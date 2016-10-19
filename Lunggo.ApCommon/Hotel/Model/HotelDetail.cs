@@ -19,37 +19,25 @@ namespace Lunggo.ApCommon.Hotel.Model
         [JsonProperty("hotelName", NullValueHandling = NullValueHandling.Ignore)]
         public string HotelName { get; set; }
         [JsonProperty("description", NullValueHandling = NullValueHandling.Ignore)]
-        public HotelDescriptions Description { get; set; }
-        [JsonProperty("countryCd", NullValueHandling = NullValueHandling.Ignore)]
-        public string CountryCode { get; set; }
-        [JsonProperty("countryName", NullValueHandling = NullValueHandling.Ignore)]
+        public string Description { get; set; }
+        [JsonProperty("country", NullValueHandling = NullValueHandling.Ignore)]
         public string CountryName { get; set; }
-        [JsonProperty("destinationCd", NullValueHandling = NullValueHandling.Ignore)]
-        public string DestinationCode { get; set; }
-        [JsonProperty("destinationName", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonProperty("destination", NullValueHandling = NullValueHandling.Ignore)]
         public string DestinationName { get; set; }
-        [JsonProperty("zoneCd", NullValueHandling = NullValueHandling.Ignore)]
-        public int ZoneCode { get; set; }
-        [JsonProperty("zoneName", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonProperty("zone", NullValueHandling = NullValueHandling.Ignore)]
         public string ZoneName { get; set; }
         [JsonProperty("latitude", NullValueHandling = NullValueHandling.Ignore)]
-        public decimal Latitude { get; set; }
+        public decimal? Latitude { get; set; }
         [JsonProperty("longitude", NullValueHandling = NullValueHandling.Ignore)]
-        public decimal Longitude { get; set; }
-        [JsonProperty("starRatingCd", NullValueHandling = NullValueHandling.Ignore)]
-        public String StarRatingCd { get; set; }
-        [JsonProperty("starRatingDesc", NullValueHandling = NullValueHandling.Ignore)]
-        public String StarRatingDescription { get; set; }
+        public decimal? Longitude { get; set; }
+        [JsonProperty("starRating", NullValueHandling = NullValueHandling.Ignore)]
+        public string StarRatingDescription { get; set; }
         [JsonProperty("chain", NullValueHandling = NullValueHandling.Ignore)]
-        public string Chain { get; set; }
-        [JsonProperty("chainName", NullValueHandling = NullValueHandling.Ignore)]
         public string ChainName { get; set; }
-        [JsonProperty("accomodationType", NullValueHandling = NullValueHandling.Ignore)]
-        public string AccomodationType { get; set; }
-        [JsonProperty("accomodationName", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonProperty("accomodation", NullValueHandling = NullValueHandling.Ignore)]
         public string AccomodationName { get; set; }
         [JsonProperty("segments", NullValueHandling = NullValueHandling.Ignore)]
-        public List<Segment> Segments { get; set; }
+        public List<string> Segments { get; set; }
         [JsonProperty("facilities", NullValueHandling = NullValueHandling.Ignore)]
         public List<HotelFacilityForDisplay> Facilities { get; set; } 
         [JsonProperty("address", NullValueHandling = NullValueHandling.Ignore)]

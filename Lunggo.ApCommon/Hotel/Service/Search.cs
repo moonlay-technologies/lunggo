@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using CsQuery.Engine.PseudoClassSelectors;
 using Lunggo.ApCommon.Flight.Model.Logic;
 using Lunggo.ApCommon.Hotel.Model;
 using Lunggo.ApCommon.Hotel.Model.Logic;
@@ -140,9 +141,6 @@ namespace Lunggo.ApCommon.Hotel.Service
                 result.SearchId = generatedSearchId.ToString();
                 Debug.Print("Search Id : "+ result.SearchId);
 
-                //Add HotelDetail Here
-                //result = AddHotelDetail(result);
-
                 if (result.HotelDetails != null)
                 {
                     //TODO: MARGIN
@@ -163,12 +161,18 @@ namespace Lunggo.ApCommon.Hotel.Service
                         });
                     }
                         )));
-                    //return only 100 data for the first page
+
                     SaveSearchResultintoDatabaseToCache(result.SearchId, result);
+
+                    var firstPageHotelDetails = result.HotelDetails.Take(100).ToList(); 
+                    //Add HotelDetail Here
+                    firstPageHotelDetails = AddHotelDetail(firstPageHotelDetails);
+
+                    //return only 100 data for the first page
                     return new SearchHotelOutput
                     {
                         SearchId = result.SearchId,
-                        HotelDetailLists = ConvertToHotelDetailForDisplay(result.HotelDetails).Take(100).ToList(),
+                        HotelDetailLists = ConvertToHotelDetailForDisplay(firstPageHotelDetails).Take(100).ToList(),
                         StartPage = 1,
                         EndPage = 100,
                     };
@@ -181,32 +185,19 @@ namespace Lunggo.ApCommon.Hotel.Service
             }
         }
 
-        public SearchHotelResult AddHotelDetail(SearchHotelResult result)
+        public List<HotelDetail> AddHotelDetail(List<HotelDetail> result)
         {
             //Adding Additional Hotel Information
-                foreach (var hotel in result.HotelDetails)
+                foreach (var hotel in result)
                 {
                    var detail = GetHotelDetailFromDb(hotel.HotelCode);
-                    hotel.PhonesNumbers = detail.PhonesNumbers;
-                    hotel.Terminals = detail.Terminals; //TODO
-                    hotel.PostalCode = detail.PostalCode;
-                    hotel.Review = detail.Review;
-                    hotel.StarRating = detail.StarRating;
-                    hotel.Chain = detail.Chain;
-                    hotel.Pois = detail.Pois;
                     hotel.Address = detail.Address;
-                    hotel.Segment = detail.Segment;
-                    hotel.PhonesNumbers = detail.PhonesNumbers;
-                    hotel.ImageUrl = detail.ImageUrl; //TODO
-                    hotel.Email = detail.Email;
                     hotel.City = detail.City;
-                    hotel.CountryCode = detail.CountryCode;
-                    hotel.ZoneCode = detail.ZoneCode;
-                    hotel.Longitude = detail.Longitude;
-                    hotel.Latitude = detail.Latitude;
-                    hotel.DestinationCode = detail.DestinationCode;
-                    hotel.Description = detail.Description;
+                    hotel.Chain = detail.Chain;
                     hotel.AccomodationType = detail.AccomodationType;
+                    //facilities hotel;
+                    hotel.Review = detail.Review;
+                    hotel.ImageUrl = detail.ImageUrl;
                 }
             return result;
         }
