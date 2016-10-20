@@ -1152,6 +1152,17 @@ namespace Lunggo.ApCommon.Hotel.Service
             }
         }
 
+        public string GetCountryFromDestination(string cd)
+        {
+            try
+            {
+                return Countries.Where(c => c.Destinations.Any(d => d.Code == cd)).ToList()[0].Code;
+            }
+            catch
+            {
+                return "";
+            }
+        }
         //GET METHODS REGARDING DESTINATION AND ZONE
         public Country GetHotelCountryFromMasterList(string countryCode)
         {
@@ -1251,7 +1262,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                 return new Accomodation();
             }
         }
-        public string GetHotelAccomdationMultiDesc(string code)
+        public string GetHotelAccomodationMultiDesc(string code)
         {
             try
             {

@@ -83,13 +83,16 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds
             if (responseAvail != null && responseAvail.hotels != null && responseAvail.hotels.hotels != null &&
                 responseAvail.hotels.hotels.Count > 0)
             {
+                var price = new Price();
                 var currency = new Currency("IDR");
                 foreach (var hotelResponse in responseAvail.hotels.hotels)
                 {
+                    
                     var hotel = new HotelDetail()
                     {
                         HotelCode = hotelResponse.code,
                         HotelName = hotelResponse.name,
+                        CountryCode = HotelService.GetInstance().GetCountryFromDestination(hotelResponse.destinationCode),
                         Latitude = decimal.Parse(hotelResponse.latitude),
                         Longitude = decimal.Parse(hotelResponse.longitude),
                         ZoneCode =  hotelResponse.zoneCode,
@@ -119,7 +122,7 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds
                                         Name = z.name
                                     }).ToList(),
                                 RateKey = x.rateKey,
-                                    Price = new Price(),
+                                    Price = price,
                                 Boards = x.boardCode,
                                     Cancellation = x.cancellationPolicies == null ? null : x.cancellationPolicies.Select(y => new Cancellation
                                     {

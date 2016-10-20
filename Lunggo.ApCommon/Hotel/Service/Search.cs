@@ -150,31 +150,11 @@ namespace Lunggo.ApCommon.Hotel.Service
 
                 if (result.HotelDetails != null)
                 {
-                    //TODO: MARGIN
-                    result.HotelDetails.ForEach(h => h.Rooms.ForEach(r => r.Rates.ForEach(t =>
-                    {
-                        t.Price.LocalCurrency = new Currency("IDR");
-                        t.Price.SetMargin(new Margin
-                        {
-                            Constant = 0,
-                            Currency = new Currency("IDR"),
-                            Description = "HOTELBEDS",
-                            Id = 10,
-                            IsActive = false,
-                            IsFlat = false,
-                            Name = "htbd",
-                            Percentage = 5,
-                            RuleId = 3
-                        });
-                    }
-                        )));
-
-
+                    AddPriceMargin(result.HotelDetails);
                     if (isByDestination)
                     {
                         result.HotelFilterDisplayInfo = SetHotelFilterDisplayInfo(result.HotelDetails);
                     }
-
                     SaveSearchResultintoDatabaseToCache(result.SearchId, result);
 
                     var firstPageHotelDetails = result.HotelDetails.Take(100).ToList(); 
@@ -210,6 +190,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                     hotel.Address = detail.Address;
                     hotel.City = detail.City;
                     hotel.Chain = detail.Chain;
+                    hotel.CountryCode = detail.CountryCode;
                     hotel.AccomodationType = detail.AccomodationType;
                     //facilities hotel;
                     hotel.Review = detail.Review;
