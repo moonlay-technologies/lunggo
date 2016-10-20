@@ -148,6 +148,7 @@ namespace Lunggo.ApCommon.Hotel.Service
             Zone = 2,
             Hotel = 3
         }
+
         //FOR AUTOCOMPLETE
         public Dictionary<long, Autocomplete> _Autocompletes; 
 

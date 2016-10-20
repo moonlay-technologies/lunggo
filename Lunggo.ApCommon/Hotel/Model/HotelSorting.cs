@@ -3,14 +3,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace Lunggo.ApCommon.Hotel.Model
 {
     public class HotelSorting
     {
-        public bool AscendingPrice { get; set; }
-        public bool DescendingPrice { get; set; }
-        public bool ByReview { get;set; }
-        public bool ByPopularity { get; set; }
+        [JsonProperty("lowestPrice")]
+        public bool LowestPrice { get; set; }
+        [JsonProperty("highestPrice")]
+        public bool HighestPrice { get; set; }
+        [JsonProperty("highestStar")]
+        public bool HighestStar { get; set; }
+        [JsonProperty("highestReviewScore")]
+        public bool HighestReviewScore { get; set; }
+        [JsonProperty("highestPopularity")]
+        public bool HighestPopularity { get; set; }
     }
 }

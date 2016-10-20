@@ -13,5 +13,7 @@ namespace Lunggo.ApCommon.Hotel.Model
         public string SearchId { get; set; } 
         [JsonProperty("hotels", NullValueHandling = NullValueHandling.Ignore)]
         public List<HotelDetail> HotelDetails { get; set; }
+        [JsonProperty("hotelFilterDisplayInfo", NullValueHandling = NullValueHandling.Ignore)]
+        public HotelFilterDisplayInfo HotelFilterDisplayInfo { get; set; }
     }
 }

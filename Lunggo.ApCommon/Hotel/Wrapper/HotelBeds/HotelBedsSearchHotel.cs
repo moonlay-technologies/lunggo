@@ -83,6 +83,7 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds
             if (responseAvail != null && responseAvail.hotels != null && responseAvail.hotels.hotels != null &&
                 responseAvail.hotels.hotels.Count > 0)
             {
+                var currency = new Currency("IDR");
                 foreach (var hotelResponse in responseAvail.hotels.hotels)
                 {
                     var hotel = new HotelDetail()
@@ -129,7 +130,7 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds
                                 Type = x.rateType.ToString() 
 
                                 };
-                                rate.Price.SetSupplier(x.net, new Currency("IDR"));
+                                rate.Price.SetSupplier(x.net, currency);
                                 return rate;
                             }).ToList()
                         }).ToList(),

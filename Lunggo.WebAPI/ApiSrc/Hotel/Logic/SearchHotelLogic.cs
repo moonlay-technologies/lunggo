@@ -31,7 +31,7 @@ namespace Lunggo.WebAPI.ApiSrc.Hotel.Logic
             return new HotelSelectRoomApiResponse
             {
                 StatusCode = HttpStatusCode.BadRequest,
-                ErrorCode = "ERHBOO01"
+                ErrorCode = "ERSOO01"
             };
         }
 
@@ -60,7 +60,7 @@ namespace Lunggo.WebAPI.ApiSrc.Hotel.Logic
         {
             var searchServiceRequest = new SearchHotelInput
             {
-                SearchId = request.SearchId, //TODO SEARCH ID
+                SearchId = request.SearchId,
                 CheckIn = request.CheckinDate,
                 Checkout = request.CheckoutDate,
                 AdultCount = request.AdultCount,
@@ -69,9 +69,9 @@ namespace Lunggo.WebAPI.ApiSrc.Hotel.Logic
                 Rooms = request.RoomCount,
                 Location = request.Location,
                 StartPage = request.From,
-                EndPage = request.To,//TODO START PAGE and END PAGE
-                //FilterParam = request.Filter, //TODO FILTER
-                //SortingParam = request.Sorting, //TODO SORTING PARAM
+                EndPage = request.To,
+                FilterParam = request.Filter,
+                SortingParam = request.Sorting,
                 
             };
             return searchServiceRequest;
@@ -82,11 +82,13 @@ namespace Lunggo.WebAPI.ApiSrc.Hotel.Logic
             var apiResponse = new HotelSearchApiResponse
             {
                 SearchId = searchServiceResponse.SearchId,
-                TotalHotel = searchServiceResponse.TotalHotel, //TODO
+                TotalDisplayHotel = searchServiceResponse.TotalDisplayHotel,
+                TotalActualHotel =  searchServiceResponse.TotalActualHotel,
                 Hotels = searchServiceResponse.HotelDetailLists,
                 ExpiryTime = searchServiceResponse.ExpiryTime.TruncateMilliseconds(),
                 From = searchServiceResponse.StartPage,
                 To =  searchServiceResponse.EndPage,
+                HotelFilterDisplayInfo = searchServiceResponse.HotelFilterDisplayInfo,
                 StatusCode = HttpStatusCode.OK
             };
             return apiResponse;
