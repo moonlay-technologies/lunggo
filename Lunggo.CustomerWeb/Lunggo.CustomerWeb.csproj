@@ -2947,6 +2947,7 @@
     <Content Include="Views\Hotel\BankTransferHotel.cshtml" />
     <Content Include="Views\Hotel\VoucherHotel.cshtml" />
     <Content Include="Views\Hotel\VirtualAccountHotel.cshtml" />
+    <Content Include="Views\Hotel\SorryEmailHotel.cshtml" />
     <None Include="Views\Template\eticket.cshtml" />
     <Content Include="Views\Template\OrderFlightHistory.cshtml" />
     <Content Include="Views\Template\PrivacyPolicy.cshtml" />
