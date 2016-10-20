@@ -50,10 +50,7 @@
     <Compile Include="TableRecord\CurrencyTableRecord.cs" />
     <Compile Include="TableRecord\DiscountTableRecord.cs" />
     <Compile Include="TableRecord\FlightItineraryRuleTableRecord.cs" />
-    <Compile Include="TableRecord\HotelRateRuleTableRecord.cs">
-      <SubType>
-      </SubType>
-    </Compile>
+    <Compile Include="TableRecord\HotelRateRuleTableRecord.cs" />
     <Compile Include="TableRecord\HotelRateTableRecord.cs" />
     <Compile Include="TableRecord\HotelReservationDetailsTableRecord.cs" />
     <Compile Include="TableRecord\HotelRoomTableRecord.cs" />

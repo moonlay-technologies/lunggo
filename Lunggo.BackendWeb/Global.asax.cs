@@ -32,15 +32,25 @@ namespace Lunggo.BackendWeb
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             
             AppInitializer.Init();
-
-            HotelService.GetInstance().SelectHotelRoom(new SelectHotelRoomInput
+            HotelService.GetInstance().Search(new SearchHotelInput
             {
-                RegsIds = new List<string>
-                {
-                    "444942-DBL.DX-20170320|20170321|W|325|444942|DBL.DX|BAR|BB||1~1~0||N@E665A06263B84C179B64F9E8F5107DAC"
-                },
-                SearchId = "1178e2cc-9fc1-40ac-afe1-a7d6ef57a199"
+                AdultCount = 1,
+                CheckIn = new DateTime(2017,3,4),
+                Checkout = new DateTime(2017,3,6),
+                ChildCount = 0,
+                Location = 16151,
+                Rooms = 1,
             });
+
+
+            //HotelService.GetInstance().SelectHotelRoom(new SelectHotelRoomInput
+            //{
+            //    RegsIds = new List<string>
+            //    {
+            //        "444942-DBL.DX-20170320|20170321|W|325|444942|DBL.DX|BAR|BB||1~1~0||N@E665A06263B84C179B64F9E8F5107DAC"
+            //    },
+            //    SearchId = "1178e2cc-9fc1-40ac-afe1-a7d6ef57a199"
+            //});
             //var info = new HotelRevalidateInfo
             //{
             //    RateKey = "20171108|20171110|W|1|1533|TPL.ST|CG- MERCHANT|RO||1~2~1|8|N@03B9A98F4D3B4AF99F3AF21C0914DE60",

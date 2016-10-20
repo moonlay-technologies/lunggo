@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web.UI;
 using Lunggo.ApCommon.Hotel.Model;
 
 namespace Lunggo.ApCommon.Hotel.Service
 {
     public partial class HotelService
     {
-        internal void InitPriceMarginRules()
+        public void InitPriceMarginRules()
         {
             PullPriceMarginRulesFromDatabaseToCache();
         }
@@ -28,7 +29,7 @@ namespace Lunggo.ApCommon.Hotel.Service
 
         internal void AddPriceMargin(HotelDetail hotelDetail, List<HotelMarginRule> marginRules)
         {
-            if (hotelDetail.Rooms.Any())
+            if (!hotelDetail.Rooms.Any())
             {
                 return;
             }
@@ -41,7 +42,7 @@ namespace Lunggo.ApCommon.Hotel.Service
 
         internal void AddPriceMargin(HotelRoom room, HotelDetail hotelDetail, List<HotelMarginRule> marginRules)
         {
-            if (room.Rates.Any())
+            if (!room.Rates.Any())
             {
                 return;
             }
@@ -123,14 +124,13 @@ namespace Lunggo.ApCommon.Hotel.Service
             {
                 var rule = marginRule.Rule;
                 if (!BookingDateMatches(rule)) continue;
-                if (!StayDurationMatches(rule, hotelDetail)) continue;
-                if (!StayDateMatches(rule, hotelDetail)) continue;
+                if (!StayDurationMatches(rule, rate)) continue;
+                if (!StayDateMatches(rule, rate)) continue;
                 if (!HotelStarMatches(rule, hotelDetail)) continue;
                 if (!CountryMatches(rule, hotelDetail)) continue;
                 if (!DestinationMatches(rule, hotelDetail)) continue;
-                if (!HotelChainMatches(rule, hotelDetail)) continue;
                 if (!BoardMatches(rule, rate)) continue;
-                if (!RoomTypeMatches(rule, rate)) continue;
+                if (!RoomTypeMatches(rule, room)) continue;
                 if (!PaxMatches(rule, rate)) continue;
                 return marginRule;
             }
@@ -144,53 +144,61 @@ namespace Lunggo.ApCommon.Hotel.Service
             return dateSpanOk;
         }
 
-        private static bool StayDateMatches(HotelRateRule rule, HotelDetail hotelDetail)
+        private static bool StayDateMatches(HotelRateRule rule, HotelRate hotelRate)
         {
-            var dateSpanOk = !rule.StayDates.Any() || rule.StayDates.Any(dateSpan => dateSpan.Contains(hotelDetail.CheckInDate));
+            var cidate = hotelRate.RateKey.Split('|')[0];
+            var cekin = new DateTime(Convert.ToInt32(cidate.Substring(0, 4)), Convert.ToInt32(cidate.Substring(4, 2)),
+                Convert.ToInt32(cidate.Substring(6, 2)));
+            var dateSpanOk = !rule.StayDates.Any() || rule.StayDates.Any(dateSpan => dateSpan.Contains(cekin));
             return dateSpanOk;
         }
 
-        private static bool StayDurationMatches(HotelRateRule rule, HotelDetail hotelDetail)
+        private static bool StayDurationMatches(HotelRateRule rule, HotelRate hotelRate)
         {
-            var stayduration = hotelDetail.NightCount;
-            var stayDurOk = rule.StayDurations.Contains(stayduration);
-            return stayDurOk;
+            var cidate = hotelRate.RateKey.Split('|')[0];
+            var codate = hotelRate.RateKey.Split('|')[1];
+            var cekin = new DateTime(Convert.ToInt32(cidate.Substring(0, 4)), Convert.ToInt32(cidate.Substring(4, 2)),
+                Convert.ToInt32(cidate.Substring(6, 2)));
+            var cekout = new DateTime(Convert.ToInt32(codate.Substring(0, 4)), Convert.ToInt32(codate.Substring(4, 2)),
+                Convert.ToInt32(codate.Substring(6, 2)));
+            var stayduration = (cekout - cekin).Days;
+            var stayDurOk = !rule.StayDurations.Any() || rule.StayDurations.Contains(stayduration);
+            return stayDurOk ;
         }
 
         private static bool HotelStarMatches(HotelRateRule rule, HotelDetail hotelDetail)
         {
             var rating = hotelDetail.StarRating;
-            return rule.HotelStars.Contains(rating);
+            var ratingOk = !rule.HotelStars.Any() || rule.HotelStars.Contains(rating);
+            return ratingOk;
         }
 
         private static bool CountryMatches(HotelRateRule rule, HotelDetail hotelDetail)
         {
             var countryCd = hotelDetail.CountryCode;
-            return rule.HotelStars.Contains(countryCd);
+            var countryOk = !rule.Countries.Any() || rule.Countries.Contains(countryCd);
+            return countryOk;
         }
 
         private static bool DestinationMatches(HotelRateRule rule, HotelDetail hotelDetail)
         {
             var destCd = hotelDetail.DestinationCode;
-            return rule.HotelStars.Contains(destCd);
-        }
-
-        private static bool HotelChainMatches(HotelRateRule rule, HotelDetail hotelDetail)
-        {
-            var chain = hotelDetail.Chain;
-            return rule.HotelStars.Contains(chain);
+            var destOk = !rule.Destinations.Any() || rule.Destinations.Contains(destCd);
+            return destOk;
         }
 
         private static bool BoardMatches(HotelRateRule rule, HotelRate rate)
         {
             var board = rate.Boards;
-            return rule.HotelStars.Contains(board);
+            var boardOk = !rule.Boards.Any() || rule.Boards.Contains(board);
+            return boardOk;
         }
 
-        private static bool RoomTypeMatches(HotelRateRule rule, HotelRate rate)
+        private static bool RoomTypeMatches(HotelRateRule rule, HotelRoom room)
         {
-            var roomtype = rate.Type;
-            return rule.HotelStars.Contains(roomtype);
+            var roomtype = room.Type;
+            var roomTypeOk = !rule.RoomTypes.Any() || rule.RoomTypes.Contains(roomtype);
+            return roomTypeOk;
         }
 
         private static bool PaxMatches(HotelRateRule rule, HotelRate rate)

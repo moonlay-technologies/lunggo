@@ -5,15 +5,6 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using Lunggo.ApCommon.Constant;
-using Lunggo.ApCommon.Flight.Constant;
-using Lunggo.ApCommon.Flight.Model;
-using Lunggo.ApCommon.Flight.Wrapper;
-using Lunggo.ApCommon.Flight.Wrapper.AirAsia;
-using Lunggo.ApCommon.Flight.Wrapper.Citilink;
-using Lunggo.ApCommon.Flight.Wrapper.Garuda;
-using Lunggo.ApCommon.Flight.Wrapper.LionAir;
-using Lunggo.ApCommon.Flight.Wrapper.Mystifly;
-using Lunggo.ApCommon.Flight.Wrapper.Sriwijaya;
 using Lunggo.ApCommon.Product.Service;
 using Lunggo.ApCommon.Voucher;
 using Lunggo.Framework.Config;
@@ -34,7 +25,7 @@ namespace Lunggo.ApCommon.Hotel.Service
             if (!_isInitialized)
             {
                 InitDictionary(dictionaryFolderName);
-
+                InitPriceMarginRules();
                 //foreach (var supplier in Suppliers.Select(entry => entry.Value))
                 //{
                 //    supplier.Init();

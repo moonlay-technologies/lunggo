@@ -25,7 +25,7 @@ namespace Lunggo.ApCommon.Hotel.Query
                                  "r.ConstraintCount, r.Priority, r.BookingDays, r.BookingDates, " +
                                  "r.StayDates, r.StayDurations, r.MaxAdult, r.MaxChild, r.MinAdult, " +
                                  "r.MinChild, r.Boards, r.Countries, r.Destinations, r.RoomTypes, " +
-                                 "r.HotelStars, r.HotelChains ");
+                                 "r.HotelStars ");
             clauseBuilder.Append("FROM Margin AS m " +
                                  "INNER JOIN HotelRateRule AS r ON m.OrderRuleId = r.Id ");
             return clauseBuilder.ToString();
@@ -34,7 +34,7 @@ namespace Lunggo.ApCommon.Hotel.Query
         private static string CreateWhereClause()
         {
             var clauseBuilder = new StringBuilder();
-            clauseBuilder.Append("WHERE m.IsActive = 1 AND CAST(m.OrderRuleId AS NVARCHAR) LIKE '1%'");
+            clauseBuilder.Append("WHERE m.IsActive = 1 AND CAST(m.OrderRuleId AS NVARCHAR) LIKE '2%'");
             clauseBuilder.Append("ORDER BY r.ConstraintCount DESC, r.Priority ASC");
             return clauseBuilder.ToString();
         }

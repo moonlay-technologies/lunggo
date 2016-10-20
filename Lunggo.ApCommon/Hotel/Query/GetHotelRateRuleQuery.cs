@@ -19,7 +19,7 @@ namespace Lunggo.ApCommon.Hotel.Query
             var clauseBuilder = new StringBuilder();
             clauseBuilder.Append("SELECT ConstraintCount, Priority, BookingDays, BookingDates, StayDates" +
                                  "StayDurations, MaxAdult, MinAdult, MinChild, MaxChild, " +
-                                 "Boards, Countries, Destinations, RoomTypes, HotelStars, HotelChains ");
+                                 "Boards, Countries, Destinations, RoomTypes, HotelStars ");
             clauseBuilder.Append("FROM HotelRateRule ");
             return clauseBuilder.ToString();
         }

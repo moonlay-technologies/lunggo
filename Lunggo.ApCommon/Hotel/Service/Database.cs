@@ -161,7 +161,6 @@ namespace Lunggo.ApCommon.Hotel.Service
                             BookingDates = ruleRecord.BookingDays.Deserialize<List<HotelRateRule.DateSpanRule>>(),
                             Countries = ruleRecord.Countries.Deserialize<List<string>>(),
                             Destinations = ruleRecord.Destinations.Deserialize<List<string>>(),
-                            HotelChains = ruleRecord.HotelChains.Deserialize<List<string>>(),
                             HotelStars = ruleRecord.HotelStars.Deserialize<List<string>>(),
                             MaxAdult = ruleRecord.MaxAdult.GetValueOrDefault(),
                             MaxChild = ruleRecord.MaxChild.GetValueOrDefault(),
@@ -170,7 +169,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                             RoomTypes = ruleRecord.RoomTypes.Deserialize<List<string>>()
                         };
                         return new HotelMarginRule(margin, rule);
-                    }, "BookingDateSpans").ToList();
+                    }, "ConstraintCount").ToList();
                 return activeRules.ToList();
             }
         }
@@ -344,7 +343,6 @@ namespace Lunggo.ApCommon.Hotel.Service
                             Boards = rule.ToString().Serialize(),
                             Countries = rule.Countries.Serialize(),
                             Destinations = rule.Countries.Serialize(),
-                            HotelChains = rule.HotelChains.Serialize(),
                             HotelStars = rule.HotelStars.Serialize(),
                             MaxAdult = rule.MaxAdult,
                             MaxChild = rule.MaxChild,

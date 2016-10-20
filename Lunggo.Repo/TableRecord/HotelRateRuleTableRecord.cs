@@ -155,15 +155,6 @@ namespace Lunggo.Repository.TableRecord
 		        IncrementLog("HotelStars");
 		    }
 		}
-		public String HotelChains
-		{
-		    get { return _HotelChains; }
-		    set
-		    {
-		        _HotelChains = value;
-		        IncrementLog("HotelChains");
-		    }
-		}
 		public String InsertBy
 		{
 		    get { return _InsertBy; }
@@ -236,7 +227,6 @@ namespace Lunggo.Repository.TableRecord
 		private String _Destinations;
 		private String _RoomTypes;
 		private String _HotelStars;
-		private String _HotelChains;
 		private String _InsertBy;
 		private DateTime? _InsertDate;
 		private String _InsertPgId;
@@ -290,7 +280,6 @@ namespace Lunggo.Repository.TableRecord
 				new ColumnMetadata("Destinations", false),
 				new ColumnMetadata("RoomTypes", false),
 				new ColumnMetadata("HotelStars", false),
-				new ColumnMetadata("HotelChains", false),
 				new ColumnMetadata("InsertBy", false),
 				new ColumnMetadata("InsertDate", false),
 				new ColumnMetadata("InsertPgId", false),

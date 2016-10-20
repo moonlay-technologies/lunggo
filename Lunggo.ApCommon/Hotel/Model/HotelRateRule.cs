@@ -64,7 +64,6 @@ namespace Lunggo.ApCommon.Hotel.Model
                     HotelStars = record.HotelStars.Deserialize<List<string>>(), //
                     Countries = record.Countries.Deserialize<List<string>>(), //
                     Destinations = record.Destinations.Deserialize<List<string>>(), //
-                    HotelChains = record.HotelChains.Deserialize<List<string>>(), //
                     Boards = record.Boards.Deserialize<List<string>>(), //
                     MaxAdult = record.MaxAdult.GetValueOrDefault(),
                     MaxChild = record.MaxChild.GetValueOrDefault(),
