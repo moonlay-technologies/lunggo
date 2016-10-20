@@ -1151,11 +1151,11 @@ namespace Lunggo.ApCommon.Hotel.Service
             }
         }
 
-        public string GetCountryFromdestination(string Cd)
+        public string GetCountryFromDestination(string cd)
         {
             try
             {
-                return Countries.Where(c => c.Destinations.Any(d => d.Code == Cd)).ToList()[0].Code;
+                return Countries.Where(c => c.Destinations.Any(d => d.Code == cd)).ToList()[0].Code;
             }
             catch
             {
@@ -1261,7 +1261,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                 return new Accomodation();
             }
         }
-        public string GetHotelAccomdationMultiDesc(string code)
+        public string GetHotelAccomodationMultiDesc(string code)
         {
             try
             {

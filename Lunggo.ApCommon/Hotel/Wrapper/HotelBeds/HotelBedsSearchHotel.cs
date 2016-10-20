@@ -92,7 +92,7 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds
                     {
                         HotelCode = hotelResponse.code,
                         HotelName = hotelResponse.name,
-                        CountryCode = HotelService.GetInstance().GetCountryFromdestination(hotelResponse.destinationCode),
+                        CountryCode = HotelService.GetInstance().GetCountryFromDestination(hotelResponse.destinationCode),
                         Latitude = decimal.Parse(hotelResponse.latitude),
                         Longitude = decimal.Parse(hotelResponse.longitude),
                         ZoneCode =  hotelResponse.zoneCode,
