@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 
@@ -18,12 +19,11 @@ namespace Lunggo.CustomerWeb.Controllers
                 NameValueCollection query = Request.QueryString;
                 HotelSearchApiRequest model = new HotelSearchApiRequest(query[0]);
 
-                return View();
+                return View(model);
             }
             catch (Exception ex)
             {
-                return View();
-                // return new HttpStatusCodeResult(  )
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, ex.Message);
             }
 
         }

@@ -2,6 +2,8 @@
     Layout = "/Views/Shared/Travorama20/_Layout20150929.cshtml";
     ViewBag.BodyClass = "page-hotel page-search";
     ViewBag.Title = "Pencarian Hotel";
+    ViewBag.AngularController = "hotelSearchController";
+    
 }
 
 @section AdditionalCSS{
@@ -9,9 +11,9 @@
 }
 
 @section AdditionalJS {
-    <script src="/Assets/js/angular.min.js"></script>
+    @*<script src="/Assets/js/angular.min.js"></script>
     <script src="/Assets/js/angular-animate.min.js"></script>
-    <script src="/Assets/js/angular-route.min.js"></script>
+    <script src="/Assets/js/angular-route.min.js"></script>*@
     <script src="/Assets/js/jquery-ui.min.js"></script>
     <script type="text/javascript" src="/Scripts/bootstrap.min.js"></script>
 }
@@ -32,10 +34,13 @@
               " - $" + $("#slider-range").slider("values", 1));
         });
     </script>
+
+<script src="/Assets/Travorama20/js/hotelSearchController.js"></script>
+
 }
 
 @Html.Partial("/Views/Hotel/Shared/Desktop/_PageSlider.cshtml")
-<div class="travorama-hotel">
+<div class="travorama-hotel" ng-init="init(@Newtonsoft.Json.JsonConvert.SerializeObject(Model))">
     <div class="container">
         <div class="search-list">
             @Html.Partial("/Views/Hotel/Shared/Desktop/_BreadCrumb.cshtml")

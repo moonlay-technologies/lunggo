@@ -13,12 +13,9 @@ using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds;
 using Lunggo.ApCommon.Payment.Model;
 using Lunggo.ApCommon.Product.Constant;
 using Lunggo.ApCommon.Product.Model;
-<<<<<<< HEAD
 using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds;
-=======
 using Lunggo.ApCommon.Hotel.Service;
 using Lunggo.ApCommon.Hotel.Service;
->>>>>>> f487fd4c18764af6650997763893179639b89a5d
 namespace Lunggo.BackendWeb
 {
     public class MvcApplication : HttpApplication
@@ -78,15 +75,14 @@ namespace Lunggo.BackendWeb
                                     },
                                     MarginNominal = 10000,
                                 },
-                                PaymentType = "AT_WEB",
                                 AdultCount = 2,
                                 ChildCount = 1,
                                 Boards = "RO",
-                                Cancellation = new Cancellation
+                                Cancellation = new  List<Cancellation>{ new Cancellation
                                 {
                                     StartTime = Convert.ToDateTime("2017-06-06T23:59:00+07:00"),
                                     Fee = 1347709
-                                },
+                                }},
                                 RoomCount = 1,
                                 Class = "NOR",
                                 Type = "BOOKABLE",
@@ -97,7 +93,7 @@ namespace Lunggo.BackendWeb
                 }
             };
 
-<<<<<<< HEAD
+
             HotelService.GetInstance().SaveSelectedHotelDetailsToCache("1005", hoteldetail);
 
             var bookinput = new BookHotelInput
@@ -152,13 +148,11 @@ namespace Lunggo.BackendWeb
 
 //            });
 
-            
-=======
-            HotelService.GetInstance().IssueHotel(new IssueHotelTicketInput
-            {
-                RsvNo = "276696535679"
-            });
->>>>>>> f487fd4c18764af6650997763893179639b89a5d
+
+            //HotelService.GetInstance().IssueHotel(new IssueHotelTicketInput
+            //{
+            //    RsvNo = "276696535679"
+            //});
             //var hoteldetail = new HotelDetailsBase
             //{
             //    AccomodationType = "HOTEL",
@@ -261,9 +255,7 @@ namespace Lunggo.BackendWeb
             //};
 
             //HotelService.GetInstance().BookHotel(bookinput);
-        }
-    }
-}
+
 
 //var hotelbed = new HotelBedsSearchHotel();
 //hotelbed.SearchHotel(new SearchHotelCondition

@@ -4,11 +4,57 @@ $(function() {
 });
 
 if (typeof(angular) == 'object') {
-    var app = angular.module('travorama', ['ngRoute']);
+    var app = angular.module('travorama', ['ngRoute', 'ngResource']);
 
     app.config(function ($logProvider) {
         $logProvider.debugEnabled(true);
     });
+
+    //function myFunction(xml) {
+    //    var x, i, xmlDoc, txt;
+    //    xmlDoc = xml.responseXML;
+    //    txt = "";
+    //    x = xmlDoc.getElementsByTagName('book');
+    //    for (i = 0; i < x.length; i++) {
+    //        txt += x[i].getAttribute('category') + "<br>";
+    //    }
+    //    document.getElementById("demo").innerHTML = txt;
+    //}
+
+
+    app.factory('DataSource', ['$http', function ($http) {
+        return {
+            get: function (file, callback, transform) {
+                $http.get(
+                    file,
+                    { transformResponse: transform }
+                ).
+                success(function (data, status) {
+                    console.log("Request succeeded");
+                    callback(data);
+                }).
+                error(function (data, status) {
+                    console.log("Request failed " + status);
+                });
+            }
+        };
+    }]);
+
+    var SOURCE_FILE = "/Config/application.properties";
+
+    xmlTransform = function (data) {
+        console.log("transform data");
+        var x2js = new X2JS();
+        var json = x2js.xml_str2json(data);
+        return json.guitars.guitar;
+    };
+
+    setData = function (data) {
+        $scope.dataSet = data;
+    };
+
+    //DataSource.get(SOURCE_FILE, setData, xmlTransform);
+
 }
 
 

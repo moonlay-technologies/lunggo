@@ -1,17 +1,30 @@
 ﻿// home controller
-app.controller('homeController', ['$scope', '$log', '$http', '$location', function($scope, $log, $http, $location) {
+app.controller('hotelSearchController', ['$scope', '$log', '$http', '$resource', function ($scope, $log, $http, $resource) {
 
-    $scope.departureDate = departureDate;
-    $scope.topDestinations = topDestinations;
-    $scope.flightDestination = {
-        name: indexPageDestination,
-        code: indexPageDestinationsCode
-    };
+    $scope.model = {};
+    $scope.init = function (model) {
+        $scope.model = model;
 
-    $scope.hotelCalendar = {};
-    $scope.hotelCalendar.show = true;
-    $scope.changeTab = function (){
+        var Job = $resource('//api.local.travorama.com/v1/hotel/search',
+            {},
+            {
+                query: { method: 'POST', params: {}, isArray: false }
+            }
+        );
+
+        Job.query().$promise.then(function (data) {
+            var wrapped = angular.fromJson(data);
+            angular.forEach(wrapped.items, function (item, idx) {
+                wrapped.items[idx] = new Job(item);
+            });
+            return wrapped;
+        })
     }
+    
+
+
+
+
 
     //@Url.Action("Search", "Hotel")?zzz={{departureDate}}" method="POST"
     //=============== hotel start ======================
@@ -26,7 +39,7 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', functi
     $scope.hotel.roomCount = 2;
 
 
-    $scope.hotel.searchHotel = function (){
+    $scope.hotel.searchHotel = function () {
         $log.debug('searching hotel');
         location.href = '/id/Hotel/Search/' + $scope.hotel.searchParam();
         //$http({
@@ -36,8 +49,8 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', functi
         //   })
     };
 
-    $scope.hotel.searchParam = function (){
-        return ("?info=" + 
+    $scope.hotel.searchParam = function () {
+        return ("?info=" +
             [$scope.hotel.location,
              $scope.hotel.checkinDate,
              $scope.hotel.checkoutDate,
@@ -48,12 +61,5 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', functi
         )
     }
     //=============== hotel end ======================
-    
-}]);
 
-// Calendar 2016 Controller
-app.controller('campaignController', [
-    '$scope', function ($scope) {
-        
-    }
-]);
+}]);

@@ -304,6 +304,7 @@
     </Content>
     <Content Include="Assets\css\eticket.scss" />
     <Content Include="Assets\images\order-hotel-list-bg.png" />
+    <Content Include="Assets\js\xml2json.min.js" />
     <Content Include="Assets\mobile\images\adult.png" />
     <Content Include="Assets\mobile\images\Hotel\ac-grey.png" />
     <Content Include="Assets\mobile\images\Hotel\ac.png" />
@@ -356,6 +357,7 @@
     <Content Include="Assets\travorama20\images\Hotel\triangle-grey.png" />
     <Content Include="Assets\travorama20\images\Hotel\up.png" />
     <Content Include="Assets\travorama20\images\Hotel\view.png" />
+    <Content Include="Assets\travorama20\js\hotelSearchController.js" />
     <Content Include="Assets\vendor\flexslider\flexslider.css" />
     <Content Include="Assets\css\font-awesome.min.css" />
     <Content Include="Assets\css\images\ui-bg_flat_0_aaaaaa_40x100.png" />
