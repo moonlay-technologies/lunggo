@@ -309,6 +309,7 @@
     <Content Include="Assets\mobile\images\Hotel\ac.png" />
     <Content Include="Assets\mobile\images\Hotel\arrow-down-grey.png" />
     <Content Include="Assets\mobile\images\Hotel\arrow-down-orange.png" />
+    <Content Include="Assets\mobile\images\Hotel\arrow-down-yellow.png" />
     <Content Include="Assets\mobile\images\Hotel\arrow-next.png" />
     <Content Include="Assets\mobile\images\Hotel\arrow-orange.png" />
     <Content Include="Assets\mobile\images\child.png" />
@@ -321,11 +322,12 @@
     <Content Include="Assets\mobile\images\Hotel\arrow-prev.png" />
     <Content Include="Assets\mobile\images\Hotel\arrow-up-grey.png" />
     <Content Include="Assets\mobile\images\Hotel\arrow-up-orange.png" />
+    <Content Include="Assets\mobile\images\Hotel\arrow-up-yellow.png" />
     <Content Include="Assets\mobile\images\Hotel\bar.png" />
     <Content Include="Assets\mobile\images\Hotel\bed-white.png" />
     <Content Include="Assets\mobile\images\Hotel\bed.png" />
     <Content Include="Assets\mobile\images\Hotel\bel-grey.png" />
-    <Content Include="Assets\mobile\images\Hotel\bel-whitel.png" />
+    <Content Include="Assets\mobile\images\Hotel\bel-white.png" />
     <Content Include="Assets\mobile\images\Hotel\bel.png" />
     <Content Include="Assets\mobile\images\Hotel\car-white.png" />
     <Content Include="Assets\mobile\images\Hotel\car.png" />

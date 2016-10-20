@@ -1,4 +1,4 @@
-﻿.detail-hotel { /*display: none;*/
+﻿.detail-hotel { display: none;
     .dh-title {
         padding: 20px 15px;
         border-bottom: 1px solid #e9e9e9;
@@ -115,7 +115,7 @@
         }
     }
 }
-.spec-hotel { display: none;
+.spec-hotel { /*display: none;*/
     .sh-title {margin-bottom: 15px;}
     .sh-desc, .sh-facility, .sh-policy {padding: 25px 15px;}
     .sh-desc, .sh-facility {border-bottom: 1px solid #e9e9e9;}
