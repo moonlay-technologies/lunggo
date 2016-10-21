@@ -87,6 +87,14 @@ namespace Lunggo.ApCommon.Hotel.Service
             return result;
         }
 
+        public HotelDetailsBase GetHotelDetailFromTableStorage()
+        {
+            var tableClient = TableStorageService.GetInstance();
+            CloudTable table = tableClient.GetTableByReference("hoteldetail");
+            var entities = table.ExecuteQuery(new TableQuery<HotelDetailWrapper>()).ToList();
+            return new HotelDetailsBase();
+        }
+
         public string ConcateData(HotelDetailWrapper hotel)
         {
             var data = new StringBuilder();

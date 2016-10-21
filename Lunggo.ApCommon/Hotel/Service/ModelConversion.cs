@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using CsQuery.ExtensionMethods;
 using Lunggo.ApCommon.Hotel.Model;
 using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.ApCommon.Payment.Service;
@@ -47,12 +48,12 @@ namespace Lunggo.ApCommon.Hotel.Service
                 Address = hotelDetail.Address,
                 City = hotelDetail.City,
                 ZoneName = GetHotelZoneNameFromDict(hotelDetail.DestinationCode+"-"+hotelDetail.ZoneCode),
-                StarRatingDescription = GetHotelCategoryDescId(hotelDetail.StarRating),
+                StarRating = hotelDetail.StarCode,
                 ChainName = GetHotelChainDesc(hotelDetail.Chain),
                 //Facilities =  hotelDetail.//TODO
                 Review = hotelDetail.Review,
                 AccomodationName = GetHotelAccomodationDescId(hotelDetail.AccomodationType),
-                ImageUrl = hotelDetail.ImageUrl, //hoteldetailcontent // just take one picture
+                ImageUrl = hotelDetail.ImageUrl,
                 OriginalFare = hotelDetail.OriginalFare,
                 NetFare = hotelDetail.NetFare,
             };
@@ -82,7 +83,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                                 .Select(x => x.Description).SingleOrDefault(),
                 PhonesNumbers = hotelDetail.PhonesNumbers,
                 ZoneName = GetHotelZoneNameFromDict(hotelDetail.DestinationCode + "-" + hotelDetail.ZoneCode),
-                StarRatingDescription = GetHotelCategoryDescId(hotelDetail.StarRating),
+                StarRating = hotelDetail.StarCode,
                 ChainName = GetHotelChainDesc(hotelDetail.Chain),
                 //Segments =  //TODO "List of Segment by SegmentCode"
                 Pois = hotelDetail.Pois,

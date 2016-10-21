@@ -39,7 +39,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                     
                     hotels = searchResult.HotelDetails.Where(p =>
                     (input.FilterParam.AreaFilter == null || input.FilterParam.AreaFilter.Areas.Contains(p.ZoneCode)) &&
-                    (listStar == null || listStar.Contains(p.StarRating)) &&
+                    (listStar == null || listStar.Contains(p.StarCode)) &&
                     (input.FilterParam.PriceFilter == null|| (p.OriginalFare >= input.FilterParam.PriceFilter.MinPrice && p.OriginalFare <= input.FilterParam.PriceFilter.MaxPrice))
                     ).Select(p => new HotelDetail
                     {
@@ -51,6 +51,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                         Chain = p.Chain,
                         Pois = p.Pois,
                         StarRating = p.StarRating,
+                        StarCode = p.StarCode,
                         Terminals = p.Terminals,
                         Latitude = p.Latitude,
                         Longitude = p.Longitude,
@@ -155,13 +156,13 @@ namespace Lunggo.ApCommon.Hotel.Service
                     {
                         result.HotelFilterDisplayInfo = SetHotelFilterDisplayInfo(result.HotelDetails);
                     }
+
+                    result.HotelDetails = AddFilteringInfo(result.HotelDetails);
                     SaveSearchResultintoDatabaseToCache(result.SearchId, result);
 
                     var firstPageHotelDetails = result.HotelDetails.Take(100).ToList(); 
-                    //Add HotelDetail Here
                     firstPageHotelDetails = AddHotelDetail(firstPageHotelDetails);
 
-                    //return only 100 data for the first page
                     return new SearchHotelOutput
                     {
                         SearchId = result.SearchId,
@@ -191,13 +192,24 @@ namespace Lunggo.ApCommon.Hotel.Service
                     hotel.City = detail.City;
                     hotel.Chain = detail.Chain;
                     hotel.CountryCode = detail.CountryCode;
-                    hotel.AccomodationType = detail.AccomodationType;
-                    //facilities hotel;
                     hotel.Review = detail.Review;
                     hotel.ImageUrl = detail.ImageUrl;
                 }
             return result;
         }
+
+        public List<HotelDetail> AddFilteringInfo(List<HotelDetail> result )
+        {
+            //Adding Additional Hotel Information
+            foreach (var hotel in result)
+            {
+                var detail = GetHotelDetailFromDb(hotel.HotelCode);
+                hotel.AccomodationType = detail.AccomodationType;
+                hotel.Facilities = detail.Facilities;
+                hotel.StarCode = GetSimpleCodeByCategoryCode(hotel.StarRating);
+            }
+            return result;
+        } 
 
         public HotelFilterDisplayInfo SetHotelFilterDisplayInfo(List<HotelDetail> hotels)
         {
@@ -241,13 +253,13 @@ namespace Lunggo.ApCommon.Hotel.Service
             return filter;
         }
 
-        public List<string> GetStarFilter(List<bool> starFilter)
+        public List<int> GetStarFilter(List<bool> starFilter)
         {
             if (starFilter != null)
             {
                 int count = 0;
-                var completedList = new List<string> { "1EST", "2EST", "3EST", "4EST", "5EST" };
-                var listStar = new List<string>();
+                var completedList = new List<int> { 1, 2, 3, 4, 5};
+                var listStar = new List<int>();
                 foreach (var star in starFilter)
                 {
                     if (star)
