@@ -108,7 +108,7 @@ namespace Lunggo.ApCommon.Hotel.Service
 
         private RegsIdDecrypted DecryptRegsId(string regsId)
         {
-            var splittedData = regsId.Split('-');
+            var splittedData = regsId.Split(',');
             return new RegsIdDecrypted
             {
                 HotelCode = Convert.ToInt32(splittedData[0]),

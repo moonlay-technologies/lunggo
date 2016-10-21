@@ -31,7 +31,7 @@ namespace Lunggo.BackendWeb
             InitRedisService();
             InitDatabaseService();
             InitQueueService();
-            //InitLogger();
+            InitHotelService();
             InitFlightService();
             InitPaymentService();
             InitBrowserDetectionService();
@@ -123,11 +123,11 @@ namespace Lunggo.BackendWeb
             flight.Init("Config");
         }
 
-        //private static void InitHotelService()
-        //{
-        //    var hotel = HotelService.GetInstance();
-        //    hotel.Init("Config");
-        //}
+        private static void InitHotelService()
+        {
+            var hotel = HotelService.GetInstance();
+            hotel.Init("config");
+        }
 
         private static void InitPaymentService()
         {

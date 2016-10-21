@@ -34,5 +34,4 @@ namespace Lunggo.ApCommon.Hotel.Service
                 return new GetRoomDetailOutput();
         }
     }
-
 }
