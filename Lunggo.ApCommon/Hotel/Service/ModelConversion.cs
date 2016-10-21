@@ -90,7 +90,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                 //Facilities =  hotelDetail.Facilities,//TODO Bentuk LIst, harus dipecah satu satu
                 Review = hotelDetail.Review,
                 Rooms = ConvertToHotelRoomForDisplay(hotelDetail.Rooms),
-                AccomodationName = GetHotelAccomdationMultiDesc(hotelDetail.AccomodationType),
+                AccomodationName = GetHotelAccomodationMultiDesc(hotelDetail.AccomodationType),
                 ImageUrl = hotelDetail.ImageUrl,
             };
             return hotel;
