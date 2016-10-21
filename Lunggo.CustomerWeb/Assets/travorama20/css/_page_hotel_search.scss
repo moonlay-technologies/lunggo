@@ -73,7 +73,9 @@
                 .col-right-hotel {padding-left: 15px;}
             }
             .facility {
-                float: right;
+                text-align: right;
+                .wifi {@extend .wifi-icon;}
+                .meal {@extend .meal-icon;}
             }
             .location {
                 margin: 7px 0;

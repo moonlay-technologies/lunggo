@@ -168,22 +168,18 @@
         display: inline-block;
         vertical-align: middle;
     }
-    .facility {
-        &:before {
-            content: '';
-            display: inline-block;
-            background: url(/Assets/travorama20/images/Hotel/wifi.png) no-repeat;
-            width: 23px;
-            height: 19px;
-        }
-        &:after {
-            content: '';
-            display: inline-block;
-            background: url(/Assets/travorama20/images/Hotel/meal.png) no-repeat;
-            width: 18px;
-            height: 20px;
-            margin-left: 10px;
-        }
+    .wifi-icon {
+        display: inline-block;
+        background: url(/Assets/travorama20/images/Hotel/wifi.png) no-repeat;
+        width: 23px;
+        height: 19px;
+    }
+    .meal-icon {
+        display: inline-block;
+        background: url(/Assets/travorama20/images/Hotel/meal.png) no-repeat;
+        width: 18px;
+        height: 20px;
+        margin-left: 10px;
     }
     .blue-sprite {
         content: '';

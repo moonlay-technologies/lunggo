@@ -4859,14 +4859,12 @@ file: /Assets/travorama20/css/_page_flight.scss
     height: 25px;
     display: inline-block;
     vertical-align: middle; }
-  .page-hotel .facility:before {
-    content: '';
+  .page-hotel .wifi-icon, .page-hotel .travorama-hotel .search-list .search-list-result .col-right-result .facility .wifi {
     display: inline-block;
     background: url(/Assets/travorama20/images/Hotel/wifi.png) no-repeat;
     width: 23px;
     height: 19px; }
-  .page-hotel .facility:after {
-    content: '';
+  .page-hotel .meal-icon, .page-hotel .travorama-hotel .search-list .search-list-result .col-right-result .facility .meal {
     display: inline-block;
     background: url(/Assets/travorama20/images/Hotel/meal.png) no-repeat;
     width: 18px;
@@ -5155,7 +5153,7 @@ file: /Assets/travorama20/css/_page_flight.scss
           .page-hotel .travorama-hotel .search-list .search-list-result .col-right-result .hotel-list .col-right-hotel {
             padding-left: 15px; }
         .page-hotel .travorama-hotel .search-list .search-list-result .col-right-result .facility {
-          float: right; }
+          text-align: right; }
         .page-hotel .travorama-hotel .search-list .search-list-result .col-right-result .location {
           margin: 7px 0;
           margin-left: 20px;
