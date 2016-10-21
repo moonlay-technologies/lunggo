@@ -236,11 +236,9 @@
     <Compile Include="Hotel\Constant\PaymentType.cs" />
     <Compile Include="Hotel\Constant\CheckRateStatus.cs" />
     <Compile Include="Hotel\Model\HotelReservationSearch.cs" />
-	<Compile Include="Hotel\Model\HotelDetailWrapper.cs" />
+    <Compile Include="Hotel\Model\HotelDetailWrapper.cs" />
     <Compile Include="Hotel\Model\HotelFacility.cs" />
-    <Compile Include="Hotel\Model\HotelFilter.cs" />
     <Compile Include="Hotel\Model\HotelRoomFacilities.cs" />
-    <Compile Include="Hotel\Model\HotelSorting.cs" />
     <Compile Include="Hotel\Model\Logic\GetHotelDetailInput.cs" />
     <Compile Include="Hotel\Model\Logic\GetHotelDetailOutput.cs" />
     <Compile Include="Hotel\Query\GetHotelDetailFromSearchResult.cs" />
