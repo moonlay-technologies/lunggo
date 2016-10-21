@@ -302,7 +302,11 @@
       <DependentUpon>eticket.css</DependentUpon>
     </Content>
     <Content Include="Assets\css\eticket.scss" />
+    <Content Include="Assets\images\hotel-star-4.jpg" />
+    <Content Include="Assets\images\hotel-star-4.png" />
+    <Content Include="Assets\images\location.png" />
     <Content Include="Assets\images\order-hotel-list-bg.png" />
+    <Content Include="Assets\images\phone.png" />
     <Content Include="Assets\mobile\images\adult.png" />
     <Content Include="Assets\mobile\images\Hotel\ac-grey.png" />
     <Content Include="Assets\mobile\images\Hotel\ac-white.png" />
@@ -2948,6 +2952,7 @@
     <Content Include="Views\Hotel\VoucherHotel.cshtml" />
     <Content Include="Views\Hotel\VirtualAccountHotel.cshtml" />
     <Content Include="Views\Hotel\SorryEmailHotel.cshtml" />
+    <Content Include="Views\Hotel\EmailVoucher.cshtml" />
     <None Include="Views\Template\eticket.cshtml" />
     <Content Include="Views\Template\OrderFlightHistory.cshtml" />
     <Content Include="Views\Template\PrivacyPolicy.cshtml" />

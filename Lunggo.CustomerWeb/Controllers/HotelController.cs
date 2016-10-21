@@ -39,6 +39,10 @@ namespace Lunggo.CustomerWeb.Controllers
         {
             return View();
         }
+        public ActionResult EmailVoucher()
+        {
+            return View();
+        }
         public ActionResult SorryEmailHotel()
         {
             return View();
