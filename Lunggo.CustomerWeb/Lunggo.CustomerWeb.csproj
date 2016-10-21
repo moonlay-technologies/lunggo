@@ -2949,7 +2949,6 @@
     <Content Include="Views\Hotel\Thankyou.mobile.cshtml" />
     <Content Include="Views\Shared\travorama20\_SearchCalendarHotel.cshtml" />
     <Content Include="Views\Hotel\BankTransferHotel.cshtml" />
-    <Content Include="Views\Hotel\VoucherHotel.cshtml" />
     <Content Include="Views\Hotel\VirtualAccountHotel.cshtml" />
     <Content Include="Views\Hotel\SorryEmailHotel.cshtml" />
     <Content Include="Views\Hotel\EmailVoucher.cshtml" />
