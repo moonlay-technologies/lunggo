@@ -24,10 +24,10 @@ namespace Lunggo.WebAPI.ApiSrc.Hotel.Logic
                 if (apiResponse.StatusCode == HttpStatusCode.OK) return apiResponse;
                 return apiResponse;
             }
-            return new HotelSelectRoomApiResponse
+            return new HotelDetailApiResponse
             {
                 StatusCode = HttpStatusCode.BadRequest,
-                ErrorCode = "ERHBOO01"
+                ErrorCode = "ERHGHD01"
             };
         }
 

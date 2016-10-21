@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Web;
+using Lunggo.ApCommon.Hotel.Model;
 
 namespace Lunggo.ApCommon.Hotel.Service
 {
@@ -260,6 +261,7 @@ namespace Lunggo.ApCommon.Hotel.Service
             PopulateHotelZoneDict(Countries);
 
             PopulateAutocomplete();
+            PopulateHotel();
         }
 
         private static void PopulateAutocomplete()
@@ -300,6 +302,35 @@ namespace Lunggo.ApCommon.Hotel.Service
             }
         }
 
+        private static void PopulateHotel()
+        {
+            var index = HotelService.GetInstance()._Autocompletes.Count + 1;
+            for (var i = 1; i < 100; i++)
+            {
+                var hotel = new HotelDetailsBase();
+                try
+                {
+                    hotel = HotelService.GetInstance().GetHotelDetailFromTableStorage(i);
+                    var input = new Autocomplete
+                    {
+                        Id = index,
+                        Code = hotel.HotelCode.ToString(),
+                        Type = AutocompleteType.Hotel,
+                        Name = hotel.HotelName + ", " + HotelService.GetInstance().
+                            GetHotelZoneNameFromDict(hotel.DestinationCode + "-" + hotel.ZoneCode) + ", "
+                            + HotelService.GetInstance().GetHotelDestinationFromDict(hotel.DestinationCode).Name + ", "
+                            + HotelService.GetInstance().GetHotelCountryFromDict(hotel.CountryCode).Name
+                    };
+                    HotelService.GetInstance()._Autocompletes.Add(index, input);
+                    index++;
+                }
+                catch
+                {
+
+                }
+
+            }
+        }
 
         //POPULATE METHODS REGARDING HOTEL SEGMENT
         private static void PopulateHotelSegmentDict(String hotelSegmentFilePath)
@@ -913,7 +944,32 @@ namespace Lunggo.ApCommon.Hotel.Service
                 return "";
             }
         }
-        
+
+        public List<Facility> GetAllFacilitiesInAGroup(int cd)
+        {
+            try
+            {
+                return FacilityGroups.Where(g => g.Code == cd).ToList()[0].Facilities;
+            }
+            catch
+            {
+                return new List<Facility>();
+            }
+        }
+
+        public string GetNameOfFacilityGroup(int facilityCd, string lang)
+        {
+            try
+            {
+                return lang == "EN" ? FacilityGroups.Where(g => g.Code == facilityCd/1000).ToList()[0].NameEn 
+                    : FacilityGroups.Where(g => g.Code == facilityCd / 1000).ToList()[0].NameId;
+            }
+            catch
+            {
+                return "";
+            }
+        }
+
         //GET METHODS REGARDING HOTEL ROOM
         public Room GetHotelRoom(string code)
         {

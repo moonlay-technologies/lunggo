@@ -1,27 +1,25 @@
 ﻿using System;
-using System.Net.Http;
 using System.Web.Http;
-using Lunggo.ApCommon.Hotel.Service;
+using Lunggo.Framework.Context;
 using Lunggo.Framework.Cors;
-using Lunggo.Framework.Documents;
 using Lunggo.WebAPI.ApiSrc.Common.Model;
-using Lunggo.WebAPI.ApiSrc.Flight.Logic;
-using Lunggo.WebAPI.ApiSrc.Flight.Model;
 using Lunggo.WebAPI.ApiSrc.Hotel.Logic;
 using Lunggo.WebAPI.ApiSrc.Hotel.Model;
 
 
 namespace Lunggo.WebAPI.ApiSrc.Hotel
 {
-
-
     public class HotelController : ApiController
     {
         [HttpPost]
         [LunggoCorsPolicy]
         [Route("v1/hotel/book")]
         public ApiResponseBase BookHotel()
-        {                 
+        {
+            var lang = ApiRequestBase.GetHeaderValue("Language");
+            OnlineContext.SetActiveLanguageCode(lang);
+            var currency = ApiRequestBase.GetHeaderValue("Currency");
+            OnlineContext.SetActiveCurrencyCode(currency);
             HotelBookApiRequest request = null;
             try
             {
@@ -40,6 +38,10 @@ namespace Lunggo.WebAPI.ApiSrc.Hotel
         [Route("v1/hotel/select")]
         public ApiResponseBase SelectHotel()
         {
+            var lang = ApiRequestBase.GetHeaderValue("Language");
+            OnlineContext.SetActiveLanguageCode(lang);
+            var currency = ApiRequestBase.GetHeaderValue("Currency");
+            OnlineContext.SetActiveCurrencyCode(currency);
             HotelSelectRoomApiRequest request = null;
             try
             {
@@ -58,6 +60,10 @@ namespace Lunggo.WebAPI.ApiSrc.Hotel
         [Route("v1/hotel/getroomdetail")]
         public ApiResponseBase GetRoomDetail()
         {
+            var lang = ApiRequestBase.GetHeaderValue("Language");
+            OnlineContext.SetActiveLanguageCode(lang);
+            var currency = ApiRequestBase.GetHeaderValue("Currency");
+            OnlineContext.SetActiveCurrencyCode(currency);
             HotelRoomDetailApiRequest request = null;
             try
             {
@@ -76,6 +82,10 @@ namespace Lunggo.WebAPI.ApiSrc.Hotel
         [Route("v1/hotel/getrate")]
         public ApiResponseBase GetRate()
         {
+            var lang = ApiRequestBase.GetHeaderValue("Language");
+            OnlineContext.SetActiveLanguageCode(lang);
+            var currency = ApiRequestBase.GetHeaderValue("Currency");
+            OnlineContext.SetActiveCurrencyCode(currency);
             HotelRateApiRequest request = null;
             try
             {
@@ -94,6 +104,10 @@ namespace Lunggo.WebAPI.ApiSrc.Hotel
         [Route("v1/hotel/search")]
         public ApiResponseBase SearchHotel()
         {
+            var lang = ApiRequestBase.GetHeaderValue("Language");
+            OnlineContext.SetActiveLanguageCode(lang);
+            var currency = ApiRequestBase.GetHeaderValue("Currency");
+            OnlineContext.SetActiveCurrencyCode(currency);
             HotelSearchApiRequest request = null;
             try
             {
@@ -113,6 +127,10 @@ namespace Lunggo.WebAPI.ApiSrc.Hotel
         [Route("v1/hotel/GetHotelDetail/{searchId}/{hotelCd}")]
         public ApiResponseBase GetHotelDetail(string searchId, int hotelCd)
         {
+            var lang = ApiRequestBase.GetHeaderValue("Language");
+            OnlineContext.SetActiveLanguageCode(lang);
+            var currency = ApiRequestBase.GetHeaderValue("Currency");
+            OnlineContext.SetActiveCurrencyCode(currency);
             try
             {
                 var request = new HotelDetailApiRequest
@@ -132,7 +150,32 @@ namespace Lunggo.WebAPI.ApiSrc.Hotel
             }
         }
 
+        [HttpGet]
+        [LunggoCorsPolicy]
+        [Route("v1/hotel/GetSelectedHotelDetail/{token}")]
+        public ApiResponseBase GetSelectedHotelDetail(string token)
+        {
+            var lang = ApiRequestBase.GetHeaderValue("Language");
+            OnlineContext.SetActiveLanguageCode(lang);
+            var currency = ApiRequestBase.GetHeaderValue("Currency");
+            OnlineContext.SetActiveCurrencyCode(currency);
+            try
+            {
+                var request = new HotelSelectedRoomApiRequest
+                {
+                    Token = token
+                };
+                var apiResponse = HotelLogic.GetSelectedHotelDetailLogic(request);
+                return apiResponse;
+                //var apiResponse = HotelService.GetInstance().GetHotelDetailFromDb(444942);
+                //return new ApiResponseBase();
 
+            }
+            catch (Exception e)
+            {
+                return ApiResponseBase.ExceptionHandling(e);
+            }
+        }
     }
     
 

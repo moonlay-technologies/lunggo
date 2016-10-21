@@ -11,6 +11,7 @@ using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Sdk.auto.messages;
 using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Sdk.helpers;
 using Lunggo.ApCommon.Payment.Model;
 using Lunggo.ApCommon.Product.Model;
+using Lunggo.Framework.Context;
 using Microsoft.Owin.Security.Provider;
 using Newtonsoft.Json;
 using Lunggo.ApCommon.Hotel.Constant;
@@ -79,15 +80,13 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds
             List<HotelDetail> hotels = new List<HotelDetail>();
             
             //var hotels = new HotelDetail();
-
+            var lang = OnlineContext.GetActiveLanguageCode();
+            var allCurrencies = HotelService.GetInstance().GetAllCurrenciesFromCache(condition.SearchId);
             if (responseAvail != null && responseAvail.hotels != null && responseAvail.hotels.hotels != null &&
                 responseAvail.hotels.hotels.Count > 0)
             {
-                var price = new Price();
-                var currency = new Currency("IDR");
                 foreach (var hotelResponse in responseAvail.hotels.hotels)
                 {
-                    
                     var hotel = new HotelDetail()
                     {
                         HotelCode = hotelResponse.code,
@@ -105,7 +104,8 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds
                         {
                             RoomCode = roomApi.code,
                             Type = roomApi.code.Substring(0,3),
-                            TypeName = HotelService.GetInstance().GetHotelRoomTypeDescEn(roomApi.code.Substring(0, 3)),
+                            TypeName = lang == "EN" ? HotelService.GetInstance().GetHotelRoomTypeDescEn(roomApi.code.Substring(0, 3)) :
+                            HotelService.GetInstance().GetHotelRoomTypeDescId(roomApi.code.Substring(0, 3)),
                             RoomName = roomApi.name,
                             Rates = roomApi.rates == null ? null : roomApi.rates.Select(x =>
                             {
@@ -116,13 +116,13 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds
                                     RoomCount = x.rooms,
                                     PaymentType = PaymentTypeCd.Mnemonic(x.paymentType),
                                     Offers = x.offers == null ? null : x.offers.Select(z => new Offer
-                            {
+                                    {
                                         Code = z.code,
                                         Amount = z.amount,
                                         Name = z.name
                                     }).ToList(),
                                 RateKey = x.rateKey,
-                                    Price = price,
+                                    Price = new Price(),
                                 Boards = x.boardCode,
                                     Cancellation = x.cancellationPolicies == null ? null : x.cancellationPolicies.Select(y => new Cancellation
                                     {
@@ -133,7 +133,8 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds
                                 Type = x.rateType.ToString() 
 
                                 };
-                                rate.Price.SetSupplier(x.net, currency);
+                                rate.Price.SetSupplier(x.net,
+                                    x.hotelCurrency != null ? allCurrencies[x.hotelCurrency] : allCurrencies["IDR"]);
                                 return rate;
                             }).ToList()
                         }).ToList(),

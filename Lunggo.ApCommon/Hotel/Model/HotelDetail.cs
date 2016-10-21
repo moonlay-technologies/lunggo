@@ -117,7 +117,8 @@ namespace Lunggo.ApCommon.Hotel.Model
         public List<HotelFacility> Facilities { get; set; }
         [JsonProperty("review", NullValueHandling = NullValueHandling.Ignore)]
         public List<Review> Review { get; set; }
-        
+        [JsonProperty("searchId", NullValueHandling = NullValueHandling.Ignore)]
+        public string SearchId { get; set; }
     }
 
     public class POI

@@ -28,7 +28,7 @@ namespace Lunggo.WebAPI.ApiSrc.Hotel.Logic
                 var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
                 return apiResponse;
             }
-            return new HotelSelectRoomApiResponse
+            return new HotelSearchApiResponse
             {
                 StatusCode = HttpStatusCode.BadRequest,
                 ErrorCode = "ERHBOO01"

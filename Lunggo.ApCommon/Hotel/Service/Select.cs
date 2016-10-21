@@ -70,24 +70,7 @@ namespace Lunggo.ApCommon.Hotel.Service
 
                 hotel.Rooms.Add(newRoom);
             }
-
-            
-            //Initialise Rate for each Room
-            //foreach (var room in hotel.Rooms)
-            //{
-            //    room.Rates = new List<HotelRate>();
-            //}
-
-            //Get Rate detail based on RateKey, then add rate detail to matched room code
-            //foreach (var detail in decryptedData)
-            //{
-            //    //var roomRate = GetRateFromCache(detail.RateKey);
-            //    foreach (var room in hotel.Rooms.Where(room => detail.RateKey.Split('|')[5] == room.RoomCode))
-            //    {
-            //        room.Rates.Add(roomRate);
-            //    }
-            //}
-
+            hotel.SearchId = input.SearchId;
             var token = HotelBookingIdSequence.GetInstance().GetNext().ToString();
 
             SaveSelectedHotelDetailsToCache(token, hotel);

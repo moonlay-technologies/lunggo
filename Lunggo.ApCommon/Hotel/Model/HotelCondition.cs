@@ -19,6 +19,7 @@ namespace Lunggo.ApCommon.Hotel.Model
         public int Rooms { get; set; }
         public int AdultCount { get; set; }
         public int ChildCount { get; set; }
+        public string SearchId { get; set; }
         //Sorting
         //Filter1
         //Page Param

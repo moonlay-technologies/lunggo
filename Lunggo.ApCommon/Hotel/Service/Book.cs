@@ -22,7 +22,8 @@ namespace Lunggo.ApCommon.Hotel.Service
             var bookInfo = GetSelectedHotelDetailsFromCache(input.Token);
             var oldPrice = bookInfo.Rooms.SelectMany(r => r.Rates).Sum(p => p.Price.Supplier);
             decimal newPrice = 0;
-
+            var searchId = bookInfo.SearchId;
+            
             foreach (var room in bookInfo.Rooms)
             {
                 foreach (var rate in room.Rates)
@@ -32,7 +33,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                         var revalidateResult = CheckRate(rate.RateKey, rate.Price.Supplier);
                         if (revalidateResult.IsPriceChanged)
                         {
-                            rate.Price.SetSupplier(revalidateResult.NewPrice.GetValueOrDefault(), new Currency("IDR"));;
+                            rate.Price.SetSupplier(revalidateResult.NewPrice.GetValueOrDefault(), rate.Price.SupplierCurrency);;
                             newPrice += revalidateResult.NewPrice.GetValueOrDefault();
                         }
                         else
