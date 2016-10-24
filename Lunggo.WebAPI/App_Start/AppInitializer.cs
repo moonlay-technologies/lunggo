@@ -31,16 +31,16 @@ namespace Lunggo.WebAPI
             InitUniqueIdGenerator();
             InitRedisService();
             InitFlightService();
-            InitHotelService();
             InitQueueService();
             InitMailService();
             InitPaymentService();
             InitTableStorageService();
             InitHtmlTemplateService();
-            InitAutocompleteManager();
             InitNotificationService();
             InitLogService();
             InitDocumentsService();
+            InitHotelService();
+            InitAutocompleteManager();
         }
 
         private static void InitDocumentsService()

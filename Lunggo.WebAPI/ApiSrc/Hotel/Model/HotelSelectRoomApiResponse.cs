@@ -8,9 +8,11 @@ namespace Lunggo.WebAPI.ApiSrc.Hotel.Model
 {
     public class HotelSelectRoomApiResponse : ApiResponseBase
     {
-        [JsonProperty("token")]
-        public string Token{ get; set; } 
-        [JsonProperty("timeLimit")]
-        public DateTime TimeLimit { get; set; }
+        [JsonProperty("token", NullValueHandling = NullValueHandling.Ignore)]
+        public string Token{ get; set; }
+        [JsonProperty("timeLimit", NullValueHandling = NullValueHandling.Ignore)]
+        public DateTime? TimeLimit { get; set; }
+
+   //     public PaxReqirement Type { get; set; }
     }
 }

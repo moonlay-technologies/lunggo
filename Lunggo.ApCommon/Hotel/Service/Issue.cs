@@ -97,12 +97,11 @@ namespace Lunggo.ApCommon.Hotel.Service
                         where rateKey[5] == roomCd && rateKey[6] == someData && rateKey[7] == board
                         select ratea))))
                     {
-                        rate.Price.SetSupplier(ratea.Price.OriginalIdr, new Currency("IDR"));
+                        rate.Price.SetSupplier(ratea.Price.OriginalIdr, rate.Price.SupplierCurrency);
                     }
                 }
             }
             
-
             var issueInfo = new HotelIssueInfo
             {
                 RsvNo = rsvData.RsvNo,

@@ -117,6 +117,11 @@ namespace Lunggo.ApCommon.Hotel.Service
             }
             else
             {
+                var allCurrency = Currency.GetAllCurrencies();
+                Guid generatedSearchId = Guid.NewGuid();
+                SaveAllCurrencyToCache(generatedSearchId.ToString(), allCurrency );
+
+                //Do Call Availability
                 //Save data to DocDB
                 var hotelBedsClient = new HotelBedsSearchHotel();
                 var detailDestination = GetLocationById(input.Location);
@@ -128,7 +133,8 @@ namespace Lunggo.ApCommon.Hotel.Service
                     AdultCount = input.AdultCount,
                     ChildCount = input.ChildCount,
                     Nights = input.Nights,
-                    Rooms = input.Rooms
+                    Rooms = input.Rooms,
+                    SearchId = generatedSearchId.ToString()
                 };
                 switch (detailDestination.Type)
                 {
@@ -148,11 +154,10 @@ namespace Lunggo.ApCommon.Hotel.Service
                 };
 
                 var result = hotelBedsClient.SearchHotel(request);
-
-                //remember to add searchId
-                Guid generatedSearchId = Guid.NewGuid();
                 result.SearchId = generatedSearchId.ToString();
-                Debug.Print("Search Id : "+ result.SearchId);
+                Debug.Print("Search Id : " + result.SearchId);
+                //remember to add searchId
+
 
                 if (result.HotelDetails != null)
                 {

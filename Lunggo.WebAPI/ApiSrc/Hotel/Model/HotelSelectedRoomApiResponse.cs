@@ -6,9 +6,11 @@ using Newtonsoft.Json;
 
 namespace Lunggo.WebAPI.ApiSrc.Hotel.Model
 {
-    public class HotelDetailApiResponse: ApiResponseBase
+    public class HotelSelectedRoomApiResponse : ApiResponseBase
     {
         [JsonProperty("hotelDetails", NullValueHandling = NullValueHandling.Ignore)]
-        public HotelDetailForDisplay HotelDetails { get; set; } 
+        public HotelDetailsBase HotelDetails{ get; set; }
+
+   //     public PaxReqirement Type { get; set; }
     }
 }

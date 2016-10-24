@@ -11,6 +11,7 @@ using Lunggo.ApCommon.Hotel.Constant;
 using Lunggo.ApCommon.Hotel.Model;
 using Lunggo.ApCommon.Hotel.Model.Logic;
 using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds;
+using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Sdk.auto.model;
 using Lunggo.ApCommon.Payment.Model;
 using Lunggo.ApCommon.Product.Constant;
 using Lunggo.ApCommon.Product.Model;
@@ -32,17 +33,8 @@ namespace Lunggo.BackendWeb
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             
             AppInitializer.Init();
-            HotelService.GetInstance().Search(new SearchHotelInput
-            {
-                AdultCount = 1,
-                CheckIn = new DateTime(2017,3,4),
-                Checkout = new DateTime(2017,3,6),
-                ChildCount = 0,
-                Location = 16151,
-                Rooms = 1,
-            });
-
-
+            var c = HotelService.GetInstance()._Autocompletes[200000];
+            var b = c;
             //HotelService.GetInstance().SelectHotelRoom(new SelectHotelRoomInput
             //{
             //    RegsIds = new List<string>

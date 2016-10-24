@@ -46,7 +46,7 @@ namespace Lunggo.WebAPI.ApiSrc.Hotel.Logic
                 //    + HotelService.GetInstance().GetItineraryForDisplay(request.Token).Serialize());
                 return apiResponse;
             }
-            return new HotelSelectRoomApiResponse
+            return new HotelRoomDetailApiResponse
             {
                 StatusCode = HttpStatusCode.BadRequest,
                 ErrorCode = "ERHGRD01"
