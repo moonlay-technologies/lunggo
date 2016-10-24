@@ -4909,7 +4909,40 @@ file: /Assets/travorama20/css/_page_flight.scss
       border-radius: 5px; }
   .page-hotel label {
     /*Custom label*/ }
-    .page-hotel label.round input, .page-hotel label.square input {
+    .page-hotel label.round, .page-hotel label.sqr {
+      display: block;
+      border: 0;
+      margin-bottom: 0;
+      position: relative;
+      padding: 6px 0;
+      line-height: 14px; }
+    .page-hotel label.sqr.city-point {
+      width: 80%;
+      display: inline-block; }
+    .page-hotel label.sqr span.star {
+      display: inline-block;
+      vertical-align: middle;
+      margin-left: 3px; }
+    .page-hotel label.sqr span.name {
+      margin-left: 5px;
+      font-weight: 400; }
+    .page-hotel label.sqr .checkbox {
+      vertical-align: middle;
+      margin: 0;
+      border: 1px solid #ccc;
+      width: 12px;
+      height: 12px;
+      display: inline-block;
+      background: #fff; }
+      .page-hotel label.sqr .checkbox.active:after {
+        content: '';
+        width: 10px;
+        height: 10px;
+        display: inline-block;
+        background: #1daee4;
+        float: left;
+        border: 2px solid #fff; }
+    .page-hotel label.sqr input[name="check"] {
       display: none; }
     .page-hotel label.round {
       display: block;
@@ -4919,11 +4952,9 @@ file: /Assets/travorama20/css/_page_flight.scss
       position: relative; }
       .page-hotel label.round span.name {
         width: 100%;
-        padding-left: 25px;
-        display: block;
-        line-height: 17px;
+        padding-left: 4px;
         font-weight: 400; }
-      .page-hotel label.round .chck-container {
+      .page-hotel label.round .radio {
         border: 1px solid #ccc;
         width: 17px;
         height: 17px;
@@ -4932,54 +4963,22 @@ file: /Assets/travorama20/css/_page_flight.scss
         -moz-border-radius: 17px;
         -ms-border-radius: 17px;
         border-radius: 17px;
-        position: absolute;
-        background: #fff; }
-        .page-hotel label.round .chck-container .switch {
+        background: #fff;
+        margin: 0;
+        vertical-align: middle; }
+        .page-hotel label.round .radio.active:after {
           float: left;
           width: 15px;
           height: 15px;
           content: "";
-          background: #fff;
+          background: #1daee4;
           border: 3px solid #fff;
-          position: absolute;
           -webkit-border-radius: 15px;
           -moz-border-radius: 15px;
           -ms-border-radius: 15px;
           border-radius: 15px; }
-      .page-hotel label.round.active .switch {
-        background: #1daee4; }
-    .page-hotel label.square {
-      display: block;
-      border: 0;
-      margin-bottom: 0;
-      position: relative;
-      padding: 6px 0;
-      line-height: 14px; }
-      .page-hotel label.square.city-point {
-        width: 80%;
-        display: inline-block; }
-      .page-hotel label.square span.star {
-        margin-left: 20px;
-        display: block; }
-      .page-hotel label.square span.name {
-        padding-left: 24px;
-        font-weight: 400; }
-      .page-hotel label.square .chck-container {
-        border: 1px solid #ccc;
-        width: 12px;
-        height: 12px;
-        display: inline-block;
-        position: absolute;
-        background: #fff; }
-        .page-hotel label.square .chck-container .switch {
-          float: left;
-          width: 10px;
-          height: 10px;
-          content: "";
-          border: 2px solid #fff;
-          background: #fff; }
-      .page-hotel label.square.active .switch {
-        background: #1daee4; }
+      .page-hotel label.round input[name="optradio"] {
+        display: none; }
     .page-hotel label.confirmation-buyer span.name {
       font-weight: 600; }
   .page-hotel a.btn-blue {
@@ -5144,6 +5143,8 @@ file: /Assets/travorama20/css/_page_flight.scss
         line-height: 20px; }
       .page-hotel .travorama-hotel .search-list .search-list-result .col-right-result {
         padding-left: 30px; }
+        .page-hotel .travorama-hotel .search-list .search-list-result .col-right-result .sort .col-xs-left {
+          margin-top: 5px; }
         .page-hotel .travorama-hotel .search-list .search-list-result .col-right-result .hotel-list {
           margin-top: 15px;
           padding: 14px;

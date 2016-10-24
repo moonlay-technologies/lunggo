@@ -29,9 +29,10 @@
                 }
             });
             $("#amount").val("$" + $("#slider-range").slider("values", 0) +
-              " - $" + $("#slider-range").slider("values", 1));
+                " - $" + $("#slider-range").slider("values", 1));
         });
     </script>
+    <script type="text/javascript" src="/Assets/travorama20/js/HotelController.js"></script>
 }
 
 @Html.Partial("/Views/Hotel/Shared/Desktop/_PageSlider.cshtml")
@@ -45,9 +46,6 @@
             </div>
             <div class="search-list-result clearfix">
                 <div class="col-left-result filter">
-                    <div class="map-filter">
-                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.576207608118!2d106.82465531533295!3d-6.187424662347063!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69fa9d5f6b0e51%3A0x78d0672b773afe93!2sHotel+ibis+Jakarta+Tamarin!5e0!3m2!1sen!2sid!4v1475128137389" frameborder="0" style="border:0" allowfullscreen></iframe>
-                    </div>
                     <div class="filter-container">
                         <div class="header-filter">Filter Pencarian</div>
                         <div class="filter-group">
@@ -65,64 +63,61 @@
                         <div class="filter-group">
                             <label class="filter-title">Bintang Hotel</label>
                             <div class="rating">
-                                <label class="square active">
-                                    <div class="chck-container"><span class="switch"></span></div>
+                                <label class="sqr">
+                                    <span class="checkbox"></span>
+                                    <input type="checkbox" name="check" class="check" value="false" />
                                     <span class="star star-5"></span>
-                                    <input type="checkbox" value="false" class="ng-valid ng-dirty ng-valid-parse ng-touched">
                                 </label>
-                                <label class="square">
-                                    <div class="chck-container"><span class="switch"></span></div>
+                                <label class="sqr">
+                                    <span class="checkbox"></span>
+                                    <input type="checkbox" name="check" class="check" value="false" />
                                     <span class="star star-4"></span>
-                                    <input type="checkbox" value="false" class="ng-valid ng-dirty ng-valid-parse ng-touched">
                                 </label>
-                                <label class="square">
-                                    <div class="chck-container"><span class="switch"></span></div>
+                                <label class="sqr">
+                                    <span class="checkbox"></span>
+                                    <input type="checkbox" name="check" class="check" value="false" />
                                     <span class="star star-3"></span>
-                                    <input type="checkbox" value="false" class="ng-valid ng-dirty ng-valid-parse ng-touched">
                                 </label>
-                                <label class="square">
-                                    <div class="chck-container"><span class="switch"></span></div>
+                                <label class="sqr">
+                                    <span class="checkbox"></span>
+                                    <input type="checkbox" name="check" class="check" value="false" />
                                     <span class="star star-2"></span>
-                                    <input type="checkbox" value="false" class="ng-valid ng-dirty ng-valid-parse ng-touched">
                                 </label>
-                                <label class="square">
-                                    <div class="chck-container"><span class="switch"></span></div>
+                                <label class="sqr">
+                                    <span class="checkbox"></span>
+                                    <input type="checkbox" name="check" class="check" value="false" />
                                     <span class="star star-1"></span>
-                                    <input type="checkbox" value="false" class="ng-valid ng-dirty ng-valid-parse ng-touched">
                                 </label>
                             </div>
                         </div>
                         <div class="filter-group">
                             <label class="filter-title">Hotel Area:</label><span class="city-name blue-txt"><a href="#">(Jakarta)</a></span>
                             <div class="area">
-                                <label class="square active city-point">
-                                    <div class="chck-container"><span class="switch"></span></div>
-                                    <span class="name">Jakarta Selatan</span>
-                                    <input type="checkbox" value="false" class="ng-valid ng-dirty ng-valid-parse ng-touched">
-                                </label>
-                                <span class="city-hotel">54</span>
-                                <label class="square city-point">
-                                    <div class="chck-container"><span class="switch"></span></div>
-                                    <span class="name">Jakarta Pusat</span>
-                                    <input type="checkbox" value="false" class="ng-valid ng-dirty ng-valid-parse ng-touched">
-                                </label>
-                                <span class="city-hotel">54</span>
-                                <label class="square city-point">
-                                    <div class="chck-container"><span class="switch"></span></div>
-                                    <span class="name">Jakarta Barat</span>
-                                    <input type="checkbox" value="false" class="ng-valid ng-dirty ng-valid-parse ng-touched">
-                                </label>
-                                <span class="city-hotel">54</span>
-                                <label class="square city-point">
-                                    <div class="chck-container"><span class="switch"></span></div>
+                                <label class="sqr city-point">
+                                    <span class="checkbox"></span>
+                                    <input type="checkbox" name="check" class="check" value="false" />
                                     <span class="name">Jakarta Utara</span>
-                                    <input type="checkbox" value="false" class="ng-valid ng-dirty ng-valid-parse ng-touched">
                                 </label>
                                 <span class="city-hotel">54</span>
-                                <label class="square city-point">
-                                    <div class="chck-container"><span class="switch"></span></div>
+
+                                <label class="sqr city-point">
+                                    <span class="checkbox"></span>
+                                    <input type="checkbox" name="check" class="check" value="false" />
+                                    <span class="name">Jakarta Barat</span>
+                                </label>
+                                <span class="city-hotel">54</span>
+
+                                <label class="sqr city-point">
+                                    <span class="checkbox"></span>
+                                    <input type="checkbox" name="check" class="check" value="false" />
+                                    <span class="name">Jakarta Selatan</span>
+                                </label>
+                                <span class="city-hotel">54</span>
+
+                                <label class="sqr city-point">
+                                    <span class="checkbox"></span>
+                                    <input type="checkbox" name="check" class="check" value="false" />
                                     <span class="name">Jakarta Timur</span>
-                                    <input type="checkbox" value="false" class="ng-valid ng-dirty ng-valid-parse ng-touched">
                                 </label>
                                 <span class="city-hotel">54</span>
                             </div>
@@ -130,20 +125,20 @@
                         <div class="filter-group">
                             <label class="filter-title">Tipe Kamar</label>
                             <div class="room">
-                                <label class="square active">
-                                    <div class="chck-container"><span class="switch"></span></div>
+                                <label class="sqr city-point">
+                                    <span class="checkbox"></span>
+                                    <input type="checkbox" name="check" class="check" value="false" />
                                     <span class="name">Single</span>
-                                    <input type="checkbox" value="false" class="ng-valid ng-dirty ng-valid-parse ng-touched">
                                 </label>
-                                <label class="square">
-                                    <div class="chck-container"><span class="switch"></span></div>
+                                <label class="sqr city-point">
+                                    <span class="checkbox"></span>
+                                    <input type="checkbox" name="check" class="check" value="false" />
                                     <span class="name">Twin</span>
-                                    <input type="checkbox" value="false" class="ng-valid ng-dirty ng-valid-parse ng-touched">
                                 </label>
-                                <label class="square">
-                                    <div class="chck-container"><span class="switch"></span></div>
+                                <label class="sqr city-point">
+                                    <span class="checkbox"></span>
+                                    <input type="checkbox" name="check" class="check" value="false" />
                                     <span class="name">King</span>
-                                    <input type="checkbox" value="false" class="ng-valid ng-dirty ng-valid-parse ng-touched">
                                 </label>
                             </div>
                         </div>
@@ -153,17 +148,17 @@
                     <div class="sort clearfix">
                         <div class="col-xs-left"><b>Sort By:</b></div>
                         <div class="col-xs-middle">
-                            <label class="round active">
-                                <div class="chck-container"><span class="switch"></span></div>
-                                <span class="name">Rekomendasi Travorama</span>
-                                <input type="checkbox" value="false" class="ng-valid ng-dirty ng-valid-parse ng-touched">
+                            <label class="round">
+                                <span class="radio"></span>
+                                <input type="radio" name="optradio" class="check-radio" value="false" />
+                                <span class="name">Harga Tertinggi</span>
                             </label>
                         </div>
                         <div class="col-xs-right">
                             <label class="round">
-                                <div class="chck-container"><span class="switch"></span></div>
-                                <span class="name">Harga Hotel</span>
-                                <input type="checkbox" value="false" class="ng-valid ng-dirty ng-valid-parse ng-touched">
+                                <span class="radio"></span>
+                                <input type="radio" name="optradio" class="check-radio" value="false" />
+                                <span class="name">Harga Terendah</span>
                             </label>
                         </div>
                     </div>

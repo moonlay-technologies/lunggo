@@ -224,8 +224,49 @@
 
     /*Checklist & Radio Button*/
     label {
-        &.round, &.square{
-            input {display: none;}
+        &.round, &.sqr {
+            display: block;
+            border: 0;
+            margin-bottom: 0;
+            position: relative;
+            padding: 6px 0;
+            line-height: 14px;
+        }
+        &.sqr {
+            &.city-point {
+                width: 80%;
+                display: inline-block;
+            }
+            span {
+                &.star {
+                    display: inline-block;
+                    vertical-align: middle;
+                    margin-left: 3px;
+                }
+                &.name {
+                    margin-left: 5px;
+                    font-weight: 400;
+                }
+            }
+		    .checkbox {
+		        vertical-align: middle;
+                margin: 0;
+                border: 1px solid #ccc;
+                width: 12px;
+                height: 12px;
+                display: inline-block;
+                background: #fff;
+		        &.active:after {
+			        content: '';
+                    width: 10px;
+                    height: 10px;
+                    display: inline-block;
+                    background: #1daee4;
+                    float: left;
+                    border: 2px solid #fff;
+			    }
+		    }
+		    input[name="check"]{display: none;}
         }
         &.round {
             display: block;
@@ -235,69 +276,29 @@
             position: relative;
             span.name {
                 width: 100%;
-                padding-left: 25px;
-                display: block;
-                line-height: 17px;
+                padding-left: 4px;
                 font-weight: 400;
             }
-            .chck-container {
+            .radio {
                 border: 1px solid #ccc;
                 width: 17px;
                 height: 17px;
                 display: inline-block;
                 @include border-radius(17px);
-                position: absolute;
                 background: #fff;
-                .switch {
+                margin: 0;
+                vertical-align: middle;
+                &.active:after {
                     float: left;
                     width: 15px;
                     height: 15px;
                     content: "";
-                    background: #fff;
+                    background: #1daee4;
                     border: 3px solid #fff;
-                    position: absolute;
                     @include border-radius(15px);
                 }
             }
-            &.active .switch {background: $color-main-blue;}
-        }
-        &.square {
-            &.city-point {
-                width: 80%;
-                display: inline-block;
-            }
-            display: block;
-            border: 0;
-            margin-bottom: 0;
-            position: relative;
-            padding: 6px 0;
-            line-height: 14px;
-            span {
-                &.star {
-                margin-left: 20px;
-                display: block;  
-                } &.name {
-                    padding-left: 24px;
-                    font-weight: 400;
-                }       
-            }
-            .chck-container {
-                border: 1px solid #ccc;
-                width: 12px;
-                height: 12px;
-                display: inline-block;
-                position: absolute;
-                background: #fff;
-                .switch {
-                    float: left;
-                    width: 10px;
-                    height: 10px;
-                    content: "";
-                    border: 2px solid #fff;
-                    background: #fff;
-                }
-            }
-            &.active .switch {background: $color-main-blue;}
+            input[name="optradio"]{display: none;}
         }
 
         /*Custom label*/
