@@ -31,7 +31,6 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds
                 checkOut =  condition.Checkout,
                 destination = condition.Destination ?? null,
                 zone = condition.Zone,
-                //country belum ada
                 language = "ENG",
                 payed = Availability.Pay.AT_WEB
             };
@@ -43,7 +42,6 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds
                     checkIn = condition.CheckIn,
                     checkOut = condition.Checkout,
                     includeHotels = new List<int>{condition.HotelCode},
-                    //country belum ada
                     language = "ENG",
                     payed = Availability.Pay.AT_WEB
                 };
@@ -53,7 +51,6 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds
             {
                 adults = condition.AdultCount,
                 children = condition.ChildCount,
-                //Room Detail
                 numberOfRooms = condition.Rooms
             };
             room.details = new List<RoomDetail>();

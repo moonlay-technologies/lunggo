@@ -124,7 +124,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                 {
                     CheckIn = input.CheckIn,
                     Checkout = input.Checkout,
-                    HotelCode = input.HotelCode,
+                    //HotelCode = input.HotelCode,
                     AdultCount = input.AdultCount,
                     ChildCount = input.ChildCount,
                     Nights = input.Nights,
@@ -140,6 +140,10 @@ namespace Lunggo.ApCommon.Hotel.Service
                     case AutocompleteType.Destination:
                         request.Destination = detailDestination.Code;
                         isByDestination = true;
+                        break;
+
+                    case AutocompleteType.Hotel:
+                        request.HotelCode = int.Parse(detailDestination.Code);
                         break;
                 };
 
