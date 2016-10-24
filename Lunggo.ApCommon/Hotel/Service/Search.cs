@@ -39,6 +39,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                     
                     hotels = searchResult.HotelDetails.Where(p =>
                     (input.FilterParam.AreaFilter == null || input.FilterParam.AreaFilter.Areas.Contains(p.ZoneCode)) &&
+                    (input.FilterParam.AccommodationTypeFilter == null || input.FilterParam.AccommodationTypeFilter.Accomodations.Contains(p.AccomodationType)) &&
                     (listStar == null || listStar.Contains(p.StarCode)) &&
                     (input.FilterParam.PriceFilter == null|| (p.OriginalFare >= input.FilterParam.PriceFilter.MinPrice && p.OriginalFare <= input.FilterParam.PriceFilter.MaxPrice))
                     ).Select(p => new HotelDetail
@@ -152,12 +153,9 @@ namespace Lunggo.ApCommon.Hotel.Service
                 if (result.HotelDetails != null)
                 {
                     AddPriceMargin(result.HotelDetails);
-                    if (isByDestination)
-                    {
-                        result.HotelFilterDisplayInfo = SetHotelFilterDisplayInfo(result.HotelDetails);
-                    }
-
                     result.HotelDetails = AddFilteringInfo(result.HotelDetails);
+                    result.HotelFilterDisplayInfo = SetHotelFilterDisplayInfo(result.HotelDetails, isByDestination);
+              
                     SaveSearchResultintoDatabaseToCache(result.SearchId, result);
 
                     var firstPageHotelDetails = result.HotelDetails.Take(100).ToList(); 
@@ -209,41 +207,80 @@ namespace Lunggo.ApCommon.Hotel.Service
                 hotel.StarCode = GetSimpleCodeByCategoryCode(hotel.StarRating);
             }
             return result;
-        } 
+        }
 
-        public HotelFilterDisplayInfo SetHotelFilterDisplayInfo(List<HotelDetail> hotels)
+        public HotelFilterDisplayInfo SetHotelFilterDisplayInfo(List<HotelDetail> hotels, bool isByDestination)
         {
             var filter = new HotelFilterDisplayInfo();
             var zoneDict = new Dictionary<int, ZoneFilter>();
+            var accDict = new Dictionary<string, AccomodationFilter>();
             try
             {
                 foreach (var hotelDetail in hotels)
                 {
-                    if (!(zoneDict.ContainsKey(hotelDetail.ZoneCode)))
+                    //For Zone
+                    if (isByDestination)
                     {
-                        zoneDict.Add(hotelDetail.ZoneCode, new ZoneFilter
+                        if (!(zoneDict.ContainsKey(hotelDetail.ZoneCode)))
                         {
-                            Code = hotelDetail.ZoneCode,
+                            zoneDict.Add(hotelDetail.ZoneCode, new ZoneFilter
+                            {
+                                Code = hotelDetail.ZoneCode,
+                                Count = 1,
+                                Name = GetHotelZoneNameFromDict(hotelDetail.DestinationCode + "-" + hotelDetail.ZoneCode)
+                            });
+                        }
+                        else
+                        {
+                            zoneDict[hotelDetail.ZoneCode].Count += 1;
+                        }    
+                    }
+
+                    //ForAccomodation
+                    if (!(accDict.ContainsKey(hotelDetail.AccomodationType)))
+                    {
+                        accDict.Add(hotelDetail.AccomodationType, new AccomodationFilter
+                        {
+                            Code = hotelDetail.AccomodationType,
                             Count = 1,
-                            Name = GetHotelZoneNameFromDict(hotelDetail.DestinationCode + "-" + hotelDetail.ZoneCode)
+                            Name = GetHotelAccomodationMultiDesc(hotelDetail.AccomodationType)
                         });
                     }
                     else
                     {
-                        zoneDict[hotelDetail.ZoneCode].Count += 1;
+                        accDict[hotelDetail.AccomodationType].Count += 1;
                     }
-                }
-                filter.ZoneFilter = new List<ZoneFilter>();
 
-                foreach (var zone in zoneDict.Keys)
+                    
+                }
+
+                filter.ZoneFilter = new List<ZoneFilter>();
+                filter.AccomodationFilter = new List<AccomodationFilter>();
+
+
+                if (isByDestination)
                 {
-                    filter.ZoneFilter.Add(new ZoneFilter
+                    foreach (var zone in zoneDict.Keys)
                     {
-                        Code = zoneDict[zone].Code,
-                        Count = zoneDict[zone].Count,
-                        Name = zoneDict[zone].Name,
+                        filter.ZoneFilter.Add(new ZoneFilter
+                        {
+                            Code = zoneDict[zone].Code,
+                            Count = zoneDict[zone].Count,
+                            Name = zoneDict[zone].Name,
+                        });
+                    }   
+                }
+
+                foreach (var accomodation in accDict.Keys)
+                {
+                    filter.AccomodationFilter.Add(new AccomodationFilter
+                    {
+                        Code = accDict[accomodation].Code,
+                        Count = accDict[accomodation].Count,
+                        Name = accDict[accomodation].Name
                     });
                 }
+                
             }
             catch(Exception e)
             {

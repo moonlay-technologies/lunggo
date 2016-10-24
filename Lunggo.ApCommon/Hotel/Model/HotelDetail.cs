@@ -56,8 +56,10 @@ namespace Lunggo.ApCommon.Hotel.Model
         public List<Terminal> Terminals { get; set; }
         [JsonProperty("poi", NullValueHandling = NullValueHandling.Ignore)]
         public List<POI> Pois { get; set; }
+        [JsonProperty("mainImage", NullValueHandling = NullValueHandling.Ignore)]
+        public string MainImage { get; set; }
         [JsonProperty("images", NullValueHandling = NullValueHandling.Ignore)]
-        public List<Image> ImageUrl { get; set; }
+        public List<string> ImageUrl { get; set; }
         [JsonProperty("review", NullValueHandling = NullValueHandling.Ignore)]
         public List<Review> Review { get; set; }
         [JsonProperty("originalFare", NullValueHandling = NullValueHandling.Ignore)]
@@ -166,14 +168,6 @@ namespace Lunggo.ApCommon.Hotel.Model
         public string Path;
     }
 
-    //public class Types
-    //{
-    //    [JsonProperty("code", NullValueHandling = NullValueHandling.Ignore)]
-    //    public string Code { get; set; }
-        
-    //    [JsonProperty("description", NullValueHandling = NullValueHandling.Ignore)]
-    //    public Description Description { get; set; }
-    //}
 
     public class HotelDetail : HotelDetailsBase
     {
