@@ -27,27 +27,27 @@ namespace Lunggo.ApCommon.Hotel.Service
             return document.Retrieve<SearchHotelResult>(id);
         }
 
-        public SearchHotelResult GetSearchHotelResultWithFilter(SearchHotelInput input)
-        {
-            var param = new
-            {
-                input.SearchId,
-                input.SortingParam.AscendingPrice,
-                input.SortingParam.DescendingPrice,
-                input.SortingParam.ByPopularity,
-                input.SortingParam.ByReview,
-                input.FilterParam.MaxPrice,
-                input.FilterParam.MinPrice,
-                input.FilterParam.StarRating,
-                input.FilterParam.Area,
-                input.FilterParam.BoardCode,
-                input.FilterParam.AccomodationType,
-                input.FilterParam.Amenities
-            };
-            var document = DocumentService.GetInstance();
-            var searchResultData = document.Execute<SearchHotelResult>(new GetSearchResultBySearchId(), param, param).SingleOrDefault();
-            return searchResultData;
-        }
+        //public SearchHotelResult GetSearchHotelResultWithFilter(SearchHotelInput input)
+        //{
+        //    var param = new
+        //    {
+        //        input.SearchId,
+        //        input.SortingParam.AscendingPrice,
+        //        input.SortingParam.DescendingPrice,
+        //        input.SortingParam.ByPopularity,
+        //        input.SortingParam.ByReview,
+        //        input.FilterParam.MaxPrice,
+        //        input.FilterParam.MinPrice,
+        //        input.FilterParam.StarRating,
+        //        input.FilterParam.Area,
+        //        input.FilterParam.BoardCode,
+        //        input.FilterParam.AccomodationType,
+        //        input.FilterParam.Amenities
+        //    };
+        //    var document = DocumentService.GetInstance();
+        //    var searchResultData = document.Execute<SearchHotelResult>(new GetSearchResultBySearchId(), param, param).SingleOrDefault();
+        //    return searchResultData;
+        //}
         
         public void SaveHotelDetailToDocument(HotelDetailsBase hotelDetails)
         {

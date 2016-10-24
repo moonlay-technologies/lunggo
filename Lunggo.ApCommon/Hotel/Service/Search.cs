@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Mvc;
@@ -23,25 +24,23 @@ namespace Lunggo.ApCommon.Hotel.Service
     {
         public SearchHotelOutput Search(SearchHotelInput input)
         {
+            bool isByDestination = false;
             if (input.SearchId != null)
             {
-                ////Take search result from docDB
-                //var searchResult = GetSearchHotelResultWithFilter(input);
-
                 //Take search data from Redis
                 var searchResult = GetSearchHotelResultFromCache(input.SearchId);
 
                 var hotels = searchResult.HotelDetails;
-                var hasil = searchResult.HotelDetails;
                 
-                //DO Filtering
+                //Filtering
                 if (hotels != null && input.FilterParam != null)
                 {
+                    var listStar = GetStarFilter(input.FilterParam.StarFilter);
+                    
                     hotels = searchResult.HotelDetails.Where(p =>
-                    (input.FilterParam.Area == null || input.FilterParam.Area.Contains(p.ZoneCode)) &&
-                    (input.FilterParam.StarRating == null || input.FilterParam.StarRating.Contains(p.StarRating)) &&
-                    (input.FilterParam.AccomodationType == null || input.FilterParam.AccomodationType.Contains(p.AccomodationType)) &&
-                    (input.FilterParam.MaxPrice == null || input.FilterParam.MinPrice == null || (p.OriginalFare >= input.FilterParam.MinPrice && p.OriginalFare <= input.FilterParam.MaxPrice))
+                    (input.FilterParam.AreaFilter == null || input.FilterParam.AreaFilter.Areas.Contains(p.ZoneCode)) &&
+                    (listStar == null || listStar.Contains(p.StarRating)) &&
+                    (input.FilterParam.PriceFilter == null|| (p.OriginalFare >= input.FilterParam.PriceFilter.MinPrice && p.OriginalFare <= input.FilterParam.PriceFilter.MaxPrice))
                     ).Select(p => new HotelDetail
                     {
                         HotelCode = p.HotelCode,
@@ -76,15 +75,15 @@ namespace Lunggo.ApCommon.Hotel.Service
                 }
                 
 
-                //Do Sorting
+                //Sorting
                 if (hotels != null && input.SortingParam != null)
                 {
-                    if (input.SortingParam.AscendingPrice)
+                    if (input.SortingParam.LowestPrice)
                     {
                         hotels = hotels.OrderBy(p => p.OriginalFare).ToList();
                     }
 
-                    if (input.SortingParam.DescendingPrice)
+                    if (input.SortingParam.HighestPrice)
                     {
                         hotels = hotels.OrderByDescending(p => p.OriginalFare).ToList();
                     }
@@ -107,8 +106,11 @@ namespace Lunggo.ApCommon.Hotel.Service
                     SearchId = searchResult.SearchId,
                     HotelDetailLists = ConvertToHotelDetailForDisplay(hotelList),
                     StartPage = input.StartPage,
-                    EndPage = hotelList.Count,
-                    TotalHotel = hotelList.Count
+                    EndPage = input.EndPage,
+                    TotalDisplayHotel = hotelList.Count,
+                    TotalActualHotel = searchResult.HotelDetails.Count,
+                    HotelFilterDisplayInfo = searchResult.HotelFilterDisplayInfo
+                    
                 };
             }
             else
@@ -141,6 +143,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                         break;
                     case AutocompleteType.Destination:
                         request.Destination = detailDestination.Code;
+                        isByDestination = true;
                         break;
                 };
 
@@ -148,11 +151,15 @@ namespace Lunggo.ApCommon.Hotel.Service
                 result.SearchId = generatedSearchId.ToString();
                 Debug.Print("Search Id : " + result.SearchId);
                 //remember to add searchId
-                
+
 
                 if (result.HotelDetails != null)
                 {
                     AddPriceMargin(result.HotelDetails);
+                    if (isByDestination)
+                    {
+                        result.HotelFilterDisplayInfo = SetHotelFilterDisplayInfo(result.HotelDetails);
+                    }
                     SaveSearchResultintoDatabaseToCache(result.SearchId, result);
 
                     var firstPageHotelDetails = result.HotelDetails.Take(100).ToList(); 
@@ -166,7 +173,9 @@ namespace Lunggo.ApCommon.Hotel.Service
                         HotelDetailLists = ConvertToHotelDetailForDisplay(firstPageHotelDetails),
                         StartPage = 1,
                         EndPage = 100,
-                        TotalHotel = firstPageHotelDetails.Count
+                        TotalDisplayHotel = firstPageHotelDetails.Count,
+                        TotalActualHotel = result.HotelDetails.Count,
+                        HotelFilterDisplayInfo = result.HotelFilterDisplayInfo
                     };
                 }
                 else
@@ -194,5 +203,71 @@ namespace Lunggo.ApCommon.Hotel.Service
                 }
             return result;
         }
+
+        public HotelFilterDisplayInfo SetHotelFilterDisplayInfo(List<HotelDetail> hotels)
+        {
+            var filter = new HotelFilterDisplayInfo();
+            var zoneDict = new Dictionary<int, ZoneFilter>();
+            try
+            {
+                foreach (var hotelDetail in hotels)
+                {
+                    if (!(zoneDict.ContainsKey(hotelDetail.ZoneCode)))
+                    {
+                        zoneDict.Add(hotelDetail.ZoneCode, new ZoneFilter
+                        {
+                            Code = hotelDetail.ZoneCode,
+                            Count = 1,
+                            Name = GetHotelZoneNameFromDict(hotelDetail.DestinationCode + "-" + hotelDetail.ZoneCode)
+                        });
+                    }
+                    else
+                    {
+                        zoneDict[hotelDetail.ZoneCode].Count += 1;
+                    }
+                }
+                filter.ZoneFilter = new List<ZoneFilter>();
+
+                foreach (var zone in zoneDict.Keys)
+                {
+                    filter.ZoneFilter.Add(new ZoneFilter
+                    {
+                        Code = zoneDict[zone].Code,
+                        Count = zoneDict[zone].Count,
+                        Name = zoneDict[zone].Name,
+                    });
+                }
+            }
+            catch(Exception e)
+            {
+                Debug.Print(e.Message);
+            }
+            
+            return filter;
+        }
+
+        public List<string> GetStarFilter(List<bool> starFilter)
+        {
+            if (starFilter != null)
+            {
+                int count = 0;
+                var completedList = new List<string> { "1EST", "2EST", "3EST", "4EST", "5EST" };
+                var listStar = new List<string>();
+                foreach (var star in starFilter)
+                {
+                    if (star)
+                    {
+                        listStar.Add(completedList[count]);
+                    }
+                    count++;
+                }
+                return listStar;
+            }
+            else
+            {
+                return null;
+            }
+            
+        } 
     }
 }

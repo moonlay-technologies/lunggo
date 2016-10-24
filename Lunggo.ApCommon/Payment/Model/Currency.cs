@@ -20,7 +20,6 @@ namespace Lunggo.ApCommon.Payment.Model
         public decimal RoundingOrder { get; private set; }
         public Supplier Supplier { get; set; }
 
-        [JsonConstructor]
         public Currency(string symbol)
         {
             if (!ValidateSymbol(symbol))
@@ -54,6 +53,7 @@ namespace Lunggo.ApCommon.Payment.Model
             RoundingOrder = GetRoundingOrder();
         }
 
+        [JsonConstructor]
         public Currency(string symbol, decimal rate, decimal roundingOrder, Supplier supplier = Supplier.Travorama)
         {
             if (!ValidateSymbol(symbol))
