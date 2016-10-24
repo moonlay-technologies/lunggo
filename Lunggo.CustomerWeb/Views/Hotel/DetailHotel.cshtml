@@ -2,6 +2,7 @@
     Layout = "/Views/Shared/Travorama20/_Layout20150929.cshtml";
     ViewBag.BodyClass = "page-hotel page-detail";
     ViewBag.Title = "Detail Hotel";
+    ViewBag.AngularController = "hotelDetailController";
 }
 
 @section AdditionalCSS{
@@ -42,10 +43,12 @@
     <script>
         accordionFunctions();
     </script>
+<script src="/Assets/Travorama20/js/hotelDetailController.js"></script>
+
 }
 
 @Html.Partial("/Views/Hotel/Shared/Desktop/_PageSlider.cshtml")
-<div class="travorama-hotel">
+<div class="travorama-hotel" ng-init="init(@Newtonsoft.Json.JsonConvert.SerializeObject(Model))">
     <div class="container">
         <div class="detail-hotel-content">
             @Html.Partial("/Views/Hotel/Shared/Desktop/_BreadCrumb.cshtml")
@@ -479,7 +482,7 @@
                                     <div class="col-half ih-l">
                                         This hotel features a fitness centre, an outdoor pool and a rooftop terrace with panoramic city views. It is close to the area's tourist attractions and is minutes on foot from Lavender MRT Station.
                                         <br /><br />
-                                        This 4-star hotel offers a coffee bar, a 24-hour reception and an express check-in and check-out feature. Corporate amenities include a business centre. 
+                                        This 4-star hotel offers a coffee bar, a 24-hour reception and an express check-in and check-out feature. Corporate amenities include a business centre.
                                     </div>
                                     <div class="col-half ih-r">
                                         This hotel features a fitness centre, an outdoor pool and a rooftop terrace with panoramic city views. It is close to the area's tourist attractions and is minutes on foot from Lavender MRT Station.

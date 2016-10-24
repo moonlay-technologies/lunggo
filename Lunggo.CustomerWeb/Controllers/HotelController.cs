@@ -28,9 +28,9 @@ namespace Lunggo.CustomerWeb.Controllers
 
         }
 
-        public ActionResult DetailHotel()
+        public ActionResult DetailHotel(string searchId, int hotelCd)
         {
-            return View();
+            return View(new { searchId, hotelCd });
         }
 
         public ActionResult Checkout()

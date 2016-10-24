@@ -1,37 +1,16 @@
 ﻿// home controller
-app.controller('hotelSearchController', ['$scope', '$log', '$http', '$resource', function ($scope, $log, $http, $resource) {
-
-    $scope.model = {};
-    $scope.hotels = [];
-    $scope.totalActualHotel = '';
-    $scope.hotelFilterDisplayInfo = undefined;
-
-    $scope.filterDisabled = true;
-
-    
-
-    //@Url.Action("Search", "Hotel")?zzz={{departureDate}}" method="POST"
-    //=============== hotel start ======================
-
-    $scope.searchId = '';
-    $scope.hotel = {};
-    $scope.hotel.location = "BALI";
-    $scope.hotel.checkinDate = "28-12-2016";
-    $scope.hotel.checkoutDate = "30-12-2016";
-    $scope.hotel.adultCount = 3;
-    $scope.hotel.childCount = 1;
-    $scope.hotel.nightCount = 1;
-    $scope.hotel.roomCount = 2;
+app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource', function ($scope, $log, $http, $resource) {
 
     $scope.init = function (model) {
+        $log.debug(model);
         $scope.model = model;
 
-        var resource = $resource('//api.local.travorama.com/v1/hotel/search',
+        var resource = $resource('//api.local.travorama.com/v1/hotel/GetHotelDetail/:searchId/:hotelCd',
             {},
             {
                 query: {
-                    method: 'POST',
-                    params: {},
+                    method: 'GET',
+                    params: { searchId: model.searchId, hotelCd: model.hotelCd },
                     isArray: false
                 }
             }
@@ -48,15 +27,36 @@ app.controller('hotelSearchController', ['$scope', '$log', '$http', '$resource',
             "from": "1",
             "to": "9"
         }).$promise.then(function (data) {
-            $scope.searchId = data.searchId;
+            $log.debug(data);
+
+
+            $scope.hotelDetails = data.searchId;
             $scope.hotels = data.hotels;
             $scope.searchId = data.searchId;
             totalActualHotel = data.totalActualHotel;
             $scope.hotelFilterDisplayInfo = data.hotelFilterDisplayInfo;
 
-            $log.debug(data);
         })
     }
+
+    $scope.model = {};
+    $scope.hotels = [];
+    $scope.totalActualHotel = '';
+    $scope.hotelFilterDisplayInfo = undefined;
+    $scope.filterDisabled = true;
+
+    //@Url.Action("Search", "Hotel")?zzz={{departureDate}}" method="POST"
+    //=============== hotel start ======================
+
+    $scope.searchId = '';
+    $scope.hotel = {};
+    $scope.hotel.location = "BALI";
+    $scope.hotel.checkinDate = "28-12-2016";
+    $scope.hotel.checkoutDate = "30-12-2016";
+    $scope.hotel.adultCount = 3;
+    $scope.hotel.childCount = 1;
+    $scope.hotel.nightCount = 1;
+    $scope.hotel.roomCount = 2;
 
     $scope.hotel.searchHotel = function () {
         $log.debug('searching hotel');
