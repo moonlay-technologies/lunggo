@@ -1,15 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using System.Web;
 using Lunggo.ApCommon.Hotel.Model.Logic;
 using Lunggo.ApCommon.Hotel.Service;
 using Lunggo.Framework.Config;
 using Lunggo.Framework.Extension;
 using Lunggo.Framework.Log;
 using Lunggo.WebAPI.ApiSrc.Common.Model;
-using Lunggo.WebAPI.ApiSrc.Flight.Model;
 using Lunggo.WebAPI.ApiSrc.Hotel.Model;
 
 namespace Lunggo.WebAPI.ApiSrc.Hotel.Logic
@@ -23,7 +19,15 @@ namespace Lunggo.WebAPI.ApiSrc.Hotel.Logic
                 var searchServiceRequest = PreprocessServiceRequest(request);
                 var searchServiceResponse = HotelService.GetInstance().Search(searchServiceRequest);
                 var apiResponse = AssembleApiResponse(searchServiceResponse);
-                if (apiResponse.StatusCode == HttpStatusCode.OK) return apiResponse;
+                if (apiResponse.ExpiryTime <= DateTime.UtcNow)
+                {
+                    return new HotelSearchApiResponse
+                    {
+                        StatusCode = HttpStatusCode.BadRequest,
+                        ErrorCode = "ERHSEA02"
+                    };
+                }
+                //if (apiResponse.StatusCode == HttpStatusCode.OK) return apiResponse;
                 var log = LogService.GetInstance();
                 var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
                 return apiResponse;
@@ -31,7 +35,7 @@ namespace Lunggo.WebAPI.ApiSrc.Hotel.Logic
             return new HotelSearchApiResponse
             {
                 StatusCode = HttpStatusCode.BadRequest,
-                ErrorCode = "ERSOO01"
+                ErrorCode = "ERHSEA01"
             };
         }
 

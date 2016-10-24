@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Web;
+﻿using System.Net;
 using Lunggo.ApCommon.Hotel.Model.Logic;
 using Lunggo.ApCommon.Hotel.Service;
-using Lunggo.Framework.Config;
-using Lunggo.Framework.Log;
 using Lunggo.WebAPI.ApiSrc.Common.Model;
 using Lunggo.WebAPI.ApiSrc.Hotel.Model;
 
@@ -21,7 +15,15 @@ namespace Lunggo.WebAPI.ApiSrc.Hotel.Logic
                 var searchServiceRequest = PreprocessServiceRequest(request);
                 var searchServiceResponse = HotelService.GetInstance().GetHotelDetail(searchServiceRequest);
                 var apiResponse = AssembleApiResponse(searchServiceResponse);
-                if (apiResponse.StatusCode == HttpStatusCode.OK) return apiResponse;
+                if (apiResponse.HotelDetails == null)
+                {
+                    return new HotelDetailApiResponse
+                    {
+                        StatusCode = HttpStatusCode.BadRequest,
+                        ErrorCode = "ERHGHD02"
+                    };
+                }
+
                 return apiResponse;
             }
             return new HotelDetailApiResponse

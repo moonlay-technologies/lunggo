@@ -1,13 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Web;
+﻿using System.Net;
 using Lunggo.ApCommon.Hotel.Model;
-using Lunggo.ApCommon.Hotel.Model.Logic;
 using Lunggo.ApCommon.Hotel.Service;
-using Lunggo.Framework.Config;
-using Lunggo.Framework.Log;
 using Lunggo.WebAPI.ApiSrc.Common.Model;
 using Lunggo.WebAPI.ApiSrc.Hotel.Model;
 
@@ -17,19 +10,24 @@ namespace Lunggo.WebAPI.ApiSrc.Hotel.Logic
     {
         public static ApiResponseBase GetSelectedHotelDetailLogic(HotelSelectedRoomApiRequest request)
         {
-            if (IsValid(request))
+            if (!IsValid(request))
+                return new HotelDetailApiResponse
+                {
+                    StatusCode = HttpStatusCode.BadRequest,
+                    ErrorCode = "ERHGSH01"
+                };
+            //var searchServiceRequest = PreprocessServiceRequest(request);
+            var selectedHotelServiceResponse = HotelService.GetInstance().GetSelectedHotelDetailsFromCache(request.Token);
+            var apiResponse = AssembleApiResponse(selectedHotelServiceResponse);
+            if (apiResponse.HotelDetails == null)
             {
-                //var searchServiceRequest = PreprocessServiceRequest(request);
-                var searchServiceResponse = HotelService.GetInstance().GetSelectedHotelDetailsFromCache(request.Token);
-                var apiResponse = AssembleApiResponse(searchServiceResponse);
-                if (apiResponse.StatusCode == HttpStatusCode.OK) return apiResponse;
-                return apiResponse;
-            }
-            return new HotelDetailApiResponse
-            {
-                StatusCode = HttpStatusCode.BadRequest,
-                ErrorCode = "ERHGSH01"
-            };
+                return new HotelSelectedRoomApiResponse
+                {
+                    StatusCode = HttpStatusCode.BadRequest,
+                    ErrorCode = "ERHGSH02"
+                };
+            }               
+            return apiResponse;
         }
 
         private static bool IsValid(HotelSelectedRoomApiRequest request)
@@ -38,15 +36,14 @@ namespace Lunggo.WebAPI.ApiSrc.Hotel.Logic
                 return false;
             return
                 request.Token != null;
-
         }
-
-       
+        
         private static HotelSelectedRoomApiResponse AssembleApiResponse(HotelDetailsBase response)
         {
             var apiResponse = new HotelSelectedRoomApiResponse
             {
-                HotelDetails = response
+                HotelDetails = response,
+                StatusCode = HttpStatusCode.OK
             };
             return apiResponse;
         }

@@ -24,11 +24,28 @@ namespace Lunggo.WebAPI.ApiSrc.Hotel.Logic
         public static ApiResponseBase SelectHotelRatesLogic(HotelSelectRoomApiRequest request)
         {
             if (IsValid(request))
-            {
+            { 
                 var selectRateServiceRequest = PreprocessServiceRequest(request);
                 var selectRateServiceResponse = HotelService.GetInstance().SelectHotelRoom(selectRateServiceRequest);
                 var apiResponse = AssembleApiResponse(selectRateServiceResponse);
-                if (apiResponse.StatusCode == HttpStatusCode.OK) return apiResponse;
+                if (apiResponse.TimeLimit <= DateTime.UtcNow)
+                {
+                    return new HotelSelectRoomApiResponse
+                    {
+                        StatusCode = HttpStatusCode.BadRequest,
+                        ErrorCode = "ERHSEL02"
+                    };
+                }
+
+                if (apiResponse.Token == null)
+                {
+                    return new HotelSelectRoomApiResponse
+                    {
+                        StatusCode = HttpStatusCode.BadRequest,
+                        ErrorCode = "ERHSEL03"
+                    };
+                }
+                
                 var log = LogService.GetInstance();
                 var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
                 //log.Post(
@@ -49,7 +66,7 @@ namespace Lunggo.WebAPI.ApiSrc.Hotel.Logic
             return new HotelSelectRoomApiResponse
             {
                 StatusCode = HttpStatusCode.BadRequest,
-                ErrorCode = "ERHSER01"
+                ErrorCode = "ERHSEL01"
             };
         }
 
@@ -79,7 +96,7 @@ namespace Lunggo.WebAPI.ApiSrc.Hotel.Logic
             }
             return new HotelSelectRoomApiResponse
             {
-                //TimeLimit = selectHotelRoomServiceResponse
+                StatusCode = HttpStatusCode.OK,
                 Token = selectHotelRoomServiceResponse.Token,
                 TimeLimit = selectHotelRoomServiceResponse.Timelimit
             };
