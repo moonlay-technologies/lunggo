@@ -32,7 +32,6 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds
                 checkOut =  condition.Checkout,
                 destination = condition.Destination ?? null,
                 zone = condition.Zone,
-                //country belum ada
                 language = "ENG",
                 payed = Availability.Pay.AT_WEB
             };
@@ -44,7 +43,6 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds
                     checkIn = condition.CheckIn,
                     checkOut = condition.Checkout,
                     includeHotels = new List<int>{condition.HotelCode},
-                    //country belum ada
                     language = "ENG",
                     payed = Availability.Pay.AT_WEB
                 };
@@ -54,7 +52,6 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds
             {
                 adults = condition.AdultCount,
                 children = condition.ChildCount,
-                //Room Detail
                 numberOfRooms = condition.Rooms
             };
             room.details = new List<RoomDetail>();
@@ -92,8 +89,8 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds
                         HotelCode = hotelResponse.code,
                         HotelName = hotelResponse.name,
                         CountryCode = HotelService.GetInstance().GetCountryFromDestination(hotelResponse.destinationCode),
-                        Latitude = decimal.Parse(hotelResponse.latitude),
-                        Longitude = decimal.Parse(hotelResponse.longitude),
+                        Latitude = hotelResponse.latitude == null ? null : (decimal?)decimal.Parse(hotelResponse.latitude),
+                        Longitude = hotelResponse.longitude == null? null : (decimal?)decimal.Parse(hotelResponse.longitude),
                         ZoneCode =  hotelResponse.zoneCode,
                         DestinationCode = hotelResponse.destinationCode,
                         NetFare =  hotelResponse.totalNet,

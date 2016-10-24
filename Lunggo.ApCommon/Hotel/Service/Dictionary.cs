@@ -1399,6 +1399,18 @@ namespace Lunggo.ApCommon.Hotel.Service
                 return new Category();
             }
         }
+
+        public int GetSimpleCodeByCategoryCode(string code)
+        {
+            try
+            {
+                return HotelCategories[code].SimpleCode;
+            }
+            catch
+            {
+                return 0;
+            }
+        }
         public string GetHotelCategoryDescEn(string code)
         {
             try
