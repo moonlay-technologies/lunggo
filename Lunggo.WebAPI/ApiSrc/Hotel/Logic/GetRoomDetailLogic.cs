@@ -32,7 +32,14 @@ namespace Lunggo.WebAPI.ApiSrc.Hotel.Logic
                     ErrorCode = "ERHGHD02"
                 };
             }
-
+            //if (apiResponse.RoomDetails.Rates == null || apiResponse.RoomDetails.Rates.Count == 0)
+            //{
+            //    return new HotelRoomDetailApiResponse
+            //    {
+            //        StatusCode = HttpStatusCode.BadRequest,
+            //        ErrorCode = "ERHGHD03"
+            //    };
+            //}
             var log = LogService.GetInstance();
             var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
             //log.Post(

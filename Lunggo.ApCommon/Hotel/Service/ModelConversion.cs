@@ -52,9 +52,11 @@ namespace Lunggo.ApCommon.Hotel.Service
                 ChainName = GetHotelChainDesc(hotelDetail.Chain),
                 //Facilities =  hotelDetail.//TODO
                 AccomodationName = GetHotelAccomodationDescId(hotelDetail.AccomodationType),
-                MainImage = hotelDetail.ImageUrl.Where(x=>x.Type=="GEN").Select(x=>x.Path).FirstOrDefault(),
+                MainImage = hotelDetail.ImageUrl != null ? hotelDetail.ImageUrl.Where(x=>x.Type=="GEN").Select(x=>x.Path).FirstOrDefault()
+                : null,
                 OriginalFare = hotelDetail.OriginalFare,
                 NetFare = hotelDetail.NetFare,
+                Rooms = ConvertToHotelRoomForDisplay(hotelDetail.Rooms)
             };
             convertedHotels.Add(hotel);
             }

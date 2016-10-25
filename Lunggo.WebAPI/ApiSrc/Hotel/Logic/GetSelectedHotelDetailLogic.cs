@@ -26,7 +26,24 @@ namespace Lunggo.WebAPI.ApiSrc.Hotel.Logic
                     StatusCode = HttpStatusCode.BadRequest,
                     ErrorCode = "ERHGSH02"
                 };
-            }               
+            }
+            if (apiResponse.HotelDetails.Rooms == null || apiResponse.HotelDetails.Rooms.Count == 0)
+            {
+                return new HotelSelectedRoomApiResponse
+                {
+                    StatusCode = HttpStatusCode.BadRequest,
+                    ErrorCode = "ERHGSH03"
+                };
+            }
+
+            if (apiResponse.HotelDetails.Rooms.Exists(r => r.Rates == null || r.Rates.Count == 0))
+            {
+                return new HotelRateApiResponse
+                {
+                    StatusCode = HttpStatusCode.BadRequest,
+                    ErrorCode = "ERHGSH04"
+                };
+            }
             return apiResponse;
         }
 

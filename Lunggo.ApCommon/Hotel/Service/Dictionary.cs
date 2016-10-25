@@ -262,7 +262,7 @@ namespace Lunggo.ApCommon.Hotel.Service
             PopulateHotelZoneDict(Countries);
 
             PopulateAutocomplete();
-            PopulateHotel();
+            //PopulateHotel();
         }
 
         private static void PopulateAutocomplete()
@@ -482,7 +482,6 @@ namespace Lunggo.ApCommon.Hotel.Service
                 }
             }
         }
-
 
         private static void PopulateHotelRoomDict(IEnumerable<Room> rooms )
         {
@@ -1000,6 +999,18 @@ namespace Lunggo.ApCommon.Hotel.Service
             catch
             {
                 return "";
+            }
+        }
+
+        public int GetMaxAdult(string code)
+        {
+            try
+            {
+                return Rooms.Where(r => r.RoomCd == code).ToList()[0].MaxAdult;
+            }
+            catch
+            {
+                return 0;
             }
         }
         public HotelRoomType GetHotelRoomType(string code)

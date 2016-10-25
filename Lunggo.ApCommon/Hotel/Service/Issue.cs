@@ -6,7 +6,6 @@ using Lunggo.ApCommon.Hotel.Model;
 using Lunggo.ApCommon.Hotel.Model.Logic;
 using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds;
 using Lunggo.ApCommon.Payment.Constant;
-using Lunggo.ApCommon.Payment.Model;
 using Lunggo.ApCommon.Product.Constant;
 using Lunggo.Framework.Database;
 using Lunggo.Framework.Queue;
@@ -45,12 +44,9 @@ namespace Lunggo.ApCommon.Hotel.Service
                 output.IsSuccess = true;
                 return output;
             }
-            else
-            {
-                output.IsSuccess = false;
-                //output.Errors = new List<FlightError> { FlightError.NotEligibleToIssue };
-                return output;
-            }
+            output.IsSuccess = false;
+            //output.Errors = new List<FlightError> { FlightError.NotEligibleToIssue };
+            return output;
         }
 
         public IssueHotelTicketOutput CommenceIssueHotel(IssueHotelTicketInput input)
@@ -97,6 +93,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                         where rateKey[5] == roomCd && rateKey[6] == someData && rateKey[7] == board
                         select ratea))))
                     {
+                        rate.RateKey = ratea.RateKey;
                         rate.Price.SetSupplier(ratea.Price.OriginalIdr, rate.Price.SupplierCurrency);
                     }
                 }
@@ -151,15 +148,5 @@ namespace Lunggo.ApCommon.Hotel.Service
             }
 
         }
-
-        //private void SendHotelEticket(string rsvNo)
-        //{
-        //    //TODO Update THIS
-        //}
-
-        //private void SendFailedHotelNotif(string rsvNo)
-        //{
-        //    //TODO Update THIS
-        //}
     }       
 }

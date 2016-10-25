@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.UI;
 using Lunggo.ApCommon.Hotel.Model;
+using Lunggo.ApCommon.Payment.Model;
+using Lunggo.Framework.Context;
 
 namespace Lunggo.ApCommon.Hotel.Service
 {
@@ -25,6 +27,8 @@ namespace Lunggo.ApCommon.Hotel.Service
             {
                 AddPriceMargin(hotelDetail, rules);
             }
+            var localCurr = new Currency(OnlineContext.GetActiveCurrencyCode());
+            hotelDetails.SelectMany(h => h.Rooms).SelectMany(r => r.Rates).ToList().ForEach(r => r.Price.CalculateFinalAndLocal(localCurr));
         }
 
         internal void AddPriceMargin(HotelDetail hotelDetail, List<HotelMarginRule> marginRules)

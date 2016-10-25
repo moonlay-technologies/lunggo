@@ -25,7 +25,7 @@ namespace Lunggo.WebAPI.ApiSrc.Hotel.Logic
             var getRateServiceRequest = PreprocessServiceRequest(request);
             var getRateServiceResponse = HotelService.GetInstance().GetRate(getRateServiceRequest);
             var apiResponse = AssembleApiResponse(getRateServiceResponse);
-            if (apiResponse.Rooms == null)
+            if (apiResponse.Rooms == null || apiResponse.Rooms.Count == 0)
             {
                 return new HotelRateApiResponse
                 {

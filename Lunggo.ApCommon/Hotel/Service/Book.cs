@@ -22,29 +22,65 @@ namespace Lunggo.ApCommon.Hotel.Service
             var bookInfo = GetSelectedHotelDetailsFromCache(input.Token);
             var oldPrice = bookInfo.Rooms.SelectMany(r => r.Rates).Sum(p => p.Price.Supplier);
             decimal newPrice = 0;
-            var searchId = bookInfo.SearchId;
             
-            foreach (var room in bookInfo.Rooms)
+            //Refresh RateKey
+            foreach (var rate in bookInfo.Rooms.SelectMany(room => room.Rates))
             {
-                foreach (var rate in room.Rates)
+                var sampleRatekey = rate.RateKey.Split('|');
+                var checkInDate = new DateTime(Convert.ToInt32(sampleRatekey[0].Substring(0, 4)), Convert.ToInt32(sampleRatekey[0].Substring(4, 2)),
+                    Convert.ToInt32(sampleRatekey[0].Substring(6, 2)));
+                var checkOutDate = new DateTime(Convert.ToInt32(sampleRatekey[1].Substring(0, 4)), Convert.ToInt32(sampleRatekey[1].Substring(4, 2)),
+                    Convert.ToInt32(sampleRatekey[1].Substring(6, 2)));
+                var roomCd = sampleRatekey[5];
+                var someData = sampleRatekey[6];
+                var board = sampleRatekey[7];
+                
+                var result = GetInstance().Search(new SearchHotelInput
                 {
-                    if (BookingStatusCd.Mnemonic(rate.Type) == CheckRateStatus.Recheck)
+                    HotelCode = bookInfo.HotelCode,
+                    Rooms = 1,
+                    CheckIn = checkInDate,
+                    Checkout = checkOutDate,
+                    AdultCount = GetMaxAdult(roomCd),
+                });
+
+                foreach (var hotel in result.HotelDetailLists)
+                {
+                    foreach (var room in hotel.Rooms)
                     {
-                        var revalidateResult = CheckRate(rate.RateKey, rate.Price.Supplier);
-                        if (revalidateResult.IsPriceChanged)
+                        foreach (var ratea in room.Rates)
                         {
-                            rate.Price.SetSupplier(revalidateResult.NewPrice.GetValueOrDefault(), rate.Price.SupplierCurrency);;
-                            newPrice += revalidateResult.NewPrice.GetValueOrDefault();
+                            var ratekey = ratea.RateKey.Split('|');
+                            if (Convert.ToInt32(ratekey[4]) != bookInfo.HotelCode || ratekey[5] != roomCd ||
+                                ratekey[6] != someData || ratekey[7] != board) continue;
+                            rate.RateKey = ratea.RateKey;
+                            rate.Price = ratea.Price;
+                            rate.PaymentType = ratea.PaymentType;
+                            rate.Type = ratea.Type;
                         }
-                        else
-                        {
-                            newPrice += rate.Price.Supplier;
-                        }
+                    }
+                }                
+            }
+
+            //Recheck for every rate with rate type = recheck
+            foreach (var rate in bookInfo.Rooms.SelectMany(room => room.Rates))
+            {
+                if (BookingStatusCd.Mnemonic(rate.Type) == CheckRateStatus.Recheck)
+                {
+                    var revalidateResult = CheckRate(rate.RateKey, rate.Price.Supplier);
+                    if (revalidateResult.IsPriceChanged)
+                    {
+                        rate.Price.SetSupplier(revalidateResult.NewPrice.GetValueOrDefault(), rate.Price.SupplierCurrency);;
+                        newPrice += revalidateResult.NewPrice.GetValueOrDefault();
                     }
                     else
                     {
                         newPrice += rate.Price.Supplier;
                     }
+                }
+                else
+                {
+                    newPrice += rate.Price.Supplier;
                 }
             }
             

@@ -53,6 +53,8 @@ namespace Lunggo.ApCommon.Hotel.Model
     
     public class HotelRate : OrderBase
     {
+        [JsonProperty("rateCount", NullValueHandling = NullValueHandling.Ignore)]
+        public int RateCount { get; set; }
         [JsonProperty("rateKey", NullValueHandling = NullValueHandling.Ignore)]
         public string RateKey { get; set; }
         [JsonProperty("regsId", NullValueHandling = NullValueHandling.Ignore)]

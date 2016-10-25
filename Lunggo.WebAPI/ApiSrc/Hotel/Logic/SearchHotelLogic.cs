@@ -14,29 +14,28 @@ namespace Lunggo.WebAPI.ApiSrc.Hotel.Logic
     {
         public static ApiResponseBase Search(HotelSearchApiRequest request)
         {
-            if (IsValid(request))
-            {
-                var searchServiceRequest = PreprocessServiceRequest(request);
-                var searchServiceResponse = HotelService.GetInstance().Search(searchServiceRequest);
-                var apiResponse = AssembleApiResponse(searchServiceResponse);
-                if (apiResponse.ExpiryTime <= DateTime.UtcNow)
+            if (!IsValid(request))
+                return new HotelSearchApiResponse
                 {
-                    return new HotelSearchApiResponse
-                    {
-                        StatusCode = HttpStatusCode.BadRequest,
-                        ErrorCode = "ERHSEA02"
-                    };
-                }
-                //if (apiResponse.StatusCode == HttpStatusCode.OK) return apiResponse;
-                var log = LogService.GetInstance();
-                var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
-                return apiResponse;
-            }
-            return new HotelSearchApiResponse
+                    StatusCode = HttpStatusCode.BadRequest,
+                    ErrorCode = "ERHSEA01"
+                };
+            var searchServiceRequest = PreprocessServiceRequest(request);
+            var searchServiceResponse = HotelService.GetInstance().Search(searchServiceRequest);
+            var apiResponse = AssembleApiResponse(searchServiceResponse);
+            if (apiResponse.ExpiryTime <= DateTime.UtcNow)
             {
-                StatusCode = HttpStatusCode.BadRequest,
-                ErrorCode = "ERHSEA01"
-            };
+                return new HotelSearchApiResponse
+                {
+                    StatusCode = HttpStatusCode.BadRequest,
+                    ErrorCode = "ERHSEA01"
+                };
+            }
+
+            //if (apiResponse.StatusCode == HttpStatusCode.OK) return apiResponse;
+            var log = LogService.GetInstance();
+            var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
+            return apiResponse;
         }
 
         private static bool IsValid(HotelSearchApiRequest request)

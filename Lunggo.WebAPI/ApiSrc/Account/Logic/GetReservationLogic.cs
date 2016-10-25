@@ -59,7 +59,7 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
                     user.Identity.GetDeviceId() == rsv.DeviceId)
                     return new GetReservationApiResponse
                     {
-                        ProductType = ProductType.Flight,
+                        ProductType = ProductType.Hotel,
                         HotelReservation = rsv,
                         StatusCode = HttpStatusCode.OK
                     };

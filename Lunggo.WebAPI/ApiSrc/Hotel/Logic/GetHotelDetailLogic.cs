@@ -10,27 +10,25 @@ namespace Lunggo.WebAPI.ApiSrc.Hotel.Logic
     {
         public static ApiResponseBase GetHotelDetailLogic(HotelDetailApiRequest request)
         {
-            if (IsValid(request))
-            {
-                var searchServiceRequest = PreprocessServiceRequest(request);
-                var searchServiceResponse = HotelService.GetInstance().GetHotelDetail(searchServiceRequest);
-                var apiResponse = AssembleApiResponse(searchServiceResponse);
-                if (apiResponse.HotelDetails == null)
+            if (!IsValid(request))
+                return new HotelDetailApiResponse
                 {
-                    return new HotelDetailApiResponse
-                    {
-                        StatusCode = HttpStatusCode.BadRequest,
-                        ErrorCode = "ERHGHD02"
-                    };
-                }
-
-                return apiResponse;
-            }
-            return new HotelDetailApiResponse
+                    StatusCode = HttpStatusCode.BadRequest,
+                    ErrorCode = "ERHGHD01"
+                };
+            var searchServiceRequest = PreprocessServiceRequest(request);
+            var searchServiceResponse = HotelService.GetInstance().GetHotelDetail(searchServiceRequest);
+            var apiResponse = AssembleApiResponse(searchServiceResponse);
+            if (apiResponse.HotelDetails == null)
             {
-                StatusCode = HttpStatusCode.BadRequest,
-                ErrorCode = "ERHGHD01"
-            };
+                return new HotelDetailApiResponse
+                {
+                    StatusCode = HttpStatusCode.BadRequest,
+                    ErrorCode = "ERHGHD02"
+                };
+            }
+            
+            return apiResponse;
         }
 
         private static bool IsValid(HotelDetailApiRequest request)

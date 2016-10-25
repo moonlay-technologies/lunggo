@@ -123,6 +123,10 @@ namespace Lunggo.ApCommon.Hotel.Model
         public List<Review> Review { get; set; }
         [JsonProperty("searchId", NullValueHandling = NullValueHandling.Ignore)]
         public string SearchId { get; set; }
+        [JsonProperty("wifiAccess", NullValueHandling = NullValueHandling.Ignore)]
+        public bool WifiAccess { get; set; }
+        [JsonProperty("restaurant", NullValueHandling = NullValueHandling.Ignore)]
+        public bool IsRestaurantAvailable { get; set; }
     }
 
     public class POI

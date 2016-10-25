@@ -13,44 +13,42 @@ namespace Lunggo.WebAPI.ApiSrc.Hotel.Logic
     {
         public static ApiResponseBase BookLogic(HotelBookApiRequest request)
         {
-            if (IsValid(request))
-            {
-                var bookServiceRequest = PreprocessServiceRequest(request);
-                var bookServiceResponse = HotelService.GetInstance().BookHotel(bookServiceRequest);
-                var apiResponse = AssembleApiResponse(bookServiceResponse);
-                 
-                if (apiResponse.TimeLimit <= DateTime.UtcNow)
+            if (!IsValid(request))
+                return new HotelBookApiResponse
                 {
-                    return new HotelBookApiResponse
-                    {
-                        StatusCode = HttpStatusCode.Accepted,
-                        ErrorCode = "ERHBOO02"
-                    };
-                }
-                
-                if (apiResponse.StatusCode == HttpStatusCode.OK) return apiResponse;
-                var log = LogService.GetInstance();
-                var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
-                //log.Post(
-                //    "```Booking API Log```"
-                //    + "\n`*Environment :* " + env.ToUpper()
-                //    + "\n*REQUEST :*\n"
-                //    + request.Serialize()
-                //    + "\n*RESPONSE :*\n"
-                //    + apiResponse.Serialize()
-                //    + "\n*LOGIC RESPONSE :*\n"
-                //    + selectRateServiceResponse.Serialize()
-                //    + "\n*Platform :* "
-                //    + Client.GetPlatformType(HttpContext.Current.User.Identity.GetClientId())
-                //    + "\n*Itinerary :* \n"
-                //    + HotelService.GetInstance().GetItineraryForDisplay(request.Token).Serialize());
-                return apiResponse;
-            }
-            return new HotelBookApiResponse
+                    StatusCode = HttpStatusCode.BadRequest,
+                    ErrorCode = "ERHBOO01"
+                };
+            var bookServiceRequest = PreprocessServiceRequest(request);
+            var bookServiceResponse = HotelService.GetInstance().BookHotel(bookServiceRequest);
+            var apiResponse = AssembleApiResponse(bookServiceResponse);
+                 
+            if (apiResponse.TimeLimit <= DateTime.UtcNow)
             {
-                StatusCode = HttpStatusCode.BadRequest,
-                ErrorCode = "ERHBOO01"
-            };
+                return new HotelBookApiResponse
+                {
+                    StatusCode = HttpStatusCode.Accepted,
+                    ErrorCode = "ERHBOO02"
+                };
+            }
+                
+            if (apiResponse.StatusCode == HttpStatusCode.OK) return apiResponse;
+            var log = LogService.GetInstance();
+            var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
+            //log.Post(
+            //    "```Booking API Log```"
+            //    + "\n`*Environment :* " + env.ToUpper()
+            //    + "\n*REQUEST :*\n"
+            //    + request.Serialize()
+            //    + "\n*RESPONSE :*\n"
+            //    + apiResponse.Serialize()
+            //    + "\n*LOGIC RESPONSE :*\n"
+            //    + selectRateServiceResponse.Serialize()
+            //    + "\n*Platform :* "
+            //    + Client.GetPlatformType(HttpContext.Current.User.Identity.GetClientId())
+            //    + "\n*Itinerary :* \n"
+            //    + HotelService.GetInstance().GetItineraryForDisplay(request.Token).Serialize());
+            return apiResponse;
         }
 
         private static bool IsValid(HotelBookApiRequest request)

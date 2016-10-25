@@ -25,6 +25,29 @@ namespace Lunggo.ApCommon.Hotel.Service
             table.Execute(insertOp);
         }
 
+        public void SaveTruncatedHotelDetailToTableStorage(HotelDetailsBase hotelDetail, int hotelCd)
+        {
+            HotelDetailWrapper hotel = new HotelDetailWrapper("hotel", hotelCd.ToString());
+            var data = hotelDetail.Serialize();
+            var splittedData = SplitByLength(data, 30000);
+            DivideData(hotel, splittedData);
+            var tableClient = TableStorageService.GetInstance();
+            var table = tableClient.GetTableByReference("hoteldetailtrunc");
+            var insertOp = TableOperation.InsertOrReplace(hotel);
+            table.Execute(insertOp);
+        }
+
+        public void SaveHotelAmenitiesAndAccomodationTypeToTableStorage(HotelDetailsBase hotelDetail, int hotelCd)
+        {
+            HotelDetailWrapper hotel = new HotelDetailWrapper("hotel", hotelCd.ToString());
+            var data = hotelDetail.Serialize();
+            var splittedData = SplitByLength(data, 30000);
+            DivideData(hotel, splittedData);
+            var tableClient = TableStorageService.GetInstance();
+            var table = tableClient.GetTableByReference("amenitiesacc");
+            var insertOp = TableOperation.InsertOrReplace(hotel);
+            table.Execute(insertOp);
+        }
         public void DivideData(HotelDetailWrapper hotel, IEnumerable<string> splittedData)
         {
             try
@@ -87,6 +110,41 @@ namespace Lunggo.ApCommon.Hotel.Service
             return result;
         }
 
+        public HotelDetailsBase GetTruncatedHotelDetailFromTableStorage(int hotelCd)
+        {
+            var partitionKey = "hotel";
+            var rowKey = hotelCd.ToString();
+            var tableClient = TableStorageService.GetInstance();
+            CloudTable table = tableClient.GetTableByReference("hoteldetailtrunc");
+
+            // Create a retrieve operation that takes a customer entity.
+            TableOperation retrieveOperation = TableOperation.Retrieve<HotelDetailWrapper>(partitionKey, rowKey);
+
+            // Execute the retrieve operation.
+            TableResult retrievedResult = table.Execute(retrieveOperation);
+            HotelDetailWrapper resultWrapper = (HotelDetailWrapper)retrievedResult.Result;
+            var concatedResult = ConcateData(resultWrapper);
+            HotelDetailsBase result = concatedResult.Deserialize<HotelDetailsBase>();
+            return result;
+        }
+
+        public HotelDetailsBase GetHotelAmenitiesAndAccomodationTypeFromTableStorage(int hotelCd)
+        {
+            var partitionKey = "hotel";
+            var rowKey = hotelCd.ToString();
+            var tableClient = TableStorageService.GetInstance();
+            CloudTable table = tableClient.GetTableByReference("amenitiesacc");
+
+            // Create a retrieve operation that takes a customer entity.
+            TableOperation retrieveOperation = TableOperation.Retrieve<HotelDetailWrapper>(partitionKey, rowKey);
+
+            // Execute the retrieve operation.
+            TableResult retrievedResult = table.Execute(retrieveOperation);
+            HotelDetailWrapper resultWrapper = (HotelDetailWrapper)retrievedResult.Result;
+            var concatedResult = ConcateData(resultWrapper);
+            HotelDetailsBase result = concatedResult.Deserialize<HotelDetailsBase>();
+            return result;
+        }
         public HotelDetailsBase GetHotelDetailFromTableStorage()
         {
             var tableClient = TableStorageService.GetInstance();

@@ -1,17 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using System.Web;
-using Lunggo.ApCommon.Hotel.Model;
 using Lunggo.ApCommon.Hotel.Model.Logic;
 using Lunggo.ApCommon.Hotel.Service;
-using Lunggo.ApCommon.Identity.Auth;
-using Lunggo.ApCommon.Identity.Users;
-using Lunggo.ApCommon.Util;
 using Lunggo.Framework.Config;
-using Lunggo.Framework.Constant;
-using Lunggo.Framework.Extension;
 using Lunggo.Framework.Log;
 using Lunggo.WebAPI.ApiSrc.Common.Model;
 using Lunggo.WebAPI.ApiSrc.Hotel.Model;

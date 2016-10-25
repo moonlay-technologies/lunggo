@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Lunggo.ApCommon.Hotel.Model.Logic;
 using Lunggo.ApCommon.Model;
 using Newtonsoft.Json;
 
@@ -9,7 +10,7 @@ namespace Lunggo.WebAPI.ApiSrc.Hotel.Model
     {
         [JsonProperty("searchId")]
         public string SearchId { get; set; }
-        [JsonProperty("regsIds")]
-        public List<string> RegsIds { get; set; }    
+        [JsonProperty("regs")]
+        public List<RegsId> RegsIds { get; set; }    
     } 
 }
