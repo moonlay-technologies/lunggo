@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Web;
 using System.Web.Http;
 using System.Web.Mvc;
@@ -20,6 +21,8 @@ using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds;
 
 using Lunggo.ApCommon.Hotel.Service;
 using Lunggo.ApCommon.Hotel.Service;
+using Occupancy = Lunggo.ApCommon.Hotel.Model.Occupancy;
+
 namespace Lunggo.BackendWeb
 {
     public class MvcApplication : HttpApplication
@@ -31,20 +34,30 @@ namespace Lunggo.BackendWeb
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
-            
+
             AppInitializer.Init();
 
-            HotelService.GetInstance().Search(new SearchHotelInput
+            //HotelService.GetInstance().Search(new SearchHotelInput
+            //{
+            //    Location = 16151,
+            //    CheckIn = new DateTime(2017, 3, 1),
+            //    Checkout = new DateTime(2017, 3, 4),
+            //    AdultCount = 1,
+            //    ChildCount = 0,
+            //    Rooms = 1,
+            //    Nights = 3
+            //});
+
+            HotelService.GetInstance().CommenceIssueHotel(new IssueHotelTicketInput
             {
-                Location = 16151,
-                CheckIn = new DateTime(2017, 3, 1),
-                Checkout = new DateTime(2017, 3, 4),
-                AdultCount = 1,
-                ChildCount = 0,
-                Rooms = 1,
-                Nights = 3
+                RsvNo = "280746537779"
             });
-            
+
+            //var hotel = HotelService.GetInstance().GetTruncatedHotelDetailFromTableStorage(444942);
+            //var iswifi = hotel.WifiAccess;
+            //var facilities = HotelService.GetInstance().GetHotelAmenitiesAndAccomodationTypeFromTableStorage(444942);
+            //var fac = facilities.Facilities;
+            //var acc = facilities.AccomodationType;
         }
     }
 }

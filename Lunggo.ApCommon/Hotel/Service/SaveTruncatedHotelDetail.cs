@@ -16,7 +16,7 @@ namespace Lunggo.ApCommon.Hotel.Service
     {
         public void SaveTruncatedHotelDetail()
         {
-            for (var i = 150001; i <= 600000; i++)
+            for (var i = 1; i <= 600000; i++)
             {
                 try
                 {
@@ -26,15 +26,19 @@ namespace Lunggo.ApCommon.Hotel.Service
                     {
                         HotelName = hotel.HotelName,
                         StarRating = hotel.StarRating,
-                        ImageUrl = new List<Image>
+                        ImageUrl = hotel.ImageUrl != null && (hotel.ImageUrl != null || hotel.ImageUrl.Count != 0) ?
+                        new List<Image>
                         {
                             hotel.ImageUrl.Where(u => u.Order == 1).ToList()[0]
-                        },
-                        WifiAccess = hotel.Facilities.Any(f => (f.FacilityGroupCode == 60 && f.FacilityCode == 261)
-                            || (f.FacilityGroupCode == 70 && f.FacilityCode == 550)),
-                        IsRestaurantAvailable = hotel.Facilities.Any(f => (f.FacilityGroupCode == 71 && f.FacilityCode == 200)
+                        } : null,
+                        WifiAccess = hotel.Facilities != null && 
+                            ((hotel.Facilities != null || hotel.Facilities.Count != 0) && 
+                            hotel.Facilities.Any(f => (f.FacilityGroupCode == 60 && f.FacilityCode == 261) 
+                            || (f.FacilityGroupCode == 70 && f.FacilityCode == 550))),
+                        IsRestaurantAvailable = hotel.Facilities != null && ((hotel.Facilities != null || hotel.Facilities.Count != 0) && 
+                            hotel.Facilities.Any(f => (f.FacilityGroupCode == 71 && f.FacilityCode == 200)
                             || (f.FacilityGroupCode == 75 && f.FacilityCode == 840)
-                            || (f.FacilityGroupCode == 75 && f.FacilityCode == 845)),
+                            || (f.FacilityGroupCode == 75 && f.FacilityCode == 845))),
                         Latitude = hotel.Latitude,
                         Longitude = hotel.Longitude,
                         DestinationCode = hotel.DestinationCode,
@@ -67,7 +71,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                         AccomodationType = hotel.AccomodationType
                     };
                     SaveHotelAmenitiesAndAccomodationTypeToTableStorage(truncatedHotelDetail, hotel.HotelCode);
-                    Console.WriteLine("Amenities saved for: " + i);
+                    Console.WriteLine("Amenities and Accommodation Type saved for: " + i);
                 }
                 catch
                 {

@@ -17,22 +17,8 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds
             var client = new HotelApiClient("p8zy585gmgtkjvvecb982azn", "QrwuWTNf8a", "https://api.test.hotelbeds.com/hotel-api");
             var booking = new Booking();
 
-            var listAdultPax = new List<Pax>();
-            var listChildPax = new List<Pax>();
-            foreach (var pax in hotelIssueInfo.Pax)
-            {
-                if (pax.Type == PaxType.Adult)
-                {
-                    listAdultPax.Add(pax);
-                }
-                if (pax.Type == PaxType.Child)
-                {
-                    listChildPax.Add(pax);
-                }
-            }
-
-            var countAdult = 0;
-            var countChild = 0;
+            var firstname = hotelIssueInfo.Pax[0].FirstName;
+            var lastname = hotelIssueInfo.Pax[0].LastName;
             string first, last;
             var splittedName = hotelIssueInfo.Contact.Name.Trim().Split(' ');
             if (splittedName.Length == 1)
@@ -62,13 +48,11 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds
                     {
                         for (var i = 0; i < totalAdultperRate; i++)
                         {
-                            confirmRoom.detailed(RoomDetail.GuestType.ADULT, 30, listAdultPax[countAdult].FirstName, listAdultPax[countAdult].LastName, z);
-                            countAdult++;
+                            confirmRoom.detailed(RoomDetail.GuestType.ADULT, 30, firstname, lastname, z);
                         }
                         for (var i = 0; i < totalChildrenperRate; i++)
                         {
-                            confirmRoom.detailed(RoomDetail.GuestType.CHILD, 8, listChildPax[countChild].FirstName, listChildPax[countChild].LastName, z);
-                            countChild++;
+                            confirmRoom.detailed(RoomDetail.GuestType.CHILD, 8, firstname, lastname, z);
                         }
                     }
                     //confirmRoom.detailed(RoomDetail.GuestType.ADULT, 30, "NombrePasajero1", "ApellidoPasajero1", 1);

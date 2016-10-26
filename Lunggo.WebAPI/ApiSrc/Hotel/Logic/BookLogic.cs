@@ -31,7 +31,15 @@ namespace Lunggo.WebAPI.ApiSrc.Hotel.Logic
                     ErrorCode = "ERHBOO02"
                 };
             }
-                
+
+            if (apiResponse.IsValid == false)
+            {
+                return new HotelBookApiResponse
+                {
+                    StatusCode = HttpStatusCode.BadRequest,
+                    ErrorCode = "ERHBOO03"
+                };
+            }
             if (apiResponse.StatusCode == HttpStatusCode.OK) return apiResponse;
             var log = LogService.GetInstance();
             var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");

@@ -47,25 +47,53 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds
                     payed = Availability.Pay.AT_WEB
                 };
             }
+
+            if (condition.Occupancies == null)
+            {
+                AvailRoom room = new AvailRoom
+                {
+                    adults = condition.AdultCount,
+                    children = condition.ChildCount,
+                    numberOfRooms = condition.Rooms
+                };
+                room.details = new List<RoomDetail>();
+                for (int i = 0; i < condition.AdultCount; i++)
+                {
+                    room.adultOf(30);
+                }
+
+                for (int i = 0; i < condition.ChildCount; i++)
+                {
+                    room.childOf(8);
+                }
+
+                avail.rooms.Add(room);
+            }
+            else
+            {
+                foreach (var occ in condition.Occupancies)
+                {
+                    AvailRoom room = new AvailRoom
+                    {
+                        adults = occ.AdultCount,
+                        children = occ.ChildCount,
+                        numberOfRooms = occ.RoomCount
+                    };
+                    room.details = new List<RoomDetail>();
+                    for (int i = 0; i < occ.AdultCount; i++)
+                    {
+                        room.adultOf(30);
+                    }
+
+                    for (int i = 0; i < occ.ChildCount; i++)
+                    {
+                        room.childOf(8);
+                    }
+                    
+                    avail.rooms.Add(room);
+                }
+            }
             
-            AvailRoom room = new AvailRoom
-            {
-                adults = condition.AdultCount,
-                children = condition.ChildCount,
-                numberOfRooms = condition.Rooms
-            };
-            room.details = new List<RoomDetail>();
-            for (int i = 0; i < condition.AdultCount; i++)
-            {
-            room.adultOf(30);
-            }
-
-            for (int i = 0; i < condition.ChildCount; i++)
-            {
-                room.childOf(8);
-            }
-
-            avail.rooms.Add(room);
             AvailabilityRQ availabilityRq = avail.toAvailabilityRQ();
                 if (availabilityRq == null)
                     throw new Exception("Availability RQ can't be null", new ArgumentNullException());
