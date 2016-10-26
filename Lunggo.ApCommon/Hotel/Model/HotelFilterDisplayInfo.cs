@@ -9,7 +9,7 @@ namespace Lunggo.ApCommon.Hotel.Model
     public class HotelFilterDisplayInfo
     {
         public List<AccomodationFilter> AccomodationFilter { get; set; }
-        public List<FacilityFilter> FacilityFilter { get; set; }
+        public List<FacilitiesFilter> FacilityFilter { get; set; }
         public List<ZoneFilter> ZoneFilter { get; set; }
     }
 
@@ -20,10 +20,10 @@ namespace Lunggo.ApCommon.Hotel.Model
         public string Code { get; set; }
     }
 
-    public class FacilityFilter
+    public class FacilitiesFilter
     {
         public int Count { get; set; }
-        public int Code { get; set; }
+        public string Code { get; set; }
         public string Name { get; set; }
     }
 

@@ -46,7 +46,7 @@ namespace Lunggo.ApCommon.Hotel.Model
         [JsonProperty("childCount", NullValueHandling = NullValueHandling.Ignore)]
         public int ChildCount { get; set; }
         [JsonProperty("allotment", NullValueHandling = NullValueHandling.Ignore)]
-        public string Allotment { get; set; }
+        public int Allotment { get; set; }
         [JsonProperty("offers", NullValueHandling = NullValueHandling.Ignore)]
         public List<Offer> Offers { get; set; }
     }
@@ -77,6 +77,9 @@ namespace Lunggo.ApCommon.Hotel.Model
         public int ChildCount { get; set; }
         [JsonProperty("offers", NullValueHandling = NullValueHandling.Ignore)]
         public List<Offer> Offers { get; set; }
+        [JsonProperty("allotment", NullValueHandling = NullValueHandling.Ignore)]
+        public int Allotment { get; set; }
+
         
     }
 

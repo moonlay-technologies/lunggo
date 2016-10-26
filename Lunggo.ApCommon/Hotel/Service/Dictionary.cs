@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using Lunggo.ApCommon.Hotel.Model;
+using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Sdk.auto.model;
 
 namespace Lunggo.ApCommon.Hotel.Service
 {
@@ -38,6 +39,12 @@ namespace Lunggo.ApCommon.Hotel.Service
             public string NameEn { get; set; }
             public List<Facility> Facilities { get; set; } 
 
+        }
+
+        public class FacilityFilter
+        {
+            public string Code { get; set; }
+            public List<string> FacilityCode { get; set; }
         }
 
         public class Facility
@@ -163,7 +170,8 @@ namespace Lunggo.ApCommon.Hotel.Service
         public static Dictionary<string, Chain> HotelChains;
         public static Dictionary<string, Accomodation> HotelAccomodations;
         public static Dictionary<string, Board> HotelBoards;
-        public static Dictionary<string, Category> HotelCategories; 
+        public static Dictionary<string, Category> HotelCategories;
+        public static Dictionary<string, FacilityFilter> HotelFacilityFilters; 
 
         public static Dictionary<string, Room> HotelRoomDict;
         public static Dictionary<string, HotelRoomType> HotelRoomTypeDict;
@@ -179,7 +187,8 @@ namespace Lunggo.ApCommon.Hotel.Service
 
         public static List<Country> Countries;
         public static List<FacilityGroup> FacilityGroups;
-        public static List<Room> Rooms; 
+        public static List<Room> Rooms;
+        public static List<FacilityFilter> FacilityFilters; 
 
         private const string HotelSegmentFileName = @"HotelSegment.csv";
         private const string HotelFacilityFileName = @"HotelFacilities.csv";
@@ -195,6 +204,7 @@ namespace Lunggo.ApCommon.Hotel.Service
         private const string HotelBoardFileName = @"HotelBoard.csv";
         private const string HotelAccomodationFileName = @"HotelAccomodation.csv";
         private const string HotelCategoryFileName = @"HotelCategory.csv";
+        private const string HotelFacilityFilterGroupFileName = @"HotelFacilitiesFilterGroup.csv";
 
 
         private static string _hotelSegmentFilePath;
@@ -210,6 +220,7 @@ namespace Lunggo.ApCommon.Hotel.Service
         private static string _hotelBoardFilePath;
         private static string _hotelChainFilePath;
         private static string _hotelCategoryFilePath;
+        private static string _hotelFacilitiesFilter;
 
         private static string _configPath;
 
@@ -234,12 +245,14 @@ namespace Lunggo.ApCommon.Hotel.Service
             _hotelBoardFilePath = Path.Combine(_configPath, HotelBoardFileName);
             _hotelChainFilePath = Path.Combine(_configPath, HotelchainFileName);
             _hotelCategoryFilePath = Path.Combine(_configPath, HotelCategoryFileName);
+            _hotelFacilitiesFilter = Path.Combine(_configPath, HotelFacilityFilterGroupFileName);
             PopulateHotelSegmentDict(_hotelSegmentFilePath);
 
             PopulateHotelAccomodationDict(_hotelAccomodationFilePath);
             PopulateHotelBoardDict(_hotelBoardFilePath);
             PopulateHotelChainDict(_hotelChainFilePath);
             PopulateHotelCategoryDict(_hotelCategoryFilePath);
+            PopulateHotelFacilityFilter(_hotelFacilitiesFilter);
 
             PopulateHotelFacilityGroupDict(_hotelFacilityGroupFilePath);
             PopulateHotelFacilityGroupList(_hotelFacilitiesFilePath);
@@ -682,11 +695,42 @@ namespace Lunggo.ApCommon.Hotel.Service
         }
 
 
+        private static void PopulateHotelFacilityFilter(String hotelFacilityFilter)
+        {
+            HotelFacilityFilters = new Dictionary<string, FacilityFilter>();
+            FacilityFilters = new List<FacilityFilter>();
+
+            using (var file = new StreamReader(hotelFacilityFilter))
+            {
+                var line = file.ReadLine();
+                while (!file.EndOfStream)
+                {
+                    line = file.ReadLine();
+                    var splittedLine = line.Split('|');
+                    if (HotelFacilityFilters.ContainsKey(splittedLine[1]))
+                    {
+                        HotelFacilityFilters[splittedLine[1]].FacilityCode.Add(splittedLine[0]);
+                    }
+                    else
+                    {
+                        HotelFacilityFilters.Add(splittedLine[1], new FacilityFilter
+                        {
+                            Code = splittedLine[1],
+                            FacilityCode = new List<string>{splittedLine[0]}
+                        });
+                    }
+                }
+            }
+        }
+
+
+        
+
 
         private static void PopulateHotelCountriesDict(String hotelCountriesFilePath)
         {
             HotelService.GetInstance().HotelCountry = new Dictionary<string, CountryDict>();
-
+            Countries = new List<Country>();
             using (var file = new StreamReader(hotelCountriesFilePath))
             {
                 var line = file.ReadLine();
@@ -809,6 +853,21 @@ namespace Lunggo.ApCommon.Hotel.Service
             foreach (var zone in countries.SelectMany(country => country.Destinations).SelectMany(destination => destination.Zones))
             {
                 HotelService.GetInstance().HotelDestinationZoneDict.Add(zone.Code, zone);
+            }
+        }
+
+
+
+        //GETTER METHOD FOR FACILITY FILTER
+        public FacilityFilter GetFacilityFilter(string code)
+        {
+            try
+            {
+                return HotelFacilityFilters[code];
+            }
+            catch (Exception)
+            {
+                return new FacilityFilter();
             }
         }
 

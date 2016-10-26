@@ -2,6 +2,7 @@
 using System.Linq;
 using CsQuery.ExtensionMethods;
 using Lunggo.ApCommon.Hotel.Model;
+using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Sdk.auto.model;
 using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.ApCommon.Payment.Service;
 using Lunggo.ApCommon.Product.Constant;
@@ -86,7 +87,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                 //Segments =  //TODO "List of Segment by SegmentCode"
                 Pois = hotelDetail.Pois,
                 Terminals =  hotelDetail.Terminals,
-                //Facilities =  hotelDetail.Facilities,//TODO Bentuk LIst, harus dipecah satu satu
+                Facilities = hotelDetail.Facilities.Select(p => GetHotelFacilityDescId(p.FacilityGroupCode) + "" + hotelDetail.Facilities.Select(x => x.FacilityCode)).ToList(),
                 Review = hotelDetail.Review,
                 Rooms = ConvertToHotelRoomForDisplay(hotelDetail.Rooms),
                 AccomodationName = GetHotelAccomodationMultiDesc(hotelDetail.AccomodationType),
@@ -152,7 +153,7 @@ namespace Lunggo.ApCommon.Hotel.Service
             {
                 var rate = new HotelRateForDisplay()
                 {
-                    RateKey = rateDetail.RateKey,
+                    //RateKey = rateDetail.RateKey,
                     Type = rateDetail.Type,
                     TypeDescription = dictionary.GetHotelRoomRateTypeId(rateDetail.Type),
                     Class = rateDetail.Class,
@@ -161,7 +162,8 @@ namespace Lunggo.ApCommon.Hotel.Service
                     Price = rateDetail.Price!=null?rateDetail.Price:null,
                     AdultCount = rateDetail.AdultCount,
                     ChildCount = rateDetail.ChildCount,
-                    Boards = rateDetail.Boards,
+                    Allotment = rateDetail.Allotment,
+                    //Boards = rateDetail.Boards,
                     BoardDescription = GetHotelBoardDescId(rateDetail.Boards),
                     RoomCount = rateDetail.RoomCount,
                     TimeLimit = rateDetail.TimeLimit,

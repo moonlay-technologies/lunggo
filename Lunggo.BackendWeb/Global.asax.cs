@@ -33,8 +33,23 @@ namespace Lunggo.BackendWeb
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             
             AppInitializer.Init();
-            var c = HotelService.GetInstance()._Autocompletes[200000];
-            var b = c;
+            //var c = HotelService.GetInstance()._Autocompletes[200000];
+            //var b = c;
+
+            var a = HotelService.GetInstance().GetFacilityFilter("Park");
+            var b = HotelService.GetInstance().GetFacilityFilter("Internet");
+            var c = HotelService.GetInstance().GetFacilityFilter("FrontDesk");
+            var d = HotelService.GetInstance().GetFacilityFilter("SwimmingPool");
+            var e = HotelService.GetInstance().GetFacilityFilter("Restaurant");
+            var f = HotelService.GetInstance().GetFacilityFilter("MeetingRoom");
+            var x = HotelService.GetInstance().GetFacilityFilter("Spa");
+            var g = HotelService.GetInstance().GetFacilityFilter("DisabilityRoom");
+            var h = HotelService.GetInstance().GetFacilityFilter("WheelChair");
+            var i = HotelService.GetInstance().GetFacilityFilter("Lift");
+            var j = HotelService.GetInstance().GetFacilityFilter("Gym/Fitness");
+            var k = HotelService.GetInstance().GetFacilityFilter("Sport");
+            Console.WriteLine(x);
+
             //HotelService.GetInstance().SelectHotelRoom(new SelectHotelRoomInput
             //{
             //    RegsIds = new List<string>

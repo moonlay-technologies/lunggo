@@ -111,6 +111,7 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds
                                     AdultCount = x.adults,
                                     ChildCount = x.children,
                                     RoomCount = x.rooms,
+                                    Allotment = x.allotment,
                                     PaymentType = PaymentTypeCd.Mnemonic(x.paymentType),
                                     Offers = x.offers == null ? null : x.offers.Select(z => new Offer
                                     {

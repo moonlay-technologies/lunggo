@@ -54,34 +54,8 @@ namespace Lunggo.ApCommon.Hotel.Model
 
     public class AmenitiesFilter
     {
-        [JsonProperty("parkingSpace")]
-        public bool ParkingSpace { get; set; }
-        [JsonProperty("internet")]
-        public bool Internet { get; set; }
-        [JsonProperty("frontDesk24Hour")]
-        public bool FrontDesk24Hour { get; set; }
-        [JsonProperty("swimmingPool")]
-        public bool SwimmingPool { get; set; }
-        [JsonProperty("restaurant")]
-        public bool Restaurant { get; set; }
-        [JsonProperty("meetingFacilities")]
-        public bool MeetingFacilities { get; set; }
-        [JsonProperty("nonSmokingRoom")]
-        public bool NonSmokingRoom { get; set; }
-        [JsonProperty("sportFacilities")]
-        public bool SportFacilities { get; set; }
-        [JsonProperty("airConditioner")]
-        public bool AirConditioner { get; set; }
-        [JsonProperty("spa")]
-        public bool Spa { get; set; }
-        [JsonProperty("disabilityFriendly")]
-        public bool DisabilityFriendly { get; set; }
-        [JsonProperty("wheelchair")]
-        public bool Wheelchair { get; set; }
-        [JsonProperty("lift")]
-        public bool Lift { get; set; }
-        [JsonProperty("gymAndFitness")]
-        public bool GymAndFitness { get; set; }
+        [JsonProperty("facilities")]
+        public List<string> Facilities { get; set; } 
     }
 
     public class BoardFilter
