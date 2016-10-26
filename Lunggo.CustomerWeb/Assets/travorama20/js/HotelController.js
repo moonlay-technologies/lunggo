@@ -14,13 +14,8 @@
         var id = $(this).parent().find('.check-radio');
         $('body .radio').checked = false;
         $('body .radio').removeClass('active');
-        if ($(id).is(':checked')) {
-            id.checked = false;
-            $(this).removeClass('active');
-        } else {
-            id.checked = true;
-            $(this).addClass('active');
-        }
+        id.checked = true;
+        $(this).addClass('active');
     });
 
     $("body .img-list").each(function (i, elem) {
