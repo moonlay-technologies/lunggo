@@ -28,28 +28,28 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
         {
             internal BookFlightResult BookFlight(FlightBookingInfo bookInfo)
             {
-                RevalidateConditions conditions = new RevalidateConditions
-                {
-                    Itinerary = bookInfo.Itinerary
-                };
+                //RevalidateConditions conditions = new RevalidateConditions
+                //{
+                //    Itinerary = bookInfo.Itinerary
+                //};
                 //conditions.Itinerary = bookInfo.Itinerary;
-                RevalidateFareResult revalidateResult = RevalidateFare(conditions);
-                if (revalidateResult.IsItineraryChanged || revalidateResult.IsPriceChanged || (!revalidateResult.IsValid))
-                {
-                    return new BookFlightResult
-                    {
-                        IsValid = revalidateResult.IsValid,
-                        Errors = revalidateResult.Errors,
-                        ErrorMessages = revalidateResult.ErrorMessages,
-                        IsItineraryChanged = revalidateResult.IsItineraryChanged,
-                        IsPriceChanged = revalidateResult.IsPriceChanged,
-                        IsSuccess = false,
-                        NewItinerary = revalidateResult.NewItinerary,
-                        NewPrice = revalidateResult.NewPrice,
-                        Status = null
-                    };
-                }
-                bookInfo.Itinerary = revalidateResult.NewItinerary;
+                //RevalidateFareResult revalidateResult = RevalidateFare(conditions);
+                //if (revalidateResult.IsItineraryChanged || revalidateResult.IsPriceChanged || (!revalidateResult.IsValid))
+                //{
+                //    return new BookFlightResult
+                //    {
+                //        IsValid = revalidateResult.IsValid,
+                //        Errors = revalidateResult.Errors,
+                //        ErrorMessages = revalidateResult.ErrorMessages,
+                //        IsItineraryChanged = revalidateResult.IsItineraryChanged,
+                //        IsPriceChanged = revalidateResult.IsPriceChanged,
+                //        IsSuccess = false,
+                //        NewItinerary = revalidateResult.NewItinerary,
+                //        NewPrice = revalidateResult.NewPrice,
+                //        Status = null
+                //    };
+                //}
+                //bookInfo.Itinerary = revalidateResult.NewItinerary;
                 var client = CreateAgentClient();
                 Login(client);
 
@@ -370,7 +370,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                     {
                         IsValid = true,
                         IsItineraryChanged = false,
-                        IsPriceChanged = bookInfo.Itinerary.Price.Supplier != fixPrice,
+                        IsPriceChanged = true,
                         IsSuccess = false,
                         //Errors = new List<FlightError> { FlightError.FareIdNoLongerValid },
                         ErrorMessages = new List<string> { "Price is changed!" },

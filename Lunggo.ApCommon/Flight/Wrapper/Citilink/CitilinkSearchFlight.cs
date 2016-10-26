@@ -267,7 +267,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                                         AdultPricePortion = hargaAdult/harga,
                                         ChildPricePortion = hargaChild/harga,
                                         InfantPricePortion = hargaInfant/harga,
-                                        FareId = prefix + ParseFID1[1],
+                                        FareId = prefix + FID,
                                         Trips = new List<FlightTrip>
                                     {
                                         new FlightTrip()

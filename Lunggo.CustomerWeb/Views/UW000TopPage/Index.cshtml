@@ -8,7 +8,7 @@
     ViewBag.Title = "Enjoy Your Every Moment";
 
     //ViewBag.Campaign = true;
-    
+
     // location
     ViewBag.LocationData = new Dictionary<string, string>();
     ViewBag.LocationData["Jakarta"] = "[{'name' : 'Surabaya','origin' : 'SUB','price' : '500000'},{'name' : 'Medan','origin' : 'KNO',	'price' : '700000'},{'name' : 'Denpasar','origin' : 'DPS','price' : '500000'},{'name' : 'Semarang','origin' : 'SRG','price' : '300000'},{'name' : 'Singapore','origin' : 'SIN','price' : '200000'},{'name' : 'Yogyakarta','origin' : 'JOG','price' : '300000'},{'name' : 'Balikpapan','origin' : 'BPN','price' : '600000'},{'name' : 'Makassar','origin' : 'UPG','price' : '600000'},{'name' : 'Batam','origin' : 'BTH','price' : '500000'}]";
@@ -85,13 +85,13 @@
 
 @section AdditionalCSS{
     <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/jquery.slick/1.5.9/slick.css" />
-    
+
     @*@if (ViewBag.Campaign)
-    {
-        <!-- imlek start -->
-        <link href="/Campaign/Imlek2016/css/imlek2016.min.css" rel="stylesheet" />
-        <!-- imlek end -->
-    }*@
+        {
+            <!-- imlek start -->
+            <link href="/Campaign/Imlek2016/css/imlek2016.min.css" rel="stylesheet" />
+            <!-- imlek end -->
+        }*@
 
 }
 
@@ -138,12 +138,12 @@
 
     </script>
     <script src="/Assets/Travorama20/js/homeController.js"></script>
-    
+
     @*@if (ViewBag.Campaign)
-    {
-        <script src="/Assets/vendor/transitJS/jquery.transit.min.js"></script>
-        <script src="/Campaign/Imlek2016/js/imlek2016.js"></script>
-    }*@
+        {
+            <script src="/Assets/vendor/transitJS/jquery.transit.min.js"></script>
+            <script src="/Campaign/Imlek2016/js/imlek2016.js"></script>
+        }*@
 
 }
 
@@ -154,12 +154,12 @@
 
             <header class="tab-header">
                 @*<nav>
-                <ul>
-                    <li class="flight active"><a href="#">Pesawat</a></li>
-                    <li class="hotel" data-toggle="tooltip" data-placement="bottom" title="Coming soon!"><a href="#">Hotel</a></li>
-    <li class="activity" data-toggle="tooltip" data-placement="bottom" title="Coming soon!"><a href="#">Activity</a></li>
-                    </ul>
-                </nav>*@
+                                <ul>
+                                    <li class="flight active"><a href="#">Pesawat</a></li>
+                                    <li class="hotel" data-toggle="tooltip" data-placement="bottom" title="Coming soon!"><a href="#">Hotel</a></li>
+                    <li class="activity" data-toggle="tooltip" data-placement="bottom" title="Coming soon!"><a href="#">Activity</a></li>
+                                    </ul>
+                                </nav>*@
             </header>
 
             <section class="tab-content">
@@ -367,45 +367,35 @@
         @Html.Partial("/Views/Shared/Travorama20/_SearchCalendar.cshtml")
         @Html.Partial("/Views/Shared/Travorama20/_SearchLocation.cshtml")
     </div><!-- .container -->
-    @if (ViewBag.DestinationName == null || ViewBag.DestinationName == "" )
+    @if (ViewBag.DestinationName == null || ViewBag.DestinationName == "")
     {
         <div class="page-slider">
             <div class="slider-wrapper" id="index-wrapper">
-                <!--
-                    <div class="slider">
-                        <a href="@Url.Action("danamonsweetvalentine","StaticPage")">
-                            <img src="/Assets/images/campaign/DanamonSweetValentine/danamonsweetvalentine-slider.jpg" alt="Danamon Sweet Valentine" />
-                        </a>
-                    </div>
-                    -->
-                <!--
-                    <div class="slider">
-                        <a href="@Url.Action("VisaWonderfulWednesday","StaticPage")">
-                            <img src="/Assets/images/campaign/VisaWonderfulWednesday/visa-wonderful-wednesday-front.jpg" alt="Wonderful Wednesday with VISA" />
-                        </a>
-                    </div>
-                    -->
-                <!--
-                    <div class="slider">
-                        <a href="@Url.Action("GetCalendarTerms","StaticPage")">
-                            <img src="/Assets/images/campaign/free2016calendar/campaign-2016_calendar.jpg" alt="Free 2016 Calendar" />
-                        </a>
-                    </div>
-                    -->
-                <!--
-                    <div class="slider">
-                        <a href="#">
-                            <img src="/Assets/images/slider/slider-happy_hew_year.jpg" alt="Merry Christmas and Happy New Year" />
-                        </a>
-                    </div>
-                    -->
-                <!--
-                    <div class="slider">
-                        <a href="#">
-                            <img src="/Assets/images/slider/slider-winner-20151002.jpg" alt="Pemenang Beta Test" />
-                        </a>
-                    </div>
-                    -->
+                @*<div class="slider">
+                    <a href="@Url.Action("danamonsweetvalentine","StaticPage")">
+                        <img src="/Assets/images/campaign/DanamonSweetValentine/danamonsweetvalentine-slider.jpg" alt="Danamon Sweet Valentine" />
+                    </a>
+                </div>
+                <div class="slider">
+                    <a href="@Url.Action("VisaWonderfulWednesday","StaticPage")">
+                        <img src="/Assets/images/campaign/VisaWonderfulWednesday/visa-wonderful-wednesday-front.jpg" alt="Wonderful Wednesday with VISA" />
+                    </a>
+                </div>
+                <div class="slider">
+                    <a href="@Url.Action("GetCalendarTerms","StaticPage")">
+                        <img src="/Assets/images/campaign/free2016calendar/campaign-2016_calendar.jpg" alt="Free 2016 Calendar" />
+                    </a>
+                </div>
+                <div class="slider">
+                    <a href="#">
+                        <img src="/Assets/images/slider/slider-happy_hew_year.jpg" alt="Merry Christmas and Happy New Year" />
+                    </a>
+                </div>
+                <div class="slider">
+                    <a href="#">
+                        <img src="/Assets/images/slider/slider-winner-20151002.jpg" alt="Pemenang Beta Test" />
+                    </a>
+                </div>*@
                 <div class="slider">
                     <a href="@Url.Action("Btn","Promo")">
                         <img src="/Assets/images/campaign/PromoBTN/PromoBTN-slider-bg.jpg" alt="Promo BTN" />
@@ -423,15 +413,17 @@
                 </div>
             </div>
         </div><!-- .slider -->
-    }else{
-        <div class="page-slider" style="background-image:url('/Assets/images/campaign/@(ViewBag.DestinationName.Replace(" ","")).jpg');">    
+    }
+    else
+    {
+        <div class="page-slider" style="background-image:url('/Assets/images/campaign/@(ViewBag.DestinationName.Replace(" ","")).jpg');">
             <div class="slider-text hidden">
                 <h1><img src="/Assets/images/enjoyyoureverymoment.png" alt="Enjoy Your Every Moment" /></h1>
                 <p>Ke mana pun Anda ingin bepergian, kami menyediakan pilihan penerbangan <br /> domestik dan internasional dari 900 maskapai</p>
             </div>
         </div><!-- .slider -->
     }
-        
+
 </section><!-- .section-search -->
 
 <section class="section-reason">
@@ -439,7 +431,8 @@
         <img src="/Assets/images/choose-travorama.png" alt="Why choose Travorama" />
     </div>
 </section>
-@if (ViewBag.DestinationName == null || ViewBag.Destinationname == ""){
+@if (ViewBag.DestinationName == null || ViewBag.Destinationname == "")
+{
     <section class="section-popular">
         <div class="container">
             <h2 class="section-title stripe text-center">TUJUAN <span>TERPOPULER</span></h2>
@@ -451,7 +444,7 @@
                             <h3>
                                 <small>Penerbangan ke</small> <b>Jakarta</b>
                             </h3>
-                            
+
                         </a>
                         <img src="/Assets/images/pop-jakarta.jpg" alt="Jakarta, Indonesia" />
                     </div>
@@ -460,7 +453,7 @@
                             <h3>
                                 <small>Penerbangan ke</small> <b>Bali</b>
                             </h3>
-                            
+
                         </a>
                         <img src="/Assets/images/pop-bali.jpg" alt="Bali, Indonesia" />
                     </div>
@@ -469,7 +462,7 @@
                             <h3>
                                 <small>Penerbangan ke</small> <b>Malaysia</b>
                             </h3>
-                            
+
                         </a>
                         <img src="/Assets/images/pop-malaysia.jpg" alt="Malaysia" />
                     </div>
@@ -480,7 +473,7 @@
                             <h3>
                                 <small>Penerbangan ke</small> <b>Yogyakarta</b>
                             </h3>
-                            
+
                         </a>
                         <img src="/Assets/images/pop-yogyakarta.jpg" alt="Yogyakarta, Indonesia" />
                     </div>
@@ -489,7 +482,7 @@
                             <h3>
                                 <small>Penerbangan ke</small> <b>Singapura</b>
                             </h3>
-                            
+
                         </a>
                         <img src="/Assets/images/pop-singapore.jpg" alt="Singapore" />
                     </div>
@@ -500,7 +493,7 @@
                             <h3>
                                 <small>Penerbangan ke</small> <b>Bandung</b>
                             </h3>
-                            
+
                         </a>
                         <img src="/Assets/images/pop-bandung.jpg" alt="Bandung, Indonesia" />
                     </div>
@@ -509,7 +502,7 @@
                             <h3>
                                 <small>Penerbangan ke</small> <b>Surabaya</b>
                             </h3>
-                            
+
                         </a>
                         <img src="/Assets/images/pop-surabaya.jpg" alt="Surabaya, Indonesia" />
                     </div>
@@ -534,11 +527,11 @@ else
     <section class="section-popular">
         <div class="container">
             <h2 class="section-title stripe text-center">RUTE PENERBANGAN <span>TERPOPULER</span></h2>
-            
+
             <div class="route-wrapper" ng-app="travorama" ng-controller="homeController">
-            
+
                 <div class="row">
-                    
+
                     <div class="col-xs-4" ng-repeat="destination in topDestinations">
                         <div class="route">
                             <header>
@@ -552,7 +545,7 @@ else
                         </div>
                     </div>
 
-                </div>    
+                </div>
 
             </div><!-- .destination-wrapper -->
 
@@ -564,7 +557,7 @@ else
     <div class="container">
 
         <img class="subscribe-bg" src="/Assets/images/subscribe-bg.jpg" alt="Email" />
-        
+
         <div class="row subscribe-after">
             <div class="col-xs-10 col-xs-offset-2">
                 <div>
@@ -622,7 +615,6 @@ else
 
     </div>
 </section><!-- .section-feedback -->
-
 <!--<div class="page-newsletter" id="newsletter">
     <div class=" overlay-content">
         <section>
@@ -660,116 +652,114 @@ else
         </section>
     </div>
 </div> -->
-
-
 @*@if (ViewBag.Campaign)
-{
-    <!-- TRAVORAMA IMLEK CAMPAIGN -->
-    <div class="imlek-wrapper">
-    
-        <a href="#" class="imlek-wrapper__close">
-            <img src="/Campaign/Imlek2016/images/imlek-close.png" alt="X" />
-        </a>
+    {
+        <!-- TRAVORAMA IMLEK CAMPAIGN -->
+        <div class="imlek-wrapper">
 
-        <div class="draw__wrapper">
-        
-            <header class="draw__header">
-                <img src="/Campaign/Imlek2016/images/imlek-header.png" alt="TRAVORAMA - Chinese New Year Celebration" />
-            </header><!-- .draw__header -->
-        
-            <section class="draw__body">
-                
-                <div class="tree">
-                    <img src="/Campaign/Imlek2016/images/imlek-tree.png" alt="Tree" class="main" />
-                    <img src="/Campaign/Imlek2016/images/imlek-monkey.png" alt="Monkey" class="monkey" />
-                    
-                    <div class="card card-1">
-                        <div class="prize__wrapper">
-                            <a href="#" class="prize__close">
-                                <img src="/Campaign/Imlek2016/images/close-btn.png" alt="Close" />
-                            </a>
-                                
-                            <div class="prize__body">
-                                <p class="loading"><b>Loading</b></p>
+            <a href="#" class="imlek-wrapper__close">
+                <img src="/Campaign/Imlek2016/images/imlek-close.png" alt="X" />
+            </a>
+
+            <div class="draw__wrapper">
+
+                <header class="draw__header">
+                    <img src="/Campaign/Imlek2016/images/imlek-header.png" alt="TRAVORAMA - Chinese New Year Celebration" />
+                </header><!-- .draw__header -->
+
+                <section class="draw__body">
+
+                    <div class="tree">
+                        <img src="/Campaign/Imlek2016/images/imlek-tree.png" alt="Tree" class="main" />
+                        <img src="/Campaign/Imlek2016/images/imlek-monkey.png" alt="Monkey" class="monkey" />
+
+                        <div class="card card-1">
+                            <div class="prize__wrapper">
+                                <a href="#" class="prize__close">
+                                    <img src="/Campaign/Imlek2016/images/close-btn.png" alt="Close" />
+                                </a>
+
+                                <div class="prize__body">
+                                    <p class="loading"><b>Loading</b></p>
+                                </div>
+
                             </div>
-
+                            <img src="/Campaign/Imlek2016/images/card-1.png" alt="Card 1" class="envelope" />
                         </div>
-                        <img src="/Campaign/Imlek2016/images/card-1.png" alt="Card 1" class="envelope" />
-                    </div>
-                    <div class="card card-2">
-                        <div class="prize__wrapper">
-                            <a href="#" class="prize__close">
-                                <img src="/Campaign/Imlek2016/images/close-btn.png" alt="Close" />
-                            </a>
+                        <div class="card card-2">
+                            <div class="prize__wrapper">
+                                <a href="#" class="prize__close">
+                                    <img src="/Campaign/Imlek2016/images/close-btn.png" alt="Close" />
+                                </a>
 
-                            <div class="prize__body">
-                                <p class="loading"><b>Loading</b></p>
+                                <div class="prize__body">
+                                    <p class="loading"><b>Loading</b></p>
+                                </div>
+
                             </div>
-
+                            <img src="/Campaign/Imlek2016/images/card-2.png" alt="Card 2" class="envelope" />
                         </div>
-                        <img src="/Campaign/Imlek2016/images/card-2.png" alt="Card 2" class="envelope" />
-                    </div>
-                    <div class="card card-3">
-                        <div class="prize__wrapper">
-                            <a href="#" class="prize__close">
-                                <img src="/Campaign/Imlek2016/images/close-btn.png" alt="Close" />
-                            </a>
+                        <div class="card card-3">
+                            <div class="prize__wrapper">
+                                <a href="#" class="prize__close">
+                                    <img src="/Campaign/Imlek2016/images/close-btn.png" alt="Close" />
+                                </a>
 
-                            <div class="prize__body">
-                                <p class="loading"><b>Loading</b></p>
+                                <div class="prize__body">
+                                    <p class="loading"><b>Loading</b></p>
+                                </div>
+
                             </div>
-
+                            <img src="/Campaign/Imlek2016/images/card-3.png" alt="Card 3" class="envelope" />
                         </div>
-                        <img src="/Campaign/Imlek2016/images/card-3.png" alt="Card 3" class="envelope" />
-                    </div>
-                    <div class="card card-4">
-                        <div class="prize__wrapper">
-                            <a href="#" class="prize__close">
-                                <img src="/Campaign/Imlek2016/images/close-btn.png" alt="Close" />
-                            </a>
+                        <div class="card card-4">
+                            <div class="prize__wrapper">
+                                <a href="#" class="prize__close">
+                                    <img src="/Campaign/Imlek2016/images/close-btn.png" alt="Close" />
+                                </a>
 
-                            <div class="prize__body">
-                                <p class="loading"><b>Loading</b></p>
+                                <div class="prize__body">
+                                    <p class="loading"><b>Loading</b></p>
+                                </div>
+
                             </div>
-
+                            <img src="/Campaign/Imlek2016/images/card-4.png" alt="Card 4" class="envelope" />
                         </div>
-                        <img src="/Campaign/Imlek2016/images/card-4.png" alt="Card 4" class="envelope" />
-                    </div>
-                    <div class="card card-5">
-                        <div class="prize__wrapper">
-                            <a href="#" class="prize__close">
-                                <img src="/Campaign/Imlek2016/images/close-btn.png" alt="Close" />
-                            </a>
+                        <div class="card card-5">
+                            <div class="prize__wrapper">
+                                <a href="#" class="prize__close">
+                                    <img src="/Campaign/Imlek2016/images/close-btn.png" alt="Close" />
+                                </a>
 
-                            <div class="prize__body">
-                                <p class="loading"><b>Loading</b></p>
+                                <div class="prize__body">
+                                    <p class="loading"><b>Loading</b></p>
+                                </div>
+
                             </div>
-
+                            <img src="/Campaign/Imlek2016/images/card-5.png" alt="Card 5" class="envelope" />
                         </div>
-                        <img src="/Campaign/Imlek2016/images/card-5.png" alt="Card 5" class="envelope" />
-                    </div>
-                
-                    <img src="/Campaign/Imlek2016/images/imlek-title.png" alt="Pilih Keberuntunganmu Sekarang !" class="note" />
 
-                </div><!-- .tree -->
-                
-                <div class="cloud"> 
-                </div><!-- .cloud -->
-            
-                <div class="email">
-                    <div class="form-group">
-                        <p>Masukkan email Anda sebelum memilih angpao</p>
-                        <input type="email" value="" class="form-control" id="imlek__email__address" placeholder="alamat@email.com" />
-                        <p class="help-block text-left">Masukkan alamat email yang valid</p>
-                        <button class="btn btn-yellow" id="imlek__email__submit" data-url="@ConfigManager.GetInstance().GetConfigValue("api","apiUrl")">PILIH ANGPAO</button>
-                        <p>Baca <a href="@Url.Action("Imlek2016","StaticPage")">syarat dan ketentuan disini</a></p>
-                    </div>
-                </div><!-- .email -->
+                        <img src="/Campaign/Imlek2016/images/imlek-title.png" alt="Pilih Keberuntunganmu Sekarang !" class="note" />
 
-            </section><!-- .draw__bdoy -->
+                    </div><!-- .tree -->
+
+                    <div class="cloud">
+                    </div><!-- .cloud -->
+
+                    <div class="email">
+                        <div class="form-group">
+                            <p>Masukkan email Anda sebelum memilih angpao</p>
+                            <input type="email" value="" class="form-control" id="imlek__email__address" placeholder="alamat@email.com" />
+                            <p class="help-block text-left">Masukkan alamat email yang valid</p>
+                            <button class="btn btn-yellow" id="imlek__email__submit" data-url="@ConfigManager.GetInstance().GetConfigValue("api","apiUrl")">PILIH ANGPAO</button>
+                            <p>Baca <a href="@Url.Action("Imlek2016","StaticPage")">syarat dan ketentuan disini</a></p>
+                        </div>
+                    </div><!-- .email -->
+
+                </section><!-- .draw__bdoy -->
 
 
-        </div><!-- .draw__wrapper -->
+            </div><!-- .draw__wrapper -->
 
-    </div><!-- .imlek-wrapper -->
-}*@
+        </div><!-- .imlek-wrapper -->
+    }*@
