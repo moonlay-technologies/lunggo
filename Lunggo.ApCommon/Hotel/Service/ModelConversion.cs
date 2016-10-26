@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using CsQuery.ExtensionMethods;
 using Lunggo.ApCommon.Hotel.Model;
@@ -51,7 +52,6 @@ namespace Lunggo.ApCommon.Hotel.Service
                 ZoneName = GetHotelZoneNameFromDict(hotelDetail.DestinationCode+"-"+hotelDetail.ZoneCode),
                 StarRating = hotelDetail.StarCode,
                 ChainName = GetHotelChainDesc(hotelDetail.Chain),
-                //Facilities =  hotelDetail.//TODO
                 AccomodationName = GetHotelAccomodationDescId(hotelDetail.AccomodationType),
                 MainImage = hotelDetail.ImageUrl.Where(x=>x.Type=="GEN").Select(x=>x.Path).FirstOrDefault(),
                 OriginalFare = hotelDetail.OriginalFare,
@@ -87,7 +87,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                 //Segments =  //TODO "List of Segment by SegmentCode"
                 Pois = hotelDetail.Pois,
                 Terminals =  hotelDetail.Terminals,
-                Facilities = hotelDetail.Facilities.Select(p => GetHotelFacilityDescId(p.FacilityGroupCode) + "" + hotelDetail.Facilities.Select(x => x.FacilityCode)).ToList(),
+                Facilities = hotelDetail.Facilities.Select(x =>(GetHotelFacilityDescId(Convert.ToInt32(x.FullFacilityCode)))).ToList(),
                 Review = hotelDetail.Review,
                 Rooms = ConvertToHotelRoomForDisplay(hotelDetail.Rooms),
                 AccomodationName = GetHotelAccomodationMultiDesc(hotelDetail.AccomodationType),
@@ -111,9 +111,9 @@ namespace Lunggo.ApCommon.Hotel.Service
                     RoomCode = roomDetail.RoomCode,
                     RoomName = roomDetail.RoomName,
                     Type = roomDetail.Type,
-                    TypeName = dictionary.GetHotelRoomRateTypeId(roomDetail.Type),
-                    CharacteristicCode = roomDetail.characteristicCd,
-                    CharacteristicName = dictionary.GetHotelRoomRateTypeId(roomDetail.characteristicCd),
+                    //TypeName = dictionary.GetHotelRoomRateTypeId(roomDetail.Type),
+                    //CharacteristicCode = roomDetail.characteristicCd,
+                    //CharacteristicName = dictionary.GetHotelRoomRateTypeId(roomDetail.characteristicCd),
                     Images = roomDetail.Images != null ? roomDetail.Images : null,
                     Facilities = roomDetail.Facilities != null ? roomDetail.Facilities : null,
                     Rates = ConvertToRateForDisplays(roomDetail.Rates)
@@ -134,9 +134,9 @@ namespace Lunggo.ApCommon.Hotel.Service
                     RoomCode = roomDetail.RoomCode,
                     RoomName = roomDetail.RoomName,
                     Type = roomDetail.Type,
-                    TypeName = dictionary.GetHotelRoomRateTypeId(roomDetail.Type),//TODO "Mapping Type Name"
+                    TypeName = dictionary.GetHotelRoomRateTypeId(roomDetail.Type),
                     CharacteristicCode = roomDetail.characteristicCd,
-                    CharacteristicName = dictionary.GetHotelRoomRateTypeId(roomDetail.characteristicCd),//TODO "Mapping Characteristic Name"
+                    CharacteristicName = dictionary.GetHotelRoomRateTypeId(roomDetail.characteristicCd),
                     Images = roomDetail.Images != null ? roomDetail.Images : null,
                     Facilities = roomDetail.Facilities != null ? roomDetail.Facilities : null,
                     Rates = ConvertToRateForDisplays(roomDetail.Rates)

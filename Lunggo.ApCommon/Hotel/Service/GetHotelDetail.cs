@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.Configuration;
 using Lunggo.ApCommon.Hotel.Model;
 using Lunggo.ApCommon.Hotel.Model.Logic;
 using Lunggo.Framework.Documents;
@@ -16,6 +17,7 @@ namespace Lunggo.ApCommon.Hotel.Service
         public GetHotelDetailOutput GetHotelDetail(GetHotelDetailInput input)
         {
             var hotelDetail = GetHotelDetailFromDb(input.HotelCode);
+            SetHotelFullFacilityCode(hotelDetail);
             var hotelRoom = GetRoomFromSearchResult(input.HotelCode, input.SearchId);
             hotelDetail.Rooms = hotelRoom;
             return new GetHotelDetailOutput
@@ -39,6 +41,14 @@ namespace Lunggo.ApCommon.Hotel.Service
             var searchResultData = GetSearchHotelResultFromCache(searchId);
             var SearchResulthotel = searchResultData.HotelDetails.SingleOrDefault(p => p.HotelCode == hotelCode);
             return SearchResulthotel.Rooms;
+        }
+
+        public void SetHotelFullFacilityCode(HotelDetailsBase hotel)
+        {
+            foreach (var data in hotel.Facilities)
+            {
+                data.FullFacilityCode = data.FacilityGroupCode + "" + data.FacilityCode;
+            }
         }
 
     }

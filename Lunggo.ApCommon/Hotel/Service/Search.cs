@@ -217,6 +217,7 @@ namespace Lunggo.ApCommon.Hotel.Service
 
         public List<HotelDetail> AddFilteringInfo(List<HotelDetail> result )
         {
+            var shortlistHotel = new List<HotelDetail>();
             //Adding Additional Hotel Information
             foreach (var hotel in result)
             {
@@ -231,8 +232,13 @@ namespace Lunggo.ApCommon.Hotel.Service
                         FullFacilityCode = x.FacilityGroupCode+""+x.FacilityCode
                     }).ToList();
                 hotel.StarCode = GetSimpleCodeByCategoryCode(hotel.StarRating);
+                //Filtering Hotel by AccomodationType
+                if (hotel.AccomodationType == "HOTEL")
+                {
+                    shortlistHotel.Add(hotel);
+                }
             }
-            return result;
+            return shortlistHotel;
         }
 
         public HotelFilterDisplayInfo SetHotelFilterDisplayInfo(List<HotelDetail> hotels, bool isByDestination)
