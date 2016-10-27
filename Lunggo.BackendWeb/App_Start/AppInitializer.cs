@@ -31,7 +31,7 @@ namespace Lunggo.BackendWeb
             InitRedisService();
             InitDatabaseService();
             InitQueueService();
-            InitHotelService();
+            
             InitFlightService();
             InitPaymentService();
             InitBrowserDetectionService();
@@ -40,6 +40,7 @@ namespace Lunggo.BackendWeb
             InitHtmlTemplateService();
             InitTableStorageService();
             InitDocumentsService();
+            InitHotelService();
         }
 
         private static void InitDocumentsService()

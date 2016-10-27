@@ -2,17 +2,18 @@
 using System.Collections.Generic;
 using System.Linq;
 using Lunggo.ApCommon.Flight.Constant;
+using Lunggo.ApCommon.Hotel.Constant;
 using Lunggo.ApCommon.Hotel.Model;
 using Lunggo.ApCommon.Hotel.Model.Logic;
 using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds;
 using Lunggo.ApCommon.Payment.Constant;
-using Lunggo.ApCommon.Payment.Model;
 using Lunggo.ApCommon.Product.Constant;
 using Lunggo.Framework.Database;
 using Lunggo.Framework.Queue;
 using Lunggo.Repository.TableRecord;
 using Lunggo.Repository.TableRepository;
 using Microsoft.WindowsAzure.Storage.Queue;
+using BookingStatusCd = Lunggo.ApCommon.Hotel.Constant.BookingStatusCd;
 
 namespace Lunggo.ApCommon.Hotel.Service
 {
@@ -45,12 +46,8 @@ namespace Lunggo.ApCommon.Hotel.Service
                 output.IsSuccess = true;
                 return output;
             }
-            else
-            {
-                output.IsSuccess = false;
-                //output.Errors = new List<FlightError> { FlightError.NotEligibleToIssue };
-                return output;
-            }
+            output.IsSuccess = false;
+            return output;
         }
 
         public IssueHotelTicketOutput CommenceIssueHotel(IssueHotelTicketInput input)
@@ -63,46 +60,104 @@ namespace Lunggo.ApCommon.Hotel.Service
                     IsSuccess = false,
                 };
             }
-            var newRooms = new List<HotelRoom>();
+            //var oldPrice = rsvData.HotelDetails.Rooms.Sum(room => room.Rates.Sum(rate => rate.Price.Supplier));
+            var occupancies = new List<Occupancy>();
+            
+            foreach (var room in rsvData.HotelDetails.Rooms)
+            {
+                occupancies.AddRange(from rate in room.Rates
+                    select rate.RateKey.Split('|')
+                    into sampleRatekey
+                    let roomCount = Convert.ToInt32(sampleRatekey[9].Split('~')[0])
+                    let adultCount = Convert.ToInt32(sampleRatekey[9].Split('~')[1])
+                    let childCount = Convert.ToInt32(sampleRatekey[9].Split('~')[2])
+                    select new Occupancy
+                    {
+                        RoomCount = roomCount, AdultCount = adultCount, ChildCount = childCount
+                    });
+            }
+
+            occupancies = occupancies.Distinct().ToList();
+            var searchResult = GetInstance().Search(new SearchHotelInput
+            {
+                HotelCode = rsvData.HotelDetails.HotelCode,
+                Occupancies = occupancies,
+                CheckIn = rsvData.HotelDetails.CheckInDate,
+                Checkout = rsvData.HotelDetails.CheckOutDate
+            });
+
+            if (searchResult.HotelDetailLists == null || searchResult.HotelDetailLists.Count == 0)
+            {
+                return new IssueHotelTicketOutput
+                {
+                    ErrorMessages = new List<string> {"When refresh ratekeys, no hotel result"},
+                    IsSuccess = false
+                };
+            }
+
+            if (searchResult.HotelDetailLists.Any(hotel => hotel.Rooms == null || hotel.Rooms.Count == 0))
+            {
+                return new IssueHotelTicketOutput
+                {
+                    ErrorMessages = new List<string> { "When refresh ratekeys, there is at least a hotel without Rooms" },
+                    IsSuccess = false
+                };
+            }
+
+            if (searchResult.HotelDetailLists.Any(hotel => hotel.Rooms.Any(room => room.Rates == null || room.Rates.Count == 0)))
+            {
+                return new IssueHotelTicketOutput
+                {
+                    ErrorMessages = new List<string> { "When refresh ratekeys, there is at least a room withour Rates" },
+                    IsSuccess = false
+                };
+            }
+
             foreach (var room in rsvData.HotelDetails.Rooms)
             {
                 foreach (var rate in room.Rates)
                 {
                     if (rate.TimeLimit >= DateTime.UtcNow) continue;
                     var sampleRatekey = rate.RateKey.Split('|');
-                    var checkInDate = new DateTime(Convert.ToInt32(sampleRatekey[0].Substring(0, 4)), Convert.ToInt32(sampleRatekey[0].Substring(4, 2)),
-                        Convert.ToInt32(sampleRatekey[0].Substring(6, 2)));
-                    var checkOutDate = new DateTime(Convert.ToInt32(sampleRatekey[1].Substring(0, 4)), Convert.ToInt32(sampleRatekey[1].Substring(4, 2)),
-                        Convert.ToInt32(sampleRatekey[1].Substring(6, 2)));
-                    var hotelCd = Convert.ToInt32(sampleRatekey[4]);
                     var roomCd = sampleRatekey[5];
                     var someData = sampleRatekey[6];
                     var board = sampleRatekey[7];
                     var roomCount = Convert.ToInt32(sampleRatekey[9].Split('~')[0]);
-                    var adultCount = Convert.ToInt32(sampleRatekey[9].Split('~')[1]);
-                    var childCount = Convert.ToInt32(sampleRatekey[9].Split('~')[2]);
+                    var adultCount = GetMaxAdult(roomCd);
 
-                    var searchResult = Search(new SearchHotelInput
+                    foreach (var rooma in searchResult.HotelDetailLists[0].Rooms)
                     {
-                        AdultCount = adultCount,
-                        CheckIn = checkInDate,
-                        Checkout = checkOutDate,
-                        ChildCount = childCount,
-                        Rooms = roomCount,
-                        HotelCode = hotelCd
-                    });
-
-                    foreach (var ratea in searchResult.HotelDetailLists.SelectMany(hotel => hotel.Rooms.SelectMany(rooma => (from ratea in rooma.Rates
-                        let rateKey = rate.RateKey.Split('|')
-                        where rateKey[5] == roomCd && rateKey[6] == someData && rateKey[7] == board
-                        select ratea))))
-                    {
-                        rate.Price.SetSupplier(ratea.Price.OriginalIdr, new Currency("IDR"));
+                        foreach (var ratea in rooma.Rates)
+                        {
+                            var rateKey = ratea.RateKey.Split('|');
+                            if (rateKey[5] == roomCd && rateKey[6] == someData && rateKey[7] == board &&
+                                Convert.ToInt32(rateKey[9].Split('~')[0]) == roomCount &&
+                                Convert.ToInt32(rateKey[9].Split('~')[1]) == adultCount)
+                            {
+                                if (BookingStatusCd.Mnemonic(rate.Type) == CheckRateStatus.Recheck)
+                                {
+                                    var revalidateResult = CheckRate(ratea.RateKey, ratea.Price.Supplier);
+                                    if (revalidateResult.IsPriceChanged)
+                                    {
+                                        rate.Price.SetSupplier(revalidateResult.NewPrice.GetValueOrDefault(), rate.Price.SupplierCurrency);
+                                    }
+                                    rate.RateKey = revalidateResult.RateKey;
+                                    rate.Price.SetSupplier(revalidateResult.NewPrice.GetValueOrDefault(),
+                                        rate.Price.SupplierCurrency);
+                                }
+                                else
+                                {
+                                    rate.RateKey = ratea.RateKey;
+                                    rate.Price.SetSupplier(ratea.Price.OriginalIdr, rate.Price.SupplierCurrency);
+                                }   
+                            }
+                        }
                     }
                 }
             }
-            
 
+            //var newPrice = rsvData.HotelDetails.Rooms.Sum(room => room.Rates.Sum(rate => rate.Price.Supplier));
+            var newRooms = rsvData.HotelDetails.Rooms;
             var issueInfo = new HotelIssueInfo
             {
                 RsvNo = rsvData.RsvNo,
@@ -125,19 +180,18 @@ namespace Lunggo.ApCommon.Hotel.Service
                 };
             }
             
+            SendEticketToCustomer(rsvData.RsvNo);
+            var order = issueResult.BookingId.Select(id => new OrderResult
             {
-                SendEticketToCustomer(rsvData.RsvNo);
-                var order = issueResult.BookingId.Select(id => new OrderResult
-                {
-                    BookingId = id, BookingStatus = BookingStatus.Ticketed, IsSuccess = true
-                }).ToList();
+                BookingId = id, BookingStatus = BookingStatus.Ticketed, IsSuccess = true
+            }).ToList();
                 
-                return new IssueHotelTicketOutput
-                {
-                    IsSuccess = true,
-                    OrderResults = order
-                };
-            }
+            return new IssueHotelTicketOutput
+            {
+                IsSuccess = true,
+                OrderResults = order
+            };
+            
         }
 
         private void UpdateRsvStatusDb(string rsvNo, RsvStatus status)
@@ -152,15 +206,5 @@ namespace Lunggo.ApCommon.Hotel.Service
             }
 
         }
-
-        //private void SendHotelEticket(string rsvNo)
-        //{
-        //    //TODO Update THIS
-        //}
-
-        //private void SendFailedHotelNotif(string rsvNo)
-        //{
-        //    //TODO Update THIS
-        //}
     }       
 }

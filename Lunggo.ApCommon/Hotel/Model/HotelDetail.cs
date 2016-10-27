@@ -31,7 +31,7 @@ namespace Lunggo.ApCommon.Hotel.Model
         [JsonProperty("longitude", NullValueHandling = NullValueHandling.Ignore)]
         public decimal? Longitude { get; set; }
         [JsonProperty("starRating", NullValueHandling = NullValueHandling.Ignore)]
-        public string StarRatingDescription { get; set; }
+        public int StarRating { get; set; }
         [JsonProperty("chain", NullValueHandling = NullValueHandling.Ignore)]
         public string ChainName { get; set; }
         [JsonProperty("accomodation", NullValueHandling = NullValueHandling.Ignore)]
@@ -56,8 +56,10 @@ namespace Lunggo.ApCommon.Hotel.Model
         public List<Terminal> Terminals { get; set; }
         [JsonProperty("poi", NullValueHandling = NullValueHandling.Ignore)]
         public List<POI> Pois { get; set; }
+        [JsonProperty("mainImage", NullValueHandling = NullValueHandling.Ignore)]
+        public string MainImage { get; set; }
         [JsonProperty("images", NullValueHandling = NullValueHandling.Ignore)]
-        public List<Image> ImageUrl { get; set; }
+        public List<string> ImageUrl { get; set; }
         [JsonProperty("review", NullValueHandling = NullValueHandling.Ignore)]
         public List<Review> Review { get; set; }
         [JsonProperty("originalFare", NullValueHandling = NullValueHandling.Ignore)]
@@ -84,11 +86,13 @@ namespace Lunggo.ApCommon.Hotel.Model
         [JsonProperty("zoneCd", NullValueHandling = NullValueHandling.Ignore)]
         public int ZoneCode { get; set; }
         [JsonProperty("latitude", NullValueHandling = NullValueHandling.Ignore)]
-        public decimal Latitude { get; set; }
+        public decimal? Latitude { get; set; }
         [JsonProperty("longitude", NullValueHandling = NullValueHandling.Ignore)]
-        public decimal Longitude { get; set; }
+        public decimal? Longitude { get; set; }
         [JsonProperty("starRating", NullValueHandling = NullValueHandling.Ignore)]
         public string StarRating { get; set; }
+        [JsonProperty("starCd", NullValueHandling = NullValueHandling.Ignore)]
+        public int StarCode { get; set; }
         [JsonProperty("chain", NullValueHandling = NullValueHandling.Ignore)]
         public string Chain { get; set; }
         [JsonProperty("accomodationType", NullValueHandling = NullValueHandling.Ignore)]
@@ -117,7 +121,12 @@ namespace Lunggo.ApCommon.Hotel.Model
         public List<HotelFacility> Facilities { get; set; }
         [JsonProperty("review", NullValueHandling = NullValueHandling.Ignore)]
         public List<Review> Review { get; set; }
-        
+        [JsonProperty("searchId", NullValueHandling = NullValueHandling.Ignore)]
+        public string SearchId { get; set; }
+        [JsonProperty("wifiAccess", NullValueHandling = NullValueHandling.Ignore)]
+        public bool WifiAccess { get; set; }
+        [JsonProperty("restaurant", NullValueHandling = NullValueHandling.Ignore)]
+        public bool IsRestaurantAvailable { get; set; }
     }
 
     public class POI
@@ -164,14 +173,6 @@ namespace Lunggo.ApCommon.Hotel.Model
         public string Path;
     }
 
-    //public class Types
-    //{
-    //    [JsonProperty("code", NullValueHandling = NullValueHandling.Ignore)]
-    //    public string Code { get; set; }
-        
-    //    [JsonProperty("description", NullValueHandling = NullValueHandling.Ignore)]
-    //    public Description Description { get; set; }
-    //}
 
     public class HotelDetail : HotelDetailsBase
     {

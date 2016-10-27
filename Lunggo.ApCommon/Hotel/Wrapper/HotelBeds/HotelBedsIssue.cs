@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Hotel.Model;
 using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Sdk;
 using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Sdk.auto.common;
 using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Sdk.helpers;
-using Lunggo.ApCommon.Product.Model;
 
 namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds
 {
@@ -17,22 +15,8 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds
             var client = new HotelApiClient("p8zy585gmgtkjvvecb982azn", "QrwuWTNf8a", "https://api.test.hotelbeds.com/hotel-api");
             var booking = new Booking();
 
-            var listAdultPax = new List<Pax>();
-            var listChildPax = new List<Pax>();
-            foreach (var pax in hotelIssueInfo.Pax)
-            {
-                if (pax.Type == PaxType.Adult)
-                {
-                    listAdultPax.Add(pax);
-                }
-                if (pax.Type == PaxType.Child)
-                {
-                    listChildPax.Add(pax);
-                }
-            }
-
-            var countAdult = 0;
-            var countChild = 0;
+            var firstname = hotelIssueInfo.Pax[0].FirstName;
+            var lastname = hotelIssueInfo.Pax[0].LastName;
             string first, last;
             var splittedName = hotelIssueInfo.Contact.Name.Trim().Split(' ');
             if (splittedName.Length == 1)
@@ -46,11 +30,10 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds
                 last = splittedName[splittedName.Length - 1];
             }
             booking.createHolder(first, last);
-            foreach (HotelRoom room in hotelIssueInfo.Rooms)
+            foreach (var room in hotelIssueInfo.Rooms)
             {
-                foreach (HotelRate rate in room.Rates)
+                foreach (var rate in room.Rates)
                 {
-                    // "20161108|20161110|W|1|1075|DBT.ST|CG-TODOS RO|RO||2~2~0||N@3A311B81C82B4A52AF30BAC1A7C55E3D"
                     var confirmRoom = new ConfirmRoom {details = new List<RoomDetail>()};
                     var ratekey = rate.RateKey;
                     var data = ratekey.Split('|')[9];
@@ -62,17 +45,14 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds
                     {
                         for (var i = 0; i < totalAdultperRate; i++)
                         {
-                            confirmRoom.detailed(RoomDetail.GuestType.ADULT, 30, listAdultPax[countAdult].FirstName, listAdultPax[countAdult].LastName, z);
-                            countAdult++;
+                            confirmRoom.detailed(RoomDetail.GuestType.ADULT, 30, firstname, lastname, z);
                         }
                         for (var i = 0; i < totalChildrenperRate; i++)
                         {
-                            confirmRoom.detailed(RoomDetail.GuestType.CHILD, 8, listChildPax[countChild].FirstName, listChildPax[countChild].LastName, z);
-                            countChild++;
+                            confirmRoom.detailed(RoomDetail.GuestType.CHILD, 8, firstname, lastname, z);
                         }
                     }
-                    //confirmRoom.detailed(RoomDetail.GuestType.ADULT, 30, "NombrePasajero1", "ApellidoPasajero1", 1);
-                    //confirmRoom.detailed(RoomDetail.GuestType.ADULT, 30, "NombrePasajero2", "ApellidoPasajero2", 1);
+                    
                     booking.addRoom(rate.RateKey, confirmRoom);
                 }
             }

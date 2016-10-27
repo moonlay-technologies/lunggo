@@ -1,15 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using System.Web;
 using Lunggo.ApCommon.Hotel.Model.Logic;
 using Lunggo.ApCommon.Hotel.Service;
 using Lunggo.Framework.Config;
 using Lunggo.Framework.Extension;
 using Lunggo.Framework.Log;
 using Lunggo.WebAPI.ApiSrc.Common.Model;
-using Lunggo.WebAPI.ApiSrc.Flight.Model;
 using Lunggo.WebAPI.ApiSrc.Hotel.Model;
 
 namespace Lunggo.WebAPI.ApiSrc.Hotel.Logic
@@ -18,21 +14,28 @@ namespace Lunggo.WebAPI.ApiSrc.Hotel.Logic
     {
         public static ApiResponseBase Search(HotelSearchApiRequest request)
         {
-            if (IsValid(request))
+            if (!IsValid(request))
+                return new HotelSearchApiResponse
+                {
+                    StatusCode = HttpStatusCode.BadRequest,
+                    ErrorCode = "ERHSEA01"
+                };
+            var searchServiceRequest = PreprocessServiceRequest(request);
+            var searchServiceResponse = HotelService.GetInstance().Search(searchServiceRequest);
+            var apiResponse = AssembleApiResponse(searchServiceResponse);
+            if (apiResponse.ExpiryTime <= DateTime.UtcNow)
             {
-                var searchServiceRequest = PreprocessServiceRequest(request);
-                var searchServiceResponse = HotelService.GetInstance().Search(searchServiceRequest);
-                var apiResponse = AssembleApiResponse(searchServiceResponse);
-                if (apiResponse.StatusCode == HttpStatusCode.OK) return apiResponse;
-                var log = LogService.GetInstance();
-                var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
-                return apiResponse;
+                return new HotelSearchApiResponse
+                {
+                    StatusCode = HttpStatusCode.BadRequest,
+                    ErrorCode = "ERHSEA01"
+                };
             }
-            return new HotelSelectRoomApiResponse
-            {
-                StatusCode = HttpStatusCode.BadRequest,
-                ErrorCode = "ERSOO01"
-            };
+
+            //if (apiResponse.StatusCode == HttpStatusCode.OK) return apiResponse;
+            var log = LogService.GetInstance();
+            var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
+            return apiResponse;
         }
 
         private static bool IsValid(HotelSearchApiRequest request)

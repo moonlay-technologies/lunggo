@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using CsQuery.ExtensionMethods;
 using Lunggo.ApCommon.Hotel.Model;
 using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.ApCommon.Payment.Service;
@@ -47,14 +48,15 @@ namespace Lunggo.ApCommon.Hotel.Service
                 Address = hotelDetail.Address,
                 City = hotelDetail.City,
                 ZoneName = GetHotelZoneNameFromDict(hotelDetail.DestinationCode+"-"+hotelDetail.ZoneCode),
-                StarRatingDescription = GetHotelCategoryDescId(hotelDetail.StarRating),
+                StarRating = hotelDetail.StarCode,
                 ChainName = GetHotelChainDesc(hotelDetail.Chain),
                 //Facilities =  hotelDetail.//TODO
-                Review = hotelDetail.Review,
                 AccomodationName = GetHotelAccomodationDescId(hotelDetail.AccomodationType),
-                ImageUrl = hotelDetail.ImageUrl, //hoteldetailcontent // just take one picture
+                MainImage = hotelDetail.ImageUrl != null ? hotelDetail.ImageUrl.Where(x=>x.Type=="GEN").Select(x=>x.Path).FirstOrDefault()
+                : null,
                 OriginalFare = hotelDetail.OriginalFare,
                 NetFare = hotelDetail.NetFare,
+                Rooms = ConvertToHotelRoomForDisplay(hotelDetail.Rooms)
             };
             convertedHotels.Add(hotel);
             }
@@ -77,21 +79,20 @@ namespace Lunggo.ApCommon.Hotel.Service
                 Longitude = hotelDetail.Longitude,
                 Email = hotelDetail.Email,
                 PostalCode = hotelDetail.PostalCode,
-                //DestinationName =   //TODO "Get Destination Name"
                 Description = hotelDetail.Description == null ? null : hotelDetail.Description.Where(x => x.languageCode.Equals("IND"))
                                 .Select(x => x.Description).SingleOrDefault(),
                 PhonesNumbers = hotelDetail.PhonesNumbers,
                 ZoneName = GetHotelZoneNameFromDict(hotelDetail.DestinationCode + "-" + hotelDetail.ZoneCode),
-                StarRatingDescription = GetHotelCategoryDescId(hotelDetail.StarRating),
+                StarRating = hotelDetail.StarCode,
                 ChainName = GetHotelChainDesc(hotelDetail.Chain),
                 //Segments =  //TODO "List of Segment by SegmentCode"
                 Pois = hotelDetail.Pois,
-                Terminals =  hotelDetail.Terminals,//TODO "Perlu dtambahi dari data HotelDetailContent"
+                Terminals =  hotelDetail.Terminals,
                 //Facilities =  hotelDetail.Facilities,//TODO Bentuk LIst, harus dipecah satu satu
                 Review = hotelDetail.Review,
                 Rooms = ConvertToHotelRoomForDisplay(hotelDetail.Rooms),
                 AccomodationName = GetHotelAccomodationMultiDesc(hotelDetail.AccomodationType),
-                ImageUrl = hotelDetail.ImageUrl,
+                ImageUrl = hotelDetail.ImageUrl.Select(x => x.Path).ToList(),
             };
             return hotel;
         }
@@ -111,9 +112,9 @@ namespace Lunggo.ApCommon.Hotel.Service
                     RoomCode = roomDetail.RoomCode,
                     RoomName = roomDetail.RoomName,
                     Type = roomDetail.Type,
-                    TypeName = dictionary.GetHotelRoomRateTypeId(roomDetail.Type),//TODO "Mapping Type Name"
+                    TypeName = dictionary.GetHotelRoomRateTypeId(roomDetail.Type),
                     CharacteristicCode = roomDetail.characteristicCd,
-                    CharacteristicName = dictionary.GetHotelRoomRateTypeId(roomDetail.characteristicCd),//TODO "Mapping Characteristic Name"
+                    CharacteristicName = dictionary.GetHotelRoomRateTypeId(roomDetail.characteristicCd),
                     Images = roomDetail.Images != null ? roomDetail.Images : null,
                     Facilities = roomDetail.Facilities != null ? roomDetail.Facilities : null,
                     Rates = ConvertToRateForDisplays(roomDetail.Rates)
@@ -155,15 +156,15 @@ namespace Lunggo.ApCommon.Hotel.Service
                 {
                     RateKey = rateDetail.RateKey,
                     Type = rateDetail.Type,
-                    TypeDescription = dictionary.GetHotelRoomRateTypeId(rateDetail.Type),//TODO "Mapping Rate Type"
+                    TypeDescription = dictionary.GetHotelRoomRateTypeId(rateDetail.Type),
                     Class = rateDetail.Class,
-                    ClassDescription = dictionary.GetHotelRoomRateClassId(rateDetail.Class),//TODO 
+                    ClassDescription = dictionary.GetHotelRoomRateClassId(rateDetail.Class),
                     RegsId = rateDetail.RegsId,
                     Price = rateDetail.Price!=null?rateDetail.Price:null,
                     AdultCount = rateDetail.AdultCount,
                     ChildCount = rateDetail.ChildCount,
                     Boards = rateDetail.Boards,
-                    BoardDescription = GetHotelBoardDescId(rateDetail.Boards),//TODO
+                    BoardDescription = GetHotelBoardDescId(rateDetail.Boards),
                     RoomCount = rateDetail.RoomCount,
                     TimeLimit = rateDetail.TimeLimit,
                     Cancellation = rateDetail.Cancellation,

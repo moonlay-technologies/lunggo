@@ -39,7 +39,8 @@ namespace Lunggo.ApCommon.Hotel.Service
                     
                     hotels = searchResult.HotelDetails.Where(p =>
                     (input.FilterParam.AreaFilter == null || input.FilterParam.AreaFilter.Areas.Contains(p.ZoneCode)) &&
-                    (listStar == null || listStar.Contains(p.StarRating)) &&
+                    (input.FilterParam.AccommodationTypeFilter == null || input.FilterParam.AccommodationTypeFilter.Accomodations.Contains(p.AccomodationType)) &&
+                    (listStar == null || listStar.Contains(p.StarCode)) &&
                     (input.FilterParam.PriceFilter == null|| (p.OriginalFare >= input.FilterParam.PriceFilter.MinPrice && p.OriginalFare <= input.FilterParam.PriceFilter.MaxPrice))
                     ).Select(p => new HotelDetail
                     {
@@ -51,6 +52,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                         Chain = p.Chain,
                         Pois = p.Pois,
                         StarRating = p.StarRating,
+                        StarCode = p.StarCode,
                         Terminals = p.Terminals,
                         Latitude = p.Latitude,
                         Longitude = p.Longitude,
@@ -115,53 +117,94 @@ namespace Lunggo.ApCommon.Hotel.Service
             }
             else
             {
+                var allCurrency = Currency.GetAllCurrencies();
+                Guid generatedSearchId = Guid.NewGuid();
+                SaveAllCurrencyToCache(generatedSearchId.ToString(), allCurrency );
+
+                //Do Call Availability
                 //Save data to DocDB
                 var hotelBedsClient = new HotelBedsSearchHotel();
-                var detailDestination = GetLocationById(input.Location);
-                var request = new SearchHotelCondition
+                var request = new SearchHotelCondition();
+                if (input.HotelCode != 0)
                 {
-                    CheckIn = input.CheckIn,
-                    Checkout = input.Checkout,
-                    HotelCode = input.HotelCode,
-                    AdultCount = input.AdultCount,
-                    ChildCount = input.ChildCount,
-                    Nights = input.Nights,
-                    Rooms = input.Rooms
-                };
-                switch (detailDestination.Type)
+                    if (input.Occupancies == null)
+                    {
+                        request.AdultCount = input.AdultCount;
+                        request.Rooms = input.Rooms;
+                    }
+                    else
+                    {
+                        request.Occupancies = input.Occupancies;
+                    }
+                    request.HotelCode = input.HotelCode;
+                    request.CheckIn = input.CheckIn;
+                    request.Checkout = input.Checkout;
+                    request.SearchId = generatedSearchId.ToString();
+                }
+                else
                 {
-                    case AutocompleteType.Zone :
-                        var splittedZone = detailDestination.Code.Split('-');
-                        request.Zone = int.Parse(splittedZone[1].Trim());
-                        request.Destination = splittedZone[0].Trim();
-                        break;
-                    case AutocompleteType.Destination:
-                        request.Destination = detailDestination.Code;
-                        isByDestination = true;
-                        break;
-                };
+                    var detailDestination = GetLocationById(input.Location);
+                    if (input.Occupancies == null)
+                    {
+                        request = new SearchHotelCondition
+                        {
+                            CheckIn = input.CheckIn,
+                            Checkout = input.Checkout,
+                            AdultCount = input.AdultCount,
+                            ChildCount = input.ChildCount,
+                            Nights = input.Nights,
+                            Rooms = input.Rooms,
+                            SearchId = generatedSearchId.ToString()
+                        };
+                    }
+                    else
+                    {
+                        request = new SearchHotelCondition
+                        {
+                            CheckIn = input.CheckIn,
+                            Checkout = input.Checkout,
+                            Nights = input.Nights,
+                            Occupancies = input.Occupancies,
+                            SearchId = generatedSearchId.ToString()
+                        };
+                    }
+                    
+                    switch (detailDestination.Type)
+                    {
+                        case AutocompleteType.Zone:
+                            var splittedZone = detailDestination.Code.Split('-');
+                            request.Zone = int.Parse(splittedZone[1].Trim());
+                            request.Destination = splittedZone[0].Trim();
+                            break;
+                        case AutocompleteType.Destination:
+                            request.Destination = detailDestination.Code;
+                            isByDestination = true;
+                            break;
+
+                        case AutocompleteType.Hotel:
+                            request.HotelCode = int.Parse(detailDestination.Code);
+                            break;
+                    };
+                }
+                
 
                 var result = hotelBedsClient.SearchHotel(request);
-
-                //remember to add searchId
-                Guid generatedSearchId = Guid.NewGuid();
                 result.SearchId = generatedSearchId.ToString();
-                Debug.Print("Search Id : "+ result.SearchId);
+                Debug.Print("Search Id : " + result.SearchId);
+                //remember to add searchId
+
 
                 if (result.HotelDetails != null)
                 {
                     AddPriceMargin(result.HotelDetails);
-                    if (isByDestination)
-                    {
-                        result.HotelFilterDisplayInfo = SetHotelFilterDisplayInfo(result.HotelDetails);
-                    }
+                    result.HotelDetails = AddFilteringInfo(result.HotelDetails);
+                    result.HotelFilterDisplayInfo = SetHotelFilterDisplayInfo(result.HotelDetails, isByDestination);
+              
                     SaveSearchResultintoDatabaseToCache(result.SearchId, result);
 
                     var firstPageHotelDetails = result.HotelDetails.Take(100).ToList(); 
-                    //Add HotelDetail Here
                     firstPageHotelDetails = AddHotelDetail(firstPageHotelDetails);
 
-                    //return only 100 data for the first page
                     return new SearchHotelOutput
                     {
                         SearchId = result.SearchId,
@@ -191,47 +234,97 @@ namespace Lunggo.ApCommon.Hotel.Service
                     hotel.City = detail.City;
                     hotel.Chain = detail.Chain;
                     hotel.CountryCode = detail.CountryCode;
-                    hotel.AccomodationType = detail.AccomodationType;
-                    //facilities hotel;
                     hotel.Review = detail.Review;
                     hotel.ImageUrl = detail.ImageUrl;
                 }
             return result;
         }
 
-        public HotelFilterDisplayInfo SetHotelFilterDisplayInfo(List<HotelDetail> hotels)
+        public List<HotelDetail> AddFilteringInfo(List<HotelDetail> result )
+        {
+            //Adding Additional Hotel Information
+            foreach (var hotel in result)
+            {
+                var detail = GetHotelDetailFromDb(hotel.HotelCode);
+                hotel.AccomodationType = detail.AccomodationType;
+                hotel.Facilities = detail.Facilities;
+                hotel.StarCode = GetSimpleCodeByCategoryCode(hotel.StarRating);
+            }
+            return result;
+        }
+
+        public HotelFilterDisplayInfo SetHotelFilterDisplayInfo(List<HotelDetail> hotels, bool isByDestination)
         {
             var filter = new HotelFilterDisplayInfo();
             var zoneDict = new Dictionary<int, ZoneFilter>();
+            var accDict = new Dictionary<string, AccomodationFilter>();
             try
             {
                 foreach (var hotelDetail in hotels)
                 {
-                    if (!(zoneDict.ContainsKey(hotelDetail.ZoneCode)))
+                    //For Zone
+                    if (isByDestination)
                     {
-                        zoneDict.Add(hotelDetail.ZoneCode, new ZoneFilter
+                        if (!(zoneDict.ContainsKey(hotelDetail.ZoneCode)))
                         {
-                            Code = hotelDetail.ZoneCode,
+                            zoneDict.Add(hotelDetail.ZoneCode, new ZoneFilter
+                            {
+                                Code = hotelDetail.ZoneCode,
+                                Count = 1,
+                                Name = GetHotelZoneNameFromDict(hotelDetail.DestinationCode + "-" + hotelDetail.ZoneCode)
+                            });
+                        }
+                        else
+                        {
+                            zoneDict[hotelDetail.ZoneCode].Count += 1;
+                        }    
+                    }
+
+                    //ForAccomodation
+                    if (!(accDict.ContainsKey(hotelDetail.AccomodationType)))
+                    {
+                        accDict.Add(hotelDetail.AccomodationType, new AccomodationFilter
+                        {
+                            Code = hotelDetail.AccomodationType,
                             Count = 1,
-                            Name = GetHotelZoneNameFromDict(hotelDetail.DestinationCode + "-" + hotelDetail.ZoneCode)
+                            Name = GetHotelAccomodationMultiDesc(hotelDetail.AccomodationType)
                         });
                     }
                     else
                     {
-                        zoneDict[hotelDetail.ZoneCode].Count += 1;
+                        accDict[hotelDetail.AccomodationType].Count += 1;
                     }
-                }
-                filter.ZoneFilter = new List<ZoneFilter>();
 
-                foreach (var zone in zoneDict.Keys)
+                    
+                }
+
+                filter.ZoneFilter = new List<ZoneFilter>();
+                filter.AccomodationFilter = new List<AccomodationFilter>();
+
+
+                if (isByDestination)
                 {
-                    filter.ZoneFilter.Add(new ZoneFilter
+                    foreach (var zone in zoneDict.Keys)
                     {
-                        Code = zoneDict[zone].Code,
-                        Count = zoneDict[zone].Count,
-                        Name = zoneDict[zone].Name,
+                        filter.ZoneFilter.Add(new ZoneFilter
+                        {
+                            Code = zoneDict[zone].Code,
+                            Count = zoneDict[zone].Count,
+                            Name = zoneDict[zone].Name,
+                        });
+                    }   
+                }
+
+                foreach (var accomodation in accDict.Keys)
+                {
+                    filter.AccomodationFilter.Add(new AccomodationFilter
+                    {
+                        Code = accDict[accomodation].Code,
+                        Count = accDict[accomodation].Count,
+                        Name = accDict[accomodation].Name
                     });
                 }
+                
             }
             catch(Exception e)
             {
@@ -241,13 +334,13 @@ namespace Lunggo.ApCommon.Hotel.Service
             return filter;
         }
 
-        public List<string> GetStarFilter(List<bool> starFilter)
+        public List<int> GetStarFilter(List<bool> starFilter)
         {
             if (starFilter != null)
             {
                 int count = 0;
-                var completedList = new List<string> { "1EST", "2EST", "3EST", "4EST", "5EST" };
-                var listStar = new List<string>();
+                var completedList = new List<int> { 1, 2, 3, 4, 5};
+                var listStar = new List<int>();
                 foreach (var star in starFilter)
                 {
                     if (star)

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Lunggo.ApCommon.Constant;
 using Lunggo.ApCommon.Hotel.Model;
+using Lunggo.ApCommon.Payment.Model;
 using Lunggo.ApCommon.Product.Model;
 using Lunggo.Framework.Extension;
 using Lunggo.Framework.Redis;
@@ -11,6 +12,24 @@ namespace Lunggo.ApCommon.Hotel.Service
 {
     public partial class HotelService
     {
+        public void SaveAllCurrencyToCache(string searchId, Dictionary<string, Currency> currencies)
+        {
+            var redisService = RedisService.GetInstance();
+            var redisKey = "searchId:" + searchId;
+            var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
+            var redisValue =  currencies.Serialize() ;
+            redisDb.StringSet(redisKey, redisValue);
+        }
+
+        public Dictionary<string, Currency> GetAllCurrenciesFromCache(string searchId)
+        {
+            var redisService = RedisService.GetInstance();
+            var redisKey = "searchId:" + searchId;
+            var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
+            var cacheObject = (string)redisDb.StringGet(redisKey);
+            var currencies = cacheObject.Deserialize<Dictionary<string, Currency>>();
+            return currencies;
+        }
         public void SaveSelectedHotelDetailsToCache(string token, HotelDetailsBase hotel)
         {
             var redisService = RedisService.GetInstance();

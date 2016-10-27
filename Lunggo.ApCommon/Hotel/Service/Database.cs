@@ -13,7 +13,6 @@ using Lunggo.Framework.Database;
 using Lunggo.Framework.Extension;
 using Lunggo.Repository.TableRecord;
 using Lunggo.Repository.TableRepository;
-//using Pax = Lunggo.ApCommon.Product.Model.Pax;
 
 namespace Lunggo.ApCommon.Hotel.Service
 {
@@ -60,7 +59,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                         TotalAdult = hotelDetailRecord.AdultCount.GetValueOrDefault(),
                         TotalChildren = hotelDetailRecord.ChildCount.GetValueOrDefault(),
                         SpecialRequest = hotelDetailRecord.SpecialRequest,
-                        Rooms = new List<Model.HotelRoom>(),
+                        Rooms = new List<HotelRoom>(),
                     };
 
                     var hotelRoomRecords = HotelRoomTableRepo.GetInstance()
@@ -71,7 +70,7 @@ namespace Lunggo.ApCommon.Hotel.Service
 
                     foreach (var hotelRoomRecord in hotelRoomRecords)
                     {
-                        var hotelRoom = new Model.HotelRoom
+                        var hotelRoom = new HotelRoom
                         {
                             RoomCode = hotelRoomRecord.Code,
                             Type = hotelRoomRecord.Type,
@@ -199,7 +198,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                 //reservation.State.InsertToDb(reservation.RsvNo);
                 reservation.Payment.InsertToDb(reservation.RsvNo);
                 
-                var hotelRsvDetailsRecord = new HotelReservationDetailsTableRecord()
+                var hotelRsvDetailsRecord = new HotelReservationDetailsTableRecord
                 {
                     Id = HotelReservationIdSequence.GetInstance().GetNext(),
                     RsvNo = reservation.RsvNo,
@@ -282,7 +281,7 @@ namespace Lunggo.ApCommon.Hotel.Service
             }
         }
 
-        private static void InsertPriceMarginRulesToDb(List<HotelMarginRule> rules, List<HotelMarginRule> deletedRules)
+        private static void InsertPriceMarginRulesToDb(IEnumerable<HotelMarginRule> rules, IEnumerable<HotelMarginRule> deletedRules)
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
@@ -305,6 +304,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                             });
                     }
                 }
+
                 foreach (var marginRule in rules)
                 {
                     if (activeRules.Any(activeRule => activeRule.Margin.RuleId == marginRule.Margin.RuleId))

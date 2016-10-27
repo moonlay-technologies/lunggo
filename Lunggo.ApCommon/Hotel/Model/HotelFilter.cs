@@ -48,22 +48,8 @@ namespace Lunggo.ApCommon.Hotel.Model
 
     public class AccommodationTypeFilter
     {
-        [JsonProperty("apartment")]
-        public bool Apartment { get; set; }
-        [JsonProperty("apartHotel")]
-        public bool ApartHotel { get; set; }
-        [JsonProperty("camping")]
-        public bool Camping { get; set; }
-        [JsonProperty("villa")]
-        public bool Villa { get; set; }
-        [JsonProperty("hostel")]
-        public bool Hostel { get; set; }
-        [JsonProperty("hotel")]
-        public bool Hotel { get; set; }
-        [JsonProperty("resort")]
-        public bool Resort { get; set; }
-        [JsonProperty("rural")]
-        public bool Rural { get; set; }
+        [JsonProperty("accomodations")]
+        public List<string> Accomodations { get; set; }
     }
 
     public class AmenitiesFilter

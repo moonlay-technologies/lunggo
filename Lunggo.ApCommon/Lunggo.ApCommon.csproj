@@ -249,6 +249,7 @@
     <Compile Include="Hotel\Model\Logic\GetHotelDetailOutput.cs" />
     <Compile Include="Hotel\Query\GetActiveHotelPriceMarginRuleQuery.cs" />
     <Compile Include="Hotel\Query\GetHotelRateRuleQuery.cs" />
+    <Compile Include="Hotel\Service\SaveTruncatedHotelDetail.cs" />
     <Compile Include="Hotel\Service\PriceMargin.cs" />
     <Compile Include="Hotel\Query\GetHotelDetailFromSearchResult.cs" />
     <Compile Include="Hotel\Query\GetRoomDetailFromSearchResult.cs" />

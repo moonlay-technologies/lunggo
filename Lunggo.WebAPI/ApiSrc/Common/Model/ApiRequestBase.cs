@@ -34,6 +34,16 @@ namespace Lunggo.WebAPI.ApiSrc.Common.Model
 
         }
 
+        public static string GetHeaderValue(string key)
+        {
+            var sr = HttpContext.Current.Request.Headers.GetValues(key);
+            if (sr != null)
+            {
+                return sr[0];
+            }
+            return "";
+        }
+
         private static IEnumerable<Type> PopulateDerivedTypes()
         {
             return (from domainAssembly in AppDomain.CurrentDomain.GetAssemblies()

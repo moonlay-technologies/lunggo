@@ -10,11 +10,11 @@ namespace Lunggo.WebAPI.ApiSrc.Hotel.Model
         public string RsvNo { get; set; }
         [JsonProperty("timeLimit", NullValueHandling = NullValueHandling.Ignore)]
         public DateTime? TimeLimit { get; set; }
-        [JsonProperty("isValid")]
+        [JsonProperty("isValid", NullValueHandling = NullValueHandling.Ignore)]
         public bool IsValid { get; set; }
-        [JsonProperty("isPriceChanged")]
+        [JsonProperty("isPriceChanged", NullValueHandling = NullValueHandling.Ignore)]
         public bool IsPriceChanged { get; set; }
-        [JsonProperty("newPrice")]
+        [JsonProperty("newPrice", NullValueHandling = NullValueHandling.Ignore)]
         public decimal? NewPrice { get; set; }
 
     }

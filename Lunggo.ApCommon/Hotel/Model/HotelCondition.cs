@@ -19,11 +19,19 @@ namespace Lunggo.ApCommon.Hotel.Model
         public int Rooms { get; set; }
         public int AdultCount { get; set; }
         public int ChildCount { get; set; }
+        public string SearchId { get; set; }
+        public List<Occupancy> Occupancies { get; set; } 
         //Sorting
         //Filter1
         //Page Param
     }
 
+    public class Occupancy
+    {
+        public int RoomCount { get; set; }
+        public int AdultCount { get; set; }
+        public int ChildCount { get; set; }
+    }
     public class HotelRevalidateInfo
     {
         public string RateKey { get; set; }
