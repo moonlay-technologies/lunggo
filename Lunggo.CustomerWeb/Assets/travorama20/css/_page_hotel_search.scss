@@ -63,6 +63,7 @@
         }
         .col-right-result {
             padding-left: 30px;
+            .sort .col-xs-left {margin-top: 5px;}
             .hotel-list {
                 margin-top: 15px;
                 padding: 14px;
@@ -73,12 +74,14 @@
                 .col-right-hotel {padding-left: 15px;}
             }
             .facility {
-                float: right;
+                text-align: right;
+                .wifi {@extend .wifi-icon;}
+                .meal {@extend .meal-icon;}
             }
             .location {
                 margin: 7px 0;
                 margin-left: 20px;
-                line-height: 12px;
+                line-height: 14px;
                 &:before {
                     @extend .maps-icon;
                     position: absolute;

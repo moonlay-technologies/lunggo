@@ -172,7 +172,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
 .form-control {
   color: #000000; }
 
-.search-calendar {
+.search-calendar, .search-calendar-hotel {
   width: 320px;
   height: 520px;
   background: #252525;
@@ -181,19 +181,19 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
   left: 325px;
   z-index: 2;
   display: none; }
-  .search-calendar .calendar-header {
+  .search-calendar .calendar-header, .search-calendar-hotel .calendar-header {
     height: 40px;
     background: #4e4e4e;
     color: #fff;
     font-weight: 600;
     font-size: 17px;
     padding: 10px 15px; }
-    .search-calendar .calendar-header .close-calendar {
+    .search-calendar .calendar-header .close-calendar, .search-calendar .calendar-header .close-calendar-hotel, .search-calendar-hotel .calendar-header .close-calendar, .search-calendar-hotel .calendar-header .close-calendar-hotel {
       float: right;
       cursor: pointer; }
-  .search-calendar .calendar-body {
+  .search-calendar .calendar-body, .search-calendar-hotel .calendar-body {
     padding-top: 15px; }
-  .search-calendar .home-nav {
+  .search-calendar .home-nav, .search-calendar-hotel .home-nav {
     display: none; }
 
 .date-picker {
@@ -246,7 +246,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
           background: #fed83e; }
         .date-picker .ui-datepicker .ui-datepicker-group .ui-datepicker-calendar .ui-datepicker-week-end.ui-datepicker-unselectable span, .date-picker .ui-datepicker .ui-datepicker-group .ui-datepicker-calendar .ui-datepicker-week-end.ui-datepicker-unselectable a {
           color: #666; }
-      .date-picker .ui-datepicker .ui-datepicker-group .ui-datepicker-prev, .date-picker .ui-datepicker .ui-datepicker-group .page-index .search-calendar .calendar-body .ui-datepicker-next, .page-index .search-calendar .calendar-body .date-picker .ui-datepicker .ui-datepicker-group .ui-datepicker-next {
+      .date-picker .ui-datepicker .ui-datepicker-group .ui-datepicker-prev, .date-picker .ui-datepicker .ui-datepicker-group .page-index .search-calendar .calendar-body .ui-datepicker-next, .page-index .search-calendar .calendar-body .date-picker .ui-datepicker .ui-datepicker-group .ui-datepicker-next, .date-picker .ui-datepicker .ui-datepicker-group .page-index .search-calendar-hotel .calendar-body .ui-datepicker-next, .page-index .search-calendar-hotel .calendar-body .date-picker .ui-datepicker .ui-datepicker-group .ui-datepicker-next {
         position: absolute;
         top: -10px;
         left: 15px;
@@ -254,6 +254,71 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         color: #1daee4;
         font-size: 12px; }
       .date-picker .ui-datepicker .ui-datepicker-group .ui-datepicker-next {
+        position: absolute;
+        top: -10px;
+        cursor: pointer;
+        color: #1daee4;
+        font-size: 12px;
+        left: auto;
+        right: 15px;
+        font-size: 12px; }
+
+.hotel-date-picker {
+  padding: 15px; }
+  .hotel-date-picker .ui-datepicker {
+    width: 100% !important;
+    position: relative; }
+    .hotel-date-picker .ui-datepicker.ui-datepicker-inline {
+      width: 100%;
+      padding: 15px; }
+      .hotel-date-picker .ui-datepicker.ui-datepicker-inline .ui-datepicker-title {
+        color: #fff;
+        color: #1daee4;
+        font-size: 14px;
+        font-weight: 600;
+        margin-bottom: 10px; }
+      .hotel-date-picker .ui-datepicker.ui-datepicker-inline .ui-datepicker-calendar {
+        width: 100%;
+        color: #fff; }
+        .hotel-date-picker .ui-datepicker.ui-datepicker-inline .ui-datepicker-calendar thead th {
+          text-align: center;
+          padding-bottom: 10px; }
+          .hotel-date-picker .ui-datepicker.ui-datepicker-inline .ui-datepicker-calendar thead th span {
+            color: #fff !important;
+            font-size: 12px; }
+        .hotel-date-picker .ui-datepicker.ui-datepicker-inline .ui-datepicker-calendar tbody tr {
+          margin-bottom: 5px; }
+          .hotel-date-picker .ui-datepicker.ui-datepicker-inline .ui-datepicker-calendar tbody tr td {
+            text-align: center; }
+            .hotel-date-picker .ui-datepicker.ui-datepicker-inline .ui-datepicker-calendar tbody tr td span, .hotel-date-picker .ui-datepicker.ui-datepicker-inline .ui-datepicker-calendar tbody tr td a {
+              color: #fff;
+              display: inline-block;
+              font-size: 12px;
+              padding-top: 4px;
+              width: 25px;
+              height: 25px; }
+            .hotel-date-picker .ui-datepicker.ui-datepicker-inline .ui-datepicker-calendar tbody tr td a:hover {
+              background: #fff;
+              color: #252525;
+              text-decoration: none; }
+        .hotel-date-picker .ui-datepicker.ui-datepicker-inline .ui-datepicker-calendar .ui-state-disabled, .hotel-date-picker .ui-datepicker.ui-datepicker-inline .ui-datepicker-calendar .ui-datepicker-unselectable {
+          cursor: not-allowed; }
+          .hotel-date-picker .ui-datepicker.ui-datepicker-inline .ui-datepicker-calendar .ui-state-disabled span, .hotel-date-picker .ui-datepicker.ui-datepicker-inline .ui-datepicker-calendar .ui-datepicker-unselectable span {
+            color: #666; }
+        .hotel-date-picker .ui-datepicker.ui-datepicker-inline .ui-datepicker-calendar .ui-datepicker-week-end span, .hotel-date-picker .ui-datepicker.ui-datepicker-inline .ui-datepicker-calendar .ui-datepicker-week-end a {
+          color: #fed83e; }
+        .hotel-date-picker .ui-datepicker.ui-datepicker-inline .ui-datepicker-calendar .ui-datepicker-week-end a:hover {
+          background: #fed83e; }
+        .hotel-date-picker .ui-datepicker.ui-datepicker-inline .ui-datepicker-calendar .ui-datepicker-week-end.ui-datepicker-unselectable span, .hotel-date-picker .ui-datepicker.ui-datepicker-inline .ui-datepicker-calendar .ui-datepicker-week-end.ui-datepicker-unselectable a {
+          color: #666; }
+      .hotel-date-picker .ui-datepicker.ui-datepicker-inline .ui-datepicker-prev, .hotel-date-picker .ui-datepicker.ui-datepicker-inline .page-index .search-calendar .calendar-body .ui-datepicker-next, .page-index .search-calendar .calendar-body .hotel-date-picker .ui-datepicker.ui-datepicker-inline .ui-datepicker-next, .hotel-date-picker .ui-datepicker.ui-datepicker-inline .page-index .search-calendar-hotel .calendar-body .ui-datepicker-next, .page-index .search-calendar-hotel .calendar-body .hotel-date-picker .ui-datepicker.ui-datepicker-inline .ui-datepicker-next {
+        position: absolute;
+        top: -10px;
+        left: 15px;
+        cursor: pointer;
+        color: #1daee4;
+        font-size: 12px; }
+      .hotel-date-picker .ui-datepicker.ui-datepicker-inline .ui-datepicker-next {
         position: absolute;
         top: -10px;
         cursor: pointer;
@@ -924,6 +989,158 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
       .accordion-wrapper .accordion-content.show > ol > li {
         margin-bottom: 10px; }
 
+.widget-container .widget .widget-content {
+  background: #ededed; }
+
+.widget-container .widget.price-detail .widget-content {
+  padding: 12px;
+  font-size: 12px; }
+  .widget-container .widget.price-detail .widget-content dl {
+    margin-bottom: 12px; }
+    .widget-container .widget.price-detail .widget-content dl:before, .widget-container .widget.price-detail .widget-content dl:after {
+      display: block;
+      width: 100%;
+      content: "";
+      clear: both; }
+    .widget-container .widget.price-detail .widget-content dl dt {
+      font-weight: 600;
+      width: 60%;
+      float: left;
+      position: relative; }
+      .widget-container .widget.price-detail .widget-content dl dt:before {
+        content: "";
+        position: absolute;
+        width: 7px;
+        height: 7px;
+        background: #fd8524;
+        left: -12px;
+        top: 3px; }
+      .widget-container .widget.price-detail .widget-content dl dt.dt-title {
+        width: 45%; }
+    .widget-container .widget.price-detail .widget-content dl dd {
+      font-weight: 600;
+      width: 40%;
+      float: left;
+      text-align: right; }
+      .widget-container .widget.price-detail .widget-content dl dd.dd-price {
+        width: 55%; }
+  .widget-container .widget.price-detail .widget-content dl.total-price {
+    border-top: 1px solid #ccc;
+    padding-top: 12px;
+    margin-bottom: 0; }
+    .widget-container .widget.price-detail .widget-content dl.total-price dt {
+      font-weight: 700;
+      width: 40%; }
+      .widget-container .widget.price-detail .widget-content dl.total-price dt:before {
+        display: none; }
+    .widget-container .widget.price-detail .widget-content dl.total-price dd {
+      color: #ff7200;
+      font-size: 16px;
+      font-weight: bold;
+      width: 60%; }
+
+.widget-container .widget.price-detail footer {
+  padding: 12px;
+  background: #ddd;
+  font-style: italic; }
+
+.widget-container .widget.voucher .widget-content {
+  padding: 12px; }
+
+.widget-container .widget.voucher .bg-danger, .widget-container .widget.voucher .bg-success {
+  padding: 6px;
+  margin-top: 6px; }
+
+.widget-container .widget.flight .widget-content {
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-top: none; }
+  .widget-container .widget.flight .widget-content .airline {
+    padding-bottom: 12px; }
+    .widget-container .widget.flight .widget-content .airline .airline-image {
+      width: 50px;
+      border: 1px solid #ccc;
+      float: left;
+      margin-right: 12px;
+      background: #fff; }
+    .widget-container .widget.flight .widget-content .airline .airline-name, .widget-container .widget.flight .widget-content .airline .airline-number {
+      font-weight: bold;
+      color: #1daee4; }
+  .widget-container .widget.flight .widget-content .route:before, .widget-container .widget.flight .widget-content .route:after {
+    display: block;
+    width: 100%;
+    content: "";
+    clear: both; }
+  .widget-container .widget.flight .widget-content .route .origin, .widget-container .widget.flight .widget-content .route .destination {
+    float: left;
+    width: 45%; }
+  .widget-container .widget.flight .widget-content .route .duration {
+    float: left;
+    width: 7%;
+    margin-right: 3%;
+    content: "";
+    border-top: 3px solid #1daee4;
+    margin-top: 50px; }
+  .widget-container .widget.flight .widget-content .route h4 {
+    font-weight: bold; }
+
+.widget-container .widget.countdown .widget-content {
+  background: #ffd632;
+  padding: 12px; }
+  .widget-container .widget.countdown .widget-content P {
+    padding-left: 28px;
+    background: url(/Assets/images/sandclock-yellow.png) left 3px no-repeat;
+    font-size: 12px;
+    margin-bottom: 12px; }
+  .widget-container .widget.countdown .widget-content .timer {
+    background: #ffefb1;
+    border-bottom: 1px solid #dab939;
+    text-align: center;
+    padding: 12px;
+    color: #4d4e4e; }
+    .widget-container .widget.countdown .widget-content .timer > div {
+      display: inline-block; }
+    .widget-container .widget.countdown .widget-content .timer h5 {
+      font-weight: bold;
+      font-size: 36px;
+      margin-bottom: 0;
+      margin-top: 0; }
+    .widget-container .widget.countdown .widget-content .timer span {
+      font-size: 12px; }
+    .widget-container .widget.countdown .widget-content .timer .separator {
+      vertical-align: top;
+      margin-left: 6px;
+      margin-right: 6px; }
+
+.widget-container .widget.hotel .widget-content {
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-top: none; }
+  .widget-container .widget.hotel .widget-content .wt-top .col-right-hotel {
+    padding: 15px 10px; }
+  .widget-container .widget.hotel .widget-content .wt-bottom {
+    margin: 7px 0;
+    margin-left: 25px;
+    line-height: 16px; }
+  .widget-container .widget.hotel .widget-content .widget-bottom {
+    line-height: 24px;
+    border-top: 1px solid #ccc;
+    padding-top: 7px; }
+
+.widget-container .widget.hotel .widget-subtitle {
+  background: #1daee4;
+  color: #fff;
+  padding: 7px 15px;
+  font-size: 15px;
+  font-weight: 600;
+  position: relative; }
+
+.widget-container .widget.hotel .widget-wrapper.notes {
+  margin-top: 15px; }
+  .widget-container .widget.hotel .widget-wrapper.notes .sqr-blue-list li {
+    padding-left: 8px;
+    margin-bottom: 10px; }
+
 /*--------------------*/
 /* imports */
 @media (max-width: 1199px) {
@@ -1482,7 +1699,10 @@ file : /Assets/travorama20/css/_page_index.scss
         padding-right: 5px; }
       .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-date > div:last-child {
         padding-left: 5px; }
-      .page-index .section-search .search-form .tab-content .tab-hotel .form-hotel-checkin, .page-index .section-search .search-form .tab-content .tab-hotel .form-hotel-checkout {
+      .page-index .section-search .search-form .tab-content .tab-hotel .form-hotel-checkin {
+        cursor: pointer;
+        margin-bottom: 10px;
+        text-align: center;
         background: #fff;
         color: #6a6a6a;
         padding: 10px 8px;
@@ -1492,27 +1712,31 @@ file : /Assets/travorama20/css/_page_index.scss
         border-radius: 2px;
         border: 1px solid #ccc;
         font-weight: 600; }
-        .page-index .section-search .search-form .tab-content .tab-hotel .form-hotel-checkin:before, .page-index .section-search .search-form .tab-content .tab-hotel .form-hotel-checkout:before, .page-index .section-search .search-form .tab-content .tab-hotel .form-hotel-checkin:after, .page-index .section-search .search-form .tab-content .tab-hotel .form-hotel-checkout:after {
+        .page-index .section-search .search-form .tab-content .tab-hotel .form-hotel-checkin:before, .page-index .section-search .search-form .tab-content .tab-hotel .form-hotel-checkin:after {
           display: block;
           width: 100%;
           content: "";
           clear: both; }
-        .page-index .section-search .search-form .tab-content .tab-hotel .form-hotel-checkin small, .page-index .section-search .search-form .tab-content .tab-hotel .form-hotel-checkout small {
+        .page-index .section-search .search-form .tab-content .tab-hotel .form-hotel-checkin small {
           display: block;
           font-weight: normal; }
-        .page-index .section-search .search-form .tab-content .tab-hotel .form-hotel-checkin .date, .page-index .section-search .search-form .tab-content .tab-hotel .form-hotel-checkout .date {
+        .page-index .section-search .search-form .tab-content .tab-hotel .form-hotel-checkin .date {
           float: left;
           font-size: 42px;
           width: 60px;
           line-height: 42px; }
-        .page-index .section-search .search-form .tab-content .tab-hotel .form-hotel-checkin .month, .page-index .section-search .search-form .tab-content .tab-hotel .form-hotel-checkout .month {
+        .page-index .section-search .search-form .tab-content .tab-hotel .form-hotel-checkin .month {
           display: block;
           font-size: 17px;
           line-height: 26px; }
-        .page-index .section-search .search-form .tab-content .tab-hotel .form-hotel-checkin .year, .page-index .section-search .search-form .tab-content .tab-hotel .form-hotel-checkout .year {
+        .page-index .section-search .search-form .tab-content .tab-hotel .form-hotel-checkin .year {
           display: block;
           font-size: 17px;
           line-height: 10px; }
+        .page-index .section-search .search-form .tab-content .tab-hotel .form-hotel-checkin .date-hotel {
+          font-size: 18px;
+          line-height: 25px;
+          font-weight: 700; }
       .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-room > div:first-child, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-visitor > div:first-child {
         padding-right: 5px; }
       .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-room > div:last-child, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-visitor > div:last-child {
@@ -1528,37 +1752,33 @@ file : /Assets/travorama20/css/_page_index.scss
         border: 1px solid #ccc;
         position: relative;
         height: 50px;
-        cursor: pointer; }
+        /*.visitor-input {width:50px; position:absolute; top:25px; right:5px; border:0; text-align:right; font-size:30px; padding:0; line-height:0; margin:0; letter-spacing:0; font-weight:600;}*/
+        /*input {width:50px; position:absolute; right:5px; border:0; text-align:right; font-size:30px; padding:0; line-height:0; margin:0; letter-spacing:0; font-weight:600; height: 30px; background: transparent;}*/ }
         .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-room .form-hotel-night small, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-room .form-hotel-room small, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-room .form-hotel-visitor small, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-visitor .form-hotel-night small, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-visitor .form-hotel-room small, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-visitor .form-hotel-visitor small {
           font-size: 10px;
           line-height: 0; }
-        .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-room .form-hotel-night .visitor-input, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-room .form-hotel-room .visitor-input, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-room .form-hotel-visitor .visitor-input, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-visitor .form-hotel-night .visitor-input, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-visitor .form-hotel-room .visitor-input, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-visitor .form-hotel-visitor .visitor-input {
-          width: 50px;
-          position: absolute;
-          top: 25px;
-          right: 5px;
-          border: 0;
-          text-align: right;
+        .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-room .form-hotel-night .input-hotel, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-room .form-hotel-room .input-hotel, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-room .form-hotel-visitor .input-hotel, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-visitor .form-hotel-night .input-hotel, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-visitor .form-hotel-room .input-hotel, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-visitor .form-hotel-visitor .input-hotel {
           font-size: 30px;
-          padding: 0;
-          line-height: 0;
-          margin: 0;
-          letter-spacing: 0;
-          font-weight: 600; }
-        .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-room .form-hotel-night input, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-room .form-hotel-room input, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-room .form-hotel-visitor input, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-visitor .form-hotel-night input, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-visitor .form-hotel-room input, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-visitor .form-hotel-visitor input {
-          width: 50px;
-          position: absolute;
-          right: 5px;
-          border: 0;
-          text-align: right;
-          font-size: 30px;
-          padding: 0;
-          line-height: 0;
-          margin: 0;
-          letter-spacing: 0;
           font-weight: 600;
-          height: 30px;
-          background: transparent; }
+          line-height: 30px;
+          text-align: right;
+          padding: 0 6px; }
+        .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-room .form-hotel-night a.increase, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-room .form-hotel-room a.increase, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-room .form-hotel-visitor a.increase, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-visitor .form-hotel-night a.increase, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-visitor .form-hotel-room a.increase, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-visitor .form-hotel-visitor a.increase {
+          display: block;
+          width: 6px;
+          height: 6px;
+          border-left: 6px solid transparent;
+          border-right: 6px solid transparent;
+          border-bottom: 6px solid #777;
+          margin-top: 5px; }
+        .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-room .form-hotel-night a.decrease, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-room .form-hotel-room a.decrease, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-room .form-hotel-visitor a.decrease, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-visitor .form-hotel-night a.decrease, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-visitor .form-hotel-room a.decrease, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-visitor .form-hotel-visitor a.decrease {
+          display: block;
+          width: 6px;
+          height: 6px;
+          border-left: 6px solid transparent;
+          border-right: 6px solid transparent;
+          border-top: 6px solid #777;
+          margin-top: 10px; }
       .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-room .option, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-visitor .option {
         display: none;
         z-index: 3;
@@ -1932,17 +2152,17 @@ file : /Assets/travorama20/css/_page_index.scss
   .page-index .section-feedback > .container {
     max-width: none; }
 
-.page-index .search-calendar .calendar-header {
+.page-index .search-calendar .calendar-header, .page-index .search-calendar-hotel .calendar-header {
   height: 45px;
   padding: 10px 27px;
   padding-right: 16px; }
-  .page-index .search-calendar .calendar-header .calendar-title {
+  .page-index .search-calendar .calendar-header .calendar-title, .page-index .search-calendar-hotel .calendar-header .calendar-title {
     font-size: 14px;
     padding: 4px 0; }
 
-.page-index .search-calendar .calendar-body {
+.page-index .search-calendar .calendar-body, .page-index .search-calendar-hotel .calendar-body {
   position: relative; }
-  .page-index .search-calendar .calendar-body .home-nav {
+  .page-index .search-calendar .calendar-body .home-nav, .page-index .search-calendar-hotel .calendar-body .home-nav {
     background: #999;
     height: 25px;
     width: 100%;
@@ -1950,7 +2170,7 @@ file : /Assets/travorama20/css/_page_index.scss
     position: absolute;
     top: 0;
     left: 0; }
-    .page-index .search-calendar .calendar-body .home-nav .nav-prev, .page-index .search-calendar .calendar-body .home-nav .nav-next {
+    .page-index .search-calendar .calendar-body .home-nav .nav-prev, .page-index .search-calendar .calendar-body .home-nav .nav-next, .page-index .search-calendar-hotel .calendar-body .home-nav .nav-prev, .page-index .search-calendar-hotel .calendar-body .home-nav .nav-next {
       width: 11px;
       height: 19px;
       background-image: url(/Assets/images/calendar-nav-sprite.png);
@@ -1961,18 +2181,18 @@ file : /Assets/travorama20/css/_page_index.scss
       position: absolute;
       top: 4px;
       left: 15px; }
-    .page-index .search-calendar .calendar-body .home-nav .nav-next {
+    .page-index .search-calendar .calendar-body .home-nav .nav-next, .page-index .search-calendar-hotel .calendar-body .home-nav .nav-next {
       right: 15px;
       left: auto;
       background-position: -11px 0; }
-  .page-index .search-calendar .calendar-body .ui-datepicker-prev, .page-index .search-calendar .calendar-body .ui-datepicker-next {
+  .page-index .search-calendar .calendar-body .ui-datepicker-prev, .page-index .search-calendar .calendar-body .ui-datepicker-next, .page-index .search-calendar-hotel .calendar-body .ui-datepicker-prev, .page-index .search-calendar-hotel .calendar-body .ui-datepicker-next {
     position: absolute;
     top: 0;
     left: 0;
     display: inline;
     width: auto;
     display: none; }
-  .page-index .search-calendar .calendar-body .ui-datepicker-next {
+  .page-index .search-calendar .calendar-body .ui-datepicker-next, .page-index .search-calendar-hotel .calendar-body .ui-datepicker-next {
     left: auto;
     right: 0; }
 
@@ -2892,7 +3112,7 @@ file: /Assets/travorama20/css/_page_flight.scss
   .page-flight .search-calendar .ui-datepicker-group-last {
     border-top: none !important;
     border-left: 1px solid #ccc; }
-  .page-flight .search-calendar .ui-datepicker-prev, .page-flight .page-index .search-calendar .calendar-body .ui-datepicker-next, .page-index .page-flight .search-calendar .calendar-body .ui-datepicker-next {
+  .page-flight .search-calendar .ui-datepicker-prev, .page-flight .page-index .search-calendar .calendar-body .ui-datepicker-next, .page-index .page-flight .search-calendar .calendar-body .ui-datepicker-next, .page-flight .search-calendar .page-index .search-calendar-hotel .calendar-body .ui-datepicker-next, .page-index .search-calendar-hotel .calendar-body .page-flight .search-calendar .ui-datepicker-next {
     background: url(/Assets/images/calendar-sprite.png) no-repeat;
     width: 22px;
     height: 37px;
@@ -4446,10 +4666,14 @@ file: /Assets/travorama20/css/_page_flight.scss
   /*Bullets*/
   /*Checklist & Radio Button*/
   /*Form & Lable*/
-  /*Shared Page*/ }
+  /*Shared Page*/
+  /*Hotel Checkout Page*/ }
   .page-hotel .lg-txt {
     font-size: 22px;
     line-height: 24px; }
+  .page-hotel .xlg-txt {
+    font-size: 30px;
+    line-height: 30px; }
   .page-hotel .md-txt {
     font-size: 15px; }
   .page-hotel .sm-txt {
@@ -4484,12 +4708,12 @@ file: /Assets/travorama20/css/_page_flight.scss
     margin-bottom: 15px; }
   .page-hotel .col-left, .page-hotel col-right, .page-hotel .col-left-result, .page-hotel .col-right-result, .page-hotel .col-xs-left, .page-hotel .col-xs-middle, .page-hotel .col-xs-right, .page-hotel .col-left-hotel, .page-hotel .col-right-hotel, .page-hotel .col-half, .page-hotel .col-left-page, .page-hotel .col-right-page,
   .page-hotel .col-left-slider, .page-hotel col-right-slider, .page-hotel .col-left-rs, .page-hotel .col-right-rs, .page-hotel .rb-left, .page-hotel .rb-mid, .page-hotel .rb-right, .page-hotel .room-sort-left, .page-hotel .room-sort-mid, .page-hotel .room-sort-right, .page-hotel .room-left, .page-hotel .room-right,
-  .page-hotel .room-rl, .page-hotel .room-rm, .page-hotel .room-rr, .page-hotel .wb-left, .page-hotel .wb-mid, .page-hotel .wb-right, .page-hotel .ot-left, .page-hotel .ot-right {
+  .page-hotel .room-rl, .page-hotel .room-rm, .page-hotel .room-rr, .page-hotel .wb-left, .page-hotel .wb-mid, .page-hotel .wb-right, .page-hotel .ot-left, .page-hotel .ot-right, .page-hotel .col-2, .page-hotel .col-3, .page-hotel .col-4, .page-hotel .col-6, .page-hotel .col-8 {
     position: relative;
     min-height: 1px; }
   .page-hotel .col-left, .page-hotel .col-left-result, .page-hotel .col-right-result, .page-hotel .col-left-hotel, .page-hotel .col-right-hotel, .page-hotel .col-xs-left, .page-hotel .col-xs-middle, .page-hotel .col-xs-right, .page-hotel .col-half, .page-hotel .col-left-page, .page-hotel .col-right-page,
   .page-hotel .col-left-slider, .page-hotel .col-right-slider, .page-hotel .col-left-rs, .page-hotel .col-right-rs, .page-hotel .rb-left, .page-hotel .rb-mid, .page-hotel .rb-right, .page-hotel .room-sort-left, .page-hotel .room-sort-mid, .page-hotel .room-sort-right, .page-hotel .room-left, .page-hotel .room-right,
-  .page-hotel .room-rl, .page-hotel .room-rm, .page-hotel .room-rr, .page-hotel .wb-left, .page-hotel .wb-mid, .page-hotel .wb-right, .page-hotel .ot-left, .page-hotel .ot-right {
+  .page-hotel .room-rl, .page-hotel .room-rm, .page-hotel .room-rr, .page-hotel .wb-left, .page-hotel .wb-mid, .page-hotel .wb-right, .page-hotel .ot-left, .page-hotel .ot-right, .page-hotel .col-2, .page-hotel .col-3, .page-hotel .col-4, .page-hotel .col-6, .page-hotel .col-8 {
     float: left; }
   .page-hotel .col-right {
     float: right; }
@@ -4549,6 +4773,16 @@ file: /Assets/travorama20/css/_page_flight.scss
     width: 22%; }
   .page-hotel .ot-right {
     width: 78%; }
+  .page-hotel .col-2 {
+    width: 20%; }
+  .page-hotel .col-3 {
+    width: 33.333333333333336%; }
+  .page-hotel .col-4 {
+    width: 40%; }
+  .page-hotel .col-6 {
+    width: 60%; }
+  .page-hotel .col-8 {
+    width: 80%; }
   .page-hotel .star-outline, .page-hotel .so-1, .page-hotel .star.e-star.star-4:after, .page-hotel .so-2, .page-hotel .star.e-star.star-3:after, .page-hotel .so-3, .page-hotel .star.e-star.star-2:after, .page-hotel .so-4, .page-hotel .star.e-star:after {
     content: '';
     display: inline-block;
@@ -4587,7 +4821,7 @@ file: /Assets/travorama20/css/_page_flight.scss
       width: 68px; }
     .page-hotel .star.e-star.star-5 {
       width: 85px; }
-  .page-hotel .maps-icon, .page-hotel .travorama-hotel .search-list .search-list-result .col-right-result .location:before, .page-hotel .travorama-hotel .detail-hotel .big-slider .top-desc .address:before, .page-hotel .widget-container .widget.hotel .widget-content .wt-bottom:before, .widget-container .widget.hotel .widget-content .page-hotel .wt-bottom:before, .page-hotel .checkout-hotel .content-step .rh-container .rh-content .rh-location:before, .checkout-hotel .content-step .rh-container .rh-content .page-hotel .rh-location:before {
+  .page-hotel .maps-icon, .page-hotel .widget-container .widget.hotel .widget-content .wt-bottom:before, .widget-container .widget.hotel .widget-content .page-hotel .wt-bottom:before, .page-hotel .travorama-hotel .search-list .search-list-result .col-right-result .location:before, .page-hotel .travorama-hotel .detail-hotel .big-slider .top-desc .address:before, .page-hotel .rh-container .rh-content .rh-location:before {
     content: '';
     display: inline-block;
     background: url(/Assets/travorama20/images/Hotel/location.png) no-repeat;
@@ -4624,14 +4858,12 @@ file: /Assets/travorama20/css/_page_flight.scss
     height: 25px;
     display: inline-block;
     vertical-align: middle; }
-  .page-hotel .facility:before {
-    content: '';
+  .page-hotel .wifi-icon, .page-hotel .travorama-hotel .search-list .search-list-result .col-right-result .facility .wifi {
     display: inline-block;
     background: url(/Assets/travorama20/images/Hotel/wifi.png) no-repeat;
     width: 23px;
     height: 19px; }
-  .page-hotel .facility:after {
-    content: '';
+  .page-hotel .meal-icon, .page-hotel .travorama-hotel .search-list .search-list-result .col-right-result .facility .meal {
     display: inline-block;
     background: url(/Assets/travorama20/images/Hotel/meal.png) no-repeat;
     width: 18px;
@@ -4676,7 +4908,40 @@ file: /Assets/travorama20/css/_page_flight.scss
       border-radius: 5px; }
   .page-hotel label {
     /*Custom label*/ }
-    .page-hotel label.round input, .page-hotel label.square input {
+    .page-hotel label.round, .page-hotel label.sqr {
+      display: block;
+      border: 0;
+      margin-bottom: 0;
+      position: relative;
+      padding: 6px 0;
+      line-height: 14px; }
+    .page-hotel label.sqr.city-point {
+      width: 80%;
+      display: inline-block; }
+    .page-hotel label.sqr span.star {
+      display: inline-block;
+      vertical-align: middle;
+      margin-left: 3px; }
+    .page-hotel label.sqr span.name {
+      margin-left: 5px;
+      font-weight: 400; }
+    .page-hotel label.sqr .checkbox {
+      vertical-align: middle;
+      margin: 0;
+      border: 1px solid #ccc;
+      width: 12px;
+      height: 12px;
+      display: inline-block;
+      background: #fff; }
+      .page-hotel label.sqr .checkbox.active:after {
+        content: '';
+        width: 10px;
+        height: 10px;
+        display: inline-block;
+        background: #1daee4;
+        float: left;
+        border: 2px solid #fff; }
+    .page-hotel label.sqr input[name="check"] {
       display: none; }
     .page-hotel label.round {
       display: block;
@@ -4686,11 +4951,9 @@ file: /Assets/travorama20/css/_page_flight.scss
       position: relative; }
       .page-hotel label.round span.name {
         width: 100%;
-        padding-left: 25px;
-        display: block;
-        line-height: 17px;
+        padding-left: 4px;
         font-weight: 400; }
-      .page-hotel label.round .chck-container {
+      .page-hotel label.round .radio {
         border: 1px solid #ccc;
         width: 17px;
         height: 17px;
@@ -4699,54 +4962,22 @@ file: /Assets/travorama20/css/_page_flight.scss
         -moz-border-radius: 17px;
         -ms-border-radius: 17px;
         border-radius: 17px;
-        position: absolute;
-        background: #fff; }
-        .page-hotel label.round .chck-container .switch {
+        background: #fff;
+        margin: 0;
+        vertical-align: middle; }
+        .page-hotel label.round .radio.active:after {
           float: left;
           width: 15px;
           height: 15px;
           content: "";
-          background: #fff;
+          background: #1daee4;
           border: 3px solid #fff;
-          position: absolute;
           -webkit-border-radius: 15px;
           -moz-border-radius: 15px;
           -ms-border-radius: 15px;
           border-radius: 15px; }
-      .page-hotel label.round.active .switch {
-        background: #1daee4; }
-    .page-hotel label.square {
-      display: block;
-      border: 0;
-      margin-bottom: 0;
-      position: relative;
-      padding: 6px 0;
-      line-height: 14px; }
-      .page-hotel label.square.city-point {
-        width: 80%;
-        display: inline-block; }
-      .page-hotel label.square span.star {
-        margin-left: 20px;
-        display: block; }
-      .page-hotel label.square span.name {
-        padding-left: 24px;
-        font-weight: 400; }
-      .page-hotel label.square .chck-container {
-        border: 1px solid #ccc;
-        width: 12px;
-        height: 12px;
-        display: inline-block;
-        position: absolute;
-        background: #fff; }
-        .page-hotel label.square .chck-container .switch {
-          float: left;
-          width: 10px;
-          height: 10px;
-          content: "";
-          border: 2px solid #fff;
-          background: #fff; }
-      .page-hotel label.square.active .switch {
-        background: #1daee4; }
+      .page-hotel label.round input[name="optradio"] {
+        display: none; }
     .page-hotel label.confirmation-buyer span.name {
       font-weight: 600; }
   .page-hotel a.btn-blue {
@@ -4910,6 +5141,8 @@ file: /Assets/travorama20/css/_page_flight.scss
         line-height: 20px; }
       .page-hotel .travorama-hotel .search-list .search-list-result .col-right-result {
         padding-left: 30px; }
+        .page-hotel .travorama-hotel .search-list .search-list-result .col-right-result .sort .col-xs-left {
+          margin-top: 5px; }
         .page-hotel .travorama-hotel .search-list .search-list-result .col-right-result .hotel-list {
           margin-top: 15px;
           padding: 14px;
@@ -4920,11 +5153,11 @@ file: /Assets/travorama20/css/_page_flight.scss
           .page-hotel .travorama-hotel .search-list .search-list-result .col-right-result .hotel-list .col-right-hotel {
             padding-left: 15px; }
         .page-hotel .travorama-hotel .search-list .search-list-result .col-right-result .facility {
-          float: right; }
+          text-align: right; }
         .page-hotel .travorama-hotel .search-list .search-list-result .col-right-result .location {
           margin: 7px 0;
           margin-left: 20px;
-          line-height: 12px; }
+          line-height: 14px; }
           .page-hotel .travorama-hotel .search-list .search-list-result .col-right-result .location:before {
             position: absolute;
             left: 15px; }
@@ -5189,6 +5422,17 @@ file: /Assets/travorama20/css/_page_flight.scss
             display: inline-block;
             background: url(/Assets/travorama20/images/Hotel/sort.png) no-repeat;
             margin-right: 10px; }
+        .page-hotel .travorama-hotel .detail-hotel .room .room-list-container {
+          padding: 0;
+          list-style: none; }
+          .page-hotel .travorama-hotel .detail-hotel .room .room-list-container .rl-accordion .accordion-rl.active .room-list {
+            border: 3px solid #1daee4;
+            border-bottom: none; }
+          .page-hotel .travorama-hotel .detail-hotel .room .room-list-container .rl-accordion .accordion-rl.active > .room-right {
+            border: none; }
+          .page-hotel .travorama-hotel .detail-hotel .room .room-list-container .rl-accordion > .accordion-wrapper .accordion-content.show {
+            padding: 0;
+            border: none; }
         .page-hotel .travorama-hotel .detail-hotel .room .room-list {
           margin-top: 15px; }
           .page-hotel .travorama-hotel .detail-hotel .room .room-list .room-right {
@@ -5281,7 +5525,8 @@ file: /Assets/travorama20/css/_page_flight.scss
                     background: url(/Assets/travorama20/images/Hotel/prev-white.png) no-repeat;
                     width: 9px;
                     height: 14px;
-                    display: inline-block; }
+                    display: inline-block;
+                    margin-top: 5px; }
                 .page-hotel .travorama-hotel .detail-hotel .room .hotel-detail .col-left-top .hd-slider button.slick-arrow.slick-next {
                   right: 0;
                   margin-right: 15px; }
@@ -5290,7 +5535,8 @@ file: /Assets/travorama20/css/_page_flight.scss
                     background: url(/Assets/travorama20/images/Hotel/next-white.png) no-repeat;
                     width: 9px;
                     height: 14px;
-                    display: inline-block; }
+                    display: inline-block;
+                    margin-top: 5px; }
             .page-hotel .travorama-hotel .detail-hotel .room .hotel-detail .col-left-top .total-img {
               text-align: center;
               margin: 10px 0; }
@@ -5428,6 +5674,75 @@ file: /Assets/travorama20/css/_page_flight.scss
             padding-right: 15px; }
           .page-hotel .travorama-hotel .detail-hotel .info-hotel .ih-desc .col-half.ih-r {
             padding-left: 15px; }
+  .page-hotel .rh-container .rh-main-title {
+    background: #1daee4;
+    padding: 8px 25px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #fff; }
+  .page-hotel .rh-container .rh-content {
+    border: 1px solid #ccc;
+    background: #fff;
+    padding: 15px 20px; }
+    .page-hotel .rh-container .rh-content .rh-row {
+      padding: 0 15px; }
+    .page-hotel .rh-container .rh-content .hotel-title-lg {
+      margin-bottom: 10px; }
+    .page-hotel .rh-container .rh-content .rh-location {
+      margin: 10px 0;
+      margin-left: 20px; }
+    .page-hotel .rh-container .rh-content .rh-detail {
+      line-height: 22px;
+      margin-bottom: 15px; }
+    .page-hotel .rh-container .rh-content .rh-top {
+      border-top: 1px solid #ccc;
+      padding: 15px 0; }
+      .page-hotel .rh-container .rh-content .rh-top .hotel-facility {
+        position: absolute;
+        right: 0; }
+    .page-hotel .rh-container .rh-content .rh-tnc {
+      padding: 0;
+      margin: 0; }
+    .page-hotel .rh-container .rh-content .sqr-blue-list li {
+      padding-left: 0;
+      margin-bottom: 10px; }
+  .page-hotel .rh-container.notes-hotel {
+    margin-top: 20px; }
+  .page-hotel.page-checkout-hotel .checkout-hotel .step-button .btn {
+    margin-top: 15px;
+    font-size: 13px;
+    width: 200px; }
+    .page-hotel.page-checkout-hotel .checkout-hotel .step-button .btn.btn-grey {
+      margin-right: 10px; }
+  .page-hotel.page-checkout-hotel .checkout-hotel .maps-icon, .page-hotel.page-checkout-hotel .checkout-hotel .widget-container .widget.hotel .widget-content .wt-bottom:before, .widget-container .widget.hotel .widget-content .page-hotel.page-checkout-hotel .checkout-hotel .wt-bottom:before, .page-hotel.page-checkout-hotel .checkout-hotel .travorama-hotel .search-list .search-list-result .col-right-result .location:before, .page-hotel.page-checkout-hotel .travorama-hotel .search-list .search-list-result .col-right-result .checkout-hotel .location:before, .page-hotel.page-checkout-hotel .checkout-hotel .travorama-hotel .detail-hotel .big-slider .top-desc .address:before, .page-hotel.page-checkout-hotel .travorama-hotel .detail-hotel .big-slider .top-desc .checkout-hotel .address:before, .page-hotel.page-checkout-hotel .checkout-hotel .rh-container .rh-content .rh-location:before, .page-hotel.page-checkout-hotel .rh-container .rh-content .checkout-hotel .rh-location:before {
+    content: '';
+    display: inline-block;
+    background: url(/Assets/travorama20/images/Hotel/location.png) no-repeat;
+    width: 12px;
+    height: 17px;
+    vertical-align: middle;
+    position: absolute;
+    margin-left: -20px;
+    margin-top: 2px; }
+  .page-hotel.page-checkout-hotel .checkout-hotel .sqr-blue-list {
+    padding: 0;
+    list-style: none;
+    margin: 0; }
+    .page-hotel.page-checkout-hotel .checkout-hotel .sqr-blue-list .wc-title:before {
+      width: 8px;
+      height: 8px;
+      display: inline-block;
+      background: #1daee4;
+      content: '';
+      margin-left: -20px;
+      position: absolute;
+      margin-top: 4px; }
+  .page-hotel.page-checkout-hotel .checkout-hotel textarea[name="special-request"].form-control {
+    height: 80px;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    -ms-border-radius: 2px;
+    border-radius: 2px; }
 
 /*
 
@@ -5912,158 +6227,6 @@ label.control-label {
   background-position: 98% center;
   background-repeat: no-repeat; }
 
-.widget-container .widget .widget-content {
-  background: #ededed; }
-
-.widget-container .widget.price-detail .widget-content {
-  padding: 12px;
-  font-size: 12px; }
-  .widget-container .widget.price-detail .widget-content dl {
-    margin-bottom: 12px; }
-    .widget-container .widget.price-detail .widget-content dl:before, .widget-container .widget.price-detail .widget-content dl:after {
-      display: block;
-      width: 100%;
-      content: "";
-      clear: both; }
-    .widget-container .widget.price-detail .widget-content dl dt {
-      font-weight: 600;
-      width: 60%;
-      float: left;
-      position: relative; }
-      .widget-container .widget.price-detail .widget-content dl dt:before {
-        content: "";
-        position: absolute;
-        width: 7px;
-        height: 7px;
-        background: #fd8524;
-        left: -12px;
-        top: 3px; }
-      .widget-container .widget.price-detail .widget-content dl dt.dt-title {
-        width: 45%; }
-    .widget-container .widget.price-detail .widget-content dl dd {
-      font-weight: 600;
-      width: 40%;
-      float: left;
-      text-align: right; }
-      .widget-container .widget.price-detail .widget-content dl dd.dd-price {
-        width: 55%; }
-  .widget-container .widget.price-detail .widget-content dl.total-price {
-    border-top: 1px solid #ccc;
-    padding-top: 12px;
-    margin-bottom: 0; }
-    .widget-container .widget.price-detail .widget-content dl.total-price dt {
-      font-weight: 700;
-      width: 40%; }
-      .widget-container .widget.price-detail .widget-content dl.total-price dt:before {
-        display: none; }
-    .widget-container .widget.price-detail .widget-content dl.total-price dd {
-      color: #ff7200;
-      font-size: 16px;
-      font-weight: bold;
-      width: 60%; }
-
-.widget-container .widget.price-detail footer {
-  padding: 12px;
-  background: #ddd;
-  font-style: italic; }
-
-.widget-container .widget.voucher .widget-content {
-  padding: 12px; }
-
-.widget-container .widget.voucher .bg-danger, .widget-container .widget.voucher .bg-success {
-  padding: 6px;
-  margin-top: 6px; }
-
-.widget-container .widget.flight .widget-content {
-  padding: 12px;
-  border: 1px solid #ccc;
-  border-top: none; }
-  .widget-container .widget.flight .widget-content .airline {
-    padding-bottom: 12px; }
-    .widget-container .widget.flight .widget-content .airline .airline-image {
-      width: 50px;
-      border: 1px solid #ccc;
-      float: left;
-      margin-right: 12px;
-      background: #fff; }
-    .widget-container .widget.flight .widget-content .airline .airline-name, .widget-container .widget.flight .widget-content .airline .airline-number {
-      font-weight: bold;
-      color: #1daee4; }
-  .widget-container .widget.flight .widget-content .route:before, .widget-container .widget.flight .widget-content .route:after {
-    display: block;
-    width: 100%;
-    content: "";
-    clear: both; }
-  .widget-container .widget.flight .widget-content .route .origin, .widget-container .widget.flight .widget-content .route .destination {
-    float: left;
-    width: 45%; }
-  .widget-container .widget.flight .widget-content .route .duration {
-    float: left;
-    width: 7%;
-    margin-right: 3%;
-    content: "";
-    border-top: 3px solid #1daee4;
-    margin-top: 50px; }
-  .widget-container .widget.flight .widget-content .route h4 {
-    font-weight: bold; }
-
-.widget-container .widget.countdown .widget-content {
-  background: #ffd632;
-  padding: 12px; }
-  .widget-container .widget.countdown .widget-content P {
-    padding-left: 28px;
-    background: url(/Assets/images/sandclock-yellow.png) left 3px no-repeat;
-    font-size: 12px;
-    margin-bottom: 12px; }
-  .widget-container .widget.countdown .widget-content .timer {
-    background: #ffefb1;
-    border-bottom: 1px solid #dab939;
-    text-align: center;
-    padding: 12px;
-    color: #4d4e4e; }
-    .widget-container .widget.countdown .widget-content .timer > div {
-      display: inline-block; }
-    .widget-container .widget.countdown .widget-content .timer h5 {
-      font-weight: bold;
-      font-size: 36px;
-      margin-bottom: 0;
-      margin-top: 0; }
-    .widget-container .widget.countdown .widget-content .timer span {
-      font-size: 12px; }
-    .widget-container .widget.countdown .widget-content .timer .separator {
-      vertical-align: top;
-      margin-left: 6px;
-      margin-right: 6px; }
-
-.widget-container .widget.hotel .widget-content {
-  padding: 12px;
-  border: 1px solid #ccc;
-  border-top: none; }
-  .widget-container .widget.hotel .widget-content .wt-top .col-right-hotel {
-    padding: 15px 10px; }
-  .widget-container .widget.hotel .widget-content .wt-bottom {
-    margin: 7px 0;
-    margin-left: 25px;
-    line-height: 16px; }
-  .widget-container .widget.hotel .widget-content .widget-bottom {
-    line-height: 24px;
-    border-top: 1px solid #ccc;
-    padding-top: 7px; }
-
-.widget-container .widget.hotel .widget-subtitle {
-  background: #1daee4;
-  color: #fff;
-  padding: 7px 15px;
-  font-size: 15px;
-  font-weight: 600;
-  position: relative; }
-
-.widget-container .widget.hotel .widget-wrapper.notes {
-  margin-top: 15px; }
-  .widget-container .widget.hotel .widget-wrapper.notes .sqr-blue-list li {
-    padding-left: 8px;
-    margin-bottom: 10px; }
-
 .travorama-login {
   border-top: 1px solid #ccc;
   position: relative;
@@ -6154,7 +6317,7 @@ label.control-label {
         color: #fed83e; }
       .page-checkout .ui-datepicker .ui-datepicker-group .ui-datepicker-calendar .ui-datepicker-week-end a:hover {
         background: #fed83e; }
-    .page-checkout .ui-datepicker .ui-datepicker-group .ui-datepicker-prev, .page-checkout .ui-datepicker .ui-datepicker-group .page-index .search-calendar .calendar-body .ui-datepicker-next, .page-index .search-calendar .calendar-body .page-checkout .ui-datepicker .ui-datepicker-group .ui-datepicker-next {
+    .page-checkout .ui-datepicker .ui-datepicker-group .ui-datepicker-prev, .page-checkout .ui-datepicker .ui-datepicker-group .page-index .search-calendar .calendar-body .ui-datepicker-next, .page-index .search-calendar .calendar-body .page-checkout .ui-datepicker .ui-datepicker-group .ui-datepicker-next, .page-checkout .ui-datepicker .ui-datepicker-group .page-index .search-calendar-hotel .calendar-body .ui-datepicker-next, .page-index .search-calendar-hotel .calendar-body .page-checkout .ui-datepicker .ui-datepicker-group .ui-datepicker-next {
       position: absolute;
       top: -10px;
       left: 15px;
@@ -6270,7 +6433,7 @@ label.control-label {
   display: none; }
   .page-confirmation .ui-datepicker .ui-datepicker-header {
     padding-bottom: 10px; }
-    .page-confirmation .ui-datepicker .ui-datepicker-header .ui-datepicker-prev, .page-confirmation .ui-datepicker .ui-datepicker-header .page-index .search-calendar .calendar-body .ui-datepicker-next, .page-index .search-calendar .calendar-body .page-confirmation .ui-datepicker .ui-datepicker-header .ui-datepicker-next, .page-confirmation .ui-datepicker .ui-datepicker-header .ui-datepicker-next {
+    .page-confirmation .ui-datepicker .ui-datepicker-header .ui-datepicker-prev, .page-confirmation .ui-datepicker .ui-datepicker-header .page-index .search-calendar .calendar-body .ui-datepicker-next, .page-index .search-calendar .calendar-body .page-confirmation .ui-datepicker .ui-datepicker-header .ui-datepicker-next, .page-confirmation .ui-datepicker .ui-datepicker-header .page-index .search-calendar-hotel .calendar-body .ui-datepicker-next, .page-index .search-calendar-hotel .calendar-body .page-confirmation .ui-datepicker .ui-datepicker-header .ui-datepicker-next, .page-confirmation .ui-datepicker .ui-datepicker-header .ui-datepicker-next {
       display: inline;
       color: #fff;
       cursor: pointer; }
@@ -6300,270 +6463,286 @@ label.control-label {
   .page-confirmation .ui-datepicker .ui-datepicker-calendar .ui-datepicker-unselectable {
     color: #666; }
 
-.page-thankyou .site-content {
-  padding: 24px 0; }
-
-.page-thankyou .countdown {
-  background: #fff;
-  padding: 24px;
-  border: 1px solid #ccc;
-  margin-top: 24px;
-  margin-bottom: 24px;
-  text-align: center; }
-  .page-thankyou .countdown .timer {
-    text-align: center;
+.page-thankyou {
+  /*Hotel Thankyou Page*/ }
+  .page-thankyou .section-title.stripe {
+    font-weight: 600;
+    background: url(/Assets/images/yellow-stripe.png) center bottom no-repeat;
+    padding-bottom: 20px;
+    width: 240px;
+    background-size: 100%;
+    margin: 15px auto 45px; }
+  .page-thankyou .site-content {
+    padding: 24px 0; }
+  .page-thankyou .countdown {
+    background: #fff;
+    padding: 24px;
+    border: 1px solid #ccc;
+    margin-top: 24px;
     margin-bottom: 24px;
-    background-image: url(/Assets/images/sandclock.png);
-    background-repeat: no-repeat;
-    background-position: left center; }
-    .page-thankyou .countdown .timer > div {
-      display: inline-block;
-      color: #1daee4; }
-      .page-thankyou .countdown .timer > div + div {
-        padding-left: 15px; }
-      .page-thankyou .countdown .timer > div.separator {
-        font-size: 32px;
-        vertical-align: top;
-        padding-top: 6px; }
-      .page-thankyou .countdown .timer > div h5 {
-        font-weight: bold;
-        font-size: 36px;
-        margin: 0; }
-      .page-thankyou .countdown .timer > div span {
-        font-size: 14px; }
-  .page-thankyou .countdown .print a {
-    height: 100%;
-    padding: 16px 0; }
-    .page-thankyou .countdown .print a span {
-      background: url(/Assets/images/print-image.png) top left no-repeat;
-      padding-left: 36px;
-      font-size: 18px; }
-  .page-thankyou .countdown p {
-    margin-top: 15px; }
-
-.page-thankyou .order-detail header {
-  background: #1daee4;
-  color: #fff;
-  padding: 6px 12px; }
-
-.page-thankyou .order-detail section {
-  background: #f3f1f2;
-  position: relative;
-  min-height: 350px; }
-  .page-thankyou .order-detail section h4 {
-    font-weight: bold;
-    letter-spacing: 0;
-    margin-bottom: 18px; }
-  .page-thankyou .order-detail section .order-detail-left {
-    padding: 12px 24px; }
-    .page-thankyou .order-detail section .order-detail-left .va-passenger .passenger {
+    text-align: center; }
+    .page-thankyou .countdown .timer {
+      text-align: center;
       margin-bottom: 24px;
-      padding-left: 0px;
-      margin-left: 0; }
-      .page-thankyou .order-detail section .order-detail-left .va-passenger .passenger ol {
-        counter-reset: passenger-counter;
-        list-style: none;
-        margin: 0;
-        padding: 0; }
-        .page-thankyou .order-detail section .order-detail-left .va-passenger .passenger ol li {
-          position: relative;
-          padding-left: 21px;
-          font-size: 12px; }
-          .page-thankyou .order-detail section .order-detail-left .va-passenger .passenger ol li:before {
-            content: "0" counter(passenger-counter);
-            counter-increment: passenger-counter;
-            position: absolute;
-            left: 0;
-            color: #1daee4;
-            font-weight: bold; }
-    .page-thankyou .order-detail section .order-detail-left .va-passenger .virtual-account {
-      margin-bottom: 24px;
-      padding-left: 23px; }
-      .page-thankyou .order-detail section .order-detail-left .va-passenger .virtual-account .va-text {
-        font-size: 10px;
-        padding-bottom: 2px;
-        margin-bottom: 8px; }
-      .page-thankyou .order-detail section .order-detail-left .va-passenger .virtual-account .va-number {
-        font-size: 18px;
-        padding: 0;
-        color: #ff6900; }
-    .page-thankyou .order-detail section .order-detail-left .order .flight {
-      padding-left: 36px;
-      position: relative; }
-      .page-thankyou .order-detail section .order-detail-left .order .flight .col-xs-9 {
-        font-weight: bold; }
-      .page-thankyou .order-detail section .order-detail-left .order .flight img {
-        height: 36px;
-        margin-right: 24px; }
-      .page-thankyou .order-detail section .order-detail-left .order .flight span {
-        font-weight: bold;
+      background-image: url(/Assets/images/sandclock.png);
+      background-repeat: no-repeat;
+      background-position: left center; }
+      .page-thankyou .countdown .timer > div {
+        display: inline-block;
         color: #1daee4; }
-      .page-thankyou .order-detail section .order-detail-left .order .flight:before {
-        content: '';
-        width: 20px;
-        height: 20px;
-        position: absolute;
-        top: 0;
-        left: 0;
-        background-color: #1daee4;
-        background-image: url(/Assets/images/plane-updown-sprite.png);
-        background-size: 200%;
-        background-repeat: no-repeat;
-        border: 2px solid #1daee4; }
-    .page-thankyou .order-detail section .order-detail-left .order.return:before {
-      background-position: -16px; }
-
-.page-thankyou .order-detail .order-detail-right {
-  background: #e9e7e8;
-  padding: 12px 24px;
-  height: 100%;
-  position: absolute;
-  right: 0; }
-  .page-thankyou .order-detail .order-detail-right .price-detail {
-    margin-bottom: 24px; }
-    .page-thankyou .order-detail .order-detail-right .price-detail dl:before, .page-thankyou .order-detail .order-detail-right .price-detail dl:after {
-      display: block;
-      width: 100%;
-      content: "";
-      clear: both; }
-    .page-thankyou .order-detail .order-detail-right .price-detail dl dt {
-      width: 55%;
-      float: left;
-      font-weight: normal;
-      position: relative;
-      padding-left: 12px; }
-      .page-thankyou .order-detail .order-detail-right .price-detail dl dt:before {
+        .page-thankyou .countdown .timer > div + div {
+          padding-left: 15px; }
+        .page-thankyou .countdown .timer > div.separator {
+          font-size: 32px;
+          vertical-align: top;
+          padding-top: 6px; }
+        .page-thankyou .countdown .timer > div h5 {
+          font-weight: bold;
+          font-size: 36px;
+          margin: 0; }
+        .page-thankyou .countdown .timer > div span {
+          font-size: 14px; }
+    .page-thankyou .countdown .print a {
+      height: 100%;
+      padding: 16px 0; }
+      .page-thankyou .countdown .print a span {
+        background: url(/Assets/images/print-image.png) top left no-repeat;
+        padding-left: 36px;
+        font-size: 18px; }
+    .page-thankyou .countdown p {
+      margin-top: 15px; }
+  .page-thankyou .order-detail header {
+    background: #1daee4;
+    color: #fff;
+    padding: 6px 12px; }
+  .page-thankyou .order-detail section {
+    background: #f3f1f2;
+    position: relative;
+    min-height: 350px; }
+    .page-thankyou .order-detail section h4 {
+      font-weight: bold;
+      letter-spacing: 0;
+      margin-bottom: 18px; }
+    .page-thankyou .order-detail section .order-detail-left {
+      padding: 12px 24px; }
+      .page-thankyou .order-detail section .order-detail-left .va-passenger .passenger {
+        margin-bottom: 24px;
+        padding-left: 0px;
+        margin-left: 0; }
+        .page-thankyou .order-detail section .order-detail-left .va-passenger .passenger ol {
+          counter-reset: passenger-counter;
+          list-style: none;
+          margin: 0;
+          padding: 0; }
+          .page-thankyou .order-detail section .order-detail-left .va-passenger .passenger ol li {
+            position: relative;
+            padding-left: 21px;
+            font-size: 12px; }
+            .page-thankyou .order-detail section .order-detail-left .va-passenger .passenger ol li:before {
+              content: "0" counter(passenger-counter);
+              counter-increment: passenger-counter;
+              position: absolute;
+              left: 0;
+              color: #1daee4;
+              font-weight: bold; }
+      .page-thankyou .order-detail section .order-detail-left .va-passenger .virtual-account {
+        margin-bottom: 24px;
+        padding-left: 23px; }
+        .page-thankyou .order-detail section .order-detail-left .va-passenger .virtual-account .va-text {
+          font-size: 10px;
+          padding-bottom: 2px;
+          margin-bottom: 8px; }
+        .page-thankyou .order-detail section .order-detail-left .va-passenger .virtual-account .va-number {
+          font-size: 18px;
+          padding: 0;
+          color: #ff6900; }
+      .page-thankyou .order-detail section .order-detail-left .order .flight {
+        padding-left: 36px;
+        position: relative; }
+        .page-thankyou .order-detail section .order-detail-left .order .flight .col-xs-9 {
+          font-weight: bold; }
+        .page-thankyou .order-detail section .order-detail-left .order .flight img {
+          height: 36px;
+          margin-right: 24px; }
+        .page-thankyou .order-detail section .order-detail-left .order .flight span {
+          font-weight: bold;
+          color: #1daee4; }
+        .page-thankyou .order-detail section .order-detail-left .order .flight:before {
+          content: '';
+          width: 20px;
+          height: 20px;
+          position: absolute;
+          top: 0;
+          left: 0;
+          background-color: #1daee4;
+          background-image: url(/Assets/images/plane-updown-sprite.png);
+          background-size: 200%;
+          background-repeat: no-repeat;
+          border: 2px solid #1daee4; }
+      .page-thankyou .order-detail section .order-detail-left .order.return:before {
+        background-position: -16px; }
+  .page-thankyou .order-detail .order-detail-right {
+    background: #e9e7e8;
+    padding: 12px 24px;
+    height: 100%;
+    position: absolute;
+    right: 0; }
+    .page-thankyou .order-detail .order-detail-right .price-detail {
+      margin-bottom: 24px; }
+      .page-thankyou .order-detail .order-detail-right .price-detail dl:before, .page-thankyou .order-detail .order-detail-right .price-detail dl:after {
+        display: block;
+        width: 100%;
         content: "";
-        width: 6px;
-        height: 6px;
-        position: absolute;
-        top: 3px;
-        left: 0;
-        background: #ff6900; }
-    .page-thankyou .order-detail .order-detail-right .price-detail dl dd {
-      width: 45%;
-      float: left;
-      text-align: right;
-      font-weight: bold; }
-    .page-thankyou .order-detail .order-detail-right .price-detail dl.total-price {
-      border-top: 1px solid #ccc;
-      padding-top: 12px; }
-      .page-thankyou .order-detail .order-detail-right .price-detail dl.total-price dt {
-        width: 40%; }
-        .page-thankyou .order-detail .order-detail-right .price-detail dl.total-price dt:before {
+        clear: both; }
+      .page-thankyou .order-detail .order-detail-right .price-detail dl dt {
+        width: 55%;
+        float: left;
+        font-weight: normal;
+        position: relative;
+        padding-left: 12px; }
+        .page-thankyou .order-detail .order-detail-right .price-detail dl dt:before {
           content: "";
-          width: 0;
-          height: 0; }
-      .page-thankyou .order-detail .order-detail-right .price-detail dl.total-price dd {
-        width: 60%;
-        color: #ff6900;
-        font-weight: bold;
-        font-size: 16px; }
-  .page-thankyou .order-detail .order-detail-right .payment-detail h5 {
-    color: #1daee4;
-    font-weight: bold; }
-
-.page-thankyou .bookfailed-popup .overlay-content .popup-container {
-  max-width: 280px;
-  float: right;
-  margin-top: 60px;
-  padding-right: 10px;
-  background: url("/Assets/images/travorama-logo-color.png");
-  background-repeat: no-repeat;
-  background-size: 30%; }
-  .page-thankyou .bookfailed-popup .overlay-content .popup-container .popup-header {
-    margin: 30px 0; }
-    .page-thankyou .bookfailed-popup .overlay-content .popup-container .popup-header span.popup-title {
-      color: #15b1e4;
-      font-size: 20px;
+          width: 6px;
+          height: 6px;
+          position: absolute;
+          top: 3px;
+          left: 0;
+          background: #ff6900; }
+      .page-thankyou .order-detail .order-detail-right .price-detail dl dd {
+        width: 45%;
+        float: left;
+        text-align: right;
+        font-weight: bold; }
+      .page-thankyou .order-detail .order-detail-right .price-detail dl.total-price {
+        border-top: 1px solid #ccc;
+        padding-top: 12px; }
+        .page-thankyou .order-detail .order-detail-right .price-detail dl.total-price dt {
+          width: 40%; }
+          .page-thankyou .order-detail .order-detail-right .price-detail dl.total-price dt:before {
+            content: "";
+            width: 0;
+            height: 0; }
+        .page-thankyou .order-detail .order-detail-right .price-detail dl.total-price dd {
+          width: 60%;
+          color: #ff6900;
+          font-weight: bold;
+          font-size: 16px; }
+    .page-thankyou .order-detail .order-detail-right .payment-detail h5 {
+      color: #1daee4;
+      font-weight: bold; }
+  .page-thankyou .bookfailed-popup .overlay-content .popup-container {
+    max-width: 280px;
+    float: right;
+    margin-top: 60px;
+    padding-right: 10px;
+    background: url("/Assets/images/travorama-logo-color.png");
+    background-repeat: no-repeat;
+    background-size: 30%; }
+    .page-thankyou .bookfailed-popup .overlay-content .popup-container .popup-header {
+      margin: 30px 0; }
+      .page-thankyou .bookfailed-popup .overlay-content .popup-container .popup-header span.popup-title {
+        color: #15b1e4;
+        font-size: 20px;
+        font-weight: 700; }
+        .page-thankyou .bookfailed-popup .overlay-content .popup-container .popup-header span.popup-title.stripe {
+          background: url(/Assets/mobile/images/yellow-stripe.png) center bottom no-repeat;
+          width: 280px;
+          height: 14px;
+          padding-bottom: 15px;
+          background-size: 100%; }
+    .page-thankyou .bookfailed-popup .overlay-content .popup-container .popup-desc {
+      font-size: 13px;
+      color: #000; }
+      .page-thankyou .bookfailed-popup .overlay-content .popup-container .popup-desc span.blue-txt {
+        color: #15b1e4; }
+    .page-thankyou .bookfailed-popup .overlay-content .popup-container .popup-btn {
+      padding: 25px;
+      float: right; }
+  .page-thankyou.page-hotel .thankyou > .container {
+    max-width: none !important; }
+  .page-thankyou.page-hotel .timer-container {
+    max-width: 800px;
+    margin: 0 auto; }
+  .page-thankyou.page-hotel .tp-counter {
+    padding: 20px;
+    border: 1px solid #ccc;
+    background: #fff;
+    margin: 15px 0 30px;
+    text-align: center;
+    border-radius: 2px; }
+    .page-thankyou.page-hotel .tp-counter .tp-list {
+      padding: 0;
+      margin: 0;
+      list-style-type: none;
+      text-align: center; }
+      .page-thankyou.page-hotel .tp-counter .tp-list.minute:before {
+        content: ':';
+        display: inline;
+        font-size: 30px;
+        position: absolute;
+        left: 0;
+        top: 0;
+        font-weight: 700; }
+      .page-thankyou.page-hotel .tp-counter .tp-list.sec:before {
+        content: ':';
+        display: inline;
+        font-size: 30px;
+        position: absolute;
+        left: 0;
+        top: 0;
+        font-weight: 700; }
+    .page-thankyou.page-hotel .tp-counter .col-half.left-side {
+      padding-left: 190px; }
+    .page-thankyou.page-hotel .tp-counter .col-half.right-side {
+      text-align: left;
+      padding-left: 40px; }
+      .page-thankyou.page-hotel .tp-counter .col-half.right-side .btn-yellow {
+        font-size: 13px;
+        padding: 10px 30px; }
+        .page-thankyou.page-hotel .tp-counter .col-half.right-side .btn-yellow:before {
+          content: '';
+          display: inline-block;
+          width: 22px;
+          height: 20px;
+          background: url(/Assets/travorama20/images/Hotel/print.png) no-repeat;
+          vertical-align: middle;
+          background-size: 100%;
+          margin-right: 10px; }
+    .page-thankyou.page-hotel .tp-counter .timer {
+      max-width: 240px;
+      margin: 0 auto 15px; }
+      .page-thankyou.page-hotel .tp-counter .timer:before {
+        content: '';
+        background: url(/Assets/mobile/images/sand-clock.png) no-repeat;
+        display: inline;
+        width: 28px;
+        height: 47px;
+        position: absolute;
+        background-size: 100%;
+        margin-left: -140px; }
+  .page-thankyou.page-hotel .tp-detail .tp-container {
+    padding: 15px 20px;
+    min-height: 320px !important; }
+  .page-thankyou.page-hotel .tp-detail .tp-left {
+    background: #f3f1f1; }
+  .page-thankyou.page-hotel .tp-detail .tp-right {
+    background: #ededed; }
+  .page-thankyou.page-hotel .tp-detail .tp-title {
+    margin-bottom: 10px; }
+  .page-thankyou.page-hotel .tp-detail .tp-img {
+    text-align: center;
+    margin-top: 10px; }
+  .page-thankyou.page-hotel .tp-detail .tpb-container {
+    line-height: 20px; }
+    .page-thankyou.page-hotel .tp-detail .tpb-container .col-8:before {
+      content: '\00a0:\00a0';
+      display: inline-block;
       font-weight: 700; }
-      .page-thankyou .bookfailed-popup .overlay-content .popup-container .popup-header span.popup-title.stripe {
-        background: url(/Assets/mobile/images/yellow-stripe.png) center bottom no-repeat;
-        width: 280px;
-        height: 14px;
-        padding-bottom: 15px;
-        background-size: 100%; }
-  .page-thankyou .bookfailed-popup .overlay-content .popup-container .popup-desc {
-    font-size: 13px;
-    color: #000; }
-    .page-thankyou .bookfailed-popup .overlay-content .popup-container .popup-desc span.blue-txt {
-      color: #15b1e4; }
-  .page-thankyou .bookfailed-popup .overlay-content .popup-container .popup-btn {
-    padding: 25px;
-    float: right; }
+  .page-thankyou.page-hotel .tp-detail .tp-top {
+    margin-bottom: 10px; }
 
 .page-overlay.flight-expired {
   z-index: 9999; }
-
-/*Hotel Checkout Page*/
-.checkout-hotel .step-button .btn {
-  margin-top: 15px;
-  font-size: 13px;
-  width: 200px; }
-  .checkout-hotel .step-button .btn.btn-grey {
-    margin-right: 10px; }
-
-.checkout-hotel .maps-icon, .checkout-hotel .page-hotel .travorama-hotel .search-list .search-list-result .col-right-result .location:before, .page-hotel .travorama-hotel .search-list .search-list-result .col-right-result .checkout-hotel .location:before, .checkout-hotel .page-hotel .travorama-hotel .detail-hotel .big-slider .top-desc .address:before, .page-hotel .travorama-hotel .detail-hotel .big-slider .top-desc .checkout-hotel .address:before, .checkout-hotel .widget-container .widget.hotel .widget-content .wt-bottom:before, .widget-container .widget.hotel .widget-content .checkout-hotel .wt-bottom:before, .checkout-hotel .content-step .rh-container .rh-content .rh-location:before {
-  content: '';
-  display: inline-block;
-  background: url(/Assets/travorama20/images/Hotel/location.png) no-repeat;
-  width: 12px;
-  height: 17px;
-  vertical-align: middle;
-  position: absolute;
-  margin-left: -20px;
-  margin-top: 2px; }
-
-.checkout-hotel .sqr-blue-list {
-  padding: 0;
-  list-style: none;
-  margin: 0; }
-  .checkout-hotel .sqr-blue-list .wc-title:before {
-    width: 8px;
-    height: 8px;
-    display: inline-block;
-    background: #1daee4;
-    content: '';
-    margin-left: -20px;
-    position: absolute;
-    margin-top: 4px; }
-
-.checkout-hotel .content-step .rh-container .rh-main-title {
-  background: #1daee4;
-  padding: 6px 25px;
-  font-size: 15px;
-  font-weight: 600;
-  color: #fff; }
-
-.checkout-hotel .content-step .rh-container .rh-content {
-  border: 1px solid #ccc;
-  background: #fff;
-  padding: 15px 20px; }
-  .checkout-hotel .content-step .rh-container .rh-content .rh-row {
-    padding: 0 15px; }
-  .checkout-hotel .content-step .rh-container .rh-content .hotel-title-lg {
-    margin-bottom: 10px; }
-  .checkout-hotel .content-step .rh-container .rh-content .rh-location {
-    margin: 10px 0;
-    margin-left: 20px; }
-  .checkout-hotel .content-step .rh-container .rh-content .rh-detail {
-    line-height: 22px;
-    margin-bottom: 15px; }
-  .checkout-hotel .content-step .rh-container .rh-content .rh-top {
-    border-top: 1px solid #ccc;
-    padding: 15px 0; }
-    .checkout-hotel .content-step .rh-container .rh-content .rh-top .hotel-facility {
-      position: absolute;
-      right: 0; }
-  .checkout-hotel .content-step .rh-container .rh-content .rh-tnc {
-    padding: 0;
-    margin: 0; }
-  .checkout-hotel .content-step .rh-container .rh-content .sqr-blue-list li {
-    padding-left: 0;
-    margin-bottom: 10px; }
-
-.checkout-hotel .content-step .rh-container.notes-hotel {
-  margin-top: 20px; }
 
 /*
 
@@ -6809,8 +6988,6 @@ file : /Assets/travorama20/css/_page_password.scss
       border-top: 1px solid #ccc; }
     .page-account-profile .account-content form[name="profileForm"], .page-account-profile .account-content form[name="passwordForm"] {
       padding: 15px 0; }
-  .page-account-profile .account-content .history-content .content-body {
-    background: #fff; }
   .page-account-profile .account-content .history-content .tab-header {
     margin-top: 15px; }
     .page-account-profile .account-content .history-content .tab-header > nav > ul {
@@ -6821,7 +6998,7 @@ file : /Assets/travorama20/css/_page_password.scss
       width: 100%; }
       .page-account-profile .account-content .history-content .tab-header > nav > ul > li {
         width: 50%;
-        background: #ccc;
+        background: #e9e9e9;
         display: inline;
         float: left;
         padding: 12px;
@@ -6829,16 +7006,25 @@ file : /Assets/travorama20/css/_page_password.scss
         text-transform: uppercase; }
         .page-account-profile .account-content .history-content .tab-header > nav > ul > li.active {
           background: #1daee4; }
-          .page-account-profile .account-content .history-content .tab-header > nav > ul > li.active a {
-            color: #fff; }
+          .page-account-profile .account-content .history-content .tab-header > nav > ul > li.active:after {
+            content: '';
+            width: 20px;
+            height: 20px;
+            display: block;
+            position: absolute;
+            margin-top: 12px;
+            margin-left: 137px;
+            border-right: 10px solid transparent;
+            border-left: 10px solid transparent;
+            border-top: 10px solid #1daee4; }
         .page-account-profile .account-content .history-content .tab-header > nav > ul > li a {
-          color: #999;
+          color: #fff;
           font-weight: 700;
           font-size: 14px;
           text-decoration: none;
           padding: 0 100px; }
   .page-account-profile .account-content .history-content .tab-content {
-    padding: 15px 15px; }
+    padding: 10px 0; }
 
 .page-account-profile .order-wrapper {
   margin-top: 15px; }
@@ -6979,8 +7165,17 @@ file : /Assets/travorama20/css/_page_password.scss
     .page-account-profile .order-detail .passenger-list li .row div + div {
       background: #e2e2e2; }
 
-.page-account-profile .order-detail .info-buyer, .page-account-profile .order-detail .info-flight {
+.page-account-profile .order-detail .info-buyer, .page-account-profile .order-detail .info-flight, .page-account-profile .order-detail .info-hotel {
   padding: 15px 0; }
+
+.page-account-profile .order-detail .info-hotel .otl, .page-account-profile .order-detail .info-hotel .otr {
+  float: left; }
+
+.page-account-profile .order-detail .info-hotel .otr {
+  padding-left: 10px; }
+
+.page-account-profile .order-detail .info-hotel .order-bottom > .row {
+  padding: 6px 0; }
 
 .page-account-profile .site-content > .container {
   max-width: none !important; }

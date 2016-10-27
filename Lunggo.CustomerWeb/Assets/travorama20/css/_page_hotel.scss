@@ -6,11 +6,15 @@
     color: #000;
     letter-spacing: 0;
     -webkit-font-smoothing: antialiased;
-    
+
     /*Fonts*/
     .lg-txt {    
         font-size: 22px;
         line-height: 24px;
+    }
+    .xlg-txt {
+        font-size: 30px;
+        line-height: 30px;
     }
     .md-txt {font-size: 15px;}
     .sm-txt {font-size: 10px;}
@@ -39,14 +43,14 @@
     /*Custom Column*/
     .col-left, col-right, .col-left-result, .col-right-result, .col-xs-left, .col-xs-middle, .col-xs-right, .col-left-hotel, .col-right-hotel, .col-half, .col-left-page, .col-right-page, 
     .col-left-slider, col-right-slider, .col-left-rs, .col-right-rs, .rb-left, .rb-mid, .rb-right, .room-sort-left, .room-sort-mid, .room-sort-right, .room-left, .room-right,
-    .room-rl, .room-rm, .room-rr, .wb-left, .wb-mid, .wb-right, .ot-left, .ot-right {
+    .room-rl, .room-rm, .room-rr, .wb-left, .wb-mid, .wb-right, .ot-left, .ot-right, .col-2, .col-3, .col-4, .col-6, .col-8 {
         position: relative;
         min-height: 1px;
     }
 
     .col-left, .col-left-result, .col-right-result, .col-left-hotel, .col-right-hotel, .col-xs-left, .col-xs-middle, .col-xs-right, .col-half, .col-left-page, .col-right-page,
     .col-left-slider, .col-right-slider, .col-left-rs, .col-right-rs, .rb-left, .rb-mid, .rb-right, .room-sort-left, .room-sort-mid, .room-sort-right, .room-left, .room-right,
-    .room-rl, .room-rm, .room-rr, .wb-left, .wb-mid, .wb-right, .ot-left, .ot-right {float: left;}
+    .room-rl, .room-rm, .room-rr, .wb-left, .wb-mid, .wb-right, .ot-left, .ot-right, .col-2, .col-3, .col-4, .col-6, .col-8  {float: left;}
     
     .col-right {float: right;}
     
@@ -75,6 +79,9 @@
     .wb-left {width: 40%;} .wb-mid {width: 3%;} .wb-right {width: 57%;}
 
     .ot-left {width: 22%;}  .ot-right {width: 78%;} 
+
+    .col-2 {width:20%} .col-3 {width: 33.333333333333336%;} .col-4 {width: 40%;} .col-6 {width: 60%;} .col-8 {width: 80%;} 
+
     /*Icon*/
     .star-outline {
         content: '';
@@ -161,22 +168,18 @@
         display: inline-block;
         vertical-align: middle;
     }
-    .facility {
-        &:before {
-            content: '';
-            display: inline-block;
-            background: url(/Assets/travorama20/images/Hotel/wifi.png) no-repeat;
-            width: 23px;
-            height: 19px;
-        }
-        &:after {
-            content: '';
-            display: inline-block;
-            background: url(/Assets/travorama20/images/Hotel/meal.png) no-repeat;
-            width: 18px;
-            height: 20px;
-            margin-left: 10px;
-        }
+    .wifi-icon {
+        display: inline-block;
+        background: url(/Assets/travorama20/images/Hotel/wifi.png) no-repeat;
+        width: 23px;
+        height: 19px;
+    }
+    .meal-icon {
+        display: inline-block;
+        background: url(/Assets/travorama20/images/Hotel/meal.png) no-repeat;
+        width: 18px;
+        height: 20px;
+        margin-left: 10px;
     }
     .blue-sprite {
         content: '';
@@ -221,8 +224,49 @@
 
     /*Checklist & Radio Button*/
     label {
-        &.round, &.square{
-            input {display: none;}
+        &.round, &.sqr {
+            display: block;
+            border: 0;
+            margin-bottom: 0;
+            position: relative;
+            padding: 6px 0;
+            line-height: 14px;
+        }
+        &.sqr {
+            &.city-point {
+                width: 80%;
+                display: inline-block;
+            }
+            span {
+                &.star {
+                    display: inline-block;
+                    vertical-align: middle;
+                    margin-left: 3px;
+                }
+                &.name {
+                    margin-left: 5px;
+                    font-weight: 400;
+                }
+            }
+		    .checkbox {
+		        vertical-align: middle;
+                margin: 0;
+                border: 1px solid #ccc;
+                width: 12px;
+                height: 12px;
+                display: inline-block;
+                background: #fff;
+		        &.active:after {
+			        content: '';
+                    width: 10px;
+                    height: 10px;
+                    display: inline-block;
+                    background: #1daee4;
+                    float: left;
+                    border: 2px solid #fff;
+			    }
+		    }
+		    input[name="check"]{display: none;}
         }
         &.round {
             display: block;
@@ -232,69 +276,29 @@
             position: relative;
             span.name {
                 width: 100%;
-                padding-left: 25px;
-                display: block;
-                line-height: 17px;
+                padding-left: 4px;
                 font-weight: 400;
             }
-            .chck-container {
+            .radio {
                 border: 1px solid #ccc;
                 width: 17px;
                 height: 17px;
                 display: inline-block;
                 @include border-radius(17px);
-                position: absolute;
                 background: #fff;
-                .switch {
+                margin: 0;
+                vertical-align: middle;
+                &.active:after {
                     float: left;
                     width: 15px;
                     height: 15px;
                     content: "";
-                    background: #fff;
+                    background: #1daee4;
                     border: 3px solid #fff;
-                    position: absolute;
                     @include border-radius(15px);
                 }
             }
-            &.active .switch {background: $color-main-blue;}
-        }
-        &.square {
-            &.city-point {
-                width: 80%;
-                display: inline-block;
-            }
-            display: block;
-            border: 0;
-            margin-bottom: 0;
-            position: relative;
-            padding: 6px 0;
-            line-height: 14px;
-            span {
-                &.star {
-                margin-left: 20px;
-                display: block;  
-                } &.name {
-                    padding-left: 24px;
-                    font-weight: 400;
-                }       
-            }
-            .chck-container {
-                border: 1px solid #ccc;
-                width: 12px;
-                height: 12px;
-                display: inline-block;
-                position: absolute;
-                background: #fff;
-                .switch {
-                    float: left;
-                    width: 10px;
-                    height: 10px;
-                    content: "";
-                    border: 2px solid #fff;
-                    background: #fff;
-                }
-            }
-            &.active .switch {background: $color-main-blue;}
+            input[name="optradio"]{display: none;}
         }
 
         /*Custom label*/
@@ -404,5 +408,91 @@
         /* imports */
         @import 'page_hotel_search';
         @import 'page_hotel_detail';
+    }
+    .rh-container {
+        .rh-main-title {
+            background: #1daee4;
+            padding: 8px 25px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #fff;
+        }
+        .rh-content {
+            border: 1px solid #ccc;
+            background: #fff;
+            padding: 15px 20px;
+            .rh-row {padding: 0 15px;}
+            .hotel-title-lg {margin-bottom: 10px;}
+            .rh-location {
+                margin: 10px 0;
+                margin-left: 20px;
+                &:before {@extend .maps-icon;}
+            }
+            .rh-detail {
+                line-height: 22px;
+                margin-bottom: 15px;
+            }
+            .rh-top {
+                border-top: 1px solid #ccc;
+                padding: 15px 0;
+                .hotel-facility {
+                    position: absolute;
+                    right: 0;
+                }
+            }
+            .rh-tnc {
+                padding: 0;
+                margin: 0;
+            }
+            .sqr-blue-list li {
+                padding-left: 0;
+                margin-bottom: 10px;
+            }
+        }
+        &.notes-hotel {margin-top: 20px;}
+    }
+
+    /*Hotel Checkout Page*/
+    &.page-checkout-hotel {
+        .checkout-hotel {
+            .step-button {
+                .btn {
+                    margin-top: 15px;
+                    font-size: 13px;
+                    width: 200px;
+                    &.btn-grey {margin-right: 10px;}
+                }
+            }
+            .maps-icon {
+                content: '';
+                display: inline-block;
+                background: url(/Assets/travorama20/images/Hotel/location.png) no-repeat;
+                width: 12px;
+                height: 17px;
+                vertical-align: middle;
+                position: absolute;
+                margin-left: -20px;
+                margin-top: 2px;
+            }
+            .sqr-blue-list {
+                padding: 0;
+                list-style: none;
+                margin: 0;
+                .wc-title:before {
+                    width: 8px;
+                    height: 8px;
+                    display: inline-block;
+                    background: #1daee4;
+                    content: '';
+                    margin-left: -20px;
+                    position: absolute;
+                    margin-top: 4px;
+                }
+            }
+            textarea[name="special-request"].form-control {
+                height: 80px;
+                @include border-radius(2px);
+            }
+        } 
     }
 }

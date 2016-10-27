@@ -466,17 +466,14 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
 }
 
 // overlay flight filter
-.overlay.overlay--flight-filter {
-    .overlay__content {background:#878787; color:#fff;}
-}
-
-// overlay flight sort
-.overlay.overlay--flight-sort {
-    .overlay__content {background:#878787; color:#fff;}
+.overlay {
+    &.overlay--flight-filter, &.overlay--hotel-filter, &.overlay--flight-sort, &.overlay--hotel-sort {
+        .overlay__content {background:#878787; color:#fff;}
+    }
 }
 
 // overlay airport select
-.overlay.overlay--airport-select {
+.overlay.overlay--airport-select, .overlay.overlay--hotel-select {
     .overlay__content {padding:0;
         .autocomplete-input {background:#616161; padding:10px;
             input[type="text"] {padding:10px; height:auto;}
@@ -489,12 +486,12 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         }
         .autocomplete-loading {}
         ul.result {
-            li.airport {padding:10px 0; position:relative;
-                .airport__link {position:absolute; display:block; width:100%; height:100%; left:0; top:0; z-index:2; }
-                .airport__code {display:inline-block; vertical-align:middle; font-weight:bold; font-size:32px; padding-left:15px; padding-right:15px; color:$color-main-blue; width:30%; text-align:center;}
-                .airport__detail {display:inline-block; vertical-align:middle; font-size:14px; width:65%;
-                    .airport__location {z-index:3; margin:0; font-weight:600; margin-bottom:5px;}
-                    .airport__name {z-index:3; margin:0;}
+            li.airport, li.hotel {padding:10px 0; position:relative;
+                .airport__link, .hotel__link {position:absolute; display:block; width:100%; height:100%; left:0; top:0; z-index:2; }
+                .airport__code, .hotel__code {display:inline-block; vertical-align:middle; font-weight:bold; font-size:32px; padding-left:15px; padding-right:15px; color:$color-main-blue; width:30%; text-align:center;}
+                .airport__detail, .hotel__detail {display:inline-block; vertical-align:-webkit-baseline-middle; font-size:12px; line-height:14px; width:65%;
+                    .airport__location, .hotel__location {z-index:3; margin:0; font-weight:600; margin-bottom:5px;}
+                    .airport__name, .hotel__result {z-index:3; margin:0;}
                 }
             }
             //
@@ -505,7 +502,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         ul {margin:0; padding:0;
             li {
                 a {display:block; padding:10px 18px; color:#111;}
-                &+li {border-top:$border-default;}
+                &+li {border-top: 1px solid #e9e9e9;}
             }
         }
     }
@@ -859,9 +856,9 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
 }
 // payment
 &.summary--payment {
-    label {border:$border-default; display:block; width:100%; background:#fff; color:#fff;
+    label {display:block; width:100%; background:#fff; color:#fff;
         header {background:#36b6e7; position:relative; @include clearfix();
-            .input-wrapper {float:left; background:#028ec3; width:30px; text-align:center; position:absolute; height:100%; padding-top:5px;}
+            .input-wrapper {float:left; background:#028ec3; width:30px; text-align:center; position:absolute; height:100%;}
             h5 {padding:10px; margin:0; float:left; padding-left:40px; font-weight:bold; width:100%;}
         }
         section {text-align:center; padding:5px;}
@@ -908,6 +905,205 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
                 &>li {margin-bottom: 10px;}
             }
         }
+    }
+}
+
+
+// --------------------
+// overlay sort
+.overlay--flight-sort, .overlay--hotel-sort {
+    .overlay__content {padding:0; font-size: 11px;
+        span {display:block; padding:20px 15px;
+            &:before {content:''; width:20px; height:20px; background:#fff; display:inline-block; vertical-align:middle; margin-right:10px; border:3px solid #fff; @include border-radius(50px);}
+            &+span {border-top: 1px solid #999;}
+            &.active {color:#fff;
+                &:before {background:#ffca10;}
+            }
+        }
+        label {display:block; width:100%; padding:12px 0;
+            &+label {border-top:$border-default;}
+            input[type="radio"] {float:right;}
+        }
+    }
+}
+
+// --------------------
+// overlay filter
+.overlay--flight-filter, .overlay--hotel-filter {
+    //overlay content
+    .overlay__content {
+        // filter group
+        .filter-container {
+            padding: 12px;
+        }
+        .filter-group {
+            padding:15px 12px;
+            font-size: 11px;
+            label {font-weight:normal;}
+            &+.filter-group {border-top: 1px solid #999;}
+            .filter-group__header {margin-bottom: 5px;
+                .filter-group__title {margin:0; font-weight:600; font-size: 12px;}
+            }
+            .filter-group__content {
+                label {display:block; padding:12px 0;
+                    &+label {border-top:$border-default;}
+                }
+                input[type="checkbox"] {float:right;}
+            }
+            // price filter
+            &.filter-group--price {
+                .ui-slider-horizontal {
+                    @include box-shadow(1px 1px 1px #666);
+                    margin: 10px 0;
+                    background: #fff;
+                    border: none !important;
+                    border-radius: 0;
+                    height: 15px;
+                    .ui-slider-range {
+                        background: #fed446;
+                        box-shadow: 1px 1px 1px #666;
+                        border-radius: 0;
+                    }
+                    .ui-slider-handle {
+                        @include box-shadow(1px 1px 5px #666);
+                        width: 20px;
+                        height: 20px;
+                        background: #fed446;
+                        border: 0;
+                        border-radius: 0;
+                        margin-left: -10px;
+                    }
+                }
+            }
+            // airline filter
+            &.filter-group--airline {
+                label {
+                    img {height:30px; margin-right:10px;}
+                }
+            }
+            // departure time filter
+            &.filter-group--departure {
+                .filter-group__content {@include clearfix();
+                    label {display:block; float:left; width:50%; border:0; margin-bottom:0; padding: 6px 0; position:relative;
+                        .switch {float:left; width:20px; height:20px; content:""; background:#fff; border:3px solid #fff; position:absolute; top:50%; margin-top:-10px; @include border-radius(20px);}
+                        input {display:none;}
+                        span {width:100%; padding-left:30px; display:block;}
+                        // if active
+                        &.active {
+                            .switch {background:#ffca10;}
+                        }
+                    }
+                }
+            }
+            // rating filter
+            &.filter-group--rating {
+                .filter-group__content {@include clearfix();
+                    label {display:block; float:left; width:100%; border:0; margin-bottom:0; padding: 6px 0; position:relative;
+                        .switch {float:left; width:20px; height:20px; content:""; background:#fff; border:3px solid #fff; position:absolute; top:50%; margin-top:-10px; @include border-radius(20px);}
+                        input {display:none;}
+                        span {margin-left:28px;}
+                        // if active
+                        &.active {
+                            .switch {background:#ffca10;}
+                        }
+                    }
+                }
+            }
+            // filter flight
+            &.filter-group--arrival {@extend &.filter-group--departure;}
+            // transit filter
+            &.filter-group--transit {@extend &.filter-group--departure;
+                .filter-group__content {
+                    label {width:33.3334%;}
+                }
+            }
+            // flight & hotel filter
+            &.filter-group--facility, &.filter-group--area, &.filter-group--room, &.filter-group--airline {@extend &.filter-group--departure;
+                .filter-group__content {
+                    label {width:100%;}
+                }
+            }
+        }
+        .reset {
+            text-align: center;
+            margin: 20px 0;
+            .btn-reset {
+                @include size(104px, 42px);
+                @include border-radius(0);
+                background: #696969;
+                font-size: 15px;
+                text-transform: uppercase;
+                @extend .os-semibold;
+                letter-spacing: 1px;
+                color: #fff;
+            }
+        }
+    }
+}
+
+.main-tab {
+    .tab-detail.nav-tabs {border: none;
+        &>li {padding: 0;
+            &.active > a, & > a {
+                border-radius: 0;
+                border: none;
+                margin: 0;
+                text-align: center;
+                text-transform: uppercase;
+                font-size: 12px;
+                font-weight: 700;
+                padding: 12px;
+            }
+            & > a {
+                color: #626262;
+                background: $color-grey-tab;
+                &.tab-flight:before {
+                    content: '';
+                    width: 22px;
+                    height: 24px;
+                    display: inline-block;
+                    background: url(/Assets/mobile/images/flight-grey.png);
+                    vertical-align: middle;
+                    margin-right: 8px;
+                }
+                &.tab-hotel:before {
+                    content: '';
+                    width: 21px;
+                    height: 21px;
+                    display: inline-block;
+                    background: url(/Assets/mobile/images/hotel-grey.png);
+                    vertical-align: middle;
+                    margin-right: 8px;
+                }
+            }
+            &.active > a {
+                color: $color-main-blue;
+                background: $color-white;
+                &.order {background: #f9f9f9;}
+                &.tab-flight:before {
+                    content: '';
+                    width: 22px;
+                    height: 24px;
+                    display: inline-block;
+                    background: url(/Assets/mobile/images/flight-blue.png);
+                    vertical-align: middle;
+                    margin-right: 8px;
+                }
+                &.tab-hotel:before {
+                    content: '';
+                    width: 21px;
+                    height: 21px;
+                    display: inline-block;
+                    background: url(/Assets/mobile/images/hotel-blue.png);
+                    vertical-align: middle;
+                    margin-right: 8px;
+                }
+            }
+        }
+    }
+    & > .tab-content {
+        padding: 10px 0;
+        &.tab-order {padding:0;}
     }
 }
 

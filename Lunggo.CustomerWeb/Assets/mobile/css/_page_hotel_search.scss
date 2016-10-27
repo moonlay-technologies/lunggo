@@ -12,3 +12,24 @@
         }
     }
 }
+
+ /*Shorten Text*/
+.shorten-txt {
+	height: 170px;
+    &.opened {height: auto;
+        .toggle {
+            .sh-open {display: none;}
+            .sh-close {display: block;}
+        }
+    }
+    .toggle {
+        .sh-open {display: block;}
+        .sh-close {display: none;}
+
+    }
+    .sh-open {@extend .arrow-down-yellow;}
+    .sh-close {@extend .arrow-up-yellow;}
+    &.is-truncated .col-half {
+        width: 100%;
+    }
+}
