@@ -31,6 +31,7 @@ namespace Lunggo.ApCommon.Hotel.Model
         public int RoomCount { get; set; }
         public int AdultCount { get; set; }
         public int ChildCount { get; set; }
+        public List<int> ChildrenAges { get; set; } 
     }
     public class HotelRevalidateInfo
     {

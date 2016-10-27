@@ -39,7 +39,8 @@ namespace Lunggo.ApCommon.Hotel.Service
             {
                 occupancies.AddRange(room.Rates.Select(rate => new Occupancy
                 {
-                    RoomCount = rate.RateCount, AdultCount = GetMaxAdult(room.RoomCode)
+                    RoomCount = rate.RateCount, AdultCount = rate.AdultCount,
+                    ChildCount = rate.ChildCount, ChildrenAges = rate.ChildrenAges
                 }));
             }
 
@@ -131,6 +132,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                     newPrice += rate.Price.Supplier;
                 }
             }
+            
             
             SaveSelectedHotelDetailsToCache(input.Token, bookInfo);
             if (oldPrice != newPrice)

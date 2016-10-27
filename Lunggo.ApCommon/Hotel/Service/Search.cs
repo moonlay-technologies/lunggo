@@ -204,7 +204,7 @@ namespace Lunggo.ApCommon.Hotel.Service
 
                     var firstPageHotelDetails = result.HotelDetails.Take(100).ToList(); 
                     firstPageHotelDetails = AddHotelDetail(firstPageHotelDetails);
-
+                    
                     return new SearchHotelOutput
                     {
                         SearchId = result.SearchId,

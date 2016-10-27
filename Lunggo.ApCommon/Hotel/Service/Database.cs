@@ -59,7 +59,15 @@ namespace Lunggo.ApCommon.Hotel.Service
                         TotalAdult = hotelDetailRecord.AdultCount.GetValueOrDefault(),
                         TotalChildren = hotelDetailRecord.ChildCount.GetValueOrDefault(),
                         SpecialRequest = hotelDetailRecord.SpecialRequest,
+                        Address = hotelDetailRecord.HotelAddress,
+                        PhonesNumbers = hotelDetailRecord.HotelPhone == null ? new List<string>() : new List<string>{
+                        hotelDetailRecord.HotelPhone}, 
+                        StarRating = hotelDetailRecord.HotelRating,
                         Rooms = new List<HotelRoom>(),
+                        ClientReference = hotelDetailRecord.ClientReference,
+                        BookingReference = hotelDetailRecord.BookingReference,
+                        SupplierName = hotelDetailRecord.SupplierName,
+                        SupplierVat = hotelDetailRecord.SupplierVat
                     };
 
                     var hotelRoomRecords = HotelRoomTableRepo.GetInstance()
@@ -211,8 +219,12 @@ namespace Lunggo.ApCommon.Hotel.Service
                     HotelCd = reservation.HotelDetails.HotelCode,
                     InsertBy = "LunggoSystem",
                     InsertDate = DateTime.UtcNow,
-                    InsertPgId = "0",                 
-                };
+                    InsertPgId = "0",
+                    HotelAddress = reservation.HotelDetails.Address,
+                    HotelPhone = !(reservation.HotelDetails.PhonesNumbers == null || reservation.HotelDetails.PhonesNumbers.Count == 0) ?
+                    reservation.HotelDetails.PhonesNumbers[0] : null,
+                    HotelRating = reservation.HotelDetails.StarRating,
+                 };
 
                 HotelReservationDetailsTableRepo.GetInstance().Insert(conn, hotelRsvDetailsRecord);
 

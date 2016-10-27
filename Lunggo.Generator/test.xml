@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <tables>
   <table name="HotelRateRule" />
+  <table name="HotelReservationDetails" />
   <!--<table name="Activities" />
   <table name="ActivityPrice" />
   <table name="ActivityPriceType" />

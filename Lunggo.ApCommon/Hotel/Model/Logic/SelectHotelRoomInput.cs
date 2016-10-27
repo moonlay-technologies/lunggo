@@ -19,5 +19,11 @@ namespace Lunggo.ApCommon.Hotel.Model.Logic
         public string RegId { get; set; }
         [JsonProperty("rateCount", NullValueHandling = NullValueHandling.Ignore)]
         public int RateCount { get; set; }
+        [JsonProperty("adultCount", NullValueHandling = NullValueHandling.Ignore)]
+        public int AdultCount { get; set; }
+        [JsonProperty("childCount", NullValueHandling = NullValueHandling.Ignore)]
+        public int ChildCount { get; set; }
+        [JsonProperty("childrenAges", NullValueHandling = NullValueHandling.Ignore)]
+        public List<int> ChildrenAges { get; set; } 
     }
 }

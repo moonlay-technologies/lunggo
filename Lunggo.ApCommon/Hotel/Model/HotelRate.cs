@@ -65,7 +65,7 @@ namespace Lunggo.ApCommon.Hotel.Model
         public string Type { get; set; }
         //[JsonProperty("price", NullValueHandling = NullValueHandling.Ignore)]
         //public decimal Price { get; set; }
-        [JsonProperty("paymenType", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonProperty("paymentType", NullValueHandling = NullValueHandling.Ignore)]
         public PaymentTypeEnum PaymentType { get; set; }
         [JsonProperty("boards", NullValueHandling = NullValueHandling.Ignore)]
         public string Boards { get; set; }
@@ -79,6 +79,8 @@ namespace Lunggo.ApCommon.Hotel.Model
         public int ChildCount { get; set; }
         [JsonProperty("offers", NullValueHandling = NullValueHandling.Ignore)]
         public List<Offer> Offers { get; set; }
+        [JsonProperty("childrenAges", NullValueHandling = NullValueHandling.Ignore)]
+        public List<int> ChildrenAges { get; set; } 
         
     }
 

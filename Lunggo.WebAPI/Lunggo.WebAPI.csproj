@@ -307,8 +307,8 @@
     <Compile Include="ApiSrc\Hotel\Model\HotelBookApiResponse.cs" />
     <Compile Include="ApiSrc\Hotel\Model\HotelDetailApiRequest.cs" />
     <Compile Include="ApiSrc\Hotel\Model\HotelDetailApiResponse.cs" />
-    <Compile Include="ApiSrc\Hotel\Model\HotelSelectedRoomApiRequest.cs" />
     <Compile Include="ApiSrc\Hotel\Model\HotelSelectRoomApiRequest.cs" />
+    <Compile Include="ApiSrc\Hotel\Model\HotelSelectedRoomApiRequest.cs" />
     <Compile Include="ApiSrc\Hotel\Model\HotelRoomDetailApiRequest.cs" />
     <Compile Include="ApiSrc\Hotel\Model\HotelRateApiRequest.cs" />
     <Compile Include="ApiSrc\Hotel\Model\HotelSearchApiRequest.cs" />
