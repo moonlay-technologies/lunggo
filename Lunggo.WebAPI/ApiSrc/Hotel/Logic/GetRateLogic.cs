@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Linq;
 using System.Net;
 using Lunggo.ApCommon.Hotel.Model;
 using Lunggo.ApCommon.Hotel.Model.Logic;
@@ -15,34 +16,58 @@ namespace Lunggo.WebAPI.ApiSrc.Hotel.Logic
     {
         public static ApiResponseBase GetRateLogic(HotelRateApiRequest request)
         {
-            if (IsValid(request))
+            if (!IsValid(request))
+                return new HotelRateApiResponse
+                {
+                    StatusCode = HttpStatusCode.BadRequest,
+                    ErrorCode = "ERHGRA01"
+                };
+            var getRateServiceRequest = PreprocessServiceRequest(request);
+            var getRateServiceResponse = HotelService.GetInstance().GetRate(getRateServiceRequest);
+            var apiResponse = AssembleApiResponse(getRateServiceResponse);
+            if (apiResponse.Rooms == null || apiResponse.Rooms.Count == 0)
             {
-                var getRateServiceRequest = PreprocessServiceRequest(request);
-                var getRateServiceResponse = HotelService.GetInstance().GetRate(getRateServiceRequest);
-                var apiResponse = AssembleApiResponse(getRateServiceResponse);
-                if (apiResponse.StatusCode == HttpStatusCode.OK) return apiResponse;
-                var log = LogService.GetInstance();
-                var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
-                //log.Post(
-                //    "```Booking API Log```"
-                //    + "\n`*Environment :* " + env.ToUpper()
-                //    + "\n*REQUEST :*\n"
-                //    + request.Serialize()
-                //    + "\n*RESPONSE :*\n"
-                //    + apiResponse.Serialize()
-                //    + "\n*LOGIC RESPONSE :*\n"
-                //    + selectRateServiceResponse.Serialize()
-                //    + "\n*Platform :* "
-                //    + Client.GetPlatformType(HttpContext.Current.User.Identity.GetClientId())
-                //    + "\n*Itinerary :* \n"
-                //    + HotelService.GetInstance().GetItineraryForDisplay(request.Token).Serialize());
-                return apiResponse;
+                return new HotelRateApiResponse
+                {
+                    StatusCode = HttpStatusCode.BadRequest,
+                    ErrorCode = "ERHGRA02"
+                };
             }
-            return new HotelRateApiResponse
+
+            if (apiResponse.Rooms.Exists(r => r.Rates == null || r.Rates.Count == 0))
             {
-                StatusCode = HttpStatusCode.BadRequest,
-                ErrorCode = "ERHGRA01"
-            };
+                return new HotelRateApiResponse
+                {
+                    StatusCode = HttpStatusCode.BadRequest,
+                    ErrorCode = "ERHGRA03"
+                };
+            }
+
+            if (apiResponse.Rooms[0].Rates[0].TimeLimit <= DateTime.UtcNow)
+            {
+                return new HotelRateApiResponse
+                {
+                    StatusCode = HttpStatusCode.BadRequest,
+                    ErrorCode = "ERHGRA04"
+                };
+            }
+                
+            var log = LogService.GetInstance();
+            var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
+            //log.Post(
+            //    "```Booking API Log```"
+            //    + "\n`*Environment :* " + env.ToUpper()
+            //    + "\n*REQUEST :*\n"
+            //    + request.Serialize()
+            //    + "\n*RESPONSE :*\n"
+            //    + apiResponse.Serialize()
+            //    + "\n*LOGIC RESPONSE :*\n"
+            //    + selectRateServiceResponse.Serialize()
+            //    + "\n*Platform :* "
+            //    + Client.GetPlatformType(HttpContext.Current.User.Identity.GetClientId())
+            //    + "\n*Itinerary :* \n"
+            //    + HotelService.GetInstance().GetItineraryForDisplay(request.Token).Serialize());
+            return apiResponse;
         }
 
         private static bool IsValid(HotelRateApiRequest request)
@@ -70,49 +95,21 @@ namespace Lunggo.WebAPI.ApiSrc.Hotel.Logic
                 return new HotelRateApiResponse();
             }
 
-            var rooms = new List<HotelRoomForDisplay>();
-
-            foreach (var room in getHotelRateServiceResponse.Rooms)
-            {
-                var rates = new List<HotelRateForDisplay>();
-                foreach (var rate in room.Rates)
+            var rooms = (from room in getHotelRateServiceResponse.Rooms
+                let rates = room.Rates.Select(rate => new HotelRateForDisplay
                 {
-                    var newRate = new HotelRateForDisplay
-                    {
-                        AdultCount = rate.AdultCount,
-                        Boards = rate.Boards,
-                        Cancellation = rate.Cancellation,
-                        ChildCount = rate.ChildCount,
-                        Class = rate.Class,
-                        Price = rate.Price,
-                        PaymentType = rate.PaymentType,
-                        RateKey = rate.RateKey,
-                        RoomCount = rate.RoomCount,
-                        RegsId = rate.RegsId,
-                        Offers = rate.Offers,
-                        Type = rate.Type,
-                    };
-                    rates.Add(newRate);
-                }
-
-                var newroom = new HotelRoomForDisplay
+                    AdultCount = rate.AdultCount, Boards = rate.Boards, Cancellation = rate.Cancellation, ChildCount = rate.ChildCount, Class = rate.Class, Price = rate.Price, PaymentType = rate.PaymentType, RateKey = rate.RateKey, RoomCount = rate.RoomCount, RegsId = rate.RegsId, Offers = rate.Offers, Type = rate.Type,
+                }).ToList()
+                select new HotelRoomForDisplay
                 {
-                    RoomCode = room.RoomCode,
-                    RoomName = room.RoomName,
-                    Type = room.Type,
-                    TypeName = room.TypeName,
-                    Facilities = room.Facilities,
-                    Images = room.Images,
-                    CharacteristicCode = room.characteristicCd,
-                    Rates = rates
-                };
-                rooms.Add(newroom);
-            }
-            
+                    RoomCode = room.RoomCode, RoomName = room.RoomName, Type = room.Type, TypeName = room.TypeName, Facilities = room.Facilities, Images = room.Images, CharacteristicCode = room.characteristicCd, Rates = rates
+                }).ToList();
+
             return new HotelRateApiResponse
             {
                 SearchId = getHotelRateServiceResponse.SearchId,
-                Rooms = rooms
+                Rooms = rooms,
+                StatusCode = HttpStatusCode.OK
             };
         }
     }

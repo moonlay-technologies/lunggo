@@ -35,7 +35,6 @@ namespace Lunggo.ApCommon.Hotel.Service
                 //    (sender, certificate, chain, sslPolicyErrors) => true;
 
                 //VoucherService.GetInstance().Init();
-                //InitPriceMarginRules();
                 _isInitialized = true;
             }
         }

@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Lunggo.ApCommon.Hotel.Service;
 using Lunggo.ApCommon.Hotel.Wrapper.Content;
 using Lunggo.Framework.Documents;
 using Lunggo.Framework.TableStorage;
@@ -21,8 +22,8 @@ namespace Lunggo.Webjob.HotelContentWrapper
 
             // Begin timing.
             stopwatch.Start();
-            GetHotel x = new GetHotel();
-            x.GetHotelData();
+            //HotelService.GetInstance().SaveTruncatedHotelDetail();
+            HotelService.GetInstance().SaveHotelAmenities();
             stopwatch.Stop();
             Debug.Print("Done in : {0}", stopwatch.Elapsed);
             Console.WriteLine("Done in : {0}", stopwatch.Elapsed);

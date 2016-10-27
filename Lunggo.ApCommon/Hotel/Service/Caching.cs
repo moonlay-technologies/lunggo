@@ -17,7 +17,7 @@ namespace Lunggo.ApCommon.Hotel.Service
             var redisService = RedisService.GetInstance();
             var redisKey = "searchId:" + searchId;
             var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
-            var redisValue = currencies.Serialize();
+            var redisValue =  currencies.Serialize() ;
             redisDb.StringSet(redisKey, redisValue);
         }
 

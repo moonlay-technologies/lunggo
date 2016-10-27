@@ -1,22 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using System.Web;
-using Lunggo.ApCommon.Hotel.Model;
 using Lunggo.ApCommon.Hotel.Model.Logic;
 using Lunggo.ApCommon.Hotel.Service;
-using Lunggo.ApCommon.Identity.Auth;
-using Lunggo.ApCommon.Identity.Users;
-using Lunggo.ApCommon.Product.Model;
-using Lunggo.ApCommon.Util;
 using Lunggo.Framework.Config;
-using Lunggo.Framework.Constant;
-using Lunggo.Framework.Extension;
 using Lunggo.Framework.Log;
 using Lunggo.WebAPI.ApiSrc.Common.Model;
 using Lunggo.WebAPI.ApiSrc.Hotel.Model;
-using Lunggo.ApCommon.Product.Service;
 
 namespace Lunggo.WebAPI.ApiSrc.Hotel.Logic
 {
@@ -24,34 +13,50 @@ namespace Lunggo.WebAPI.ApiSrc.Hotel.Logic
     {
         public static ApiResponseBase BookLogic(HotelBookApiRequest request)
         {
-            if (IsValid(request))
+            if (!IsValid(request))
+                return new HotelBookApiResponse
+                {
+                    StatusCode = HttpStatusCode.BadRequest,
+                    ErrorCode = "ERHBOO01"
+                };
+            var bookServiceRequest = PreprocessServiceRequest(request);
+            var bookServiceResponse = HotelService.GetInstance().BookHotel(bookServiceRequest);
+            var apiResponse = AssembleApiResponse(bookServiceResponse);
+                 
+            if (apiResponse.TimeLimit <= DateTime.UtcNow)
             {
-                var bookServiceRequest = PreprocessServiceRequest(request);
-                var bookServiceResponse = HotelService.GetInstance().BookHotel(bookServiceRequest);
-                var apiResponse = AssembleApiResponse(bookServiceResponse);
-                if (apiResponse.StatusCode == HttpStatusCode.OK) return apiResponse;
-                var log = LogService.GetInstance();
-                var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
-                //log.Post(
-                //    "```Booking API Log```"
-                //    + "\n`*Environment :* " + env.ToUpper()
-                //    + "\n*REQUEST :*\n"
-                //    + request.Serialize()
-                //    + "\n*RESPONSE :*\n"
-                //    + apiResponse.Serialize()
-                //    + "\n*LOGIC RESPONSE :*\n"
-                //    + selectRateServiceResponse.Serialize()
-                //    + "\n*Platform :* "
-                //    + Client.GetPlatformType(HttpContext.Current.User.Identity.GetClientId())
-                //    + "\n*Itinerary :* \n"
-                //    + HotelService.GetInstance().GetItineraryForDisplay(request.Token).Serialize());
-                return apiResponse;
+                return new HotelBookApiResponse
+                {
+                    StatusCode = HttpStatusCode.Accepted,
+                    ErrorCode = "ERHBOO02"
+                };
             }
-            return new HotelBookApiResponse
+
+            if (apiResponse.IsValid == false)
             {
-                StatusCode = HttpStatusCode.BadRequest,
-                ErrorCode = "ERHBOO01"
-            };
+                return new HotelBookApiResponse
+                {
+                    StatusCode = HttpStatusCode.BadRequest,
+                    ErrorCode = "ERHBOO03"
+                };
+            }
+            if (apiResponse.StatusCode == HttpStatusCode.OK) return apiResponse;
+            var log = LogService.GetInstance();
+            var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
+            //log.Post(
+            //    "```Booking API Log```"
+            //    + "\n`*Environment :* " + env.ToUpper()
+            //    + "\n*REQUEST :*\n"
+            //    + request.Serialize()
+            //    + "\n*RESPONSE :*\n"
+            //    + apiResponse.Serialize()
+            //    + "\n*LOGIC RESPONSE :*\n"
+            //    + selectRateServiceResponse.Serialize()
+            //    + "\n*Platform :* "
+            //    + Client.GetPlatformType(HttpContext.Current.User.Identity.GetClientId())
+            //    + "\n*Itinerary :* \n"
+            //    + HotelService.GetInstance().GetItineraryForDisplay(request.Token).Serialize());
+            return apiResponse;
         }
 
         private static bool IsValid(HotelBookApiRequest request)
@@ -82,43 +87,30 @@ namespace Lunggo.WebAPI.ApiSrc.Hotel.Logic
             {
                 return new HotelBookApiResponse();
             }
-            else
+            if (!bookHotelServiceResponse.IsValid)
+                return new HotelBookApiResponse
+                {
+                    IsValid = bookHotelServiceResponse.IsValid,
+                    StatusCode = HttpStatusCode.OK,
+                };
+            if (bookHotelServiceResponse.IsPriceChanged)
             {
-                if (bookHotelServiceResponse.IsValid)
+                return new HotelBookApiResponse
                 {
-                    if (bookHotelServiceResponse.IsPriceChanged)
-                    {
-                        return new HotelBookApiResponse
-                        {
-                            IsPriceChanged = bookHotelServiceResponse.IsPriceChanged,
-                            NewPrice = bookHotelServiceResponse.NewPrice,
-                            IsValid = bookHotelServiceResponse.IsValid
-                        };
-                    }
-                    else
-                    {
-                        return new HotelBookApiResponse
-                        {
-                            IsValid = bookHotelServiceResponse.IsValid,
-                            RsvNo = bookHotelServiceResponse.RsvNo,
-                            TimeLimit = bookHotelServiceResponse.TimeLimit
-                        };
-                    }
-                }
-                else
-                {
-                    return new HotelBookApiResponse
-                    {
-                        IsValid = bookHotelServiceResponse.IsValid
-                    };
-                }
+                    IsPriceChanged = bookHotelServiceResponse.IsPriceChanged,
+                    NewPrice = bookHotelServiceResponse.NewPrice,
+                    IsValid = bookHotelServiceResponse.IsValid,
+                    StatusCode = HttpStatusCode.OK,
+                };
             }
-            
+            return new HotelBookApiResponse
+            {
+                IsValid = bookHotelServiceResponse.IsValid,
+                RsvNo = bookHotelServiceResponse.RsvNo,
+                TimeLimit = bookHotelServiceResponse.TimeLimit,
+                StatusCode = HttpStatusCode.OK,
+            };
         }
 
-        internal static object g(HotelRoomDetailApiRequest request)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

@@ -133,34 +133,69 @@ namespace Lunggo.ApCommon.Hotel.Service
                 //Do Call Availability
                 //Save data to DocDB
                 var hotelBedsClient = new HotelBedsSearchHotel();
-                var detailDestination = GetLocationById(input.Location);
-                var request = new SearchHotelCondition
+                var request = new SearchHotelCondition();
+                if (input.HotelCode != 0)
                 {
-                    CheckIn = input.CheckIn,
-                    Checkout = input.Checkout,
-                    //HotelCode = input.HotelCode,
-                    AdultCount = input.AdultCount,
-                    ChildCount = input.ChildCount,
-                    Nights = input.Nights,
-                    Rooms = input.Rooms,
-                    SearchId = generatedSearchId.ToString()
-                };
-                switch (detailDestination.Type)
+                    if (input.Occupancies == null)
+                    {
+                        request.AdultCount = input.AdultCount;
+                        request.Rooms = input.Rooms;
+                    }
+                    else
+                    {
+                        request.Occupancies = input.Occupancies;
+                    }
+                    request.HotelCode = input.HotelCode;
+                    request.CheckIn = input.CheckIn;
+                    request.Checkout = input.Checkout;
+                    request.SearchId = generatedSearchId.ToString();
+                }
+                else
                 {
-                    case AutocompleteType.Zone :
-                        var splittedZone = detailDestination.Code.Split('-');
-                        request.Zone = int.Parse(splittedZone[1].Trim());
-                        request.Destination = splittedZone[0].Trim();
-                        break;
-                    case AutocompleteType.Destination:
-                        request.Destination = detailDestination.Code;
-                        isByDestination = true;
-                        break;
+                    var detailDestination = GetLocationById(input.Location);
+                    if (input.Occupancies == null)
+                    {
+                        request = new SearchHotelCondition
+                        {
+                            CheckIn = input.CheckIn,
+                            Checkout = input.Checkout,
+                            AdultCount = input.AdultCount,
+                            ChildCount = input.ChildCount,
+                            Nights = input.Nights,
+                            Rooms = input.Rooms,
+                            SearchId = generatedSearchId.ToString()
+                        };
+                    }
+                    else
+                    {
+                        request = new SearchHotelCondition
+                        {
+                            CheckIn = input.CheckIn,
+                            Checkout = input.Checkout,
+                            Nights = input.Nights,
+                            Occupancies = input.Occupancies,
+                            SearchId = generatedSearchId.ToString()
+                        };
+                    }
+                    
+                    switch (detailDestination.Type)
+                    {
+                        case AutocompleteType.Zone:
+                            var splittedZone = detailDestination.Code.Split('-');
+                            request.Zone = int.Parse(splittedZone[1].Trim());
+                            request.Destination = splittedZone[0].Trim();
+                            break;
+                        case AutocompleteType.Destination:
+                            request.Destination = detailDestination.Code;
+                            isByDestination = true;
+                            break;
 
-                    case AutocompleteType.Hotel:
-                        request.HotelCode = int.Parse(detailDestination.Code);
-                        break;
-                };
+                        case AutocompleteType.Hotel:
+                            request.HotelCode = int.Parse(detailDestination.Code);
+                            break;
+                    };
+                }
+                
 
                 var result = hotelBedsClient.SearchHotel(request);
                 result.SearchId = generatedSearchId.ToString();

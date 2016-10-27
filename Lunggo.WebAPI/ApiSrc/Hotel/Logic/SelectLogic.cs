@@ -1,17 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using System.Web;
-using Lunggo.ApCommon.Hotel.Model;
 using Lunggo.ApCommon.Hotel.Model.Logic;
 using Lunggo.ApCommon.Hotel.Service;
-using Lunggo.ApCommon.Identity.Auth;
-using Lunggo.ApCommon.Identity.Users;
-using Lunggo.ApCommon.Util;
 using Lunggo.Framework.Config;
-using Lunggo.Framework.Constant;
-using Lunggo.Framework.Extension;
 using Lunggo.Framework.Log;
 using Lunggo.WebAPI.ApiSrc.Common.Model;
 using Lunggo.WebAPI.ApiSrc.Hotel.Model;
@@ -24,11 +15,28 @@ namespace Lunggo.WebAPI.ApiSrc.Hotel.Logic
         public static ApiResponseBase SelectHotelRatesLogic(HotelSelectRoomApiRequest request)
         {
             if (IsValid(request))
-            {
+            { 
                 var selectRateServiceRequest = PreprocessServiceRequest(request);
                 var selectRateServiceResponse = HotelService.GetInstance().SelectHotelRoom(selectRateServiceRequest);
                 var apiResponse = AssembleApiResponse(selectRateServiceResponse);
-                if (apiResponse.StatusCode == HttpStatusCode.OK) return apiResponse;
+                if (apiResponse.TimeLimit <= DateTime.UtcNow)
+                {
+                    return new HotelSelectRoomApiResponse
+                    {
+                        StatusCode = HttpStatusCode.BadRequest,
+                        ErrorCode = "ERHSEL02"
+                    };
+                }
+
+                if (apiResponse.Token == null)
+                {
+                    return new HotelSelectRoomApiResponse
+                    {
+                        StatusCode = HttpStatusCode.BadRequest,
+                        ErrorCode = "ERHSEL03"
+                    };
+                }
+                
                 var log = LogService.GetInstance();
                 var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
                 //log.Post(
@@ -49,7 +57,7 @@ namespace Lunggo.WebAPI.ApiSrc.Hotel.Logic
             return new HotelSelectRoomApiResponse
             {
                 StatusCode = HttpStatusCode.BadRequest,
-                ErrorCode = "ERHSER01"
+                ErrorCode = "ERHSEL01"
             };
         }
 
@@ -79,7 +87,7 @@ namespace Lunggo.WebAPI.ApiSrc.Hotel.Logic
             }
             return new HotelSelectRoomApiResponse
             {
-                //TimeLimit = selectHotelRoomServiceResponse
+                StatusCode = HttpStatusCode.OK,
                 Token = selectHotelRoomServiceResponse.Token,
                 TimeLimit = selectHotelRoomServiceResponse.Timelimit
             };

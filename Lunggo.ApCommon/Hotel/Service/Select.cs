@@ -12,64 +12,54 @@ namespace Lunggo.ApCommon.Hotel.Service
     {
         public SelectHotelRoomOutput SelectHotelRoom (SelectHotelRoomInput input)
         {
-            var decryptedData = input.RegsIds.Select(DecryptRegsId).ToList();
-
-            var hotel = GetHotelDetailFromDb(decryptedData[0].HotelCode);
+            //var decryptedData = input.RegsIds.Select(DecryptRegsId).ToList();
+            var someData = DecryptRegsId(input.RegsIds[0].RegId);
+            var hotel = GetHotelDetailFromDb(someData.HotelCode);
             hotel.Rooms = new List<HotelRoom>();
 
-            //Enter Room Details to Hotel
-
-            foreach (var data in decryptedData)
+            foreach (var id in input.RegsIds)
             {
+                var data = DecryptRegsId(id.RegId);
                 var output = GetRoomDetail(new GetRoomDetailInput
                 {
-                    HotelCode = decryptedData[0].HotelCode,
+                    HotelCode = data.HotelCode,
                     RoomCode = data.RoomCode,
                     SearchId = input.SearchId
-
                 });
+
                 var originRateKey = data.RateKey;
-                var newRates = new List<HotelRate>();
-                foreach (var rate in output.Room.Rates)
-                {
-
-                    var roomRateKey = rate.RateKey;
-                    if (roomRateKey == originRateKey)
+                var newRate = (from rate in output.Room.Rates
+                    let roomRateKey = rate.RateKey
+                    where roomRateKey == originRateKey
+                    select new HotelRate
                     {
-                        var newrate = new HotelRate
-                        {
-                            RateKey = rate.RateKey,
-                            AdultCount = rate.AdultCount,
-                            Boards = rate.Boards,
-                            Cancellation = rate.Cancellation,
-                            ChildCount = rate.ChildCount,
-                            Class = rate.Class,
-                            Offers = rate.Offers,
-                            PaymentType = rate.PaymentType,
-                            RegsId = rate.RegsId,
-                            Price = rate.Price,
-                            Type = rate.Type,
-                        };
-                        newRates.Add(newrate);
-                    }
-                    
-                }
+                        RateCount = id.RateCount, RateKey = rate.RateKey, AdultCount = rate.AdultCount, Boards = rate.Boards, Cancellation = rate.Cancellation, ChildCount = rate.ChildCount, Class = rate.Class, Offers = rate.Offers, PaymentType = rate.PaymentType, RegsId = rate.RegsId, Price = rate.Price, Type = rate.Type,
+                    }).ToList()[0];
 
-                var newRoom = new HotelRoom
+                if (hotel.Rooms.Any(r => r.RoomCode == output.Room.RoomCode))
                 {
-                    RoomCode = output.Room.RoomCode,
-                    characteristicCd = output.Room.CharacteristicCode,
-                    Facilities = output.Room.Facilities,
-                    Images = output.Room.Images,
-                    Rates = newRates,
-                    RoomName = output.Room.RoomName,
-                    Type = output.Room.Type,
-                    TypeName = output.Room.TypeName,
-                    
-                };
-
-                hotel.Rooms.Add(newRoom);
+                    hotel.Rooms.Where(r => r.RoomCode == output.Room.RoomCode).ToList()[0].Rates.Add(newRate);
+                }
+                else
+                {
+                    var newRoom = new HotelRoom
+                    {
+                        RoomCode = output.Room.RoomCode,
+                        characteristicCd = output.Room.CharacteristicCode,
+                        Facilities = output.Room.Facilities,
+                        Images = output.Room.Images,
+                        Rates = new List<HotelRate>
+                        {
+                           newRate 
+                        },
+                        RoomName = output.Room.RoomName,
+                        Type = output.Room.Type,
+                        TypeName = output.Room.TypeName,
+                    };
+                    hotel.Rooms.Add(newRoom);
+                }               
             }
+
             hotel.SearchId = input.SearchId;
             var token = HotelBookingIdSequence.GetInstance().GetNext().ToString();
 
@@ -89,7 +79,7 @@ namespace Lunggo.ApCommon.Hotel.Service
             
         }
 
-        private RegsIdDecrypted DecryptRegsId(string regsId)
+        private static RegsIdDecrypted DecryptRegsId(string regsId)
         {
             var splittedData = regsId.Split(',');
             return new RegsIdDecrypted
@@ -99,12 +89,5 @@ namespace Lunggo.ApCommon.Hotel.Service
                 RateKey = splittedData[2]
             };
         }
-
-        private HotelRate GetRateFromCache(string ratekey)
-        {
-            //TODO
-            return new HotelRate();
-        }
     }       
-
 }
