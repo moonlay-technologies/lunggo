@@ -5158,7 +5158,7 @@ file: /Assets/travorama20/css/_page_flight.scss
         .page-hotel .travorama-hotel .search-list .search-list-result .col-right-result .location {
           margin: 7px 0;
           margin-left: 20px;
-          line-height: 12px; }
+          line-height: 14px; }
           .page-hotel .travorama-hotel .search-list .search-list-result .col-right-result .location:before {
             position: absolute;
             left: 15px; }
@@ -6989,8 +6989,6 @@ file : /Assets/travorama20/css/_page_password.scss
       border-top: 1px solid #ccc; }
     .page-account-profile .account-content form[name="profileForm"], .page-account-profile .account-content form[name="passwordForm"] {
       padding: 15px 0; }
-  .page-account-profile .account-content .history-content .content-body {
-    background: #fff; }
   .page-account-profile .account-content .history-content .tab-header {
     margin-top: 15px; }
     .page-account-profile .account-content .history-content .tab-header > nav > ul {
@@ -7001,7 +6999,7 @@ file : /Assets/travorama20/css/_page_password.scss
       width: 100%; }
       .page-account-profile .account-content .history-content .tab-header > nav > ul > li {
         width: 50%;
-        background: #ccc;
+        background: #e9e9e9;
         display: inline;
         float: left;
         padding: 12px;
@@ -7009,16 +7007,25 @@ file : /Assets/travorama20/css/_page_password.scss
         text-transform: uppercase; }
         .page-account-profile .account-content .history-content .tab-header > nav > ul > li.active {
           background: #1daee4; }
-          .page-account-profile .account-content .history-content .tab-header > nav > ul > li.active a {
-            color: #fff; }
+          .page-account-profile .account-content .history-content .tab-header > nav > ul > li.active:after {
+            content: '';
+            width: 20px;
+            height: 20px;
+            display: block;
+            position: absolute;
+            margin-top: 12px;
+            margin-left: 137px;
+            border-right: 10px solid transparent;
+            border-left: 10px solid transparent;
+            border-top: 10px solid #1daee4; }
         .page-account-profile .account-content .history-content .tab-header > nav > ul > li a {
-          color: #999;
+          color: #fff;
           font-weight: 700;
           font-size: 14px;
           text-decoration: none;
           padding: 0 100px; }
   .page-account-profile .account-content .history-content .tab-content {
-    padding: 15px 15px; }
+    padding: 10px 0; }
 
 .page-account-profile .order-wrapper {
   margin-top: 15px; }
@@ -7159,8 +7166,17 @@ file : /Assets/travorama20/css/_page_password.scss
     .page-account-profile .order-detail .passenger-list li .row div + div {
       background: #e2e2e2; }
 
-.page-account-profile .order-detail .info-buyer, .page-account-profile .order-detail .info-flight {
+.page-account-profile .order-detail .info-buyer, .page-account-profile .order-detail .info-flight, .page-account-profile .order-detail .info-hotel {
   padding: 15px 0; }
+
+.page-account-profile .order-detail .info-hotel .otl, .page-account-profile .order-detail .info-hotel .otr {
+  float: left; }
+
+.page-account-profile .order-detail .info-hotel .otr {
+  padding-left: 10px; }
+
+.page-account-profile .order-detail .info-hotel .order-bottom > .row {
+  padding: 6px 0; }
 
 .page-account-profile .site-content > .container {
   max-width: none !important; }

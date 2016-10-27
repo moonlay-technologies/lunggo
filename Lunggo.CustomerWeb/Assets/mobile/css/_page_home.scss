@@ -57,67 +57,6 @@ $play-store: '../images/play-store.png';
             }
         }
     }
-    .homepage-tab {
-        .tab-detail.nav-tabs {border: none;
-            &>li {padding: 0;
-                &.active > a, & > a {
-                    border-radius: 0;
-                    border: none;
-                    margin: 0;
-                    text-align: center;
-                    text-transform: uppercase;
-                    font-size: 12px;
-                    font-weight: 700;
-                    padding: 12px;
-                }
-                & > a {
-                    color: #626262;
-                    background: $color-grey-tab;
-                    &.tab-flight:before {
-                        content: '';
-                        width: 22px;
-                        height: 24px;
-                        display: inline-block;
-                        background: url(/Assets/mobile/images/flight-grey.png);
-                        vertical-align: middle;
-                        margin-right: 8px;
-                    }
-                    &.tab-hotel:before {
-                        content: '';
-                        width: 21px;
-                        height: 21px;
-                        display: inline-block;
-                        background: url(/Assets/mobile/images/hotel-grey.png);
-                        vertical-align: middle;
-                        margin-right: 8px;
-                    }
-                }
-                &.active > a {
-                    color: $color-main-blue;
-                    background: $color-white;
-                    &.tab-flight:before {
-                        content: '';
-                        width: 22px;
-                        height: 24px;
-                        display: inline-block;
-                        background: url(/Assets/mobile/images/flight-blue.png);
-                        vertical-align: middle;
-                        margin-right: 8px;
-                    }
-                    &.tab-hotel:before {
-                        content: '';
-                        width: 21px;
-                        height: 21px;
-                        display: inline-block;
-                        background: url(/Assets/mobile/images/hotel-blue.png);
-                        vertical-align: middle;
-                        margin-right: 8px;
-                    }
-                }
-            }
-        }
-        & > .tab-content {padding: 10px 0;}
-    }
 }
 
 @media only screen and (min-width: 375px) and (max-height: 667px) {

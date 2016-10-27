@@ -27,6 +27,10 @@ namespace Lunggo.CustomerWeb.Controllers
         {
             return View();
         }
+        public ActionResult OrderHotelHistoryDetail()
+        {
+            return View();
+        }
         public ActionResult BankTransferHotel()
         {
             return View();
