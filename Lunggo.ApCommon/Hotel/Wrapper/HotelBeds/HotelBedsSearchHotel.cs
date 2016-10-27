@@ -155,8 +155,8 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds
                                         StartTime = y.from
                                     }).ToList(),
                                 Class = x.rateClass,
-                                Type = x.rateType.ToString() 
-
+                                Type = x.rateType.ToString() ,
+                                TimeLimit = DateTime.UtcNow.AddMinutes(30),
                                 };
                                 rate.Price.SetSupplier(x.net,
                                     x.hotelCurrency != null ? allCurrencies[x.hotelCurrency] : allCurrencies["IDR"]);

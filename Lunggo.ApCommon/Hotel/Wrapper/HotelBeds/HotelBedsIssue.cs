@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Hotel.Model;
 using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Sdk;
 using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Sdk.auto.common;
 using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Sdk.helpers;
-using Lunggo.ApCommon.Product.Model;
 
 namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds
 {
@@ -32,11 +30,10 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds
                 last = splittedName[splittedName.Length - 1];
             }
             booking.createHolder(first, last);
-            foreach (HotelRoom room in hotelIssueInfo.Rooms)
+            foreach (var room in hotelIssueInfo.Rooms)
             {
-                foreach (HotelRate rate in room.Rates)
+                foreach (var rate in room.Rates)
                 {
-                    // "20161108|20161110|W|1|1075|DBT.ST|CG-TODOS RO|RO||2~2~0||N@3A311B81C82B4A52AF30BAC1A7C55E3D"
                     var confirmRoom = new ConfirmRoom {details = new List<RoomDetail>()};
                     var ratekey = rate.RateKey;
                     var data = ratekey.Split('|')[9];
@@ -55,8 +52,7 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds
                             confirmRoom.detailed(RoomDetail.GuestType.CHILD, 8, firstname, lastname, z);
                         }
                     }
-                    //confirmRoom.detailed(RoomDetail.GuestType.ADULT, 30, "NombrePasajero1", "ApellidoPasajero1", 1);
-                    //confirmRoom.detailed(RoomDetail.GuestType.ADULT, 30, "NombrePasajero2", "ApellidoPasajero2", 1);
+                    
                     booking.addRoom(rate.RateKey, confirmRoom);
                 }
             }

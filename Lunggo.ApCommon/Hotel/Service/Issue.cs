@@ -47,7 +47,6 @@ namespace Lunggo.ApCommon.Hotel.Service
                 return output;
             }
             output.IsSuccess = false;
-            //output.Errors = new List<FlightError> { FlightError.NotEligibleToIssue };
             return output;
         }
 
@@ -141,7 +140,6 @@ namespace Lunggo.ApCommon.Hotel.Service
                                     if (revalidateResult.IsPriceChanged)
                                     {
                                         rate.Price.SetSupplier(revalidateResult.NewPrice.GetValueOrDefault(), rate.Price.SupplierCurrency);
-                                        //newPrice += revalidateResult.NewPrice.GetValueOrDefault() * rate.RateCount;
                                     }
                                     rate.RateKey = revalidateResult.RateKey;
                                     rate.Price.SetSupplier(revalidateResult.NewPrice.GetValueOrDefault(),
