@@ -56,10 +56,16 @@
             <div class="detail-hotel">
                 <div class="big-slider">
                     <div class="top-desc">
-                        <span class="slider-title-lg blue-txt">Bliss Hotel Singapore</span>
-                        <span class="star star-5"></span>
+                        <span class="slider-title-lg blue-txt">{{hotel.hotelName}}</span>
+                        <div class="star" ng-class="{
+                                     'star-1 e-star':hotel.starRating.indexOf('1')>-1,
+                                     'star-2 e-star':hotel.starRating.indexOf('2')>-1,
+                                     'star-3 e-star':hotel.starRating.indexOf('3')>-1,
+                                     'star-4 e-star':hotel.starRating.indexOf('4')>-1,
+                                     'star-5':hotel.starRating.indexOf('5')>-1}">
+                        </div>
                         <br />
-                        <span class="address">Kios Tower AB No. 26, Jl. Karet Pasar Gang Tiong No: 62 - Jakarta Barat</span>
+                        <span class="address">{{hotel.address}}{{hotel.city}}</span>
                         <a href="#" class="btn-blue small">Lihat Peta</a>
                     </div>
                     <div class="slider-container clearfix">
@@ -67,7 +73,10 @@
                             <div class="slider">
                                 <div class="flexslider">
                                     <ul class="slides">
-                                        <li data-thumb="/Assets/travorama20/images/Hotel/big-slider-img.jpg">
+                                        <li data-thumb="http://photos.hotelbeds.com/giata/giata/42/428978/428978a_hb_ro_002.jpg" ng-repeat="image in hotel.images">
+                                            <img ng-src="http://photos.hotelbeds.com/giata/{{image.path}}" alt="Alternate Text" />
+                                        </li>
+                                        @*<li data-thumb="/Assets/travorama20/images/Hotel/big-slider-img.jpg">
                                             <img src="/Assets/travorama20/images/Hotel/big-slider-img.jpg" alt="Alternate Text" />
                                         </li>
                                         <li data-thumb="/Assets/travorama20/images/Hotel/big-slider-img.jpg">
@@ -81,10 +90,7 @@
                                         </li>
                                         <li data-thumb="/Assets/travorama20/images/Hotel/big-slider-img.jpg">
                                             <img src="/Assets/travorama20/images/Hotel/big-slider-img.jpg" alt="Alternate Text" />
-                                        </li>
-                                        <li data-thumb="/Assets/travorama20/images/Hotel/big-slider-img.jpg">
-                                            <img src="/Assets/travorama20/images/Hotel/big-slider-img.jpg" alt="Alternate Text" />
-                                        </li>
+                                        </li>*@
                                     </ul>
                                 </div>
                             </div>

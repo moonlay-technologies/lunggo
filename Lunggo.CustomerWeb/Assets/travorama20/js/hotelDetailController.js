@@ -4,6 +4,7 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
     $scope.init = function (model) {
         $log.debug(model);
         $scope.model = model;
+        $scope.searchId = $scope.model.searchId;
 
         var resource = $resource('//api.local.travorama.com/v1/hotel/GetHotelDetail/:searchId/:hotelCd',
             {},
@@ -28,14 +29,7 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
             "to": "9"
         }).$promise.then(function (data) {
             $log.debug(data);
-
-
-            $scope.hotelDetails = data.searchId;
-            $scope.hotels = data.hotels;
-            $scope.searchId = data.searchId;
-            totalActualHotel = data.totalActualHotel;
-            $scope.hotelFilterDisplayInfo = data.hotelFilterDisplayInfo;
-
+            $scope.hotel = data.HotelDetails;
         })
     }
 
