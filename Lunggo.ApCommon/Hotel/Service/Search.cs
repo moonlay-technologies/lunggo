@@ -135,8 +135,6 @@ namespace Lunggo.ApCommon.Hotel.Service
                 Guid generatedSearchId = Guid.NewGuid();
                 SaveAllCurrencyToCache(generatedSearchId.ToString(), allCurrency );
 
-                //Do Call Availability
-                //Save data to DocDB
                 var hotelBedsClient = new HotelBedsSearchHotel();
                 var request = new SearchHotelCondition();
                 if (input.HotelCode != 0)
@@ -249,9 +247,9 @@ namespace Lunggo.ApCommon.Hotel.Service
             foreach (var hotel in result)
             {
                 //TODO address masih belum disimpan, makanya make dua storage
-                var detail = GetHotelDetailFromDb(hotel.HotelCode);
-                hotel.Address = detail.Address;
-                hotel.CountryCode = detail.CountryCode;
+                //var detail = GetHotelDetailFromDb(hotel.HotelCode);
+                //hotel.Address = detail.Address;
+                //hotel.CountryCode = detail.CountryCode;
                 var detail2 = GetTruncatedHotelDetailFromTableStorage(hotel.HotelCode);
                 hotel.City = detail2.City;
                 hotel.ImageUrl = detail2.ImageUrl;
