@@ -34,7 +34,6 @@
     <script src="/Assets/vendor/flexslider/jquery.flexslider.js"></script>
     <script>
         accordionFunctions();
-        shortenTextFunctions();
     </script>
     <script src="/Assets/mobile/js/HotelController.js"></script>
 }
@@ -43,13 +42,13 @@
         @Html.Partial("/Views/Hotel/Shared/Mobile/_Summary.cshtml")
         <div class="hotel-detail-menu clearfix">
             <div class="hotel-detail-menu-action">
-                <a href="#" class="detail-menu">UMUM</a>
-                <a href="#" class="spec-menu active">RINCIAN</a>
+                <a href="#detail-menu">UMUM</a>
+                <a href="#spec-menu">RINCIAN</a>
             </div>
         </div>
     </div>
     <div class="detail-hotel-container">
-        <div class="detail-hotel">
+        <div class="detail-tab detail-hotel" id="detail-menu">
             <div class="dh-slider">
                 <div class="item active">
                     <img src="/Assets/mobile/images/Hotel/hotel-detail-lg.jpg" />
@@ -135,14 +134,15 @@
                 </ul>
             </div>
         </div>
-        <div class="spec-hotel">
+        <div class="detail-tab spec-hotel" id="spec-menu">
             <div class="sh-desc">
                 <div class="sh-title darkgrey-txt lg-txt bold-txt">Deskripsi </div>
-                <div class="sh-txt darkgrey-txt" id="dot">
+                <div class="sh-txt darkgrey-txt">
                     Dolor sit amet, consectetuer adipiscing elit, sed diam nonummy. ectetuer adipiscing elit, sed diam nonummy. Lorem ipsum dolor sit amet, consectetuer ectetuer. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. my nibh euismod tincidunt. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.
                     <br /><br />
                     Dolor sit amet, consectetuer adipiscing elit, sed diam nonummy. ectetuer adipiscing elit, sed diam nonummy. Lorem ipsum dolor sit amet, consectetuer ectetuer. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. my nibh euismod tincidunt. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.
                 </div>
+                <a class="toggle" href="#"><span class="sh-open"></span><span class="sh-close"></span></a>
             </div>
             <div class="sh-facility">
                 <div class="sh-title darkgrey-txt lg-txt bold-txt">Fasilitas Utama Hotel</div>

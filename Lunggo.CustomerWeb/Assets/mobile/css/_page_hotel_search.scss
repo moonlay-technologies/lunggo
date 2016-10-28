@@ -14,22 +14,20 @@
 }
 
  /*Shorten Text*/
-.shorten-txt {
-	height: 170px;
-    &.opened {height: auto;
-        .toggle {
-            .sh-open {display: none;}
-            .sh-close {display: block;}
-        }
+.filter-group--facility {
+    .sh-list {
+	    height: 170px;
+        overflow: hidden;
+        &.opened {height: auto;}
     }
     .toggle {
         .sh-open {display: block;}
         .sh-close {display: none;}
-
+        &.active {
+            .sh-open {display: none;}
+            .sh-close {display: block;}
+        }
     }
     .sh-open {@extend .arrow-down-yellow;}
     .sh-close {@extend .arrow-up-yellow;}
-    &.is-truncated .col-half {
-        width: 100%;
-    }
 }

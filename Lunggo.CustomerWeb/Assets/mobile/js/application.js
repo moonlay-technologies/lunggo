@@ -1087,35 +1087,3 @@ function accordionFunctions() {
         }
     }
 }
-
-//********************
-// shorten text functions
-function shortenTextFunctions() {
-    $(function () {
-        var dot = $('#dot');
-        dot.append(' <a class="toggle" href="#"><span class="sh-open"></span><span class="sh-close"></span></a>');
-        function createDots() {
-            dot.dotdotdot({
-                after: 'a.toggle'
-            });
-        }
-        function destroyDots() {
-            dot.trigger('destroy');
-        }
-        createDots();
-        dot.on(
-            'click',
-            'a.toggle',
-            function () {
-                dot.toggleClass('opened');
-
-                if (dot.hasClass('opened')) {
-                    destroyDots();
-                } else {
-                    createDots();
-                }
-                return false;
-            }
-        );
-    });
-}
