@@ -16,8 +16,8 @@ app.controller('hotelSearchController', ['$scope', '$log', '$http', '$resource',
     $scope.searchId = '';
     $scope.hotel = {};
     $scope.hotel.location = "BALI";
-    $scope.hotel.checkinDate = "28-12-2016";
-    $scope.hotel.checkoutDate = "30-12-2016";
+    $scope.hotel.checkinDate = "12/10/2016";
+    $scope.hotel.checkoutDate = "12/11/2016";
     $scope.hotel.adultCount = 3;
     $scope.hotel.childCount = 1;
     $scope.hotel.nightCount = 1;

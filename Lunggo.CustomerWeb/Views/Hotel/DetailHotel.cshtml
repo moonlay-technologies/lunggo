@@ -57,7 +57,8 @@
                 <div class="big-slider">
                     <div class="top-desc">
                         <span class="slider-title-lg blue-txt">{{hotel.hotelName}}</span>
-                        <div class="star" ng-class="{
+                        <div class="" ng-class="{
+                                     '':hotel.starRating.indexOf('0')>-1,
                                      'star-1 e-star':hotel.starRating.indexOf('1')>-1,
                                      'star-2 e-star':hotel.starRating.indexOf('2')>-1,
                                      'star-3 e-star':hotel.starRating.indexOf('3')>-1,
@@ -65,7 +66,7 @@
                                      'star-5':hotel.starRating.indexOf('5')>-1}">
                         </div>
                         <br />
-                        <span class="address">{{hotel.address}}{{hotel.city}}</span>
+                        <span class="address">{{hotel.address}}{{hotel.city}}{{hotel.country}}</span>
                         <a href="#" class="btn-blue small">Lihat Peta</a>
                     </div>
                     <div class="slider-container clearfix">
@@ -73,8 +74,8 @@
                             <div class="slider">
                                 <div class="flexslider">
                                     <ul class="slides">
-                                        <li data-thumb="http://photos.hotelbeds.com/giata/giata/42/428978/428978a_hb_ro_002.jpg" ng-repeat="image in hotel.images">
-                                            <img ng-src="http://photos.hotelbeds.com/giata/{{image.path}}" alt="Alternate Text" />
+                                        <li data-thumb="{{image}}" ng-repeat="image in hotel.images">
+                                            <img ng-src="{{image}}" alt="alternative" />
                                         </li>
                                         @*<li data-thumb="/Assets/travorama20/images/Hotel/big-slider-img.jpg">
                                             <img src="/Assets/travorama20/images/Hotel/big-slider-img.jpg" alt="Alternate Text" />
@@ -493,18 +494,19 @@
                             </div>
                             <div class="accordion-title accordion md-txt">Deskripsi Hotel</div>
                             <div class="accordion-content show">
-                                <div class="ih-title md-txt">“Clean rooms, Great location, Spotless beds”</div>
+                                @*<div class="ih-title md-txt">“Clean rooms, Great location, Spotless beds”</div>*@
                                 <div class="ih-desc clearfix">
-                                    <div class="col-half ih-l">
+                                    {{hotel.description}}
+                                    @*<div class="col-half ih-l">
                                         This hotel features a fitness centre, an outdoor pool and a rooftop terrace with panoramic city views. It is close to the area's tourist attractions and is minutes on foot from Lavender MRT Station.
                                         <br /><br />
                                         This 4-star hotel offers a coffee bar, a 24-hour reception and an express check-in and check-out feature. Corporate amenities include a business centre.
-                                    </div>
-                                    <div class="col-half ih-r">
+                                    </div>*@
+                                    @*<div class="col-half ih-r">
                                         This hotel features a fitness centre, an outdoor pool and a rooftop terrace with panoramic city views. It is close to the area's tourist attractions and is minutes on foot from Lavender MRT Station.
                                         <br /><br />
                                         This 4-star hotel offers a coffee bar, a 24-hour reception and an express check-in and check-out feature. Corporate amenities include a business centre.
-                                    </div>
+                                    </div>*@
                                 </div>
                             </div>
                             <div class="accordion-title accordion md-txt">Syarat & Ketentuan Hotel</div>

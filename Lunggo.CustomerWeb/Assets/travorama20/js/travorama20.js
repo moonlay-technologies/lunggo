@@ -1900,17 +1900,17 @@ function hotelFormSearchFunctions() {
     });
 
     // embed date picker into page
-    $('.hotel-date-picker').datepicker({
-        numberOfMonths: 1,
-        onSelect: function (data) {
-            data = data.substring(3, 5) + "/" + data.substring(0, 2) + "/" + data.substring(6, 10);
-            console.log(data);
-            var target;
-            var chosenDate = new Date(data);
-            $(target + ' .date').html(('0' + chosenDate.getDate()).slice(-2));
-            $(target + ' .month').html(translateMonth(chosenDate.getMonth()));
-            $(target + ' .year').html(chosenDate.getFullYear());
-            $('.search-calendar-hotel').hide();
-        }
-    });
+    //$('.hotel-date-picker').datepicker({
+    //    numberOfMonths: 1,
+    //    onSelect: function (data) {
+    //        data = data.substring(3, 5) + "/" + data.substring(0, 2) + "/" + data.substring(6, 10);
+    //        console.log(data);
+    //        var target;
+    //        var chosenDate = new Date(data);
+    //        $(target + ' .date').html(('0' + chosenDate.getDate()).slice(-2));
+    //        $(target + ' .month').html(translateMonth(chosenDate.getMonth()));
+    //        $(target + ' .year').html(chosenDate.getFullYear());
+    //        $('.search-calendar-hotel').hide();
+    //    }
+    //});
 }

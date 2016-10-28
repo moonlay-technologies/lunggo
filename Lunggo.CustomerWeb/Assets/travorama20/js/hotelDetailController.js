@@ -5,6 +5,7 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
         $log.debug(model);
         $scope.model = model;
         $scope.searchId = $scope.model.searchId;
+        var maxImages = 6;
 
         var resource = $resource('//api.local.travorama.com/v1/hotel/GetHotelDetail/:searchId/:hotelCd',
             {},
@@ -28,8 +29,20 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
             "from": "1",
             "to": "9"
         }).$promise.then(function (data) {
-            $log.debug(data);
-            $scope.hotel = data.HotelDetails;
+            $scope.hotel = data.hotelDetails;
+
+            var loadedImages = 0;
+            var tempHotelImages = [];
+            $.each($scope.hotel.images, function (key, value) {
+                tempHotelImages.push("http://photos.hotelbeds.com/giata/bigger/" + value);
+
+                loadedImages++;
+                if (loadedImages == maxImages) {
+                    return false;
+                }
+            });
+            $scope.hotel.images = tempHotelImages;
+            $log.debug($scope.hotel);
         })
     }
 

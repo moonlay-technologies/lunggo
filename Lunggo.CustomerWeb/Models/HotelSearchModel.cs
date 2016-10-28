@@ -39,10 +39,11 @@ namespace Lunggo.CustomerWeb.Models
             Location = query[0];
             //DateTime tempDate = new DateTime();
             //DateTime.TryParse(query[1], out tempDate) = true ? CheckinDate = tempDate : ;
-            CheckinDate = DateTime.Parse(query[1], new CultureInfo("id-ID"));
-            CheckoutDate = DateTime.Parse(query[2], new CultureInfo("id-ID"));
-            AdultCount = int.Parse(query[3]);
-            ChildCount = int.Parse(query[4]);
+            CheckinDate = DateTime.Parse(query[1]);
+            CheckoutDate = DateTime.Parse(query[3]);
+            AdultCount = int.Parse(query[5]);
+            ChildCount = int.Parse(query[6]);
+           
            
         }
     }

@@ -169,7 +169,7 @@
                     </div>
                     <div class="hotel-list-container">
                         <div class="hotel-list clearfix" ng-repeat="hotel in hotels" ng-click="GotoDetailHotel(hotel.hotelCd)" style="cursor:pointer">
-                            <div class="col-left-hotel"><img ng-src="http://photos.hotelbeds.com/giata/{{hotel.images[0].path}}" alt="Hotel" /></div>
+                            <div class="col-left-hotel"><img ng-src="http://photos.hotelbeds.com/giata/{{hotel.mainImage}}" alt="Hotel" /></div>
                             <div class="col-right-hotel">
                                 <div class="clearfix">
                                     <div class="col-half blue-txt bg">{{hotel.hotelName}}</div>
@@ -178,7 +178,8 @@
                                         <span class="meal"></span>
                                     </div>
                                 </div>
-                                <div class="star" ng-class="{
+                                <div class="" ng-class="{
+                                     '':hotel.starRating.indexOf('0')>-1,
                                      'star-1 e-star':hotel.starRating.indexOf('1')>-1,
                                      'star-2 e-star':hotel.starRating.indexOf('2')>-1,
                                      'star-3 e-star':hotel.starRating.indexOf('3')>-1,
