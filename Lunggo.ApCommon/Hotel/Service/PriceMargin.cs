@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web.UI;
 using Lunggo.ApCommon.Hotel.Model;
 using Lunggo.ApCommon.Payment.Model;
+using Lunggo.ApCommon.Product.Model;
 using Lunggo.Framework.Context;
 
 namespace Lunggo.ApCommon.Hotel.Service
@@ -53,14 +54,28 @@ namespace Lunggo.ApCommon.Hotel.Service
 
             foreach (var rate in room.Rates)
             {
+                
                 AddPriceMargin(rate, room, hotelDetail, marginRules);
             }
         }
 
         internal void AddPriceMargin(HotelRate hotelRate, HotelRoom room, HotelDetail hotelDetail, List<HotelMarginRule> marginRules)
         {
-            var rule = GetFirstMatchingRule(hotelRate, room, hotelDetail, marginRules);
-            ApplyMarginRule(hotelRate, rule);
+            if (hotelRate.HotelSellingRate > 0)
+            {
+                hotelRate.Price.SetMargin(new Margin
+                {
+                    Constant = hotelRate.HotelSellingRate - hotelRate.Price.Supplier,
+                    Currency = hotelRate.Price.SupplierCurrency,
+                    Name = "HotelSellingRate"
+                });
+            }
+            else
+            {
+                var rule = GetFirstMatchingRule(hotelRate, room, hotelDetail, marginRules);
+                ApplyMarginRule(hotelRate, rule);                
+            }
+
         }
 
         //private void RoundFinalAndLocalPrice(HotelRate rate)
