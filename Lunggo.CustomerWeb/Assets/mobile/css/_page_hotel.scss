@@ -752,4 +752,11 @@
             }
         }
     }
+    .overlay {
+        &.overlay--hotel-form .overlay__content { 
+            @import 'home_page_layout';
+            min-height: auto;
+            padding: 0;
+        }
+    }
 }

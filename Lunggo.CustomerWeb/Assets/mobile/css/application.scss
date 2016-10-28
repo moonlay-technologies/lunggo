@@ -999,7 +999,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
             // departure time filter
             &.filter-group--departure {
                 .filter-group__content {@include clearfix();
-                    label {display:block; float:left; width:50%; border:0; margin-bottom:0; padding: 6px 0; position:relative;
+                    label {display:block; float:left; width:50%; border:0; margin-bottom:0; padding: 10px 0; position:relative;
                         .switch {float:left; width:20px; height:20px; content:""; background:#fff; border:3px solid #fff; position:absolute; top:50%; margin-top:-10px; @include border-radius(20px);
                             &.active:before {
                                 background: #ffca10;
@@ -1019,7 +1019,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
             // rating filter
             &.filter-group--rating {
                 .filter-group__content {@include clearfix();
-                    label {display:block; float:left; width:100%; border:0; margin-bottom:0; padding: 6px 0; position:relative;
+                    label {display:block; float:left; width:100%; border:0; margin-bottom:0; padding: 10px 0; position:relative;
                         .switch {float:left; width:20px; height:20px; content:""; background:#fff; border:3px solid #fff; position:absolute; top:50%; margin-top:-10px; @include border-radius(20px);
                             &.active:before {
                                 background: #ffca10;

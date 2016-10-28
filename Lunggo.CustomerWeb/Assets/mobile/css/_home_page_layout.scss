@@ -222,7 +222,7 @@
                     -moz-border-radius: 1px 1px 5px #666;
                     -ms-border-radius: 1px 1px 5px #666;
                     box-shadow: 1px 1px 5px #666;
-                        width: 16px;
+                    width: 16px;
                     height: 16px;
                     background: #ffffff;
                     border: 0;
@@ -239,59 +239,20 @@
                 }
             }
         }
-    }    
-}
-.tab-content {
-    .tp-flight .form-wrapper {padding: 20px 15px;}
-    .tp-hotel .form-wrapper {
-        padding: 0 12px 20px;
-        .placeholder {
-            color: #999;
-            float: right;
-            font-size: 13px
-        }
-        .checkout-date {
-            margin-top: 6px;
-            font-size: 13px;
-            width: 100%;
-            text-align: right;
-        }
-        p {
-            &.form-hotel:before {
-                background-size: 40%;
-                background-repeat: no-repeat;
-                content: '';
-                display: inline-block;
-                vertical-align: middle;
-                position: absolute;
-                left: 0;
-                @include size(47px, 52px);
-                background-image: url(/Assets/mobile/images/find.png);
-                margin-left: 12px;
+        &.hotel-form {
+            .placeholder {
+                color: #999;
+                float: right;
+                font-size: 13px
             }
-            &.form-date:before {
-                background-size: 40%;
-                background-repeat: no-repeat;
-                content: '';
-                display: inline-block;
-                vertical-align: middle;
-                position: absolute;
-                left: 0;
-                @include size(47px, 46px);
-                background-image: url(/Assets/mobile/images/date.png);
-                margin-left: 12px;
+            .checkout-date {
+                margin-top: 6px;
+                font-size: 13px;
+                width: 100%;
+                text-align: right;
             }
-            &.form-time{
-                .duration-title {    
-                    float: left;
-                    margin-top: 10px;
-                }
-                .placeholder {margin-top: 10px;}
-                input[name="hotel-night"] {
-                    float: right;
-                    width: 60px;
-                }
-                &:before {
+            p {
+                &.form-hotel:before {
                     background-size: 40%;
                     background-repeat: no-repeat;
                     content: '';
@@ -299,42 +260,81 @@
                     vertical-align: middle;
                     position: absolute;
                     left: 0;
-                    @include size(53px, 52px);
-                    background-image: url(/Assets/mobile/images/time.png);
+                    @include size(47px, 52px);
+                    background-image: url(/Assets/mobile/images/find.png);
                     margin-left: 12px;
-                    margin-top: 10px
+                }
+                &.form-date:before {
+                    background-size: 40%;
+                    background-repeat: no-repeat;
+                    content: '';
+                    display: inline-block;
+                    vertical-align: middle;
+                    position: absolute;
+                    left: 0;
+                    @include size(47px, 46px);
+                    background-image: url(/Assets/mobile/images/date.png);
+                    margin-left: 12px;
+                }
+                &.form-time{
+                    .duration-title {    
+                        float: left;
+                        margin-top: 10px;
+                    }
+                    .placeholder {margin-top: 10px;}
+                    input[name="hotel-night"] {
+                        float: right;
+                        width: 60px;
+                    }
+                    &:before {
+                        background-size: 40%;
+                        background-repeat: no-repeat;
+                        content: '';
+                        display: inline-block;
+                        vertical-align: middle;
+                        position: absolute;
+                        left: 0;
+                        @include size(53px, 52px);
+                        background-image: url(/Assets/mobile/images/time.png);
+                        margin-left: 12px;
+                        margin-top: 10px
+                    }
+                }
+                &.form-adult:before {
+                    background-size: 40%;
+                    background-repeat: no-repeat;
+                    content: '';
+                    display: inline-block;
+                    vertical-align: middle;
+                    position: absolute;
+                    left: 0;
+                    @include size(41px, 57px);
+                    background-image: url(/Assets/mobile/images/adult.png);
+                    margin-top: 10px;
+                }
+                &.form-child:before {
+                    background-size: 40%;
+                    background-repeat: no-repeat;
+                    content: '';
+                    display: inline-block;
+                    vertical-align: middle;
+                    position: absolute;
+                    left: 0;
+                    @include size(42px, 53px);
+                    background-image: url(/Assets/mobile/images/child.png);
+                    margin-top: 10px;
+                }
+                .vt-title {
+                    margin-top: 10px;
+                    text-align: left;
                 }
             }
-            &.form-adult:before {
-                background-size: 40%;
-                background-repeat: no-repeat;
-                content: '';
-                display: inline-block;
-                vertical-align: middle;
-                position: absolute;
-                left: 0;
-                @include size(41px, 57px);
-                background-image: url(/Assets/mobile/images/adult.png);
-                margin-top: 10px;
-            }
-            &.form-child:before {
-                background-size: 40%;
-                background-repeat: no-repeat;
-                content: '';
-                display: inline-block;
-                vertical-align: middle;
-                position: absolute;
-                left: 0;
-                @include size(42px, 53px);
-                background-image: url(/Assets/mobile/images/child.png);
-                margin-top: 10px;
-            }
-            .vt-title {
-                margin-top: 10px;
-                text-align: left;
-            }
         }
-    }
+    }    
+}
+.tab-content {
+    .tp-flight .form-wrapper {padding: 20px 15px;}
+    .tp-hotel .form-wrapper {padding: 0 12px 20px;}
 }
 .col-custom-logo {
     &.icon-adult:before {
