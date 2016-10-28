@@ -68,6 +68,10 @@ namespace Lunggo.ApCommon.Hotel.Model
         public decimal NetFare { get; set; }
         [JsonProperty("discount", NullValueHandling = NullValueHandling.Ignore)]
         public decimal Discount { get; set; }
+        [JsonProperty("wifiAccess", NullValueHandling = NullValueHandling.Ignore)]
+        public bool WifiAccess { get; set; }
+        [JsonProperty("restaurant", NullValueHandling = NullValueHandling.Ignore)]
+        public bool IsRestaurantAvailable { get; set; }
     }
 
     public class HotelDetailsBase

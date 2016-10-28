@@ -10,10 +10,10 @@ namespace Lunggo.WebAPI.ApiSrc.Hotel.Model
     {
         [JsonProperty("searchId", NullValueHandling = NullValueHandling.Ignore)]
         public string SearchId { get; set; }
-        [JsonProperty("totalDisplayHotel", NullValueHandling = NullValueHandling.Ignore)]
-        public int TotalDisplayHotel { get; set; }
-        [JsonProperty("totalActualHotel", NullValueHandling = NullValueHandling.Ignore)]
-        public int TotalActualHotel { get; set; }
+        [JsonProperty("returnedHotelCount", NullValueHandling = NullValueHandling.Ignore)]
+        public int ReturnedHotelCount { get; set; }
+        [JsonProperty("totalHotelCount", NullValueHandling = NullValueHandling.Ignore)]
+        public int TotalHotelCount { get; set; }
         [JsonProperty("hotels", NullValueHandling = NullValueHandling.Ignore)]
         public List<HotelDetailForDisplay> Hotels { get; set; }
         [JsonProperty("expTime", NullValueHandling = NullValueHandling.Ignore)]
@@ -22,6 +22,10 @@ namespace Lunggo.WebAPI.ApiSrc.Hotel.Model
         public int From { get; set; }
         [JsonProperty("to", NullValueHandling = NullValueHandling.Ignore)]
         public int To { get; set; }
+        [JsonProperty("maxPrice", NullValueHandling = NullValueHandling.Ignore)]
+        public decimal MaxPrice { get; set; }
+        [JsonProperty("minPrice", NullValueHandling = NullValueHandling.Ignore)]
+        public decimal MinPrice { get; set; }
         [JsonProperty("hotelFilterDisplayInfo", NullValueHandling = NullValueHandling.Ignore)]
         public HotelFilterDisplayInfo HotelFilterDisplayInfo { get; set; }
 

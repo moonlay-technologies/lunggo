@@ -14,10 +14,12 @@ namespace Lunggo.ApCommon.Hotel.Model.Logic
         [JsonProperty("hotels", NullValueHandling = NullValueHandling.Ignore)]
         public List<HotelDetailForDisplay> HotelDetailLists { get; set; }
         public DateTime? ExpiryTime { get; set; }
-        public int TotalDisplayHotel { get; set; }
-        public int TotalActualHotel { get; set; }
+        public int ReturnedHotelCount { get; set; }
+        public int TotalHotelCount { get; set; }
         public int StartPage { get; set; }
         public int EndPage { get; set; }
+        public decimal MaxPrice { get; set; }
+        public decimal MinPrice { get; set; }
         public HotelFilterDisplayInfo HotelFilterDisplayInfo { get; set; }
     }
 }

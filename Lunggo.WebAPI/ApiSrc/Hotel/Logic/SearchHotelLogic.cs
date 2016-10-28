@@ -85,12 +85,14 @@ namespace Lunggo.WebAPI.ApiSrc.Hotel.Logic
             var apiResponse = new HotelSearchApiResponse
             {
                 SearchId = searchServiceResponse.SearchId,
-                TotalDisplayHotel = searchServiceResponse.TotalDisplayHotel,
-                TotalActualHotel =  searchServiceResponse.TotalActualHotel,
+                ReturnedHotelCount = searchServiceResponse.ReturnedHotelCount,
+                TotalHotelCount =  searchServiceResponse.TotalHotelCount,
                 Hotels = searchServiceResponse.HotelDetailLists,
                 ExpiryTime = searchServiceResponse.ExpiryTime.TruncateMilliseconds(),
                 From = searchServiceResponse.StartPage,
                 To =  searchServiceResponse.EndPage,
+                MaxPrice = searchServiceResponse.MaxPrice,
+                MinPrice = searchServiceResponse.MinPrice,
                 HotelFilterDisplayInfo = searchServiceResponse.HotelFilterDisplayInfo,
                 StatusCode = HttpStatusCode.OK
             };

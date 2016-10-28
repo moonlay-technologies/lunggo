@@ -123,7 +123,7 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds
                         DestinationCode = hotelResponse.destinationCode,
                         NetFare =  hotelResponse.totalNet,
                         StarRating =  hotelResponse.categoryCode,
-                        OriginalFare = hotelResponse.minRate,
+                        //OriginalFare = hotelResponse.minRate,
                         Review = hotelResponse.reviews,
                         Rooms = hotelResponse.rooms == null ? null : hotelResponse.rooms.Select(roomApi => new HotelRoom
                         {

@@ -49,6 +49,11 @@ namespace Lunggo.ApCommon.Hotel.Model
         public int Allotment { get; set; }
         [JsonProperty("offers", NullValueHandling = NullValueHandling.Ignore)]
         public List<Offer> Offers { get; set; }
+        [JsonProperty("originalPrice", NullValueHandling = NullValueHandling.Ignore)]
+        public decimal OriginalPrice { get; set; }
+        [JsonProperty("netPrice", NullValueHandling = NullValueHandling.Ignore)]
+        public decimal NetPrice { get; set; }
+
     }
     
     public class HotelRate : OrderBase
@@ -81,6 +86,10 @@ namespace Lunggo.ApCommon.Hotel.Model
         public List<Offer> Offers { get; set; }
         [JsonProperty("allotment", NullValueHandling = NullValueHandling.Ignore)]
         public int Allotment { get; set; }
+        [JsonProperty("originalFare", NullValueHandling = NullValueHandling.Ignore)]
+        public int OriginalFare { get; set; }
+        [JsonProperty("netPrice", NullValueHandling = NullValueHandling.Ignore)]
+        public int NetPrice { get; set; }
 
         
     }

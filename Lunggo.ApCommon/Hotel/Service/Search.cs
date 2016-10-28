@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Core.Metadata.Edm;
 using System.Diagnostics;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
@@ -8,6 +9,7 @@ using System.Threading.Tasks;
 using System.Web.Mvc;
 using CsQuery.Engine.PseudoClassSelectors;
 using Lunggo.ApCommon.Flight.Model.Logic;
+using Lunggo.ApCommon.Hotel.Constant;
 using Lunggo.ApCommon.Hotel.Model;
 using Lunggo.ApCommon.Hotel.Model.Logic;
 using Lunggo.ApCommon.Hotel.Query;
@@ -32,9 +34,9 @@ namespace Lunggo.ApCommon.Hotel.Service
 
                 var hotels = searchResult.HotelDetails;
                 var facilityData = new List<string>();
-                if (input.FilterParam.AmenitiesFilter != null)
+                if (input.FilterParam != null && input.FilterParam.FacilityFilter.Facilities != null)
                 {
-                    foreach (var facilities in input.FilterParam.AmenitiesFilter.Facilities.Select(param => HotelFacilityFilters[param].FacilityCode))
+                    foreach (var facilities in input.FilterParam.FacilityFilter.Facilities.Select(param => HotelFacilityFilters[param].FacilityCode))
                     {
                         facilityData.AddRange(facilities);
                     }
@@ -42,14 +44,12 @@ namespace Lunggo.ApCommon.Hotel.Service
                      
                 //Filtering
                 if (hotels != null && input.FilterParam != null)
-                {
-                    var listStar = GetStarFilter(input.FilterParam.StarFilter);
-                    
+                {   
                     hotels = searchResult.HotelDetails.Where(p =>
-                    (input.FilterParam.AreaFilter == null || input.FilterParam.AreaFilter.Areas.Contains(p.ZoneCode)) &&
+                    (input.FilterParam.ZoneFilter == null || input.FilterParam.ZoneFilter.Zones.Contains(p.ZoneCode)) &&
                     (input.FilterParam.AccommodationTypeFilter == null || input.FilterParam.AccommodationTypeFilter.Accomodations.Contains(p.AccomodationType)) &&
-                    (facilityData == null || facilityData.Any(e=> p.Facilities.Select(x=>x.FullFacilityCode).ToList().Contains(e))) &&
-                    (listStar == null || listStar.Contains(p.StarCode)) &&
+                    (facilityData.Count == 0 || facilityData.Any(e=> p.Facilities.Select(x=>x.FullFacilityCode).ToList().Contains(e))) &&
+                    (input.FilterParam.StarFilter == null || input.FilterParam.StarFilter.Stars.Contains(p.StarCode)) &&
                     (input.FilterParam.PriceFilter == null|| (p.OriginalFare >= input.FilterParam.PriceFilter.MinPrice && p.OriginalFare <= input.FilterParam.PriceFilter.MaxPrice))
                     ).Select(p => new HotelDetail
                     {
@@ -87,17 +87,20 @@ namespace Lunggo.ApCommon.Hotel.Service
                 
 
                 //Sorting
-                if (hotels != null && input.SortingParam != null)
+                switch (SortingTypeCd.Mnemonic(input.SortingParam))
                 {
-                    if (input.SortingParam.LowestPrice)
-                    {
-                        hotels = hotels.OrderBy(p => p.OriginalFare).ToList();
-                    }
-
-                    if (input.SortingParam.HighestPrice)
-                    {
-                        hotels = hotels.OrderByDescending(p => p.OriginalFare).ToList();
-                    }
+                    case SortingType.AscendingPrice :
+                        if (hotels != null) hotels = hotels.OrderBy(p => p.OriginalFare).ToList();
+                        break;
+                    case SortingType.DescendingPrice :
+                        if (hotels != null) hotels = hotels.OrderByDescending(p => p.OriginalFare).ToList();
+                        break;
+                    case SortingType.AscendingStar:
+                        if (hotels != null) hotels = hotels.OrderBy(p => p.StarCode).ToList();
+                        break;
+                    case SortingType.DescendingStar:
+                        if (hotels != null) hotels = hotels.OrderByDescending(p => p.StarCode).ToList();
+                        break;
                 }
 
                 List<HotelDetail> hotelList;
@@ -111,17 +114,19 @@ namespace Lunggo.ApCommon.Hotel.Service
                 }
 
                 hotelList = AddHotelDetail(hotelList);
+                var sortedHotel = searchResult.HotelDetails.OrderByDescending(x => x.NetFare);
 
                 return new SearchHotelOutput
                 {
                     SearchId = searchResult.SearchId,
                     HotelDetailLists = ConvertToHotelDetailForDisplay(hotelList),
                     StartPage = input.StartPage,
-                    EndPage = input.EndPage,
-                    TotalDisplayHotel = hotelList.Count,
-                    TotalActualHotel = searchResult.HotelDetails.Count,
-                    HotelFilterDisplayInfo = searchResult.HotelFilterDisplayInfo
-                    
+                    EndPage = input.EndPage==0?hotelList.Count:input.EndPage,
+                    ReturnedHotelCount = hotelList.Count,
+                    TotalHotelCount = searchResult.HotelDetails.Count,
+                    HotelFilterDisplayInfo = searchResult.HotelFilterDisplayInfo,
+                    MaxPrice = sortedHotel.Select(x => x.NetFare).FirstOrDefault(),
+                    MinPrice = sortedHotel.Select(x => x.OriginalFare).LastOrDefault(),
                 };
             }
             else
@@ -200,30 +205,35 @@ namespace Lunggo.ApCommon.Hotel.Service
                 var result = hotelBedsClient.SearchHotel(request);
                 result.SearchId = generatedSearchId.ToString();
                 Debug.Print("Search Id : " + result.SearchId);
-                //remember to add searchId
-
+                
 
                 if (result.HotelDetails != null)
                 {
                     AddPriceMargin(result.HotelDetails);
-                    result.HotelDetails = AddFilteringInfo(result.HotelDetails);
+                    result.HotelDetails = AddDetailInfo(result.HotelDetails);
                     result.HotelFilterDisplayInfo = SetHotelFilterDisplayInfo(result.HotelDetails, isByDestination);
                     
-                    
+                    //REMEMBER TO UNCOMMENT THIS
                     SaveSearchResultintoDatabaseToCache(result.SearchId, result);
 
-                    var firstPageHotelDetails = result.HotelDetails.Take(100).ToList(); 
+                    var firstPageHotelDetails = result.HotelDetails.Take(100).ToList();
+                    
+                     
                     firstPageHotelDetails = AddHotelDetail(firstPageHotelDetails);
 
+                    var sortedHotel = result.HotelDetails.OrderByDescending(x => x.NetFare);
                     return new SearchHotelOutput
                     {
                         SearchId = result.SearchId,
                         HotelDetailLists = ConvertToHotelDetailForDisplay(firstPageHotelDetails),
                         StartPage = 1,
                         EndPage = 100,
-                        TotalDisplayHotel = firstPageHotelDetails.Count,
-                        TotalActualHotel = result.HotelDetails.Count,
-                        HotelFilterDisplayInfo = result.HotelFilterDisplayInfo
+                        ReturnedHotelCount = firstPageHotelDetails.Count,
+                        TotalHotelCount = result.HotelDetails.Count,
+                        HotelFilterDisplayInfo = result.HotelFilterDisplayInfo,
+                        MaxPrice = sortedHotel.Select(x => x.NetFare).FirstOrDefault(),
+                        MinPrice = sortedHotel.Select(x => x.OriginalFare).LastOrDefault(),
+                        //TODO Expiry Time
                     };
                 }
                 else
@@ -236,40 +246,40 @@ namespace Lunggo.ApCommon.Hotel.Service
 
         public List<HotelDetail> AddHotelDetail(List<HotelDetail> result)
         {
-            //Adding Additional Hotel Information
-                foreach (var hotel in result)
-                {
-                   var detail = GetHotelDetailFromDb(hotel.HotelCode);
-                    hotel.Address = detail.Address;
-                    hotel.City = detail.City;
-                    hotel.Chain = detail.Chain;
-                    hotel.CountryCode = detail.CountryCode;
-                    hotel.Review = detail.Review;
-                    hotel.ImageUrl = detail.ImageUrl;
-                }
+            foreach (var hotel in result)
+            {
+                //TODO address masih belum disimpan, makanya make dua storage
+                var detail = GetHotelDetailFromDb(hotel.HotelCode);
+                hotel.Address = detail.Address;
+                hotel.CountryCode = detail.CountryCode;
+                var detail2 = GetTruncatedHotelDetailFromTableStorage(hotel.HotelCode);
+                hotel.City = detail2.City;
+                hotel.ImageUrl = detail2.ImageUrl;
+                hotel.IsRestaurantAvailable = detail2.IsRestaurantAvailable;
+                hotel.WifiAccess = detail2.WifiAccess;
+            }
             return result;
         }
 
-        public List<HotelDetail> AddFilteringInfo(List<HotelDetail> result )
+        public List<HotelDetail> AddDetailInfo(List<HotelDetail> result )
         {
             var shortlistHotel = new List<HotelDetail>();
-            //Adding Additional Hotel Information
             foreach (var hotel in result)
             {
                 var detail = GetHotelDetailFromDb(hotel.HotelCode);
                 hotel.AccomodationType = detail.AccomodationType;
-                hotel.Facilities = detail.Facilities == null
+                if (hotel.AccomodationType == "HOTEL")
+                {
+                    hotel.Facilities = detail.Facilities == null
                     ? null
-                    : detail.Facilities.Select(x=> new HotelFacility
+                    : detail.Facilities.Select(x => new HotelFacility
                     {
                         FacilityCode = x.FacilityCode,
                         FacilityGroupCode = x.FacilityGroupCode,
-                        FullFacilityCode = x.FacilityGroupCode+""+x.FacilityCode
+                        FullFacilityCode = x.FacilityGroupCode + "" + x.FacilityCode
                     }).ToList();
-                hotel.StarCode = GetSimpleCodeByCategoryCode(hotel.StarRating);
-                //Filtering Hotel by AccomodationType
-                if (hotel.AccomodationType == "HOTEL")
-                {
+                    hotel.StarCode = GetSimpleCodeByCategoryCode(hotel.StarRating);
+                    CalculatePriceHotel(hotel);
                     shortlistHotel.Add(hotel);
                 }
             }
@@ -279,9 +289,14 @@ namespace Lunggo.ApCommon.Hotel.Service
         public HotelFilterDisplayInfo SetHotelFilterDisplayInfo(List<HotelDetail> hotels, bool isByDestination)
         {
             var filter = new HotelFilterDisplayInfo();
-            var zoneDict = new Dictionary<int, ZoneFilter>();
-            var accDict = new Dictionary<string, AccomodationFilter>();
-            var facilityDict = HotelFacilityFilters.Keys.ToDictionary(key => key, key => new FacilitiesFilter());
+            var zoneDict = new Dictionary<int, ZoneFilterInfo>();
+            var starDict = new Dictionary<int, StarFilterInfo>();
+            var accDict = new Dictionary<string, AccomodationFilterInfo>();
+            var facilityDict = HotelFacilityFilters.Keys.ToDictionary(key => key, key => new FacilitiesFilterInfo
+            {
+                Name = key,
+                Code = key
+            });
             try
             {
                 foreach (var hotelDetail in hotels)
@@ -291,7 +306,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                     {
                         if (!(zoneDict.ContainsKey(hotelDetail.ZoneCode)))
                         {
-                            zoneDict.Add(hotelDetail.ZoneCode, new ZoneFilter
+                            zoneDict.Add(hotelDetail.ZoneCode, new ZoneFilterInfo
                             {
                                 Code = hotelDetail.ZoneCode,
                                 Count = 1,
@@ -307,7 +322,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                     //ForAccomodation
                     if (!(accDict.ContainsKey(hotelDetail.AccomodationType)))
                     {
-                        accDict.Add(hotelDetail.AccomodationType, new AccomodationFilter
+                        accDict.Add(hotelDetail.AccomodationType, new AccomodationFilterInfo
                         {
                             Code = hotelDetail.AccomodationType,
                             Count = 1,
@@ -318,38 +333,56 @@ namespace Lunggo.ApCommon.Hotel.Service
                     {
                         accDict[hotelDetail.AccomodationType].Count += 1;
                     }
+
+
+                    if (!(starDict.ContainsKey(hotelDetail.StarCode)))
+                    {
+                        starDict.Add(hotelDetail.StarCode, new StarFilterInfo
+                        {
+                            Code = hotelDetail.StarCode,
+                            Count = 1,
+                        });
+                    }
+                    else
+                    {
+                        starDict[hotelDetail.StarCode].Count += 1;
+                    }
+
                     //ForFacilities
+                    var keys = facilityDict.Keys;
+                    var hotelFacilityDict = new Dictionary<string, bool>();
                     foreach (var facility in hotelDetail.Facilities)
                     {
                         var concatedFacility = facility.FacilityGroupCode + "" + facility.FacilityCode;
-                        foreach (var key in facilityDict.Keys)
+
+                        foreach (var key in keys)
                         {
+                            if (!hotelFacilityDict.ContainsKey(key))
+                                hotelFacilityDict[key] = false;
                             if (HotelFacilityFilters[key].FacilityCode.Contains(concatedFacility))
                             {
-                                facilityDict[key].Code = key;
-                                facilityDict[key].Count += 1;
-                                facilityDict[key].Name = key;
+                                hotelFacilityDict[key] = true;
                             }
-                            //else
-                            //{
-                            //    facilityDict[key].Code = key;
-                            //    facilityDict[key].Count = 0;
-                            //    facilityDict[key].Name = key;
-                            //}
                         }
+
+                    }
+                    foreach (var key in keys)
+                    {
+                        facilityDict[key].Count += hotelFacilityDict[key] ? 1 : 0;
                     }
 
-                    
+
                 }
-                filter.ZoneFilter = new List<ZoneFilter>();
-                filter.AccomodationFilter = new List<AccomodationFilter>();
-                filter.FacilityFilter = new List<FacilitiesFilter>();
+                filter.ZoneFilter = new List<ZoneFilterInfo>();
+                filter.AccomodationFilter = new List<AccomodationFilterInfo>();
+                filter.FacilityFilter = new List<FacilitiesFilterInfo>();
+                filter.StarFilter = new List<StarFilterInfo>();
 
                 if (isByDestination)
                 {
                     foreach (var zone in zoneDict.Keys)
                     {
-                        filter.ZoneFilter.Add(new ZoneFilter
+                        filter.ZoneFilter.Add(new ZoneFilterInfo
                         {
                             Code = zoneDict[zone].Code,
                             Count = zoneDict[zone].Count,
@@ -360,7 +393,7 @@ namespace Lunggo.ApCommon.Hotel.Service
 
                 foreach (var accomodation in accDict.Keys)
                 {
-                    filter.AccomodationFilter.Add(new AccomodationFilter
+                    filter.AccomodationFilter.Add(new AccomodationFilterInfo
                     {
                         Code = accDict[accomodation].Code,
                         Count = accDict[accomodation].Count,
@@ -370,11 +403,20 @@ namespace Lunggo.ApCommon.Hotel.Service
 
                 foreach (var key in facilityDict.Keys)
                 {
-                    filter.FacilityFilter.Add(new FacilitiesFilter
+                    filter.FacilityFilter.Add(new FacilitiesFilterInfo
                     {
                         Code = facilityDict[key].Code,
                         Count = facilityDict[key].Count,
                         Name = facilityDict[key].Name
+                    });
+                }
+
+                foreach (var key in starDict.Keys)
+                {
+                    filter.StarFilter.Add(new StarFilterInfo
+                    {
+                        Code = starDict[key].Code,
+                        Count = starDict[key].Count
                     });
                 }
                 
@@ -407,8 +449,7 @@ namespace Lunggo.ApCommon.Hotel.Service
             else
             {
                 return null;
-            }
-            
+            } 
         } 
     }
 }

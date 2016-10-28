@@ -236,6 +236,7 @@
     <Compile Include="Hotel\Constant\AccomodationType.cs" />
     <Compile Include="Hotel\Constant\PaymentType.cs" />
     <Compile Include="Hotel\Constant\CheckRateStatus.cs" />
+    <Compile Include="Hotel\Constant\SortingType.cs" />
     <Compile Include="Hotel\Model\HotelRateRule.cs" />
     <Compile Include="Hotel\Model\HotelMarginRule.cs" />
     <Compile Include="Hotel\Model\HotelFilterDisplayInfo.cs" />
