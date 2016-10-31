@@ -30,7 +30,7 @@ namespace Lunggo.ApCommon.Hotel.Model
     public class ZoneFilter
     {
         public int Count { get; set; }
-        public int Code { get; set; }
+        public string Code { get; set; }
         public string Name { get; set; }
     }
 }

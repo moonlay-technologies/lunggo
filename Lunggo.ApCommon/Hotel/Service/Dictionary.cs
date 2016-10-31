@@ -147,7 +147,8 @@ namespace Lunggo.ApCommon.Hotel.Service
         {
             Destination = 1,
             Zone = 2,
-            Hotel = 3
+            Area = 3,
+            Hotel = 4
         }
 
         //FOR AUTOCOMPLETE
@@ -318,9 +319,9 @@ namespace Lunggo.ApCommon.Hotel.Service
                         Code = hotel.HotelCode.ToString(),
                         Type = AutocompleteType.Hotel,
                         Name = hotel.HotelName + ", " + GetInstance().
-                            GetHotelZoneNameFromDict(hotel.DestinationCode + "-" + hotel.ZoneCode) + ", "
-                            + GetInstance().GetHotelDestinationFromDict(hotel.DestinationCode).Name + ", "
-                            + GetInstance().GetHotelCountryFromDict(hotel.CountryCode).Name
+                            GetZoneNameFromDict(hotel.ZoneCode) + ", "
+                            + GetInstance().GetDestinationNameFromDict(hotel.DestinationCode).Name + ", "
+                            + GetInstance().GetCountryNameFromDict(hotel.CountryCode).Name
                     };
                     GetInstance()._Autocompletes.Add(index, input);
                     index++;
@@ -1240,7 +1241,7 @@ namespace Lunggo.ApCommon.Hotel.Service
             }
         }
 
-        public Country GetHotelCountryFromDict(string countryCode)
+        public Country GetCountryNameFromDict(string countryCode)
         {
             try
             {
@@ -1252,7 +1253,7 @@ namespace Lunggo.ApCommon.Hotel.Service
             }
         }
 
-        public Destination GetHotelDestinationFromDict(string destinationCode)
+        public Destination GetDestinationNameFromDict(string destinationCode)
         {
             try
             {
@@ -1276,7 +1277,7 @@ namespace Lunggo.ApCommon.Hotel.Service
             }
         }
 
-        public string GetHotelZoneNameFromDict(string zoneCode)
+        public string GetZoneNameFromDict(string zoneCode)
         {
             try
             {
