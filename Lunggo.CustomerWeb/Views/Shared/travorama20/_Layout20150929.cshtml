@@ -119,7 +119,7 @@
     }
 
 </head>
-<body class="@ViewBag.BodyClass" @(ViewBag.AngularController != null ? "ng-app=travorama ng-controller=" + ViewBag.AngularController+" ng-class={'no-scroll':PageConfig.BodyNoScroll,'burger-shown':PageConfig.BurgerShown}" : "ng-app=travorama")>
+<body class="@ViewBag.BodyClass" @(ViewBag.AngularController != null ? "ng-app=travorama ng-controller=" + ViewBag.AngularController+" ng-class={'no-scroll':PageConfig.BodyNoScroll,'burger-shown':PageConfig.BurgerShown}" : "ng-app=travorama") ng-cloak>
     @Html.Partial("/Views/Shared/_googleTag.cshtml")
 
     <!--********************-->
