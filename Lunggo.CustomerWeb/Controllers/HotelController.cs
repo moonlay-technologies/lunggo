@@ -13,12 +13,14 @@ namespace Lunggo.CustomerWeb.Controllers
         {
             return View();
         }
-
         public ActionResult DetailHotel()
         {
             return View();
         }
-
+        public ActionResult HotelSearchForm()
+        {
+            return View();
+        }
         public ActionResult Checkout()
         {
             return View();
