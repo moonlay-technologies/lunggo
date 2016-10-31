@@ -224,7 +224,15 @@ namespace Lunggo.ApCommon.Hotel.Service
                     //REMEMBER TO UNCOMMENT THIS
                     SaveSearchResultintoDatabaseToCache(result.SearchId, result);
 
-                    var firstPageHotelDetails = result.HotelDetails.Take(100).ToList(); 
+                    List<HotelDetail> firstPageHotelDetails;
+                    if (input.StartPage != 0 && input.EndPage != 0)
+                    {
+                        firstPageHotelDetails = result.HotelDetails.Skip(input.StartPage).Take(input.EndPage).ToList();
+                    }
+                    else
+                    {
+                        firstPageHotelDetails = result.HotelDetails.Take(100).ToList();
+                    }
 
                      
                     firstPageHotelDetails = AddHotelDetail(firstPageHotelDetails);
@@ -264,10 +272,13 @@ namespace Lunggo.ApCommon.Hotel.Service
                 //hotel.Address = detail.Address;
                 //hotel.CountryCode = detail.CountryCode;
                 var detail2 = GetTruncatedHotelDetailFromTableStorage(hotel.HotelCode);
-                hotel.City = detail2.City;
-                hotel.ImageUrl = detail2.ImageUrl;
-                hotel.IsRestaurantAvailable = detail2.IsRestaurantAvailable;
-                hotel.WifiAccess = detail2.WifiAccess;
+                if (detail2 != null)
+                {
+                    hotel.City = detail2.City;
+                    hotel.ImageUrl = detail2.ImageUrl;
+                    hotel.IsRestaurantAvailable = detail2.IsRestaurantAvailable;
+                    hotel.WifiAccess = detail2.WifiAccess;
+                }
                 }
             return result;
         }

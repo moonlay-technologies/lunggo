@@ -239,6 +239,7 @@
     <Compile Include="Hotel\Constant\CheckRateStatus.cs" />
     <Compile Include="Hotel\Constant\SearchHotelType.cs" />
     <Compile Include="Hotel\Constant\SortingType.cs" />
+    <Compile Include="Hotel\Model\HotelRateComment.cs" />
     <Compile Include="Hotel\Model\HotelRateRule.cs" />
     <Compile Include="Hotel\Model\HotelMarginRule.cs" />
     <Compile Include="Hotel\Model\HotelFilterDisplayInfo.cs" />
@@ -276,8 +277,11 @@
     <Compile Include="Hotel\Service\SendToCustomer.cs" />
     <Compile Include="Hotel\Service\Settings.cs" />
     <Compile Include="Hotel\Wrapper\HotelBeds\Content\GetHotel.cs" />
+    <Compile Include="Hotel\Wrapper\HotelBeds\Content\GetRateComment.cs" />
     <Compile Include="Hotel\Wrapper\HotelBeds\Content\Model\HotelContent.cs" />
     <Compile Include="Hotel\Wrapper\HotelBeds\Content\Model\HotelRS.cs" />
+    <Compile Include="Hotel\Wrapper\HotelBeds\Content\Model\RateCommentContent.cs" />
+    <Compile Include="Hotel\Wrapper\HotelBeds\Content\Model\RateCommentRS.cs" />
     <Compile Include="Hotel\Wrapper\HotelBeds\HotelBedsIssue.cs" />
     <Compile Include="Hotel\Wrapper\HotelBeds\Sdk\auto\common\SimpleTypes.cs" />
     <Compile Include="Hotel\Wrapper\HotelBeds\Sdk\auto\messages\AbstractGenericRequest.cs" />

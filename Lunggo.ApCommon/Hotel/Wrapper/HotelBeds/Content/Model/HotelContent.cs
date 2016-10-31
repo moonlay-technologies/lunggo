@@ -109,6 +109,7 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Content.Model
         public int facilityGroupCode;
         public bool indFee;
         public bool indYesOrNo;
+        public bool indLogic;
         public int order;
         //additional from API
         //public int distance;

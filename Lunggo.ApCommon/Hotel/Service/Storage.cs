@@ -48,6 +48,21 @@ namespace Lunggo.ApCommon.Hotel.Service
             var insertOp = TableOperation.InsertOrReplace(hotel);
             table.Execute(insertOp);
         }
+
+        public void SaveRateCommentToTableStorage(HotelRateComment hotelRateComment)
+        {
+            var rowKey = hotelRateComment.Incoming + "|" + hotelRateComment.HotelCode + "|" + hotelRateComment.Code;
+            HotelDetailWrapper rateCom = new HotelDetailWrapper("rateComments", rowKey);
+            var data = hotelRateComment.Serialize();
+            var splittedData = SplitByLength(data, 30000);
+            DivideData(rateCom, splittedData);
+            var tableClient = TableStorageService.GetInstance();
+            var table = tableClient.GetTableByReference("ratecomments");
+            var insertOp = TableOperation.InsertOrReplace(rateCom);
+            table.Execute(insertOp);
+        }
+
+        
         public void DivideData(HotelDetailWrapper hotel, IEnumerable<string> splittedData)
         {
             try
@@ -107,6 +122,24 @@ namespace Lunggo.ApCommon.Hotel.Service
             HotelDetailWrapper resultWrapper = (HotelDetailWrapper) retrievedResult.Result;
             var concatedResult = ConcateData(resultWrapper);
             HotelDetailsBase result = concatedResult.Deserialize<HotelDetailsBase>();
+            return result;
+        }
+
+        public HotelRateComment GetRateCommentFromTableStorage(int incoming,int hotelCode, string code)
+        {
+            var partitionKey = "rateComments";
+            var rowKey = incoming + "|" + hotelCode + "|" + code;
+            var tableClient = TableStorageService.GetInstance();
+            CloudTable table = tableClient.GetTableByReference("ratecomments");
+
+            // Create a retrieve operation that takes a customer entity.
+            TableOperation retrieveOperation = TableOperation.Retrieve<HotelDetailWrapper>(partitionKey, rowKey);
+
+            // Execute the retrieve operation.
+            TableResult retrievedResult = table.Execute(retrieveOperation);
+            HotelDetailWrapper resultWrapper = (HotelDetailWrapper)retrievedResult.Result;
+            var concatedResult = ConcateData(resultWrapper);
+            HotelRateComment result = concatedResult.Deserialize<HotelRateComment>();
             return result;
         }
 

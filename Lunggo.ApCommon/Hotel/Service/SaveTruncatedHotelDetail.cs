@@ -29,7 +29,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                         ImageUrl = hotel.ImageUrl != null && (hotel.ImageUrl != null || hotel.ImageUrl.Count != 0) ?
                         new List<Image>
                         {
-                            hotel.ImageUrl.Where(u => u.Order == 1).ToList()[0]
+                            hotel.ImageUrl.Where(u => u.Order == 1).Take(1).FirstOrDefault()
                         } : null,
                         WifiAccess = hotel.Facilities != null && 
                             ((hotel.Facilities != null || hotel.Facilities.Count != 0) && 

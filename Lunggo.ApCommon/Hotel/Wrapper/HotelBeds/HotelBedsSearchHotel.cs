@@ -160,6 +160,7 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds
                                 Type = x.rateType.ToString(),
                                 TimeLimit = DateTime.UtcNow.AddMinutes(30),
                                 HotelSellingRate = x.hotelMandatory?x.hotelSellingRate:0M,
+                                RateCommentsId = x.rateCommentsId
                                 };
                                 rate.Price.SetSupplier(x.net,
                                     x.hotelCurrency != null ? allCurrencies[x.hotelCurrency] : allCurrencies["IDR"]);
