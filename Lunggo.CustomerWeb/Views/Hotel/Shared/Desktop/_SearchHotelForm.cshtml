@@ -1,0 +1,43 @@
+﻿<form class="hotel-form" name="hotel-form" ng-submit="FlightSearchForm.Submit()" novalidate>
+    <div class="th-form clearfix">
+        <div class="form-group form__hotel col-half">
+            <div class="field-container">
+                <p class="form-control form-hotel" ng-click="PageConfig.SetOverlay('hotel-select')">Tujuan <span class="hotel-placeholder placeholder">Kota, Wilayah atau Nama Hotel</span></p>
+            </div>
+        </div>
+        <div class="form-group form__date col-half">
+            <div class="field-container">
+                <p class="form-control form-date" ng-click="DatePicker.SetOption({Target : 'departure'}, ' '); PageConfig.SetOverlay('datepicker-hotel')">
+                    Tanggal Masuk <span class="date-placeholder placeholder"></span>
+                </p>
+            </div>
+        </div>
+        <div class="form-group form__time col-half">
+            <div class="field-container">
+                <p class="form-control form-date" ng-click="DatePicker.SetOption({Target : 'departure'}, ' '); PageConfig.SetOverlay('datepicker-hotel')">
+                    Malam <span class="date-placeholder placeholder"></span>
+                </p>
+            </div>
+        </div>
+        <div class="form-group form-hotel-room col-half">
+            <div class="field-container">
+                <p class="form-control form-date" ng-click="DatePicker.SetOption({Target : 'departure'}, ' '); PageConfig.SetOverlay('datepicker-hotel')">
+                    Kamar <span class="date-placeholder placeholder"></span>
+                </p>
+            </div>
+        </div>
+        <div class="form-group form-adult col-3">
+            <p class="form-control form-date" ng-click="DatePicker.SetOption({Target : 'departure'}, ' '); PageConfig.SetOverlay('datepicker-hotel')">
+                Dewasa <span class="date-placeholder placeholder"></span>
+            </p>
+        </div>
+        <div class="form-group form-child col-3">
+            <p class="form-control form-date" ng-click="DatePicker.SetOption({Target : 'departure'}, ' '); PageConfig.SetOverlay('datepicker-hotel')">
+                Anak <span class="date-placeholder placeholder"></span>
+            </p>
+        </div>
+        <div class="form-group form__submit col-3">
+            <button class="btn btn-yellow btn-block btn-lg btnSubmit">CARI HOTEL</button>
+        </div>
+    </div>
+</form>

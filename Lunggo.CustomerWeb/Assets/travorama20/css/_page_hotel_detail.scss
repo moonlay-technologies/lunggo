@@ -116,6 +116,7 @@
                 img {
                     opacity: 1;
                     @include transition(none);
+                    height: 57px;
                 }
                 .flex-active {
                     border: 2px solid #fff;

@@ -43,6 +43,7 @@
                     @include size(18px, 18px);
                     @include border-radius(18px);
                     background:#ffffff;
+                    border: 1px solid #ccc;
                 }
             }
             .city-name {float: right;
@@ -81,7 +82,7 @@
             .location {
                 margin: 7px 0;
                 margin-left: 20px;
-                line-height: 14px;
+                line-height: 16px;
                 &:before {
                     @extend .maps-icon;
                     position: absolute;

@@ -1,5 +1,5 @@
 ﻿// home controller
-app.controller('hotelSearchController', ['$scope', '$log', '$http', '$resource', function ($scope, $log, $http, $resource) {
+app.controller('hotelSearchController', ['$scope', '$log', '$http', '$resource', '$timeout', function ($scope, $log, $http, $resource, $timeout) {
 
     $scope.model = {};
     $scope.hotels = [];
@@ -61,11 +61,6 @@ app.controller('hotelSearchController', ['$scope', '$log', '$http', '$resource',
     $scope.hotel.searchHotel = function () {
         $log.debug('searching hotel');
         location.href = '/id/Hotel/Search/' + $scope.hotel.searchParam();
-        //$http({
-        //   url: "/id/Hotel/Search", 
-        //   method: "GET",
-        //   params: {aaa : "kode123", bbb : "silubab" }
-        //   })
     };
 
     $scope.hotel.searchParam = function () {
@@ -88,4 +83,20 @@ app.controller('hotelSearchController', ['$scope', '$log', '$http', '$resource',
     }
     //=============== hotel end ======================
 
+
+    $scope.$watch('hotels', function (newValue, oldValue, ccc) {
+        $timeout(function () {
+            $("body .col-left-hotel .img-list").each(function (i, elem) {
+                var img = $(elem);
+                var div = $("<div />").css({
+                    background: "url(" + img.attr("src") + ") no-repeat",
+                    width: "143px",
+                    height: "180px",
+                    "background-size": "cover",
+                    "background-position": "center"
+                });
+                img.replaceWith(div);
+            });
+        }, 0);
+    });
 }]);

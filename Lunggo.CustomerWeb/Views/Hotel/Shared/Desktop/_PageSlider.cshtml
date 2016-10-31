@@ -10,9 +10,6 @@
     <script type="text/javascript" src="/Scripts/bootstrap.min.js"></script>
 }
 
-@section PageJS{
-}
-
 <div class="page-slider">
     <div class="container">
         <div class="main-title header-title">Feel The <br /> <b>Excitement!</b><br></div>
@@ -24,7 +21,7 @@
             <div class="col-sm-9">
                 <div class="result-form-left">
                     <span class="md-txt">Hasil Pencarian Hotel di: <b>Bandar Lampung, Indonesia</b></span><br />
-                    <span class="sm-txt">3 Nights <b>( Wed, 15 Dec 2015 - Thu, 18 Dec 2015 )</b></span>
+                    <span class="">3 Nights <b>( Wed, 15 Dec 2015 - Thu, 18 Dec 2015 )</b></span>
                 </div>
             </div>
             <div class="col-sm-3">
@@ -36,7 +33,7 @@
     </div>
     <div class="container">
         <div class="search-result-form-content">
-            @Html.Partial("/Views/Flight/FlightSearchForm.cshtml")
+            @Html.Partial("/Views/Hotel/Shared/Desktop/_SearchHotelForm.cshtml")
         </div><!-- .search-result-form-content -->
         @Html.Partial("/Views/Shared/Travorama20/_SearchLocation.cshtml")
         @Html.Partial("/Views/Shared/Travorama20/_SearchCalendar.cshtml")

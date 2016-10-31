@@ -2963,7 +2963,7 @@
     <Content Include="Views\Hotel\EmailVoucher.cshtml" />
     <Content Include="Views\Hotel\OrderHotelHistoryDetail.cshtml" />
     <Content Include="Views\Hotel\OrderHotelHistoryDetail.mobile.cshtml" />
-    <Content Include="Views\Hotel\Shared\Mobile\_SearchHotelForm.cshtml" />
+    <Content Include="Views\Hotel\Shared\Desktop\_SearchHotelForm.cshtml" />
     <Content Include="Views\Hotel\HotelSearchForm.cshtml" />
     <None Include="Views\Template\eticket.cshtml" />
     <Content Include="Views\Template\OrderFlightHistory.cshtml" />

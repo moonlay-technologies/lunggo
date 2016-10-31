@@ -28,7 +28,7 @@
         &.bg {
             font-size: 16px;
             font-weight: 700;
-            line-height: 28px;
+            line-height: 20px;
         }
     }
     .grey-txt {color: #999;}
@@ -495,4 +495,12 @@
             }
         } 
     }
+
+    /*form search hotel*/
+    .hotel-form {
+        margin-top: 15px;
+        padding-top: 15px;
+        border-top: 1px solid #6F879E;
+        display: none;
+    }            
 }

@@ -34,9 +34,14 @@
               " - $" + $("#slider-range").slider("values", 1));
         });
     </script>
-
-<script src="/Assets/Travorama20/js/hotelSearchController.js"></script>
-
+    <script>
+        jQuery(document).ready(function ($) {
+            $('body .search-result-form-trigger').on('click', function () {
+                $('body .hotel-form').slideToggle("slow");
+            });
+        });
+    </script>
+    <script src="/Assets/Travorama20/js/hotelSearchController.js"></script>
     <script type="text/javascript" src="/Assets/travorama20/js/HotelController.js"></script>
 }
 
@@ -95,7 +100,7 @@
                                 </label>
                             </div>
                         </div>
-                        <div class="filter-group" ng-if="hotelFilterDisplayInfo!==undefined">
+                        <div class="filter-group" >
                             <label class="filter-title">Hotel Area:</label><span class="city-name blue-txt"><a href="#">(Jakarta)</a></span>
                             <div class="area">
                                 <label class="sqr city-point">
@@ -169,11 +174,11 @@
                     </div>
                     <div class="hotel-list-container">
                         <div class="hotel-list clearfix" ng-repeat="hotel in hotels" ng-click="GotoDetailHotel(hotel.hotelCd)" style="cursor:pointer">
-                            <div class="col-left-hotel"><img ng-src="http://photos.hotelbeds.com/giata/{{hotel.mainImage}}" alt="Hotel" /></div>
+                            <div class="col-left-hotel"><img class="img-list" ng-src="http://photos.hotelbeds.com/giata/{{hotel.mainImage}}" alt="Hotel" /></div>
                             <div class="col-right-hotel">
                                 <div class="clearfix">
-                                    <div class="col-half blue-txt bg">{{hotel.hotelName}}</div>
-                                    <div class="col-half facility">
+                                    <div class="col-8 blue-txt bg">{{hotel.hotelName}}</div>
+                                    <div class="col-2 facility">
                                         <span class="wifi"></span>
                                         <span class="meal"></span>
                                     </div>
