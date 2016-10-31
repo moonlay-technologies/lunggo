@@ -16,7 +16,7 @@ namespace Lunggo.ApCommon.Hotel.Service
     {
         public void UpdateTruncatedHotelDetailContent()
         {
-            for (var i = 1; i <= 600000; i++)
+            for (var i = 1; i <= 150000; i++)
             {
                 try
                 {
@@ -57,7 +57,7 @@ namespace Lunggo.ApCommon.Hotel.Service
 
         public void UpdateHotelAmenitiesContent()
         {
-            for (var i = 109600; i <= 600000; i++)
+            for (var i = 1; i <= 150000; i++)
             {
                 try
                 {

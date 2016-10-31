@@ -23,5 +23,6 @@ namespace Lunggo.ApCommon.Hotel.Model.Logic
         public string BookingId { get; set; }
         public BookingStatus BookingStatus { get; set; }
         public bool IsInstantIssuance { get; set; }
+        public string Supplier { get; set; }
     }
 }
