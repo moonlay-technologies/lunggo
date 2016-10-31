@@ -39,7 +39,7 @@ namespace Lunggo.ApCommon.Hotel.Model
         [JsonProperty("segments", NullValueHandling = NullValueHandling.Ignore)]
         public List<string> Segments { get; set; }
         [JsonProperty("facilities", NullValueHandling = NullValueHandling.Ignore)]
-        public List<HotelFacilityForDisplay> Facilities { get; set; } 
+        public List<string> Facilities { get; set; } 
         [JsonProperty("address", NullValueHandling = NullValueHandling.Ignore)]
         public string Address { get; set; }
         [JsonProperty("postalCd", NullValueHandling = NullValueHandling.Ignore)]

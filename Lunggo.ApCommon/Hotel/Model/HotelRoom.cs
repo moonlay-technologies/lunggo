@@ -26,6 +26,9 @@ namespace Lunggo.ApCommon.Hotel.Model
         public string CharacteristicCode { get; set; }
         [JsonProperty("characteristicName", NullValueHandling = NullValueHandling.Ignore)]
         public string CharacteristicName { get; set; }
+        [JsonProperty("paxCapacity", NullValueHandling = NullValueHandling.Ignore)]
+        public int PaxCapacity { get; set; }
+
     }
     
     public class HotelRoom
@@ -46,6 +49,5 @@ namespace Lunggo.ApCommon.Hotel.Model
         public List<HotelRate> Rates { get; set; }
         [JsonProperty("characteristic", NullValueHandling = NullValueHandling.Ignore)]
         public string characteristicCd { get; set; }
-
     }
 }

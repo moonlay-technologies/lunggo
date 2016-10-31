@@ -13,15 +13,17 @@ namespace Lunggo.ApCommon.Hotel.Model
         [JsonProperty("priceFilter")]
         public PriceFilter PriceFilter { get; set; }
         [JsonProperty("starFilter")]
-        public List<bool> StarFilter { get; set; }
+        public StarFilter StarFilter { get; set; }
         [JsonProperty("accommodationTypeFilter")]
         public AccommodationTypeFilter AccommodationTypeFilter { get; set; }
-        [JsonProperty("amenitiesFilter")]
-        public AmenitiesFilter AmenitiesFilter { get; set; }
+        [JsonProperty("facilityFilter")]
+        public FacilityFilter FacilityFilter { get; set; }
         [JsonProperty("boardFilter")]
         public BoardFilter BoardFilter { get; set; }
         [JsonProperty("areaFilter")]
         public AreaFilter AreaFilter { get; set; }
+        [JsonProperty("zoneFilter")]
+        public ZoneFilter ZoneFilter { get; set; }
     }
 
     public class PriceFilter
@@ -32,19 +34,19 @@ namespace Lunggo.ApCommon.Hotel.Model
         public decimal? MaxPrice { get; set; }
     }
 
-    public class StarFilter
-    {
-        [JsonProperty("oneStar")]
-        public bool OneStar { get; set; }
-        [JsonProperty("twoStar")]
-        public bool TwoStar { get; set; }
-        [JsonProperty("threeStar")]
-        public bool ThreeStar { get; set; }
-        [JsonProperty("fourStar")]
-        public bool FourStar { get; set; }
-        [JsonProperty("fiveStar")]
-        public bool FiveStar { get; set; }
-    }
+    //public class StarFilter
+    //{
+    //    [JsonProperty("oneStar")]
+    //    public bool OneStar { get; set; }
+    //    [JsonProperty("twoStar")]
+    //    public bool TwoStar { get; set; }
+    //    [JsonProperty("threeStar")]
+    //    public bool ThreeStar { get; set; }
+    //    [JsonProperty("fourStar")]
+    //    public bool FourStar { get; set; }
+    //    [JsonProperty("fiveStar")]
+    //    public bool FiveStar { get; set; }
+    //}
 
     public class AccommodationTypeFilter
     {
@@ -52,36 +54,10 @@ namespace Lunggo.ApCommon.Hotel.Model
         public List<string> Accomodations { get; set; }
     }
 
-    public class AmenitiesFilter
+    public class FacilityFilter
     {
-        [JsonProperty("parkingSpace")]
-        public bool ParkingSpace { get; set; }
-        [JsonProperty("internet")]
-        public bool Internet { get; set; }
-        [JsonProperty("frontDesk24Hour")]
-        public bool FrontDesk24Hour { get; set; }
-        [JsonProperty("swimmingPool")]
-        public bool SwimmingPool { get; set; }
-        [JsonProperty("restaurant")]
-        public bool Restaurant { get; set; }
-        [JsonProperty("meetingFacilities")]
-        public bool MeetingFacilities { get; set; }
-        [JsonProperty("nonSmokingRoom")]
-        public bool NonSmokingRoom { get; set; }
-        [JsonProperty("sportFacilities")]
-        public bool SportFacilities { get; set; }
-        [JsonProperty("airConditioner")]
-        public bool AirConditioner { get; set; }
-        [JsonProperty("spa")]
-        public bool Spa { get; set; }
-        [JsonProperty("disabilityFriendly")]
-        public bool DisabilityFriendly { get; set; }
-        [JsonProperty("wheelchair")]
-        public bool Wheelchair { get; set; }
-        [JsonProperty("lift")]
-        public bool Lift { get; set; }
-        [JsonProperty("gymAndFitness")]
-        public bool GymAndFitness { get; set; }
+        [JsonProperty("facilities")]
+        public List<string> Facilities { get; set; } 
     }
 
     public class BoardFilter
@@ -126,5 +102,17 @@ namespace Lunggo.ApCommon.Hotel.Model
     {
         [JsonProperty("areas")]
         public List<int> Areas { get; set; }
+    }
+
+    public class ZoneFilter
+    {
+        [JsonProperty("zones")]
+        public List<int> Zones { get; set; } 
+    }
+
+    public class StarFilter
+    {
+        [JsonProperty("stars")]
+        public List<int> Stars { get; set; }
     }
 }

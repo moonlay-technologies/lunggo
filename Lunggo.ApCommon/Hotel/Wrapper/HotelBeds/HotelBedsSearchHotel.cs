@@ -124,7 +124,7 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds
                         DestinationCode = hotelResponse.destinationCode,
                         NetFare =  hotelResponse.totalNet,
                         StarRating =  hotelResponse.categoryCode,
-                        OriginalFare = hotelResponse.minRate,
+                        //OriginalFare = hotelResponse.minRate,
                         Review = hotelResponse.reviews,
                         Rooms = hotelResponse.rooms == null ? null : hotelResponse.rooms.Select(roomApi => new HotelRoom
                         {
@@ -140,6 +140,7 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds
                                     AdultCount = x.adults,
                                     ChildCount = x.children,
                                     RoomCount = x.rooms,
+                                    Allotment = x.allotment,
                                     PaymentType = PaymentTypeCd.Mnemonic(x.paymentType),
                                     Offers = x.offers == null ? null : x.offers.Select(z => new Offer
                                     {
@@ -156,8 +157,9 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds
                                         StartTime = y.from
                                     }).ToList(),
                                 Class = x.rateClass,
-                                Type = x.rateType.ToString() ,
+                                Type = x.rateType.ToString(),
                                 TimeLimit = DateTime.UtcNow.AddMinutes(30),
+                                HotelSellingRate = x.hotelMandatory?x.hotelSellingRate:0M,
                                 };
                                 rate.Price.SetSupplier(x.net,
                                     x.hotelCurrency != null ? allCurrencies[x.hotelCurrency] : allCurrencies["IDR"]);

@@ -24,12 +24,18 @@ namespace Lunggo.ApCommon.Hotel.Model
         public bool IsFree;
         [JsonProperty("isAvailable", NullValueHandling = NullValueHandling.Ignore)]
         public bool IsAvailable;
+        [JsonProperty("fullCd", NullValueHandling = NullValueHandling.Ignore)]
+        public string FullFacilityCode { get; set; }
     }
     
     public class HotelFacility
     {
         [JsonProperty("facilityCd", NullValueHandling = NullValueHandling.Ignore)]
-        public int FacilityCode;
+        public int FacilityCode { get; set; }
+        [JsonProperty("facilityGroupCd", NullValueHandling = NullValueHandling.Ignore)]
+        public int FacilityGroupCode { get; set; }
+        [JsonProperty("fullCd", NullValueHandling = NullValueHandling.Ignore)]
+        public string FullFacilityCode { get; set; }
         [JsonProperty("facilityGroupCd", NullValueHandling = NullValueHandling.Ignore)]
         public int FacilityGroupCode;
         [JsonProperty("mustDisplay", NullValueHandling = NullValueHandling.Ignore)]
@@ -38,5 +44,6 @@ namespace Lunggo.ApCommon.Hotel.Model
         public bool IsFree;
         [JsonProperty("isAvailable", NullValueHandling = NullValueHandling.Ignore)]
         public bool IsAvailable;
+
     }
 }
