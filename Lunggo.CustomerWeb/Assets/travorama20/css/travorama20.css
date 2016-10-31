@@ -1753,20 +1753,15 @@ file : /Assets/travorama20/css/_page_index.scss
           line-height: 30px;
           text-align: right;
           padding: 0 6px; }
-        .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-room .form-hotel-night a.increase, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-room .form-hotel-room a.increase, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-room .form-hotel-visitor a.increase, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-visitor .form-hotel-night a.increase, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-visitor .form-hotel-room a.increase, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-visitor .form-hotel-visitor a.increase {
+        .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-room .form-hotel-night a.increase, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-room .form-hotel-room a.increase, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-room .form-hotel-night a.decrease, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-room .form-hotel-room a.decrease, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-room .form-hotel-visitor a.increase, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-room .form-hotel-visitor a.decrease, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-visitor .form-hotel-night a.increase, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-visitor .form-hotel-room a.increase, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-visitor .form-hotel-night a.decrease, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-visitor .form-hotel-room a.decrease, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-visitor .form-hotel-visitor a.increase, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-visitor .form-hotel-visitor a.decrease {
           display: block;
-          width: 6px;
-          height: 6px;
+          width: 10px;
+          height: 10px;
           border-left: 6px solid transparent;
           border-right: 6px solid transparent;
-          border-bottom: 6px solid #777;
-          margin-top: 5px; }
+          border-bottom: 6px solid #777; }
         .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-room .form-hotel-night a.decrease, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-room .form-hotel-room a.decrease, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-room .form-hotel-visitor a.decrease, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-visitor .form-hotel-night a.decrease, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-visitor .form-hotel-room a.decrease, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-visitor .form-hotel-visitor a.decrease {
-          display: block;
-          width: 6px;
-          height: 6px;
-          border-left: 6px solid transparent;
-          border-right: 6px solid transparent;
+          border-bottom: none;
           border-top: 6px solid #777;
           margin-top: 10px; }
       .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-room .option, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-visitor .option {
@@ -4629,6 +4624,10 @@ file: /Assets/travorama20/css/_page_flight.scss
     font-weight: 600; }
   .page-hotel .normal-txt {
     font-weight: 400; }
+  .page-hotel .grey-txt {
+    color: #969696; }
+  .page-hotel .darkgrey-txt {
+    color: #555555; }
   .page-hotel .blue-txt {
     color: #1daee4; }
     .page-hotel .blue-txt.bg {
@@ -4641,6 +4640,8 @@ file: /Assets/travorama20/css/_page_flight.scss
     color: #3a8e1b; }
   .page-hotel .orange-txt {
     color: #ff7200; }
+  .page-hotel .right-txt {
+    text-align: right; }
   .page-hotel .bg-title {
     font-size: 19px;
     text-transform: uppercase;
@@ -5303,6 +5304,8 @@ file: /Assets/travorama20/css/_page_flight.scss
               font-size: 12px;
               color: #fff;
               text-shadow: none; }
+          .page-hotel .travorama-hotel .detail-hotel .slider .flexslider .slides img {
+            height: 450px; }
       .page-hotel .travorama-hotel .detail-hotel .menu-hotel {
         margin-bottom: 20px; }
         .page-hotel .travorama-hotel .detail-hotel .menu-hotel .mh-title {
@@ -5680,11 +5683,44 @@ file: /Assets/travorama20/css/_page_flight.scss
     -moz-border-radius: 2px;
     -ms-border-radius: 2px;
     border-radius: 2px; }
-  .page-hotel .hotel-form {
+  .page-hotel form[name="hotel-form"].hotel-form {
     margin-top: 15px;
     padding-top: 15px;
     border-top: 1px solid #6F879E;
     display: none; }
+    .page-hotel form[name="hotel-form"].hotel-form .form-control {
+      height: 45px;
+      -webkit-border-radius: 2px;
+      -moz-border-radius: 2px;
+      -ms-border-radius: 2px;
+      border-radius: 2px; }
+      .page-hotel form[name="hotel-form"].hotel-form .form-control.form-date > .md-txt {
+        float: right;
+        line-height: 30px; }
+      .page-hotel form[name="hotel-form"].hotel-form .form-control a.increase, .page-hotel form[name="hotel-form"].hotel-form .form-control .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-room .form-hotel-night a.decrease, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-room .form-hotel-night .page-hotel form[name="hotel-form"].hotel-form .form-control a.decrease, .page-hotel form[name="hotel-form"].hotel-form .form-control .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-room .form-hotel-room a.decrease, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-room .form-hotel-room .page-hotel form[name="hotel-form"].hotel-form .form-control a.decrease, .page-hotel form[name="hotel-form"].hotel-form .form-control .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-room .form-hotel-visitor a.decrease, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-room .form-hotel-visitor .page-hotel form[name="hotel-form"].hotel-form .form-control a.decrease, .page-hotel form[name="hotel-form"].hotel-form .form-control .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-visitor .form-hotel-night a.decrease, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-visitor .form-hotel-night .page-hotel form[name="hotel-form"].hotel-form .form-control a.decrease, .page-hotel form[name="hotel-form"].hotel-form .form-control .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-visitor .form-hotel-room a.decrease, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-visitor .form-hotel-room .page-hotel form[name="hotel-form"].hotel-form .form-control a.decrease, .page-hotel form[name="hotel-form"].hotel-form .form-control .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-visitor .form-hotel-visitor a.decrease, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-visitor .form-hotel-visitor .page-hotel form[name="hotel-form"].hotel-form .form-control a.decrease, .page-hotel form[name="hotel-form"].hotel-form .form-control a.decrease {
+        display: block;
+        width: 10px;
+        height: 10px;
+        border-left: 6px solid transparent;
+        border-right: 6px solid transparent;
+        border-bottom: 6px solid #777; }
+      .page-hotel form[name="hotel-form"].hotel-form .form-control a.decrease {
+        border-bottom: none;
+        border-top: 6px solid #777;
+        margin-top: 10px; }
+      .page-hotel form[name="hotel-form"].hotel-form .form-control.form-night a.increase, .page-hotel form[name="hotel-form"].hotel-form .form-control.form-night .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-room .form-hotel-night a.decrease, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-room .form-hotel-night .page-hotel form[name="hotel-form"].hotel-form .form-control.form-night a.decrease, .page-hotel form[name="hotel-form"].hotel-form .form-control.form-night .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-room .form-hotel-room a.decrease, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-room .form-hotel-room .page-hotel form[name="hotel-form"].hotel-form .form-control.form-night a.decrease, .page-hotel form[name="hotel-form"].hotel-form .form-control.form-night .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-room .form-hotel-visitor a.decrease, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-room .form-hotel-visitor .page-hotel form[name="hotel-form"].hotel-form .form-control.form-night a.decrease, .page-hotel form[name="hotel-form"].hotel-form .form-control.form-night .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-visitor .form-hotel-night a.decrease, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-visitor .form-hotel-night .page-hotel form[name="hotel-form"].hotel-form .form-control.form-night a.decrease, .page-hotel form[name="hotel-form"].hotel-form .form-control.form-night .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-visitor .form-hotel-room a.decrease, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-visitor .form-hotel-room .page-hotel form[name="hotel-form"].hotel-form .form-control.form-night a.decrease, .page-hotel form[name="hotel-form"].hotel-form .form-control.form-night .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-visitor .form-hotel-visitor a.decrease, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-visitor .form-hotel-visitor .page-hotel form[name="hotel-form"].hotel-form .form-control.form-night a.decrease, .page-hotel form[name="hotel-form"].hotel-form .form-control.form-night a.decrease, .page-hotel form[name="hotel-form"].hotel-form .form-control.form-room a.increase, .page-hotel form[name="hotel-form"].hotel-form .form-control.form-room .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-room .form-hotel-night a.decrease, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-room .form-hotel-night .page-hotel form[name="hotel-form"].hotel-form .form-control.form-room a.decrease, .page-hotel form[name="hotel-form"].hotel-form .form-control.form-room .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-room .form-hotel-room a.decrease, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-room .form-hotel-room .page-hotel form[name="hotel-form"].hotel-form .form-control.form-room a.decrease, .page-hotel form[name="hotel-form"].hotel-form .form-control.form-room .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-room .form-hotel-visitor a.decrease, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-room .form-hotel-visitor .page-hotel form[name="hotel-form"].hotel-form .form-control.form-room a.decrease, .page-hotel form[name="hotel-form"].hotel-form .form-control.form-room .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-visitor .form-hotel-night a.decrease, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-visitor .form-hotel-night .page-hotel form[name="hotel-form"].hotel-form .form-control.form-room a.decrease, .page-hotel form[name="hotel-form"].hotel-form .form-control.form-room .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-visitor .form-hotel-room a.decrease, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-visitor .form-hotel-room .page-hotel form[name="hotel-form"].hotel-form .form-control.form-room a.decrease, .page-hotel form[name="hotel-form"].hotel-form .form-control.form-room .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-visitor .form-hotel-visitor a.decrease, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-visitor .form-hotel-visitor .page-hotel form[name="hotel-form"].hotel-form .form-control.form-room a.decrease, .page-hotel form[name="hotel-form"].hotel-form .form-control.form-room a.decrease {
+        margin-left: 30px; }
+      .page-hotel form[name="hotel-form"].hotel-form .form-control.form-adult a.increase, .page-hotel form[name="hotel-form"].hotel-form .form-control.form-adult .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-room .form-hotel-night a.decrease, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-room .form-hotel-night .page-hotel form[name="hotel-form"].hotel-form .form-control.form-adult a.decrease, .page-hotel form[name="hotel-form"].hotel-form .form-control.form-adult .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-room .form-hotel-room a.decrease, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-room .form-hotel-room .page-hotel form[name="hotel-form"].hotel-form .form-control.form-adult a.decrease, .page-hotel form[name="hotel-form"].hotel-form .form-control.form-adult .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-room .form-hotel-visitor a.decrease, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-room .form-hotel-visitor .page-hotel form[name="hotel-form"].hotel-form .form-control.form-adult a.decrease, .page-hotel form[name="hotel-form"].hotel-form .form-control.form-adult .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-visitor .form-hotel-night a.decrease, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-visitor .form-hotel-night .page-hotel form[name="hotel-form"].hotel-form .form-control.form-adult a.decrease, .page-hotel form[name="hotel-form"].hotel-form .form-control.form-adult .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-visitor .form-hotel-room a.decrease, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-visitor .form-hotel-room .page-hotel form[name="hotel-form"].hotel-form .form-control.form-adult a.decrease, .page-hotel form[name="hotel-form"].hotel-form .form-control.form-adult .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-visitor .form-hotel-visitor a.decrease, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-visitor .form-hotel-visitor .page-hotel form[name="hotel-form"].hotel-form .form-control.form-adult a.decrease, .page-hotel form[name="hotel-form"].hotel-form .form-control.form-adult a.decrease, .page-hotel form[name="hotel-form"].hotel-form .form-control.form-child a.increase, .page-hotel form[name="hotel-form"].hotel-form .form-control.form-child .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-room .form-hotel-night a.decrease, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-room .form-hotel-night .page-hotel form[name="hotel-form"].hotel-form .form-control.form-child a.decrease, .page-hotel form[name="hotel-form"].hotel-form .form-control.form-child .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-room .form-hotel-room a.decrease, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-room .form-hotel-room .page-hotel form[name="hotel-form"].hotel-form .form-control.form-child a.decrease, .page-hotel form[name="hotel-form"].hotel-form .form-control.form-child .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-room .form-hotel-visitor a.decrease, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-room .form-hotel-visitor .page-hotel form[name="hotel-form"].hotel-form .form-control.form-child a.decrease, .page-hotel form[name="hotel-form"].hotel-form .form-control.form-child .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-visitor .form-hotel-night a.decrease, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-visitor .form-hotel-night .page-hotel form[name="hotel-form"].hotel-form .form-control.form-child a.decrease, .page-hotel form[name="hotel-form"].hotel-form .form-control.form-child .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-visitor .form-hotel-room a.decrease, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-visitor .form-hotel-room .page-hotel form[name="hotel-form"].hotel-form .form-control.form-child a.decrease, .page-hotel form[name="hotel-form"].hotel-form .form-control.form-child .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-visitor .form-hotel-visitor a.decrease, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-visitor .form-hotel-visitor .page-hotel form[name="hotel-form"].hotel-form .form-control.form-child a.decrease, .page-hotel form[name="hotel-form"].hotel-form .form-control.form-child a.decrease {
+        margin-left: 15px; }
+    .page-hotel form[name="hotel-form"].hotel-form .form-group {
+      margin-bottom: 10px; }
+      .page-hotel form[name="hotel-form"].hotel-form .form-group.form__hotel, .page-hotel form[name="hotel-form"].hotel-form .form-group.form__night, .page-hotel form[name="hotel-form"].hotel-form .form-group.form__adult, .page-hotel form[name="hotel-form"].hotel-form .form-group.form__child {
+        padding-right: 10px; }
+      .page-hotel form[name="hotel-form"].hotel-form .form-group.form__submit .btn-lg {
+        -webkit-border-radius: 2px;
+        -moz-border-radius: 2px;
+        -ms-border-radius: 2px;
+        border-radius: 2px; }
 
 /*
 

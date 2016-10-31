@@ -31,4 +31,9 @@
             img.replaceWith(div);
         });
     });
+
+    //Ubah Pencarian Hotel
+    $('body .search-result-form-trigger').on('click', function () {
+        $('body .hotel-form').slideToggle("slow");
+    });
 });

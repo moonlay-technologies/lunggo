@@ -152,19 +152,15 @@ file : /Assets/travorama20/css/_page_index.scss
                             a {
                                 &.increase {
                                     display: block;
-                                    width: 6px;
-                                    height: 6px;
+                                    width: 10px;
+                                    height: 10px;
                                     border-left: 6px solid transparent;
                                     border-right: 6px solid transparent;
                                     border-bottom: 6px solid #777;
-                                    margin-top: 5px;
                                 }      
                                 &.decrease {
-                                    display: block;
-                                    width: 6px;
-                                    height: 6px;
-                                    border-left: 6px solid transparent;
-                                    border-right: 6px solid transparent;
+                                    @extend a.increase;
+                                    border-bottom: none;
                                     border-top: 6px solid #777;
                                     margin-top: 10px;
                                 }

@@ -24,6 +24,8 @@
     .bold-txt {font-weight: 700;}
     .semibold-txt {font-weight: 600;}
     .normal-txt {font-weight: 400;}   
+    .grey-txt {color: #969696;}
+    .darkgrey-txt {color: #555555;}
     .blue-txt {color: $color-main-blue;
         &.bg {
             font-size: 16px;
@@ -34,6 +36,7 @@
     .grey-txt {color: #999;}
     .green-txt {color: #3a8e1b;}
     .orange-txt {color: #ff7200;}
+    .right-txt {text-align: right;}
     .bg-title {
         font-size: 19px;
         text-transform: uppercase;
@@ -497,10 +500,49 @@
     }
 
     /*form search hotel*/
-    .hotel-form {
-        margin-top: 15px;
-        padding-top: 15px;
-        border-top: 1px solid #6F879E;
-        display: none;
-    }            
+    form[name="hotel-form"]{
+        &.hotel-form {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #6F879E;
+            display: none;
+            .form-control {
+                height: 45px;
+                @include border-radius(2px);
+                &.form-date {
+                    &>.md-txt {
+                        float: right;
+                        line-height: 30px;
+                    }
+                }
+                a {
+                    &.increase {
+                        display: block;
+                        width: 10px;
+                        height: 10px;
+                        border-left: 6px solid transparent;
+                        border-right: 6px solid transparent;
+                        border-bottom: 6px solid #777;
+                    }      
+                    &.decrease {
+                        @extend a.increase;
+                        border-bottom: none;
+                        border-top: 6px solid #777;
+                        margin-top: 10px;
+                    }
+                }    
+                &.form-night, &.form-room {
+                    a.increase {margin-left: 30px;}
+                }
+                &.form-adult, &.form-child {
+                    a.increase {margin-left: 15px;}      
+                }
+            }
+            .form-group {
+                margin-bottom: 10px;
+                &.form__hotel, &.form__night, &.form__adult, &.form__child {padding-right: 10px;}
+                &.form__submit .btn-lg {@include border-radius(2px);}
+            }
+        }
+    }
 }
