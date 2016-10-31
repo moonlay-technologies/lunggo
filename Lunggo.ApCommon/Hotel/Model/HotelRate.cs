@@ -15,47 +15,67 @@ namespace Lunggo.ApCommon.Hotel.Model
     {
         [JsonProperty("price", NullValueHandling = NullValueHandling.Ignore)]
         public Price Price { get; set; }
+
         [JsonProperty("timelimit", NullValueHandling = NullValueHandling.Ignore)]
         public DateTime TimeLimit { get; set; }
+
         [JsonProperty("rateKey", NullValueHandling = NullValueHandling.Ignore)]
         public string RateKey { get; set; }
+
         [JsonProperty("regsId", NullValueHandling = NullValueHandling.Ignore)]
         public string RegsId { get; set; }
+
         [JsonProperty("class", NullValueHandling = NullValueHandling.Ignore)]
         public string Class { get; set; }
+
         [JsonProperty("classDesc", NullValueHandling = NullValueHandling.Ignore)]
         public string ClassDescription { get; set; }
+
         [JsonProperty("type", NullValueHandling = NullValueHandling.Ignore)]
         public string Type { get; set; }
+
         [JsonProperty("typeDesc", NullValueHandling = NullValueHandling.Ignore)]
         public string TypeDescription { get; set; }
+
         //[JsonProperty("price", NullValueHandling = NullValueHandling.Ignore)]
         //public decimal Price { get; set; }
         [JsonProperty("paymentType", NullValueHandling = NullValueHandling.Ignore)]
         public PaymentTypeEnum PaymentType { get; set; }
+
         [JsonProperty("boards", NullValueHandling = NullValueHandling.Ignore)]
         public string Boards { get; set; }
+
         [JsonProperty("boardDesc", NullValueHandling = NullValueHandling.Ignore)]
         public string BoardDescription { get; set; }
+
         [JsonProperty("cancellation", NullValueHandling = NullValueHandling.Ignore)]
         public List<Cancellation> Cancellation { get; set; }
+
         [JsonProperty("roomCount", NullValueHandling = NullValueHandling.Ignore)]
         public int RoomCount { get; set; }
+
         [JsonProperty("adultCount", NullValueHandling = NullValueHandling.Ignore)]
         public int AdultCount { get; set; }
+
         [JsonProperty("childCount", NullValueHandling = NullValueHandling.Ignore)]
         public int ChildCount { get; set; }
+
         [JsonProperty("allotment", NullValueHandling = NullValueHandling.Ignore)]
         public int Allotment { get; set; }
+
         [JsonProperty("offers", NullValueHandling = NullValueHandling.Ignore)]
         public List<Offer> Offers { get; set; }
+
         [JsonProperty("originalPrice", NullValueHandling = NullValueHandling.Ignore)]
         public decimal OriginalPrice { get; set; }
+
         [JsonProperty("netPrice", NullValueHandling = NullValueHandling.Ignore)]
         public decimal NetPrice { get; set; }
 
+        [JsonProperty("childrenAges", NullValueHandling = NullValueHandling.Ignore)]
+        public List<int> ChildrenAges { get; set; }
     }
-    
+
     public class HotelRate : OrderBase
     {
         [JsonProperty("rateCount", NullValueHandling = NullValueHandling.Ignore)]
@@ -70,7 +90,7 @@ namespace Lunggo.ApCommon.Hotel.Model
         public string Type { get; set; }
         //[JsonProperty("price", NullValueHandling = NullValueHandling.Ignore)]
         //public decimal Price { get; set; }
-        [JsonProperty("paymentType", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonProperty("paymenType", NullValueHandling = NullValueHandling.Ignore)]
         public PaymentTypeEnum PaymentType { get; set; }
         [JsonProperty("boards", NullValueHandling = NullValueHandling.Ignore)]
         public string Boards { get; set; }
@@ -84,15 +104,13 @@ namespace Lunggo.ApCommon.Hotel.Model
         public int ChildCount { get; set; }
         [JsonProperty("offers", NullValueHandling = NullValueHandling.Ignore)]
         public List<Offer> Offers { get; set; }
-        [JsonProperty("allotment", NullValueHandling = NullValueHandling.Ignore)]
-        public int Allotment { get; set; }
-        [JsonProperty("originalFare", NullValueHandling = NullValueHandling.Ignore)]
-        public int OriginalFare { get; set; }
-        [JsonProperty("netPrice", NullValueHandling = NullValueHandling.Ignore)]
-        public int NetPrice { get; set; }
-        public decimal HotelSellingRate { get; set; }
         [JsonProperty("childrenAges", NullValueHandling = NullValueHandling.Ignore)]
         public List<int> ChildrenAges { get; set; }
+        [JsonProperty("hotelSellingRate", NullValueHandling = NullValueHandling.Ignore)]
+        public decimal HotelSellingRate{ get; set; }
+        [JsonProperty("allotment", NullValueHandling = NullValueHandling.Ignore)]
+        public int Allotment { get; set; }
+        
     }
 
     public class Offer

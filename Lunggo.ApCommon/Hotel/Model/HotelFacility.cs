@@ -36,8 +36,6 @@ namespace Lunggo.ApCommon.Hotel.Model
         public int FacilityGroupCode { get; set; }
         [JsonProperty("fullCd", NullValueHandling = NullValueHandling.Ignore)]
         public string FullFacilityCode { get; set; }
-        [JsonProperty("facilityGroupCd", NullValueHandling = NullValueHandling.Ignore)]
-        public int FacilityGroupCode;
         [JsonProperty("mustDisplay", NullValueHandling = NullValueHandling.Ignore)]
         public bool MustDisplay;
         [JsonProperty("isFree", NullValueHandling = NullValueHandling.Ignore)]
