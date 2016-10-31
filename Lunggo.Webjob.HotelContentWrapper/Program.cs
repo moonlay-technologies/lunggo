@@ -22,8 +22,8 @@ namespace Lunggo.Webjob.HotelContentWrapper
 
             // Begin timing.
             stopwatch.Start();
-            //HotelService.GetInstance().SaveTruncatedHotelDetail();
-            HotelService.GetInstance().SaveHotelAmenities();
+            HotelService.GetInstance().SaveTruncatedHotelDetail();
+            //HotelService.GetInstance().SaveHotelAmenities();
             stopwatch.Stop();
             Debug.Print("Done in : {0}", stopwatch.Elapsed);
             Console.WriteLine("Done in : {0}", stopwatch.Elapsed);

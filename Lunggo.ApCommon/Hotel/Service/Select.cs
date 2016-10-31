@@ -33,7 +33,10 @@ namespace Lunggo.ApCommon.Hotel.Service
                     where roomRateKey == originRateKey
                     select new HotelRate
                     {
-                        RateCount = id.RateCount, RateKey = rate.RateKey, AdultCount = rate.AdultCount, Boards = rate.Boards, Cancellation = rate.Cancellation, ChildCount = rate.ChildCount, Class = rate.Class, Offers = rate.Offers, PaymentType = rate.PaymentType, RegsId = rate.RegsId, Price = rate.Price, Type = rate.Type,
+                        RateCount = id.RateCount, RateKey = rate.RateKey, AdultCount = id.AdultCount, 
+                        Boards = rate.Boards, Cancellation = rate.Cancellation, ChildrenAges = id.ChildrenAges,
+                        ChildCount = id.ChildCount, Class = rate.Class, Offers = rate.Offers, 
+                        PaymentType = rate.PaymentType, RegsId = rate.RegsId, Price = rate.Price, Type = rate.Type,
                     }).ToList()[0];
 
                 if (hotel.Rooms.Any(r => r.RoomCode == output.Room.RoomCode))
@@ -61,6 +64,7 @@ namespace Lunggo.ApCommon.Hotel.Service
             }
 
             hotel.SearchId = input.SearchId;
+            
             var token = HotelBookingIdSequence.GetInstance().GetNext().ToString();
 
             SaveSelectedHotelDetailsToCache(token, hotel);

@@ -83,6 +83,69 @@ namespace Lunggo.Repository.TableRecord
 		        IncrementLog("ChildCount");
 		    }
 		}
+		public String HotelPhone
+		{
+		    get { return _HotelPhone; }
+		    set
+		    {
+		        _HotelPhone = value;
+		        IncrementLog("HotelPhone");
+		    }
+		}
+		public String HotelAddress
+		{
+		    get { return _HotelAddress; }
+		    set
+		    {
+		        _HotelAddress = value;
+		        IncrementLog("HotelAddress");
+		    }
+		}
+		public String HotelRating
+		{
+		    get { return _HotelRating; }
+		    set
+		    {
+		        _HotelRating = value;
+		        IncrementLog("HotelRating");
+		    }
+		}
+		public String ClientReference
+		{
+		    get { return _ClientReference; }
+		    set
+		    {
+		        _ClientReference = value;
+		        IncrementLog("ClientReference");
+		    }
+		}
+		public String BookingReference
+		{
+		    get { return _BookingReference; }
+		    set
+		    {
+		        _BookingReference = value;
+		        IncrementLog("BookingReference");
+		    }
+		}
+		public String SupplierName
+		{
+		    get { return _SupplierName; }
+		    set
+		    {
+		        _SupplierName = value;
+		        IncrementLog("SupplierName");
+		    }
+		}
+		public String SupplierVat
+		{
+		    get { return _SupplierVat; }
+		    set
+		    {
+		        _SupplierVat = value;
+		        IncrementLog("SupplierVat");
+		    }
+		}
 		public String SpecialRequest
 		{
 		    get { return _SpecialRequest; }
@@ -156,6 +219,13 @@ namespace Lunggo.Repository.TableRecord
 		private DateTime? _CheckOutDate;
 		private int? _AdultCount;
 		private int? _ChildCount;
+		private String _HotelPhone;
+		private String _HotelAddress;
+		private String _HotelRating;
+		private String _ClientReference;
+		private String _BookingReference;
+		private String _SupplierName;
+		private String _SupplierVat;
 		private String _SpecialRequest;
 		private String _InsertBy;
 		private DateTime? _InsertDate;
@@ -202,6 +272,13 @@ namespace Lunggo.Repository.TableRecord
 				new ColumnMetadata("CheckOutDate", false),
 				new ColumnMetadata("AdultCount", false),
 				new ColumnMetadata("ChildCount", false),
+				new ColumnMetadata("HotelPhone", false),
+				new ColumnMetadata("HotelAddress", false),
+				new ColumnMetadata("HotelRating", false),
+				new ColumnMetadata("ClientReference", false),
+				new ColumnMetadata("BookingReference", false),
+				new ColumnMetadata("SupplierName", false),
+				new ColumnMetadata("SupplierVat", false),
 				new ColumnMetadata("SpecialRequest", false),
 				new ColumnMetadata("InsertBy", false),
 				new ColumnMetadata("InsertDate", false),

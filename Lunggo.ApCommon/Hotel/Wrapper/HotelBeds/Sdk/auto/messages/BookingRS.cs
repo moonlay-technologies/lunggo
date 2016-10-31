@@ -7,6 +7,6 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Sdk.auto.messages
     {
         public List<string> providerDetails { get; set; }
         public Booking booking { get; set; }
-        public Source source { get; set; }        
+        public Source source { get; set; }
     }
 }

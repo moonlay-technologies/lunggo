@@ -1,19 +1,19 @@
 facilityCd|description__ENG|description__ID
-61001|Single bed 90-130 width|Ranjang Single selebar 90-130
-62001|Single bed 90-130 width|Ranjang Single selebar 90-130
-85001|Gay-friendly|Bersahabat pada kaum gay
-100010|1|1
-20010|Hotel|Hotel
-30010|American Express|American Express
-40010|City centre|Pusat kota
-60010|Bathroom|Kamar mandi
-70010|Air conditioning in public areas|AC di area publik
+611|Single bed 90-130 width|Ranjang Single selebar 90-130
+621|Single bed 90-130 width|Ranjang Single selebar 90-130
+851|Gay-friendly|Bersahabat pada kaum gay
+10010|1|1
+2010|Hotel|Hotel
+3010|American Express|American Express
+4010|City centre|Pusat kota
+6010|Bathroom|Kamar mandi
+7010|Air conditioning in public areas|AC di area publik
 10100|Suites|Suite
 60100|Internet access|Akses internet
 70100|Supermarket|Supermarket
 80100|Set menu dinner|Makan malam menu set
-70011|Fireplace|Perapian
-80011|Breakfast and dinner|Sarapan dan makan malam
+7011|Fireplace|Perapian
+8011|Breakfast and dinner|Sarapan dan makan malam
 10110|Apartments|Apartemen
 30110|EuroCard|EuroCard
 60110|Kitchenette|Dapur kecil
@@ -23,8 +23,8 @@ facilityCd|description__ENG|description__ID
 10115|Studios|Studio
 30115|Euro 6000|Euro 6000
 60115|Kitchen|Dapur
-70012|Smoke detector|Detektor asap
-80012|Breakfast and lunch|Sarapan dan makan siang
+7012|Smoke detector|Detektor asap
+8012|Breakfast and lunch|Sarapan dan makan siang
 10120|Bungalows|Bungalo
 60120|Minibar|Minibar
 74120|Hairdressing salon|Salon pemangkas rambut
@@ -76,12 +76,12 @@ facilityCd|description__ENG|description__ID
 90190|Motor board ride|Wahana papan motor
 73193|TV lounge|Lounge TV
 60195|Individually adjustable heating |Pemanas yang dapat disesuaikan sendiri-sendiri
-85002|Naturist|Nudis
-10020|Year of construction|Tahun konstruksi
-100020|2|2
-30020|EC|EC
-40020|Nearest Bus / Metro Stop|Halte Bus / Metro Terdekat
-60020|Shower|Shower
+852|Naturist|Nudis
+1020|Year of construction|Tahun konstruksi
+10020|2|2
+3020|EC|EC
+4020|Nearest Bus / Metro Stop|Halte Bus / Metro Terdekat
+6020|Shower|Shower
 60200|Safe|Brankas
 71200|Restaurant|Restoran
 80200|Breakfast served to the table|Sarapan yang disajikan di meja
@@ -104,7 +104,7 @@ facilityCd|description__ENG|description__ID
 70240|Mobile phone coverage|Jangkauan ponsel
 80240|No alcohol is served|Tidak ada minuman beralkohol yang disajikan
 90240|Canoeing|Berkano
-20025|Apartment hotel|Hotel apartemen
+2025|Apartment hotel|Hotel apartemen
 20250|Campsite|Perkemahan
 60250|Wheelchair-accessible|Dapat diakses dengan kursi roda
 70250|Wired Internet|Internet berkabel
@@ -124,7 +124,7 @@ facilityCd|description__ENG|description__ID
 70260|Check-in hour|Jam check-in
 80260|All inclusive with alcoholic drinks top brands|Paket lengkap dengan minuman beralkohol merek ternama
 90260|Table tennis|Tenis meja
-60261|Wi-fi|Wi-fi
+60261|Wi-fi|Wi-fi.
 80261|Full board|Paket Full Board
 60262|Wake-up service|Layanan bangun tidur
 80262|Half Board|Paket Half Board
@@ -176,14 +176,14 @@ facilityCd|description__ENG|description__ID
 60297|Smoke detector|Detektor asap
 60298|Number of bedrooms|Jumlah kamar tidur
 60299|Shared bathroom|Kamar mandi berbagi
-85003|No hen/stag or any other parties allowed|Pesta melepas masa lajang atau pesta lainnya tidak diizinkan
-10030|Year of most recent renovation|Tahun renovasi terkini
-100030|3|3
-20030|Apartment|Apartemen
-30030|JCB|JCB
-60030|Bathtub|Bathtub
-70030|24-hour reception|resepsionis 24 jam
-80030|Breakfast buffet|Prasmanan sarapan
+853|No hen/stag or any other parties allowed|Pesta melepas masa lajang atau pesta lainnya tidak diizinkan
+1030|Year of most recent renovation|Tahun renovasi terkini
+10030|3|3
+2030|Apartment|Apartemen
+3030|JCB|JCB
+6030|Bathtub|Bathtub
+7030|24-hour reception|resepsionis 24 jam
+8030|Breakfast buffet|Prasmanan sarapan
 20300|Vacation condo or apartment|Kondo atau apartemen untuk liburan
 60300|Housekeeping|tata graha
 70300|Bicycle storage|Penyimpanan sepeda
@@ -254,13 +254,13 @@ facilityCd|description__ENG|description__ID
 70390|Check-out hour|Jam check-out
 90390|Golf|Golf
 73395|Sun loungers|Kursi berjemur
-10040|Annexe (s)|Bangunan tambahan
-100040|4|4
-30040|Diners Club|Diners Club
-40040|Beach|Pantai
-60040|Hairdryer|Pengering rambut
-70040|Hotel safe|Brankas hotel
-80040|Breakfast|Sarapan
+1040|Annexe (s)|Bangunan tambahan
+10040|4|4
+3040|Diners Club|Diners Club
+4040|Beach|Pantai
+6040|Hairdryer|Pengering rambut
+7040|Hotel safe|Brankas hotel
+8040|Breakfast|Sarapan
 20400|Residence|Residence
 73400|Parasols|Payung
 73401|Entertainment programme for adults|Program hiburan untuk orang dewasa
@@ -286,13 +286,13 @@ facilityCd|description__ENG|description__ID
 70490|Car hire|Penyewaan mobil
 90490|Skiing|Ski
 70495|Transfer service|Layanan Transfer
-10050|Number of floors (main building)|Jumlah lantai (bangunan utama)
-100050|5|5
-20050|Guest house|Guest house
-30050|MasterCard|MasterCard
-60050|Direct dial telephone|Telepon sambungan langsung
-70050|Currency exchange facilities|Fasilitas penukaran mata uang
-80050|Buffet lunch|Makan siang prasmanan
+1050|Number of floors (main building)|Jumlah lantai (bangunan utama)
+10050|5|5
+2050|Guest house|Guest house
+3050|MasterCard|MasterCard
+6050|Direct dial telephone|Telepon sambungan langsung
+7050|Currency exchange facilities|Fasilitas penukaran mata uang
+8050|Buffet lunch|Makan siang prasmanan
 70500|Secure parking|Layanan antar-jemput
 90500|Tobogganing|Naik kereta peluncur
 70505|Multilingual staff|Staf multibahasa
@@ -305,7 +305,7 @@ facilityCd|description__ENG|description__ID
 70535|Small pets allowed (under 5 kg)|Hewan peliharaan kecil dibolehkan (kurang dari 5 kg)
 70540|Large pets allowed (over 5 kg)|Hewan peliharaan besar dibolehkan (lebih dari 5 kg)
 70545|Golf desk|Meja layanan golf
-60055|TV|TV
+6055|TV|TV
 70550|Wi-fi|Wi-fi
 85551|Charges for late arrival|Denda untuk kedatangan yang terlambat
 85552|Early Check-in|Check-in Lebih Awal
@@ -315,7 +315,7 @@ facilityCd|description__ENG|description__ID
 85557|Identification card at arrival|Kartu identifikasi saat tiba
 85558|Marriage certificate required for a couple to share room|Sertifikat pernikahan diperlukan untuk pasangan yang menginap sekamar
 70559|Luggage room|Ruang koper
-10056|Connecting rooms|Kamar terhubung
+1056|Connecting rooms|Kamar terhubung
 70560|Valet parking|Parkir valet
 71560|Banquet hall|Aula andrawina
 85561|Deposit on arrival|Deposit saat tiba
@@ -348,11 +348,11 @@ facilityCd|description__ENG|description__ID
 72580|Projector|Proyektor
 72590|Conference hostess|Penerima tamu konferensi
 72595|Secretarial service|Layanan sekretaris
-10060|Number of floors (annexe)|Jumlah lantai (bangunan tambahan)
-20060|Rural house|Rumah pedesaan
-30060|Visa|Visa
-70060|Cloakroom|Ruang ganti
-80060|À la carte lunch|Makan siang a la carte
+1060|Number of floors (annexe)|Jumlah lantai (bangunan tambahan)
+2060|Rural house|Rumah pedesaan
+3060|Visa|Visa
+7060|Cloakroom|Ruang ganti
+8060|À la carte lunch|Makan siang a la carte
 72600|Photocopier|Mesin foto kopi
 72605|Business centre|Pusat bisnis
 72610|Fax|Faks
@@ -371,30 +371,30 @@ facilityCd|description__ENG|description__ID
 76670|EMAS|EMAS
 76675|EU Ecolabel|EU Ecolabel
 76695|Austrian Ecolabel (Umweltzeichen für Tourismusbetriebe) |Austrian Ecolabel (Umweltzeichen für Tourismusbetriebe)
-10070|Total number of rooms|Tumlah kamar total
-40070|Harbour|Pelabuhan
-70070|Lift access|Akses lift
-80070|Set menu lunch|Makan siang menu set
+1070|Total number of rooms|Tumlah kamar total
+4070|Harbour|Pelabuhan
+7070|Lift access|Akses lift
+8070|Set menu lunch|Makan siang menu set
 76740|ECO Certification Malta |Sertifikasi ECO Malta
 76741|TourCert|TourCert
 77755|CST – Costa Rica |CST – Kosta Rika
-10080|Single rooms|Kamar single
-30080|Maestro|Maestro
-40080|Airport|Bandara
-60080|Radio|Radio
-71080|Café|Kafé
-80080|Buffet dinner|Makan malam prasmanan
+1080|Single rooms|Kamar single
+3080|Maestro|Maestro
+4080|Airport|Bandara
+6080|Radio|Radio
+7180|Café|Kafé
+8080|Buffet dinner|Makan malam prasmanan
 78810|EcoCertification (EA) – Australia|EcoCertification (EA) – Australia
 79830|FTTSA – South Africa |FTTSA – Afrika Selatan
 75840|ISO  9001 certified hotels and restaurants|Hotel dan restoran yang bersertifikat ISO  9001
 75845|ISO  14001 certified hotels and restaurants|Hotel dan restoran yang bersertifikat ISO  14001
-10090|Double rooms|Kamar double
-30090|Visa Electrón|Visa Electrón
-60090|Hi-fi|Hi-fi
-70090|Newspaper stand|Kios koran
-80090|À la carte dinner|Makan malam a la carte
-90090|Aqua fit|Aqua fit
-10095|Junior suites|Suite junior
+1090|Double rooms|Kamar double
+3090|Visa Electrón|Visa Electrón
+6090|Hi-fi|Hi-fi
+7090|Newspaper stand|Kios koran
+8090|À la carte dinner|Makan malam a la carte
+9090|Aqua fit|Aqua fit
+1095|Junior suites|Suite junior
 61992|Rollaways on demand|Tempat tidur geser ATAS PERMINTAAN
 62992|Rollaways on demand|Tempat tidur geser ATAS PERMINTAAN
 61993|Bunk beds|Tempat tidur tingkat
