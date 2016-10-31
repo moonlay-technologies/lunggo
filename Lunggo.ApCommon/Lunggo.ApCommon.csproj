@@ -249,6 +249,7 @@
     <Compile Include="Hotel\Model\Logic\GetHotelDetailOutput.cs" />
     <Compile Include="Hotel\Query\GetActiveHotelPriceMarginRuleQuery.cs" />
     <Compile Include="Hotel\Query\GetHotelRateRuleQuery.cs" />
+    <Compile Include="Flight\Query\UpdateBookingIdQuery.cs" />
     <Compile Include="Hotel\Service\SaveTruncatedHotelDetail.cs" />
     <Compile Include="Hotel\Service\PriceMargin.cs" />
     <Compile Include="Hotel\Query\GetHotelDetailFromSearchResult.cs" />
@@ -413,7 +414,7 @@
     <Compile Include="Flight\Query\GetTripInfoQuery.cs" />
     <Compile Include="Flight\Query\GetVoucherCodeQuery.cs" />
     <Compile Include="Flight\Query\SearchReservationQuery.cs" />
-    <Compile Include="Flight\Query\UpdateBookingIdQuery.cs" />
+    <Compile Include="Hotel\Query\UpdateReservationQuery.cs" />
     <Compile Include="Flight\Query\UpdateBookingStatusQuery.cs" />
     <Compile Include="Flight\Query\UpdateDetailsQuery.cs" />
     <Compile Include="Flight\Service\Notification.cs" />

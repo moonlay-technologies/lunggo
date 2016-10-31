@@ -80,8 +80,7 @@ namespace Lunggo.ApCommon.Hotel.Model
         [JsonProperty("offers", NullValueHandling = NullValueHandling.Ignore)]
         public List<Offer> Offers { get; set; }
         [JsonProperty("childrenAges", NullValueHandling = NullValueHandling.Ignore)]
-        public List<int> ChildrenAges { get; set; } 
-        
+        public List<int> ChildrenAges { get; set; }        
     }
 
     public class Offer

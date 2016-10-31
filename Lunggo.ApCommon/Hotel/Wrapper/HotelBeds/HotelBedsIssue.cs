@@ -94,14 +94,13 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds
                 return new HotelIssueTicketResult
                 {
                     IsSuccess = true,
-                    Supplier = new Supplier
-                    {
-                        Name = responseBooking.booking.hotel.supplier.name,
-                        VatNumber = responseBooking.booking.hotel.supplier.vatNumber
-                    },
+                    SupplierName = responseBooking.booking.hotel.supplier.name,
+                    SupplierVat = responseBooking.booking.hotel.supplier.vatNumber,
                     RsvNo = hotelIssueInfo.RsvNo,
                     Status = "CONFIRMED",
-                    BookingId = hotelIssueInfo.Rooms.SelectMany(r => r.Rates.Select(t => t.RateKey)).ToList()
+                    BookingId = hotelIssueInfo.Rooms.SelectMany(r => r.Rates.Select(t => t.RateKey)).ToList(),
+                    ClientReference = responseBooking.booking.clientReference,
+                    BookingReference = responseBooking.booking.reference
                 };
             }
 

@@ -5,6 +5,7 @@ using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Hotel.Constant;
 using Lunggo.ApCommon.Hotel.Model;
 using Lunggo.ApCommon.Hotel.Query;
+using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Sdk.auto.model;
 using Lunggo.ApCommon.Payment.Model;
 using Lunggo.ApCommon.Product.Constant;
 using Lunggo.ApCommon.Product.Model;
@@ -13,6 +14,7 @@ using Lunggo.Framework.Database;
 using Lunggo.Framework.Extension;
 using Lunggo.Repository.TableRecord;
 using Lunggo.Repository.TableRepository;
+using Pax = Lunggo.ApCommon.Product.Model.Pax;
 
 namespace Lunggo.ApCommon.Hotel.Service
 {
@@ -105,7 +107,8 @@ namespace Lunggo.ApCommon.Hotel.Service
                                 Cancellation = rateRecord.Cancellation.Deserialize<List<Cancellation>>(),
                                 PaymentType = PaymentTypeCd.Mnemonic(rateRecord.PaymentType),
                                 RoomCount = rateRecord.RoomCount.GetValueOrDefault(),
-                                Price = Price.GetFromDb(rateRecord.PriceId.GetValueOrDefault()) 
+                                Price = Price.GetFromDb(rateRecord.PriceId.GetValueOrDefault()),
+                                ChildrenAges = rateRecord.ChildrenAges.Deserialize<List<int>>()
                             };
                             hotelRoom.Rates.Add(rate);
                         }
@@ -259,9 +262,10 @@ namespace Lunggo.ApCommon.Hotel.Service
                             InsertPgId = "0",
                             PriceId = rate.Price.InsertToDb(),
                             RoomId = roomId,
-                            RoomCount = rate.RoomCount,
+                            RoomCount = rate.RateCount,
                             RateKey =  rate.RateKey,
                             PaymentType = PaymentTypeCd.MnemonicToString(rate.PaymentType),
+                            ChildrenAges = rate.ChildrenAges.Serialize()
                         };
 
                         HotelRateTableRepo.GetInstance().Insert(conn, rateRecord);
@@ -377,7 +381,15 @@ namespace Lunggo.ApCommon.Hotel.Service
         #endregion
 
         #region Update
-        
+        private static void UpdateReservationDetailsToDb (HotelIssueTicketResult result)
+        {
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                var query = UpdateReservationQuery.GetInstance();
+                var dbRsvDetailInfo = result;
+                query.Execute(conn, dbRsvDetailInfo);
+            }
+        }
         #endregion
     }
 }

@@ -6,6 +6,7 @@ using Lunggo.ApCommon.Hotel.Constant;
 using Lunggo.ApCommon.Hotel.Model;
 using Lunggo.ApCommon.Hotel.Model.Logic;
 using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds;
+using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Sdk.auto.model;
 using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.ApCommon.Product.Constant;
 using Lunggo.Framework.Database;
@@ -14,6 +15,7 @@ using Lunggo.Repository.TableRecord;
 using Lunggo.Repository.TableRepository;
 using Microsoft.WindowsAzure.Storage.Queue;
 using BookingStatusCd = Lunggo.ApCommon.Hotel.Constant.BookingStatusCd;
+using Occupancy = Lunggo.ApCommon.Hotel.Model.Occupancy;
 
 namespace Lunggo.ApCommon.Hotel.Service
 {
@@ -65,16 +67,11 @@ namespace Lunggo.ApCommon.Hotel.Service
             
             foreach (var room in rsvData.HotelDetails.Rooms)
             {
-                occupancies.AddRange(from rate in room.Rates
-                    select rate.RateKey.Split('|')
-                    into sampleRatekey
-                    let roomCount = Convert.ToInt32(sampleRatekey[9].Split('~')[0])
-                    let adultCount = Convert.ToInt32(sampleRatekey[9].Split('~')[1])
-                    let childCount = Convert.ToInt32(sampleRatekey[9].Split('~')[2])
-                    select new Occupancy
-                    {
-                        RoomCount = roomCount, AdultCount = adultCount, ChildCount = childCount
-                    });
+                occupancies.AddRange(room.Rates.Select(rate => new Occupancy
+                {
+                    RoomCount = rate.RoomCount, AdultCount = rate.AdultCount,
+                    ChildCount = rate.ChildCount, ChildrenAges = rate.ChildrenAges
+                }));
             }
 
             occupancies = occupancies.Distinct().ToList();
@@ -122,9 +119,11 @@ namespace Lunggo.ApCommon.Hotel.Service
                     var roomCd = sampleRatekey[5];
                     var someData = sampleRatekey[6];
                     var board = sampleRatekey[7];
-                    var roomCount = Convert.ToInt32(sampleRatekey[9].Split('~')[0]);
-                    var adultCount = GetMaxAdult(roomCd);
-
+                    var roomCount = rate.RoomCount;
+                    var adultCount = rate.AdultCount;
+                    var childCount = rate.ChildCount;
+                    var childrenAges = sampleRatekey[10];
+                    
                     foreach (var rooma in searchResult.HotelDetailLists[0].Rooms)
                     {
                         foreach (var ratea in rooma.Rates)
@@ -132,23 +131,26 @@ namespace Lunggo.ApCommon.Hotel.Service
                             var rateKey = ratea.RateKey.Split('|');
                             if (rateKey[5] == roomCd && rateKey[6] == someData && rateKey[7] == board &&
                                 Convert.ToInt32(rateKey[9].Split('~')[0]) == roomCount &&
-                                Convert.ToInt32(rateKey[9].Split('~')[1]) == adultCount)
+                                Convert.ToInt32(rateKey[9].Split('~')[1]) == adultCount &&
+                                Convert.ToInt32(rateKey[9].Split('~')[2]) == childCount &&
+                                rateKey[10] == childrenAges)
                             {
                                 if (BookingStatusCd.Mnemonic(rate.Type) == CheckRateStatus.Recheck)
                                 {
                                     var revalidateResult = CheckRate(ratea.RateKey, ratea.Price.Supplier);
                                     if (revalidateResult.IsPriceChanged)
                                     {
-                                        rate.Price.SetSupplier(revalidateResult.NewPrice.GetValueOrDefault(), rate.Price.SupplierCurrency);
+                                        rate.Price.SetSupplier(revalidateResult.NewPrice.GetValueOrDefault() * roomCount,
+                                            rate.Price.SupplierCurrency);
                                     }
                                     rate.RateKey = revalidateResult.RateKey;
-                                    rate.Price.SetSupplier(revalidateResult.NewPrice.GetValueOrDefault(),
+                                    rate.Price.SetSupplier(revalidateResult.NewPrice.GetValueOrDefault() * roomCount,
                                         rate.Price.SupplierCurrency);
                                 }
                                 else
                                 {
                                     rate.RateKey = ratea.RateKey;
-                                    rate.Price.SetSupplier(ratea.Price.OriginalIdr, rate.Price.SupplierCurrency);
+                                    rate.Price.SetSupplier(ratea.Price.OriginalIdr * roomCount, rate.Price.SupplierCurrency);
                                 }   
                             }
                         }
@@ -170,6 +172,7 @@ namespace Lunggo.ApCommon.Hotel.Service
             var issue = new HotelBedsIssue();
             var issueResult = issue.IssueHotel(issueInfo);
             UpdateRsvStatusDb(rsvData.RsvNo, issueResult.IsSuccess ? RsvStatus.Completed : RsvStatus.Failed);
+            UpdateReservationDetailsToDb(issueResult);
             if (issueResult.IsSuccess == false)
             {
                 SendSaySorryFailedIssueNotifToCustomer(rsvData.RsvNo);

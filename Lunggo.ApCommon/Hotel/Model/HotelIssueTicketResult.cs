@@ -9,17 +9,18 @@ namespace Lunggo.ApCommon.Hotel.Model
 {
     public class HotelIssueTicketResult
     {
-        internal List<string> BookingId { get; set; }
-        internal string RsvNo { get; set; }
-        internal string Status { get; set; }
-        internal bool IsInstantIssuance { get; set; }
-        internal bool IsSuccess { get; set; }
-        internal Supplier Supplier { get; set; }
-        internal string HotelPhone { get; set; }
-        internal string HotelRating { get; set; }
-        internal string HotelAddress { get; set; }
-        internal string BookingReference { get; set; }
-        internal string ClientReference { get; set; }
+        public List<string> BookingId { get; set; }
+        public string RsvNo { get; set; }
+        public string Status { get; set; }
+        public bool IsInstantIssuance { get; set; }
+        public bool IsSuccess { get; set; }
+        public string SupplierName { get; set; }
+        public string SupplierVat { get; set; }
+        public string HotelPhone { get; set; }
+        public string HotelRating { get; set; }
+        public string HotelAddress { get; set; }
+        public string BookingReference { get; set; }
+        public string ClientReference { get; set; }
     }
 
     public class Supplier

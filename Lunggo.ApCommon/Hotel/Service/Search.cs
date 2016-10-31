@@ -130,6 +130,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                     if (input.Occupancies == null)
                     {
                         request.AdultCount = input.AdultCount;
+                        request.ChildCount = input.ChildCount;
                         request.Rooms = input.Rooms;
                     }
                     else
