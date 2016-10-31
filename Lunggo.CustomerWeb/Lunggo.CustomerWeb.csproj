@@ -24,6 +24,7 @@
     <WebGreaseLibPath>..\packages\WebGrease.1.5.2\lib</WebGreaseLibPath>
     <NuGetPackageImportStamp>644122b3</NuGetPackageImportStamp>
     <TypeScriptToolsVersion>1.0</TypeScriptToolsVersion>
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -108,9 +109,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\WindowsAzure.Storage.4.3.0\lib\net40\Microsoft.WindowsAzure.Storage.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Newtonsoft.Json.8.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="Owin">
       <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
@@ -130,9 +131,9 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Data.Services.Client" />
     <Reference Include="System.Drawing" />
-    <Reference Include="System.Net.Http.Formatting, Version=5.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.2\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
     </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
@@ -260,6 +261,7 @@
     <Compile Include="Models\FlightSearchData.cs" />
     <Compile Include="Models\FlightSelectData.cs" />
     <Compile Include="Models\FlightThankyouData.cs" />
+    <Compile Include="Models\HotelSearchModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\StringSearchParam.cs" />
@@ -283,7 +285,6 @@
     <Compile Include="WebSrc\UW600\UW620\Object\UW620OrderHistoryRespone.cs" />
     <Compile Include="WebSrc\UW600\UW620\Query\GetFlightHistoryRecord.cs" />
     <Compile Include="WebSrc\UW600\UW620\Query\GetFlightHistory.cs" />
-    <Compile Include="WebSrc\UW600\UW620\Query\GetHotelHistory.cs" />
     <Compile Include="WebSrc\UW600\UW620\UW620OrderHistoryController.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -306,6 +307,7 @@
     <Content Include="Assets\images\hotel-star-4.png" />
     <Content Include="Assets\images\location.png" />
     <Content Include="Assets\images\order-hotel-list-bg.png" />
+    <Content Include="Assets\js\xml2json.min.js" />
     <Content Include="Assets\images\phone.png" />
     <Content Include="Assets\mobile\images\adult.png" />
     <Content Include="Assets\mobile\images\Hotel\ac-grey.png" />
@@ -375,6 +377,8 @@
     <Content Include="Assets\travorama20\images\Hotel\triangle-grey.png" />
     <Content Include="Assets\travorama20\images\Hotel\up.png" />
     <Content Include="Assets\travorama20\images\Hotel\view.png" />
+    <Content Include="Assets\travorama20\js\hotelDetailController.js" />
+    <Content Include="Assets\travorama20\js\hotelSearchController.js" />
     <Content Include="Assets\travorama20\js\HotelController.js" />
     <Content Include="Assets\vendor\flexslider\flexslider.css" />
     <Content Include="Assets\css\font-awesome.min.css" />
@@ -1597,6 +1601,10 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\json2.js" />
     <Content Include="Scripts\modernizr-2.7.2.js" />
+    <Content Include="Scripts\moment-with-locales.js" />
+    <Content Include="Scripts\moment-with-locales.min.js" />
+    <Content Include="Scripts\moment.js" />
+    <Content Include="Scripts\moment.min.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
@@ -3021,10 +3029,6 @@
       <Project>{e0624ffe-a4c2-44f5-9f9f-8c71f3b32aed}</Project>
       <Name>Lunggo.Framework</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Lunggo.Hotel\Lunggo.Hotel.csproj">
-      <Project>{9f226318-0164-4d44-8b2d-4139caca98d2}</Project>
-      <Name>Lunggo.Hotel</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Lunggo.Repo\Lunggo.Repository.csproj">
       <Project>{50b8c0c0-6b28-46fd-ba90-771d8c9f12a1}</Project>
       <Name>Lunggo.Repository</Name>
@@ -3043,7 +3047,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <TypeScriptCompile Include="Scripts\typings\cryptojs\cryptojs.d.ts" />
+    <None Include="Scripts\typings\cryptojs\cryptojs.d.ts" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

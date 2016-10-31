@@ -66,20 +66,20 @@ namespace Lunggo.ApCommon.Autocomplete
             return distinctairlineIds;
         }
 
-        public IEnumerable<long> GetHotelLocationIdsAutocomplete(string prefix)
+        public IEnumerable<long> GetHotelIdsAutocomplete(string prefix)
         {
-            var hotelLocationIndex = TrieIndexService.GetInstance().HotelLocationIndex;
+            var hotelIndex = TrieIndexService.GetInstance().HotelAutocompleteIndex;
             var splittedString = prefix.Split(' ');
-            var hotelLocationIds = new List<long>();
-            hotelLocationIds.AddRange(hotelLocationIndex.GetAllSuggestionIds(splittedString[0]));
+            var hotelIds = new List<long>();
+            hotelIds.AddRange(hotelIndex.GetAllSuggestionIds(splittedString[0]));
             var i = 1;
             while (i < splittedString.Count())
             {
-                hotelLocationIds = hotelLocationIds.Intersect(hotelLocationIndex.GetAllSuggestionIds(splittedString[i])).ToList();
+                hotelIds = hotelIds.Intersect(hotelIndex.GetAllSuggestionIds(splittedString[i])).ToList();
                 i++;
             }
-            var distincthotelLocationIds = hotelLocationIds.Distinct();
-            return distincthotelLocationIds;
+            var distincthotelIds = hotelIds.Distinct();
+            return distincthotelIds;
         }
 
         private static IEnumerable<long> PopularAirports()

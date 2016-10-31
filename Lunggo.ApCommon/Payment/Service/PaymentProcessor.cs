@@ -1,28 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
-using System.Reflection;
-using System.Text;
 using Lunggo.ApCommon.Campaign.Constant;
-using Lunggo.ApCommon.Campaign.Model;
 using Lunggo.ApCommon.Campaign.Service;
-using Lunggo.ApCommon.Constant;
-using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Service;
+using Lunggo.ApCommon.Hotel.Service;
 using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.ApCommon.Payment.Model;
 using Lunggo.ApCommon.Payment.Query;
-using Lunggo.ApCommon.Payment.Wrapper.Veritrans;
 using Lunggo.ApCommon.Product.Constant;
 using Lunggo.ApCommon.Product.Model;
-using Lunggo.Framework.BlobStorage;
 using Lunggo.Framework.Database;
-using Lunggo.Framework.Queue;
-using Lunggo.Framework.SharedModel;
 using Lunggo.Repository.TableRecord;
 using Lunggo.Repository.TableRepository;
-using Microsoft.WindowsAzure.Storage.Queue;
 
 namespace Lunggo.ApCommon.Payment.Service
 {
@@ -135,7 +125,17 @@ namespace Lunggo.ApCommon.Payment.Service
                 UpdatePaymentToDb(rsvNo, paymentDetails);
             }
             if (method == PaymentMethod.BankTransfer || method == PaymentMethod.VirtualAccount)
-                FlightService.GetInstance().SendTransferInstructionToCustomer(rsvNo);
+            {
+                if (reservation.Type == ProductType.Flight)
+                {
+                    FlightService.GetInstance().SendTransferInstructionToCustomer(rsvNo);
+                }
+                else
+                {
+                    HotelService.GetInstance().SendTransferInstructionToCustomer(rsvNo);
+                }
+            }
+                
             isUpdated = true;
             return paymentDetails;
         }
@@ -148,7 +148,10 @@ namespace Lunggo.ApCommon.Payment.Service
                 //var service = typeof(FlightService);
                 //var serviceInstance = service.GetMethod("GetInstance").Invoke(null, null);
                 //service.GetMethod("Issue").Invoke(serviceInstance, new object[] { rsvNo });
-                FlightService.GetInstance().Issue(rsvNo);
+                if (rsvNo.StartsWith("1"))
+                    FlightService.GetInstance().Issue(rsvNo);
+                if (rsvNo.StartsWith("2"))
+                    HotelService.GetInstance().Issue(rsvNo);
             }
         }
 

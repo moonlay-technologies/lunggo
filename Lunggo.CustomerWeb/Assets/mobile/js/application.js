@@ -1,9 +1,11 @@
 ﻿// check if angular exist
 if (typeof (angular) == 'object') {
     
-    var app = angular.module('Travorama', ['ngRoute']);
+    var app = angular.module('travoramaMobile', ['ngRoute']);
     // root scope
-    app.run(function($rootScope) {
+    app.run(function ($rootScope) {
+        $rootScope.travoramaModuleName = 'travoramaMobile';
+
         $.datepicker.setDefaults(
             $.extend(
             { 'dateFormat': 'dd/mm/yy' },

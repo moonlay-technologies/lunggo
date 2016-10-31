@@ -3,7 +3,7 @@ using Lunggo.Framework.Database;
 
 namespace Lunggo.ApCommon.Flight.Query
 {
-    internal class GetTotalFareQuery : QueryBase<GetTotalFareQuery, decimal>
+    internal class GetTotalFareQuery : DbQueryBase<GetTotalFareQuery, decimal>
     {
         protected override string GetQuery(dynamic condition = null)
         {

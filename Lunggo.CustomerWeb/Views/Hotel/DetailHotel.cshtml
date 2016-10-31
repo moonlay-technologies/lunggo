@@ -2,6 +2,7 @@
     Layout = "/Views/Shared/Travorama20/_Layout20150929.cshtml";
     ViewBag.BodyClass = "page-hotel page-detail";
     ViewBag.Title = "Detail Hotel";
+    ViewBag.AngularController = "hotelDetailController";
 }
 
 @section AdditionalCSS{
@@ -42,10 +43,12 @@
     <script>
         accordionFunctions();
     </script>
+<script src="/Assets/Travorama20/js/hotelDetailController.js"></script>
+
 }
 
 @Html.Partial("/Views/Hotel/Shared/Desktop/_PageSlider.cshtml")
-<div class="travorama-hotel">
+<div class="travorama-hotel" ng-init="init(@Newtonsoft.Json.JsonConvert.SerializeObject(Model))">
     <div class="container">
         <div class="detail-hotel-content">
             @Html.Partial("/Views/Hotel/Shared/Desktop/_BreadCrumb.cshtml")
@@ -53,10 +56,17 @@
             <div class="detail-hotel">
                 <div class="big-slider">
                     <div class="top-desc">
-                        <span class="slider-title-lg blue-txt">Bliss Hotel Singapore</span>
-                        <span class="star star-5"></span>
+                        <span class="slider-title-lg blue-txt">{{hotel.hotelName}}</span>
+                        <div class="" ng-class="{
+                                     '':hotel.starRating.indexOf('0')>-1,
+                                     'star-1 e-star':hotel.starRating.indexOf('1')>-1,
+                                     'star-2 e-star':hotel.starRating.indexOf('2')>-1,
+                                     'star-3 e-star':hotel.starRating.indexOf('3')>-1,
+                                     'star-4 e-star':hotel.starRating.indexOf('4')>-1,
+                                     'star-5':hotel.starRating.indexOf('5')>-1}">
+                        </div>
                         <br />
-                        <span class="address">Kios Tower AB No. 26, Jl. Karet Pasar Gang Tiong No: 62 - Jakarta Barat</span>
+                        <span class="address">{{hotel.address}}{{hotel.city}}{{hotel.country}}</span>
                         <a href="#" class="btn-blue small">Lihat Peta</a>
                     </div>
                     <div class="slider-container clearfix">
@@ -64,7 +74,10 @@
                             <div class="slider">
                                 <div class="flexslider">
                                     <ul class="slides">
-                                        <li data-thumb="/Assets/travorama20/images/Hotel/big-slider-img.jpg">
+                                        <li data-thumb="{{image}}" ng-repeat="image in hotel.images">
+                                            <img ng-src="{{image}}" alt="alternative" />
+                                        </li>
+                                        @*<li data-thumb="/Assets/travorama20/images/Hotel/big-slider-img.jpg">
                                             <img src="/Assets/travorama20/images/Hotel/big-slider-img.jpg" alt="Alternate Text" />
                                         </li>
                                         <li data-thumb="/Assets/travorama20/images/Hotel/big-slider-img.jpg">
@@ -78,10 +91,7 @@
                                         </li>
                                         <li data-thumb="/Assets/travorama20/images/Hotel/big-slider-img.jpg">
                                             <img src="/Assets/travorama20/images/Hotel/big-slider-img.jpg" alt="Alternate Text" />
-                                        </li>
-                                        <li data-thumb="/Assets/travorama20/images/Hotel/big-slider-img.jpg">
-                                            <img src="/Assets/travorama20/images/Hotel/big-slider-img.jpg" alt="Alternate Text" />
-                                        </li>
+                                        </li>*@
                                     </ul>
                                 </div>
                             </div>
@@ -484,18 +494,19 @@
                             </div>
                             <div class="accordion-title accordion md-txt">Deskripsi Hotel</div>
                             <div class="accordion-content show">
-                                <div class="ih-title md-txt">“Clean rooms, Great location, Spotless beds”</div>
+                                @*<div class="ih-title md-txt">“Clean rooms, Great location, Spotless beds”</div>*@
                                 <div class="ih-desc clearfix">
-                                    <div class="col-half ih-l">
+                                    {{hotel.description}}
+                                    @*<div class="col-half ih-l">
                                         This hotel features a fitness centre, an outdoor pool and a rooftop terrace with panoramic city views. It is close to the area's tourist attractions and is minutes on foot from Lavender MRT Station.
                                         <br /><br />
                                         This 4-star hotel offers a coffee bar, a 24-hour reception and an express check-in and check-out feature. Corporate amenities include a business centre.
-                                    </div>
-                                    <div class="col-half ih-r">
+                                    </div>*@
+                                    @*<div class="col-half ih-r">
                                         This hotel features a fitness centre, an outdoor pool and a rooftop terrace with panoramic city views. It is close to the area's tourist attractions and is minutes on foot from Lavender MRT Station.
                                         <br /><br />
                                         This 4-star hotel offers a coffee bar, a 24-hour reception and an express check-in and check-out feature. Corporate amenities include a business centre.
-                                    </div>
+                                    </div>*@
                                 </div>
                             </div>
                             <div class="accordion-title accordion md-txt">Syarat & Ketentuan Hotel</div>

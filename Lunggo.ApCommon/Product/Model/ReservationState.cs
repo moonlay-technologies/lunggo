@@ -68,7 +68,7 @@ namespace Lunggo.ApCommon.Product.Model
             }
         }
 
-        private class GetReservationStateQuery : QueryBase<GetReservationStateQuery, ReservationStateTableRecord>
+        private class GetReservationStateQuery : DbQueryBase<GetReservationStateQuery, ReservationStateTableRecord>
         {
             protected override string GetQuery(dynamic condition = null)
             {

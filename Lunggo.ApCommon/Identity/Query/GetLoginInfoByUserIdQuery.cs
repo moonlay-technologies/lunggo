@@ -7,7 +7,7 @@ namespace Lunggo.ApCommon.Identity.Query
     
 
 
-    public class GetLoginInfoByUserIdQuery : QueryBase<GetLoginInfoByUserIdQuery, GetUserLoginInfoByAnyQueryRecord>
+    public class GetLoginInfoByUserIdQuery : DbQueryBase<GetLoginInfoByUserIdQuery, GetUserLoginInfoByAnyQueryRecord>
     {
         private GetLoginInfoByUserIdQuery()
         {

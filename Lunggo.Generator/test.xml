@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <tables>
-  <table name="Activities" />
+  <table name="HotelRateRule" />
+  <!--<table name="Activities" />
   <table name="ActivityPrice" />
   <table name="ActivityPriceType" />
   <table name="ActivitySwitch" />
@@ -50,5 +51,5 @@
   <table name="User" />
   <table name="UserRole" />
   <table name="VoucherRecipients" />
-  <table name="Voucher" />
+  <table name="Voucher" />-->
 </tables>

@@ -78,9 +78,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\WindowsAzure.Storage.4.3.0\lib\net40\Microsoft.WindowsAzure.Storage.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Newtonsoft.Json.8.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -103,6 +103,9 @@
     <None Include="App.config" />
     <None Include="Config\BackendWeb\api.properties" />
     <None Include="Config\BackendWeb\cw.properties" />
+    <None Include="Config\BackendWeb\documentDb.properties">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Config\BackendWeb\facebook.properties" />
     <None Include="Config\BackendWeb\flight.properties">
       <SubType>Designer</SubType>
@@ -173,7 +176,48 @@
     <None Include="Config\Common\Airline.csv" />
     <None Include="Config\Common\Airport.csv" />
     <None Include="Config\Common\Country.csv" />
-    <None Include="Config\Common\HotelLocation.csv" />
+    <Content Include="Config\Common\HotelAccomodation.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Config\Common\HotelBoard.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Config\Common\HotelCategory.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Config\Common\HotelChain.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Config\Common\HotelCountries.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Config\Common\HotelDestinations.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Config\Common\HotelFacilities.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Config\Common\HotelFacilityGroup.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Config\Common\HotelRoom.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Config\Common\HotelRoomPaymentType.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Config\Common\HotelRoomRateType.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Config\Common\HotelRoomRateClass.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Config\Common\HotelSegment.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Config\Common\HotelLocation.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="Config\CloudApp.EticketHandler\Garuda.properties" />
     <None Include="Config\CustomerWeb\airAsia.properties" />
     <None Include="Config\CustomerWeb\api.properties" />
@@ -200,6 +244,9 @@
     <None Include="Config\CustomerWeb\veritrans.properties" />
     <None Include="Config\CustomerWeb\zendesk.properties" />
     <None Include="Config\Driver\azureStorage.properties" />
+    <None Include="Config\WebAPI\documentDb.properties">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Config\WebAPI\log.properties">
       <SubType>Designer</SubType>
     </None>
@@ -499,6 +546,48 @@
     </None>
     <None Include="Config\WebJob.CurrencyCrawler\veritrans.properties" />
     <None Include="Config\WebJob.CurrencyCrawler\zendesk.properties" />
+    <None Include="Config\WebJob.HotelProcessor\airAsia.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\WebJob.HotelProcessor\api.properties" />
+    <None Include="Config\WebJob.HotelProcessor\azureStorage.properties" />
+    <None Include="Config\WebJob.HotelProcessor\citilink.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\WebJob.HotelProcessor\cw.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\WebJob.HotelProcessor\db.properties" />
+    <None Include="Config\WebJob.HotelProcessor\domain.properties" />
+    <None Include="Config\WebJob.HotelProcessor\facebook.properties" />
+    <None Include="Config\WebJob.HotelProcessor\flight.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\WebJob.HotelProcessor\freshdesk.properties" />
+    <None Include="Config\WebJob.HotelProcessor\Garuda.properties" />
+    <None Include="Config\WebJob.HotelProcessor\general.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\WebJob.HotelProcessor\hotel.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\WebJob.HotelProcessor\lionAir.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\WebJob.HotelProcessor\mandrill.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\WebJob.HotelProcessor\mystifly.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\WebJob.HotelProcessor\redis.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\WebJob.HotelProcessor\sriwijaya.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\WebJob.HotelProcessor\veritrans.properties" />
+    <None Include="Config\WebJob.HotelProcessor\zendesk.properties" />
     <None Include="Config\WebJob.FlightProcessor\airAsia.properties">
       <SubType>Designer</SubType>
     </None>
@@ -695,6 +784,11 @@
     <None Include="Config\CloudApp.EticketHandler\sriwijaya.properties">
       <SubType>Designer</SubType>
     </None>
+    <None Include="HtmlTemplate\BankTransferInstructionEmailHotel.cshtml" />
+    <None Include="HtmlTemplate\HotelSaySorryFailedIssueNotifEmail.cshtml" />
+    <None Include="HtmlTemplate\HotelEticketEmail.cshtml" />
+    <None Include="HtmlTemplate\HotelInvoice.cshtml" />
+    <None Include="HtmlTemplate\HotelEticket.cshtml" />
     <None Include="HtmlTemplate\FlightEticketSlightDelayNotifEmail.cshtml" />
     <None Include="HtmlTemplate\ContactUsEmail.cshtml" />
     <None Include="HtmlTemplate\FlightIssueFailedNotifEmail.cshtml" />
@@ -707,6 +801,7 @@
     <None Include="HtmlTemplate\TransferConfirmationEmail.cshtml" />
     <None Include="HtmlTemplate\FlightChangedEticketEmail.cshtml" />
     <None Include="HtmlTemplate\FlightEticketEmail.cshtml" />
+    <None Include="HtmlTemplate\VirtualAccountInstructionEmailHotel.cshtml" />
     <None Include="HtmlTemplate\VirtualAccountInstructionEmail.cshtml" />
     <None Include="HtmlTemplate\BankTransferInstructionEmail.cshtml" />
     <None Include="HtmlTemplate\ForgotPasswordEmail.cshtml" />

@@ -43,7 +43,6 @@
                     @include size(18px, 18px);
                     @include border-radius(18px);
                     background:#ffffff;
-                    border: 1px solid #ccc;
                 }
             }
             .city-name {float: right;
@@ -71,6 +70,7 @@
                 background: #fff;
                 border: 1px solid #afafaf;
                 border-radius: 3px;
+                cursor:pointer;
                 .col-right-hotel {padding-left: 15px;}
             }
             .facility {

@@ -2,7 +2,7 @@
 
 namespace Lunggo.BackendWeb.Query
 {
-    public class GetHotelBookingDetail : QueryBase<GetHotelBookingDetail, GetHotelBookingDetailRecord>
+    public class GetHotelBookingDetail : DbQueryBase<GetHotelBookingDetail, GetHotelBookingDetailRecord>
     {
         protected override string GetQuery(dynamic condition = null)
         {

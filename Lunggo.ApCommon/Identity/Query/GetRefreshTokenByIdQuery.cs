@@ -5,7 +5,7 @@ using Lunggo.Repository.TableRecord;
 
 namespace Lunggo.ApCommon.Identity.Query
 {
-    public class GetRefreshTokenByIdQuery : QueryBase<GetRefreshTokenByIdQuery, RefreshTokenTableRecord>
+    public class GetRefreshTokenByIdQuery : DbQueryBase<GetRefreshTokenByIdQuery, RefreshTokenTableRecord>
     {
         protected override string GetQuery(dynamic condition = null)
         {

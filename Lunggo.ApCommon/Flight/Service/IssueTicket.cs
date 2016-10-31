@@ -1,13 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Lunggo.ApCommon.Constant;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Model.Logic;
 using Lunggo.ApCommon.Flight.Query;
-//using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.Framework.Database;
 using Lunggo.Framework.Queue;
@@ -40,16 +37,16 @@ namespace Lunggo.ApCommon.Flight.Service
                 (reservation.Payment.Method != PaymentMethod.Credit &&
                  reservation.Payment.Status == PaymentStatus.Settled))
             {
-            var queueService = QueueService.GetInstance();
-            var queue = queueService.GetQueueByReference("FlightIssueTicket");
-            queue.AddMessage(new CloudQueueMessage(input.RsvNo));
+                var queueService = QueueService.GetInstance();
+                var queue = queueService.GetQueueByReference("FlightIssueTicket");
+                queue.AddMessage(new CloudQueueMessage(input.RsvNo));
                 output.IsSuccess = true;
                 return output;
-        }
+            }
             else
             {
                 output.IsSuccess = false;
-                output.Errors = new List<FlightError> { FlightError.NotEligibleToIssue };
+                output.Errors = new List<FlightError> {FlightError.NotEligibleToIssue};
                 return output;
             }
         }

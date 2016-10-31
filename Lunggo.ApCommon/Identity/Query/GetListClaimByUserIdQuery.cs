@@ -4,7 +4,7 @@ using Lunggo.Framework.Database;
 namespace Lunggo.ApCommon.Identity.Query
 {
 
-    public class GetListClaimByUserIdQuery : QueryBase<GetListClaimByUserIdQuery, dynamic>
+    public class GetListClaimByUserIdQuery : DbQueryBase<GetListClaimByUserIdQuery, dynamic>
     {
         private GetListClaimByUserIdQuery()
         {
