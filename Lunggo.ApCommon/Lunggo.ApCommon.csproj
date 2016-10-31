@@ -234,8 +234,10 @@
     <Compile Include="Flight\Model\FlightReservationSearch.cs" />
     <Compile Include="Flight\Model\FlightRsvRule.cs" />
     <Compile Include="Hotel\Constant\AccomodationType.cs" />
+    <Compile Include="Hotel\Constant\HotelError.cs" />
     <Compile Include="Hotel\Constant\PaymentType.cs" />
     <Compile Include="Hotel\Constant\CheckRateStatus.cs" />
+    <Compile Include="Hotel\Constant\SearchHotelType.cs" />
     <Compile Include="Hotel\Constant\SortingType.cs" />
     <Compile Include="Hotel\Model\HotelRateRule.cs" />
     <Compile Include="Hotel\Model\HotelMarginRule.cs" />
@@ -248,6 +250,7 @@
     <Compile Include="Hotel\Model\HotelSorting.cs" />
     <Compile Include="Hotel\Model\Logic\GetHotelDetailInput.cs" />
     <Compile Include="Hotel\Model\Logic\GetHotelDetailOutput.cs" />
+    <Compile Include="Hotel\Model\ResultBase.cs" />
     <Compile Include="Hotel\Query\GetActiveHotelPriceMarginRuleQuery.cs" />
     <Compile Include="Hotel\Query\GetHotelRateRuleQuery.cs" />
     <Compile Include="Hotel\Service\SaveTruncatedHotelDetail.cs" />

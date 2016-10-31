@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Lunggo.ApCommon.Hotel.Constant;
 using Newtonsoft.Json;
 
 namespace Lunggo.ApCommon.Hotel.Model.Logic
 {
-    public class SearchHotelOutput
+    public class SearchHotelOutput : ResultBase
     {
         [JsonProperty("searchId", NullValueHandling = NullValueHandling.Ignore)]
         public string SearchId { get; set; }
@@ -20,6 +21,8 @@ namespace Lunggo.ApCommon.Hotel.Model.Logic
         public int EndPage { get; set; }
         public decimal MaxPrice { get; set; }
         public decimal MinPrice { get; set; }
+        public bool IsSpecificHotel { get; set; }
+        public int? HotelCode { get; set; }
         public HotelFilterDisplayInfo HotelFilterDisplayInfo { get; set; }
     }
 }
