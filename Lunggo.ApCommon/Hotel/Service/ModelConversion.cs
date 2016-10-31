@@ -139,6 +139,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                     RoomCode = roomDetail.RoomCode,
                     RoomName = roomDetail.RoomName,
                     Type = roomDetail.Type,
+                    PaxCapacity = GetPaxCapacity(roomDetail.RoomCode),
                     //TypeName = dictionary.GetHotelRoomRateTypeId(roomDetail.Type),
                     //CharacteristicCode = roomDetail.characteristicCd,
                     //CharacteristicName = dictionary.GetHotelRoomRateTypeId(roomDetail.characteristicCd),

@@ -1054,6 +1054,17 @@ namespace Lunggo.ApCommon.Hotel.Service
                 return 0;
             }
         }
+        public int GetPaxCapacity(string code)
+        {
+            try
+            {
+                return Rooms.Where(r => r.RoomCd == code).ToList()[0].MaxPax;
+            }
+            catch
+            {
+                return 0;
+            }
+        }
         public HotelRoomType GetHotelRoomType(string code)
         {
             try
