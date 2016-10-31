@@ -88,7 +88,7 @@ namespace Lunggo.ApCommon.Hotel.Service
             hotel.OriginalFare = price*1.01M;
         }
 
-        internal HotelDetailForDisplay ConvertToHotelDetailsBaseForDisplay(HotelDetailsBase hotelDetail)
+        internal HotelDetailForDisplay ConvertToHotelDetailsBaseForDisplay(HotelDetailsBase hotelDetail, decimal originalPrice, decimal netPrice)
         {
             if (hotelDetail == null)
                 return null;
@@ -110,6 +110,8 @@ namespace Lunggo.ApCommon.Hotel.Service
                 ZoneName = GetHotelZoneNameFromDict(hotelDetail.DestinationCode + "-" + hotelDetail.ZoneCode),
                 StarRating = hotelDetail.StarCode,
                 ChainName = GetHotelChainDesc(hotelDetail.Chain),
+                OriginalFare = originalPrice,
+                NetFare = netPrice,
                 //Segments =  //TODO "List of Segment by SegmentCode"
                 Pois = hotelDetail.Pois,
                 Terminals =  hotelDetail.Terminals,
@@ -195,16 +197,16 @@ namespace Lunggo.ApCommon.Hotel.Service
                     Cancellation = rateDetail.Cancellation,
                     Offers = rateDetail.Offers,
                 };
-                SetDisplayPriceHotelRate(rate);
+                SetDisplayPriceHotelRate(rate, rateDetail);
                 convertedRate.Add(rate);
             }
             return convertedRate;
         }
 
-        public void SetDisplayPriceHotelRate(HotelRateForDisplay rate)
+        public void SetDisplayPriceHotelRate(HotelRateForDisplay rateDisplay,HotelRate rate)
         {
-            rate.NetPrice = rate.Price.Local;
-            rate.OriginalPrice = rate.NetPrice*1.01M;
+            rateDisplay.NetPrice = rate.Price.Local;
+            rateDisplay.OriginalPrice = rateDisplay.NetPrice*1.01M;
         }
 
         private static RsvDisplayStatus MapReservationStatus(HotelReservation reservation)
