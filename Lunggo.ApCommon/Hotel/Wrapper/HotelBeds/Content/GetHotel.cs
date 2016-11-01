@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Globalization;
 using System.Threading;
 using Lunggo.ApCommon.Hotel.Model;
 using Lunggo.ApCommon.Hotel.Service;
@@ -90,7 +91,7 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.Content
                                                 Distance = p.distance,
                                                 Description = p.description
                                             }).ToList(),
-                                    ZoneCode = hotelRS.zoneCode,
+                                    ZoneCode = hotelRS.destinationCode + '-' + hotelRS.zoneCode.ToString(CultureInfo.InvariantCulture),
                                     CountryCode = hotelRS.countryCode,
                                     Pois = hotelRS.InterestPoints == null
                                         ? null

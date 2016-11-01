@@ -50,7 +50,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                 HotelName = hotelDetail.HotelName,
                 Address = hotelDetail.Address,
                 City = hotelDetail.City,
-                ZoneName = GetHotelZoneNameFromDict(hotelDetail.DestinationCode+"-"+hotelDetail.ZoneCode),
+                ZoneName = GetZoneNameFromDict(hotelDetail.ZoneCode),
                 StarRating = hotelDetail.StarCode,
                 //ChainName = GetHotelChainDesc(hotelDetail.Chain),
                 AccomodationName = GetHotelAccomodationDescId(hotelDetail.AccomodationType),
@@ -107,7 +107,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                 Description = hotelDetail.Description == null ? null : hotelDetail.Description.Where(x => x.languageCode.Equals("IND"))
                                 .Select(x => x.Description).SingleOrDefault(),
                 PhonesNumbers = hotelDetail.PhonesNumbers,
-                ZoneName = GetHotelZoneNameFromDict(hotelDetail.DestinationCode + "-" + hotelDetail.ZoneCode),
+                ZoneName = GetZoneNameFromDict(hotelDetail.ZoneCode),
                 StarRating = hotelDetail.StarCode,
                 ChainName = GetHotelChainDesc(hotelDetail.Chain),
                 OriginalFare = originalPrice,

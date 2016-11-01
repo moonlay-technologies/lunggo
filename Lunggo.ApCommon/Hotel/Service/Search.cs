@@ -194,15 +194,15 @@ namespace Lunggo.ApCommon.Hotel.Service
                     switch (detailDestination.Type)
                     {
                         case AutocompleteType.Zone:
-                            var splittedZone = detailDestination.Code.Split('-');
-                            request.Zone = int.Parse(splittedZone[1].Trim());
-                            request.Destination = splittedZone[0].Trim();
+                            request.Zone = detailDestination.Code;
                             break;
                         case AutocompleteType.Destination:
                             request.Destination = detailDestination.Code;
                             isByDestination = true;
                             break;
-
+                        case AutocompleteType.Area:
+                            request.Area = detailDestination.Code;
+                            break;
                         case AutocompleteType.Hotel:
                             request.HotelCode = int.Parse(detailDestination.Code);
                             break;
@@ -332,7 +332,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                             {
                                 Code = hotelDetail.ZoneCode,
                                 Count = 1,
-                                Name = GetHotelZoneNameFromDict(hotelDetail.DestinationCode + "-" + hotelDetail.ZoneCode)
+                                Name = GetZoneNameFromDict(hotelDetail.ZoneCode)
                             });
                         }
                         else

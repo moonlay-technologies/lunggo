@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Services.Client;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,12 +14,51 @@ namespace Lunggo.ApCommon.Hotel.Service
 {
     public partial class HotelService
     {
+        public void SaveHotelLocationInStorage(string destination, string zoneOrArea, int hotelCode)
+        {
+            var table = TableStorageService.GetInstance().GetTableByReference("hotelLocation");
+            var retrieveOp = TableOperation.Retrieve<DynamicTableEntity>(destination, zoneOrArea);
+            var retrievedRow = (DynamicTableEntity) table.Execute(retrieveOp).Result;
+            var hotelCodes = retrievedRow == null ? null : retrievedRow.Properties["HotelCode"].StringValue;
+            var updatedHotelCodes = string.IsNullOrEmpty(hotelCodes) ? hotelCode.ToString(CultureInfo.InvariantCulture) : string.Join(",", hotelCodes, hotelCode);
+            var row = new DynamicTableEntity(destination, zoneOrArea, null, new Dictionary<string, EntityProperty>
+            {
+                {"HotelCode", new EntityProperty(updatedHotelCodes)}
+            });
+            TableStorageService.GetInstance().InsertOrReplaceEntityToTableStorage(row, "hotelsByLocation");
+        }
+
+        internal List<int> GetHotelListByLocationFromStorage(string location)
+        {
+            var table = TableStorageService.GetInstance().GetTableByReference("hotelsByLocation");
+            var splitLocation = location.Split('-');
+            if (splitLocation.Length > 1)
+            {
+                var destination = splitLocation[0];
+                var retrieveOp = TableOperation.Retrieve<DynamicTableEntity>(destination, location);
+                var retrievedRow = (DynamicTableEntity)table.Execute(retrieveOp).Result;
+                return retrievedRow == null ? 
+                    new List<int>() : 
+                    retrievedRow.Properties["HotelCode"].StringValue.Split(',').Select(int.Parse).ToList();
+            }
+            else
+            {
+                var query =
+                    new TableQuery<DynamicTableEntity>()
+                        .Where(TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal, location))
+                        .Select(new[] { "HotelCode" });
+                var hotelCodes =
+                    table.ExecuteQuery(query).Select(r => r["HotelCode"].StringValue.Split(',')).ToList();
+                return hotelCodes.SelectMany(s => s).Select(int.Parse).ToList();
+            }
+        }
+
         public void SaveHotelDetailToTableStorage(HotelDetailsBase hotelDetail, int hotelCd)
         {
-            HotelDetailWrapper hotel = new HotelDetailWrapper("hotel",hotelCd.ToString());
+            HotelDetailWrapper hotel = new HotelDetailWrapper("hotel", hotelCd.ToString());
             var data = hotelDetail.Serialize();
             var splittedData = SplitByLength(data, 30000);
-            DivideData(hotel,splittedData);
+            DivideData(hotel, splittedData);
             var tableClient = TableStorageService.GetInstance();
             var table = tableClient.GetTableByReference("hoteldetail");
             var insertOp = TableOperation.InsertOrReplace(hotel);
@@ -91,7 +131,7 @@ namespace Lunggo.ApCommon.Hotel.Service
             }
             catch (Exception e)
             {
-                
+
             }
         }
 
@@ -119,7 +159,7 @@ namespace Lunggo.ApCommon.Hotel.Service
 
             // Execute the retrieve operation.
             TableResult retrievedResult = table.Execute(retrieveOperation);
-            HotelDetailWrapper resultWrapper = (HotelDetailWrapper) retrievedResult.Result;
+            HotelDetailWrapper resultWrapper = (HotelDetailWrapper)retrievedResult.Result;
             var concatedResult = ConcateData(resultWrapper);
             HotelDetailsBase result = concatedResult.Deserialize<HotelDetailsBase>();
             return result;
@@ -214,7 +254,7 @@ namespace Lunggo.ApCommon.Hotel.Service
             }
             catch
             {
-                
+
             }
 
             return data.ToString();
