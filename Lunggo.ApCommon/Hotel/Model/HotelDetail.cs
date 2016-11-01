@@ -170,6 +170,7 @@ namespace Lunggo.ApCommon.Hotel.Model
         public int Distance;
         [JsonProperty("terminalCode", NullValueHandling = NullValueHandling.Ignore)]
         public string TerminalCode;
+
         [JsonProperty("name", NullValueHandling = NullValueHandling.Ignore)]
         public Description Name;
         [JsonProperty("description", NullValueHandling = NullValueHandling.Ignore)]

@@ -47,45 +47,45 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Content
                     var rateCommentRs = client.GetRateComment(param);
                     foreach (var rateComs in rateCommentRs.rateComments)
                     {
-                        var rateComment = new HotelRateComment
+                        foreach (var rates in rateComs.commentsByRates)
                         {
-                            Code = rateComs.code,
-                            HotelCode = rateComs.hotel,
-                            Incoming = rateComs.incoming,
-                            CommentsByRates = rateComs.commentsByRates==null?null:rateComs.commentsByRates.Select(x=> new CommentsByRates
+                            foreach (var rateCd in rates.rateCodes)
                             {
-                                RateCodes = x.rateCodes,
-                                Comments = x.comments ==null?null:x.comments.Select(p=>  new Comment
+                                foreach (var date in rates.comments)
                                 {
-                                    DateStart = p.dateStart,
-                                    DateEnd = p.dateEnd,
-                                    Description = p.description
-                                }).ToList(),
-                            }).ToList()
-                        };
-                        Debug.Print("Insert ke-" + dataCount);
-                        InsertRateCommentToTableStorage(rateComment);
-                        dataCount++;
-
-                        //foreach (var rates in rateComs.commentsByRates)
+                                    var rateComment = new HotelRateComment
+                                    {
+                                        Code = rateComs.code,
+                                        Incoming = rateComs.incoming,
+                                        HotelCode = rateComs.hotel,
+                                        RateCode = rateCd,
+                                        DateStart = date.dateStart,
+                                        DateEnd = date.dateEnd,
+                                        Description = date.description
+                                    };
+                                    Debug.Print("Insert ke-" + dataCount);
+                                    InsertRateCommentToTableStorage(rateComment);
+                                    dataCount++;
+                                }
+                            }
+                        }
+                        //var rateComment = new HotelRateComment
                         //{
-                        //    foreach (var rateCd in rates.rateCodes)
+                        //    Code = rateComs.code,
+                        //    HotelCode = rateComs.hotel,
+                        //    Incoming = rateComs.incoming,
+                        //    CommentsByRates = rateComs.commentsByRates == null ? null : rateComs.commentsByRates.Select(x => new CommentsByRates
                         //    {
-                        //        var rateComment = new HotelRateComment
+                        //        RateCodes = x.rateCodes,
+                        //        Comments = x.comments == null ? null : x.comments.Select(p => new Comment
                         //        {
-                        //            Code = rateComs.code,
-                        //            Incoming =  rateComs.incoming,
-                        //            HotelCode = rateComs.hotel,
-                        //            RateCode = rateCd,
-                        //            Comments = rates.comments==null?null:rates.comments.Select(x=> new Comment
-                        //            {
-                        //                DateStart = x.dateStart,
-                        //                DateEnd = x.dateEnd,
-                        //                Description = x.description
-                        //            }).ToList(),
-                        //        };
-                        //    }
-                        //}
+                        //            DateStart = p.dateStart,
+                        //            DateEnd = p.dateEnd,
+                        //            Description = p.description
+                        //        }).ToList(),
+                        //    }).ToList()
+                        //};
+                       
                     }
                     from = from + 1000;
                     to = to + 1000;

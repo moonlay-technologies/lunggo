@@ -39,10 +39,11 @@ namespace Lunggo.ApCommon.Hotel.Service
         public void SetDetailFromSearchResult(HotelDetailsBase hotel ,string searchId)
         {
             var searchResultData = GetSearchHotelResultFromCache(searchId);
-            var SearchResulthotel = searchResultData.HotelDetails.SingleOrDefault(p => p.HotelCode == hotel.HotelCode);
-            hotel.Rooms = SearchResulthotel.Rooms;
-            OriginalPrice = SearchResulthotel.OriginalFare;
-            NetFare = SearchResulthotel.NetFare;
+            var searchResulthotel = searchResultData.HotelDetails.SingleOrDefault(p => p.HotelCode == hotel.HotelCode);
+            hotel.Rooms = searchResulthotel.Rooms;
+            SetRegIdsAndTnc(hotel.Rooms, searchResulthotel.CheckInDate, hotel.HotelCode);
+            OriginalPrice = searchResulthotel.OriginalFare;
+            NetFare = searchResulthotel.NetFare;
         }
 
         public void SetHotelFullFacilityCode(HotelDetailsBase hotel)

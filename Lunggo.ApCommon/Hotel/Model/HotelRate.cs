@@ -74,6 +74,8 @@ namespace Lunggo.ApCommon.Hotel.Model
 
         [JsonProperty("childrenAges", NullValueHandling = NullValueHandling.Ignore)]
         public List<int> ChildrenAges { get; set; }
+        [JsonProperty("tnc", NullValueHandling = NullValueHandling.Ignore)]
+        public List<string> TermAndCondition { get; set; }
     }
 
     public class HotelRate : OrderBase
@@ -112,6 +114,8 @@ namespace Lunggo.ApCommon.Hotel.Model
         public int Allotment { get; set; }
         [JsonProperty("rateCommentsId", NullValueHandling = NullValueHandling.Ignore)]
         public string RateCommentsId { get; set; }
+        [JsonProperty("tnc", NullValueHandling = NullValueHandling.Ignore)]
+        public List<string> TermAndCondition { get; set; }
         
     }
 

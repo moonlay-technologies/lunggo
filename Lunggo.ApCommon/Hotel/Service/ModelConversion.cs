@@ -107,15 +107,17 @@ namespace Lunggo.ApCommon.Hotel.Service
                 Description = hotelDetail.Description == null ? null : hotelDetail.Description.Where(x => x.languageCode.Equals("IND"))
                                 .Select(x => x.Description).SingleOrDefault(),
                 PhonesNumbers = hotelDetail.PhonesNumbers,
-                ZoneName = GetZoneNameFromDict(hotelDetail.ZoneCode),
-                StarRating = hotelDetail.StarCode,
+                ZoneName = GetZoneNameFromDict(hotelDetail.DestinationCode +"-"+ hotelDetail.ZoneCode),
+                StarRating = GetSimpleCodeByCategoryCode(hotelDetail.StarRating),
                 ChainName = GetHotelChainDesc(hotelDetail.Chain),
                 OriginalFare = originalPrice,
                 NetFare = netPrice,
                 //Segments =  //TODO "List of Segment by SegmentCode"
                 Pois = hotelDetail.Pois,
                 Terminals =  hotelDetail.Terminals,
-                Facilities = hotelDetail.Facilities == null?null:hotelDetail.Facilities.Select(x => (GetHotelFacilityDescId(Convert.ToInt32(x.FullFacilityCode)))).ToList(),
+                Facilities = hotelDetail.Facilities == null?null:hotelDetail.Facilities
+                    .Where(x=>x.MustDisplay==true ||x.IsAvailable==true)
+                    .Select(x => (GetHotelFacilityDescId(Convert.ToInt32(x.FullFacilityCode)))).ToList(),
                 Review = hotelDetail.Review,
                 Rooms = ConvertToHotelRoomForDisplay(hotelDetail.Rooms),
                 AccomodationName = GetHotelAccomodationMultiDesc(hotelDetail.AccomodationType),
@@ -205,6 +207,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                     TimeLimit = rateDetail.TimeLimit,
                     Cancellation = rateDetail.Cancellation,
                     Offers = rateDetail.Offers,
+                    TermAndCondition = rateDetail.TermAndCondition
                 };
                 SetDisplayPriceHotelRate(rate, rateDetail);
                 convertedRate.Add(rate);
