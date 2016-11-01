@@ -18,5 +18,14 @@ namespace Lunggo.CustomerWeb.Controllers
         {
             return View();
         }
+
+        //Buat ngelempar ke halaman payment
+        [RequireHttps]
+        [HttpPost]
+        [ActionName("Checkout")]
+        public ActionResult CheckoutPost(string rsvNo)
+        {
+            return RedirectToAction("Payment", "Payment", new { rsvNo });
+        }
     }
 }

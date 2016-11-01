@@ -17,7 +17,7 @@ namespace Lunggo.ApCommon.Payment.Service
 {
     public partial class PaymentService
     {
-        internal PaymentDetails GetPayment(string rsvNo)
+        public PaymentDetails GetPayment(string rsvNo)
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {

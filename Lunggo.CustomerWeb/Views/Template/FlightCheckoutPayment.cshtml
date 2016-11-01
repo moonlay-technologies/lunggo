@@ -55,18 +55,18 @@
         var rsvNo = @Model.RsvNo;
         var paymentDetail = '';
         var flightDetail = '';
-        var trips = @Html.Raw(Model.Reservation.Itinerary.Trips.Serialize());
-        var price = @Model.Reservation.Itinerary.TotalFare;
+        var trips = @Html.Raw(Model.FlightReservation.Itinerary.Trips.Serialize());
+        var price = @Model.FlightReservation.Itinerary.TotalFare;
         var departureDate;
-        @if (Model.Reservation.Itinerary.Trips != null)
+        @if (Model.FlightReservation.Itinerary.Trips != null)
         {
-            if (Model.Reservation.Itinerary.Trips.Count == 2)
+            if (Model.FlightReservation.Itinerary.Trips.Count == 2)
             {
-                @:departureDate = '@Model.Reservation.Itinerary.Trips[1].DepartureDate';
+                @:departureDate = '@Model.FlightReservation.Itinerary.Trips[1].DepartureDate';
                                             }
             else
             {
-                @:departureDate = '@Model.Reservation.Itinerary.Trips[0].DepartureDate';
+                @:departureDate = '@Model.FlightReservation.Itinerary.Trips[0].DepartureDate';
                                             }
         }
 

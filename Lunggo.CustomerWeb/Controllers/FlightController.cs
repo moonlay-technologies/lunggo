@@ -127,68 +127,7 @@ namespace Lunggo.CustomerWeb.Controllers
         [ActionName("Checkout")]
         public ActionResult CheckoutPost(string rsvNo)
         {
-            return RedirectToAction("Payment", "Flight", new { rsvNo });
-        }
-
-        [RequireHttps]
-        public ActionResult Payment(string rsvNo)
-        {
-            var flight = FlightService.GetInstance();
-            var payment = PaymentService.GetInstance();
-            var reservation = flight.GetReservationForDisplay(rsvNo);
-            //if (reservation.Payment.Status == PaymentStatus.Pending)
-            //{
-            try
-            {
-                //var savedCreditCards = User.Identity.IsAuthenticated
-                //    ? payment.GetSavedCreditCards(User.Identity.GetEmail())
-                //    : new List<SavedCreditCard>();
-                var x = reservation.Itinerary.Trips;
-                return View(new FlightPaymentData
-                {
-                    RsvNo = rsvNo,
-                    Reservation = reservation,
-                    TimeLimit = reservation.Payment.TimeLimit.GetValueOrDefault(),
-                    //SavedCreditCards = savedCreditCards
-                });
-
-            }
-            catch
-            {
-                ViewBag.Message = "Failed";
-                return View(new FlightPaymentData
-                {
-                    RsvNo = rsvNo
-                });
-            }
-            //}
-            //else
-            //{
-            //    return RedirectToAction("Thankyou", "Flight", new { rsvNo });
-            //}
-
-        }
-
-        [RequireHttps]
-        [HttpPost]
-        [ActionName("Payment")]
-        public ActionResult PaymentPost(string rsvNo, string paymentUrl)
-        {
-            var flight = FlightService.GetInstance();
-            var reservation = flight.GetReservationForDisplay(rsvNo);
-            if (reservation.Payment.Method == PaymentMethod.BankTransfer || reservation.Payment.Method == PaymentMethod.VirtualAccount)
-            {
-                return RedirectToAction("Confirmation", "Flight", new { rsvNo });
-            }
-            else if (!string.IsNullOrEmpty(paymentUrl))
-            {
-                return Redirect(paymentUrl);
-            }
-            else
-            {
-                TempData["AllowThisThankyouPage"] = rsvNo;
-                return RedirectToAction("Thankyou", "Flight", new { rsvNo });
-            }
+            return RedirectToAction("Payment", "Payment", new { rsvNo });
         }
 
         public ActionResult Thankyou(string rsvNo)
