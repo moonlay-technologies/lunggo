@@ -53,7 +53,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                 if (hotels != null && input.FilterParam != null)
                 {
                     hotels = searchResult.HotelDetails.Where(p =>
-                    (input.FilterParam.ZoneFilter == null || input.FilterParam.ZoneFilter.Zones.Contains(p.ZoneCode)) &&
+                    (input.FilterParam.ZoneFilter == null || input.FilterParam.ZoneFilter.Zones.Contains(Convert.ToInt32(p.ZoneCode))) &&
                     (input.FilterParam.AccommodationTypeFilter == null || input.FilterParam.AccommodationTypeFilter.Accomodations.Contains(p.AccomodationType)) &&
                     (facilityData.Count == 0 || facilityData.Any(e=> p.Facilities.Select(x=>x.FullFacilityCode).ToList().Contains(e))) &&
                     (input.FilterParam.StarFilter == null || input.FilterParam.StarFilter.Stars.Contains(p.StarCode)) &&
@@ -311,7 +311,7 @@ namespace Lunggo.ApCommon.Hotel.Service
         public HotelFilterDisplayInfo SetHotelFilterDisplayInfo(List<HotelDetail> hotels, bool isByDestination)
         {
             var filter = new HotelFilterDisplayInfo();
-            var zoneDict = new Dictionary<int, ZoneFilterInfo>();
+            var zoneDict = new Dictionary<string, ZoneFilterInfo>();
             var starDict = new Dictionary<int, StarFilterInfo>();
             var accDict = new Dictionary<string, AccomodationFilterInfo>();
             var facilityDict = HotelFacilityFilters.Keys.ToDictionary(key => key, key => new FacilitiesFilterInfo
