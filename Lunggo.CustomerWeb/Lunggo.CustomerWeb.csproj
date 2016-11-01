@@ -307,6 +307,10 @@
     <Content Include="Assets\images\hotel-star-4.png" />
     <Content Include="Assets\images\location.png" />
     <Content Include="Assets\images\order-hotel-list-bg.png" />
+    <Content Include="Assets\images\swim.png" />
+    <Content Include="Assets\images\voucher-hotel-bg.jpg" />
+    <Content Include="Assets\images\voucher-hotel.jpg" />
+    <Content Include="Assets\images\wifi.png" />
     <Content Include="Assets\js\xml2json.min.js" />
     <Content Include="Assets\images\phone.png" />
     <Content Include="Assets\mobile\images\adult.png" />
@@ -2965,6 +2969,8 @@
     <Content Include="Views\Hotel\OrderHotelHistoryDetail.mobile.cshtml" />
     <Content Include="Views\Hotel\Shared\Desktop\_SearchHotelForm.cshtml" />
     <Content Include="Views\Hotel\HotelSearchForm.cshtml" />
+    <Content Include="Views\Hotel\VoucherHotel.cshtml" />
+    <Content Include="Views\Hotel\Shared\Mobile\_SearchHotelForm.cshtml" />
     <None Include="Views\Template\eticket.cshtml" />
     <Content Include="Views\Template\OrderFlightHistory.cshtml" />
     <Content Include="Views\Template\PrivacyPolicy.cshtml" />

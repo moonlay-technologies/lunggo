@@ -27,10 +27,9 @@
             }
         });
         $('body .hotel-detail-menu-action a').on('click touchstart', function () {
-            var id = $(this).attr('href');
+            var id = $(this).attr('attr-link');
             $('body .detail-tab').hide();
             $(id).show();
-            $(id).scrollTop(0);
         });
 
         // **********

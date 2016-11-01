@@ -17,9 +17,15 @@ namespace Lunggo.CustomerWeb.Controllers
             try
             {
                 NameValueCollection query = Request.QueryString;
-                HotelSearchApiRequest model = new HotelSearchApiRequest(query[0]);
+                if (query.Count > 0)
+                {
+                    HotelSearchApiRequest model = new HotelSearchApiRequest(query[0]);
 
-                return View(model);
+                    return View(model); 
+                }
+
+                return View();
+
             }
             catch (Exception ex)
             {
@@ -28,10 +34,15 @@ namespace Lunggo.CustomerWeb.Controllers
 
         }
 
-        public ActionResult DetailHotel(string searchId, int hotelCd)
+        public ActionResult DetailHotel()
         {
-            return View(new { searchId, hotelCd });
+            return View();
         }
+
+        //public ActionResult DetailHotel(string searchId, int hotelCd)
+        //{
+        //    return View(new { searchId, hotelCd });
+        //}
 
         public ActionResult Checkout()
         {
@@ -54,6 +65,10 @@ namespace Lunggo.CustomerWeb.Controllers
             return View();
         }
         public ActionResult EmailVoucher()
+        {
+            return View();
+        }
+        public ActionResult VoucherHotel()
         {
             return View();
         }
