@@ -24,20 +24,5 @@
         <div><b>Denpasar</b>, 2 Kamar</div>
         <div class="semibold-txt">1 Malam (4 Okt 2016 - 5 Okt 2016)</div>
     </div>
-    <a ng-click="SetOverlay('hotel-form')" class="summary-right"><span>GANTI</span></a>
-</div>
-
-<!-- .overlay - change flight -->
-<div class="overlay overlay--theme--blue overlay--hotel-form" ng-class="{'active' : (PageConfig.ActiveOverlay == 'hotel-form')}">
-    <header class="overlay__header">
-        <h3 class="overlay__title">
-            <b>GANTI HOTEL</b>
-            <span class="overlay__close" ng-click="SetOverlay()">X</span>
-        </h3>
-    </header><!-- .overlay__header -->
-    <section class="overlay__content">
-        <div class="form-wrapper">
-            @Html.Partial("/Views/Hotel/Shared/Mobile/_SearchHotelForm.cshtml")
-        </div>
-    </section>
+    <a class="summary-right"><span>GANTI</span></a>
 </div>

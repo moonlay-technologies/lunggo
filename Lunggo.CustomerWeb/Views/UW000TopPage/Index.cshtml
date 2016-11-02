@@ -293,7 +293,7 @@
 
                         <div class="form-group hotel-location ">
                             <div class="col-xs-12">
-                                <input type="text" name="hotelLocation" value="" class="form-hotel-location form-control" placeholder="Kota, Wilayah atau Nama Hotel" ng-model="hotel.location" />
+                                <input type="text" name="hotelLocation" value="" class="form-hotel-location form-control" placeholder="Kota, Wilayah atau Nama Hotel" ng-model="hotel.locationDisplay" ng-click="view.showHotelSearch = true" />
                             </div>
                         </div>
                         <div class="form-hotel-checkin">
@@ -347,10 +347,10 @@
                                         <div class="col-2 clearfix">
                                             <a href="" class="increase" ng-click="addValue('childCount', 1)"></a>
                                             <a href="" class="decrease" ng-click="addValue('childCount', -1)"></a>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
+                        </div>
                         </div>
                         <div class="form-group hotel-submit">
                             <div class="col-xs-12">

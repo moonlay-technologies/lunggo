@@ -31,7 +31,7 @@
       })(document,"//cdn.hokolinks.com/banner/v1/","script","7ebdfcd03161adc9");
     </script>*@
 </head>
-    <body class="@ViewBag.BodyClass" @(ViewBag.AngularController != null ? "ng-app=travoramaMobile ng-controller=" + ViewBag.AngularController+" ng-class={'no-scroll':PageConfig.BodyNoScroll,'burger-shown':PageConfig.BurgerShown}" : "")>
+    <body class="@ViewBag.BodyClass" @(ViewBag.AngularController != null ? "ng-app=travoramaMobile ng-controller=" + ViewBag.AngularController+" ng-class={'no-scroll':PageConfig.BodyNoScroll,'burger-shown':PageConfig.BurgerShown}" : "") ng-cloak>
         @Html.Partial("/Views/Shared/_googleTag.cshtml")
 
         <!--********************-->

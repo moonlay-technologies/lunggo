@@ -1,4 +1,6 @@
-﻿using Lunggo.CustomerWeb.Models;
+﻿using Lunggo.ApCommon.Hotel.Service;
+using Lunggo.ApCommon.Payment.Service;
+using Lunggo.CustomerWeb.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -17,16 +19,10 @@ namespace Lunggo.CustomerWeb.Controllers
             try
             {
                 NameValueCollection query = Request.QueryString;
-                if (query.Count > 0)
-                {
-                    HotelSearchApiRequest model = new HotelSearchApiRequest(query[0]);
+                HotelSearchApiRequest model = new HotelSearchApiRequest(query[0]);
 
-                    return View(model); 
-                }
-
-            return View();
-
-        }
+                return View(model);
+            }
             catch (Exception ex)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest, ex.Message);
@@ -34,20 +30,84 @@ namespace Lunggo.CustomerWeb.Controllers
 
         }
 
-        public ActionResult DetailHotel()
+        public ActionResult DetailHotel(string searchId, int hotelCd)
         {
-            return View();
+            return View(new { searchId, hotelCd });
         }
 
+        //public ActionResult Checkout()
+        //{
+        //    return View();
+        //}
+
+        [RequireHttps]
+        public ActionResult Checkout(string token)
+        {
+            var hotelDetail = HotelService.GetInstance().GetSelectionFromCache(token);
+
+            if (hotelDetail != null)
+            {
+                if (TempData["HotelCheckoutOrBookingError"] != null)
+                {
+                    ViewBag.Message = "BookFailed";
+                    return View();
+
+                }
+
+                if (token == null)
+                {
+                    ViewBag.Message = "BookExpired";
+                    return View();
+                }
+           
+                try
+                {
+                    var hotelService = HotelService.GetInstance();
+                    var payment = PaymentService.GetInstance();
+                    //var expiryTime = hotelService.GetSelectionExpiry(token);
+                    //var savedPassengers = flight.GetSavedPassengers(User.Identity.GetEmail());
+                    //var savedCreditCards = User.Identity.IsAuthenticated
+                    //    ? payment.GetSavedCreditCards(User.Identity.GetEmail())
+                    //    : new List<SavedCreditCard>();
+                    return View(new HotelCheckoutData
+                    {
+                        Token = token,
+                        HotelDetail = hotelDetail,
+                       // ExpiryTime = expiryTime.GetValueOrDefault(),
+                        //SavedPassengers = savedPassengers,
+                        //SavedCreditCards = savedCreditCards
+                    });
+                }
+                catch
+                {
+                    ViewBag.Message = "BookExpired";
+                    return View(new HotelCheckoutData
+                    {
+                        Token = token
+                    });
+                }
+            }
+            else
+            {
+                return RedirectToAction("Index", "UW000TopPage");
+            }
+
+        }
+
+        [RequireHttps]
+        [HttpPost]
+        [ActionName("Checkout")]
+        public ActionResult CheckoutPost(string rsvNo)
+        {
+            return RedirectToAction("Payment", "Payment", new { rsvNo });
+        }
+
+        
         //public ActionResult DetailHotel(string searchId, int hotelCd)
         //{
         //    return View(new { searchId, hotelCd });
         //}
 
-        public ActionResult Checkout()
-        {
-            return View();
-        }
         public ActionResult Thankyou()
         {
             return View();
@@ -75,15 +135,6 @@ namespace Lunggo.CustomerWeb.Controllers
         public ActionResult SorryEmailHotel()
         {
             return View();
-        }
-
-        //Buat ngelempar ke halaman payment
-        [RequireHttps]
-        [HttpPost]
-        [ActionName("Checkout")]
-        public ActionResult CheckoutPost(string rsvNo)
-        {
-            return RedirectToAction("Payment", "Payment", new { rsvNo });
         }
     }
 }

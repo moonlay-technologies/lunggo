@@ -1,12 +1,40 @@
 ﻿jQuery(document).ready(function ($) {
-    $('body .checkbox').on('click touchstart', function () {
+    //$('body .checkbox').on('click touchstart', function () {
+    //    var id = $(this).parent().find('.check');
+    //    if ($(id).is(':checked')) {
+    //        id.checked = false;
+    //        $(this).removeClass('active');
+    //    } else {
+    //        id.checked = true;
+    //        $(this).addClass('active');
+    //    }
+    //});
+
+    //$('body .sqr').on('click touchstart', function () {
+    //    var id = $(this).find('.check');
+    //    var checkbox = $(this).find('.checkbox');
+
+    //    if ($(id).is(':checked')) {
+    //        id.val(false);
+    //        checkbox.removeClass('active');
+    //    } else {
+    //        id.val(true);
+    //        //$(id).is(':checked') = true;
+    //        checkbox.addClass('active');
+    //    }
+    //});
+
+    $('body .sqra').on('click touchstart', function () {
         var id = $(this).parent().find('.check');
+        var checkbox = $(this).parent().find('.checkbox');
+
         if ($(id).is(':checked')) {
-            id.checked = false;
-            $(this).removeClass('active');
+            id.val(true);
+            //$(id).is(':checked') = true;
+            checkbox.addClass('active');
         } else {
-            id.checked = true;
-            $(this).addClass('active');
+            id.val(false);
+            checkbox.removeClass('active');
         }
     });
 
@@ -18,22 +46,15 @@
         $(this).addClass('active');
     });
 
-    $(function () {
-        $("body .col-left-hotel .img-list").each(function (i, elem) {
-            var img = $(elem);
-            var div = $("<div />").css({
-                background: "url(" + img.attr("src") + ") no-repeat",
-                width: "143px",
-                height: "180px",
-                "background-size": "cover",
-                "background-position": "center"
-            });
-            img.replaceWith(div);
-        });
+    $("body .img-list").each(function (i, elem) {
+        var img = $(elem);
+        var div = $("<div />").css({
+            background: "url(" + img.attr("src") + ") no-repeat",
+            width: "143px",
+            height: "180px",
+            "background-size": "cover",
+            "background-position": "center"
     });
-
-    //Ubah Pencarian Hotel
-    $('body .search-result-form-trigger').on('click', function () {
-        $('body .hotel-form').slideToggle("slow");
+        img.replaceWith(div);
     });
 });

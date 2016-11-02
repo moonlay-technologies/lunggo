@@ -98,6 +98,12 @@ namespace Lunggo.BackendWeb
             //            ChildCount = 2,
             //            RoomCount = 2,
             //            ChildrenAges = new List<int>{8, 6}
+            //        },
+            //        new Occupancy
+            //        {
+            //            AdultCount = 1,
+            //            ChildCount = 0,
+            //            RoomCount = 1,
             //        }
             //    },
             //    Nights = 3

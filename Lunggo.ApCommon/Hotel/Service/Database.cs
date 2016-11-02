@@ -263,7 +263,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                             RoomCount = rate.RateCount,
                             RateKey = rate.RateKey,
                             PaymentType = PaymentTypeCd.MnemonicToString(rate.PaymentType),
-                            ChildrenAges = rate.ChildrenAges.Serialize()
+                            ChildrenAges = rate.ChildrenAges != null ? rate.ChildrenAges.Serialize() : null
                         };
 
                         HotelRateTableRepo.GetInstance().Insert(conn, rateRecord);

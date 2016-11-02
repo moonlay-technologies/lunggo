@@ -77,9 +77,24 @@
                                         <li data-thumb="{{image}}" ng-repeat="image in hotel.images">
                                             <img ng-src="{{image}}" alt="alternative" />
                                         </li>
+                                        @*<li data-thumb="/Assets/travorama20/images/Hotel/big-slider-img.jpg">
+                                            <img src="/Assets/travorama20/images/Hotel/big-slider-img.jpg" alt="Alternate Text" />
+                                        </li>
+                                        <li data-thumb="/Assets/travorama20/images/Hotel/big-slider-img.jpg">
+                                            <img src="/Assets/travorama20/images/Hotel/big-slider-img.jpg" alt="Alternate Text" />
+                                        </li>
+                                        <li data-thumb="/Assets/travorama20/images/Hotel/big-slider-img.jpg">
+                                            <img src="/Assets/travorama20/images/Hotel/big-slider-img.jpg" alt="Alternate Text" />
+                                        </li>
+                                        <li data-thumb="/Assets/travorama20/images/Hotel/big-slider-img.jpg">
+                                            <img src="/Assets/travorama20/images/Hotel/big-slider-img.jpg" alt="Alternate Text" />
+                                        </li>
+                                        <li data-thumb="/Assets/travorama20/images/Hotel/big-slider-img.jpg">
+                                            <img src="/Assets/travorama20/images/Hotel/big-slider-img.jpg" alt="Alternate Text" />
+                                        </li>*@
                                     </ul>
-                                </div>
                             </div>
+                        </div>
                         </div>
                         <div class="col-right-slider">
                             <div class="rs-title md-txt">Review Hotel</div>
@@ -175,7 +190,7 @@
                         <div class="room-sort-right"><a href="#" class="sort"></a>Harga Kamar</div>
                     </div>
                     <ul class="room-list-container">
-                        <li>
+                        <li ng-repeat="room in hotel.room track by $index">
                             <div class="rl-accordion">
                                 <div class="accordion-wrapper">
                                     <div class="accordion accordion-rl">
@@ -183,9 +198,9 @@
                                             <div class="room-left"><img src="/Assets/travorama20/images/Hotel/room.jpg" alt="Room" /></div>
                                             <div class="room-right clearfix">
                                                 <div class="room-rl">
-                                                    <div class="blue-txt md-txt"><b>Deluxe 2 Kings Bed Rooms</b></div>
+                                                    <div class="blue-txt md-txt"><b>{{room.roomName}}</b></div>
                                                     <div class="facility"></div>
-                                                    <div class="max-people">Maks <b>2 orang / kamar</b></div>
+                                                    <div class="max-people">Maks <b>{{room.paxCapacity}} orang / kamar</b></div>
                                                     <div class="info-room">
                                                         <span class="info-icon italic-txt">i</span>
                                                         <span class="blue-txt sm-txt">Info Kamar</span>
@@ -205,10 +220,10 @@
                                                     </div>
                                                 </div>
                                                 <div class="room-rr">
-                                                    <div class="underline-txt">Rp 999.999.999</div>
-                                                    <div class="lg-txt"><b><sup>Rp</sup> 899.999.999</b></div>
+                                                    <div class="underline-txt">{{room.rate.originalPrice | number}}</div>
+                                                    <div class="lg-txt"><b><sup>Rp</sup> {{room.rate.netPrice | number}}</b></div>
                                                     <div class="xs-txt">*Harga Termasuk Pajak & Service Charge</div>
-                                                    <a href="#" class="btn btn-yellow small">PESAN</a>
+                                                    <a href="" class="btn btn-yellow small" ng-click="bookRoom(room)">PESAN</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -230,7 +245,7 @@
                                                 <div class="col-left-bottom">
                                                     <ul class="hd-list">
                                                         <li class="hd-size">: 3 x 3 m</li>
-                                                        <li class="hd-bed">: Double bed / Queen size</li>
+                                                        <li class="hd-bed">: {{room.rate.boardDesc}}</li>
                                                         <li class="hd-view">: City View</li>
                                                     </ul>
                                                 </div>
@@ -241,8 +256,7 @@
                                                         <li class="hd-point">
                                                             <div class="hd-title blue-txt">Room Policy</div>
                                                             <div class="hd-txt">
-                                                                Dolor sit amet, consectetuer adipiscing elit, sed diam nonummy. ectetuer adipiscing elit, sed diam nonummy. Lorem ipsum dolor sit amet, consect
-                                                                etuer ectetuer. Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
+                                                                <span ng-repeat="tnc in room.rate.tnc">{{tnc}}</span>
                                                             </div>
                                                         </li>
                                                         <li class="hd-point">

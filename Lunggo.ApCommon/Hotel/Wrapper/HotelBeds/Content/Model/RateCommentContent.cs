@@ -22,8 +22,8 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Content.Model
 
     public class Comment
     {
-        public string dateEnd { get; set; }
-        public string dateStart { get; set; }
+        public DateTime dateEnd { get; set; }
+        public DateTime dateStart { get; set; }
         public string description{ get; set; }
     }
 }

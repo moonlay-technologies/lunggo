@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Lunggo.ApCommon.Hotel.Model;
+using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Sdk.auto.model;
 using Lunggo.Framework.Extension;
 using Lunggo.Framework.TableStorage;
 using Microsoft.WindowsAzure.Storage.Table;
@@ -91,12 +92,15 @@ namespace Lunggo.ApCommon.Hotel.Service
 
         public void SaveRateCommentToTableStorage(HotelRateComment hotelRateComment)
         {
-            var rowKey = hotelRateComment.Incoming + "|" + hotelRateComment.HotelCode + "|" + hotelRateComment.Code;
-            HotelDetailWrapper rateCom = new HotelDetailWrapper("rateComments", rowKey);
+            //var rowKey = hotelRateComment.Incoming + "|" + hotelRateComment.HotelCode + "|" + hotelRateComment.Code;
+            var partitionKey = hotelRateComment.Incoming + "|" + hotelRateComment.Code + "|" + hotelRateComment.RateCode;
+            var rowKey = hotelRateComment.DateStart.Ticks.ToString("d19");
+            HotelDetailWrapper rateCom = new HotelDetailWrapper(partitionKey, rowKey);
             var data = hotelRateComment.Serialize();
             var splittedData = SplitByLength(data, 30000);
             DivideData(rateCom, splittedData);
             var tableClient = TableStorageService.GetInstance();
+            //var table = tableClient.GetTableByReference("ratecomments");
             var table = tableClient.GetTableByReference("ratecomments");
             var insertOp = TableOperation.InsertOrReplace(rateCom);
             table.Execute(insertOp);
@@ -165,22 +169,55 @@ namespace Lunggo.ApCommon.Hotel.Service
             return result;
         }
 
-        public HotelRateComment GetRateCommentFromTableStorage(int incoming,int hotelCode, string code)
+        public List<HotelRateComment> GetRateCommentFromTableStorage(string rateComment, DateTime startDateTime)
         {
-            var partitionKey = "rateComments";
-            var rowKey = incoming + "|" + hotelCode + "|" + code;
+            //var partitionKey = "rateComments";
+            //var rowKey = incoming + "|" + hotelCode + "|" + code;
+            var partitionKey = rateComment;
+            var rowKey = startDateTime.Ticks.ToString("d19");
             var tableClient = TableStorageService.GetInstance();
             CloudTable table = tableClient.GetTableByReference("ratecomments");
+            TableQuery<HotelDetailWrapper> rangeQuery = new TableQuery<HotelDetailWrapper>().Where(
+            TableQuery.CombineFilters(
+            TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal, partitionKey),
+            TableOperators.And,
+            TableQuery.GenerateFilterCondition("RowKey", QueryComparisons.GreaterThanOrEqual, rowKey)));
+            List<HotelRateComment> result = new List<HotelRateComment>();
+            var resultQuery = table.ExecuteQuery(rangeQuery);
+            if (resultQuery != null)
+            {
+                foreach (var rateCom in resultQuery)
+                {
+                    var concatedResult = ConcateData(rateCom);
+                    var rate= concatedResult.Deserialize<HotelRateComment>();
+                    result.Add(rate);
+                }
+                var sortedResult = result.Where(x => x.DateEnd > startDateTime).Select(x => new HotelRateComment
+                {
+                  Code = x.Code,
+                  DateEnd = x.DateEnd,
+                  DateStart = x.DateStart,
+                  Incoming = x.Incoming,
+                  HotelCode = x.HotelCode,
+                  RateCode = x.RateCode,
+                  Description = x.Description
+                }).ToList();
+                return sortedResult;
+            }
+            else
+            {
+                return new List<HotelRateComment>();
+            }
+            
+            //// Create a retrieve operation that takes a customer entity.
+            //TableOperation retrieveOperation = TableOperation.Retrieve<HotelDetailWrapper>(partitionKey, rowKey);
 
-            // Create a retrieve operation that takes a customer entity.
-            TableOperation retrieveOperation = TableOperation.Retrieve<HotelDetailWrapper>(partitionKey, rowKey);
-
-            // Execute the retrieve operation.
-            TableResult retrievedResult = table.Execute(retrieveOperation);
-            HotelDetailWrapper resultWrapper = (HotelDetailWrapper)retrievedResult.Result;
-            var concatedResult = ConcateData(resultWrapper);
-            HotelRateComment result = concatedResult.Deserialize<HotelRateComment>();
-            return result;
+            //// Execute the retrieve operation.
+            //TableResult retrievedResult = table.Execute(retrieveOperation);
+            //HotelDetailWrapper resultWrapper = (HotelDetailWrapper)retrievedResult.Result;
+            //var concatedResult = ConcateData(resultWrapper);
+            //HotelRateComment result = concatedResult.Deserialize<HotelRateComment>();
+            //return result;
         }
 
         public HotelDetailsBase GetTruncatedHotelDetailFromTableStorage(int hotelCd)
