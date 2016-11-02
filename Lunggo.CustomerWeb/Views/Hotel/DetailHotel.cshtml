@@ -190,7 +190,7 @@
                         <div class="room-sort-right"><a href="#" class="sort"></a>Harga Kamar</div>
                     </div>
                     <ul class="room-list-container">
-                        <li>
+                        <li ng-repeat="room in hotel.room track by $index">
                             <div class="rl-accordion">
                                 <div class="accordion-wrapper">
                                     <div class="accordion accordion-rl">
@@ -198,9 +198,9 @@
                                             <div class="room-left"><img src="/Assets/travorama20/images/Hotel/room.jpg" alt="Room" /></div>
                                             <div class="room-right clearfix">
                                                 <div class="room-rl">
-                                                    <div class="blue-txt md-txt"><b>Deluxe 2 Kings Bed Rooms</b></div>
+                                                    <div class="blue-txt md-txt"><b>{{room.roomName}}</b></div>
                                                     <div class="facility"></div>
-                                                    <div class="max-people">Maks <b>2 orang / kamar</b></div>
+                                                    <div class="max-people">Maks <b>{{room.paxCapacity}} orang / kamar</b></div>
                                                     <div class="info-room">
                                                         <span class="info-icon italic-txt">i</span>
                                                         <span class="blue-txt sm-txt">Info Kamar</span>

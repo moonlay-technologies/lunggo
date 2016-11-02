@@ -1,105 +1,115 @@
-﻿<div class="search-hotel page-hotel">
+﻿<div class="search-hotel page-hotel" ng-show="view.showHotelSearch">
     <header class="location-header">
         <p class="origin">Pilih Hotel Tujuan Anda <span class="close-hotel">X</span></p>
     </header>
     <section class="location-body">
         <section class="location-recommend">
-            <header class="tab-header">
-                @*<a href="#" class="nav-click prev"></a>
-                <a href="#" class="nav-click next"></a>
-                <nav>
-                    <ul>
-                        <li class="active" data-show="dest-popular"><span>Destinasi Terpopuler</span></li>
-                        <li data-show="hotel-popular"><span>Hotel Terpopular</span></li>
-                    </ul>
-                </nav>*@
-            </header>
+            @*<header class="tab-header">
+                    @*<a href="#" class="nav-click prev"></a>
+                    <a href="#" class="nav-click next"></a>
+                    <nav>
+                        <ul>
+                            <li class="active" data-show="dest-popular"><span>Destinasi Terpopuler</span></li>
+                            <li data-show="hotel-popular"><span>Hotel Terpopular</span></li>
+                        </ul>
+                    </nav>
+                </header>*@
             <section class="tab-content">
-                <ul>qweqweqwe</ul>
-                    <pre>{{hotel.hotelAutocomplete}}</pre>
-                <section class="location-search">
-
-                    <div class="autocomplete-pre">
+                <section class="hotel-location-search">
+                    <div class="hotel-autocomplete-pre">
                         <h3 class="text-center text-pre">Masukkan Kata Kunci Anda (Minimal 3 huruf)</h3>
                         <h3 class="text-center text-loading">Mencari lokasi</h3>
                     </div>
 
-                    <div class="autocomplete-no-result">
+                    <div class="hotel-autocomplete-no-result">
                         <h2 class="text-center">Hasil Tidak Ditemukan</h2>
                     </div>
 
-                    <div >
-                       
+                    <div class="hotel-autocomplete-result">
+                        <ul>
+                            <li ng-repeat="location in hotel.hotelAutocomplete track by $index" ng-model="hotel.location" ng-click="selectLocation(location)">{{location.name}}</li>
+                            @*<li data-code="AQP" data-city="Arequipa">Arequipa (AQP), Rodriguez Ballon, Peru</li>
+                            <li data-code="BAL" data-city="Batman">Batman (BAL), Batman, Turkey</li>
+                            <li data-code="AQP" data-city="Arequipa">Arequipa (AQP), Rodriguez Ballon, Peru</li>*@
+                        </ul>
                     </div>
-
                 </section><!-- .location-search -->
-
                 @*<div class="dest-popular active">
-                    <div class="list-hotel">
-                        <div class="list-row clearfix">
-                            <div class="col-half">
-                                <div class="location bold-txt">Bali, Denpasar</div>
-                                <div class="country">Indonesia</div>
+                        <div class="list-hotel">
+                            <div class="list-row clearfix">
+                                <div class="col-half">
+                                    <div class="location bold-txt">Bali, Denpasar</div>
+                                    <div class="country">Indonesia</div>
+                                </div>
+                                <div class="col-half">
+                                    <div class="blue-txt semibold-txt">1234 Hotel ditemukan</div>
+                                </div>
                             </div>
-                            <div class="col-half">
-                                <div class="blue-txt semibold-txt">1234 Hotel ditemukan</div>
+                            <div class="list-row clearfix">
+                                <div class="col-half">
+                                    <div class="location bold-txt">Bali, Denpasar</div>
+                                    <div class="country">Indonesia</div>
+                                </div>
+                                <div class="col-half">
+                                    <div class="blue-txt semibold-txt">1234 Hotel ditemukan</div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="list-row clearfix">
-                            <div class="col-half">
-                                <div class="location bold-txt">Bali, Denpasar</div>
-                                <div class="country">Indonesia</div>
-                            </div>
-                            <div class="col-half">
-                                <div class="blue-txt semibold-txt">1234 Hotel ditemukan</div>
-                            </div>
-                        </div>
-                        <div class="list-row clearfix">
-                            <div class="col-half">
-                                <div class="location bold-txt">Bali, Denpasar</div>
-                                <div class="country">Indonesia</div>
-                            </div>
-                            <div class="col-half">
-                                <div class="blue-txt semibold-txt">1234 Hotel ditemukan</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="hotel-popular">
-                    <div class="list-hotel">
-                        <div class="list-row clearfix">
-                            <div class="col-half">
-                                <div class="hotel-title bold-txt">Bliss Hotel Singapore</div>
-                                <div class="country">Jakarta Selatan, Indonesia</div>
-                            </div>
-                            <div class="col-half">
-                                <div class="blue-txt semibold-txt">1234 Hotel ditemukan</div>
-                            </div>
-                        </div>
-                        <div class="list-row clearfix">
-                            <div class="col-half">
-                                <div class="hotel-title bold-txt">Bliss Hotel Singapore</div>
-                                <div class="country">Jakarta Selatan, Indonesia</div>
-                            </div>
-                            <div class="col-half">
-                                <div class="blue-txt semibold-txt">1234 Hotel ditemukan</div>
-                            </div>
-                        </div>
-                        <div class="list-row clearfix">
-                            <div class="col-half">
-                                <div class="hotel-title bold-txt">Bliss Hotel Singapore</div>
-                                <div class="country">Jakarta Selatan, Indonesia</div>
-                            </div>
-                            <div class="col-half">
-                                <div class="blue-txt semibold-txt">1234 Hotel ditemukan</div>
+                            <div class="list-row clearfix">
+                                <div class="col-half">
+                                    <div class="location bold-txt">Bali, Denpasar</div>
+                                    <div class="country">Indonesia</div>
+                                </div>
+                                <div class="col-half">
+                                    <div class="blue-txt semibold-txt">1234 Hotel ditemukan</div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>*@
 
-              
+                    <div class="hotel-popular">
+                        <div class="list-hotel">
+                            <div class="list-row clearfix">
+                                <div class="col-half">
+                                    <div class="hotel-title bold-txt">Bliss Hotel Singapore</div>
+                                    <div class="country">Jakarta Selatan, Indonesia</div>
+                                </div>
+                                <div class="col-half">
+                                    <div class="blue-txt semibold-txt">1234 Hotel ditemukan</div>
+                                </div>
+                            </div>
+                            <div class="list-row clearfix">
+                                <div class="col-half">
+                                    <div class="hotel-title bold-txt">Bliss Hotel Singapore</div>
+                                    <div class="country">Jakarta Selatan, Indonesia</div>
+                                </div>
+                                <div class="col-half">
+                                    <div class="blue-txt semibold-txt">1234 Hotel ditemukan</div>
+                                </div>
+                            </div>
+                            <div class="list-row clearfix">
+                                <div class="col-half">
+                                    <div class="hotel-title bold-txt">Bliss Hotel Singapore</div>
+                                    <div class="country">Jakarta Selatan, Indonesia</div>
+                                </div>
+                                <div class="col-half">
+                                    <div class="blue-txt semibold-txt">1234 Hotel ditemukan</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>*@
+
+
             </section>
+        </section>
+        <section class="location-search">
+            @*<div class="autocomplete-pre">
+                    <h3 class="text-center text-pre">Masukkan Kata Kunci Anda (Minimal 3 huruf)</h3>
+                    <h3 class="text-center text-loading">Mencari lokasi</h3>
+                </div>
+                <div class="autocomplete-no-result">
+                    <h2 class="text-center">Hasil Tidak Ditemukan</h2>
+                </div>*@
+         
         </section>
     </section>
 </div>

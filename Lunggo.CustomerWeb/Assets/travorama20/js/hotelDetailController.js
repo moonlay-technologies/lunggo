@@ -1,5 +1,5 @@
 ﻿// home controller
-app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource', function ($scope, $log, $http, $resource) {
+app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource', '$timeout', function ($scope, $log, $http, $resource, $timeout) {
 
     $scope.init = function (model) {
         $log.debug(model);
@@ -43,6 +43,8 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
             });
             $scope.hotel.images = tempHotelImages;
             $log.debug($scope.hotel);
+
+            accordionFunctions();
         })
     }
 
@@ -87,11 +89,19 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
         )
     }
 
-    $scope.GotoDetailHotel = function (hotelCd) {
-        $log.debug('redirect to detail hotel with hotelCd: ' + hotelCd);
-        location.href = '/id/Hotel/DetailHotel/?' +
-            "searchId=" + $scope.searchId + "&" +
-            "hotelCd=" + hotelCd;
+    var accordionFunctions = function() {
+        //Accordion Help Section by W3School
+        $timeout(function () {
+            var acc = document.getElementsByClassName("accordion");
+            var i;
+
+            for (i = 0; i < acc.length; i++) {
+                acc[i].onclick = function () {
+                    this.classList.toggle("active");
+                    this.nextElementSibling.classList.toggle("show");
+                }
+            }
+        }, 0)
     }
     //=============== hotel end ======================
 

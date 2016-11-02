@@ -21,7 +21,6 @@ using Lunggo.Framework.SharedModel;
 
 namespace Lunggo.ApCommon.Hotel.Service
 {
-
     public partial class HotelService
     {
         public SearchHotelOutput Search(SearchHotelInput input)
