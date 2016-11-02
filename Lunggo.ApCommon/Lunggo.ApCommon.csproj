@@ -254,6 +254,7 @@
     <Compile Include="Hotel\Query\GetActiveHotelPriceMarginRuleQuery.cs" />
     <Compile Include="Hotel\Query\GetHotelRateRuleQuery.cs" />
     <Compile Include="Flight\Query\UpdateBookingIdQuery.cs" />
+    <Compile Include="Hotel\Service\GetRoom.cs" />
     <Compile Include="Hotel\Service\SaveTruncatedHotelDetail.cs" />
     <Compile Include="Hotel\Service\PriceMargin.cs" />
     <Compile Include="Hotel\Query\GetHotelDetailFromSearchResult.cs" />

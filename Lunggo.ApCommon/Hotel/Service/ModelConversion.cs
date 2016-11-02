@@ -36,6 +36,32 @@ namespace Lunggo.ApCommon.Hotel.Service
             return convertedRsv;
         }
 
+        internal HotelDetailForDisplay ConvertToHotelDetailForDisplay(HotelDetailsBase hotelDetail)
+        {
+            if (hotelDetail == null)
+                return null;
+            var price = hotelDetail.Rooms.SelectMany(r => r.Rates).Sum(p => p.Price.Local);
+            var convertedHotel = new HotelDetailForDisplay
+            {
+                HotelCode = hotelDetail.HotelCode,
+                HotelName = hotelDetail.HotelName,
+                Address = hotelDetail.Address,
+                City = hotelDetail.City,
+                ZoneName = GetHotelZoneNameFromDict(hotelDetail.DestinationCode + "-" + hotelDetail.ZoneCode),
+                StarRating = Convert.ToInt32(hotelDetail.StarRating.Substring(0,1)),
+                //ChainName = GetHotelChainDesc(hotelDetail.Chain),
+                AccomodationName = GetHotelAccomodationDescId(hotelDetail.AccomodationType),
+                MainImage = hotelDetail.ImageUrl.Select(x => x.Path).FirstOrDefault(),// != null ? hotelDetail.ImageUrl.Where(x=>x.Type=="GEN").Select(x=>x.Path).FirstOrDefault(): null,
+                OriginalFare = price * 1.01M,
+                NetFare = price,
+                IsRestaurantAvailable = hotelDetail.IsRestaurantAvailable,
+                IsWifiAccessAvailable = hotelDetail.WifiAccess,
+                Rooms = ConvertToHotelRoomForDisplay(hotelDetail.Rooms)
+            };
+                
+            
+            return convertedHotel;
+        }
         internal List<HotelDetailForDisplay> ConvertToHotelDetailForDisplay(List<HotelDetail> hotelDetails)
         {
             if (hotelDetails == null)
@@ -190,7 +216,7 @@ namespace Lunggo.ApCommon.Hotel.Service
             {
                 var rate = new HotelRateForDisplay()
                 {
-                    //RateKey = rateDetail.RateKey,
+                    RateKey = rateDetail.RateKey,
                     Type = rateDetail.Type,
                     TypeDescription = dictionary.GetHotelRoomRateTypeId(rateDetail.Type),
                     Class = rateDetail.Class,
@@ -201,10 +227,11 @@ namespace Lunggo.ApCommon.Hotel.Service
                     Allotment = rateDetail.Allotment,
                     //Boards = rateDetail.Boards,
                     BoardDescription = GetHotelBoardDescId(rateDetail.Boards),
-                    RoomCount = rateDetail.RoomCount,
+                    RoomCount = rateDetail.RateCount,
                     TimeLimit = rateDetail.TimeLimit,
                     Cancellation = rateDetail.Cancellation,
                     Offers = rateDetail.Offers,
+                    
                 };
                 SetDisplayPriceHotelRate(rate, rateDetail);
                 convertedRate.Add(rate);

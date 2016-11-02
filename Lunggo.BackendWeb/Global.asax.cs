@@ -50,15 +50,21 @@ namespace Lunggo.BackendWeb
             //            ChildCount = 2,
             //            RoomCount = 2,
             //            ChildrenAges = new List<int>{8, 6}
+            //        },
+            //        new Occupancy
+            //        {
+            //            AdultCount = 1,
+            //            ChildCount = 0,
+            //            RoomCount = 1,
             //        }
             //    },
             //    Nights = 3
             //});
 
-            HotelService.GetInstance().CommenceIssueHotel(new IssueHotelTicketInput
-            {
-                RsvNo = "282096538479"
-            });
+            //HotelService.GetInstance().CommenceIssueHotel(new IssueHotelTicketInput
+            //{
+            //    RsvNo = "282096538479"
+            //});
 
             //var hotel = HotelService.GetInstance().GetHotelDetailFromTableStorage(444942);
             //var iswifi = hotel.WifiAccess;

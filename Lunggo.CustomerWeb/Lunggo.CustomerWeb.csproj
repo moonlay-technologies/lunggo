@@ -255,6 +255,7 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AdminViewModel.cs" />
     <Compile Include="Models\CalendarRecipientData.cs" />
+    <Compile Include="Models\HotelCheckoutData.cs" />
     <Compile Include="Models\FlightCheckoutData.cs" />
     <Compile Include="Models\FlightPaymentConfirmationData.cs" />
     <Compile Include="Models\FlightPaymentData.cs" />
@@ -377,6 +378,7 @@
     <Content Include="Assets\travorama20\images\Hotel\triangle-grey.png" />
     <Content Include="Assets\travorama20\images\Hotel\up.png" />
     <Content Include="Assets\travorama20\images\Hotel\view.png" />
+    <Content Include="Assets\travorama20\js\HotelCheckoutController.js" />
     <Content Include="Assets\travorama20\js\hotelDetailController.js" />
     <Content Include="Assets\travorama20\js\hotelSearchController.js" />
     <Content Include="Assets\travorama20\js\HotelController.js" />
