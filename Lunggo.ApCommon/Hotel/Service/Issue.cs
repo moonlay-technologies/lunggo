@@ -140,17 +140,17 @@ namespace Lunggo.ApCommon.Hotel.Service
                                     var revalidateResult = CheckRate(ratea.RateKey, ratea.Price.Supplier);
                                     if (revalidateResult.IsPriceChanged)
                                     {
-                                        rate.Price.SetSupplier(revalidateResult.NewPrice.GetValueOrDefault() * roomCount,
+                                        rate.Price.SetSupplier(revalidateResult.NewPrice.GetValueOrDefault(),
                                             rate.Price.SupplierCurrency);
                                     }
                                     rate.RateKey = revalidateResult.RateKey;
-                                    rate.Price.SetSupplier(revalidateResult.NewPrice.GetValueOrDefault() * roomCount,
+                                    rate.Price.SetSupplier(revalidateResult.NewPrice.GetValueOrDefault(),
                                         rate.Price.SupplierCurrency);
                                 }
                                 else
                                 {
                                     rate.RateKey = ratea.RateKey;
-                                    rate.Price.SetSupplier(ratea.Price.OriginalIdr * roomCount, rate.Price.SupplierCurrency);
+                                    rate.Price.SetSupplier(ratea.Price.OriginalIdr, rate.Price.SupplierCurrency);
                                 }   
                             }
                         }

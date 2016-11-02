@@ -58,8 +58,8 @@ namespace Lunggo.ApCommon.Hotel.Service
                 OriginalFare = hotelDetail.OriginalFare,
                 NetFare = hotelDetail.NetFare,
                 IsRestaurantAvailable = hotelDetail.IsRestaurantAvailable,
-                IsWifiAccessAvailable = hotelDetail.WifiAccess
-                //Rooms = ConvertToHotelRoomForDisplay(hotelDetail.Rooms)
+                IsWifiAccessAvailable = hotelDetail.WifiAccess,
+                Rooms = ConvertToHotelRoomForDisplay(hotelDetail.Rooms)
             };
             convertedHotels.Add(hotel);
             }
@@ -190,7 +190,7 @@ namespace Lunggo.ApCommon.Hotel.Service
             {
                 var rate = new HotelRateForDisplay()
                 {
-                    //RateKey = rateDetail.RateKey,
+                    RateKey = rateDetail.RateKey,
                     Type = rateDetail.Type,
                     TypeDescription = dictionary.GetHotelRoomRateTypeId(rateDetail.Type),
                     Class = rateDetail.Class,
@@ -199,7 +199,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                     AdultCount = rateDetail.AdultCount,
                     ChildCount = rateDetail.ChildCount,
                     Allotment = rateDetail.Allotment,
-                    //Boards = rateDetail.Boards,
+                    Boards = rateDetail.Boards,
                     BoardDescription = GetHotelBoardDescId(rateDetail.Boards),
                     RoomCount = rateDetail.RoomCount,
                     TimeLimit = rateDetail.TimeLimit,

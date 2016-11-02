@@ -29,7 +29,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                 };
             }
         
-            var oldPrice = bookInfo.Rooms.Sum(room => room.Rates.Sum(rate => rate.RateCount*rate.Price.Supplier));
+            var oldPrice = bookInfo.Rooms.Sum(room => room.Rates.Sum(rate => rate.Price.Supplier));
             decimal newPrice = 0;
             
             //Refresh RateKey
@@ -80,7 +80,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                     IsValid = false
                 };
             }
-
+            
             foreach (var rate in bookInfo.Rooms.SelectMany(room => room.Rates))
             {
                 var sampleRatekey = rate.RateKey.Split('|');
@@ -132,16 +132,16 @@ namespace Lunggo.ApCommon.Hotel.Service
                     if (revalidateResult.IsPriceChanged)
                     {
                         rate.Price.SetSupplier(revalidateResult.NewPrice.GetValueOrDefault(), rate.Price.SupplierCurrency);
-                        newPrice += revalidateResult.NewPrice.GetValueOrDefault() * rate.RateCount;
+                        newPrice += revalidateResult.NewPrice.GetValueOrDefault();
                     }
                     else
                     {
-                        newPrice += rate.Price.Supplier * rate.RateCount;
+                        newPrice += rate.Price.Supplier ;
                     }
                 }
                 else
                 {
-                    newPrice += rate.Price.Supplier * rate.RateCount;
+                    newPrice += rate.Price.Supplier;
                 }
             }
             
