@@ -6,6 +6,7 @@ using Lunggo.ApCommon.Hotel.Constant;
 using Lunggo.ApCommon.Hotel.Model;
 using Lunggo.ApCommon.Hotel.Model.Logic;
 using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds;
+using Lunggo.ApCommon.Payment.Model;
 using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Sdk.auto.model;
 using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.ApCommon.Product.Constant;
@@ -75,15 +76,25 @@ namespace Lunggo.ApCommon.Hotel.Service
             }
 
             occupancies = occupancies.Distinct().ToList();
-            var searchResult = GetInstance().Search(new SearchHotelInput
+            occupancies = occupancies.Distinct().ToList();
+            var allCurrency = Currency.GetAllCurrencies();
+            Guid generatedSearchId = Guid.NewGuid();
+            SaveAllCurrencyToCache(generatedSearchId.ToString(), allCurrency);
+
+            var request = new SearchHotelCondition
             {
-                HotelCode = rsvData.HotelDetails.HotelCode,
                 Occupancies = occupancies,
                 CheckIn = rsvData.HotelDetails.CheckInDate,
-                Checkout = rsvData.HotelDetails.CheckOutDate
-            });
+                Checkout =  rsvData.HotelDetails.CheckOutDate,
+                HotelCode = rsvData.HotelDetails.HotelCode,
+                SearchId = generatedSearchId.ToString()
+            };
 
-            if (searchResult.HotelDetailLists == null || searchResult.HotelDetailLists.Count == 0)
+            var hotelbeds = new HotelBedsSearchHotel();
+            var searchResult = hotelbeds.SearchHotel(request);
+            AddPriceMargin(searchResult.HotelDetails);
+            
+            if (searchResult.HotelDetails == null || searchResult.HotelDetails.Count == 0)
             {
                 return new IssueHotelTicketOutput
                 {
@@ -92,7 +103,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                 };
             }
 
-            if (searchResult.HotelDetailLists.Any(hotel => hotel.Rooms == null || hotel.Rooms.Count == 0))
+            if (searchResult.HotelDetails.Any(hotel => hotel.Rooms == null || hotel.Rooms.Count == 0))
             {
                 return new IssueHotelTicketOutput
                 {
@@ -101,7 +112,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                 };
             }
 
-            if (searchResult.HotelDetailLists.Any(hotel => hotel.Rooms.Any(room => room.Rates == null || room.Rates.Count == 0)))
+            if (searchResult.HotelDetails.Any(hotel => hotel.Rooms.Any(room => room.Rates == null || room.Rates.Count == 0)))
             {
                 return new IssueHotelTicketOutput
                 {
@@ -124,7 +135,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                     var childCount = rate.ChildCount;
                     var childrenAges = sampleRatekey[10];
                     
-                    foreach (var rooma in searchResult.HotelDetailLists[0].Rooms)
+                    foreach (var rooma in searchResult.HotelDetails[0].Rooms)
                     {
                         foreach (var ratea in rooma.Rates)
                         {

@@ -28,10 +28,10 @@ namespace Lunggo.ApCommon.Hotel.Service
                     IsValid = false
                 };
             }
-        
+
             var oldPrice = bookInfo.Rooms.Sum(room => room.Rates.Sum(rate => rate.Price.Supplier));
             decimal newPrice = 0;
-            
+
             //Refresh RateKey
             var occupancies = new List<Occupancy>();
 
@@ -39,25 +39,35 @@ namespace Lunggo.ApCommon.Hotel.Service
             {
                 occupancies.AddRange(room.Rates.Select(rate => new Occupancy
                 {
-                    RoomCount = rate.RateCount, AdultCount = rate.AdultCount,
-                    ChildCount = rate.ChildCount, ChildrenAges = rate.ChildrenAges
+                    RoomCount = rate.RateCount,
+                    AdultCount = rate.AdultCount,
+                    ChildCount = rate.ChildCount,
+                    ChildrenAges = rate.ChildrenAges
                 }));
             }
 
             occupancies = occupancies.Distinct().ToList();
             var checkin = bookInfo.Rooms[0].Rates[0].RateKey.Split('|')[0];
             var checkout = bookInfo.Rooms[0].Rates[0].RateKey.Split('|')[1];
-            var searchResult = GetInstance().Search(new SearchHotelInput
+            var allCurrency = Currency.GetAllCurrencies();
+            Guid generatedSearchId = Guid.NewGuid();
+            SaveAllCurrencyToCache(generatedSearchId.ToString(), allCurrency);
+
+            var request = new SearchHotelCondition
             {
-                HotelCode = bookInfo.HotelCode,
                 Occupancies = occupancies,
                 CheckIn = new DateTime(Convert.ToInt32(checkin.Substring(0, 4)), Convert.ToInt32(checkin.Substring(4, 2)),
                     Convert.ToInt32(checkin.Substring(6, 2))),
                 Checkout = new DateTime(Convert.ToInt32(checkout.Substring(0, 4)), Convert.ToInt32(checkout.Substring(4, 2)),
-                    Convert.ToInt32(checkout.Substring(6, 2)))
-            });
+                    Convert.ToInt32(checkout.Substring(6, 2))),
+                HotelCode = bookInfo.HotelCode,
+                SearchId = generatedSearchId.ToString()
+            };
 
-            if (searchResult.HotelDetailLists == null || searchResult.HotelDetailLists.Count == 0)
+            var hotelbeds = new HotelBedsSearchHotel();
+            var searchResult = hotelbeds.SearchHotel(request);
+            AddPriceMargin(searchResult.HotelDetails);
+            if (searchResult.HotelDetails == null || searchResult.HotelDetails.Count == 0)
             {
                 return new BookHotelOutput
                 {
@@ -65,7 +75,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                 };
             }
 
-            if (searchResult.HotelDetailLists.Any(hotel => hotel.Rooms == null || hotel.Rooms.Count == 0))
+            if (searchResult.HotelDetails.Any(hotel => hotel.Rooms == null || hotel.Rooms.Count == 0))
             {
                 return new BookHotelOutput
                 {
@@ -73,14 +83,14 @@ namespace Lunggo.ApCommon.Hotel.Service
                 };
             }
 
-            if (searchResult.HotelDetailLists.Any(hotel => hotel.Rooms.Any(room => room.Rates == null || room.Rates.Count == 0)))
+            if (searchResult.HotelDetails.Any(hotel => hotel.Rooms.Any(room => room.Rates == null || room.Rates.Count == 0)))
             {
                 return new BookHotelOutput
                 {
                     IsValid = false
                 };
             }
-            
+
             foreach (var rate in bookInfo.Rooms.SelectMany(room => room.Rates))
             {
                 var sampleRatekey = rate.RateKey.Split('|');
@@ -97,8 +107,8 @@ namespace Lunggo.ApCommon.Hotel.Service
                     childrenAges = rate.ChildrenAges.Aggregate(childrenAges, (current, age) => current + (age + "~"));
                     childrenAges = childrenAges.Substring(0, childrenAges.Length - 1);
                 }
-                
-                foreach (var hotel in searchResult.HotelDetailLists)
+
+                foreach (var hotel in searchResult.HotelDetails)
                 {
                     foreach (var room in hotel.Rooms)
                     {
@@ -107,7 +117,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                             var ratekey = ratea.RateKey.Split('|');
                             if (Convert.ToInt32(ratekey[4]) != bookInfo.HotelCode || ratekey[5] != roomCd ||
                                 ratekey[6] != someData || ratekey[7] != board ||
-                                Convert.ToInt32(ratekey[9].Split('~')[0]) != roomCount 
+                                Convert.ToInt32(ratekey[9].Split('~')[0]) != roomCount
                                 || Convert.ToInt32(ratekey[9].Split('~')[1]) != adultCount
                                 || Convert.ToInt32(ratekey[9].Split('~')[2]) != childCount
                                 ) continue;
@@ -120,7 +130,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                             rate.Type = ratea.Type;
                         }
                     }
-                }                
+                }
             }
 
             //Recheck for every rate with rate type = recheck
@@ -136,7 +146,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                     }
                     else
                     {
-                        newPrice += rate.Price.Supplier ;
+                        newPrice += rate.Price.Supplier;
                     }
                 }
                 else
@@ -144,8 +154,8 @@ namespace Lunggo.ApCommon.Hotel.Service
                     newPrice += rate.Price.Supplier;
                 }
             }
-            
-            
+
+
             SaveSelectedHotelDetailsToCache(input.Token, bookInfo);
             if (oldPrice != newPrice)
                 return new BookHotelOutput
@@ -195,14 +205,14 @@ namespace Lunggo.ApCommon.Hotel.Service
             var coDate = bookInfo.Rooms[0].Rates[0].RateKey.Split('|')[1];
             var checkindate = new DateTime(Convert.ToInt32(ciDate.Substring(0, 4)),
                 Convert.ToInt32(ciDate.Substring(4, 2)), Convert.ToInt32(ciDate.Substring(6, 2)));
-            var checkoutdate =  new DateTime(Convert.ToInt32(coDate.Substring(0, 4)),
+            var checkoutdate = new DateTime(Convert.ToInt32(coDate.Substring(0, 4)),
                 Convert.ToInt32(coDate.Substring(4, 2)), Convert.ToInt32(coDate.Substring(6, 2)));
 
             var hotelInfo = new HotelDetail
             {
                 AccomodationType = bookInfo.AccomodationType,
                 CheckInDate = checkindate,
-                CheckOutDate = checkoutdate, 
+                CheckOutDate = checkoutdate,
                 City = bookInfo.City,
                 CountryCode = bookInfo.CountryCode,
                 DestinationCode = bookInfo.DestinationCode,
@@ -241,5 +251,5 @@ namespace Lunggo.ApCommon.Hotel.Service
 
             return rsvDetail;
         }
-    }       
+    }
 }
