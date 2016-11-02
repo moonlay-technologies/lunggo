@@ -36,7 +36,7 @@ app.controller('hotelcheckoutController', [
 
         
         //Declaration From CSHTML
-        //$scope.token = token;
+        $scope.token = token;
         $scope.guestInfo = {};
         $scope.guestInfo.name = '';
         $scope.netFare = netFare;
@@ -160,15 +160,19 @@ app.controller('hotelcheckoutController', [
 
         $scope.$watch('buyerInfo.name', function () {
             if ($scope.diffPerson == false) {
-                $scope.guestInfo.name = $scope.buyerInfo.name;
-                $scope.guestInfo.title = $scope.buyerInfo.title;
+                if ($scope.buyerInfo.name != null && $scope.buyerInfo.title != "") {
+                    $scope.guestInfo.name = $scope.buyerInfo.name;
+                    $scope.guestInfo.title = $scope.buyerInfo.title;
+                }              
             }
         });
 
         $scope.$watch('buyerInfo.title', function () {
             if ($scope.diffPerson == false) {
-                $scope.guestInfo.name = $scope.buyerInfo.name;
-                $scope.guestInfo.title = $scope.buyerInfo.title;
+                if ($scope.buyerInfo.name != null && $scope.buyerInfo.title != "") {
+                    $scope.guestInfo.name = $scope.buyerInfo.name;
+                    $scope.guestInfo.title = $scope.buyerInfo.title;
+                }
             }
         });
 
@@ -378,6 +382,105 @@ app.controller('hotelcheckoutController', [
                 $scope.loginShown = false;
             }
         }
+
+        $scope.book = {
+            booking: false,
+            url: HotelBookConfig.Url,
+            postData: '',
+            checked: false,
+            newPrice: '',
+            rsvNo: '',
+            isSuccess: false,
+            isPriceChanged: false,
+
+            send: function () {
+                if ($scope.trial > 3) {
+                    $scope.trial = 0;
+                }
+                $scope.book.booking = true;
+                $scope.book.isPriceChanged = false;
+                $scope.book.checked = false;
+                $scope.contactData = '{' + ' "title":"' + $scope.buyerInfo.title + '",  "name" :"' + $scope.buyerInfo.name + '","countryCallCd":"' + $scope.buyerInfo.countryCode + '","phone":"' + $scope.buyerInfo.phone + '","email":"' + $scope.buyerInfo.email + '"' + '}';
+                $scope.paxData = ' "pax" : [ ';
+
+                // generate data
+                $scope.book.postData = ' "token":"' + $scope.token + '",  "contact" :' + $scope.contactData + ',"lang":"' + $scope.language + '",';
+                $scope.paxData = $scope.paxData + '{ "type":"1", "title":"' + $scope.guestInfo.title + '" , "name":"' + $scope.guestInfo.name + '" }]';
+                $scope.specialReq = '"specialRequest":"' + $scope.buyerInfo.message + '"';
+                $scope.book.postData = '{' + $scope.book.postData + ',' + $scope.paxData + ',' + $scope.specialReq + '}';
+                console.log($scope.book.postData);
+                $scope.book.postData = JSON.parse($scope.book.postData);
+
+                console.log($scope.book.postData);
+
+                //Check Authorization
+                var authAccess = getAuthAccess();
+                if (authAccess == 1 || authAccess == 2) {
+                    // send form
+                    $http({
+                        method: 'POST',
+                        url: $scope.book.url,
+                        data: $scope.book.postData,
+                        headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') }
+                    }).then(function (returnData) {
+                        //console.log(returnData);
+                        if (returnData.data.status == '200' && (returnData.data.rsvNo != '' || returnData.data.rsvNo != null)) {
+                            if (returnData.data.price != null) {
+                                $scope.book.isPriceChanged = true;
+                                $scope.book.isSuccess = true;
+                                $scope.book.newPrice = returnData.data.price;
+                                $scope.book.checked = false;
+                                $scope.book.booking = false;
+                            }
+                            else {
+                                $scope.book.isSuccess = true;
+                                $scope.book.rsvNo = returnData.data.rsvNo;
+
+                                $('form#rsvno input#rsvno-input').val(returnData.data.rsvNo);
+                                $('form#rsvno').submit();
+                                $scope.book.checked = true;
+                                $scope.book.booking = false;
+                            }
+
+                        } else {
+                            if (returnData.data.price != null) {
+                                $scope.book.isPriceChanged = true;
+                                $scope.book.isSuccess = false;
+                                $scope.book.newPrice = returnData.data.price;
+                                $scope.book.booking = false;
+                                $scope.book.checked = true;
+                            }
+                            else {
+                                $scope.book.isSuccess = false;
+                                $scope.book.checked = true;
+                                $scope.book.booking = false;
+                                console.log(returnData);
+                                $scope.errorMessage = returnData.data.error;
+                            }
+                        }
+
+                    }).catch(function (returnData) {
+                        $scope.trial++;
+                        if (refreshAuthAccess() && $scope.trial < 4) //refresh cookie
+                        {
+                            $scope.book.send();
+                        }
+                        else {
+                            console.log(returnData);
+                            $scope.book.checked = true;
+                            $scope.book.isSuccess = false;
+                        }
+
+                    });
+                }
+                else {
+                    console.log('Not Authorized');
+                    $scope.book.checked = true;
+                    $scope.book.isSuccess = false;
+                }
+
+            }
+        };
     }
 ]);// checkout controller
 
