@@ -19,20 +19,18 @@
             list-style: none;
             &>li{border-top: 1px solid #e9e9e9;
                 &:first-child {border-top:none;}
-            }
-            &:before {@extend .arrow-down;}
-            &.active {
-                .dh-list-detail {display: block;}
-                &:before {@extend .arrow-up;}
-            }
+            } 
             .dh-list {
                 padding: 10px 15px;
                 .col-right-hotel .sm-txt.grey-txt {margin: 5px 0;}
+                &:before {@extend .arrow-down;}
+                &.active:before {@extend .arrow-up;}
             }
             .dh-list-detail {
                 display: none;
                 padding: 15px;
                 background: #eceff4;
+                &.active {display: block;}
                 .dh-top img {width: 100%;}
                 .dh-bottom {
                     margin-top: 15px;

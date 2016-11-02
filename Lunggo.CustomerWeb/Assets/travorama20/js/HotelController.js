@@ -32,8 +32,32 @@
         });
     });
 
-    //Ubah Pencarian Hotel
+    // Ubah Pencarian Hotel
     $('body .search-result-form-trigger').on('click', function () {
         $('body .hotel-form').slideToggle("slow");
     });
+
+    // Dropdown room
+    $('body .change-room').on('click', function () {
+        $(this).toggleClass('active');
+    });
+
+    // Big Slider Detail Hotel
+    $(window).load(function () {
+        $('.flexslider').flexslider({
+            animation: "slide",
+            controlNav: "thumbnails",
+            start: function (slider) {
+                $('body').removeClass('loading');
+            }
+        });
+    });
+
+    // Slick Slider Detail Hotel
+    $('.hd-slider').slick({
+        autoplay: false,
+        autoplaySpeed: 2500,
+        dots: false
+    });
+
 });

@@ -87,7 +87,9 @@
         // **********
         // Open Detail Room
         $('body .dh-list').on('click', function () {
-            $('body .dh-list-container').toggleClass('active');
+            var id = $(this).parent().find('.dh-list-detail');
+            id.toggleClass('active');
+            $(this).toggleClass('active');
         });
 
         // **********

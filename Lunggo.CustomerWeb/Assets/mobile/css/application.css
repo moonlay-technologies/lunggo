@@ -4210,7 +4210,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     right: 0;
     margin-right: 15px;
     vertical-align: middle; }
-  .page-hotel .arrow-down, .page-hotel .travorama-hotel-mobile .detail-hotel .dh-listing .dh-list-container:before {
+  .page-hotel .arrow-down, .page-hotel .travorama-hotel-mobile .detail-hotel .dh-listing .dh-list-container .dh-list:before {
     content: '';
     display: block;
     background: url(/Assets/mobile/images/Hotel/arrow-down-orange.png);
@@ -4221,7 +4221,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     margin-right: 20px;
     vertical-align: middle;
     margin-top: 10px; }
-  .page-hotel .arrow-up, .page-hotel .travorama-hotel-mobile .detail-hotel .dh-listing .dh-list-container.active:before {
+  .page-hotel .arrow-up, .page-hotel .travorama-hotel-mobile .detail-hotel .dh-listing .dh-list-container .dh-list.active:before {
     content: '';
     display: block;
     background: url(/Assets/mobile/images/Hotel/arrow-up-orange.png);
@@ -4422,8 +4422,6 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         border-top: 1px solid #e9e9e9; }
         .page-hotel .travorama-hotel-mobile .detail-hotel .dh-listing .dh-list-container > li:first-child {
           border-top: none; }
-      .page-hotel .travorama-hotel-mobile .detail-hotel .dh-listing .dh-list-container.active .dh-list-detail {
-        display: block; }
       .page-hotel .travorama-hotel-mobile .detail-hotel .dh-listing .dh-list-container .dh-list {
         padding: 10px 15px; }
         .page-hotel .travorama-hotel-mobile .detail-hotel .dh-listing .dh-list-container .dh-list .col-right-hotel .sm-txt.grey-txt {
@@ -4432,6 +4430,8 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         display: none;
         padding: 15px;
         background: #eceff4; }
+        .page-hotel .travorama-hotel-mobile .detail-hotel .dh-listing .dh-list-container .dh-list-detail.active {
+          display: block; }
         .page-hotel .travorama-hotel-mobile .detail-hotel .dh-listing .dh-list-container .dh-list-detail .dh-top img {
           width: 100%; }
         .page-hotel .travorama-hotel-mobile .detail-hotel .dh-listing .dh-list-container .dh-list-detail .dh-bottom {
