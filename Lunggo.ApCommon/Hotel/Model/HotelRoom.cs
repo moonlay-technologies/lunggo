@@ -28,6 +28,8 @@ namespace Lunggo.ApCommon.Hotel.Model
         public string CharacteristicName { get; set; }
         [JsonProperty("paxCapacity", NullValueHandling = NullValueHandling.Ignore)]
         public int PaxCapacity { get; set; }
+        [JsonProperty("rate", NullValueHandling = NullValueHandling.Ignore)]
+        public HotelRateForDisplay SingleRate { get; set; }
 
     }
     
@@ -47,6 +49,8 @@ namespace Lunggo.ApCommon.Hotel.Model
         public List<string> Images { get; set; }
         [JsonProperty("rates", NullValueHandling = NullValueHandling.Ignore)]
         public List<HotelRate> Rates { get; set; }
+        [JsonProperty("rate", NullValueHandling = NullValueHandling.Ignore)]
+        public HotelRate SingleRate { get; set; }
         [JsonProperty("characteristic", NullValueHandling = NullValueHandling.Ignore)]
         public string characteristicCd { get; set; }
     }

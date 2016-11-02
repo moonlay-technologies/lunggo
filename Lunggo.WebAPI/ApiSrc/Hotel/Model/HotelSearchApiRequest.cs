@@ -40,10 +40,10 @@ namespace Lunggo.WebAPI.ApiSrc.Hotel.Model
         //[JsonProperty("roomCount")]
         //public int RoomCount { get; set; }
 
-        [JsonProperty("HotelCd")]
+        [JsonProperty("hotelCd")]
         public int HotelCode { get; set; }
-        [JsonProperty("RateKey")]
-        public string RateKey { get; set; }
+        [JsonProperty("regsId")]
+        public string RegsId { get; set; }
 
     }
 

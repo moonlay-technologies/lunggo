@@ -31,6 +31,7 @@ namespace Lunggo.ApCommon.Hotel.Service
             var hotelResult = new SearchHotelOutput();
             Guid generatedSearchId = Guid.NewGuid();
             var hotelBedsClient = new HotelBedsSearchHotel();
+            var allCurrency = Currency.GetAllCurrencies();
 
             switch (input.SearchHotelType)
             {
@@ -118,8 +119,6 @@ namespace Lunggo.ApCommon.Hotel.Service
 
                 case SearchHotelType.Location :
                     var isByDestination = false;
-                    var allCurrency = Currency.GetAllCurrencies();
-                
                 SaveAllCurrencyToCache(generatedSearchId.ToString(), allCurrency );
 
                 
@@ -217,31 +216,35 @@ namespace Lunggo.ApCommon.Hotel.Service
                 }
                     break;
                 case SearchHotelType.HotelCode:
+                    
+                    SaveAllCurrencyToCache(generatedSearchId.ToString(), allCurrency );
                     var splittedRegsId = input.RegsId.Split(',');
                     var hotelCd = splittedRegsId[0];
-                    var roomCd = splittedRegsId[1];
                     var rateKey = splittedRegsId[2];
-                    var checkin = rateKey.Split('|')[0];
-                    var checkout = rateKey.Split('|')[1];
+                    var splittedRateKey = rateKey.Split('|');
+                    var checkin = splittedRateKey[0];
+                    var checkout = splittedRateKey[1];
+                    var roomCd = splittedRateKey[5];
+                    var someData = splittedRateKey[6];
+                    var board = splittedRateKey[7];
 
-                    results = new SearchHotelCondition
+                    var checkinDateTime = new DateTime(Convert.ToInt32(checkin.Substring(0, 4)),
+                        Convert.ToInt32(checkin.Substring(4, 2)),
+                        Convert.ToInt32(checkin.Substring(6, 2)));
+
+                    var results = hotelBedsClient.SearchHotel(new SearchHotelCondition
                     {
-                       
-                    };
-
-                    //var results = hotelBedsClient.SearchHotel(
-                    //{
-                    //    HotelCode = input.HotelCode,
-                    //    Occupancies = input.Occupancies,
-                    //    CheckIn = new DateTime(Convert.ToInt32(checkin.Substring(0, 4)), Convert.ToInt32(checkin.Substring(4, 2)),
-                    //        Convert.ToInt32(checkin.Substring(6, 2))),
-                    //    Checkout = new DateTime(Convert.ToInt32(checkout.Substring(0, 4)), Convert.ToInt32(checkout.Substring(4, 2)),
-                    //        Convert.ToInt32(checkout.Substring(6, 2))),
-                    //    SearchId = generatedSearchId.ToString()
+                        HotelCode = input.HotelCode,
+                        Occupancies = input.Occupancies,
+                        CheckIn = new DateTime(Convert.ToInt32(checkin.Substring(0, 4)), Convert.ToInt32(checkin.Substring(4, 2)),
+                            Convert.ToInt32(checkin.Substring(6, 2))),
+                        Checkout = new DateTime(Convert.ToInt32(checkout.Substring(0, 4)), Convert.ToInt32(checkout.Substring(4, 2)),
+                            Convert.ToInt32(checkout.Substring(6, 2))),
+                        SearchId = generatedSearchId.ToString()
                         
-                    //});
+                    });
 
-                    if (results.HotelDetailLists == null || results.HotelDetailLists.Count == 0)
+                    if (results.HotelDetails == null || results.HotelDetails.Count == 0)
                     {
                         hotelResult = new SearchHotelOutput
                         {
@@ -249,7 +252,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                         };
                     }
                     
-                    if (results.HotelDetailLists == null || results.HotelDetailLists.Count == 0)
+                    if (results.HotelDetails == null || results.HotelDetails.Count == 0)
                     {
                         hotelResult = new SearchHotelOutput
                         {
@@ -257,18 +260,59 @@ namespace Lunggo.ApCommon.Hotel.Service
                         };
                     }
 
-                    if (results.HotelDetailLists.Any(hotel => hotel.Rooms == null || hotel.Rooms.Count == 0))
+                    if (results.HotelDetails.Any(hotel => hotel.Rooms == null || hotel.Rooms.Count == 0))
                     {
                         hotelResult = new SearchHotelOutput
                         {
                             IsSuccess = false
                         };
                     }
+                    AddPriceMargin(results.HotelDetails);
                     List<HotelRate> rateList = new List<HotelRate>();
-                    HotelRoom room = new HotelRoom();
-                    foreach (var hotel in results.HotelDetailLists)
+                    HotelRoom roomHotel = new HotelRoom();
+                    var isRateFound = false;
+                    var counter = 0;
+                    foreach (var hotel in results.HotelDetails)
                     {
-                        
+                        foreach (var room in hotel.Rooms)
+                        {
+                            foreach (var ratea in room.Rates)
+                            {
+                                var ratekey = ratea.RateKey.Split('|');
+                                if (Convert.ToInt32(ratekey[4]) == input.HotelCode && ratekey[5] == roomCd &&
+                                    ratekey[6] == someData && ratekey[7] == board)
+                                {
+                                    isRateFound = true;
+                                    roomHotel.Facilities = room.Facilities;
+                                    roomHotel.Images = room.Images;
+                                    roomHotel.RoomCode = room.RoomCode;
+                                    roomHotel.RoomName = room.RoomName;
+                                    roomHotel.Type = room.Type;
+                                    roomHotel.TypeName = room.TypeName;
+                                    roomHotel.characteristicCd = room.characteristicCd;
+                                    roomHotel.SingleRate = ratea;
+                                    roomHotel.SingleRate.TermAndCondition = GetRateCommentFromTableStorage(roomHotel.SingleRate.RateCommentsId, checkinDateTime).Select(x => x.Description).ToList();
+                                    roomHotel.SingleRate.RegsId = EncryptRegsId(hotel.HotelCode, room.RoomCode, roomHotel.SingleRate.RateKey);
+                                    hotelResult = new SearchHotelOutput
+                                    {
+                                        IsSuccess = true,
+                                        HotelRoom = ConvertToSingleHotelRoomForDisplay(roomHotel)
+                                    };
+                                    Debug.Print("----->FOUND" +counter);
+                                    counter++;
+                                }
+                            }
+                        }
+                    }
+
+                    if (!isRateFound)
+                    {
+                        hotelResult = new SearchHotelOutput
+                        {
+                            Errors = new List<HotelError> { HotelError.RateKeyNotFound },
+                            IsSuccess = false,
+                            ErrorMessages = new List<string> { "Rate Key Not Found!" }
+                        };
                     }
 
                     break;

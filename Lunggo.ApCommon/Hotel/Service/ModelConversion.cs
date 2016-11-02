@@ -178,7 +178,8 @@ namespace Lunggo.ApCommon.Hotel.Service
                     CharacteristicName = dictionary.GetHotelRoomRateTypeId(roomDetail.characteristicCd),
                     Images = roomDetail.Images != null ? roomDetail.Images : null,
                     Facilities = roomDetail.Facilities != null ? roomDetail.Facilities : null,
-                    Rates = ConvertToRateForDisplays(roomDetail.Rates)
+                    //Rates = ConvertToRateForDisplays(roomDetail.Rates)
+                    SingleRate = ConvertToSingleRateForDisplays(roomDetail.SingleRate)
                 };
         }
 
@@ -213,6 +214,34 @@ namespace Lunggo.ApCommon.Hotel.Service
                 convertedRate.Add(rate);
             }
             return convertedRate;
+        }
+
+        internal HotelRateForDisplay ConvertToSingleRateForDisplays(HotelRate rate)
+        {
+            if (rate == null)
+                return new HotelRateForDisplay();
+            var dictionary = HotelService.GetInstance();
+            var result = new HotelRateForDisplay
+            {
+                //RateKey = rateDetail.RateKey,
+                Type = rate.Type,
+                TypeDescription = dictionary.GetHotelRoomRateTypeId(rate.Type),
+                Class = rate.Class,
+                ClassDescription = dictionary.GetHotelRoomRateClassId(rate.Class),
+                RegsId = rate.RegsId,
+                AdultCount = rate.AdultCount,
+                ChildCount = rate.ChildCount,
+                Allotment = rate.Allotment,
+                //Boards = rateDetail.Boards,
+                BoardDescription = GetHotelBoardDescId(rate.Boards),
+                RoomCount = rate.RoomCount,
+                TimeLimit = rate.TimeLimit,
+                Cancellation = rate.Cancellation,
+                Offers = rate.Offers,
+                TermAndCondition = rate.TermAndCondition
+            };
+            SetDisplayPriceHotelRate(result, rate);
+            return result;
         }
 
         public void SetDisplayPriceHotelRate(HotelRateForDisplay rateDisplay,HotelRate rate)
