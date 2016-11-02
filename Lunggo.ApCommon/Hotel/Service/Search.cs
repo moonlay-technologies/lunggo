@@ -40,7 +40,7 @@ namespace Lunggo.ApCommon.Hotel.Service
 
                 var hotels = searchResult.HotelDetails;
                 var facilityData = new List<string>();
-                if (input.FilterParam != null && input.FilterParam.FacilityFilter.Facilities != null)
+                if (input.FilterParam != null && input.FilterParam.FacilityFilter != null && input.FilterParam.FacilityFilter.Facilities != null)
                 {
                     foreach (var facilities in input.FilterParam.FacilityFilter.Facilities.Select(param => HotelFacilityFilters[param].FacilityCode))
                     {

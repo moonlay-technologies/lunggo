@@ -220,10 +220,10 @@
                                                     </div>
                                                 </div>
                                                 <div class="room-rr">
-                                                    <div class="underline-txt">Rp 999.999.999</div>
-                                                    <div class="lg-txt"><b><sup>Rp</sup> 899.999.999</b></div>
+                                                    <div class="underline-txt">{{room.rate.originalPrice | number}}</div>
+                                                    <div class="lg-txt"><b><sup>Rp</sup> {{room.rate.netPrice | number}}</b></div>
                                                     <div class="xs-txt">*Harga Termasuk Pajak & Service Charge</div>
-                                                    <a href="#" class="btn btn-yellow small">PESAN</a>
+                                                    <a href="" class="btn btn-yellow small" ng-click="bookRoom(room)">PESAN</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -245,7 +245,7 @@
                                                 <div class="col-left-bottom">
                                                     <ul class="hd-list">
                                                         <li class="hd-size">: 3 x 3 m</li>
-                                                        <li class="hd-bed">: Double bed / Queen size</li>
+                                                        <li class="hd-bed">: {{room.rate.boardDesc}}</li>
                                                         <li class="hd-view">: City View</li>
                                                     </ul>
                                                 </div>
@@ -256,8 +256,7 @@
                                                         <li class="hd-point">
                                                             <div class="hd-title blue-txt">Room Policy</div>
                                                             <div class="hd-txt">
-                                                                Dolor sit amet, consectetuer adipiscing elit, sed diam nonummy. ectetuer adipiscing elit, sed diam nonummy. Lorem ipsum dolor sit amet, consect
-                                                                etuer ectetuer. Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
+                                                                <span ng-repeat="tnc in room.rate.tnc">{{tnc}}</span>
                                                             </div>
                                                         </li>
                                                         <li class="hd-point">

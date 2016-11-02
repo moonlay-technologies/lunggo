@@ -45,7 +45,7 @@ app.controller('hotelSearchController', ['$scope', '$log', '$http', '$resource',
     $scope.init = function (model) {
         $scope.model = model;
         $log.debug($scope.model);
-
+        //$scope.hotel.searchId = $scope.model.searchId;
         $scope.hotel.location = $scope.model.location;
         $scope.hotel.checkinDate = $scope.model.checkinDate;
         $scope.hotel.checkoutDate =$scope.model.checkoutDate;
@@ -131,19 +131,22 @@ app.controller('hotelSearchController', ['$scope', '$log', '$http', '$resource',
             "hotelCd=" + hotelCd;
     }
 
-    $scope.changeFilter = function (star) {
-        if ($scope.filter.stars == null) {
-            $scope.filter.stars = [star];
-        }
-        else {
-            var starIndex = $scope.filter.stars.indexOf(star);
-            if (starIndex < 0) {
-                $scope.filter.stars.push(star);
+    $scope.changeFilter = function (filterType, value) {
+        if (filterType == 'star') {
+            if ($scope.filter.stars == null) {
+                $scope.filter.stars = [value];
             }
             else {
-                $scope.filter.stars.splice(starIndex, 1);
+                var starIndex = $scope.filter.stars.indexOf(value);
+                if (starIndex < 0) {
+                    $scope.filter.stars.push(value);
+                }
+                else {
+                    $scope.filter.stars.splice(starIndex, 1);
+                }
             }
         }
+        
     }
 
     var initiatePriceSlider = function (minPrice, maxPrice) {
