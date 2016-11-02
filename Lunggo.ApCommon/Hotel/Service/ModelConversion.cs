@@ -178,13 +178,13 @@ namespace Lunggo.ApCommon.Hotel.Service
                     RoomName = roomDetail.RoomName,
                     Type = roomDetail.Type,
                     PaxCapacity = GetPaxCapacity(roomDetail.RoomCode),
-                    //TypeName = dictionary.GetHotelRoomRateTypeId(roomDetail.Type),
-                    //CharacteristicCode = roomDetail.characteristicCd,
-                    //CharacteristicName = dictionary.GetHotelRoomRateTypeId(roomDetail.characteristicCd),
+                    TypeName = dictionary.GetHotelRoomRateTypeId(roomDetail.Type),
+                    CharacteristicCode = roomDetail.characteristicCd,
+                    CharacteristicName = dictionary.GetHotelRoomRateTypeId(roomDetail.characteristicCd),
                     Images = roomDetail.Images != null ? roomDetail.Images : null,
                     Facilities = roomDetail.Facilities != null ? roomDetail.Facilities : null,
-                    SingleRate = ConvertToSingleRateForDisplays(roomDetail.SingleRate)
-                    //Rates = ConvertToRateForDisplays(roomDetail.Rates)
+                    SingleRate = ConvertToSingleRateForDisplays(roomDetail.SingleRate),
+                    Rates = ConvertToRateForDisplays(roomDetail.Rates)
                 };
                 convertedRoom.Add(room);
             }
