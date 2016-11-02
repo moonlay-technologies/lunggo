@@ -20,6 +20,7 @@ namespace Lunggo.ApCommon.Hotel.Service
             var hotelDetail = GetHotelDetailFromDb(input.HotelCode);
             SetHotelFullFacilityCode(hotelDetail);
             SetDetailFromSearchResult(hotelDetail, input.SearchId);
+            hotelDetail.Rooms = SetRoomPerRate(hotelDetail.Rooms);
             return new GetHotelDetailOutput
             {
                 HotelDetail = ConvertToHotelDetailsBaseForDisplay(hotelDetail,OriginalPrice,NetFare)
@@ -52,6 +53,30 @@ namespace Lunggo.ApCommon.Hotel.Service
             {
                 data.FullFacilityCode = data.FacilityGroupCode + "" + data.FacilityCode;
             }
+        }
+
+        public List<HotelRoom> SetRoomPerRate(List<HotelRoom> hotelRoom)
+        {
+            var roomList = new List<HotelRoom>();
+            foreach (var room in hotelRoom)
+            {
+                foreach (var rate in room.Rates)
+                {
+                    var singleRoom = new HotelRoom
+                    {
+                        RoomCode = room.RoomCode,
+                        RoomName = room.RoomName,
+                        Type = room.Type,
+                        TypeName = room.TypeName,
+                        Images = room.Images,
+                        Facilities = room.Facilities,
+                        characteristicCd = room.characteristicCd,
+                        SingleRate = rate
+                    };
+                    roomList.Add(singleRoom);
+                }
+            }
+            return roomList;
         }
 
     }
