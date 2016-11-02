@@ -239,11 +239,12 @@
     <Compile Include="Hotel\Constant\CheckRateStatus.cs" />
     <Compile Include="Hotel\Constant\SearchHotelType.cs" />
     <Compile Include="Hotel\Constant\SortingType.cs" />
+    <Compile Include="Hotel\Model\HotelRateComment.cs" />
     <Compile Include="Hotel\Model\HotelRateRule.cs" />
     <Compile Include="Hotel\Model\HotelMarginRule.cs" />
     <Compile Include="Hotel\Model\HotelFilterDisplayInfo.cs" />
     <Compile Include="Hotel\Model\HotelReservationSearch.cs" />
-    <Compile Include="Hotel\Model\HotelDetailWrapper.cs" />
+    <Compile Include="Hotel\Model\HotelTableStorage.cs" />
     <Compile Include="Hotel\Model\HotelFacility.cs" />
     <Compile Include="Hotel\Model\HotelFilter.cs" />
     <Compile Include="Hotel\Model\HotelRoomFacilities.cs" />
@@ -253,9 +254,9 @@
     <Compile Include="Hotel\Model\ResultBase.cs" />
     <Compile Include="Hotel\Query\GetActiveHotelPriceMarginRuleQuery.cs" />
     <Compile Include="Hotel\Query\GetHotelRateRuleQuery.cs" />
+    <Compile Include="Hotel\Service\ContentUpdate.cs" />
     <Compile Include="Flight\Query\UpdateBookingIdQuery.cs" />
     <Compile Include="Hotel\Service\GetRoom.cs" />
-    <Compile Include="Hotel\Service\SaveTruncatedHotelDetail.cs" />
     <Compile Include="Hotel\Service\PriceMargin.cs" />
     <Compile Include="Hotel\Query\GetHotelDetailFromSearchResult.cs" />
     <Compile Include="Hotel\Query\GetRoomDetailFromSearchResult.cs" />
@@ -277,8 +278,11 @@
     <Compile Include="Hotel\Service\SendToCustomer.cs" />
     <Compile Include="Hotel\Service\Settings.cs" />
     <Compile Include="Hotel\Wrapper\HotelBeds\Content\GetHotel.cs" />
+    <Compile Include="Hotel\Wrapper\HotelBeds\Content\GetRateComment.cs" />
     <Compile Include="Hotel\Wrapper\HotelBeds\Content\Model\HotelContent.cs" />
     <Compile Include="Hotel\Wrapper\HotelBeds\Content\Model\HotelRS.cs" />
+    <Compile Include="Hotel\Wrapper\HotelBeds\Content\Model\RateCommentContent.cs" />
+    <Compile Include="Hotel\Wrapper\HotelBeds\Content\Model\RateCommentRS.cs" />
     <Compile Include="Hotel\Wrapper\HotelBeds\HotelBedsIssue.cs" />
     <Compile Include="Hotel\Wrapper\HotelBeds\Sdk\auto\common\SimpleTypes.cs" />
     <Compile Include="Hotel\Wrapper\HotelBeds\Sdk\auto\messages\AbstractGenericRequest.cs" />

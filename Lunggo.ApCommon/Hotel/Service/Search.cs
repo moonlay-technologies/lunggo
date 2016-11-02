@@ -21,7 +21,6 @@ using Lunggo.Framework.SharedModel;
 
 namespace Lunggo.ApCommon.Hotel.Service
 {
-
     public partial class HotelService
     {
         public SearchHotelOutput Search(SearchHotelInput input)
@@ -41,7 +40,7 @@ namespace Lunggo.ApCommon.Hotel.Service
 
                 var hotels = searchResult.HotelDetails;
                 var facilityData = new List<string>();
-                if (input.FilterParam != null && input.FilterParam.FacilityFilter.Facilities != null)
+                if (input.FilterParam != null && input.FilterParam.FacilityFilter != null && input.FilterParam.FacilityFilter.Facilities != null)
                 {
                     foreach (var facilities in input.FilterParam.FacilityFilter.Facilities.Select(param => HotelFacilityFilters[param].FacilityCode))
                     {
@@ -53,7 +52,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                 if (hotels != null && input.FilterParam != null)
                 {
                     hotels = searchResult.HotelDetails.Where(p =>
-                    (input.FilterParam.ZoneFilter == null || input.FilterParam.ZoneFilter.Zones.Contains(p.ZoneCode)) &&
+                    (input.FilterParam.ZoneFilter == null || input.FilterParam.ZoneFilter.Zones.Contains(Convert.ToInt32(p.ZoneCode))) &&
                     (input.FilterParam.AccommodationTypeFilter == null || input.FilterParam.AccommodationTypeFilter.Accomodations.Contains(p.AccomodationType)) &&
                     (facilityData.Count == 0 || facilityData.Any(e=> p.Facilities.Select(x=>x.FullFacilityCode).ToList().Contains(e))) &&
                     (input.FilterParam.StarFilter == null || input.FilterParam.StarFilter.Stars.Contains(p.StarCode)) &&
@@ -194,15 +193,15 @@ namespace Lunggo.ApCommon.Hotel.Service
                     switch (detailDestination.Type)
                     {
                         case AutocompleteType.Zone:
-                            var splittedZone = detailDestination.Code.Split('-');
-                            request.Zone = int.Parse(splittedZone[1].Trim());
-                            request.Destination = splittedZone[0].Trim();
+                            request.Zone = detailDestination.Code;
                             break;
                         case AutocompleteType.Destination:
                             request.Destination = detailDestination.Code;
                             isByDestination = true;
                             break;
-
+                        case AutocompleteType.Area:
+                            request.Area = detailDestination.Code;
+                            break;
                         case AutocompleteType.Hotel:
                             request.HotelCode = int.Parse(detailDestination.Code);
                             break;
@@ -224,7 +223,15 @@ namespace Lunggo.ApCommon.Hotel.Service
                     //REMEMBER TO UNCOMMENT THIS
                     SaveSearchResultintoDatabaseToCache(result.SearchId, result);
 
-                    var firstPageHotelDetails = result.HotelDetails.Take(100).ToList(); 
+                    List<HotelDetail> firstPageHotelDetails;
+                    if (input.StartPage != 0 && input.EndPage != 0)
+                    {
+                        firstPageHotelDetails = result.HotelDetails.Skip(input.StartPage).Take(input.EndPage).ToList();
+                    }
+                    else
+                    {
+                        firstPageHotelDetails = result.HotelDetails.Take(100).ToList();
+                    }
 
                      
                     firstPageHotelDetails = AddHotelDetail(firstPageHotelDetails);
@@ -264,10 +271,13 @@ namespace Lunggo.ApCommon.Hotel.Service
                 //hotel.Address = detail.Address;
                 //hotel.CountryCode = detail.CountryCode;
                 var detail2 = GetTruncatedHotelDetailFromTableStorage(hotel.HotelCode);
-                hotel.City = detail2.City;
-                hotel.ImageUrl = detail2.ImageUrl;
-                hotel.IsRestaurantAvailable = detail2.IsRestaurantAvailable;
-                hotel.WifiAccess = detail2.WifiAccess;
+                if (detail2 != null)
+                {
+                    hotel.City = detail2.City;
+                    hotel.ImageUrl = detail2.ImageUrl;
+                    hotel.IsRestaurantAvailable = detail2.IsRestaurantAvailable;
+                    hotel.WifiAccess = detail2.WifiAccess;
+                }
                 }
             return result;
         }
@@ -300,7 +310,7 @@ namespace Lunggo.ApCommon.Hotel.Service
         public HotelFilterDisplayInfo SetHotelFilterDisplayInfo(List<HotelDetail> hotels, bool isByDestination)
         {
             var filter = new HotelFilterDisplayInfo();
-            var zoneDict = new Dictionary<int, ZoneFilterInfo>();
+            var zoneDict = new Dictionary<string, ZoneFilterInfo>();
             var starDict = new Dictionary<int, StarFilterInfo>();
             var accDict = new Dictionary<string, AccomodationFilterInfo>();
             var facilityDict = HotelFacilityFilters.Keys.ToDictionary(key => key, key => new FacilitiesFilterInfo
@@ -321,7 +331,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                             {
                                 Code = hotelDetail.ZoneCode,
                                 Count = 1,
-                                Name = GetHotelZoneNameFromDict(hotelDetail.DestinationCode + "-" + hotelDetail.ZoneCode)
+                                Name = GetZoneNameFromDict(hotelDetail.ZoneCode)
                             });
                         }
                         else

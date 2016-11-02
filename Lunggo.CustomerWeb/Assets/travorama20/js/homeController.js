@@ -18,6 +18,7 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
 
     $scope.hotel = {};
     $scope.hotel.location = "";
+    $scope.hotel.locationDisplay = "";
     $scope.hotel.checkinDate = moment().locale("id").add(5, 'days');
     $scope.hotel.checkinDateDisplay = $scope.hotel.checkinDate.locale("id").format('LL');
     $scope.hotel.checkoutDate = moment().locale("id").add(7, 'days');
@@ -37,6 +38,10 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
 
     $scope.hotel.roomCountMin = 1;
     $scope.hotel.roomCountMax = 8;
+
+    $scope.view = {}
+    $scope.view.showHotelSearch = false;
+
 
     $scope.addValue = function (variableName, amount) {
         var minCount = 1;
@@ -73,17 +78,14 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
            }
        );
 
-    $scope.$watch('hotel.location', function (newValue, oldValue, ccc) {
+    $scope.$watch('hotel.locationDisplay', function (newValue, oldValue, ccc) {
         if (newValue.length >= 3) {
             resource.query({ prefix: newValue }).$promise.then(function (data) {
-                $log.debug(data);
                 $scope.hotel.hotelAutocomplete = data.hotelAutocomplete;
+                $log.debug($scope.hotel.hotelAutocomplete);
             });
         }
     });
-
-    
-
 
     $scope.hotel.searchHotel = function (){
         $log.debug('searching hotel');
@@ -98,16 +100,17 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
     $scope.hotel.searchParam = function (){
         return ("?info=" + 
             //[$scope.hotel.location,
-            ["16121",
-             $scope.hotel.checkinDate.toISOString(),
-             $scope.hotel.checkoutDate.toISOString(),
+            [$scope.hotel.location,
+             $scope.hotel.checkinDate.format("YYYY-MM-DD"),
+             $scope.hotel.checkoutDate.format("YYYY-MM-DD"),
              $scope.hotel.adultCount,
              $scope.hotel.childCount,
              $scope.hotel.nightCount,
-             $scope.hotel.roomCount].join('.')
+             $scope.hotel.roomCount,
+             
+             ].join('.')
         )
     }
-
 
     $scope.setCheckinDate = function (scope, date) {
         scope.$apply(function () {
@@ -137,6 +140,12 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
         }
     });
     //=============== hotel end ======================
+
+    $scope.selectLocation = function (location) {
+        $scope.hotel.location = location.id;
+        $scope.hotel.locationDisplay = location.name;
+        $scope.view.showHotelSearch = false;
+    }
     
 }]);
 

@@ -11,7 +11,9 @@ using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Hotel.Constant;
 using Lunggo.ApCommon.Hotel.Model;
 using Lunggo.ApCommon.Hotel.Model.Logic;
+using Lunggo.ApCommon.Hotel.Wrapper.Content;
 using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds;
+using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Content;
 using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Sdk.auto.model;
 using Lunggo.ApCommon.Payment.Model;
 using Lunggo.ApCommon.Product.Constant;
@@ -37,6 +39,52 @@ namespace Lunggo.BackendWeb
 
             AppInitializer.Init();
 
+            var x = HotelService.GetInstance().GetHotelDetailFromTableStorage(24408);
+            var y = HotelService.GetInstance().GetTruncatedHotelDetailFromTableStorage(24408);
+            Console.WriteLine(x);
+
+
+            //try
+            //{
+            //    var hotel = HotelService.GetInstance().GetHotelDetailFromTableStorage(24408);
+            //    Console.WriteLine("hotelCd: " + 24408);
+            //    var truncatedHotelDetail = new HotelDetailsBase
+            //    {
+            //        HotelName = hotel.HotelName,
+            //        StarRating = hotel.StarRating,
+            //        ImageUrl = hotel.ImageUrl != null && (hotel.ImageUrl != null || hotel.ImageUrl.Count != 0) ?
+            //        new List<Image>
+            //            {
+            //                hotel.ImageUrl.Where(u => u.Order == 1).Take(1).FirstOrDefault()
+            //            } : null,
+            //        WifiAccess = hotel.Facilities != null &&
+            //            ((hotel.Facilities != null || hotel.Facilities.Count != 0) &&
+            //            hotel.Facilities.Any(f => (f.FacilityGroupCode == 60 && f.FacilityCode == 261)
+            //            || (f.FacilityGroupCode == 70 && f.FacilityCode == 550))),
+            //        IsRestaurantAvailable = hotel.Facilities != null && ((hotel.Facilities != null || hotel.Facilities.Count != 0) &&
+            //            hotel.Facilities.Any(f => (f.FacilityGroupCode == 71 && f.FacilityCode == 200)
+            //            || (f.FacilityGroupCode == 75 && f.FacilityCode == 840)
+            //            || (f.FacilityGroupCode == 75 && f.FacilityCode == 845))),
+            //        Latitude = hotel.Latitude,
+            //        Longitude = hotel.Longitude,
+            //        DestinationCode = hotel.DestinationCode,
+            //        ZoneCode = hotel.ZoneCode,
+            //        City = hotel.City,
+            //    };
+            //    HotelService.GetInstance().SaveTruncatedHotelDetailToTableStorage(truncatedHotelDetail, hotel.HotelCode);
+            //    Console.WriteLine("Hotel detail truncated saved for: " + 24408);
+            //}
+            //catch
+            //{
+            //    Console.WriteLine("Hotel with code: " + 24408 + " not found");
+            //}
+
+            //GetHotel x = new GetHotel();
+            //x.GetHotelData();
+            //GetRateComment rateComment = new GetRateComment();
+            //rateComment.GetRateCommentData();
+            //var x = HotelService.GetInstance().GetRateCommentFromTableStorage(1, 226545, "81306");
+            //Console.WriteLine(x);
             //HotelService.GetInstance().Search(new SearchHotelInput
             //{
             //    HotelCode = 444942,

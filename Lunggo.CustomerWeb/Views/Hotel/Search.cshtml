@@ -58,73 +58,58 @@
                             <input type="text" value="" ng-disabled="hotels.length < 1" class="form-hotel-name form-control">
                         </div>
                         <div class="filter-group">
-                            <label class="filter-title">Harga Hotel</label>
-                            <div class="slider-price" id="slider-range"></div>
+                            <label class="filter-title">Harga Hotel</label> 
+                            <div class="slider-price slider-range" id="slider-range"></div>
                             <div class="slider-minmax">
-                                <span>Rp 500.000</span>
-                                <span class="pull-right">Rp 100.000.000</span>
+                                <span>{{filter.minPrice | number}}</span>
+                                <span class="pull-right">{{filter.maxPrice | number}}</span>
+                            </div>
+                            <div class="hidden">
+                                <input type="text" name="priceSliderValueMin" value="" class="slider-range-min" ng-model="filter.minPrice" />
+                                <input type="text" name="priceSliderValueMax" value="" class="slider-range-max" ng-model="filter.maxPrice" />
                             </div>
                         </div>
+
+
                         <div class="filter-group">
-                            <label class="filter-title">Bintang Hotel</label>
+                            <label class="filter-title">Bintang Hotel</label> - {{filter.stars}}
                             <div class="rating">
                                 <label class="sqr">
-                                    <span class="checkbox"></span>
-                                    <input type="checkbox" name="check" class="check" value="false" />
+                                    <span class="checkbox sqra"></span>
+                                    <input type="checkbox" name="check" class="check sqra" value="false" ng-model="star5" ng-change="changeFilter(star, 5)" />
                                     <span class="star star-5"></span>
                                 </label>
                                 <label class="sqr">
                                     <span class="checkbox"></span>
-                                    <input type="checkbox" name="check" class="check" value="false" />
+                                    <input type="checkbox" name="check" class="check sqra" value="false" ng-model="star4" ng-change="changeFilter(star, 4)" />
                                     <span class="star star-4"></span>
                                 </label>
                                 <label class="sqr">
                                     <span class="checkbox"></span>
-                                    <input type="checkbox" name="check" class="check" value="false" />
+                                    <input type="checkbox" name="check" class="check sqra" value="false" ng-model="star3" ng-change="changeFilter(star, 3)" />
                                     <span class="star star-3"></span>
                                 </label>
                                 <label class="sqr">
                                     <span class="checkbox"></span>
-                                    <input type="checkbox" name="check" class="check" value="false" />
+                                    <input type="checkbox" name="check" class="check sqra" value="false" ng-model="star2" ng-change="changeFilter(star, 2)" />
                                     <span class="star star-2"></span>
                                 </label>
                                 <label class="sqr">
                                     <span class="checkbox"></span>
-                                    <input type="checkbox" name="check" class="check" value="false" />
+                                    <input type="checkbox" name="check" class="check sqra" value="false" ng-model="star1" ng-change="changeFilter(star, 1)" />
                                     <span class="star star-1"></span>
                                 </label>
                             </div>
                         </div>
-                        <div class="filter-group" ng-if="hotelFilterDisplayInfo!==undefined">
-                            <label class="filter-title">Hotel Area:</label><span class="city-name blue-txt"><a href="#">(Jakarta)</a></span>
-                            <div class="area">
+                        <div class="filter-group" ng-if="hotelFilterDisplayInfo.ZoneFilter!==undefined || hotelFilterDisplayInfo.ZoneFilter!=null">
+                            <label class="filter-title">Hotel Zone:</label><span class="city-name blue-txt"><a href="#">(Jakarta)</a></span>
+                            <div class="area" ng-repeat="zoneFilter in hotelFilterDisplayInfo.ZoneFilter">
                                 <label class="sqr city-point">
                                     <span class="checkbox"></span>
                                     <input type="checkbox" name="check" class="check" value="false" />
-                                    <span class="name">Jakarta Utara</span>
+                                    <span class="name">{{zoneFilter.Name}}</span>
                                 </label>
-                                <span class="city-hotel">54</span>
-
-                                <label class="sqr city-point">
-                                    <span class="checkbox"></span>
-                                    <input type="checkbox" name="check" class="check" value="false" />
-                                    <span class="name">Jakarta Barat</span>
-                                </label>
-                                <span class="city-hotel">54</span>
-
-                                <label class="sqr city-point">
-                                    <span class="checkbox"></span>
-                                    <input type="checkbox" name="check" class="check" value="false" />
-                                    <span class="name">Jakarta Selatan</span>
-                                </label>
-                                <span class="city-hotel">54</span>
-
-                                <label class="sqr city-point">
-                                    <span class="checkbox"></span>
-                                    <input type="checkbox" name="check" class="check" value="false" />
-                                    <span class="name">Jakarta Timur</span>
-                                </label>
-                                <span class="city-hotel">54</span>
+                                <span class="city-hotel">{{zoneFilter.Count}}</span>
                             </div>
                         </div>
                         <div class="filter-group">
@@ -148,6 +133,10 @@
                             </div>
                         </div>
                     </div>
+                    <div>
+                        <button class="pull-right" ng-click="searchHotel()">filter button</button>
+                    </div>
+                    
                 </div>
                 <div class="col-right-result">
                     <div class="sort clearfix">
@@ -179,13 +168,12 @@
                                     </div>
                                 </div>
                                 <div class="" ng-class="{
-                                     '':hotel.starRating.indexOf('0')>-1,
-                                     'star-1 e-star':hotel.starRating.indexOf('1')>-1,
-                                     'star-2 e-star':hotel.starRating.indexOf('2')>-1,
-                                     'star-3 e-star':hotel.starRating.indexOf('3')>-1,
-                                     'star-4 e-star':hotel.starRating.indexOf('4')>-1,
-                                     'star-5':hotel.starRating.indexOf('5')>-1}">
-                                </div>
+                                     'star e-star': hotel.starRating.indexOf('1')>-1,
+                                     'star-2 e-star': hotel.starRating.indexOf('2')>-1,
+                                     'star-3 e-star': hotel.starRating.indexOf('3')>-1,
+                                     'star-4 e-star': hotel.starRating.indexOf('4')>-1,
+                                     'star-5': hotel.starRating.indexOf('5')>-1}">
+                                </div>{{hotel.starRating}}
                                 
                                 <div class="location">
                                     @*Kios Tower AB No. 26, Jl. Karet Pasar Gang Tiong No: 62 ;

@@ -15,7 +15,28 @@ namespace Lunggo.CustomerWeb.Models
         public string name { get; set; }
     }
 
-   
+    enum RequestParam
+    {
+        //Location = 0,
+        //CheckinDate = 1,
+        //CheckoutDate = 3,
+        //AdultCount = 5,
+        //ChildCount = 6,
+        //NightCount = 7,
+        //RoomCount = 8,
+        //Filter = 9,
+        //Sorting = 10,
+
+        Location = 0,
+        CheckinDate = 1,
+        CheckoutDate = 2,
+        AdultCount = 3,
+        ChildCount = 4,
+        NightCount = 5,
+        RoomCount = 6,
+        Filter = 7,
+        Sorting = 8,
+    }
 
     public class HotelSearchApiRequest
     {
@@ -29,6 +50,10 @@ namespace Lunggo.CustomerWeb.Models
         public int AdultCount { get; set; }
         [JsonProperty("childCount")]
         public int ChildCount { get; set; }
+        [JsonProperty("nightCount")]
+        public int NightCount { get; set; }
+        [JsonProperty("roomCount")]
+        public int RoomCount { get; set; }
         [JsonProperty("filter")]
         public HotelRequestFilter Filter { get; set; }
         [JsonProperty("sorting")]
@@ -36,14 +61,15 @@ namespace Lunggo.CustomerWeb.Models
 
         public HotelSearchApiRequest(string queryString) {
             List<string> query = queryString.Split('.').ToList<string>();
-            Location = query[0];
-            //DateTime tempDate = new DateTime();
-            //DateTime.TryParse(query[1], out tempDate) = true ? CheckinDate = tempDate : ;
-            CheckinDate = DateTime.Parse(query[1]);
-            CheckoutDate = DateTime.Parse(query[3]);
-            AdultCount = int.Parse(query[5]);
-            ChildCount = int.Parse(query[6]);
-           
+            Location = query[(int)RequestParam.Location];
+            CheckinDate = DateTime.Parse(query[(int)RequestParam.CheckinDate]);
+            CheckoutDate = DateTime.Parse(query[(int)RequestParam.CheckoutDate]);
+            AdultCount = int.Parse(query[(int)RequestParam.AdultCount]);
+            ChildCount = int.Parse(query[(int)RequestParam.ChildCount]);
+            NightCount = int.Parse(query[(int)RequestParam.NightCount]);
+            RoomCount = int.Parse(query[(int)RequestParam.RoomCount]);
+            //Filter =  query[(int)RequestParam.Filter];
+            //Sorting = int.Parse(query[(int)RequestParam.Sorting]);
            
         }
     }
