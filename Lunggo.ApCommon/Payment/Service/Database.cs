@@ -19,37 +19,7 @@ namespace Lunggo.ApCommon.Payment.Service
     {
         public PaymentDetails GetPayment(string rsvNo)
         {
-            using (var conn = DbService.GetInstance().GetOpenConnection())
-            {
-                var paymentRecord =
-                    GetPaymentByRsvNoQuery.GetInstance().Execute(conn, new { RsvNo = rsvNo }).SingleOrDefault();
-                if (paymentRecord == null)
-                    return null;
-                return new PaymentDetails
-                {
-                    Medium = PaymentMediumCd.Mnemonic(paymentRecord.MediumCd),
-                    Method = PaymentMethodCd.Mnemonic(paymentRecord.MethodCd),
-                    Status = PaymentStatusCd.Mnemonic(paymentRecord.StatusCd),
-                    Time = paymentRecord.Time.HasValue ? DateTime.SpecifyKind(paymentRecord.Time.Value, DateTimeKind.Utc) : (DateTime?) null,
-                    TimeLimit = DateTime.SpecifyKind(paymentRecord.TimeLimit.GetValueOrDefault(), DateTimeKind.Utc),
-                    TransferAccount = paymentRecord.TransferAccount,
-                    RedirectionUrl = paymentRecord.RedirectionUrl,
-                    ExternalId = paymentRecord.ExternalId,
-                    DiscountCode = paymentRecord.DiscountCode,
-                    OriginalPriceIdr = paymentRecord.OriginalPriceIdr.GetValueOrDefault(),
-                    DiscountNominal = paymentRecord.DiscountNominal.GetValueOrDefault(),
-                    UniqueCode = paymentRecord.UniqueCode.GetValueOrDefault(),
-                    FinalPriceIdr = paymentRecord.FinalPriceIdr.GetValueOrDefault(),
-                    PaidAmountIdr = paymentRecord.PaidAmountIdr.GetValueOrDefault(),
-                    LocalCurrency =
-                        new Currency(paymentRecord.LocalCurrencyCd, paymentRecord.LocalRate.GetValueOrDefault()),
-                    LocalFinalPrice = paymentRecord.LocalFinalPrice.GetValueOrDefault(),
-                    LocalPaidAmount = paymentRecord.LocalPaidAmount.GetValueOrDefault(),
-                    InvoiceNo = paymentRecord.InvoiceNo,
-                    Refund = Refund.GetFromDb(rsvNo),
-                    Discount = UsedDiscount.GetFromDb(rsvNo)
-                };
-            }
+            return PaymentDetails.GetFromDb(rsvNo);
         }
 
         private PaymentStatus GetStatusFromDb(string rsvNo)

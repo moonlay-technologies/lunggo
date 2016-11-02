@@ -154,7 +154,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                     IsValid = true,
                     NewPrice = newPrice
                 };
-            var rsvDetail = CreateHotelReservation(input, bookInfo, oldPrice);
+            var rsvDetail = CreateHotelReservation(input, bookInfo);
             InsertHotelRsvToDb(rsvDetail);
             return new BookHotelOutput
             {
@@ -176,7 +176,7 @@ namespace Lunggo.ApCommon.Hotel.Service
             return hb.CheckRateHotel(revalidateInfo);
         }
 
-        private HotelReservation CreateHotelReservation(BookHotelInput input, HotelDetailsBase bookInfo, decimal price)
+        private HotelReservation CreateHotelReservation(BookHotelInput input, HotelDetailsBase bookInfo)
         {
             var rsvNo = RsvNoSequence.GetInstance().GetNext(ProductType.Hotel);
             //var identity = HttpContext.Current.User.Identity as ClaimsIdentity ?? new ClaimsIdentity();
@@ -198,6 +198,8 @@ namespace Lunggo.ApCommon.Hotel.Service
             var checkoutdate =  new DateTime(Convert.ToInt32(coDate.Substring(0, 4)),
                 Convert.ToInt32(coDate.Substring(4, 2)), Convert.ToInt32(coDate.Substring(6, 2)));
 
+            var price = bookInfo.Rooms.SelectMany(r => r.Rates).Sum(r => r.Price.Local);
+
             var hotelInfo = new HotelDetail
             {
                 AccomodationType = bookInfo.AccomodationType,
@@ -207,6 +209,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                 CountryCode = bookInfo.CountryCode,
                 DestinationCode = bookInfo.DestinationCode,
                 NetFare = price,
+                OriginalFare = price*1.01M,
                 TotalAdult = input.Passengers.Count(p => p.Type == PaxType.Adult),
                 TotalChildren = input.Passengers.Count(p => p.Type == PaxType.Child),
                 SpecialRequest = input.SpecialRequest,

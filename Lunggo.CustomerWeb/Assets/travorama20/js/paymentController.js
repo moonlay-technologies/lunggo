@@ -23,6 +23,7 @@ app.controller('paymentController', [
         $scope.paymentTimeout = paymentTimeout;
         $scope.paymentMethod = ''; //Payment
         $scope.trips = trips;
+        $scope.hotelDetails = hotelDetails;
         $scope.stepClass = '';
         $scope.redirectionUrl = redirectionUrl;
         //CreditCard

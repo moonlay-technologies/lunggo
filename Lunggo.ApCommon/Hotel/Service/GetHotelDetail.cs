@@ -13,16 +13,15 @@ namespace Lunggo.ApCommon.Hotel.Service
 {
     public partial class HotelService
     {
-        private decimal NetFare = 0;
-        private decimal OriginalPrice = 0;
         public GetHotelDetailOutput GetHotelDetail(GetHotelDetailInput input)
         {
             var hotelDetail = GetHotelDetailFromDb(input.HotelCode);
             SetHotelFullFacilityCode(hotelDetail);
-            SetDetailFromSearchResult(hotelDetail, input.SearchId);
+            decimal originalPrice, netFare;
+            SetDetailFromSearchResult(hotelDetail, input.SearchId, out originalPrice, out netFare);
             return new GetHotelDetailOutput
             {
-                HotelDetail = ConvertToHotelDetailsBaseForDisplay(hotelDetail,OriginalPrice,NetFare)
+                HotelDetail = ConvertToHotelDetailsBaseForDisplay(hotelDetail,originalPrice,netFare)
             };
         }
 
@@ -36,13 +35,13 @@ namespace Lunggo.ApCommon.Hotel.Service
             return GetHotelDetailFromTableStorage(hotelCode);
         }
 
-        public void SetDetailFromSearchResult(HotelDetailsBase hotel ,string searchId)
+        public void SetDetailFromSearchResult(HotelDetailsBase hotel ,string searchId, out decimal originalPrice, out decimal netFare)
         {
             var searchResultData = GetSearchHotelResultFromCache(searchId);
             var SearchResulthotel = searchResultData.HotelDetails.SingleOrDefault(p => p.HotelCode == hotel.HotelCode);
             hotel.Rooms = SearchResulthotel.Rooms;
-            OriginalPrice = SearchResulthotel.OriginalFare;
-            NetFare = SearchResulthotel.NetFare;
+            originalPrice = SearchResulthotel.OriginalFare;
+            netFare = SearchResulthotel.NetFare;
         }
 
         public void SetHotelFullFacilityCode(HotelDetailsBase hotel)

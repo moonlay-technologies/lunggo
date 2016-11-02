@@ -43,7 +43,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                 rsvData.Payment.Status == PaymentStatus.Settled))
             {
                 var queueService = QueueService.GetInstance();
-                var queue = queueService.GetQueueByReference("HotelIssueTicket");
+                var queue = queueService.GetQueueByReference("HotelIssueVoucher");
                 queue.AddMessage(new CloudQueueMessage(input.RsvNo));
                 output.IsSuccess = true;
                 return output;

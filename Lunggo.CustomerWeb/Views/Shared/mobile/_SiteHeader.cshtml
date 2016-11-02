@@ -26,6 +26,14 @@
         {
             <a class="flight-swap" ng-click="FlightFunctions.SwapFlight()"></a>
         }
+        @if (ViewBag.CurrentPage == "search-hotel")
+        {
+            <a class="change-hotel"></a>
+        }
+        @if (ViewBag.CurrentPage == "detail-hotel")
+        {
+            <a class="login-hotel"></a>
+        }
         @*@if (ViewBag.FlightDetail == "true")
             {
                 <a class="flight-detail" ng-click="PageConfig.SetOverlay('flight-detail')">Detail</a>

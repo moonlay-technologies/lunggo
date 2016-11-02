@@ -1,9 +1,11 @@
-﻿@using Lunggo.ApCommon.Identity.Users
+﻿@using Lunggo.ApCommon.Flight.Model
+@using Lunggo.ApCommon.Hotel.Model
+@using Lunggo.ApCommon.Identity.Users
 @using Lunggo.ApCommon.Payment.Constant
 @using Lunggo.Framework.Context
 @using Lunggo.Framework.Extension
 @using Lunggo.Framework.Config
-@model Lunggo.CustomerWeb.Models.FlightPaymentData
+@model Lunggo.CustomerWeb.Models.PaymentData
 
 @{
 
@@ -74,24 +76,43 @@
     var rsvNo = @Model.RsvNo;
     var paymentDetail = '';
     var flightDetail = '';
-    var trips = @Html.Raw(Model.FlightReservation.Itinerary.Trips.Serialize());
-    var price = @Model.FlightReservation.Itinerary.NetTotalFare;
-    var originalPrice = '@Model.FlightReservation.Itinerary.OriginalTotalFare';
-    var redirectionUrl;
-    @if (Model.FlightReservation.Payment.RedirectionUrl != null) {
-        @:redirectionUrl = '@Model.FlightReservation.Payment.RedirectionUrl';
-    }
-    var departureDate;
-    @if (Model.FlightReservation.Itinerary.Trips != null)
-    {
-        if (Model.FlightReservation.Itinerary.Trips.Count == 2)
+    var trips = '';
+    var hotelDetails = '';
+    var price = '';
+    var originalPrice = '';
+    @if (Model.Reservation is FlightReservationForDisplay)
         {
-            @:departureDate = '@Model.FlightReservation.Itinerary.Trips[1].DepartureDate';
-                                                    }
+            var reservation = Model.Reservation as FlightReservationForDisplay;
+            @:trips = @Html.Raw(reservation.Itinerary.Trips.Serialize());
+                @:price = @reservation.Itinerary.NetTotalFare;
+                @:originalPrice = '@reservation.Itinerary.OriginalTotalFare';
+            }
         else
         {
-            @:departureDate = '@Model.FlightReservation.Itinerary.Trips[0].DepartureDate';
-                                                    }
+            var reservation = Model.Reservation as HotelReservationForDisplay;
+            @:hotelDetails = @Html.Raw(reservation.HotelDetail.Serialize());
+                @:price = @reservation.HotelDetail.NetFare;
+                @:originalPrice = '@reservation.HotelDetail.OriginalFare';
+            }
+    var redirectionUrl;
+    @if (Model.Reservation.Payment.RedirectionUrl != null) {
+        @:redirectionUrl = '@Model.Reservation.Payment.RedirectionUrl';
+        }
+    @if (Model.Reservation is FlightReservationForDisplay)
+    {
+        @:var departureDate;
+        var reservation = Model.Reservation as FlightReservationForDisplay;
+        if (reservation.Itinerary.Trips != null)
+         {
+             if (reservation.Itinerary.Trips.Count == 2)
+             {
+                 @:departureDate = '@reservation.Itinerary.Trips[1].DepartureDate';
+             }
+             else
+             {
+                 @:departureDate = '@reservation.Itinerary.Trips[0].DepartureDate';
+             }
+         }
     }
 
     // change current page
@@ -107,7 +128,7 @@
         phone: '@User.Identity.GetPhoneNumber()',
         email: '@User.Identity.GetEmail()'
     };
-        
+
     </script>
     <!-- angular controller -->
     <script src="/Assets/travorama20/js/paymentController.js"></script>
@@ -557,65 +578,152 @@
                                 </div>
                             </div>
                         </div><!-- .widget.countdown -->
-                        <div class="widget flight">
-                            <div class="flight-detail" id="departure-flight" ng-if="trips[0]">
-                                <h3 class="widget-title"><b>RINCIAN</b> PENERBANGAN</h3>
-                                <div>
-                                    <header><span>PENERBANGAN PERGI</span></header>
-                                    <div class="widget-content">
-                                        <div class="airline">
-                                            <img ng-src="{{trips[0].segments[0].airlineLogoUrl}}" alt="{{trips[0].segments[0].airlineName}}" class="airline-image" />
-                                            <h4 class="airline-name">{{trips[0].segments[0].airlineName}}</h4>
-                                        </div>
-                                        <div class="route">
-                                            <div class="origin">
-                                                <h5>{{trips[0].segments[0].departureTime | date: 'dd MMM yyyy':'UTC'}}</h5>
-                                                <h3>{{trips[0].segments[0].departureTime | date: 'HH:mm' : 'UTC'}}</h3>
-                                                <h4>{{trips[0].segments[0].departureCity}} ({{trips[0].segments[0].departure}})</h4>
-                                                <h5>{{trips[0].segments[0].departureName}}</h5>
-                                            </div>
-                                            <div class="duration"></div>
-                                            <div class="destination">
-                                                <h5>{{trips[0].segments[ trips[0].segments.length - 1 ].arrivalTime | date: 'dd MMM yyyy':'UTC'}}</h5>
-                                                <h3>{{trips[0].segments[ trips[0].segments.length - 1 ].arrivalTime | date: 'HH:mm': 'UTC' }}</h3>
-                                                <h4>{{trips[0].segments[ trips[0].segments.length - 1 ].arrivalCity}} ({{trips[0].segments[ trips[0].segments.length - 1 ].arrival}})</h4>
-                                                <h5>{{trips[0].segments[ trips[0].segments.length - 1 ].arrivalName}}</h5>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div><!-- .widget.flight-detail -->
-                            <div class="flight-detail" id="return-flight" ng-if="trips[1]">
-                                <div>
-                                    <header><span>PENERBANGAN PULANG</span></header>
-                                    <div class="widget-content">
-                                        <div class="airline">
-                                            <img ng-src="{{trips[1].segments[0].airlineLogoUrl}}" alt="{{trips[1].segments[0].airlineName}}" class="airline-image" />
-                                            <h4 class="airline-name">{{trips[1].segments[0].airlineName}}</h4>
-                                        </div>
-                                        <div class="route">
-                                            <div class="origin">
-                                                <h5>{{trips[1].segments[0].departureTime | date: 'dd MMM yyyy' : 'UTC'}}</h5>
-                                                <h3>{{trips[1].segments[0].departureTime | date: 'HH:mm' : 'UTC'}}</h3>
-                                                <h4>{{trips[1].segments[0].departureCity}} ({{trips[1].segments[0].departure}})</h4>
-                                                <h5>{{trips[1].segments[0].departureName}}</h5>
-                                            </div>
-                                            <div class="duration"></div>
-                                            <div class="destination">
-                                                <h5>{{trips[1].segments[ trips[1].segments.length - 1 ].arrivalTime | date: 'dd MMM yyyy' : 'UTC'}}</h5>
-                                                <h3>{{trips[1].segments[ trips[1].segments.length - 1 ].arrivalTime | date: 'HH:mm' : 'UTC'}}</h3>
-                                                <h4>{{trips[1].segments[ trips[1].segments.length - 1 ].arrivalCity}} ({{trips[1].segments[ trips[1].segments.length - 1 ].arrival}})</h4>
-                                                <h5>{{trips[1].segments[ trips[1].segments.length - 1 ].arrivalName}}</h5>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div><!-- .widget.flight-detail -->
-                        </div>
-                        <div class="widget passenger-detail"></div><!-- .widget.passenger-detail -->
-                    </div><!-- .widget-container -->
+                        
+                        @if (Model.Reservation is FlightReservationForDisplay)
+                        {
 
-                </div>
+                            <div class="widget flight">
+                                <div class="flight-detail" id="departure-flight" ng-if="trips[0]">
+                                    <h3 class="widget-title"><b>RINCIAN</b> PENERBANGAN</h3>
+                                    <div>
+                                        <header><span>PENERBANGAN PERGI</span></header>
+                                        <div class="widget-content">
+                                            <div class="airline">
+                                                <img ng-src="{{trips[0].segments[0].airlineLogoUrl}}" alt="{{trips[0].segments[0].airlineName}}" class="airline-image" />
+                                                <h4 class="airline-name">{{trips[0].segments[0].airlineName}}</h4>
+                                            </div>
+                                            <div class="route">
+                                                <div class="origin">
+                                                    <h5>{{trips[0].segments[0].departureTime | date: 'dd MMM yyyy':'UTC'}}</h5>
+                                                    <h3>{{trips[0].segments[0].departureTime | date: 'HH:mm' : 'UTC'}}</h3>
+                                                    <h4>{{trips[0].segments[0].departureCity}} ({{trips[0].segments[0].departure}})</h4>
+                                                    <h5>{{trips[0].segments[0].departureName}}</h5>
+                                                </div>
+                                                <div class="duration"></div>
+                                                <div class="destination">
+                                                    <h5>{{trips[0].segments[ trips[0].segments.length - 1 ].arrivalTime | date: 'dd MMM yyyy':'UTC'}}</h5>
+                                                    <h3>{{trips[0].segments[ trips[0].segments.length - 1 ].arrivalTime | date: 'HH:mm': 'UTC' }}</h3>
+                                                    <h4>{{trips[0].segments[ trips[0].segments.length - 1 ].arrivalCity}} ({{trips[0].segments[ trips[0].segments.length - 1 ].arrival}})</h4>
+                                                    <h5>{{trips[0].segments[ trips[0].segments.length - 1 ].arrivalName}}</h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div><!-- .widget.flight-detail -->
+                                <div class="flight-detail" id="return-flight" ng-if="trips[1]">
+                                    <div>
+                                        <header><span>PENERBANGAN PULANG</span></header>
+                                        <div class="widget-content">
+                                            <div class="airline">
+                                                <img ng-src="{{trips[1].segments[0].airlineLogoUrl}}" alt="{{trips[1].segments[0].airlineName}}" class="airline-image" />
+                                                <h4 class="airline-name">{{trips[1].segments[0].airlineName}}</h4>
+                                            </div>
+                                            <div class="route">
+                                                <div class="origin">
+                                                    <h5>{{trips[1].segments[0].departureTime | date: 'dd MMM yyyy' : 'UTC'}}</h5>
+                                                    <h3>{{trips[1].segments[0].departureTime | date: 'HH:mm' : 'UTC'}}</h3>
+                                                    <h4>{{trips[1].segments[0].departureCity}} ({{trips[1].segments[0].departure}})</h4>
+                                                    <h5>{{trips[1].segments[0].departureName}}</h5>
+                                                </div>
+                                                <div class="duration"></div>
+                                                <div class="destination">
+                                                    <h5>{{trips[1].segments[ trips[1].segments.length - 1 ].arrivalTime | date: 'dd MMM yyyy' : 'UTC'}}</h5>
+                                                    <h3>{{trips[1].segments[ trips[1].segments.length - 1 ].arrivalTime | date: 'HH:mm' : 'UTC'}}</h3>
+                                                    <h4>{{trips[1].segments[ trips[1].segments.length - 1 ].arrivalCity}} ({{trips[1].segments[ trips[1].segments.length - 1 ].arrival}})</h4>
+                                                    <h5>{{trips[1].segments[ trips[1].segments.length - 1 ].arrivalName}}</h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div><!-- .widget.flight-detail -->
+                            </div>
+                            <div class="widget passenger-detail"></div>
+                            <!-- .widget.passenger-detail -->
+
+                        }
+                        else
+                        {
+
+                            //<div class="widget hotel" @*ng-show="currentPage > 1"*@>
+                            //    <div class="hotel-detail">
+                            //        <h3 class="widget-title"><b>RINCIAN</b> PEMESANAN</h3>
+                            //        <div class="widget-wrapper">
+                            //            <div class="widget-subtitle">Detail Hotel</div>
+                            //            <div class="widget-content">
+                            //                <div class="widget-top">
+                            //                    <div class="wt-top clearfix">
+                            //                        <div class="col-left-hotel"><img src="{{hotelDetails.mainImage}}" alt="{{hotelDetails.hotelName}}" /></div>
+                            //                        <div class="col-right-hotel">
+                            //                            <span class="blue-txt bold-txt">{{hotelDetails.hotelName}}</span>
+                            //                            <br /><span class="star star-{{hotelDetails.starRating}}"></span>
+                            //                        </div>
+                            //                    </div>
+                            //                    <div class="wt-bottom">
+                            //                        Kios Tower AB No. 26, Jl. Karet Pasar Gang Tiong No: 62 ; Jakarta Barat
+                            //                    </div>  
+                            //                </div>
+                            //                <div class="widget-bottom">
+                            //                    <div class="wb-container clearfix">
+                            //                        <div class="wb-left">Check in</div>
+                            //                        <div class="wb-mid">:</div>
+                            //                        <div class="wb-right bold-txt">5 November 2016</div>
+                            //                    </div>
+                            //                    <div class="wb-container clearfix">
+                            //                        <div class="wb-left">Check out</div>
+                            //                        <div class="wb-mid">:</div>
+                            //                        <div class="wb-right bold-txt">9 November 2016</div>
+                            //                    </div>
+                            //                    <div class="wb-container clearfix">
+                            //                        <div class="wb-left">Malam</div>
+                            //                        <div class="wb-mid">:</div>
+                            //                        <div class="wb-right bold-txt">3 Malam</div>
+                            //                    </div>
+                            //                    <div class="wb-container clearfix">
+                            //                        <div class="wb-left">Kamar</div>
+                            //                        <div class="wb-mid">:</div>
+                            //                        <div class="wb-right bold-txt">2 Kamar</div>
+                            //                    </div>
+                            //                    <div class="wb-container clearfix">
+                            //                        <div class="wb-left">Jenis Kamar</div>
+                            //                        <div class="wb-mid">:</div>
+                            //                        <div class="wb-right bold-txt">Superior Room</div>
+                            //                    </div>
+                            //                    <div class="wb-container clearfix">
+                            //                        <div class="wb-left">Tamu per Kamar</div>
+                            //                        <div class="wb-mid">:</div>
+                            //                        <div class="wb-right bold-txt">2 orang</div>
+                            //                    </div>
+                            //                </div>
+                            //            </div>
+                            //        </div>
+                            //        <div class="widget-wrapper notes">
+                            //            <div class="widget-subtitle">Catatan Khusus</div>
+                            //            <div class="widget-content clearfix">
+                            //                <ul class="sqr-blue-list">
+                            //                    <li>
+                            //                        <div class="wc-title blue-txt bold-txt">Room Policy</div>
+                            //                        <div class="wc-txt">
+                            //                            Dolor sit amet, consectetuer adipiscing elit, sed diam nonummy.
+                            //                        </div>
+                            //                    </li>
+                            //                    <li>
+                            //                        <div class="wc-title blue-txt bold-txt">Room Policy</div>
+                            //                        <div class="wc-txt">
+                            //                            Dolor sit amet, consectetuer adipiscing elit, sed diam nonummy.
+                            //                        </div>
+                            //                    </li>
+                            //                </ul>
+                            //            </div>
+                            //        </div>
+                            //    </div><!-- .widget.hotel -->
+                            //</div>
+                            //<!-- .widget-container -->
+                            //
+                            
+                        }
+                        
+
+                    </div>
             </div>
         </div>
     </section><!-- .checkout-content -->

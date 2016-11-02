@@ -118,7 +118,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Function\HotelSaySorryFailedIssueNotifEmail.cs" />
-    <Compile Include="Function\HotelEticketEmail.cs" />
+    <Compile Include="Function\HotelVoucherEmail.cs" />
     <Compile Include="Function\FlightEticketSlightDelayNotifEmail.cs" />
     <Compile Include="Function\FlightIssueFailedNotifEmail.cs" />
     <Compile Include="Function\ContactUsEmail.cs" />
@@ -214,6 +214,7 @@
     <None Include="Properties\PublishProfiles\dv1-webjob.pubxml" />
     <None Include="Properties\PublishProfiles\prod-webjob.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-dv2-webjob.pubxml" />
+    <None Include="Properties\PublishProfiles\travorama-local-webjob %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-local-webjob.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-qa-webjob.pubxml" />
     <None Include="Properties\webjob-publish-settings.json" />

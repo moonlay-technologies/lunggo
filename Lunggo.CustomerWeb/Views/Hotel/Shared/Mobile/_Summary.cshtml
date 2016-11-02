@@ -1,0 +1,43 @@
+﻿@{
+    Layout = "/Views/Shared/mobile/_Layout.cshtml";
+    ViewBag.BodyClass = "page-hotel page-search";
+    ViewBag.Title = "Pencarian Hotel";
+}
+
+@section AdditionalCSS{
+    <link href="/Assets/css/jquery-ui.min.css" rel="stylesheet" />
+}
+
+@section AdditionalJS {
+    <script src="/Assets/js/angular.min.js"></script>
+    <script src="/Assets/js/angular-animate.min.js"></script>
+    <script src="/Assets/js/angular-route.min.js"></script>
+    <script src="/Assets/js/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="/Scripts/bootstrap.min.js"></script>
+}
+
+@section PageJS{
+}
+
+<div class="hotel-summary">
+    <div class="summary-left">
+        <div><b>Denpasar</b>, 2 Kamar</div>
+        <div class="semibold-txt">1 Malam (4 Okt 2016 - 5 Okt 2016)</div>
+    </div>
+    <a ng-click="SetOverlay('hotel-form')" class="summary-right"><span>GANTI</span></a>
+</div>
+
+<!-- .overlay - change flight -->
+<div class="overlay overlay--theme--blue overlay--hotel-form" ng-class="{'active' : (PageConfig.ActiveOverlay == 'hotel-form')}">
+    <header class="overlay__header">
+        <h3 class="overlay__title">
+            <b>GANTI HOTEL</b>
+            <span class="overlay__close" ng-click="SetOverlay()">X</span>
+        </h3>
+    </header><!-- .overlay__header -->
+    <section class="overlay__content">
+        <div class="form-wrapper">
+            @Html.Partial("/Views/Hotel/Shared/Mobile/_SearchHotelForm.cshtml")
+        </div>
+    </section>
+</div>

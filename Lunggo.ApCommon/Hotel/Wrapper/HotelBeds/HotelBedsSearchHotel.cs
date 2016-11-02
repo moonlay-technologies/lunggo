@@ -89,12 +89,15 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds
                         room.adultOf(30);
                     }
 
-                    occ.ChildrenAges.Sort();
-                    for (int i = 0; i < occ.ChildCount; i++)
+                    if (occ.ChildrenAges != null)
                     {
-                        room.childOf(occ.ChildrenAges[i]);
+                        occ.ChildrenAges.Sort();
+                        for (int i = 0; i < occ.ChildCount; i++)
+                        {
+                            room.childOf(occ.ChildrenAges[i]);
+                        }
                     }
-                    
+
                     avail.rooms.Add(room);
                 }
             }
@@ -126,9 +129,7 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds
                         Longitude = hotelResponse.longitude == null ? null : (decimal?)decimal.Parse(hotelResponse.longitude),
                         ZoneCode = hotelResponse.destinationCode + '-' + hotelResponse.zoneCode.ToString(CultureInfo.InvariantCulture),
                         DestinationCode = hotelResponse.destinationCode,
-                        NetFare =  hotelResponse.totalNet,
                         StarRating =  hotelResponse.categoryCode,
-                        //OriginalFare = hotelResponse.minRate,
                         Review = hotelResponse.reviews,
                         Rooms = hotelResponse.rooms == null ? null : hotelResponse.rooms.Select(roomApi => new HotelRoom
                         {

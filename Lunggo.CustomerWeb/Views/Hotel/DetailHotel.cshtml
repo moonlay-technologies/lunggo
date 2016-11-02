@@ -2,45 +2,83 @@
     Layout = "/Views/Shared/Travorama20/_Layout20150929.cshtml";
     ViewBag.BodyClass = "page-hotel page-detail";
     ViewBag.Title = "Detail Hotel";
+    ViewBag.AngularController = "hotelDetailController";
 }
 
 @section AdditionalCSS{
     <link href="/Assets/css/jquery-ui.min.css" rel="stylesheet" />
+    <link href="/Assets/vendor/flexslider/flexslider.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/jquery.slick/1.5.9/slick.css" />
 }
 
 @section AdditionalJS {
     <script src="/Assets/js/angular.min.js"></script>
     <script src="/Assets/js/angular-animate.min.js"></script>
     <script src="/Assets/js/angular-route.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="/Assets/js/jquery-ui.min.js"></script>
     <script type="text/javascript" src="/Scripts/bootstrap.min.js"></script>
+    <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.slick/1.5.9/slick.min.js"></script>
+
 }
 
 @section PageJS{
     <script>
-
+        $(window).load(function () {
+            $('.flexslider').flexslider({
+                animation: "slide",
+                controlNav: "thumbnails",
+                start: function (slider) {
+                    $('body').removeClass('loading');
+                }
+            });
+        });
+        $('.hd-slider').slick({
+            autoplay: false,
+            autoplaySpeed: 2500,
+            dots: false
+        });
     </script>
+    <script src="/Assets/vendor/flexslider/jquery.flexslider.js"></script>
+    <script>
+        accordionFunctions();
+    </script>
+    <script src="/Assets/Travorama20/js/hotelDetailController.js"></script>
+    <script type="text/javascript" src="/Assets/travorama20/js/HotelController.js"></script>
 }
 
-@Html.Partial("/Views/Hotel/Shared/_PageSlider.cshtml")
-<div class="travorama-hotel">
+@Html.Partial("/Views/Hotel/Shared/Desktop/_PageSlider.cshtml")
+<div class="travorama-hotel" ng-init="init(@Newtonsoft.Json.JsonConvert.SerializeObject(Model))">
     <div class="container">
         <div class="detail-hotel-content">
-            @Html.Partial("/Views/Hotel/Shared/_BreadCrumb.cshtml")
+            @Html.Partial("/Views/Hotel/Shared/Desktop/_BreadCrumb.cshtml")
 
             <div class="detail-hotel">
                 <div class="big-slider">
                     <div class="top-desc">
-                        <span class="slider-title-lg blue-txt">Bliss Hotel Singapore</span>
-                        <span class="star star-5"></span>
+                        <span class="slider-title-lg blue-txt">{{hotel.hotelName}}</span>
+                        <div class="" ng-class="{
+                                     '':hotel.starRating.indexOf('0')>-1,
+                                     'star-1 e-star':hotel.starRating.indexOf('1')>-1,
+                                     'star-2 e-star':hotel.starRating.indexOf('2')>-1,
+                                     'star-3 e-star':hotel.starRating.indexOf('3')>-1,
+                                     'star-4 e-star':hotel.starRating.indexOf('4')>-1,
+                                     'star-5':hotel.starRating.indexOf('5')>-1}">
+                        </div>
                         <br />
-                        <span class="address">Kios Tower AB No. 26, Jl. Karet Pasar Gang Tiong No: 62 - Jakarta Barat</span>
+                        <span class="address">{{hotel.address}}{{hotel.city}}{{hotel.country}}</span>
                         <a href="#" class="btn-blue small">Lihat Peta</a>
                     </div>
                     <div class="slider-container clearfix">
                         <div class="col-left-slider">
-                            <div>
-                                <img src="/Assets/travorama20/images/Hotel/big-slider-img.jpg" alt="Alternate Text" />
+                            <div class="slider">
+                                <div class="flexslider">
+                                    <ul class="slides">
+                                        <li data-thumb="{{image}}" ng-repeat="image in hotel.images">
+                                            <img ng-src="{{image}}" alt="alternative" />
+                                        </li>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                         <div class="col-right-slider">
@@ -113,6 +151,361 @@
                                 <div class="ta-title green-txt"><b>Rating dari TripAdvisor</b></div>
                                 <div class="grey-txt sm-txt italic-txt">Dari 900 ulasan</div>
                                 <div class="btn-container"><a class="btn-green" href="#">Selengkapnya</a></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-hotel clearfix">
+                    <div class="col-left-hotel mh-title md-txt">Informasi Hotel</div>
+                    <ul class=" col-right-hotel mh-container">
+                        <li class="mh-list"><a href="#" class="active">Fasilitas Hotel</a></li>
+                        <li class="mh-list"><a href="#">Peta Hotel</a></li>
+                        <li class="mh-list"><a href="#">Kebijakan Hotel</a></li>
+                        <li class="mh-list"><a href="#">Keterangan</a></li>
+                    </ul>
+                </div>
+                <div class="room clearfix">
+                    <div class="top-title clearfix">
+                        <div class="col-left-rs bg-title"><b>Pilih</b> Kamar </div>
+                        <div class="col-right-rs total-day">3 Nights <b>( Wed, 15 Dec 2015  -  Thu, 18 Dec 2015 )</b></div>
+                    </div>
+                    <div class="room-sort clearfix">
+                        <div class="room-sort-left"><a href="#" class="sort"></a>Tipe Kamar</div>
+                        <div class="room-sort-mid">Jumlah Kamar</div>
+                        <div class="room-sort-right"><a href="#" class="sort"></a>Harga Kamar</div>
+                    </div>
+                    <ul class="room-list-container">
+                        <li>
+                            <div class="rl-accordion">
+                                <div class="accordion-wrapper">
+                                    <div class="accordion accordion-rl">
+                                        <div class="room-list clearfix">
+                                            <div class="room-left"><img src="/Assets/travorama20/images/Hotel/room.jpg" alt="Room" /></div>
+                                            <div class="room-right clearfix">
+                                                <div class="room-rl">
+                                                    <div class="blue-txt md-txt"><b>Deluxe 2 Kings Bed Rooms</b></div>
+                                                    <div class="facility"></div>
+                                                    <div class="max-people">Maks <b>2 orang / kamar</b></div>
+                                                    <div class="info-room">
+                                                        <span class="info-icon italic-txt">i</span>
+                                                        <span class="blue-txt sm-txt">Info Kamar</span>
+                                                    </div>
+
+                                                </div>
+                                                <div class="room-rm">
+                                                    <div class="dropdown-container">
+                                                        <div class="form-control change-room">
+                                                            <span>1</span>
+                                                            <div class="option">
+                                                                <span data-value="y">2</span>
+                                                                <span data-value="c">3</span>
+                                                                <span data-value="f">4</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="room-rr">
+                                                    <div class="underline-txt">Rp 999.999.999</div>
+                                                    <div class="lg-txt"><b><sup>Rp</sup> 899.999.999</b></div>
+                                                    <div class="xs-txt">*Harga Termasuk Pajak & Service Charge</div>
+                                                    <a href="#" class="btn btn-yellow small">PESAN</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="accordion-content">
+                                        <div class="hotel-detail clearfix">
+                                            <div class=" col-left-result">
+                                                <div class="col-left-top clearfix">
+                                                    <div class="hd-slider">
+                                                        <div class="item active">
+                                                            <img src="/Assets/travorama20/images/Hotel/mini-slider.jpg" />
+                                                        </div>
+                                                        <div class="item">
+                                                            <img src="/Assets/travorama20/images/Hotel/mini-slider.jpg" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="total-img"><b>1</b> / 20</div>
+                                                </div>
+                                                <div class="col-left-bottom">
+                                                    <ul class="hd-list">
+                                                        <li class="hd-size">: 3 x 3 m</li>
+                                                        <li class="hd-bed">: Double bed / Queen size</li>
+                                                        <li class="hd-view">: City View</li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div class="col-right-result">
+                                                <div class="hd-right-container">
+                                                    <ul class="hd-description">
+                                                        <li class="hd-point">
+                                                            <div class="hd-title blue-txt">Room Policy</div>
+                                                            <div class="hd-txt">
+                                                                Dolor sit amet, consectetuer adipiscing elit, sed diam nonummy. ectetuer adipiscing elit, sed diam nonummy. Lorem ipsum dolor sit amet, consect
+                                                                etuer ectetuer. Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
+                                                            </div>
+                                                        </li>
+                                                        <li class="hd-point">
+                                                            <div class="hd-title blue-txt">Room Description </div>
+                                                            <div class="hd-txt">
+                                                                Dolor sit amet, consectetuer adipiscing elit, sed diam nonummy. ectetuer adipiscing elit, sed diam nonummy. Lorem ipsum dolor sit amet, consect
+                                                                etuer ectetuer. Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
+                                                            </div>
+                                                        </li>
+                                                        <li class="hd-point">
+                                                            <div class="hd-title blue-txt">Room Features </div>
+                                                            <div class="hd-txt clearfix">
+                                                                <ul class="blue-list quarter">
+                                                                    <li>Bed</li>
+                                                                    <li>2 Toilet</li>
+                                                                    <li>Towel</li>
+                                                                    <li>TV</li>
+                                                                    <li>Shower</li>
+                                                                    <li>Bed</li>
+                                                                    <li>2 Toilet</li>
+                                                                    <li>Towel</li>
+                                                                    <li>TV</li>
+                                                                    <li>Shower</li>
+                                                                </ul>
+                                                                <ul class="blue-list quarter">
+                                                                    <li>Bed</li>
+                                                                    <li>2 Toilet</li>
+                                                                    <li>Towel</li>
+                                                                    <li>TV</li>
+                                                                    <li>Shower</li>
+                                                                    <li>Bed</li>
+                                                                    <li>2 Toilet</li>
+                                                                    <li>Towel</li>
+                                                                    <li>TV</li>
+                                                                    <li>Shower</li>
+                                                                </ul>
+                                                                <ul class="blue-list quarter">
+                                                                    <li>Bed</li>
+                                                                    <li>2 Toilet</li>
+                                                                    <li>Towel</li>
+                                                                    <li>TV</li>
+                                                                    <li>Shower</li>
+                                                                    <li>Bed</li>
+                                                                    <li>2 Toilet</li>
+                                                                    <li>Towel</li>
+                                                                    <li>TV</li>
+                                                                    <li>Shower</li>
+                                                                </ul>
+                                                                <ul class="blue-list quarter">
+                                                                    <li>Bed</li>
+                                                                    <li>2 Toilet</li>
+                                                                    <li>Towel</li>
+                                                                    <li>TV</li>
+                                                                    <li>Shower</li>
+                                                                    <li>Bed</li>
+                                                                    <li>2 Toilet</li>
+                                                                    <li>Towel</li>
+                                                                    <li>TV</li>
+                                                                    <li>Shower</li>
+                                                                </ul>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="hotel-result clearfix">
+                        <span class="hotel-result-txt">Hotels Room Found: <b>332</b></span>
+                        <a href="#" class="btn-hotel-result btn-blue small">Tampilkan semua</a>
+                    </div>
+                </div>
+                <div class="info-hotel">
+                    <div class="top-title clearfix">
+                        <div class="col-left-rs bg-title"><b>Pilih</b> Kamar </div>
+                    </div>
+                    <div class="ih-accordion">
+                        <div class="accordion-wrapper">
+                            <div class="accordion-title accordion md-txt">Fasilitas Hotel</div>
+                            <div class="accordion-content show">
+                                <div class="ih-row fc clearfix">
+                                    <div class="col-left-hotel">
+                                        <div class="ih-left hotel-blue">
+                                            Fasilitas dan Layanan Hotel
+                                        </div>
+                                    </div>
+                                    <div class="col-right-hotel">
+                                        <div class="ih-right clearfix">
+                                            <ul class="blue-list quarter">
+                                                <li>Bed</li>
+                                                <li>2 Toilet</li>
+                                                <li>Towel</li>
+                                                <li>TV</li>
+                                                <li>Shower</li>
+                                                <li>Bed</li>
+                                                <li>2 Toilet</li>
+                                                <li>Towel</li>
+                                                <li>TV</li>
+                                                <li>Shower</li>
+                                            </ul>
+                                            <ul class="blue-list quarter">
+                                                <li>Bed</li>
+                                                <li>2 Toilet</li>
+                                                <li>Towel</li>
+                                                <li>TV</li>
+                                                <li>Shower</li>
+                                                <li>Bed</li>
+                                                <li>2 Toilet</li>
+                                                <li>Towel</li>
+                                                <li>TV</li>
+                                                <li>Shower</li>
+                                            </ul>
+                                            <ul class="blue-list quarter">
+                                                <li>Bed</li>
+                                                <li>2 Toilet</li>
+                                                <li>Towel</li>
+                                                <li>TV</li>
+                                                <li>Shower</li>
+                                                <li>Bed</li>
+                                                <li>2 Toilet</li>
+                                                <li>Towel</li>
+                                                <li>TV</li>
+                                                <li>Shower</li>
+                                            </ul>
+                                            <ul class="blue-list quarter">
+                                                <li>Bed</li>
+                                                <li>2 Toilet</li>
+                                                <li>Towel</li>
+                                                <li>TV</li>
+                                                <li>Shower</li>
+                                                <li>Bed</li>
+                                                <li>2 Toilet</li>
+                                                <li>Towel</li>
+                                                <li>TV</li>
+                                                <li>Shower</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="ih-row clearfix">
+                                    <div class="col-left-hotel">
+                                        <div class="ih-left sport-blue">
+                                            Olahraga dan Sarana Rekreasi
+                                        </div>
+                                    </div>
+                                    <div class="col-right-hotel">
+                                        <div class="ih-right clearfix">
+                                            <ul class="blue-list quarter">
+                                                <li>Bed</li>
+                                                <li>2 Toilet</li>
+                                                <li>Towel</li>
+                                                <li>TV</li>
+                                                <li>Shower</li>
+                                            </ul>
+                                            <ul class="blue-list quarter">
+                                                <li>Bed</li>
+                                                <li>2 Toilet</li>
+                                                <li>Towel</li>
+                                                <li>TV</li>
+                                                <li>Shower</li>
+                                            </ul>
+                                            <ul class="blue-list quarter">
+                                                <li>Bed</li>
+                                                <li>2 Toilet</li>
+                                                <li>Towel</li>
+                                                <li>TV</li>
+                                                <li>Shower</li>
+                                            </ul>
+                                            <ul class="blue-list quarter">
+                                                <li>Bed</li>
+                                                <li>2 Toilet</li>
+                                                <li>Towel</li>
+                                                <li>TV</li>
+                                                <li>Shower</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="ih-row clearfix">
+                                    <div class="col-left-hotel">
+                                        <div class="ih-left wifi-blue">
+                                            Internet & Wifi
+                                        </div>
+                                    </div>
+                                    <div class="col-right-hotel">
+                                        <div class="ih-right clearfix">
+                                            <ul class="blue-list quarter">
+                                                <li>Bed</li>
+                                                <li>2 Toilet</li>
+                                                <li>Towel</li>
+                                                <li>TV</li>
+                                                <li>Shower</li>
+                                            </ul>
+                                            <ul class="blue-list quarter">
+                                                <li>Bed</li>
+                                                <li>2 Toilet</li>
+                                                <li>Towel</li>
+                                                <li>TV</li>
+                                                <li>Shower</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="ih-row clearfix">
+                                    <div class="col-left-hotel">
+                                        <div class="ih-left parking-blue">
+                                            Parking
+                                        </div>
+                                    </div>
+                                    <div class="col-right-hotel">
+                                        <div class="ih-right clearfix">
+                                            <ul class="blue-list quarter">
+                                                <li>Bed</li>
+                                                <li>2 Toilet</li>
+                                                <li>Towel</li>
+                                                <li>TV</li>
+                                                <li>Shower</li>
+                                            </ul>
+                                            <ul class="blue-list quarter">
+                                                <li>Bed</li>
+                                                <li>2 Toilet</li>
+                                                <li>Towel</li>
+                                                <li>TV</li>
+                                                <li>Shower</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-title accordion md-txt">Deskripsi Hotel</div>
+                            <div class="accordion-content show">
+                                @*<div class="ih-title md-txt">“Clean rooms, Great location, Spotless beds”</div>*@
+                                <div class="ih-desc clearfix">
+                                    {{hotel.description}}
+                                    @*<div class="col-half ih-l">
+                                        This hotel features a fitness centre, an outdoor pool and a rooftop terrace with panoramic city views. It is close to the area's tourist attractions and is minutes on foot from Lavender MRT Station.
+                                        <br /><br />
+                                        This 4-star hotel offers a coffee bar, a 24-hour reception and an express check-in and check-out feature. Corporate amenities include a business centre.
+                                    </div>*@
+                                    @*<div class="col-half ih-r">
+                                        This hotel features a fitness centre, an outdoor pool and a rooftop terrace with panoramic city views. It is close to the area's tourist attractions and is minutes on foot from Lavender MRT Station.
+                                        <br /><br />
+                                        This 4-star hotel offers a coffee bar, a 24-hour reception and an express check-in and check-out feature. Corporate amenities include a business centre.
+                                    </div>*@
+                                </div>
+                            </div>
+                            <div class="accordion-title accordion md-txt">Syarat & Ketentuan Hotel</div>
+                            <div class="accordion-content show">
+                                <div class="snk-container clearfix">
+                                    Syarat dan Kettentuan Hotel Swiss Bell Hotel - Singapore:
+                                    <ul class="blue-list">
+                                        <li>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt</li>
+                                        <li>Adipiscing elit, sed diam nonummy nibh euismod tincidunt</li>
+                                        <li>Dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt</li>
+                                        <li>Amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt</li>
+                                        <li>Ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt</li>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                     </div>

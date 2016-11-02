@@ -10,7 +10,7 @@ file: /Assets/travorama20/css/_page_flight.scss
 .page-flight {
     // *****
     // search location
-    .search-location {position:absolute; top:95px;
+    .search-location, .search-hotel {position:absolute; top:95px;
         &#origin {left:5px;}
         &#destination {left:5px;}
         .location-body {border:$border-default;}
@@ -219,7 +219,7 @@ file: /Assets/travorama20/css/_page_flight.scss
     }
     // *****
     // search result
-    .search-result { width: 860px; margin: 0 auto; min-height:500px; padding-top:20px; letter-spacing:0;}
+    .search-result { width: 920px; margin: 0 auto; min-height:500px; padding-top:20px; letter-spacing:0;}
     // *****
     // flight
     .flight {border:$border-default; @include border-radius($border-radius-default); color:#525252; background:#fff; margin-bottom:15px; position:relative;
@@ -614,12 +614,12 @@ file: /Assets/travorama20/css/_page_flight.scss
             //.search-result-sort {display:none;}
         }
         // if search result departure or search result return is active
-        &>.active {width:530px;
+        &>.active {width:560px;
             .search-result-title {
                 p span.route-date {display:inline;}
             }
         }
-        &>.inactive {width:290px; opacity:0.5;
+        &>.inactive {width:320px; opacity:0.5;
             .search-result-warning {display:none;}
             .search-result-filter {display:none;}
             .search-result-sort {display:none;}
@@ -932,7 +932,7 @@ file: /Assets/travorama20/css/_page_flight.scss
         }
     }
     // default
-    .flight-review {@include border-radius($border-radius-default); border:5px solid $color-main-blue; background:#fff; width:860px; height:auto; position:absolute;top:50%; left:50%; @include translate(-50%, -50%);
+    .flight-review {@include border-radius($border-radius-default); border:5px solid $color-main-blue; background:#fff; width:920px; height:auto; position:absolute;top:50%; left:50%; @include translate(-50%, -50%);
         // flight review header
         .flight-review-header {background:#1daee4; padding:10px;
             h3 {color:#fff; text-align:center; padding-right:15px; margin:0;}

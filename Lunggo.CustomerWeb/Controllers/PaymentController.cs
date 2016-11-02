@@ -8,7 +8,10 @@ using Lunggo.ApCommon.Hotel.Service;
 using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.ApCommon.Payment.Model;
 using Lunggo.ApCommon.Payment.Service;
+using Lunggo.ApCommon.Product.Constant;
+using Lunggo.ApCommon.Product.Model;
 using Lunggo.CustomerWeb.Models;
+using PaymentData = Lunggo.CustomerWeb.Models.PaymentData;
 
 namespace Lunggo.CustomerWeb.Controllers
 {
@@ -19,36 +22,23 @@ namespace Lunggo.CustomerWeb.Controllers
         {
             try
             {
+                ReservationForDisplayBase rsv;
                 if (rsvNo[0] == '1')
-                {
-                    var flight = FlightService.GetInstance();
-                    var reservation = flight.GetReservationForDisplay(rsvNo);
-
-                    return View(new FlightPaymentData
-                    {
-                        RsvNo = rsvNo,
-                        FlightReservation = reservation,
-                        TimeLimit = reservation.Payment.TimeLimit.GetValueOrDefault(),
-                    });
-                }
+                    rsv = FlightService.GetInstance().GetReservationForDisplay(rsvNo);
                 else
+                    rsv = HotelService.GetInstance().GetReservationForDisplay(rsvNo);
+
+                return View(new PaymentData
                 {
-                    var hotel = HotelService.GetInstance();
-                    var reservation = hotel.GetReservationForDisplay(rsvNo);
-
-                    return View(new FlightPaymentData
-                    {
-                        RsvNo = rsvNo,
-                        HotelReservation = reservation,
-                        TimeLimit = reservation.Payment.TimeLimit.GetValueOrDefault(),
-                    });
-                }
-
+                    RsvNo = rsvNo,
+                    Reservation = rsv,
+                    TimeLimit = rsv.Payment.TimeLimit.GetValueOrDefault(),
+                });
             }
             catch
             {
                 ViewBag.Message = "Failed";
-                return View(new FlightPaymentData
+                return View(new PaymentData
                 {
                     RsvNo = rsvNo
                 });
@@ -61,21 +51,11 @@ namespace Lunggo.CustomerWeb.Controllers
         [ActionName("Payment")]
         public ActionResult PaymentPost(string rsvNo, string paymentUrl)
         {
-            var controller = "";
-            switch (rsvNo[0])
-            {
-                case '1':
-                    controller = "Flight";
-                    break;
-                case '2':
-                    controller = "Hotel";
-                    break;
-            }
             var payment = PaymentService.GetInstance().GetPayment(rsvNo);
             if (payment.Method == PaymentMethod.BankTransfer ||
                 payment.Method == PaymentMethod.VirtualAccount)
             {
-                return RedirectToAction("Confirmation", controller, new { rsvNo });
+                return RedirectToAction("Confirmation", "Payment", new { rsvNo });
             }
             else if (!string.IsNullOrEmpty(paymentUrl))
             {
@@ -84,8 +64,80 @@ namespace Lunggo.CustomerWeb.Controllers
             else
             {
                 TempData["AllowThisThankyouPage"] = rsvNo;
-                return RedirectToAction("Thankyou", controller, new { rsvNo });
+                return RedirectToAction("Thankyou", "Payment", new { rsvNo });
             }
+        }
+
+        public ActionResult Confirmation(string rsvNo)
+        {
+            ReservationForDisplayBase rsv;
+            if (rsvNo[0] == '1')
+                rsv = FlightService.GetInstance().GetReservationForDisplay(rsvNo);
+            else
+                rsv = HotelService.GetInstance().GetReservationForDisplay(rsvNo);
+            if ((rsv.Payment.Method == PaymentMethod.BankTransfer || rsv.Payment.Method == PaymentMethod.VirtualAccount) 
+                && rsv.Payment.Status == PaymentStatus.Pending)
+            {
+                return View(rsv);
+            }
+            else
+                TempData["AllowThisThankyouPage"] = rsvNo;
+            return RedirectToAction("Thankyou", "Payment", new { rsvNo });
+        }
+
+
+        public ActionResult Thankyou(string rsvNo)
+        {
+            ReservationForDisplayBase rsv;
+            if (rsvNo[0] == '1')
+                rsv = FlightService.GetInstance().GetReservationForDisplay(rsvNo);
+            else
+                rsv = HotelService.GetInstance().GetReservationForDisplay(rsvNo);
+            return View(rsv);
+        }
+
+        [HttpPost]
+        [ActionName("Thankyou")]
+        public ActionResult ThankyouPost(string rsvNo)
+        {
+            TempData["AllowThisReservationCheck"] = rsvNo;
+            return RedirectToAction("OrderFlightHistoryDetail", "Uw620OrderHistory", new { rsvNo });
+        }
+
+        public ActionResult Eticket(string rsvNo)
+        {
+            ReservationForDisplayBase rsvData;
+            if (rsvNo.StartsWith("1"))
+                rsvData = FlightService.GetInstance().GetReservationForDisplay(rsvNo);
+            else
+                rsvData = HotelService.GetInstance().GetReservationForDisplay(rsvNo);
+            try
+            {
+
+                if (rsvData.RsvDisplayStatus == RsvDisplayStatus.Issued)
+                {
+                    if (rsvData.Type == ProductType.Flight)
+                    {
+                        var eticketData = FlightService.GetInstance().GetEticket(rsvNo);
+                        return File(eticketData, "application/pdf");
+                    }
+                    else
+                    {
+                        var eticketData = HotelService.GetInstance().GetEticket(rsvNo);
+                        return File(eticketData, "application/pdf");
+                    }
+                }
+                else
+                {
+                    return View(rsvData);
+                }
+
+            }
+            catch
+            {
+                return View(rsvData);
+            }
+
         }
     }
 }

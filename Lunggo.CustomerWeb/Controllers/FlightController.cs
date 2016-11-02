@@ -129,90 +129,12 @@ namespace Lunggo.CustomerWeb.Controllers
         {
             return RedirectToAction("Payment", "Payment", new { rsvNo });
         }
-
-        public ActionResult Thankyou(string rsvNo)
-        {
-            var service = FlightService.GetInstance();
-            var summary = service.GetReservationForDisplay(rsvNo);
-            return View(summary);
-        }
-
-        [HttpPost]
-        [ActionName("Thankyou")]
-        public ActionResult ThankyouPost(string rsvNo)
-        {
-            TempData["AllowThisReservationCheck"] = rsvNo;
-            return RedirectToAction("OrderFlightHistoryDetail", "Uw620OrderHistory", new { rsvNo });
-        }
-
-        public ActionResult Confirmation(string rsvNo)
-        {
-            var reservation = FlightService.GetInstance().GetReservationForDisplay(rsvNo);
-            if ((reservation.Payment.Method == PaymentMethod.BankTransfer || reservation.Payment.Method == PaymentMethod.VirtualAccount) && reservation.Payment.Status == PaymentStatus.Pending)
-            {
-                //if want to use form payment Confirmation
-                /*return View(new FlightPaymentConfirmationData
-                {
-                    RsvNo = rsvNo,
-                    FinalPrice = reservation.Payment.FinalPrice,
-                    TimeLimit = reservation.Payment.TimeLimit
-                });*/
-                var service = FlightService.GetInstance();
-                var summary = service.GetReservationForDisplay(rsvNo);
-                return View(summary);
-            }
-            else
-                TempData["AllowThisThankyouPage"] = rsvNo;
-            return RedirectToAction("Thankyou", "Flight", new { rsvNo });
-        }
-
-        /*[HttpPost]
-        public ActionResult Confirmation(TransferConfirmationReport report, HttpPostedFileBase file)
-        {
-            if (!ModelState.IsValid)
-                return RedirectToAction("Confirmation", "Flight", new { report.RsvNo });
-            var fileInfo = file != null && file.ContentLength > 0
-                ? new FileInfo
-                {
-                    FileData = file.InputStream.StreamToByteArray(),
-                    ContentType = file.ContentType,
-                    FileName = file.FileName
-                }
-                : null;
-            var paymentService = PaymentService.GetInstance();
-            paymentService.SubmitTransferConfirmationReport(report, fileInfo);
-            return RedirectToAction("Thankyou", "Flight", new { rsvNo = report.RsvNo });
-        }*/
-
+        
         public ActionResult TopDestinations()
         {
             var flightService = FlightService.GetInstance();
             var topDestinations = flightService.GetTopDestination();
             return View(topDestinations);
-        }
-
-        public ActionResult Eticket(string rsvNo)
-        {
-            var rsvData = FlightService.GetInstance().GetReservationForDisplay(rsvNo);
-            try
-            {
-                
-                if (rsvData.RsvDisplayStatus == RsvDisplayStatus.Issued)
-                {
-                    var eticketData = FlightService.GetInstance().GetEticket(rsvNo);
-                    return File(eticketData, "application/pdf");
-                }
-                else
-                {
-                    return View(rsvData);
-                }
-                
-            }
-            catch
-            {
-                return View(rsvData);
-            }
-
         }
 
         #region Helpers
