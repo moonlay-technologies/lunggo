@@ -62,7 +62,14 @@ app.controller('hotelcheckoutController', [
             { name: 'Ny.', value: 'Mistress' },
             { name: 'Nn.', value: 'Miss' }
         ];
-
+       
+        $scope.language = langCode;
+        $interval(function () {
+            var nowTime = new Date();
+            if (nowTime > $scope.expiryDate) {
+                $scope.expired = true;
+            }
+        }, 1000);
         //Serving easier Data
         $scope.capitalizeFirstLetter = function (sentence) {
             var words = sentence.split(" ");
@@ -404,7 +411,7 @@ app.controller('hotelcheckoutController', [
                 $scope.paxData = ' "pax" : [ ';
 
                 // generate data
-                $scope.book.postData = ' "token":"' + $scope.token + '",  "contact" :' + $scope.contactData + ',"lang":"' + $scope.language + '",';
+                $scope.book.postData = ' "token":"' + $scope.token + '",  "contact" :' + $scope.contactData + ',"lang":"' + $scope.language + '"';
                 $scope.paxData = $scope.paxData + '{ "type":"1", "title":"' + $scope.guestInfo.title + '" , "name":"' + $scope.guestInfo.name + '" }]';
                 $scope.specialReq = '"specialRequest":"' + $scope.buyerInfo.message + '"';
                 $scope.book.postData = '{' + $scope.book.postData + ',' + $scope.paxData + ',' + $scope.specialReq + '}';
@@ -424,18 +431,17 @@ app.controller('hotelcheckoutController', [
                         headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') }
                     }).then(function (returnData) {
                         //console.log(returnData);
-                        if (returnData.data.status == '200' && (returnData.data.rsvNo != '' || returnData.data.rsvNo != null)) {
-                            if (returnData.data.price != null) {
+                        if (returnData.data.status == '200') {
+                            if (returnData.data.newPrice != null) {
                                 $scope.book.isPriceChanged = true;
                                 $scope.book.isSuccess = true;
-                                $scope.book.newPrice = returnData.data.price;
+                                $scope.book.newPrice = returnData.data.newPrice;
                                 $scope.book.checked = false;
                                 $scope.book.booking = false;
                             }
                             else {
                                 $scope.book.isSuccess = true;
                                 $scope.book.rsvNo = returnData.data.rsvNo;
-
                                 $('form#rsvno input#rsvno-input').val(returnData.data.rsvNo);
                                 $('form#rsvno').submit();
                                 $scope.book.checked = true;
@@ -443,20 +449,32 @@ app.controller('hotelcheckoutController', [
                             }
 
                         } else {
-                            if (returnData.data.price != null) {
-                                $scope.book.isPriceChanged = true;
-                                $scope.book.isSuccess = false;
-                                $scope.book.newPrice = returnData.data.price;
-                                $scope.book.booking = false;
-                                $scope.book.checked = true;
-                            }
-                            else {
+                            if (returnData.data.error == "ERHBOO01") {
+                                //This is Invalid Data
                                 $scope.book.isSuccess = false;
                                 $scope.book.checked = true;
                                 $scope.book.booking = false;
                                 console.log(returnData);
-                                $scope.errorMessage = returnData.data.error;
+                                $scope.errorMessage = 'Data yang Anda masukkan tidak lengkap. Silakan ulangi pemesanan.';
                             }
+                            else if (returnData.data.error == "ERHBOO02") {
+                                //Expired
+                                $scope.book.isSuccess = false;
+                                $scope.book.checked = true;
+                                $scope.book.booking = false;
+                                console.log(returnData);
+                                $scope.errorMessage = 'Waktu checkout sudah habis. Silakan ulangi pencarian.';
+                            } else {
+                                // if (returnData.data.error == "ERHBOO03")
+                                //Any IsValid = false in response
+                                $scope.book.isSuccess = false;
+                                $scope.book.checked = true;
+                                $scope.book.booking = false;
+                                console.log(returnData);
+                                $scope.errorMessage = 'Mohon maaf, pemesanan hotel tidak dapat dilanjutkan karena hotel sudah penuh.';
+                                
+                            }
+                            console.log($scope.errorMessage);
                         }
 
                     }).catch(function (returnData) {

@@ -29,7 +29,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                 };
             }
         
-            var oldPrice = bookInfo.Rooms.Sum(room => room.Rates.Sum(rate => rate.RateCount*rate.Price.Supplier));
+            var oldPrice = bookInfo.Rooms.Sum(room => room.Rates.Sum(rate => rate.Price.Supplier));
             decimal newPrice = 0;
             
             //Refresh RateKey
@@ -47,17 +47,25 @@ namespace Lunggo.ApCommon.Hotel.Service
             occupancies = occupancies.Distinct().ToList();
             var checkin = bookInfo.Rooms[0].Rates[0].RateKey.Split('|')[0];
             var checkout = bookInfo.Rooms[0].Rates[0].RateKey.Split('|')[1];
-            var searchResult = GetInstance().Search(new SearchHotelInput
+            var allCurrency = Currency.GetAllCurrencies();
+            Guid generatedSearchId = Guid.NewGuid();
+            SaveAllCurrencyToCache(generatedSearchId.ToString(), allCurrency);
+
+            var request = new SearchHotelCondition
             {
-                HotelCode = bookInfo.HotelCode,
                 Occupancies = occupancies,
                 CheckIn = new DateTime(Convert.ToInt32(checkin.Substring(0, 4)), Convert.ToInt32(checkin.Substring(4, 2)),
                     Convert.ToInt32(checkin.Substring(6, 2))),
                 Checkout = new DateTime(Convert.ToInt32(checkout.Substring(0, 4)), Convert.ToInt32(checkout.Substring(4, 2)),
-                    Convert.ToInt32(checkout.Substring(6, 2)))
-            });
+                    Convert.ToInt32(checkout.Substring(6, 2))),
+                HotelCode = bookInfo.HotelCode,
+                SearchId = generatedSearchId.ToString()
+            };
 
-            if (searchResult.HotelDetailLists == null || searchResult.HotelDetailLists.Count == 0)
+            var hotelbeds = new HotelBedsSearchHotel();
+            var searchResult = hotelbeds.SearchHotel(request);
+            AddPriceMargin(searchResult.HotelDetails);
+            if (searchResult.HotelDetails == null || searchResult.HotelDetails.Count == 0)
             {
                 return new BookHotelOutput
                 {
@@ -65,7 +73,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                 };
             }
 
-            if (searchResult.HotelDetailLists.Any(hotel => hotel.Rooms == null || hotel.Rooms.Count == 0))
+            if (searchResult.HotelDetails.Any(hotel => hotel.Rooms == null || hotel.Rooms.Count == 0))
             {
                 return new BookHotelOutput
                 {
@@ -73,7 +81,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                 };
             }
 
-            if (searchResult.HotelDetailLists.Any(hotel => hotel.Rooms.Any(room => room.Rates == null || room.Rates.Count == 0)))
+            if (searchResult.HotelDetails.Any(hotel => hotel.Rooms.Any(room => room.Rates == null || room.Rates.Count == 0)))
             {
                 return new BookHotelOutput
                 {
@@ -98,7 +106,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                     childrenAges = childrenAges.Substring(0, childrenAges.Length - 1);
                 }
                 
-                foreach (var hotel in searchResult.HotelDetailLists)
+                foreach (var hotel in searchResult.HotelDetails)
                 {
                     foreach (var room in hotel.Rooms)
                     {
@@ -132,16 +140,16 @@ namespace Lunggo.ApCommon.Hotel.Service
                     if (revalidateResult.IsPriceChanged)
                     {
                         rate.Price.SetSupplier(revalidateResult.NewPrice.GetValueOrDefault(), rate.Price.SupplierCurrency);
-                        newPrice += revalidateResult.NewPrice.GetValueOrDefault() * rate.RateCount;
+                        newPrice += revalidateResult.NewPrice.GetValueOrDefault() ;
                     }
                     else
                     {
-                        newPrice += rate.Price.Supplier * rate.RateCount;
+                        newPrice += rate.Price.Supplier ;
                     }
                 }
                 else
                 {
-                    newPrice += rate.Price.Supplier * rate.RateCount;
+                    newPrice += rate.Price.Supplier ;
                 }
             }
             

@@ -92,6 +92,15 @@ namespace Lunggo.CustomerWeb.Controllers
             }
 
         }
+
+        [RequireHttps]
+        [HttpPost]
+        [ActionName("Checkout")]
+        public ActionResult CheckoutPost(string rsvNo)
+        {
+            return RedirectToAction("Payment", "Flight", new { rsvNo });
+        }
+
         public ActionResult Thankyou()
         {
             return View();

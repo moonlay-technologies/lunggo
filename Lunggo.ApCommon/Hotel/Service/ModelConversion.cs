@@ -84,8 +84,8 @@ namespace Lunggo.ApCommon.Hotel.Service
                 OriginalFare = hotelDetail.OriginalFare,
                 NetFare = hotelDetail.NetFare,
                 IsRestaurantAvailable = hotelDetail.IsRestaurantAvailable,
-                IsWifiAccessAvailable = hotelDetail.WifiAccess
-                //Rooms = ConvertToHotelRoomForDisplay(hotelDetail.Rooms)
+                IsWifiAccessAvailable = hotelDetail.WifiAccess,
+                Rooms = ConvertToHotelRoomForDisplay(hotelDetail.Rooms)
             };
             convertedHotels.Add(hotel);
             }
