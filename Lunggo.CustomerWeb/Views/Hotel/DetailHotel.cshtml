@@ -23,18 +23,10 @@
 }
 
 @section PageJS{
-    <script>
-        jQuery(document).ready(function ($) {
-            $('body .info-room').on('click', function () {
-                var item = $(this).parents('.room-rl').parents('.room-right').find('.hotel-detail');
-                item.toggleClass('active');
-            });
-        });
-    </script>
     <script src="/Assets/vendor/flexslider/jquery.flexslider.js"></script>
-    <script>accordionFunctions()</script>
     <script src="/Assets/Travorama20/js/hotelDetailController.js"></script>
     <script type="text/javascript" src="/Assets/travorama20/js/HotelController.js"></script>
+    <script>accordionFunctions()</script>
 }
 
 @Html.Partial("/Views/Hotel/Shared/Desktop/_PageSlider.cshtml")
@@ -166,38 +158,38 @@
                     <ul class="room-list-container">
                         <li>
                             <div class="room-list clearfix">
-                                    <div class="room-left"><img src="/Assets/travorama20/images/Hotel/room.jpg" alt="Room" /></div>
-                                    <div class="room-right clearfix">
-                                        <div class="room-rl">
-                                            <div class="blue-txt md-txt"><b>Deluxe 2 Kings Bed Rooms</b></div>
-                                            <div class="facility"></div>
-                                            <div class="max-people">Maks <b>2 orang / kamar</b></div>
-                                            <div class="info-room">
-                                                <span class="info-icon italic-txt">i</span>
-                                                <span class="blue-txt sm-txt">Info Kamar</span>
-                                            </div>
-
+                                <div class="room-left"><img src="/Assets/travorama20/images/Hotel/room.jpg" alt="Room" /></div>
+                                <div class="room-right clearfix">
+                                    <div class="room-rl">
+                                        <div class="blue-txt md-txt"><b>Deluxe 2 Kings Bed Rooms</b></div>
+                                        <div class="facility"></div>
+                                        <div class="max-people">Maks <b>2 orang / kamar</b></div>
+                                        <div class="info-room">
+                                            <span class="info-icon italic-txt">i</span>
+                                            <span class="blue-txt sm-txt">Info Kamar</span>
                                         </div>
-                                        <div class="room-rm">
-                                            <div class="dropdown-container">
-                                                <div class="form-control change-room">
-                                                    <span>1</span>
-                                                    <div class="option">
-                                                        <span data-value="y">2</span>
-                                                        <span data-value="c">3</span>
-                                                        <span data-value="f">4</span>
-                                                    </div>
+
+                                    </div>
+                                    <div class="room-rm">
+                                        <div class="dropdown-container">
+                                            <div class="form-control change-room">
+                                                <span>1</span>
+                                                <div class="option">
+                                                    <span data-value="y">2</span>
+                                                    <span data-value="c">3</span>
+                                                    <span data-value="f">4</span>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="room-rr">
-                                            <div class="underline-txt">Rp 999.999.999</div>
-                                            <div class="lg-txt"><b><sup>Rp</sup> 899.999.999</b></div>
-                                            <div class="xs-txt">*Harga Termasuk Pajak & Service Charge</div>
-                                            <a href="#" class="btn btn-yellow small">PESAN</a>
-                                        </div>
+                                    </div>
+                                    <div class="room-rr">
+                                        <div class="underline-txt">Rp 999.999.999</div>
+                                        <div class="lg-txt"><b><sup>Rp</sup> 899.999.999</b></div>
+                                        <div class="xs-txt">*Harga Termasuk Pajak & Service Charge</div>
+                                        <a href="#" class="btn btn-yellow small">PESAN</a>
                                     </div>
                                 </div>
+                            </div>
                             <div class="hotel-detail clearfix">
                                 <div class=" col-left-result">
                                     <div class="col-left-top clearfix">
