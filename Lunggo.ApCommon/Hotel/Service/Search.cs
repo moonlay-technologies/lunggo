@@ -6,6 +6,7 @@ using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.Configuration;
 using System.Web.Mvc;
 using CsQuery.Engine.PseudoClassSelectors;
 using Lunggo.ApCommon.Flight.Model.Logic;
@@ -26,9 +27,12 @@ namespace Lunggo.ApCommon.Hotel.Service
     {
         public SearchHotelOutput Search(SearchHotelInput input)
         {
-            bool isByDestination = false;
-            if (input.SearchId != null)
+            var hotelResult = new SearchHotelOutput();
+            switch (input.SearchHotelType)
             {
+                case SearchHotelType.SearchID :
+                    if (input.SearchId != null)
+                    {
                 var searchResult = GetSearchHotelResultFromCache(input.SearchId);
 
                 if (searchResult == null)
@@ -52,44 +56,13 @@ namespace Lunggo.ApCommon.Hotel.Service
                 //Filtering
                 if (hotels != null && input.FilterParam != null)
                 {
-                    hotels = searchResult.HotelDetails.Where(p =>
+                    hotels = hotels.Where(p =>
                     (input.FilterParam.ZoneFilter == null || input.FilterParam.ZoneFilter.Zones.Contains(Convert.ToInt32(p.ZoneCode))) &&
                     (input.FilterParam.AccommodationTypeFilter == null || input.FilterParam.AccommodationTypeFilter.Accomodations.Contains(p.AccomodationType)) &&
                     (facilityData.Count == 0 || facilityData.Any(e=> p.Facilities.Select(x=>x.FullFacilityCode).ToList().Contains(e))) &&
                     (input.FilterParam.StarFilter == null || input.FilterParam.StarFilter.Stars.Contains(p.StarCode)) &&
                     (input.FilterParam.PriceFilter == null|| (p.OriginalFare >= input.FilterParam.PriceFilter.MinPrice && p.OriginalFare <= input.FilterParam.PriceFilter.MaxPrice))
-                    ).Select(p => new HotelDetail
-                    {
-                        HotelCode = p.HotelCode,
-                        HotelName = p.HotelName,
-                        Review = p.Review,
-                        Address = p.Address,
-                        PostalCode = p.PostalCode,
-                        Chain = p.Chain,
-                        Pois = p.Pois,
-                        StarRating = p.StarRating,
-                        StarCode = p.StarCode,
-                        Terminals = p.Terminals,
-                        Latitude = p.Latitude,
-                        Longitude = p.Longitude,
-                        PhonesNumbers = p.PhonesNumbers,
-                        OriginalFare = p.OriginalFare,
-                        ImageUrl = p.ImageUrl,
-                        ZoneCode = p.ZoneCode,
-                        SpecialRequest = p.SpecialRequest,
-                        Email = p.Email,
-                        Facilities = p.Facilities,
-                        Segment = p.Segment,
-                        Description = p.Description,
-                        City = p.City,
-                        CountryCode = p.CountryCode,
-                        NightCount = p.NightCount,
-                        Rooms = p.Rooms,
-                        NetFare = p.NetFare,
-                        DestinationCode = p.DestinationCode,
-                        AccomodationType = p.AccomodationType,
-                        Discount = p.Discount,
-                    }).ToList();    
+                    ).ToList();
                 }
                 
 
@@ -123,7 +96,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                 hotelList = AddHotelDetail(hotelList);
                 var sortedHotel = searchResult.HotelDetails.OrderByDescending(x => x.NetFare);
 
-                return new SearchHotelOutput
+                hotelResult = new SearchHotelOutput
                 {
                     SearchId = searchResult.SearchId,
                     HotelDetailLists = ConvertToHotelDetailForDisplay(hotelList),
@@ -137,9 +110,11 @@ namespace Lunggo.ApCommon.Hotel.Service
                     IsSuccess = true
                 };
             }
-            else
-            {
-                var allCurrency = Currency.GetAllCurrencies();
+                    break;
+
+                case SearchHotelType.Location :
+                    var isByDestination = false;
+                    var allCurrency = Currency.GetAllCurrencies();
                 Guid generatedSearchId = Guid.NewGuid();
                 SaveAllCurrencyToCache(generatedSearchId.ToString(), allCurrency );
 
@@ -238,7 +213,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                     firstPageHotelDetails = AddHotelDetail(firstPageHotelDetails);
                     var searchType = detailDestination.Type.ToString();
                     var sortedHotel = result.HotelDetails.OrderByDescending(x => x.NetFare);
-                    return new SearchHotelOutput
+                    hotelResult =  new SearchHotelOutput
                     {
                         IsSuccess = true,
                         SearchId = result.SearchId,
@@ -260,7 +235,12 @@ namespace Lunggo.ApCommon.Hotel.Service
                     Console.WriteLine("Search result is empty");
                     return new SearchHotelOutput();
                 }
+                    break;
+                case SearchHotelType.HotelCode:
+                    break;
             }
+
+            return hotelResult;
         }
 
         public List<HotelDetail> AddHotelDetail(List<HotelDetail> result)
