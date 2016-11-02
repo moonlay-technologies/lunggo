@@ -26,7 +26,7 @@ namespace Lunggo.ApCommon.Hotel.Model.Logic
         public HotelFilter FilterParam { get; set; }
         public string SortingParam { get; set; }
         public int HotelCode { get; set; }
-        public string RateKey { get; set; }
+        public string RegsId { get; set; }
         public List<Occupancy> Occupancies { get; set; }
         public SearchHotelInput()
         {
