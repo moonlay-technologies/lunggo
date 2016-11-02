@@ -125,5 +125,14 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Sdk.types
                 endpoint = "hotels?fields=${fields}&language=${language}&from=${from}&to=${to}&useSecondaryLanguage=${useSecondaryLanguage}";
             }
         }
+
+        public class HOTEL_RATECOMMENT : HotelApiPathsBase
+        {
+            public HOTEL_RATECOMMENT()
+            {
+                httpMethod = new HttpMethod("GET");
+                endpoint = "types/ratecomments?fields=${fields}&language=${language}&from=${from}&to=${to}&useSecondaryLanguage=${useSecondaryLanguage}";
+            }
+        }
     }
 }

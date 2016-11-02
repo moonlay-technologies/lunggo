@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Globalization;
 using System.Threading;
 using Lunggo.ApCommon.Hotel.Model;
 using Lunggo.ApCommon.Hotel.Service;
@@ -33,10 +34,10 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.Content
                     "https://api.test.hotelbeds.com/hotel-content-api");
                 //https://api.test.hotelbeds.com/hotel-content-api/1.0/hotels?fields=all&language=ENG&from=1&to=100&useSecondaryLanguage=false
 
-                var dataCount = 85001;
+                var dataCount = 1;
                 var counter = 0;
-                var from = 85001;
-                var to = 86000;
+                var from = 101001;
+                var to = 102000;
                 while (to <= 128000)
                 {
 
@@ -90,7 +91,7 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.Content
                                                 Distance = p.distance,
                                                 Description = p.description
                                             }).ToList(),
-                                    ZoneCode = hotelRS.zoneCode,
+                                    ZoneCode = hotelRS.destinationCode + '-' + hotelRS.zoneCode.ToString(CultureInfo.InvariantCulture),
                                     CountryCode = hotelRS.countryCode,
                                     Pois = hotelRS.InterestPoints == null
                                         ? null
@@ -127,7 +128,10 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.Content
                                             : hotelRS.facilities.Select(p => new HotelFacility()
                                             {
                                                 FacilityCode = p.facilityCode,
-                                                FacilityGroupCode = p.facilityGroupCode
+                                                FacilityGroupCode = p.facilityGroupCode,
+                                                IsFree = !p.indFee,
+                                                MustDisplay = p.indYesOrNo,
+                                                IsAvailable = p.indLogic
                                             }).ToList(),
                                     DestinationCode = hotelRS.destinationCode,
                                     ImageUrl = hotelRS.images == null
@@ -184,7 +188,6 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.Content
         public void InsertHotelDetailToTableStorage(HotelDetailsBase hotel)
         {
             HotelService.GetInstance().SaveHotelDetailToTableStorage(hotel,hotel.HotelCode);
-            
         }
 
     }

@@ -20,6 +20,7 @@ namespace Lunggo.ApCommon.Hotel.Service
             var hotelDetail = GetHotelDetailFromDb(input.HotelCode);
             SetHotelFullFacilityCode(hotelDetail);
             SetDetailFromSearchResult(hotelDetail, input.SearchId);
+            hotelDetail.Rooms = SetRoomPerRate(hotelDetail.Rooms);
             return new GetHotelDetailOutput
             {
                 HotelDetail = ConvertToHotelDetailsBaseForDisplay(hotelDetail,OriginalPrice,NetFare)
@@ -39,10 +40,11 @@ namespace Lunggo.ApCommon.Hotel.Service
         public void SetDetailFromSearchResult(HotelDetailsBase hotel ,string searchId)
         {
             var searchResultData = GetSearchHotelResultFromCache(searchId);
-            var SearchResulthotel = searchResultData.HotelDetails.SingleOrDefault(p => p.HotelCode == hotel.HotelCode);
-            hotel.Rooms = SearchResulthotel.Rooms;
-            OriginalPrice = SearchResulthotel.OriginalFare;
-            NetFare = SearchResulthotel.NetFare;
+            var searchResulthotel = searchResultData.HotelDetails.SingleOrDefault(p => p.HotelCode == hotel.HotelCode);
+            hotel.Rooms = searchResulthotel.Rooms;
+            SetRegIdsAndTnc(hotel.Rooms, searchResulthotel.CheckInDate, hotel.HotelCode);
+            OriginalPrice = searchResulthotel.OriginalFare;
+            NetFare = searchResulthotel.NetFare;
         }
 
         public void SetHotelFullFacilityCode(HotelDetailsBase hotel)
@@ -51,6 +53,30 @@ namespace Lunggo.ApCommon.Hotel.Service
             {
                 data.FullFacilityCode = data.FacilityGroupCode + "" + data.FacilityCode;
             }
+        }
+
+        public List<HotelRoom> SetRoomPerRate(List<HotelRoom> hotelRoom)
+        {
+            var roomList = new List<HotelRoom>();
+            foreach (var room in hotelRoom)
+            {
+                foreach (var rate in room.Rates)
+                {
+                    var singleRoom = new HotelRoom
+                    {
+                        RoomCode = room.RoomCode,
+                        RoomName = room.RoomName,
+                        Type = room.Type,
+                        TypeName = room.TypeName,
+                        Images = room.Images,
+                        Facilities = room.Facilities,
+                        characteristicCd = room.characteristicCd,
+                        SingleRate = rate
+                    };
+                    roomList.Add(singleRoom);
+                }
+            }
+            return roomList;
         }
 
     }
