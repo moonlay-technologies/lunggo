@@ -193,6 +193,10 @@ var ResendConfirmationEmailMobileConfig = {
     Url: 'http://m.local.travorama.com/v1/resendconfirmationemail'
 };
 
+var HotelBookConfig = {
+    Url: 'https://api.local.travorama.com/v1/hotel/book',
+    working: false
+};
 function setCookie(cname, cvalue, expTime) {
 
     if (cname != "accesstoken") {

@@ -89,7 +89,11 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds
                         room.adultOf(30);
                     }
 
-                    occ.ChildrenAges.Sort();
+                    if (occ.ChildrenAges != null)
+                    {
+                        occ.ChildrenAges.Sort();
+                    }
+                    
                     for (int i = 0; i < occ.ChildCount; i++)
                     {
                         room.childOf(occ.ChildrenAges[i]);

@@ -1,4 +1,6 @@
-﻿using Lunggo.CustomerWeb.Models;
+﻿using Lunggo.ApCommon.Hotel.Service;
+using Lunggo.ApCommon.Payment.Service;
+using Lunggo.CustomerWeb.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -33,9 +35,62 @@ namespace Lunggo.CustomerWeb.Controllers
             return View(new { searchId, hotelCd });
         }
 
-        public ActionResult Checkout()
+        //public ActionResult Checkout()
+        //{
+        //    return View();
+        //}
+
+        [RequireHttps]
+        public ActionResult Checkout(string token)
         {
-            return View();
+            var hotelDetail = HotelService.GetInstance().GetSelectionFromCache(token);
+
+            if (hotelDetail != null)
+            {
+                if (TempData["HotelCheckoutOrBookingError"] != null)
+                {
+                    ViewBag.Message = "BookFailed";
+                    return View();
+                }
+
+                if (token == null)
+                {
+                    ViewBag.Message = "BookExpired";
+                    return View();
+                }
+
+                try
+                {
+                    var hotelService = HotelService.GetInstance();
+                    var payment = PaymentService.GetInstance();
+                    //var expiryTime = hotelService.GetSelectionExpiry(token);
+                    //var savedPassengers = flight.GetSavedPassengers(User.Identity.GetEmail());
+                    //var savedCreditCards = User.Identity.IsAuthenticated
+                    //    ? payment.GetSavedCreditCards(User.Identity.GetEmail())
+                    //    : new List<SavedCreditCard>();
+                    return View(new HotelCheckoutData
+                    {
+                        Token = token,
+                        HotelDetail = hotelDetail,
+                       // ExpiryTime = expiryTime.GetValueOrDefault(),
+                        //SavedPassengers = savedPassengers,
+                        //SavedCreditCards = savedCreditCards
+                    });
+                }
+                catch
+                {
+                    ViewBag.Message = "BookExpired";
+                    return View(new HotelCheckoutData
+                    {
+                        Token = token
+                    });
+                }
+            }
+            else
+            {
+                return RedirectToAction("Index", "UW000TopPage");
+            }
+
         }
         public ActionResult Thankyou()
         {
