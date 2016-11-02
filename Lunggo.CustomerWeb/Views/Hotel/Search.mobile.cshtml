@@ -21,9 +21,6 @@
 
 @section PageJS{
     <script src="/Assets/mobile/js/HotelController.js"></script>
-    <script>
-        //shortenTextFunctions();
-    </script>
 }
 
 <div class="travorama-hotel-mobile">
@@ -82,241 +79,243 @@
             </h3>
         </header>
         <section class="overlay__content">
-            <div class="filter-group filter-group--price">
-                <div class="filter-group__header">
-                    <h4 class="filter-group__title">Harga (permalam)</h4>
-                </div>
-                <div class="filter-group__content">
-                    <div class="slider-price" id="slider-range"></div>
-                    <div class="slider-minmax">
-                        <span>Rp 500.000</span>
-                        <span class="pull-right">Rp 100.000.000</span>
+            <form name="filter" id="filter-hotel">
+                <div class="filter-group filter-group--price">
+                    <div class="filter-group__header">
+                        <h4 class="filter-group__title">Harga (permalam)</h4>
                     </div>
-                    <div class="hidden">
-                        <input type="text" name="priceSliderValueMin" value="" class="price-slider-min" ng-model="priceFilterParam.current[0]" />
-                        <input type="text" name="priceSliderValueMax" value="" class="price-slider-max" ng-model="priceFilterParam.current[1]" />
-                    </div>
+                    <div class="filter-group__content">
+                        <div class="slider-price" id="slider-range"></div>
+                        <div class="slider-minmax">
+                            <span>Rp 500.000</span>
+                            <span class="pull-right">Rp 100.000.000</span>
+                        </div>
+                        <div class="hidden">
+                            <input type="text" name="priceSliderValueMin" value="" class="price-slider-min" ng-model="priceFilterParam.current[0]" />
+                            <input type="text" name="priceSliderValueMax" value="" class="price-slider-max" ng-model="priceFilterParam.current[1]" />
+                        </div>
 
-                </div>
-            </div>
-            <div class="filter-group filter-group--rating">
-                <div class="filter-group__header">
-                    <h4 class="filter-group__title">Peringkat Bintang Hotel</h4>
-                </div>
-                <div class="filter-group__content">
-                    <label>
-                        <div class="switch"></div>
-                        <span class="star"></span>
-                        <input type="checkbox" name="check" class="check" value="false" />
-                    </label>
-                    <label>
-                        <div class="switch"></div>
-                        <span class="star star-2"></span>
-                        <input type="checkbox" name="check" class="check" value="false" />
-                    </label>
-                    <label>
-                        <div class="switch"></div>
-                        <span class="star star-3"></span>
-                        <input type="checkbox" name="check" class="check" value="false" />
-                    </label>
-                    <label>
-                        <div class="switch"></div>
-                        <span class="star star-4"></span>
-                        <input type="checkbox" name="check" class="check" value="false" />
-                    </label>
-                    <label>
-                        <div class="switch"></div>
-                        <span class="star star-5"></span>
-                        <input type="checkbox" name="check" class="check" value="false" />
-                    </label>
-                </div>
-            </div>
-            <div class="filter-group filter-group--facility">
-                <div class="filter-group__header">
-                    <h4 class="filter-group__title">Fasilitas</h4>
-                </div>
-                <div class="filter-group__content sh-list clearfix">
-                    <div class="col-half">
-                        <label class="active">
-                            <div class="switch"></div>
-                            <span class="bed-white">Bed</span>
-                            <input type="checkbox" name="check" class="check" value="false" />
-                        </label>
-                        <label>
-                            <div class="switch"></div>
-                            <span class="meal-white">Breakfast</span>
-                            <input type="checkbox" name="check" class="check" value="false" />
-                        </label>
-                        <label>
-                            <div class="switch"></div>
-                            <span class="ac-white">AC</span>
-                            <input type="checkbox" name="check" class="check" value="false" />
-                        </label>
-                        <label>
-                            <div class="switch"></div>
-                            <span class="pool-white">Pool</span>
-                            <input type="checkbox" name="check" class="check" value="false" />
-                        </label>
-                        <label>
-                            <div class="switch"></div>
-                            <span class="car-white">Car</span>
-                            <input type="checkbox" name="check" class="check" value="false" />
-                        </label>
-                        <label class="active">
-                            <div class="switch"></div>
-                            <span class="bed-white">Bed</span>
-                            <input type="checkbox" name="check" class="check" value="false" />
-                        </label>
-                        <label>
-                            <div class="switch"></div>
-                            <span class="meal-white">Breakfast</span>
-                            <input type="checkbox" name="check" class="check" value="false" />
-                        </label>
-                        <label>
-                            <div class="switch"></div>
-                            <span class="ac-white">AC</span>
-                            <input type="checkbox" name="check" class="check" value="false" />
-                        </label>
-                        <label>
-                            <div class="switch"></div>
-                            <span class="pool-white">Pool</span>
-                            <input type="checkbox" name="check" class="check" value="false" />
-                        </label>
-                        <label>
-                            <div class="switch"></div>
-                            <span class="car-white">Car</span>
-                            <input type="checkbox" name="check" class="check" value="false" />
-                        </label>
                     </div>
-                    <div class="col-half">
-                        <label class="active">
+                </div>
+                <div class="filter-group filter-group--rating">
+                    <div class="filter-group__header">
+                        <h4 class="filter-group__title">Peringkat Bintang Hotel</h4>
+                    </div>
+                    <div class="filter-group__content">
+                        <label class="checkbox">
                             <div class="switch"></div>
-                            <span class="wifi-white">Public WiFi</span>
+                            <span class="star"></span>
                             <input type="checkbox" name="check" class="check" value="false" />
                         </label>
-                        <label>
+                        <label class="checkbox">
                             <div class="switch"></div>
-                            <span class="bell-white">Room Service</span>
+                            <span class="star star-2"></span>
                             <input type="checkbox" name="check" class="check" value="false" />
                         </label>
-                        <label>
+                        <label class="checkbox">
                             <div class="switch"></div>
-                            <span class="tv-white">TV</span>
+                            <span class="star star-3"></span>
                             <input type="checkbox" name="check" class="check" value="false" />
                         </label>
-                        <label>
+                        <label class="checkbox">
                             <div class="switch"></div>
-                            <span class="bed-white">Bed</span>
+                            <span class="star star-4"></span>
                             <input type="checkbox" name="check" class="check" value="false" />
                         </label>
-                        <label>
+                        <label class="checkbox">
                             <div class="switch"></div>
-                            <span class="meal-white">Breakfast</span>
-                            <input type="checkbox" name="check" class="check" value="false" />
-                        </label>
-                        <label class="active">
-                            <div class="switch"></div>
-                            <span class="bed-white">Bed</span>
-                            <input type="checkbox" name="check" class="check" value="false" />
-                        </label>
-                        <label>
-                            <div class="switch"></div>
-                            <span class="meal-white">Breakfast</span>
-                            <input type="checkbox" name="check" class="check" value="false" />
-                        </label>
-                        <label>
-                            <div class="switch"></div>
-                            <span class="ac-white">AC</span>
-                            <input type="checkbox" name="check" class="check" value="false" />
-                        </label>
-                        <label>
-                            <div class="switch"></div>
-                            <span class="pool-white">Pool</span>
-                            <input type="checkbox" name="check" class="check" value="false" />
-                        </label>
-                        <label>
-                            <div class="switch"></div>
-                            <span class="car-white">Car</span>
+                            <span class="star star-5"></span>
                             <input type="checkbox" name="check" class="check" value="false" />
                         </label>
                     </div>
                 </div>
-                <a class="toggle" href="#"><span class="sh-open"></span><span class="sh-close"></span></a>
-            </div>
-            <div class="filter-group filter-group--area">
-                <div class="filter-group__header">
-                    <h4 class="filter-group__title">Area</h4>
-                </div>
-                <div class="filter-group__content clearfix">
-                    <div class="col-half">
-                        <label class="active">
-                            <div class="switch"></div>
-                            <span>Ubud</span>
-                            <input type="checkbox" name="check" class="check" value="false" />
-                        </label>
-                        <label>
-                            <div class="switch"></div>
-                            <span>Kuta</span>
-                            <input type="checkbox" name="check" class="check" value="false" />
-                        </label>
+                <div class="filter-group filter-group--facility">
+                    <div class="filter-group__header">
+                        <h4 class="filter-group__title">Fasilitas</h4>
                     </div>
-                    <div class="col-half">
-                        <label>
-                            <div class="switch"></div>
-                            <span>Seminyak</span>
-                            <input type="checkbox" name="check" class="check" value="false" />
-                        </label>
-                        <label>
-                            <div class="switch"></div>
-                            <span>Legian</span>
-                            <input type="checkbox" name="check" class="check" value="false" />
-                        </label>
+                    <div class="filter-group__content sh-list clearfix">
+                        <div class="col-half">
+                            <label class="checkbox">
+                                <div class="switch"></div>
+                                <span class="bed-white">Bed</span>
+                                <input type="checkbox" name="check" class="check" value="false" />
+                            </label>
+                            <label class="checkbox">
+                                <div class="switch"></div>
+                                <span class="meal-white">Breakfast</span>
+                                <input type="checkbox" name="check" class="check" value="false" />
+                            </label>
+                            <label class="checkbox">
+                                <div class="switch"></div>
+                                <span class="ac-white">AC</span>
+                                <input type="checkbox" name="check" class="check" value="false" />
+                            </label>
+                            <label class="checkbox">
+                                <div class="switch"></div>
+                                <span class="pool-white">Pool</span>
+                                <input type="checkbox" name="check" class="check" value="false" />
+                            </label>
+                            <label class="checkbox">
+                                <div class="switch"></div>
+                                <span class="car-white">Car</span>
+                                <input type="checkbox" name="check" class="check" value="false" />
+                            </label>
+                            <label class="checkbox">
+                                <div class="switch"></div>
+                                <span class="bed-white">Bed</span>
+                                <input type="checkbox" name="check" class="check" value="false" />
+                            </label>
+                            <label class="checkbox">
+                                <div class="switch"></div>
+                                <span class="meal-white">Breakfast</span>
+                                <input type="checkbox" name="check" class="check" value="false" />
+                            </label>
+                            <label class="checkbox">
+                                <div class="switch"></div>
+                                <span class="ac-white">AC</span>
+                                <input type="checkbox" name="check" class="check" value="false" />
+                            </label>
+                            <label class="checkbox">
+                                <div class="switch"></div>
+                                <span class="pool-white">Pool</span>
+                                <input type="checkbox" name="check" class="check" value="false" />
+                            </label>
+                            <label class="checkbox">
+                                <div class="switch"></div>
+                                <span class="car-white">Car</span>
+                                <input type="checkbox" name="check" class="check" value="false" />
+                            </label>
+                        </div>
+                        <div class="col-half">
+                            <label class="checkbox">
+                                <div class="switch"></div>
+                                <span class="wifi-white">Public WiFi</span>
+                                <input type="checkbox" name="check" class="check" value="false" />
+                            </label>
+                            <label class="checkbox">
+                                <div class="switch"></div>
+                                <span class="bell-white">Room Service</span>
+                                <input type="checkbox" name="check" class="check" value="false" />
+                            </label>
+                            <label class="checkbox">
+                                <div class="switch"></div>
+                                <span class="tv-white">TV</span>
+                                <input type="checkbox" name="check" class="check" value="false" />
+                            </label>
+                            <label class="checkbox">
+                                <div class="switch"></div>
+                                <span class="bed-white">Bed</span>
+                                <input type="checkbox" name="check" class="check" value="false" />
+                            </label>
+                            <label class="checkbox">
+                                <div class="switch"></div>
+                                <span class="meal-white">Breakfast</span>
+                                <input type="checkbox" name="check" class="check" value="false" />
+                            </label>
+                            <label class="checkbox">
+                                <div class="switch"></div>
+                                <span class="bed-white">Bed</span>
+                                <input type="checkbox" name="check" class="check" value="false" />
+                            </label>
+                            <label class="checkbox">
+                                <div class="switch"></div>
+                                <span class="meal-white">Breakfast</span>
+                                <input type="checkbox" name="check" class="check" value="false" />
+                            </label>
+                            <label class="checkbox">
+                                <div class="switch"></div>
+                                <span class="ac-white">AC</span>
+                                <input type="checkbox" name="check" class="check" value="false" />
+                            </label>
+                            <label class="checkbox">
+                                <div class="switch"></div>
+                                <span class="pool-white">Pool</span>
+                                <input type="checkbox" name="check" class="check" value="false" />
+                            </label>
+                            <label class="checkbox">
+                                <div class="switch"></div>
+                                <span class="car-white">Car</span>
+                                <input type="checkbox" name="check" class="check" value="false" />
+                            </label>
+                        </div>
+                    </div>
+                    <a class="toggle" href="#"><span class="sh-open"></span><span class="sh-close"></span></a>
+                </div>
+                <div class="filter-group filter-group--area">
+                    <div class="filter-group__header">
+                        <h4 class="filter-group__title">Area</h4>
+                    </div>
+                    <div class="filter-group__content clearfix">
+                        <div class="col-half">
+                            <label class="checkbox">
+                                <div class="switch"></div>
+                                <span>Ubud</span>
+                                <input type="checkbox" name="check" class="check" value="false" />
+                            </label>
+                            <label class="checkbox">
+                                <div class="switch"></div>
+                                <span>Kuta</span>
+                                <input type="checkbox" name="check" class="check" value="false" />
+                            </label>
+                        </div>
+                        <div class="col-half">
+                            <label class="checkbox">
+                                <div class="switch"></div>
+                                <span>Seminyak</span>
+                                <input type="checkbox" name="check" class="check" value="false" />
+                            </label>
+                            <label class="checkbox">
+                                <div class="switch"></div>
+                                <span>Legian</span>
+                                <input type="checkbox" name="check" class="check" value="false" />
+                            </label>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="filter-group filter-group--room">
-                <div class="filter-group__header">
-                    <h4 class="filter-group__title">Jenis Kamar</h4>
-                </div>
-                <div class="filter-group__content clearfix">
-                    <div class="col-half">
-                        <label class="active">
-                            <div class="switch"></div>
-                            <span>Single</span>
-                            <input type="checkbox" name="check" class="check" value="false" />
-                        </label>
-                        <label>
-                            <div class="switch"></div>
-                            <span>Triple</span>
-                            <input type="checkbox" name="check" class="check" value="false" />
-                        </label>
-                        <label>
-                            <div class="switch"></div>
-                            <span>Twin</span>
-                            <input type="checkbox" name="check" class="check" value="false" />
-                        </label>
+                <div class="filter-group filter-group--room">
+                    <div class="filter-group__header">
+                        <h4 class="filter-group__title">Jenis Kamar</h4>
                     </div>
-                    <div class="col-half">
-                        <label>
-                            <div class="switch"></div>
-                            <span>Queen</span>
-                            <input type="checkbox" name="check" class="check" value="false" />
-                        </label>
-                        <label>
-                            <div class="switch"></div>
-                            <span>Double</span>
-                            <input type="checkbox" name="check" class="check" value="false" />
-                        </label>
-                        <label>
-                            <div class="switch"></div>
-                            <span>King</span>
-                            <input type="checkbox" name="check" class="check" value="false" />
-                        </label>
+                    <div class="filter-group__content clearfix">
+                        <div class="col-half">
+                            <label class="checkbox">
+                                <div class="switch"></div>
+                                <span>Single</span>
+                                <input type="checkbox" name="check" class="check" value="false" />
+                            </label>
+                            <label class="checkbox">
+                                <div class="switch"></div>
+                                <span>Triple</span>
+                                <input type="checkbox" name="check" class="check" value="false" />
+                            </label>
+                            <label class="checkbox">
+                                <div class="switch"></div>
+                                <span>Twin</span>
+                                <input type="checkbox" name="check" class="check" value="false" />
+                            </label>
+                        </div>
+                        <div class="col-half">
+                            <label class="checkbox">
+                                <div class="switch"></div>
+                                <span>Queen</span>
+                                <input type="checkbox" name="check" class="check" value="false" />
+                            </label>
+                            <label class="checkbox">
+                                <div class="switch"></div>
+                                <span>Double</span>
+                                <input type="checkbox" name="check" class="check" value="false" />
+                            </label>
+                            <label class="checkbox">
+                                <div class="switch"></div>
+                                <span>King</span>
+                                <input type="checkbox" name="check" class="check" value="false" />
+                            </label>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </form>
             <div class="reset">
-                <button class="btn btn-reset" value="Reset" ng-click="resetFilter()">Reset</button>
+                <button class="btn btn-reset" id="reset">Reset</button>
             </div>
         </section>
     </div>
@@ -335,45 +334,45 @@
                 <input type="radio" name="optradio" class="check-radio" value="false" />
                 <span class="name">Harga Terendah</span>
             </label>
-            <label>
+            <label class="round">
                 <span class="radio"></span>
                 <input type="radio" name="optradio" class="check-radio" value="false" />
-                <span class="name">Harga - Rendah ke Tinggi</span>            
+                <span class="name">Harga - Rendah ke Tinggi</span>
             </label>
-            <label>
+            <label class="round">
                 <span class="radio"></span>
                 <input type="radio" name="optradio" class="check-radio" value="false" />
-                <span class="name">Harga - Tinggi ke Rendah</span>            
+                <span class="name">Harga - Tinggi ke Rendah</span>
             </label>
-            <label>
+            <label class="round">
                 <span class="radio"></span>
                 <input type="radio" name="optradio" class="check-radio" value="false" />
-                <span class="name">Nama Hotel - A ke Z</span>            
+                <span class="name">Nama Hotel - A ke Z</span>
             </label>
-            <label>
+            <label class="round">
                 <span class="radio"></span>
                 <input type="radio" name="optradio" class="check-radio" value="false" />
-                <span class="name">Nama Hotel - Z ke A</span>            
+                <span class="name">Nama Hotel - Z ke A</span>
             </label>
-            <label>
+            <label class="round">
                 <span class="radio"></span>
                 <input type="radio" name="optradio" class="check-radio" value="false" />
-                <span class="name">Bintang Hotel - 5 ke 1</span>            
+                <span class="name">Bintang Hotel - 5 ke 1</span>
             </label>
-            <label>
+            <label class="round">
                 <span class="radio"></span>
                 <input type="radio" name="optradio" class="check-radio" value="false" />
-                <span class="name">Bintang Hotel - 1 ke 5</span>            
+                <span class="name">Bintang Hotel - 1 ke 5</span>
             </label>
-            <label>
+            <label class="round">
                 <span class="radio"></span>
                 <input type="radio" name="optradio" class="check-radio" value="false" />
-                <span class="name">Ulasan Tamu - Tertinggi ke Terendah</span>            
+                <span class="name">Ulasan Tamu - Tertinggi ke Terendah</span>
             </label>
-            <label>
+            <label class="round">
                 <span class="radio"></span>
                 <input type="radio" name="optradio" class="check-radio" value="false" />
-                <span class="name">Ulasan Tamu - Terendah ke Tertinggi</span>            
+                <span class="name">Ulasan Tamu - Terendah ke Tertinggi</span>
             </label>
         </section>
     </div>
