@@ -75,16 +75,16 @@
                             <td>
                                 @if (ViewData["Name"] == null)
                                 {
-                                    @Html.Raw(String.Format("({0} people)", rsv.Passengers.Count));
+                                    @Html.Raw(String.Format("({0} people)", rsv.Pax.Count));
                                 }
                                 else
                                 {
-                                    var passenger = rsv.Passengers.First(p => (p.Name).ToLower().Contains(ViewData["Name"].ToString().ToLower()));
+                                    var passenger = rsv.Pax.First(p => (p.Name).ToLower().Contains(ViewData["Name"].ToString().ToLower()));
                                     @passenger.Name<wbr/>
                                     
-                                    if (rsv.Passengers.Count > 1)
+                                    if (rsv.Pax.Count > 1)
                                     {
-                                        @Html.Raw(String.Format("et. al. ({0} more)", rsv.Passengers.Count - 1));
+                                        @Html.Raw(String.Format("et. al. ({0} more)", rsv.Pax.Count - 1));
                                     }
                                 }
                             </td>

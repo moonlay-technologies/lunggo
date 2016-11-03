@@ -95,7 +95,7 @@
 
     <div class="order-detail">
         <header class="content-header">
-            <h3>NOMOR PESANAN: <b>@Model.RsvNo</b></h3>
+            <span>NOMOR PESANAN: <b>@Model.RsvNo</b></span>
         </header>
         <section class="content-body">
 
@@ -107,7 +107,7 @@
                     </form>
                     <h4>
                         <b>INFO PEMESANAN</b>
-                        <span>
+                        <span class="btn-search">
                             <button class="pull-right btn btn-yellow" ng-if="isExist" ng-click="submitRsvNo(flight.rsvNo, flight.rsvStatus)">{{ButtonText(flight.rsvStatus,flight.payment.method)}}</button>
                         </span>
                         @*<span ng-if="flight.payment.status == 2">
@@ -120,48 +120,48 @@
                     </h4>
                 </header>
 
-                <section>
+                <section class="oh-container">
                     <div class="form form-horizontal">
                         
                         <div class="form-group">
-                            <label class="control-label col-xs-4">Nama Pemesan</label>
-                            <div class="col-xs-8">
+                            <label class="control-label col-xs-5">Nama Pemesan</label>
+                            <div class="col-xs-7">
                                 <p class="form-control-static">{{flight.contact.name}}</p>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-xs-4">Tanggal Pemesanan</label>
-                            <div class="col-xs-8">
+                            <label class="control-label col-xs-5">Tanggal Pemesanan</label>
+                            <div class="col-xs-7">
                                 <p class="form-control-static">{{flight.rsvTime | date : 'dd MMMM yyyy , HH:mm' }}</p>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-xs-4">Tipe</label>
-                            <div class="col-xs-8">
+                            <label class="control-label col-xs-5">Tipe</label>
+                            <div class="col-xs-7">
                                 <p class="form-control-static">Penerbangan</p>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-xs-4">Harga Pesanan</label>
-                            <div class="col-xs-8">
+                            <label class="control-label col-xs-5">Harga Pesanan</label>
+                            <div class="col-xs-7">
                                 <p class="form-control-static">Rp {{flight.payment.originalPrice | number}}</p>
                             </div>
                         </div>
                         <div class="form-group" ng-show="flight.payment.method">
-                            <label class="control-label col-xs-4">Metode Pembayaran</label>
-                            <div class="col-xs-8">
+                            <label class="control-label col-xs-5">Metode Pembayaran</label>
+                            <div class="col-xs-7">
                                 <p class="form-control-static">{{methodpayment(flight.payment.method)}}</p>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-xs-4">Status Pembayaran</label>
-                            <div class="col-xs-8">
+                            <label class="control-label col-xs-5">Status Pembayaran</label>
+                            <div class="col-xs-7">
                                 <p class="form-control-static">{{paymentstatus(flight.payment.status)}}</p>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-xs-4">@Html.I18NString("CW00017")</label>
-                            <div class="col-xs-8">
+                            <label class="control-label col-xs-5">@Html.I18NString("CW00017")</label>
+                            <div class="col-xs-7">
                                 <ol class="passenger-list">
                                     <div ng-repeat="passenger in flight.pax">
                                         <li>

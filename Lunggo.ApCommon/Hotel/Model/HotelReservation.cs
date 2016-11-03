@@ -10,32 +10,17 @@ using Newtonsoft.Json;
 
 namespace Lunggo.ApCommon.Hotel.Model
 {
-    public class HotelReservationForDisplay
+    public class HotelReservationForDisplay : ReservationForDisplayBase
     {
-        [JsonProperty("rsvNo", NullValueHandling = NullValueHandling.Ignore)]
-        public string RsvNo { get; set; }
-        [JsonProperty("rsvTime", NullValueHandling = NullValueHandling.Ignore)]
-        public DateTime RsvTime { get; set; }
-        [JsonProperty("rsvStatus", NullValueHandling = NullValueHandling.Ignore)]
-        public RsvDisplayStatus RsvDisplayStatus { get; set; }
-        [JsonProperty("cancelType", NullValueHandling = NullValueHandling.Ignore)]
-        public CancellationType CancellationType { get; set; }
-        [JsonProperty("cancelTime", NullValueHandling = NullValueHandling.Ignore)]
-        public DateTime? CancellationTime { get; set; }
-        [JsonProperty("payment", NullValueHandling = NullValueHandling.Ignore)]
-        public PaymentDetailsForDisplay Payment { get; set; }
-        [JsonProperty("contact", NullValueHandling = NullValueHandling.Ignore)]
-        public Contact Contact { get; set; }
+        public override ProductType Type
+        {
+            get { return ProductType.Hotel; }
+        }
+
         [JsonProperty("hotelDetail", NullValueHandling = NullValueHandling.Ignore)]
         public HotelDetailForDisplay HotelDetail { get; set; }
-        [JsonProperty("pax", NullValueHandling = NullValueHandling.Ignore)]
-        public List<PaxForDisplay> Passengers { get; set; }
-        [JsonIgnore]
-        public string UserId { get; set; }
-        [JsonIgnore]
-        public string DeviceId { get; set; }
     }
-    public class HotelReservation : ReservationBase<HotelReservation>
+    public class HotelReservation : ReservationBase
     {
         public override ProductType Type
         {

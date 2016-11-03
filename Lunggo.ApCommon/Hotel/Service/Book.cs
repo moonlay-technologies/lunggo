@@ -28,10 +28,10 @@ namespace Lunggo.ApCommon.Hotel.Service
                     IsValid = false
                 };
             }
-
+        
             var oldPrice = bookInfo.Rooms.Sum(room => room.Rates.Sum(rate => rate.Price.Supplier));
             decimal newPrice = 0;
-
+            
             //Refresh RateKey
             var occupancies = new List<Occupancy>();
 
@@ -107,7 +107,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                     childrenAges = rate.ChildrenAges.Aggregate(childrenAges, (current, age) => current + (age + "~"));
                     childrenAges = childrenAges.Substring(0, childrenAges.Length - 1);
                 }
-
+                
                 foreach (var hotel in searchResult.HotelDetails)
                 {
                     foreach (var room in hotel.Rooms)
@@ -117,7 +117,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                             var ratekey = ratea.RateKey.Split('|');
                             if (Convert.ToInt32(ratekey[4]) != bookInfo.HotelCode || ratekey[5] != roomCd ||
                                 ratekey[6] != someData || ratekey[7] != board ||
-                                Convert.ToInt32(ratekey[9].Split('~')[0]) != roomCount
+                                Convert.ToInt32(ratekey[9].Split('~')[0]) != roomCount 
                                 || Convert.ToInt32(ratekey[9].Split('~')[1]) != adultCount
                                 || Convert.ToInt32(ratekey[9].Split('~')[2]) != childCount
                                 ) continue;
@@ -130,7 +130,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                             rate.Type = ratea.Type;
                         }
                     }
-                }
+                }                
             }
 
             //Recheck for every rate with rate type = recheck
@@ -154,8 +154,8 @@ namespace Lunggo.ApCommon.Hotel.Service
                     newPrice += rate.Price.Supplier;
                 }
             }
-
-
+            
+            
             SaveSelectedHotelDetailsToCache(input.Token, bookInfo);
             if (oldPrice != newPrice)
                 return new BookHotelOutput
@@ -164,7 +164,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                     IsValid = true,
                     NewPrice = newPrice
                 };
-            var rsvDetail = CreateHotelReservation(input, bookInfo, oldPrice);
+            var rsvDetail = CreateHotelReservation(input, bookInfo);
             InsertHotelRsvToDb(rsvDetail);
             return new BookHotelOutput
             {
@@ -186,7 +186,7 @@ namespace Lunggo.ApCommon.Hotel.Service
             return hb.CheckRateHotel(revalidateInfo);
         }
 
-        private HotelReservation CreateHotelReservation(BookHotelInput input, HotelDetailsBase bookInfo, decimal price)
+        private HotelReservation CreateHotelReservation(BookHotelInput input, HotelDetailsBase bookInfo)
         {
             var rsvNo = RsvNoSequence.GetInstance().GetNext(ProductType.Hotel);
             //var identity = HttpContext.Current.User.Identity as ClaimsIdentity ?? new ClaimsIdentity();
@@ -208,15 +208,18 @@ namespace Lunggo.ApCommon.Hotel.Service
             var checkoutdate = new DateTime(Convert.ToInt32(coDate.Substring(0, 4)),
                 Convert.ToInt32(coDate.Substring(4, 2)), Convert.ToInt32(coDate.Substring(6, 2)));
 
+            var price = bookInfo.Rooms.SelectMany(r => r.Rates).Sum(r => r.Price.Local);
+
             var hotelInfo = new HotelDetail
             {
                 AccomodationType = bookInfo.AccomodationType,
                 CheckInDate = checkindate,
-                CheckOutDate = checkoutdate,
+                CheckOutDate = checkoutdate, 
                 City = bookInfo.City,
                 CountryCode = bookInfo.CountryCode,
                 DestinationCode = bookInfo.DestinationCode,
                 NetFare = price,
+                OriginalFare = price*1.01M,
                 TotalAdult = input.Passengers.Count(p => p.Type == PaxType.Adult),
                 TotalChildren = input.Passengers.Count(p => p.Type == PaxType.Child),
                 SpecialRequest = input.SpecialRequest,
@@ -251,5 +254,5 @@ namespace Lunggo.ApCommon.Hotel.Service
 
             return rsvDetail;
         }
-    }
+    }       
 }

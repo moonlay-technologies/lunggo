@@ -37,7 +37,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                         Boards = rate.Boards, Cancellation = rate.Cancellation, ChildrenAges = id.ChildrenAges,
                         ChildCount = id.ChildCount, Class = rate.Class, Offers = rate.Offers, 
                         PaymentType = rate.PaymentType, RegsId = rate.RegsId, Price = rate.Price, Type = rate.Type,
-                    }).ToList()[0];
+                    }).ToList().FirstOrDefault();
 
                 if (hotel.Rooms.Any(r => r.RoomCode == output.RoomCode))
                 {

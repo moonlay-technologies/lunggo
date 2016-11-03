@@ -1,0 +1,391 @@
+﻿@using System.Globalization
+@using Lunggo.ApCommon.Constant
+@using Lunggo.ApCommon.Payment.Constant
+@using Lunggo.Framework.Config
+@using Lunggo.ApCommon.Flight.Model
+@model Lunggo.ApCommon.Product.Model.ReservationForDisplayBase
+
+@{
+    Layout = "/Views/Shared/mobile/_Layout.cshtml";
+    ViewBag.Title = "Terima Kasih";
+    ViewBag.BodyClass = "page page-thankyou";
+    ViewBag.SiteHeader = "thankyou";
+    ViewBag.AngularController = "ThankyouController";
+    
+}
+
+@{
+    var timeout = ConfigManager.GetInstance().GetConfigValue("flight", "paymentTimeout");
+}
+
+@functions{
+    public string msToTime(double duration)
+    {
+        var hours = Convert.ToInt32(duration) / (1000 * 60 * 60);
+        var minutes = (Convert.ToInt32(duration) / (1000 * 60)) % 60;
+
+        return hours + "j " + minutes + "m";
+    }
+}
+@section AdditionalCSS {
+
+    <link rel="stylesheet" href="/Assets/mobile/css/application.css">
+}
+@section AdditionalJS {
+    <!-- additional Angular JS-->
+    <script src="/Assets/js/angular.min.js"></script>
+    <script src="/Assets/js/angular-animate.min.js"></script>
+    <script src="/Assets/js/angular-route.min.js"></script>
+}
+
+@section PageJS{
+    <script src="/Assets/mobile/js/ThankyouController.js"></script>
+}
+
+<div ng-app="travorama" ng-controller="ThankyouController">
+    <section class="page group-checkout group-flight-checkout ticket-page">
+
+        @switch (Model.Payment.Status)
+        {
+            case PaymentStatus.Failed:
+            case PaymentStatus.Denied:
+
+                <div class="popup__wrapper active">
+                    <div class="popup">
+                        <header class="popup__header">
+                            <h4 class="popup__title">Pembayaran Gagal</h4>
+                        </header>
+                        <div class="popup__body">
+                            <div class="container_new">
+                                <span>
+                                    Mohon maaf, pembayaran Anda gagal. Silakan membuat pemesanan baru dengan metode pembayaran berbeda.
+                                </span>
+                            </div>
+                        </div>
+                        <div class="popup__footer">
+                            <div class="container_new">
+                                <a class="btn btn-block btn-yellow" href="{{returnUrl}}">CARI ULANG</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                break;
+
+            case PaymentStatus.Undefined:
+            case PaymentStatus.Cancelled:
+
+            <div class="popup__wrapper active">
+                <div class="popup">
+                    <header class="popup__header">
+                        <h4 class="popup__title">Belum Ada Reservasi</h4>
+                    </header>
+                    <div class="popup__body">
+                        <div class="container_new">
+                            <span>
+                                Reservasi tidak ditemukan. Silakan klik tombol di bawah untuk membuat reservasi.
+                            </span>
+                        </div>
+                    </div>
+                    <div class="popup__footer">
+                        <div class="container_new">
+                            <a class="btn btn-block btn-yellow" href="{{returnUrl}}">CARI PENERBANGAN</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                break;
+
+            case PaymentStatus.Expired:
+
+            <div class="popup__wrapper active">
+                <div class="popup">
+                    <header class="popup__header">
+                        <h4 class="popup__title">Pemesanan Kadaluarsa</h4>
+                    </header>
+                    <div class="popup__body">
+                        <div class="container_new">
+                            <span>
+                                Pemesanan Anda kadaluarsa. Silakan klik tombol di bawah untuk membuat pemesanan baru.
+                            </span>
+                        </div>
+                    </div>
+                    <div class="popup__footer">
+                        <div class="container_new">
+                            <a class="btn btn-block btn-yellow" href="{{returnUrl}}">CARI ULANG</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                break;
+
+            case PaymentStatus.Verifying:
+            case PaymentStatus.Pending:
+            case PaymentStatus.Challenged:
+
+            <div ng-init="refresh()">
+                <header class="page__header">
+                    <h1 class="text-center section-title stripe">Sedang <span>Memverifikasi</span></h1>
+                </header>
+                <div class="thankyou-words">
+                    <div>Terima kasih telah memesan penerbangan di Travorama. Pembayaran Anda sedang diverifikasi oleh sistem kami.</div>
+                    @*<div class="ticket-print">
+                            <a href="@Url.Action("Eticket", "Flight", new { Model.RsvNo })" class="btn btn-yellow print-ticket-button"> <span class="fa fa-print"></span>CEK E-TIKET</a>
+                        </div>
+                        <div>Anda dapat menutup halaman ini dan mengecek kembali halaman ini di menu Cek Pemesanan setiap saat.</div>*@
+                </div>
+            </div>
+            @*<div ng-init="refresh()" ng-hide = "hide">
+                <div class="popup__wrapper active">
+                    <div class="popup">
+                        <header class="popup__header">
+                            <h4 class="popup__title">Sedang Memverifikasi</h4>
+                        </header>
+                        <div class="popup__body">
+                            <div class="container_new">
+                                <span>
+                                    Mohon menunggu. Pembayaran Anda sedang diverifikasi oleh sistem kami.
+                                </span>
+                                <div class="text-center"><img src="/Assets/images/loading-image-dark.gif" width="50%" alt="loading" /></div>
+                            </div>
+                        </div>
+                        <div class="popup__footer">
+                            <div class="container_new">
+                                <a class="btn btn-block btn-yellow" ng-click ="seeDetail()">LIHAT DETAIL PEMESANAN</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>*@
+
+                break;
+            case PaymentStatus.Settled:
+            
+            <header class="page__header">
+                <h1 class="text-center section-title stripe">Terima <span>Kasih</span></h1>
+            </header>
+            <div class="thankyou-words">
+                <div>Terima kasih telah memesan penerbangan di Travorama. Anda dapat mengecek e-tiket Anda melalui tombol berikut.</div>
+                <div class="ticket-print">
+                    <a href="@Url.Action("Eticket", "Payment", new { Model.RsvNo })" class="btn btn-yellow print-ticket-button"> <span class="fa fa-print"></span>CEK E-TIKET</a>
+                </div>
+                <div>Anda dapat menutup halaman ini dan mengecek kembali halaman ini di menu Cek Pemesanan setiap saat.</div>
+            </div>
+                break;
+        }
+
+        @if (Model.Payment.Status == PaymentStatus.Settled || Model.Payment.Status == PaymentStatus.Pending ||
+            Model.Payment.Status == PaymentStatus.Challenged || Model.Payment.Status == PaymentStatus.Verifying)
+        {
+            <div class="page__body">
+                <h3><b>DETAIL</b> PESANAN</h3>
+                <span>Nomor Reservasi: <b>@Model.RsvNo</b></span>
+                <div class="summary summary--passenger">
+                    <h3 class="summary__title"><b>DAFTAR</b> PENUMPANG</h3>
+                    <div class="summary__body">
+                        <ol>
+                            @foreach (var passenger in Model.Pax)
+                            {
+                                <li>
+                                    <b><span>@EnumDisplay.Title(passenger.Title.GetValueOrDefault())</span>
+                                    @passenger.Name</b>
+                                    
+                                    <dl>
+                                        <dt>Jenis Tiket</dt>
+                                        @EnumDisplay.PassengerType(passenger.Type.GetValueOrDefault())
+                                    </dl>
+
+                                </li>
+                            }
+                        </ol>
+                    </div><!-- .summary__body -->
+                </div><!-- .summary--passenger -->
+                
+                @if (Model is FlightReservationForDisplay)
+                {
+                    var reservation = Model as FlightReservationForDisplay;
+                    <div class="overlay--flight-detail">
+                        <div class="overlay__body overlay__content">
+                            <div class=" flight-fare-wrapper">
+                                <h3><b>RINCIAN</b> PENERBANGAN</h3>
+                                <h4><b>BERANGKAT</b></h4>
+                                <div class="flight-title flight-title--departure">
+                                    <div class="flight-info">
+                                        <h4><b>@reservation.Itinerary.Trips[0].OriginCity</b> ke <b>@reservation.Itinerary.Trips[0].DestinationCity</b></h4>
+                                        <h5>@reservation.Itinerary.Trips[0].DepartureDate.GetValueOrDefault().ToString("ddd, d MMM yyyy", new CultureInfo("id-ID"))</h5>
+                                    </div><!-- .flight-info -->
+                                </div><!-- .flight-title -->
+                                @for (var segment = 0; segment < reservation.Itinerary.Trips[0].Segments.Count; segment++)
+                                {
+                                    <div class="flight-wrapper">
+                                        <div class="flight">
+                                            <div class="flight__number">
+                                                <span>@(segment + 1)</span>
+                                            </div><!-- .flight__number -->
+                                            <div class="flight__content">
+                                                <div class="flight__summary">
+                                                    <img class="flight__image" src="@reservation.Itinerary.Trips[0].Airlines[0].LogoUrl" alt="@reservation.Itinerary.Trips[0].Airlines[0].Name">
+                                                    <div class="flight__airline">
+                                                        <h4><b>@reservation.Itinerary.Trips[0].Airlines[0].Name</b></h4>
+                                                        <h5>@reservation.Itinerary.Trips[0].Airlines[0].Code-@reservation.Itinerary.Trips[0].Segments[segment].FlightNumber</h5>
+                                                    </div>
+                                                </div><!-- .flight__summary -->
+                                                <div class="flight__detail">
+                                                    <div class="flight__departure">
+                                                        <h5>@reservation.Itinerary.Trips[0].Segments[segment].DepartureTime.GetValueOrDefault().ToString("d MMM yyyy", new CultureInfo("id-ID"))</h5>
+                                                        <h4><b>@reservation.Itinerary.Trips[0].Segments[segment].DepartureTime.GetValueOrDefault().ToString("HH:mm", new CultureInfo("id-ID"))</b></h4>
+                                                        <h5><b>@reservation.Itinerary.Trips[0].Segments[segment].DepartureCity (@reservation.Itinerary.Trips[0].Segments[segment].DepartureAirport)</b></h5>
+                                                        <h5>@reservation.Itinerary.Trips[0].Segments[segment].DepartureAirportName</h5>
+                                                    </div>
+                                                    <div class="flight__separator">
+                                                        <h5><b>Durasi:</b><br>@msToTime(reservation.Itinerary.Trips[0].Segments[segment].Duration.GetValueOrDefault())</h5>
+                                                    </div>
+                                                    <div class="flight__arrival">
+                                                        <h5>@reservation.Itinerary.Trips[0].Segments[segment].ArrivalTime.GetValueOrDefault().ToString("d MMM yyyy", new CultureInfo("id-ID"))</h5>
+                                                        <h4><b>@reservation.Itinerary.Trips[0].Segments[segment].ArrivalTime.GetValueOrDefault().ToString("HH:mm", new CultureInfo("id-ID"))</b></h4>
+                                                        <h5><b>@reservation.Itinerary.Trips[0].Segments[segment].ArrivalCity (@reservation.Itinerary.Trips[0].Segments[segment].ArrivalAirport)</b></h5>
+                                                        <h5>@reservation.Itinerary.Trips[0].Segments[segment].ArrivalAirportName</h5>
+                                                    </div><!-- .flight__arrival -->
+                                                </div><!-- .flight__detail -->
+                                            </div><!-- .flight__content -->
+                                        </div><!-- .flight -->
+                                        @if (reservation.Itinerary.Trips[0].Transits.Count > 0 && segment < reservation.Itinerary.Trips[0].TotalTransit)
+                                        {
+                                            <div class="transit">
+                                                <span>Transit di @reservation.Itinerary.Trips[0].Segments[segment].ArrivalCity (@reservation.Itinerary.Trips[0].Segments[segment].ArrivalAirport) selama <b>@reservation.Itinerary.Trips[0].Transits.ElementAt(segment).Duration</b></span>
+                                            </div>
+                                            <!-- .transit -->
+                                        }
+                                    </div>
+                                    <!-- .flight-wrapper -->
+                                }
+
+                            </div>
+                        </div>
+                    </div>
+
+                    if (reservation.Itinerary.Trips.Count > 1)
+                     {
+                         <div class="overlay--flight-detail">
+                             <div class="overlay__body overlay__content">
+                                 <div class=" flight-fare-wrapper">
+                                     <h4><b>KEMBALI</b></h4>
+                                     <div class="flight-title flight-title--departure">
+                                         <div class="flight-info">
+                                             <h4><b>@reservation.Itinerary.Trips[1].OriginCity</b> ke <b>@reservation.Itinerary.Trips[1].DestinationCity</b></h4>
+                                             <h5>@reservation.Itinerary.Trips[1].DepartureDate.GetValueOrDefault().ToString("ddd, d MMM yyyy", new CultureInfo("id-ID"))</h5>
+                                         </div><!-- .flight-info -->
+                                     </div><!-- .flight-title -->
+                                     @for (var segment = 0; segment < reservation.Itinerary.Trips[1].Segments.Count; segment++)
+                                     {
+                                         <div class="flight-wrapper">
+
+                                             <div class="flight">
+                                                 <div class="flight__number">
+                                                     <span>@(segment + 1)</span>
+                                                 </div><!-- .flight__number -->
+                                                 <div class="flight__content">
+                                                     <div class="flight__summary">
+                                                         <img class="flight__image" src="@reservation.Itinerary.Trips[1].Airlines[0].LogoUrl" alt="@reservation.Itinerary.Trips[1].Airlines[0].Name">
+                                                         <div class="flight__airline">
+                                                             <h4><b>@reservation.Itinerary.Trips[1].Airlines[0].Name</b></h4>
+                                                             <h5>@reservation.Itinerary.Trips[1].Airlines[0].Code-@reservation.Itinerary.Trips[1].Segments[segment].FlightNumber</h5>
+                                                         </div>
+                                                     </div><!-- .flight__summary -->
+                                                     <div class="flight__detail">
+                                                         <div class="flight__departure">
+                                                             <h5>@reservation.Itinerary.Trips[1].Segments[segment].DepartureTime.GetValueOrDefault().ToString("d MMM yyyy", new CultureInfo("id-ID"))</h5>
+                                                             <h4><b>@reservation.Itinerary.Trips[1].Segments[segment].DepartureTime.GetValueOrDefault().ToString("HH:mm", new CultureInfo("id-ID"))</b></h4>
+                                                             <h5><b>@reservation.Itinerary.Trips[1].Segments[segment].DepartureCity (@reservation.Itinerary.Trips[1].Segments[segment].DepartureAirport)</b></h5>
+                                                             <h5>@reservation.Itinerary.Trips[1].Segments[segment].DepartureAirportName</h5>
+                                                         </div>
+                                                         <div class="flight__separator">
+                                                             <h5><b>Durasi:</b><br />@reservation.Itinerary.Trips[1].Segments[segment].Duration</h5>
+                                                         </div>
+                                                         <div class="flight__arrival">
+                                                             <h5>@reservation.Itinerary.Trips[1].Segments[segment].ArrivalTime.GetValueOrDefault().ToString("d MMM yyyy", new CultureInfo("id-ID"))</h5>
+                                                             <h4><b>@reservation.Itinerary.Trips[1].Segments[segment].ArrivalTime.GetValueOrDefault().ToString("HH:mm", new CultureInfo("id-ID"))</b></h4>
+                                                             <h5><b>@reservation.Itinerary.Trips[1].Segments[segment].ArrivalCity (@reservation.Itinerary.Trips[1].Segments[segment].ArrivalAirport)</b></h5>
+                                                             <h5>@reservation.Itinerary.Trips[1].Segments[segment].ArrivalAirportName</h5>
+                                                         </div><!-- .flight__arrival -->
+                                                     </div><!-- .flight__detail -->
+                                                 </div><!-- .flight__content -->
+                                             </div><!-- .flight -->
+                                             @if (reservation.Itinerary.Trips[1].Transits.Count > 0 && segment < reservation.Itinerary.Trips[1].TotalTransit)
+                                             {
+                                                 <div class="transit">
+                                                     <span>Transit di @reservation.Itinerary.Trips[1].Segments[segment].ArrivalCity (@reservation.Itinerary.Trips[1].Segments[segment].ArrivalAirport) selama <b>@reservation.Itinerary.Trips[1].Transits.ElementAt(segment).Duration</b></span>
+                                                 </div>
+                                                 <!-- .transit -->
+                                             }
+                                         </div>
+                                         <!-- .flight-wrapper -->
+                                     }
+                                 </div>
+                             </div>
+                         </div>
+                     }
+                }
+                <div class="summary summary--price">
+                    <h3 class="summary__title"><b>RINCIAN</b> HARGA</h3>
+                    <div class="summary__body">
+                        <dl>
+                            <dt>Tiket Pesawat @Model.Pax.Count Penumpang</dt>
+                            <dd>Rp @((Model.Payment.OriginalPrice).ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID")))</dd>
+                        </dl>
+                        @if (Model.Payment.DiscountNominal != 0)
+                        {
+                            <dl>
+                                <dt>Potongan Harga</dt>
+                                <dd>- Rp @Model.Payment.DiscountNominal.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</dd>
+                            </dl>
+                        }
+                        @if (Model.Payment.UniqueCode != 0)
+                        {
+                            <dl>
+                                <dt>Kode Unik Pembayaran</dt>
+                                <dd>- Rp @Math.Abs(Model.Payment.UniqueCode).ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</dd>
+                            </dl>
+                        }
+                        <dl class="total-price">
+                            <dt>Total</dt>
+                            <dd>Rp @Model.Payment.FinalPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</dd>
+                        </dl>
+
+                    </div><!-- .widget.price-detail -->
+                </div><!-- .widget-container -->
+
+                <div class="summary summary--price">
+                    <h3 class="summary__title"><b>METODE </b>PEMBAYARAN</h3>
+                    @switch (Model.Payment.Method)
+                    {
+                        case PaymentMethod.CreditCard:
+                            <h5>@EnumDisplay.PaymentMethod(Model.Payment.Method)</h5>
+                            <img src="/Assets/images/payment-cc.jpg" alt="Credit Card" />
+                            break;
+                        case PaymentMethod.VirtualAccount:
+                        <h5>@EnumDisplay.PaymentMethod(Model.Payment.Method)</h5>
+                        <img src="/Assets/images/atm-bersama.jpg" alt="Virtual Account" />
+                            break;
+                        case PaymentMethod.BankTransfer:
+                        <h5>@EnumDisplay.PaymentMethod(Model.Payment.Method)</h5>
+                        <img src="/Assets/images/atm-bersama.jpg" alt="Bank Transfer" />
+                            break;
+                        case PaymentMethod.CimbClicks:
+                        <img src="/Assets/images/cimb-clicks-transparan.png" alt="CIMB Clicks" />
+                            break;
+                        case PaymentMethod.MandiriClickPay:
+                        <h5>@EnumDisplay.PaymentMethod(Model.Payment.Method)</h5>
+                        <img src="/Assets/images/payment-mandiri.png" alt="Mandiri Click Pay" />
+                            break;
+                    }
+
+                </div>
+
+                <div class="tnc">
+                    <small><i>Travorama selalu mementingkan keamanan transaksi Anda. Semua transaksi melalui Travorama.com dijamin 100% aman.</i></small>
+                </div>
+            </div>
+        }
+    </section><!-- .checkout-page -->
+</div>

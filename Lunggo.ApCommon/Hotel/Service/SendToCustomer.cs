@@ -10,7 +10,7 @@ namespace Lunggo.ApCommon.Hotel.Service
         public void SendEticketToCustomer(string rsvNo)
         {
             var queueService = QueueService.GetInstance();
-            var queue = queueService.GetQueueByReference("HotelEticket");
+            var queue = queueService.GetQueueByReference("HotelVoucher");
             queue.AddMessage(new CloudQueueMessage(rsvNo));
         }
 

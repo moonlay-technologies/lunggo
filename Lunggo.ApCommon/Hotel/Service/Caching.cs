@@ -33,12 +33,12 @@ namespace Lunggo.ApCommon.Hotel.Service
         public void SaveSelectedHotelDetailsToCache(string token, HotelDetailsBase hotel)
         {
             var redisService = RedisService.GetInstance();
-            var redisKey = "token:" + token;
+            var redisKey = "hotelToken:" + token;
             var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
             var timeNow = DateTime.UtcNow;
             var expiry = timeNow.AddHours(1);
-            var redisValue = "hoteldetails:" + hotel.Serialize(); 
-            redisDb.StringSet(redisKey, redisValue, expiry - timeNow);
+            var redisValue = "hoteldetails:" + hotel.Serialize();
+            redisDb.StringSet(redisKey, redisValue); //, expiry - timeNow
         }
 
         public void SaveSearchResultintoDatabaseToCache(string token, SearchHotelResult searchResult)
@@ -63,13 +63,29 @@ namespace Lunggo.ApCommon.Hotel.Service
         public HotelDetailsBase GetSelectedHotelDetailsFromCache(string token)
         {
             var redisService = RedisService.GetInstance();
-            var redisKey = "token:" + token;
+            var redisKey = "hotelToken:" + token;
             var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
             var cacheObject = (string) redisDb.StringGet(redisKey);
             var hotelDetails = cacheObject.Substring(13).Deserialize<HotelDetailsBase>();
             return hotelDetails;
         }
 
+        public DateTime? GetSelectionExpiry(string token)
+        {
+            try
+            {
+                var redisService = RedisService.GetInstance();
+                var redisKey = "hotelToken:" + token;
+                var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
+                var timeToLive = redisDb.KeyTimeToLive(redisKey).GetValueOrDefault();
+                var expiryTime = DateTime.UtcNow + timeToLive;
+                return expiryTime;
+            }
+            catch
+            {
+                return DateTime.UtcNow;
+            }
+        }
         public DateTime? GetSearchedHotelDetailsExpiry(string searchId)
         {
             try

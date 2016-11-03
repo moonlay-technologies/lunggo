@@ -9,7 +9,7 @@ namespace Lunggo.Framework.Context
     {
         public static String GetActiveCurrencyCode()
         {
-            return (String)HttpContext.Current.Items[SystemConstant.HttpContextCurrencyCode] ?? "IDR";
+            return string.IsNullOrEmpty((String)HttpContext.Current.Items[SystemConstant.HttpContextCurrencyCode]) ? "IDR" : (String)HttpContext.Current.Items[SystemConstant.HttpContextCurrencyCode];
         }
 
         public static void SetActiveCurrencyCode(string currCode)
@@ -19,7 +19,7 @@ namespace Lunggo.Framework.Context
 
         public static String GetActiveLanguageCode()
         {
-            return (String)HttpContext.Current.Items[SystemConstant.HttpContextLangCode] ?? "id";
+            return string.IsNullOrEmpty((String)HttpContext.Current.Items[SystemConstant.HttpContextLangCode]) ? "id" : (String)HttpContext.Current.Items[SystemConstant.HttpContextCurrencyCode];
         }
 
         public static void SetActiveLanguageCode(string langCode)

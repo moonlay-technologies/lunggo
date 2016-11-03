@@ -15,6 +15,7 @@
     <script src="/Assets/js/angular.min.js"></script>
     <script src="/Assets/js/angular-animate.min.js"></script>
     <script src="/Assets/js/angular-route.min.js"></script>
+    <script src="/Scripts/bootstrap.min.js"></script>
 }
 
 @section PageJS{
@@ -46,11 +47,7 @@
     <header class="notifbox" ng-hide="!NotifBox">
         <h3>{{formMessage}}</h3>
     </header>
-
-    <header class="page__header">
-        <h1 class="text-center section-title stripe">Ubah <span>Profil</span></h1>
-    </header>
-
+    
     <section class="user-menu" ng-show="PageConfig.ActivePage == 'menu'">
         <div class="menu-user">
             <span ng-if="UserProfile.name.length != 0">{{UserProfile.name}}</span>
@@ -160,68 +157,156 @@
     </section><!-- .user-profile -->
 
     <section class="user-history" ng-show="PageConfig.ActivePage == 'history'">
-
         <header class="page-title">
             <span>PEMESANAN SAYA</span>
         </header>
-
-        <ul class="history-list">
-            <li class="" ng-repeat="flight in flightlist track by $index" ng-class="{'done' : flight.payment.status == 3, 'pending' : flight.payment.status == 2 ||  flight.payment.status == 6, 'canceled' : flight.payment.status == 1 || flight.payment.status == 4 || flight.payment.status == 5 || flight.payment.status == 8}">
-                <div class="row">
-                    <div class="col-xs-4">
-                        <span class="blue">Nomor Pesanan</span>
-                    </div>
-                    <div class="col-xs-8">
-                        <span class="blue">: <b>{{flight.rsvNo}}</b></span>
-                    </div>
+        <div class="main-tab">
+            <ul class="nav nav-tabs tab-detail">
+                <li class="col-xs-6 active">
+                    <a class="tab-flight order" data-toggle="tab" href="#order-flight">Penerbangan</a>
+                </li>
+                <li class="col-xs-6">
+                    <a class="tab-hotel order" data-toggle="tab" href="#order-hotel">Hotel</a>
+                </li>
+            </ul>
+            <div class="tab-content tab-order">
+                <div id="order-flight" class="tab-pane tp-flight active">
+                    <ul class="history-list">
+                        <li class="" ng-repeat="flight in flightlist track by $index" ng-class="{'done' : flight.payment.status == 3, 'pending' : flight.payment.status == 2 ||  flight.payment.status == 6, 'canceled' : flight.payment.status == 1 || flight.payment.status == 4 || flight.payment.status == 5 || flight.payment.status == 8}">
+                            <div class="row">
+                                <div class="col-xs-4">
+                                    <span class="blue">Nomor Pesanan</span>
+                                </div>
+                                <div class="col-xs-8">
+                                    <span class="blue">: <b>{{flight.rsvNo}}</b></span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-4">
+                                    <span>Maskapai</span>
+                                </div>
+                                <div class="col-xs-8">
+                                    <span class="blue">: <b>{{flight.itin.trips[0].segments[0].airlineName}}</b></span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-4">
+                                    <span>Tujuan</span>
+                                </div>
+                                <div class="col-xs-8">
+                                    <span>: <b>{{flight.itin.trips[0].origin}}</b> ke <b>{{flight.itin.trips[0].destination}}</b> ({{FlightType(flight.itin.type)}})</span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-4">
+                                    <span>Berangkat</span>
+                                </div>
+                                <div class="col-xs-8">
+                                    <span>: <b>{{flight.itin.trips[0].date | date}}</b></span>
+                                </div>
+                            </div>
+                            <div class="row" ng-show="flight.itin.trips[1].date">
+                                <div class="col-xs-4">
+                                    <span>Kembali</span>
+                                </div>
+                                <div class="col-xs-8">
+                                    <span>: <b>{{flight.itin.trips[1].date | date}}</b></span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-4">
+                                    <span>Status</span>
+                                </div>
+                                <div class="col-xs-8">
+                                    <span>: <b>{{OrderStatus(flight.payment.status)}}</b></span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <a ng-href="@Url.Action("OrderFlightHistoryDetail", "UW620OrderHistory")?rsvNo={{flight.rsvNo}}" class="btn btn-yellow">Detail</a>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
                 </div>
-                <div class="row">
-                    <div class="col-xs-4">
-                        <span>Maskapai</span>
-                    </div>
-                    <div class="col-xs-8">
-                        <span class="blue">: <b>{{flight.itin.trips[0].segments[0].airlineName}}</b></span>
-                    </div>
+                <div id="order-hotel" class="tab-pane tp-hotel">
+                    <ul class="history-list">
+                        <li class="">
+                            <div class="order-wrapper">
+                                <div class="order hotel page-hotel">
+                                    <div class="order-top">
+                                        <div class="ot clearfix">
+                                            <div class="col-2"><img src="/Assets/travorama20/images/Hotel/hotel-sm.jpg" alt="Alternate Text" /></div>
+                                            <div class="col-8">
+                                                <span class="blue-txt bold-txt">Bliss Hotel Singapore</span>
+                                                <br /><span class="star star-4"></span>
+                                                <div class="wt-location">
+                                                    Kios Tower AB No. 26, Jl. Karet Pasar Gang Tiong No: 62 ; Jakarta Barat
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="order-bottom">
+                                        <div class="row">
+                                            <div class="col-xs-4">
+                                                <span>Check in</span>
+                                            </div>
+                                            <div class="col-xs-8">
+                                                <span>: <b>5 November 2016</b></span>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xs-4">
+                                                <span>Check out</span>
+                                            </div>
+                                            <div class="col-xs-8">
+                                                <span>: <b>9 November 2016</b></span>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xs-4">
+                                                <span>Malam</span>
+                                            </div>
+                                            <div class="col-xs-8">
+                                                <span>: <b>3 Malam</b></span>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xs-4">
+                                                <span>Kamar</span>
+                                            </div>
+                                            <div class="col-xs-8">
+                                                <span>: <b>2 Kamar</b></span>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xs-4">
+                                                <span>Jenis Kamar</span>
+                                            </div>
+                                            <div class="col-xs-8">
+                                                <span>: <b>Superior Room</b></span>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xs-4">
+                                                <span>Tamu per Kamar</span>
+                                            </div>
+                                            <div class="col-xs-8">
+                                                <span>: <b>2 Orang</b></span>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xs-12">
+                                                <a class="btn btn-yellow">Detail</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
                 </div>
-                <div class="row">
-                    <div class="col-xs-4">
-                        <span>Tujuan</span>
-                    </div>
-                    <div class="col-xs-8">
-                        <span>: <b>{{flight.itin.trips[0].origin}}</b> ke <b>{{flight.itin.trips[0].destination}}</b> ({{FlightType(flight.itin.type)}})</span>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-xs-4">
-                        <span>Berangkat</span>
-                    </div>
-                    <div class="col-xs-8">
-                        <span>: <b>{{flight.itin.trips[0].date | date}}</b></span>
-                    </div>
-                </div>
-                <div class="row" ng-show="flight.itin.trips[1].date">
-                    <div class="col-xs-4">
-                        <span>Kembali</span>
-                    </div>
-                    <div class="col-xs-8">
-                        <span>: <b>{{flight.itin.trips[1].date | date}}</b></span>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-xs-4">
-                        <span>Status</span>
-                    </div>
-                    <div class="col-xs-8">
-                        <span>: <b>{{OrderStatus(flight.payment.status)}}</b></span>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-xs-12">
-                        <a ng-href="@Url.Action("OrderFlightHistoryDetail", "UW620OrderHistory")?rsvNo={{flight.rsvNo}}" class="btn btn-yellow">Detail</a>
-                    </div>
-                </div>
-            </li>
-        </ul>
-
+            </div>
+        </div>
     </section><!-- .user-history -->
 </div>

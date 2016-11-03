@@ -15,7 +15,7 @@ file : /Assets/travorama20/css/_page_password.scss
         hgroup {margin-bottom:24px;
             h1,h4 {font-weight:bold; color:#525252;}
         }
-        input {text-align:center; padding:12px 0; height:auto;}
+        input {text-align:center; padding:12px 0; height:auto; @include border-radius(3px);}
         a {font-weight:bold; color:inherit;}
         .link-container p > a {color: #37bcf2; text-decoration: underline;}
     }
@@ -27,18 +27,51 @@ file : /Assets/travorama20/css/_page_password.scss
 
 // login page
 .page-account-login {
-    .form-section {background-image:url(/Assets/images/login-bg.jpg);
-        h1 {font-size:45px; margin-bottom:12px;}
+    .login-form {float: right;}
+    .form-section {
+        background-image: url(/Assets/images/login-bg.jpg);
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        min-height: 520px;
+        h1 {
+            font-size: 19px;
+            margin: 0;
+            line-height: 30px;
+        }
+        h4 {
+            font-size: 12px;
+            font-weight: 400;
+            margin: 0;
+        }
+        form[name="loginForm"] {
+            width: 300px;
+            border-radius: 3px;
+            padding: 20px 15px;        
+            input[name="RememberMe"] {vertical-align: text-bottom;}
+        }
     }
 }
 
 // register page
 .page-account-register {
-    .form-section {background-image:url(/Assets/images/register-bg.jpg);
+    .register-form {float: right;}
+    .register-title {margin-left: 250px;}
+    .form-section {
+        background-image:url(/Assets/images/register-bg.jpg);
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        min-height: 520px;
         h1 {font-size:40px;}
     }
-    hgroup {text-align:right; margin-bottom:24px;
+    hgroup {text-align:right; margin-bottom:20px;
         h1,h4 {font-weight:bold;}
+    }
+    form[name="registerForm"] {
+        width: 300px;
+        border-radius: 3px;
+        padding: 20px 15px;        
     }
 }
 
@@ -85,12 +118,11 @@ file : /Assets/travorama20/css/_page_password.scss
     // account content
     .account-content {padding-left:30px;
         .content-header {border-bottom:$border-default;
-            h2 {margin-top:0;}
+            h2 {margin: 0 0 15px; text-transform: uppercase; font-size: 19px;}
         }
-
         // form
         form {font-size:12px;
-            header {display:block;
+            header {display:block; margin-bottom: 0;
                 &:after {@include clearfix();}
                 h4 {}
                 .btn {width:150px;}
@@ -98,20 +130,65 @@ file : /Assets/travorama20/css/_page_password.scss
             .control-label {text-align:left;}
             .form-group {margin-bottom:5px;
                 >div:first-child:after {content:":"; position:absolute; right:6px; top:6px;}
+                &>.col-xs-3 {padding: 0}
             }
-            &[name="passwordForm"] {border-top:$border-default; padding-top:18px; margin-top:18px;}
+            &[name="passwordForm"] {border-top:$border-default;}
+            &[name="profileForm"], &[name="passwordForm"] {padding: 15px 0;}
         }
         // profile content
         .profile-content {}
         // history content
-        .history-content {}
+        .history-content {
+            .tab-header {margin-top: 15px;
+                &>nav>ul {
+                    padding: 0;
+                    margin: 0;
+                    list-style: none;
+                    display: inline-block;
+                    width: 100%;
+                    &>li {
+                        width: 50%;
+                        background: #e9e9e9;
+                        display: inline;
+                        float: left;
+                        padding: 12px;
+                        text-align: center;
+                        text-transform: uppercase;
+                        &.active {
+                            background: #1daee4;
+                            &:after {
+                                content: '';
+                                width: 20px;
+                                height: 20px;
+                                display: block;
+                                position: absolute;
+                                margin-top: 12px;
+                                margin-left: 137px;
+                                border-right: 10px solid transparent;
+                                border-left: 10px solid transparent;
+                                border-top: 10px solid #1daee4;
+                            }
+                        }
+                        a {
+                            color: #fff;
+                            font-weight: 700;
+                            font-size: 14px;
+                            text-decoration: none;
+                            padding: 0 100px;
+                        }
+                    }
+                }
+            }
+            .tab-content {padding: 10px 0;}
+        }
     }
 
     // order history
-    .order-wrapper {margin-top:24px;
+    .order-wrapper {margin-top:15px;
         .order {
+            &.flight, &.hotel {background:#f1f1f1; background-position:top left; background-repeat:no-repeat;}
             // flight order
-            &.flight {background:#f1f1f1; padding:24px; background-image:url(/Assets/images/order-flight-list-bg.png); background-position:top left; background-repeat:no-repeat; padding-left:50px;
+            &.flight { background-image:url(/Assets/images/order-flight-list-bg.png); padding: 10px 55px;
                 header {padding:5px; font-size:12px; font-weight:bold;
                     .row {margin-bottom:3px;}
                     span {color:$color-main-blue;}
@@ -126,9 +203,34 @@ file : /Assets/travorama20/css/_page_password.scss
                             &.pending {color:#b551ea;}
                         }
                     }
-                    .action {}
+                    .action {float: right;}
                 }
                 &+.order {border-top:$border-default;}
+            }
+            &.hotel {background-image:url(/Assets/images/order-hotel-list-bg.png); padding: 15px 55px; padding-right: 40px;
+                .ot {margin-bottom: 8px;}
+                .wt-location {margin: 5px 0;
+                    &:before {
+                        content: '';
+                        display: inline-block;
+                        background: url(/Assets/travorama20/images/Hotel/location.png) no-repeat;
+                        width: 12px;
+                        height: 17px;
+                        vertical-align: middle;
+                    }
+                }
+                .action-hotel {
+                    position: absolute;
+                    margin-top: -35px;
+                    right: 0;
+                    margin-right: 75px;
+                }
+                .order-bottom .ot-left:after {
+                    content: ':';
+                    display: inline-block;
+                    float: right;
+                    margin-right: 3px;
+                }
             }
         }
     }
@@ -136,7 +238,7 @@ file : /Assets/travorama20/css/_page_password.scss
     // order detail
     .order-detail {
         .content-body {
-            & > div + div {margin-top:24px; padding-top:24px; border-top:$border-default;}
+            & > div + div {border-top:$border-default;}
         }
         h2, h4 {letter-spacing:0;}
         h4 {margin-bottom:18px;}
@@ -154,7 +256,9 @@ file : /Assets/travorama20/css/_page_password.scss
         }
         .form {
             .form-group {margin-bottom:6px;}
-            .control-label {text-align:left;}
+            .control-label {text-align:left;
+                &.col-xs-3 {padding: 0;}
+            }
             label + div:before {content:":"; display:inline; float:left; position:relative; padding-top:6px; left:-18px;}
         }
         .passenger-list {list-style:none; counter-reset:passenger-number; margin:0; padding:0;
@@ -167,7 +271,20 @@ file : /Assets/travorama20/css/_page_password.scss
                 }
             }
         }
+        .info-buyer, .info-flight, .info-hotel {padding: 15px 0;}
+        .info-hotel {
+            .otl, .otr {float: left;}
+            .otr {padding-left: 10px;}
+            .order-bottom > .row {padding: 6px 0;}
+        }
     }
+}
 
+.page-account-profile {
+    .site-content>.container {max-width: none !important;}
+}
+.page-account-register, .page-account-login {
+    .form-section>.container {max-width: none !important;}
+    .section-benefit>.container {max-width: none !important;}
 }
 
