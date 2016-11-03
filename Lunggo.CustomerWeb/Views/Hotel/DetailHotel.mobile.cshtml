@@ -24,18 +24,8 @@
 }
 
 @section PageJS{
-    <script>
-        $('.dh-slider').slick({
-            autoplay: true,
-            autoplaySpeed: 2500,
-            dots: false
-        });
-    </script>
+    
     <script src="/Assets/vendor/flexslider/jquery.flexslider.js"></script>
-    <script>
-        accordionFunctions();
-        shortenTextFunctions();
-    </script>
     <script src="/Assets/mobile/js/HotelController.js"></script>
 }
 <div class="travorama-hotel-mobile">
@@ -43,13 +33,13 @@
         @Html.Partial("/Views/Hotel/Shared/Mobile/_Summary.cshtml")
         <div class="hotel-detail-menu clearfix">
             <div class="hotel-detail-menu-action">
-                <a href="#" class="detail-menu">UMUM</a>
-                <a href="#" class="spec-menu active">RINCIAN</a>
+                <a href="#" attr-link="#detail-menu">UMUM</a>
+                <a href="#" attr-link="#spec-menu">RINCIAN</a>
             </div>
         </div>
     </div>
     <div class="detail-hotel-container">
-        <div class="detail-hotel">
+        <div class="detail-tab detail-hotel" id="detail-menu">
             <div class="dh-slider">
                 <div class="item active">
                     <img src="/Assets/mobile/images/Hotel/hotel-detail-lg.jpg" />
@@ -76,73 +66,66 @@
                 <div class="dh-list-title bold-txt lg-txt darkgrey-txt">Informasi Kamar & Harga </div>
                 <ul class="dh-list-container">
                     <li>
-                        <div class="dh-accordion">
-                            <div class="accordion-wrapper">
-                                <div class="accordion accordion-dh md-txt">
-                                    <div class="dh-list clearfix">
-                                        <div class="col-left-hotel"><img src="/Assets/mobile/images/Hotel/hotel-detail-sm.jpg" alt="Hotel" /></div>
-                                        <div class="col-right-hotel">
-                                            <div class="bold-txt lg-txt darkgrey-txt">Deluxe Room Only</div>
-                                            <div class="sm-txt grey-txt">
-                                                <div>Non-free Cancellation</div>
-                                                <span class="max-visitor">Max 2 orang</span>
-                                            </div>
-                                            <div class="price orange-txt">
-                                                <div class="underline-txt sm-txt">Rp 899.999.999</div>
-                                                <a href="#" class="detail"></a>
-                                                <div class="lg-txt"><b><sup>Rp</sup> 999.999.999</b></div>
-                                                <span class="xs-txt">(*Termasuk Pajak)</span>
-                                            </div>
-                                        </div>
-                                    </div>
+                        <div class="dh-list clearfix">
+                            <div class="col-left-hotel"><img src="/Assets/mobile/images/Hotel/hotel-detail-sm.jpg" alt="Hotel" /></div>
+                            <div class="col-right-hotel">
+                                <div class="bold-txt lg-txt darkgrey-txt">Deluxe Room Only</div>
+                                <div class="sm-txt grey-txt">
+                                    <div>Non-free Cancellation</div>
+                                    <span class="max-visitor">Max 2 orang</span>
                                 </div>
-                                <div class="accordion-content">
-                                    <div class="dh-list-detail clearfix">
-                                        <div class="dh-top"><img src="/Assets/mobile/images/Hotel/hotel-detail-xlg.jpg" alt="Hotel" /></div>
-                                        <div class="dh-bottom">
-                                            <div class="bold-txt lg-txt darkgrey-txt">Deluxe Room Only</div>
-                                            <div class="sm-txt grey-txt">
-                                                <div>Non-free Cancellation</div>
-                                                <span class="max-visitor">Max 2 orang</span>
-                                            </div>
-                                            <div class="price orange-txt">
-                                                <div class="underline-txt sm-txt">Rp 899.999.999</div>
-                                                <a href="#" class="detail"></a>
-                                                <div class="lg-txt"><b><sup>Rp</sup> 999.999.999</b></div>
-                                                <span class="xs-txt">(*Termasuk Pajak)</span>
-                                            </div>
-                                            <a href="#" class="blue-txt downline-txt sm-txt" ng-click="PageConfig.SetOverlay('detail-room')">Detail Info Kamar</a>
-                                            <div class="facility">
-                                                <span class="wifi"></span>
-                                                <span class="meal"></span>
-                                                <span class="ac"></span>
-                                            </div>
-                                            <div class="room clearfix">
-                                                <span class="room-title darkgrey-txt semibold-txt">Kamar</span>
-                                                <div class="counter-room clearfix">
-                                                    <a href="#" class="btn-room btn-min">-</a>
-                                                    <span class="result-room semibold-txt">2</span>
-                                                    <a href="#" class="btn-room btn-plus">-</a>
-                                                </div>
-                                                <a href="#" class="btn btn-yellow small">PESAN</a>
-                                            </div>
-                                        </div>
-                                    </div>
+                                <div class="price orange-txt">
+                                    <div class="underline-txt sm-txt">Rp 899.999.999</div>
+                                    <a href="#" class="detail"></a>
+                                    <div class="lg-txt"><b><sup>Rp</sup> 999.999.999</b></div>
+                                    <span class="xs-txt">(*Termasuk Pajak)</span>
                                 </div>
                             </div>
                         </div>
+                        <div class="dh-list-detail clearfix">
+                                <div class="dh-top"><img src="/Assets/mobile/images/Hotel/hotel-detail-xlg.jpg" alt="Hotel" /></div>
+                                <div class="dh-bottom">
+                                    <div class="bold-txt lg-txt darkgrey-txt">Deluxe Room Only</div>
+                                    <div class="sm-txt grey-txt">
+                                        <div>Non-free Cancellation</div>
+                                        <span class="max-visitor">Max 2 orang</span>
+                                    </div>
+                                    <div class="price orange-txt">
+                                        <div class="underline-txt sm-txt">Rp 899.999.999</div>
+                                        <a href="#" class="detail"></a>
+                                        <div class="lg-txt"><b><sup>Rp</sup> 999.999.999</b></div>
+                                        <span class="xs-txt">(*Termasuk Pajak)</span>
+                                    </div>
+                                    <a href="#" class="blue-txt downline-txt sm-txt" ng-click="PageConfig.SetOverlay('detail-room')">Detail Info Kamar</a>
+                                    <div class="facility">
+                                        <span class="wifi"></span>
+                                        <span class="meal"></span>
+                                        <span class="ac"></span>
+                                    </div>
+                                    <div class="room clearfix">
+                                        <span class="room-title darkgrey-txt semibold-txt">Kamar</span>
+                                        <div class="counter-room clearfix">
+                                            <span class="btn-room btn-min"></span>
+                                            <input type="text" name="counter" class="result-room semibold-txt" value="0" readonly="readonly" />
+                                            <span class="btn-room btn-plus" attr-limit="9"></span>
+                                        </div>
+                                        <a href="#" class="btn btn-yellow small">PESAN</a>
+                                    </div>
+                                </div>
+                            </div>
                     </li>
                 </ul>
             </div>
         </div>
-        <div class="spec-hotel">
+        <div class="detail-tab spec-hotel" id="spec-menu">
             <div class="sh-desc">
                 <div class="sh-title darkgrey-txt lg-txt bold-txt">Deskripsi </div>
-                <div class="sh-txt darkgrey-txt" id="dot">
+                <div class="sh-txt darkgrey-txt">
                     Dolor sit amet, consectetuer adipiscing elit, sed diam nonummy. ectetuer adipiscing elit, sed diam nonummy. Lorem ipsum dolor sit amet, consectetuer ectetuer. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. my nibh euismod tincidunt. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.
                     <br /><br />
                     Dolor sit amet, consectetuer adipiscing elit, sed diam nonummy. ectetuer adipiscing elit, sed diam nonummy. Lorem ipsum dolor sit amet, consectetuer ectetuer. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. my nibh euismod tincidunt. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.
                 </div>
+                <a class="toggle" href="#"><span class="sh-open"></span><span class="sh-close"></span></a>
             </div>
             <div class="sh-facility">
                 <div class="sh-title darkgrey-txt lg-txt bold-txt">Fasilitas Utama Hotel</div>

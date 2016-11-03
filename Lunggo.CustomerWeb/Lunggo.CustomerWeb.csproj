@@ -309,6 +309,7 @@
     <Content Include="Assets\images\hotel-star-4.png" />
     <Content Include="Assets\images\location.png" />
     <Content Include="Assets\images\order-hotel-list-bg.png" />
+    <Content Include="Assets\images\select-arrow-up.png" />
     <Content Include="Assets\images\swim.png" />
     <Content Include="Assets\images\voucher-hotel-bg.jpg" />
     <Content Include="Assets\images\voucher-hotel.jpg" />
@@ -383,6 +384,7 @@
     <Content Include="Assets\travorama20\images\Hotel\triangle-grey.png" />
     <Content Include="Assets\travorama20\images\Hotel\up.png" />
     <Content Include="Assets\travorama20\images\Hotel\view.png" />
+    <Content Include="Assets\travorama20\js\HotelCheckoutController.js" />
     <Content Include="Assets\travorama20\js\hotelDetailController.js" />
     <Content Include="Assets\travorama20\js\hotelSearchController.js" />
     <Content Include="Assets\travorama20\js\HotelController.js" />

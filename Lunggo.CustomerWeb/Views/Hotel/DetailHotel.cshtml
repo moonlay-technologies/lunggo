@@ -3,6 +3,8 @@
     ViewBag.BodyClass = "page-hotel page-detail";
     ViewBag.Title = "Detail Hotel";
     ViewBag.AngularController = "hotelDetailController";
+    
+  
 }
 
 @section AdditionalCSS{
@@ -19,11 +21,16 @@
     <script src="/Assets/js/jquery-ui.min.js"></script>
     <script type="text/javascript" src="/Scripts/bootstrap.min.js"></script>
     <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.slick/1.5.9/slick.min.js"></script>
-
 }
 
 @section PageJS{
+    <script src="/Assets/vendor/flexslider/jquery.flexslider.js"></script>
+    <script src="/Assets/Travorama20/js/hotelDetailController.js"></script>
+    <script type="text/javascript" src="/Assets/travorama20/js/HotelController.js"></script>
+    <script>accordionFunctions()</script>
+    
     <script>
+        // Big Slider Detail Hotel
         $(window).load(function () {
             $('.flexslider').flexslider({
                 animation: "slide",
@@ -33,18 +40,7 @@
                 }
             });
         });
-        $('.hd-slider').slick({
-            autoplay: false,
-            autoplaySpeed: 2500,
-            dots: false
-        });
     </script>
-    <script src="/Assets/vendor/flexslider/jquery.flexslider.js"></script>
-    <script>
-        accordionFunctions();
-    </script>
-    <script src="/Assets/Travorama20/js/hotelDetailController.js"></script>
-    <script type="text/javascript" src="/Assets/travorama20/js/HotelController.js"></script>
 }
 
 @Html.Partial("/Views/Hotel/Shared/Desktop/_PageSlider.cshtml")
@@ -77,24 +73,9 @@
                                         <li data-thumb="{{image}}" ng-repeat="image in hotel.images">
                                             <img ng-src="{{image}}" alt="alternative" />
                                         </li>
-                                        @*<li data-thumb="/Assets/travorama20/images/Hotel/big-slider-img.jpg">
-                                            <img src="/Assets/travorama20/images/Hotel/big-slider-img.jpg" alt="Alternate Text" />
-                                        </li>
-                                        <li data-thumb="/Assets/travorama20/images/Hotel/big-slider-img.jpg">
-                                            <img src="/Assets/travorama20/images/Hotel/big-slider-img.jpg" alt="Alternate Text" />
-                                        </li>
-                                        <li data-thumb="/Assets/travorama20/images/Hotel/big-slider-img.jpg">
-                                            <img src="/Assets/travorama20/images/Hotel/big-slider-img.jpg" alt="Alternate Text" />
-                                        </li>
-                                        <li data-thumb="/Assets/travorama20/images/Hotel/big-slider-img.jpg">
-                                            <img src="/Assets/travorama20/images/Hotel/big-slider-img.jpg" alt="Alternate Text" />
-                                        </li>
-                                        <li data-thumb="/Assets/travorama20/images/Hotel/big-slider-img.jpg">
-                                            <img src="/Assets/travorama20/images/Hotel/big-slider-img.jpg" alt="Alternate Text" />
-                                        </li>*@
                                     </ul>
+                                </div>
                             </div>
-                        </div>
                         </div>
                         <div class="col-right-slider">
                             <div class="rs-title md-txt">Review Hotel</div>
@@ -173,10 +154,9 @@
                 <div class="menu-hotel clearfix">
                     <div class="col-left-hotel mh-title md-txt">Informasi Hotel</div>
                     <ul class=" col-right-hotel mh-container">
-                        <li class="mh-list"><a href="#" class="active">Fasilitas Hotel</a></li>
-                        <li class="mh-list"><a href="#">Peta Hotel</a></li>
-                        <li class="mh-list"><a href="#">Kebijakan Hotel</a></li>
-                        <li class="mh-list"><a href="#">Keterangan</a></li>
+                        <li class="mh-list"><a href="#menu-facility">Fasilitas Hotel</a></li>
+                        <li class="mh-list"><a href="#menu-desc">Deskripsi Hotel</a></li>
+                        <li class="mh-list"><a href="#menu-tnc">Syarat & Ketentuan Hotel</a></li>
                     </ul>
                 </div>
                 <div class="room clearfix">
@@ -191,9 +171,6 @@
                     </div>
                     <ul class="room-list-container">
                         <li ng-repeat="room in hotel.room track by $index">
-                            <div class="rl-accordion">
-                                <div class="accordion-wrapper">
-                                    <div class="accordion accordion-rl">
                                         <div class="room-list clearfix">
                                             <div class="room-left"><img src="/Assets/travorama20/images/Hotel/room.jpg" alt="Room" /></div>
                                             <div class="room-right clearfix">
@@ -227,8 +204,6 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="accordion-content">
                                         <div class="hotel-detail clearfix">
                                             <div class=" col-left-result">
                                                 <div class="col-left-top clearfix">
@@ -236,9 +211,9 @@
                                                         <div class="item active">
                                                             <img src="/Assets/travorama20/images/Hotel/mini-slider.jpg" />
                                                         </div>
-                                                        <div class="item">
+                                            @*<div class="item">
                                                             <img src="/Assets/travorama20/images/Hotel/mini-slider.jpg" />
-                                                        </div>
+                                            </div>*@
                                                     </div>
                                                     <div class="total-img"><b>1</b> / 20</div>
                                                 </div>
@@ -324,9 +299,6 @@
 
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
-                            </div>
                         </li>
                     </ul>
                     <div class="hotel-result clearfix">
@@ -340,7 +312,7 @@
                     </div>
                     <div class="ih-accordion">
                         <div class="accordion-wrapper">
-                            <div class="accordion-title accordion md-txt">Fasilitas Hotel</div>
+                            <div class="accordion-title accordion md-txt" id="menu-facility">Fasilitas Hotel</div>
                             <div class="accordion-content show">
                                 <div class="ih-row fc clearfix">
                                     <div class="col-left-hotel">
@@ -491,7 +463,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="accordion-title accordion md-txt">Deskripsi Hotel</div>
+                            <div class="accordion-title accordion md-txt" id="menu-desc">Deskripsi Hotel</div>
                             <div class="accordion-content show">
                                 @*<div class="ih-title md-txt">“Clean rooms, Great location, Spotless beds”</div>*@
                                 <div class="ih-desc clearfix">
@@ -508,7 +480,7 @@
                                     </div>*@
                                 </div>
                             </div>
-                            <div class="accordion-title accordion md-txt">Syarat & Ketentuan Hotel</div>
+                            <div class="accordion-title accordion md-txt" id="menu-tnc">Syarat & Ketentuan Hotel</div>
                             <div class="accordion-content show">
                                 <div class="snk-container clearfix">
                                     Syarat dan Kettentuan Hotel Swiss Bell Hotel - Singapore:

@@ -153,43 +153,7 @@
             </div>
             <div id="tab-hotel" class="tab-pane tp-hotel page-hotel-mobile active">
                 <div class="form-wrapper">
-                    <form class="hotel-form" name="hotel-form">
-                        <div class="th-form">
-                            <div class="form-group form__hotel">
-                                <div class="field-container">
-                                    <p class="form-control form-hotel" ng-click="PageConfig.SetOverlay('hotel-select')">Tujuan <span class="hotel-placeholder placeholder">Kota, Wilayah atau Nama Hotel</span></p>
-                                </div>
-                            </div>
-                            <div class="form-group form__date">
-                                <div class="field-container">
-                                    <p class="form-control form-date" ng-click="DatePicker.SetOption({Target : 'departure'}, ' '); PageConfig.SetOverlay('datepicker-hotel')">
-                                        Tanggal Masuk <span class="date-placeholder placeholder">{{FlightSearchForm.DepartureDate | date : 'EEE, dd MMM yyyy'}}</span>
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="form-group form__time">
-                                <div class="field-container clearfix">
-                                    <p class="form-control form-time"><span class="duration-title">Durasi</span><span class="placeholder">malam</span><input class="time-placeholder" type="text" name="hotel-night" value="1"></p>
-                                </div>
-                                <div class="checkout-date placeholder">Tanggal Keluar: Rab, 5 Okt 2016</div>
-                            </div>
-                            <div class="form-group form__visitor clearfix">
-                                <div class="field-container form-v-adult col-half">
-                                    <div class="field-wrapper">
-                                        <p class="form-control form-adult clearfix" ng-click="PageConfig.SetOverlay('visitor-hotel')"><input class="col-4" type="text" name="hotel-visitor" value="2"><span class="vt-title col-6">Dewasa</span></p>
-                                    </div>
-                                </div>
-                                <div class="field-container form-v-child col-half">
-                                    <div class="field-wrapper">
-                                        <p class="form-control form-child clearfix" ng-click="PageConfig.SetOverlay('visitor-hotel')"><input class="col-4" type="text" name="hotel-visitor" value="1"><span class="vt-title col-6">Anak</span></p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group form__submit">
-                            <button class="btn btn-yellow btn-block btn-lg btnSubmit">CARI HOTEL</button>
-                        </div>
-                    </form>
+                    @Html.Partial("/Views/Hotel/Shared/Mobile/_SearchHotelForm.cshtml")
                 </div>
             </div>
         </div>
