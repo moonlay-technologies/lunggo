@@ -18,7 +18,7 @@ namespace Lunggo.ApCommon.Hotel.Service
 
         internal void AddPriceMargin(List<HotelDetail> hotelDetails)
         {
-            if (!hotelDetails.Any())
+            if (hotelDetails == null || !hotelDetails.Any())
             {
                 return;
             }

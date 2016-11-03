@@ -1,15 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
+using System.Web;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Hotel.Model;
 using Lunggo.ApCommon.Hotel.Model.Logic;
 using Lunggo.ApCommon.Hotel.Constant;
 using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds;
+using Lunggo.ApCommon.Identity.Auth;
 using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.ApCommon.Payment.Model;
 using Lunggo.ApCommon.Payment.Service;
 using Lunggo.ApCommon.Product.Constant;
+using Lunggo.ApCommon.Product.Model;
 using Lunggo.ApCommon.Sequence;
 using Lunggo.Framework.Context;
 using BookingStatusCd = Lunggo.ApCommon.Hotel.Constant.BookingStatusCd;
@@ -28,10 +32,10 @@ namespace Lunggo.ApCommon.Hotel.Service
                     IsValid = false
                 };
             }
-        
+
             var oldPrice = bookInfo.Rooms.Sum(room => room.Rates.Sum(rate => rate.Price.Supplier));
             decimal newPrice = 0;
-            
+
             //Refresh RateKey
             var occupancies = new List<Occupancy>();
 
@@ -107,7 +111,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                     childrenAges = rate.ChildrenAges.Aggregate(childrenAges, (current, age) => current + (age + "~"));
                     childrenAges = childrenAges.Substring(0, childrenAges.Length - 1);
                 }
-                
+
                 foreach (var hotel in searchResult.HotelDetails)
                 {
                     foreach (var room in hotel.Rooms)
@@ -117,7 +121,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                             var ratekey = ratea.RateKey.Split('|');
                             if (Convert.ToInt32(ratekey[4]) != bookInfo.HotelCode || ratekey[5] != roomCd ||
                                 ratekey[6] != someData || ratekey[7] != board ||
-                                Convert.ToInt32(ratekey[9].Split('~')[0]) != roomCount 
+                                Convert.ToInt32(ratekey[9].Split('~')[0]) != roomCount
                                 || Convert.ToInt32(ratekey[9].Split('~')[1]) != adultCount
                                 || Convert.ToInt32(ratekey[9].Split('~')[2]) != childCount
                                 ) continue;
@@ -130,7 +134,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                             rate.Type = ratea.Type;
                         }
                     }
-                }                
+                }
             }
 
             //Recheck for every rate with rate type = recheck
@@ -154,8 +158,8 @@ namespace Lunggo.ApCommon.Hotel.Service
                     newPrice += rate.Price.Supplier;
                 }
             }
-            
-            
+
+
             SaveSelectedHotelDetailsToCache(input.Token, bookInfo);
             if (oldPrice != newPrice)
                 return new BookHotelOutput
@@ -214,12 +218,12 @@ namespace Lunggo.ApCommon.Hotel.Service
             {
                 AccomodationType = bookInfo.AccomodationType,
                 CheckInDate = checkindate,
-                CheckOutDate = checkoutdate, 
+                CheckOutDate = checkoutdate,
                 City = bookInfo.City,
                 CountryCode = bookInfo.CountryCode,
                 DestinationCode = bookInfo.DestinationCode,
                 NetFare = price,
-                OriginalFare = price*1.01M,
+                OriginalFare = price * 1.01M,
                 TotalAdult = input.Passengers.Count(p => p.Type == PaxType.Adult),
                 TotalChildren = input.Passengers.Count(p => p.Type == PaxType.Child),
                 SpecialRequest = input.SpecialRequest,
@@ -230,6 +234,11 @@ namespace Lunggo.ApCommon.Hotel.Service
                 PhonesNumbers = bookInfo.PhonesNumbers,
                 StarRating = bookInfo.StarRating
             };
+
+            var identity = HttpContext.Current.User.Identity as ClaimsIdentity ?? new ClaimsIdentity();
+            var clientId = identity.Claims.Single(claim => claim.Type == "Client ID").Value;
+            var platform = Client.GetPlatformType(clientId);
+            var deviceId = identity.Claims.Single(claim => claim.Type == "Device ID").Value;
 
             var rsvDetail = new HotelReservation
             {
@@ -247,12 +256,18 @@ namespace Lunggo.ApCommon.Hotel.Service
                 },
                 RsvStatus = RsvStatus.InProcess,
                 RsvTime = DateTime.UtcNow,
-                //State = rsvState,
+                State = new ReservationState
+                {
+                    Platform = platform,
+                    DeviceId = deviceId,
+                    Language = "id", //OnlineContext.GetActiveLanguageCode();
+                    Currency = new Currency("IDR"), //OnlineContext.GetActiveCurrencyCode());
+                }
             };
 
             PaymentService.GetInstance().GetUniqueCode(rsvDetail.RsvNo, null, null);
 
             return rsvDetail;
         }
-    }       
+    }
 }

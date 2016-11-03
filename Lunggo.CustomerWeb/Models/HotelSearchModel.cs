@@ -25,6 +25,8 @@ namespace Lunggo.CustomerWeb.Models
         public DateTime CheckinDate { get; set; }
         [JsonProperty("checkoutDate")]
         public DateTime CheckoutDate { get; set; }
+        [JsonProperty("roomCount")]
+        public int RoomCount { get; set; }
         [JsonProperty("adultCount")]
         public int AdultCount { get; set; }
         [JsonProperty("childCount")]
@@ -40,7 +42,8 @@ namespace Lunggo.CustomerWeb.Models
             //DateTime tempDate = new DateTime();
             //DateTime.TryParse(query[1], out tempDate) = true ? CheckinDate = tempDate : ;
             CheckinDate = DateTime.Parse(query[1]);
-            CheckoutDate = DateTime.Parse(query[3]);
+            CheckoutDate = DateTime.Parse(query[2]);
+            RoomCount = int.Parse(query[4]);
             AdultCount = int.Parse(query[5]);
             ChildCount = int.Parse(query[6]);
            
