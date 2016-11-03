@@ -248,21 +248,7 @@ app.controller('hotelcheckoutController', [
 
             }
         }
-        //Room
-        $scope.roomOrdered = function () {
-
-            var array = [];
-            for (var i = 0; i < $scope.hotelDetail.room.length; i++) {
-                var roomName = $scope.hotelDetail.room[i].roomName;
-                var sum = 0;
-                for (var j = 0; j < $scope.hotelDetail.room[i].rates.length; j++) {
-                    sum += ($scope.hotelDetail.room[i].rates[j].roomCount);
-                }
-                array.push({ "roomName": roomName, "total": sum });
-            }
-            return array;
-        }
-
+       
         //Change Page
        
         $scope.changePage = function (page) {

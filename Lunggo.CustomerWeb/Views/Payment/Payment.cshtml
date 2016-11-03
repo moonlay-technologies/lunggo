@@ -1,5 +1,6 @@
 ﻿@using Lunggo.ApCommon.Flight.Model
 @using Lunggo.ApCommon.Hotel.Model
+@using Lunggo.ApCommon.Hotel.Service
 @using Lunggo.ApCommon.Identity.Users
 @using Lunggo.ApCommon.Payment.Constant
 @using Lunggo.Framework.Context
@@ -11,10 +12,24 @@
 
     var rsvNo = "";
     var savedCreditCards = Model.SavedCreditCards;
-
+    var orderedRooms = new List<Tuple<string, int>>();
+    
     try
     {
+        var rooms = (Model.Reservation as HotelReservationForDisplay).HotelDetail.Rooms;
         rsvNo = Model.RsvNo;
+        foreach (var room in rooms)
+        {
+            var roomName = HotelService.GetInstance().GetHotelRoom(room.RoomCode).RoomDescId;
+            var sum = 0;
+            foreach (var rate in room.Rates)
+            {
+                sum += rate.RoomCount;
+            }
+            orderedRooms.Add(new Tuple<string, int>(roomName, sum)); ;
+        }
+        
+        
     }
     catch
     {
@@ -28,6 +43,48 @@
 
     ViewBag.SiteHeader = "checkout";
     ViewBag.Title = "Pembayaran";
+}
+
+@functions{
+
+    public string ToTitleCase(string input)
+    {
+
+        var text = "";
+        try
+        {
+            var splittedText = input.Split(' ');
+            foreach (var word in splittedText)
+            {
+                var splittedByStrips = word.Split('-');
+                var w = "";
+                if (splittedByStrips.Count() != 1)
+                {
+                    foreach (var part in splittedByStrips)
+                    {
+                        w += ApplyTitleCase(part) + "-";
+                    }
+                    text += w.Substring(0, w.Length - 1) + " ";
+                }
+                else
+                {
+                    text += word[0] + word.Substring(1, word.Length - 1).ToLower() + " ";
+                }
+            }
+
+        }
+        catch
+        {
+
+        }
+        return text;
+    }
+
+    public string ApplyTitleCase(string input)
+    {
+        return input[0] + input.Substring(1, input.Length - 1).ToLower();
+    }
+
 }
 @section AdditionalCSS {
     <link href="/Assets/css/jquery-ui.min.css" rel="stylesheet" />
@@ -84,37 +141,45 @@
         {
             var reservation = Model.Reservation as FlightReservationForDisplay;
             @:trips = @Html.Raw(reservation.Itinerary.Trips.Serialize());
-                @:price = @reservation.Itinerary.NetTotalFare;
-                @:originalPrice = '@reservation.Itinerary.OriginalTotalFare';
-            }
+                        @:price = @reservation.Itinerary.NetTotalFare;
+                        @:originalPrice = '@reservation.Itinerary.OriginalTotalFare';
+                    }
         else
         {
             var reservation = Model.Reservation as HotelReservationForDisplay;
             @:hotelDetails = @Html.Raw(reservation.HotelDetail.Serialize());
-                @:price = @reservation.HotelDetail.NetFare;
-                @:originalPrice = '@reservation.HotelDetail.OriginalFare';
-            }
+                        @:price = @reservation.HotelDetail.NetFare;
+                        @:originalPrice = '@reservation.HotelDetail.OriginalFare';
+                    }
     var redirectionUrl;
     @if (Model.Reservation.Payment.RedirectionUrl != null) {
         @:redirectionUrl = '@Model.Reservation.Payment.RedirectionUrl';
-        }
+                }
     @if (Model.Reservation is FlightReservationForDisplay)
     {
         @:var departureDate;
-        var reservation = Model.Reservation as FlightReservationForDisplay;
+                var reservation = Model.Reservation as FlightReservationForDisplay;
         if (reservation.Itinerary.Trips != null)
          {
              if (reservation.Itinerary.Trips.Count == 2)
              {
                  @:departureDate = '@reservation.Itinerary.Trips[1].DepartureDate';
-             }
+                     }
              else
              {
                  @:departureDate = '@reservation.Itinerary.Trips[0].DepartureDate';
-             }
+                     }
          }
     }
-
+    @if (Model.Reservation is HotelReservationForDisplay)
+    {
+        var hotel = Model.Reservation as HotelReservationForDisplay;
+        @:var originalFare = '@hotel.HotelDetail.OriginalFare';
+        @:var netFare = '@hotel.HotelDetail.NetFare';
+        @:var totalRoom = '@hotel.HotelDetail.Rooms.SelectMany(r => r.Rates).Sum(p => p.RoomCount)';
+        @:var checkin = '@hotel.HotelDetail.Rooms[0].Rates[0].RateKey.Split('|')[0]';
+        @:var checkout = '@hotel.HotelDetail.Rooms[0].Rates[0].RateKey.Split('|')[1]';
+    }
     // change current page
     if (getParam('page') == 4) {
         currentPage = getParam('page');
@@ -129,6 +194,10 @@
         email: '@User.Identity.GetEmail()'
     };
 
+    var langCode = '@OnlineContext.GetActiveLanguageCode()';
+
+    var expirytime = '@Model.TimeLimit';
+    
     </script>
     <!-- angular controller -->
     <script src="/Assets/travorama20/js/paymentController.js"></script>
@@ -644,90 +713,110 @@
                         else
                         {
 
-                            //<div class="widget hotel" @*ng-show="currentPage > 1"*@>
-                            //    <div class="hotel-detail">
-                            //        <h3 class="widget-title"><b>RINCIAN</b> PEMESANAN</h3>
-                            //        <div class="widget-wrapper">
-                            //            <div class="widget-subtitle">Detail Hotel</div>
-                            //            <div class="widget-content">
-                            //                <div class="widget-top">
-                            //                    <div class="wt-top clearfix">
-                            //                        <div class="col-left-hotel"><img src="{{hotelDetails.mainImage}}" alt="{{hotelDetails.hotelName}}" /></div>
-                            //                        <div class="col-right-hotel">
-                            //                            <span class="blue-txt bold-txt">{{hotelDetails.hotelName}}</span>
-                            //                            <br /><span class="star star-{{hotelDetails.starRating}}"></span>
-                            //                        </div>
-                            //                    </div>
-                            //                    <div class="wt-bottom">
-                            //                        Kios Tower AB No. 26, Jl. Karet Pasar Gang Tiong No: 62 ; Jakarta Barat
-                            //                    </div>  
-                            //                </div>
-                            //                <div class="widget-bottom">
-                            //                    <div class="wb-container clearfix">
-                            //                        <div class="wb-left">Check in</div>
-                            //                        <div class="wb-mid">:</div>
-                            //                        <div class="wb-right bold-txt">5 November 2016</div>
-                            //                    </div>
-                            //                    <div class="wb-container clearfix">
-                            //                        <div class="wb-left">Check out</div>
-                            //                        <div class="wb-mid">:</div>
-                            //                        <div class="wb-right bold-txt">9 November 2016</div>
-                            //                    </div>
-                            //                    <div class="wb-container clearfix">
-                            //                        <div class="wb-left">Malam</div>
-                            //                        <div class="wb-mid">:</div>
-                            //                        <div class="wb-right bold-txt">3 Malam</div>
-                            //                    </div>
-                            //                    <div class="wb-container clearfix">
-                            //                        <div class="wb-left">Kamar</div>
-                            //                        <div class="wb-mid">:</div>
-                            //                        <div class="wb-right bold-txt">2 Kamar</div>
-                            //                    </div>
-                            //                    <div class="wb-container clearfix">
-                            //                        <div class="wb-left">Jenis Kamar</div>
-                            //                        <div class="wb-mid">:</div>
-                            //                        <div class="wb-right bold-txt">Superior Room</div>
-                            //                    </div>
-                            //                    <div class="wb-container clearfix">
-                            //                        <div class="wb-left">Tamu per Kamar</div>
-                            //                        <div class="wb-mid">:</div>
-                            //                        <div class="wb-right bold-txt">2 orang</div>
-                            //                    </div>
-                            //                </div>
-                            //            </div>
-                            //        </div>
-                            //        <div class="widget-wrapper notes">
-                            //            <div class="widget-subtitle">Catatan Khusus</div>
-                            //            <div class="widget-content clearfix">
-                            //                <ul class="sqr-blue-list">
-                            //                    <li>
-                            //                        <div class="wc-title blue-txt bold-txt">Room Policy</div>
-                            //                        <div class="wc-txt">
-                            //                            Dolor sit amet, consectetuer adipiscing elit, sed diam nonummy.
-                            //                        </div>
-                            //                    </li>
-                            //                    <li>
-                            //                        <div class="wc-title blue-txt bold-txt">Room Policy</div>
-                            //                        <div class="wc-txt">
-                            //                            Dolor sit amet, consectetuer adipiscing elit, sed diam nonummy.
-                            //                        </div>
-                            //                    </li>
-                            //                </ul>
-                            //            </div>
-                            //        </div>
-                            //    </div><!-- .widget.hotel -->
-                            //</div>
-                            //<!-- .widget-container -->
-                            //
+                            <div class="widget hotel page-hotel" @*ng-show="currentPage > 1"*@>
+                                <div class="hotel-detail">
+                                    <h3 class="widget-title"><b>RINCIAN</b> PEMESANAN</h3>
+                                    <div class="widget-wrapper">
+                                        <div class="widget-subtitle">Detail Hotel</div>
+                                        <div class="widget-content">
+                                            <div class="widget-top">
+                                                <div class="wt-top clearfix">
+                                                    <div class="col-left-hotel"><img src="{{hotelDetails.mainImage}}" alt="{{capitalizeFirstLetter(hotelDetails.hotelName)}}" /></div>
+                                                    <div class="col-right-hotel">
+                                                        <span class="blue-txt bold-txt">{{capitalizeFirstLetter(hotelDetails.hotelName)}}</span>
+                                                        <div class="star" ng-show="hotelstar() == 'star'"></div>
+                                                        <div class="star star-2" ng-show="hotelstar() == 'star star-2'"></div>
+                                                        <div class="star star-3" ng-show="hotelstar() == 'star star-3'"></div>
+                                                        <div class="star star-4" ng-show="hotelstar() == 'star star-4'"></div>
+                                                        <div class="star star-5" ng-show="hotelstar() == 'star star-5'"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="wt-bottom">
+                                                    {{capitalizeFirstLetter(hotelDetails.address)}}
+                                                </div>  
+                                            </div>
+                                            <div class="widget-bottom">
+                                                <div class="wb-container clearfix">
+                                                    <div class="wb-left">Check in</div>
+                                                    <div class="wb-mid">:</div>
+                                                    <div class="wb-right bold-txt">{{checkin | date : "d MMMM yyyy"}}</div>
+                                                </div>
+                                                <div class="wb-container clearfix">
+                                                    <div class="wb-left">Check out</div>
+                                                    <div class="wb-mid">:</div>
+                                                    <div class="wb-right bold-txt">{{checkout | date : "d MMMM yyyy"}}</div>
+                                                </div>
+                                                <div class="wb-container clearfix">
+                                                    <div class="wb-left">Malam</div>
+                                                    <div class="wb-mid">:</div>
+                                                    <div class="wb-right bold-txt">{{nights}} Malam</div>
+                                                </div>
+                                                <div class="wb-container clearfix">
+                                                    <div class="wb-left">Kamar</div>
+                                                    <div class="wb-mid">:</div>
+                                                    <div class="wb-right bold-txt">{{totalRoom}} Kamar</div>
+                                                </div>
+                                                <div class="wb-container clearfix">
+                                                    <div class="wb-left">Jenis Kamar</div>
+                                                    <div class="wb-mid">:</div>
+                                                    <div class="wb-right bold-txt">
+                                                        @for (var i = 0; i < orderedRooms.Count; i++)
+                                                              {
+                                                                  if (i != orderedRooms.Count - 1)
+                                                                  {
+                                                                      @orderedRooms[i].Item2<span> </span>
+                                                                      @ToTitleCase(orderedRooms[i].Item1)<span>, </span>
+                                                                  }
+                                                                  else
+                                                                  {
+                                                                      @orderedRooms[i].Item2<span> </span>
+                                                                      @ToTitleCase(orderedRooms[i].Item1)
+                                                                  }
+
+                                                              }
+                                                    </div>
+                                                </div>
+                                                <div class="wb-container clearfix">
+                                                    <div class="wb-left">Tamu per Kamar</div>
+                                                    <div class="wb-mid">:</div>
+                                                    <div class="wb-right bold-txt">{{totalRoom}} orang</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @*<div class="widget-wrapper notes">
+                                        <div class="widget-subtitle">Catatan Khusus</div>
+                                        <div class="widget-content clearfix">
+                                            <ul class="sqr-blue-list">
+                                                <li>
+                                                    <div class="wc-title blue-txt bold-txt">Room Policy</div>
+                                                    <div class="wc-txt">
+                                                        Dolor sit amet, consectetuer adipiscing elit, sed diam nonummy.
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="wc-title blue-txt bold-txt">Room Policy</div>
+                                                    <div class="wc-txt">
+                                                        Dolor sit amet, consectetuer adipiscing elit, sed diam nonummy.
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>*@
+                                </div><!-- .widget.hotel -->
+                            </div>
+                            <!-- .widget-container -->
+                            
                             
                         }
                         
 
                     </div>
+                </div>
             </div>
         </div>
     </section><!-- .checkout-content -->
-        <div class="bookfailed-popup" ng-show="expired">
+        @*<div class="bookfailed-popup" ng-show="expired">
             <div class=" overlay-content">
                 <section style="padding-top:60px; padding-left:225px;">
                     <div><img src="/Assets/images/travorama-logo-color.png" height="30px" width="88px"></div>
@@ -744,7 +833,7 @@
                 
                 </div>
             </div>
-        </div>
+        </div>*@
        
             
 
