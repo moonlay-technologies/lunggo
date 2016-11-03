@@ -128,7 +128,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                     {
                         foreach (var ratea in rooma.Rates)
                         {
-                            var rateKey = ratea.RateKey.Split('|');
+                            var rateKey = ratea.RegsId.Split(',')[2].Split('|');
                             if (rateKey[5] == roomCd && rateKey[6] == someData && rateKey[7] == board &&
                                 Convert.ToInt32(rateKey[9].Split('~')[0]) == roomCount &&
                                 Convert.ToInt32(rateKey[9].Split('~')[1]) == adultCount &&
@@ -137,7 +137,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                             {
                                 if (BookingStatusCd.Mnemonic(rate.Type) == CheckRateStatus.Recheck)
                                 {
-                                    var revalidateResult = CheckRate(ratea.RateKey, ratea.Price.Supplier);
+                                    var revalidateResult = CheckRate(ratea.RegsId.Split(',')[2], ratea.Price.Supplier);
                                     if (revalidateResult.IsPriceChanged)
                                     {
                                         rate.Price.SetSupplier(revalidateResult.NewPrice.GetValueOrDefault() * roomCount,
@@ -149,7 +149,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                                 }
                                 else
                                 {
-                                    rate.RateKey = ratea.RateKey;
+                                    rate.RateKey = ratea.RegsId.Split(',')[2];
                                     rate.Price.SetSupplier(ratea.Price.OriginalIdr * roomCount, rate.Price.SupplierCurrency);
                                 }   
                             }

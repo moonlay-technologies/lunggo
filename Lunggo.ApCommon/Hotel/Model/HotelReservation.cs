@@ -28,5 +28,7 @@ namespace Lunggo.ApCommon.Hotel.Model
         }
 
         public HotelDetail HotelDetails { get; set; }
+
+        
     }
 }

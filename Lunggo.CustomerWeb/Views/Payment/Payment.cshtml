@@ -177,8 +177,8 @@
         @:var originalFare = '@hotel.HotelDetail.OriginalFare';
         @:var netFare = '@hotel.HotelDetail.NetFare';
         @:var totalRoom = '@hotel.HotelDetail.Rooms.SelectMany(r => r.Rates).Sum(p => p.RoomCount)';
-        @:var checkin = '@hotel.HotelDetail.Rooms[0].Rates[0].RateKey.Split('|')[0]';
-        @:var checkout = '@hotel.HotelDetail.Rooms[0].Rates[0].RateKey.Split('|')[1]';
+        @:var checkin = '@hotel.HotelDetail.CheckInDate';
+        @:var checkout = '@hotel.HotelDetail.CheckOutDate';
     }
     // change current page
     if (getParam('page') == 4) {

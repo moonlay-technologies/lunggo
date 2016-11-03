@@ -1,7 +1,7 @@
 ﻿@using System.Globalization
 @using Lunggo.ApCommon.Constant
 @using Lunggo.Framework.Config
-
+@model Lunggo.ApCommon.Hotel.Model.HotelReservationForDisplay
 @{
     ViewBag.SiteHeader = "header-email";
 }
@@ -66,18 +66,18 @@
                             </tr>
                             <tr>
                                 <td width="14.5%">
-                                    <p style="color: #999;">Nomor Pemesanan.</p>
-                                    <p style=""><b>1020006675802</b></p>
+                                    <p style="color: #999;">Nomor Reservasi.</p>
+                                    <p style=""><b>@Model.RsvNo</b></p>
                                 </td>
                                 <td width="4%"></td>
                                 <td width="14.5%">
                                     <p style="color: #999;">Waktu.</p>
-                                    <p style=""><b>18 Okt 16 &nbsp;-&nbsp; 08:36</b></p>
+                                    <p style=""><b>@Model.RsvTime.ToString("D", CultureInfo.CreateSpecificCulture("id-ID")) &nbsp;-&nbsp; @Model.RsvTime.ToString("t", CultureInfo.CreateSpecificCulture("id-ID"))</b></p>
                                 </td>
                                 <td width="4%"></td>
                                 <td width="14.5%">
                                     <p style="color: #999;">Detail Hotel.</p>
-                                    <p style=""><b>MaxOne Hotels at Legian</b></p>
+                                    <p style=""><b>@Model.HotelDetail.HotelName</b></p>
                                 </td>
                             </tr>
                         </tbody>
@@ -96,12 +96,12 @@
                     <table width="100%" style="margin-bottom: 0px;">
                         <tr>
                             <td>
-                                <p style="margin-bottom:0px;">Melakukan pembayaran sejumlah total tagihan : Rp. <b>9.999.999.999 </b>ke nomor akun virtual tujuan : <b>12345678900</b></p>
+                                <p style="margin-bottom:0px;">Melakukan pembayaran sejumlah total tagihan : Rp. <b>@Model.Payment.FinalPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID")) </b>ke nomor akun virtual tujuan : <b>@Model.Payment.TransferAccount</b></p>
                             </td>
                         </tr>
                         <tr>
                             <td>
-                                <p style="font-style: italic; font-size: 11px; margin-left: 6%; margin-bottom: 0px;">Batas waktu pembayaran anda adalah sebelum <span style="color: #15b1e4">19:52 - Pk WIB (Selasa, 20 Okt 2016).</span></p>
+                                <p style="font-style: italic; font-size: 11px; margin-left: 6%; margin-bottom: 0px;">Batas waktu pembayaran anda adalah sebelum <span style="color: #15b1e4">@Model.Payment.TimeLimit.GetValueOrDefault().AddHours(7).ToString("t", CultureInfo.CreateSpecificCulture("id-ID"))) WIB (@Model.Payment.TimeLimit.GetValueOrDefault().ToString("D", CultureInfo.CreateSpecificCulture("id-ID"))).</span></p>
                                 <p style="font-size: 10px; opacity: 0.5; font-style: italic;margin-top: 1px; margin-bottom: 20px;">Jika lewat, booking Anda akan dibatalkan otomatis oleh sistem kami. Untuk booking yang sama, Anda harus melakukan pemesanan ulang dan harga kemungkinan besar akan berubah.</p>
                             </td>
                         </tr>
@@ -115,8 +115,8 @@
                                     <li><p>Di Menu Utama, pilih <b>Transaksi Lainnya </b>.</p></li>
                                     <li><p>Pilih <b>Transfer</b>.</p></li>
                                     <li><p>Pilih <b>Antar Bank Online</b>.</p></li>
-                                    <li><p>Masukkan nomor <b>013 12345678900</b> (kode 013 dan 16 digit nomor akun virtual pembayaran).</p></li>
-                                    <li><p>Masukkan jumlah harga tiket yang harus Anda bayar Rp. <b>9.999.999</b> (jika jumlah yang dimasukkan tidak sama dengan jumlah tagihan, transaksi akan ditolak).</p></li>
+                                    <li><p>Masukkan nomor <b>@Model.Payment.TransferAccount</b> (kode 013 dan 16 digit nomor akun virtual pembayaran).</p></li>
+                                    <li><p>Masukkan jumlah harga tiket yang harus Anda bayar Rp. <b>@Model.Payment.FinalPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</b> (jika jumlah yang dimasukkan tidak sama dengan jumlah tagihan, transaksi akan ditolak).</p></li>
                                     <li><p>No. referensi dapat dikosongkan, lalu tekan <b>Benar</b>.</p></li>
                                     <li><p>Di halaman konfirmasi transfer akan muncul jumlah yang dibayarkan, no. rekening tujuan. Jika informasinya telah cocok, tekan <b>Benar</b>.</p></li>
                                     <li><p>Transaksi berhasil.</p></li>
@@ -131,8 +131,8 @@
                                     <li><p>Di Menu Utama, pilih <b>Transaksi Lainnya</b>.</p></li>
                                     <li><p>Pilih <b>Transfer</b>.</p></li>
                                     <li><p>Pilih <b>Ke Rekening Bank Lain</b>.</p></li>
-                                    <li><p>Masukkan kode <b>013</b> (Kode Bank Permata) lalu tekan <b>Benar</b>.</p></li>
-                                    <li><p>Masukkan jumlah harga tiket yang harus Anda bayar Rp. <b>9.999.999</b> (jika jumlah yang dimasukkan tidak sama dengan jumlah tagihan, transaksi akan ditolak).</p></li>
+                                    <li><p>Masukkan kode <b>@Model.Payment.TransferAccount</b> (Kode Bank Permata) lalu tekan <b>Benar</b>.</p></li>
+                                    <li><p>Masukkan jumlah harga tiket yang harus Anda bayar Rp. <b>@Model.Payment.FinalPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</b> (jika jumlah yang dimasukkan tidak sama dengan jumlah tagihan, transaksi akan ditolak).</p></li>
                                     <li><p>Masukkan <b>12345678900</b> (16 digit nomor akun virtual pembayaran) lalu tekan <b>Benar</b>.</p></li>
                                     <li><p>Di halaman konfirmasi transfer akan muncul jumlah yang dibayarkan, no. rekening tujuan. Jika informasinya telah cocok, tekan <b>Benar</b>.</p></li>
                                     <li><p>Transaksi berhasil.</p></li>
@@ -147,7 +147,7 @@
                                     <li><p>Di Menu Utama, pilih <b>Transaksi Lainnya</b>.</p></li>
                                     <li><p>Pilih <b>Transaksi Pembayaran</b>.</p></li>
                                     <li><p>Pilih <b>Pembayaran Virtual Account</b>.</p></li>
-                                    <li><p>Masukkan 16 digit nomor akun virtual pembayaran <b>12345678900</b>.</p></li>
+                                    <li><p>Masukkan 16 digit nomor akun virtual pembayaran <b>@Model.Payment.TransferAccount</b>.</p></li>
                                     <li><p>Di halaman konfirmasi transfer akan muncul jumlah yang dibayarkan, no. rekening tujuan. Jika informasinya telah cocok, tekan <b>Benar</b>.</p></li>
                                     <li><p>Transaksi berhasil.</p></li>
                                 </ol>
@@ -160,7 +160,7 @@
                         </tr>
                     </table>
 
-                    <p style="opacity: 0.8; font-size: 10px; font-style: italic; margin-bottom: 40px;">Jika ada pertanyaan dapat mengirimkan email ke <span style="color: #15b1e4"> cs@travorama.com </span> dengan mencantumkan <span style="color: #15b1e4">No. Pesanan Travorama 12345678900</span></p>
+                    <p style="opacity: 0.8; font-size: 10px; font-style: italic; margin-bottom: 40px;">Jika ada pertanyaan dapat mengirimkan email ke <span style="color: #15b1e4"> cs@travorama.com </span> dengan mencantumkan <span style="color: #15b1e4">No. Pesanan Travorama @Model.RsvNo</span></p>
                     <hr style="border-color: #15b1e4; border-style: dotted; margin-bottom: 20px;" width="100%" />
                     <p>E-mail tagihan ini bukan merupakan bukti pembayaran yang sah dan tidak dapat ditukar menjadi tiket apapun.</p>
                     <p style=" font-size: 11px; font-style: italic; margin-bottom: 50px;">E-mail ini ditujukan hanya untuk, karena Anda telah melakukan pemesanan melalui Travorama</p>

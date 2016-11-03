@@ -37,7 +37,10 @@ namespace Lunggo.ApCommon.Hotel.Service
             try
             {
                 var rsv = GetReservation(rsvNo);
-                return ConvertToReservationForDisplay(rsv);
+                var rsvfordisplay = ConvertToReservationForDisplay(rsv);
+                var room = HotelService.GetInstance().GetHotelRoom(rsvfordisplay.HotelDetail.Rooms[0].RoomCode).RoomDescId;
+                var boards = @HotelService.GetInstance().GetHotelBoardDescId(rsvfordisplay.HotelDetail.Rooms[0].Rates[0].Boards);
+                return rsvfordisplay;
             }
             catch
             {

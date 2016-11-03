@@ -1,4 +1,7 @@
-﻿@{
+﻿@using System.Globalization
+@using Lunggo.ApCommon.Hotel.Service
+@model Lunggo.ApCommon.Hotel.Model.HotelReservationForDisplay
+@{
     ViewBag.SiteHeader = "header-email";
 }
 
@@ -64,8 +67,8 @@
                                         <tbody>
                                             <tr>
                                                 <td style="">
-                                                    <p style="color: #525252; font-size: 12px;">Itinerary ID</p>
-                                                    <p style="color: #0c84b1; font-size: 15px;"><b>123456789</b></p>
+                                                    <p style="color: #525252; font-size: 12px;">Nomor Reservasi</p>
+                                                    <p style="color: #0c84b1; font-size: 15px;"><b>@Model.RsvNo</b></p>
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -74,13 +77,31 @@
                                         <tbody>
                                             <tr>
                                                 <td style="padding-left: 30px; border-left: 1px solid #ddd;">
-                                                    <p style="font-size: 15px; text-transform: uppercase; color: #15b1e4;"><b>B hotel bali & spa</b></p>
-                                                    <p><img src="/Assets/images/hotel-star-4.png"></p>
+                                                    <p style="font-size: 15px; text-transform: uppercase; color: #15b1e4;"><b>@Model.HotelDetail.HotelName</b></p>
+                                                    @if (Model.HotelDetail.StarRating == 1)
+                                                    {
+                                                        <p><img src="/Assets/images/hotel-star-1.png" /></p>
+                                                    }
+                                                    @if (Model.HotelDetail.StarRating == 2)
+                                                    {
+                                                        <p><img src="/Assets/images/hotel-star-2.png" /></p>
+                                                    }
+                                                    @if (Model.HotelDetail.StarRating == 3)
+                                                    {
+                                                        <p><img src="/Assets/images/hotel-star-3.png" /></p>
+                                                    }
+                                                    @if (Model.HotelDetail.StarRating == 4)
+                                                    {
+                                                        <p><img src="/Assets/images/hotel-star-4.png" /></p>
+                                                    }
+                                                    @if (Model.HotelDetail.StarRating == 5)
+                                                    {
+                                                        <p><img src="/Assets/images/hotel-star-5.png" /></p>
+                                                    }
                                                     <p style="color: #525252;">
-                                                        <img src="/Assets/images/location.png"> Jl. Imam Bonjol No 508, Denpasar,
-                                                        Denpasar, Indonesia 80119</p>
+                                                        <img src="/Assets/images/location.png"> @Model.HotelDetail.Address, @Model.HotelDetail.City</p>
                                                     <p style="color: #525252;">
-                                                        <img src="/Assets/images/phone.png"> 0000 000000
+                                                        <img src="/Assets/images/phone.png"> @Model.HotelDetail.PhonesNumbers[0]
                                                     </p>
                                                 </td>
                                             </tr>
@@ -94,7 +115,7 @@
                                         <tbody>
                                             <tr>
                                                 <td style="">
-                                                    <p style="font-size: 15px; color: #525252; margin: 20px 0;"><b>BOOKING DETAILS</b></p>
+                                                    <p style="font-size: 15px; color: #525252; margin: 20px 0;"><b>DETAIL PEMESANAN</b></p>
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -103,18 +124,10 @@
                                         <tbody>
                                             <tr>
                                                 <td width="160px" style="">
-                                                    <p style=""><b>Booking ID</b></p>
+                                                    <p style=""><b>Nama Tamu</b></p>
                                                 </td>
                                                 <td width="480px" style="padding-left: 30px;">
-                                                    <p style="">: <b>123456789</b></p>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td width="160px" style="">
-                                                    <p style=""><b>Guest Name</b></p>
-                                                </td>
-                                                <td width="480px" style="padding-left: 30px;">
-                                                    <p style="">: <b>Anonymous</b></p>
+                                                    <p style="">: <b>@Model.Pax[0].Title @Model.Pax[0].Name</b></p>
                                                 </td>
                                             </tr>
                                             <tr>
@@ -125,25 +138,25 @@
                                                         <tbody>
                                                             <tr>
                                                                 <td width="160px" style="">
-                                                                    <span style="color: #0c84b1;">Check-in from</span>
+                                                                    <span style="color: #0c84b1;">Check-in</span>
                                                                 </td>
                                                                 <td width="160px" style="">
                                                                     <span style="">.........................</span>
                                                                 </td>
                                                                 <td width="160px" style="">
-                                                                    <span style="color: #0c84b1;">Check-out until</span>
+                                                                    <span style="color: #0c84b1;">Check-out</span>
                                                                 </td>
                                                             </tr>
                                                             <tr>
                                                                 <td width="160px" style="">
-                                                                    <span style="color: #15b1e4; font-size: 15px;"><b>05 Nov 2016</b></span>
+                                                                    <span style="color: #15b1e4; font-size: 15px;"><b>@Model.HotelDetail.CheckInDate.ToString("D", CultureInfo.CreateSpecificCulture("id-ID"))</b></span>
                                                                 </td>
                                                                 <td width="160px" style=""></td>
                                                                 <td width="160px" style="">
-                                                                    <span style="color: #15b1e4; font-size: 15px;"><b>09 Nov 2016</b></span>
+                                                                    <span style="color: #15b1e4; font-size: 15px;"><b>@Model.HotelDetail.CheckOutDate.ToString("D", CultureInfo.CreateSpecificCulture("id-ID"))</b></span>
                                                                 </td>
                                                             </tr>
-                                                            <tr>
+                                                            @*<tr>
                                                                 <td width="160px" style="">
                                                                     <span style="">14.00</span>
                                                                 </td>
@@ -151,62 +164,85 @@
                                                                 <td width="160px" style="">
                                                                     <span style="">12.00</span>
                                                                 </td>
-                                                            </tr>
+                                                            </tr>*@
                                                         </tbody>
                                                     </table>
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td width="160px" style="">
-                                                    <p style="color: #525252;">Guest per room</p>
+                                                    <p style="color: #525252;">Tamu per Kamar</p>
                                                 </td>
                                                 <td width="480px" style="padding-left: 30px;">
-                                                    <p style="">: 2 persons</p>
+                                                    <p style="">: @(Model.HotelDetail.Rooms[0].Rates[0].AdultCount + Model.HotelDetail.Rooms[0].Rates[0].ChildCount)</p>
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td width="160px" style="">
-                                                    <p style="color: #525252;">Room Type</p>
+                                                    <p style="color: #525252;">Tipe Kamar</p>
                                                 </td>
                                                 <td width="480px" style="padding-left: 30px;">
-                                                    <p style="">: Deluxe Room Only</p>
+                                                    <p style="">: @HotelService.GetInstance().GetHotelRoom(Model.HotelDetail.Rooms[0].RoomCode).RoomDescId @HotelService.GetInstance().GetHotelBoardDescId(Model.HotelDetail.Rooms[0].Rates[0].Boards)</p>
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td width="160px" style="">
-                                                    <p style="color: #525252;">Number of rooms</p>
+                                                    <p style="color: #525252;">Jumlah Kamar</p>
                                                 </td>
                                                 <td width="480px" style="padding-left: 30px;">
-                                                    <p style="">: 2</p>
+                                                    <p style="">: @Model.HotelDetail.Rooms[0].Rates[0].RoomCount </p>
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td width="160px" style="">
-                                                    <p style="color: #525252;">Include breakfast?</p>
+                                                    <p style="color: #525252;">Termasuk Sarapan?</p>
                                                 </td>
                                                 <td width="480px" style="padding-left: 30px;">
-                                                    <p style=""> : No</p>
+                                                    @if (Model.HotelDetail.Rooms[0].Rates[0].Boards != "RO")
+                                                    {
+                                                        <p style=""> : Ya</p>
+                                                    }
+                                                    @if (Model.HotelDetail.Rooms[0].Rates[0].Boards == "RO")
+                                                    {
+                                                        <p style=""> : Tidak</p>
+                                                    }
+                                                       
                                                 </td>
                                             </tr>
-                                            <tr>
-                                                <td width="160px" style="">
-                                                    <p style="color: #525252;">Special Request</p>
-                                                </td>
-                                                <td width="480px" style="padding-left: 30px;">
-                                                    <p style="">: extra pillow</p>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td width="160px" style="">
-                                                    <p style="color: #525252;">Includes</p>
-                                                </td>
-                                                <td width="480px" style="padding-left: 30px;">
-                                                    <p style="">
-                                                        <span><img style="padding-right: 5px" src="/Assets/images/wifi.png" alt="Alternate Text" />Free Wifi</span>
-                                                        <span style="padding-left: 15px"><img style="padding-right: 5px" src="/Assets/images/swim.png" alt="Alternate Text" />Swimming Pool</span>
-                                                    </p>
-                                                </td>
-                                            </tr>
+                                            @if (Model.HotelDetail.SpecialRequest != null && Model.HotelDetail.SpecialRequest.Length != 0)
+                                            {
+                                                <tr>
+                                                    <td width="160px" style="">
+                                                        <p style="color: #525252;">Permintaan Khusus</p>
+                                                    </td>
+                                                    <td width="480px" style="padding-left: 30px;">
+                                                        <p style="">: @Model.HotelDetail.SpecialRequest</p>
+                                                    </td>
+                                                </tr>
+                                            }
+                                            
+                                            @if (Model.HotelDetail.IsRestaurantAvailable || Model.HotelDetail.IsWifiAccessAvailable)
+                                            {
+                                                <tr>
+                                                    <td width="160px" style="">
+                                                        <p style="color: #525252;">Fasilitas</p>
+                                                    </td>
+                                                    <td width="480px" style="padding-left: 30px;">
+                                                        <p style="">
+                                                            @if (Model.HotelDetail.IsWifiAccessAvailable)
+                                                            {
+                                                                <span><img style="padding-right: 5px" src="/Assets/images/wifi.png" alt="Alternate Text" />Wifi</span>
+                                                            }
+                                                            @if (Model.HotelDetail.IsRestaurantAvailable)
+                                                            {
+                                                                <span style="padding-left: 15px"><img style="padding-right: 5px" src="/Assets/images/swim.png" alt="Alternate Text" />Restoran</span>
+                                                            }
+                                                            
+                                                        </p>
+                                                    </td>
+                                                </tr>
+                                            }
+                                            
                                         </tbody>
                                     </table>
                                 </td>

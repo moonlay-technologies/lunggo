@@ -38,7 +38,8 @@ namespace Lunggo.ApCommon.Hotel.Service
                     Pax = new List<Pax>(),
                     Payment = PaymentDetails.GetFromDb(rsvNo),
                     State = ReservationState.GetFromDb(rsvNo),
-                    HotelDetails = new HotelDetail()
+                    HotelDetails = new HotelDetail(),
+                    RsvTime = reservationRecord.RsvTime.GetValueOrDefault()
                 };
                 //|| hotelReservation.State == null
                 if (hotelReservation.Contact == null || hotelReservation.Payment == null)

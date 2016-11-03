@@ -119,8 +119,8 @@
             @:var originalFare = '@hotel.HotelDetail.OriginalFare';
             @:var netFare = '@hotel.HotelDetail.NetFare';
             @:var totalRoom = '@hotel.HotelDetail.Rooms.SelectMany(r => r.Rates).Sum(p => p.RoomCount)';
-            @:var checkin = '@hotel.HotelDetail.Rooms[0].Rates[0].RateKey.Split('|')[0]';
-            @:var checkout = '@hotel.HotelDetail.Rooms[0].Rates[0].RateKey.Split('|')[1]';
+            @:var checkin = '@hotel.HotelDetail.CheckInDate';
+            @:var checkout = '@hotel.HotelDetail.CheckOutDate';
         }
     </script>
     <!-- angular controller -->
@@ -418,7 +418,7 @@
                                                                         <div class="wb-container clearfix">
                                                                             <div class="wb-left">Rate Comment</div>
                                                                             <div class="wb-mid">:</div>
-                                                                            <div class="wb-right bold-txt">ALKSJHJDKDJS</div>
+                                                                            <div class="wb-right bold-txt">@rate.RateCommentsId</div>
                                                                         </div>
                                                                         <div class="wb-container clearfix">
                                                                             <div class="wb-left">Ketentuan Pembatalan</div>
