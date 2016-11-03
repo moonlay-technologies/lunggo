@@ -244,30 +244,17 @@ namespace Lunggo.ApCommon.Hotel.Service
                         
                     });
 
-                    if (results.HotelDetails == null || results.HotelDetails.Count == 0)
+                    if (results.HotelDetails != null || results.HotelDetails.Count != 0)
                     {
-                        hotelResult = new SearchHotelOutput
+                        if (results.HotelDetails.Any(hotel => hotel.Rooms == null || hotel.Rooms.Count == 0))
                         {
-                            IsSuccess = false
-                        };
-                    }
-                    
-                    if (results.HotelDetails == null || results.HotelDetails.Count == 0)
-                    {
-                        hotelResult = new SearchHotelOutput
-                        {
-                            IsSuccess = false
-                        };
-                    }
+                            hotelResult = new SearchHotelOutput
+                            {
+                                IsSuccess = false
+                            };
+                        }
 
-                    if (results.HotelDetails.Any(hotel => hotel.Rooms == null || hotel.Rooms.Count == 0))
-                    {
-                        hotelResult = new SearchHotelOutput
-                        {
-                            IsSuccess = false
-                        };
-                    }
-                    AddPriceMargin(results.HotelDetails);
+                        AddPriceMargin(results.HotelDetails);
                     List<HotelRate> rateList = new List<HotelRate>();
                     HotelRoom roomHotel = new HotelRoom();
                     var isRateFound = false;
@@ -314,6 +301,22 @@ namespace Lunggo.ApCommon.Hotel.Service
                             ErrorMessages = new List<string> { "Rate Key Not Found!" }
                         };
                     }
+                        
+                    }
+                    else
+                    {
+                        hotelResult = new SearchHotelOutput
+                        {
+                            IsSuccess = false,
+                            Errors = new List<HotelError>{HotelError.RateKeyNotFound},
+                            ErrorMessages = new List<string> { "Search Result is null" }
+                        };
+                    }
+                  
+                    
+
+                    
+                    
 
                     break;
             }

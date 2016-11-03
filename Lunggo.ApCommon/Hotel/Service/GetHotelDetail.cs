@@ -41,7 +41,7 @@ namespace Lunggo.ApCommon.Hotel.Service
             var searchResultData = GetSearchHotelResultFromCache(searchId);
             var searchResulthotel = searchResultData.HotelDetails.SingleOrDefault(p => p.HotelCode == hotel.HotelCode);
             hotel.Rooms = searchResulthotel.Rooms;
-            SetRegIdsAndTnc(hotel.Rooms, searchResulthotel.CheckInDate, hotel.HotelCode);
+            SetRegIdsAndTnc(hotel.Rooms, searchResultData.CheckIn, hotel.HotelCode);
             OriginalPrice = searchResulthotel.OriginalFare;
             NetFare = searchResulthotel.NetFare;
         }
