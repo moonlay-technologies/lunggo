@@ -131,6 +131,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                     ReturnedHotelCount = hotelList.Count,
                     TotalHotelCount = searchResult.HotelDetails.Count,
                     HotelFilterDisplayInfo = searchResult.HotelFilterDisplayInfo,
+                    FilteredHotelCount = hotels != null ?hotels.Count : 0,
                     MaxPrice = sortedHotel.Select(x => x.NetFare).FirstOrDefault(),
                     MinPrice = sortedHotel.Select(x => x.OriginalFare).LastOrDefault(),
                     IsSuccess = true
