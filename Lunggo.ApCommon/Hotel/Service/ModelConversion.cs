@@ -183,8 +183,8 @@ namespace Lunggo.ApCommon.Hotel.Service
                     //CharacteristicName = dictionary.GetHotelRoomRateTypeId(roomDetail.characteristicCd),
                     Images = roomDetail.Images != null ? roomDetail.Images : null,
                     Facilities = roomDetail.Facilities != null ? roomDetail.Facilities : null,
-                    SingleRate = ConvertToSingleRateForDisplays(roomDetail.SingleRate)
-                    //Rates = ConvertToRateForDisplays(roomDetail.Rates)
+                    SingleRate = ConvertToSingleRateForDisplays(roomDetail.SingleRate),
+                    Rates = ConvertToRateForDisplays(roomDetail.Rates)
                 };
                 convertedRoom.Add(room);
             }

@@ -36,7 +36,7 @@ app.controller('hotelSearchController', ['$scope', '$log', '$http', '$resource',
             {
                 query: {
                     method: 'POST',
-                    params: {},
+                    params: $scope.Hotel,
                     isArray: false
                 }
             }
@@ -51,7 +51,7 @@ app.controller('hotelSearchController', ['$scope', '$log', '$http', '$resource',
         $scope.hotel.checkoutDate =$scope.model.checkoutDate;
         $scope.hotel.adultCount = $scope.model.adultCount;
         $scope.hotel.childCount = $scope.model.childCount;
-        $scope.hotel.nightCount = $scope.model.nightCount
+        $scope.hotel.nightCount = $scope.model.nightCount;
         $scope.hotel.roomCount = $scope.model.roomCount;
 
         $scope.searchHotel();

@@ -17,7 +17,7 @@ namespace Lunggo.ApCommon.Hotel.Service
     {
         public void SaveHotelLocationInStorage(string destination, string zoneOrArea, int hotelCode)
         {
-            var table = TableStorageService.GetInstance().GetTableByReference("hotelLocation");
+            var table = TableStorageService.GetInstance().GetTableByReference("hotelLocations");
             var retrieveOp = TableOperation.Retrieve<DynamicTableEntity>(destination, zoneOrArea);
             var retrievedRow = (DynamicTableEntity) table.Execute(retrieveOp).Result;
             var hotelCodes = retrievedRow == null ? null : retrievedRow.Properties["HotelCode"].StringValue;
@@ -26,12 +26,12 @@ namespace Lunggo.ApCommon.Hotel.Service
             {
                 {"HotelCode", new EntityProperty(updatedHotelCodes)}
             });
-            TableStorageService.GetInstance().InsertOrReplaceEntityToTableStorage(row, "hotelsByLocation");
+            TableStorageService.GetInstance().InsertOrReplaceEntityToTableStorage(row, "hotelLocations");
         }
 
         internal List<int> GetHotelListByLocationFromStorage(string location)
         {
-            var table = TableStorageService.GetInstance().GetTableByReference("hotelsByLocation");
+            var table = TableStorageService.GetInstance().GetTableByReference("hotelLocations");
             var splitLocation = location.Split('-');
             if (splitLocation.Length > 1)
             {
