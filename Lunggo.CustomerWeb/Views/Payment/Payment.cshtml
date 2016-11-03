@@ -49,13 +49,40 @@
 
     public string ToTitleCase(string input)
     {
-        var splittedText = input.Split(' ');
+
         var text = "";
-        foreach (var word in splittedText)
+        try
         {
-            text += word[0] + word.Substring(1, word.Length - 1).ToLower() + " ";
+            var splittedText = input.Split(' ');
+            foreach (var word in splittedText)
+            {
+                var splittedByStrips = word.Split('-');
+                var w = "";
+                if (splittedByStrips.Count() != 1)
+                {
+                    foreach (var part in splittedByStrips)
+                    {
+                        w += ApplyTitleCase(part) + "-";
+                    }
+                    text += w.Substring(0, w.Length - 1) + " ";
+                }
+                else
+                {
+                    text += word[0] + word.Substring(1, word.Length - 1).ToLower() + " ";
+                }
+            }
+
+        }
+        catch
+        {
+
         }
         return text;
+    }
+
+    public string ApplyTitleCase(string input)
+    {
+        return input[0] + input.Substring(1, input.Length - 1).ToLower();
     }
 
 }
@@ -722,12 +749,12 @@
                                                 <div class="wb-container clearfix">
                                                     <div class="wb-left">Malam</div>
                                                     <div class="wb-mid">:</div>
-                                                    <div class="wb-right bold-txt">3 Malam</div>
+                                                    <div class="wb-right bold-txt">{{nights}} Malam</div>
                                                 </div>
                                                 <div class="wb-container clearfix">
                                                     <div class="wb-left">Kamar</div>
                                                     <div class="wb-mid">:</div>
-                                                    <div class="wb-right bold-txt">{{nights}} Kamar</div>
+                                                    <div class="wb-right bold-txt">{{totalRoom}} Kamar</div>
                                                 </div>
                                                 <div class="wb-container clearfix">
                                                     <div class="wb-left">Jenis Kamar</div>

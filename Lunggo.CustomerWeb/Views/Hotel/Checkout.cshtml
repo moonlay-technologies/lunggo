@@ -4,6 +4,7 @@
 @using Lunggo.ApCommon.Hotel.Service
 @using Lunggo.ApCommon.Identity.Users
 @using Lunggo.ApCommon.Payment.Constant
+@using Lunggo.ApCommon.Travolutionary.WebService.Hotel
 @using Lunggo.Framework.Context
 @using Lunggo.Framework.Extension
 @using Lunggo.Framework.Config
@@ -49,13 +50,40 @@
 
     public string ToTitleCase(string input)
     {
-        var splittedText = input.Split(' ');
+
         var text = "";
-        foreach (var word in splittedText)
+        try
         {
-            text += word[0] + word.Substring(1, word.Length - 1).ToLower() + " ";
+            var splittedText = input.Split(' ');
+            foreach (var word in splittedText)
+            {
+                var splittedByStrips = word.Split('-');
+                var w = "";
+                if (splittedByStrips.Count() != 1)
+                {
+                    foreach (var part in splittedByStrips)
+                    {
+                        w += ApplyTitleCase(part) + "-";
+                    }
+                    text += w.Substring(0, w.Length - 1) + " ";
+                }
+                else
+                {
+                    text += word[0] + word.Substring(1, word.Length - 1).ToLower() + " ";
+                }
+            }
+
+        }
+        catch
+        {
+
         }
         return text;
+    }
+
+    public string ApplyTitleCase(string input)
+    {
+        return input[0] + input.Substring(1, input.Length - 1).ToLower();
     }
 
 }
@@ -493,7 +521,7 @@
                                             </div>
                                         </div>
                                         <div class="wt-bottom">
-                                            {{hotelDetail.address}}, {{capitalizeFirstLetter(hotelDetail.city)}}
+                                            {{capitalizeFirstLetter(hotelDetail.address)}}, {{capitalizeFirstLetter(hotelDetail.city)}}
                                         </div>
                                     </div>
                                     <div class="widget-bottom">
