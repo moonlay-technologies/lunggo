@@ -1,5 +1,5 @@
 ﻿// home controller
-app.controller('homeController', ['$scope', '$log', '$http', '$location', '$resource', function ($scope, $log, $http, $location, $resource) {
+app.controller('homeController', ['$scope', '$log', '$http', '$location', '$resource', '$timeout', function ($scope, $log, $http, $location, $resource, $timeout) {
 
     $scope.departureDate = departureDate;
     $scope.topDestinations = topDestinations;
@@ -81,8 +81,10 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
     $scope.$watch('hotel.locationDisplay', function (newValue, oldValue, ccc) {
         if (newValue.length >= 3) {
             resource.query({ prefix: newValue }).$promise.then(function (data) {
-                $scope.hotel.hotelAutocomplete = data.hotelAutocomplete;
-                $log.debug($scope.hotel.hotelAutocomplete);
+                $timeout(function () {
+                    $scope.hotel.hotelAutocomplete = data.hotelAutocomplete;
+                    $log.debug($scope.hotel.hotelAutocomplete);
+                }, 0);
             });
         }
     });

@@ -99,7 +99,7 @@ app.controller('hotelSearchController', ['$scope', '$log', '$http', '$resource',
             $scope.hotels = data.hotels;
             totalActualHotel = data.totalActualHotel;
             $scope.hotelFilterDisplayInfo = data.hotelFilterDisplayInfo;
-
+            $scope.returnedHotelCount = data.returnedHotelCount;
             initiatePriceSlider();
             $log.debug(data);
         })

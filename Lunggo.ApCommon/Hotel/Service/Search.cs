@@ -52,7 +52,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                 if (hotels != null && input.FilterParam != null)
                 {
                     hotels = searchResult.HotelDetails.Where(p =>
-                    (input.FilterParam.ZoneFilter == null || input.FilterParam.ZoneFilter.Zones.Contains(Convert.ToInt32(p.ZoneCode))) &&
+                    (input.FilterParam.ZoneFilter == null || input.FilterParam.ZoneFilter.Zones == null || input.FilterParam.ZoneFilter.Zones.Contains(Convert.ToInt32(p.ZoneCode))) &&
                     (input.FilterParam.AccommodationTypeFilter == null || input.FilterParam.AccommodationTypeFilter.Accomodations.Contains(p.AccomodationType)) &&
                     (facilityData.Count == 0 || facilityData.Any(e=> p.Facilities.Select(x=>x.FullFacilityCode).ToList().Contains(e))) &&
                     (input.FilterParam.StarFilter == null || input.FilterParam.StarFilter.Stars.Contains(p.StarCode)) &&
@@ -257,7 +257,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                 else
                 {
                     Console.WriteLine("Search result is empty");
-                    return new SearchHotelOutput();
+                    return new SearchHotelOutput() { IsSuccess = true };
                 }
             }
         }
