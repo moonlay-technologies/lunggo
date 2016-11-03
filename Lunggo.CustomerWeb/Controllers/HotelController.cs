@@ -33,17 +33,14 @@ namespace Lunggo.CustomerWeb.Controllers
             }
 
         }
-
-        public ActionResult DetailHotel()
-        {
-            return View();
-        }
-
-        //public ActionResult DetailHotel(string searchId, int hotelCd)
+        //public ActionResult DetailHotel()
         //{
-        //    return View(new { searchId, hotelCd });
+        //    return View();
         //}
-
+        public ActionResult DetailHotel(string searchId, int hotelCd)
+        {
+            return View(new { searchId, hotelCd });
+        }
         public ActionResult Checkout()
         {
             return View();
