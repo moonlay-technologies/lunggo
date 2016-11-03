@@ -45,7 +45,7 @@ namespace Lunggo.ApCommon.Hotel.Service
             {
                 room.Images = hotel.ImageUrl.Where(x=>x.Type == "HAB").Select(x => x.Path).ToList();
             }
-            SetRegIdsAndTnc(hotel.Rooms, searchResulthotel.CheckInDate, hotel.HotelCode);
+            SetRegIdsAndTnc(hotel.Rooms, searchResultData.CheckIn, hotel.HotelCode);
             originalPrice = searchResulthotel.OriginalFare;
             netFare = searchResulthotel.NetFare;
         }

@@ -181,7 +181,7 @@ namespace Lunggo.ApCommon.Hotel.Service
             TableQuery.CombineFilters(
             TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal, partitionKey),
             TableOperators.And,
-            TableQuery.GenerateFilterCondition("RowKey", QueryComparisons.GreaterThanOrEqual, rowKey)));
+            TableQuery.GenerateFilterCondition("RowKey", QueryComparisons.LessThanOrEqual, rowKey)));
             List<HotelRateComment> result = new List<HotelRateComment>();
             var resultQuery = table.ExecuteQuery(rangeQuery);
             if (resultQuery != null)

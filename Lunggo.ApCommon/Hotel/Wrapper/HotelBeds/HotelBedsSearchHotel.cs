@@ -178,6 +178,8 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds
                     hotels.Add(hotel);
                 }
                 response.HotelDetails = hotels;
+                response.CheckIn = condition.CheckIn;
+                response.CheckOut = condition.Checkout;
             }
             return response;
         }
