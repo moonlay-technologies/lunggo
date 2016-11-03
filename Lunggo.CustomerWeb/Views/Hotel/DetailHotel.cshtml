@@ -3,6 +3,8 @@
     ViewBag.BodyClass = "page-hotel page-detail";
     ViewBag.Title = "Detail Hotel";
     ViewBag.AngularController = "hotelDetailController";
+    
+  
 }
 
 @section AdditionalCSS{
@@ -27,6 +29,19 @@
     <script src="/Assets/Travorama20/js/hotelDetailController.js"></script>
     <script type="text/javascript" src="/Assets/travorama20/js/HotelController.js"></script>
     <script>accordionFunctions()</script>
+    
+    <script>
+        // Big Slider Detail Hotel
+        $(window).load(function () {
+            $('.flexslider').flexslider({
+                animation: "slide",
+                controlNav: "thumbnails",
+                start: function (slider) {
+                    $('body').removeClass('loading');
+                }
+            });
+        });
+    </script>
 }
 
 @Html.Partial("/Views/Hotel/Shared/Desktop/_PageSlider.cshtml")
@@ -197,9 +212,9 @@
                                             <div class="item active">
                                                 <img src="/Assets/travorama20/images/Hotel/mini-slider.jpg" />
                                             </div>
-                                            <div class="item">
+                                            @*<div class="item">
                                                 <img src="/Assets/travorama20/images/Hotel/mini-slider.jpg" />
-                                            </div>
+                                            </div>*@
                                         </div>
                                         <div class="total-img"><b>1</b> / 20</div>
                                     </div>

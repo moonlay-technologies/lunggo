@@ -4889,14 +4889,14 @@ file: /Assets/travorama20/css/_page_flight.scss
       height: 12px;
       display: inline-block;
       background: #fff; }
-      .page-hotel label.sqr .checkbox.active:after {
-        content: '';
-        width: 10px;
-        height: 10px;
-        display: inline-block;
-        background: #1daee4;
-        float: left;
-        border: 2px solid #fff; }
+    .page-hotel label.sqr.active .checkbox:after {
+      content: '';
+      width: 10px;
+      height: 10px;
+      display: inline-block;
+      background: #1daee4;
+      float: left;
+      border: 2px solid #fff; }
     .page-hotel label.sqr input[name="check"] {
       display: none; }
     .page-hotel label.round {
@@ -4921,17 +4921,17 @@ file: /Assets/travorama20/css/_page_flight.scss
         background: #fff;
         margin: 0;
         vertical-align: middle; }
-        .page-hotel label.round .radio.active:after {
-          float: left;
-          width: 15px;
-          height: 15px;
-          content: "";
-          background: #1daee4;
-          border: 3px solid #fff;
-          -webkit-border-radius: 15px;
-          -moz-border-radius: 15px;
-          -ms-border-radius: 15px;
-          border-radius: 15px; }
+      .page-hotel label.round.active .radio:after {
+        float: left;
+        width: 15px;
+        height: 15px;
+        content: "";
+        background: #1daee4;
+        border: 3px solid #fff;
+        -webkit-border-radius: 15px;
+        -moz-border-radius: 15px;
+        -ms-border-radius: 15px;
+        border-radius: 15px; }
       .page-hotel label.round input[name="optradio"] {
         display: none; }
     .page-hotel label.confirmation-buyer span.name {

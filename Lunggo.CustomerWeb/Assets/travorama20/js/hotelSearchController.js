@@ -1,5 +1,5 @@
 ﻿// home controller
-app.controller('hotelSearchController', ['$scope', '$log', '$http', '$resource', function ($scope, $log, $http, $resource) {
+app.controller('hotelSearchController', ['$scope', '$log', '$http', '$resource', '$timeout', function ($scope, $log, $http, $resource, $timeout) {
 
     $scope.model = {};
     $scope.hotels = [];
@@ -73,25 +73,25 @@ app.controller('hotelSearchController', ['$scope', '$log', '$http', '$resource',
             "from": "1",
             "to": "10",
 
-            "hotelFilter": 
+            "hotelFilter":
+            {
+                "priceFilter":
                 {
-                    "priceFilter":
-                        {
-                            "minPrice": $scope.filter.minPrice,
-                            "maxPrice": $scope.filter.maxPrice
-                        },
-                    "zoneFilter":
-                        {
-                            "zones": $scope.filter.zones
-                        },
-                    "starFilter":
-                        {
-                            "stars": $scope.filter.stars
-                        }
+                    "minPrice": $scope.filter.minPrice,
+                    "maxPrice": $scope.filter.maxPrice
                 },
+                "zoneFilter":
+                {
+                    "zones": $scope.filter.zones
+                },
+                "starFilter":
+                {
+                    "stars": $scope.filter.stars
+                }
+            },
             "hotelSorting": $scope.sorting
             //"hotelSorting": "ASCENDINGPRICE"
-        }).$promise.then(function (data) {
+        }).$promise.then(function(data) {
 
             $scope.filter.minPrice = data.minPrice;
             $scope.filter.maxPrice = data.maxPrice;
@@ -102,7 +102,7 @@ app.controller('hotelSearchController', ['$scope', '$log', '$http', '$resource',
 
             initiatePriceSlider();
             $log.debug(data);
-        })
+        });
 
         //if (filter != undefined || sort != undefined) {
         //    location.href = '/id/Hotel/Search/' + $scope.hotel.filterParam();
@@ -121,7 +121,7 @@ app.controller('hotelSearchController', ['$scope', '$log', '$http', '$resource',
              $scope.hotel.childCount,
              $scope.hotel.nightCount,
              $scope.hotel.roomCount].join('.')
-        )
+        );
     }
 
     $scope.GotoDetailHotel = function (hotelCd) {
@@ -179,5 +179,19 @@ app.controller('hotelSearchController', ['$scope', '$log', '$http', '$resource',
     }
     
     //=============== hotel end ======================
-
+    $scope.$watch('hotels', function (newValue, oldValue, ccc) {
+        $timeout(function () {
+            $("body .col-left-hotel .img-list").each(function (i, elem) {
+                var img = $(elem);
+                var div = $("<div />").css({
+                    background: "url(" + img.attr("src") + ") no-repeat",
+                    width: "143px",
+                    height: "180px",
+                    "background-size": "cover",
+                    "background-position": "center"
+                });
+                img.replaceWith(div);
+            });
+        }, 0);
+    });
 }]);
