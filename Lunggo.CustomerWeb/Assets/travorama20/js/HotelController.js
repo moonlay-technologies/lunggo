@@ -53,17 +53,17 @@
         });
     });
 
-    // Slick Slider Detail Hotel
-    $('.hd-slider').slick({
-        autoplay: false,
-        autoplaySpeed: 2500,
-        dots: false
-    });
-
     // Open Room Detail
     $('body .info-room').on('click', function () {
         var parent1 = $(this).closest('.room-list').find('.room-left');
         var parent2 = parent1.closest('li').find('.hotel-detail');
         parent2.toggleClass('active');
+
+        // Slick Slider Detail Hotel
+        $('body .hd-slider').slick({
+            autoplay: false,
+            autoplaySpeed: 2500,
+            dots: false
+        });
     });
 });
