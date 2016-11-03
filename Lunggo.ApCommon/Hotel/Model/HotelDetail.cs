@@ -39,7 +39,7 @@ namespace Lunggo.ApCommon.Hotel.Model
         [JsonProperty("segments", NullValueHandling = NullValueHandling.Ignore)]
         public List<string> Segments { get; set; }
         [JsonProperty("facilities", NullValueHandling = NullValueHandling.Ignore)]
-        public List<HotelFacilityForDisplay> Facilities { get; set; } 
+        public List<string> Facilities { get; set; } 
         [JsonProperty("address", NullValueHandling = NullValueHandling.Ignore)]
         public string Address { get; set; }
         [JsonProperty("postalCd", NullValueHandling = NullValueHandling.Ignore)]
@@ -68,6 +68,17 @@ namespace Lunggo.ApCommon.Hotel.Model
         public decimal NetFare { get; set; }
         [JsonProperty("discount", NullValueHandling = NullValueHandling.Ignore)]
         public decimal Discount { get; set; }
+        [JsonProperty("isWifiAccessAvailable", NullValueHandling = NullValueHandling.Ignore)]
+        public bool IsWifiAccessAvailable { get; set; }
+        [JsonProperty("restaurant", NullValueHandling = NullValueHandling.Ignore)]
+        public bool IsRestaurantAvailable { get; set; }
+        public string SupplierName { get; set; }
+        [JsonProperty("specialRq", NullValueHandling = NullValueHandling.Ignore)]
+        public string SupplierVat { get; set; }
+        [JsonProperty("bookingReference", NullValueHandling = NullValueHandling.Ignore)]
+        public string BookingReference { get; set; }
+        [JsonProperty("clientReference", NullValueHandling = NullValueHandling.Ignore)]
+        public string ClientReference { get; set; }
     }
 
     public class HotelDetailsBase
@@ -84,7 +95,9 @@ namespace Lunggo.ApCommon.Hotel.Model
         [JsonProperty("destinationCd", NullValueHandling = NullValueHandling.Ignore)]
         public string DestinationCode { get; set; }
         [JsonProperty("zoneCd", NullValueHandling = NullValueHandling.Ignore)]
-        public int ZoneCode { get; set; }
+        public string ZoneCode { get; set; }
+        [JsonProperty("areaCd", NullValueHandling = NullValueHandling.Ignore)]
+        public string AreaCode { get; set; }
         [JsonProperty("latitude", NullValueHandling = NullValueHandling.Ignore)]
         public decimal? Latitude { get; set; }
         [JsonProperty("longitude", NullValueHandling = NullValueHandling.Ignore)]
@@ -157,6 +170,7 @@ namespace Lunggo.ApCommon.Hotel.Model
         public int Distance;
         [JsonProperty("terminalCode", NullValueHandling = NullValueHandling.Ignore)]
         public string TerminalCode;
+
         [JsonProperty("name", NullValueHandling = NullValueHandling.Ignore)]
         public Description Name;
         [JsonProperty("description", NullValueHandling = NullValueHandling.Ignore)]
@@ -192,8 +206,16 @@ namespace Lunggo.ApCommon.Hotel.Model
         public DateTime CheckOutDate { get; set; }
         [JsonProperty("night", NullValueHandling = NullValueHandling.Ignore)]
         public int NightCount { get; set; }
+        [JsonProperty("supplierName", NullValueHandling = NullValueHandling.Ignore)]
+        public string SupplierName { get; set; }
+        [JsonProperty("supplierVat", NullValueHandling = NullValueHandling.Ignore)]
+        public string SupplierVat { get; set; }
         [JsonProperty("specialRq", NullValueHandling = NullValueHandling.Ignore)]
         public string SpecialRequest { get; set; }
+        [JsonProperty("bookingReference", NullValueHandling = NullValueHandling.Ignore)]
+        public string BookingReference { get; set; }
+        [JsonProperty("clientReference", NullValueHandling = NullValueHandling.Ignore)]
+        public string ClientReference { get; set; }
     }
 
     public class Segment

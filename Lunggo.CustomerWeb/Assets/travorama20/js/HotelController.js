@@ -1,12 +1,40 @@
 ﻿jQuery(document).ready(function ($) {
-    $('body .checkbox').on('click touchstart', function () {
+    //$('body .checkbox').on('click touchstart', function () {
+    //    var id = $(this).parent().find('.check');
+    //    if ($(id).is(':checked')) {
+    //        id.checked = false;
+    //        $(this).removeClass('active');
+    //    } else {
+    //        id.checked = true;
+    //        $(this).addClass('active');
+    //    }
+    //});
+
+    //$('body .sqr').on('click touchstart', function () {
+    //    var id = $(this).find('.check');
+    //    var checkbox = $(this).find('.checkbox');
+
+    //    if ($(id).is(':checked')) {
+    //        id.val(false);
+    //        checkbox.removeClass('active');
+    //    } else {
+    //        id.val(true);
+    //        //$(id).is(':checked') = true;
+    //        checkbox.addClass('active');
+    //    }
+    //});
+
+    $('body .sqra').on('click touchstart', function () {
         var id = $(this).parent().find('.check');
+        var checkbox = $(this).parent().find('.checkbox');
+
         if ($(id).is(':checked')) {
-            id.checked = false;
-            $(this).removeClass('active');
+            id.val(true);
+            //$(id).is(':checked') = true;
+            checkbox.addClass('active');
         } else {
-            id.checked = true;
-            $(this).addClass('active');
+            id.val(false);
+            checkbox.removeClass('active');
         }
     });
 

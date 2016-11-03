@@ -460,6 +460,27 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
           background: #1daee4; }
       .search-location .location-search .autocomplete-result ul li + li, .search-hotel .location-search .autocomplete-result ul li + li {
         border-top: 1px solid #ccc; }
+  .search-location .hotel-location-search, .search-hotel .hotel-location-search {
+    padding: 10px;
+    height: 475px;
+    overflow: auto; }
+    .search-location .hotel-location-search .hotel-autocomplete-pre .text-pre, .search-hotel .hotel-location-search .hotel-autocomplete-pre .text-pre {
+      display: none; }
+    .search-location .hotel-location-search .hotel-autocomplete-pre .text-loading, .search-hotel .hotel-location-search .hotel-autocomplete-pre .text-loading {
+      display: none; }
+    .search-location .hotel-location-search .hotel-autocomplete-no-result, .search-hotel .hotel-location-search .hotel-autocomplete-no-result {
+      display: none; }
+    .search-location .hotel-location-search .hotel-autocomplete-result ul, .search-hotel .hotel-location-search .hotel-autocomplete-result ul {
+      margin: 0;
+      padding: 0; }
+      .search-location .hotel-location-search .hotel-autocomplete-result ul li, .search-hotel .hotel-location-search .hotel-autocomplete-result ul li {
+        padding: 10px;
+        list-style: none;
+        cursor: pointer; }
+        .search-location .hotel-location-search .hotel-autocomplete-result ul li:hover, .search-hotel .hotel-location-search .hotel-autocomplete-result ul li:hover {
+          background: #1daee4; }
+      .search-location .hotel-location-search .hotel-autocomplete-result ul li + li, .search-hotel .hotel-location-search .hotel-autocomplete-result ul li + li {
+        border-top: 1px solid #ccc; }
 
 .search-location .location-search {
   display: none; }

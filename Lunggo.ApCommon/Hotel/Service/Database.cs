@@ -5,6 +5,7 @@ using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Hotel.Constant;
 using Lunggo.ApCommon.Hotel.Model;
 using Lunggo.ApCommon.Hotel.Query;
+using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Sdk.auto.model;
 using Lunggo.ApCommon.Payment.Model;
 using Lunggo.ApCommon.Product.Constant;
 using Lunggo.ApCommon.Product.Model;
@@ -13,6 +14,7 @@ using Lunggo.Framework.Database;
 using Lunggo.Framework.Extension;
 using Lunggo.Repository.TableRecord;
 using Lunggo.Repository.TableRepository;
+using Pax = Lunggo.ApCommon.Product.Model.Pax;
 
 namespace Lunggo.ApCommon.Hotel.Service
 {
@@ -59,7 +61,15 @@ namespace Lunggo.ApCommon.Hotel.Service
                         TotalAdult = hotelDetailRecord.AdultCount.GetValueOrDefault(),
                         TotalChildren = hotelDetailRecord.ChildCount.GetValueOrDefault(),
                         SpecialRequest = hotelDetailRecord.SpecialRequest,
+                        Address = hotelDetailRecord.HotelAddress,
+                        PhonesNumbers = hotelDetailRecord.HotelPhone == null ? new List<string>() : new List<string>{
+                        hotelDetailRecord.HotelPhone}, 
+                        StarRating = hotelDetailRecord.HotelRating,
                         Rooms = new List<HotelRoom>(),
+                        ClientReference = hotelDetailRecord.ClientReference,
+                        BookingReference = hotelDetailRecord.BookingReference,
+                        SupplierName = hotelDetailRecord.SupplierName,
+                        SupplierVat = hotelDetailRecord.SupplierVat
                     };
 
                     var hotelRoomRecords = HotelRoomTableRepo.GetInstance()
@@ -97,7 +107,8 @@ namespace Lunggo.ApCommon.Hotel.Service
                                 Cancellation = rateRecord.Cancellation.Deserialize<List<Cancellation>>(),
                                 PaymentType = PaymentTypeCd.Mnemonic(rateRecord.PaymentType),
                                 RoomCount = rateRecord.RoomCount.GetValueOrDefault(),
-                                Price = Price.GetFromDb(rateRecord.PriceId.GetValueOrDefault()) 
+                                Price = Price.GetFromDb(rateRecord.PriceId.GetValueOrDefault()),
+                                ChildrenAges = rateRecord.ChildrenAges.Deserialize<List<int>>()
                             };
                             hotelRoom.Rates.Add(rate);
                         }
@@ -211,8 +222,12 @@ namespace Lunggo.ApCommon.Hotel.Service
                     HotelCd = reservation.HotelDetails.HotelCode,
                     InsertBy = "LunggoSystem",
                     InsertDate = DateTime.UtcNow,
-                    InsertPgId = "0",                 
-                };
+                    InsertPgId = "0",
+                    HotelAddress = reservation.HotelDetails.Address,
+                    HotelPhone = !(reservation.HotelDetails.PhonesNumbers == null || reservation.HotelDetails.PhonesNumbers.Count == 0) ?
+                    reservation.HotelDetails.PhonesNumbers[0] : null,
+                    HotelRating = reservation.HotelDetails.StarRating,
+                 };
 
                 HotelReservationDetailsTableRepo.GetInstance().Insert(conn, hotelRsvDetailsRecord);
 
@@ -247,9 +262,10 @@ namespace Lunggo.ApCommon.Hotel.Service
                             InsertPgId = "0",
                             PriceId = rate.Price.InsertToDb(),
                             RoomId = roomId,
-                            RoomCount = rate.RoomCount,
+                            RoomCount = rate.RateCount,
                             RateKey =  rate.RateKey,
                             PaymentType = PaymentTypeCd.MnemonicToString(rate.PaymentType),
+                            ChildrenAges = rate.ChildrenAges != null ? rate.ChildrenAges.Serialize() : null
                         };
 
                         HotelRateTableRepo.GetInstance().Insert(conn, rateRecord);
@@ -365,7 +381,15 @@ namespace Lunggo.ApCommon.Hotel.Service
         #endregion
 
         #region Update
-        
+        private static void UpdateReservationDetailsToDb (HotelIssueTicketResult result)
+        {
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                var query = UpdateReservationQuery.GetInstance();
+                var dbRsvDetailInfo = result;
+                query.Execute(conn, dbRsvDetailInfo);
+            }
+        }
         #endregion
     }
 }

@@ -1,4 +1,6 @@
-﻿using Lunggo.CustomerWeb.Models;
+﻿using Lunggo.ApCommon.Hotel.Service;
+using Lunggo.ApCommon.Payment.Service;
+using Lunggo.CustomerWeb.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -17,15 +19,9 @@ namespace Lunggo.CustomerWeb.Controllers
             try
             {
                 NameValueCollection query = Request.QueryString;
-                if (query.Count > 0)
-                {
-                    HotelSearchApiRequest model = new HotelSearchApiRequest(query[0]);
+                HotelSearchApiRequest model = new HotelSearchApiRequest(query[0]);
 
-                    return View(model); 
-                }
-
-                return View();
-
+                return View(model);
             }
             catch (Exception ex)
             {
@@ -33,18 +29,78 @@ namespace Lunggo.CustomerWeb.Controllers
             }
 
         }
-        //public ActionResult DetailHotel()
-        //{
-        //    return View();
-        //}
+
         public ActionResult DetailHotel(string searchId, int hotelCd)
         {
             return View(new { searchId, hotelCd });
         }
-        public ActionResult Checkout()
+
+        //public ActionResult Checkout()
+        //{
+        //    return View();
+        //}
+
+        [RequireHttps]
+        public ActionResult Checkout(string token)
         {
-            return View();
+            var hotelDetail = HotelService.GetInstance().GetSelectionFromCache(token);
+
+            if (hotelDetail != null)
+            {
+                if (TempData["HotelCheckoutOrBookingError"] != null)
+                {
+                    ViewBag.Message = "BookFailed";
+                    return View();
+                }
+
+                if (token == null)
+                {
+                    ViewBag.Message = "BookExpired";
+                    return View();
+                }
+
+                try
+                {
+                    var hotelService = HotelService.GetInstance();
+                    var payment = PaymentService.GetInstance();
+                    //var expiryTime = hotelService.GetSelectionExpiry(token);
+                    //var savedPassengers = flight.GetSavedPassengers(User.Identity.GetEmail());
+                    //var savedCreditCards = User.Identity.IsAuthenticated
+                    //    ? payment.GetSavedCreditCards(User.Identity.GetEmail())
+                    //    : new List<SavedCreditCard>();
+                    return View(new HotelCheckoutData
+                    {
+                        Token = token,
+                        HotelDetail = hotelDetail,
+                       // ExpiryTime = expiryTime.GetValueOrDefault(),
+                        //SavedPassengers = savedPassengers,
+                        //SavedCreditCards = savedCreditCards
+                    });
+                }
+                catch
+                {
+                    ViewBag.Message = "BookExpired";
+                    return View(new HotelCheckoutData
+                    {
+                        Token = token
+                    });
+                }
+            }
+            else
+            {
+                return RedirectToAction("Index", "UW000TopPage");
+            }
+
         }
+
+        [RequireHttps]
+        [HttpPost]
+        [ActionName("Checkout")]
+        public ActionResult CheckoutPost(string rsvNo)
+        {
+            return RedirectToAction("Payment", "Flight", new { rsvNo });
+        }
+
         public ActionResult Thankyou()
         {
             return View();
@@ -62,10 +118,6 @@ namespace Lunggo.CustomerWeb.Controllers
             return View();
         }
         public ActionResult EmailVoucher()
-        {
-            return View();
-        }
-        public ActionResult VoucherHotel()
         {
             return View();
         }

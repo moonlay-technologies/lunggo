@@ -14,9 +14,9 @@ namespace Lunggo.ApCommon.Hotel.Service
 {
     public partial class HotelService
     {
-        public void SaveTruncatedHotelDetail()
+        public void UpdateTruncatedHotelDetailContent()
         {
-            for (var i = 1; i <= 600000; i++)
+            for (var i = 1; i <= 150000; i++)
             {
                 try
                 {
@@ -29,7 +29,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                         ImageUrl = hotel.ImageUrl != null && (hotel.ImageUrl != null || hotel.ImageUrl.Count != 0) ?
                         new List<Image>
                         {
-                            hotel.ImageUrl.Where(u => u.Order == 1).ToList()[0]
+                            hotel.ImageUrl.Where(u => u.Order == 1).Take(1).FirstOrDefault()
                         } : null,
                         WifiAccess = hotel.Facilities != null && 
                             ((hotel.Facilities != null || hotel.Facilities.Count != 0) && 
@@ -55,9 +55,9 @@ namespace Lunggo.ApCommon.Hotel.Service
             }               
         }
 
-        public void SaveHotelAmenities()
+        public void UpdateHotelAmenitiesContent()
         {
-            for (var i = 109600; i <= 600000; i++)
+            for (var i = 1; i <= 150000; i++)
             {
                 try
                 {
@@ -78,6 +78,27 @@ namespace Lunggo.ApCommon.Hotel.Service
                     Console.WriteLine("Hotel with code: " + i + " not found");
                 }
 
+            }
+        }
+
+        public void UpdateHotelListByLocationContent()
+        {
+            for (var i = 0; i <= 600000; i++)
+            {
+                try
+                {
+                    var hotel = GetHotelDetailFromTableStorage(i);
+                    Console.WriteLine("hotelCd: " + i);
+                    if (hotel.ZoneCode != null)
+                        SaveHotelLocationInStorage(hotel.DestinationCode, hotel.DestinationCode + '-' + hotel.ZoneCode, hotel.HotelCode);
+                    if (hotel.AreaCode != null)
+                        SaveHotelLocationInStorage(hotel.DestinationCode, hotel.DestinationCode + '-' + hotel.ZoneCode + '-' + hotel.AreaCode, hotel.HotelCode);
+                    Console.WriteLine("Hotel Location saved for: " + i);
+                }
+                catch
+                {
+                    Console.WriteLine("Hotel with code: " + i + " not found");
+                }
             }
         }
     }

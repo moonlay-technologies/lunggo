@@ -19,6 +19,19 @@ namespace Lunggo.ApCommon.Hotel.Service
 {
     public partial class HotelService
     {
+        public HotelDetailForDisplay GetSelectionFromCache(string token)
+        {
+            try
+            {
+                var rsv = GetSelectedHotelDetailsFromCache(token);
+                return ConvertToHotelDetailForDisplay(rsv);
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
         public HotelReservationForDisplay GetReservationForDisplay(string rsvNo)
         {
             try

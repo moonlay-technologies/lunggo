@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Lunggo.ApCommon.Hotel.Service;
 using Lunggo.ApCommon.Hotel.Wrapper.Content;
+using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Content;
 using Lunggo.Framework.Documents;
 using Lunggo.Framework.TableStorage;
 
@@ -23,7 +24,13 @@ namespace Lunggo.Webjob.HotelContentWrapper
             // Begin timing.
             stopwatch.Start();
             //HotelService.GetInstance().SaveTruncatedHotelDetail();
-            HotelService.GetInstance().SaveHotelAmenities();
+            //HotelService.GetInstance().UpdateHotelAmenitiesContent();
+            HotelService.GetInstance().UpdateHotelListByLocationContent();
+            //var obj = new GetHotel();
+            //obj.GetHotelData();
+            //Console.WriteLine("RateComment");
+            //var rate = new GetRateComment();
+            //rate.GetRateCommentData();
             stopwatch.Stop();
             Debug.Print("Done in : {0}", stopwatch.Elapsed);
             Console.WriteLine("Done in : {0}", stopwatch.Elapsed);

@@ -20,7 +20,7 @@ namespace Lunggo.ApCommon.Hotel.Service
             foreach (var id in input.RegsIds)
             {
                 var data = DecryptRegsId(id.RegId);
-                var output = GetRoomDetail(new GetRoomDetailInput
+                var output = GetRoom(new GetRoomDetailInput
                 {
                     HotelCode = data.HotelCode,
                     RoomCode = data.RoomCode,
@@ -28,39 +28,43 @@ namespace Lunggo.ApCommon.Hotel.Service
                 });
 
                 var originRateKey = data.RateKey;
-                var newRate = (from rate in output.Room.Rates
+                var newRate = (from rate in output.Rates
                     let roomRateKey = rate.RateKey
                     where roomRateKey == originRateKey
                     select new HotelRate
                     {
-                        RateCount = id.RateCount, RateKey = rate.RateKey, AdultCount = rate.AdultCount, Boards = rate.Boards, Cancellation = rate.Cancellation, ChildCount = rate.ChildCount, Class = rate.Class, Offers = rate.Offers, PaymentType = rate.PaymentType, RegsId = rate.RegsId, Price = rate.Price, Type = rate.Type,
-                    }).ToList()[0];
+                        RateCount = id.RateCount, RateKey = rate.RateKey, AdultCount = id.AdultCount, 
+                        Boards = rate.Boards, Cancellation = rate.Cancellation, ChildrenAges = id.ChildrenAges,
+                        ChildCount = id.ChildCount, Class = rate.Class, Offers = rate.Offers, 
+                        PaymentType = rate.PaymentType, RegsId = rate.RegsId, Price = rate.Price, Type = rate.Type,
+                    }).ToList().FirstOrDefault();
 
-                if (hotel.Rooms.Any(r => r.RoomCode == output.Room.RoomCode))
+                if (hotel.Rooms.Any(r => r.RoomCode == output.RoomCode))
                 {
-                    hotel.Rooms.Where(r => r.RoomCode == output.Room.RoomCode).ToList()[0].Rates.Add(newRate);
+                    hotel.Rooms.Where(r => r.RoomCode == output.RoomCode).ToList()[0].Rates.Add(newRate);
                 }
                 else
                 {
                     var newRoom = new HotelRoom
                     {
-                        RoomCode = output.Room.RoomCode,
-                        characteristicCd = output.Room.CharacteristicCode,
-                        Facilities = output.Room.Facilities,
-                        Images = output.Room.Images,
+                        RoomCode = output.RoomCode,
+                        characteristicCd = output.characteristicCd,
+                        Facilities = output.Facilities,
+                        Images = output.Images,
                         Rates = new List<HotelRate>
                         {
                            newRate 
                         },
-                        RoomName = output.Room.RoomName,
-                        Type = output.Room.Type,
-                        TypeName = output.Room.TypeName,
+                        RoomName = output.RoomName,
+                        Type = output.Type,
+                        TypeName = output.TypeName,
                     };
                     hotel.Rooms.Add(newRoom);
                 }               
             }
 
             hotel.SearchId = input.SearchId;
+            
             var token = HotelBookingIdSequence.GetInstance().GetNext().ToString();
 
             SaveSelectedHotelDetailsToCache(token, hotel);

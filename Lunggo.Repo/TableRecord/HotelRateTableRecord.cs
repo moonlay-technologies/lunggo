@@ -101,6 +101,15 @@ namespace Lunggo.Repository.TableRecord
 		        IncrementLog("ChildCount");
 		    }
 		}
+		public String ChildrenAges
+		{
+		    get { return _ChildrenAges; }
+		    set
+		    {
+		        _ChildrenAges = value;
+		        IncrementLog("ChildrenAges");
+		    }
+		}
 		public String InsertBy
 		{
 		    get { return _InsertBy; }
@@ -167,6 +176,7 @@ namespace Lunggo.Repository.TableRecord
 		private String _Cancellation;
 		private int? _AdultCount;
 		private int? _ChildCount;
+		private String _ChildrenAges;
 		private String _InsertBy;
 		private DateTime? _InsertDate;
 		private String _InsertPgId;
@@ -214,6 +224,7 @@ namespace Lunggo.Repository.TableRecord
 				new ColumnMetadata("Cancellation", false),
 				new ColumnMetadata("AdultCount", false),
 				new ColumnMetadata("ChildCount", false),
+				new ColumnMetadata("ChildrenAges", false),
 				new ColumnMetadata("InsertBy", false),
 				new ColumnMetadata("InsertDate", false),
 				new ColumnMetadata("InsertPgId", false),

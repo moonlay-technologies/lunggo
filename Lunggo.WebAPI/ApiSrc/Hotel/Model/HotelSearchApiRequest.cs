@@ -29,6 +29,6 @@ namespace Lunggo.WebAPI.ApiSrc.Hotel.Model
         [JsonProperty("hotelFilter")]
         public HotelFilter Filter { get; set; }
         [JsonProperty("hotelSorting")]
-        public HotelSorting Sorting { get; set; }
+        public string Sorting { get; set; }
     }
 }

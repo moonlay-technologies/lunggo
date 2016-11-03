@@ -16,7 +16,7 @@ namespace Lunggo.WebAPI.ApiSrc.Hotel.Logic
                     StatusCode = HttpStatusCode.BadRequest,
                     ErrorCode = "ERHGSH01"
                 };
-            //var searchServiceRequest = PreprocessServiceRequest(request);
+           
             var selectedHotelServiceResponse = HotelService.GetInstance().GetSelectedHotelDetailsFromCache(request.Token);
             var apiResponse = AssembleApiResponse(selectedHotelServiceResponse);
             if (apiResponse.HotelDetails == null)

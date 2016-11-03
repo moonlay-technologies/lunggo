@@ -247,7 +247,22 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Sdk
             {
                 throw e;
             }
-        } 
+        }
+
+        public RateCommentRS GetRateComment(List<Tuple<string, string>> param)
+        {
+            try
+            {
+                HotelApiPaths.HOTEL_RATECOMMENT hotelRatecomment = new HotelApiPaths.HOTEL_RATECOMMENT();
+                RateCommentRS repsonse = callRemoteApi<RateCommentRS, Tuple<string, string>[]>(null, hotelRatecomment, param);
+                return repsonse;
+            }
+            catch (HotelSDKException e)
+            {
+                throw e;
+            }
+        }
+ 
 
 
         private T callRemoteApi<T, U>(U request, HotelApiPaths.HotelApiPathsBase path, List<Tuple<string, string>> param)
@@ -263,7 +278,7 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Sdk
                                         }))
                 {
                     if (request == null && (path.GetType() != typeof(HotelApiPaths.STATUS)
-                        && path.GetType() != typeof(HotelApiPaths.BOOKING_CANCEL) && path.GetType() != typeof(HotelApiPaths.BOOKING_DETAIL) && path.GetType() != typeof(HotelApiPaths.BOOKING_LIST) && path.GetType() != typeof(HotelApiPaths.HOTEL_LIST)))
+                        && path.GetType() != typeof(HotelApiPaths.BOOKING_CANCEL) && path.GetType() != typeof(HotelApiPaths.BOOKING_DETAIL) && path.GetType() != typeof(HotelApiPaths.BOOKING_LIST) && path.GetType() != typeof(HotelApiPaths.HOTEL_LIST) && path.GetType() != typeof(HotelApiPaths.HOTEL_RATECOMMENT)))
                         throw new Exception("Object request can't be null");
 
                     client.BaseAddress = new Uri(path.getUrl(this.basePath, this.version));

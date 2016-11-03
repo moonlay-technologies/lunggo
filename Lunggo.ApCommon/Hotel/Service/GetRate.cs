@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Lunggo.ApCommon.Hotel.Model;
 using Lunggo.ApCommon.Hotel.Model.Logic;
@@ -17,13 +18,7 @@ namespace Lunggo.ApCommon.Hotel.Service
             var hotel = searchResultData.HotelDetails.SingleOrDefault(p => p.HotelCode == hotelRateInput.HotelCode);
             if (hotel != null)
             {
-                foreach (var room in hotel.Rooms)
-                {
-                    foreach (var rate in room.Rates)
-                    {
-                        rate.RegsId = EncryptRegsId(hotelRateInput.HotelCode, room.RoomCode, rate.RateKey);
-                    }
-                }
+                SetRegIdsAndTnc(hotel.Rooms, hotel.CheckInDate, hotel.HotelCode);
             }
             else
             {
@@ -36,6 +31,19 @@ namespace Lunggo.ApCommon.Hotel.Service
                 Rooms = hotel.Rooms != null ? hotel.Rooms : null,
             };
 
+        }
+
+        public void SetRegIdsAndTnc(List<HotelRoom> rooms, DateTime checkinDateTime, int hotelCd)
+        {
+            foreach (var room in rooms)
+            {
+                foreach (var rate in room.Rates)
+                {
+                    rate.TermAndCondition = GetRateCommentFromTableStorage(rate.RateCommentsId, checkinDateTime).Select(x => x.Description).ToList();
+                    rate.RegsId = EncryptRegsId(hotelCd, room.RoomCode, rate.RateKey);
+                    
+                }
+            }
         }
         public string EncryptRegsId(int hotelCode, string roomCode, string rateKey)
         {

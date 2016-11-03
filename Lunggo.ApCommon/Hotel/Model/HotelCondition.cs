@@ -10,7 +10,8 @@ namespace Lunggo.ApCommon.Hotel.Model
     public class SearchHotelCondition
     {
         public string Destination { get; set; }
-        public int? Zone { get; set; }
+        public string Zone { get; set; }
+        public string Area { get; set; }
         public string Country { get; set; }
         public int HotelCode { get; set; }
         public int Nights { get; set; }
@@ -31,6 +32,7 @@ namespace Lunggo.ApCommon.Hotel.Model
         public int RoomCount { get; set; }
         public int AdultCount { get; set; }
         public int ChildCount { get; set; }
+        public List<int> ChildrenAges { get; set; } 
     }
     public class HotelRevalidateInfo
     {
