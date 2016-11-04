@@ -234,7 +234,8 @@ namespace Lunggo.ApCommon.Hotel.Service
                 Address = bookInfo.Address,
                 PhonesNumbers = bookInfo.PhonesNumbers,
                 StarRating = bookInfo.StarRating,
-                AreaCode = bookInfo.AreaCode
+                AreaCode = bookInfo.AreaCode,
+                ZoneCode = bookInfo.ZoneCode
             };
 
             var identity = HttpContext.Current.User.Identity as ClaimsIdentity ?? new ClaimsIdentity();
