@@ -106,7 +106,9 @@
     var totalRoom = '@Model.HotelDetail.Rooms.SelectMany(r => r.Rates).Sum(p => p.RoomCount)';
     var checkin = '@Model.HotelDetail.CheckInDate.ToString("D",CultureInfo.CreateSpecificCulture("id-ID"))';
     var checkout = '@Model.HotelDetail.CheckOutDate.ToString("D", CultureInfo.CreateSpecificCulture("id-ID"))';
-    var nights = '@((Model.HotelDetail.CheckOutDate - Model.HotelDetail.CheckInDate).Days)';
+        var nights = '@((Model.HotelDetail.CheckOutDate - Model.HotelDetail.CheckInDate).Days)';
+        var country = '@Model.HotelDetail.CountryName';
+        
     if (getParam('page') == 2) {
         currentPage = getParam('page');
     } else {
@@ -304,7 +306,8 @@
                                     <div class="star star-4" ng-show="hotelstar() == 'star star-4'"></div>
                                     <div class="star star-5" ng-show="hotelstar() == 'star star-5'"></div>
                                     <div class="rh-location">
-                                        {{capitalizeFirstLetter(hotelDetail.address)}}, {{capitalizeFirstLetter(hotelDetail.city)}}
+                                        {{capitalizeFirstLetter(hotelDetail.address)}}, @ToTitleCase(Model.HotelDetail.ZoneName), 
+                                        @ToTitleCase(Model.HotelDetail.DestinationName), @Model.HotelDetail.CountryName
                                     </div>
                                     <div class="rh-detail">
                                         <div class="wb-container clearfix">

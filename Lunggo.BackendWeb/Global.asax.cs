@@ -59,7 +59,7 @@ namespace Lunggo.BackendWeb
                 },
                 CheckIn = new DateTime(2017,6,23),
                 Checkout = new DateTime(2017, 6,25),
-                HotelCode = 195728
+                HotelCode = 140898
             });
         }
     }

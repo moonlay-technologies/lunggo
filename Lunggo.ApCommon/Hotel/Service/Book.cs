@@ -132,6 +132,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                             rate.Price = ratea.Price;
                             rate.PaymentType = ratea.PaymentType;
                             rate.Type = ratea.Type;
+                            rate.RateCommentsId = ratea.RateCommentsId;
                         }
                     }
                 }
@@ -232,7 +233,8 @@ namespace Lunggo.ApCommon.Hotel.Service
                 Rooms = bookInfo.Rooms,
                 Address = bookInfo.Address,
                 PhonesNumbers = bookInfo.PhonesNumbers,
-                StarRating = bookInfo.StarRating
+                StarRating = bookInfo.StarRating,
+                AreaCode = bookInfo.AreaCode
             };
 
             var identity = HttpContext.Current.User.Identity as ClaimsIdentity ?? new ClaimsIdentity();
