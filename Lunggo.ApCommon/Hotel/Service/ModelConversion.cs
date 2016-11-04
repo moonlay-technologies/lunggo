@@ -58,7 +58,9 @@ namespace Lunggo.ApCommon.Hotel.Service
                 NetFare = price,
                 IsRestaurantAvailable = hotelDetail.IsRestaurantAvailable,
                 IsWifiAccessAvailable = hotelDetail.WifiAccess,
-                Rooms = ConvertToHotelRoomForDisplay(hotelDetail.Rooms)
+                Rooms = ConvertToHotelRoomForDisplay(hotelDetail.Rooms),
+                CheckInDate = hotelDetail.CheckInDate,
+                CheckOutDate = hotelDetail.CheckOutDate
             };
                 
             

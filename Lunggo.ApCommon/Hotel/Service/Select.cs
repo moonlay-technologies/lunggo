@@ -64,7 +64,13 @@ namespace Lunggo.ApCommon.Hotel.Service
             }
 
             hotel.SearchId = input.SearchId;
-            
+            var cekin = input.RegsIds[0].RegId.Split(',')[2].Split('|')[0];
+            var cekout = input.RegsIds[0].RegId.Split(',')[2].Split('|')[1];
+            hotel.CheckInDate = new DateTime(Convert.ToInt32(cekin.Substring(0,4)),
+                Convert.ToInt32(cekin.Substring(4, 2)), Convert.ToInt32(cekin.Substring(6, 2)));
+
+            hotel.CheckOutDate = new DateTime(Convert.ToInt32(cekout.Substring(0, 4)),
+                Convert.ToInt32(cekout.Substring(4, 2)), Convert.ToInt32(cekout.Substring(6, 2)));
             var token = HotelBookingIdSequence.GetInstance().GetNext().ToString();
 
             SaveSelectedHotelDetailsToCache(token, hotel);

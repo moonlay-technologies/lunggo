@@ -149,6 +149,10 @@ namespace Lunggo.ApCommon.Hotel.Model
         public bool WifiAccess { get; set; }
         [JsonProperty("restaurant", NullValueHandling = NullValueHandling.Ignore)]
         public bool IsRestaurantAvailable { get; set; }
+        [JsonProperty("checkIn", NullValueHandling = NullValueHandling.Ignore)]
+        public DateTime CheckInDate { get; set; }
+        [JsonProperty("checkOut", NullValueHandling = NullValueHandling.Ignore)]
+        public DateTime CheckOutDate { get; set; }
         
     }
 

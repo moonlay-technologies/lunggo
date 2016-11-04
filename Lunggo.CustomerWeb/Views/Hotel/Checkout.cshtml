@@ -98,21 +98,22 @@
 @section PageJS{
     <!-- angular controller -->
     <script>
-        var langCode = '@OnlineContext.GetActiveLanguageCode()';
-        var hotelDetail = @Html.Raw(Model.HotelDetail.Serialize());
-        var expirytime = '@Model.ExpiryTime';
-        var originalFare = '@Model.HotelDetail.OriginalFare';
-        var netFare = '@Model.HotelDetail.NetFare';
-        var totalRoom = '@Model.HotelDetail.Rooms.SelectMany(r => r.Rates).Sum(p => p.RoomCount)';
-        var checkin = '@Model.HotelDetail.CheckInDate';
-        var checkout = '@Model.HotelDetail.CheckOutDate';
-        if (getParam('page') == 2) {
-            currentPage = getParam('page');
-        } else {
-            currentPage = 1;
-        }
-        var token = '@Model.Token';
-    </script>
+    var langCode = '@OnlineContext.GetActiveLanguageCode()';
+    var hotelDetail = @Html.Raw(Model.HotelDetail.Serialize());
+    var expirytime = '@Model.ExpiryTime';
+    var originalFare = '@Model.HotelDetail.OriginalFare';
+    var netFare = '@Model.HotelDetail.NetFare';
+    var totalRoom = '@Model.HotelDetail.Rooms.SelectMany(r => r.Rates).Sum(p => p.RoomCount)';
+    var checkin = '@Model.HotelDetail.CheckInDate.ToString("D",CultureInfo.CreateSpecificCulture("id-ID"))';
+    var checkout = '@Model.HotelDetail.CheckOutDate.ToString("D", CultureInfo.CreateSpecificCulture("id-ID"))';
+    var nights = '@((Model.HotelDetail.CheckOutDate - Model.HotelDetail.CheckInDate).Days)';
+    if (getParam('page') == 2) {
+        currentPage = getParam('page');
+    } else {
+        currentPage = 1;
+    }
+    var token = '@Model.Token';
+</script>
     <script src="/Assets/travorama20/js/HotelCheckoutController.js"></script>
 }
 

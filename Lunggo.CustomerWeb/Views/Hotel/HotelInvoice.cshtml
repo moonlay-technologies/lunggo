@@ -47,15 +47,15 @@
                             <h3>INVOICE</h3>
                             <table>
                                 <tr>
-                                    <td>Number</td>
+                                    <td>Nomor Pemesanan</td>
                                     <td>@Model.RsvNo</td>
                                 </tr>
                                 <tr>
-                                    <td>Date</td>
+                                    <td>Tanggal</td>
                                     <td>@Model.Payment.Time.GetValueOrDefault().ToString("dddd"), @Model.Payment.Time.GetValueOrDefault().ToString("dd MMM yyy")</td>
                                 </tr>
                                 <tr>
-                                    <td>Time</td>
+                                    <td>Jam</td>
                                     <td>Pk @Model.Payment.Time.GetValueOrDefault().AddHours(7).ToString("HH:mm") WIB</td>
                                 </tr>
                             </table>
@@ -63,18 +63,18 @@
                     </div>
                     <div class="col-xs-6">
                         <div class="customer-detail">
-                            <h3>Customer Detail</h3>
+                            <h3>Detail Pemesan</h3>
                             <table>
                                 <tr>
-                                    <td>Name</td>
+                                    <td>Nama</td>
                                     <td>@Model.Contact.Name</td>
                                 </tr>
                                 <tr>
-                                    <td>Email</td>
+                                    <td>E-mail</td>
                                     <td>@Model.Contact.Email</td>
                                 </tr>
                                 <tr>
-                                    <td>Contact Number</td>
+                                    <td>No. Telepon</td>
                                     <td>@Model.Contact.Phone</td>
                                 </tr>
                             </table>
@@ -108,6 +108,30 @@
             </div>
 
             <div class="container">
+                <div class="row">
+                    <div class="col-xs-6">
+                        <div class="customer-detail">
+                            <h3>Detail Hotel</h3>
+                            <table>
+                                <tr>
+                                    <td>Nama Hotel</td>
+                                    <td>@Model.HotelDetail.HotelName</td>
+                                </tr>
+                                <tr>
+                                    <td>Alamat Hotel</td>
+                                    <td>@Model.HotelDetail.Address</td>
+                                </tr>
+                                <tr>
+                                    <td>No. Telepon</td>
+                                    <td>@Model.HotelDetail.PhonesNumbers[0]</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container">
                 <div class="purchase-detail">
                     <h3>Detail Pembelian</h3>
                     <table>
@@ -122,17 +146,24 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @{ int i = Model.HotelDetail.Rooms.Count;}
-                            @for (int k = 0; k < i; k++)
+                            @{ int i = 1;}
+                            @for (var j = 0; j < Model.HotelDetail.Rooms.Count; j++)
                             {
-                                <tr>
-                                    <td class="no">@(k + 1).</td>
-                                    <td class="item">Kamar</td>
-                                    <td class="description">@HotelService.GetInstance().GetHotelRoom(Model.HotelDetail.Rooms[k].RoomCode).RoomDescId</td> @*tipe kamar*@ @*board*@
-                                    <td class="qty">@Model.HotelDetail.Rooms[k].Rates.Sum(p => p.RoomCount) Kamar</td>@*jumlah kamar*@
-                                    <td class="price"></td>
-                                    <td class="total">@Model.HotelDetail.Rooms[k].Rates.Sum(p => p.NetPrice))</td>
-                                </tr>
+                                for (var k = 0; k < Model.HotelDetail.Rooms[j].Rates.Count; k++)
+                                {
+                                    <tr>
+                                        <td class="no">@(i).</td>
+                                        <td class="item">Kamar</td>
+                                        <td class="description">
+                                            @HotelService.GetInstance().GetHotelRoom(Model.HotelDetail.Rooms[j].RoomCode).RoomDescId
+                                            @HotelService.GetInstance().GetHotelBoardDescId(Model.HotelDetail.Rooms[j].Rates[k].Boards)
+                                        </td> @*tipe kamar*@ @*board*@
+                                        <td class="qty">@Model.HotelDetail.Rooms[j].Rates[k].RoomCount </td>@*jumlah kamar*@
+                                        <td class="price"></td>
+                                        <td class="total">@Model.HotelDetail.Rooms[j].Rates[k].NetPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</td>
+                                    </tr>
+                                    i++;
+                                }
                             }
                             @if (Model.Payment.DiscountName != null)
                             {
@@ -162,12 +193,12 @@
                             </tr>
                             <tr>
                                 <td colspan="3"></td>
-                                <td colspan="2"><strong>ADMINISTRATION FEE</strong></td>
+                                <td colspan="2"><strong>BIAYA ADMINISTRASI</strong></td>
                                 <td>0</td>
                             </tr>
                             <tr>
                                 <td colspan="3"></td>
-                                <td colspan="2"><strong>PAYMENT AMOUNT</strong></td>
+                                <td colspan="2"><strong>TOTAL PEMBAYARAN</strong></td>
                                 <td>@Model.Payment.FinalPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</td>
                             </tr>
                         </tfoot>

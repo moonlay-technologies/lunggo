@@ -1,6 +1,7 @@
 ﻿@using System.Globalization
 @model Lunggo.ApCommon.Hotel.Model.HotelReservationForDisplay
 @using Lunggo.ApCommon.Constant
+@using Lunggo.ApCommon.Hotel.Service
 @using Lunggo.Framework.Config
 
 <!DOCTYPE html>
@@ -12,7 +13,7 @@
 
     <link rel="shortcut icon" type="image/ico" href="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/favico.ico")" />
 
-    <title>Travorama - E-tiket</title>
+    <title>Travorama - Voucher Hotel</title>
 
     <!-- stylesheets -->
     <link rel="stylesheet" href="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/css/bootstrap.min.css")">
@@ -37,7 +38,175 @@
                 </div>
             </div>
         </header><!-- .page-header -->
-        
+        <section class="page-content">
+
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-6">
+                        <div class="invoice-detail">
+                            <h3>INVOICE</h3>
+                            <table>
+                                <tr>
+                                    <td>Nomor Pemesanan</td>
+                                    <td>@Model.RsvNo</td>
+                                </tr>
+                                <tr>
+                                    <td>Tanggal</td>
+                                    <td>@Model.Payment.Time.GetValueOrDefault().ToString("dddd"), @Model.Payment.Time.GetValueOrDefault().ToString("dd MMM yyy")</td>
+                                </tr>
+                                <tr>
+                                    <td>Jam</td>
+                                    <td>Pk @Model.Payment.Time.GetValueOrDefault().AddHours(7).ToString("HH:mm") WIB</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-xs-6">
+                        <div class="customer-detail">
+                            <h3>Detail Pemesan</h3>
+                            <table>
+                                <tr>
+                                    <td>Nama</td>
+                                    <td>@Model.Contact.Name</td>
+                                </tr>
+                                <tr>
+                                    <td>E-mail</td>
+                                    <td>@Model.Contact.Email</td>
+                                </tr>
+                                <tr>
+                                    <td>No. Telepon</td>
+                                    <td>@Model.Contact.Phone</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container">
+                <div class="payment-detail">
+                    <h3>Detail Pembayaran</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="number">P.O NUMBER</th>
+                                <th class="payment-method">PEMBELIAN MELALUI</th>
+                                <th class="payment-status">DETAIL TRANSAKSI</th>
+                                <th class="terms">TERMS</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="number">@Model.RsvNo</td>
+                                <td class="payment-method">@EnumDisplay.PaymentMethod(Model.Payment.Method)</td>
+                                <td class="payment-status">Lunas</td>
+                                <td class="terms">Due on Receipt</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-6">
+                        <div class="customer-detail">
+                            <h3>Detail Hotel</h3>
+                            <table>
+                                <tr>
+                                    <td>Nama Hotel</td>
+                                    <td>@Model.HotelDetail.HotelName</td>
+                                </tr>
+                                <tr>
+                                    <td>Alamat Hotel</td>
+                                    <td>@Model.HotelDetail.Address</td>
+                                </tr>
+                                <tr>
+                                    <td>No. Telepon</td>
+                                    <td>@Model.HotelDetail.PhonesNumbers[0]</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container">
+                <div class="purchase-detail">
+                    <h3>Detail Pembelian</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="no">NO.</th>
+                                <th class="item">JENIS ITEM</th>
+                                <th class="description">DESKRIPSI</th>
+                                <th class="qty">QTY</th>
+                                <th class="price"></th>
+                                <th class="total-price">TOTAL</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{ int i = 1;}
+                            @for (var j = 0; j < Model.HotelDetail.Rooms.Count; j++)
+                            {
+                                for (var k = 0; k < Model.HotelDetail.Rooms[j].Rates.Count; k++)
+                                {
+                                    <tr>
+                                        <td class="no">@(i).</td>
+                                        <td class="item">Kamar</td>
+                                        <td class="description">
+                                            @HotelService.GetInstance().GetHotelRoom(Model.HotelDetail.Rooms[j].RoomCode).RoomDescId
+                                            @HotelService.GetInstance().GetHotelBoardDescId(Model.HotelDetail.Rooms[j].Rates[k].Boards)
+                                        </td> @*tipe kamar*@ @*board*@
+                                        <td class="qty">@Model.HotelDetail.Rooms[j].Rates[k].RoomCount </td>@*jumlah kamar*@
+                                        <td class="price"></td>
+                                        <td class="total">@Model.HotelDetail.Rooms[j].Rates[k].NetPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</td>
+                                    </tr>
+                                    i++;
+                                }
+                            }
+                            @if (Model.Payment.DiscountName != null)
+                            {
+                                <tr>
+                                    <td class="no"></td>
+                                    <td class="item">Voucher</td>
+                                    <td class="description">@Model.Payment.DiscountName</td>
+                                    <td class="qty">1</td>
+                                    <td class="price"></td>
+                                    <td class="total">-@Model.Payment.DiscountNominal.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</td>
+                                </tr>
+                            }
+                            <tr>
+                                <td class="no"></td>
+                                <td class="item">Kode Unik</td>
+                                <td class="description"></td>
+                                <td class="qty">1</td>
+                                <td class="price"></td>
+                                <td class="total">@Model.Payment.UniqueCode.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="3"></td>
+                                <td colspan="2"><strong>TOTAL</strong></td>
+                                <td>@Model.Payment.FinalPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</td>
+                            </tr>
+                            <tr>
+                                <td colspan="3"></td>
+                                <td colspan="2"><strong>BIAYA ADMINISTRASI</strong></td>
+                                <td>0</td>
+                            </tr>
+                            <tr>
+                                <td colspan="3"></td>
+                                <td colspan="2"><strong>TOTAL PEMBAYARAN</strong></td>
+                                <td>@Model.Payment.FinalPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+
+        </section><!-- .page-content -->
     </div><!-- .page -->
     <!-- ****************************** -->
     <!-- javascripts -->

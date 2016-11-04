@@ -100,34 +100,35 @@
 }
 @section PageJS{
     <script>
-        var langCode = 'en';
-        var paymentTimeout = '';
+    var langCode = 'en';
+    var paymentTimeout = '';
 
-        // development only start
-        paymentTimeout = new Date('@timelimit.ToString("yyyy-MM-dd'T'HH:mm:ss")');
+    // development only start
+    paymentTimeout = new Date('@timelimit.ToString("yyyy-MM-dd'T'HH:mm:ss")');
 
-        // countdown timer
-        $('.timer').countdown(paymentTimeout, function (event) {
-            $('.timer .hour').text(event.strftime('%H'));
-            $('.timer .minute').text(event.strftime('%M'));
-            $('.timer .second').text(event.strftime('%S'));
-        });
+    // countdown timer
+    $('.timer').countdown(paymentTimeout, function (event) {
+        $('.timer .hour').text(event.strftime('%H'));
+        $('.timer .minute').text(event.strftime('%M'));
+        $('.timer .second').text(event.strftime('%S'));
+    });
 
-        // date selector
-        $('.date-picker').datepicker({
-            minDate: new Date()
-        });
+    // date selector
+    $('.date-picker').datepicker({
+        minDate: new Date()
+    });
 
-        @if (Model is HotelReservationForDisplay)
+    @if (Model is HotelReservationForDisplay)
         {
             var hotel = Model as HotelReservationForDisplay;
             @:var hotelDetails = '@hotel.HotelDetail.';
             @:var originalFare = '@hotel.HotelDetail.OriginalFare';
             @:var netFare = '@hotel.HotelDetail.NetFare';
             @:var totalRoom = '@hotel.HotelDetail.Rooms.SelectMany(r => r.Rates).Sum(p => p.RoomCount)';
-            @:var checkin = '@hotel.HotelDetail.CheckInDate';
-            @:var checkout = '@hotel.HotelDetail.CheckOutDate';
-        }
+            @:var checkin = '@hotel.HotelDetail.CheckInDate.ToString("D",CultureInfo.CreateSpecificCulture("id-ID"))';
+            @:var checkout = '@hotel.HotelDetail.CheckOutDate.ToString("D", CultureInfo.CreateSpecificCulture("id-ID"))';
+            @:var nights = '@((hotel.HotelDetail.CheckOutDate - hotel.HotelDetail.CheckInDate).Days)';
+            }
     </script>
     <!-- angular controller -->
     <script src="/Assets/travorama20/js/checkoutController.js"></script>
