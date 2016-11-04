@@ -2974,6 +2974,7 @@
     <Content Include="Views\Hotel\HotelSearchForm.cshtml" />
     <Content Include="Views\Hotel\VoucherHotel.cshtml" />
     <Content Include="Views\Hotel\Shared\Mobile\_SearchHotelForm.cshtml" />
+    <Content Include="Views\Hotel\VoucherHotelNew.cshtml" />
     <None Include="Views\Template\eticket.cshtml" />
     <Content Include="Views\Template\OrderFlightHistory.cshtml" />
     <Content Include="Views\Template\PrivacyPolicy.cshtml" />
