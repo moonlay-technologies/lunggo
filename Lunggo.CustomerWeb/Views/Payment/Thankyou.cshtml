@@ -96,32 +96,33 @@
 
 @section PageJS{
     <script>
-        var langCode = 'en';
-        var printTimeout = '';
+    var langCode = 'en';
+    var printTimeout = '';
 
-        // development only start
-        printTimeout = new Date(); // please change this print time out to actual time
-        printTimeout.setSeconds(printTimeout.getSeconds() + 7200);
-        // development only end
+    // development only start
+    printTimeout = new Date(); // please change this print time out to actual time
+    printTimeout.setSeconds(printTimeout.getSeconds() + 7200);
+    // development only end
 
-        // countdown timer
-        $('.timer').countdown(printTimeout, function (event) {
-            $('.timer .hour h5').text(event.strftime('%H'));
-            $('.timer .minute h5').text(event.strftime('%M'));
-            $('.timer .second h5').text(event.strftime('%S'));
-        }).on('finish.countdown', function () {
-            $('.print .btn').removeClass('disabled');
-        });
-         @if (Model is HotelReservationForDisplay)
+    // countdown timer
+    $('.timer').countdown(printTimeout, function (event) {
+        $('.timer .hour h5').text(event.strftime('%H'));
+        $('.timer .minute h5').text(event.strftime('%M'));
+        $('.timer .second h5').text(event.strftime('%S'));
+    }).on('finish.countdown', function () {
+        $('.print .btn').removeClass('disabled');
+    });
+    @if (Model is HotelReservationForDisplay)
         {
             var hotel = Model as HotelReservationForDisplay;
             @:var hotelDetails = '@hotel.HotelDetail.';
-            @:var originalFare = '@hotel.HotelDetail.OriginalFare';
-            @:var netFare = '@hotel.HotelDetail.NetFare';
-            @:var totalRoom = '@hotel.HotelDetail.Rooms.SelectMany(r => r.Rates).Sum(p => p.RoomCount)';
-            @:var checkin = '@hotel.HotelDetail.Rooms[0].Rates[0].RateKey.Split('|')[0]';
-            @:var checkout = '@hotel.HotelDetail.Rooms[0].Rates[0].RateKey.Split('|')[1]';
-        }
+                @:var originalFare = '@hotel.HotelDetail.OriginalFare';
+                @:var netFare = '@hotel.HotelDetail.NetFare';
+                @:var totalRoom = '@hotel.HotelDetail.Rooms.SelectMany(r => r.Rates).Sum(p => p.RoomCount)';
+                @:var checkin = '@hotel.HotelDetail.CheckInDate.ToString("D",CultureInfo.CreateSpecificCulture("id-ID"))';
+            @:var checkout = '@hotel.HotelDetail.CheckOutDate.ToString("D", CultureInfo.CreateSpecificCulture("id-ID"))';
+            @:var nights = '@((hotel.HotelDetail.CheckOutDate - hotel.HotelDetail.CheckInDate).Days)';
+            }
     </script>
     <!-- angular controller -->
     <script src="/Assets/travorama20/js/checkoutController.js"></script>
@@ -418,7 +419,7 @@
                                                                         <div class="wb-container clearfix">
                                                                             <div class="wb-left">Rate Comment</div>
                                                                             <div class="wb-mid">:</div>
-                                                                            <div class="wb-right bold-txt">ALKSJHJDKDJS</div>
+                                                                            <div class="wb-right bold-txt">@rate.RateCommentsId</div>
                                                                         </div>
                                                                         <div class="wb-container clearfix">
                                                                             <div class="wb-left">Ketentuan Pembatalan</div>
@@ -492,7 +493,7 @@
                                                     <dl class="total-room">
                                                         <dt class="dt-title">
                                                             @rate.RoomCount @ToTitleCase(HotelService.GetInstance().GetHotelRoom(room.RoomCode).RoomDescId)
-                                                            @rate.Boards x {{nights}} Malam :
+                                                            @HotelService.GetInstance().GetHotelBoardDescId(rate.Boards) x {{nights}} Malam :
                                                         </dt>
                                                         <dd class="dd-price">
                                                             Rp @(rate.NetPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID")))
@@ -505,9 +506,20 @@
                                                 <dt class="dt-title">Pelayanan Kamar :</dt>
                                                 <dd class="dd-price">Rp {{roomService | number}}</dd>
                                             </dl>
+                                            if (Model.Payment.DiscountNominal > 0)
+                                            {
+                                                <dl>
+                                                    <dt>@Model.Payment.DiscountName</dt>
+                                                    <dd>- Rp @Model.Payment.DiscountNominal.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</dd>
+                                                </dl>
+                                            }
+                                            <dl>
+                                                <dt>Kode Unik Pembayaran</dt>
+                                                <dd>- Rp @(Math.Abs(Model.Payment.UniqueCode).ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID")))</dd>
+                                            </dl>
                                             <dl class="total-price">
-                                                <dt class="dt-title">Total</dt>
-                                                <dd class="dd-price">Rp {{netFare + roomService | number}}</dd>
+                                                <dt>Total</dt>
+                                                <dd>Rp @Model.Payment.FinalPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</dd>
                                             </dl>
                                         }
                                         

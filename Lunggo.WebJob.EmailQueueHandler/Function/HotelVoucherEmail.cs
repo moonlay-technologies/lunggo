@@ -26,11 +26,13 @@ namespace Lunggo.WebJob.EmailQueueHandler.Function
             Console.WriteLine("Getting Required Files and Data from Storage...");
             sw.Start();
             var blobService = BlobStorageService.GetInstance();
-            var eticketFile = blobService.GetByteArrayByFileInContainer(rsvNo + ".pdf", "Eticket");
+            var eticketFile = blobService.GetByteArrayByFileInContainer(rsvNo + ".pdf", "Voucher");
             var invoiceFile = blobService.GetByteArrayByFileInContainer(rsvNo + ".pdf", "Invoice");
             var summaryBytes = blobService.GetByteArrayByFileInContainer(rsvNo, "Reservation");
             var summaryJson = Encoding.UTF8.GetString(summaryBytes);
             var summary = JsonConvert.DeserializeObject<HotelReservationForDisplay>(summaryJson);
+            var roomcd = HotelService.GetInstance().GetHotelRoom(summary.HotelDetail.Rooms[0].RoomCode).RoomDescId;
+            var boards = @HotelService.GetInstance().GetHotelBoardDescId(summary.HotelDetail.Rooms[0].Rates[0].Boards);
             sw.Stop();
             Console.WriteLine("Done Getting Required Files and Data from Storage. (" + sw.Elapsed.TotalSeconds + "s)");
             sw.Reset();
