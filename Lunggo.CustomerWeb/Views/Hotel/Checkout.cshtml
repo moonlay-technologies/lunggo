@@ -1,0 +1,700 @@
+﻿@using System.Globalization
+@using System.Security.Cryptography.X509Certificates
+@using Lunggo.ApCommon.Hotel.Model
+@using Lunggo.ApCommon.Hotel.Service
+@using Lunggo.ApCommon.Identity.Users
+@using Lunggo.ApCommon.Payment.Constant
+@using Lunggo.ApCommon.Travolutionary.WebService.Hotel
+@using Lunggo.Framework.Context
+@using Lunggo.Framework.Extension
+@using Lunggo.Framework.Config
+@model Lunggo.CustomerWeb.Models.HotelCheckoutData
+@{
+    Layout = "/Views/Shared/Travorama20/_Layout20150929.cshtml";
+    ViewBag.BodyClass = "page-hotel page-checkout-hotel";
+
+    ViewBag.SiteHeader = "checkout";
+    ViewBag.Title = "Checkout";
+    ViewBag.AngularController = "hotelcheckoutController";
+}
+
+@{
+    var rooms = new List<HotelRoomForDisplay>();
+    var token = "";
+    var textInfo = new CultureInfo("en-US", false).TextInfo;
+    var orderedRooms = new List<Tuple<string, int>>();
+    try
+    {
+        rooms = Model.HotelDetail.Rooms;
+        token = Model.Token;
+        foreach (var room in rooms)
+        {
+            var roomName = room.RoomName;
+            var sum = 0;
+            foreach (var rate in room.Rates)
+            {
+                sum += rate.RoomCount;
+            }
+            orderedRooms.Add(new Tuple<string, int>(roomName, sum));;
+        }
+
+    }
+    catch
+    {
+        ViewBag.Message = "BookExpired";
+    }
+    
+}
+
+@functions{
+
+    public string ToTitleCase(string input)
+    {
+
+        var text = "";
+        try
+        {
+            var splittedText = input.Split(' ');
+            foreach (var word in splittedText)
+            {
+                var splittedByStrips = word.Split('-');
+                var w = "";
+                if (splittedByStrips.Count() != 1)
+                {
+                    foreach (var part in splittedByStrips)
+                    {
+                        w += ApplyTitleCase(part) + "-";
+                    }
+                    text += w.Substring(0, w.Length - 1) + " ";
+                }
+                else
+                {
+                    text += word[0] + word.Substring(1, word.Length - 1).ToLower() + " ";
+                }
+            }
+
+        }
+        catch
+        {
+
+        }
+        return text;
+    }
+
+    public string ApplyTitleCase(string input)
+    {
+        return input[0] + input.Substring(1, input.Length - 1).ToLower();
+    }
+
+}
+@section AdditionalJS {
+    <script src="/Assets/js/angular.min.js"></script>
+    <script src="/Assets/js/angular-animate.min.js"></script>
+    <script src="/Assets/js/angular-route.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script type="text/javascript" src="/Scripts/bootstrap.min.js"></script>
+}
+
+@section PageJS{
+    <!-- angular controller -->
+    <script>
+        var langCode = '@OnlineContext.GetActiveLanguageCode()';
+        var hotelDetail = @Html.Raw(Model.HotelDetail.Serialize());
+        var expirytime = '@Model.ExpiryTime';
+        var originalFare = '@Model.HotelDetail.OriginalFare';
+        var netFare = '@Model.HotelDetail.NetFare';
+        var totalRoom = '@Model.HotelDetail.Rooms.SelectMany(r => r.Rates).Sum(p => p.RoomCount)';
+        var checkin = '@Model.HotelDetail.Rooms[0].Rates[0].RateKey.Split('|')[0]';
+        var checkout = '@Model.HotelDetail.Rooms[0].Rates[0].RateKey.Split('|')[1]';
+        if (getParam('page') == 2) {
+            currentPage = getParam('page');
+        } else {
+            currentPage = 1;
+        }
+        var token = '@Model.Token';
+</script>
+    <script src="/Assets/travorama20/js/HotelCheckoutController.js"></script>
+}
+
+<div class="checkout-hotel">
+    <section class="checkout-step {{stepClass}}">
+        <div class="container">
+            <div class="step step-1" ng-class="{'active' : currentPage == 1, 'inactive' : currentPage > 1}"><span>01. <b>Data Pemesan</b></span></div>
+            <div class="step step-2" ng-class="{'active' : currentPage == 2, 'inactive' : currentPage > 2}"><span>02. <b>Data Pesanan</b></span></div>
+        </div>
+    </section>
+    <section class="checkout-content">
+        <div class="container">
+            <div class="col-left">
+                <div class="content-step" id="step-1" ng-show="currentPage == 1">
+                    <h3><b>DETAIL</b> PEMESAN</h3>
+                    <div class="travorama-login" ng-class="{'active' : loginShown}" ng-if="!loggedIn">
+                        <a class="login-toggle" ng-click="toggleLogin()"><b>Masuk</b> dengan akun <b>TRAVORAMA</b><span class="caret"></span></a>
+                        <div class="login-content">
+                            <form class="form register-form form-horizontal" name="loginForm" novalidate ng-submit="form.submit()">
+                                <div class="form-group">
+                                    <div class="col-xs-5">
+                                        <input type="text" class="form-control" ng-model="form.email" name="Email" id="login-username" value="" placeholder="Alamat e-mail" />
+                                    </div>
+                                    <div class="col-xs-5">
+                                        <input type="password" class="form-control" name="Password" ng-model="form.password" id="login-password" value="" placeholder="Password" />
+                                    </div>
+                                    <div class="col-xs-2">
+                                        <input type="submit" value="MASUK" class="btn btn-yellow form-control" ng-disabled="form.submitting" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-xs-10 text-right">
+                                        <a href="@Url.Action("ForgotPassword", "Account")">Lupa Password?</a>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div><!-- .travorama-login -->
+                    <div>
+                        <form class="form" id="buyer-form" name="buyerForm" novalidate>
+                            <div class="form-group" ng-class="{'has-error' : buyerForm.contactTitle.$touched && buyerForm.contactTitle.$invalid}">
+                                <label class="control-label important">Titel :</label>
+                                <div>
+                                    <select class="form-control" id="buyer-title" name="contactTitle" ng-model="buyerInfo.title" ng-init="buyerInfo.title = titles[0].value">
+                                        <option ng-repeat="title in titles" value="{{title.value}}">{{title.name}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group" ng-class="{'has-error' : buyerForm.contactName.$touched && buyerForm.contactName.$invalid}">
+                                <label class="control-label important">Nama Lengkap :</label>
+                                <div ng-hide="loggedIn">
+                                    <input type="text" pattern="[a-zA-Z\s]+" class="form-control nama" value=""
+                                           id="buyer-name" placeholder="Nama Lengkap" name="contactName" ng-model="buyerInfo.name" required />
+                                    <div ng-show="!checkName(buyerInfo.name)" style="color:red">
+                                        Nama tidak boleh mengandung karakter selain alfabet dan spasi
+                                    </div>
+                                </div>
+                                <div ng-hide="!loggedIn">
+                                    <!--Jika udah Login-->
+                                    <input type="text" class="form-control nama" value=buyerInfo.name id="buyer-name" placeholder="Nama Lengkap" name="name" ng-model="buyerInfo.name" required />
+                                </div>
+                            </div>
+
+                            <div class="form-group" ng-class="{'has-error' : (buyerForm.phone.$touched && buyerForm.phone.$invalid) || (buyerForm.countryCode.$touched && buyerForm.countryCode.$invalid)}">
+                                <label class="control-label important">Nomor Telepon:</label>
+                                <div class="row">
+                                    <div class="col-xs-4" ng-hide="loggedIn">
+                                        <p>Kode Negara</p>
+                                        <select class="form-control" name="countryCode" ng-model="buyerInfo.countryCode" ng-init="buyerInfo.countryCode = '62'">
+                                            <option ng-repeat="country in countries" ng-selected="country.dial_code == '62'" value="{{country.dial_code}}">{{country.name}} ({{country.dial_code}})</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-xs-4" ng-hide="!loggedIn">
+                                        <!--Jika udah Login-->
+                                        <p>Kode Negara</p>
+                                        <select class="form-control" name="countryCode" ng-model="buyerInfo.countryCode">
+                                            <option ng-repeat="country in countries" ng-selected="country.dial_code == buyerInfo.countryCode" value="{{country.dial_code}}">{{country.name}} ({{country.dial_code}})</option>
+                                        </select>
+
+                                        @*<input type="number" name="countryCode" value=buyerInfo.countryCode class="form-control" placeholder="ex : 62 for Indonesia" required ng-model="buyerInfo.countryCode" maxlength="5" />*@
+                                    </div>
+                                    <div class="col-xs-8" ng-hide="loggedIn">
+                                        <p>Nomor Telepon (Tanpa Kode Negara)</p>
+                                        <input type="number" class="form-control" value="" id="buyer-phone" placeholder="Ex: 821 2345 6789 (Tanpa Kode Negara)" name="phone" ng-model="buyerInfo.phone" required />
+                                    </div>
+                                    <div class="col-xs-8" ng-hide="!loggedIn">
+                                        <!--Jika udah Login-->
+                                        <p>Nomor Telepon (Tanpa Kode Negara)</p>
+                                        <input type="number" class="form-control" value=buyerInfo.phone id="buyer-phone" placeholder="Ex: 821 2345 6789 (Tanpa Kode Negara)" name="phone" ng-model="buyerInfo.phone" required />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group" ng-class="{'has-error' : buyerForm.email.$touched && buyerForm.email.$invalid}">
+                                <label class="control-label important">Masukkan Alamat E-mail Anda :</label>
+                                <div ng-hide="loggedIn">
+                                    <input type="email" class="form-control" value="" id="buyer-email" placeholder="Ex: name@domain.com" name="email" ng-model="buyerInfo.email" required />
+                                </div>
+                                <div ng-hide="!loggedIn">
+                                    <!--Jika udah Login-->
+                                    <input type="email" class="form-control" value=form.email id="buyer-email" placeholder="Ex: name@domain.com" name="email" ng-model="buyerInfo.email" required />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="square active confirmation-buyer">
+                                    <div class="chck-container"><span class="switch"></span></div>
+                                    <input type="checkbox" value="false" class="ng-valid ng-dirty ng-valid-parse ng-touched" ng-model="diffPerson" ng-change="cleanGuestInfo()">
+                                    <span class="name italic-txt semibold-txt">Saya tidak menginap di sini. Saya membuatkan reservasi untuk orang lain.</span>
+                                </label>
+                            </div>
+
+                            <h3><b>DETAIL</b> TAMU</h3>
+
+                            <div class="form-group" ng-class="{'has-error' : buyerForm.guestTitle.$touched && buyerForm.guestTitle.$invalid}">
+                                <label class="control-label important">Titel :</label>
+                                <div>
+                                    <select class="form-control" id="buyer-title" name="guestTitle" ng-model="guestInfo.title" ng-init="guestInfo.title = titles[0].value">
+                                        <option ng-repeat="title in titles" value="{{title.value}}">{{title.name}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group" ng-class="{'has-error' : buyerForm.guestName.$touched && buyerForm.guestName.$invalid}">
+                                <label class="control-label important">Nama Lengkap :</label>
+                                <div ng-hide="loggedIn">
+                                    <input type="text" pattern="[a-zA-Z\s]+" class="form-control nama" value="" id="buyer-name" placeholder="Nama Lengkap"
+                                           name="guestName" ng-model="guestInfo.name" required />
+                                    <div ng-show="!checkName(guestInfo.name)" style="color:red">
+                                        Nama tidak boleh mengandung karakter selain alfabet dan spasi
+                                    </div>
+                                </div>
+                                <div ng-hide="!loggedIn">
+                                    <!--Jika udah Login-->
+                                    <input type="text" class="form-control nama" value=guestInfo.name id="buyer-name" placeholder="Nama Lengkap" name="name" ng-model="guestInfo.name" required />
+                                </div>
+                            </div>
+
+                            @*<div class="form-group">
+                                    <label class="control-label">Country of Residence</label>
+                                    <div>
+                                        <select class="form-control" id="buyer-title" name="Country of Residence">
+                                            <option></option>
+                                        </select>
+                                    </div>
+                                </div>*@
+                            <div class="form-group">
+                                <label class="control-label">Catatan Khusus</label>
+                                <div>
+                                    <textarea class="form-control ng-pristine ng-untouched ng-valid" name="special-request" ng-model="buyerInfo.message"></textarea>
+                                </div>
+                            </div>
+                        </form><!-- #buyer-form -->
+                    </div>
+                    <div class="step-button">
+                        <div style="color:red" ng-show="form.incompleteContactTitle">
+                            Gelar pada Nama Kontak Belum Ditambahkan <br /> <br />
+                        </div>
+                        <div style="color:red" ng-show="form.incompleteContactName">
+                            Nama pada Data Kontak Belum Ditambahkan <br /> <br />
+                        </div>
+                        <div style="color:red" ng-show="form.incompleteContactPhone">
+                            Nomor Telepon pada Data Kontak Belum Lengkap. Silakan Pilih Kode Negara atau Lengkapi Nomor Telepon<br /> <br />
+                        </div>
+                        <div style="color:red" ng-show="form.incompleteContactEmail">
+                            Alamat E-Mail pada Data Kontak Belum Ditambahkan<br /> <br />
+                        </div>
+                        <div style="color:red" ng-show="form.incompleteGuestTitle">
+                            Gelar pada Nama Tamu Belum Ditambahkan <br /> <br />
+                        </div>
+                        <div style="color:red" ng-show="form.incompleteGuestName">
+                            Nama pada Data Tamu Belum Ditambahkan <br /> <br />
+                        </div>
+                        <button class="btn btn-yellow go-top" ng-click="validateForm(1)">LANJUTKAN</button>
+                    </div>
+
+                </div><!-- .content-step#step-1 -->
+                <!-- ******************** -->
+                <div class="content-step" id="step-2" ng-show="currentPage == 2" @*style=" display: block !important;"*@>
+                    <h3><b>RINCIAN</b> PEMESANAN</h3>
+                    <div class="rh-container review-hotel">
+                        <div class="rh-main-title">Detail Hotel</div>
+                        <div class="rh-content">
+                            <div class="rh-row clearfix">
+                                <div class="col-left-hotel"><img src="@Model.HotelDetail.MainImage" alt="Alternate Text" /></div>
+                                <div class="col-right-hotel">
+                                    <div class="blue-txt bold-txt hotel-title-lg md-txt">{{capitalizeFirstLetter(hotelDetail.hotelName)}}</div>
+                                    <div class="star" ng-show="hotelstar() == 'star'"></div>
+                                    <div class="star star-2" ng-show="hotelstar() == 'star star-2'"></div>
+                                    <div class="star star-3" ng-show="hotelstar() == 'star star-3'"></div>
+                                    <div class="star star-4" ng-show="hotelstar() == 'star star-4'"></div>
+                                    <div class="star star-5" ng-show="hotelstar() == 'star star-5'"></div>
+                                    <div class="rh-location">
+                                        {{capitalizeFirstLetter(hotelDetail.address)}}, {{capitalizeFirstLetter(hotelDetail.city)}}
+                                    </div>
+                                    <div class="rh-detail">
+                                        <div class="wb-container clearfix">
+                                            <div class="wb-left">Check in</div>
+                                            <div class="wb-mid">:</div>
+                                            <div class="wb-right bold-txt">{{checkin | date : "d MMMM yyyy"}}</div>
+                                        </div>
+                                        <div class="wb-container clearfix">
+                                            <div class="wb-left">Check out</div>
+                                            <div class="wb-mid">:</div>
+                                            <div class="wb-right bold-txt">{{checkout | date : "d MMMM yyyy"}}</div>
+                                        </div>
+                                        <div class="wb-container clearfix">
+                                            <div class="wb-left">Malam</div>
+                                            <div class="wb-mid">:</div>
+                                            <div class="wb-right bold-txt">{{nights}} Malam</div>
+                                        </div>
+                                        <div class="wb-container clearfix">
+                                            <div class="wb-left">Kamar</div>
+                                            <div class="wb-mid">:</div>
+                                            <div class="wb-right bold-txt">{{totalRoom}} Kamar</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="rh-row">
+                                <div class="rh-top clearfix">
+                                    <div class="col-left-hotel"><img src="/Assets/travorama20/images/Hotel/hotel-md.jpg" alt="Alternate Text" /></div>
+                                    <div class="col-right-hotel clearfix">
+                                        <span class="hotel-facility facility"></span>
+
+
+                                        @foreach (var room in rooms)
+                                        {
+                                            var index = 1;
+                                            <div class="rh-detail">
+                                                <div class="wb-container clearfix">
+                                                    <div class="wb-left">Jenis Kamar</div>
+                                                    <div class="wb-mid">:</div>
+                                                    <div class="wb-right bold-txt">@ToTitleCase(room.RoomName)</div>
+                                                </div>
+
+                                                @foreach (var rate in room.Rates)
+                                                {
+                                                    @index
+                                                    var pol = 1;
+                                                    <div class="wb-container clearfix">
+                                                        <div class="wb-left">Jumlah Kamar</div>
+                                                        <div class="wb-mid">:</div>
+                                                        <div class="wb-right bold-txt">@rate.RoomCount Kamar</div>
+                                                    </div>
+                                                    <div class="wb-container clearfix">
+                                                        <div class="wb-left">Tamu per Kamar</div>
+                                                        <div class="wb-mid">:</div>
+                                                        <div class="wb-right bold-txt">@(rate.AdultCount + rate.ChildCount) Orang</div>
+                                                    </div>
+                                                    <div class="wb-container clearfix">
+                                                        <div class="wb-left">Tipe Board</div>
+                                                        <div class="wb-mid">:</div>
+                                                        <div class="wb-right bold-txt">@ToTitleCase(rate.BoardDescription)</div>
+                                                    </div>
+                                                    <div class="wb-container clearfix">
+                                                        <div class="wb-left">Rate Comment</div>
+                                                        <div class="wb-mid">:</div>
+                                                        <div class="wb-right bold-txt">ALKSJHJDKDJS</div>
+                                                    </div>
+                                                    <div class="wb-container clearfix">
+                                                        <div class="wb-left">Ketentuan Pembatalan</div>
+                                                        <div class="wb-mid">:</div>
+                                                        <div class="wb-right bold-txt">
+                                                            @foreach (var policy in rate.Cancellation)
+                                                            {
+                                                                <div>
+                                                                    @pol. Biaya pembatalan: Rp @(policy.Fee.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID")))<br />
+                                                                    Mulai berlaku: @policy.StartTime.ToString("D", CultureInfo.CreateSpecificCulture("id-ID")) <br />
+                                                                </div>
+                                                                pol++;
+                                                            }
+                                                        </div>
+                                                    </div>
+
+                                                            index++;
+                                                }
+
+                                            </div>
+                                            <ul class="blue-txt semibold-txt blue-list rh-tnc">
+                                                @*<li>Extra bed belum termasuk</li>*@
+                                                @*<li>Free cancelation sebelum H-5 tanggal booking</li>*@
+                                            </ul>
+                                        }
+
+                                    </div>
+                                </div>
+                                @*<div class="rh-bottom">
+                                        <div class="rhb-content">
+                                            Dolor sit amet, consectetuer adipiscing elit, sed diam nonummy. ectetuer adipiscing elit, sed diam nonummy. Lorem ipsum dolor sit amet, consectuer ectetuer. Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
+                                        </div>
+                                    </div>*@
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <h3><b>RINCIAN</b> PESANAN</h3>
+                        <!--Info Pemesan-->
+                        <div class="buyer-review">
+                            <header>
+                                <span>Data Pemesan dan Tamu</span>
+                            </header>
+                            <section class="buyer-content">
+                                <div class="buyer-list-item">
+                                    <h3 class="buyer-list-heading"><b> Pemesan: {{changeTitle(buyerInfo.title)}} {{buyerInfo.name}}</b></h3>
+                                    <div class="buyer-list-content">
+                                        <p>
+                                            <span class="buyer-label">No. Telepon</span>
+                                            <span class="buyer-data">+{{buyerInfo.countryCode}}{{buyerInfo.phone}}</span>
+                                        </p>
+                                        <p>
+                                            <span class="buyer-label">E-mail</span>
+                                            <span class="buyer-data">{{buyerInfo.email}}</span>
+                                        </p>
+                                    </div>
+                                    <h3 class="buyer-list-heading"><b> Tamu: {{changeTitle(guestInfo.title)}} {{guestInfo.name}}</b></h3>
+                                    <h3 class="buyer-list-heading" ng-show="buyerInfo.message != null && buyerInfo.message != ''"><b>Catatan: </b></h3>
+                                    <div class="buyer-list-content">
+                                        {{buyerInfo.message}}
+                                    </div>
+                                </div>
+                            </section>
+
+                        </div><!--Info Pemesan-->
+
+                    </div>
+                    @*<div class="rh-container notes-hotel">
+                            <div class="rh-main-title">Catatan Khusus</div>
+                            <div class="rh-content clearfix">
+                                <ul class="sqr-blue-list">
+                                    <li>
+                                        <div class="wc-title blue-txt bold-txt">Room Policy</div>
+                                        <div class="wc-txt">
+                                            Dolor sit amet, consectetuer adipiscing elit, sed diam nonummy. ectetuer adipiscing elit, sed diam nonummy. Lorem ipsum dolor sit amet, consect etuer ectetuer. Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="wc-title blue-txt bold-txt">Room Policy</div>
+                                        <div class="wc-txt">
+                                            Dolor sit amet, consectetuer adipiscing elit, sed diam nonummy. ectetuer adipiscing elit, sed diam nonummy. Lorem ipsum dolor sit amet, consect etuer ectetuer. Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>*@
+                    <form action="" method="post" name="submitForm" id="rsvno" class="hidden">
+                        <input type="text" name="RsvNo" value="" id="rsvno-input" />
+                    </form>
+                    <div class="step-button">
+                        <button class="btn btn-grey" ng-click="changePage(1)">KEMBALI</button>
+                        <button class="btn btn-yellow go-top" ng-click="book.send()">PESAN</button>
+                    </div>
+                </div><!-- .content-step#step-2 -->
+                <!-- ******************** -->
+            </div>
+
+
+            <div class="col-right">
+                <div class="widget-container">
+                    <div class="widget price-detail">
+                        <h3 class="widget-title"><b>RINCIAN</b> HARGA</h3>
+                        <div class="widget-content">
+                            @foreach (var room in rooms)
+                            {
+                                foreach (var rate in room.Rates)
+                                {
+                            <dl class="total-room">
+                                <dt class="dt-title">
+                                    @rate.RoomCount @ToTitleCase(room.RoomName)
+                                    @rate.Boards x {{nights}} Malam :
+                                </dt>
+                                <dd class="dd-price">
+                                    Rp @(rate.NetPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID")))
+                                </dd>
+                            </dl>
+                                }
+                            }
+
+                            <dl class="service-room" ng-show="roomService > 0">
+                                <dt class="dt-title">Pelayanan Kamar :</dt>
+                                <dd class="dd-price">Rp {{roomService | number}}</dd>
+                            </dl>
+                            <dl class="total-price">
+                                <dt class="dt-title">Total</dt>
+                                <dd class="dd-price">Rp {{netFare + roomService | number}}</dd>
+                            </dl>
+                        </div>
+                        <footer>
+                            <small>*Harga akan dikonfirmasi kembali sebelum proses pembayaran</small>
+                        </footer>
+                    </div><!-- .widget.price-detail -->
+                    <div class="widget hotel" @*ng-show="currentPage > 1"*@>
+                        <div class="hotel-detail">
+                            <h3 class="widget-title"><b>RINCIAN</b> PEMESANAN</h3>
+                            <div class="widget-wrapper">
+                                <div class="widget-subtitle">Detail Hotel</div>
+                                <div class="widget-content">
+                                    <div class="widget-top">
+                                        <div class="wt-top clearfix">
+                                            <div class="col-left-hotel"><img src="/Assets/travorama20/images/Hotel/hotel-sm.jpg" alt="Alternate Text" /></div>
+                                            <div class="col-right-hotel">
+                                                <span class="blue-txt bold-txt">{{capitalizeFirstLetter(hotelDetail.hotelName)}}</span>
+                                                <br />
+                                                <span class="star" ng-show="hotelstar() == 'star'"></span>
+                                                <span class="star star-2" ng-show="hotelstar() == 'star star-2'"></span>
+                                                <span class="star star-3" ng-show="hotelstar() == 'star star-3'"></span>
+                                                <span class="star star-4" ng-show="hotelstar() == 'star star-4'"></span>
+                                                <span class="star star-5" ng-show="hotelstar() == 'star star-5'"></span>
+                                            </div>
+                                        </div>
+                                        <div class="wt-bottom">
+                                            {{capitalizeFirstLetter(hotelDetail.address)}}, {{capitalizeFirstLetter(hotelDetail.city)}}
+                                        </div>
+                                    </div>
+                                    <div class="widget-bottom">
+                                        <div class="wb-container clearfix">
+                                            <div class="wb-left">Check in</div>
+                                            <div class="wb-mid">:</div>
+                                            <div class="wb-right bold-txt">{{checkin | date : "d MMMM yyyy"}}</div>
+                                        </div>
+                                        <div class="wb-container clearfix">
+                                            <div class="wb-left">Check out</div>
+                                            <div class="wb-mid">:</div>
+                                            <div class="wb-right bold-txt">{{checkout | date : "d MMMM yyyy"}}</div>
+                                        </div>
+                                        <div class="wb-container clearfix">
+                                            <div class="wb-left">Malam</div>
+                                            <div class="wb-mid">:</div>
+                                            <div class="wb-right bold-txt">{{nights}} Malam</div>
+                                        </div>
+                                        <div class="wb-container clearfix">
+                                            <div class="wb-left">Kamar</div>
+                                            <div class="wb-mid">:</div>
+                                            <div class="wb-right bold-txt">{{totalRoom}} Kamar</div>
+                                        </div>
+                                        <div class="wb-container clearfix">
+                                            <div class="wb-left">Jenis Kamar</div>
+                                            <div class="wb-mid">:</div>
+                                            <div class="wb-right bold-txt">
+                                                @for (var i = 0; i < orderedRooms.Count; i++)
+
+                                                {
+                                                    if (i != orderedRooms.Count - 1)
+                                                    {
+                                                @orderedRooms[i].Item2<span> </span>
+                                                @ToTitleCase(orderedRooms[i].Item1)<span>, </span>
+                                                    }
+                                                    else
+                                                    {
+                                                @orderedRooms[i].Item2<span> </span>
+                                                @ToTitleCase(orderedRooms[i].Item1)
+                                                    }
+
+                                                }
+                                            </div>
+                                        </div>
+                                        <div class="wb-container clearfix">
+                                            <div class="wb-left">Tamu per Kamar</div>
+                                            <div class="wb-mid">:</div>
+                                            <div class="wb-right bold-txt">
+                                                {{totalpax()}} Orang
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            @*<div class="widget-wrapper notes">
+                                    <div class="widget-subtitle">Catatan Khusus</div>
+                                    <div class="widget-content clearfix">
+                                        <ul class="sqr-blue-list">
+
+                                            <li><div class="wc-title blue-txt bold-txt">Aturan Pembatalan</div>
+                                            </li>
+                                            @foreach (var room in rooms)
+                                            {
+
+                                                foreach (var rate in room.Rates)
+
+                                                {
+                                                    var index = 1;
+                                                    foreach (var policy in rate.Cancellation)
+                                                    {
+                                                        <li>
+                                                            <div class="wc-txt">
+                                                                @index. Biaya pembatalan: Rp @(policy.Fee.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID")))<br/>
+                                                                Mulai berlaku: @policy.StartTime.ToString("D", CultureInfo.CreateSpecificCulture("id-ID")) <br/>
+                                                            </div>
+                                                        </li>
+                                                        index++;
+                                                    }
+                                                }
+                                            }
+
+                                        </ul>
+                                    </div>
+                                </div>*@
+                        </div><!-- .widget.flight-detail -->
+                    </div>
+                </div><!-- .widget-container -->
+            </div>
+        </div>
+    </section>
+
+    @*<div class="bookfailed-popup" ng-show="expired">
+        <div class="overlay-content">
+            <section style="padding-top:60px; padding-left:225px;">
+                <div><img src="/Assets/images/travorama-logo-color.png" height="22px" width="80px"></div>
+                <div style="padding-top:25px;"><span style="color: #15b1e4; font-size:26px"><b>Mohon maaf...</b></span></div>
+                <div style="padding-top:5px;"><span style="font-size:13px">Waktu pemesanan Anda<span style="color: #15b1e4;font-size:13px"><b> sudah habis</b></span>.</span></div>
+                <div><span style="font-size:13px">Silakan klik tombol di bawah untuk kembali ke halaman pencarian.</span></div>
+            </section>
+            <div align="right" style="padding-right:30px;padding-top:30px;">
+                <a class="btn popup-btn-yellow book-failed" href="{{returnUrl}}"><b>CARI ULANG</b></a>
+            </div>
+        </div>
+    </div>*@
+
+    <div class="loading-popup" ng-show="book.booking">
+        <div class="overlay-content">
+            <section style="padding-top:40px; padding-left:190px;">
+                <div><img src="/Assets/images/travorama-logo-color.png" height="22px" width="80px"></div>
+                <div style="padding-top:20px;"><span style="color: #15b1e4; font-size:17px"><i><b>Mohon Tunggu...</b></i></span></div>
+                <div><img src="/Assets/images/popup/loading-strip2.png"></div>
+                <div style="padding-top:15px;"><span style="font-size:14px"><b>Kami sedang</b></span></div>
+                <span style="color: #15b1e4; font-size:14px"><b>memproses*</b></span>
+                <div><span style="font-size:14px"><b>pemesanan Anda</b></span></div>
+                <div><span style="font-size:14px"><b>ke hotel</b></span></div>
+                <div style="padding-right:8px;padding-top:20px"><span style="font-size:9px"><b>*Dapat berlangsung hingga 5(lima) menit</b></span></div>
+                <div style="padding-top:20px"><img src="/Assets/images/popup/quotation1.png"><span style="font-size:12px;">Oh the Places</span></div>
+                <div><span style="font-size:12px;">You'll go<img src="/Assets/images/popup/quotation2.png"></span></div>
+                <div><span><i>-Dr. Seuss</i></span></div>
+            </section>
+        </div>
+    </div>
+
+    <div class="bookfailed-popup" ng-show="book.checked && book.isSuccess">
+        <div class=" overlay-content">
+            <section style="padding-top:60px; padding-left:225px;">
+                <div><img src="/Assets/images/travorama-logo-color.png" height="22px" width="80px"></div>
+                <div style="padding-top:20px;"><span style="color: #15b1e4; font-size:20px"><b>Pemesanan Berhasil</b></span></div>
+                <div><img src="~/Assets/images/popup/paymentyellowstrip.png" /></div>
+                <div style="padding-top:5px;"><span style="font-size:14px"></span></div>
+                <div style="padding-top:5px;"><span style="font-size:14px">Mengalihkan Anda ke halaman pembayaran.</span></div>
+            </section>
+        </div>
+    </div>
+
+    <div class="bookfailed-popup" ng-show="book.checked && !book.isSuccess">
+        <div class="overlay-content">
+            <section style="padding-top:60px; padding-left:225px;">
+                <div><img src="/Assets/images/travorama-logo-color.png" height="22px" width="80px"></div>
+                <div style="padding-top:25px;"><span style="color: #15b1e4; font-size:26px"><b>Mohon maaf...</b></span></div>
+                <div style="padding-top:5px;"><span style="font-size:13px">Pemesanan tidak dapat diproses karena hotel <span style="color: #15b1e4;font-size:13px"><b>telah terisi penuh</b></span></span></div>
+                <div align="right" style="padding-right:50px"><img src="/Assets/images/popup/smallyellowstrip.png"></div>
+            </section>
+            <div align="right" style="padding-right:30px;padding-top:30px;">
+                <a class="btn popup-btn-yellow book-failed" href="{{returnUrl}}"><b>CARI LAGI</b></a>
+            </div>
+        </div>
+    </div>
+
+    <div class="priceChaged-popup" ng-show="book.isPriceChanged">
+        <div class="overlay-content">
+            <section style="padding-top:45px; padding-left:200px;padding-bottom:0px;margin-bottom:0px;">
+                <div><img src="/Assets/images/travorama-logo-color.png" height="22px" width="80px"></div>
+                <div style="padding-top:5px;"><span style="color: #15b1e4; font-size:26px"><b>Harga berubah*</b></span></div>
+                <div style="padding-top:5px;"><span style="font-size:13px">Pihak hotel baru saja mengupdate harga kamar dari <span style="color: #15b1e4;font-size:13px"><b>Rp {{netFare | number : fractionSize}}</b></span> menjadi <span style="color: #15b1e4;font-size:13px"><b>Rp {{book.newPrice | number : fractionSize}}</b></span></span></div>
+                <div align="right" style="padding-right:10px"><img src="/Assets/images/popup/paymentyellowstrip.png"></div>
+                <div style="padding-right:5px;padding-top:5px;padding-bottom:0px;margin-bottom:0px;"><span style="font-size:10px"><b>*Dapat berlangsung hingga 5(lima) menit</b></span></div>
+                <div style="padding-top:0px;margin-top:0px"><hr style="color:#15b1e4;padding-bottom:15px;margin-bottom:0px;padding-top:0px;margin-top:3px;margin-right:75px;" /></div>
+
+                <footer>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <a class="btn btn-grey btn-block" href="{{returnUrl}}">CARI ULANG</a>
+                            </div>
+                            <form name="finalForm" id="finalForm" ng-submit="book.send()">
+                                <input type="submit" class="btn btn-yellow" value="LANJUTKAN" ng-disabled="(checkoutForm.loading)">
+                            </form>
+                        </div>
+                    </div>
+                </footer>
+            </section>
+        </div>
+    </div>
+</div>

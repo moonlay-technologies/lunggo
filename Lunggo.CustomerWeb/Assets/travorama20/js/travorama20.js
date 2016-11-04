@@ -4,8 +4,60 @@ $(function() {
 });
 
 if (typeof(angular) == 'object') {
-    var app = angular.module('travorama', ['ngRoute']);
+    var app = angular.module('travorama', ['ngRoute', 'ngResource']);
+
+    app.config(function ($logProvider) {
+        $logProvider.debugEnabled(true);
+    });
+
+    //function myFunction(xml) {
+    //    var x, i, xmlDoc, txt;
+    //    xmlDoc = xml.responseXML;
+    //    txt = "";
+    //    x = xmlDoc.getElementsByTagName('book');
+    //    for (i = 0; i < x.length; i++) {
+    //        txt += x[i].getAttribute('category') + "<br>";
+    //    }
+    //    document.getElementById("demo").innerHTML = txt;
+    //}
+
+
+    app.factory('DataSource', ['$http', function ($http) {
+        return {
+            get: function (file, callback, transform) {
+                $http.get(
+                    file,
+                    { transformResponse: transform }
+                ).
+                success(function (data, status) {
+                    console.log("Request succeeded");
+                    callback(data);
+                }).
+                error(function (data, status) {
+                    console.log("Request failed " + status);
+                });
+            }
+        };
+    }]);
+
+    var SOURCE_FILE = "/Config/application.properties";
+
+    xmlTransform = function (data) {
+        console.log("transform data");
+        var x2js = new X2JS();
+        var json = x2js.xml_str2json(data);
+        return json.guitars.guitar;
+    };
+
+    setData = function (data) {
+        $scope.dataSet = data;
+    };
+
+    //DataSource.get(SOURCE_FILE, setData, xmlTransform);
+
 }
+
+
 
 //********************
 // variables
@@ -1792,4 +1844,73 @@ function accordionFunctions() {
             this.nextElementSibling.classList.toggle("show");
         }
     }
+}
+
+//********************
+// hotel form search function
+function hotelFormSearchFunctions() {
+    //Show hotel
+    $('.form-hotel-location').click(function () {
+        $('.search-hotel').show();
+    });
+
+    //hideHotel hotel
+    function hideHotel() {
+        $('.search-hotel').hide();
+    }
+
+    //close hotel
+    $('.close-hotel').click(function () { hideHotel(); });
+
+    $('.search-hotel .location-recommend nav ul li ').click(function () {
+        var showClass = $(this).attr('data-show');
+        $(this).addClass('active');
+        $(this).siblings().removeClass('active');
+        $('.search-hotel .location-recommend .tab-content>div').removeClass('active');
+        $('.search-hotel .location-recommend .tab-content>div.' + showClass).addClass('active');
+    });
+
+    //*****
+    // show and hide search calendar
+    function showCalendar(target) {
+        target = target || $('.search-calendar-hotel').attr('data-date');
+        $('.search-calendar-hotel').attr('id', target);
+        if (target == 'departure') {
+            $('.search-calendar-hotel .calendar-header .departure').removeClass('hidden');
+            $('.search-calendar-hotel .calendar-header .return').addClass('hidden');
+        } else {
+            $('.search-calendar-hotel .calendar-header .departure').addClass('hidden');
+            $('.search-calendar-hotel .calendar-header .return').removeClass('hidden');
+        }
+        $('.search-calendar-hotel').attr('data-date', target);
+        $('.searchsearch-calendar-hotel').show();
+    }
+
+    function hideCalendar() {
+        $('.search-calendar-hotel').hide();
+    }
+    $('.close-calendar-hotel').click(function () { hideCalendar(); });
+
+    //*****
+    // date selector
+    $('.form-hotel-checkin').click(function () {
+        $('.search-calendar-hotel').show();
+        showCalendar();
+        $('.hotel-date-picker').datepicker('option', 'minDate', new Date());
+    });
+
+    // embed date picker into page
+    //$('.hotel-date-picker').datepicker({
+    //    numberOfMonths: 1,
+    //    onSelect: function (data) {
+    //        data = data.substring(3, 5) + "/" + data.substring(0, 2) + "/" + data.substring(6, 10);
+    //        console.log(data);
+    //        var target;
+    //        var chosenDate = new Date(data);
+    //        $(target + ' .date').html(('0' + chosenDate.getDate()).slice(-2));
+    //        $(target + ' .month').html(translateMonth(chosenDate.getMonth()));
+    //        $(target + ' .year').html(chosenDate.getFullYear());
+    //        $('.search-calendar-hotel').hide();
+    //    }
+    //});
 }

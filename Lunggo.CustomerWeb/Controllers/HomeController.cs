@@ -77,7 +77,7 @@ namespace Lunggo.CustomerWeb.Controllers
             if (displayReservation != null)
             {
                 //var passengerLastName = displayReservation.Passengers.Where(x => x.Name.ToLower() == lastName.ToLower());
-                var passengerLastName = displayReservation.Passengers.Where(x => x.Name.ToLower().Contains(lastName.ToLower()));
+                var passengerLastName = displayReservation.Pax.Where(x => x.Name.ToLower().Contains(lastName.ToLower()));
                 if (passengerLastName.Any())
                 {
                     TempData["AllowThisReservationCheck"] = rsvNo;

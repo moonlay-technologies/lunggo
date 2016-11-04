@@ -17,6 +17,7 @@ namespace Lunggo.ApCommon.Hotel.Model.Logic
         public DateTime? ExpiryTime { get; set; }
         public int ReturnedHotelCount { get; set; }
         public int TotalHotelCount { get; set; }
+        public int FilteredHotelCount { get; set; }
         public int StartPage { get; set; }
         public int EndPage { get; set; }
         public decimal MaxPrice { get; set; }

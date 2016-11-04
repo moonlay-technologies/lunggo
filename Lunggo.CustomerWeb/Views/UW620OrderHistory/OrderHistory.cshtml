@@ -14,6 +14,7 @@
     <script src="/Assets/js/angular.min.js"></script>
     <script src="/Assets/js/angular-animate.min.js"></script>
     <script src="/Assets/js/angular-route.min.js"></script>
+    <script type="text/javascript" src="/Scripts/bootstrap.min.js"></script>
 }
 
 @section PageJS{
@@ -164,37 +165,141 @@
                         <h2><b>@Html.I18NString("CW00195")</b> @Html.I18NString("CW00196")</h2>
                     </header>
                     <section class="content-body">
-                        <h3 ng-if="flightlist.length == 0">Belum ada pemesanan.</h3>
-                        <div ng-if="flightlist.length > 0" ng-repeat="flight in flightlist track by $index">
-                            <div class="order-wrapper">
-                                <div class="order flight">
-                                    <header>
-                                        <span> Nomor Pesanan : {{flight.rsvNo}}</span>
-                                    </header>
-                                    <section class="container">
-                                        <div class="row">
-                                            <div class="col-xs-10">
-                                                <div class="detail">
-                                                    <p>@Html.I18NString("CW00197") : <b>{{flight.itin.trips[0].origin}}</b> to <b>{{flight.itin.trips[0].destination}}</b></p>
-                                                    <p ng-if="flight.itin.trips.length > 1">@Html.I18NString("CW00057"): {{flight.itin.trips[0].segments[0].departureTime | date : 'dd - MMMM - yyyy , HH:mm' :'UTC'}} | @Html.I18NString("CW00058"): {{flight.itin.trips[1].segments[0].departureTime | date : 'dd - MMMM - yyyy , HH:mm' :'UTC'}}</p>
-                                                    <p ng-if="flight.itin.trips.length < 2">@Html.I18NString("CW00057"): {{flight.itin.trips[0].segments[0].departureTime | date : 'dd - MMMM - yyyy , HH:mm' :'UTC'}}</p>
-                                                    <p>Status : <span class="success">{{paymentstatus(flight.payment.status)}}</span></p>
+                        <header class="tab-header">
+                            <nav>
+                                <ul>
+                                    <li class="flight-history active"><a data-toggle="tab" href="#flight-history">Pesawat</a></li>
+                                    <li class="hotel-history"><a data-toggle="tab" href="#hotel-history">Hotel</a></li>
+                                </ul>
+                            </nav>
+                        </header>
+                        <div class="tab-content">
+                            <div class="tab-flight-history tab-pane cleafix active" id="flight-history">
+                                <h3 ng-if="flightlist.length == 0">Belum ada pemesanan.</h3>
+                                <div ng-if="flightlist.length > 0" ng-repeat="flight in flightlist track by $index">
+                                    <div class="order-wrapper">
+                                        <div class="order flight">
+                                            <header>
+                                                <span> Nomor Pesanan : {{flight.rsvNo}}</span>
+                                            </header>
+                                            <section class="container">
+                                                <div class="row">
+                                                    <div class="col-xs-10">
+                                                        <div class="detail">
+                                                            <p>@Html.I18NString("CW00197") : <b>{{flight.itin.trips[0].origin}}</b> to <b>{{flight.itin.trips[0].destination}}</b></p>
+                                                            <p ng-if="flight.itin.trips.length > 1">@Html.I18NString("CW00057"): {{flight.itin.trips[0].segments[0].departureTime | date : 'dd - MMMM - yyyy , HH:mm' :'UTC'}} | @Html.I18NString("CW00058"): {{flight.itin.trips[1].segments[0].departureTime | date : 'dd - MMMM - yyyy , HH:mm' :'UTC'}}</p>
+                                                            <p ng-if="flight.itin.trips.length < 2">@Html.I18NString("CW00057"): {{flight.itin.trips[0].segments[0].departureTime | date : 'dd - MMMM - yyyy , HH:mm' :'UTC'}}</p>
+                                                            <p>Status : <span class="success">{{paymentstatus(flight.payment.status)}}</span></p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xs-2">
+                                                        <form action="" method="post" name="submitForm" id="rsvno" class="hidden">
+                                                            <input type="text" name="RsvNo" value="" id="rsvno-input" />
+                                                        </form>
+                                                        <div class="action">
+                                                            <button class="btn btn-yellow" ng-click="submitRsvNo(flight.rsvNo)">@Html.I18NString("CW00175")</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </section>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-hotel-history tab-pane cleafix" id="hotel-history">
+                                <div class="order-wrapper">
+                                    <div class="order hotel page-hotel">
+                                        <div class="order-top">
+                                            <div class="ot clearfix">
+                                                <div class="ot-left"><img src="/Assets/travorama20/images/Hotel/hotel-sm.jpg" alt="Alternate Text" /></div>
+                                                <div class="ot-right">
+                                                    <span class="blue-txt bold-txt">Bliss Hotel Singapore</span>
+                                                    <br /><span class="star star-4"></span>
+                                                    <div class="wt-location">
+                                                        Kios Tower AB No. 26, Jl. Karet Pasar Gang Tiong No: 62 ; Jakarta Barat
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <div class="col-xs-2">
-                                                <form action="" method="post" name="submitForm" id="rsvno" class="hidden">
-                                                    <input type="text" name="RsvNo" value="" id="rsvno-input" />
-                                                </form>
-                                                <div class="action">
-                                                    <button class="btn btn-yellow" ng-click="submitRsvNo(flight.rsvNo)">@Html.I18NString("CW00175")</button>
+                                            
+                                        </div>
+                                        <div class="order-bottom">
+                                            <div class="wb-container clearfix">
+                                                <div class="ot-left">Check in</div>
+                                                <div class="ot-right bold-txt">5 November 2016</div>
+                                            </div>
+                                            <div class="wb-container clearfix">
+                                                <div class="ot-left">Check out</div>
+                                                <div class="ot-right bold-txt">9 November 2016</div>
+                                            </div>
+                                            <div class="wb-container clearfix">
+                                                <div class="ot-left">Malam</div>
+                                                <div class="ot-right bold-txt">3 Malam</div>
+                                            </div>
+                                            <div class="wb-container clearfix">
+                                                <div class="ot-left">Kamar</div>
+                                                <div class="ot-right bold-txt">2 Kamar</div>
+                                            </div>
+                                            <div class="wb-container clearfix">
+                                                <div class="ot-left">Jenis Kamar</div>
+                                                <div class="ot-right bold-txt">Superior Room</div>
+                                            </div>
+                                            <div class="wb-container clearfix">
+                                                <div class="ot-left">Tamu per Kamar</div>
+                                                <div class="ot-right bold-txt">2 orang</div>
+                                            </div>
+                                        </div>
+                                        <div class="action-hotel">
+                                            <button class="btn btn-yellow" ng-click="submitRsvNo(flight.rsvNo)">DETAIL</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="order-wrapper">
+                                    <div class="order hotel page-hotel">
+                                        <div class="order-top">
+                                            <div class="ot clearfix">
+                                                <div class="ot-left"><img src="/Assets/travorama20/images/Hotel/hotel-sm.jpg" alt="Alternate Text" /></div>
+                                                <div class="ot-right">
+                                                    <span class="blue-txt bold-txt">Bliss Hotel Singapore</span>
+                                                    <br /><span class="star star-4"></span>
+                                                    <div class="wt-location">
+                                                        Kios Tower AB No. 26, Jl. Karet Pasar Gang Tiong No: 62 ; Jakarta Barat
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </section>
+                                        <div class="order-bottom">
+                                            <div class="wb-container clearfix">
+                                                <div class="ot-left">Check in</div>
+                                                <div class="ot-right bold-txt">5 November 2016</div>
+                                            </div>
+                                            <div class="wb-container clearfix">
+                                                <div class="ot-left">Check out</div>
+                                                <div class="ot-right bold-txt">9 November 2016</div>
+                                            </div>
+                                            <div class="wb-container clearfix">
+                                                <div class="ot-left">Malam</div>
+                                                <div class="ot-right bold-txt">3 Malam</div>
+                                            </div>
+                                            <div class="wb-container clearfix">
+                                                <div class="ot-left">Kamar</div>
+                                                <div class="ot-right bold-txt">2 Kamar</div>
+                                            </div>
+                                            <div class="wb-container clearfix">
+                                                <div class="ot-left">Jenis Kamar</div>
+                                                <div class="ot-right bold-txt">Superior Room</div>
+                                            </div>
+                                            <div class="wb-container clearfix">
+                                                <div class="ot-left">Tamu per Kamar</div>
+                                                <div class="ot-right bold-txt">2 orang</div>
+                                            </div>
+                                        </div>
+                                        <div class="action-hotel">
+                                            <button class="btn btn-yellow" ng-click="submitRsvNo(flight.rsvNo)">DETAIL</button>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-
                     </section>
 
                 </div><!-- .history-content -->

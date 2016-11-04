@@ -787,9 +787,9 @@
     </None>
     <None Include="HtmlTemplate\BankTransferInstructionEmailHotel.cshtml" />
     <None Include="HtmlTemplate\HotelSaySorryFailedIssueNotifEmail.cshtml" />
-    <None Include="HtmlTemplate\HotelEticketEmail.cshtml" />
+    <None Include="HtmlTemplate\HotelVoucherEmail.cshtml" />
     <None Include="HtmlTemplate\HotelInvoice.cshtml" />
-    <None Include="HtmlTemplate\HotelEticket.cshtml" />
+    <None Include="HtmlTemplate\HotelVoucher.cshtml" />
     <None Include="HtmlTemplate\FlightEticketSlightDelayNotifEmail.cshtml" />
     <None Include="HtmlTemplate\ContactUsEmail.cshtml" />
     <None Include="HtmlTemplate\FlightIssueFailedNotifEmail.cshtml" />

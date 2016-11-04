@@ -100,6 +100,7 @@ namespace Lunggo.WebAPI.ApiSrc.Hotel.Logic
                     HotelFilterDisplayInfo = searchServiceResponse.HotelFilterDisplayInfo,
                     IsSpecificHotel = searchServiceResponse.IsSpecificHotel,
                     HotelCode = searchServiceResponse.HotelCode,
+                    FilteredHotelCount = searchServiceResponse.FilteredHotelCount,
                     StatusCode = HttpStatusCode.OK
                 };
             }

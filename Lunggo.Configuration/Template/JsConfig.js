@@ -193,6 +193,10 @@ var ResendConfirmationEmailMobileConfig = {
     Url: '$mobileUrl$$resendConfirmationEmailPath$'
 };
 
+var HotelBookConfig = {
+    Url: '$apiUrl$$hotelBookPath$',
+    working: false
+};
 function setCookie(cname, cvalue, expTime) {
 
     if (cname != "accesstoken") {

@@ -15,6 +15,11 @@ namespace Lunggo.ApCommon.Constant
     {
         private static readonly MessageManager Msg = MessageManager.GetInstance();
 
+        public static string Title(Title? title)
+        {
+            return Title(title.GetValueOrDefault());
+        }
+
         public static string Title(Title title)
         {
             var lang = "en_US";
@@ -34,6 +39,11 @@ namespace Lunggo.ApCommon.Constant
                 default:
                     return "";
             }
+        }
+
+        public static string PassengerType(PaxType? type)
+        {
+            return PassengerType(type.GetValueOrDefault());
         }
 
         public static string PassengerType(PaxType type)

@@ -13,17 +13,16 @@ namespace Lunggo.ApCommon.Hotel.Service
 {
     public partial class HotelService
     {
-        private decimal NetFare = 0;
-        private decimal OriginalPrice = 0;
         public GetHotelDetailOutput GetHotelDetail(GetHotelDetailInput input)
         {
             var hotelDetail = GetHotelDetailFromDb(input.HotelCode);
             SetHotelFullFacilityCode(hotelDetail);
-            SetDetailFromSearchResult(hotelDetail, input.SearchId);
+            decimal originalPrice, netFare;
+            SetDetailFromSearchResult(hotelDetail, input.SearchId, out originalPrice, out netFare);
             hotelDetail.Rooms = SetRoomPerRate(hotelDetail.Rooms);
             return new GetHotelDetailOutput
             {
-                HotelDetail = ConvertToHotelDetailsBaseForDisplay(hotelDetail,OriginalPrice,NetFare)
+                HotelDetail = ConvertToHotelDetailsBaseForDisplay(hotelDetail,originalPrice,netFare)
             };
         }
 
@@ -37,7 +36,7 @@ namespace Lunggo.ApCommon.Hotel.Service
             return GetHotelDetailFromTableStorage(hotelCode);
         }
 
-        public void SetDetailFromSearchResult(HotelDetailsBase hotel ,string searchId)
+        public void SetDetailFromSearchResult(HotelDetailsBase hotel ,string searchId, out decimal originalPrice, out decimal netFare)
         {
             var searchResultData = GetSearchHotelResultFromCache(searchId);
             var searchResulthotel = searchResultData.HotelDetails.SingleOrDefault(p => p.HotelCode == hotel.HotelCode);
@@ -46,9 +45,9 @@ namespace Lunggo.ApCommon.Hotel.Service
             {
                 room.Images = hotel.ImageUrl.Where(x=>x.Type == "HAB").Select(x => x.Path).ToList();
             }
-            SetRegIdsAndTnc(hotel.Rooms, searchResulthotel.CheckInDate, hotel.HotelCode);
-            OriginalPrice = searchResulthotel.OriginalFare;
-            NetFare = searchResulthotel.NetFare;
+            SetRegIdsAndTnc(hotel.Rooms, searchResultData.CheckIn, hotel.HotelCode);
+            originalPrice = searchResulthotel.OriginalFare;
+            netFare = searchResulthotel.NetFare;
         }
 
         public void SetHotelFullFacilityCode(HotelDetailsBase hotel)

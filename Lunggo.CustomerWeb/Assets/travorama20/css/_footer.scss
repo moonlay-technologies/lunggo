@@ -58,8 +58,8 @@ including in this file :
     }
     &>.container {max-width: none;}
     .web-banner {
-        padding: 35px 0;
-        border-bottom: 1px solid #fff;
+        padding: 25px 0;
+        border-bottom: 1px solid #666;
         .menu-left a {
             background: url($mobile-app) no-repeat;
             height: 165px;
@@ -68,7 +68,7 @@ including in this file :
         .menu-right {    
             padding: 20px 0;
             .text-lg-banner {
-                font-size: 16px;
+                font-size: 20px;
                 font-weight: 700;
                 line-height: 36px;
                 .top-txt {line-height: 42px;}

@@ -42,17 +42,12 @@ namespace Lunggo.ApCommon.Hotel.Service
                     RsvTime = reservationRecord.RsvTime.GetValueOrDefault()
                 };
                 //|| hotelReservation.State == null
-                if (hotelReservation.Contact == null || hotelReservation.Payment == null )
+                if (hotelReservation.Contact == null || hotelReservation.Payment == null)
                     return null;
 
-                var hotelDetailRecords = HotelReservationDetailsTableRepo.GetInstance()
-                    .Find(conn, new HotelReservationDetailsTableRecord { RsvNo = rsvNo }).ToList();
+                var hotelDetailRecord = HotelReservationDetailsTableRepo.GetInstance()
+                    .Find1(conn, new HotelReservationDetailsTableRecord { RsvNo = rsvNo });
 
-                if (hotelDetailRecords.Count == 0)
-                    return null;
-
-                foreach (var hotelDetailRecord in hotelDetailRecords)
-                {
                     var hotelDetail = new HotelDetail
                     {
                         HotelCode = hotelDetailRecord.HotelCd.GetValueOrDefault(),
@@ -97,7 +92,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                             return null;
 
                         var rateRecords = HotelRateTableRepo.GetInstance()
-                            .Find(conn, new HotelRateTableRecord { RoomId =  hotelRoomRecord.Id }).ToList();
+                        .Find(conn, new HotelRateTableRecord { RoomId = hotelRoomRecord.Id }).ToList();
 
                         if (rateRecords.Count == 0)
                             return null;
@@ -114,7 +109,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                                 PaymentType = PaymentTypeCd.Mnemonic(rateRecord.PaymentType),
                                 RoomCount = rateRecord.RoomCount.GetValueOrDefault(),
                                 Price = Price.GetFromDb(rateRecord.PriceId.GetValueOrDefault()),
-                                ChildrenAges = rateRecord.ChildrenAges.Deserialize<List<int>>()
+                            ChildrenAges = rateRecord.ChildrenAges != null ? rateRecord.ChildrenAges.Deserialize<List<int>>() : null
                             };
                             hotelRoom.Rates.Add(rate);
                         }
@@ -122,8 +117,11 @@ namespace Lunggo.ApCommon.Hotel.Service
                         hotelDetail.Rooms.Add(hotelRoom);
                     }
 
+                var price = hotelDetail.Rooms.SelectMany(r => r.Rates).Sum(r => r.Price.Local);
+                hotelDetail.NetFare = price;
+                hotelDetail.OriginalFare = price * 1.01M;
+
                     hotelReservation.HotelDetails = hotelDetail;
-                }
                 
                 var paxRecords = PaxTableRepo.GetInstance()
                         .Find(conn, new PaxTableRecord { RsvNo = rsvNo }).ToList();
@@ -276,8 +274,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                             RoomCount = rate.RoomCount,
                             RateKey =  rate.RateKey,
                             PaymentType = PaymentTypeCd.MnemonicToString(rate.PaymentType),
-                            ChildrenAges = rate.ChildrenAges.Serialize(),
-                            
+                            ChildrenAges = rate.ChildrenAges != null ? rate.ChildrenAges.Serialize() : null
                         };
 
                         HotelRateTableRepo.GetInstance().Insert(conn, rateRecord);
@@ -393,7 +390,7 @@ namespace Lunggo.ApCommon.Hotel.Service
         #endregion
 
         #region Update
-        private static void UpdateReservationDetailsToDb (HotelIssueTicketResult result)
+        private static void UpdateReservationDetailsToDb(HotelIssueTicketResult result)
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {

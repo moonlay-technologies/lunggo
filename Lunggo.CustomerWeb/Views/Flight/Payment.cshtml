@@ -3,7 +3,7 @@
 @using Lunggo.Framework.Context
 @using Lunggo.Framework.Extension
 @using Lunggo.Framework.Config
-@model Lunggo.CustomerWeb.Models.FlightPaymentData
+@model Lunggo.CustomerWeb.Models.PaymentData
 
 @{
 
@@ -74,24 +74,24 @@
     var rsvNo = @Model.RsvNo;
     var paymentDetail = '';
     var flightDetail = '';
-    var trips = @Html.Raw(Model.Reservation.Itinerary.Trips.Serialize());
-    var price = @Model.Reservation.Itinerary.NetTotalFare;
-    var originalPrice = '@Model.Reservation.Itinerary.OriginalTotalFare';
+    var trips = @(Model.Reservation != null ? Html.Raw(Model.Reservation.Itinerary.Trips.Serialize()) : Html.Raw(""));
+    var price = @(Model.Reservation != null ? Model.Reservation.Itinerary.NetTotalFare : Model.HotelReservation.HotelDetail.NetFare);
+    var originalPrice = '@(Model.Reservation != null ? Model.Reservation.Itinerary.OriginalTotalFare : Model.HotelReservation.HotelDetail.OriginalFare);';
     var redirectionUrl;
     @if (Model.Reservation.Payment.RedirectionUrl != null) {
         @:redirectionUrl = '@Model.Reservation.Payment.RedirectionUrl';
-    }
+            } 
     var departureDate;
     @if (Model.Reservation.Itinerary.Trips != null)
     {
         if (Model.Reservation.Itinerary.Trips.Count == 2)
         {
             @:departureDate = '@Model.Reservation.Itinerary.Trips[1].DepartureDate';
-                                                    }
+                                                            }
         else
         {
             @:departureDate = '@Model.Reservation.Itinerary.Trips[0].DepartureDate';
-                                                    }
+                                                            }
     }
 
     // change current page
@@ -107,7 +107,7 @@
         phone: '@User.Identity.GetPhoneNumber()',
         email: '@User.Identity.GetEmail()'
     };
-        
+
     </script>
     <!-- angular controller -->
     <script src="/Assets/travorama20/js/paymentController.js"></script>
@@ -633,12 +633,12 @@
                     <div class="col-xs-3">
                         <a class="btn btn-grey btn-block" href="/" style="width:100%">KEMBALI</a>
                     </div>
-                
+
                 </div>
             </div>
         </div>
-       
-            
+
+
 
             <div class="tnc-popup" ng-show="pay.transfer">
                 <div class="popup">
@@ -701,7 +701,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="payment-popup" ng-show="pay.continueVoucher">
                 <div class=" overlay-content">
                     <section style="padding-top:60px; padding-left:225px;">
@@ -718,7 +718,7 @@
                     </div>
                 </div>
             </div>
-            
+
 
             <div class="payment-popup" ng-show="pay.continueBIN">
                 <div class=" overlay-content">
@@ -732,7 +732,7 @@
                     <div align="right" style="padding-right:30px;">
                         <a class="btn popup-btn-yellow book-failed" ng-click="pay.continuePay('bin')" ><b>Ya</b></a>
                         <a class="btn popup-btn-yellow book-failed" ng-click="pay.continueBIN = false;"><b>Tidak</b></a>
-                        
+
                     </div>
                 </div>
             </div>
@@ -755,13 +755,13 @@
                                 break;
     case "BookExpired":
     @:[Ini ceritanya page booking expired]
-        break;
+            break;
     case "BookError":
     @:[Ini ceritanya page kalo input datanya ga bener]
-        break;
+            break;
     case "NoLongerAvailable":
     @:[Ini ceritanya page kalo fare-nya uda ga available lageh]
-        break;
+            break;
     case "InvalidInputData":
     @:[Ini ceritanya page kalo input datanya ga bener]
         break;

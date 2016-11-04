@@ -3,6 +3,7 @@ using System.Web.WebPages;
 using log4net;
 using Lunggo.ApCommon.Constant;
 using Lunggo.ApCommon.Flight.Service;
+using Lunggo.ApCommon.Hotel.Service;
 using Lunggo.ApCommon.Payment;
 using Lunggo.ApCommon.Payment.Service;
 using Lunggo.Framework.BrowserDetection;
@@ -39,6 +40,7 @@ namespace Lunggo.CustomerWeb
             InitMailService();
             InitHtmlTemplateService();
             InitTableStorageService();
+            InitHotelService();
         }
 
         private static void InitMailService()
@@ -117,6 +119,12 @@ namespace Lunggo.CustomerWeb
         {
             var flight = FlightService.GetInstance();
             flight.Init("Config");
+        }
+
+        private static void InitHotelService()
+        {
+            var hotel = HotelService.GetInstance();
+            hotel.Init("Config");
         }
 
         private static void InitPaymentService()

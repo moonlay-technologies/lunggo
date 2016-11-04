@@ -85,7 +85,7 @@
   <ItemGroup>
     <Compile Include="Init.cs" />
     <Compile Include="ProcessChangedEticketQueue.cs" />
-    <Compile Include="ProcessHotelEticketQueue.cs" />
+    <Compile Include="ProcessHotelVoucherQueue.cs" />
     <Compile Include="ProcessEticketQueue.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WorkerRole.cs" />

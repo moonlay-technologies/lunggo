@@ -27,7 +27,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                 {
                     hotelReservation.HotelDetails
                 }).ToList()[0],
-                Passengers = ConvertToPaxForDisplay(hotelReservation.Pax),
+                Pax = ConvertToPaxForDisplay(hotelReservation.Pax),
                 RsvNo = hotelReservation.RsvNo,
                 Payment = PaymentService.GetInstance().ConvertToPaymentDetailsForDisplay(hotelReservation.Payment),
                 RsvTime = hotelReservation.RsvTime,
@@ -36,6 +36,32 @@ namespace Lunggo.ApCommon.Hotel.Service
             return convertedRsv;
         }
 
+        internal HotelDetailForDisplay ConvertToHotelDetailForDisplay(HotelDetailsBase hotelDetail)
+        {
+            if (hotelDetail == null)
+                return null;
+            var price = hotelDetail.Rooms.SelectMany(r => r.Rates).Sum(p => p.Price.Local);
+            var convertedHotel = new HotelDetailForDisplay
+            {
+                HotelCode = hotelDetail.HotelCode,
+                HotelName = hotelDetail.HotelName,
+                Address = hotelDetail.Address,
+                City = hotelDetail.City,
+                ZoneName = GetZoneNameFromDict(hotelDetail.DestinationCode + "-" + hotelDetail.ZoneCode),
+                StarRating = Convert.ToInt32(hotelDetail.StarRating.Substring(0,1)),
+                //ChainName = GetHotelChainDesc(hotelDetail.Chain),
+                AccomodationName = GetHotelAccomodationDescId(hotelDetail.AccomodationType),
+                MainImage = hotelDetail.ImageUrl.Select(x => x.Path).FirstOrDefault(),// != null ? hotelDetail.ImageUrl.Where(x=>x.Type=="GEN").Select(x=>x.Path).FirstOrDefault(): null,
+                OriginalFare = price * 1.01M,
+                NetFare = price,
+                IsRestaurantAvailable = hotelDetail.IsRestaurantAvailable,
+                IsWifiAccessAvailable = hotelDetail.WifiAccess,
+                Rooms = ConvertToHotelRoomForDisplay(hotelDetail.Rooms)
+            };
+                
+            
+            return convertedHotel;
+        }
         internal List<HotelDetailForDisplay> ConvertToHotelDetailForDisplay(List<HotelDetail> hotelDetails)
         {
             if (hotelDetails == null)
@@ -44,7 +70,7 @@ namespace Lunggo.ApCommon.Hotel.Service
             var convertedHotels = new List<HotelDetailForDisplay>();
             foreach (var hotelDetail in hotelDetails)
             {
-                var hotel =   new HotelDetailForDisplay
+                var hotel = new HotelDetailForDisplay
                 {
                 HotelCode = hotelDetail.HotelCode,
                 HotelName = hotelDetail.HotelName,
@@ -55,8 +81,10 @@ namespace Lunggo.ApCommon.Hotel.Service
                 ZoneName = GetZoneNameFromDict(hotelDetail.ZoneCode),
                 StarRating = hotelDetail.StarCode,
                 //ChainName = GetHotelChainDesc(hotelDetail.Chain),
-                AccomodationName = GetHotelAccomodationDescId(hotelDetail.AccomodationType),
-                MainImage = hotelDetail == null?null:hotelDetail.ImageUrl.Select(x=>x.Path).FirstOrDefault(),// != null ? hotelDetail.ImageUrl.Where(x=>x.Type=="GEN").Select(x=>x.Path).FirstOrDefault(): null,
+                    //AccomodationName = GetHotelAccomodationDescId(hotelDetail.AccomodationType),
+                    MainImage =
+                        hotelDetail.ImageUrl == null ? null : hotelDetail.ImageUrl.Select(x => x.Path).FirstOrDefault(),
+                    // != null ? hotelDetail.ImageUrl.Where(x=>x.Type=="GEN").Select(x=>x.Path).FirstOrDefault(): null,
                 OriginalFare = hotelDetail.OriginalFare,
                 NetFare = hotelDetail.NetFare,
                 IsRestaurantAvailable = hotelDetail.IsRestaurantAvailable,
@@ -155,9 +183,9 @@ namespace Lunggo.ApCommon.Hotel.Service
                     RoomName = roomDetail.RoomName ?? GetHotelRoomDescId(roomDetail.RoomCode),
                     Type = roomDetail.Type,
                     PaxCapacity = GetPaxCapacity(roomDetail.RoomCode),
-                    //TypeName = dictionary.GetHotelRoomRateTypeId(roomDetail.Type),
-                    //CharacteristicCode = roomDetail.characteristicCd,
-                    //CharacteristicName = dictionary.GetHotelRoomRateTypeId(roomDetail.characteristicCd),
+                    TypeName = dictionary.GetHotelRoomRateTypeId(roomDetail.Type),
+                    CharacteristicCode = roomDetail.characteristicCd,
+                    CharacteristicName = dictionary.GetHotelRoomRateTypeId(roomDetail.characteristicCd),
                     Images = roomDetail.Images != null ? roomDetail.Images : null,
                     Facilities = roomDetail.Facilities != null ? roomDetail.Facilities : null,
                     SingleRate = ConvertToSingleRateForDisplays(roomDetail.SingleRate),

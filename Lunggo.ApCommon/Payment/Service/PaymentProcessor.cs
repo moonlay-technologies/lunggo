@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Lunggo.ApCommon.Campaign.Constant;
 using Lunggo.ApCommon.Campaign.Service;
+using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Service;
 using Lunggo.ApCommon.Hotel.Service;
 using Lunggo.ApCommon.Payment.Constant;
@@ -21,7 +22,11 @@ namespace Lunggo.ApCommon.Payment.Service
         public PaymentDetails SubmitPayment(string rsvNo, PaymentMethod method, PaymentData paymentData, string discountCode, out bool isUpdated)
         {
             isUpdated = false;
-            var reservation = FlightService.GetInstance().GetReservation(rsvNo);
+            ReservationBase reservation;
+            if (rsvNo.StartsWith("1"))
+                reservation = FlightService.GetInstance().GetReservation(rsvNo);
+            else
+                reservation = HotelService.GetInstance().GetReservation(rsvNo);
             var paymentDetails = reservation.Payment;
 
             if (paymentDetails == null)
@@ -67,26 +72,30 @@ namespace Lunggo.ApCommon.Payment.Service
                 }
                 if (binDiscount.ReplaceMargin)
                 {
-                    foreach (var itin in reservation.Itineraries)
+                    if (reservation.Type == ProductType.Flight)
                     {
-                        itin.Price.Margin = new UsedMargin
+                        var rsv = reservation as FlightReservation;
+                        foreach (var itin in rsv.Itineraries)
                         {
-                            Name = "Margin Cancel",
-                            Description = "Margin Cancelled by BIN Promo",
-                            Currency = itin.Price.LocalCurrency
-                        };
-                        itin.Price.Local = itin.Price.OriginalIdr / itin.Price.LocalCurrency.Rate;
-                        itin.Price.Rounding = 0;
-                        itin.Price.FinalIdr = itin.Price.OriginalIdr;
-                        itin.Price.MarginNominal = 0;
+                            itin.Price.Margin = new UsedMargin
+                            {
+                                Name = "Margin Cancel",
+                                Description = "Margin Cancelled by BIN Promo",
+                                Currency = itin.Price.LocalCurrency
+                            };
+                            itin.Price.Local = itin.Price.OriginalIdr/itin.Price.LocalCurrency.Rate;
+                            itin.Price.Rounding = 0;
+                            itin.Price.FinalIdr = itin.Price.OriginalIdr;
+                            itin.Price.MarginNominal = 0;
+                        }
+                        paymentDetails.OriginalPriceIdr = rsv.Itineraries.Sum(i => i.Price.FinalIdr);
+                        paymentDetails.FinalPriceIdr = paymentDetails.OriginalPriceIdr - binDiscount.Amount;
                     }
-                    paymentDetails.OriginalPriceIdr = reservation.Itineraries.Sum(i => i.Price.FinalIdr);
-                    paymentDetails.FinalPriceIdr = paymentDetails.OriginalPriceIdr-binDiscount.Amount;
-                    }
+                }
                 else
                 {
                     paymentDetails.FinalPriceIdr -= binDiscount.Amount;
-                    
+
                 }
                 if (paymentDetails.Discount == null)
                     paymentDetails.Discount = new UsedDiscount
@@ -121,7 +130,11 @@ namespace Lunggo.ApCommon.Payment.Service
             ProcessPayment(paymentDetails, transactionDetails, method);
             if (paymentDetails.Status != PaymentStatus.Failed && paymentDetails.Status != PaymentStatus.Denied)
             {
-                reservation.Itineraries.ForEach(i => i.Price.UpdateToDb());
+                if (reservation.Type == ProductType.Flight)
+                {
+                    var rsv = reservation as FlightReservation;
+                    rsv.Itineraries.ForEach(i => i.Price.UpdateToDb());
+                }
                 UpdatePaymentToDb(rsvNo, paymentDetails);
             }
             if (method == PaymentMethod.BankTransfer || method == PaymentMethod.VirtualAccount)
