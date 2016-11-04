@@ -38,7 +38,8 @@ namespace Lunggo.ApCommon.Hotel.Service
                     Pax = new List<Pax>(),
                     Payment = PaymentDetails.GetFromDb(rsvNo),
                     State = ReservationState.GetFromDb(rsvNo),
-                    HotelDetails = new HotelDetail()
+                    HotelDetails = new HotelDetail(),
+                    RsvTime = reservationRecord.RsvTime.GetValueOrDefault()
                 };
                 //|| hotelReservation.State == null
                 if (hotelReservation.Contact == null || hotelReservation.Payment == null )
@@ -69,7 +70,12 @@ namespace Lunggo.ApCommon.Hotel.Service
                         ClientReference = hotelDetailRecord.ClientReference,
                         BookingReference = hotelDetailRecord.BookingReference,
                         SupplierName = hotelDetailRecord.SupplierName,
-                        SupplierVat = hotelDetailRecord.SupplierVat
+                        SupplierVat = hotelDetailRecord.SupplierVat,
+                        City = hotelDetailRecord.HotelCity,
+                        CountryCode = hotelDetailRecord.HotelCountry,
+                        DestinationCode = hotelDetailRecord.HotelDestination,
+                        ZoneCode = hotelDetailRecord.HotelZone,
+                        AreaCode = hotelDetailRecord.HotelArea
                     };
 
                     var hotelRoomRecords = HotelRoomTableRepo.GetInstance()
@@ -227,6 +233,11 @@ namespace Lunggo.ApCommon.Hotel.Service
                     HotelPhone = !(reservation.HotelDetails.PhonesNumbers == null || reservation.HotelDetails.PhonesNumbers.Count == 0) ?
                     reservation.HotelDetails.PhonesNumbers[0] : null,
                     HotelRating = reservation.HotelDetails.StarRating,
+                    HotelCity = reservation.HotelDetails.City,
+                    HotelCountry = reservation.HotelDetails.CountryCode,
+                    HotelDestination = reservation.HotelDetails.DestinationCode,
+                    HotelZone =  reservation.HotelDetails.ZoneCode,
+                    HotelArea = reservation.HotelDetails.AreaCode
                  };
 
                 HotelReservationDetailsTableRepo.GetInstance().Insert(conn, hotelRsvDetailsRecord);
@@ -262,10 +273,11 @@ namespace Lunggo.ApCommon.Hotel.Service
                             InsertPgId = "0",
                             PriceId = rate.Price.InsertToDb(),
                             RoomId = roomId,
-                            RoomCount = rate.RateCount,
+                            RoomCount = rate.RoomCount,
                             RateKey =  rate.RateKey,
                             PaymentType = PaymentTypeCd.MnemonicToString(rate.PaymentType),
-                            ChildrenAges = rate.ChildrenAges.Serialize()
+                            ChildrenAges = rate.ChildrenAges.Serialize(),
+                            
                         };
 
                         HotelRateTableRepo.GetInstance().Insert(conn, rateRecord);
