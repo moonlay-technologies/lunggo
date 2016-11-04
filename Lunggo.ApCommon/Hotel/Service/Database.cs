@@ -109,7 +109,8 @@ namespace Lunggo.ApCommon.Hotel.Service
                                 PaymentType = PaymentTypeCd.Mnemonic(rateRecord.PaymentType),
                                 RoomCount = rateRecord.RoomCount.GetValueOrDefault(),
                                 Price = Price.GetFromDb(rateRecord.PriceId.GetValueOrDefault()),
-                            ChildrenAges = rateRecord.ChildrenAges != null ? rateRecord.ChildrenAges.Deserialize<List<int>>() : null
+                                RateCommentsId = rateRecord.RateComment,
+                                ChildrenAges = rateRecord.ChildrenAges != null ? rateRecord.ChildrenAges.Deserialize<List<int>>() : null
                             };
                             hotelRoom.Rates.Add(rate);
                         }
@@ -274,7 +275,8 @@ namespace Lunggo.ApCommon.Hotel.Service
                             RoomCount = rate.RoomCount,
                             RateKey =  rate.RateKey,
                             PaymentType = PaymentTypeCd.MnemonicToString(rate.PaymentType),
-                            ChildrenAges = rate.ChildrenAges != null ? rate.ChildrenAges.Serialize() : null
+                            ChildrenAges = rate.ChildrenAges != null ? rate.ChildrenAges.Serialize() : null,
+                            RateComment = rate.RateCommentsId
                         };
 
                         HotelRateTableRepo.GetInstance().Insert(conn, rateRecord);
