@@ -76,6 +76,8 @@ namespace Lunggo.ApCommon.Hotel.Model
         public List<int> ChildrenAges { get; set; }
         [JsonProperty("tnc", NullValueHandling = NullValueHandling.Ignore)]
         public List<string> TermAndCondition { get; set; }
+        [JsonProperty("rateCommentsId", NullValueHandling = NullValueHandling.Ignore)]
+        public string RateCommentsId { get; set; }
     }
 
     public class HotelRate : OrderBase

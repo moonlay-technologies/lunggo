@@ -31,6 +31,8 @@ namespace Lunggo.ApCommon.Hotel.Service
                 RsvNo = hotelReservation.RsvNo,
                 Payment = PaymentService.GetInstance().ConvertToPaymentDetailsForDisplay(hotelReservation.Payment),
                 RsvTime = hotelReservation.RsvTime,
+                
+
             };
 
             return convertedRsv;
@@ -56,7 +58,9 @@ namespace Lunggo.ApCommon.Hotel.Service
                 NetFare = price,
                 IsRestaurantAvailable = hotelDetail.IsRestaurantAvailable,
                 IsWifiAccessAvailable = hotelDetail.WifiAccess,
-                Rooms = ConvertToHotelRoomForDisplay(hotelDetail.Rooms)
+                Rooms = ConvertToHotelRoomForDisplay(hotelDetail.Rooms),
+                CheckInDate = hotelDetail.CheckInDate,
+                CheckOutDate = hotelDetail.CheckOutDate
             };
                 
             
@@ -91,7 +95,13 @@ namespace Lunggo.ApCommon.Hotel.Service
                 Rooms = ConvertToHotelRoomForDisplay(hotelDetail.Rooms),
                 CheckInDate = hotelDetail.CheckInDate,
                 CheckOutDate = hotelDetail.CheckOutDate,
-                NightCount = hotelDetail.NightCount
+                NightCount = hotelDetail.NightCount,
+                SpecialRequest = hotelDetail.SpecialRequest,
+                SupplierVat = hotelDetail.SupplierVat,
+                SupplierName = hotelDetail.SupplierName,
+                BookingReference = hotelDetail.BookingReference,
+                ClientReference = hotelDetail.ClientReference,
+                PhonesNumbers = hotelDetail.PhonesNumbers
             };
             convertedHotels.Add(hotel);
             }

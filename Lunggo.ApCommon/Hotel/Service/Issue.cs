@@ -74,8 +74,6 @@ namespace Lunggo.ApCommon.Hotel.Service
                     ChildCount = rate.ChildCount, ChildrenAges = rate.ChildrenAges
                 }));
             }
-
-            occupancies = occupancies.Distinct().ToList();
             occupancies = occupancies.Distinct().ToList();
             var allCurrency = Currency.GetAllCurrencies();
             Guid generatedSearchId = Guid.NewGuid();
@@ -93,7 +91,7 @@ namespace Lunggo.ApCommon.Hotel.Service
             var hotelbeds = new HotelBedsSearchHotel();
             var searchResult = hotelbeds.SearchHotel(request);
             AddPriceMargin(searchResult.HotelDetails);
-            
+
             if (searchResult.HotelDetails == null || searchResult.HotelDetails.Count == 0)
             {
                 return new IssueHotelTicketOutput
@@ -148,7 +146,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                             {
                                 if (BookingStatusCd.Mnemonic(rate.Type) == CheckRateStatus.Recheck)
                                 {
-                                    var revalidateResult = CheckRate(ratea.RateKey, ratea.Price.Supplier);
+                                    var revalidateResult = CheckRate(ratea.RegsId.Split(',')[2], ratea.Price.Supplier);
                                     if (revalidateResult.IsPriceChanged)
                                     {
                                         rate.Price.SetSupplier(revalidateResult.NewPrice.GetValueOrDefault(),

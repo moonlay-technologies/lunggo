@@ -1,7 +1,7 @@
 ﻿@using System.Globalization
 @using Lunggo.ApCommon.Constant
 @using Lunggo.Framework.Config
-
+@model Lunggo.ApCommon.Hotel.Model.HotelReservationForDisplay
 @{
     ViewBag.SiteHeader = "header-email";
 }
@@ -45,11 +45,11 @@
                 <td colspan="2" width="90%">
 
                     <!-- CONTENT  -->
-                    <p style="font-size:16px;"><b>Hi <span style="color: #15b1e4;"> Anonymous </span></b></p>
+                    <p style="font-size:16px;"><b>Hi <span style="color: #15b1e4;"> @Model.Contact.Name </span></b></p>
                     <span style="font-size:13px;">Terima kasih telah menggunakan <b>Travorama</b> untuk pemesanan Anda.</span>
                     <br /><br />
                     <p>
-                        <b>Mohon Maaf</b>, pemesanan Anda gagal dikarenakan kesalahan sistem. Tiket Anda akan direfund secara otomatis setelah Anda menerima email ini
+                        <b>Mohon Maaf</b>, pemesanan Anda gagal dikarenakan kesalahan sistem. Voucher Anda akan direfund secara otomatis setelah Anda menerima email ini
                         Anda dapat melakukan pemesanan ulang tiket di <span style="color: #15b1e4;">www.travorama.com</span> dengan pilihan hotel lain.
                     </p>
 
@@ -73,7 +73,7 @@
                                     <p style="">:</p>
                                 </td>
                                 <td width="78%">
-                                    <p style=""><b>1020006675802</b></p>
+                                    <p style=""><b>@Model.RsvNo</b></p>
                                 </td>
                             </tr>
                             <tr>
@@ -84,7 +84,7 @@
                                     <p style="">:</p>
                                 </td>
                                 <td width="78%">
-                                    <p style=""><b>18 Okt 16 &nbsp;-&nbsp; 08:36</b></p>
+                                    <p style=""><b>@Model.RsvTime.ToString("D", CultureInfo.CreateSpecificCulture("id-ID"))  &nbsp;-&nbsp; @Model.RsvTime.ToString("t", CultureInfo.CreateSpecificCulture("id-ID"))</b></p>
                                 </td>
                             </tr>
                             <tr>
@@ -95,7 +95,7 @@
                                     <p style="">:</p>
                                 </td>
                                 <td width="78%">
-                                    <p style=""><b>MaxOne Hotels at Legian</b></p>
+                                    <p style=""><b>@Model.HotelDetail.HotelName</b></p>
                                 </td>
                             </tr>
                         </tbody>

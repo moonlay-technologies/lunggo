@@ -1,6 +1,7 @@
 ﻿@using System.Globalization
 @using Lunggo.ApCommon.Constant
 @using Lunggo.Framework.Config
+@model Lunggo.ApCommon.Hotel.Model.HotelReservationForDisplay
 
 @{
     ViewBag.SiteHeader = "header-email";
@@ -67,17 +68,17 @@
                             <tr>
                                 <td width="14.5%">
                                     <p style="color: #999;">Nomor Pemesanan.</p>
-                                    <p style=""><b>1020006675802</b></p>
+                                    <p style=""><b>@Model.RsvNo</b></p>
                                 </td>
                                 <td width="4%"></td>
                                 <td width="14.5%">
                                     <p style="color: #999;">Waktu.</p>
-                                    <p style=""><b>18 Okt 16 &nbsp;-&nbsp; 08:36</b></p>
+                                    <p style=""><b>@Model.RsvTime.ToString("D", CultureInfo.CreateSpecificCulture("id-ID"))  &nbsp;-&nbsp; @Model.RsvTime.ToString("t", CultureInfo.CreateSpecificCulture("id-ID"))</b></p>
                                 </td>
                                 <td width="4%"></td>
                                 <td width="14.5%">
                                     <p style="color: #999;">Detail Hotel.</p>
-                                    <p style=""><b>MaxOne Hotels at Legian</b></p>
+                                    <p style=""><b>@Model.HotelDetail.HotelName</b></p>
                                 </td>
                             </tr>
                         </tbody>
@@ -99,7 +100,7 @@
                                 <span style="background: #ffd632; color: #000; padding: 6.5px 10px; line-height: 0; border-radius: 27px; font-weight: 700; vertical-align: middle;">1</span>
                             </td>
                             <td>
-                                <p style="margin: 0;"><b>Transfer pembayaran Anda tepat dengan total tagihan ke rekening di bawah ini</b></p>
+                                <p style="margin: 0;"><b>Transfer pembayaran Anda tepat dengan total tagihan Rp @Model.Payment.FinalPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID")) ke rekening di bawah ini</b></p>
                             </td>
                         </tr>
                     </table>
@@ -145,7 +146,7 @@
                         </tr>
                     </table>
 
-                    <p style="font-style: italic; font-size: 11px; margin-left: 6%; margin-bottom: 0px;">Batas waktu pembayaran anda adalah sebelum <span style="color: #15b1e4">19:52 - Pk WIB (Selasa, 20 Okt 2016).</span></p>
+                    <p style="font-style: italic; font-size: 11px; margin-left: 6%; margin-bottom: 0px;">Batas waktu pembayaran Anda adalah sebelum <span style="color: #15b1e4">Pk. @Model.Payment.TimeLimit.GetValueOrDefault().ToString("t", CultureInfo.CreateSpecificCulture("id-ID")) WIB - (@Model.Payment.TimeLimit.GetValueOrDefault().ToString("D", CultureInfo.CreateSpecificCulture("id-ID"))).</span></p>
                     <p style="font-size: 10px; opacity: 0.5; font-style: italic; margin-left: 6%; margin-top: 1px; margin-bottom: 50px;">Jika lewat, booking Anda akan dibatalkan otomatis oleh sistem kami. Untuk booking yang sama, Anda harus melakukan pemesanan ulang dan harga kemungkinan besar akan berubah</p>
                     
                     <table width="100%" style="margin-bottom: 30px">
@@ -169,7 +170,7 @@
                         </tr>
                     </table>
 
-                    <p style="margin-left: 5%; opacity: 0.8; font-size: 10px; font-style: italic; margin-bottom: 40px;">Jika ada pertanyaan dapat mengirimkan email ke <span style="color: #15b1e4"> cs@travorama.com </span> dengan mencantumkan <span style="color: #15b1e4">No. Pesanan Travorama 12345678900</span></p>
+                    <p style="margin-left: 5%; opacity: 0.8; font-size: 10px; font-style: italic; margin-bottom: 40px;">Jika ada pertanyaan dapat mengirimkan email ke <span style="color: #15b1e4"> cs@travorama.com </span> dengan mencantumkan <span style="color: #15b1e4">No. Pesanan Travorama @Model.RsvNo</span></p>
                     <hr style="border-color: #15b1e4; border-style: dotted; margin-bottom: 20px;" width="100%" />
                     <p>Email tagihan ini bukan merupakan bukti pembayaran yang sah dan tidak dapat ditukar menjadi tiket apapun.</p>
                     <p style="font-size: 11px; font-style: italic; margin-bottom: 50px;">Email ini ditujukan hanya untuk, karena Anda telah melakukan pemesanan melalui Travorama</p>
