@@ -30,11 +30,10 @@ namespace Lunggo.WebAPI.ApiSrc.Hotel.Logic
                 return new HotelSearchApiResponse
                 {
                     StatusCode = HttpStatusCode.BadRequest,
-                    ErrorCode = "ERHSEA01"
+                    ErrorCode = "ERHSEA04"
                 };
             }
 
-            //if (apiResponse.StatusCode == HttpStatusCode.OK) return apiResponse;
             var log = LogService.GetInstance();
             var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
             return apiResponse;
@@ -49,15 +48,17 @@ namespace Lunggo.WebAPI.ApiSrc.Hotel.Logic
                 return
                     request.Filter != null ||
                     request.Sorting != null ||
-                    (request.From != null && request.To != null);
-    
+                    (request.From >= 0 && request.To >= 0);
             }
             else
             {
                 return
+                request.Location > 0 &&
                 request.AdultCount >= 1 &&
                 request.ChildCount >= 0 &&
-                request.CheckinDate >= DateTime.UtcNow.Date;   
+                request.CheckinDate >= DateTime.UtcNow.Date &&
+                request.CheckoutDate >= request.CheckinDate &&
+                request.RoomCount > 0;   
             }
         }
 
@@ -77,7 +78,6 @@ namespace Lunggo.WebAPI.ApiSrc.Hotel.Logic
                 EndPage = request.To,
                 FilterParam = request.Filter,
                 SortingParam = request.Sorting,
-                
             };
             return searchServiceRequest;
         }
@@ -86,6 +86,9 @@ namespace Lunggo.WebAPI.ApiSrc.Hotel.Logic
         {
             if (searchServiceResponse.IsSuccess)
             {
+                if (searchServiceResponse.ReturnedHotelCount <= 0)
+                    return new HotelSearchApiResponse(){StatusCode = HttpStatusCode.OK};
+
                 return new HotelSearchApiResponse
                 {
                     SearchId = searchServiceResponse.SearchId,
@@ -106,17 +109,20 @@ namespace Lunggo.WebAPI.ApiSrc.Hotel.Logic
             }
             else
             {
-                if (searchServiceResponse.Errors == null)
-                {
-                    return new HotelSearchApiResponse();
-                }
+                if (searchServiceResponse.Errors != null)
+                    return new HotelSearchApiResponse
+                    {
+                        StatusCode = HttpStatusCode.BadRequest,
+                        ErrorCode = "ERHSEA99"
+                    };
+
                 switch (searchServiceResponse.Errors[0])
                 {
                     case HotelError.InvalidInputData:
                         return new HotelSearchApiResponse
                         {
-                            StatusCode = HttpStatusCode.BadRequest,
-                            ErrorCode = "ERHSEA01"
+                            StatusCode = HttpStatusCode.InternalServerError,
+                            ErrorCode = "ERRGEN99"
                         };
                     case HotelError.SearchIdNoLongerValid:
                         return new HotelSearchApiResponse
