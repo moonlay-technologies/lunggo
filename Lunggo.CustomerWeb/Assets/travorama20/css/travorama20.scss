@@ -22,7 +22,7 @@ $mobile-app: '../images/mobile-app.png';
 /*--------------------*/
 /* mixins */
 @mixin letter-spacing($value){
-    letter-spacing:$value ;   
+    letter-spacing:$value;    
 }
 
 @mixin border-radius($radius){
@@ -76,7 +76,7 @@ $mobile-app: '../images/mobile-app.png';
 
 
 @mixin size($width, $height) {
-    width: $width ;
+    width: $width;
     height: $height;
 }
 
@@ -299,6 +299,21 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
             }
         }
     }
+    .hotel-location-search {padding:10px; height:475px; overflow:auto;
+        .hotel-autocomplete-pre {
+            .text-pre {display:none;}
+            .text-loading {display:none;}
+        }
+        .hotel-autocomplete-no-result {display:none;}
+        .hotel-autocomplete-result {
+            ul {margin:0; padding:0;
+                li {padding:10px; list-style:none; cursor:pointer;
+                    &:hover {background:$color-main-blue;}
+                }
+                li+li {border-top:$border-default;}
+            }
+        }
+    }
 }
 
 .search-location {
@@ -321,7 +336,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
 
 // slider
 .slider {margin-top:10px; margin-bottom:10px; background:#666;
-    .ui-slider-range {background:#fed446; }
+    .ui-slider-range {background:#fed446;}
     .ui-slider-handle {background:#dedede; @include border-radius(20px); width:15px; height:15px; color:#fff;
         &:focus {border:0;}
     }
