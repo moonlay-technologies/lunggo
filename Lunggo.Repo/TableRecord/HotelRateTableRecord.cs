@@ -110,6 +110,15 @@ namespace Lunggo.Repository.TableRecord
 		        IncrementLog("ChildrenAges");
 		    }
 		}
+		public String RateComment
+		{
+		    get { return _RateComment; }
+		    set
+		    {
+		        _RateComment = value;
+		        IncrementLog("RateComment");
+		    }
+		}
 		public String InsertBy
 		{
 		    get { return _InsertBy; }
@@ -177,6 +186,7 @@ namespace Lunggo.Repository.TableRecord
 		private int? _AdultCount;
 		private int? _ChildCount;
 		private String _ChildrenAges;
+		private String _RateComment;
 		private String _InsertBy;
 		private DateTime? _InsertDate;
 		private String _InsertPgId;
@@ -225,6 +235,7 @@ namespace Lunggo.Repository.TableRecord
 				new ColumnMetadata("AdultCount", false),
 				new ColumnMetadata("ChildCount", false),
 				new ColumnMetadata("ChildrenAges", false),
+				new ColumnMetadata("RateComment", false),
 				new ColumnMetadata("InsertBy", false),
 				new ColumnMetadata("InsertDate", false),
 				new ColumnMetadata("InsertPgId", false),

@@ -41,7 +41,11 @@ namespace Lunggo.ApCommon.Hotel.Service
             var searchResultData = GetSearchHotelResultFromCache(searchId);
             var searchResulthotel = searchResultData.HotelDetails.SingleOrDefault(p => p.HotelCode == hotel.HotelCode);
             hotel.Rooms = searchResulthotel.Rooms;
-            SetRegIdsAndTnc(hotel.Rooms, searchResulthotel.CheckInDate, hotel.HotelCode);
+            foreach (var room in hotel.Rooms)
+            {
+                room.Images = hotel.ImageUrl.Where(x=>x.Type == "HAB").Select(x => x.Path).ToList();
+            }
+            SetRegIdsAndTnc(hotel.Rooms, searchResultData.CheckIn, hotel.HotelCode);
             originalPrice = searchResulthotel.OriginalFare;
             netFare = searchResulthotel.NetFare;
         }
@@ -53,7 +57,6 @@ namespace Lunggo.ApCommon.Hotel.Service
                 data.FullFacilityCode = data.FacilityGroupCode + "" + data.FacilityCode;
             }
         }
-
         public List<HotelRoom> SetRoomPerRate(List<HotelRoom> hotelRoom)
         {
             var roomList = new List<HotelRoom>();

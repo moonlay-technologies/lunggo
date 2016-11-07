@@ -9,10 +9,9 @@ namespace Lunggo.ApCommon.Hotel.Constant
     public enum SearchHotelType
     {
         Undefined = 0,
-        Hotel = 1,
-        Area = 2,
-        Zone = 3,
-        Destination = 4
+        SearchID = 1,
+        HotelCode = 2,
+        Location = 3,
     }
 
     internal class SearchHotelTypeCd
@@ -21,14 +20,12 @@ namespace Lunggo.ApCommon.Hotel.Constant
         {
             switch (type)
             {
-                case SearchHotelType.Hotel:
-                    return "Hotel";
-                case SearchHotelType.Area:
-                    return "Area";
-                case SearchHotelType.Zone:
-                    return "Zone";
-                case SearchHotelType.Destination:
-                    return "Destination";
+                case SearchHotelType.SearchID:
+                    return "SearchID";
+                case SearchHotelType.HotelCode:
+                    return "HotelCode";
+                case SearchHotelType.Location:
+                    return "Location";
                 default:
                     return null;
             }
@@ -38,14 +35,12 @@ namespace Lunggo.ApCommon.Hotel.Constant
         {
             switch (searchHotelType)
             {
-                case "Hotel":
-                    return SearchHotelType.Hotel;
-                case "Area":
-                    return SearchHotelType.Area;
-                case "Zone":
-                    return SearchHotelType.Zone;
-                case "Destination":
-                    return SearchHotelType.Destination;
+                case "SearchID":
+                    return SearchHotelType.SearchID;
+                case "HotelCode":
+                    return SearchHotelType.HotelCode;
+                case "Location":
+                    return SearchHotelType.Location;
                 default:
                     return SearchHotelType.Undefined;
             }

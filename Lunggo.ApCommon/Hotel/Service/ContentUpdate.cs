@@ -8,7 +8,9 @@ using Lunggo.ApCommon.Hotel.Model;
 using Lunggo.ApCommon.Hotel.Model.Logic;
 using Lunggo.ApCommon.Hotel.Query;
 using Lunggo.Framework.Documents;
+using Lunggo.Framework.TableStorage;
 using Microsoft.Azure.Documents;
+using Microsoft.WindowsAzure.Storage.Table;
 
 namespace Lunggo.ApCommon.Hotel.Service
 {

@@ -19,8 +19,12 @@ namespace Lunggo.WebAPI.ApiSrc.Hotel.Model
         public int ReturnedHotelCount { get; set; }
         [JsonProperty("totalHotelCount", NullValueHandling = NullValueHandling.Ignore)]
         public int TotalHotelCount { get; set; }
+        [JsonProperty("filteredHotelCount", NullValueHandling = NullValueHandling.Ignore)]
+        public int FilteredHotelCount { get; set; }
         [JsonProperty("hotels", NullValueHandling = NullValueHandling.Ignore)]
         public List<HotelDetailForDisplay> Hotels { get; set; }
+        [JsonProperty("room", NullValueHandling = NullValueHandling.Ignore)]
+        public HotelRoomForDisplay Room { get; set; }
         [JsonProperty("expTime", NullValueHandling = NullValueHandling.Ignore)]
         public DateTime? ExpiryTime { get; set; }
         [JsonProperty("from", NullValueHandling = NullValueHandling.Ignore)]

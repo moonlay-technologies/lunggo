@@ -50,9 +50,10 @@ app.controller('paymentController', [
         $scope.trips = trips;
         $scope.hotelDetails = hotelDetails;
         $scope.totalRoom = totalRoom;
-        $scope.checkin = new Date(checkin.substring(0, 4), checkin.substring(4, 6) - 1, checkin.substring(6, 8));
-        $scope.checkout = new Date(checkout.substring(0, 4), checkout.substring(4, 6) - 1, checkout.substring(6, 8));
-        $scope.nights = daysBetween($scope.checkin, $scope.checkout);
+        $scope.checkin = checkin;
+        $scope.checkout = checkout;
+        $scope.nights = nights;
+        $scope.totalpax = totalpax;
         $scope.stepClass = '';
         $scope.redirectionUrl = redirectionUrl;
         //CreditCard

@@ -101,6 +101,51 @@ namespace Lunggo.Repository.TableRecord
 		        IncrementLog("HotelAddress");
 		    }
 		}
+		public String HotelArea
+		{
+		    get { return _HotelArea; }
+		    set
+		    {
+		        _HotelArea = value;
+		        IncrementLog("HotelArea");
+		    }
+		}
+		public String HotelZone
+		{
+		    get { return _HotelZone; }
+		    set
+		    {
+		        _HotelZone = value;
+		        IncrementLog("HotelZone");
+		    }
+		}
+		public String HotelCity
+		{
+		    get { return _HotelCity; }
+		    set
+		    {
+		        _HotelCity = value;
+		        IncrementLog("HotelCity");
+		    }
+		}
+		public String HotelDestination
+		{
+		    get { return _HotelDestination; }
+		    set
+		    {
+		        _HotelDestination = value;
+		        IncrementLog("HotelDestination");
+		    }
+		}
+		public String HotelCountry
+		{
+		    get { return _HotelCountry; }
+		    set
+		    {
+		        _HotelCountry = value;
+		        IncrementLog("HotelCountry");
+		    }
+		}
 		public String HotelRating
 		{
 		    get { return _HotelRating; }
@@ -221,6 +266,11 @@ namespace Lunggo.Repository.TableRecord
 		private int? _ChildCount;
 		private String _HotelPhone;
 		private String _HotelAddress;
+		private String _HotelArea;
+		private String _HotelZone;
+		private String _HotelCity;
+		private String _HotelDestination;
+		private String _HotelCountry;
 		private String _HotelRating;
 		private String _ClientReference;
 		private String _BookingReference;
@@ -274,6 +324,11 @@ namespace Lunggo.Repository.TableRecord
 				new ColumnMetadata("ChildCount", false),
 				new ColumnMetadata("HotelPhone", false),
 				new ColumnMetadata("HotelAddress", false),
+				new ColumnMetadata("HotelArea", false),
+				new ColumnMetadata("HotelZone", false),
+				new ColumnMetadata("HotelCity", false),
+				new ColumnMetadata("HotelDestination", false),
+				new ColumnMetadata("HotelCountry", false),
 				new ColumnMetadata("HotelRating", false),
 				new ColumnMetadata("ClientReference", false),
 				new ColumnMetadata("BookingReference", false),

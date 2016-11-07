@@ -4,6 +4,7 @@
 @using Lunggo.ApCommon.Hotel.Service
 @using Lunggo.ApCommon.Identity.Users
 @using Lunggo.ApCommon.Payment.Constant
+@using Lunggo.ApCommon.Travolutionary.WebService.Hotel
 @using Lunggo.Framework.Context
 @using Lunggo.Framework.Extension
 @using Lunggo.Framework.Config
@@ -49,13 +50,40 @@
 
     public string ToTitleCase(string input)
     {
-        var splittedText = input.Split(' ');
+
         var text = "";
-        foreach (var word in splittedText)
+        try
         {
-            text += word[0] + word.Substring(1, word.Length - 1).ToLower() + " ";
+            var splittedText = input.Split(' ');
+            foreach (var word in splittedText)
+            {
+                var splittedByStrips = word.Split('-');
+                var w = "";
+                if (splittedByStrips.Count() != 1)
+                {
+                    foreach (var part in splittedByStrips)
+                    {
+                        w += ApplyTitleCase(part) + "-";
+                    }
+                    text += w.Substring(0, w.Length - 1) + " ";
+                }
+                else
+                {
+                    text += word[0] + word.Substring(1, word.Length - 1).ToLower() + " ";
+                }
+            }
+
+        }
+        catch
+        {
+
         }
         return text;
+    }
+
+    public string ApplyTitleCase(string input)
+    {
+        return input[0] + input.Substring(1, input.Length - 1).ToLower();
     }
 
 }
@@ -70,20 +98,21 @@
 @section PageJS{
     <!-- angular controller -->
     <script>
-        var langCode = '@OnlineContext.GetActiveLanguageCode()';
-        var hotelDetail = @Html.Raw(Model.HotelDetail.Serialize());
-        var expirytime = '@Model.ExpiryTime';
-        var originalFare = '@Model.HotelDetail.OriginalFare';
-        var netFare = '@Model.HotelDetail.NetFare';
-        var totalRoom = '@Model.HotelDetail.Rooms.SelectMany(r => r.Rates).Sum(p => p.RoomCount)';
-        var checkin = '@Model.HotelDetail.Rooms[0].Rates[0].RateKey.Split('|')[0]';
-        var checkout = '@Model.HotelDetail.Rooms[0].Rates[0].RateKey.Split('|')[1]';
-        if (getParam('page') == 2) {
-            currentPage = getParam('page');
-        } else {
-            currentPage = 1;
-        }
-        var token = '@Model.Token';
+    var langCode = '@OnlineContext.GetActiveLanguageCode()';
+    var hotelDetail = @Html.Raw(Model.HotelDetail.Serialize());
+    var expirytime = '@Model.ExpiryTime';
+    var originalFare = '@Model.HotelDetail.OriginalFare';
+    var netFare = '@Model.HotelDetail.NetFare';
+    var totalRoom = '@Model.HotelDetail.Rooms.SelectMany(r => r.Rates).Sum(p => p.RoomCount)';
+    var checkin = '@Model.HotelDetail.CheckInDate.ToString("D",CultureInfo.CreateSpecificCulture("id-ID"))';
+    var checkout = '@Model.HotelDetail.CheckOutDate.ToString("D", CultureInfo.CreateSpecificCulture("id-ID"))';
+    var nights = '@((Model.HotelDetail.CheckOutDate - Model.HotelDetail.CheckInDate).Days)';
+    if (getParam('page') == 2) {
+        currentPage = getParam('page');
+    } else {
+        currentPage = 1;
+    }
+    var token = '@Model.Token';
 </script>
     <script src="/Assets/travorama20/js/HotelCheckoutController.js"></script>
 }
@@ -340,7 +369,7 @@
                                                     <div class="wb-container clearfix">
                                                         <div class="wb-left">Rate Comment</div>
                                                         <div class="wb-mid">:</div>
-                                                        <div class="wb-right bold-txt">ALKSJHJDKDJS</div>
+                                                        <div class="wb-right bold-txt">@rate.RateCommentsId</div>
                                                     </div>
                                                     <div class="wb-container clearfix">
                                                         <div class="wb-left">Ketentuan Pembatalan</div>
@@ -493,7 +522,7 @@
                                             </div>
                                         </div>
                                         <div class="wt-bottom">
-                                            {{hotelDetail.address}}, {{capitalizeFirstLetter(hotelDetail.city)}}
+                                            {{capitalizeFirstLetter(hotelDetail.address)}}, {{capitalizeFirstLetter(hotelDetail.city)}}
                                         </div>
                                     </div>
                                     <div class="widget-bottom">

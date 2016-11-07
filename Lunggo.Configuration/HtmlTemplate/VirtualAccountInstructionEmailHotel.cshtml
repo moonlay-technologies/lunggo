@@ -2,13 +2,190 @@
 @using Lunggo.ApCommon.Constant
 @using Lunggo.Framework.Config
 @model Lunggo.ApCommon.Hotel.Model.HotelReservationForDisplay
-
-
+@{
+    ViewBag.SiteHeader = "header-email";
+}
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width" />
+</head>
+<body style="background-color:#F4F4F4; color:#535353; font-family:arial, helvetica, sans-serif; font-size:12px;">
 
-    <body style="background-color:#F4F4F4; color:#535353; font-family:arial, helvetica, sans-serif; font-size:12px;">
-        TES
-    </body>
+
+    <table style="margin-left:auto; margin-right:auto; width:100%; max-width:700px; display:block; background:#ffffff;">
+        <thead width="100%">
+            <tr width="100%">
+                <th width="5%"></th>
+                <th colspan="2" width="90%" style="padding-top:30px;">
+                    <p style="text-align:right;">
+                        <a href="http://travorama.com" style="text-decoration:none;">
+                            <img src="/Assets/images/travorama-logo-color.png" alt="Travorama" />
+                        </a>
+                        <br />
+                        <a href="https://www.facebook.com/travorama" style="text-decoration:none;">
+                            <img src="/Assets/images/email-facebook.jpg" alt="Travorama on Facebook" />
+                        </a>
+                        <a href="https://twitter.com/travoramaid" style="text-decoration:none;">
+                            <img src="/Assets/images/email-twitter.jpg" alt="Travorama on Twitter" />
+                        </a>
+                        <a href="https://instagram.com/travorama" style="text-decoration:none;">
+                            <img src="/Assets/images/email-instagram.jpg" alt="Travorama on Instagram" />
+                        </a>
+                    </p>
+                </th>
+                <th width="5%"></th>
+            </tr>
+        </thead>
+        <tbody width="100%">
+            <tr width="100%">
+                <td width="5%"></td>
+                <td colspan="2" width="90%">
+
+                    <!-- CONTENT  -->
+                    <p>
+                        Terima kasih, Anda baru saja memesan hotel dari Travorama dengan rincian:
+                    </p>
+                    <table width="100%" style="margin-bottom: 20px">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <hr style="border-color: #ddd;" />
+                                </td>
+                                <td width="4%"></td>
+                                <td>
+                                    <hr style="border-color: #ddd;" />
+                                </td>
+                                <td width="4%"></td>
+                                <td>
+                                    <hr style="border-color: #ddd;" />
+                                </td>
+                                <td width="4%"></td>
+                            </tr>
+                            <tr>
+                                <td width="14.5%">
+                                    <p style="color: #999;">Nomor Reservasi.</p>
+                                    <p style=""><b>@Model.RsvNo</b></p>
+                                </td>
+                                <td width="4%"></td>
+                                <td width="14.5%">
+                                    <p style="color: #999;">Waktu.</p>
+                                    <p style=""><b>@Model.RsvTime.ToString("D", CultureInfo.CreateSpecificCulture("id-ID")) &nbsp;-&nbsp; @Model.RsvTime.ToString("t", CultureInfo.CreateSpecificCulture("id-ID"))</b></p>
+                                </td>
+                                <td width="4%"></td>
+                                <td width="14.5%">
+                                    <p style="color: #999;">Detail Hotel.</p>
+                                    <p style=""><b>@Model.HotelDetail.HotelName</b></p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <table width="100%" style="border-top: 2px #15b1e4 solid; border-bottom: 2px #15b1e4 solid; margin-bottom: 25px ">
+                        <tr>
+                            <td>
+                                <p style="color: #15b1e4; text-align: center; margin: 7px 0;"><b>Metode Pembayaran : Virtual Account/ATM</b> </p>
+                            </td>
+                        </tr>
+                    </table>
+
+                    <p>Untuk mendapatkan e-tiket, lakukan pembayaran sesuai langkah berikut:</p>
+
+                    <table width="100%" style="margin-bottom: 0px;">
+                        <tr>
+                            <td>
+                                <p style="margin-bottom:0px;">Melakukan pembayaran sejumlah total tagihan : Rp. <b>@Model.Payment.FinalPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID")) </b>ke nomor akun virtual tujuan : <b>@Model.Payment.TransferAccount</b></p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p style="font-style: italic; font-size: 11px; margin-left: 6%; margin-bottom: 0px;">Batas waktu pembayaran anda adalah sebelum <span style="color: #15b1e4">@Model.Payment.TimeLimit.GetValueOrDefault().AddHours(7).ToString("t", CultureInfo.CreateSpecificCulture("id-ID"))) WIB (@Model.Payment.TimeLimit.GetValueOrDefault().ToString("D", CultureInfo.CreateSpecificCulture("id-ID"))).</span></p>
+                                <p style="font-size: 10px; opacity: 0.5; font-style: italic;margin-top: 1px; margin-bottom: 20px;">Jika lewat, booking Anda akan dibatalkan otomatis oleh sistem kami. Untuk booking yang sama, Anda harus melakukan pemesanan ulang dan harga kemungkinan besar akan berubah.</p>
+                            </td>
+                        </tr>
+                    </table>
+                    <table>
+                        <tr>
+                            <td>
+                                <p style="margin-left:4px;">Cara Pembayaran Lewat <b>ATM Mandiri/Jaringan ATM Bersama</b>:</p>
+                                <ol style="padding-left: 20px; margin-bottom: 20px;">
+                                    <li><p>Masukkan PIN Anda.</p></li>
+                                    <li><p>Di Menu Utama, pilih <b>Transaksi Lainnya </b>.</p></li>
+                                    <li><p>Pilih <b>Transfer</b>.</p></li>
+                                    <li><p>Pilih <b>Antar Bank Online</b>.</p></li>
+                                    <li><p>Masukkan nomor <b>@Model.Payment.TransferAccount</b> (kode 013 dan 16 digit nomor akun virtual pembayaran).</p></li>
+                                    <li><p>Masukkan jumlah harga tiket yang harus Anda bayar Rp. <b>@Model.Payment.FinalPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</b> (jika jumlah yang dimasukkan tidak sama dengan jumlah tagihan, transaksi akan ditolak).</p></li>
+                                    <li><p>No. referensi dapat dikosongkan, lalu tekan <b>Benar</b>.</p></li>
+                                    <li><p>Di halaman konfirmasi transfer akan muncul jumlah yang dibayarkan, no. rekening tujuan. Jika informasinya telah cocok, tekan <b>Benar</b>.</p></li>
+                                    <li><p>Transaksi berhasil.</p></li>
+                                </ol>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p>Cara Pembayaran Lewat <b>ATM BCA/Jaringan ATM PRIMA</b>:</p>
+                                <ol style="padding-left: 20px; margin-bottom: 20px;">
+                                    <li><p>Masukkan PIN Anda.</p></li>
+                                    <li><p>Di Menu Utama, pilih <b>Transaksi Lainnya</b>.</p></li>
+                                    <li><p>Pilih <b>Transfer</b>.</p></li>
+                                    <li><p>Pilih <b>Ke Rekening Bank Lain</b>.</p></li>
+                                    <li><p>Masukkan kode <b>@Model.Payment.TransferAccount</b> (Kode Bank Permata) lalu tekan <b>Benar</b>.</p></li>
+                                    <li><p>Masukkan jumlah harga tiket yang harus Anda bayar Rp. <b>@Model.Payment.FinalPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</b> (jika jumlah yang dimasukkan tidak sama dengan jumlah tagihan, transaksi akan ditolak).</p></li>
+                                    <li><p>Masukkan <b>12345678900</b> (16 digit nomor akun virtual pembayaran) lalu tekan <b>Benar</b>.</p></li>
+                                    <li><p>Di halaman konfirmasi transfer akan muncul jumlah yang dibayarkan, no. rekening tujuan. Jika informasinya telah cocok, tekan <b>Benar</b>.</p></li>
+                                    <li><p>Transaksi berhasil.</p></li>
+                                </ol>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p>Cara Pembayaran Lewat <b>ATM Bank Permata/Jaringan ATM Alto</b>:</p>
+                                <ol style="padding-left: 20px; margin-bottom: 20px;">
+                                    <li><p>Masukkan PIN Anda.</p></li>
+                                    <li><p>Di Menu Utama, pilih <b>Transaksi Lainnya</b>.</p></li>
+                                    <li><p>Pilih <b>Transaksi Pembayaran</b>.</p></li>
+                                    <li><p>Pilih <b>Pembayaran Virtual Account</b>.</p></li>
+                                    <li><p>Masukkan 16 digit nomor akun virtual pembayaran <b>@Model.Payment.TransferAccount</b>.</p></li>
+                                    <li><p>Di halaman konfirmasi transfer akan muncul jumlah yang dibayarkan, no. rekening tujuan. Jika informasinya telah cocok, tekan <b>Benar</b>.</p></li>
+                                    <li><p>Transaksi berhasil.</p></li>
+                                </ol>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p style="margin-bottom:10px">Setelah itu, mohon tunggu hingga e-tiket/voucher diterbitkan dan dikirim ke e-mail Anda maks. 60 menit</p>
+                            </td>
+                        </tr>
+                    </table>
+
+                    <p style="opacity: 0.8; font-size: 10px; font-style: italic; margin-bottom: 40px;">Jika ada pertanyaan dapat mengirimkan email ke <span style="color: #15b1e4"> cs@travorama.com </span> dengan mencantumkan <span style="color: #15b1e4">No. Pesanan Travorama @Model.RsvNo</span></p>
+                    <hr style="border-color: #15b1e4; border-style: dotted; margin-bottom: 20px;" width="100%" />
+                    <p>E-mail tagihan ini bukan merupakan bukti pembayaran yang sah dan tidak dapat ditukar menjadi tiket apapun.</p>
+                    <p style=" font-size: 11px; font-style: italic; margin-bottom: 50px;">E-mail ini ditujukan hanya untuk, karena Anda telah melakukan pemesanan melalui Travorama</p>
+
+                </td>
+                <td width="5%"></td>
+            </tr>
+        </tbody>
+        <tfoot width="100%">
+            <tr>
+                <td></td>
+                <td style="width: 60%;"><img style="width: 100%;" src="/Assets/images/email/plane-email-bg.jpg" /></td>
+                <td style="padding-bottom:40px;">
+                    <address style="font-style:normal; float:right; width:240px; margin-right:0; margin-left:auto; font-size:12px;">
+                        <h4 style="color:#1daee5; margin-bottom:5px;">PT. Travel Madezy Internasional</h4>
+                        <p style="margin-top:0; margin-bottom:5px;">
+                            <span style="color:#1daee5;">A.</span> Equity Tower 25th Floor, SCBD lot 9<br />Jl. Jenderal Sudirman Kav.52-53<br />Jakarta 12190
+                        </p>
+                        <p style="margin-top:0;"></p>
+                    </address>
+                </td>
+                <td></td>
+                <td></td>
+            </tr>
+        </tfoot>
+    </table>
+</body>
 </html>

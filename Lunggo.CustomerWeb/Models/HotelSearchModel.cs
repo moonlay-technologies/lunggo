@@ -36,7 +36,7 @@ namespace Lunggo.CustomerWeb.Models
         Filter = 7,
         Sorting = 8,
     }
-
+   
     public class HotelSearchApiRequest
     {
         [JsonProperty("location")]

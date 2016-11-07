@@ -9,6 +9,7 @@ using Lunggo.Framework.Http;
 using Lunggo.Framework.Log;
 using Lunggo.WebAPI.ApiSrc.Common.Model;
 using Lunggo.WebAPI.ApiSrc.Hotel.Model;
+using ServiceStack.Text;
 
 namespace Lunggo.WebAPI.ApiSrc.Hotel.Logic
 {
@@ -30,11 +31,10 @@ namespace Lunggo.WebAPI.ApiSrc.Hotel.Logic
                 return new HotelSearchApiResponse
                 {
                     StatusCode = HttpStatusCode.BadRequest,
-                    ErrorCode = "ERHSEA01"
+                    ErrorCode = "ERHSEA04"
                 };
             }
 
-            //if (apiResponse.StatusCode == HttpStatusCode.OK) return apiResponse;
             var log = LogService.GetInstance();
             var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
             return apiResponse;
@@ -49,15 +49,18 @@ namespace Lunggo.WebAPI.ApiSrc.Hotel.Logic
                 return
                     request.Filter != null ||
                     request.Sorting != null ||
-                    (request.From != null && request.To != null);
-    
+                    (request.From >= 0 && request.To >= 0);
             }
             else
             {
                 return
-                request.AdultCount >= 1 &&
-                request.ChildCount >= 0 &&
-                request.CheckinDate >= DateTime.UtcNow.Date;   
+                    request.Occupancies != null &&
+                    //request.AdultCount >= 1 &&
+                    //request.ChildCount >= 0 &&
+                    request.CheckinDate >= DateTime.UtcNow.Date &&
+                    request.CheckoutDate >= request.CheckinDate;
+                //request.RoomCount > 0;   
+
             }
         }
 
@@ -65,19 +68,23 @@ namespace Lunggo.WebAPI.ApiSrc.Hotel.Logic
         {
             var searchServiceRequest = new SearchHotelInput
             {
+                SearchHotelType = request.SearchType,
                 SearchId = request.SearchId,
                 CheckIn = request.CheckinDate,
                 Checkout = request.CheckoutDate,
-                AdultCount = request.AdultCount,
-                ChildCount = request.ChildCount,
+                //AdultCount = request.AdultCount,
+                //ChildCount = request.ChildCount,
                 Nights = request.NightCount,
-                Rooms = request.RoomCount,
+                Occupancies = request.Occupancies,
+                //Rooms = request.RoomCount,
                 Location = request.Location,
                 StartPage = request.From,
                 EndPage = request.To,
                 FilterParam = request.Filter,
                 SortingParam = request.Sorting,
-                
+                HotelCode = request.HotelCode,
+                RegsId = request.RegsId
+
             };
             return searchServiceRequest;
         }
@@ -86,65 +93,68 @@ namespace Lunggo.WebAPI.ApiSrc.Hotel.Logic
         {
             if (searchServiceResponse.IsSuccess)
             {
-                if (searchServiceResponse.HotelDetailLists != null)
+                if (searchServiceResponse.ReturnedHotelCount <= 0)
+                    return new HotelSearchApiResponse() { StatusCode = HttpStatusCode.OK };
+
+                return new HotelSearchApiResponse
                 {
-                    return new HotelSearchApiResponse
-                    {
-                        SearchId = searchServiceResponse.SearchId,
-                        ReturnedHotelCount = searchServiceResponse.ReturnedHotelCount,
-                        TotalHotelCount = searchServiceResponse.TotalHotelCount,
-                        Hotels = searchServiceResponse.HotelDetailLists,
-                        ExpiryTime = searchServiceResponse.ExpiryTime.TruncateMilliseconds(),
-                        From = searchServiceResponse.StartPage,
-                        To = searchServiceResponse.EndPage,
-                        MaxPrice = searchServiceResponse.MaxPrice,
-                        MinPrice = searchServiceResponse.MinPrice,
-                        HotelFilterDisplayInfo = searchServiceResponse.HotelFilterDisplayInfo,
-                        IsSpecificHotel = searchServiceResponse.IsSpecificHotel,
-                        HotelCode = searchServiceResponse.HotelCode,
-                        StatusCode = HttpStatusCode.OK
-                    };
-                }
-                else
-                {
-                    return new HotelSearchApiResponse();
-                }
+                    SearchId = searchServiceResponse.SearchId,
+                    ReturnedHotelCount = searchServiceResponse.ReturnedHotelCount,
+                    TotalHotelCount = searchServiceResponse.TotalHotelCount,
+                    Hotels = searchServiceResponse.HotelDetailLists,
+                    ExpiryTime = searchServiceResponse.ExpiryTime.TruncateMilliseconds(),
+                    From = searchServiceResponse.StartPage,
+                    To = searchServiceResponse.EndPage,
+                    MaxPrice = searchServiceResponse.MaxPrice,
+                    MinPrice = searchServiceResponse.MinPrice,
+                    HotelFilterDisplayInfo = searchServiceResponse.HotelFilterDisplayInfo,
+                    IsSpecificHotel = searchServiceResponse.IsSpecificHotel,
+                    HotelCode = searchServiceResponse.HotelCode,
+                    Room = searchServiceResponse.HotelRoom,
+                    FilteredHotelCount = searchServiceResponse.FilteredHotelCount,
+                    StatusCode = HttpStatusCode.OK
+                };
             }
             else
             {
-                if (searchServiceResponse.Errors != null && searchServiceResponse.Errors.Count > 0)
-                {
-                    switch (searchServiceResponse.Errors[0])
-                    {
-                        case HotelError.InvalidInputData:
-                            return new HotelSearchApiResponse
-                            {
-                                StatusCode = HttpStatusCode.BadRequest,
-                                ErrorCode = "ERHSEA01"
-                            };
-                        case HotelError.SearchIdNoLongerValid:
-                            return new HotelSearchApiResponse
-                            {
-                                StatusCode = HttpStatusCode.Accepted,
-                                ErrorCode = "ERHSEA02"
-                            };
-                        default:
-                            return new HotelSearchApiResponse
-                            {
-                                StatusCode = HttpStatusCode.InternalServerError,
-                                ErrorCode = "ERRGEN99"
-                            };
-                    }
-                }
-                else {
+                if (searchServiceResponse.Errors != null)
                     return new HotelSearchApiResponse
                     {
-                        StatusCode = HttpStatusCode.InternalServerError,
-                        ErrorCode = "ERRGEN99"
+                        StatusCode = HttpStatusCode.BadRequest,
+                        ErrorCode = "ERHSEA99"
                     };
+
+                switch (searchServiceResponse.Errors[0])
+                {
+                    case HotelError.InvalidInputData:
+                        return new HotelSearchApiResponse
+                        {
+                            StatusCode = HttpStatusCode.InternalServerError,
+                            ErrorCode = "ERRGEN99"
+                        };
+                    case HotelError.SearchIdNoLongerValid:
+                        return new HotelSearchApiResponse
+                        {
+                            StatusCode = HttpStatusCode.Accepted,
+                            ErrorCode = "ERHSEA02"
+                        };
+                    case HotelError.RateKeyNotFound:
+                        return new HotelSearchApiResponse
+                        {
+                            StatusCode = HttpStatusCode.Accepted,
+                            ErrorCode = "ERHSEA03"
+                        };
+                    default:
+                        return new HotelSearchApiResponse
+                        {
+                            StatusCode = HttpStatusCode.InternalServerError,
+                            ErrorCode = "ERRGEN99"
+                        };
                 }
+
+
             }
-            
+
         }
 
     }

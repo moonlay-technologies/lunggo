@@ -19,5 +19,6 @@ namespace Lunggo.ApCommon.Hotel.Constant
         PaymentFailed = 8,
         PriceChanged = 9,
         SearchIdNoLongerValid = 10,
+        RateKeyNotFound = 11,
     }
 }

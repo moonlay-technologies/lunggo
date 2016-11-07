@@ -1,4 +1,5 @@
-﻿@using Lunggo.ApCommon.Flight.Model
+﻿@using System.Globalization
+@using Lunggo.ApCommon.Flight.Model
 @using Lunggo.ApCommon.Hotel.Model
 @using Lunggo.ApCommon.Hotel.Service
 @using Lunggo.ApCommon.Identity.Users
@@ -13,7 +14,7 @@
     var rsvNo = "";
     var savedCreditCards = Model.SavedCreditCards;
     var orderedRooms = new List<Tuple<string, int>>();
-    
+    var totalpax = 0;
     try
     {
         var rooms = (Model.Reservation as HotelReservationForDisplay).HotelDetail.Rooms;
@@ -25,6 +26,7 @@
             foreach (var rate in room.Rates)
             {
                 sum += rate.RoomCount;
+                totalpax += (rate.AdultCount + rate.ChildCount)*rate.RoomCount;
             }
             orderedRooms.Add(new Tuple<string, int>(roomName, sum)); ;
         }
@@ -49,13 +51,40 @@
 
     public string ToTitleCase(string input)
     {
-        var splittedText = input.Split(' ');
+
         var text = "";
-        foreach (var word in splittedText)
+        try
         {
-            text += word[0] + word.Substring(1, word.Length - 1).ToLower() + " ";
+            var splittedText = input.Split(' ');
+            foreach (var word in splittedText)
+            {
+                var splittedByStrips = word.Split('-');
+                var w = "";
+                if (splittedByStrips.Count() != 1)
+                {
+                    foreach (var part in splittedByStrips)
+                    {
+                        w += ApplyTitleCase(part) + "-";
+                    }
+                    text += w.Substring(0, w.Length - 1) + " ";
+                }
+                else
+                {
+                    text += word[0] + word.Substring(1, word.Length - 1).ToLower() + " ";
+                }
+            }
+
+        }
+        catch
+        {
+
         }
         return text;
+    }
+
+    public string ApplyTitleCase(string input)
+    {
+        return input[0] + input.Substring(1, input.Length - 1).ToLower();
     }
 
 }
@@ -150,8 +179,10 @@
         @:var originalFare = '@hotel.HotelDetail.OriginalFare';
         @:var netFare = '@hotel.HotelDetail.NetFare';
         @:var totalRoom = '@hotel.HotelDetail.Rooms.SelectMany(r => r.Rates).Sum(p => p.RoomCount)';
-        @:var checkin = '@hotel.HotelDetail.Rooms[0].Rates[0].RateKey.Split('|')[0]';
-        @:var checkout = '@hotel.HotelDetail.Rooms[0].Rates[0].RateKey.Split('|')[1]';
+        @:var checkin = '@hotel.HotelDetail.CheckInDate.ToString("D",CultureInfo.CreateSpecificCulture("id-ID"))';
+        @:var checkout = '@hotel.HotelDetail.CheckOutDate.ToString("D", CultureInfo.CreateSpecificCulture("id-ID"))';
+        @:var nights = '@((hotel.HotelDetail.CheckOutDate - hotel.HotelDetail.CheckInDate).Days)';
+        @:var totalpax = '@totalpax';
     }
     // change current page
     if (getParam('page') == 4) {
@@ -536,7 +567,14 @@
                             <h3 class="widget-title"><b>RINCIAN</b> HARGA</h3>
                             <div class="widget-content">
                                 <dl>
-                                    <dt>Harga Tiket</dt>
+                                    @if (Model.Reservation is FlightReservationForDisplay)
+                                    {
+                                        <dt>Harga Tiket</dt>
+                                    }
+                                    @if (Model.Reservation is HotelReservationForDisplay)
+                                    {
+                                        <dt>Harga Kamar</dt>
+                                    }
                                     <dd>Rp {{originalPrice | number}}</dd>
                                 </dl>
                                 <dl style="color: #1daee4">
@@ -722,12 +760,12 @@
                                                 <div class="wb-container clearfix">
                                                     <div class="wb-left">Malam</div>
                                                     <div class="wb-mid">:</div>
-                                                    <div class="wb-right bold-txt">3 Malam</div>
+                                                    <div class="wb-right bold-txt">{{nights}} Malam</div>
                                                 </div>
                                                 <div class="wb-container clearfix">
                                                     <div class="wb-left">Kamar</div>
                                                     <div class="wb-mid">:</div>
-                                                    <div class="wb-right bold-txt">{{nights}} Kamar</div>
+                                                    <div class="wb-right bold-txt">{{totalRoom}} Kamar</div>
                                                 </div>
                                                 <div class="wb-container clearfix">
                                                     <div class="wb-left">Jenis Kamar</div>
@@ -750,9 +788,9 @@
                                                     </div>
                                                 </div>
                                                 <div class="wb-container clearfix">
-                                                    <div class="wb-left">Tamu per Kamar</div>
+                                                    <div class="wb-left">Jumlah Tamu</div>
                                                     <div class="wb-mid">:</div>
-                                                    <div class="wb-right bold-txt">{{totalRoom}} orang</div>
+                                                    <div class="wb-right bold-txt">{{totalpax}} orang</div>
                                                 </div>
                                             </div>
                                         </div>

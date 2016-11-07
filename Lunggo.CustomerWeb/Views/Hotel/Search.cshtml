@@ -1,4 +1,6 @@
-﻿@{
+﻿@using Lunggo.Framework.Extension
+@model Lunggo.CustomerWeb.Models.HotelSearchApiRequest
+@{
     Layout = "/Views/Shared/Travorama20/_Layout20150929.cshtml";
     ViewBag.BodyClass = "page-hotel page-search";
     ViewBag.Title = "Pencarian Hotel";
@@ -41,7 +43,7 @@
 }
 
 @Html.Partial("/Views/Hotel/Shared/Desktop/_PageSlider.cshtml")
-<div class="travorama-hotel" ng-init="init(@Newtonsoft.Json.JsonConvert.SerializeObject(Model))">
+<div class="travorama-hotel" ng-init="init(@Model.Serialize())">
     <div class="container">
         <div class="search-list">
             @Html.Partial("/Views/Hotel/Shared/Desktop/_BreadCrumb.cshtml")
