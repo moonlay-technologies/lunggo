@@ -60,7 +60,17 @@ namespace Lunggo.ApCommon.Hotel.Service
                 IsWifiAccessAvailable = hotelDetail.WifiAccess,
                 Rooms = ConvertToHotelRoomForDisplay(hotelDetail.Rooms),
                 CheckInDate = hotelDetail.CheckInDate,
-                CheckOutDate = hotelDetail.CheckOutDate
+                CheckOutDate = hotelDetail.CheckOutDate,
+                NightCount = hotelDetail.NightCount,
+                SpecialRequest = hotelDetail.SpecialRequest,
+                SupplierVat = hotelDetail.SupplierVat,
+                SupplierName = hotelDetail.SupplierName,
+                BookingReference = hotelDetail.BookingReference,
+                ClientReference = hotelDetail.ClientReference,
+                PhonesNumbers = hotelDetail.PhonesNumbers,
+                CountryName = GetCountryNameFromDict(hotelDetail.CountryCode).Name,
+                DestinationName = GetDestinationNameFromDict(hotelDetail.DestinationCode).Name,
+
             };
                 
             
@@ -82,8 +92,9 @@ namespace Lunggo.ApCommon.Hotel.Service
                 City = hotelDetail.City,
                 CountryName = GetCountryNameFromDict(hotelDetail.CountryCode).Name,
                 DestinationName = GetDestinationNameFromDict(hotelDetail.DestinationCode).Name,
-                ZoneName = GetZoneNameFromDict(hotelDetail.ZoneCode),
-                StarRating = hotelDetail.StarCode,
+                ZoneName = GetZoneNameFromDict(hotelDetail.DestinationCode + "-" + hotelDetail.ZoneCode),
+                StarRating = hotelDetail.StarCode != 0 ? hotelDetail.StarCode : (hotelDetail.StarRating != null ?
+                Convert.ToInt32(hotelDetail.StarRating.Substring(0,1)) : 0),
                 //ChainName = GetHotelChainDesc(hotelDetail.Chain),
                     //AccomodationName = GetHotelAccomodationDescId(hotelDetail.AccomodationType),
                     MainImage =

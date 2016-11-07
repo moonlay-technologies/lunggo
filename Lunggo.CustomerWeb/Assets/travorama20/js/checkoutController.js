@@ -995,6 +995,24 @@ app.controller('confirmationController', [
         $scope.checkin = checkin;
         $scope.checkout = checkout;
         $scope.nights = nights;
+        $scope.rating = rating;
+        $scope.hotelstar = function () {
+            if ($scope.rating == 1) {
+                return 'star';
+            }
+            if ($scope.rating == 2) {
+                return 'star star-2';
+            }
+            if ($scope.rating == 3) {
+                return 'star star-3';
+            }
+            if ($scope.rating == 4) {
+                return 'star star-4';
+            }
+            if ($scope.rating == 5) {
+                return 'star star-5';
+            }
+        }
 
     }
 ]);// confirmation controller
@@ -1067,6 +1085,7 @@ app.controller('thankyouController', [
             return text;
         }
 
+
         $scope.hotelDetails = hotelDetails;
         $scope.totalRoom = totalRoom;
         $scope.checkin = checkin;
@@ -1075,5 +1094,23 @@ app.controller('thankyouController', [
 
         $scope.roomService = 0;
         $scope.netFare = netFare;
+        $scope.rating = rating;
+        $scope.hotelstar = function () {
+            if ($scope.rating == 1) {
+                return 'star';
+            }
+            if ($scope.rating == 2) {
+                return 'star star-2';
+            }
+            if ($scope.rating == 3) {
+                return 'star star-3';
+            }
+            if ($scope.rating == 4) {
+                return 'star star-4';
+            }
+            if ($scope.rating == 5) {
+                return 'star star-5';
+            }
+        }
     }
 ]);// confirmation controller
