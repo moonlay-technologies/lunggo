@@ -21,10 +21,11 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
     $scope.hotel.locationDisplay = "";
     $scope.hotel.checkinDate = moment().locale("id").add(5, 'days');
     $scope.hotel.checkinDateDisplay = $scope.hotel.checkinDate.locale("id").format('LL');
+    $scope.hotel.nightCount = 2;
     $scope.hotel.checkoutDate = moment().locale("id").add(7, 'days');
     $scope.hotel.adultCount = 2;
     $scope.hotel.childCount = 1;
-    $scope.hotel.nightCount = 2;
+    
     $scope.hotel.roomCount = 1;
 
     $scope.hotel.adultCountMin = 1;
@@ -87,6 +88,23 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
         }
     });
 
+    $scope.setCheckinDate = function (scope, date) {
+        scope.$apply(function () {
+            scope.hotel.checkinDate = moment(date, "MM-DD-YYYY");
+            scope.hotel.checkinDateDisplay = $scope.hotel.checkinDate.locale("id").format('LL');
+        });
+    }
+
+    $scope.$watch('hotel.nightCount', function (newValue, oldValue) {
+        //var scope = angular.element($('.hotel-date-picker')).scope();
+        //$scope.setCheckinDate(scope, $scope.hotel.checkinDate);
+        //$scope.hotel.checkoutDate = $scope.hotel.checkinDate;
+        if (oldValue != newValue) {
+            var cod = moment($scope.hotel.checkinDate);
+            $scope.hotel.checkoutDate = moment(cod).add($scope.hotel.nightCount, 'days');
+        }
+        
+    });
     $scope.hotel.searchHotel = function (){
         $log.debug('searching hotel');
         location.href = '/id/Hotel/Search/' + $scope.hotel.searchParam();
@@ -112,13 +130,6 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
         )
     }
 
-    $scope.setCheckinDate = function (scope, date) {
-        scope.$apply(function () {
-            scope.hotel.checkinDate = moment(date, "MM-DD-YYYY");
-            scope.hotel.checkinDateDisplay = $scope.hotel.checkinDate.locale("id").format('LL');
-        });
-    }
-
     $('.hotel-date-picker').datepicker({
         numberOfMonths: 1,
         onSelect: function (date) {
@@ -137,6 +148,14 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
             $(target + ' .month').html(translateMonth(chosenDate.getMonth()));
             $(target + ' .year').html(chosenDate.getFullYear());
             $('.search-calendar-hotel').hide();
+            var cd = new Date(date);
+            var checkoutDate = new Date(cd.setDate(cd.getDate() + $scope.hotel.nightCount));
+            var dd = checkoutDate.getDate();
+            var mm = checkoutDate.getMonth() + 1;
+            var yyyy = checkoutDate.getFullYear();
+            var d = yyyy + '-' + mm + '-' + dd;
+            $scope.hotel.checkoutDate = moment(checkoutDate, "MM-DD-YYYY");
+            $log.debug("checkout date = " + $scope.hotel.checkoutDate);
         }
     });
     //=============== hotel end ======================

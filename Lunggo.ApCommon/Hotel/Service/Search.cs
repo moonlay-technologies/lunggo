@@ -238,6 +238,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                     firstPageHotelDetails = AddHotelDetail(firstPageHotelDetails);
                     var searchType = detailDestination.Type.ToString();
                     var sortedHotel = result.HotelDetails.OrderByDescending(x => x.NetFare);
+                    
                     return new SearchHotelOutput
                     {
                         IsSuccess = true,

@@ -93,15 +93,24 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
           }
       );
     $scope.bookRoom = function (room) {
+        var childrenages = room.rate.regsId.split(',')[2].split('|')[10];
+        var ages = [];
+        if (childrenages != null && childrenages.length != 0) {
+            var age = childrenages.split('~');
+            for (var i = 0; i < age.length; i++) {
+                ages.push(parseInt(age[i]));
+            }
+        }
+
         selectService.query({}, {
             "searchId": $scope.searchId,
             "regs": [
                   {
                       "regsId": room.rate.regsId,
-                      "rateCount": 1,
-                      "adultCount": 1,
-                      "childCount": 2,
-                      "childrenAges": [6, 8]
+                      "rateCount": room.rate.roomCount,
+                      "adultCount": room.rate.adultCount,
+                      "childCount": room.rate.childCount,
+                      "childrenAges": ages
                   }
             ]
         }).$promise.then(function (data) {

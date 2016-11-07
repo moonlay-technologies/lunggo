@@ -106,6 +106,10 @@ namespace Lunggo.WebAPI.ApiSrc.Hotel.Logic
             }
             else
             {
+                if (searchServiceResponse.Errors == null)
+                {
+                    return new HotelSearchApiResponse();
+                }
                 switch (searchServiceResponse.Errors[0])
                 {
                     case HotelError.InvalidInputData:
