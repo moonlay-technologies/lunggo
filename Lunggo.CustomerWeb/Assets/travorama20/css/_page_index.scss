@@ -114,7 +114,7 @@ file : /Assets/travorama20/css/_page_index.scss
                         .sub-title {font-size: 14px;}
                     }
                     .form-group {
-                        &.hotel-location, &.hotel-date, &.hotel-room, &.hotel-visitor {margin-bottom: 10px;}
+                        &.hotel-location, &.hotel-date, &.hotel-room, &.hotel-visitor, &.hotel-age-children {margin-bottom: 10px;}
                     }
                     // hotel location
                     .form-group.hotel-location {
@@ -171,6 +171,62 @@ file : /Assets/travorama20/css/_page_index.scss
                     }
                     // hotel submit
                     input[type="submit"] {padding:10px 0; height:auto; font-size:14px;}
+
+                    /*Hotel Age Childern*/
+                    .form-group.hotel-age-children {
+                        .btn-age {
+                            cursor: pointer;
+                            color: #fff;
+                            padding: 0 6px;
+                            &:before {
+                                content: '';
+                                display: block;
+                                position: absolute;
+                                width: 4px;
+                                height: 4px;
+                                border-left: 4px solid transparent;
+                                border-right: 4px solid transparent;
+                                border-top: 4px solid #fff;
+                                margin-top: 8px;
+                                margin-left: 65px;
+                            }
+                            &:after {
+                                position: absolute;
+                                content: '';
+                                width: 200px;
+                                height: 1px;
+                                background: #fff;
+                                display: block;
+                                right: 0;
+                                margin-top: -8px;
+                                margin-right: 20px;
+                            }
+                        }
+                        .age-container {
+                            display: none;
+                            margin-top: 10px;
+                            &.active {display: block;}
+                        }
+                        .dropdown-container {
+                            .form-control.select-age {
+                                height: 45px;
+                                font-size: 30px;
+                                line-height: 30px;
+                                font-weight: 600;
+                                text-align: center;
+                                color: #6a6a6a;
+                                border-radius: 2px;
+                                cursor: pointer;
+                                .option {position:absolute; top:100%; left:0; display:none; width:100%; z-index:2; font-size:12px; border: none; padding: 0 6px;
+                                    &>span {display:block; color:#000; padding:10px; background:#ddd; cursor:pointer; line-height: 16px;
+                                        &+span {border-top:$border-default;}
+                                        &:hover {background:$color-main-blue; color:#fff;}
+                                    }
+                                    &.active {display: block;}
+                                }
+                            }
+                        }
+                    }
                 }
                 //*****
                 // tab activity

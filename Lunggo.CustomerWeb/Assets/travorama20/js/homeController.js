@@ -155,3 +155,65 @@ app.controller('campaignController', [
         
     }
 ]);
+
+//********************
+// hotel form search function
+jQuery(document).ready(function($) {
+    //Show hotel
+    $('.form-hotel-location').click(function () {
+        $('.search-hotel').show();
+    });
+
+    //hideHotel hotel
+    function hideHotel() {
+        $('.search-hotel').hide();
+    }
+
+    //close hotel
+    $('.close-hotel').click(function () { hideHotel(); });
+
+    $('.search-hotel .location-recommend nav ul li ').click(function () {
+        var showClass = $(this).attr('data-show');
+        $(this).addClass('active');
+        $(this).siblings().removeClass('active');
+        $('.search-hotel .location-recommend .tab-content>div').removeClass('active');
+        $('.search-hotel .location-recommend .tab-content>div.' + showClass).addClass('active');
+    });
+
+    //*****
+    // show and hide search calendar
+    function showCalendar(target) {
+        target = target || $('.search-calendar-hotel').attr('data-date');
+        $('.search-calendar-hotel').attr('id', target);
+        if (target == 'departure') {
+            $('.search-calendar-hotel .calendar-header .departure').removeClass('hidden');
+            $('.search-calendar-hotel .calendar-header .return').addClass('hidden');
+        } else {
+            $('.search-calendar-hotel .calendar-header .departure').addClass('hidden');
+            $('.search-calendar-hotel .calendar-header .return').removeClass('hidden');
+        }
+        $('.search-calendar-hotel').attr('data-date', target);
+        $('.searchsearch-calendar-hotel').show();
+    }
+
+    function hideCalendar() {
+        $('.search-calendar-hotel').hide();
+    }
+    $('.close-calendar-hotel').click(function () { hideCalendar(); });
+
+    //*****
+    // date selector
+    $('.form-hotel-checkin').click(function () {
+        $('.search-calendar-hotel').show();
+        showCalendar();
+        $('.hotel-date-picker').datepicker('option', 'minDate', new Date());
+    });
+
+    // Select Age Childeren
+    $('body .btn-age').on('click', function() {
+        $('body .age-container').toggleClass('active');
+    });
+    $('body .select-age span').on('click', function () {
+        $(this).parent().find('.option').toggleClass('active');
+    });
+});
