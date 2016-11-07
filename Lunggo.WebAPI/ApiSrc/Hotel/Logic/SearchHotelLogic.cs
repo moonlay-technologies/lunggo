@@ -9,6 +9,7 @@ using Lunggo.Framework.Http;
 using Lunggo.Framework.Log;
 using Lunggo.WebAPI.ApiSrc.Common.Model;
 using Lunggo.WebAPI.ApiSrc.Hotel.Model;
+using ServiceStack.Text;
 
 namespace Lunggo.WebAPI.ApiSrc.Hotel.Logic
 {
@@ -53,12 +54,13 @@ namespace Lunggo.WebAPI.ApiSrc.Hotel.Logic
             else
             {
                 return
-                request.Location > 0 &&
-                request.AdultCount >= 1 &&
-                request.ChildCount >= 0 &&
-                request.CheckinDate >= DateTime.UtcNow.Date &&
-                request.CheckoutDate >= request.CheckinDate &&
-                request.RoomCount > 0;   
+                    request.Occupancies != null &&
+                    //request.AdultCount >= 1 &&
+                    //request.ChildCount >= 0 &&
+                    request.CheckinDate >= DateTime.UtcNow.Date &&
+                    request.CheckoutDate >= request.CheckinDate;
+                //request.RoomCount > 0;   
+
             }
         }
 
@@ -66,18 +68,23 @@ namespace Lunggo.WebAPI.ApiSrc.Hotel.Logic
         {
             var searchServiceRequest = new SearchHotelInput
             {
+                SearchHotelType = request.SearchType,
                 SearchId = request.SearchId,
                 CheckIn = request.CheckinDate,
                 Checkout = request.CheckoutDate,
-                AdultCount = request.AdultCount,
-                ChildCount = request.ChildCount,
+                //AdultCount = request.AdultCount,
+                //ChildCount = request.ChildCount,
                 Nights = request.NightCount,
-                Rooms = request.RoomCount,
+                Occupancies = request.Occupancies,
+                //Rooms = request.RoomCount,
                 Location = request.Location,
                 StartPage = request.From,
                 EndPage = request.To,
                 FilterParam = request.Filter,
                 SortingParam = request.Sorting,
+                HotelCode = request.HotelCode,
+                RegsId = request.RegsId
+
             };
             return searchServiceRequest;
         }
@@ -87,7 +94,7 @@ namespace Lunggo.WebAPI.ApiSrc.Hotel.Logic
             if (searchServiceResponse.IsSuccess)
             {
                 if (searchServiceResponse.ReturnedHotelCount <= 0)
-                    return new HotelSearchApiResponse(){StatusCode = HttpStatusCode.OK};
+                    return new HotelSearchApiResponse() { StatusCode = HttpStatusCode.OK };
 
                 return new HotelSearchApiResponse
                 {
@@ -130,7 +137,12 @@ namespace Lunggo.WebAPI.ApiSrc.Hotel.Logic
                             StatusCode = HttpStatusCode.Accepted,
                             ErrorCode = "ERHSEA02"
                         };
-
+                    case HotelError.RateKeyNotFound:
+                        return new HotelSearchApiResponse
+                        {
+                            StatusCode = HttpStatusCode.Accepted,
+                            ErrorCode = "ERHSEA03"
+                        };
                     default:
                         return new HotelSearchApiResponse
                         {
@@ -138,8 +150,10 @@ namespace Lunggo.WebAPI.ApiSrc.Hotel.Logic
                             ErrorCode = "ERRGEN99"
                         };
                 }
+
+
             }
-            
+
         }
 
     }

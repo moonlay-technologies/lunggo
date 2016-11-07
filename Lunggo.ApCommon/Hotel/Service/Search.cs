@@ -6,6 +6,7 @@ using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.Configuration;
 using System.Web.Mvc;
 using CsQuery.Engine.PseudoClassSelectors;
 using Lunggo.ApCommon.Flight.Model.Logic;
@@ -14,6 +15,7 @@ using Lunggo.ApCommon.Hotel.Model;
 using Lunggo.ApCommon.Hotel.Model.Logic;
 using Lunggo.ApCommon.Hotel.Query;
 using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds;
+using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Sdk.auto.model;
 using Lunggo.ApCommon.Payment.Model;
 using Lunggo.ApCommon.Product.Model;
 using Lunggo.Framework.Documents;
@@ -25,128 +27,112 @@ namespace Lunggo.ApCommon.Hotel.Service
     {
         public SearchHotelOutput Search(SearchHotelInput input)
         {
-            bool isByDestination = false;
-            if (input.SearchId != null)
+            var hotelResult = new SearchHotelOutput();
+            Guid generatedSearchId = Guid.NewGuid();
+            var hotelBedsClient = new HotelBedsSearchHotel();
+            var allCurrency = Currency.GetAllCurrencies();
+
+            switch (input.SearchHotelType)
             {
-                var searchResult = GetSearchHotelResultFromCache(input.SearchId);
-
-                if (searchResult == null)
-                    return new SearchHotelOutput
+                case SearchHotelType.SearchID:
+                    if (input.SearchId != null)
                     {
-                        Errors = new List<HotelError>{HotelError.SearchIdNoLongerValid},
-                        IsSuccess = false,
-                        ErrorMessages = new List<string> { "Error while getting search result by searchId" }
-                    };
+                        var searchResult = GetSearchHotelResultFromCache(input.SearchId);
 
-                var hotels = searchResult.HotelDetails;
-                var facilityData = new List<string>();
-                if (input.FilterParam != null && input.FilterParam.FacilityFilter != null && input.FilterParam.FacilityFilter.Facilities != null)
-                {
-                    foreach (var facilities in input.FilterParam.FacilityFilter.Facilities.Select(param => HotelFacilityFilters[param].FacilityCode))
-                    {
-                        facilityData.AddRange(facilities);
-                    }
-                }
-                
-                //Filtering
-                if (hotels != null && input.FilterParam != null)
-                {
-                    hotels = searchResult.HotelDetails.Where(p =>
-                    (input.FilterParam.ZoneFilter == null || input.FilterParam.ZoneFilter.Zones == null || input.FilterParam.ZoneFilter.Zones.Contains(Convert.ToInt32(p.ZoneCode))) &&
-                    (input.FilterParam.AccommodationTypeFilter == null || input.FilterParam.AccommodationTypeFilter.Accomodations == null || input.FilterParam.AccommodationTypeFilter.Accomodations.Contains(p.AccomodationType)) &&
-                    (facilityData.Count == 0 || facilityData.Any(e=> p.Facilities.Select(x=>x.FullFacilityCode).ToList().Contains(e))) &&
-                    (input.FilterParam.StarFilter == null || input.FilterParam.StarFilter.Stars == null || input.FilterParam.StarFilter.Stars.Contains(p.StarCode)) &&
-                    (input.FilterParam.PriceFilter == null || (p.OriginalFare >= input.FilterParam.PriceFilter.MinPrice && p.OriginalFare <= input.FilterParam.PriceFilter.MaxPrice))
-                    ).ToList();    
-                }
-                
+                        if (searchResult == null)
+                            return new SearchHotelOutput
+                            {
+                                Errors = new List<HotelError> { HotelError.SearchIdNoLongerValid },
+                                IsSuccess = false,
+                                ErrorMessages = new List<string> { "Error while getting search result by searchId" }
+                            };
 
-                //Sorting
-                switch (SortingTypeCd.Mnemonic(input.SortingParam))
-                {
-                    case SortingType.AscendingPrice :
-                        if (hotels != null) hotels = hotels.OrderBy(p => p.OriginalFare).ToList();
-                        break;
-                    case SortingType.DescendingPrice :
-                        if (hotels != null) hotels = hotels.OrderByDescending(p => p.OriginalFare).ToList();
-                        break;
-                    case SortingType.AscendingStar:
-                        if (hotels != null) hotels = hotels.OrderBy(p => p.StarCode).ToList();
-                        break;
-                    case SortingType.DescendingStar:
-                        if (hotels != null) hotels = hotels.OrderByDescending(p => p.StarCode).ToList();
-                        break;
-                }
-
-                List<HotelDetail> hotelList;
-                if (input.StartPage != 0 && input.EndPage != 0)
-                {
-                    hotelList = hotels.Skip(input.StartPage).Take(input.EndPage).ToList();
-                }
-                else
-                {
-                    hotelList = hotels.Take(100).ToList();
-                }
-
-                hotelList = AddHotelDetail(hotelList);
-                var sortedHotel = searchResult.HotelDetails.OrderByDescending(x => x.NetFare);
-
-                return new SearchHotelOutput
-                {
-                    SearchId = searchResult.SearchId,
-                    HotelDetailLists = hotelList.Count != null?ConvertToHotelDetailForDisplay(hotelList):null,
-                    StartPage = input.StartPage,
-                    EndPage = input.EndPage==0?hotelList.Count:input.EndPage,
-                    ReturnedHotelCount = hotelList.Count,
-                    TotalHotelCount = searchResult.HotelDetails.Count,
-                    HotelFilterDisplayInfo = searchResult.HotelFilterDisplayInfo,
-                    FilteredHotelCount = hotels != null ?hotels.Count : 0,
-                    MaxPrice = sortedHotel.Select(x => x.NetFare).FirstOrDefault(),
-                    MinPrice = sortedHotel.Select(x => x.NetFare).LastOrDefault(),
-                    IsSuccess = true
-                };
-            }
-            else
-            {
-                var allCurrency = Currency.GetAllCurrencies();
-                Guid generatedSearchId = Guid.NewGuid();
-                SaveAllCurrencyToCache(generatedSearchId.ToString(), allCurrency );
-
-                var hotelBedsClient = new HotelBedsSearchHotel();
-                var request = new SearchHotelCondition();
-                var detailDestination = GetLocationById(input.Location);
-
-                if (input.HotelCode != 0)
-                {
-                    if (input.Occupancies == null)
-                    {
-                        request.AdultCount = input.AdultCount;
-                        request.ChildCount = input.ChildCount;
-                        request.Rooms = input.Rooms;
-                    }
-                    else
-                    {
-                        request.Occupancies = input.Occupancies;
-                    }
-                    request.HotelCode = input.HotelCode;
-                    request.CheckIn = input.CheckIn;
-                    request.Checkout = input.Checkout;
-                    request.SearchId = generatedSearchId.ToString();
-                }
-                else
-                {
-                    if (input.Occupancies == null)
-                    {
-                        request = new SearchHotelCondition
+                        var hotels = searchResult.HotelDetails;
+                        var facilityData = new List<string>();
+                        if (input.FilterParam != null && input.FilterParam.FacilityFilter != null && input.FilterParam.FacilityFilter.Facilities != null)
                         {
-                            CheckIn = input.CheckIn,
-                            Checkout = input.Checkout,
-                            AdultCount = input.AdultCount,
-                            ChildCount = input.ChildCount,
-                            Nights = input.Nights,
-                            Rooms = input.Rooms,
-                            SearchId = generatedSearchId.ToString()
+                            foreach (var facilities in input.FilterParam.FacilityFilter.Facilities.Select(param => HotelFacilityFilters[param].FacilityCode))
+                            {
+                                facilityData.AddRange(facilities);
+                            }
+                        }
+
+                        //Filtering
+                        if (hotels != null && input.FilterParam != null)
+                        {
+                            hotels = searchResult.HotelDetails.Where(p =>
+                            (input.FilterParam.ZoneFilter == null || input.FilterParam.ZoneFilter.Zones == null || input.FilterParam.ZoneFilter.Zones.Contains(Convert.ToInt32(p.ZoneCode))) &&
+                            (input.FilterParam.AccommodationTypeFilter == null || input.FilterParam.AccommodationTypeFilter.Accomodations == null || input.FilterParam.AccommodationTypeFilter.Accomodations.Contains(p.AccomodationType)) &&
+                            (facilityData.Count == 0 || facilityData.Any(e => p.Facilities.Select(x => x.FullFacilityCode).ToList().Contains(e))) &&
+                            (input.FilterParam.StarFilter == null || input.FilterParam.StarFilter.Stars == null || input.FilterParam.StarFilter.Stars.Contains(p.StarCode)) &&
+                            (input.FilterParam.PriceFilter == null || (p.OriginalFare >= input.FilterParam.PriceFilter.MinPrice && p.OriginalFare <= input.FilterParam.PriceFilter.MaxPrice))
+                            ).ToList();
+                        }
+
+
+                        //Sorting
+                        switch (SortingTypeCd.Mnemonic(input.SortingParam))
+                        {
+                            case SortingType.AscendingPrice:
+                                if (hotels != null) hotels = hotels.OrderBy(p => p.OriginalFare).ToList();
+                                break;
+                            case SortingType.DescendingPrice:
+                                if (hotels != null) hotels = hotels.OrderByDescending(p => p.OriginalFare).ToList();
+                                break;
+                            case SortingType.AscendingStar:
+                                if (hotels != null) hotels = hotels.OrderBy(p => p.StarCode).ToList();
+                                break;
+                            case SortingType.DescendingStar:
+                                if (hotels != null) hotels = hotels.OrderByDescending(p => p.StarCode).ToList();
+                                break;
+                        }
+
+                        List<HotelDetail> hotelList;
+                        if (input.StartPage != 0 && input.EndPage != 0)
+                        {
+                            hotelList = hotels.Skip(input.StartPage).Take(input.EndPage).ToList();
+                        }
+                        else
+                        {
+                            hotelList = hotels.Take(100).ToList();
+                        }
+
+                        hotelList = AddHotelDetail(hotelList);
+                        var sortedHotel = searchResult.HotelDetails.OrderByDescending(x => x.NetFare);
+
+                        hotelResult = new SearchHotelOutput
+                        {
+                            SearchId = searchResult.SearchId,
+                            HotelDetailLists = hotelList.Count != null ? ConvertToHotelDetailForDisplay(hotelList) : null,
+                            StartPage = input.StartPage,
+                            EndPage = input.EndPage == 0 ? hotelList.Count : input.EndPage,
+                            ReturnedHotelCount = hotelList.Count,
+                            TotalHotelCount = searchResult.HotelDetails.Count,
+                            HotelFilterDisplayInfo = searchResult.HotelFilterDisplayInfo,
+                            FilteredHotelCount = hotels != null ? hotels.Count : 0,
+                            MaxPrice = sortedHotel.Select(x => x.NetFare).FirstOrDefault(),
+                            MinPrice = sortedHotel.Select(x => x.NetFare).LastOrDefault(),
+                            IsSuccess = true
                         };
+                    }
+                    break;
+
+                case SearchHotelType.Location:
+                    var isByDestination = false;
+                    SaveAllCurrencyToCache(generatedSearchId.ToString(), allCurrency);
+
+
+                    var request = new SearchHotelCondition();
+                    var detailDestination = GetLocationById(input.Location);
+
+                    if (input.HotelCode != 0)
+                    {
+
+                        request.Occupancies = input.Occupancies;
+                        request.HotelCode = input.HotelCode;
+                        request.CheckIn = input.CheckIn;
+                        request.Checkout = input.Checkout;
+                        request.SearchId = generatedSearchId.ToString();
                     }
                     else
                     {
@@ -158,78 +144,186 @@ namespace Lunggo.ApCommon.Hotel.Service
                             Occupancies = input.Occupancies,
                             SearchId = generatedSearchId.ToString()
                         };
+
+                        switch (detailDestination.Type)
+                        {
+                            case AutocompleteType.Zone:
+                                request.Zone = detailDestination.Code;
+                                break;
+                            case AutocompleteType.Destination:
+                                request.Destination = detailDestination.Code;
+                                isByDestination = true;
+                                break;
+                            case AutocompleteType.Area:
+                                request.Area = detailDestination.Code;
+                                break;
+                            case AutocompleteType.Hotel:
+                                request.HotelCode = int.Parse(detailDestination.Code);
+                                break;
+                        };
                     }
-                    
-                    switch (detailDestination.Type)
+
+
+                    var result = hotelBedsClient.SearchHotel(request);
+                    result.SearchId = generatedSearchId.ToString();
+                    Debug.Print("Search Id : " + result.SearchId);
+
+
+                    if (result.HotelDetails != null)
                     {
-                        case AutocompleteType.Zone:
-                            request.Zone = detailDestination.Code;
-                            break;
-                        case AutocompleteType.Destination:
-                            request.Destination = detailDestination.Code;
-                            isByDestination = true;
-                            break;
-                        case AutocompleteType.Area:
-                            request.Area = detailDestination.Code;
-                            break;
-                        case AutocompleteType.Hotel:
-                            request.HotelCode = int.Parse(detailDestination.Code);
-                            break;
-                    };
-                }
-                
+                        AddPriceMargin(result.HotelDetails);
+                        result.HotelDetails = AddDetailInfo(result.HotelDetails);
+                        result.HotelFilterDisplayInfo = SetHotelFilterDisplayInfo(result.HotelDetails, isByDestination);
 
-                var result = hotelBedsClient.SearchHotel(request);
-                result.SearchId = generatedSearchId.ToString();
-                Debug.Print("Search Id : " + result.SearchId);
+                        //REMEMBER TO UNCOMMENT THIS
+                        SaveSearchResultintoDatabaseToCache(result.SearchId, result);
+
+                        List<HotelDetail> firstPageHotelDetails;
+                        if (input.StartPage != 0 && input.EndPage != 0)
+                        {
+                            firstPageHotelDetails = result.HotelDetails.Skip(input.StartPage).Take(input.EndPage).ToList();
+                        }
+                        else
+                        {
+                            firstPageHotelDetails = result.HotelDetails.Take(100).ToList();
+                        }
 
 
-                if (result.HotelDetails != null)
-                {
-                    AddPriceMargin(result.HotelDetails);
-                    result.HotelDetails = AddDetailInfo(result.HotelDetails);
-                    result.HotelFilterDisplayInfo = SetHotelFilterDisplayInfo(result.HotelDetails, isByDestination);
-              
-                    //REMEMBER TO UNCOMMENT THIS
-                    SaveSearchResultintoDatabaseToCache(result.SearchId, result);
-
-                    List<HotelDetail> firstPageHotelDetails;
-                    if (input.StartPage != 0 && input.EndPage != 0)
-                    {
-                        firstPageHotelDetails = result.HotelDetails.Skip(input.StartPage).Take(input.EndPage).ToList();
+                        firstPageHotelDetails = AddHotelDetail(firstPageHotelDetails);
+                        var searchType = detailDestination.Type.ToString();
+                        var sortedHotel = result.HotelDetails.OrderByDescending(x => x.NetFare);
+                        hotelResult = new SearchHotelOutput
+                        {
+                            IsSuccess = true,
+                            SearchId = result.SearchId,
+                            HotelDetailLists = ConvertToHotelDetailForDisplay(firstPageHotelDetails),
+                            StartPage = 1,
+                            EndPage = firstPageHotelDetails.Count,
+                            ReturnedHotelCount = firstPageHotelDetails.Count,
+                            TotalHotelCount = result.HotelDetails.Count,
+                            HotelFilterDisplayInfo = result.HotelFilterDisplayInfo,
+                            MaxPrice = sortedHotel.Select(x => x.NetFare).FirstOrDefault(),
+                            MinPrice = sortedHotel.Select(x => x.NetFare).LastOrDefault(),
+                            IsSpecificHotel = searchType.Equals("Hotel"),
+                            HotelCode = searchType.Equals("Hotel") ? (int?)firstPageHotelDetails.Select(x => x.HotelCode).FirstOrDefault() : null
+                            //TODO Expiry Time
+                        };
                     }
                     else
                     {
-                        firstPageHotelDetails = result.HotelDetails.Take(100).ToList();
+                        Console.WriteLine("Search result is empty");
+                        return new SearchHotelOutput() { IsSuccess = true };
+                    }
+                    break;
+                case SearchHotelType.HotelCode:
+
+                    SaveAllCurrencyToCache(generatedSearchId.ToString(), allCurrency);
+                    var splittedRegsId = input.RegsId.Split(',');
+                    var hotelCd = splittedRegsId[0];
+                    var rateKey = splittedRegsId[2];
+                    var splittedRateKey = rateKey.Split('|');
+                    var checkin = splittedRateKey[0];
+                    var checkout = splittedRateKey[1];
+                    var roomCd = splittedRateKey[5];
+                    var someData = splittedRateKey[6];
+                    var board = splittedRateKey[7];
+
+                    var checkinDateTime = new DateTime(Convert.ToInt32(checkin.Substring(0, 4)),
+                        Convert.ToInt32(checkin.Substring(4, 2)),
+                        Convert.ToInt32(checkin.Substring(6, 2)));
+
+                    var results = hotelBedsClient.SearchHotel(new SearchHotelCondition
+                    {
+                        HotelCode = input.HotelCode,
+                        Occupancies = input.Occupancies,
+                        CheckIn = new DateTime(Convert.ToInt32(checkin.Substring(0, 4)), Convert.ToInt32(checkin.Substring(4, 2)),
+                            Convert.ToInt32(checkin.Substring(6, 2))),
+                        Checkout = new DateTime(Convert.ToInt32(checkout.Substring(0, 4)), Convert.ToInt32(checkout.Substring(4, 2)),
+                            Convert.ToInt32(checkout.Substring(6, 2))),
+                        SearchId = generatedSearchId.ToString()
+
+                    });
+
+                    if (results.HotelDetails != null || results.HotelDetails.Count != 0)
+                    {
+                        if (results.HotelDetails.Any(hotel => hotel.Rooms == null || hotel.Rooms.Count == 0))
+                        {
+                            hotelResult = new SearchHotelOutput
+                            {
+                                IsSuccess = false
+                            };
+                        }
+
+                        AddPriceMargin(results.HotelDetails);
+                        List<HotelRate> rateList = new List<HotelRate>();
+                        HotelRoom roomHotel = new HotelRoom();
+                        var isRateFound = false;
+                        var counter = 0;
+                        foreach (var hotel in results.HotelDetails)
+                        {
+                            foreach (var room in hotel.Rooms)
+                            {
+                                foreach (var ratea in room.Rates)
+                                {
+                                    var ratekey = ratea.RateKey.Split('|');
+                                    if (Convert.ToInt32(ratekey[4]) == input.HotelCode && ratekey[5] == roomCd &&
+                                        ratekey[6] == someData && ratekey[7] == board)
+                                    {
+                                        isRateFound = true;
+                                        roomHotel.Facilities = room.Facilities;
+                                        roomHotel.Images = room.Images;
+                                        roomHotel.RoomCode = room.RoomCode;
+                                        roomHotel.RoomName = room.RoomName;
+                                        roomHotel.Type = room.Type;
+                                        roomHotel.TypeName = room.TypeName;
+                                        roomHotel.characteristicCd = room.characteristicCd;
+                                        roomHotel.SingleRate = ratea;
+                                        roomHotel.SingleRate.TermAndCondition = GetRateCommentFromTableStorage(roomHotel.SingleRate.RateCommentsId, checkinDateTime).Select(x => x.Description).ToList();
+                                        roomHotel.SingleRate.RegsId = EncryptRegsId(hotel.HotelCode, room.RoomCode, roomHotel.SingleRate.RateKey);
+                                        hotelResult = new SearchHotelOutput
+                                        {
+                                            IsSuccess = true,
+                                            HotelRoom = ConvertToSingleHotelRoomForDisplay(roomHotel),
+                                            ReturnedHotelCount = 1,
+                                            TotalHotelCount = 1
+                                        };
+                                        Debug.Print("----->FOUND" + counter);
+                                        counter++;
+                                    }
+                                }
+                            }
+                        }
+
+                        if (!isRateFound)
+                        {
+                            hotelResult = new SearchHotelOutput
+                            {
+                                Errors = new List<HotelError> { HotelError.RateKeyNotFound },
+                                IsSuccess = false,
+                                ErrorMessages = new List<string> { "Rate Key Not Found!" }
+                            };
+                        }
+
+                    }
+                    else
+                    {
+                        hotelResult = new SearchHotelOutput
+                        {
+                            IsSuccess = false,
+                            Errors = new List<HotelError> { HotelError.RateKeyNotFound },
+                            ErrorMessages = new List<string> { "Search Result is null" }
+                        };
                     }
 
-                     
-                    firstPageHotelDetails = AddHotelDetail(firstPageHotelDetails);
-                    var searchType = detailDestination.Type.ToString();
-                    var sortedHotel = result.HotelDetails.OrderByDescending(x => x.NetFare);
-                    return new SearchHotelOutput
-                    {
-                        IsSuccess = true,
-                        SearchId = result.SearchId,
-                        HotelDetailLists = ConvertToHotelDetailForDisplay(firstPageHotelDetails),
-                        StartPage = 1,
-                        EndPage = firstPageHotelDetails.Count,
-                        ReturnedHotelCount = firstPageHotelDetails.Count,
-                        TotalHotelCount = result.HotelDetails.Count,
-                        HotelFilterDisplayInfo = result.HotelFilterDisplayInfo,
-                        MaxPrice = sortedHotel.Select(x => x.NetFare).FirstOrDefault(),
-                        MinPrice = sortedHotel.Select(x => x.NetFare).LastOrDefault(),
-                        IsSpecificHotel = searchType.Equals("Hotel"),
-                        HotelCode = searchType.Equals("Hotel") ? (int?) firstPageHotelDetails.Select(x=>x.HotelCode).FirstOrDefault():null
-                        //TODO Expiry Time
-                    };
-                }
-                else
-                {
-                    Console.WriteLine("Search result is empty");
-                    return new SearchHotelOutput(){IsSuccess = true};
-                }
+
+
+
+
+
+                    break;
             }
+
+            return hotelResult;
         }
 
         public List<HotelDetail> AddHotelDetail(List<HotelDetail> result)
@@ -248,7 +342,8 @@ namespace Lunggo.ApCommon.Hotel.Service
             return result;
         }
 
-        public List<HotelDetail> AddDetailInfo(List<HotelDetail> result )
+
+        public List<HotelDetail> AddDetailInfo(List<HotelDetail> result)
         {
             var shortlistHotel = new List<HotelDetail>();
             foreach (var hotel in result)
@@ -438,6 +533,6 @@ namespace Lunggo.ApCommon.Hotel.Service
             {
                 return null;
             }
-        } 
+        }
     }
 }
