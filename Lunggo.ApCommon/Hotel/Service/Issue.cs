@@ -90,7 +90,7 @@ namespace Lunggo.ApCommon.Hotel.Service
 
             var hotelbeds = new HotelBedsSearchHotel();
             var searchResult = hotelbeds.SearchHotel(request);
-            AddPriceMargin(searchResult.HotelDetails);
+            AddPriceMargin(searchResult.HotelDetails, rsvData.State.Currency);
 
             if (searchResult.HotelDetails == null || searchResult.HotelDetails.Count == 0)
             {

@@ -193,17 +193,6 @@ namespace Lunggo.ApCommon.Hotel.Service
         private HotelReservation CreateHotelReservation(BookHotelInput input, HotelDetailsBase bookInfo)
         {
             var rsvNo = RsvNoSequence.GetInstance().GetNext(ProductType.Hotel);
-            //var identity = HttpContext.Current.User.Identity as ClaimsIdentity ?? new ClaimsIdentity();
-            //var clientId = identity.Claims.Single(claim => claim.Type == "Client ID").Value;
-            //var platform = Client.GetPlatformType(clientId);
-            //var deviceId = identity.Claims.Single(claim => claim.Type == "Device ID").Value;
-            //var rsvState = new ReservationState
-            //{
-            //    Platform = platform,
-            //    DeviceId = deviceId,
-            //    Language = "id", //OnlineContext.GetActiveLanguageCode();
-            //    Currency = new Currency("IDR"), //OnlineContext.GetActiveCurrencyCode());
-            //};
 
             var ciDate = bookInfo.Rooms[0].Rates[0].RateKey.Split('|')[0];
             var coDate = bookInfo.Rooms[0].Rates[0].RateKey.Split('|')[1];
