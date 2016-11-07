@@ -175,6 +175,7 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds
                             }).ToList()
                         }).ToList(),
                     };
+                    DistinguishRoom(hotel); 
                     hotels.Add(hotel);
                 }
                 response.HotelDetails = hotels;
@@ -182,6 +183,25 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds
                 response.CheckOut = condition.Checkout;
             }
             return response;
+        }
+
+        private void DistinguishRoom(HotelDetail hotel)
+        {
+            var newlist = new List<HotelRoom>();
+            foreach (var room in hotel.Rooms)
+            {
+                var found = newlist.SingleOrDefault(r => r.RoomCode == room.RoomCode);
+                if (found != null)
+                {
+                    found.Rates.AddRange(room.Rates);
+                }
+                else
+                {
+                    newlist.Add(room);
+                }
+            }
+
+            hotel.Rooms = newlist;
         }
     }
 }
