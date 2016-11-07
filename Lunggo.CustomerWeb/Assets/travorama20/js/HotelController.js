@@ -1,16 +1,16 @@
 ﻿jQuery(document).ready(function ($) {
-    // **********
-    // Custom Checkbox
-    $('body .sqr').on('click', function () {
-        var id = $(this).find('.check');
-        if ($(id).is(':checked')) {
-            id.checked = true;
-            $(this).addClass('active');
-        } else {
-            id.checked = false;
-            $(this).removeClass('active');
-        }
-    });
+    //// **********
+    //// Custom Checkbox
+    //$('body .sqr').on('click', function () {
+    //    var id = $(this).find('.check');
+    //    if ($(id).is(':checked')) {
+    //        id.checked = true;
+    //        $(this).addClass('active');
+    //    } else {
+    //        id.checked = false;
+    //        $(this).removeClass('active');
+    //    }
+    //});
 
     // **********
     // Custom Radio
@@ -43,3 +43,18 @@
         $('body .hotel-form').slideToggle("slow");
     });
 });
+
+function customCheckbox() {
+    // **********
+    // Custom Checkbox
+    $('body .sqr').on('click', function () {
+        var id = $(this).find('.check');
+        if ($(id).is(':checked')) {
+            id.checked = true;
+            $(this).addClass('active');
+        } else {
+            id.checked = false;
+            $(this).removeClass('active');
+        }
+    });
+}

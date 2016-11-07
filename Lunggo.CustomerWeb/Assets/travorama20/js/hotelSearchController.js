@@ -101,6 +101,7 @@ app.controller('hotelSearchController', ['$scope', '$log', '$http', '$resource',
             $scope.hotelFilterDisplayInfo = data.hotelFilterDisplayInfo;
             $scope.returnedHotelCount = data.returnedHotelCount;
             initiatePriceSlider();
+            $timeout(function () { customCheckbox(); }, 0);
             $log.debug(data);
         });
 
@@ -145,6 +146,20 @@ app.controller('hotelSearchController', ['$scope', '$log', '$http', '$resource',
                     $scope.filter.stars.splice(starIndex, 1);
                 }
             }
+        }
+        else if (filterType == 'zone') {
+            if ($scope.filter.zones == null) {
+                $scope.filter.zones = [value.code];
+            }
+            else {
+                var zoneCodeIndex = $scope.filter.zones.indexOf(value.code);
+                if (zoneCodeIndex < 0) {
+                    $scope.filter.zones.push(value.code);
+                }
+                else {
+                    $scope.filter.zones.splice(zoneCodeIndex, 1);
+                }
+            } 
         }
         
     }

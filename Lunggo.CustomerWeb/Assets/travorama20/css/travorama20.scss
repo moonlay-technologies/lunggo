@@ -22,7 +22,7 @@ $mobile-app: '../images/mobile-app.png';
 /*--------------------*/
 /* mixins */
 @mixin letter-spacing($value){
-    letter-spacing:$value;   
+    letter-spacing:$value ;   
 }
 
 @mixin border-radius($radius){
