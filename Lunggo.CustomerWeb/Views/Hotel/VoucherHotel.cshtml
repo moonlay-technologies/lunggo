@@ -1,221 +1,179 @@
-﻿@{
-    ViewBag.SiteHeader = "header-email";
-}
+﻿@using System.Globalization
+@using Lunggo.ApCommon.Flight.Model
+@using Lunggo.Framework.Config
+@using Lunggo.ApCommon.Constant
 
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta name="viewport" content="width=device-width" />
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <link rel="shortcut icon" type="image/ico" href="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/favico.ico")" />
+
+    <title>Travorama - eTicket</title>
+
+    <!-- stylesheets -->
+    <link rel="stylesheet" href="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/css/bootstrap.min.css")" />
+    <link rel="stylesheet" href="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/css/font-awesome.min.css")" />
+    <link rel="stylesheet" href="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/css/neweticket.css")" />
+
 </head>
-<body style="width:100%; height:100%; -webkit-print-color-adjust: exact;">
-    <table width="100%" border="0" cellpadding="0" cellspacing="0">
-        <tbody>
-            <tr>
-                <td>
-                    <table style="background: #fff; width: 100%; max-width: 700px;" align="center" cellpadding="0" cellspacing="0" border="0">
-                        <tbody>
-                            <tr>
-                                <td style="padding: 40px 30px;">
-                                    <table width="320px" align="left" border="0" cellpadding="0" cellspacing="0">
-                                        <tbody>
-                                            <tr>
-                                                <td style="">
-                                                    <a href="http://travorama.com" style="text-decoration:none;">
-                                                        <img style="width: 130px;" src="/Assets/images/travorama-logo-color.png" alt="Travorama" />
-                                                    </a>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                    <table width="320px" align="left" border="0" cellpadding="0" cellspacing="0">
-                                        <tbody>
-                                            <tr>
-                                                <td style="font-size: 24px; text-align: right; line-height: 40px;">
-                                                    <b>HOTEL <span style="color: #15b1e4;">VOUCHER</span></b>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="padding: 0 30px;">
-                                    <table width="640px" align="left" border="0" cellpadding="0" cellspacing="0">
-                                        <tbody>
-                                            <tr>
-                                                <td style="padding-bottom: 20px;">
-                                                    <p style="border-bottom: 2px solid #15b1e4; margin-bottom: 20px;">
-                                                        <img style="padding-right: 5px;" src="/Assets/images/phone.png" /><span style="color: #15b1e4;">021 1234 5678</span>
-                                                        <img style="padding-right: 5px; padding-left: 15px;" src="/Assets/images/email/mail.png" /><span style="color: #15b1e4;">cs@travorama.com</span>
-                                                    </p>
-                                                    <p style="margin-bottom: 0;">
-                                                        <img style="width: 640px" src="/Assets/images/voucher-hotel-bg.jpg" />
-                                                    </p>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="padding: 0 30px 15px;">
-                                    <table width="160px" align="left" border="0" cellpadding="0" cellspacing="0">
-                                        <tbody>
-                                            <tr>
-                                                <td style="">
-                                                    <p style="color: #525252; font-size: 12px;">Itinerary ID</p>
-                                                    <p style="color: #0c84b1; font-size: 15px;"><b>123456789</b></p>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                    <table width="480px" align="left" border="0" cellpadding="0" cellspacing="0">
-                                        <tbody>
-                                            <tr>
-                                                <td style="padding-left: 30px; border-left: 1px solid #ddd;">
-                                                    <p style="font-size: 15px; text-transform: uppercase; color: #15b1e4;"><b>B hotel bali & spa</b></p>
-                                                    <p><img src="/Assets/images/hotel-star-4.png" /></p>
-                                                    <p style="color: #525252;">
-                                                        <img src="/Assets/images/location.png" /> Jl. Imam Bonjol No 508, Denpasar,
-                                                        Denpasar, Indonesia 80119
-                                                    </p>
-                                                    <p style="color: #525252;">
-                                                        <img src="/Assets/images/phone.png" /> 0000 000000
-                                                    </p>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="padding: 0 30px 40px;">
-                                    <table width="640px" align="left" border="0" cellpadding="0" cellspacing="0" style="border-top: 1px solid #ddd;">
-                                        <tbody>
-                                            <tr>
-                                                <td style="">
-                                                    <p style="font-size: 15px; color: #525252; margin: 20px 0;"><b>BOOKING DETAILS</b></p>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                    <table align="left" border="0" cellpadding="0" cellspacing="0" style="">
-                                        <tbody>
-                                            <tr>
-                                                <td width="160px" style="">
-                                                    <p style=""><b>Booking ID</b></p>
-                                                </td>
-                                                <td width="480px" style="padding-left: 30px;">
-                                                    <p style="">: <b>123456789</b></p>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td width="160px" style="">
-                                                    <p style=""><b>Guest Name</b></p>
-                                                </td>
-                                                <td width="480px" style="padding-left: 30px;">
-                                                    <p style="">: <b>Anonymous</b></p>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td width="160px" style=""></td>
-                                                <td width="480px" style="padding-left: 30px;">
-                                                    <table style="margin-bottom: 20px;" align="left" border="0" cellpadding="0" cellspacing="0">
-                                                        <tbody>
-                                                            <tr>
-                                                                <td width="160px" style="">
-                                                                    <span style="color: #0c84b1;">Check-in from</span>
-                                                                </td>
-                                                                <td width="160px" style="">
-                                                                    <span style="">.........................</span>
-                                                                </td>
-                                                                <td width="160px" style="">
-                                                                    <span style="color: #0c84b1;">Check-out until</span>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td width="160px" style="">
-                                                                    <span style="color: #15b1e4; font-size: 15px;"><b>05 Nov 2016</b></span>
-                                                                </td>
-                                                                <td width="160px" style=""></td>
-                                                                <td width="160px" style="">
-                                                                    <span style="color: #15b1e4; font-size: 15px;"><b>09 Nov 2016</b></span>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td width="160px" style="">
-                                                                    <span style="">14.00</span>
-                                                                </td>
-                                                                <td width="160px" style=""></td>
-                                                                <td width="160px" style="">
-                                                                    <span style="">12.00</span>
-                                                                </td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td width="160px" style="">
-                                                    <p style="color: #525252;">Guest per room</p>
-                                                </td>
-                                                <td width="480px" style="padding-left: 30px;">
-                                                    <p style="">: 2 persons</p>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td width="160px" style="">
-                                                    <p style="color: #525252;">Room Type</p>
-                                                </td>
-                                                <td width="480px" style="padding-left: 30px;">
-                                                    <p style="">: Deluxe Room Only</p>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td width="160px" style="">
-                                                    <p style="color: #525252;">Number of rooms</p>
-                                                </td>
-                                                <td width="480px" style="padding-left: 30px;">
-                                                    <p style="">: 2</p>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td width="160px" style="">
-                                                    <p style="color: #525252;">Include breakfast?</p>
-                                                </td>
-                                                <td width="480px" style="padding-left: 30px;">
-                                                    <p style=""> : No</p>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td width="160px" style="">
-                                                    <p style="color: #525252;">Special Request</p>
-                                                </td>
-                                                <td width="480px" style="padding-left: 30px;">
-                                                    <p style="">: extra pillow</p>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td width="160px" style="">
-                                                    <p style="color: #525252;">Includes</p>
-                                                </td>
-                                                <td width="480px" style="padding-left: 30px;">
-                                                    <p style="">
-                                                        <span><img style="padding-right: 5px" src="/Assets/images/wifi.png" alt="Alternate Text" />Free Wifi</span>
-                                                        <span style="padding-left: 15px"><img style="padding-right: 5px" src="/Assets/images/swim.png" alt="Alternate Text" />Swimming Pool</span>
-                                                    </p>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+<body class="eticket">
+    <div class="page page-hotel-voucher">
+        <header class="page-header">
+            <div class="row">
+                <div class="col-xs-4">
+                    <img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/travorama-logo-color.png")" />
+                </div>
+                <div class="col-xs-8">
+                    <div class="page-header-right pull-right">
+                        <div class="page-title"><h3><span class="black-txt">HOTEL</span> VOUCHER</h3></div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <section class="page-content">
+            <div class="hotel-wrapper">
+                <div class="hotel-top">
+                    <p>
+                        <img class="img-phone" src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/phone.png")" /><span class="blue-txt">021 1234 5678</span>
+                        <img class="img-email" src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/email/mail.png")" /><span class="blue-txt">cs@travorama.com</span>
+                    </p>
+                    <img class="img-hotel" src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/voucher-hotel-bg.jpg")" />
+                </div>
+                <div class="hotel-middle">
+                    <div class="row">
+                        <div class="col-xs-2">
+                            <h4>Itinerary ID</h4>
+                            <h4 class="blue-txt"><b>123456789</b></h4>
+                        </div>
+                        <div class="col-xs-10">
+                            <div class="right-side">
+                                <h4 class="blue-txt uppercase"><b>B hotel bali & spa</b></h4>
+                                <p><img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/hotel-star-4.png")" /></p>
+                                <p class="grey-txt">
+                                    <img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/location.png")" /> Jl. Imam Bonjol No 508, Denpasar,
+                                    Denpasar, Indonesia 80119
+                                </p>
+                                <p class="grey-txt">
+                                    <img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/phone.png")" /> 0000 000000
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="hotel-bottom">
+                    <h3><b>BOOKING DETAILS</b></h3>
+                    <div class="hotel-detail">
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <p style=""><b>Booking ID</b></p>
+                            </div>
+                            <div class="col-xs-9">
+                                <p style="">: <b>123456789</b></p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <p style=""><b>Guest Name</b></p>
+                            </div>
+                            <div class="col-xs-9">
+                                <p style="">: <b>Anonymous</b></p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-3"></div>
+                            <div class="col-xs-9">
+                                <div class="hotel-booked">
+                                    <div class="row">
+                                        <div class="col-xs-3">
+                                            <span class="blue-txt">Check-in from</span>
+                                        </div>
+                                        <div class="col-xs-3">
+                                            <span>.........................</span>
+                                        </div>
+                                        <div class="col-xs-3">
+                                            <span class="blue-txt">Check-out until</span>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xs-3">
+                                            <span class="blue-txt md-txt"><b>05 Nov 2016</b></span>
+                                        </div>
+                                        <div class="col-xs-3"></div>
+                                        <div class="col-xs-3">
+                                            <span class="blue-txt md-txt"><b>09 Nov 2016</b></span>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xs-3">
+                                            <span class="grey-txt">14.00</span>
+                                        </div>
+                                        <div class="col-xs-3"></div>
+                                        <div class="col-xs-3">
+                                            <span class="grey-txt">12.00</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row grey-txt">
+                            <div class="col-xs-3">
+                                <p>Guest per room</p>
+                            </div>
+                            <div class="col-xs-9">
+                                <p>: 2 persons</p>
+                            </div>
+                        </div>
+                        <div class="row grey-txt">
+                            <div class="col-xs-3">
+                                <p>Room Type</p>
+                            </div>
+                            <div class="col-xs-9">
+                                <p>: Deluxe Room Only</p>
+                            </div>
+                        </div>
+                        <div class="row grey-txt">
+                            <div class="col-xs-3">
+                                <p>Number of rooms</p>
+                            </div>
+                            <div class="col-xs-9">
+                                <p>: 2</p>
+                            </div>
+                        </div>
+                        <div class="row grey-txt">
+                            <div class="col-xs-3">
+                                <p>Include breakfast?</p>
+                            </div>
+                            <div class="col-xs-9">
+                                <p> : No</p>
+                            </div>
+                        </div>
+                        <div class="row grey-txt">
+                            <div class="col-xs-3">
+                                <p>Special Request</p>
+                            </div>
+                            <div class="col-xs-9">
+                                <p>: extra pillow</p>
+                            </div>
+                        </div>
+                        <div class="row grey-txt">
+                            <div class="col-xs-3">
+                                <p>Includes</p>
+                            </div>
+                            <div class="col-xs-9">
+                                <p>
+                                    <span><img class="img-wifi" src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/wifi.png")" />Free Wifi</span>
+                                    <span><img class="img-swim" src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/swim.png")" />Swimming Pool</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
 </body>
 </html>
