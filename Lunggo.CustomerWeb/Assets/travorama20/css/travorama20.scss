@@ -76,7 +76,7 @@ $mobile-app: '../images/mobile-app.png';
 
 
 @mixin size($width, $height) {
-    width: $width;
+    width: $width ;
     height: $height;
 }
 
@@ -321,7 +321,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
 
 // slider
 .slider {margin-top:10px; margin-bottom:10px; background:#666;
-    .ui-slider-range {background:#fed446;}
+    .ui-slider-range {background:#fed446; }
     .ui-slider-handle {background:#dedede; @include border-radius(20px); width:15px; height:15px; color:#fff;
         &:focus {border:0;}
     }
