@@ -154,12 +154,9 @@ namespace Lunggo.ApCommon.Hotel.Service
                 ChainName = GetHotelChainDesc(hotelDetail.Chain),
                 OriginalFare = originalPrice,
                 NetFare = netPrice,
-                //Segments =  //TODO "List of Segment by SegmentCode"
                 Pois = hotelDetail.Pois,
                 Terminals =  hotelDetail.Terminals,
-                Facilities = hotelDetail.Facilities == null?null:hotelDetail.Facilities
-                    .Where(x=>x.MustDisplay==true ||x.IsAvailable==true)
-                    .Select(x => (GetHotelFacilityDescId(Convert.ToInt32(x.FullFacilityCode)))).ToList(),
+                Facilities = ConvertFacilityForDisplay(hotelDetail.Facilities),
                 Review = hotelDetail.Review,
                 Rooms = ConvertToHotelRoomForDisplay(hotelDetail.Rooms),
                 AccomodationName = GetHotelAccomodationMultiDesc(hotelDetail.AccomodationType),
@@ -172,8 +169,57 @@ namespace Lunggo.ApCommon.Hotel.Service
                     hotelDetail.Facilities.Any(f => (f.FacilityGroupCode == 71 && f.FacilityCode == 200)
                     || (f.FacilityGroupCode == 75 && f.FacilityCode == 840)
                     || (f.FacilityGroupCode == 75 && f.FacilityCode == 845))),
+                Policy = hotelDetail.Facilities == null ? null : hotelDetail.Facilities.Where(x => x.FacilityCode == 85).Select(x => (GetHotelFacilityDescId(Convert.ToInt32(x.FullFacilityCode)))).ToList()
             };
             return hotel;
+        }
+
+        internal HotelFacilityForDisplay ConvertFacilityForDisplay(List<HotelFacility> facilities)
+        {
+            var displayFacilities = new HotelFacilityForDisplay();
+            var selected = facilities.Where(x => x.MustDisplay == true || x.IsAvailable == true);
+            foreach (var data in selected)
+            {
+                switch (data.FacilityGroupCode)
+                {
+                    case 70:
+                        if(displayFacilities.General == null)
+                            displayFacilities.General = new List<string>();
+                        displayFacilities.General.Add(GetHotelFacilityDescId(Convert.ToInt32(data.FullFacilityCode)));
+                        break;
+                    case 71:
+                        if (displayFacilities.Meal == null)
+                            displayFacilities.Meal = new List<string>();
+                        displayFacilities.Meal.Add(GetHotelFacilityDescId(Convert.ToInt32(data.FullFacilityCode)));
+                        break;
+                    case 72:
+                        if (displayFacilities.Business == null)
+                            displayFacilities.Business = new List<string>();
+                        displayFacilities.Business.Add(GetHotelFacilityDescId(Convert.ToInt32(data.FullFacilityCode)));
+                        break;
+                    case 73:
+                        if (displayFacilities.Entertainment == null)
+                            displayFacilities.Entertainment = new List<string>();
+                        displayFacilities.Entertainment.Add(GetHotelFacilityDescId(Convert.ToInt32(data.FullFacilityCode)));
+                        break;
+                    case 74:
+                        if (displayFacilities.Health == null)
+                            displayFacilities.Health = new List<string>();
+                        displayFacilities.Health.Add(GetHotelFacilityDescId(Convert.ToInt32(data.FullFacilityCode)));
+                        break;
+                    case 90:
+                        if (displayFacilities.Sport == null)
+                            displayFacilities.Sport = new List<string>();
+                        displayFacilities.Sport.Add(GetHotelFacilityDescId(Convert.ToInt32(data.FullFacilityCode)));
+                        break;
+                    default:
+                        if(displayFacilities.Other == null)
+                            displayFacilities.Other = new List<string>();
+                        displayFacilities.Other.Add(GetHotelFacilityDescId(Convert.ToInt32(data.FullFacilityCode)));
+                        break;
+                }
+            }
+            return displayFacilities;
         }
 
 

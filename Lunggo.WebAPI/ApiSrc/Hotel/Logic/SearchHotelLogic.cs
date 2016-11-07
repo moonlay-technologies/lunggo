@@ -117,7 +117,7 @@ namespace Lunggo.WebAPI.ApiSrc.Hotel.Logic
             }
             else
             {
-                if (searchServiceResponse.Errors != null)
+                if (searchServiceResponse.Errors == null)
                     return new HotelSearchApiResponse
                     {
                         StatusCode = HttpStatusCode.BadRequest,

@@ -39,7 +39,7 @@ namespace Lunggo.ApCommon.Hotel.Model
         [JsonProperty("segments", NullValueHandling = NullValueHandling.Ignore)]
         public List<string> Segments { get; set; }
         [JsonProperty("facilities", NullValueHandling = NullValueHandling.Ignore)]
-        public List<string> Facilities { get; set; } 
+        public HotelFacilityForDisplay Facilities { get; set; } 
         [JsonProperty("address", NullValueHandling = NullValueHandling.Ignore)]
         public string Address { get; set; }
         [JsonProperty("postalCd", NullValueHandling = NullValueHandling.Ignore)]
@@ -88,6 +88,8 @@ namespace Lunggo.ApCommon.Hotel.Model
         public DateTime CheckOutDate { get; set; }
         [JsonProperty("night", NullValueHandling = NullValueHandling.Ignore)]
         public int NightCount { get; set; }
+        [JsonProperty("policy", NullValueHandling = NullValueHandling.Ignore)]
+        public List<string> Policy { get; set; }
     }
 
     public class HotelDetailsBase
