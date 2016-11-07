@@ -259,16 +259,16 @@
                 height: 12px;
                 display: inline-block;
                 background: #fff;
-		        &.active:after {
-			        content: '';
-                    width: 10px;
-                    height: 10px;
-                    display: inline-block;
-                    background: #1daee4;
-                    float: left;
-                    border: 2px solid #fff;
-			    }
 		    }
+            &.active .checkbox:after {
+			    content: '';
+                width: 10px;
+                height: 10px;
+                display: inline-block;
+                background: #1daee4;
+                float: left;
+                border: 2px solid #fff;
+			}
 		    input[name="check"]{display: none;}
         }
         &.round {
@@ -291,15 +291,15 @@
                 background: #fff;
                 margin: 0;
                 vertical-align: middle;
-                &.active:after {
-                    float: left;
-                    width: 15px;
-                    height: 15px;
-                    content: "";
-                    background: #1daee4;
-                    border: 3px solid #fff;
-                    @include border-radius(15px);
-                }
+            }
+            &.active .radio:after {
+                float: left;
+                width: 15px;
+                height: 15px;
+                content: "";
+                background: #1daee4;
+                border: 3px solid #fff;
+                @include border-radius(15px);
             }
             input[name="optradio"]{display: none;}
         }
@@ -416,16 +416,13 @@
                             margin-top: 10px;
                         }
                     }    
-                    &.form-night, &.form-room {
-                        a.increase {margin-left: 30px;}
-                    }
-                    &.form-adult, &.form-child {
-                        a.increase {margin-left: 15px;}      
+                    &.form-night, &.form-room, &.form-adult, &.form-child {
+                        a.increase {margin-left: 5px;}
                     }
                 }
                 .form-group {
                     margin-bottom: 10px;
-                    &.form__hotel, &.form__night, &.form__adult, &.form__child {padding-right: 10px;}
+                    &.form__hotel, &.form__room, &.form__night, &.form__adult, &.form__child {padding-right: 10px;}
                     &.form__submit .btn-lg {@include border-radius(2px);}
                 }
             }

@@ -309,6 +309,7 @@
     <Content Include="Assets\images\hotel-star-4.png" />
     <Content Include="Assets\images\location.png" />
     <Content Include="Assets\images\order-hotel-list-bg.png" />
+    <Content Include="Assets\images\select-arrow-up.png" />
     <Content Include="Assets\images\swim.png" />
     <Content Include="Assets\images\voucher-hotel-bg.jpg" />
     <Content Include="Assets\images\voucher-hotel.jpg" />
