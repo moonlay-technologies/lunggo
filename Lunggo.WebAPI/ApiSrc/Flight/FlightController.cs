@@ -13,7 +13,7 @@ namespace Lunggo.WebAPI.ApiSrc.Flight
     {
         [HttpGet]
         [LunggoCorsPolicy]
-        [Authorize]
+        //[Authorize]
         [Route("v1/flight/{searchId}/{progress}")]
         public ApiResponseBase SearchFlights(string searchId, int progress)
         {

@@ -2,7 +2,11 @@
 using System.Net;
 using System.Net.Http;
 using System.Web;
+using Lunggo.ApCommon.Identity.Auth;
+using Lunggo.ApCommon.Identity.Users;
+using Lunggo.Framework.Config;
 using Lunggo.Framework.Extension;
+using Lunggo.Framework.Log;
 using Lunggo.WebAPI.ApiSrc.Account.Model;
 using RestSharp;
 
@@ -46,38 +50,50 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
             }
             tokenRequest.AddParameter("application/x-www-form-urlencoded", postData, ParameterType.RequestBody);
             var tokenResponse = tokenClient.Execute(tokenRequest);
-            var tokenData = tokenResponse.Content.Deserialize<TokenData>();
-            if (tokenData.Error == "invalid_grant")
-                return new LoginApiResponse
-                {
-                    StatusCode = HttpStatusCode.BadRequest,
-                    ErrorCode = "ERALOG02"
-                };
-            if (tokenData.Error == "not_active")
-                return new LoginApiResponse
-                {
-                    StatusCode = HttpStatusCode.BadRequest,
-                    ErrorCode = "ERALOG03"
-                };
-            if (tokenData.Error == "invalid_clientId")
-                return new LoginApiResponse
-                {
-                    StatusCode = HttpStatusCode.BadRequest,
-                    ErrorCode = "ERALOG04"
-                };
-            if (tokenData.Error == "not_registered")
-                return new LoginApiResponse
-                {
-                    StatusCode = HttpStatusCode.BadRequest,
-                    ErrorCode = "ERALOG05"
-                };
-            return new LoginApiResponse
+            try
             {
-                AccessToken = tokenData.AccessToken,
-                RefreshToken = tokenData.RefreshToken,
-                ExpiryTime = tokenData.ExpiryTime,
-                StatusCode = HttpStatusCode.OK
-            };
+                var tokenData = tokenResponse.Content.Deserialize<TokenData>();
+                if (tokenData.Error == "invalid_grant")
+                    return new LoginApiResponse
+                    {
+                        StatusCode = HttpStatusCode.BadRequest,
+                        ErrorCode = "ERALOG02"
+                    };
+                if (tokenData.Error == "not_active")
+                    return new LoginApiResponse
+                    {
+                        StatusCode = HttpStatusCode.BadRequest,
+                        ErrorCode = "ERALOG03"
+                    };
+                if (tokenData.Error == "invalid_clientId")
+                    return new LoginApiResponse
+                    {
+                        StatusCode = HttpStatusCode.BadRequest,
+                        ErrorCode = "ERALOG04"
+                    };
+                if (tokenData.Error == "not_registered")
+                    return new LoginApiResponse
+                    {
+                        StatusCode = HttpStatusCode.BadRequest,
+                        ErrorCode = "ERALOG05"
+                    };
+                return new LoginApiResponse
+                {
+                    AccessToken = tokenData.AccessToken,
+                    RefreshToken = tokenData.RefreshToken,
+                    ExpiryTime = tokenData.ExpiryTime,
+                    StatusCode = HttpStatusCode.OK
+                };
+            }
+            catch
+            {
+                var log = LogService.GetInstance();
+                var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
+                log.Post(
+                    "```Token Error " + env + "```\n"
+                    + tokenResponse.Content);
+                throw;
+            }
         }
     }
 }

@@ -42,6 +42,10 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                 client.AddDefaultHeader("Origin", "https://booking.airasia.com");
                 //client.AddDefaultHeader("Referer", "https://booking2.airasia.com/Payment.aspx");
                 client.UserAgent = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.106 Safari/537.36";
+                client.Proxy = new WebProxy("128.199.91.32", 80)
+                {
+                    Credentials = new NetworkCredential("travorama", "tmi12345")
+                };
                 client.CookieContainer = new CookieContainer();
                 return client;
             }
@@ -57,6 +61,10 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                 client.AddDefaultHeader("Cache-Control", "max-age=0");
                 client.AddDefaultHeader("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
                 client.UserAgent = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.106 Safari/537.36";
+                client.Proxy = new WebProxy("128.199.91.32", 80)
+                {
+                    Credentials = new NetworkCredential("travorama", "tmi12345")
+                };
                 client.CookieContainer = new CookieContainer();
                 return client;
             }
