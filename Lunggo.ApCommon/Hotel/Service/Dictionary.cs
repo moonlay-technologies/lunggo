@@ -1341,6 +1341,29 @@ namespace Lunggo.ApCommon.Hotel.Service
             }
         }
 
+        public Zone GetZoneFromHotel(string hotelCd)
+        {
+            try
+            {
+                return HotelDestinationZoneDict.Values.Where(a => a.Hotel.Contains(hotelCd)).ToList()[0];
+            }
+            catch
+            {
+                return new Zone();
+            }
+        }
+
+        public Destination GetDestinationFromZone(string zoneCd)
+        {
+            try
+            {
+                return HotelDestinationDict.Single(e => e.Value.Zones.Any(z => z.Code == zoneCd)).Value;
+            }
+            catch
+            {
+                return new Destination();
+            }
+        }
 
         //GETTER FOR HOTEL CHAIN
         public Chain GetHotelChain(string code)
