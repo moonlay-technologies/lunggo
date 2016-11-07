@@ -210,8 +210,7 @@ namespace Lunggo.ApCommon.Hotel.Service
 
                 ReservationTableRepo.GetInstance().Insert(conn, reservationRecord);
                 reservation.Contact.InsertToDb(reservation.RsvNo);
-                
-                //reservation.State.InsertToDb(reservation.RsvNo);
+                reservation.State.InsertToDb(reservation.RsvNo);
                 reservation.Payment.InsertToDb(reservation.RsvNo);
                 
                  var hotelRsvDetailsRecord = new HotelReservationDetailsTableRecord

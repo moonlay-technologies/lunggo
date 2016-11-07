@@ -137,7 +137,7 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds
                         {
                             RoomCode = roomApi.code,
                             Type = roomApi.code.Substring(0, 3),
-                            TypeName = lang == "EN" ? HotelService.GetInstance().GetHotelRoomTypeDescEn(roomApi.code.Substring(0, 3)) :
+                            TypeName = lang == "en" ? HotelService.GetInstance().GetHotelRoomTypeDescEn(roomApi.code.Substring(0, 3)) :
                             HotelService.GetInstance().GetHotelRoomTypeDescId(roomApi.code.Substring(0, 3)),
                             RoomName = roomApi.name,
                             Rates = roomApi.rates == null ? null : roomApi.rates.Select(x =>
