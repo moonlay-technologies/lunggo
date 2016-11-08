@@ -175,7 +175,6 @@ file : /Assets/travorama20/css/_page_index.scss
                     /*Hotel Age Childern*/
                     .form-group.hotel-age-children {
                         .btn-age {
-                            cursor: pointer;
                             color: #fff;
                             padding: 0 6px;
                             &:before {
@@ -202,27 +201,31 @@ file : /Assets/travorama20/css/_page_index.scss
                                 margin-right: 20px;
                             }
                         }
-                        .age-container {
-                            display: none;
-                            margin-top: 10px;
-                            &.active {display: block;}
-                        }
+                        .age-container {margin-top: 10px;}
                         .dropdown-container {
                             .form-control.select-age {
-                                height: 45px;
-                                font-size: 30px;
-                                line-height: 30px;
+                                height: 50px;
+                                font-size: 24px;
+                                line-height: 50px;
                                 font-weight: 600;
-                                text-align: center;
+                                text-align: right;
                                 color: #6a6a6a;
                                 border-radius: 2px;
                                 cursor: pointer;
+                                padding: 5px;
+                                &>small {
+                                    font-size: 10px;
+                                    position: absolute;
+                                    left: 0;
+                                    margin-left: 12px;
+                                    line-height: 12px;
+                                    color: #999;
+                                }
                                 .option {position:absolute; top:100%; left:0; display:none; width:100%; z-index:2; font-size:12px; border: none; padding: 0 6px;
-                                    &>span {display:block; color:#000; padding:10px; background:#ddd; cursor:pointer; line-height: 16px;
+                                    &>span {display:block; color:#000; padding:10px; background:#ddd; cursor:pointer; line-height: 10px;
                                         &+span {border-top:$border-default;}
                                         &:hover {background:$color-main-blue; color:#fff;}
                                     }
-                                    &.active {display: block;}
                                 }
                             }
                         }
