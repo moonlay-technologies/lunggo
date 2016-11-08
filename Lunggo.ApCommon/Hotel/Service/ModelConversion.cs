@@ -213,8 +213,9 @@ namespace Lunggo.ApCommon.Hotel.Service
                         displayFacilities.Sport.Add(GetHotelFacilityDescId(Convert.ToInt32(data.FullFacilityCode)));
                         break;
                     default:
-                        if(displayFacilities.Other == null && data.MustDisplay == true)
+                        if(displayFacilities.Other == null)
                             displayFacilities.Other = new List<string>();
+                        if(data.MustDisplay == true)
                         displayFacilities.Other.Add(GetHotelFacilityDescId(Convert.ToInt32(data.FullFacilityCode)));
                         break;
                 }
