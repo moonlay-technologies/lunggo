@@ -92,7 +92,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                 NetFare = hotelDetail.NetFare,
                 IsRestaurantAvailable = hotelDetail.IsRestaurantAvailable,
                 IsWifiAccessAvailable = hotelDetail.WifiAccess,
-                Rooms = ConvertToHotelRoomForDisplay(hotelDetail.Rooms),
+                //Rooms = ConvertToHotelRoomForDisplay(hotelDetail.Rooms),
                 CheckInDate = hotelDetail.CheckInDate,
                 CheckOutDate = hotelDetail.CheckOutDate,
                 NightCount = hotelDetail.NightCount,
@@ -169,7 +169,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                     hotelDetail.Facilities.Any(f => (f.FacilityGroupCode == 71 && f.FacilityCode == 200)
                     || (f.FacilityGroupCode == 75 && f.FacilityCode == 840)
                     || (f.FacilityGroupCode == 75 && f.FacilityCode == 845))),
-                Policy = hotelDetail.Facilities == null ? null : hotelDetail.Facilities.Where(x => x.FacilityCode == 85).Select(x => (GetHotelFacilityDescId(Convert.ToInt32(x.FullFacilityCode)))).ToList()
+                Policy = hotelDetail.Facilities == null ? null : hotelDetail.Facilities.Where(x => x.FacilityGroupCode == 85).Select(x => (GetHotelFacilityDescId(Convert.ToInt32(x.FullFacilityCode)))).ToList()
             };
             return hotel;
         }
@@ -213,7 +213,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                         displayFacilities.Sport.Add(GetHotelFacilityDescId(Convert.ToInt32(data.FullFacilityCode)));
                         break;
                     default:
-                        if(displayFacilities.Other == null)
+                        if(displayFacilities.Other == null && data.MustDisplay == true)
                             displayFacilities.Other = new List<string>();
                         displayFacilities.Other.Add(GetHotelFacilityDescId(Convert.ToInt32(data.FullFacilityCode)));
                         break;
