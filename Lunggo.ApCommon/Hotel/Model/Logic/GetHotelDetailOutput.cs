@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Lunggo.ApCommon.Hotel.Model.Logic
 {
-    public class GetHotelDetailOutput
+    public class GetHotelDetailOutput : ResultBase
     {
         public HotelDetailForDisplay HotelDetail { get; set; }
     }

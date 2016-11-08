@@ -1,4 +1,5 @@
 ﻿using System.Net;
+using Lunggo.ApCommon.Hotel.Constant;
 using Lunggo.ApCommon.Hotel.Model.Logic;
 using Lunggo.ApCommon.Hotel.Service;
 using Lunggo.WebAPI.ApiSrc.Common.Model;
@@ -50,14 +51,46 @@ namespace Lunggo.WebAPI.ApiSrc.Hotel.Logic
             return searchServiceRequest;
         }
 
-        private static HotelDetailApiResponse AssembleApiResponse(GetHotelDetailOutput searchServiceResponse)
+        private static HotelDetailApiResponse AssembleApiResponse(GetHotelDetailOutput hotelDetailServiceResponse)
         {
-            var apiResponse = new HotelDetailApiResponse
+            if (hotelDetailServiceResponse.IsSuccess)
             {
-                HotelDetails = searchServiceResponse.HotelDetail,
-                StatusCode = HttpStatusCode.OK
-            };
-            return apiResponse;
+                return new HotelDetailApiResponse
+                {
+                    HotelDetails = hotelDetailServiceResponse.HotelDetail,
+                    StatusCode = HttpStatusCode.OK
+                };
+            }
+            else
+            {
+                if (hotelDetailServiceResponse.Errors == null)
+                    return new HotelDetailApiResponse
+                    {
+                        StatusCode = HttpStatusCode.BadRequest,
+                        ErrorCode = "ERHSEA99"
+                    };
+                switch (hotelDetailServiceResponse.Errors[0])
+                {
+                    case HotelError.InvalidInputData:
+                        return new HotelDetailApiResponse
+                        {
+                            StatusCode = HttpStatusCode.InternalServerError,
+                            ErrorCode = "ERHGHD01"
+                        };
+                    case HotelError.SearchIdNoLongerValid:
+                        return new HotelDetailApiResponse
+                        {
+                            StatusCode = HttpStatusCode.Accepted,
+                            ErrorCode = "ERHGHD02"
+                        };
+                    default:
+                        return new HotelDetailApiResponse
+                        {
+                            StatusCode = HttpStatusCode.InternalServerError,
+                            ErrorCode = "ERRGEN99"
+                        };
+                }
+            }
         }
     }
 }

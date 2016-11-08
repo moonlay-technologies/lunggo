@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Configuration;
+using Lunggo.ApCommon.Hotel.Constant;
 using Lunggo.ApCommon.Hotel.Model;
 using Lunggo.ApCommon.Hotel.Model.Logic;
 using Lunggo.Framework.Documents;
@@ -19,9 +20,17 @@ namespace Lunggo.ApCommon.Hotel.Service
             SetHotelFullFacilityCode(hotelDetail);
             decimal originalPrice, netFare;
             SetDetailFromSearchResult(hotelDetail, input.SearchId, out originalPrice, out netFare);
+            if (hotelDetail == null)
+                return new GetHotelDetailOutput
+                {
+                    IsSuccess = false,
+                    Errors = new List<HotelError> { HotelError.SearchIdNoLongerValid },
+                    ErrorMessages = new List<string> {"SearchID no longer valid"}
+                };
             hotelDetail.Rooms = SetRoomPerRate(hotelDetail.Rooms);
             return new GetHotelDetailOutput
             {
+                IsSuccess = true,
                 HotelDetail = ConvertToHotelDetailsBaseForDisplay(hotelDetail,originalPrice,netFare)
             };
         }
@@ -40,6 +49,8 @@ namespace Lunggo.ApCommon.Hotel.Service
         {
             var searchResultData = GetSearchHotelResultFromCache(searchId);
             var searchResulthotel = searchResultData.HotelDetails.SingleOrDefault(p => p.HotelCode == hotel.HotelCode);
+            if (searchResulthotel == null)
+                hotel = null;
             hotel.Rooms = searchResulthotel.Rooms;
             foreach (var room in hotel.Rooms)
             {
