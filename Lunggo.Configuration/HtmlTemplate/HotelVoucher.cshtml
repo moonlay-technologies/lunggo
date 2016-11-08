@@ -184,17 +184,6 @@
                                 }
                             </div>
                         </div>
-                        @if (Model.HotelDetail.SpecialRequest != null && Model.HotelDetail.SpecialRequest.Length != 0)
-                        {
-                            <div class="row grey-txt">
-                                <div class="col-xs-3">
-                                    <p>Special Request</p>
-                                </div>
-                                <div class="col-xs-9">
-                                    <p>: @Model.HotelDetail.SpecialRequest</p>
-                                </div>
-                            </div>
-                        }
                         @if (Model.HotelDetail.IsRestaurantAvailable || Model.HotelDetail.IsWifiAccessAvailable)
                         {
                             <div class="row grey-txt">
@@ -224,9 +213,19 @@
                                 <p>Fasilitas</p>
                             </div>
                             <div class="col-xs-9">
-                                @foreach (var facility in Model.HotelDetail.Facilities)
+                                @for (var f = 0; f < Model.HotelDetail.Facilities.Count; f++)
                                 {
-                                    <p> @facility <br /> </p>
+                                    if (Model.HotelDetail.Facilities[f].Length != 0)
+                                    {
+                                        if (f != Model.HotelDetail.Facilities.Count - 1)
+                                        {
+                                            <p>@Model.HotelDetail.Facilities[f], </p>
+                                        }
+                                        else
+                                        {
+                                            <p>@Model.HotelDetail.Facilities[f] </p>
+                                        }
+                                    }
                                 }
                             </div>
                         </div>

@@ -148,7 +148,7 @@
                                 <p>: @Model.HotelDetail.Rooms[0].Rates[0].RoomCount</p>
                             </div>
                         </div>
-                        
+
                         <div class="row grey-txt">
                             <div class="col-xs-3">
                                 <p>Rate Comment</p>
@@ -184,17 +184,6 @@
                                 }
                             </div>
                         </div>
-                        @if (Model.HotelDetail.SpecialRequest != null && Model.HotelDetail.SpecialRequest.Length != 0)
-                        {
-                            <div class="row grey-txt">
-                                <div class="col-xs-3">
-                                    <p>Special Request</p>
-                                </div>
-                                <div class="col-xs-9">
-                                    <p>: @Model.HotelDetail.SpecialRequest</p>
-                                </div>
-                            </div>
-                        }
                         @if (Model.HotelDetail.IsRestaurantAvailable || Model.HotelDetail.IsWifiAccessAvailable)
                         {
                             <div class="row grey-txt">
@@ -214,7 +203,7 @@
                                     </p>
                                     @foreach (var facility in Model.HotelDetail.Facilities)
                                     {
-                                        <p> @facility <br/> </p>
+                                        <p> @facility <br /> </p>
                                     }
                                 </div>
                             </div>
@@ -224,9 +213,19 @@
                                 <p>Fasilitas</p>
                             </div>
                             <div class="col-xs-9">
-                                @foreach (var facility in Model.HotelDetail.Facilities)
+                                @for (var f = 0; f < Model.HotelDetail.Facilities.Count; f++)
                                 {
-                                    <p> @facility <br /> </p>
+                                    if (Model.HotelDetail.Facilities[f].Length != 0)
+                                    {
+                                        if (f != Model.HotelDetail.Facilities.Count - 1)
+                                        {
+                                            <p>@Model.HotelDetail.Facilities[f], </p>
+                                        }
+                                        else
+                                        {
+                                            <p>@Model.HotelDetail.Facilities[f] </p>
+                                        }
+                                    }
                                 }
                             </div>
                         </div>
@@ -236,14 +235,16 @@
                                 <p></p>
                             </div>
                             <div class="col-xs-9">
-                                <p>&quot;Payable through @Model.HotelDetail.SupplierName, acting as agent for the service operating
+                                <p>
+                                    &quot;Payable through @Model.HotelDetail.SupplierName, acting as agent for the service operating
 
-company, details of which can be provided upon request&quot;. VAT: @Model.HotelDetail.SupplierVat
+                                    company, details of which can be provided upon request&quot;. VAT: @Model.HotelDetail.SupplierVat
 
-Reference: @Model.HotelDetail.BookingReference</p>
+                                    Reference: @Model.HotelDetail.BookingReference
+                                </p>
                             </div>
                         </div>
-                        
+
                         <div class="row grey-txt">
                             <div class="col-xs-3">
                                 <p>Client Reference</p>
