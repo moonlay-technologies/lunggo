@@ -22,8 +22,8 @@ namespace Lunggo.WebAPI.ApiSrc.Hotel.Model
         public long Location { get; set; }
         [JsonProperty("checkinDate")]
         public DateTime CheckinDate { get; set; }
-        [JsonProperty("checkoutDate")]
-        public DateTime CheckoutDate { get; set; }
+        //[JsonProperty("checkoutDate")]
+        //public DateTime CheckoutDate { get; set; }
         //[JsonProperty("adultCount")]
         //public int AdultCount { get; set; }
         //[JsonProperty("childCount")]

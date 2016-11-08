@@ -82,7 +82,7 @@ namespace Lunggo.WebAPI.ApiSrc.Hotel.Logic
                 SearchHotelType = request.SearchType,
                 SearchId = request.SearchId,
                 CheckIn = request.CheckinDate,
-                Checkout = request.CheckoutDate,
+                //Checkout = request.CheckoutDate,
                 //AdultCount = request.AdultCount,
                 //ChildCount = request.ChildCount,
                 Nights = request.NightCount,
