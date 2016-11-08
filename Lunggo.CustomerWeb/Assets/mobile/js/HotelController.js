@@ -69,6 +69,28 @@
             $(this).addClass('active');
         });
 
+        //// **********
+        //// Custom Checkbox
+        //$('body .switch').on('click touchstart', function () {
+        //    var id = $(this).parent().find('.check');
+        //    if ($(id).is(':checked')) {
+        //        id.checked = false;
+        //        $(this).removeClass('active');
+        //    } else {
+        //        id.checked = true;
+        //        $(this).addClass('active');
+        //    }
+        //});
+
+        //// **********
+        //// Custom Radio
+        //$('body .radio').on('click touchstart', function () {
+        //    var id = $(this).parent().find('.check-radio');
+        //    $('body .radio').checked = false;
+        //    $('body .radio').removeClass('active');
+        //    id.checked = true;
+        //    $(this).addClass('active');
+        //});
         // **********
         // Reset
         $('body #reset').on('click', function () {
@@ -80,8 +102,8 @@
                     id.removeClass('active');
                 } else {
                     $(item).val('');
-                }
-            });
+            }
+        });
         });
 
         // **********
@@ -107,7 +129,7 @@
             value = calculate(value, 'plus', limit);
 
             $(this).parent().find('.result-room').val(value);
-        });
+    });
 
         function calculate(value, type, limit){
             value = parseInt(value);
@@ -129,29 +151,4 @@
                 }
     }
 
-            return value;
-        }
-
-        // **********
-        // Slick Slider Detail Hotel
-        $('.dh-slider').slick({
-            autoplay: true,
-            autoplaySpeed: 2500,
-            dots: false
-        });
-
-        // **********
-        // Slider
-        $("#slider-range").slider({
-            range: true,
-            min: 0,
-            max: 500,
-            values: [75, 300],
-            slide: function (event, ui) {
-                $("#amount").val("$" + ui.values[0] + " - $" + ui.values[1]);
-            }
-        });
-        $("#amount").val("$" + $("#slider-range").slider("values", 0) +
-            " - $" + $("#slider-range").slider("values", 1));
-    });
 }]);

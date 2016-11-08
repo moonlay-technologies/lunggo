@@ -1,5 +1,5 @@
 ﻿// home controller
-app.controller('homeController', ['$scope', '$log', '$http', '$location', '$resource', function ($scope, $log, $http, $location, $resource) {
+app.controller('homeController', ['$scope', '$log', '$http', '$location', '$resource', '$timeout', function ($scope, $log, $http, $location, $resource, $timeout) {
 
     $scope.departureDate = departureDate;
     $scope.topDestinations = topDestinations;
@@ -17,6 +17,7 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
     //=============== hotel start ======================
 
     $scope.hotel = {};
+    $scope.hotel.searchHotelType = 'Location';
     $scope.hotel.location = "";
     $scope.hotel.locationDisplay = "";
     $scope.hotel.checkinDate = moment().locale("id").add(5, 'days');
@@ -25,7 +26,10 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
     $scope.hotel.checkoutDate = moment().locale("id").add(7, 'days');
     $scope.hotel.adultCount = 2;
     $scope.hotel.childCount = 1;
-    
+    $scope.hotel.childrenAges = [0, 0, 0, 0];
+
+    $scope.hotel.childrenAgeList = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
+
     $scope.hotel.roomCount = 1;
 
     $scope.hotel.adultCountMin = 1;
@@ -82,8 +86,10 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
     $scope.$watch('hotel.locationDisplay', function (newValue, oldValue, ccc) {
         if (newValue.length >= 3) {
             resource.query({ prefix: newValue }).$promise.then(function (data) {
-                $scope.hotel.hotelAutocomplete = data.hotelAutocomplete;
-                $log.debug($scope.hotel.hotelAutocomplete);
+                $timeout(function () {
+                    $scope.hotel.hotelAutocomplete = data.hotelAutocomplete;
+                    $log.debug($scope.hotel.hotelAutocomplete);
+                }, 0);
             });
         }
     });
@@ -115,18 +121,19 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
         //   })
     };
 
-    $scope.hotel.searchParam = function (){
-        return ("?info=" + 
-            //[$scope.hotel.location,
-            [$scope.hotel.location,
-             $scope.hotel.checkinDate.format("YYYY-MM-DD"),
-             $scope.hotel.checkoutDate.format("YYYY-MM-DD"),
-             $scope.hotel.adultCount,
-             $scope.hotel.childCount,
-             $scope.hotel.nightCount,
-             $scope.hotel.roomCount,
-             
-             ].join('.')
+    $scope.hotel.searchParam = function () {
+        return ("?info=" +
+            [
+                $scope.hotel.searchHotelType, //hardcoded with 'Location'
+                $scope.hotel.location,
+                $scope.hotel.checkinDate.format("YYYY-MM-DD"),
+                $scope.hotel.checkoutDate.format("YYYY-MM-DD"),
+                $scope.hotel.adultCount,
+                $scope.hotel.childCount,
+                $scope.hotel.nightCount,
+                $scope.hotel.roomCount,
+                $scope.hotel.childrenAges
+            ].join('.')
         )
     }
 
@@ -165,6 +172,11 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
         $scope.hotel.locationDisplay = location.name;
         $scope.view.showHotelSearch = false;
     }
+
+    $scope.setChildAge = function (index, age) {
+        $scope.hotel.childrenAges[index] = age;
+
+    }
     
 }]);
 
@@ -174,3 +186,70 @@ app.controller('campaignController', [
         
     }
 ]);
+
+//********************
+// hotel form search function
+jQuery(document).ready(function($) {
+    //Show hotel
+    $('.form-hotel-location').click(function (evt) {
+        evt.stopPropagation();
+        $('.search-hotel').show();
+        $('.search-calendar-hotel, .select-age .option').hide();
+    });
+
+    //hideHotel hotel
+    function hideHotel() {
+        $('.search-hotel').hide();
+    }
+
+    //close hotel
+    $('.close-hotel').click(function () { hideHotel(); });
+
+    $('.search-hotel .location-recommend nav ul li ').click(function () {
+        var showClass = $(this).attr('data-show');
+        $(this).addClass('active');
+        $(this).siblings().removeClass('active');
+        $('.search-hotel .location-recommend .tab-content>div').removeClass('active');
+        $('.search-hotel .location-recommend .tab-content>div.' + showClass).addClass('active');
+    });
+
+    //*****
+    // show and hide search calendar
+    function showCalendar(target) {
+        target = target || $('.search-calendar-hotel').attr('data-date');
+        $('.search-calendar-hotel').attr('id', target);
+        if (target == 'departure') {
+            $('.search-calendar-hotel .calendar-header .departure').removeClass('hidden');
+            $('.search-calendar-hotel .calendar-header .return').addClass('hidden');
+        } else {
+            $('.search-calendar-hotel .calendar-header .departure').addClass('hidden');
+            $('.search-calendar-hotel .calendar-header .return').removeClass('hidden');
+        }
+        $('.search-calendar-hotel').attr('data-date', target);
+        $('.searchsearch-calendar-hotel').show();
+    }
+
+    function hideCalendar() {
+        $('.search-calendar-hotel').hide();
+    }
+    $('.close-calendar-hotel').click(function () { hideCalendar(); });
+
+    //*****
+    // date selector
+    $('.form-hotel-checkin').click(function (evt) {
+        $('.search-calendar-hotel').show();
+        showCalendar();
+        $('.hotel-date-picker').datepicker('option', 'minDate', new Date());
+        evt.stopPropagation();
+        $('.search-hotel').show();
+        $('.search-hotel, .select-age .option').hide();
+    });
+
+    // Select Age Childeren
+    $('body .select-age').on('click', function (evt) {
+        evt.stopPropagation();
+        $(this).parent().siblings().children('div').children('.option').hide();
+        $(this).children('.option').toggle();
+        $('.search-calendar-hotel, .search-hotel').hide();
+    });
+});

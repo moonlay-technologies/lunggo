@@ -80,10 +80,11 @@ namespace Lunggo.ApCommon.Hotel.Service
         {
             if (hotelDetails == null)
                 return null;
-           
+            int i = 0;
             var convertedHotels = new List<HotelDetailForDisplay>();
             foreach (var hotelDetail in hotelDetails)
             {
+                i++;
                 var hotel = new HotelDetailForDisplay
                 {
                 HotelCode = hotelDetail.HotelCode,

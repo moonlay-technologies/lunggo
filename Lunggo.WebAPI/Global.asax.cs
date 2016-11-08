@@ -1,4 +1,5 @@
-﻿using System.Web.Http;
+﻿using Newtonsoft.Json.Serialization;
+using System.Web.Http;
 
 namespace Lunggo.WebAPI
 {
@@ -8,6 +9,9 @@ namespace Lunggo.WebAPI
         {
             AppInitializer.Init();
             GlobalConfiguration.Configure(WebApiConfig.Register);
+
+            var config = GlobalConfiguration.Configuration;
+            config.Formatters.JsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
         }
     }
 }
