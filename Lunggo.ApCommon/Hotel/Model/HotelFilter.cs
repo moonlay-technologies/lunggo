@@ -107,7 +107,7 @@ namespace Lunggo.ApCommon.Hotel.Model
     public class ZoneFilter
     {
         [JsonProperty("zones")]
-        public List<int> Zones { get; set; } 
+        public List<string> Zones { get; set; } 
     }
 
     public class StarFilter

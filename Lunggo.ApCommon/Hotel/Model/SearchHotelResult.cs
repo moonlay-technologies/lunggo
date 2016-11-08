@@ -10,13 +10,15 @@ namespace Lunggo.ApCommon.Hotel.Model
     public class SearchHotelResult
     {
         [JsonProperty("searchId", NullValueHandling = NullValueHandling.Ignore)]
-        public string SearchId { get; set; }
+        public string SearchId { get; set; } 
         [JsonProperty("checkIn", NullValueHandling = NullValueHandling.Ignore)]
         public DateTime CheckIn { get; set; }
         [JsonProperty("checkOut", NullValueHandling = NullValueHandling.Ignore)]
         public DateTime CheckOut{ get; set; } 
         [JsonProperty("hotels", NullValueHandling = NullValueHandling.Ignore)]
         public List<HotelDetail> HotelDetails { get; set; }
+        [JsonProperty("Room", NullValueHandling = NullValueHandling.Ignore)]
+        public HotelRoomForDisplay Room { get; set; }
         [JsonProperty("hotelFilterDisplayInfo", NullValueHandling = NullValueHandling.Ignore)]
         public HotelFilterDisplayInfo HotelFilterDisplayInfo { get; set; }
     }
