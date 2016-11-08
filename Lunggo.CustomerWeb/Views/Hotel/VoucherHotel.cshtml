@@ -3,6 +3,10 @@
 @using Lunggo.Framework.Config
 @using Lunggo.ApCommon.Constant
 
+@{
+    ViewBag.SiteHeader = "header-email";
+}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -52,7 +56,18 @@
                         <div class="col-xs-10">
                             <div class="right-side">
                                 <h4 class="blue-txt uppercase"><b>B hotel bali & spa</b></h4>
-                                <p><img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/hotel-star-4.png")" /></p>
+                                <p>
+                                    @*Star 5*@
+                                    @*<span class="star star-5"></span>*@ 
+                                    @*Star 4*@
+                                    <span class="star star-4 e-star"></span>
+                                    @*Star 3*@
+                                    @*<span class="star star-3 e-star"></span>*@
+                                    @*Star 2*@
+                                    @*<span class="star star-2 e-star"></span>*@
+                                    @*Star 1*@
+                                    @*<span class="star star-1 e-star"></span>*@
+                                </p>
                                 <p class="grey-txt">
                                     <img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/location.png")" /> Jl. Imam Bonjol No 508, Denpasar,
                                     Denpasar, Indonesia 80119

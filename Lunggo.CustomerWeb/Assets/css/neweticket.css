@@ -340,40 +340,77 @@ Site Footer
   -webkit-print-color-adjust: exact; }
 
 /*Voucher Hotel*/
-.page-hotel-voucher .black-txt {
-  color: #000000; }
-
-.page-hotel-voucher .blue-txt {
-  color: #15b1e4; }
-
-.page-hotel-voucher .grey-txt {
-  color: #525252; }
-
-.page-hotel-voucher .uppercase {
-  text-transform: uppercase; }
-
-.page-hotel-voucher .md-txt {
-  font-size: 15px; }
-
-.page-hotel-voucher .hotel-wrapper {
-  width: 100%; }
-  .page-hotel-voucher .hotel-wrapper .hotel-top {
-    margin: 1cm 0 0.5cm;
-    border-bottom: 2px solid #15b1e4; }
-  .page-hotel-voucher .hotel-wrapper .hotel-middle {
-    margin-top: 0.5cm; }
-    .page-hotel-voucher .hotel-wrapper .hotel-middle .right-side {
-      padding-left: 30px;
-      border-left: 1px solid #ddd; }
-  .page-hotel-voucher .hotel-wrapper .hotel-bottom {
-    margin-top: 0.5cm;
-    border-top: 1px solid #ddd; }
-    .page-hotel-voucher .hotel-wrapper .hotel-bottom .hotel-detail .row {
-      margin-bottom: 0.25cm; }
-  .page-hotel-voucher .hotel-wrapper .img-wifi, .page-hotel-voucher .hotel-wrapper .img-phone {
-    padding-right: 5px; }
-  .page-hotel-voucher .hotel-wrapper .img-swim, .page-hotel-voucher .hotel-wrapper .img-email {
-    padding-right: 5px;
-    padding-left: 15px; }
-  .page-hotel-voucher .hotel-wrapper .img-hotel {
+.page-hotel-voucher {
+  /*Icon*/ }
+  .page-hotel-voucher .black-txt {
+    color: #000000; }
+  .page-hotel-voucher .blue-txt {
+    color: #15b1e4; }
+  .page-hotel-voucher .grey-txt {
+    color: #525252; }
+  .page-hotel-voucher .uppercase {
+    text-transform: uppercase; }
+  .page-hotel-voucher .md-txt {
+    font-size: 15px; }
+  .page-hotel-voucher .hotel-wrapper {
     width: 100%; }
+    .page-hotel-voucher .hotel-wrapper .hotel-top {
+      margin: 1cm 0 0.5cm;
+      border-bottom: 2px solid #15b1e4; }
+    .page-hotel-voucher .hotel-wrapper .hotel-middle {
+      margin-top: 0.5cm; }
+      .page-hotel-voucher .hotel-wrapper .hotel-middle .right-side {
+        padding-left: 30px;
+        border-left: 1px solid #ddd; }
+        .page-hotel-voucher .hotel-wrapper .hotel-middle .right-side p {
+          margin-bottom: 0.25cm; }
+    .page-hotel-voucher .hotel-wrapper .hotel-bottom {
+      margin-top: 0.5cm;
+      border-top: 1px solid #ddd; }
+      .page-hotel-voucher .hotel-wrapper .hotel-bottom .hotel-detail .row {
+        margin-bottom: 0.25cm; }
+    .page-hotel-voucher .hotel-wrapper .img-wifi, .page-hotel-voucher .hotel-wrapper .img-phone {
+      padding-right: 5px; }
+    .page-hotel-voucher .hotel-wrapper .img-swim, .page-hotel-voucher .hotel-wrapper .img-email {
+      padding-right: 5px;
+      padding-left: 15px; }
+    .page-hotel-voucher .hotel-wrapper .img-hotel {
+      width: 100%; }
+  .page-hotel-voucher .star-outline, .page-hotel-voucher .so-1, .page-hotel-voucher .star.e-star.star-4:after, .page-hotel-voucher .so-2, .page-hotel-voucher .star.e-star.star-3:after, .page-hotel-voucher .so-3, .page-hotel-voucher .star.e-star.star-2:after, .page-hotel-voucher .so-4, .page-hotel-voucher .star.e-star:after {
+    content: '';
+    display: inline-block;
+    background: url(/Assets/travorama20/images/Hotel/star-outline.png);
+    height: 16px; }
+  .page-hotel-voucher .so-1, .page-hotel-voucher .star.e-star.star-4:after {
+    width: 19px;
+    margin-left: 68px; }
+  .page-hotel-voucher .so-2, .page-hotel-voucher .star.e-star.star-3:after {
+    width: 38px;
+    margin-left: 51px; }
+  .page-hotel-voucher .so-3, .page-hotel-voucher .star.e-star.star-2:after {
+    width: 57px;
+    margin-left: 34px; }
+  .page-hotel-voucher .so-4, .page-hotel-voucher .star.e-star:after {
+    width: 76px;
+    margin-left: 17px; }
+  .page-hotel-voucher .star {
+    display: block;
+    background: url(/Assets/travorama20/images/Hotel/star.png);
+    height: 16px;
+    width: 17px; }
+    .page-hotel-voucher .star.star-2 {
+      width: 34px; }
+    .page-hotel-voucher .star.star-3 {
+      width: 51px; }
+    .page-hotel-voucher .star.star-4 {
+      width: 68px; }
+    .page-hotel-voucher .star.star-5 {
+      width: 85px; }
+    .page-hotel-voucher .star.e-star.star-2 {
+      width: 34px; }
+    .page-hotel-voucher .star.e-star.star-3 {
+      width: 51px; }
+    .page-hotel-voucher .star.e-star.star-4 {
+      width: 68px; }
+    .page-hotel-voucher .star.e-star.star-5 {
+      width: 85px; }
