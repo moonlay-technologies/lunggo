@@ -36,7 +36,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                         RateCount = id.RateCount, RateKey = rate.RateKey, AdultCount = id.AdultCount, 
                         Boards = rate.Boards, Cancellation = rate.Cancellation, ChildrenAges = id.ChildrenAges,
                         ChildCount = id.ChildCount, Class = rate.Class, Offers = rate.Offers, RoomCount = id.RateCount,
-                        PaymentType = rate.PaymentType, RegsId = rate.RegsId, Price = rate.Price, Type = rate.Type,
+                        PaymentType = rate.PaymentType, RegsId = rate.RegsId, Price = rate.Price, Type = rate.Type, RateCommentsId = rate.RateCommentsId
                     }).ToList().FirstOrDefault();
 
                 if (hotel.Rooms.Any(r => r.RoomCode == output.RoomCode))

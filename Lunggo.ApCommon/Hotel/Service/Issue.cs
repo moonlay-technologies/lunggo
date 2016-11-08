@@ -155,6 +155,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                                     rate.RateKey = revalidateResult.RateKey;
                                     rate.Price.SetSupplier(revalidateResult.NewPrice.GetValueOrDefault(),
                                         rate.Price.SupplierCurrency);
+                                    rate.RateCommentsId = ratea.RateCommentsId;
                                 }
                                 else
                                 {

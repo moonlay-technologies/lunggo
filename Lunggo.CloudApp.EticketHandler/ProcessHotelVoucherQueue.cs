@@ -1,4 +1,6 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Lunggo.ApCommon.Constant;
@@ -28,7 +30,7 @@ namespace Lunggo.CloudApp.EticketHandler
                 return;
             }
             var rsvNo = message.AsString;
-
+            var hotel = HotelService.GetInstance();
             Trace.WriteLine("Processing Voucher for RsvNo " + rsvNo + "...");
             var sw = new Stopwatch();
             var hotelService = HotelService.GetInstance();
@@ -38,7 +40,12 @@ namespace Lunggo.CloudApp.EticketHandler
             converter.Options.AutoFitHeight = HtmlToPdfPageFitMode.NoAdjustment;
             converter.Options.AutoFitWidth = HtmlToPdfPageFitMode.NoAdjustment;
             var reservation = hotelService.GetReservationForDisplay(rsvNo);
-
+            var hotelCode = reservation.HotelDetail.HotelCode;
+            var hotelDetail = HotelService.GetInstance().GetHotelDetailFromDb(hotelCode);
+            reservation.HotelDetail.Facilities = hotelDetail.Facilities == null ? null : hotelDetail.Facilities
+                    .Where(x => x.MustDisplay == true )
+                    .Select(x => (hotel.GetHotelFacilityDescId
+                        (Convert.ToInt32(x.FacilityGroupCode) * 1000 + Convert.ToInt32(x.FacilityCode)))).ToList();
             Trace.WriteLine("Parsing Voucher Template for RsvNo " + rsvNo + "...");
             sw.Start();
             var voucherTemplate = templateService.GenerateTemplate(reservation, "HotelVoucher");

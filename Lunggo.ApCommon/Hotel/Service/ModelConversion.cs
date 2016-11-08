@@ -244,6 +244,9 @@ namespace Lunggo.ApCommon.Hotel.Service
             var dictionary = HotelService.GetInstance();
             foreach (var rateDetail in rates)
             {
+                var cid = rateDetail.RateKey != null ? rateDetail.RateKey.Split('|')[0] : rateDetail.RegsId.Split('|')[0];
+                var checkInDate = new DateTime(Convert.ToInt32(cid.Substring(0, 4)),
+                    Convert.ToInt32(cid.Substring(4, 2)), Convert.ToInt32(cid.Substring(6, 2)));
                 var rate = new HotelRateForDisplay()
                 {
                     RateKey = rateDetail.RateKey,
@@ -262,7 +265,9 @@ namespace Lunggo.ApCommon.Hotel.Service
                     TimeLimit = rateDetail.TimeLimit,
                     Cancellation = rateDetail.Cancellation,
                     Offers = rateDetail.Offers,
-                    TermAndCondition = rateDetail.TermAndCondition
+                    TermAndCondition = GetRateCommentFromTableStorage(rateDetail.RateCommentsId,
+                    checkInDate).Select(x => x.Description).ToList()
+                    
                 };
                 SetDisplayPriceHotelRate(rate, rateDetail);
                 convertedRate.Add(rate);
@@ -276,6 +281,9 @@ namespace Lunggo.ApCommon.Hotel.Service
             if (rate == null)
                 return new HotelRateForDisplay();
             var dictionary = HotelService.GetInstance();
+            var cid = rate.RateKey != null ? rate.RateKey.Split('|')[0] : rate.RegsId.Split('|')[0];
+            var checkInDate = new DateTime(Convert.ToInt32(cid.Substring(0, 4)),
+                Convert.ToInt32(cid.Substring(4, 2)), Convert.ToInt32(cid.Substring(6, 2)));
             var result = new HotelRateForDisplay
             {
                 //RateKey = rateDetail.RateKey,
@@ -293,7 +301,8 @@ namespace Lunggo.ApCommon.Hotel.Service
                 TimeLimit = rate.TimeLimit,
                 Cancellation = rate.Cancellation,
                 Offers = rate.Offers,
-                TermAndCondition = rate.TermAndCondition
+                TermAndCondition = GetRateCommentFromTableStorage(rate.RateCommentsId,
+                    checkInDate).Select(x => x.Description).ToList()
             };
             SetDisplayPriceHotelRate(result, rate);
             return result;
