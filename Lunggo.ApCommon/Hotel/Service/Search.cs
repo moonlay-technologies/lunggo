@@ -153,7 +153,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                         request.Occupancies = input.Occupancies;
                         request.HotelCode = input.HotelCode;
                         request.CheckIn = input.CheckIn;
-                        request.Checkout = input.Checkout;
+                        request.Checkout = input.CheckIn.AddDays(input.Nights);
                         request.SearchId = generatedSearchId.ToString();
                     }
                     else
@@ -161,7 +161,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                         request = new SearchHotelCondition
                         {
                             CheckIn = input.CheckIn,
-                            Checkout = input.Checkout,
+                            Checkout = input.CheckIn.AddDays(input.Nights),
                             Nights = input.Nights,
                             Occupancies = input.Occupancies,
                             SearchId = generatedSearchId.ToString()

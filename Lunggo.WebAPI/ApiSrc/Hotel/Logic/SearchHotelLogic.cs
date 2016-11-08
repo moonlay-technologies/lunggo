@@ -66,6 +66,7 @@ namespace Lunggo.WebAPI.ApiSrc.Hotel.Logic
                 return
                     request.Occupancies.TrueForAll(data => data.AdultCount > 0) &&
                     request.Occupancies.TrueForAll(data=>data.RoomCount>0) &&
+                    request.NightCount > 0 &&
                     //request.Occupancies.TrueForAll(data=>data.ChildCount == (data.ChildrenAges==null?0:data.ChildrenAges.Count)) &&
                     request.CheckinDate >= DateTime.UtcNow.Date;
                     //request.CheckoutDate >= request.CheckinDate;
