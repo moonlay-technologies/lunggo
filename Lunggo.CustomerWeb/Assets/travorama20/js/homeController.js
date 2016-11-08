@@ -191,8 +191,10 @@ app.controller('campaignController', [
 // hotel form search function
 jQuery(document).ready(function($) {
     //Show hotel
-    $('.form-hotel-location').click(function () {
+    $('.form-hotel-location').click(function (evt) {
+        evt.stopPropagation();
         $('.search-hotel').show();
+        $('.search-calendar-hotel, .select-age .option').hide();
     });
 
     //hideHotel hotel
@@ -234,17 +236,20 @@ jQuery(document).ready(function($) {
 
     //*****
     // date selector
-    $('.form-hotel-checkin').click(function () {
+    $('.form-hotel-checkin').click(function (evt) {
         $('.search-calendar-hotel').show();
         showCalendar();
         $('.hotel-date-picker').datepicker('option', 'minDate', new Date());
+        evt.stopPropagation();
+        $('.search-hotel').show();
+        $('.search-hotel, .select-age .option').hide();
     });
 
     // Select Age Childeren
-    $('body .btn-age').on('click', function() {
-        $('body .age-container').toggleClass('active');
-    });
-    $('body .select-age span').on('click', function () {
-        $(this).parent().find('.option').toggleClass('active');
+    $('body .select-age').on('click', function (evt) {
+        evt.stopPropagation();
+        $(this).parent().siblings().children('div').children('.option').hide();
+        $(this).children('.option').toggle();
+        $('.search-calendar-hotel, .search-hotel').hide();
     });
 });

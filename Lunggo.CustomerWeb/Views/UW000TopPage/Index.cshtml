@@ -347,9 +347,9 @@
                                         <div class="col-2 clearfix">
                                             <a href="" class="increase" ng-click="addValue('childCount', 1)"></a>
                                             <a href="" class="decrease" ng-click="addValue('childCount', -1)"></a>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
                             </div>
                         </div>
                         <div class="form-group hotel-age-children" ng-show="hotel.childCount > 0">
@@ -357,6 +357,7 @@
                             <div class="age-container clearfix">
                                 <div class="col-xs-3 dropdown-container" ng-show="hotel.childCount > 0">
                                     <div class="form-control select-age">
+                                        <small>Child 1</small>
                                         <span>{{hotel.childrenAges[0]}}</span>
                                         <div class="option">
                                             <span data-value="" ng-repeat="age in hotel.childrenAgeList" ng-click="setChildAge(0, age)">{{age}}</span>
@@ -365,6 +366,7 @@
                                 </div>
                                 <div class="col-xs-3 dropdown-container" ng-show="hotel.childCount > 1">
                                     <div class="form-control select-age">
+                                        <small>Child 2</small>
                                         <span>{{hotel.childrenAges[1]}}</span>
                                         <div class="option">
                                             <span data-value="" ng-repeat="age in hotel.childrenAgeList" ng-click="setChildAge(1, age)">{{age}}</span>
@@ -373,6 +375,8 @@
                                 </div>
                                 <div class="col-xs-3 dropdown-container" ng-show="hotel.childCount > 2">
                                     <div class="form-control select-age">
+                                        
+                                        <small>Child 3</small>
                                         <span>{{hotel.childrenAges[2]}}</span>
                                         <div class="option">
                                             <span data-value="" ng-repeat="age in hotel.childrenAgeList" ng-click="setChildAge(2, age)">{{age}}</span>
@@ -381,6 +385,7 @@
                                 </div>
                                 <div class="col-xs-3 dropdown-container" ng-show="hotel.childCount > 3">
                                     <div class="form-control select-age">
+                                        <small>Child 4</small>
                                         <span>{{hotel.childrenAges[3]}}</span>
                                         <div class="option">
                                             <span data-value="" ng-repeat="age in hotel.childrenAgeList" ng-click="setChildAge(3, age)">{{age}}</span>
@@ -388,7 +393,7 @@
                                     </div>
                                 </div>
                             </div>
-
+                            
                         </div>
                         <div class="form-group hotel-submit">
                             <div class="col-xs-12">

@@ -1812,7 +1812,6 @@ file : /Assets/travorama20/css/_page_index.scss
           height: auto;
           font-size: 14px; }
         .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-age-children .btn-age {
-          cursor: pointer;
           color: #fff;
           padding: 0 6px; }
           .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-age-children .btn-age:before {
@@ -1837,19 +1836,24 @@ file : /Assets/travorama20/css/_page_index.scss
             margin-top: -8px;
             margin-right: 20px; }
         .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-age-children .age-container {
-          display: none;
           margin-top: 10px; }
-          .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-age-children .age-container.active {
-            display: block; }
         .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-age-children .dropdown-container .form-control.select-age {
-          height: 45px;
-          font-size: 30px;
-          line-height: 30px;
+          height: 50px;
+          font-size: 24px;
+          line-height: 50px;
           font-weight: 600;
-          text-align: center;
+          text-align: right;
           color: #6a6a6a;
           border-radius: 2px;
-          cursor: pointer; }
+          cursor: pointer;
+          padding: 5px; }
+          .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-age-children .dropdown-container .form-control.select-age > small {
+            font-size: 10px;
+            position: absolute;
+            left: 0;
+            margin-left: 12px;
+            line-height: 12px;
+            color: #999; }
           .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-age-children .dropdown-container .form-control.select-age .option {
             position: absolute;
             top: 100%;
@@ -1866,14 +1870,12 @@ file : /Assets/travorama20/css/_page_index.scss
               padding: 10px;
               background: #ddd;
               cursor: pointer;
-              line-height: 16px; }
+              line-height: 10px; }
               .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-age-children .dropdown-container .form-control.select-age .option > span + span {
                 border-top: 1px solid #ccc; }
               .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-age-children .dropdown-container .form-control.select-age .option > span:hover {
                 background: #1daee4;
                 color: #fff; }
-            .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-age-children .dropdown-container .form-control.select-age .option.active {
-              display: block; }
       .page-index .section-search .search-form .tab-content .tab-activity {
         text-align: center; }
         .page-index .section-search .search-form .tab-content .tab-activity h2 {
