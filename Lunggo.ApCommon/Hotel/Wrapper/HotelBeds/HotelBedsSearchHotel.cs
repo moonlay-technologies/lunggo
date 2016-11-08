@@ -91,15 +91,14 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds
 
                     if (occ.ChildrenAges != null)
                     {
-                    occ.ChildrenAges.Sort();
+                        //occ.ChildrenAges.Sort();
+                        occ.ChildrenAges = occ.ChildrenAges.Take(occ.ChildCount).ToList();
                     }
                     
                     for (int i = 0; i < occ.ChildCount; i++)
                     {
                         room.childOf(occ.ChildrenAges[i]);
                     }
-                    
-                    
                     avail.rooms.Add(room);
                 }
             }

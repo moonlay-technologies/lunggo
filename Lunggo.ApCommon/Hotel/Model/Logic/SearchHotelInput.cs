@@ -20,9 +20,8 @@ namespace Lunggo.ApCommon.Hotel.Model.Logic
         //public int Rooms { get; set; }
         //public int AdultCount { get; set; }
         //public int ChildCount { get; set; }
-        public List<PaxDataInput> PaxDataInput { get; set; }
-        public int StartPage { get; set; }
-        public int EndPage { get; set; }
+        public int Page { get; set; }
+        public int PerPage { get; set; }
         public HotelFilter FilterParam { get; set; }
         public string SortingParam { get; set; }
         public int HotelCode { get; set; }
