@@ -35,7 +35,7 @@ namespace Lunggo.WebAPI.ApiSrc.Hotel.Model
         [JsonProperty("to")]
         public int To { get; set; }
         [JsonProperty("occupancies")]
-        public List<Occupancy> Occupancies { get; set; } 
+        public List<Occupancy> Occupancies { get; set; }
         public List<PaxDataInput> PaxData { get; set; }
         //[JsonProperty("roomCount")]
         //public int RoomCount { get; set; }

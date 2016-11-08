@@ -17,6 +17,7 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
     //=============== hotel start ======================
 
     $scope.hotel = {};
+    $scope.hotel.searchHotelType = 'Location';
     $scope.hotel.location = "";
     $scope.hotel.locationDisplay = "";
     $scope.hotel.checkinDate = moment().locale("id").add(5, 'days');
@@ -25,7 +26,10 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
     $scope.hotel.checkoutDate = moment().locale("id").add(7, 'days');
     $scope.hotel.adultCount = 2;
     $scope.hotel.childCount = 1;
-    
+    $scope.hotel.childrenAges = [0, 0, 0, 0];
+
+    $scope.hotel.childrenAgeList = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
+
     $scope.hotel.roomCount = 1;
 
     $scope.hotel.adultCountMin = 1;
@@ -117,18 +121,19 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
         //   })
     };
 
-    $scope.hotel.searchParam = function (){
-        return ("?info=" + 
-            //[$scope.hotel.location,
-            [$scope.hotel.location,
-             $scope.hotel.checkinDate.format("YYYY-MM-DD"),
-             $scope.hotel.checkoutDate.format("YYYY-MM-DD"),
-             $scope.hotel.adultCount,
-             $scope.hotel.childCount,
-             $scope.hotel.nightCount,
-             $scope.hotel.roomCount,
-             
-             ].join('.')
+    $scope.hotel.searchParam = function () {
+        return ("?info=" +
+            [
+                $scope.hotel.searchHotelType, //hardcoded with 'Location'
+                $scope.hotel.location,
+                $scope.hotel.checkinDate.format("YYYY-MM-DD"),
+                $scope.hotel.checkoutDate.format("YYYY-MM-DD"),
+                $scope.hotel.adultCount,
+                $scope.hotel.childCount,
+                $scope.hotel.nightCount,
+                $scope.hotel.roomCount,
+                $scope.hotel.childrenAges
+            ].join('.')
         )
     }
 
@@ -166,6 +171,11 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
         $scope.hotel.location = location.id;
         $scope.hotel.locationDisplay = location.name;
         $scope.view.showHotelSearch = false;
+    }
+
+    $scope.setChildAge = function (index, age) {
+        $scope.hotel.childrenAges[index] = age;
+
     }
     
 }]);

@@ -16,29 +16,21 @@ namespace Lunggo.CustomerWeb.Models
     }
     enum RequestParam
     {
-        //Location = 0,
-        //CheckinDate = 1,
-        //CheckoutDate = 3,
-        //AdultCount = 5,
-        //ChildCount = 6,
-        //NightCount = 7,
-        //RoomCount = 8,
-        //Filter = 9,
-        //Sorting = 10,
-
-        Location = 0,
-        CheckinDate = 1,
-        CheckoutDate = 2,
-        AdultCount = 3,
-        ChildCount = 4,
-        NightCount = 5,
-        RoomCount = 6,
-        Filter = 7,
-        Sorting = 8,
+        SearchHotelType = 0,      
+        Location       = 1, 
+        CheckinDate    = 2, 
+        CheckoutDate   = 3, 
+        AdultCount     = 4, 
+        ChildCount     = 5, 
+        NightCount     = 6, 
+        RoomCount      = 7,
+        ChildrenAges   = 8
     }
    
     public class HotelSearchApiRequest
     {
+        [JsonProperty("searchHotelType")]
+        public string SearchHotelType { get; set; }
         [JsonProperty("location")]
         public string Location { get; set; }
         [JsonProperty("checkinDate")]
@@ -53,10 +45,8 @@ namespace Lunggo.CustomerWeb.Models
         public int NightCount { get; set; }
         [JsonProperty("roomCount")]
         public int RoomCount { get; set; }
-        [JsonProperty("filter")]
-        public HotelRequestFilter Filter { get; set; }
-        [JsonProperty("sorting")]
-        public HotelRequestSorting Sorting { get; set; }
+        [JsonProperty("childrenAges")]
+        public string[] ChildrenAges { get; set; }
 
         public HotelSearchApiRequest(string queryString)
         {
@@ -68,8 +58,7 @@ namespace Lunggo.CustomerWeb.Models
             ChildCount = int.Parse(query[(int)RequestParam.ChildCount]);
             NightCount = int.Parse(query[(int)RequestParam.NightCount]);
             RoomCount = int.Parse(query[(int)RequestParam.RoomCount]);
-            //Filter =  query[(int)RequestParam.Filter];
-            //Sorting = int.Parse(query[(int)RequestParam.Sorting]);
+            ChildrenAges = query[(int)RequestParam.ChildrenAges].Split(',').ToArray<string>();
         }
     }
 
