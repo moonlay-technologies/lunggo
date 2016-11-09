@@ -68,10 +68,29 @@
                             <td width="30%"><img style="width: 100%;" src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/voucher-hotel.jpg")" /></td>
                             <td width="70%" style="padding-left: 10px;">
                                 <p style="font-size: 15px; text-transform: uppercase; font-weight: 700; color: #15b1e4;">@Model.HotelDetail.HotelName</p>
-                                <p><img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/hotel-star-4.png")" /> </p>
+                                @if (Model.HotelDetail.StarRating == 0 || Model.HotelDetail.StarRating == 1)
+                                {
+                                    <p class="star"></p>
+                                }
+                                @if (Model.HotelDetail.StarRating == 2)
+                                {
+                                    <p class="star star-2"></p>
+                                }
+                                @if (Model.HotelDetail.StarRating == 3)
+                                {
+                                    <p class="star star-3"></p>
+                                }
+                                @if (Model.HotelDetail.StarRating == 4)
+                                {
+                                    <p class="star star-4"></p>
+                                }
+                                @if (Model.HotelDetail.StarRating == 5)
+                                {
+                                    <p class="star star-5"></p>
+                                }
                                 <p>
-                                    <img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/location.png")" />@Model.HotelDetail.Address,
-                                    @Model.HotelDetail.City
+                                    <img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/location.png")" />@Model.HotelDetail.Address
+                                    @Model.HotelDetail.City, @Model.HotelDetail.CountryName
                                 </p>
                                 <p><img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/phone.png")" /> @Model.HotelDetail.PhonesNumbers[0] </p>
                             </td>

@@ -88,8 +88,8 @@
                                 {
                                     <p class="star star-5"></p>
                                 }
-                                <p><img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/location.png")" />@Model.HotelDetail.Address,
-                                    @Model.HotelDetail.City </p>
+                                <p><img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/location.png")" />@Model.HotelDetail.Address
+                                    @Model.HotelDetail.City, @Model.HotelDetail.CountryName </p>
                                 <p><img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/phone.png")" /> @Model.HotelDetail.PhonesNumbers[0] </p>
                             </td>
                         </tr>
