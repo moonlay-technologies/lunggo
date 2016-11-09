@@ -98,7 +98,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                 Convert.ToInt32(hotelDetail.StarRating.Substring(0,1)) : 0),
                 //ChainName = GetHotelChainDesc(hotelDetail.Chain),
                     //AccomodationName = GetHotelAccomodationDescId(hotelDetail.AccomodationType),
-                MainImage = hotelDetail.ImageUrl == null ? null : hotelDetail.ImageUrl.Select(x => x.Path).FirstOrDefault(),
+                MainImage = hotelDetail.ImageUrl == null ? null : hotelDetail.ImageUrl.FirstOrDefault().Path,
                     // != null ? hotelDetail.ImageUrl.Where(x=>x.Type=="GEN").Select(x=>x.Path).FirstOrDefault(): null,
                 OriginalFare = hotelDetail.OriginalFare,
                 NetFare = hotelDetail.NetFare,
