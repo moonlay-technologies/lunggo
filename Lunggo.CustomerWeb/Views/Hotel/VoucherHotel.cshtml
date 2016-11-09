@@ -58,7 +58,26 @@
                         <div class="col-xs-10">
                             <div class="right-side">
                                 <h4 class="blue-txt uppercase"><b>@Model.HotelDetail.HotelName</b></h4>
-                                <p><img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/hotel-star-4.png")" /></p>
+                                @if (Model.HotelDetail.StarRating == 0 || Model.HotelDetail.StarRating == 1)
+                                {
+                                    <p class ="star"></p>
+                                }
+                                @if (Model.HotelDetail.StarRating == 2)
+                                {
+                                    <p class="star star-2"></p>
+                                }
+                                @if (Model.HotelDetail.StarRating == 3)
+                                {
+                                    <p class="star star-3"></p>
+                                }
+                                @if (Model.HotelDetail.StarRating == 4)
+                                {
+                                    <p class="star star-4"></p>
+                                }
+                                @if (Model.HotelDetail.StarRating == 5)
+                                {
+                                    <p class="star star-5"></p>
+                                }
                                 <p class="grey-txt">
                                     <img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/location.png")" /> @Model.HotelDetail.Address, @Model.HotelDetail.City
                                 </p>

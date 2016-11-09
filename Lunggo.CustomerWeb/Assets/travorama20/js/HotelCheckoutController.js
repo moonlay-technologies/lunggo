@@ -75,20 +75,20 @@ app.controller('hotelcheckoutController', [
             return sum;
         }
 
-        $scope.hotelstar = function () {
-            if ($scope.hotelDetail.starRating == 1) {
+        $scope.hotelstar = function (star) {
+            if (star == 1) {
                 return 'star';
             }
-            if ($scope.hotelDetail.starRating == 2) {
+            if (star == 2) {
                 return 'star star-2';
             }
-            if ($scope.hotelDetail.starRating == 3) {
+            if (star == 3) {
                 return 'star star-3';
             }
-            if ($scope.hotelDetail.starRating == 4) {
+            if (star == 4) {
                 return 'star star-4';
             }
-            if ($scope.hotelDetail.starRating == 5) {
+            if (star == 5) {
                 return 'star star-5';
             }
         }
@@ -383,8 +383,13 @@ app.controller('hotelcheckoutController', [
                 // generate data
                 $scope.book.postData = ' "token":"' + $scope.token + '",  "contact" :' + $scope.contactData + ',"lang":"' + $scope.language + '"';
                 $scope.paxData = $scope.paxData + '{ "type":"1", "title":"' + $scope.guestInfo.title + '" , "name":"' + $scope.guestInfo.name + '" }]';
-                $scope.specialReq = '"specialRequest":"' + $scope.buyerInfo.message + '"';
-                $scope.book.postData = '{' + $scope.book.postData + ',' + $scope.paxData + ',' + $scope.specialReq + '}';
+                if ($scope.buyerInfo.message == null || $scope.buyerInfo.message.length == 0) {
+                    $scope.book.postData = '{' + $scope.book.postData + ',' + $scope.paxData + '}';
+                } else {
+                    $scope.specialReq = '"specialRequest":"' + $scope.buyerInfo.message + '"';
+                    $scope.book.postData = '{' + $scope.book.postData + ',' + $scope.paxData + ',' + $scope.specialReq + '}';
+                }
+                
                 console.log($scope.book.postData);
                 $scope.book.postData = JSON.parse($scope.book.postData);
 

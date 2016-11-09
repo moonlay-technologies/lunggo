@@ -19,8 +19,8 @@
     <div class="container clearfix">
         <div class="col-8">
             <div class="result-form-left">
-                <span class="md-txt">Hasil Pencarian Hotel di: <b>Bandar Lampung, Indonesia</b></span><br />
-                <span class="">3 Nights <b>( Wed, 15 Dec 2015 - Thu, 18 Dec 2015 )</b></span>
+                <span class="md-txt">Hasil Pencarian Hotel di: <b>{{loc}}</b></span><br />
+                <span class="">{{hotel.nightCount}} Malam <b>( {{hotel.checkinDate | date : 'EEE, dd MMM yyyy'}} - {{hotel.checkoutDate | date : 'EEE, dd MMM yyyy'}} )</b></span>
             </div>
         </div>
         <div class="col-2">

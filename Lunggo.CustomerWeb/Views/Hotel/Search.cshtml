@@ -1,4 +1,5 @@
-﻿@using Lunggo.Framework.Extension
+﻿@using Lunggo.ApCommon.Hotel.Service
+@using Lunggo.Framework.Extension
 @model Lunggo.CustomerWeb.Models.HotelSearchApiRequest
 @{
     Layout = "/Views/Shared/Travorama20/_Layout20150929.cshtml";
@@ -11,7 +12,9 @@
 @section AdditionalCSS{
     <link href="/Assets/css/jquery-ui.min.css" rel="stylesheet" />
 }
-
+@{
+    long loc = 0;
+}
 @section AdditionalJS {
     @*<script src="/Assets/js/angular.min.js"></script>
     <script src="/Assets/js/angular-animate.min.js"></script>
@@ -33,8 +36,12 @@
                 }
             });
             $("#amount").val("$" + $("#slider-range").slider("values", 0) +
-              " - $" + $("#slider-range").slider("values", 1));
+                " - $" + $("#slider-range").slider("values", 1));
         });
+    </script>
+    <script>
+        var x = '@long.TryParse(Model.Location, out loc)';
+        var loc = '@HotelService.GetInstance()._Autocompletes[loc].Name';
     </script>
     <script src="/Assets/Travorama20/js/hotelSearchController.js"></script>
     <script type="text/javascript" src="/Assets/travorama20/js/HotelController.js"></script>
@@ -47,7 +54,7 @@
             @Html.Partial("/Views/Hotel/Shared/Desktop/_BreadCrumb.cshtml")
             <div class="top-title clearfix">
                 <div class="col-left bg-title"><b>Hasil</b> Pencarian </div>
-                <div class="col-right total-result">Hotels Found: <b>{{totalActualHotel}}</b></div>
+                <div class="col-right total-result">Jumlah Hotel Ditemukan: <b>{{totalActualHotel}}</b></div>
             </div>
             <div class="search-list-result clearfix">
                 <div class="col-left-result filter">
@@ -140,7 +147,7 @@
                 </div>
                 <div class="col-right-result">
                     <div class="sort clearfix">
-                        <div class="col-xs-left"><b>Sort By:</b></div>
+                        <div class="col-xs-left"><b>Urut Berdasarkan:</b></div>
                         <div class="col-xs-middle">
                             <label class="round">
                                 <span class="radio"></span>
@@ -163,17 +170,15 @@
                                 <div class="clearfix">
                                     <div class="col-8 blue-txt bg">{{hotel.hotelName}}</div>
                                     <div class="col-2 facility">
-                                        <span class="wifi"></span>
-                                        <span class="meal"></span>
+                                        <span class="wifi" ng-show="hotel.isWifiAccessAvailable"></span>
+                                        <span class="meal" ng-show="hotel.restaurant"></span>
                                     </div>
                                 </div>
-                                <div class="" ng-class="{
-                                     'star e-star': hotel.starRating.indexOf('1')>-1,
-                                     'star star-2 e-star': hotel.starRating.indexOf('2')>-1,
-                                     'star star-3 e-star': hotel.starRating.indexOf('3')>-1,
-                                     'star star-4 e-star': hotel.starRating.indexOf('4')>-1,
-                                     'star star-5': hotel.starRating.indexOf('5')>-1}">
-                                </div>{{hotel.starRating}}
+                                <div class="star" ng-show="hotel.starRating == 1 "></div>
+                                <div class="star star-2" ng-show="hotel.starRating == 2"></div>
+                                <div class="star star-3" ng-show="hotel.starRating == 3"></div>
+                                <div class="star star-4" ng-show="hotel.starRating == 4"></div>
+                                <div class="star star-5" ng-show="hotel.starRating == 5"></div>
                                 
                                 <div class="location">
                                     @*Kios Tower AB No. 26, Jl. Karet Pasar Gang Tiong No: 62 ;

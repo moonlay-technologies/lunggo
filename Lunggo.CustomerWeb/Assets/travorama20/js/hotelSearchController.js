@@ -5,7 +5,7 @@ app.controller('hotelSearchController', ['$scope', '$log', '$http', '$resource',
     $scope.hotels = [];
     $scope.totalActualHotel = '';
     $scope.hotelFilterDisplayInfo = undefined;
-
+    $scope.loc = loc;
     $scope.filterDisabled = true;
 
 
@@ -51,7 +51,7 @@ app.controller('hotelSearchController', ['$scope', '$log', '$http', '$resource',
         $scope.hotel.checkoutDate =$scope.model.checkoutDate;
         $scope.hotel.adultCount = $scope.model.adultCount;
         $scope.hotel.childCount = $scope.model.childCount;
-        $scope.hotel.nightCount = $scope.model.nightCount;
+        $scope.hotel.nightCount = new Date($scope.hotel.checkoutDate).getDate() - new Date($scope.hotel.checkinDate).getDate();
         $scope.hotel.roomCount = $scope.model.roomCount;
 
         $scope.searchHotel();
@@ -97,9 +97,9 @@ app.controller('hotelSearchController', ['$scope', '$log', '$http', '$resource',
             $scope.filter.maxPrice = data.maxPrice;
             $scope.hotel.searchId = data.searchId;
             $scope.hotels = data.hotels;
-            totalActualHotel = data.totalActualHotel;
+            $scope.totalActualHotel = data.returnedHotelCount;
             $scope.hotelFilterDisplayInfo = data.hotelFilterDisplayInfo;
-
+            //$scope.hotel.starRating = 
             initiatePriceSlider();
             $log.debug(data);
         });

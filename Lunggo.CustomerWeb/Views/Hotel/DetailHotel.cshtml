@@ -62,7 +62,7 @@
                                      'star-5':hotel.starRating.indexOf('5')>-1}">
                         </div>
                         <br />
-                        <span class="address">{{hotel.address}}{{hotel.city}}{{hotel.country}}</span>
+                        <span class="address">{{hotel.address}} {{hotel.city}}, {{hotel.country}}</span>
                         <a href="#" class="btn-blue small">Lihat Peta</a>
                     </div>
                     <div class="slider-container clearfix">
@@ -162,7 +162,7 @@
                 <div class="room clearfix">
                     <div class="top-title clearfix">
                         <div class="col-left-rs bg-title"><b>Pilih</b> Kamar </div>
-                        <div class="col-right-rs total-day">3 Nights <b>( Wed, 15 Dec 2015  -  Thu, 18 Dec 2015 )</b></div>
+                        <div class="col-right-rs total-day">{{hotel.nightCount}} Malam <b>( {{hotel.checkinDate | date : 'EEE, dd MMM yyyy'}} - {{hotel.checkoutDate | date : 'EEE, dd MMM yyyy'}} )</b></div>
                     </div>
                     <div class="room-sort clearfix">
                         <div class="room-sort-left"><a href="#" class="sort"></a>Tipe Kamar</div>
@@ -302,7 +302,7 @@
                         </li>
                     </ul>
                     <div class="hotel-result clearfix">
-                        <span class="hotel-result-txt">Hotels Room Found: <b>332</b></span>
+                        <span class="hotel-result-txt">Jumlah Tipe Kamar Tersedia: <b>{{hotel.room.length}}</b></span>
                         <a href="#" class="btn-hotel-result btn-blue small">Tampilkan semua</a>
                     </div>
                 </div>
