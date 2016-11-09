@@ -1694,108 +1694,175 @@ file : /Assets/travorama20/css/_page_index.scss
           text-align: center;
           padding: 0;
           position: absolute; }
-      .page-index .section-search .search-form .tab-content .tab-hotel h3 {
-        margin: 30px 0 15px;
-        font-size: 17px; }
-        .page-index .section-search .search-form .tab-content .tab-hotel h3 .sub-title {
-          font-size: 14px; }
-      .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-location, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-date, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-room, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-visitor {
-        margin-bottom: 10px; }
-      .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-location input[type="text"] {
-        height: auto;
-        padding: 15px;
-        text-align: center;
-        font-size: 12px; }
-      .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-date > div:first-child {
-        padding-right: 5px; }
-      .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-date > div:last-child {
-        padding-left: 5px; }
-      .page-index .section-search .search-form .tab-content .tab-hotel .form-hotel-checkin {
-        cursor: pointer;
-        margin-bottom: 10px;
-        text-align: center;
-        background: #fff;
-        color: #6a6a6a;
-        padding: 10px 8px;
-        -webkit-border-radius: 2px;
-        -moz-border-radius: 2px;
-        -ms-border-radius: 2px;
-        border-radius: 2px;
-        border: 1px solid #ccc;
-        font-weight: 600; }
-        .page-index .section-search .search-form .tab-content .tab-hotel .form-hotel-checkin:before, .page-index .section-search .search-form .tab-content .tab-hotel .form-hotel-checkin:after {
-          display: block;
+      .page-index .section-search .search-form .tab-content .tab-hotel {
+        /*Hotel Age Childern*/ }
+        .page-index .section-search .search-form .tab-content .tab-hotel h3 {
+          margin: 30px 0 15px;
+          font-size: 17px; }
+          .page-index .section-search .search-form .tab-content .tab-hotel h3 .sub-title {
+            font-size: 14px; }
+        .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-location, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-date, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-room, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-visitor, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-age-children {
+          margin-bottom: 10px; }
+        .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-location input[type="text"] {
+          height: auto;
+          padding: 15px;
+          text-align: center;
+          font-size: 12px; }
+        .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-date > div:first-child {
+          padding-right: 5px; }
+        .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-date > div:last-child {
+          padding-left: 5px; }
+        .page-index .section-search .search-form .tab-content .tab-hotel .form-hotel-checkin {
+          cursor: pointer;
+          margin-bottom: 10px;
+          text-align: center;
+          background: #fff;
+          color: #6a6a6a;
+          padding: 10px 8px;
+          -webkit-border-radius: 2px;
+          -moz-border-radius: 2px;
+          -ms-border-radius: 2px;
+          border-radius: 2px;
+          border: 1px solid #ccc;
+          font-weight: 600; }
+          .page-index .section-search .search-form .tab-content .tab-hotel .form-hotel-checkin:before, .page-index .section-search .search-form .tab-content .tab-hotel .form-hotel-checkin:after {
+            display: block;
+            width: 100%;
+            content: "";
+            clear: both; }
+          .page-index .section-search .search-form .tab-content .tab-hotel .form-hotel-checkin small {
+            display: block;
+            font-weight: normal; }
+          .page-index .section-search .search-form .tab-content .tab-hotel .form-hotel-checkin .date {
+            float: left;
+            font-size: 42px;
+            width: 60px;
+            line-height: 42px; }
+          .page-index .section-search .search-form .tab-content .tab-hotel .form-hotel-checkin .month {
+            display: block;
+            font-size: 17px;
+            line-height: 26px; }
+          .page-index .section-search .search-form .tab-content .tab-hotel .form-hotel-checkin .year {
+            display: block;
+            font-size: 17px;
+            line-height: 10px; }
+          .page-index .section-search .search-form .tab-content .tab-hotel .form-hotel-checkin .date-hotel {
+            font-size: 18px;
+            line-height: 25px;
+            font-weight: 700; }
+        .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-room > div:first-child, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-visitor > div:first-child {
+          padding-right: 5px; }
+        .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-room > div:last-child, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-visitor > div:last-child {
+          padding-left: 5px; }
+        .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-room .form-hotel-night, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-room .form-hotel-room, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-room .form-hotel-visitor, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-visitor .form-hotel-night, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-visitor .form-hotel-room, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-visitor .form-hotel-visitor {
+          background: #fff;
+          padding: 10px 8px;
+          color: #6a6a6a;
+          -webkit-border-radius: 2px;
+          -moz-border-radius: 2px;
+          -ms-border-radius: 2px;
+          border-radius: 2px;
+          border: 1px solid #ccc;
+          position: relative;
+          height: 50px;
+          /*.visitor-input {width:50px; position:absolute; top:25px; right:5px; border:0; text-align:right; font-size:30px; padding:0; line-height:0; margin:0; letter-spacing:0; font-weight:600;}*/
+          /*input {width:50px; position:absolute; right:5px; border:0; text-align:right; font-size:30px; padding:0; line-height:0; margin:0; letter-spacing:0; font-weight:600; height: 30px; background: transparent;}*/ }
+          .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-room .form-hotel-night small, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-room .form-hotel-room small, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-room .form-hotel-visitor small, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-visitor .form-hotel-night small, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-visitor .form-hotel-room small, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-visitor .form-hotel-visitor small {
+            font-size: 10px;
+            line-height: 0; }
+          .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-room .form-hotel-night .input-hotel, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-room .form-hotel-room .input-hotel, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-room .form-hotel-visitor .input-hotel, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-visitor .form-hotel-night .input-hotel, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-visitor .form-hotel-room .input-hotel, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-visitor .form-hotel-visitor .input-hotel {
+            font-size: 30px;
+            font-weight: 600;
+            line-height: 30px;
+            text-align: right;
+            padding: 0 6px; }
+          .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-room .form-hotel-night a.increase, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-room .form-hotel-room a.increase, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-room .form-hotel-night a.decrease, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-room .form-hotel-room a.decrease, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-room .form-hotel-visitor a.increase, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-room .form-hotel-visitor a.decrease, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-visitor .form-hotel-night a.increase, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-visitor .form-hotel-room a.increase, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-visitor .form-hotel-night a.decrease, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-visitor .form-hotel-room a.decrease, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-visitor .form-hotel-visitor a.increase, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-visitor .form-hotel-visitor a.decrease {
+            display: block;
+            width: 10px;
+            height: 10px;
+            border-left: 6px solid transparent;
+            border-right: 6px solid transparent;
+            border-bottom: 6px solid #777; }
+          .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-room .form-hotel-night a.decrease, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-room .form-hotel-room a.decrease, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-room .form-hotel-visitor a.decrease, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-visitor .form-hotel-night a.decrease, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-visitor .form-hotel-room a.decrease, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-visitor .form-hotel-visitor a.decrease {
+            border-bottom: none;
+            border-top: 6px solid #777;
+            margin-top: 10px; }
+        .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-room .option, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-visitor .option {
+          display: none;
+          z-index: 3;
           width: 100%;
-          content: "";
-          clear: both; }
-        .page-index .section-search .search-form .tab-content .tab-hotel .form-hotel-checkin small {
-          display: block;
-          font-weight: normal; }
-        .page-index .section-search .search-form .tab-content .tab-hotel .form-hotel-checkin .date {
-          float: left;
-          font-size: 42px;
-          width: 60px;
-          line-height: 42px; }
-        .page-index .section-search .search-form .tab-content .tab-hotel .form-hotel-checkin .month {
-          display: block;
-          font-size: 17px;
-          line-height: 26px; }
-        .page-index .section-search .search-form .tab-content .tab-hotel .form-hotel-checkin .year {
-          display: block;
-          font-size: 17px;
-          line-height: 10px; }
-        .page-index .section-search .search-form .tab-content .tab-hotel .form-hotel-checkin .date-hotel {
-          font-size: 18px;
-          line-height: 25px;
-          font-weight: 700; }
-      .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-room > div:first-child, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-visitor > div:first-child {
-        padding-right: 5px; }
-      .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-room > div:last-child, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-visitor > div:last-child {
-        padding-left: 5px; }
-      .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-room .form-hotel-night, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-room .form-hotel-room, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-room .form-hotel-visitor, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-visitor .form-hotel-night, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-visitor .form-hotel-room, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-visitor .form-hotel-visitor {
-        background: #fff;
-        padding: 10px 8px;
-        color: #6a6a6a;
-        -webkit-border-radius: 2px;
-        -moz-border-radius: 2px;
-        -ms-border-radius: 2px;
-        border-radius: 2px;
-        border: 1px solid #ccc;
-        position: relative;
-        height: 50px;
-        /*.visitor-input {width:50px; position:absolute; top:25px; right:5px; border:0; text-align:right; font-size:30px; padding:0; line-height:0; margin:0; letter-spacing:0; font-weight:600;}*/
-        /*input {width:50px; position:absolute; right:5px; border:0; text-align:right; font-size:30px; padding:0; line-height:0; margin:0; letter-spacing:0; font-weight:600; height: 30px; background: transparent;}*/ }
-        .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-room .form-hotel-night small, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-room .form-hotel-room small, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-room .form-hotel-visitor small, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-visitor .form-hotel-night small, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-visitor .form-hotel-room small, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-visitor .form-hotel-visitor small {
-          font-size: 10px;
-          line-height: 0; }
-        .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-room .form-hotel-night .input-hotel, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-room .form-hotel-room .input-hotel, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-room .form-hotel-visitor .input-hotel, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-visitor .form-hotel-night .input-hotel, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-visitor .form-hotel-room .input-hotel, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-visitor .form-hotel-visitor .input-hotel {
-          font-size: 30px;
-          font-weight: 600;
-          line-height: 30px;
-          text-align: right;
+          text-align: center;
+          padding: 0;
+          position: absolute; }
+        .page-index .section-search .search-form .tab-content .tab-hotel input[type="submit"] {
+          padding: 10px 0;
+          height: auto;
+          font-size: 14px; }
+        .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-age-children .btn-age {
+          color: #fff;
           padding: 0 6px; }
-        .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-room .form-hotel-night a.increase, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-room .form-hotel-room a.increase, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-room .form-hotel-night a.decrease, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-room .form-hotel-room a.decrease, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-room .form-hotel-visitor a.increase, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-room .form-hotel-visitor a.decrease, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-visitor .form-hotel-night a.increase, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-visitor .form-hotel-room a.increase, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-visitor .form-hotel-night a.decrease, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-visitor .form-hotel-room a.decrease, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-visitor .form-hotel-visitor a.increase, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-visitor .form-hotel-visitor a.decrease {
-          display: block;
-          width: 10px;
-          height: 10px;
-          border-left: 6px solid transparent;
-          border-right: 6px solid transparent;
-          border-bottom: 6px solid #777; }
-        .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-room .form-hotel-night a.decrease, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-room .form-hotel-room a.decrease, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-room .form-hotel-visitor a.decrease, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-visitor .form-hotel-night a.decrease, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-visitor .form-hotel-room a.decrease, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-visitor .form-hotel-visitor a.decrease {
-          border-bottom: none;
-          border-top: 6px solid #777;
+          .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-age-children .btn-age:before {
+            content: '';
+            display: block;
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            border-left: 4px solid transparent;
+            border-right: 4px solid transparent;
+            border-top: 4px solid #fff;
+            margin-top: 8px;
+            margin-left: 65px; }
+          .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-age-children .btn-age:after {
+            position: absolute;
+            content: '';
+            width: 200px;
+            height: 1px;
+            background: #fff;
+            display: block;
+            right: 0;
+            margin-top: -8px;
+            margin-right: 20px; }
+        .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-age-children .age-container {
           margin-top: 10px; }
-      .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-room .option, .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-visitor .option {
-        display: none;
-        z-index: 3;
-        width: 100%;
-        text-align: center;
-        padding: 0;
-        position: absolute; }
-      .page-index .section-search .search-form .tab-content .tab-hotel input[type="submit"] {
-        padding: 10px 0;
-        height: auto;
-        font-size: 14px; }
+        .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-age-children .dropdown-container .form-control.select-age {
+          height: 50px;
+          font-size: 24px;
+          line-height: 50px;
+          font-weight: 600;
+          text-align: right;
+          color: #6a6a6a;
+          border-radius: 2px;
+          cursor: pointer;
+          padding: 5px; }
+          .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-age-children .dropdown-container .form-control.select-age > small {
+            font-size: 10px;
+            position: absolute;
+            left: 0;
+            margin-left: 12px;
+            line-height: 12px;
+            color: #999; }
+          .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-age-children .dropdown-container .form-control.select-age .option {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            display: none;
+            width: 100%;
+            z-index: 2;
+            font-size: 12px;
+            border: none;
+            padding: 0 6px; }
+            .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-age-children .dropdown-container .form-control.select-age .option > span {
+              display: block;
+              color: #000;
+              padding: 10px;
+              background: #ddd;
+              cursor: pointer;
+              line-height: 10px; }
+              .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-age-children .dropdown-container .form-control.select-age .option > span + span {
+                border-top: 1px solid #ccc; }
+              .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-age-children .dropdown-container .form-control.select-age .option > span:hover {
+                background: #1daee4;
+                color: #fff; }
       .page-index .section-search .search-form .tab-content .tab-activity {
         text-align: center; }
         .page-index .section-search .search-form .tab-content .tab-activity h2 {

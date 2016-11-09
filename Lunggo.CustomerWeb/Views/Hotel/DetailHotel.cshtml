@@ -317,58 +317,14 @@
                                 <div class="ih-row fc clearfix">
                                     <div class="col-left-hotel">
                                         <div class="ih-left hotel-blue">
-                                            Fasilitas dan Layanan Hotel
+                                            Fasilitas dan Layanan Hotel (GENERAL)
                                         </div>
                                     </div>
                                     <div class="col-right-hotel">
                                         <div class="ih-right clearfix">
                                             <ul class="blue-list quarter">
-                                                <li>Bed</li>
-                                                <li>2 Toilet</li>
-                                                <li>Towel</li>
-                                                <li>TV</li>
-                                                <li>Shower</li>
-                                                <li>Bed</li>
-                                                <li>2 Toilet</li>
-                                                <li>Towel</li>
-                                                <li>TV</li>
-                                                <li>Shower</li>
-                                            </ul>
-                                            <ul class="blue-list quarter">
-                                                <li>Bed</li>
-                                                <li>2 Toilet</li>
-                                                <li>Towel</li>
-                                                <li>TV</li>
-                                                <li>Shower</li>
-                                                <li>Bed</li>
-                                                <li>2 Toilet</li>
-                                                <li>Towel</li>
-                                                <li>TV</li>
-                                                <li>Shower</li>
-                                            </ul>
-                                            <ul class="blue-list quarter">
-                                                <li>Bed</li>
-                                                <li>2 Toilet</li>
-                                                <li>Towel</li>
-                                                <li>TV</li>
-                                                <li>Shower</li>
-                                                <li>Bed</li>
-                                                <li>2 Toilet</li>
-                                                <li>Towel</li>
-                                                <li>TV</li>
-                                                <li>Shower</li>
-                                            </ul>
-                                            <ul class="blue-list quarter">
-                                                <li>Bed</li>
-                                                <li>2 Toilet</li>
-                                                <li>Towel</li>
-                                                <li>TV</li>
-                                                <li>Shower</li>
-                                                <li>Bed</li>
-                                                <li>2 Toilet</li>
-                                                <li>Towel</li>
-                                                <li>TV</li>
-                                                <li>Shower</li>
+                                                
+                                                <li ng-repeat="facility in hotel.facilities.general">{{facility}}</li>
                                             </ul>
                                         </div>
                                     </div>
@@ -376,38 +332,13 @@
                                 <div class="ih-row clearfix">
                                     <div class="col-left-hotel">
                                         <div class="ih-left sport-blue">
-                                            Olahraga dan Sarana Rekreasi
+                                            Olahraga dan Sarana Rekreasi (HEALTH)
                                         </div>
                                     </div>
                                     <div class="col-right-hotel">
                                         <div class="ih-right clearfix">
                                             <ul class="blue-list quarter">
-                                                <li>Bed</li>
-                                                <li>2 Toilet</li>
-                                                <li>Towel</li>
-                                                <li>TV</li>
-                                                <li>Shower</li>
-                                            </ul>
-                                            <ul class="blue-list quarter">
-                                                <li>Bed</li>
-                                                <li>2 Toilet</li>
-                                                <li>Towel</li>
-                                                <li>TV</li>
-                                                <li>Shower</li>
-                                            </ul>
-                                            <ul class="blue-list quarter">
-                                                <li>Bed</li>
-                                                <li>2 Toilet</li>
-                                                <li>Towel</li>
-                                                <li>TV</li>
-                                                <li>Shower</li>
-                                            </ul>
-                                            <ul class="blue-list quarter">
-                                                <li>Bed</li>
-                                                <li>2 Toilet</li>
-                                                <li>Towel</li>
-                                                <li>TV</li>
-                                                <li>Shower</li>
+                                                <li ng-repeat="facility in hotel.facilities.health">{{facility}}</li>
                                             </ul>
                                         </div>
                                     </div>
@@ -415,24 +346,14 @@
                                 <div class="ih-row clearfix">
                                     <div class="col-left-hotel">
                                         <div class="ih-left wifi-blue">
-                                            Internet & Wifi
+                                            Internet & Wifi (BUSINESS)
                                         </div>
                                     </div>
                                     <div class="col-right-hotel">
                                         <div class="ih-right clearfix">
                                             <ul class="blue-list quarter">
-                                                <li>Bed</li>
-                                                <li>2 Toilet</li>
-                                                <li>Towel</li>
-                                                <li>TV</li>
-                                                <li>Shower</li>
-                                            </ul>
-                                            <ul class="blue-list quarter">
-                                                <li>Bed</li>
-                                                <li>2 Toilet</li>
-                                                <li>Towel</li>
-                                                <li>TV</li>
-                                                <li>Shower</li>
+                                                <li ng-repeat="facility in hotel.facilities.business">{{facility}}</li>
+
                                             </ul>
                                         </div>
                                     </div>
@@ -440,24 +361,13 @@
                                 <div class="ih-row clearfix">
                                     <div class="col-left-hotel">
                                         <div class="ih-left parking-blue">
-                                            Parking
+                                            Parking (OTHER)
                                         </div>
                                     </div>
                                     <div class="col-right-hotel">
                                         <div class="ih-right clearfix">
                                             <ul class="blue-list quarter">
-                                                <li>Bed</li>
-                                                <li>2 Toilet</li>
-                                                <li>Towel</li>
-                                                <li>TV</li>
-                                                <li>Shower</li>
-                                            </ul>
-                                            <ul class="blue-list quarter">
-                                                <li>Bed</li>
-                                                <li>2 Toilet</li>
-                                                <li>Towel</li>
-                                                <li>TV</li>
-                                                <li>Shower</li>
+                                                <li ng-repeat="facility in hotel.facilities.other">{{facility}}</li>
                                             </ul>
                                         </div>
                                     </div>

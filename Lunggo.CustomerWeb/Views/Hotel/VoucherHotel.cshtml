@@ -167,7 +167,7 @@
                                 <p>: @Model.HotelDetail.Rooms[0].Rates[0].RoomCount</p>
                             </div>
                         </div>
-
+                        
                         <div class="row grey-txt">
                             <div class="col-xs-3">
                                 <p>Rate Comment</p>
@@ -202,7 +202,7 @@
                                     <p> : Tidak</p>
                                 }
                             </div>
-                        </div>
+                                </div>
                         @if (Model.HotelDetail.IsRestaurantAvailable || Model.HotelDetail.IsWifiAccessAvailable)
                         {
                             <div class="row grey-txt">
@@ -220,35 +220,24 @@
                                             <span><img class="img-swim" src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/swim.png")" />Kolam Renang</span>
                                         }
                                     </p>
-                                    @foreach (var facility in Model.HotelDetail.Facilities)
+                                    @for (var f = 0; f < Model.HotelDetail.Facilities.Other.Count; f++)
                                     {
-                                        <p> @facility <br /> </p>
+                                        if (Model.HotelDetail.Facilities.Other[f].Length != 0)
+                                        {
+                                            if (f != Model.HotelDetail.Facilities.Other.Count - 1)
+                                                {
+                                                    <p>@Model.HotelDetail.Facilities.Other[f], </p>
+                                                }
+                                                else
+                                                {
+                                                    <p>@Model.HotelDetail.Facilities.Other[f] </p>
+                                                }
+                                        }
                                     }
                                 </div>
                             </div>
                         }
-                        <div class="row grey-txt">
-                            <div class="col-xs-3">
-                                <p>Fasilitas</p>
-                            </div>
-                            <div class="col-xs-9">
-                                @for (var f = 0; f < Model.HotelDetail.Facilities.Count; f++)
-                                {
-                                    if (Model.HotelDetail.Facilities[f].Length != 0)
-                                    {
-                                        if (f != Model.HotelDetail.Facilities.Count - 1)
-                                        {
-                                            <p>@Model.HotelDetail.Facilities[f], </p>
-                                        }
-                                        else
-                                        {
-                                            <p>@Model.HotelDetail.Facilities[f] </p>
-                                        }
-                                    }
-                                }
-                            </div>
-                        </div>
-
+                        
                         <div class="row grey-txt">
                             <div class="col-xs-3">
                                 <p></p>
@@ -257,13 +246,13 @@
                                 <p>
                                     &quot;Payable through @Model.HotelDetail.SupplierName, acting as agent for the service operating
 
-                                    company, details of which can be provided upon request&quot;. VAT: @Model.HotelDetail.SupplierVat
+company, details of which can be provided upon request&quot;. VAT: @Model.HotelDetail.SupplierVat
 
                                     Reference: @Model.HotelDetail.BookingReference
                                 </p>
                             </div>
                         </div>
-
+                        
                         <div class="row grey-txt">
                             <div class="col-xs-3">
                                 <p>Client Reference</p>

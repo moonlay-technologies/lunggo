@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Lunggo.ApCommon.Product.Model;
+using Newtonsoft.Json;
 
 namespace Lunggo.ApCommon.Hotel.Model
 {
@@ -29,9 +30,13 @@ namespace Lunggo.ApCommon.Hotel.Model
 
     public class Occupancy
     {
+        [JsonProperty("roomCount")]
         public int RoomCount { get; set; }
+        [JsonProperty("adultCount")]
         public int AdultCount { get; set; }
+        [JsonProperty("childCount")]
         public int ChildCount { get; set; }
+        [JsonProperty("childrenAges")]
         public List<int> ChildrenAges { get; set; } 
     }
     public class HotelRevalidateInfo

@@ -7,11 +7,12 @@ app.controller('hotelSearchController', ['$scope', '$log', '$http', '$resource',
     $scope.hotelFilterDisplayInfo = undefined;
     $scope.loc = loc;
     $scope.filterDisabled = true;
-
+    var isFirstload = true;
 
     //@Url.Action("Search", "Hotel")?zzz={{departureDate}}" method="POST"
     //=============== hotel start ======================
     $scope.hotel = {};
+    $scope.hotel.searchHotelType = { "location": 'Location', searchId: 'SearchId'};
     $scope.hotel.searchId = null;
     $scope.hotel.location = "BALI";
     $scope.hotel.checkinDate = "12/10/2016";
@@ -20,12 +21,14 @@ app.controller('hotelSearchController', ['$scope', '$log', '$http', '$resource',
     $scope.hotel.childCount = 1;
     $scope.hotel.nightCount = 1;
     $scope.hotel.roomCount = 2;
+    $scope.hotel.childrenAges = [];
 
     $scope.filter = {};
     $scope.filter.minPrice = 0;
     $scope.filter.maxPrice = 0;
     $scope.filter.zones = null;
-    $scope.filter.stars = [];
+    $scope.filter.stars = null;
+    $scope.filter.facilities = null;
     $scope.sorting = '';
 
     $scope.searchHeader = {};
@@ -48,11 +51,13 @@ app.controller('hotelSearchController', ['$scope', '$log', '$http', '$resource',
         //$scope.hotel.searchId = $scope.model.searchId;
         $scope.hotel.location = $scope.model.location;
         $scope.hotel.checkinDate = $scope.model.checkinDate;
-        $scope.hotel.checkoutDate =$scope.model.checkoutDate;
+        $scope.hotel.checkoutDate = $scope.model.checkoutDate;
         $scope.hotel.adultCount = $scope.model.adultCount;
         $scope.hotel.childCount = $scope.model.childCount;
         $scope.hotel.nightCount = new Date($scope.hotel.checkoutDate).getDate() - new Date($scope.hotel.checkinDate).getDate();
         $scope.hotel.roomCount = $scope.model.roomCount;
+        $scope.hotel.childrenAges = $scope.model.childrenAges;
+
 
         $scope.searchHotel();
     }
@@ -60,19 +65,21 @@ app.controller('hotelSearchController', ['$scope', '$log', '$http', '$resource',
     $scope.searchHotel = function (filter, sort) {
         $log.debug('searching hotel');
 
-        resource.query({}, {
+        resource.query( {}, {
+            "searchHotelType": $scope.hotel.searchId == null ? $scope.hotel.searchHotelType.location : $scope.hotel.searchHotelType.searchId,
             "searchId": $scope.hotel.searchId,
 
             "location": $scope.hotel.location,
             "checkinDate": $scope.hotel.checkinDate,
-            "checkoutDate": $scope.hotel.checkoutDate,
+            "checkoutDate": moment($scope.model.checkinDate).add($scope.hotel.nightCount, 'days').format("YYYY-MM-DD"),
+            "nightCount": $scope.hotel.nightCount,
+            "occupancies":
+                [{
             "adultCount": $scope.hotel.adultCount,
             "childCount": $scope.hotel.childCount,
-            "nightCount": $scope.hotel.nightCount,
             "roomCount": $scope.hotel.roomCount,
-            "from": "1",
-            "to": "10",
-
+                    "childrenAges": $scope.hotel.childrenAges
+                }], 
             "hotelFilter":
             {
                 "priceFilter":
@@ -82,25 +89,35 @@ app.controller('hotelSearchController', ['$scope', '$log', '$http', '$resource',
                 },
                 "zoneFilter":
                 {
-                    "zones": $scope.filter.zones
+                    "zones": null//$scope.filter.zones
                 },
                 "starFilter":
                 {
                     "stars": $scope.filter.stars
+                },
+                "facilityFilter": {
+                    "facilities": $scope.filter.facilities
                 }
             },
             "hotelSorting": $scope.sorting
             //"hotelSorting": "ASCENDINGPRICE"
         }).$promise.then(function(data) {
 
-            $scope.filter.minPrice = data.minPrice;
-            $scope.filter.maxPrice = data.maxPrice;
+            
             $scope.hotel.searchId = data.searchId;
             $scope.hotels = data.hotels;
             $scope.totalActualHotel = data.returnedHotelCount;
             $scope.hotelFilterDisplayInfo = data.hotelFilterDisplayInfo;
-            //$scope.hotel.starRating = 
+            $scope.returnedHotelCount = data.returnedHotelCount;
+
+            if (isFirstload) {
+                $scope.filter.minPrice = data.minPrice;
+                $scope.filter.maxPrice = data.maxPrice;
             initiatePriceSlider();
+                isFirstload = false;
+            }
+
+            $timeout(function () { customCheckbox(); }, 0);
             $log.debug(data);
         });
 
@@ -143,6 +160,20 @@ app.controller('hotelSearchController', ['$scope', '$log', '$http', '$resource',
                 }
                 else {
                     $scope.filter.stars.splice(starIndex, 1);
+                }
+            }
+        }
+        else if (filterType == 'zone') {
+            if ($scope.filter.zones == null) {
+                $scope.filter.zones = [value.code];
+            }
+            else {
+                var zoneCodeIndex = $scope.filter.zones.indexOf(value.code);
+                if (zoneCodeIndex < 0) {
+                    $scope.filter.zones.push(value.code);
+                }
+                else {
+                    $scope.filter.zones.splice(zoneCodeIndex, 1);
                 }
             }
         }
