@@ -22,7 +22,7 @@ app.controller('hotelSearchController', ['$scope', '$log', '$http', '$resource',
     $scope.hotel.nightCount = 1;
     $scope.hotel.roomCount = 2;
     $scope.hotel.childrenAges = [];
-
+    $scope.searchDone = false;
     $scope.filter = {};
     $scope.filter.minPrice = 0;
     $scope.filter.maxPrice = 0;
@@ -103,7 +103,7 @@ app.controller('hotelSearchController', ['$scope', '$log', '$http', '$resource',
             //"hotelSorting": "ASCENDINGPRICE"
         }).$promise.then(function(data) {
 
-            
+            $scope.searchDone = true;
             $scope.hotel.searchId = data.searchId;
             $scope.hotels = data.hotels;
             $scope.totalActualHotel = data.returnedHotelCount;

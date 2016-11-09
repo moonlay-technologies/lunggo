@@ -147,7 +147,10 @@
                     </div>
                     
                 </div>
-                <div class="col-right-result">
+                <div ng-show="!searchDone">
+                    <img src="/Assets/images/load.gif" style="width: 50px; height: 50px; margin-left: 30%; margin-top: 5%">
+                </div>
+                <div class="col-right-result" ng-show="searchDone">
                     <div class="text-center" ng-if="returnedHotelCount == 0"><h3> Hotel tidak ditemukan</h3></div>
 
                     <div class="sort clearfix" ng-if="returnedHotelCount > 0">
@@ -189,8 +192,6 @@
                                 </div>
                                 
                                 <div class="location">
-                                    @*Kios Tower AB No. 26, Jl. Karet Pasar Gang Tiong No: 62 ;
-                    Jakarta Barat*@
                                     <div>{{hotel.address}}</div>
                                     {{hotel.city}}
                                 </div>
