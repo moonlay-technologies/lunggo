@@ -106,7 +106,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                 var childCount = rate.ChildCount;
                 var childrenAges = "";
 
-                if (rate.ChildrenAges != null)
+                if (rate.ChildCount != 0)
                 {
                     childrenAges = rate.ChildrenAges.Aggregate(childrenAges, (current, age) => current + (age + "~"));
                     childrenAges = childrenAges.Substring(0, childrenAges.Length - 1);

@@ -28,7 +28,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                     {
                         HotelName = hotel.HotelName,
                         StarRating = hotel.StarRating,
-                        ImageUrl = hotel.ImageUrl != null && (hotel.ImageUrl != null || hotel.ImageUrl.Count != 0) ?
+                        ImageUrl = hotel.ImageUrl != null && hotel.ImageUrl.Count > 0 && hotel.ImageUrl[0] != null ?
                         new List<Image>
                         {
                             hotel.ImageUrl.Where(u => u.Order == 1).Take(1).FirstOrDefault()
