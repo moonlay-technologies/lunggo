@@ -309,7 +309,6 @@ namespace Lunggo.ApCommon.Hotel.Service
                                         roomHotel.TypeName = room.TypeName;
                                         roomHotel.characteristicCd = room.characteristicCd;
                                         roomHotel.SingleRate = ratea;
-                                        roomHotel.SingleRate.TermAndCondition = GetRateCommentFromTableStorage(roomHotel.SingleRate.RateCommentsId, checkinDateTime).Select(x => x.Description).ToList();
                                         roomHotel.SingleRate.RegsId = EncryptRegsId(hotel.HotelCode, room.RoomCode, roomHotel.SingleRate.RateKey);
                                         hotelResult = new SearchHotelOutput
                                         {

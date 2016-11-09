@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Lunggo.ApCommon.Constant;
+using Lunggo.ApCommon.Hotel.Model;
 using Lunggo.ApCommon.Hotel.Service;
 using Lunggo.ApCommon.Hotel.Service;
 using Lunggo.Framework.BlobStorage;
@@ -42,10 +43,10 @@ namespace Lunggo.CloudApp.EticketHandler
             var reservation = hotelService.GetReservationForDisplay(rsvNo);
             var hotelCode = reservation.HotelDetail.HotelCode;
             var hotelDetail = HotelService.GetInstance().GetHotelDetailFromDb(hotelCode);
-            reservation.HotelDetail.Facilities = hotelDetail.Facilities == null ? null : hotelDetail.Facilities
+            reservation.HotelDetail.Facilities = hotelDetail.Facilities == null ? null : new HotelFacilityForDisplay {Other = hotelDetail.Facilities
                     .Where(x => x.MustDisplay == true )
                     .Select(x => (hotel.GetHotelFacilityDescId
-                        (Convert.ToInt32(x.FacilityGroupCode) * 1000 + Convert.ToInt32(x.FacilityCode)))).ToList();
+                        (Convert.ToInt32(x.FacilityGroupCode) * 1000 + Convert.ToInt32(x.FacilityCode)))).ToList()};
             Trace.WriteLine("Parsing Voucher Template for RsvNo " + rsvNo + "...");
             sw.Start();
             var voucherTemplate = templateService.GenerateTemplate(reservation, "HotelVoucher");

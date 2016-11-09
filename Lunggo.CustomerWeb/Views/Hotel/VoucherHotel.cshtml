@@ -212,7 +212,7 @@
                                             <span><img class="img-swim" src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/swim.png")" />Kolam Renang</span>
                                         }
                                     </p>
-                                    @foreach (var facility in Model.HotelDetail.Facilities)
+                                    @foreach (var facility in Model.HotelDetail.Facilities.Other)
                                     {
                                         <p> @facility <br/> </p>
                                     }
@@ -224,7 +224,7 @@
                                 <p>Fasilitas</p>
                             </div>
                             <div class="col-xs-9">
-                                @foreach (var facility in Model.HotelDetail.Facilities)
+                                @foreach (var facility in Model.HotelDetail.Facilities.Other)
                                 {
                                     <p> @facility <br /> </p>
                                 }

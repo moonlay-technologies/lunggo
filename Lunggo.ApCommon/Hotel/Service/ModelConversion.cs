@@ -104,7 +104,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                 NetFare = hotelDetail.NetFare,
                 IsRestaurantAvailable = hotelDetail.IsRestaurantAvailable,
                 IsWifiAccessAvailable = hotelDetail.WifiAccess,
-                //Rooms = ConvertToHotelRoomForDisplay(hotelDetail.Rooms),
+                Rooms = ConvertToHotelRoomForDisplay(hotelDetail.Rooms),
                 CheckInDate = hotelDetail.CheckInDate,
                 CheckOutDate = hotelDetail.CheckOutDate,
                 NightCount = hotelDetail.NightCount,
@@ -186,7 +186,7 @@ namespace Lunggo.ApCommon.Hotel.Service
             return hotel;
         }
 
-        internal HotelFacilityForDisplay ConvertFacilityForDisplay(List<HotelFacility> facilities)
+        public HotelFacilityForDisplay ConvertFacilityForDisplay(List<HotelFacility> facilities)
         {
             var displayFacilities = new HotelFacilityForDisplay();
             var selected = facilities.Where(x => x.MustDisplay == true || x.IsAvailable == true);
@@ -280,7 +280,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                     CharacteristicName = dictionary.GetHotelRoomRateTypeId(roomDetail.characteristicCd),
                     Images = roomDetail.Images != null ? roomDetail.Images : null,
                     Facilities = roomDetail.Facilities != null ? roomDetail.Facilities : null,
-                    //Rates = ConvertToRateForDisplays(roomDetail.Rates)
+                    Rates = ConvertToRateForDisplays(roomDetail.Rates),
                     SingleRate = ConvertToSingleRateForDisplays(roomDetail.SingleRate)
                 };
         }
