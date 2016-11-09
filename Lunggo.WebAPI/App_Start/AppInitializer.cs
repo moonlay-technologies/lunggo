@@ -38,7 +38,7 @@ namespace Lunggo.WebAPI
             InitHtmlTemplateService();
             InitNotificationService();
             InitLogService();
-            InitDocumentsService();
+            //InitDocumentsService();
             InitHotelService();
             InitAutocompleteManager();
         }

@@ -39,9 +39,9 @@ namespace Lunggo.ApCommon.Hotel.Service
                     Payment = PaymentDetails.GetFromDb(rsvNo),
                     State = ReservationState.GetFromDb(rsvNo),
                     HotelDetails = new HotelDetail(),
-                    RsvTime = reservationRecord.RsvTime.GetValueOrDefault()
+                    RsvTime = reservationRecord.RsvTime.GetValueOrDefault(),
+                    RsvStatus = RsvStatusCd.Mnemonic(reservationRecord.RsvStatusCd)
                 };
-                //|| hotelReservation.State == null
                 if (hotelReservation.Contact == null || hotelReservation.Payment == null)
                     return null;
 

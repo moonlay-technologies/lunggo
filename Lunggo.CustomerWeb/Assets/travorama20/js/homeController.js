@@ -72,7 +72,7 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
         }
     }
 
-    var resource = $resource('//api.local.travorama.com/v1/autocomplete/hotel/:prefix',
+    var resource = $resource(HotelAutocompleteConfig.Url + '/:prefix',
            { prefix: '@prefix'},
            {
                query: {

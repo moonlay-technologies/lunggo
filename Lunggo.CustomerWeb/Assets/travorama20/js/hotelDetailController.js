@@ -19,7 +19,7 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
 
         var maxImages = 6;
 
-        var resource = $resource('//api.local.travorama.com/v1/hotel/GetHotelDetail/:searchId/:hotelCd',
+        var resource = $resource(HotelDetailsConfig.Url + '/:searchId/:hotelCd',
             {},
             {
                 query: {
@@ -90,7 +90,7 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
         )
     }
 
-    var selectService = $resource('//api.local.travorama.com/v1/hotel/select/',
+    var selectService = $resource(HotelSelectConfig.Url,
           {},
           {
               query: {
