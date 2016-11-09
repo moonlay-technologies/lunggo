@@ -10,7 +10,14 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
 
     $scope.hotelCalendar = {};
     $scope.hotelCalendar.show = true;
-    $scope.changeTab = function (){
+    $scope.changeTab = function (tab) {
+        if (tab == 'hotel') {
+            $('.search-location').hide();
+            $('.search-calendar').hide();
+        }else if (tab == 'flight') {
+            $scope.view.showHotelSearch = false;
+            $('.search-calendar-hotel').hide();
+        }
     }
 
     //@Url.Action("Search", "Hotel")?zzz={{departureDate}}" method="POST"
@@ -46,7 +53,8 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
 
     $scope.view = {}
     $scope.view.showHotelSearch = false;
-
+    $scope.searchlocation = false;
+    $scope.wrongParam = false;
 
     $scope.addValue = function (variableName, amount) {
         var minCount = 1;
@@ -113,7 +121,13 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
     });
     $scope.hotel.searchHotel = function (){
         $log.debug('searching hotel');
-        location.href = '/id/Hotel/Search/' + $scope.hotel.searchParam();
+        if ($scope.hotel.location == null || $scope.hotel.location.length == 0) {
+            $scope.wrongParam = true;
+            alert("Silakan pilih lokasi atau hotel dari daftar yang tersedia");
+        } else {
+            location.href = '/id/Hotel/Search/' + $scope.hotel.searchParam();
+        }
+        
         //$http({
         //   url: "/id/Hotel/Search", 
         //   method: "GET",
