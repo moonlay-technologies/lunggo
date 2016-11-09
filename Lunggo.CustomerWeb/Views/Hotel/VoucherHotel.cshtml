@@ -42,7 +42,6 @@
             <div class="hotel-wrapper">
                 <div class="hotel-top">
                     <p>
-                        <img class="img-phone" src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/phone.png")" /><span class="blue-txt">021 1234 5678</span>
                         <img class="img-email" src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/email/mail.png")" /><span class="blue-txt">cs@travorama.com</span>
                     </p>
                     <img class="img-hotel" src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/voucher-hotel-bg.jpg")" />
@@ -79,7 +78,7 @@
                                     <p class="star star-5"></p>
                                 }
                                 <p class="grey-txt">
-                                    <img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/location.png")" /> @Model.HotelDetail.Address, @Model.HotelDetail.City
+                                    <img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/location.png")" /> @Model.HotelDetail.Address @Model.HotelDetail.City, @Model.HotelDetail.CountryName
                                 </p>
                                 <p class="grey-txt">
                                     <img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/phone.png")" /> @Model.HotelDetail.PhonesNumbers[0]
@@ -203,40 +202,34 @@
                                 }
                             </div>
                                 </div>
-                        @if (Model.HotelDetail.IsRestaurantAvailable || Model.HotelDetail.IsWifiAccessAvailable)
-                        {
-                            <div class="row grey-txt">
-                                <div class="col-xs-3">
-                                    <p>Fasilitas</p>
-                                </div>
-                                <div class="col-xs-9">
-                                    <p>
-                                        @if (Model.HotelDetail.IsWifiAccessAvailable)
-                                        {
-                                            <span><img class="img-wifi" src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/wifi.png")" />Free Wifi</span>
-                                        }
-                                        @if (Model.HotelDetail.IsRestaurantAvailable)
-                                        {
-                                            <span><img class="img-swim" src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/swim.png")" />Kolam Renang</span>
-                                        }
-                                    </p>
-                                    @for (var f = 0; f < Model.HotelDetail.Facilities.Other.Count; f++)
-                                    {
-                                        if (Model.HotelDetail.Facilities.Other[f].Length != 0)
-                                        {
-                                            if (f != Model.HotelDetail.Facilities.Other.Count - 1)
-                                                {
-                                                    <p>@Model.HotelDetail.Facilities.Other[f], </p>
-                                                }
-                                                else
-                                                {
-                                                    <p>@Model.HotelDetail.Facilities.Other[f] </p>
-                                                }
-                                        }
-                                    }
-                                </div>
+                        
+                        <div class="row grey-txt">
+                            <div class="col-xs-3">
+                                <p>Fasilitas</p>
                             </div>
-                        }
+                            <div class="col-xs-9">
+                                <p>
+                                    @if (Model.HotelDetail.IsWifiAccessAvailable)
+                                    {
+                                        <span><img class="img-wifi" src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/wifi.png")" />Free Wifi</span>
+                                    }
+                                    @if (Model.HotelDetail.IsRestaurantAvailable)
+                                    {
+                                        <span><img class="img-swim" src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/swim.png")" />Kolam Renang</span>
+                                    }
+                                </p>
+                                @for (var f = 0; f < Model.HotelDetail.Facilities.Other.Count; f++)
+                                {
+                                    if (Model.HotelDetail.Facilities.Other[f].Length != 0)
+                                    {
+                                       
+                                         <p>@Model.HotelDetail.Facilities.Other[f]</p>
+                                            
+                                    }
+                                }
+                            </div>
+                        </div>
+                        
                         
                         <div class="row grey-txt">
                             <div class="col-xs-3">
@@ -246,7 +239,7 @@
                                 <p>
                                     &quot;Payable through @Model.HotelDetail.SupplierName, acting as agent for the service operating
 
-company, details of which can be provided upon request&quot;. VAT: @Model.HotelDetail.SupplierVat
+                                    company, details of which can be provided upon request&quot;. VAT: @Model.HotelDetail.SupplierVat
 
                                     Reference: @Model.HotelDetail.BookingReference
                                 </p>

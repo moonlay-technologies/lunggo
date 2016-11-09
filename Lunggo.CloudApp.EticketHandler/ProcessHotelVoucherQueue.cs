@@ -47,6 +47,24 @@ namespace Lunggo.CloudApp.EticketHandler
                     .Where(x => x.MustDisplay == true )
                     .Select(x => (hotel.GetHotelFacilityDescId
                         (Convert.ToInt32(x.FacilityGroupCode) * 1000 + Convert.ToInt32(x.FacilityCode)))).ToList()};
+            reservation.HotelDetail.IsWifiAccessAvailable = hotelDetail.Facilities != null &&
+                                                            ((hotelDetail.Facilities != null ||
+                                                              hotelDetail.Facilities.Count != 0) &&
+                                                             hotelDetail.Facilities.Any(
+                                                                 f =>
+                                                                     (f.FacilityGroupCode == 60 && f.FacilityCode == 261)
+                                                                     ||
+                                                                     (f.FacilityGroupCode == 70 && f.FacilityCode == 550)));
+            reservation.HotelDetail.IsRestaurantAvailable = hotelDetail.Facilities != null &&
+                                                            ((hotelDetail.Facilities != null || hotelDetail.Facilities.Count != 0) &&
+                                                             hotelDetail.Facilities.Any(
+                                                                 f =>
+                                                                     (f.FacilityGroupCode == 71 && f.FacilityCode == 200)
+                                                                     ||
+                                                                     (f.FacilityGroupCode == 75 && f.FacilityCode == 840)
+                                                                     ||
+                                                                     (f.FacilityGroupCode == 75 && f.FacilityCode == 845)));
+
             Trace.WriteLine("Parsing Voucher Template for RsvNo " + rsvNo + "...");
             sw.Start();
             var voucherTemplate = templateService.GenerateTemplate(reservation, "HotelVoucher");
