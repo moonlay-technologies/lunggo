@@ -31,8 +31,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                 RsvNo = hotelReservation.RsvNo,
                 Payment = PaymentService.GetInstance().ConvertToPaymentDetailsForDisplay(hotelReservation.Payment),
                 RsvTime = hotelReservation.RsvTime,
-                
-
+                RsvDisplayStatus = MapReservationStatus(hotelReservation)
             };
 
             return convertedRsv;
@@ -98,7 +97,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                 Convert.ToInt32(hotelDetail.StarRating.Substring(0,1)) : 0),
                 //ChainName = GetHotelChainDesc(hotelDetail.Chain),
                     //AccomodationName = GetHotelAccomodationDescId(hotelDetail.AccomodationType),
-                MainImage = hotelDetail.ImageUrl == null ? null : hotelDetail.ImageUrl.FirstOrDefault().Path,
+                MainImage = hotelDetail.ImageUrl == null ? null : hotelDetail.ImageUrl.FirstOrDefault() == null ? null : hotelDetail.ImageUrl[0].Path,
                     // != null ? hotelDetail.ImageUrl.Where(x=>x.Type=="GEN").Select(x=>x.Path).FirstOrDefault(): null,
                 OriginalFare = hotelDetail.OriginalFare,
                 NetFare = hotelDetail.NetFare,

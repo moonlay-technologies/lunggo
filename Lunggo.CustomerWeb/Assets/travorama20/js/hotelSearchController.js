@@ -34,7 +34,7 @@ app.controller('hotelSearchController', ['$scope', '$log', '$http', '$resource',
     $scope.searchHeader = {};
 
 
-    var resource = $resource('//api.local.travorama.com/v1/hotel/search',
+    var resource = $resource(HotelSearchConfig.Url,
             {},
             {
                 query: {
