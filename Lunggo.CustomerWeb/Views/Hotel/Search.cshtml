@@ -106,10 +106,10 @@
                         <div class="filter-group" ng-show="hotelFilterDisplayInfo.zoneFilter.length > 0">
                             <label class="filter-title">Hotel Zone:</label><span class="city-name blue-txt"><a href="#">(Jakarta)</a></span>
                             <div class="area" ng-repeat="zoneFilter in hotelFilterDisplayInfo.zoneFilter">
-                                <label class="sqr city-point" ng-click="changeFilter('zone', zoneFilter)">
-                                    <span class="checkbox"></span>
+                                <label class="sqr city-point" >
+                                    <span class="checkbox" ng-click="changeFilter('zone', zoneFilter)"></span>
                                     <input type="checkbox" name="check" class="check" value="false" />
-                                    <span class="name">{{zoneFilter.name}}</span>
+                                    <span class="name" ng-click="changeFilter('zone', zoneFilter)">{{zoneFilter.name}}</span>
                                 </label>
                                 <span class="city-hotel">{{zoneFilter.count}}</span>
                             </div>
