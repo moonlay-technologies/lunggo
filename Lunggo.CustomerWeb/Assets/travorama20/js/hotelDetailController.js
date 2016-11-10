@@ -19,7 +19,7 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
 
         var maxImages = 6;
 
-        var resource = $resource('//api.local.travorama.com/v1/hotel/GetHotelDetail/:searchId/:hotelCd',
+        var resource = $resource(HotelDetailsConfig.Url + '/:searchId/:hotelCd',
             {},
             {
                 query: {
@@ -45,8 +45,13 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
             });
             $scope.hotel.images = tempHotelImages;
             $log.debug($scope.hotel);
-
-
+            $scope.loc = $scope.hotel.city + ', ' + $scope.hotel.country;
+            var cekin = $scope.hotel.room[0].rate.regsId.split(',')[2].split('|')[0];
+            var cekout = $scope.hotel.room[0].rate.regsId.split(',')[2].split('|')[1];
+            $scope.hotel.checkinDate = new Date(parseInt(cekin.substring(0, 4)), parseInt(cekin.substring(4, 6)) - 1, parseInt(cekin.substring(6, 8)));
+            $scope.hotel.checkoutDate = new Date(parseInt(cekout.substring(0, 4)), parseInt(cekout.substring(4, 6)) - 1, parseInt(cekout.substring(6, 8)));
+            $scope.hotel.nightCount = new Date($scope.hotel.checkoutDate).getDate() - new Date($scope.hotel.checkinDate).getDate();
+            
             accordionFunctions();
             $timeout(function () { hotelDetailFunctions(); }, 0);
 
@@ -85,7 +90,7 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
         )
     }
 
-    var selectService = $resource('//api.local.travorama.com/v1/hotel/select/',
+    var selectService = $resource(HotelSelectConfig.Url,
           {},
           {
               query: {

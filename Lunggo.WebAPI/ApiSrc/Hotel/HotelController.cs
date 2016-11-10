@@ -109,16 +109,16 @@ namespace Lunggo.WebAPI.ApiSrc.Hotel
             var currency = ApiRequestBase.GetHeaderValue("Currency");
             OnlineContext.SetActiveCurrencyCode(currency);
             HotelSearchApiRequest request = null;
-            //try
-            //{
+            try
+            {
                 request = ApiRequestBase.DeserializeRequest<HotelSearchApiRequest>();
                 var apiResponse = HotelLogic.Search(request);
                 return apiResponse;
-            //}
-            //catch (Exception e)
-            //{
-            //    return ApiResponseBase.ExceptionHandling(e, request);
-            //}
+            }
+            catch (Exception e)
+            {
+                return ApiResponseBase.ExceptionHandling(e, request);
+            }
         }
 
 

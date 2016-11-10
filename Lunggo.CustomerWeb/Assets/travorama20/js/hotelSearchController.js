@@ -23,7 +23,7 @@ app.controller('hotelSearchController', ['$scope', '$log', '$http', '$resource',
     $scope.hotel.nightCount = 1;
     $scope.hotel.roomCount = 2;
     $scope.hotel.childrenAges = [];
-
+    $scope.searchDone = false;
     $scope.filter = {};
     $scope.filter.minPrice = 0;
     $scope.filter.maxPrice = 0;
@@ -38,7 +38,7 @@ app.controller('hotelSearchController', ['$scope', '$log', '$http', '$resource',
     $scope.searchHeader = {};
 
 
-    var resource = $resource('//api.local.travorama.com/v1/hotel/search',
+    var resource = $resource(HotelSearchConfig.Url,
             {},
             {
                 query: {
@@ -58,7 +58,7 @@ app.controller('hotelSearchController', ['$scope', '$log', '$http', '$resource',
         $scope.hotel.checkoutDate = $scope.model.checkoutDate;
         $scope.hotel.adultCount = $scope.model.adultCount;
         $scope.hotel.childCount = $scope.model.childCount;
-        $scope.hotel.nightCount = $scope.model.nightCount;
+        $scope.hotel.nightCount = new Date($scope.hotel.checkoutDate).getDate() - new Date($scope.hotel.checkinDate).getDate();
         $scope.hotel.roomCount = $scope.model.roomCount;
         $scope.hotel.childrenAges = $scope.model.childrenAges;
 
@@ -109,10 +109,11 @@ app.controller('hotelSearchController', ['$scope', '$log', '$http', '$resource',
             //"hotelSorting": "ASCENDINGPRICE"
         }).$promise.then(function (data) {
 
+            $scope.searchDone = true;
             if (data.searchId !== undefined) $scope.hotel.searchId = data.searchId;
 
             $scope.hotels = data.hotels;
-            totalActualHotel = data.totalActualHotel;
+            $scope.totalActualHotel = data.returnedHotelCount;
             $scope.hotelFilterDisplayInfo = data.hotelFilterDisplayInfo;
             $scope.returnedHotelCount = data.returnedHotelCount;
 

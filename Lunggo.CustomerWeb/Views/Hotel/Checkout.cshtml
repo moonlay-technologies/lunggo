@@ -78,7 +78,7 @@
         {
 
         }
-        return text;
+        return text.Length == 0 ? "" : text.Substring(0, text.Length - 1);
     }
 
     public string ApplyTitleCase(string input)
@@ -106,7 +106,9 @@
     var totalRoom = '@Model.HotelDetail.Rooms.SelectMany(r => r.Rates).Sum(p => p.RoomCount)';
     var checkin = '@Model.HotelDetail.CheckInDate.ToString("D",CultureInfo.CreateSpecificCulture("id-ID"))';
     var checkout = '@Model.HotelDetail.CheckOutDate.ToString("D", CultureInfo.CreateSpecificCulture("id-ID"))';
-    var nights = '@((Model.HotelDetail.CheckOutDate - Model.HotelDetail.CheckInDate).Days)';
+        var nights = '@((Model.HotelDetail.CheckOutDate - Model.HotelDetail.CheckInDate).Days)';
+        var country = '@Model.HotelDetail.CountryName';
+        
     if (getParam('page') == 2) {
         currentPage = getParam('page');
     } else {
@@ -304,7 +306,8 @@
                                     <div class="star star-4" ng-show="hotelstar() == 'star star-4'"></div>
                                     <div class="star star-5" ng-show="hotelstar() == 'star star-5'"></div>
                                     <div class="rh-location">
-                                        {{capitalizeFirstLetter(hotelDetail.address)}}, {{capitalizeFirstLetter(hotelDetail.city)}}
+                                        @ToTitleCase(Model.HotelDetail.Address), @ToTitleCase(Model.HotelDetail.ZoneName), 
+                                        @ToTitleCase(Model.HotelDetail.DestinationName), @Model.HotelDetail.CountryName
                                     </div>
                                     <div class="rh-detail">
                                         <div class="wb-container clearfix">
@@ -369,7 +372,7 @@
                                                     <div class="wb-container clearfix">
                                                         <div class="wb-left">Rate Comment</div>
                                                         <div class="wb-mid">:</div>
-                                                        <div class="wb-right bold-txt">@rate.RateCommentsId</div>
+                                                        <div class="wb-right bold-txt">@String.Join(". ", rate.TermAndCondition)</div>
                                                     </div>
                                                     <div class="wb-container clearfix">
                                                         <div class="wb-left">Ketentuan Pembatalan</div>
@@ -480,7 +483,7 @@
                             <dl class="total-room">
                                 <dt class="dt-title">
                                     @rate.RoomCount @ToTitleCase(room.RoomName)
-                                    @rate.Boards x {{nights}} Malam :
+                                    @ToTitleCase(HotelService.GetInstance().GetHotelBoardDescId(rate.Boards)) x {{nights}} Malam :
                                 </dt>
                                 <dd class="dd-price">
                                     Rp @(rate.NetPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID")))
@@ -522,7 +525,8 @@
                                             </div>
                                         </div>
                                         <div class="wt-bottom">
-                                            {{capitalizeFirstLetter(hotelDetail.address)}}, {{capitalizeFirstLetter(hotelDetail.city)}}
+                                            {{capitalizeFirstLetter(hotelDetail.address)}}, @ToTitleCase(Model.HotelDetail.ZoneName),
+                                            @ToTitleCase(Model.HotelDetail.DestinationName), @Model.HotelDetail.CountryName
                                         </div>
                                     </div>
                                     <div class="widget-bottom">

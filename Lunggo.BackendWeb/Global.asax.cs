@@ -39,28 +39,35 @@ namespace Lunggo.BackendWeb
 
             AppInitializer.Init();
 
-            HotelService.GetInstance().Search(new SearchHotelInput
+            HotelService.GetInstance().CommenceIssueHotel(new IssueHotelTicketInput
             {
-                Occupancies = new List<Occupancy>
-                {
-                    new Occupancy
-                    {
-                        AdultCount = 1,
-                        ChildCount = 2,
-                        RoomCount = 1,
-                        ChildrenAges = new List<int>{7,8}
-                    },
-                    new Occupancy
-                    {
-                        AdultCount = 1,
-                        ChildCount = 0,
-                        RoomCount = 3,
-                    }
-                },
-                CheckIn = new DateTime(2017,6,23),
-                Checkout = new DateTime(2017, 6,25),
-                HotelCode = 195728
+                RsvNo = "284796541379"
             });
+
+            //HotelService.GetInstance().Search(new SearchHotelInput
+            //{
+            //    Occupancies = new List<Occupancy>
+            //    {
+            //        new Occupancy
+            //        {
+            //            AdultCount = 1,
+            //            ChildCount = 2,
+            //            RoomCount = 1,
+            //            ChildrenAges = new List<int>{7,8}
+            //        },
+            //         new Occupancy
+            //        {
+            //            AdultCount = 2,
+            //            ChildCount = 0,
+            //            RoomCount = 2,
+            //        }
+            //    },
+            //    CheckIn = new DateTime(2017, 6, 23),
+            //    Nights = 2,
+            //    Location = 16151,
+            //    SearchHotelType = SearchHotelType.Location,
+
+            //});
         }
     }
 }

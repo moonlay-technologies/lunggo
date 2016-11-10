@@ -329,15 +329,13 @@ namespace Lunggo.Configuration
             var apiUrl = _configDictionary["@@.*.api.apiUrl@@"];
             var rootUrl = _configDictionary["@@.*.general.rootUrl@@"];
             var mobileUrl = "http://" + _configDictionary["@@.*.general.mobileUrl@@"];
-            const string hotelPath = @"/v1/hotels";
-            const string roomPath = @"/v1/rooms";
             const string flightPath = @"/v1/flight/";
             const string flightSelectPath = @"/v1/flight/select";
             const string flightRevalidatePath = @"/v1/flight/revalidate";
             const string flightBookPath = @"/v1/flight/book";
             const string flightPayPath = @"/v1/payment/pay";
             const string flightRulesPath = @"/v1/flight/rules";
-            const string autocompleteHotelLocationPath = @"/v1/autocomplete/hotellocation/";
+            const string autocompleteHotelLocationPath = @"/v1/autocomplete/hotel/";
             const string autocompleteAirportPath = @"/v1/autocomplete/airports/";
             const string autocompleteAirlinePath = @"/v1/autocomplete/airlines/";
             const string checkVoucherPath = @"/v1/payment/checkvoucher";
@@ -354,6 +352,9 @@ namespace Lunggo.Configuration
             const string getReservationPath = @"/v1/rsv/";
             const string resendConfirmationEmailPath = @"/v1/resendconfirmationemail";
             const string uniqueCodePaymentPath = @"/v1/payment/uniquecode";
+            const string hotelSearchPath = @"/v1/hotel/search";
+            const string hotelDetailsPath = @"/v1/hotel/gethoteldetail";
+            const string hotelSelectPath = @"/v1/hotel/select";
             const string hotelBookPath = @"/v1/hotel/book";
             var veritransTokenPath = _configDictionary["@@.*.veritrans.tokenEndPoint@@"];
             var veritransClientKey = _configDictionary["@@.*.veritrans.clientKey@@"];
@@ -364,8 +365,6 @@ namespace Lunggo.Configuration
             fileTemplate.Reset();
             fileTemplate.SetAttribute("apiUrl", apiUrl);
             fileTemplate.SetAttribute("rootUrl", rootUrl);
-            fileTemplate.SetAttribute("hotelPath", hotelPath);
-            fileTemplate.SetAttribute("roomPath", roomPath);
             fileTemplate.SetAttribute("flightPath", flightPath);
             fileTemplate.SetAttribute("flightSelectPath", flightSelectPath);
             fileTemplate.SetAttribute("flightRevalidatePath", flightRevalidatePath);
@@ -391,6 +390,9 @@ namespace Lunggo.Configuration
             fileTemplate.SetAttribute("veritransTokenPath", veritransTokenPath);
             fileTemplate.SetAttribute("veritransClientKey", veritransClientKey);
             fileTemplate.SetAttribute("uniqueCodePaymentPath", uniqueCodePaymentPath);
+            fileTemplate.SetAttribute("hotelSearchPath", hotelSearchPath);
+            fileTemplate.SetAttribute("hotelDetailsPath", hotelDetailsPath);
+            fileTemplate.SetAttribute("hotelSelectPath", hotelSelectPath);
             fileTemplate.SetAttribute("hotelBookPath", hotelBookPath);
             fileTemplate.SetAttribute("mobileUrl", mobileUrl);
 

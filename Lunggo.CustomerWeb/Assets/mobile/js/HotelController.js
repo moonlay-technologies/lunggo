@@ -102,8 +102,8 @@
                     id.removeClass('active');
                 } else {
                     $(item).val('');
-                }
-            });
+            }
+        });
         });
 
         // **********
@@ -129,7 +129,7 @@
             value = calculate(value, 'plus', limit);
 
             $(this).parent().find('.result-room').val(value);
-        });
+    });
 
         function calculate(value, type, limit){
             value = parseInt(value);

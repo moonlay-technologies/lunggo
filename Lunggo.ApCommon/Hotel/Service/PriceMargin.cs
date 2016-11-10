@@ -18,6 +18,12 @@ namespace Lunggo.ApCommon.Hotel.Service
 
         internal void AddPriceMargin(List<HotelDetail> hotelDetails)
         {
+            var localCurr = new Currency(OnlineContext.GetActiveCurrencyCode());
+            AddPriceMargin(hotelDetails, localCurr);
+        }
+
+        internal void AddPriceMargin(List<HotelDetail> hotelDetails, Currency localCurrency)
+        {
             if (hotelDetails == null || !hotelDetails.Any())
             {
                 return;
@@ -28,8 +34,8 @@ namespace Lunggo.ApCommon.Hotel.Service
             {
                 AddPriceMargin(hotelDetail, rules);
             }
-            var localCurr = new Currency(OnlineContext.GetActiveCurrencyCode());
-            hotelDetails.SelectMany(h => h.Rooms).SelectMany(r => r.Rates).ToList().ForEach(r => r.Price.CalculateFinalAndLocal(localCurr));
+            
+            hotelDetails.SelectMany(h => h.Rooms).SelectMany(r => r.Rates).ToList().ForEach(r => r.Price.CalculateFinalAndLocal(localCurrency));
         }
 
         internal void AddPriceMargin(HotelDetail hotelDetail, List<HotelMarginRule> marginRules)

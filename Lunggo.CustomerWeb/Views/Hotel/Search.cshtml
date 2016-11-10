@@ -1,4 +1,5 @@
-﻿@using Lunggo.Framework.Extension
+﻿@using Lunggo.ApCommon.Hotel.Service
+@using Lunggo.Framework.Extension
 @model Lunggo.CustomerWeb.Models.HotelSearchApiRequest
 @{
     Layout = "/Views/Shared/Travorama20/_Layout20150929.cshtml";
@@ -11,7 +12,9 @@
 @section AdditionalCSS{
     <link href="/Assets/css/jquery-ui.min.css" rel="stylesheet" />
 }
-
+@{
+    long loc = 0;
+}
 @section AdditionalJS {
     @*<script src="/Assets/js/angular.min.js"></script>
     <script src="/Assets/js/angular-animate.min.js"></script>
@@ -36,8 +39,11 @@
               " - $" + $("#slider-range").slider("values", 1));
         });
     </script>
-
-<script src="/Assets/Travorama20/js/hotelSearchController.js"></script>
+    <script>
+        var x = '@long.TryParse(Model.Location, out loc)';
+        var loc = '@HotelService.GetInstance()._Autocompletes[loc].Name';
+    </script>
+    <script src="/Assets/Travorama20/js/hotelSearchController.js"></script>
 
     <script type="text/javascript" src="/Assets/travorama20/js/HotelController.js"></script>
 }
@@ -49,7 +55,7 @@
             @Html.Partial("/Views/Hotel/Shared/Desktop/_BreadCrumb.cshtml")
             <div class="top-title clearfix">
                 <div class="col-left bg-title"><b>Hasil</b> Pencarian </div>
-                <div class="col-right total-result">Hotels Found: <b>{{totalActualHotel}}</b></div>
+                <div class="col-right total-result">Jumlah Hotel Ditemukan: <b>{{totalActualHotel}}</b></div>
             </div>
             <div class="search-list-result clearfix">
                 <div class="col-left-result filter">
@@ -60,7 +66,7 @@
                             <input type="text" value="" ng-disabled="hotels.length < 1" class="form-hotel-name form-control">
                         </div>
                         <div class="filter-group">
-                            <label class="filter-title">Harga Hotel</label>
+                            <label class="filter-title">Harga Hotel</label> 
                             <div class="slider-price slider-range" id="slider-range"></div>
                             <div class="slider-minmax">
                                 <span>{{filter.minPrice | number}}</span>
@@ -141,7 +147,10 @@
                     </div>
                     
                 </div>
-                <div class="col-right-result">
+                <div ng-show="!searchDone">
+                    <img src="/Assets/images/load.gif" style="width: 50px; height: 50px; margin-left: 30%; margin-top: 5%">
+                </div>
+                <div class="col-right-result" ng-show="searchDone">
                     <div class="text-center" ng-if="returnedHotelCount == 0"><h3> Hotel tidak ditemukan</h3></div>
 
                     <div class="sort clearfix" ng-if="returnedHotelCount > 0">
@@ -169,8 +178,8 @@
                                 <div class="clearfix">
                                     <div class="col-8 blue-txt bg">{{hotel.hotelName}}</div>
                                     <div class="col-2 facility">
-                                        <span class="wifi"></span>
-                                        <span class="meal"></span>
+                                        <span class="wifi" ng-show="hotel.isWifiAccessAvailable"></span>
+                                        <span class="meal" ng-show="hotel.restaurant"></span>
                                     </div>
                                 </div>
                 

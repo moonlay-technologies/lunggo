@@ -133,7 +133,7 @@
             nextArrow: '<button type="button" class="slick-next hidden">Next</button>'
         });
     </script>
-    <script src="/Assets/Travorama20/js/homeController.js"></script>
+    <script src="/Assets/travorama20/js/homeController.js"></script>
     
     @*<script>
         hotelFormSearchFunctions()
@@ -146,14 +146,14 @@
             <header class="tab-header">
                 <nav>
                     <ul>
-                        <li class="flight"><a data-toggle="tab" href="#plane">Pesawat</a></li>
-                        <li class="hotel active"><a data-toggle="tab" href="#hotel">Hotel</a></li>
+                        <li class="flight"><a data-toggle="tab" href="#plane" ng-click="changeTab('flight')">Pesawat</a></li>
+                        <li class="hotel active"><a data-toggle="tab" href="#hotel" ng-click="changeTab('hotel')">Hotel</a></li>
                         @*<li class="activity" data-toggle="tooltip" data-placement="bottom" title="Coming soon!"><a href="#">Activity</a></li>*@
                     </ul>
                 </nav>
             </header>
             <section class="tab-content">
-                <div class="tab-flight tab-pane cleafix" id="plane" ng-click="changeTab()">
+                <div class="tab-flight tab-pane cleafix" id="plane" >
                     <form class="form form-horizontal form-flight" action="/id/Flight/Search" method="GET">
                         <h3 class="text-center">Cari <b>Tiket Pesawat</b></h3>
 
@@ -293,7 +293,8 @@
 
                         <div class="form-group hotel-location ">
                             <div class="col-xs-12">
-                                <input type="text" name="hotelLocation" value="" class="form-hotel-location form-control" placeholder="Kota, Wilayah atau Nama Hotel" ng-model="hotel.locationDisplay" ng-click="view.showHotelSearch = true" />
+                                <input type="text" name="hotelLocation" value="" class="form-hotel-location form-control" 
+                                       placeholder="Kota, Wilayah atau Nama Hotel" ng-model="hotel.locationDisplay" ng-click="view.showHotelSearch = true" />
                             </div>
                         </div>
                         <div class="form-hotel-checkin">

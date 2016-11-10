@@ -104,7 +104,7 @@ namespace Lunggo.ApCommon.Hotel.Service
         {
             var azureConnString = ConfigManager.GetInstance().GetConfigValue("azureStorage", "connectionString");
             var storageName = azureConnString.Split(';')[1].Split('=')[1];
-            var url = @"https://" + storageName + @".blob.core.windows.net/eticket/" + rsvNo + ".pdf";
+            var url = @"https://" + storageName + @".blob.core.windows.net/voucher/" + rsvNo + ".pdf";
             var client = new WebClient();
             try
             {
