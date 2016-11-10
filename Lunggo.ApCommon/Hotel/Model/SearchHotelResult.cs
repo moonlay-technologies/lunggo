@@ -19,6 +19,10 @@ namespace Lunggo.ApCommon.Hotel.Model
         public List<HotelDetail> HotelDetails { get; set; }
         [JsonProperty("Room", NullValueHandling = NullValueHandling.Ignore)]
         public HotelRoomForDisplay Room { get; set; }
+        [JsonProperty("maxPrice", NullValueHandling = NullValueHandling.Ignore)]
+        public decimal MaxPrice { get; set; }
+        [JsonProperty("minPrice", NullValueHandling = NullValueHandling.Ignore)]
+        public decimal MinPrice { get; set; }
         [JsonProperty("hotelFilterDisplayInfo", NullValueHandling = NullValueHandling.Ignore)]
         public HotelFilterDisplayInfo HotelFilterDisplayInfo { get; set; }
     }

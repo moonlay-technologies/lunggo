@@ -90,7 +90,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.Owin.Security.OAuth.3.0.1\lib\net45\Microsoft.Owin.Security.OAuth.dll</HintPath>
     </Reference>
-    
     <Reference Include="Microsoft.WindowsAzure.Configuration, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.WindowsAzure.ConfigurationManager.3.1.0\lib\net40\Microsoft.WindowsAzure.Configuration.dll</HintPath>
@@ -255,6 +254,7 @@
     <Compile Include="Hotel\Query\GetHotelRateRuleQuery.cs" />
     <Compile Include="Hotel\Service\ContentUpdate.cs" />
     <Compile Include="Flight\Query\UpdateBookingIdQuery.cs" />
+    <Compile Include="Hotel\Service\FilterSortPagination.cs" />
     <Compile Include="Hotel\Service\GetRoom.cs" />
     <Compile Include="Hotel\Service\PriceMargin.cs" />
     <Compile Include="Hotel\Query\GetHotelDetailFromSearchResult.cs" />
