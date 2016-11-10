@@ -59,32 +59,34 @@ namespace Lunggo.ApCommon.Hotel.Service
                         }
 
                         //Filtering
-                        if (hotels != null && input.FilterParam != null)
+                        if (hotels != null && input.FilterParam != null && (input.FilterParam.FacilityFilter.Facilities != null || input.FilterParam.StarFilter.Stars != null || input.FilterParam.ZoneFilter.Zones != null || input.FilterParam.PriceFilter.MinPrice > 0 || input.FilterParam.PriceFilter.MaxPrice > 0))
                         {
-                            hotels = searchResult.HotelDetails.Where(p =>
-                            (input.FilterParam.ZoneFilter == null || input.FilterParam.ZoneFilter.Zones == null || input.FilterParam.ZoneFilter.Zones.Contains(p.ZoneCode)) &&
+                               hotels = searchResult.HotelDetails.Where(p =>
+                            (input.FilterParam.ZoneFilter == null || input.FilterParam.ZoneFilter.Zones == null || input.FilterParam.ZoneFilter.Zones.Contains(p.ZoneCode)) && 
                             (input.FilterParam.AccommodationTypeFilter == null || input.FilterParam.AccommodationTypeFilter.Accomodations == null || input.FilterParam.AccommodationTypeFilter.Accomodations.Contains(p.AccomodationType)) &&
                                     (facilityData.Count == 0 || facilityData.Any(e => p.Facilities.Select(x => x.FullFacilityCode).ToList().Contains(e))) &&
                             (input.FilterParam.StarFilter == null || input.FilterParam.StarFilter.Stars == null || input.FilterParam.StarFilter.Stars.Contains(p.StarCode)) &&
-                            (input.FilterParam.PriceFilter == null || (p.OriginalFare >= input.FilterParam.PriceFilter.MinPrice && p.OriginalFare <= input.FilterParam.PriceFilter.MaxPrice))
+                            (input.FilterParam.PriceFilter == null || (p.NetFare >= input.FilterParam.PriceFilter.MinPrice && p.NetFare <= input.FilterParam.PriceFilter.MaxPrice))
                             ).ToList();
                         }
-
 
                         //Sorting
                         switch (SortingTypeCd.Mnemonic(input.SortingParam))
                         {
                             case SortingType.AscendingPrice:
-                                if (hotels != null) hotels = hotels.OrderBy(p => p.OriginalFare).ToList();
+                                if (hotels != null) hotels = hotels.OrderBy(p => p.NetFare).ToList();
                                 break;
                             case SortingType.DescendingPrice:
-                                if (hotels != null) hotels = hotels.OrderByDescending(p => p.OriginalFare).ToList();
+                                if (hotels != null) hotels = hotels.OrderByDescending(p => p.NetFare).ToList();
                                 break;
                             case SortingType.AscendingStar:
                                 if (hotels != null) hotels = hotels.OrderBy(p => p.StarCode).ToList();
                                 break;
                             case SortingType.DescendingStar:
                                 if (hotels != null) hotels = hotels.OrderByDescending(p => p.StarCode).ToList();
+                                break;
+                            default:
+                                hotels = hotels.OrderBy(p => p.NetFare).ToList();
                                 break;
                         }
                         var sortedHotel = searchResult.HotelDetails.OrderByDescending(x => x.NetFare);
@@ -104,6 +106,13 @@ namespace Lunggo.ApCommon.Hotel.Service
                         }
 
                         List<HotelDetail> hotelList;
+                        int pageCount = 0;
+
+                        //input.Page = input.Page != 0 ? input.Page : 1;
+                        //input.PerPage = input.PerPage != 0 ? input.PerPage : 100;
+
+                        //hotelList = hotels.Skip((input.Page - 1) * input.PerPage).Take(input.PerPage).ToList();
+                        //pageCount = (int)Math.Ceiling((double)hotels.Count / input.PerPage);
 
                         //paging
                         if (input.Page != 0 && input.PerPage != 0)
@@ -112,11 +121,13 @@ namespace Lunggo.ApCommon.Hotel.Service
                                 hotelList = hotels.Take(input.PerPage).ToList();
                             else
                                 hotelList = hotels.Skip((input.Page - 1)*input.PerPage).Take(input.PerPage).ToList();
+                            pageCount = (int)Math.Ceiling((double)hotels.Count / input.PerPage);
                         }
                         else
                         {
                             //harusnya return error
                             hotelList = hotels.Take(100).ToList();
+                            pageCount = (int)Math.Ceiling((double)hotels.Count / 100);
                         }
 
                         hotelList = AddHotelDetail(hotelList);
@@ -128,6 +139,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                             HotelDetailLists = hotelList.Count > 0 ? ConvertToHotelDetailForDisplay(hotelList) : null,
                             Page = input.Page,
                             PerPage = input.PerPage,
+                            PageCount = pageCount,
                             ReturnedHotelCount = hotelList.Count,
                             TotalHotelCount = searchResult.HotelDetails.Count,
                             HotelFilterDisplayInfo = searchResult.HotelFilterDisplayInfo,
@@ -149,7 +161,6 @@ namespace Lunggo.ApCommon.Hotel.Service
 
                     if (input.HotelCode != 0)
                     {
-
                         request.Occupancies = input.Occupancies;
                         request.HotelCode = input.HotelCode;
                         request.CheckIn = input.CheckIn;
@@ -182,6 +193,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                             case AutocompleteType.Hotel:
                                 request.HotelCode = int.Parse(detailDestination.Code);
                                 break;
+                            
                         };
                     }
 
@@ -199,6 +211,26 @@ namespace Lunggo.ApCommon.Hotel.Service
 
                         //REMEMBER TO UNCOMMENT THIS
                         SaveSearchResultintoDatabaseToCache(result.SearchId, result);
+                        int pageCount = 0;
+
+                        switch (SortingTypeCd.Mnemonic(input.SortingParam))
+                        {
+                            case SortingType.AscendingPrice:
+                                if (result.HotelDetails != null) result.HotelDetails = result.HotelDetails.OrderBy(p => p.NetFare).ToList();
+                                break;
+                            case SortingType.DescendingPrice:
+                                if (result.HotelDetails != null) result.HotelDetails = result.HotelDetails.OrderByDescending(p => p.NetFare).ToList();
+                                break;
+                            case SortingType.AscendingStar:
+                                if (result.HotelDetails != null) result.HotelDetails = result.HotelDetails.OrderBy(p => p.StarCode).ToList();
+                                break;
+                            case SortingType.DescendingStar:
+                                if (result.HotelDetails != null) result.HotelDetails = result.HotelDetails.OrderByDescending(p => p.StarCode).ToList();
+                                break;
+                            default:
+                                result.HotelDetails = result.HotelDetails.OrderBy(p => p.NetFare).ToList();
+                                break;
+                        }
 
                         List<HotelDetail> firstPageHotelDetails;
                         if (input.Page != 0 && input.PerPage != 0)
@@ -207,11 +239,13 @@ namespace Lunggo.ApCommon.Hotel.Service
                                 firstPageHotelDetails = result.HotelDetails.Take(input.PerPage).ToList();
                             else
                                 firstPageHotelDetails = result.HotelDetails.Skip((input.Page - 1) * input.PerPage).Take(input.PerPage).ToList();
+                            pageCount = (int)Math.Ceiling((double)result.HotelDetails.Count / input.PerPage);
                         }
                         else
                         {
                             //harusnya return error
                             firstPageHotelDetails = result.HotelDetails.Take(100).ToList();
+                            pageCount = (int)Math.Ceiling((double)result.HotelDetails.Count / 100);
                         }
 
                         firstPageHotelDetails = AddHotelDetail(firstPageHotelDetails);
@@ -221,9 +255,11 @@ namespace Lunggo.ApCommon.Hotel.Service
                         {
                             IsSuccess = true,
                             SearchId = result.SearchId,
+                            FilteredHotelCount = result.HotelDetails.Count,
                             HotelDetailLists = ConvertToHotelDetailForDisplay(firstPageHotelDetails),
                             Page = input.Page,
                             PerPage = input.PerPage,
+                            PageCount = pageCount,
                             ReturnedHotelCount = firstPageHotelDetails.Count,
                             TotalHotelCount = result.HotelDetails.Count,
                             HotelFilterDisplayInfo = result.HotelFilterDisplayInfo,
@@ -350,6 +386,11 @@ namespace Lunggo.ApCommon.Hotel.Service
             }
 
             return hotelResult;
+        }
+
+        private bool zoneFilterContains(string p)
+        {
+            throw new NotImplementedException();
         }
 
         public List<HotelDetail> AddHotelDetail(List<HotelDetail> result)

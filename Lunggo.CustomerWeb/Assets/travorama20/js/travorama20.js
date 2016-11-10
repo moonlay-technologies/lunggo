@@ -21,6 +21,19 @@ if (typeof(angular) == 'object') {
     //    document.getElementById("demo").innerHTML = txt;
     //}
 
+    app.run(function ($rootScope) {
+        $rootScope.traGetRange = function (count) {
+            var returnValue = [];
+            if (count < 1) {
+                return returnValue;
+            }
+            for (var i = 1; i <= count; i++) {
+                returnValue.push(i)
+            }
+            return returnValue;
+        };
+    });
+
 
     app.factory('DataSource', ['$http', function ($http) {
         return {

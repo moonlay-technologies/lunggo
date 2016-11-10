@@ -125,6 +125,7 @@ namespace Lunggo.WebAPI.ApiSrc.Hotel.Logic
                     ExpiryTime = searchServiceResponse.ExpiryTime.TruncateMilliseconds(),
                     Page = searchServiceResponse.Page,
                     PerPage = searchServiceResponse.PerPage,
+                    PageCount = searchServiceResponse.PageCount,
                     MaxPrice = searchServiceResponse.MaxPrice,
                     MinPrice = searchServiceResponse.MinPrice,
                     HotelFilterDisplayInfo = searchServiceResponse.HotelFilterDisplayInfo,
