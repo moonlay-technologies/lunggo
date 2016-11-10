@@ -162,9 +162,8 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
             //});
         });
 
-        // Dropdown room
-        $('body .change-room').on('click', function () {
-            $(this).toggleClass('active');
+        $("body .change-room").click(function () {
+            $(this).closest('.room-list').find('.option').toggle();
         });
     }
     //=============== hotel end ======================

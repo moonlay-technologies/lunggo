@@ -296,12 +296,6 @@
                                 max-width: 78px;
                                 top: 65px;
                             }
-                            &.active {
-                                &:after {
-                                    content: url(/Assets/images/select-arrow-up.png);
-                                }
-                                .option {display: block;}
-                            }
                         }
                     }
                 }

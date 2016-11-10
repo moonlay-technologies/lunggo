@@ -154,7 +154,7 @@
             </header>
             <section class="tab-content">
                 <div class="tab-flight tab-pane cleafix" id="plane" ng-click="changeTab()">
-                    <form class="form form-horizontal form-flight" action="/id/Flight/Search" method="GET">
+                    <form class="form form-horizontal form-flight" action="/id/Flight/Search" method="GET" autocomplete="off">
                         <h3 class="text-center">Cari <b>Tiket Pesawat</b></h3>
 
                         <div class="form-group flight-type">
@@ -289,7 +289,7 @@
                 <div class="tab-hotel tab-pane clearfix active" id="hotel">
                    
                     <h3 class="text-center">Cari <b>Kamar Hotel</b><br /><span class="sub-title">(Domestik &amp; Internasional)</span></h3>
-                    <form class="form form-horizontal form-hotel page-hotel" ng-submit="hotel.searchHotel()">
+                    <form class="form form-horizontal form-hotel page-hotel" ng-submit="hotel.searchHotel()" autocomplete="off">
 
                         <div class="form-group hotel-location ">
                             <div class="col-xs-12">
@@ -375,7 +375,7 @@
                                 </div>
                                 <div class="col-xs-3 dropdown-container" ng-show="hotel.childCount > 2">
                                     <div class="form-control select-age">
-                                        
+
                                         <small>Child 3</small>
                                         <span>{{hotel.childrenAges[2]}}</span>
                                         <div class="option">
@@ -393,7 +393,7 @@
                                     </div>
                                 </div>
                             </div>
-                            
+
                         </div>
                         <div class="form-group hotel-submit">
                             <div class="col-xs-12">

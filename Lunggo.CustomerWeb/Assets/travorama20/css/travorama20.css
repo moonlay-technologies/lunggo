@@ -5554,10 +5554,6 @@ file: /Assets/travorama20/css/_page_flight.scss
                   left: 29px;
                   max-width: 78px;
                   top: 65px; }
-                .page-hotel .travorama-hotel .detail-hotel .room .room-list .room-right .room-rm .dropdown-container .form-control.change-room.active:after {
-                  content: url(/Assets/images/select-arrow-up.png); }
-                .page-hotel .travorama-hotel .detail-hotel .room .room-list .room-right .room-rm .dropdown-container .form-control.change-room.active .option {
-                  display: block; }
             .page-hotel .travorama-hotel .detail-hotel .room .room-list .room-right .room-rr {
               padding-left: 25px;
               color: #ff7200;
