@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Configuration;
 using System.Web.Mvc;
@@ -111,7 +112,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                             if (input.Page == 1)
                                 hotelList = hotels.Take(input.PerPage).ToList();
                             else
-                                hotelList = hotels.Skip((input.Page - 1)*input.PerPage).Take(input.PerPage).ToList();
+                                hotelList = hotels.Skip((input.Page - 1) * input.PerPage).Take(input.PerPage).ToList();
                         }
                         else
                         {
@@ -120,7 +121,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                         }
 
                         hotelList = AddHotelDetail(hotelList);
-                        
+
 
                         hotelResult = new SearchHotelOutput
                         {
@@ -185,20 +186,27 @@ namespace Lunggo.ApCommon.Hotel.Service
                         };
                     }
 
-
+                    var swAv = Stopwatch.StartNew();
                     var result = hotelBedsClient.SearchHotel(request);
+                    swAv.Stop();
+                    Debug.Print("AVAIALABILITY:" + swAv.Elapsed.ToString());
                     result.SearchId = generatedSearchId.ToString();
-                    Debug.Print("Search Id : " + result.SearchId);
+                    //Debug.Print("Search Id : " + result.SearchId);
 
 
                     if (result.HotelDetails != null)
                     {
+                        var swPr = Stopwatch.StartNew();
                         AddPriceMargin(result.HotelDetails);
+                        swPr.Stop();
+                        Debug.Print("PRIMARGIN:" +swPr.Elapsed.ToString());
+                        var dict = GetHotelDetailByLocation(request.Destination);
+                        result.HotelDetails = ApplyHotelDetails(dict, result.HotelDetails);
                         result.HotelDetails = AddDetailInfo(result.HotelDetails);
                         result.HotelFilterDisplayInfo = SetHotelFilterDisplayInfo(result.HotelDetails, isByDestination);
 
                         //REMEMBER TO UNCOMMENT THIS
-                        SaveSearchResultintoDatabaseToCache(result.SearchId, result);
+                        Task.Run(() => SaveSearchResultintoDatabaseToCache(result.SearchId, result));
 
                         List<HotelDetail> firstPageHotelDetails;
                         if (input.Page != 0 && input.PerPage != 0)
@@ -214,9 +222,10 @@ namespace Lunggo.ApCommon.Hotel.Service
                             firstPageHotelDetails = result.HotelDetails.Take(100).ToList();
                         }
 
-                        firstPageHotelDetails = AddHotelDetail(firstPageHotelDetails);
+                        //firstPageHotelDetails = AddHotelDetail(firstPageHotelDetails);
                         var searchType = detailDestination.Type.ToString();
                         var sortedHotel = result.HotelDetails.OrderByDescending(x => x.NetFare);
+                        var swCv = Stopwatch.StartNew();
                         hotelResult = new SearchHotelOutput
                         {
                             IsSuccess = true,
@@ -233,6 +242,8 @@ namespace Lunggo.ApCommon.Hotel.Service
                             HotelCode = searchType.Equals("Hotel") ? (int?)firstPageHotelDetails.Select(x => x.HotelCode).FirstOrDefault() : null
 
                         };
+                        swCv.Stop();
+                        Debug.Print("CONVERT:" + swCv.Elapsed.ToString());
                     }
                     else
                     {
@@ -351,6 +362,36 @@ namespace Lunggo.ApCommon.Hotel.Service
             return hotelResult;
         }
 
+        public List<HotelDetail> ApplyHotelDetails(Dictionary<int, HotelDetailsBase> dict, List<HotelDetail> hotels)
+        {
+            foreach (var hotel in hotels)
+            {
+                var value = new HotelDetailsBase();
+                var found = dict.TryGetValue(hotel.HotelCode, out value);
+                if (found)
+                {
+                    hotel.AccomodationType = value.AccomodationType;
+                    hotel.Address = value.Address;
+                    hotel.Facilities = value.Facilities;
+                    hotel.AreaCode = value.AreaCode;
+                    hotel.PhonesNumbers = value.PhonesNumbers;
+                    hotel.HotelName = value.HotelName;
+                    hotel.City = value.City;
+                    hotel.Chain = value.Chain;
+                    hotel.Email = value.Email;
+                    hotel.ImageUrl = value.ImageUrl;
+                    hotel.Pois = value.Pois;
+                    hotel.Segment = value.Segment;
+                    hotel.PostalCode = value.PostalCode;
+                }
+                else
+                {
+                    continue;
+                }
+            }
+            return hotels;
+        }
+
         public List<HotelDetail> AddHotelDetail(List<HotelDetail> result)
         {
             foreach (var hotel in result)
@@ -374,18 +415,18 @@ namespace Lunggo.ApCommon.Hotel.Service
             foreach (var hotel in result)
             {
                 //var detail = GetHotelDetailFromDb(hotel.HotelCode);
-                var detail = GetHotelAmenitiesAndAccomodationTypeFromTableStorage(hotel.HotelCode);
-                hotel.AccomodationType = detail.AccomodationType;
+                //var detail = GetHotelAmenitiesAndAccomodationTypeFromTableStorage(hotel.HotelCode);
+                //hotel.AccomodationType = detail.AccomodationType;
                 if (hotel.AccomodationType == "HOTEL")
                 {
-                    hotel.Facilities = detail.Facilities == null
-                    ? null
-                    : detail.Facilities.Select(x => new HotelFacility
-                    {
-                        FacilityCode = x.FacilityCode,
-                        FacilityGroupCode = x.FacilityGroupCode,
-                        FullFacilityCode = x.FacilityGroupCode + "" + x.FacilityCode
-                    }).ToList();
+                    //hotel.Facilities = detail.Facilities == null
+                    //? null
+                    //: detail.Facilities.Select(x => new HotelFacility
+                    //{
+                    //    FacilityCode = x.FacilityCode,
+                    //    FacilityGroupCode = x.FacilityGroupCode,
+                    //    FullFacilityCode = x.FacilityGroupCode + "" + x.FacilityCode
+                    //}).ToList();
                     hotel.StarCode = GetSimpleCodeByCategoryCode(hotel.StarRating);
                     CalculatePriceHotel(hotel);
                     shortlistHotel.Add(hotel);

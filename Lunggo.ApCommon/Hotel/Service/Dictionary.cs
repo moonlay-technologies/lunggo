@@ -1133,7 +1133,7 @@ namespace Lunggo.ApCommon.Hotel.Service
             }
         }
 
-        //
+        
         public RateClass GetHotelRoomRateClass(string code)
         {
             try
@@ -1303,6 +1303,22 @@ namespace Lunggo.ApCommon.Hotel.Service
             {
                 return new Country();
             }
+        }
+
+        public List<string> GetAllLocations()
+        {
+            var locations = new List<string>();
+
+            foreach (var country in Countries)
+            {
+                foreach (var dest in country.Destinations)
+                {
+                    locations.Add(dest.Code);
+                    locations.AddRange(dest.Zones.Select(zone => zone.Code));
+                }
+            }
+
+            return locations;
         }
 
         public Destination GetDestinationNameFromDict(string destinationCode)

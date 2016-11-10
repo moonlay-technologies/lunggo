@@ -39,10 +39,12 @@ namespace Lunggo.BackendWeb
 
             AppInitializer.Init();
 
-            HotelService.GetInstance().CommenceIssueHotel(new IssueHotelTicketInput
-            {
-                RsvNo = "284796541379"
-            });
+            HotelService.GetInstance().SaveHotelDetailByLocation();
+            //var x = HotelService.GetInstance().GetHotelDetailByLocation()
+            //HotelService.GetInstance().CommenceIssueHotel(new IssueHotelTicketInput
+            //{
+            //    RsvNo = "284796541379"
+            //});
 
             //HotelService.GetInstance().Search(new SearchHotelInput
             //{

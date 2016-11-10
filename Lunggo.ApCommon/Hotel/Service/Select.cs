@@ -16,7 +16,13 @@ namespace Lunggo.ApCommon.Hotel.Service
             var someData = DecryptRegsId(input.RegsIds[0].RegId);
             var hotel = GetHotelDetailFromDb(someData.HotelCode);
             hotel.Rooms = new List<HotelRoom>();
-
+            var cekin = input.RegsIds[0].RegId.Split(',')[2].Split('|')[0];
+            var cekout = input.RegsIds[0].RegId.Split(',')[2].Split('|')[1];
+            hotel.CheckInDate = new DateTime(Convert.ToInt32(cekin.Substring(0,4)),
+                Convert.ToInt32(cekin.Substring(4, 2)), Convert.ToInt32(cekin.Substring(6, 2)));
+            
+            hotel.CheckOutDate = new DateTime(Convert.ToInt32(cekout.Substring(0, 4)),
+                Convert.ToInt32(cekout.Substring(4, 2)), Convert.ToInt32(cekout.Substring(6, 2)));
             foreach (var id in input.RegsIds)
             {
                 var data = DecryptRegsId(id.RegId);
@@ -36,7 +42,9 @@ namespace Lunggo.ApCommon.Hotel.Service
                         RateCount = id.RateCount, RateKey = rate.RateKey, AdultCount = id.AdultCount, 
                         Boards = rate.Boards, Cancellation = rate.Cancellation, ChildrenAges = id.ChildrenAges,
                         ChildCount = id.ChildCount, Class = rate.Class, Offers = rate.Offers, RoomCount = id.RateCount,
-                        PaymentType = rate.PaymentType, RegsId = rate.RegsId, Price = rate.Price, Type = rate.Type, RateCommentsId = rate.RateCommentsId
+                        PaymentType = rate.PaymentType, RegsId = rate.RegsId, Price = rate.Price,
+                        Type = rate.Type,
+                        TermAndCondition = GetRateCommentFromTableStorage(rate.RateCommentsId, hotel.CheckInDate).Select(x => x.Description).ToList()
                     }).ToList().FirstOrDefault();
 
                 if (hotel.Rooms.Any(r => r.RoomCode == output.RoomCode))
@@ -64,13 +72,7 @@ namespace Lunggo.ApCommon.Hotel.Service
             }
 
             hotel.SearchId = input.SearchId;
-            var cekin = input.RegsIds[0].RegId.Split(',')[2].Split('|')[0];
-            var cekout = input.RegsIds[0].RegId.Split(',')[2].Split('|')[1];
-            hotel.CheckInDate = new DateTime(Convert.ToInt32(cekin.Substring(0,4)),
-                Convert.ToInt32(cekin.Substring(4, 2)), Convert.ToInt32(cekin.Substring(6, 2)));
             
-            hotel.CheckOutDate = new DateTime(Convert.ToInt32(cekout.Substring(0, 4)),
-                Convert.ToInt32(cekout.Substring(4, 2)), Convert.ToInt32(cekout.Substring(6, 2)));
             var token = HotelBookingIdSequence.GetInstance().GetNext().ToString();
 
             SaveSelectedHotelDetailsToCache(token, hotel);

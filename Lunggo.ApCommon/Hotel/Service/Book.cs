@@ -136,6 +136,10 @@ namespace Lunggo.ApCommon.Hotel.Service
                             rate.PaymentType = ratea.PaymentType;
                             rate.Type = ratea.Type;
                             rate.RateCommentsId = ratea.RateCommentsId;
+                            rate.TermAndCondition =
+                                GetRateCommentFromTableStorage(ratea.RateCommentsId, hotel.CheckInDate)
+                                    .Select(x => x.Description)
+                                    .ToList();
                             rateFound[index] = true;
                             index++;
                         }

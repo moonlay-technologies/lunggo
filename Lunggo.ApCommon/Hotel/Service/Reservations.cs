@@ -37,9 +37,19 @@ namespace Lunggo.ApCommon.Hotel.Service
             try
             {
                 var rsv = GetReservation(rsvNo);
+                foreach (var r in rsv.HotelDetails.Rooms)
+                {
+                    foreach (var rate in r.Rates)
+                    {
+                        var cid = rate.RateKey != null ? rate.RateKey.Split('|')[0] : rate.RegsId.Split('|')[0];
+                        var checkInDate = new DateTime(Convert.ToInt32(cid.Substring(0, 4)),
+                            Convert.ToInt32(cid.Substring(4, 2)), Convert.ToInt32(cid.Substring(6, 2)));
+                        rate.TermAndCondition = GetRateCommentFromTableStorage(rate.RateCommentsId,
+                        checkInDate).Select(x => x.Description).ToList();
+                    }
+                }
+                
                 var rsvfordisplay = ConvertToReservationForDisplay(rsv);
-                var room = HotelService.GetInstance().GetHotelRoom(rsvfordisplay.HotelDetail.Rooms[0].RoomCode).RoomDescId;
-                var boards = @HotelService.GetInstance().GetHotelBoardDescId(rsvfordisplay.HotelDetail.Rooms[0].Rates[0].Boards);
                 return rsvfordisplay;
             }
             catch

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Web.Configuration;
 using Lunggo.ApCommon.Hotel.Model;
 using Lunggo.ApCommon.Hotel.Model.Logic;
+using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Sdk.auto.model;
 using Lunggo.Framework.Documents;
 using Microsoft.Azure.Documents;
 
@@ -20,6 +21,17 @@ namespace Lunggo.ApCommon.Hotel.Service
             decimal originalPrice, netFare;
             SetDetailFromSearchResult(hotelDetail, input.SearchId, out originalPrice, out netFare);
             hotelDetail.Rooms = SetRoomPerRate(hotelDetail.Rooms);
+            foreach (var room in hotelDetail.Rooms)
+            {
+                
+                    var cid = room.SingleRate.RateKey != null ? room.SingleRate.RateKey.Split('|')[0] : room.SingleRate.RegsId.Split('|')[0];
+                    var checkInDate = new DateTime(Convert.ToInt32(cid.Substring(0, 4)),
+                         Convert.ToInt32(cid.Substring(4, 2)), Convert.ToInt32(cid.Substring(6, 2)));
+                    room.SingleRate.TermAndCondition = GetRateCommentFromTableStorage(room.SingleRate.RateCommentsId,
+                        checkInDate).Select(x => x.Description).ToList();
+                
+            }
+
             return new GetHotelDetailOutput
             {
                 HotelDetail = ConvertToHotelDetailsBaseForDisplay(hotelDetail,originalPrice,netFare)
