@@ -22,7 +22,7 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.Content
 {
     public class GetHotel
     {
-        public void GetHotelData()
+        public void GetHotelData(int from, int to)
         {
 
             try
@@ -36,15 +36,13 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.Content
 
                 var dataCount = 1;
                 var counter = 0;
-                var from = 101001;
-                var to = 102000;
                 while (to <= 128000)
                 {
 
                     Debug.Print("From : " + from);
                     Debug.Print("To : " + to);
 
-                    Console.WriteLine("From : " + from);
+                    Console.WriteLine("HotelFrom : " + from);
 
                     foreach (var t in languageCd)
                     {
@@ -174,12 +172,12 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.Content
                     Thread.Sleep(1000);
 
                 }
-                Console.WriteLine("Done");
             }
-            catch (Exception e)
+            catch
             {
-                Console.WriteLine(e.Message);
-                Console.WriteLine(e.StackTrace);
+                Console.WriteLine(from);
+                Console.WriteLine(to);
+                GetHotelData(from,to);
             }
             
         
