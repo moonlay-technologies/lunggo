@@ -24,7 +24,7 @@ namespace Lunggo.ApCommon.Hotel.Service
     {
         internal override void Issue(string rsvNo)
         {
-            IssueHotel(new IssueHotelTicketInput { RsvNo = rsvNo });
+            IssueHotel(new IssueHotelTicketInput {RsvNo = rsvNo});
         }
 
         public IssueHotelTicketOutput IssueHotel(IssueHotelTicketInput input)
@@ -37,11 +37,11 @@ namespace Lunggo.ApCommon.Hotel.Service
                     IsSuccess = false,
                 };
             }
-            
+
             var output = new IssueHotelTicketOutput();
             if (rsvData.Payment.Method == PaymentMethod.Credit ||
-               (rsvData.Payment.Method != PaymentMethod.Credit &&
-                rsvData.Payment.Status == PaymentStatus.Settled))
+                (rsvData.Payment.Method != PaymentMethod.Credit &&
+                 rsvData.Payment.Status == PaymentStatus.Settled))
             {
                 var queueService = QueueService.GetInstance();
                 var queue = queueService.GetQueueByReference("HotelIssueVoucher");
@@ -65,16 +65,21 @@ namespace Lunggo.ApCommon.Hotel.Service
             }
             //var oldPrice = rsvData.HotelDetails.Rooms.Sum(room => room.Rates.Sum(rate => rate.Price.Supplier));
             var occupancies = new List<Occupancy>();
-            
+
             foreach (var room in rsvData.HotelDetails.Rooms)
             {
                 occupancies.AddRange(room.Rates.Select(rate => new Occupancy
                 {
-                    RoomCount = rate.RoomCount, AdultCount = rate.AdultCount,
-                    ChildCount = rate.ChildCount, ChildrenAges = rate.ChildrenAges
+                    RoomCount = rate.RoomCount,
+                    AdultCount = rate.AdultCount,
+                    ChildCount = rate.ChildCount,
+                    ChildrenAges = rate.ChildrenAges
                 }));
             }
+
             occupancies = occupancies.Distinct().ToList();
+            var rateFound = Enumerable.Repeat(false, occupancies.Count).ToList();
+            var index = 0;
             var allCurrency = Currency.GetAllCurrencies();
             Guid generatedSearchId = Guid.NewGuid();
             SaveAllCurrencyToCache(generatedSearchId.ToString(), allCurrency);
@@ -83,7 +88,7 @@ namespace Lunggo.ApCommon.Hotel.Service
             {
                 Occupancies = occupancies,
                 CheckIn = rsvData.HotelDetails.CheckInDate,
-                Checkout =  rsvData.HotelDetails.CheckOutDate,
+                Checkout = rsvData.HotelDetails.CheckOutDate,
                 HotelCode = rsvData.HotelDetails.HotelCode,
                 SearchId = generatedSearchId.ToString()
             };
@@ -105,16 +110,18 @@ namespace Lunggo.ApCommon.Hotel.Service
             {
                 return new IssueHotelTicketOutput
                 {
-                    ErrorMessages = new List<string> { "When refresh ratekeys, there is at least a hotel without Rooms" },
+                    ErrorMessages = new List<string> {"When refresh ratekeys, there is at least a hotel without Rooms"},
                     IsSuccess = false
                 };
             }
 
-            if (searchResult.HotelDetails.Any(hotel => hotel.Rooms.Any(room => room.Rates == null || room.Rates.Count == 0)))
+            if (
+                searchResult.HotelDetails.Any(
+                    hotel => hotel.Rooms.Any(room => room.Rates == null || room.Rates.Count == 0)))
             {
                 return new IssueHotelTicketOutput
                 {
-                    ErrorMessages = new List<string> { "When refresh ratekeys, there is at least a room withour Rates" },
+                    ErrorMessages = new List<string> {"When refresh ratekeys, there is at least a room withour Rates"},
                     IsSuccess = false
                 };
             }
@@ -132,7 +139,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                     var adultCount = rate.AdultCount;
                     var childCount = rate.ChildCount;
                     var childrenAges = sampleRatekey[10];
-                    
+
                     foreach (var rooma in searchResult.HotelDetails[0].Rooms)
                     {
                         foreach (var ratea in rooma.Rates)
@@ -156,18 +163,30 @@ namespace Lunggo.ApCommon.Hotel.Service
                                     rate.Price.SetSupplier(revalidateResult.NewPrice.GetValueOrDefault(),
                                         rate.Price.SupplierCurrency);
                                     rate.RateCommentsId = ratea.RateCommentsId;
+
                                 }
                                 else
                                 {
                                     rate.RateKey = ratea.RateKey;
                                     rate.Price.SetSupplier(ratea.Price.OriginalIdr, rate.Price.SupplierCurrency);
-                                }   
+                                    rate.RateCommentsId = ratea.RateCommentsId;
+                                    rateFound[index] = true;
+                                    index++;
+                                }
                             }
                         }
                     }
                 }
             }
 
+            if (rateFound.Any(r => r == false))
+            {
+                return new IssueHotelTicketOutput
+                {
+                    IsSuccess = false,
+                    ErrorMessages = new List<string> {"At least one rate can not be found in refresh ratekey"}
+                };
+            }
             //var newPrice = rsvData.HotelDetails.Rooms.Sum(room => room.Rates.Sum(rate => rate.Price.Supplier));
             var newRooms = rsvData.HotelDetails.Rooms;
             var issueInfo = new HotelIssueInfo
@@ -181,43 +200,37 @@ namespace Lunggo.ApCommon.Hotel.Service
 
             var issue = new HotelBedsIssue();
             var issueResult = issue.IssueHotel(issueInfo);
-            UpdateRsvStatusDb(rsvData.RsvNo, issueResult.IsSuccess ? RsvStatus.Completed : RsvStatus.Failed);
-            UpdateReservationDetailsToDb(issueResult);
+           
             if (issueResult.IsSuccess == false)
             {
+                UpdateRsvDetail(rsvData.RsvNo, "FAIL", rsvData.HotelDetails);
                 SendSaySorryFailedIssueNotifToCustomer(rsvData.RsvNo);
                 return new IssueHotelTicketOutput
                 {
                     IsSuccess = false,
-                    ErrorMessages = new List<string>{issueResult.Status}
+                    ErrorMessages = new List<string> {issueResult.Status}
                 };
             }
-            
+            UpdateRsvStatusDb(rsvData.RsvNo, issueResult.IsSuccess ? RsvStatus.Completed : RsvStatus.Failed);
+            UpdateRsvDetail(rsvData.RsvNo, "TKTD", rsvData.HotelDetails);
+            UpdateReservationDetailsToDb(issueResult);
             SendEticketToCustomer(rsvData.RsvNo);
             var order = issueResult.BookingId.Select(id => new OrderResult
             {
-                BookingId = id, BookingStatus = BookingStatus.Ticketed, IsSuccess = true
+                BookingId = id,
+                BookingStatus = BookingStatus.Ticketed,
+                IsSuccess = true
             }).ToList();
-                
+
             return new IssueHotelTicketOutput
             {
                 IsSuccess = true,
                 OrderResults = order
             };
-            
-        }
-
-        private void UpdateRsvStatusDb(string rsvNo, RsvStatus status)
-        {
-            using (var conn = DbService.GetInstance().GetOpenConnection())
-            {
-                ReservationTableRepo.GetInstance().Update(conn, new ReservationTableRecord
-                {
-                    RsvNo = rsvNo,
-                    RsvStatusCd = RsvStatusCd.Mnemonic(status)
-                });
-            }
 
         }
-    }       
+
+        
+
+    }
 }
