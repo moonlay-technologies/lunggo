@@ -21,18 +21,27 @@ namespace Lunggo.Webjob.HotelContentWrapper
         {
             Init();
             Stopwatch stopwatch = new Stopwatch();
-            
+
             // Begin timing.
             stopwatch.Start();
-           
             //HotelService.GetInstance().SaveTruncatedHotelDetail();
             //HotelService.GetInstance().UpdateHotelAmenitiesContent();
-            //HotelService.GetInstance().SaveHotelDetailByLocation();
-            //var obj = new GetHotel();
-            //obj.GetHotelData();
-            //Console.WriteLine("RateComment");
-            //var rate = new GetRateComment();
-            //rate.GetRateCommentData();
+
+            var hotel = new GetHotel();
+            var service = HotelService.GetInstance();
+            var rate = new GetRateComment();
+            Console.WriteLine("Getting Hotel Detail");
+            hotel.GetHotelData(1,128000);
+
+            Console.WriteLine("Update Hotel List by Location Content");
+            service.UpdateHotelListByLocationContent();
+
+            Console.WriteLine("Update Hotel Detail by Location Content");
+            //rate.GetRateCommentData(); //TODO
+
+            Console.WriteLine("RateComment");
+            rate.GetRateCommentData();
+            
             stopwatch.Stop();
             Debug.Print("Done in : {0}", stopwatch.Elapsed);
             Console.WriteLine("Done in : {0}", stopwatch.Elapsed);

@@ -31,7 +31,7 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Content
                     Debug.Print("From : " + from);
                     Debug.Print("To : " + to);
 
-                    Console.WriteLine("From : " + from);
+                    Console.WriteLine("RateFrom : " + from);
 
                     List<Tuple<string, string>> param;
 

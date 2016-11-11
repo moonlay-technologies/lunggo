@@ -13,17 +13,17 @@ namespace Lunggo.ApCommon.Hotel.Model
         [JsonProperty("priceFilter")]
         public PriceFilter PriceFilter { get; set; }
         [JsonProperty("starFilter")]
-        public StarFilter StarFilter { get; set; }
+        public List<int> StarFilter { get; set; }
         [JsonProperty("accommodationTypeFilter")]
-        public AccommodationTypeFilter AccommodationTypeFilter { get; set; }
+        public List<string> AccommodationTypeFilter { get; set; }
         [JsonProperty("facilityFilter")]
-        public FacilityFilter FacilityFilter { get; set; }
+        public List<string> FacilityFilter { get; set; }
         [JsonProperty("boardFilter")]
-        public BoardFilter BoardFilter { get; set; }
+        public List<string> BoardFilter { get; set; }
         [JsonProperty("areaFilter")]
-        public AreaFilter AreaFilter { get; set; }
+        public List<string> AreaFilter { get; set; }
         [JsonProperty("zoneFilter")]
-        public ZoneFilter ZoneFilter { get; set; }
+        public List<string> ZoneFilter { get; set; }
     }
 
     public class PriceFilter
