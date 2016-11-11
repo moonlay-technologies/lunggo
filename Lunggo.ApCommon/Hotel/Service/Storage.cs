@@ -32,7 +32,7 @@ namespace Lunggo.ApCommon.Hotel.Service
             TableStorageService.GetInstance().InsertOrReplaceEntityToTableStorage(row, "hotelLocations");
         }
 
-        internal List<int> GetHotelListByLocationFromStorage(string location)
+        public List<int> GetHotelListByLocationFromStorage(string location)
         {
             var table = TableStorageService.GetInstance().GetTableByReference("hotelLocations");
             var splitLocation = location.Split('-');

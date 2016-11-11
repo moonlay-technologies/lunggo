@@ -468,7 +468,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                         }
                     }
 
-                    //Accomodation
+                    //Accommodation
                     if (!(accDict.ContainsKey(hotelDetail.AccomodationType)))
                     {
                         accDict.Add(hotelDetail.AccomodationType, new AccomodationFilterInfo
