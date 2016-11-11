@@ -446,8 +446,8 @@ namespace Lunggo.ApCommon.Hotel.Service
                 Name = key,
                 Code = key
             });
-            try
-            {
+            //try
+            //{
                 foreach (var hotelDetail in hotels)
                 {
                     //Zone
@@ -500,6 +500,8 @@ namespace Lunggo.ApCommon.Hotel.Service
                     //Facilities
                     var keys = facilityDict.Keys;
                     var hotelFacilityDict = new Dictionary<string, bool>();
+                    if (hotelDetail.Facilities == null)
+                        continue;
                     foreach (var facility in hotelDetail.Facilities)
                     {
                         var concatedFacility = facility.FacilityGroupCode + "" + facility.FacilityCode;
@@ -569,11 +571,11 @@ namespace Lunggo.ApCommon.Hotel.Service
                     });
                 }
 
-            }
-            catch (Exception e)
-            {
-                Debug.Print(e.Message);
-            }
+            //}
+            //catch (Exception e)
+            //{
+            //    Debug.Print(e.Message);
+            //}
 
             return filter;
         }

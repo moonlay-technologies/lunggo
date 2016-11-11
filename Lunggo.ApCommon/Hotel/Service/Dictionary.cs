@@ -1025,7 +1025,7 @@ namespace Lunggo.ApCommon.Hotel.Service
         {
             try
             {
-                return Rooms.Where(r => r.RoomCd == cd).ToList()[0].RoomDescEn;
+                return HotelRoomDict[cd].RoomDescEn;
             }
             catch
             {
@@ -1036,7 +1036,7 @@ namespace Lunggo.ApCommon.Hotel.Service
         {
             try
             {
-                return Rooms.Where(r => r.RoomCd == cd).ToList()[0].RoomDescId;
+                return HotelRoomDict[cd].RoomDescId;
             }
             catch
             {
@@ -1048,7 +1048,7 @@ namespace Lunggo.ApCommon.Hotel.Service
         {
             try
             {
-                return Rooms.Where(r => r.RoomCd == code).ToList()[0].MaxAdult;
+                return HotelRoomDict[code].MaxAdult;
             }
             catch
             {
@@ -1059,7 +1059,7 @@ namespace Lunggo.ApCommon.Hotel.Service
         {
             try
             {
-                return Rooms.Where(r => r.RoomCd == code).ToList()[0].MaxPax;
+                return HotelRoomDict[code].MaxPax;
             }
             catch
             {
