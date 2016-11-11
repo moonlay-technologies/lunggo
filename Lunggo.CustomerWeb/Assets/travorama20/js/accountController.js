@@ -585,6 +585,7 @@ app.controller('orderDetailController', [
         }
 
         $scope.flight = [];
+        $scope.hotel = [];
         $scope.title = function (title) {
             if (title == '1')
                 return 'Tn.';
