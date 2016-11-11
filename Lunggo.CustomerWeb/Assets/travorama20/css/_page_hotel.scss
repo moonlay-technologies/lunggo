@@ -46,14 +46,14 @@
     /*Custom Column*/
     .col-left, col-right, .col-left-result, .col-right-result, .col-xs-left, .col-xs-middle, .col-xs-right, .col-left-hotel, .col-right-hotel, .col-half, .col-left-page, .col-right-page, 
     .col-left-slider, col-right-slider, .col-left-rs, .col-right-rs, .rb-left, .rb-mid, .rb-right, .room-sort-left, .room-sort-mid, .room-sort-right, .room-left, .room-right,
-    .room-rl, .room-rm, .room-rr, .wb-left, .wb-mid, .wb-right, .ot-left, .ot-right, .col-2, .col-3, .col-4, .col-6, .col-8 {
+    .room-rl, .room-rm, .room-rr, .wb-left, .wb-mid, .wb-right, .ot-left, .ot-right, .col-2, .col-3, .col-4, .col-6, .col-8, .form-sm {
         position: relative;
         min-height: 1px;
     }
 
     .col-left, .col-left-result, .col-right-result, .col-left-hotel, .col-right-hotel, .col-xs-left, .col-xs-middle, .col-xs-right, .col-half, .col-left-page, .col-right-page,
     .col-left-slider, .col-right-slider, .col-left-rs, .col-right-rs, .rb-left, .rb-mid, .rb-right, .room-sort-left, .room-sort-mid, .room-sort-right, .room-left, .room-right,
-    .room-rl, .room-rm, .room-rr, .wb-left, .wb-mid, .wb-right, .ot-left, .ot-right, .col-2, .col-3, .col-4, .col-6, .col-8  {float: left;}
+    .room-rl, .room-rm, .room-rr, .wb-left, .wb-mid, .wb-right, .ot-left, .ot-right, .col-2, .col-3, .col-4, .col-6, .col-8, .quarter, .form-sm  {float: left;}
     
     .col-right {float: right;}
     
@@ -422,11 +422,11 @@
                 }
                 .form-group {
                     margin-bottom: 10px;
-                    &.form__hotel, &.form__room, &.form__night, &.form__adult, &.form__child {padding-right: 10px;}
+                    &.form__hotel, &.form__date, &.form__night, &.form__adult, &.form__child {padding-right: 10px;}
                     &.form__submit .btn-lg {@include border-radius(2px);}
                 }
             }
-        }
+        }.form-sm {width: 16.666666666666668%;}
     }
     
     .main-title {

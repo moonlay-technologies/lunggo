@@ -4733,10 +4733,10 @@ file: /Assets/travorama20/css/_page_flight.scss
     font-size: 19px;
     text-transform: uppercase;
     margin-bottom: 15px; }
-  .page-hotel .col-left, .page-hotel col-right, .page-hotel .col-left-result, .page-hotel .col-right-result, .page-hotel .col-xs-left, .page-hotel .col-xs-middle, .page-hotel .col-xs-right, .page-hotel .col-left-hotel, .page-hotel .col-right-hotel, .page-hotel .col-half, .page-hotel .col-left-page, .page-hotel .col-right-page, .page-hotel .col-left-slider, .page-hotel col-right-slider, .page-hotel .col-left-rs, .page-hotel .col-right-rs, .page-hotel .rb-left, .page-hotel .rb-mid, .page-hotel .rb-right, .page-hotel .room-sort-left, .page-hotel .room-sort-mid, .page-hotel .room-sort-right, .page-hotel .room-left, .page-hotel .room-right, .page-hotel .room-rl, .page-hotel .room-rm, .page-hotel .room-rr, .page-hotel .wb-left, .page-hotel .wb-mid, .page-hotel .wb-right, .page-hotel .ot-left, .page-hotel .ot-right, .page-hotel .col-2, .page-hotel .col-3, .page-hotel .col-4, .page-hotel .col-6, .page-hotel .col-8 {
+  .page-hotel .col-left, .page-hotel col-right, .page-hotel .col-left-result, .page-hotel .col-right-result, .page-hotel .col-xs-left, .page-hotel .col-xs-middle, .page-hotel .col-xs-right, .page-hotel .col-left-hotel, .page-hotel .col-right-hotel, .page-hotel .col-half, .page-hotel .col-left-page, .page-hotel .col-right-page, .page-hotel .col-left-slider, .page-hotel col-right-slider, .page-hotel .col-left-rs, .page-hotel .col-right-rs, .page-hotel .rb-left, .page-hotel .rb-mid, .page-hotel .rb-right, .page-hotel .room-sort-left, .page-hotel .room-sort-mid, .page-hotel .room-sort-right, .page-hotel .room-left, .page-hotel .room-right, .page-hotel .room-rl, .page-hotel .room-rm, .page-hotel .room-rr, .page-hotel .wb-left, .page-hotel .wb-mid, .page-hotel .wb-right, .page-hotel .ot-left, .page-hotel .ot-right, .page-hotel .col-2, .page-hotel .col-3, .page-hotel .col-4, .page-hotel .col-6, .page-hotel .col-8, .page-hotel .form-sm {
     position: relative;
     min-height: 1px; }
-  .page-hotel .col-left, .page-hotel .col-left-result, .page-hotel .col-right-result, .page-hotel .col-left-hotel, .page-hotel .col-right-hotel, .page-hotel .col-xs-left, .page-hotel .col-xs-middle, .page-hotel .col-xs-right, .page-hotel .col-half, .page-hotel .col-left-page, .page-hotel .col-right-page, .page-hotel .col-left-slider, .page-hotel .col-right-slider, .page-hotel .col-left-rs, .page-hotel .col-right-rs, .page-hotel .rb-left, .page-hotel .rb-mid, .page-hotel .rb-right, .page-hotel .room-sort-left, .page-hotel .room-sort-mid, .page-hotel .room-sort-right, .page-hotel .room-left, .page-hotel .room-right, .page-hotel .room-rl, .page-hotel .room-rm, .page-hotel .room-rr, .page-hotel .wb-left, .page-hotel .wb-mid, .page-hotel .wb-right, .page-hotel .ot-left, .page-hotel .ot-right, .page-hotel .col-2, .page-hotel .col-3, .page-hotel .col-4, .page-hotel .col-6, .page-hotel .col-8 {
+  .page-hotel .col-left, .page-hotel .col-left-result, .page-hotel .col-right-result, .page-hotel .col-left-hotel, .page-hotel .col-right-hotel, .page-hotel .col-xs-left, .page-hotel .col-xs-middle, .page-hotel .col-xs-right, .page-hotel .col-half, .page-hotel .col-left-page, .page-hotel .col-right-page, .page-hotel .col-left-slider, .page-hotel .col-right-slider, .page-hotel .col-left-rs, .page-hotel .col-right-rs, .page-hotel .rb-left, .page-hotel .rb-mid, .page-hotel .rb-right, .page-hotel .room-sort-left, .page-hotel .room-sort-mid, .page-hotel .room-sort-right, .page-hotel .room-left, .page-hotel .room-right, .page-hotel .room-rl, .page-hotel .room-rm, .page-hotel .room-rr, .page-hotel .wb-left, .page-hotel .wb-mid, .page-hotel .wb-right, .page-hotel .ot-left, .page-hotel .ot-right, .page-hotel .col-2, .page-hotel .col-3, .page-hotel .col-4, .page-hotel .col-6, .page-hotel .col-8, .page-hotel .quarter, .page-hotel .form-sm {
     float: left; }
   .page-hotel .col-right {
     float: right; }
@@ -5117,13 +5117,15 @@ file: /Assets/travorama20/css/_page_flight.scss
           margin-left: 5px; }
       .page-hotel .search-result-form form[name="hotel-form"].hotel-form .form-group {
         margin-bottom: 10px; }
-        .page-hotel .search-result-form form[name="hotel-form"].hotel-form .form-group.form__hotel, .page-hotel .search-result-form form[name="hotel-form"].hotel-form .form-group.form__room, .page-hotel .search-result-form form[name="hotel-form"].hotel-form .form-group.form__night, .page-hotel .search-result-form form[name="hotel-form"].hotel-form .form-group.form__adult, .page-hotel .search-result-form form[name="hotel-form"].hotel-form .form-group.form__child {
+        .page-hotel .search-result-form form[name="hotel-form"].hotel-form .form-group.form__hotel, .page-hotel .search-result-form form[name="hotel-form"].hotel-form .form-group.form__date, .page-hotel .search-result-form form[name="hotel-form"].hotel-form .form-group.form__night, .page-hotel .search-result-form form[name="hotel-form"].hotel-form .form-group.form__adult, .page-hotel .search-result-form form[name="hotel-form"].hotel-form .form-group.form__child {
           padding-right: 10px; }
         .page-hotel .search-result-form form[name="hotel-form"].hotel-form .form-group.form__submit .btn-lg {
           -webkit-border-radius: 2px;
           -moz-border-radius: 2px;
           -ms-border-radius: 2px;
           border-radius: 2px; }
+    .page-hotel .search-result-form .form-sm {
+      width: 16.66667%; }
   .page-hotel .main-title {
     font-size: 25px;
     font-weight: 400;
