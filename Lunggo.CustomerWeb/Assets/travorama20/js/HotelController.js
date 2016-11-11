@@ -47,14 +47,14 @@
 function customCheckbox() {
     // **********
     // Custom Checkbox
-    $('body .sqr').on('click', function () {
-        var id = $(this).find('.check');
-        if ($(id).is(':checked')) {
-            id.checked = true;
-            $(this).addClass('active');
-        } else {
-            id.checked = false;
-            $(this).removeClass('active');
-        }
-});
+//    $('body .sqr').on('click', function () {
+//        var id = $(this).find('.checkbox');
+//        if ($(id).is(':checked')) {
+//            id.checked = true;
+//            $(this).addClass('active');
+//        } else {
+//            id.checked = false;
+//            $(this).removeClass('active');
+//        }
+//});
 }

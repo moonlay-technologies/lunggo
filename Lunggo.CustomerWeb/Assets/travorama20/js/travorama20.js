@@ -32,6 +32,17 @@ if (typeof(angular) == 'object') {
             }
             return returnValue;
         };
+
+        $rootScope.traGetRangeDesc = function (count) {
+            var returnValue = [];
+            if (count < 1) {
+                return returnValue;
+            }
+            for (var i = count; i >= 1; i++) {
+                returnValue.push(i)
+            }
+            return returnValue;
+        };
     });
 
 
