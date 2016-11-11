@@ -239,8 +239,8 @@ namespace Lunggo.ApCommon.Hotel.Service
                             MaxPrice = sortedHotel.Select(x => x.NetFare).FirstOrDefault(),
                             MinPrice = sortedHotel.Select(x => x.NetFare).LastOrDefault(),
                             IsSpecificHotel = searchType.Equals("Hotel"),
-                            HotelCode = searchType.Equals("Hotel") ? (int?)firstPageHotelDetails.Select(x => x.HotelCode).FirstOrDefault() : null
-
+                            HotelCode = searchType.Equals("Hotel") ? (int?)firstPageHotelDetails.Select(x => x.HotelCode).FirstOrDefault() : null,
+                            
                         };
                         swCv.Stop();
                         Debug.Print("CONVERT:" + swCv.Elapsed.ToString());

@@ -3,12 +3,12 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
 
     $scope.hotel = {};
     $scope.searchId = '';
-    $scope.hotel.location = "BALI";
-    $scope.hotel.checkinDate = "28-12-2016";
-    $scope.hotel.checkoutDate = "30-12-2016";
+    $scope.hotel.location = "";
+    $scope.hotel.checkinDate = "";
+    $scope.hotel.checkoutDate = "";
     $scope.hotel.adultCount = 3;
     $scope.hotel.childCount = 1;
-    $scope.hotel.nightCount = 1;
+    $scope.hotel.nightCount = "";
     $scope.hotel.roomCount = 2;
 
 
