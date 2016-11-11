@@ -1,8 +1,8 @@
 ﻿<form class="hotel-form" name="hotel-form" ng-submit="FlightSearchForm.Submit()" novalidate>
     <div class="th-form clearfix">
         <div class="form-group form__hotel col-half">
-            <input style ="display:none" type="text" name="fakelocation" class="hidden">
-            <input type="text" value="" class="change-hotel form-control" placeholder="Kota, Wilayah atau Nama Hotel">
+            <input type="text" value="" class="change-hotel form-control" placeholder="Kota, Wilayah atau Nama Hotel"
+                   ng-model="hotel.locationDisplay" ng-click="view.showHotelSearch = true">
         </div>
         <div class="form-group form__date col-half">
             <div class="field-container">
