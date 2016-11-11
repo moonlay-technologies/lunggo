@@ -1,52 +1,31 @@
 ﻿jQuery(document).ready(function ($) {
-    //$('body .checkbox').on('click touchstart', function () {
-    //    var id = $(this).parent().find('.check');
+    //// **********
+    //// Custom Checkbox
+    //$('body .sqr').on('click', function () {
+    //    var id = $(this).find('.check');
     //    if ($(id).is(':checked')) {
-    //        id.checked = false;
-    //        $(this).removeClass('active');
-    //    } else {
     //        id.checked = true;
     //        $(this).addClass('active');
-    //    }
-    //});
-
-    //$('body .sqr').on('click touchstart', function () {
-    //    var id = $(this).find('.check');
-    //    var checkbox = $(this).find('.checkbox');
-
-    //    if ($(id).is(':checked')) {
-    //        id.val(false);
-    //        checkbox.removeClass('active');
     //    } else {
-    //        id.val(true);
-    //        //$(id).is(':checked') = true;
-    //        checkbox.addClass('active');
+    //        id.checked = false;
+    //        $(this).removeClass('active');
     //    }
     //});
 
-    $('body .sqra').on('click touchstart', function () {
-        var id = $(this).parent().find('.check');
-        var checkbox = $(this).parent().find('.checkbox');
-
-        if ($(id).is(':checked')) {
-            id.val(true);
-            //$(id).is(':checked') = true;
-            checkbox.addClass('active');
-        } else {
-            id.val(false);
-            checkbox.removeClass('active');
-        }
-    });
-
-    $('body .radio').on('click touchstart', function () {
-        var id = $(this).parent().find('.check-radio');
-        $('body .radio').checked = false;
-        $('body .radio').removeClass('active');
+    // **********
+    // Custom Radio
+    $('body .round').on('click', function () {
+        var id = $(this).find('.check-radio');
+        $('body .round').checked = false;
+        $('body .round').removeClass('active');
         id.checked = true;
         $(this).addClass('active');
     });
 
-    $("body .img-list").each(function (i, elem) {
+    // **********
+    // Search List Image
+    $(function () {
+        $("body .col-left-hotel .img-list").each(function (i, elem) {
         var img = $(elem);
         var div = $("<div />").css({
             background: "url(" + img.attr("src") + ") no-repeat",
@@ -57,4 +36,25 @@
     });
         img.replaceWith(div);
     });
+    });
+
+    // Ubah Pencarian Hotel
+    $('body .search-result-form-trigger').on('click', function () {
+        $('body .hotel-form').slideToggle("slow");
+    });
 });
+
+function customCheckbox() {
+    // **********
+    // Custom Checkbox
+    $('body .sqr').on('click', function () {
+        var id = $(this).find('.check');
+        if ($(id).is(':checked')) {
+            id.checked = true;
+            $(this).addClass('active');
+        } else {
+            id.checked = false;
+            $(this).removeClass('active');
+        }
+});
+}

@@ -3,12 +3,12 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
 
     $scope.hotel = {};
     $scope.searchId = '';
-    $scope.hotel.location = "BALI";
-    $scope.hotel.checkinDate = "28-12-2016";
-    $scope.hotel.checkoutDate = "30-12-2016";
+    $scope.hotel.location = "";
+    $scope.hotel.checkinDate = "";
+    $scope.hotel.checkoutDate = "";
     $scope.hotel.adultCount = 3;
     $scope.hotel.childCount = 1;
-    $scope.hotel.nightCount = 1;
+    $scope.hotel.nightCount = "";
     $scope.hotel.roomCount = 2;
 
 
@@ -19,7 +19,7 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
 
         var maxImages = 6;
 
-        var resource = $resource('//api.local.travorama.com/v1/hotel/GetHotelDetail/:searchId/:hotelCd',
+        var resource = $resource(HotelDetailsConfig.Url + '/:searchId/:hotelCd',
             {},
             {
                 query: {
@@ -36,6 +36,7 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
             var loadedImages = 0;
             var tempHotelImages = [];
             $.each($scope.hotel.images, function (key, value) {
+                
                 tempHotelImages.push("http://photos.hotelbeds.com/giata/bigger/" + value);
 
                 loadedImages++;
@@ -45,8 +46,16 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
             });
             $scope.hotel.images = tempHotelImages;
             $log.debug($scope.hotel);
-
+            $scope.loc = $scope.hotel.city + ', ' + $scope.hotel.country;
+            var cekin = $scope.hotel.room[0].rate.regsId.split(',')[2].split('|')[0];
+            var cekout = $scope.hotel.room[0].rate.regsId.split(',')[2].split('|')[1];
+            $scope.hotel.checkinDate = new Date(parseInt(cekin.substring(0, 4)), parseInt(cekin.substring(4, 6)) - 1, parseInt(cekin.substring(6, 8)));
+            $scope.hotel.checkoutDate = new Date(parseInt(cekout.substring(0, 4)), parseInt(cekout.substring(4, 6)) - 1, parseInt(cekout.substring(6, 8)));
+            $scope.hotel.nightCount = new Date($scope.hotel.checkoutDate).getDate() - new Date($scope.hotel.checkinDate).getDate();
+            
             accordionFunctions();
+            $timeout(function () { hotelDetailFunctions(); }, 0);
+
         })
     }
 
@@ -82,7 +91,7 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
         )
     }
 
-    var selectService = $resource('//api.local.travorama.com/v1/hotel/select/',
+    var selectService = $resource(HotelSelectConfig.Url,
           {},
           {
               query: {
@@ -137,6 +146,27 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
                 }
             }
         }, 0)
+    }
+
+    var hotelDetailFunctions = function(parameters) {
+        // Open Room Detail
+        $('body .info-room').on('click', function () {
+            var parent1 = $(this).closest('.room-list').find('.room-left');
+            var parent2 = parent1.closest('li').find('.hotel-detail');
+            parent2.toggleClass('active');
+
+            // Slick Slider Detail Hotel
+            //$('body .hd-slider').slick({
+            //    autoplay: false,
+            //    autoplaySpeed: 2500,
+            //    dots: false
+            //});
+        });
+
+        // Dropdown room
+        $('body .change-room').on('click', function () {
+            $(this).toggleClass('active');
+        });
     }
     //=============== hotel end ======================
 

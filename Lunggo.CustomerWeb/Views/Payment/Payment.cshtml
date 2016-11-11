@@ -79,7 +79,7 @@
         {
 
         }
-        return text;
+        return text.Length == 0 ? "" : text.Substring(0, text.Length - 1);
     }
 
     public string ApplyTitleCase(string input)
@@ -723,7 +723,7 @@
                         }
                         else
                         {
-
+                            var reservation = Model.Reservation as HotelReservationForDisplay;
                             <div class="widget hotel page-hotel" @*ng-show="currentPage > 1"*@>
                                 <div class="hotel-detail">
                                     <h3 class="widget-title"><b>RINCIAN</b> PEMESANAN</h3>
@@ -743,7 +743,8 @@
                                                     </div>
                                                 </div>
                                                 <div class="wt-bottom">
-                                                    {{capitalizeFirstLetter(hotelDetails.address)}}
+                                                    @ToTitleCase(reservation.HotelDetail.Address), @ToTitleCase(reservation.HotelDetail.ZoneName),
+                                                    @ToTitleCase(reservation.HotelDetail.DestinationName), @ToTitleCase(reservation.HotelDetail.CountryName)
                                                 </div>  
                                             </div>
                                             <div class="widget-bottom">

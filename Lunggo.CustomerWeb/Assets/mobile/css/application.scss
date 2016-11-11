@@ -911,9 +911,9 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
 
 // --------------------
 // overlay sort
-.overlay--flight-sort, .overlay--hotel-sort {
+.overlay--flight-sort {
     .overlay__content {padding:0; font-size: 11px;
-        /*span {display:block; padding:20px 15px;
+        span {display:block; padding:20px 15px;
             &:before {content:''; width:20px; height:20px; background:#fff; display:inline-block; vertical-align:middle; margin-right:10px; border:3px solid #fff; @include border-radius(50px);}
             &+span {border-top: 1px solid #999;}
             &.active {color:#fff;
@@ -923,7 +923,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         label {display:block; width:100%; padding:12px 0;
             &+label {border-top:$border-default;}
             input[type="radio"] {float:right;}
-        }*/
+        }
         label {padding:20px 15px; display:block; border:0; margin-bottom:0; position:relative; border-top: 1px solid #999;
             .radio {float:left; width:20px; height:20px; content:""; background:#fff; border:3px solid #fff; position:absolute; top:50%; margin-top:-10px; @include border-radius(20px);
                 &.active:before {
@@ -935,6 +935,25 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
                     @include border-radius(14px);
                     vertical-align: middle;
                 }
+            }
+            input {display:none;}
+            .name {padding-left:30px; font-weight: 400;}
+        }
+    }
+}
+
+.overlay--hotel-sort {
+    .overlay__content {padding:0; font-size: 11px;
+        label {padding:20px 15px; display:block; border:0; margin-bottom:0; position:relative; border-top: 1px solid #999;
+            .radio {float:left; width:20px; height:20px; content:""; background:#fff; border:3px solid #fff; position:absolute; top:50%; margin-top:-10px; @include border-radius(20px);}
+            &.active .radio:before {
+                background: #ffca10;
+                display: block;
+                width: 14px;
+                height: 14px;
+                content: '';
+                @include border-radius(14px);
+                vertical-align: middle;
             }
             input {display:none;}
             .name {padding-left:30px; font-weight: 400;}
@@ -1000,8 +1019,9 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
             &.filter-group--departure {
                 .filter-group__content {@include clearfix();
                     label {display:block; float:left; width:50%; border:0; margin-bottom:0; padding: 10px 0; position:relative;
-                        .switch {float:left; width:20px; height:20px; content:""; background:#fff; border:3px solid #fff; position:absolute; top:50%; margin-top:-10px; @include border-radius(20px);
-                            &.active:before {
+                        .switch {float:left; width:20px; height:20px; content:""; background:#fff; border:3px solid #fff; position:absolute; top:50%; margin-top:-10px; @include border-radius(20px);}
+                        &.active {
+                            .switch:before {
                                 background: #ffca10;
                                 display: block;
                                 width: 14px;
@@ -1020,8 +1040,9 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
             &.filter-group--rating {
                 .filter-group__content {@include clearfix();
                     label {display:block; float:left; width:100%; border:0; margin-bottom:0; padding: 10px 0; position:relative;
-                        .switch {float:left; width:20px; height:20px; content:""; background:#fff; border:3px solid #fff; position:absolute; top:50%; margin-top:-10px; @include border-radius(20px);
-                            &.active:before {
+                        .switch {float:left; width:20px; height:20px; content:""; background:#fff; border:3px solid #fff; position:absolute; top:50%; margin-top:-10px; @include border-radius(20px);}
+                        &.active {
+                            .switch:before {
                                 background: #ffca10;
                                 display: block;
                                 width: 14px;

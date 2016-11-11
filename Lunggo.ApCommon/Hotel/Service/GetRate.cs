@@ -39,7 +39,6 @@ namespace Lunggo.ApCommon.Hotel.Service
             {
                 foreach (var rate in room.Rates)
                 {
-                    rate.TermAndCondition = GetRateCommentFromTableStorage(rate.RateCommentsId, checkinDateTime).Select(x => x.Description).ToList();
                     rate.RegsId = EncryptRegsId(hotelCd, room.RoomCode, rate.RateKey);
                     
                 }

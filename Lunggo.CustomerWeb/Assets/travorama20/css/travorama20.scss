@@ -22,7 +22,7 @@ $mobile-app: '../images/mobile-app.png';
 /*--------------------*/
 /* mixins */
 @mixin letter-spacing($value){
-    letter-spacing:$value;   
+    letter-spacing:$value;    
 }
 
 @mixin border-radius($radius){
@@ -291,6 +291,21 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         }
         .autocomplete-no-result {display:none;}
         .autocomplete-result {
+            ul {margin:0; padding:0;
+                li {padding:10px; list-style:none; cursor:pointer;
+                    &:hover {background:$color-main-blue;}
+                }
+                li+li {border-top:$border-default;}
+            }
+        }
+    }
+    .hotel-location-search {padding:10px; height:475px; overflow:auto;
+        .hotel-autocomplete-pre {
+            .text-pre {display:none;}
+            .text-loading {display:none;}
+        }
+        .hotel-autocomplete-no-result {display:none;}
+        .hotel-autocomplete-result {
             ul {margin:0; padding:0;
                 li {padding:10px; list-style:none; cursor:pointer;
                     &:hover {background:$color-main-blue;}

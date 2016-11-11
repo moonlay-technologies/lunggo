@@ -39,9 +39,9 @@ namespace Lunggo.ApCommon.Hotel.Service
                     Payment = PaymentDetails.GetFromDb(rsvNo),
                     State = ReservationState.GetFromDb(rsvNo),
                     HotelDetails = new HotelDetail(),
-                    RsvTime = reservationRecord.RsvTime.GetValueOrDefault()
+                    RsvTime = reservationRecord.RsvTime.GetValueOrDefault(),
+                    RsvStatus = RsvStatusCd.Mnemonic(reservationRecord.RsvStatusCd)
                 };
-                //|| hotelReservation.State == null
                 if (hotelReservation.Contact == null || hotelReservation.Payment == null)
                     return null;
 
@@ -146,6 +146,22 @@ namespace Lunggo.ApCommon.Hotel.Service
             }
         }
 
+        public List<long> GetRoomIdFromDb(string rsvNo)
+        {
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                return GetRoomIdQuery.GetInstance().Execute(conn, new {RsvNo = rsvNo}).ToList();
+            }
+       }
+
+        public List<HotelRateTableRecord> GetRateIdFromDb(List<long> roomIds)
+        {
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                return GetRateIdQuery.GetInstance().Execute(conn, new { Id = roomIds }).ToList();
+            }
+        }
+
         private static List<HotelMarginRule> GetActivePriceMarginRulesFromDb()
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
@@ -210,11 +226,10 @@ namespace Lunggo.ApCommon.Hotel.Service
 
                 ReservationTableRepo.GetInstance().Insert(conn, reservationRecord);
                 reservation.Contact.InsertToDb(reservation.RsvNo);
-                
-                //reservation.State.InsertToDb(reservation.RsvNo);
+                reservation.State.InsertToDb(reservation.RsvNo);
                 reservation.Payment.InsertToDb(reservation.RsvNo);
                 
-                var hotelRsvDetailsRecord = new HotelReservationDetailsTableRecord
+                 var hotelRsvDetailsRecord = new HotelReservationDetailsTableRecord
                 {
                     Id = HotelReservationIdSequence.GetInstance().GetNext(),
                     RsvNo = reservation.RsvNo,
@@ -276,7 +291,8 @@ namespace Lunggo.ApCommon.Hotel.Service
                             RateKey =  rate.RateKey,
                             PaymentType = PaymentTypeCd.MnemonicToString(rate.PaymentType),
                             ChildrenAges = rate.ChildrenAges != null ? rate.ChildrenAges.Serialize() : null,
-                            RateComment = rate.RateCommentsId
+                            RateComment = rate.RateCommentsId,
+                            RateStatus = "BOOK"
                         };
 
                         HotelRateTableRepo.GetInstance().Insert(conn, rateRecord);
@@ -400,6 +416,68 @@ namespace Lunggo.ApCommon.Hotel.Service
                 var dbRsvDetailInfo = result;
                 query.Execute(conn, dbRsvDetailInfo);
             }
+        }
+
+        private void UpdateRsvStatusDb(string rsvNo, RsvStatus status)
+        {
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                ReservationTableRepo.GetInstance().Update(conn, new ReservationTableRecord
+                {
+                    RsvNo = rsvNo,
+                    RsvStatusCd = RsvStatusCd.Mnemonic(status)
+                });
+            }
+
+        }
+
+        private void UpdateRsvDetail(string rsvNo, string status, HotelDetail hotelDetail)
+        {
+            var roomIds = GetRoomIdFromDb(rsvNo);
+            var rateIds = GetRateIdFromDb(roomIds);
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                foreach (var rateId in rateIds)
+                {
+                    var sampleRatekey = rateId.RateKey.Split('|');
+                    var roomCd = sampleRatekey[5];
+                    var someData = sampleRatekey[6];
+                    var board = sampleRatekey[7];
+                    var roomCount = rateId.RoomCount;
+                    var adultCount = rateId.AdultCount;
+                    var childCount = rateId.ChildCount;
+                    var childrenAges = sampleRatekey[10];
+
+                    foreach (var rooma in hotelDetail.Rooms)
+                    {
+                        foreach (var ratea in rooma.Rates)
+                        {
+                            var rateKey = ratea.RateKey.Split('|');
+                            if (rateKey[5] == roomCd && rateKey[6] == someData && rateKey[7] == board &&
+                                Convert.ToInt32(rateKey[9].Split('~')[0]) == roomCount &&
+                                Convert.ToInt32(rateKey[9].Split('~')[1]) == adultCount &&
+                                Convert.ToInt32(rateKey[9].Split('~')[2]) == childCount &&
+                                rateKey[10] == childrenAges)
+                            {
+                                HotelRateTableRepo.GetInstance().Update(conn, new HotelRateTableRecord
+                                {
+                                    RateStatus = status,
+                                    RateComment = ratea.RateCommentsId,
+                                    RateKey = ratea.RateKey,
+                                    Id = rateId.Id
+                                });
+                            }
+                        }
+                    }
+
+                    
+                }
+                
+            }
+
+            
+            //return GetRoomIdFromDb(rsvNo);
+
         }
         #endregion
     }
