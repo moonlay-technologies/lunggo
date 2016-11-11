@@ -1,21 +1,69 @@
 ﻿<form class="hotel-form" name="hotel-form" ng-submit="FlightSearchForm.Submit()" novalidate>
     <div class="th-form clearfix">
-        <div class="form-group form__hotel col-half">
-            <input type="text" value="" class="change-hotel form-control" placeholder="Kota, Wilayah atau Nama Hotel">
-        </div>
-        <div class="form-group form__date col-half">
-            <div class="field-container">
-                <div class="form-control form-date">
-                    <span class="sm-txt grey-txt">Tanggal Masuk</span>
-                    <span class="md-txt bold-txt darkgrey-txt">28 Oktober 2016</span>
+        <div class="clearfix">
+            <div class="form-group form__hotel quarter">
+                <input type="text" value="" class="change-hotel form-control" placeholder="Kota, Wilayah atau Nama Hotel">
+            </div>
+            <div class="form-group form__date quarter">
+                <div class="field-container">
+                    <div class="form-control form-date">
+                        <span class="sm-txt grey-txt">Tanggal Masuk</span>
+                        <span class="pull-right bold-txt darkgrey-txt">28 Oktober 2016</span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group form__night quarter">
+                <div class="field-container">
+                    <div class="form-control form-night">
+                        <div class="col-half">
+                            <span class="sm-txt grey-txt">Malam</span>
+                        </div>
+                        <div class="col-half clearfix">
+                            <div class="col-8 input-hotel xlg-txt right-txt semibold-txt darkgrey-txt">1</div>
+                            <div class="col-2 clearfix">
+                                <a href="" class="increase" ng-click="addValue('childCount', 1)"></a>
+                                <a href="" class="decrease" ng-click="addValue('childCount', -1)"></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group form__room quarter">
+                <div class="field-container">
+                    <div class="form-control form-room">
+                        <div class="col-half">
+                            <span class="sm-txt grey-txt">Kamar</span>
+                        </div>
+                        <div class="col-half clearfix">
+                            <div class="col-8 input-hotel xlg-txt right-txt semibold-txt darkgrey-txt">1</div>
+                            <div class="col-2 clearfix">
+                                <a href="" class="increase" ng-click="addValue('childCount', 1)"></a>
+                                <a href="" class="decrease" ng-click="addValue('childCount', -1)"></a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="form-group form__night col-2">
-            <div class="field-container">
-                <div class="form-control form-night">
+        <div class="room-right clearfix">
+            <div class="form-group form__adult form-sm">
+                <div class="form-control form-adult clearfix">
                     <div class="col-half">
-                        <span class="sm-txt grey-txt">Malam</span>
+                        <span class="sm-txt grey-txt">Dewasa</span>
+                    </div>
+                    <div class="col-half clearfix">
+                        <div class="col-8 input-hotel xlg-txt right-txt semibold-txt darkgrey-txt">2</div>
+                        <div class="col-2 clearfix">
+                            <a href="" class="increase" ng-click="addValue('childCount', 1)"></a>
+                            <a href="" class="decrease" ng-click="addValue('childCount', -1)"></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group form__child form-sm">
+                <div class="form-control form-child">
+                    <div class="col-half">
+                        <span class="sm-txt grey-txt">Anak</span>
                     </div>
                     <div class="col-half clearfix">
                         <div class="col-8 input-hotel xlg-txt right-txt semibold-txt darkgrey-txt">1</div>
@@ -26,52 +74,88 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="form-group form__room col-2">
-            <div class="field-container">
-                <div class="form-control form-room">
-                    <div class="col-half">
-                        <span class="sm-txt grey-txt">Kamar</span>
+            <div class="form-group form__age dropdown-container form-sm">
+                <div class="form-control select-age">
+                    <span class="sm-txt grey-txt">Child Age 1</span>
+                    <span class="semibold-txt darkgrey-txt xlg-txt pull-right">11</span>
+                    <div class="option">
+                        <span data-value="">0</span>
+                        <span data-value="">1</span>
+                        <span data-value="">2</span>
+                        <span data-value="">3</span>
+                        <span data-value="">4</span>
+                        <span data-value="">5</span>
+                        <span data-value="">6</span>
+                        <span data-value="">7</span>
+                        <span data-value="">8</span>
+                        <span data-value="">9</span>
+                        <span data-value="">10</span>
+                        <span data-value="">11</span>
                     </div>
-                    <div class="col-half clearfix">
-                        <div class="col-8 input-hotel xlg-txt right-txt semibold-txt darkgrey-txt">1</div>
-                        <div class="col-2 clearfix">
-                            <a href="" class="increase" ng-click="addValue('childCount', 1)"></a>
-                            <a href="" class="decrease" ng-click="addValue('childCount', -1)"></a>
-                        </div>
+                </div>
+            </div>
+            <div class="form-group form__age dropdown-container form-sm">
+                <div class="form-control select-age">
+                    <span class="sm-txt grey-txt">Child Age 2</span>
+                    <span class="semibold-txt darkgrey-txt xlg-txt pull-right">11</span>
+                    <div class="option">
+                        <span data-value="">0</span>
+                        <span data-value="">1</span>
+                        <span data-value="">2</span>
+                        <span data-value="">3</span>
+                        <span data-value="">4</span>
+                        <span data-value="">5</span>
+                        <span data-value="">6</span>
+                        <span data-value="">7</span>
+                        <span data-value="">8</span>
+                        <span data-value="">9</span>
+                        <span data-value="">10</span>
+                        <span data-value="">11</span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group form__age dropdown-container form-sm">
+                <div class="form-control select-age">
+                    <span class="sm-txt grey-txt">Child Age 3</span>
+                    <span class="semibold-txt darkgrey-txt xlg-txt pull-right">11</span>
+                    <div class="option">
+                        <span data-value="">0</span>
+                        <span data-value="">1</span>
+                        <span data-value="">2</span>
+                        <span data-value="">3</span>
+                        <span data-value="">4</span>
+                        <span data-value="">5</span>
+                        <span data-value="">6</span>
+                        <span data-value="">7</span>
+                        <span data-value="">8</span>
+                        <span data-value="">9</span>
+                        <span data-value="">10</span>
+                        <span data-value="">11</span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group form__age dropdown-container form-sm">
+                <div class="form-control select-age">
+                    <span class="sm-txt grey-txt">Child Age 4</span>
+                    <span class="semibold-txt darkgrey-txt xlg-txt pull-right">11</span>
+                    <div class="option">
+                        <span data-value="">0</span>
+                        <span data-value="">1</span>
+                        <span data-value="">2</span>
+                        <span data-value="">3</span>
+                        <span data-value="">4</span>
+                        <span data-value="">5</span>
+                        <span data-value="">6</span>
+                        <span data-value="">7</span>
+                        <span data-value="">8</span>
+                        <span data-value="">9</span>
+                        <span data-value="">10</span>
+                        <span data-value="">11</span>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="form-group form__adult col-2">
-            <div class="form-control form-adult clearfix">
-                <div class="col-half">
-                    <span class="sm-txt grey-txt">Dewasa</span>
-                </div>
-                <div class="col-half clearfix">
-                    <div class="col-8 input-hotel xlg-txt right-txt semibold-txt darkgrey-txt">2</div>
-                    <div class="col-2 clearfix">
-                        <a href="" class="increase" ng-click="addValue('childCount', 1)"></a>
-                        <a href="" class="decrease" ng-click="addValue('childCount', -1)"></a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="form-group form__child col-2">
-            <div class="form-control form-child">
-                <div class="col-half">
-                    <span class="sm-txt grey-txt">Anak</span>
-                </div>
-                <div class="col-half clearfix">
-                    <div class="col-8 input-hotel xlg-txt right-txt semibold-txt darkgrey-txt">1</div>
-                    <div class="col-2 clearfix">
-                        <a href="" class="increase" ng-click="addValue('childCount', 1)"></a>
-                        <a href="" class="decrease" ng-click="addValue('childCount', -1)"></a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="form-group form__submit col-2">
+        <div class="form-group form__submit room-left">
             <button class="btn btn-yellow btn-block btn-lg btnSubmit">CARI HOTEL</button>
         </div>
     </div>

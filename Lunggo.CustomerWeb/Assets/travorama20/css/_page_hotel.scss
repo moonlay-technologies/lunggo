@@ -349,17 +349,17 @@
             text-align: center;
             padding: 0;
             @include border-radius(0);
-            border: 1px solid #ccc;
             span {
                 display: block;
                 width: 100%;
-                background: #fff;
+                background: #ddd;
+                border-top: 1px solid #ccc;
                 position: static;
                 font-size: 12px;
                 padding: 5px;
                 &:hover {
                     color: #fff;
-                    background: #999;
+                    background: #1daee4;
                     @include transition(all .3s ease);
                     cursor: pointer;
                 }
@@ -419,14 +419,21 @@
                     &.form-night, &.form-room, &.form-adult, &.form-child {
                         a.increase {margin-left: 5px;}
                     }
+                    .option {
+                        left: 0;
+                        width: 118.63px;
+                        margin-top: 22px;
+                    }
                 }
                 .form-group {
                     margin-bottom: 10px;
-                    &.form__hotel, &.form__date, &.form__night, &.form__adult, &.form__child {padding-right: 10px;}
+                    &.form__hotel, &.form__date, &.form__night, &.form__adult, &.form__child, &.form__age {padding-right: 10px;}
                     &.form__submit .btn-lg {@include border-radius(2px);}
                 }
+                span.pull-right.bold-txt.darkgrey-txt {line-height: 30px;}
+                .form-sm {width: 16.666666666666668%;}
             }
-        }.form-sm {width: 16.666666666666668%;}
+        }
     }
     
     .main-title {
