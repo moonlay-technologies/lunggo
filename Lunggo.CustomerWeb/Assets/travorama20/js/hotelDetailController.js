@@ -144,15 +144,16 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
                     this.nextElementSibling.classList.toggle("show");
                 }
             }
-        }, 0)
+        }, 0);
     }
 
     var hotelDetailFunctions = function(parameters) {
         // Open Room Detail
-        $('body .info-room').on('click', function () {
+        $('body .room-rl').on('click', function () {
             var parent1 = $(this).closest('.room-list').find('.room-left');
-            var parent2 = parent1.closest('li').find('.hotel-detail');
-            parent2.toggleClass('active');
+            var parent2 = parent1.closest('.room-list-container li').find('.hotel-detail');
+            parent2.toggle();
+            $(this).closest('.room-list-container li').siblings().find('.hotel-detail, .option').hide();
 
             // Slick Slider Detail Hotel
             //$('body .hd-slider').slick({
@@ -163,7 +164,10 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
         });
 
         $("body .change-room").click(function () {
-            $(this).closest('.room-list').find('.option').toggle();
+            var parent1 = $(this).closest('.room-list').find('.room-left');
+            var parent2 = parent1.closest('.room-list-container li');
+            parent2.find('.option').toggle();
+            parent2.siblings().find('.hotel-detail, .option').hide();
         });
     }
     //=============== hotel end ======================

@@ -5564,8 +5564,6 @@ file: /Assets/travorama20/css/_page_flight.scss
           border: 3px solid #1daee4;
           background: #fff;
           display: none; }
-          .page-hotel .travorama-hotel .detail-hotel .room .hotel-detail.active {
-            display: block; }
           .page-hotel .travorama-hotel .detail-hotel .room .hotel-detail .col-left-top {
             border-bottom: 1px dashed #1daee4; }
             .page-hotel .travorama-hotel .detail-hotel .room .hotel-detail .col-left-top .hd-slider {
