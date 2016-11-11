@@ -59,7 +59,7 @@
                                 <h4 class="blue-txt uppercase"><b>@Model.HotelDetail.HotelName</b></h4>
                                 @if (Model.HotelDetail.StarRating == 0 || Model.HotelDetail.StarRating == 1)
                                 {
-                                    <p class ="star"></p>
+                                    <p class="star"></p>
                                 }
                                 @if (Model.HotelDetail.StarRating == 2)
                                 {
@@ -166,7 +166,7 @@
                                 <p>: @Model.HotelDetail.Rooms[0].Rates[0].RoomCount</p>
                             </div>
                         </div>
-                        
+
                         <div class="row grey-txt">
                             <div class="col-xs-3">
                                 <p>Rate Comment</p>
@@ -178,14 +178,14 @@
 
                         @if (Model.HotelDetail.SpecialRequest != null && Model.HotelDetail.SpecialRequest.Length != 0)
                         {
-                            <tr>
-                                <td width="160px" style="">
+                            <div class="row grey-txt">
+                                <div class="col-xs-3">
                                     <p style="color: #525252;">Permintaan Khusus</p>
-                                </td>
-                                <td width="480px" style="padding-left: 30px;">
-                                    <p style="">: @Model.HotelDetail.SpecialRequest</p>
-                                </td>
-                            </tr>
+                                </div>
+                                <div class="col-xs-9">
+                                    <p style="">@Model.HotelDetail.SpecialRequest</p>
+                                </div>
+                            </div>
                         }
                         <div class="row grey-txt">
                             <div class="col-xs-3">
@@ -201,8 +201,8 @@
                                     <p> : Tidak</p>
                                 }
                             </div>
-                                </div>
-                        
+                        </div>
+
                         <div class="row grey-txt">
                             <div class="col-xs-3">
                                 <p>Fasilitas</p>
@@ -222,15 +222,15 @@
                                 {
                                     if (Model.HotelDetail.Facilities.Other[f].Length != 0)
                                     {
-                                       
-                                         <p>@Model.HotelDetail.Facilities.Other[f]</p>
-                                            
+
+                                        <p>@Model.HotelDetail.Facilities.Other[f]</p>
+
                                     }
                                 }
                             </div>
                         </div>
-                        
-                        
+
+
                         <div class="row grey-txt">
                             <div class="col-xs-3">
                                 <p></p>
@@ -245,7 +245,7 @@
                                 </p>
                             </div>
                         </div>
-                        
+
                         <div class="row grey-txt">
                             <div class="col-xs-3">
                                 <p>Client Reference</p>
