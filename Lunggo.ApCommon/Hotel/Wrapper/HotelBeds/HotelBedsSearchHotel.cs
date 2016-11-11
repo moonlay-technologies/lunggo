@@ -132,6 +132,8 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds
                         DestinationCode = hotelResponse.destinationCode,
                         StarRating =  hotelResponse.categoryCode,
                         Review = hotelResponse.reviews,
+                        CheckInDate = condition.CheckIn,
+                        CheckOutDate = condition.Checkout,
                         Rooms = hotelResponse.rooms == null ? null : hotelResponse.rooms.Select(roomApi => new HotelRoom
                         {
                             RoomCode = roomApi.code,

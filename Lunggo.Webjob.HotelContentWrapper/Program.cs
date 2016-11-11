@@ -7,25 +7,28 @@ using System.Threading.Tasks;
 using Lunggo.ApCommon.Hotel.Service;
 using Lunggo.ApCommon.Hotel.Wrapper.Content;
 using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Content;
+using Lunggo.Framework.BlobStorage;
+using Lunggo.Framework.Config;
+using Lunggo.Framework.Database;
 using Lunggo.Framework.Documents;
 using Lunggo.Framework.TableStorage;
 
 namespace Lunggo.Webjob.HotelContentWrapper
 {
-    public class Program
+    partial class Program
     {
         static void Main(string[] args)
         {
-            //DocumentService.GetInstance().Init("https://travorama-development-docdb.documents.azure.com:443/", "64nWp0NH3XWQ2TGepOWrhqKQFBG4B2VeixUfnyfPqwpEAmLlvUx2ZyqvAwvlFluvDNnk7ofQXYQ8G6wbQPLwkw==", "travorama-local", "travorama-local");
-            TableStorageService.GetInstance().Init("DefaultEndpointsProtocol=https;AccountName=travoramalocal;AccountKey=t9BOHU0NktEB4qvBd7eSdXtSYabT/wDxnC2PndRtDNdQWymLUko6q0oKGICBZ0FoX7GLvGV9v4QSNYZPu98ZWw==");
-            // Create new stopwatch.
+            Init();
             Stopwatch stopwatch = new Stopwatch();
-
+            
             // Begin timing.
             stopwatch.Start();
+           
+
             //HotelService.GetInstance().SaveTruncatedHotelDetail();
             //HotelService.GetInstance().UpdateHotelAmenitiesContent();
-            HotelService.GetInstance().UpdateHotelListByLocationContent();
+            HotelService.GetInstance().SaveHotelDetailByLocation();
             //var obj = new GetHotel();
             //obj.GetHotelData();
             //Console.WriteLine("RateComment");
