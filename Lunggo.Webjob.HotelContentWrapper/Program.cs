@@ -25,10 +25,9 @@ namespace Lunggo.Webjob.HotelContentWrapper
             // Begin timing.
             stopwatch.Start();
            
-
             //HotelService.GetInstance().SaveTruncatedHotelDetail();
             //HotelService.GetInstance().UpdateHotelAmenitiesContent();
-            HotelService.GetInstance().SaveHotelDetailByLocation();
+            //HotelService.GetInstance().SaveHotelDetailByLocation();
             //var obj = new GetHotel();
             //obj.GetHotelData();
             //Console.WriteLine("RateComment");

@@ -36,6 +36,7 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
             var loadedImages = 0;
             var tempHotelImages = [];
             $.each($scope.hotel.images, function (key, value) {
+                
                 tempHotelImages.push("http://photos.hotelbeds.com/giata/bigger/" + value);
 
                 loadedImages++;

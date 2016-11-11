@@ -80,7 +80,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                 return null;
             //int i = 0;
             var convertedHotels = new List<HotelDetailForDisplay>();
-            Parallel.ForEach(hotelDetails, hotelDetail =>
+            foreach (var hotelDetail in hotelDetails)
             {
                 //i++;
                 var hotel = new HotelDetailForDisplay
@@ -120,7 +120,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                     PhonesNumbers = hotelDetail.PhonesNumbers
                 };
                 convertedHotels.Add(hotel);
-            });
+            }
             return convertedHotels;
         }
 
@@ -194,7 +194,7 @@ namespace Lunggo.ApCommon.Hotel.Service
         {
             var displayFacilities = new HotelFacilityForDisplay();
             var selected = facilities.Where(x => x.MustDisplay || x.IsAvailable);
-            Parallel.ForEach(selected, data =>
+            foreach (var data in selected)
             {
                 switch (data.FacilityGroupCode)
                 {
@@ -236,19 +236,17 @@ namespace Lunggo.ApCommon.Hotel.Service
                             displayFacilities.Other.Add(GetHotelFacilityDescId(Convert.ToInt32(data.FullFacilityCode)));
                         break;
                 }
-            });
+            }
             return displayFacilities;
         }
-
-
-
+        
         internal List<HotelRoomForDisplay> ConvertToHotelRoomForDisplay(List<HotelRoom> rooms)
         {
             if (rooms == null)
                 return null;
             var dictionary = GetInstance();
             var convertedRoom = new List<HotelRoomForDisplay>();
-            Parallel.ForEach(rooms, roomDetail =>
+            foreach (var roomDetail in rooms)
             {
                 var room = new HotelRoomForDisplay
                 {
@@ -265,7 +263,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                     Rates = ConvertToRateForDisplays(roomDetail.Rates)
                 };
                 convertedRoom.Add(room);
-            });
+            }
             return convertedRoom;
         }
 
@@ -296,7 +294,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                 return new List<HotelRateForDisplay>();
             var convertedRate = new List<HotelRateForDisplay>();
             var dictionary = GetInstance();
-            Parallel.ForEach(rates, rateDetail =>
+            foreach(var rateDetail in rates)
             {
                 var rate = new HotelRateForDisplay
                 {
@@ -320,7 +318,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                 };
                 SetDisplayPriceHotelRate(rate, rateDetail);
                 convertedRate.Add(rate);
-            });
+            }
             return convertedRate;
         }
 
