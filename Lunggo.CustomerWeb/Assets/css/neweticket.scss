@@ -148,6 +148,11 @@ Site Footer
 
 /*Voucher Hotel*/
 .page-hotel-voucher {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 12px;
+    h4 {font-size: 16px;}
+    h3 {font-size: 20px;}
+    .page-content {padding-bottom: 1cm;}
     .black-txt {color: #000000;}
     .blue-txt {color: #15b1e4;}
     .grey-txt {color: #525252;}
@@ -156,7 +161,10 @@ Site Footer
     .hotel-wrapper {width: 100%;
         .hotel-top {
             margin: 1cm 0 0.5cm;
-            border-bottom: 2px solid #15b1e4; 
+            &>p {
+                border-bottom: 2px solid #15b1e4;
+                margin-bottom: 0.5cm;
+            }
         }
         .hotel-middle {margin-top: 0.5cm;
             .right-side {
@@ -170,8 +178,8 @@ Site Footer
             border-top: 1px solid #ddd;
             .hotel-detail .row {margin-bottom: 0.25cm;}
         }
-        .img-wifi, .img-phone {padding-right: 5px;}
-        .img-swim, .img-email {
+        .img-wifi, .img-phone, .img-email{padding-right: 5px;}
+        .img-swim {
             padding-right: 5px; 
             padding-left: 15px;
         }

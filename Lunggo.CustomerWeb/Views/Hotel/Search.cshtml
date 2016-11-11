@@ -80,7 +80,7 @@
 
 
                         <div class="filter-group">
-                            <label class="filter-title">Bintang Hotel</label> - {{filter.stars}}
+                            <label class="filter-title">Bintang Hotel</label> @*- {{filter.stars}}*@
                             <div class="rating">
                                 <label class="sqr">
                                     <span class="checkbox"></span>
@@ -173,7 +173,10 @@
 
                     <div class="hotel-list-container">
                         <div class="hotel-list clearfix" ng-repeat="hotel in hotels" ng-click="GotoDetailHotel(hotel.hotelCd)" style="cursor:pointer">
-                            <div class="col-left-hotel"><img class="img-list" ng-src="http://photos.hotelbeds.com/giata/{{hotel.mainImage}}" alt="Hotel" /></div>
+                            <div class="col-left-hotel">
+                                <img class="img-list" ng-src="http://photos.hotelbeds.com/giata/{{hotel.mainImage}}" alt="Hotel" />
+                                @*<img class="img-list" src="/Assets/travorama20/images/Hotel/no-hotel.png" alt="Hotel" />*@
+                            </div>
                             <div class="col-right-hotel">
                                 <div class="clearfix">
                                     <div class="col-8 blue-txt bg">{{hotel.hotelName}}</div>
