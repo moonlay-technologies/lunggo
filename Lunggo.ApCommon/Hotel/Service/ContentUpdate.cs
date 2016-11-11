@@ -24,15 +24,15 @@ namespace Lunggo.ApCommon.Hotel.Service
                 {
                     var hotel = GetInstance().GetHotelDetailFromTableStorage(i);
                     Console.WriteLine("hotelCd: " + i);
+                    var imageHotel = hotel.ImageUrl == null ? null : hotel.ImageUrl.Where(u => u.Type == "GEN").Take(1).FirstOrDefault();
                     var truncatedHotelDetail = new HotelDetailsBase
                     {
                         HotelName = hotel.HotelName,
                         StarRating = hotel.StarRating,
-                        ImageUrl = hotel.ImageUrl != null && (hotel.ImageUrl != null || hotel.ImageUrl.Count != 0) ?
-                        new List<Image>
+                        ImageUrl = imageHotel== null ?null:new List<Image>
                         {
-                            hotel.ImageUrl.Where(u => u.Order == 1).Take(1).FirstOrDefault()
-                        } : null,
+                            imageHotel
+                        },
                         WifiAccess = hotel.Facilities != null && 
                             ((hotel.Facilities != null || hotel.Facilities.Count != 0) && 
                             hotel.Facilities.Any(f => (f.FacilityGroupCode == 60 && f.FacilityCode == 261) 
