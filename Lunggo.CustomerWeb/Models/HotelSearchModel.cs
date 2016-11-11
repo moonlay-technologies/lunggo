@@ -14,40 +14,51 @@ namespace Lunggo.CustomerWeb.Models
         [JsonProperty("bbb")]
         public string name { get; set; }
     }
-
+    enum RequestParam
+    {
+        SearchHotelType = 0,      
+        Location       = 1, 
+        CheckinDate    = 2, 
+        CheckoutDate   = 3, 
+        AdultCount     = 4, 
+        ChildCount     = 5, 
+        NightCount     = 6, 
+        RoomCount      = 7,
+        ChildrenAges   = 8
+    }
    
-
     public class HotelSearchApiRequest
     {
+        [JsonProperty("searchHotelType")]
+        public string SearchHotelType { get; set; }
         [JsonProperty("location")]
         public string Location { get; set; }
         [JsonProperty("checkinDate")]
         public DateTime CheckinDate { get; set; }
         [JsonProperty("checkoutDate")]
         public DateTime CheckoutDate { get; set; }
-        [JsonProperty("roomCount")]
-        public int RoomCount { get; set; }
         [JsonProperty("adultCount")]
         public int AdultCount { get; set; }
         [JsonProperty("childCount")]
         public int ChildCount { get; set; }
-        [JsonProperty("filter")]
-        public HotelRequestFilter Filter { get; set; }
-        [JsonProperty("sorting")]
-        public HotelRequestSorting Sorting { get; set; }
+        [JsonProperty("nightCount")]
+        public int NightCount { get; set; }
+        [JsonProperty("roomCount")]
+        public int RoomCount { get; set; }
+        [JsonProperty("childrenAges")]
+        public string[] ChildrenAges { get; set; }
 
-        public HotelSearchApiRequest(string queryString) {
+        public HotelSearchApiRequest(string queryString)
+        {
             List<string> query = queryString.Split('.').ToList<string>();
-            Location = query[0];
-            //DateTime tempDate = new DateTime();
-            //DateTime.TryParse(query[1], out tempDate) = true ? CheckinDate = tempDate : ;
-            CheckinDate = DateTime.Parse(query[1]);
-            CheckoutDate = DateTime.Parse(query[2]);
-            RoomCount = int.Parse(query[4]);
-            AdultCount = int.Parse(query[5]);
-            ChildCount = int.Parse(query[6]);
-           
-           
+            Location = query[(int)RequestParam.Location];
+            CheckinDate = DateTime.Parse(query[(int)RequestParam.CheckinDate]);
+            CheckoutDate = DateTime.Parse(query[(int)RequestParam.CheckoutDate]);
+            AdultCount = int.Parse(query[(int)RequestParam.AdultCount]);
+            ChildCount = int.Parse(query[(int)RequestParam.ChildCount]);
+            NightCount = int.Parse(query[(int)RequestParam.NightCount]);
+            RoomCount = int.Parse(query[(int)RequestParam.RoomCount]);
+            ChildrenAges = query[(int)RequestParam.ChildrenAges].Split(',').ToArray<string>();
         }
     }
 

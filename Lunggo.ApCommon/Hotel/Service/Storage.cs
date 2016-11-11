@@ -7,9 +7,12 @@ using System.Text;
 using System.Threading.Tasks;
 using Lunggo.ApCommon.Hotel.Model;
 using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Sdk.auto.model;
+using Lunggo.Framework.BlobStorage;
 using Lunggo.Framework.Extension;
+using Lunggo.Framework.SharedModel;
 using Lunggo.Framework.TableStorage;
 using Microsoft.WindowsAzure.Storage.Table;
+using StackExchange.Redis;
 
 namespace Lunggo.ApCommon.Hotel.Service
 {
@@ -52,6 +55,40 @@ namespace Lunggo.ApCommon.Hotel.Service
                     table.ExecuteQuery(query).Select(r => r["HotelCode"].StringValue.Split(',')).ToList();
                 return hotelCodes.SelectMany(s => s).Select(int.Parse).ToList();
             }
+        }
+
+        public void SaveHotelDetailByLocation()
+        {
+            var location = GetAllLocations();
+            foreach (var loc in location)
+            {
+                Console.WriteLine("location: " + loc);
+                var hotelCds = GetHotelListByLocationFromStorage(loc);
+                var hotelDetailDict = hotelCds.ToDictionary(hotelCd => hotelCd, GetHotelDetailFromTableStorage);
+
+                BlobStorageService.GetInstance().WriteFileToBlob(new BlobWriteDto
+                    {
+                        FileBlobModel = new FileBlobModel
+                        {
+                            Container = "HotelDetailByLocation",
+                            FileInfo = new FileInfo
+                            {
+                                ContentType = "",
+                                FileData = hotelDetailDict.ToCacheObject(),
+                                FileName = loc
+                            }
+                        },
+                        SaveMethod = SaveMethod.Force
+                    });
+                Console.WriteLine("Done saving hotel details for location: " + loc);
+            }
+        }
+
+        public Dictionary<int, HotelDetailsBase> GetHotelDetailByLocation(string location)
+        {
+            var blob = BlobStorageService.GetInstance().GetByteArrayByFileInContainer(location, "HotelDetailByLocation");
+            var value = (RedisValue) blob;
+            return value.DeconvertTo<Dictionary<int, HotelDetailsBase>>();
         }
 
         public void SaveHotelDetailToTableStorage(HotelDetailsBase hotelDetail, int hotelCd)

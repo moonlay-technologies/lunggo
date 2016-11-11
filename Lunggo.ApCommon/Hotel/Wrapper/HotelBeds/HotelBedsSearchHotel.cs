@@ -132,11 +132,13 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds
                         DestinationCode = hotelResponse.destinationCode,
                         StarRating =  hotelResponse.categoryCode,
                         Review = hotelResponse.reviews,
+                        CheckInDate = condition.CheckIn,
+                        CheckOutDate = condition.Checkout,
                         Rooms = hotelResponse.rooms == null ? null : hotelResponse.rooms.Select(roomApi => new HotelRoom
                         {
                             RoomCode = roomApi.code,
                             Type = roomApi.code.Substring(0, 3),
-                            TypeName = lang == "EN" ? HotelService.GetInstance().GetHotelRoomTypeDescEn(roomApi.code.Substring(0, 3)) :
+                            TypeName = lang == "en" ? HotelService.GetInstance().GetHotelRoomTypeDescEn(roomApi.code.Substring(0, 3)) :
                             HotelService.GetInstance().GetHotelRoomTypeDescId(roomApi.code.Substring(0, 3)),
                             RoomName = roomApi.name,
                             Rates = roomApi.rates == null ? null : roomApi.rates.Select(x =>

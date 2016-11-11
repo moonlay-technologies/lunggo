@@ -82,7 +82,7 @@
         {
             
         }
-        return text;
+        return text.Length == 0 ? "" : text.Substring(0, text.Length - 1);
     }
 
     public string ApplyTitleCase(string input)
@@ -121,7 +121,8 @@
     @if (Model is HotelReservationForDisplay)
         {
             var hotel = Model as HotelReservationForDisplay;
-            @:var hotelDetails = '@hotel.HotelDetail.';
+            @:var hotelDetails = '@hotel.HotelDetail';
+            @:var rating = '@hotel.HotelDetail.StarRating'
             @:var originalFare = '@hotel.HotelDetail.OriginalFare';
             @:var netFare = '@hotel.HotelDetail.NetFare';
             @:var totalRoom = '@hotel.HotelDetail.Rooms.SelectMany(r => r.Rates).Sum(p => p.RoomCount)';
@@ -416,7 +417,8 @@
                                                 <div class="star star-4" ng-show="hotelstar() == 'star star-4'"></div>
                                                 <div class="star star-5" ng-show="hotelstar() == 'star star-5'"></div>
                                                 <div class="rh-location">
-                                                   @ToTitleCase(reservation.HotelDetail.Address)
+                                                   @ToTitleCase(reservation.HotelDetail.Address), @ToTitleCase(reservation.HotelDetail.ZoneName),
+                                                @ToTitleCase(reservation.HotelDetail.DestinationName), @ToTitleCase(reservation.HotelDetail.CountryName)
                                                 </div>
                                                 <div class="rh-detail">
                                                     <div class="wb-container clearfix">
@@ -482,7 +484,7 @@
                                                                 <div class="wb-container clearfix">
                                                                     <div class="wb-left">Rate Comment</div>
                                                                     <div class="wb-mid">:</div>
-                                                                    <div class="wb-right bold-txt">@rate.RateCommentsId</div>
+                                                                    <div class="wb-right bold-txt">@String.Join(". ", rate.TermAndCondition)</div>
                                                                 </div>
                                                                 <div class="wb-container clearfix">
                                                                     <div class="wb-left">Ketentuan Pembatalan</div>

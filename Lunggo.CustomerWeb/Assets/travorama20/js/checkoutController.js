@@ -981,22 +981,6 @@ app.controller('confirmationController', [
             return hours + "j " + minutes + "m";
         }
 
-        function daysBetween(date1, date2) {
-
-            // The number of milliseconds in one day
-            var ONE_DAY = 1000 * 60 * 60 * 24
-
-            // Convert both dates to milliseconds
-            var date1_ms = date1.getTime()
-            var date2_ms = date2.getTime()
-
-            // Calculate the difference in milliseconds
-            var difference_ms = Math.abs(date1_ms - date2_ms)
-
-            // Convert back to days and return
-            return Math.round(difference_ms / ONE_DAY)
-        }
-
         $scope.capitalizeFirstLetter = function (sentence) {
             var words = sentence.split(" ");
             var text = "";
@@ -1011,6 +995,24 @@ app.controller('confirmationController', [
         $scope.checkin = checkin;
         $scope.checkout = checkout;
         $scope.nights = nights;
+        $scope.rating = rating;
+        $scope.hotelstar = function () {
+            if ($scope.rating == 1) {
+                return 'star';
+            }
+            if ($scope.rating == 2) {
+                return 'star star-2';
+            }
+            if ($scope.rating == 3) {
+                return 'star star-3';
+            }
+            if ($scope.rating == 4) {
+                return 'star star-4';
+            }
+            if ($scope.rating == 5) {
+                return 'star star-5';
+            }
+        }
 
     }
 ]);// confirmation controller
@@ -1074,22 +1076,6 @@ app.controller('thankyouController', [
             }, 15000);
         }
 
-        function daysBetween(date1, date2) {
-
-            // The number of milliseconds in one day
-            var ONE_DAY = 1000 * 60 * 60 * 24
-
-            // Convert both dates to milliseconds
-            var date1_ms = date1.getTime()
-            var date2_ms = date2.getTime()
-
-            // Calculate the difference in milliseconds
-            var difference_ms = Math.abs(date1_ms - date2_ms)
-
-            // Convert back to days and return
-            return Math.round(difference_ms / ONE_DAY)
-        }
-
         $scope.capitalizeFirstLetter = function (sentence) {
             var words = sentence.split(" ");
             var text = "";
@@ -1099,6 +1085,7 @@ app.controller('thankyouController', [
             return text;
         }
 
+
         $scope.hotelDetails = hotelDetails;
         $scope.totalRoom = totalRoom;
         $scope.checkin = checkin;
@@ -1107,5 +1094,23 @@ app.controller('thankyouController', [
 
         $scope.roomService = 0;
         $scope.netFare = netFare;
+        $scope.rating = rating;
+        $scope.hotelstar = function () {
+            if ($scope.rating == 1) {
+                return 'star';
+            }
+            if ($scope.rating == 2) {
+                return 'star star-2';
+            }
+            if ($scope.rating == 3) {
+                return 'star star-3';
+            }
+            if ($scope.rating == 4) {
+                return 'star star-4';
+            }
+            if ($scope.rating == 5) {
+                return 'star star-5';
+            }
+        }
     }
 ]);// confirmation controller

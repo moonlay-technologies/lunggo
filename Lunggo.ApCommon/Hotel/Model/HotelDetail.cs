@@ -157,6 +157,17 @@ namespace Lunggo.ApCommon.Hotel.Model
         public DateTime CheckOutDate { get; set; }
         [JsonProperty("night", NullValueHandling = NullValueHandling.Ignore)]
         public int NightCount { get; set; }
+        [JsonProperty("supplierName", NullValueHandling = NullValueHandling.Ignore)]
+        public string SupplierName { get; set; }
+        [JsonProperty("supplierVat", NullValueHandling = NullValueHandling.Ignore)]
+        public string SupplierVat { get; set; }
+        [JsonProperty("specialRq", NullValueHandling = NullValueHandling.Ignore)]
+        public string SpecialRequest { get; set; }
+        [JsonProperty("bookingReference", NullValueHandling = NullValueHandling.Ignore)]
+        public string BookingReference { get; set; }
+        [JsonProperty("clientReference", NullValueHandling = NullValueHandling.Ignore)]
+        public string ClientReference { get; set; }
+
     }
 
     public class POI
@@ -217,16 +228,6 @@ namespace Lunggo.ApCommon.Hotel.Model
         public int TotalAdult { get; set; }
         [JsonProperty("totalChildren", NullValueHandling = NullValueHandling.Ignore)]
         public int TotalChildren { get; set; }
-        [JsonProperty("supplierName", NullValueHandling = NullValueHandling.Ignore)]
-        public string SupplierName { get; set; }
-        [JsonProperty("supplierVat", NullValueHandling = NullValueHandling.Ignore)]
-        public string SupplierVat { get; set; }
-        [JsonProperty("specialRq", NullValueHandling = NullValueHandling.Ignore)]
-        public string SpecialRequest { get; set; }
-        [JsonProperty("bookingReference", NullValueHandling = NullValueHandling.Ignore)]
-        public string BookingReference { get; set; }
-        [JsonProperty("clientReference", NullValueHandling = NullValueHandling.Ignore)]
-        public string ClientReference { get; set; }
     }
 
     public class Segment
