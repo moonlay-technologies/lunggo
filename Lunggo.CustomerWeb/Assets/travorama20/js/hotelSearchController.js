@@ -111,17 +111,9 @@ app.controller('hotelSearchController', ['$scope', '$log', '$http', '$resource',
                     "minPrice": $scope.filter.minPrice,
                     "maxPrice": $scope.filter.maxPrice
                 },
-                "zoneFilter":
-                {
-                    "zones": $scope.filter.zones
-                },
-                "starFilter":
-                {
-                    "stars": $scope.filter.stars
-                },
-                "facilityFilter": {
-                    "facilities": $scope.filter.facilities
-                }
+                "zoneFilter": $scope.filter.zones,
+                "starFilter":$scope.filter.stars,
+                "facilityFilter": $scope.filter.facilities
             },
             "hotelSorting": $scope.sorting,//"DESCENDINGPRICE",
             "page": $scope.page,
@@ -154,17 +146,9 @@ app.controller('hotelSearchController', ['$scope', '$log', '$http', '$resource',
                     "minPrice": $scope.filter.minPrice,
                     "maxPrice": $scope.filter.maxPrice
                 },
-                "zoneFilter":
-                {
-                    "zones": $scope.filter.zones
-                },
-                "starFilter":
-                {
-                    "stars": $scope.filter.stars
-                },
-                "facilityFilter": {
-                    "facilities": $scope.filter.facilities
-                }
+                "zoneFilter": $scope.filter.zones,
+                "starFilter": $scope.filter.stars,
+                "facilityFilter": $scope.filter.facilities
             },
             "hotelSorting": $scope.sorting,//"DESCENDINGPRICE",
             "page": $scope.page,
