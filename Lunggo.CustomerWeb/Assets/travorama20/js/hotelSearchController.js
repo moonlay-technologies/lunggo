@@ -16,7 +16,6 @@ app.controller('hotelSearchController', ['$scope', '$log', '$http', '$resource',
     $scope.hotel.searchId = null;
     //$scope.hotel.searchId = "d3eaa926-7bb1-4a08-bfed-824b14968a50";
     $scope.hotel.location = "BALI";
-    $scope.hotel.locationDisplay = "";
     $scope.hotel.checkinDate = "12/10/2016";
     $scope.hotel.checkoutDate = "12/11/2016";
     $scope.hotel.adultCount = 3;
@@ -37,8 +36,7 @@ app.controller('hotelSearchController', ['$scope', '$log', '$http', '$resource',
     $scope.perPage = 10;
     $scope.pageCount = 1;
     $scope.searchHeader = {};
-    $scope.view = {};
-    $scope.view.showHotelSearch = false;
+
 
     var resource = $resource(HotelSearchConfig.Url,
             {},
@@ -50,27 +48,7 @@ app.controller('hotelSearchController', ['$scope', '$log', '$http', '$resource',
                 }
             }
         );
-    var resourcex = $resource(HotelAutocompleteConfig.Url + '/:prefix',
-           { prefix: '@prefix' },
-           {
-               query: {
-                   method: 'GET',
-                   params: {},
-                   isArray: false
-               }
-           }
-       );
 
-    $scope.$watch('hotel.locationDisplay', function (newValue, oldValue, ccc) {
-        if (newValue.length >= 3) {
-            resourcex.query({ prefix: newValue }).$promise.then(function (data) {
-                $timeout(function () {
-                    $scope.hotel.hotelAutocomplete = data.hotelAutocomplete;
-                    $log.debug($scope.hotel.hotelAutocomplete);
-                }, 0);
-            });
-        }
-    });
     $scope.init = function (model) {
         $scope.model = model;
         $log.debug($scope.model);
@@ -99,11 +77,11 @@ app.controller('hotelSearchController', ['$scope', '$log', '$http', '$resource',
             "nightCount": $scope.hotel.nightCount,
             "occupancies":
                 [{
-                    "adultCount": $scope.hotel.adultCount,
-                    "childCount": $scope.hotel.childCount,
-                    "roomCount": $scope.hotel.roomCount,
+            "adultCount": $scope.hotel.adultCount,
+            "childCount": $scope.hotel.childCount,
+            "roomCount": $scope.hotel.roomCount,
                     "childrenAges": $scope.hotel.childrenAges
-                }],
+                }], 
             "hotelFilter":
             {
                 "priceFilter":
@@ -173,7 +151,7 @@ app.controller('hotelSearchController', ['$scope', '$log', '$http', '$resource',
             if (isFirstload) {
                 $scope.filter.minPrice = data.minPrice;
                 $scope.filter.maxPrice = data.maxPrice;
-                initiatePriceSlider();
+            initiatePriceSlider();
 
                 $scope.hotelFilterDisplayInfo = data.hotelFilterDisplayInfo;
                 isFirstload = false;
