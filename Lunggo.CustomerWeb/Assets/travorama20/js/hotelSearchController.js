@@ -5,7 +5,7 @@ app.controller('hotelSearchController', ['$scope', '$log', '$http', '$resource',
     $scope.hotels = [];
     $scope.totalActualHotel = '';
     $scope.hotelFilterDisplayInfo = undefined;
-    $scope.loc = loc;
+
     $scope.filterDisabled = true;
     var isFirstload = true;
 
@@ -14,6 +14,7 @@ app.controller('hotelSearchController', ['$scope', '$log', '$http', '$resource',
     $scope.hotel = {};
     $scope.hotel.searchHotelType = { "location": 'Location', searchId: 'SearchId'};
     $scope.hotel.searchId = null;
+    //$scope.hotel.searchId = "d3eaa926-7bb1-4a08-bfed-824b14968a50";
     $scope.hotel.location = "BALI";
     $scope.hotel.checkinDate = "12/10/2016";
     $scope.hotel.checkoutDate = "12/11/2016";
@@ -31,6 +32,9 @@ app.controller('hotelSearchController', ['$scope', '$log', '$http', '$resource',
     $scope.filter.facilities = null;
     $scope.sorting = '';
 
+    $scope.page = 1;
+    $scope.perPage = 10;
+    $scope.pageCount = 1;
     $scope.searchHeader = {};
 
 
@@ -58,14 +62,12 @@ app.controller('hotelSearchController', ['$scope', '$log', '$http', '$resource',
         $scope.hotel.roomCount = $scope.model.roomCount;
         $scope.hotel.childrenAges = $scope.model.childrenAges;
 
-
         $scope.searchHotel();
     }
 
     $scope.searchHotel = function (filter, sort) {
-        $log.debug('searching hotel');
-
-        resource.query( {}, {
+        $log.debug('searching hotel: ');
+        $log.debug({
             "searchHotelType": $scope.hotel.searchId == null ? $scope.hotel.searchHotelType.location : $scope.hotel.searchHotelType.searchId,
             "searchId": $scope.hotel.searchId,
 
@@ -87,46 +89,77 @@ app.controller('hotelSearchController', ['$scope', '$log', '$http', '$resource',
                     "minPrice": $scope.filter.minPrice,
                     "maxPrice": $scope.filter.maxPrice
                 },
-                //"zoneFilter":
-                //{
-                //    "zones": null//$scope.filter.zones
-                //},
-                //"starFilter":
-                //{
-                //    "stars": $scope.filter.stars
-                //},
-                //"facilityFilter": {
-                //    "facilities": $scope.filter.facilities
-                //}
+                "zoneFilter": $scope.filter.zones,
+                "starFilter":$scope.filter.stars,
+                "facilityFilter": $scope.filter.facilities
             },
-            "hotelSorting": $scope.sorting
+            "hotelSorting": $scope.sorting,//"DESCENDINGPRICE",
+            "page": $scope.page,
+            "perPage": $scope.perPage,
+            "regsId": $scope.regsId
             //"hotelSorting": "ASCENDINGPRICE"
-        }).$promise.then(function(data) {
+        });
+        $scope.searchDone = false;
+
+
+        resource.query( {}, {
+            "searchHotelType": $scope.hotel.searchId == null ? $scope.hotel.searchHotelType.location : $scope.hotel.searchHotelType.searchId,
+            "searchId": $scope.hotel.searchId,
+
+            "location": $scope.hotel.location,
+            "checkinDate": $scope.hotel.checkinDate,
+            "checkoutDate": moment($scope.model.checkinDate).add($scope.hotel.nightCount, 'days').format("YYYY-MM-DD"),
+            "nightCount": $scope.hotel.nightCount,
+            "occupancies":
+                [{
+                    "adultCount": $scope.hotel.adultCount,
+                    "childCount": $scope.hotel.childCount,
+                    "roomCount": $scope.hotel.roomCount,
+                    "childrenAges": $scope.hotel.childrenAges
+                }], 
+            "hotelFilter":
+            {
+                "priceFilter":
+                {
+                    "minPrice": $scope.filter.minPrice,
+                    "maxPrice": $scope.filter.maxPrice
+                },
+                "zoneFilter": $scope.filter.zones,
+                "starFilter": $scope.filter.stars,
+                "facilityFilter": $scope.filter.facilities
+            },
+            "hotelSorting": $scope.sorting,//"DESCENDINGPRICE",
+            "page": $scope.page,
+            "perPage": $scope.perPage,
+            "regsId": $scope.regsId
+            //"hotelSorting": "ASCENDINGPRICE"
+        }).$promise.then(function (data) {
 
             $scope.searchDone = true;
-            $scope.hotel.searchId = data.searchId;
+            if (data.searchId !== undefined) $scope.hotel.searchId = data.searchId;
+
             $scope.hotels = data.hotels;
             $scope.totalActualHotel = data.returnedHotelCount;
-            $scope.hotelFilterDisplayInfo = data.hotelFilterDisplayInfo;
             $scope.returnedHotelCount = data.returnedHotelCount;
+            $scope.filteredHotelCount = data.filteredHotelCount;
+            
+            $scope.page = data.page;
+            $scope.perPage = data.perPage;
+            $scope.pageCount = data.pageCount;
+
 
             if (isFirstload) {
                 $scope.filter.minPrice = data.minPrice;
                 $scope.filter.maxPrice = data.maxPrice;
             initiatePriceSlider();
+
+                $scope.hotelFilterDisplayInfo = data.hotelFilterDisplayInfo;
                 isFirstload = false;
             }
 
             $timeout(function () { customCheckbox(); }, 0);
             $log.debug(data);
         });
-
-        //if (filter != undefined || sort != undefined) {
-        //    location.href = '/id/Hotel/Search/' + $scope.hotel.filterParam();
-        //}
-        //else {
-        //    location.href = '/id/Hotel/Search/' + $scope.hotel.searchParam();
-        //}
     };
 
     $scope.hotel.searchParam = function () {
@@ -225,4 +258,20 @@ app.controller('hotelSearchController', ['$scope', '$log', '$http', '$resource',
             });
         }, 0);
     });
+
+    $scope.prevPage = function () {
+        $scope.page--;
+        $scope.searchHotel();
+    }
+
+    $scope.nextPage = function () {
+        $scope.page++;
+        $scope.searchHotel();
+    }
+
+    $scope.changePage = function (pageNumber) {
+        $scope.page = pageNumber;
+        $scope.searchHotel();
+    }
+
 }]);

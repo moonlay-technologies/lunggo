@@ -33,7 +33,7 @@ namespace Lunggo.ApCommon.Hotel.Service
             public string Name { get; set; }
             public Hotels Hotel { get; set; }
             public string DestinationCode { get; set; }
-        }
+        }	
 
         public class Hotels
         {
@@ -44,7 +44,7 @@ namespace Lunggo.ApCommon.Hotel.Service
         {
             public string Code { get; set; }
             public List<string> FacilityCode { get; set; }
-        }	
+        }
 
         public class FacilityGroup
         {
@@ -731,7 +731,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                 }
             }
         }
-        
+
         private static void PopulateHotelCountriesDict(String hotelCountriesFilePath)
         {
             GetInstance().HotelCountry = new Dictionary<string, CountryDict>();
@@ -793,8 +793,8 @@ namespace Lunggo.ApCommon.Hotel.Service
                                         }
                                     },
                                     CountryCode = splittedLine[2]
+                                    }
                                 }
-                            }
                         };
                         Countries.Add(newCountry);
                         
@@ -900,8 +900,8 @@ namespace Lunggo.ApCommon.Hotel.Service
             var value = new Autocomplete();
             _Autocompletes.TryGetValue(id, out value);
             return value;
-        }
-
+            }
+                
         //GET METHODS REGARDING SEGMENT
         public string GetHotelSegmentId(string code)
         {
@@ -933,8 +933,8 @@ namespace Lunggo.ApCommon.Hotel.Service
                 return facility;
             }
 
-            return new Facility();
-        }
+                return new Facility();
+            }
 
         public string GetHotelFacilityDescId(int code)
         {
@@ -943,8 +943,8 @@ namespace Lunggo.ApCommon.Hotel.Service
                 return facility.NameId;
             }
 
-            return "";
-        }
+                return "";
+            }
 
         public string GetHotelFacilityDescEn(int code)
         {
@@ -953,21 +953,21 @@ namespace Lunggo.ApCommon.Hotel.Service
                 return facility.NameEn;
             }
 
-            return "";
-        }
+                return "";
+            }
 
         public string GetHotelFacilityGroupId(int code)
         {
             var value = "";
             HotelFacilityGroupDictId.TryGetValue(code, out value);
             return value;
-        }
+            }
         public string GetHotelFacilityGroupEng(int code)
         {
             var value = "";
             HotelFacilityGroupDictEng.TryGetValue(code, out value);
             return value;
-        }
+            }
         public Facility GetHotelRoomFacility(int code)
         {
             var value = new Facility();
@@ -982,8 +982,8 @@ namespace Lunggo.ApCommon.Hotel.Service
                 return facility.NameId;
             }
 
-            return "";
-        }
+                return "";
+            }
 
         public string GetHotelRoomFacilityDescEn(int roomFacilityCd)
         {
@@ -992,8 +992,8 @@ namespace Lunggo.ApCommon.Hotel.Service
                 return facility.NameEn;
             }
 
-            return "";            
-        }
+                return "";
+            }
 
         public List<Facility> GetAllFacilitiesInAGroup(int cd)
         {
@@ -1002,27 +1002,27 @@ namespace Lunggo.ApCommon.Hotel.Service
                 return @group.Facilities;
             }
 
-            return new List<Facility>();
-        }
+                return new List<Facility>();
+            }
 
         public string GetNameOfFacilityGroup(int facilityCd, string lang)
         {
             if (lang == "EN")
             {
                 foreach (var @group in FacilityGroups.Where(@group => @group.Code == facilityCd/1000))
-                {
+            {
                     return @group.NameEn;
                 }
             }
             else
             {
                 foreach (var @group in FacilityGroups.Where(@group => @group.Code == facilityCd / 1000))
-                {
+            {
                     return @group.NameId;
                 }
             }
             
-            return "";
+                return "";
             
         }
 
@@ -1039,8 +1039,8 @@ namespace Lunggo.ApCommon.Hotel.Service
                 return room;
             }
 
-            return new Room();
-        }
+                return new Room();
+            }
 
         public string GetHotelRoomDescEn(String cd)
         {
@@ -1053,8 +1053,8 @@ namespace Lunggo.ApCommon.Hotel.Service
                 return room.RoomDescEn;
             }
 
-            return "";
-        }
+                return "";
+            }
 
         public string GetHotelRoomDescId(String cd)
         {
@@ -1067,8 +1067,8 @@ namespace Lunggo.ApCommon.Hotel.Service
                 return room.RoomDescId;
             }
 
-            return "";
-        }
+                return "";
+            }
 
         public int GetMaxAdult(string code)
         {
@@ -1148,7 +1148,7 @@ namespace Lunggo.ApCommon.Hotel.Service
             var found = HotelRoomCharacteristicDict.TryGetValue(code, out value);
             return found ? value.CharacteristicDescId : "";
         }
-        
+
         public RateClass GetHotelRoomRateClass(string code)
         {
             if (code == null)
@@ -1293,8 +1293,8 @@ namespace Lunggo.ApCommon.Hotel.Service
                 return country.Code;
             }
 
-            return "";
-        }
+                return "";
+            }
 
         //GET METHODS REGARDING DESTINATION AND ZONE
         public Country GetHotelCountryFromMasterList(string countryCode)
@@ -1307,8 +1307,8 @@ namespace Lunggo.ApCommon.Hotel.Service
             {
                 return country;
             }
-            return new Country();
-        }
+                return new Country();
+            }
 
         public Country GetCountryNameFromDict(string countryCode)
         {
@@ -1378,7 +1378,7 @@ namespace Lunggo.ApCommon.Hotel.Service
             var zone = new Zone();
             var foundZone = HotelDestinationZoneDict.TryGetValue(value, out zone);
             return foundZone ? zone : new Zone();
-        }
+            }
 
         public Destination GetDestinationFromZone(string zoneCd)
         {
@@ -1417,7 +1417,7 @@ namespace Lunggo.ApCommon.Hotel.Service
             var found = HotelChains.TryGetValue(code, out value);
             return found ? value.Description : "";
         }
-        
+
         //GETTER FOR HOTEL ACCOMODATION
         public Accommodation GetHotelAccomodation(string code)
         {
@@ -1428,7 +1428,7 @@ namespace Lunggo.ApCommon.Hotel.Service
             var value = new Accommodation();
             HotelAccomodations.TryGetValue(code, out value);
             return value;
-        }
+            }
 
         public string GetHotelAccomodationMultiDesc(string code)
         {
@@ -1496,7 +1496,7 @@ namespace Lunggo.ApCommon.Hotel.Service
             var found = HotelBoards.TryGetValue(code, out value);
             return found ? value.NameId : "";
         }
-        
+
         //GETTER FOR HOTEL CATEGORY
         public Category GetHotelCategory(string code)
         {

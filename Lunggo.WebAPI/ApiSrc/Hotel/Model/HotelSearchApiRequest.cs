@@ -42,6 +42,8 @@ namespace Lunggo.WebAPI.ApiSrc.Hotel.Model
         public int Page { get; set; }
         [JsonProperty("perPage")]
         public int PerPage { get; set; }
+        [JsonProperty("pageCount")]
+        public int PageCount { get; set; }
 
 
     }
