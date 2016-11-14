@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -78,11 +79,9 @@ namespace Lunggo.ApCommon.Hotel.Service
         {
             if (hotelDetails == null)
                 return null;
-            //int i = 0;
-            var convertedHotels = new List<HotelDetailForDisplay>();
-            foreach (var hotelDetail in hotelDetails)
+            var convertedHotels = new ConcurrentBag<HotelDetailForDisplay>();
+            Parallel.ForEach(hotelDetails, hotelDetail =>
             {
-                //i++;
                 var hotel = new HotelDetailForDisplay
                 {
                     HotelCode = hotelDetail.HotelCode,
@@ -126,8 +125,8 @@ namespace Lunggo.ApCommon.Hotel.Service
                     PhonesNumbers = hotelDetail.PhonesNumbers
                 };
                 convertedHotels.Add(hotel);
-            }
-            return convertedHotels;
+            });
+            return convertedHotels.ToList();
         }
 
 
@@ -245,14 +244,14 @@ namespace Lunggo.ApCommon.Hotel.Service
             }
             return displayFacilities;
         }
-        
+
         internal List<HotelRoomForDisplay> ConvertToHotelRoomForDisplay(List<HotelRoom> rooms)
         {
             if (rooms == null)
                 return null;
             var dictionary = GetInstance();
-            var convertedRoom = new List<HotelRoomForDisplay>();
-            foreach (var roomDetail in rooms)
+            var convertedRoom = new ConcurrentBag<HotelRoomForDisplay>();
+            Parallel.ForEach(rooms, roomDetail =>
             {
                 var room = new HotelRoomForDisplay
                 {
@@ -260,7 +259,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                     RoomName = roomDetail.RoomName ?? GetHotelRoomDescId(roomDetail.RoomCode),
                     Type = roomDetail.Type,
                     PaxCapacity = GetPaxCapacity(roomDetail.RoomCode),
-                    TypeName = dictionary.GetHotelRoomRateTypeId(roomDetail.Type),
+                    //TypeName = dictionary.GetHotelRoomRateTypeId(roomDetail.Type),
                     CharacteristicCode = roomDetail.characteristicCd,
                     //CharacteristicName = dictionary.GetHotelRoomRateTypeId(roomDetail.characteristicCd),
                     Images = roomDetail.Images != null ? roomDetail.Images : null,
@@ -269,8 +268,8 @@ namespace Lunggo.ApCommon.Hotel.Service
                     Rates = ConvertToRateForDisplays(roomDetail.Rates)
                 };
                 convertedRoom.Add(room);
-            }
-            return convertedRoom;
+            });
+            return convertedRoom.ToList();
         }
 
 
@@ -298,9 +297,9 @@ namespace Lunggo.ApCommon.Hotel.Service
         {
             if(rates == null)
                 return new List<HotelRateForDisplay>();
-            var convertedRate = new List<HotelRateForDisplay>();
+            var convertedRate = new ConcurrentBag<HotelRateForDisplay>();
             var dictionary = GetInstance();
-            foreach(var rateDetail in rates)
+            Parallel.ForEach(rates,rateDetail =>
             {
                 var rate = new HotelRateForDisplay
                 {
@@ -324,8 +323,8 @@ namespace Lunggo.ApCommon.Hotel.Service
                 };
                 SetDisplayPriceHotelRate(rate, rateDetail);
                 convertedRate.Add(rate);
-            }
-            return convertedRate;
+            });
+            return convertedRate.ToList();
         }
 
 

@@ -341,7 +341,15 @@ Site Footer
 
 /*Voucher Hotel*/
 .page-hotel-voucher {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 12px;
   /*Icon*/ }
+  .page-hotel-voucher h4 {
+    font-size: 16px; }
+  .page-hotel-voucher h3 {
+    font-size: 20px; }
+  .page-hotel-voucher .page-content {
+    padding-bottom: 1cm; }
   .page-hotel-voucher .black-txt {
     color: #000000; }
   .page-hotel-voucher .blue-txt {
@@ -355,8 +363,10 @@ Site Footer
   .page-hotel-voucher .hotel-wrapper {
     width: 100%; }
     .page-hotel-voucher .hotel-wrapper .hotel-top {
-      margin: 1cm 0 0.5cm;
-      border-bottom: 2px solid #15b1e4; }
+      margin: 1cm 0 0.5cm; }
+      .page-hotel-voucher .hotel-wrapper .hotel-top > p {
+        border-bottom: 2px solid #15b1e4;
+        margin-bottom: 0.5cm; }
     .page-hotel-voucher .hotel-wrapper .hotel-middle {
       margin-top: 0.5cm; }
       .page-hotel-voucher .hotel-wrapper .hotel-middle .right-side {
@@ -369,9 +379,9 @@ Site Footer
       border-top: 1px solid #ddd; }
       .page-hotel-voucher .hotel-wrapper .hotel-bottom .hotel-detail .row {
         margin-bottom: 0.25cm; }
-    .page-hotel-voucher .hotel-wrapper .img-wifi, .page-hotel-voucher .hotel-wrapper .img-phone {
+    .page-hotel-voucher .hotel-wrapper .img-wifi, .page-hotel-voucher .hotel-wrapper .img-phone, .page-hotel-voucher .hotel-wrapper .img-email {
       padding-right: 5px; }
-    .page-hotel-voucher .hotel-wrapper .img-swim, .page-hotel-voucher .hotel-wrapper .img-email {
+    .page-hotel-voucher .hotel-wrapper .img-swim {
       padding-right: 5px;
       padding-left: 15px; }
     .page-hotel-voucher .hotel-wrapper .img-hotel {

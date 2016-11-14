@@ -90,6 +90,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                     case AutocompleteType.Hotel:
                         request.HotelCode = int.Parse(detailDestination.Code);
                         break;
+
                 };
             }
 
@@ -101,12 +102,12 @@ namespace Lunggo.ApCommon.Hotel.Service
 
             if (result.HotelDetails == null)
                 return new SearchHotelOutput()
-                {
-                    IsSuccess = true,
-                    ReturnedHotelCount = 0,
-                    TotalHotelCount = 0,
-                    FilteredHotelCount = 0
-                };
+                    {
+                        IsSuccess = true,
+                        ReturnedHotelCount = 0,
+                        TotalHotelCount = 0,
+                        FilteredHotelCount = 0
+                    };
             var swPr = Stopwatch.StartNew();
             AddPriceMargin(result.HotelDetails);
             swPr.Stop();
@@ -134,23 +135,23 @@ namespace Lunggo.ApCommon.Hotel.Service
             var searchType = detailDestination.Type.ToString();
             var swCv = Stopwatch.StartNew();
             return new SearchHotelOutput
-            {
-                IsSuccess = true,
-                SearchId = result.SearchId,
-                HotelDetailLists = ConvertToHotelDetailForDisplay(firstPageHotelDetails),
-                Page = input.Page,
-                PerPage = input.PerPage,
-                PageCount = pageCount,
-                ReturnedHotelCount = firstPageHotelDetails.Count,
-                FilteredHotelCount = result.HotelDetails.Count,
-                TotalHotelCount = result.HotelDetails.Count,
-                HotelFilterDisplayInfo = result.HotelFilterDisplayInfo,
-                MaxPrice = result.MaxPrice,
-                MinPrice = result.MinPrice,
-                IsSpecificHotel = searchType.Equals("Hotel"),
-                HotelCode = searchType.Equals("Hotel") ? (int?)firstPageHotelDetails.Select(x => x.HotelCode).FirstOrDefault() : null,
+                        {
+                            IsSuccess = true,
+                            SearchId = result.SearchId,
+                            FilteredHotelCount = result.HotelDetails.Count,
+                            HotelDetailLists = ConvertToHotelDetailForDisplay(firstPageHotelDetails),
+                            Page = input.Page,
+                            PerPage = input.PerPage,
+                            PageCount = pageCount,
+                            ReturnedHotelCount = firstPageHotelDetails.Count,
+                            TotalHotelCount = result.HotelDetails.Count,
+                            HotelFilterDisplayInfo = result.HotelFilterDisplayInfo,
+                            MaxPrice = result.MaxPrice,
+                            MinPrice = result.MinPrice,
+                            IsSpecificHotel = searchType.Equals("Hotel"),
+                            HotelCode = searchType.Equals("Hotel") ? (int?)firstPageHotelDetails.Select(x => x.HotelCode).FirstOrDefault() : null,
 
-            };
+                        };
             swCv.Stop();
             Debug.Print("CONVERT:" + swCv.Elapsed.ToString());
         }
@@ -161,11 +162,11 @@ namespace Lunggo.ApCommon.Hotel.Service
 
             if (searchResult == null)
                 return new SearchHotelOutput
-                {
-                    Errors = new List<HotelError> { HotelError.SearchIdNoLongerValid },
-                    IsSuccess = false,
-                    ErrorMessages = new List<string> { "Error while getting search result by searchId" }
-                };
+                    {
+                        Errors = new List<HotelError> { HotelError.SearchIdNoLongerValid },
+                        IsSuccess = false,
+                        ErrorMessages = new List<string> { "Error while getting search result by searchId" }
+                    };
 
             var hotels = searchResult.HotelDetails;
 
@@ -249,11 +250,11 @@ namespace Lunggo.ApCommon.Hotel.Service
 
             if (results.HotelDetails == null || results.HotelDetails.Count == 0 || results.HotelDetails.Any(hotel => hotel.Rooms == null || hotel.Rooms.Count == 0))
                 return new SearchHotelOutput
-                {
-                    Errors = new List<HotelError> { HotelError.RateKeyNotFound },
-                    IsSuccess = false,
-                    ErrorMessages = new List<string> { "Rate Key Not Found!" }
-                };
+                            {
+                                Errors = new List<HotelError> { HotelError.RateKeyNotFound },
+                                IsSuccess = false,
+                                ErrorMessages = new List<string> { "Rate Key Not Found!" }
+                            };
 
             AddPriceMargin(results.HotelDetails);
 
@@ -287,19 +288,19 @@ namespace Lunggo.ApCommon.Hotel.Service
 
             if (!isRateFound)
                 return new SearchHotelOutput
-                {
-                    Errors = new List<HotelError> { HotelError.RateKeyNotFound },
-                    IsSuccess = false,
-                    ErrorMessages = new List<string> { "Rate Key Not Found!" }
-                };
+                            {
+                                Errors = new List<HotelError> { HotelError.RateKeyNotFound },
+                                IsSuccess = false,
+                                ErrorMessages = new List<string> { "Rate Key Not Found!" }
+                            };
 
             return new SearchHotelOutput
-            {
-                IsSuccess = true,
-                HotelRoom = ConvertToSingleHotelRoomForDisplay(roomHotel),
-                ReturnedHotelCount = 1,
-                TotalHotelCount = 1
-            };
+                        {
+                            IsSuccess = true,
+                            HotelRoom = ConvertToSingleHotelRoomForDisplay(roomHotel),
+                            ReturnedHotelCount = 1,
+                            TotalHotelCount = 1
+                        };
         }
 
 
