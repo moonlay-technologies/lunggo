@@ -101,10 +101,12 @@ namespace Lunggo.ApCommon.Hotel.Service
                     MainImage =
                         hotelDetail.ImageUrl == null
                             ? null
-                            : hotelDetail.ImageUrl.FirstOrDefault() == null ? null : hotelDetail.ImageUrl[0].Path,
+                            : hotelDetail.ImageUrl == null ? null : hotelDetail.ImageUrl.Where(x=>x.Type=="GEN").Select(x=>x.Path).FirstOrDefault(),
                     // != null ? hotelDetail.ImageUrl.Where(x=>x.Type=="GEN").Select(x=>x.Path).FirstOrDefault(): null,
                     OriginalFare = hotelDetail.OriginalFare,
+                    OriginalTotalFare = hotelDetail.OriginalTotalFare,
                     NetFare = hotelDetail.NetFare,
+                    NetTotalFare = hotelDetail.NetTotalFare,
                     IsWifiAccessAvailable = hotelDetail.Facilities != null &&
                             ((hotelDetail.Facilities != null || hotelDetail.Facilities.Count != 0) &&
                             hotelDetail.Facilities.Any(f => (f.FacilityGroupCode == 60 && f.FacilityCode == 261)
@@ -133,6 +135,8 @@ namespace Lunggo.ApCommon.Hotel.Service
         public void CalculatePriceHotel(HotelDetail hotel)
         {
             decimal price = 0;
+            int night = 0;
+            int roomCount = 0;
             foreach (var room in hotel.Rooms)
             {
                 foreach (var rate in room.Rates)
@@ -140,15 +144,22 @@ namespace Lunggo.ApCommon.Hotel.Service
                     if (price == 0)
                     {
                         price = rate.Price.Local;
+                        night = rate.NightCount;
+                        roomCount = rate.RoomCount;
                     }
                     else
                     {
                         price = rate.Price.Local < price ? rate.Price.Local:price;
+                        night = rate.NightCount;
+                        roomCount = rate.RoomCount;
                     }
                 }
             }
-            hotel.NetFare = price;
-            hotel.OriginalFare = price*1.01M;
+            hotel.NetTotalFare = price;
+            hotel.OriginalTotalFare = price * 1.01M;
+            hotel.NetFare = Math.Round((hotel.NetTotalFare / roomCount) / night);
+            hotel.OriginalFare = hotel.NetFare*1.01M;
+            
         }
 
         internal HotelDetailForDisplay ConvertToHotelDetailsBaseForDisplay(HotelDetailsBase hotelDetail, decimal originalPrice, decimal netPrice)
@@ -366,8 +377,12 @@ namespace Lunggo.ApCommon.Hotel.Service
 
         public void SetDisplayPriceHotelRate(HotelRateForDisplay rateDisplay,HotelRate rate)
         {
-            rateDisplay.NetPrice = rate.Price.Local;
-            rateDisplay.OriginalPrice = rateDisplay.NetPrice*1.01M;
+            rateDisplay.NetTotalPrice = rate.Price.Local;
+            rateDisplay.OriginalTotalPrice = rateDisplay.NetTotalPrice*1.01M;
+
+            rateDisplay.NetPrice = Math.Round((rateDisplay.NetTotalPrice / rate.RoomCount) / rate.NightCount);
+            rateDisplay.OriginalPrice = rateDisplay.NetPrice * 1.01M;
+
         }
 
         private static RsvDisplayStatus MapReservationStatus(HotelReservation reservation)

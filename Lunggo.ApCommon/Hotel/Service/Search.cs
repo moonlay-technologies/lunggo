@@ -64,6 +64,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                 request.Occupancies = input.Occupancies;
                 request.HotelCode = input.HotelCode;
                 request.CheckIn = input.CheckIn;
+                request.Nights = input.Nights;
                 request.Checkout = input.CheckIn.AddDays(input.Nights);
                 request.SearchId = generatedSearchId.ToString();
             }
