@@ -90,6 +90,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                     case AutocompleteType.Hotel:
                         request.HotelCode = int.Parse(detailDestination.Code);
                         break;
+
                 };
             }
 
@@ -101,18 +102,39 @@ namespace Lunggo.ApCommon.Hotel.Service
 
             if (result.HotelDetails == null)
                 return new SearchHotelOutput()
-                {
-                    IsSuccess = true,
-                    ReturnedHotelCount = 0,
-                    TotalHotelCount = 0,
-                    FilteredHotelCount = 0
-                };
+                    {
+                        IsSuccess = true,
+                        ReturnedHotelCount = 0,
+                        TotalHotelCount = 0,
+                        FilteredHotelCount = 0
+                    };
             var swPr = Stopwatch.StartNew();
             AddPriceMargin(result.HotelDetails);
             swPr.Stop();
             Debug.Print("PRIMARGIN:" + swPr.Elapsed.ToString());
-            var dict = GetHotelDetailByLocation(request.Destination);
-            result.HotelDetails = ApplyHotelDetails(dict, result.HotelDetails);
+            var dict = new Dictionary<int, HotelDetailsBase>();
+            var details = new HotelDetailsBase();
+            //GetHotelDetailByLocation(request.Destination);
+            switch (detailDestination.Type)
+            {
+                case AutocompleteType.Zone:
+                    dict = GetHotelDetailByLocation(request.Zone);
+                    result.HotelDetails = ApplyHotelDetails(dict, result.HotelDetails);
+                    break;
+                case AutocompleteType.Destination:
+                    dict = GetHotelDetailByLocation(request.Destination);
+                    result.HotelDetails = ApplyHotelDetails(dict, result.HotelDetails);
+                    break;
+                case AutocompleteType.Area:
+                    dict = GetHotelDetailByLocation(request.Area);
+                    result.HotelDetails = ApplyHotelDetails(dict, result.HotelDetails);
+                    break;
+                case AutocompleteType.Hotel:
+                    details = GetHotelDetailFromDb(request.HotelCode);
+                    result.HotelDetails = ApplyHotelDetails(details, result.HotelDetails);
+                    break;
+            };
+            
             result.HotelDetails = AddDetailInfoForSearchResult(result.HotelDetails);
             result.HotelFilterDisplayInfo = SetHotelFilterDisplayInfo(result.HotelDetails, isByDestination);
             var sortedHotel = result.HotelDetails.OrderByDescending(x => x.NetFare);
@@ -125,7 +147,7 @@ namespace Lunggo.ApCommon.Hotel.Service
             List<HotelDetail> firstPageHotelDetails = result.HotelDetails;
 
             //Sorting
-            if (firstPageHotelDetails != null) SortHotel(firstPageHotelDetails, input.SortingParam);
+            if (firstPageHotelDetails != null) firstPageHotelDetails = SortHotel(firstPageHotelDetails, input.SortingParam);
             input.Page = input.Page != 0 ? input.Page : 1;
             input.PerPage = input.PerPage != 0 ? input.PerPage : 100;
             int pageCount = (int)Math.Ceiling((decimal)result.HotelDetails.Count / input.PerPage);
@@ -134,23 +156,23 @@ namespace Lunggo.ApCommon.Hotel.Service
             var searchType = detailDestination.Type.ToString();
             var swCv = Stopwatch.StartNew();
             return new SearchHotelOutput
-            {
-                IsSuccess = true,
-                SearchId = result.SearchId,
-                HotelDetailLists = ConvertToHotelDetailForDisplay(firstPageHotelDetails),
-                Page = input.Page,
-                PerPage = input.PerPage,
-                PageCount = pageCount,
-                ReturnedHotelCount = firstPageHotelDetails.Count,
-                FilteredHotelCount = result.HotelDetails.Count,
-                TotalHotelCount = result.HotelDetails.Count,
-                HotelFilterDisplayInfo = result.HotelFilterDisplayInfo,
-                MaxPrice = result.MaxPrice,
-                MinPrice = result.MinPrice,
-                IsSpecificHotel = searchType.Equals("Hotel"),
-                HotelCode = searchType.Equals("Hotel") ? (int?)firstPageHotelDetails.Select(x => x.HotelCode).FirstOrDefault() : null,
+                        {
+                            IsSuccess = true,
+                            SearchId = result.SearchId,
+                            FilteredHotelCount = result.HotelDetails.Count,
+                            HotelDetailLists = ConvertToHotelDetailForDisplay(firstPageHotelDetails),
+                            Page = input.Page,
+                            PerPage = input.PerPage,
+                            PageCount = pageCount,
+                            ReturnedHotelCount = firstPageHotelDetails.Count,
+                            TotalHotelCount = result.HotelDetails.Count,
+                            HotelFilterDisplayInfo = result.HotelFilterDisplayInfo,
+                            MaxPrice = result.MaxPrice,
+                            MinPrice = result.MinPrice,
+                            IsSpecificHotel = searchType.Equals("Hotel"),
+                            HotelCode = searchType.Equals("Hotel") ? (int?)firstPageHotelDetails.Select(x => x.HotelCode).FirstOrDefault() : null,
 
-            };
+                        };
             swCv.Stop();
             Debug.Print("CONVERT:" + swCv.Elapsed.ToString());
         }
@@ -161,11 +183,11 @@ namespace Lunggo.ApCommon.Hotel.Service
 
             if (searchResult == null)
                 return new SearchHotelOutput
-                {
-                    Errors = new List<HotelError> { HotelError.SearchIdNoLongerValid },
-                    IsSuccess = false,
-                    ErrorMessages = new List<string> { "Error while getting search result by searchId" }
-                };
+                    {
+                        Errors = new List<HotelError> { HotelError.SearchIdNoLongerValid },
+                        IsSuccess = false,
+                        ErrorMessages = new List<string> { "Error while getting search result by searchId" }
+                    };
 
             var hotels = searchResult.HotelDetails;
 
@@ -173,7 +195,7 @@ namespace Lunggo.ApCommon.Hotel.Service
             hotels = FilterHotel(hotels, input.FilterParam);
 
             //Sorting
-            if (hotels != null) SortHotel(hotels, input.SortingParam);
+            if (hotels != null) hotels = SortHotel(hotels, input.SortingParam);
 
             if (hotels == null || hotels.Count == 0)
                 return new SearchHotelOutput()
@@ -189,14 +211,13 @@ namespace Lunggo.ApCommon.Hotel.Service
                     MaxPrice = searchResult.MaxPrice,
                     MinPrice = searchResult.MinPrice,
                 };
-
             int pageCount = 0;
             input.Page = input.Page != 0 ? input.Page : 1;
             input.PerPage = input.PerPage != 0 ? input.PerPage : 100;
             pageCount = (int)Math.Ceiling((decimal)hotels.Count / input.PerPage);
-            hotels = SetPagination(hotels, input.Page, input.PerPage);
+            var displayHotel = SetPagination(hotels, input.Page, input.PerPage);
 
-            AddDetailInfoForDisplayHotel(hotels);
+            //AddDetailInfoForDisplayHotel(hotels);
 
             return new SearchHotelOutput
             {
@@ -205,7 +226,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                 Page = input.Page,
                 PerPage = input.PerPage,
                 PageCount = pageCount,
-                ReturnedHotelCount = hotels.Count,
+                ReturnedHotelCount = displayHotel.Count,
                 TotalHotelCount = searchResult.HotelDetails.Count,
                 HotelFilterDisplayInfo = searchResult.HotelFilterDisplayInfo,
                 FilteredHotelCount = hotels.Count,
@@ -250,11 +271,11 @@ namespace Lunggo.ApCommon.Hotel.Service
 
             if (results.HotelDetails == null || results.HotelDetails.Count == 0 || results.HotelDetails.Any(hotel => hotel.Rooms == null || hotel.Rooms.Count == 0))
                 return new SearchHotelOutput
-                {
-                    Errors = new List<HotelError> { HotelError.RateKeyNotFound },
-                    IsSuccess = false,
-                    ErrorMessages = new List<string> { "Rate Key Not Found!" }
-                };
+                            {
+                                Errors = new List<HotelError> { HotelError.RateKeyNotFound },
+                                IsSuccess = false,
+                                ErrorMessages = new List<string> { "Rate Key Not Found!" }
+                            };
 
             AddPriceMargin(results.HotelDetails);
 
@@ -288,22 +309,20 @@ namespace Lunggo.ApCommon.Hotel.Service
 
             if (!isRateFound)
                 return new SearchHotelOutput
-                {
-                    Errors = new List<HotelError> { HotelError.RateKeyNotFound },
-                    IsSuccess = false,
-                    ErrorMessages = new List<string> { "Rate Key Not Found!" }
-                };
+                            {
+                                Errors = new List<HotelError> { HotelError.RateKeyNotFound },
+                                IsSuccess = false,
+                                ErrorMessages = new List<string> { "Rate Key Not Found!" }
+                            };
 
             return new SearchHotelOutput
-            {
-                IsSuccess = true,
-                HotelRoom = ConvertToSingleHotelRoomForDisplay(roomHotel),
-                ReturnedHotelCount = 1,
-                TotalHotelCount = 1
-            };
+                        {
+                            IsSuccess = true,
+                            HotelRoom = ConvertToSingleHotelRoomForDisplay(roomHotel),
+                            ReturnedHotelCount = 1,
+                            TotalHotelCount = 1
+                        };
         }
-
-
 
         public List<HotelDetail> ApplyHotelDetails(Dictionary<int, HotelDetailsBase> dict, List<HotelDetail> hotels)
         {
@@ -335,6 +354,28 @@ namespace Lunggo.ApCommon.Hotel.Service
             return hotels;
         }
 
+        public List<HotelDetail> ApplyHotelDetails(HotelDetailsBase detail, List<HotelDetail> hotels)
+        {
+            foreach (var hotel in hotels)
+            {
+                
+                    hotel.AccomodationType = detail.AccomodationType;
+                    hotel.Address = detail.Address;
+                    hotel.Facilities = detail.Facilities;
+                    hotel.AreaCode = detail.AreaCode;
+                    hotel.PhonesNumbers = detail.PhonesNumbers;
+                    hotel.HotelName = detail.HotelName;
+                    hotel.City = detail.City;
+                    hotel.Chain = detail.Chain;
+                    hotel.Email = detail.Email;
+                    hotel.ImageUrl = detail.ImageUrl;
+                    hotel.Pois = detail.Pois;
+                    hotel.Segment = detail.Segment;
+                    hotel.PostalCode = detail.PostalCode;
+                
+            }
+            return hotels;
+        }
         public List<HotelDetail> AddDetailInfoForDisplayHotel(List<HotelDetail> result)
         {
             foreach (var hotel in result)

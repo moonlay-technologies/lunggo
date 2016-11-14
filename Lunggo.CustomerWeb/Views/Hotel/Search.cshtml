@@ -45,7 +45,8 @@
         var loc = '@HotelService.GetInstance()._Autocompletes[loc].Name';
     </script>
     <script src="/Assets/travorama20/js/hotelSearchController.js"></script>
-    <script src="/Assets/travorama20/js/HotelController.js"></script>
+ <script src="/Assets/travorama20/js/homeController.js"></script>
+    <script type="text/javascript" src="/Assets/travorama20/js/HotelController.js"></script>
 }
 
 @Html.Partial("/Views/Hotel/Shared/Desktop/_PageSlider.cshtml")
@@ -55,7 +56,7 @@
             @Html.Partial("/Views/Hotel/Shared/Desktop/_BreadCrumb.cshtml")
             <div class="top-title clearfix">
                 <div class="col-left bg-title"><b>Hasil</b> Pencarian </div>
-                <div class="col-right total-result">Jumlah Hotel Ditemukan: <b>{{totalActualHotel}}</b></div>
+                <div class="col-right total-result">Jumlah Hotel Ditemukan: <b>{{filteredHotelCount}}</b></div>
             </div>
             <div class="search-list-result clearfix">
                 <div class="col-left-result filter">
@@ -78,44 +79,38 @@
                             </div>
                         </div>
 
-
                         <div class="filter-group">
                             <label class="filter-title">Bintang Hotel</label> @*- {{filter.stars}}*@
                             <div class="rating">
-                                <label class="sqr">
+                                <label class="sqr" ng-click="changeFilter('star', 5)" ng-class="{ active: (filter.stars.indexOf(5) > -1) }">
                                     <span class="checkbox"></span>
-                                    <input type="checkbox" name="check" class="check" value="false" ng-model="star5" ng-change="changeFilter('star', 5)" />
                                     <span class="star star-5"></span>
                                 </label>
-                                <label class="sqr">
+                                <label class="sqr" ng-click="changeFilter('star', 4)" ng-class="{ active: (filter.stars.indexOf(4) > -1) }">
                                     <span class="checkbox"></span>
-                                    <input type="checkbox" name="check" class="check" value="false" ng-model="star4" ng-change="changeFilter('star', 4)" />
                                     <span class="star star-4"></span>
                                 </label>
-                                <label class="sqr">
+                                <label class="sqr" ng-click="changeFilter('star', 3)" ng-class="{ active: (filter.stars.indexOf(3) > -1) }">
                                     <span class="checkbox"></span>
-                                    <input type="checkbox" name="check" class="check" value="false" ng-model="star3" ng-change="changeFilter('star', 3)" />
                                     <span class="star star-3"></span>
                                 </label>
-                                <label class="sqr">
+                                <label class="sqr" ng-click="changeFilter('star', 2)" ng-class="{ active: (filter.stars.indexOf(2) > -1) }">
                                     <span class="checkbox"></span>
-                                    <input type="checkbox" name="check" class="check" value="false" ng-model="star2" ng-change="changeFilter('star', 2)" />
                                     <span class="star star-2"></span>
                                 </label>
-                                <label class="sqr">
+                                <label class="sqr" ng-click="changeFilter('star', 1)" ng-class="{ active: (filter.stars.indexOf(1) > -1) }">
                                     <span class="checkbox"></span>
-                                    <input type="checkbox" name="check" class="check" value="false" ng-model="star1" ng-change="changeFilter('star', 1)" />
                                     <span class="star star-1"></span>
                                 </label>
                             </div>
                         </div>
-                        <div class="filter-group" ng-show="hotelFilterDisplayInfo.zoneFilter !== undefined || hotelFilterDisplayInfo.zoneFilter != null">
+                        <div class="filter-group" ng-show="hotelFilterDisplayInfo.zoneFilter.length > 0">
                             <label class="filter-title">Hotel Zone:</label><span class="city-name blue-txt"><a href="#">(Jakarta)</a></span>
-                            <div class="area" ng-repeat="zoneFilter in hotelFilterDisplayInfo.zoneFilter">
-                                <label class="sqr city-point" ng-click="changeFilter('zone', zoneFilter)">
+                            <div class="area" ng-repeat="zoneFilter in hotelFilterDisplayInfo.zoneFilter ">
+                                <label class="sqr city-point" ng-click="changeFilter('zone', zoneFilter)" ng-class="{ active: (filter.zones.indexOf(zoneFilter.code) > -1) }">
                                     <span class="checkbox"></span>
-                                    <input type="checkbox" name="check" class="check" value="false" />
-                                    <span class="name">{{zoneFilter.name}}</span>
+                                    @*<input type="checkbox" name="check" class="check" value="false" ng-disabled="true" />*@
+                                    <span class="name">{{zoneFilter.name}} - {{(filter.zones.indexOf(zoneFilter.code) > -1)}}</span>
                                 </label>
                                 <span class="city-hotel">{{zoneFilter.count}}</span>
                             </div>
@@ -220,17 +215,19 @@
                             </div>
                         </div>
                     </div>
-                    <div class="pagination" ng-if="returnedHotelCount > 0">
+                    <div class="pagination" ng-show="returnedHotelCount > 0">
+                        @*<div class="page-container">
+                            <a href="#" class="prev" ng-click="prevPage()"></a>
+                            Halaman
+                            <a href="#" class="next" ng-click="nextPage()"></a>
+                        </div>*@
                         Halaman
                         <div class="page-container">
-                            <a href="#" class="prev"></a>
+                            <a href="#" class="prev" ng-click="prevPage()"></a>
                             <ul class="page-list">
-                                <li><a href="#" class="active">1</a></li>
-                                <li><a href="#">2</a></li>
-                                <li><a href="#">....</a></li>
-                                <li><a href="#">3</a></li>
+                                <li><a href="#" ng-class="{active : pageNumber == page}" ng-repeat="pageNumber in traGetRange(pageCount) track by $index" ng-click="changePage(pageNumber)">{{pageNumber}}</a></li>
                             </ul>
-                            <a href="#" class="next"></a>
+                            <a href="#" class="next" ng-click="nextPage()"></a>
                         </div>
                     </div>
                 </div>

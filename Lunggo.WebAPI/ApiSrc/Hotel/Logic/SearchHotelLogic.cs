@@ -129,6 +129,7 @@ namespace Lunggo.WebAPI.ApiSrc.Hotel.Logic
                     Page = searchServiceResponse.Page,
                     PageCount = searchServiceResponse.PageCount,
                     PerPage = searchServiceResponse.PerPage,
+                    PageCount = searchServiceResponse.PageCount,
                     MaxPrice = searchServiceResponse.MaxPrice,
                     MinPrice = searchServiceResponse.MinPrice,
                     HotelFilterDisplayInfo = searchServiceResponse.HotelFilterDisplayInfo,
