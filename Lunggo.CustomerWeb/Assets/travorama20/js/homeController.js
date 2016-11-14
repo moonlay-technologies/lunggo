@@ -229,18 +229,8 @@ jQuery(document).ready(function($) {
 
     //*****
     // show and hide search calendar
-    function showCalendar(target) {
-        target = target || $('.search-calendar-hotel').attr('data-date');
-        $('.search-calendar-hotel').attr('id', target);
-        if (target == 'departure') {
-            $('.search-calendar-hotel .calendar-header .departure').removeClass('hidden');
-            $('.search-calendar-hotel .calendar-header .return').addClass('hidden');
-        } else {
-            $('.search-calendar-hotel .calendar-header .departure').addClass('hidden');
-            $('.search-calendar-hotel .calendar-header .return').removeClass('hidden');
-        }
-        $('.search-calendar-hotel').attr('data-date', target);
-        $('.searchsearch-calendar-hotel').show();
+    function showCalendar() {
+        $('.search-calendar-hotel').show();
     }
 
     function hideCalendar() {

@@ -427,30 +427,8 @@ file : /Assets/travorama20/css/_page_index.scss
             width: 540px;
         }
     }
-    .search-hotel {width: 450px;
-        .location-body .location-recommend .tab-header nav {
-            width: 100%;
-        }
-        .list-hotel {
-            font-size: 13px;
-            .list-row {
-                padding: 12px 30px;
-                &:hover {
-                    background: #eaeaea;
-                    cursor: pointer;
-                    &:before {
-                        content: '';
-                        width: 10px;
-                        height: 60px;
-                        background: $color-main-blue;
-                        display: inline-block;
-                        left:0;
-                        margin-top: -12px;
-                        position: absolute;
-                    }
-                }
-            }
-            .col-half .blue-txt.semibold-txt {padding: 8px 0;}
-        }
+    .search-hotel {
+        width: 450px; 
+        .location-body .location-recommend .tab-header nav {width: 100%;}
     }
 }

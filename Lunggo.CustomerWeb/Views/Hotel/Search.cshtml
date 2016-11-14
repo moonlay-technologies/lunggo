@@ -20,6 +20,7 @@
     <script src="/Assets/js/angular-animate.min.js"></script>
     <script src="/Assets/js/angular-route.min.js"></script>*@
     <script src="/Assets/js/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="/Assets/js/jquery.ui.datepicker-id.js"></script>
     <script type="text/javascript" src="/Scripts/bootstrap.min.js"></script>
 }
 
@@ -44,8 +45,7 @@
         var loc = '@HotelService.GetInstance()._Autocompletes[loc].Name';
     </script>
     <script src="/Assets/travorama20/js/hotelSearchController.js"></script>
- <script src="/Assets/travorama20/js/homeController.js"></script>
-    <script type="text/javascript" src="/Assets/travorama20/js/HotelController.js"></script>
+    <script src="/Assets/travorama20/js/HotelController.js"></script>
 }
 
 @Html.Partial("/Views/Hotel/Shared/Desktop/_PageSlider.cshtml")
@@ -174,8 +174,7 @@
                     <div class="hotel-list-container">
                         <div class="hotel-list clearfix" ng-repeat="hotel in hotels" ng-click="GotoDetailHotel(hotel.hotelCd)" style="cursor:pointer">
                             <div class="col-left-hotel">
-                                <img class="img-list" ng-src="http://photos.hotelbeds.com/giata/{{hotel.mainImage}}" alt="Hotel" />
-                                @*<img class="img-list" src="/Assets/travorama20/images/Hotel/no-hotel.png" alt="Hotel" />*@
+                                <img class="img-list" ng-src="http://photos.hotelbeds.com/giata/{{hotel.mainImage}}" alt="Hotel" onerror="this.src = '/Assets/travorama20/images/Hotel/no-hotel.png'" />
                             </div>
                             <div class="col-right-hotel">
                                 <div class="clearfix">
