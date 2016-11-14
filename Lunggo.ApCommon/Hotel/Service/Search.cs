@@ -146,7 +146,7 @@ namespace Lunggo.ApCommon.Hotel.Service
             List<HotelDetail> firstPageHotelDetails = result.HotelDetails;
 
             //Sorting
-            if (firstPageHotelDetails != null) SortHotel(firstPageHotelDetails, input.SortingParam);
+            if (firstPageHotelDetails != null) firstPageHotelDetails = SortHotel(firstPageHotelDetails, input.SortingParam);
             input.Page = input.Page != 0 ? input.Page : 1;
             input.PerPage = input.PerPage != 0 ? input.PerPage : 100;
             int pageCount = (int)Math.Ceiling((decimal)result.HotelDetails.Count / input.PerPage);
@@ -194,7 +194,7 @@ namespace Lunggo.ApCommon.Hotel.Service
             hotels = FilterHotel(hotels, input.FilterParam);
 
             //Sorting
-            if (hotels != null) SortHotel(hotels, input.SortingParam);
+            if (hotels != null) hotels = SortHotel(hotels, input.SortingParam);
 
             if (hotels == null || hotels.Count == 0)
                 return new SearchHotelOutput()
@@ -210,14 +210,13 @@ namespace Lunggo.ApCommon.Hotel.Service
                     MaxPrice = searchResult.MaxPrice,
                     MinPrice = searchResult.MinPrice,
                 };
-
             int pageCount = 0;
             input.Page = input.Page != 0 ? input.Page : 1;
             input.PerPage = input.PerPage != 0 ? input.PerPage : 100;
             pageCount = (int)Math.Ceiling((decimal)hotels.Count / input.PerPage);
-            hotels = SetPagination(hotels, input.Page, input.PerPage);
+            var displayHotel = SetPagination(hotels, input.Page, input.PerPage);
 
-            AddDetailInfoForDisplayHotel(hotels);
+            //AddDetailInfoForDisplayHotel(hotels);
 
             return new SearchHotelOutput
             {
@@ -226,7 +225,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                 Page = input.Page,
                 PerPage = input.PerPage,
                 PageCount = pageCount,
-                ReturnedHotelCount = hotels.Count,
+                ReturnedHotelCount = displayHotel.Count,
                 TotalHotelCount = searchResult.HotelDetails.Count,
                 HotelFilterDisplayInfo = searchResult.HotelFilterDisplayInfo,
                 FilteredHotelCount = hotels.Count,
