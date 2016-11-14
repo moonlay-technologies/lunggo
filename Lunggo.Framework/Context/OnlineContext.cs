@@ -21,7 +21,7 @@ namespace Lunggo.Framework.Context
         {
             if (HttpContext.Current == null)
                 return "id";
-            return string.IsNullOrEmpty((String)HttpContext.Current.Items[SystemConstant.HttpContextLangCode]) ? "id" : (String)HttpContext.Current.Items[SystemConstant.HttpContextCurrencyCode];
+            return string.IsNullOrEmpty((String)HttpContext.Current.Items[SystemConstant.HttpContextLangCode]) ? "id" : (String)HttpContext.Current.Items[SystemConstant.HttpContextLangCode];
         }
 
         public static void SetActiveLanguageCode(string langCode)
