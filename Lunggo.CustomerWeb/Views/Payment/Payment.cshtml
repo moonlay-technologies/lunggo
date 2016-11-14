@@ -15,9 +15,22 @@
     var savedCreditCards = Model.SavedCreditCards;
     var orderedRooms = new List<Tuple<string, int>>();
     var totalpax = 0;
+    var totalAdult = 0;
+    var totalChild = 0;
+    var images = new List<Image>();
+    var hotelImg = "";
+    var roomImg = "";
     try
     {
-        var rooms = (Model.Reservation as HotelReservationForDisplay).HotelDetail.Rooms;
+        var rsv = (Model.Reservation as HotelReservationForDisplay);
+        images = HotelService.GetInstance().GetHotelDetailFromDb(rsv.HotelDetail.HotelCode).ImageUrl;
+        hotelImg = images == null
+            ? null
+            : images.FirstOrDefault() == null ? null : "http://photos.hotelbeds.com/giata/" + images[0].Path;
+        roomImg = images == null
+            ? null
+            : "http://photos.hotelbeds.com/giata/" + images.Where(i => i.Type == "HAB").ToList()[0].Path;
+        var rooms = rsv.HotelDetail.Rooms;
         rsvNo = Model.RsvNo;
         foreach (var room in rooms)
         {
@@ -27,6 +40,8 @@
             {
                 sum += rate.RoomCount;
                 totalpax += (rate.AdultCount + rate.ChildCount)*rate.RoomCount;
+                totalAdult += rate.AdultCount;
+                totalChild += rate.ChildCount;
             }
             orderedRooms.Add(new Tuple<string, int>(roomName, sum)); ;
         }
@@ -732,7 +747,7 @@
                                         <div class="widget-content">
                                             <div class="widget-top">
                                                 <div class="wt-top clearfix">
-                                                    <div class="col-left-hotel"><img src="{{hotelDetails.mainImage}}" alt="{{capitalizeFirstLetter(hotelDetails.hotelName)}}" /></div>
+                                                    <div class="col-left-hotel"><img src="@hotelImg" alt="{{capitalizeFirstLetter(hotelDetails.hotelName)}}" /></div>
                                                     <div class="col-right-hotel">
                                                         <span class="blue-txt bold-txt">{{capitalizeFirstLetter(hotelDetails.hotelName)}}</span>
                                                         <div class="star" ng-show="hotelstar() == 'star'"></div>
@@ -791,7 +806,7 @@
                                                 <div class="wb-container clearfix">
                                                     <div class="wb-left">Jumlah Tamu</div>
                                                     <div class="wb-mid">:</div>
-                                                    <div class="wb-right bold-txt">{{totalpax}} orang</div>
+                                                    <div class="wb-right bold-txt">@totalAdult Dewasa, @totalChild Anak</div>
                                                 </div>
                                             </div>
                                         </div>

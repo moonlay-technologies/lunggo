@@ -28,11 +28,23 @@
     var timelimit = Model.Payment.TimeLimit.GetValueOrDefault();
     var orderedRooms = new List<Tuple<string, int>>();
     var rooms = new List<HotelRoomForDisplay>();
+    var totalAdult = 0;
+    var totalChild = 0;
+    var images = new List<Image>();
+    var hotelImg = "";
+    var roomImg = "";
     try
     {
-
-        rooms = (Model as HotelReservationForDisplay).HotelDetail.Rooms;
+        var rsv = Model as HotelReservationForDisplay;
+        rooms = rsv.HotelDetail.Rooms;
         var rsvNo = Model.RsvNo;
+        images = HotelService.GetInstance().GetHotelDetailFromDb(rsv.HotelDetail.HotelCode).ImageUrl;
+        hotelImg = images == null
+            ? null
+            : "http://photos.hotelbeds.com/giata/" + images.Where(i => i.Type == "GEN").ToList().FirstOrDefault().Path;
+        roomImg = images == null
+            ? null
+            : "http://photos.hotelbeds.com/giata/" + images.Where(i => i.Type == "HAB").ToList().FirstOrDefault().Path;
         foreach (var room in rooms)
         {
             var roomName = HotelService.GetInstance().GetHotelRoom(room.RoomCode).RoomDescId;
@@ -40,6 +52,8 @@
             foreach (var rate in room.Rates)
             {
                 sum += rate.RoomCount;
+                totalAdult += rate.AdultCount;
+                totalChild += rate.ChildCount;
             }
             orderedRooms.Add(new Tuple<string, int>(roomName, sum)); ;
         }
@@ -292,7 +306,16 @@
                     <section class="confirmation-order" style="margin-top:0px;">
                         <div class="confirm-order-detail">
                             <div class="confirm-passenger">
-                                <h4><b>INFO PENUMPANG</b></h4>
+                                @if (Model is FlightReservationForDisplay)
+                                {
+                                    <h4><b>INFO PENUMPANG</b></h4>
+                                }
+                                @if (Model is HotelReservationForDisplay)
+                                {
+                                    <h4><b>INFO TAMU</b></h4>
+                                }
+
+                                
                                 <ol>
                                     @foreach (var passenger in Model.Pax)
                                     {
@@ -414,7 +437,11 @@
                                    @* <div class="rh-main-title">Detail Hotel</div>*@
                                     <div class="rh-content">
                                         <div class="rh-row clearfix">
-                                            <div class="col-left-hotel"><img src="@reservation.HotelDetail.MainImage" alt="Alternate Text" /></div>
+                                            <div class="col-left-hotel">
+                                                <img src="@hotelImg" alt="Alternate Text" id="hotelimg"
+                                                           width="{{hotelimgwidth}}"
+                                                           height="{{hotelimgheight}}" />
+                                            </div>
                                             <div class="col-right-hotel">
                                                 <div class="blue-txt bold-txt hotel-title-lg md-txt">@ToTitleCase(reservation.HotelDetail.HotelName)</div>
                                                 <div class="star" ng-show="hotelstar() == 'star'"></div>
@@ -423,9 +450,10 @@
                                                 <div class="star star-4" ng-show="hotelstar() == 'star star-4'"></div>
                                                 <div class="star star-5" ng-show="hotelstar() == 'star star-5'"></div>
                                                 <div class="rh-location">
-                                                   @ToTitleCase(reservation.HotelDetail.Address), @ToTitleCase(reservation.HotelDetail.ZoneName),
-                                                @ToTitleCase(reservation.HotelDetail.DestinationName), @ToTitleCase(reservation.HotelDetail.CountryName)
+                                                    @ToTitleCase(reservation.HotelDetail.Address), @ToTitleCase(reservation.HotelDetail.ZoneName),
+                                                    @ToTitleCase(reservation.HotelDetail.DestinationName), @ToTitleCase(reservation.HotelDetail.CountryName)<br/>
                                                 </div>
+                                                <div><br/></div>
                                                 <div class="rh-detail">
                                                     <div class="wb-container clearfix">
                                                         <div class="wb-left">Check in</div>
@@ -449,13 +477,17 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            <div><br /></div>
                                         </div>
                                         <div class="rh-row">
                                             <div class="rh-top clearfix">
-                                                <div class="col-left-hotel"><img src="/Assets/travorama20/images/Hotel/hotel-md.jpg" alt="Alternate Text" /></div>
+                                                <div class="col-left-hotel">
+                                                    <img src="@roomImg" alt="Alternate Text" id="roomimg"
+                                                               width="{{roomimgwidth}}" height="{{roomimgheight}}" />
+                                                </div>
                                                 <div class="col-right-hotel clearfix">
                                                     <span class="hotel-facility facility"></span>
-
+                                                   
 
                                                     @foreach (var room in rooms)
                                                     {
@@ -463,14 +495,14 @@
                                                         
                                                         <div class="rh-detail">
                                                             <div class="wb-container clearfix">
-                                                                <div class="wb-left">@indexroom. Jenis Kamar</div>
+                                                                <div class="wb-left">Jenis Kamar</div>
                                                                 <div class="wb-mid">:</div>
                                                                 <div class="wb-right bold-txt">@ToTitleCase(HotelService.GetInstance().GetHotelRoom(room.RoomCode).RoomDescId)</div>
                                                             </div>
 
                                                             @foreach (var rate in room.Rates)
                                                             {
-                                                                @index
+                                                                
                                                                 var pol = 1;
                                                                 <div class="wb-container clearfix">
                                                                     <div class="wb-left">Jumlah Kamar</div>
@@ -480,7 +512,7 @@
                                                                 <div class="wb-container clearfix">
                                                                     <div class="wb-left">Tamu per Kamar</div>
                                                                     <div class="wb-mid">:</div>
-                                                                    <div class="wb-right bold-txt">@(rate.AdultCount + rate.ChildCount) Orang</div>
+                                                                    <div class="wb-right bold-txt">@(rate.AdultCount ) Dewasa, @rate.ChildCount Anak</div>
                                                                 </div>
                                                                 <div class="wb-container clearfix">
                                                                     <div class="wb-left">Tipe Board</div>
@@ -488,7 +520,7 @@
                                                                     <div class="wb-right bold-txt">@ToTitleCase(rate.BoardDescription)</div>
                                                                 </div>
                                                                 <div class="wb-container clearfix">
-                                                                    <div class="wb-left">Rate Comment</div>
+                                                                    <div class="wb-left">Ketentuan</div>
                                                                     <div class="wb-mid">:</div>
                                                                     <div class="wb-right bold-txt">@String.Join(". ", rate.TermAndCondition)</div>
                                                                 </div>

@@ -91,7 +91,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                     City = hotelDetail.City,
                     CountryName = GetCountryNameFromDict(hotelDetail.CountryCode).Name,
                     DestinationName = GetDestinationNameFromDict(hotelDetail.DestinationCode).Name,
-                    ZoneName = GetZoneNameFromDict(hotelDetail.ZoneCode),
+                    ZoneName = GetZoneNameFromDict(hotelDetail.DestinationCode + "-" + hotelDetail.ZoneCode),
                     StarRating = hotelDetail.StarCode != 0
                         ? hotelDetail.StarCode
                         : (hotelDetail.StarRating != null
