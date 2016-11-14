@@ -79,8 +79,8 @@ namespace Lunggo.ApCommon.Hotel.Service
         {
             if (hotelDetails == null)
                 return null;
-            var convertedHotels = new ConcurrentBag<HotelDetailForDisplay>();
-            Parallel.ForEach(hotelDetails, hotelDetail =>
+            var convertedHotels = new List<HotelDetailForDisplay>();
+            foreach (var hotelDetail in hotelDetails)
             {
                 var hotel = new HotelDetailForDisplay
                 {
@@ -127,7 +127,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                     PhonesNumbers = hotelDetail.PhonesNumbers
                 };
                 convertedHotels.Add(hotel);
-            });
+            };
             return convertedHotels.ToList();
         }
 
