@@ -76,7 +76,9 @@ namespace Lunggo.ApCommon.Hotel.Model
         public List<int> ChildrenAges { get; set; }
         [JsonProperty("tnc", NullValueHandling = NullValueHandling.Ignore)]
         public List<string> TermAndCondition { get; set; }
-       
+        [JsonProperty("isCancel", NullValueHandling = NullValueHandling.Ignore)]
+        public bool IsCancel { get; set; }
+
     }
 
     public class HotelRate : OrderBase
@@ -95,7 +97,7 @@ namespace Lunggo.ApCommon.Hotel.Model
         //public decimal Price { get; set; }
         [JsonProperty("paymenType", NullValueHandling = NullValueHandling.Ignore)]
         public PaymentTypeEnum PaymentType { get; set; }
-        [JsonProperty("boards", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonProperty("board", NullValueHandling = NullValueHandling.Ignore)]
         public string Boards { get; set; }
         [JsonProperty("cancellation", NullValueHandling = NullValueHandling.Ignore)]
         public List<Cancellation> Cancellation { get; set; }
