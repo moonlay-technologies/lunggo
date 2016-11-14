@@ -106,8 +106,14 @@ namespace Lunggo.ApCommon.Hotel.Service
                     // != null ? hotelDetail.ImageUrl.Where(x=>x.Type=="GEN").Select(x=>x.Path).FirstOrDefault(): null,
                     OriginalFare = hotelDetail.OriginalFare,
                     NetFare = hotelDetail.NetFare,
-                    IsRestaurantAvailable = hotelDetail.IsRestaurantAvailable,
-                    IsWifiAccessAvailable = hotelDetail.WifiAccess,
+                    IsWifiAccessAvailable = hotelDetail.Facilities != null &&
+                            ((hotelDetail.Facilities != null || hotelDetail.Facilities.Count != 0) &&
+                            hotelDetail.Facilities.Any(f => (f.FacilityGroupCode == 60 && f.FacilityCode == 261)
+                            || (f.FacilityGroupCode == 70 && f.FacilityCode == 550))),
+                    IsRestaurantAvailable = hotelDetail.Facilities != null && ((hotelDetail.Facilities != null || hotelDetail.Facilities.Count != 0) &&
+                        hotelDetail.Facilities.Any(f => (f.FacilityGroupCode == 71 && f.FacilityCode == 200)
+                        || (f.FacilityGroupCode == 75 && f.FacilityCode == 840)
+                        || (f.FacilityGroupCode == 75 && f.FacilityCode == 845))),
                     Rooms = ConvertToHotelRoomForDisplay(hotelDetail.Rooms),
                     CheckInDate = hotelDetail.CheckInDate,
                     CheckOutDate = hotelDetail.CheckOutDate,

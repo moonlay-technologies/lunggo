@@ -30,7 +30,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                 hotels = hotels.Where(p =>
                 (filterParam.ZoneFilter == null || filterParam.ZoneFilter.Contains(p.ZoneCode)) &&
                 (filterParam.AccommodationTypeFilter == null || filterParam.AccommodationTypeFilter.Contains(p.AccomodationType)) &&
-                (facilityData.Count == 0 || facilityData.Any(e => p.Facilities.Select(x => x.FullFacilityCode).ToList().Contains(e))) &&
+                (facilityData.Count == 0 || facilityData.Any(e => p.Facilities.Select(x => x.FacilityGroupCode + "" + x.FacilityCode ).ToList().Contains(e))) &&
                 (filterParam.StarFilter == null || filterParam.StarFilter.Contains(p.StarCode)) &&
                 (filterParam.PriceFilter == null || (p.NetFare >= filterParam.PriceFilter.MinPrice && p.NetFare <= filterParam.PriceFilter.MaxPrice))
                 ).ToList();
@@ -57,26 +57,28 @@ namespace Lunggo.ApCommon.Hotel.Service
         }
 
         //Sorting
-        public void SortHotel(List<HotelDetail> hotels, string param)
+        public List<HotelDetail> SortHotel(List<HotelDetail> hotels, string param)
         {
+            var sortedHotel = new List<HotelDetail>();
             switch (SortingTypeCd.Mnemonic(param))
             {
                 case SortingType.AscendingPrice:
-                    hotels = hotels.OrderBy(p => p.NetFare).ToList();
+                    sortedHotel = hotels.OrderBy(p => p.NetFare).ToList();
                     break;
                 case SortingType.DescendingPrice:
-                    hotels = hotels.OrderByDescending(p => p.NetFare).ToList();
+                    sortedHotel = hotels.OrderByDescending(p => p.NetFare).ToList();
                     break;
                 case SortingType.AscendingStar:
-                    hotels = hotels.OrderBy(p => p.StarCode).ToList();
+                    sortedHotel = hotels.OrderBy(p => p.StarCode).ToList();
                     break;
                 case SortingType.DescendingStar:
-                    hotels = hotels.OrderByDescending(p => p.StarCode).ToList();
+                    sortedHotel = hotels.OrderByDescending(p => p.StarCode).ToList();
                     break;
                 default:
-                    hotels = hotels.OrderBy(p => p.NetFare).ToList();
+                    sortedHotel = hotels.OrderBy(p => p.NetFare).ToList();
                     break;
             }
+            return sortedHotel;
         }
 
         //Set Filter Info
