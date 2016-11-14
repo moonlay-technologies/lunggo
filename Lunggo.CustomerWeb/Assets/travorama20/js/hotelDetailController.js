@@ -3,12 +3,12 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
 
     $scope.hotel = {};
     $scope.searchId = '';
-    $scope.hotel.location = "BALI";
-    $scope.hotel.checkinDate = "28-12-2016";
-    $scope.hotel.checkoutDate = "30-12-2016";
+    $scope.hotel.location = "";
+    $scope.hotel.checkinDate = "";
+    $scope.hotel.checkoutDate = "";
     $scope.hotel.adultCount = 3;
     $scope.hotel.childCount = 1;
-    $scope.hotel.nightCount = 1;
+    $scope.hotel.nightCount = "";
     $scope.hotel.roomCount = 2;
 
 
@@ -19,7 +19,7 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
 
         var maxImages = 6;
 
-        var resource = $resource('//api.local.travorama.com/v1/hotel/GetHotelDetail/:searchId/:hotelCd',
+        var resource = $resource(HotelDetailsConfig.Url + '/:searchId/:hotelCd',
             {},
             {
                 query: {
@@ -36,6 +36,7 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
             var loadedImages = 0;
             var tempHotelImages = [];
             $.each($scope.hotel.images, function (key, value) {
+                
                 tempHotelImages.push("http://photos.hotelbeds.com/giata/bigger/" + value);
 
                 loadedImages++;
@@ -90,7 +91,7 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
         )
     }
 
-    var selectService = $resource('//api.local.travorama.com/v1/hotel/select/',
+    var selectService = $resource(HotelSelectConfig.Url,
           {},
           {
               query: {

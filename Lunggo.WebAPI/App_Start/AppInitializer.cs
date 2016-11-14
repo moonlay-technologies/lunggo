@@ -5,6 +5,7 @@ using Lunggo.ApCommon.Flight.Service;
 using Lunggo.ApCommon.Hotel.Service;
 using Lunggo.ApCommon.Payment;
 using Lunggo.ApCommon.Payment.Service;
+using Lunggo.Framework.BlobStorage;
 using Lunggo.Framework.Config;
 using Lunggo.Framework.Database;
 using Lunggo.Framework.Documents;
@@ -33,16 +34,23 @@ namespace Lunggo.WebAPI
             InitFlightService();
             InitQueueService();
             InitMailService();
+            InitBlobStorageService();
             InitPaymentService();
             InitTableStorageService();
             InitHtmlTemplateService();
             InitNotificationService();
             InitLogService();
-            InitDocumentsService();
+            //InitDocumentsService();
             InitHotelService();
             InitAutocompleteManager();
         }
 
+        private static void InitBlobStorageService()
+        {
+            var connString = ConfigManager.GetInstance().GetConfigValue("azureStorage", "connectionString");
+            var blobStorageService = BlobStorageService.GetInstance();
+            blobStorageService.Init(connString);
+        }
         private static void InitDocumentsService()
         {
             var endpoint = ConfigManager.GetInstance().GetConfigValue("documentDb", "endpoint");

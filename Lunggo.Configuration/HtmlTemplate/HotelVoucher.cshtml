@@ -178,14 +178,14 @@
 
                         @if (Model.HotelDetail.SpecialRequest != null && Model.HotelDetail.SpecialRequest.Length != 0)
                         {
-                            <tr>
-                                <td width="160px" style="">
+                           <div class="row grey-txt">
+                                <div class="col-xs-3">
                                     <p style="color: #525252;">Permintaan Khusus</p>
-                                </td>
-                                <td width="480px" style="padding-left: 30px;">
-                                    <p style="">: @Model.HotelDetail.SpecialRequest</p>
-                                </td>
-                            </tr>
+                                </div>
+                               <div class="col-xs-9">
+                                   <p style="">@Model.HotelDetail.SpecialRequest</p>
+                               </div>
+                           </div>
                         }
                         <div class="row grey-txt">
                             <div class="col-xs-3">

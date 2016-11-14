@@ -115,7 +115,7 @@ namespace Lunggo.ApCommon.Hotel.Model
         public int Allotment { get; set; }
         [JsonProperty("rateCommentsId", NullValueHandling = NullValueHandling.Ignore)]
         public string RateCommentsId { get; set; }
-        
+        public List<string> TermAndCondition { get; set; }
         
     }
 

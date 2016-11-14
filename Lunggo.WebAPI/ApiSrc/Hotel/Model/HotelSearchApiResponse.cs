@@ -41,6 +41,8 @@ namespace Lunggo.WebAPI.ApiSrc.Hotel.Model
         public int? Page { get; set; }
         [JsonProperty("perPage", NullValueHandling = NullValueHandling.Ignore)]
         public int? PerPage { get; set; }
+        [JsonProperty("PageCount", NullValueHandling = NullValueHandling.Ignore)]
+        public int? PageCount { get; set; }
 
     }
 }

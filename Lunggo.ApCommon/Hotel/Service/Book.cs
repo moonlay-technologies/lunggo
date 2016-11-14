@@ -50,13 +50,16 @@ namespace Lunggo.ApCommon.Hotel.Service
                 }));
             }
 
+            var rateFound = Enumerable.Repeat(false, occupancies.Count).ToList();
+            var index = 0;
+
             occupancies = occupancies.Distinct().ToList();
             var checkin = bookInfo.Rooms[0].Rates[0].RateKey.Split('|')[0];
             var checkout = bookInfo.Rooms[0].Rates[0].RateKey.Split('|')[1];
             var allCurrency = Currency.GetAllCurrencies();
             Guid generatedSearchId = Guid.NewGuid();
             SaveAllCurrencyToCache(generatedSearchId.ToString(), allCurrency);
-
+            
             var request = new SearchHotelCondition
             {
                 Occupancies = occupancies,
@@ -106,7 +109,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                 var childCount = rate.ChildCount;
                 var childrenAges = "";
 
-                if (rate.ChildrenAges != null)
+                if (rate.ChildCount != 0)
                 {
                     childrenAges = rate.ChildrenAges.Aggregate(childrenAges, (current, age) => current + (age + "~"));
                     childrenAges = childrenAges.Substring(0, childrenAges.Length - 1);
@@ -133,6 +136,12 @@ namespace Lunggo.ApCommon.Hotel.Service
                             rate.PaymentType = ratea.PaymentType;
                             rate.Type = ratea.Type;
                             rate.RateCommentsId = ratea.RateCommentsId;
+                            rate.TermAndCondition =
+                                GetRateCommentFromTableStorage(ratea.RateCommentsId, hotel.CheckInDate)
+                                    .Select(x => x.Description)
+                                    .ToList();
+                            rateFound[index] = true;
+                            index++;
                         }
                     }
                 }
@@ -160,6 +169,14 @@ namespace Lunggo.ApCommon.Hotel.Service
                 }
             }
 
+            if (rateFound.Any(r => r == false))
+            {
+                return new BookHotelOutput
+                {
+                    IsValid = false,
+                    
+                };
+            }
 
             SaveSelectedHotelDetailsToCache(input.Token, bookInfo);
             if (oldPrice != newPrice)

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web;
 using Lunggo.ApCommon.Hotel.Model;
 using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Sdk.auto.model;
@@ -23,20 +24,27 @@ namespace Lunggo.ApCommon.Hotel.Service
             public string Code { get; set; }
             public string Name { get; set; }
             public List<Zone> Zones { get; set; }
+            public string CountryCode { get; set; }
         }
-
-        public class FacilityFilter
-        {
-            public string Code { get; set; }
-            public List<string> FacilityCode { get; set; }
-        }	
 
         public class Zone
         {
             public string Code { get; set; }
             public string Name { get; set; }
-            public List<string> Hotel { get; set; } 
+            public Hotels Hotel { get; set; }
+            public string DestinationCode { get; set; }
         }
+
+        public class Hotels
+        {
+            public List<int> HotelCodes { get; set; }
+            public string ZoneCode { get; set; }
+        }
+        public class FacilityFilter
+        {
+            public string Code { get; set; }
+            public List<string> FacilityCode { get; set; }
+        }	
 
         public class FacilityGroup
         {
@@ -61,7 +69,7 @@ namespace Lunggo.ApCommon.Hotel.Service
             public string Description { get; set; }
         }
 
-        public class Accomodation
+        public class Accommodation
         {
             public string Code { get; set; }
             public string MultiDescription { get; set; }
@@ -169,7 +177,7 @@ namespace Lunggo.ApCommon.Hotel.Service
         public static Dictionary<int, Facility> HotelRoomFacility;
 
         public static Dictionary<string, Chain> HotelChains;
-        public static Dictionary<string, Accomodation> HotelAccomodations;
+        public static Dictionary<string, Accommodation> HotelAccomodations;
         public static Dictionary<string, Board> HotelBoards;
         public static Dictionary<string, Category> HotelCategories; 
 
@@ -184,6 +192,7 @@ namespace Lunggo.ApCommon.Hotel.Service
         public Dictionary<string, Destination> HotelDestinationDict;
         public Dictionary<string, Country> HotelDestinationCountryDict;
         public Dictionary<string, Zone> HotelDestinationZoneDict;
+        public Dictionary<int, string> HotelCodeAndZoneDict;
         public static Dictionary<string, FacilityFilter> HotelFacilityFilters;
 
         public static List<Country> Countries;
@@ -274,7 +283,7 @@ namespace Lunggo.ApCommon.Hotel.Service
             PopulateHotelDestinationCountryDict(Countries);
             PopulateHotelDestinationDict(Countries);
             PopulateHotelZoneDict(Countries);
-
+            //PopulateHotelCodeAndZoneDict(Countries);
             PopulateAutocomplete();
             //PopulateHotel();
         }
@@ -633,7 +642,7 @@ namespace Lunggo.ApCommon.Hotel.Service
 
         private static void PopulateHotelAccomodationDict(String hotelAccomodationFilePath)
         {
-            HotelAccomodations = new Dictionary<string, Accomodation>();
+            HotelAccomodations = new Dictionary<string, Accommodation>();
 
             using (var file = new StreamReader(hotelAccomodationFilePath))
             {
@@ -643,7 +652,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                     line = file.ReadLine();
                     var splittedLine = line.Split('|');
 
-                    HotelAccomodations.Add(splittedLine[0], new Accomodation
+                    HotelAccomodations.Add(splittedLine[0], new Accommodation
                     {
                         Code = splittedLine[0],
                         MultiDescription = splittedLine[1],
@@ -722,9 +731,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                 }
             }
         }
-
-
-
+        
         private static void PopulateHotelCountriesDict(String hotelCountriesFilePath)
         {
             GetInstance().HotelCountry = new Dictionary<string, CountryDict>();
@@ -776,9 +783,16 @@ namespace Lunggo.ApCommon.Hotel.Service
                                         new Zone
                                         {
                                             Code = splittedLine[0] + "-" + splittedLine[4],
-                                            Name = splittedLine[5]
+                                            Name = splittedLine[5],
+                                            DestinationCode = splittedLine[0],
+                                            //Hotel = new Hotels
+                                            //    {
+                                            //        HotelCodes = GetInstance().GetHotelListByLocationFromStorage(splittedLine[0] + "-" + splittedLine[4]),
+                                            //        ZoneCode = splittedLine[0] + "-" + splittedLine[4],
+                                            //    }
                                         }
-                                    }
+                                    },
+                                    CountryCode = splittedLine[2]
                                 }
                             }
                         };
@@ -799,9 +813,16 @@ namespace Lunggo.ApCommon.Hotel.Service
                                     new Zone
                                     {
                                         Code = splittedLine[0] + "-" + splittedLine[4],
-                                        Name = splittedLine[5]
+                                        Name = splittedLine[5],
+                                        DestinationCode = splittedLine[0],
+                                        //Hotel = new Hotels
+                                        //    {
+                                        //        HotelCodes = GetInstance().GetHotelListByLocationFromStorage(splittedLine[0] + "-" + splittedLine[4]),
+                                        //        ZoneCode = splittedLine[0] + "-" + splittedLine[4],
+                                        //    }
                                     }
-                                }
+                                },
+                                CountryCode = splittedLine[2]
                             };
                             Countries.Where(c => c.Code == splittedLine[2]).ToList()[0].Destinations.Add(newDestination);
                         }
@@ -813,7 +834,13 @@ namespace Lunggo.ApCommon.Hotel.Service
                                 var newZone = new Zone
                                 {
                                     Code = splittedLine[0] + "-" + splittedLine[4],
-                                    Name = splittedLine[5]
+                                    Name = splittedLine[5],
+                                    DestinationCode = splittedLine[0],
+                                    //Hotel = new Hotels
+                                    //{
+                                    //    HotelCodes = GetInstance().GetHotelListByLocationFromStorage(splittedLine[0] + "-" + splittedLine[4]),
+                                    //    ZoneCode = splittedLine[0] + "-" + splittedLine[4],
+                                    //}
                                 };
                                 Countries.Where(c => c.Code == splittedLine[2]).ToList()[0].Destinations.Where(d => d.Code == splittedLine[0]).ToList()[0].Zones.Add(newZone);
                             }
@@ -850,682 +877,669 @@ namespace Lunggo.ApCommon.Hotel.Service
             }
         }
 
-
+        //private void PopulateHotelCodeAndZoneDict(IEnumerable<Country> countries)
+        //{
+        //    GetInstance().HotelCodeAndZoneDict = new Dictionary<int, string>();
+        //    foreach (var country in countries)
+        //    {
+        //        foreach (var destination in country.Destinations)
+        //        {
+        //            foreach (var zone in destination.Zones)
+        //            {
+        //                foreach (var hotel in zone.Hotel.HotelCodes)
+        //                {
+        //                    HotelCodeAndZoneDict.Add(hotel, zone.Code);
+        //                }
+        //            }
+        //        }
+        //    }
+        //}
         //GET METHOD REGARDING AUTOCOMPLETE
         public Autocomplete GetLocationById(long id)
         {
-            try
-            {
-                return _Autocompletes[id];
-            }
-            catch (Exception)
-            {
-                
-                return new Autocomplete();
-            }
+            var value = new Autocomplete();
+            _Autocompletes.TryGetValue(id, out value);
+            return value;
         }
 
         //GET METHODS REGARDING SEGMENT
         public string GetHotelSegmentId(string code)
         {
-            try
-            {
-                return HotelSegmentDictId[code];
-            }
-            catch
+            if (code == null)
             {
                 return "";
             }
+            var value = "";
+            HotelSegmentDictId.TryGetValue(code, out value);
+            return value;
         }
         public string GetHotelSegmentEng(string code)
         {
-            try
-            {
-                return HotelSegmentDictEng[code];
-            }
-            catch
+            if (code == null)
             {
                 return "";
             }
+            var value = "";
+            HotelSegmentDictEng.TryGetValue(code, out value);
+            return value; 
         }
 
         //GET METHODS REGARDING FACILITY
         public Facility GetHotelFacility(int code)
         {
-            try
+            //var found = false;
+            foreach (var facility in FacilityGroups.Where(@group => @group.Code == code/1000).SelectMany(@group => @group.Facilities.Where(facility => facility.Code == code%1000)))
             {
-                return FacilityGroups.Where(g => g.Code == code/1000).ToList()[0].
-                    Facilities.Where(f => f.Code == code % 1000).ToList()[0];
+                return facility;
             }
-            catch
-            {
-                return new Facility();
-            }
+
+            return new Facility();
         }
+
         public string GetHotelFacilityDescId(int code)
         {
-            try
+            foreach (var facility in FacilityGroups.Where(@group => @group.Code == code/1000).SelectMany(@group => @group.Facilities.Where(facility => facility.Code == code % 1000)))
             {
-                return FacilityGroups.Where(g => g.Code == code/1000).ToList()[0].
-                    Facilities.Where(f => f.Code == code%1000).ToList()[0].NameId;
+                return facility.NameId;
             }
-            catch
-            {
-                return "";
-            }
+
+            return "";
         }
+
         public string GetHotelFacilityDescEn(int code)
         {
-            try
+            foreach (var facility in FacilityGroups.Where(@group => @group.Code == code/1000).SelectMany(@group => @group.Facilities.Where(facility => facility.Code == code % 1000)))
             {
-                return FacilityGroups.Where(g => g.Code == code / 1000).ToList()[0].
-                    Facilities.Where(f => f.Code == code % 1000).ToList()[0].NameEn;
+                return facility.NameEn;
             }
-            catch
-            {
-                return "";
-            }
+
+            return "";
         }
+
         public string GetHotelFacilityGroupId(int code)
         {
-            try
-            {
-                return HotelFacilityGroupDictId[code];
-            }
-            catch
-            {
-                return "";
-            }
+            var value = "";
+            HotelFacilityGroupDictId.TryGetValue(code, out value);
+            return value;
         }
         public string GetHotelFacilityGroupEng(int code)
         {
-            try
-            {
-                return HotelFacilityGroupDictEng[code];
-            }
-            catch
-            {
-                return "";
-            }
+            var value = "";
+            HotelFacilityGroupDictEng.TryGetValue(code, out value);
+            return value;
         }
         public Facility GetHotelRoomFacility(int code)
         {
-            try
-            {
-                return HotelRoomFacility[code];
-            }
-            catch
-            {
-                return new Facility();
-            }
+            var value = new Facility();
+            HotelRoomFacility.TryGetValue(code, out value);
+            return value;
+            
         }
         public string GetHotelRoomFacilityDescId(int roomFacilityCd)
         {
-            try
+            foreach (var facility in FacilityGroups.Where(@group => @group.Code == 60).SelectMany(@group => @group.Facilities.Where(facility => facility.Code == roomFacilityCd)))
             {
-                return FacilityGroups.Where(g => g.Code == 60).ToList()[0].
-                    Facilities.Where(f => f.Code == roomFacilityCd).ToList()[0].NameId;
+                return facility.NameId;
             }
-            catch
-            {
-                return "";
-            }
+
+            return "";
         }
+
         public string GetHotelRoomFacilityDescEn(int roomFacilityCd)
         {
-            try
+            foreach (var facility in FacilityGroups.Where(@group => @group.Code == 60).SelectMany(@group => @group.Facilities.Where(facility => facility.Code == roomFacilityCd)))
             {
-                return FacilityGroups.Where(g => g.Code == 60).ToList()[0].
-                    Facilities.Where(f => f.Code == roomFacilityCd).ToList()[0].NameEn;
+                return facility.NameEn;
             }
-            catch
-            {
-                return "";
-            }
+
+            return "";            
         }
 
         public List<Facility> GetAllFacilitiesInAGroup(int cd)
         {
-            try
+            foreach (var @group in FacilityGroups.Where(@group => @group.Code == cd))
             {
-                return FacilityGroups.Where(g => g.Code == cd).ToList()[0].Facilities;
+                return @group.Facilities;
             }
-            catch
-            {
-                return new List<Facility>();
-            }
+
+            return new List<Facility>();
         }
 
         public string GetNameOfFacilityGroup(int facilityCd, string lang)
         {
-            try
+            if (lang == "EN")
             {
-                return lang == "EN" ? FacilityGroups.Where(g => g.Code == facilityCd/1000).ToList()[0].NameEn 
-                    : FacilityGroups.Where(g => g.Code == facilityCd / 1000).ToList()[0].NameId;
+                foreach (var @group in FacilityGroups.Where(@group => @group.Code == facilityCd/1000))
+                {
+                    return @group.NameEn;
+                }
             }
-            catch
+            else
             {
-                return "";
+                foreach (var @group in FacilityGroups.Where(@group => @group.Code == facilityCd / 1000))
+                {
+                    return @group.NameId;
+                }
             }
+            
+            return "";
+            
         }
 
         //GET METHODS REGARDING HOTEL ROOM
         public Room GetHotelRoom(string code)
         {
-            try
-            {
-                return Rooms.Where(r => r.RoomCd == code).ToList()[0];
-            }
-            catch
+            if (code == null)
             {
                 return new Room();
             }
+
+            foreach (var room in Rooms.Where(room => room.RoomCd == code))
+            {
+                return room;
+            }
+
+            return new Room();
         }
+
         public string GetHotelRoomDescEn(String cd)
         {
-            try
-            {
-                return Rooms.Where(r => r.RoomCd == cd).ToList()[0].RoomDescEn;
-            }
-            catch
+            if (cd == null)
             {
                 return "";
             }
+            foreach (var room in Rooms.Where(room => room.RoomCd == cd))
+            {
+                return room.RoomDescEn;
+            }
+
+            return "";
         }
+
         public string GetHotelRoomDescId(String cd)
         {
-            try
-            {
-                return Rooms.Where(r => r.RoomCd == cd).ToList()[0].RoomDescId;
-            }
-            catch
+            if (cd == null)
             {
                 return "";
             }
+            foreach (var room in Rooms.Where(room => room.RoomCd == cd))
+            {
+                return room.RoomDescId;
+            }
+
+            return "";
         }
 
         public int GetMaxAdult(string code)
         {
-            try
-            {
-                return Rooms.Where(r => r.RoomCd == code).ToList()[0].MaxAdult;
-            }
-            catch
-            {
-                return 0;
-            }
+            return code == null ? 0 : Rooms.Where(room => room.RoomCd == code).Select(room => room.MaxAdult).FirstOrDefault();
         }
+
         public int GetPaxCapacity(string code)
         {
-            try
-            {
-                return Rooms.Where(r => r.RoomCd == code).ToList()[0].MaxPax;
-            }
-            catch
+            if (code == null)
             {
                 return 0;
             }
+            return Rooms.Where(room => room.RoomCd == code).Select(room => room.MaxPax).FirstOrDefault();
         }
         public HotelRoomType GetHotelRoomType(string code)
         {
-            try
-            {
-                return HotelRoomTypeDict[code];
-            }
-            catch
+            if (code == null)
             {
                 return new HotelRoomType();
             }
+            var value = new HotelRoomType();
+            HotelRoomTypeDict.TryGetValue(code, out value);
+            return value;
         }
+
         public string GetHotelRoomTypeDescEn(String cd)
         {
-            try
-            {
-                return HotelRoomTypeDict[cd].DescEn;
-            }
-            catch
+            if (cd == null)
             {
                 return "";
             }
+            var value = new HotelRoomType();
+            var found = HotelRoomTypeDict.TryGetValue(cd, out value);
+            return found ? value.DescEn : "";
         }
+
         public string GetHotelRoomTypeDescId(String cd)
         {
-            try
-            {
-                return HotelRoomTypeDict[cd].DescId;
-            }
-            catch
+            if (cd == null)
             {
                 return "";
             }
+            var value = new HotelRoomType();
+            var found = HotelRoomTypeDict.TryGetValue(cd, out value);
+            return found ? value.DescId : "";
         }
+
         public RoomCharacteristic GetHotelRoomCharacteristic(string code)
         {
-            try
-            {
-                return HotelRoomCharacteristicDict[code];
-            }
-            catch
+            if (code == null)
             {
                 return new RoomCharacteristic();
             }
-        }
-        public string GetHotelRoomCharacteristicDescEn(string code)
-        {
-            try
-            {
-                return HotelRoomCharacteristicDict[code].CharacteristicDescEn;
-            }
-            catch
-            {
-                return "";
-            }
-        }
-        public string GetHotelRoomCharacteristicDescId(string code)
-        {
-            try
-            {
-                return HotelRoomCharacteristicDict[code].CharacteristicDescId;
-            }
-            catch
-            {
-                return "";
-            }
+            var value = new RoomCharacteristic();
+            HotelRoomCharacteristicDict.TryGetValue(code, out value);
+            return value;
         }
 
-        //
+        public string GetHotelRoomCharacteristicDescEn(string code)
+        {
+            if (code == null)
+            {
+                return "";
+            }
+            var value = new RoomCharacteristic();
+            var found = HotelRoomCharacteristicDict.TryGetValue(code, out value);
+            return found ? value.CharacteristicDescEn : "";
+        }
+
+        public string GetHotelRoomCharacteristicDescId(string code)
+        {
+            if (code == null)
+            {
+                return "";
+            }
+            var value = new RoomCharacteristic();
+            var found = HotelRoomCharacteristicDict.TryGetValue(code, out value);
+            return found ? value.CharacteristicDescId : "";
+        }
+        
         public RateClass GetHotelRoomRateClass(string code)
         {
-            try
-            {
-                return HotelRoomRateClassDict[code];
-            }
-            catch
+            if (code == null)
             {
                 return new RateClass();
             }
+            var value = new RateClass();
+            HotelRoomRateClassDict.TryGetValue(code, out value);
+            return value;
         }
+
         public string GetHotelRoomRateClassId(string code)
         {
-            try
-            {
-                return HotelRoomRateClassDict[code].DescId;
-            }
-            catch
+            if (code == null)
             {
                 return "";
             }
+            var value = new RateClass();
+            var found = HotelRoomRateClassDict.TryGetValue(code, out value);
+            return found ? value.DescId : "";          
         }
+
         public string GetHotelRoomRateClassEng(string code)
         {
-            try
-            {
-                return HotelRoomRateClassDict[code].DescEn;
-            }
-            catch
+            if (code == null)
             {
                 return "";
             }
+            var value = new RateClass();
+            var found = HotelRoomRateClassDict.TryGetValue(code, out value);
+            return found ? value.DescEn : ""; 
         }
+
         public RateType GetHotelRoomRateType(string code)
         {
-            try
-            {
-                return HotelRoomRateTypeDict[code];
-            }
-            catch
+            if (code == null)
             {
                 return new RateType();
             }
+            var value = new RateType();
+            HotelRoomRateTypeDict.TryGetValue(code, out value);
+            return value;
         }
+
         public string GetHotelRoomRateTypeId(string code)
         {
-            try
-            {
-                return HotelRoomRateTypeDict[code].DescEn;
-            }
-            catch
+            if (code == null)
             {
                 return "";
             }
+            var value = new RateType();
+            var found = HotelRoomRateTypeDict.TryGetValue(code, out value);
+            return found ? value.DescId : "";          
         }
+
         public string GetHotelRoomRateTypeEng(string code)
         {
-            try
-            {
-                return HotelRoomRateTypeDict[code].DescEn;
-            }
-            catch
+            if (code == null)
             {
                 return "";
             }
+            var value = new RateType();
+            var found = HotelRoomRateTypeDict.TryGetValue(code, out value);
+            return found ? value.DescEn : "";  
         }
+
         public PaymentType GetHotelRoomPaymentType(string code)
         {
-            try
-            {
-                return HotelRoomPaymentTypeDict[code];
-            }
-            catch
+            if (code == null)
             {
                 return new PaymentType();
             }
+            var value = new PaymentType();
+            HotelRoomPaymentTypeDict.TryGetValue(code, out value);
+            return value;
         }
+
         public string GetHotelRoomPaymentTypeId(string code)
         {
-            try
-            {
-                return HotelRoomPaymentTypeDict[code].DescId;
-            }
-            catch
+            if (code == null)
             {
                 return "";
             }
+            var value = new PaymentType();
+            var found = HotelRoomPaymentTypeDict.TryGetValue(code, out value);
+            return found ? value.DescId : ""; 
         }
+
         public string GetHotelRoomPaymentTypeEng(string code)
         {
-            try
-            {
-                return HotelRoomPaymentTypeDict[code].DescEn;
-            }
-            catch
+            if (code == null)
             {
                 return "";
             }
+            var value = new PaymentType();
+            var found = HotelRoomPaymentTypeDict.TryGetValue(code, out value);
+            return found ? value.DescEn : ""; 
         }
 
         //
         public string GetHotelCountryName(string code)
         {
-            try
-            {
-                return HotelCountry[code].Name;
-            }
-            catch
+            if (code == null)
             {
                 return "";
             }
+            var value = new CountryDict();
+            var found = HotelCountry.TryGetValue(code, out value);
+            return found ? value.Name : ""; 
         }
+
         public string GetHotelCountryIsoCode(string code)
         {
-            try
-            {
-                return HotelCountry[code].IsoCode;
-            }
-            catch
+            if (code == null)
             {
                 return "";
             }
+            var value = new CountryDict();
+            var found = HotelCountry.TryGetValue(code, out value);
+            return found ? value.IsoCode : ""; 
         }
+
         public CountryDict GetHotelCountry(string code)
         {
-            try
-            {
-                return HotelCountry[code];
-            }
-            catch
+            if (code == null)
             {
                 return new CountryDict();
             }
+            var value = new CountryDict();
+            HotelCountry.TryGetValue(code, out value);
+            return value;
         }
 
         public string GetCountryFromDestination(string cd)
         {
-            try
-            {
-                return Countries.Where(c => c.Destinations.Any(d => d.Code == cd)).ToList()[0].Code;
-            }
-            catch
+            if (cd == null)
             {
                 return "";
             }
+            foreach (var country in Countries.Where(country => country.Destinations.Any(d => d.Code == cd)))
+            {
+                return country.Code;
+            }
+
+            return "";
         }
+
         //GET METHODS REGARDING DESTINATION AND ZONE
         public Country GetHotelCountryFromMasterList(string countryCode)
         {
-            try
-            {
-                return Countries.Where(c=> c.Code == countryCode).ToList()[0];
-            }
-            catch
+            if (countryCode == null)
             {
                 return new Country();
             }
+            foreach (var country in Countries.Where(country => country.Code == countryCode))
+            {
+                return country;
+            }
+            return new Country();
         }
 
         public Country GetCountryNameFromDict(string countryCode)
         {
-            try
-            {
-                return HotelDestinationCountryDict[countryCode];
-            }
-            catch
+            if (countryCode == null)
             {
                 return new Country();
             }
+            var value = new Country();
+            HotelDestinationCountryDict.TryGetValue(countryCode, out value);
+            return value;
+        }
+
+        public List<string> GetAllLocations()
+        {
+            var locations = new List<string>();
+
+            foreach (var country in Countries)
+            {
+                foreach (var dest in country.Destinations)
+                {
+                    locations.Add(dest.Code);
+                    locations.AddRange(dest.Zones.Select(zone => zone.Code));
+                }
+            }
+
+            return locations;
         }
 
         public Destination GetDestinationNameFromDict(string destinationCode)
         {
-            try
-            {
-                return HotelDestinationDict[destinationCode];
-            }
-            catch
+            if (destinationCode == null)
             {
                 return new Destination();
             }
+            var value = new Destination();
+            HotelDestinationDict.TryGetValue(destinationCode, out value);
+            return value;
         }
 
         public Zone GetHotelZoneFromDict(string zoneCode)
         {
-            try
-            {
-                return HotelDestinationZoneDict[zoneCode];
-            }
-            catch
+            if (zoneCode == null)
             {
                 return new Zone();
             }
+            var value = new Zone();
+            HotelDestinationZoneDict.TryGetValue(zoneCode, out value);
+            return value;
         }
 
         public string GetZoneNameFromDict(string zoneCode)
         {
-            try
-            {
-                return HotelDestinationZoneDict[zoneCode].Name;
-            }
-            catch
+            if (zoneCode == null)
             {
                 return "";
             }
+            var value = new Zone();
+            var found = HotelDestinationZoneDict.TryGetValue(zoneCode, out value);
+            return found ? value.Name : "";
         }
 
-        public Zone GetZoneFromHotel(string hotelCd)
+        public Zone GetZoneFromHotel(int hotelCd)
         {
-            try
-            {
-                return HotelDestinationZoneDict.Values.Where(a => a.Hotel.Contains(hotelCd)).ToList()[0];
-            }
-            catch
-            {
-                return new Zone();
-            }
+            var value = "";
+            var found = HotelCodeAndZoneDict.TryGetValue(hotelCd, out value);
+            if (!found) return new Zone();
+            var zone = new Zone();
+            var foundZone = HotelDestinationZoneDict.TryGetValue(value, out zone);
+            return foundZone ? zone : new Zone();
         }
 
         public Destination GetDestinationFromZone(string zoneCd)
         {
-            try
-            {
-                return HotelDestinationDict.Single(e => e.Value.Zones.Any(z => z.Code == zoneCd)).Value;
-            }
-            catch
+            if (zoneCd == null)
             {
                 return new Destination();
             }
+            var value = new Zone();
+            var found = HotelDestinationZoneDict.TryGetValue(zoneCd, out value);
+            if (!found) return new Destination();
+            var destCd = value.DestinationCode;
+            var dest = new Destination();
+            var foundDest = HotelDestinationDict.TryGetValue(destCd, out dest);
+            return foundDest ? dest : new Destination();
         }
 
         //GETTER FOR HOTEL CHAIN
         public Chain GetHotelChain(string code)
         {
-            try
-            {
-                return HotelChains[code];
-            }
-            catch
+            if (code == null)
             {
                 return new Chain();
             }
+            var value = new Chain();
+            HotelChains.TryGetValue(code, out value);
+            return value;
         }
+
         public string GetHotelChainDesc(string code)
         {
-            try
-            {
-                return HotelChains[code].Description;
-            }
-            catch
+            if (code == null)
             {
                 return "";
             }
+            var value = new Chain();
+            var found = HotelChains.TryGetValue(code, out value);
+            return found ? value.Description : "";
         }
-
-
+        
         //GETTER FOR HOTEL ACCOMODATION
-        public Accomodation GetHotelAccomodation(string code)
+        public Accommodation GetHotelAccomodation(string code)
         {
-            try
+            if (code == null)
             {
-                return HotelAccomodations[code];
+                return new Accommodation();
             }
-            catch
-            {
-                return new Accomodation();
-            }
+            var value = new Accommodation();
+            HotelAccomodations.TryGetValue(code, out value);
+            return value;
         }
+
         public string GetHotelAccomodationMultiDesc(string code)
         {
-            try
-            {
-                return HotelAccomodations[code].MultiDescription;
-            }
-            catch
+            if (code == null)
             {
                 return "";
             }
+            var value = new Accommodation();
+            var found = HotelAccomodations.TryGetValue(code, out value);
+            return found ? value.MultiDescription : "";
         }
 
         public string GetHotelAccomodationDescEng(string code)
         {
-            try
-            {
-                return HotelAccomodations[code].TypeNameEn;
-            }
-            catch
+            if (code == null)
             {
                 return "";
             }
+            var value = new Accommodation();
+            var found = HotelAccomodations.TryGetValue(code, out value);
+            return found ? value.TypeNameEn : "";
         }
+
         public string GetHotelAccomodationDescId(string code)
         {
-            try
-            {
-                return HotelAccomodations[code].TypeNameId;
-            }
-            catch
+            if (code == null)
             {
                 return "";
             }
+            var value = new Accommodation();
+            var found = HotelAccomodations.TryGetValue(code, out value);
+            return found ? value.TypeNameId : "";
         }
 
         //GETTER FOR HOTEL BOARD
         public Board GetHotelBoard(string code)
         {
-            try
-            {
-                return HotelBoards[code];
-            }
-            catch
+            if (code == null)
             {
                 return new Board();
             }
+            var value = new Board();
+            HotelBoards.TryGetValue(code, out value);
+            return value;
         }
+
         public string GetHotelBoardDescEn(string code)
         {
-            try
-            {
-                return HotelBoards[code].NameEn;
-            }
-            catch
+            if (code == null)
             {
                 return "";
             }
+            var value = new Board();
+            var found = HotelBoards.TryGetValue(code, out value);
+            return found ? value.NameEn : "";
         }
 
         public string GetHotelBoardDescId(string code)
         {
-            try
-            {
-                return HotelBoards[code].NameId;
-            }
-            catch
+            if (code == null)
             {
                 return "";
             }
+            var value = new Board();
+            var found = HotelBoards.TryGetValue(code, out value);
+            return found ? value.NameId : "";
         }
-
-
+        
         //GETTER FOR HOTEL CATEGORY
         public Category GetHotelCategory(string code)
         {
-            try
-            {
-                return HotelCategories[code];
-            }
-            catch
+            if (code == null)
             {
                 return new Category();
             }
+            var value = new Category();
+            HotelCategories.TryGetValue(code, out value);
+            return value;
         }
 
         public int GetSimpleCodeByCategoryCode(string code)
         {
-            try
-            {
-                return HotelCategories[code].SimpleCode;
-            }
-            catch
+            if (code == null)
             {
                 return 0;
             }
+            var value = new Category();
+            var found = HotelCategories.TryGetValue(code, out value);
+            return found ? value.SimpleCode : 0;
         }
+
         public string GetHotelCategoryDescEn(string code)
         {
-            try
-            {
-                return HotelCategories[code].NameEn;
-            }
-            catch
+            if (code == null)
             {
                 return "";
             }
+            var value = new Category();
+            var found = HotelCategories.TryGetValue(code, out value);
+            return found ? value.NameEn : "";
         }
 
         public string GetHotelCategoryDescId(string code)
         {
-            try
-            {
-                return HotelCategories[code].NameId;
-            }
-            catch
+            if (code == null)
             {
                 return "";
             }
+            var value = new Category();
+            var found = HotelCategories.TryGetValue(code, out value);
+            return found ? value.NameId : "";
         }
-
-
     }
-
-    
-
-    
 }

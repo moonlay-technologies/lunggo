@@ -361,11 +361,53 @@
     <Content Include="Config\Airport.csv" />
     <Content Include="Config\Airline.csv" />
     <Content Include="Config\Country.csv" />
+    <Content Include="Config\HotelAccomodation.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Config\HotelBoard.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Config\HotelCategory.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Config\HotelChain.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Config\HotelCountries.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Config\HotelDestinations.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Config\HotelFacilities.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Config\HotelFacilitiesFilterGroup.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Config\HotelFacilityGroup.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Config\HotelRoom.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Config\HotelRoomOriginal.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Config\HotelRoomPaymentType.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Config\HotelRoomRateClass.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Config\HotelRoomRateType.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Config\HotelSegment.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="Properties\PublishProfiles\prod-api %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\prod-api.pubxml" />
-    <None Include="Properties\PublishProfiles\travorama-dv2-api %282%29.pubxml" />
-    <None Include="Properties\PublishProfiles\travorama-dv2-api %283%29.pubxml" />
-    <None Include="Properties\PublishProfiles\travorama-dv2-api %284%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-dv2-api.pubxml" />
     <None Include="Properties\PublishProfiles\prod-api__staging.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-apidev.pubxml" />
@@ -384,6 +426,7 @@
     <None Include="Properties\PublishProfiles\travorama-prod-api__staging.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-prod-api__staging2 %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-prod-api__staging2.pubxml" />
+    <None Include="Properties\PublishProfiles\travorama-qa-api %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-qa-api.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

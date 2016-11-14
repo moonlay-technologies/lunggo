@@ -21,6 +21,7 @@ namespace Lunggo.ApCommon.Hotel.Model.Logic
         public int FilteredHotelCount { get; set; }
         public int Page { get; set; }
         public int PerPage { get; set; }
+        public int PageCount { get; set; }
         public decimal MaxPrice { get; set; }
         public decimal MinPrice { get; set; }
         public bool IsSpecificHotel { get; set; }

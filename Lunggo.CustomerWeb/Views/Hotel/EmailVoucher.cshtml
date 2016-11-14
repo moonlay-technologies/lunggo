@@ -131,8 +131,16 @@
                     <p style="font-weight: 700; color: #15b1e4;">@Model.HotelDetail.Rooms[0].Rates[0].RoomCount Kamar @HotelService.GetInstance().GetHotelRoom(Model.HotelDetail.Rooms[0].RoomCode).RoomDescId @HotelService.GetInstance().GetHotelBoardDescId(Model.HotelDetail.Rooms[0].Rates[0].Boards)</p>
                     <p style="color: #15b1e4;">sudah termasuk 10% Pajak.</p>
                     <p style="color: #15b1e4;">sudah termasuk 10% Biaya layanan.</p>
+                    <p style="font-style: italic; font-size: 10px">
+                        &quot;Payable through @Model.HotelDetail.SupplierName, acting as agent for the service operating
+
+                        company, details of which can be provided upon request&quot;. VAT: @Model.HotelDetail.SupplierVat
+
+                        Reference: @Model.HotelDetail.BookingReference
+                    </p>
                     <span style="color: #ff7200; font-size: 15px; font-weight: 700;">Harga Total</span>
                     <span style="color: #ff7200; font-size: 15px; font-weight: 700; float: right;">Rp @Model.Payment.FinalPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</span>
+                    
                 </td>
                 <td width="5%"></td>
             </tr>

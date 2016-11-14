@@ -15,6 +15,7 @@ app.controller('hotelSearchController', ['$scope', '$log', '$http', '$resource',
     $scope.hotel.searchHotelType = { "location": 'Location', searchId: 'SearchId'};
     $scope.hotel.searchId = null;
     $scope.hotel.location = "BALI";
+    $scope.hotel.locationDisplay = "";
     $scope.hotel.checkinDate = "12/10/2016";
     $scope.hotel.checkoutDate = "12/11/2016";
     $scope.hotel.adultCount = 3;
@@ -22,7 +23,7 @@ app.controller('hotelSearchController', ['$scope', '$log', '$http', '$resource',
     $scope.hotel.nightCount = 1;
     $scope.hotel.roomCount = 2;
     $scope.hotel.childrenAges = [];
-
+    $scope.searchDone = false;
     $scope.filter = {};
     $scope.filter.minPrice = 0;
     $scope.filter.maxPrice = 0;
@@ -32,9 +33,10 @@ app.controller('hotelSearchController', ['$scope', '$log', '$http', '$resource',
     $scope.sorting = '';
 
     $scope.searchHeader = {};
+    $scope.view = {};
+    $scope.view.showHotelSearch = false;
 
-
-    var resource = $resource('//api.local.travorama.com/v1/hotel/search',
+    var resource = $resource(HotelSearchConfig.Url,
             {},
             {
                 query: {
@@ -44,7 +46,27 @@ app.controller('hotelSearchController', ['$scope', '$log', '$http', '$resource',
                 }
             }
         );
+    var resourcex = $resource(HotelAutocompleteConfig.Url + '/:prefix',
+           { prefix: '@prefix' },
+           {
+               query: {
+                   method: 'GET',
+                   params: {},
+                   isArray: false
+               }
+           }
+       );
 
+    $scope.$watch('hotel.locationDisplay', function (newValue, oldValue, ccc) {
+        if (newValue.length >= 3) {
+            resourcex.query({ prefix: newValue }).$promise.then(function (data) {
+                $timeout(function () {
+                    $scope.hotel.hotelAutocomplete = data.hotelAutocomplete;
+                    $log.debug($scope.hotel.hotelAutocomplete);
+                }, 0);
+            });
+        }
+    });
     $scope.init = function (model) {
         $scope.model = model;
         $log.debug($scope.model);
@@ -103,7 +125,7 @@ app.controller('hotelSearchController', ['$scope', '$log', '$http', '$resource',
             //"hotelSorting": "ASCENDINGPRICE"
         }).$promise.then(function(data) {
 
-            
+            $scope.searchDone = true;
             $scope.hotel.searchId = data.searchId;
             $scope.hotels = data.hotels;
             $scope.totalActualHotel = data.returnedHotelCount;
