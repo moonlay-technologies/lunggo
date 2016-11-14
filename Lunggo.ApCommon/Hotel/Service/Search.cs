@@ -155,7 +155,6 @@ namespace Lunggo.ApCommon.Hotel.Service
             firstPageHotelDetails = SetPagination(firstPageHotelDetails, input.Page, input.PerPage);
             //AddDetailInfoForDisplayHotel(firstPageHotelDetails);
             var searchType = detailDestination.Type.ToString();
-            //var swCv = Stopwatch.StartNew();
             return new SearchHotelOutput
                         {
                             IsSuccess = true,
@@ -174,8 +173,6 @@ namespace Lunggo.ApCommon.Hotel.Service
                             HotelCode = searchType.Equals("Hotel") ? (int?)firstPageHotelDetails.Select(x => x.HotelCode).FirstOrDefault() : null,
 
                         };
-            swCv.Stop();
-            Debug.Print("CONVERT:" + swCv.Elapsed.ToString());
         }
 
         public SearchHotelOutput DoSearchById(SearchHotelInput input)
