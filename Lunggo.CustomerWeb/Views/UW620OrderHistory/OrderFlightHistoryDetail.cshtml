@@ -5,6 +5,7 @@
 @using Lunggo.ApCommon.Hotel.Service
 @using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Sdk.auto.model
 @using Lunggo.ApCommon.Payment.Constant
+@using Lunggo.ApCommon.Product.Constant
 @using Lunggo.Framework.Extension
 @model Lunggo.ApCommon.Product.Model.ReservationForDisplayBase
 @{
@@ -16,6 +17,7 @@
 @{
     var orderedRooms = new List<Tuple<string, int>>();
     var rooms = new List<HotelRoomForDisplay>();
+    var sum = 0;
     try
     {
 
@@ -24,7 +26,7 @@
         foreach (var room in rooms)
         {
             var roomName = HotelService.GetInstance().GetHotelRoom(room.RoomCode).RoomDescId;
-            var sum = 0;
+            
             foreach (var rate in room.Rates)
             {
                 sum += rate.RoomCount;
@@ -91,11 +93,15 @@
     <script>
     var langCode = 'en';
     var rsvNo = @Model.RsvNo;
+    var rsvStatus = '@Convert.ToInt32(Model.RsvDisplayStatus)';
+    var paymentMethod = '@Convert.ToInt32(Model.Payment.Method)';
+
     @*var orderDate = '@Model.RsvTime.ToString("u")';
     //var refundDate = '@(Model.Payment.Refund != null ? Model.Payment.Refund.Time.ToString("u") : "")';*@
     </script>
     <!-- angular controller -->
     <script src="/Assets/travorama20/js/accountController.js"></script>
+
 }
 
 
@@ -125,51 +131,68 @@
                                     </form>
                                     <h4>
                                         <b>INFO PEMESANAN</b>
-                                        <button class="pull-right btn btn-yellow" ng-if="isExist" ng-click="submitRsvNo(flight.rsvNo, flight.rsvStatus)">{{ButtonText(flight.rsvStatus,flight.payment.method)}}</button>
+                                        @*{{ButtonText(flight.rsvStatus,flight.payment.method)}}*@
+                                        <button class="pull-right btn btn-yellow" ng-click="submitRsvNo(@Model.RsvNo, @Model.RsvDisplayStatus)">
+                                            {{ButtonText(rsvStatus, paymentMethod)}}
+                                        </button>
+                                       
                                     </h4>
                                 </header>
                                 <section>
                                     <div class="form form-horizontal">
 
                                         <div class="form-group">
-                                            <label class="control-label col-xs-3">Nama Pemesan</label>
+                                            <div class="control-label col-xs-3">Nama Pemesan</div>
                                             <div class="col-xs-9">
-                                                <p class="form-control-static">@Model.Contact.Name</p>
+                                                <p>@Model.Contact.Name</p>
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label class="control-label col-xs-3">Tanggal Pemesanan</label>
+                                            <div class="control-label col-xs-3">Tanggal Pemesanan</div>
                                             <div class="col-xs-9">
-                                                <p class="form-control-static">@Model.RsvTime</p>
+                                                <p>@Model.RsvTime.ToString("D", CultureInfo.CreateSpecificCulture("id-ID"))</p>
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label class="control-label col-xs-3">Tipe</label>
+                                            <div class="control-label col-xs-3">Tipe</div>
+                                            @if (Model is FlightReservationForDisplay)
+                                            {
+                                                <div class="col-xs-9">
+                                                    <p>Penerbangan</p>
+                                                </div>
+                                            }
+                                            @if (Model is HotelReservationForDisplay)
+                                            {
+                                                <div class="col-xs-9">
+                                                    <p>Hotel</p>
+                                                </div>
+                                            }
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="control-label col-xs-3">Harga Tiket</div>
                                             <div class="col-xs-9">
-                                                <p class="form-control-static">Penerbangan</p>
+                                                <p>Rp @Model.Payment.FinalPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</p>
+                                            </div>
+                                        </div>
+                                        
+                                        @if (Model.Payment.Method != PaymentMethod.Undefined)
+                                        {
+                                            <div class="form-group">
+                                                <div class="control-label col-xs-3">Metode Pembayaran</div>
+                                                <div class="col-xs-9">
+                                                    <p>@Model.Payment.Method</p>
+                                                </div>
+                                            </div>
+                                        }
+                                        
+                                        <div class="form-group">
+                                            <div class="control-label col-xs-3">Status Pembayaran</div>
+                                            <div class="col-xs-9">
+                                                <p>@Model.Payment.Status</p>
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label class="control-label col-xs-3">Harga Pesanan</label>
-                                            <div class="col-xs-9">
-                                                <p class="form-control-static">Rp @Model.Payment.FinalPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</p>
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group" ng-show="flight.payment.method">
-                                            <label class="control-label col-xs-3">Metode Pembayaran</label>
-                                            <div class="col-xs-9">
-                                                <p class="form-control-static">@Model.Payment.Method</p>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="control-label col-xs-3">Status Pembayaran</label>
-                                            <div class="col-xs-9">
-                                                <p class="form-control-static">@Model.Payment.Status</p>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="control-label col-xs-3">Penumpang</label>
+                                            <div class="control-label col-xs-3">Penumpang</div>
                                             <div class="col-xs-9">
                                                 <ol class="passenger-list">
                                                     @foreach (var pax in Model.Pax)
@@ -205,17 +228,24 @@
                     {
                         <div>
                             <div class="flight departure">
-                                <p><!--<img src="{{trip.segments[0].airlineLogoUrl}}" alt="trip.segments[0].airlineName" /> <span>{{trip.segments[0].airlineName}}</span>--> </p>
                                 <div class="row">
                                     <div class="col-xs-2">
-                                        <p>Berangkat :</p>
+                                        <p><img src="@trip.Segments[0].AirlineLogoUrl" alt="@trip.Segments[0].AirlineName" /> </p>
                                     </div>
                                     <div class="col-xs-9">
-                                        <p>@trip.OriginCity - @trip.DestinationCity</p>
-                                        <p>@trip.DepartureDate.GetValueOrDefault().ToString("D", CultureInfo.CreateSpecificCulture("id-ID"))</p>
+                                        <span>@trip.Segments[0].AirlineName</span>
                                     </div>
                                 </div>
-                            </div>   
+                                    <div class="row">
+                                        <div class="col-xs-2">
+                                            <p>Berangkat :</p>
+                                        </div>
+                                        <div class="col-xs-9">
+                                            <p>@trip.OriginCity - @trip.DestinationCity</p>
+                                            <p>@trip.DepartureDate.GetValueOrDefault().ToString("D", CultureInfo.CreateSpecificCulture("id-ID"))</p>
+                                        </div>
+                                    </div>
+                                </div>   
                         </div>
                     }
                 </section>
@@ -258,12 +288,12 @@
                                     <div class="wb-container clearfix">
                                         <div class="wb-left">Malam</div>
                                         <div class="wb-mid">:</div>
-                                        <div class="wb-right bold-txt">@rsv.HotelDetail.NightCount Malam</div>
+                                        <div class="wb-right bold-txt">@((rsv.HotelDetail.CheckOutDate - rsv.HotelDetail.CheckInDate).Days) Malam</div>
                                     </div>
                                     <div class="wb-container clearfix">
                                         <div class="wb-left">Kamar</div>
                                         <div class="wb-mid">:</div>
-                                        <div class="wb-right bold-txt">{{totalRoom}} Kamar</div>
+                                        <div class="wb-right bold-txt">@sum Kamar</div>
                                     </div>
                                 </div>
                             </div>
