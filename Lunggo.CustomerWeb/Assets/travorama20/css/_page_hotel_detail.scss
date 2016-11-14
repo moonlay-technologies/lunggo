@@ -116,7 +116,7 @@
                 img {
                     opacity: 1;
                     @include transition(none);
-                    height: 57px;
+                    height: 100px;
                 }
                 .flex-active {
                     border: 2px solid #fff;
@@ -151,7 +151,7 @@
                     }
                 }
             }
-            .slides img {height: 450px;}
+            .slides img {height: auto;}
         }
     }
     .menu-hotel {
@@ -274,7 +274,7 @@
                         }
                     }
                 }
-                .room-rm {
+                .room-rm { display: none;
                     .dropdown-container {
                         margin: 10px 0;
                         border-left: 1px solid #ccc;
@@ -300,6 +300,7 @@
                     }
                 }
                 .room-rr {
+                    border-left: 1px solid #ccc;
                     padding-left: 25px;
                     color: #ff7200;
                     line-height: 22px;
