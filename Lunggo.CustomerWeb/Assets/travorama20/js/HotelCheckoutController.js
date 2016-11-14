@@ -3,7 +3,7 @@ app.controller('hotelcheckoutController', [
     '$http', '$scope', '$interval', '$location', function ($http, $scope, $interval, $location) {
 
         $scope.returnUrl = document.referrer == (window.location.origin + window.location.pathname + window.location.search) ? '/' : document.referrer;
-
+        
         // set hash to page 1
         angular.element(document).ready(function () {
             if (getParam('page') == 2) {
@@ -232,7 +232,16 @@ app.controller('hotelcheckoutController', [
 
             }
         }
-       
+        $scope.calculateAspectRatioFit = function (srcWidth, srcHeight) {
+
+            return { width:srcWidth * 0.9, height:srcHeight * 0.9 };
+        };
+        $scope.hotelimg = document.getElementById("hotelimg");
+        $scope.roomimg = document.getElementById("roomimg");
+        $scope.hotelimgheight = $scope.calculateAspectRatioFit($scope.hotelimg.width, $scope.hotelimg.height).height;
+            $scope.hotelimgwidth = $scope.calculateAspectRatioFit($scope.hotelimg.width, $scope.hotelimg.height).width;
+            $scope.roomimgheight = $scope.calculateAspectRatioFit($scope.roomimg.width, $scope.roomimg.height).height;
+            $scope.roomimgwidth = $scope.calculateAspectRatioFit($scope.roomimg.width, $scope.roomimg.height).width;
         //Change Page
        
         $scope.changePage = function (page) {
@@ -243,6 +252,8 @@ app.controller('hotelcheckoutController', [
             $scope.stepClass = 'active-' + page;
 
         }
+
+        
         // change page after login
         $scope.form.submit = function () {
             if ($scope.trial > 3) {
