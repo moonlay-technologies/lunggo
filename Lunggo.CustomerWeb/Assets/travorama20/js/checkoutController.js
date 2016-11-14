@@ -1085,8 +1085,11 @@ app.controller('thankyouController', [
             return text;
         }
 
-
-        $scope.hotelDetails = hotelDetails;
+        
+        if (rsvType == 'hotel') {
+            $scope.hotelDetails = hotelDetails;
+        }
+        
         $scope.totalRoom = totalRoom;
         $scope.checkin = checkin;
         $scope.checkout = checkout;

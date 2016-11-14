@@ -117,19 +117,25 @@
     $('.date-picker').datepicker({
         minDate: new Date()
     });
-
+    var rsvType = '';
+    var totalRoom = 0;
+    var rating = "";
+    var nights = 0;
+    var checkin = "";
+    var checkout = "";
+    var netFare = 0;
     @if (Model is HotelReservationForDisplay)
-        {
-            var hotel = Model as HotelReservationForDisplay;
-            @:var hotelDetails = '@hotel.HotelDetail';
-            @:var rating = '@hotel.HotelDetail.StarRating'
-            @:var originalFare = '@hotel.HotelDetail.OriginalFare';
-            @:var netFare = '@hotel.HotelDetail.NetFare';
-            @:var totalRoom = '@hotel.HotelDetail.Rooms.SelectMany(r => r.Rates).Sum(p => p.RoomCount)';
-            @:var checkin = '@hotel.HotelDetail.CheckInDate.ToString("D",CultureInfo.CreateSpecificCulture("id-ID"))';
-            @:var checkout = '@hotel.HotelDetail.CheckOutDate.ToString("D", CultureInfo.CreateSpecificCulture("id-ID"))';
-            @:var nights = '@((hotel.HotelDetail.CheckOutDate - hotel.HotelDetail.CheckInDate).Days)';
-            }
+    {
+        var hotel = Model as HotelReservationForDisplay;
+        @:var hotelDetails = '@hotel.HotelDetail';
+        @:var rating = '@hotel.HotelDetail.StarRating'
+        @:var originalFare = '@hotel.HotelDetail.OriginalFare';
+        @:var netFare = '@hotel.HotelDetail.NetFare';
+        @:var totalRoom = '@hotel.HotelDetail.Rooms.SelectMany(r => r.Rates).Sum(p => p.RoomCount)';
+        @:var checkin = '@hotel.HotelDetail.CheckInDate.ToString("D", CultureInfo.CreateSpecificCulture("id-ID"))';
+        @:var checkout = '@hotel.HotelDetail.CheckOutDate.ToString("D", CultureInfo.CreateSpecificCulture("id-ID"))';
+        @:var nights = '@((hotel.HotelDetail.CheckOutDate - hotel.HotelDetail.CheckInDate).Days)';
+    }
     </script>
     <!-- angular controller -->
     <script src="/Assets/travorama20/js/checkoutController.js"></script>

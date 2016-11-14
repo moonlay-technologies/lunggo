@@ -514,7 +514,7 @@ app.controller('orderDetailController', [
 
         $scope.pageLoaded = true;
         $scope.trial = 0;
-        $scope.isExist = false;
+        $scope.isExist = true;
         $scope.getTime = function (dateTime) {
             return new Date(dateTime);
         }
@@ -526,6 +526,8 @@ app.controller('orderDetailController', [
             countryCallCd: '',
             phone: ''
         }
+        $scope.rsvStatus = rsvStatus;
+        $scope.paymentMethod = paymentMethod;
 
         // Pass Data into MVC Controller
         $scope.submitRsvNo = function (rsvNo, rsvStatus) {
