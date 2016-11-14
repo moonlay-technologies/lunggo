@@ -111,8 +111,29 @@ namespace Lunggo.ApCommon.Hotel.Service
             AddPriceMargin(result.HotelDetails);
             swPr.Stop();
             Debug.Print("PRIMARGIN:" + swPr.Elapsed.ToString());
-            var dict = GetHotelDetailByLocation(request.Destination);
-            result.HotelDetails = ApplyHotelDetails(dict, result.HotelDetails);
+            var dict = new Dictionary<int, HotelDetailsBase>();
+            var details = new HotelDetailsBase();
+            //GetHotelDetailByLocation(request.Destination);
+            switch (detailDestination.Type)
+            {
+                case AutocompleteType.Zone:
+                    dict = GetHotelDetailByLocation(request.Zone);
+                    result.HotelDetails = ApplyHotelDetails(dict, result.HotelDetails);
+                    break;
+                case AutocompleteType.Destination:
+                    dict = GetHotelDetailByLocation(request.Destination);
+                    result.HotelDetails = ApplyHotelDetails(dict, result.HotelDetails);
+                    break;
+                case AutocompleteType.Area:
+                    dict = GetHotelDetailByLocation(request.Area);
+                    result.HotelDetails = ApplyHotelDetails(dict, result.HotelDetails);
+                    break;
+                case AutocompleteType.Hotel:
+                    details = GetHotelDetailFromDb(request.HotelCode);
+                    result.HotelDetails = ApplyHotelDetails(details, result.HotelDetails);
+                    break;
+            };
+            
             result.HotelDetails = AddDetailInfoForSearchResult(result.HotelDetails);
             result.HotelFilterDisplayInfo = SetHotelFilterDisplayInfo(result.HotelDetails, isByDestination);
             var sortedHotel = result.HotelDetails.OrderByDescending(x => x.NetFare);
@@ -303,8 +324,6 @@ namespace Lunggo.ApCommon.Hotel.Service
             };
         }
 
-
-
         public List<HotelDetail> ApplyHotelDetails(Dictionary<int, HotelDetailsBase> dict, List<HotelDetail> hotels)
         {
             foreach (var hotel in hotels)
@@ -335,6 +354,28 @@ namespace Lunggo.ApCommon.Hotel.Service
             return hotels;
         }
 
+        public List<HotelDetail> ApplyHotelDetails(HotelDetailsBase detail, List<HotelDetail> hotels)
+        {
+            foreach (var hotel in hotels)
+            {
+                
+                    hotel.AccomodationType = detail.AccomodationType;
+                    hotel.Address = detail.Address;
+                    hotel.Facilities = detail.Facilities;
+                    hotel.AreaCode = detail.AreaCode;
+                    hotel.PhonesNumbers = detail.PhonesNumbers;
+                    hotel.HotelName = detail.HotelName;
+                    hotel.City = detail.City;
+                    hotel.Chain = detail.Chain;
+                    hotel.Email = detail.Email;
+                    hotel.ImageUrl = detail.ImageUrl;
+                    hotel.Pois = detail.Pois;
+                    hotel.Segment = detail.Segment;
+                    hotel.PostalCode = detail.PostalCode;
+                
+            }
+            return hotels;
+        }
         public List<HotelDetail> AddDetailInfoForDisplayHotel(List<HotelDetail> result)
         {
             foreach (var hotel in result)
