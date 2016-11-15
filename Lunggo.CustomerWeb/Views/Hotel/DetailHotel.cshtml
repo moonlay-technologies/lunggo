@@ -273,8 +273,8 @@
                             <div class="accordion-content show">
                                 <div class="ih-row fc clearfix">
                                     <div class="col-left-hotel">
-                                        <div class="ih-left hotel-blue">
-                                            Fasilitas dan Layanan Hotel (GENERAL)
+                                        <div class="ih-left general-lg-icon">
+                                            GENERAL
                                         </div>
                                     </div>
                                     <div class="col-right-hotel">
@@ -287,8 +287,8 @@
                                 </div>
                                 <div class="ih-row clearfix">
                                     <div class="col-left-hotel">
-                                        <div class="ih-left sport-blue">
-                                            Olahraga dan Sarana Rekreasi (HEALTH)
+                                        <div class="ih-left health-lg-icon">
+                                            HEALTH
                                         </div>
                                     </div>
                                     <div class="col-right-hotel">
@@ -301,8 +301,22 @@
                                 </div>
                                 <div class="ih-row clearfix">
                                     <div class="col-left-hotel">
-                                        <div class="ih-left wifi-blue">
-                                            Internet & Wifi (BUSINESS)
+                                        <div class="ih-left sport-lg-icon">
+                                            SPORT
+                                        </div>
+                                    </div>
+                                    <div class="col-right-hotel">
+                                        <div class="ih-right clearfix">
+                                            <ul class="blue-list">
+                                                <li ng-repeat="facility in hotel.facilities.health">{{facility}}</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="ih-row clearfix">
+                                    <div class="col-left-hotel">
+                                        <div class="ih-left bussiness-lg-icon">
+                                            BUSINESS
                                         </div>
                                     </div>
                                     <div class="col-right-hotel">
@@ -316,8 +330,38 @@
                                 </div>
                                 <div class="ih-row clearfix">
                                     <div class="col-left-hotel">
-                                        <div class="ih-left parking-blue">
-                                            Parking (OTHER)
+                                        <div class="ih-left meal-lg-icon">
+                                            MEAL
+                                        </div>
+                                    </div>
+                                    <div class="col-right-hotel">
+                                        <div class="ih-right clearfix">
+                                            <ul class="blue-list">
+                                                <li ng-repeat="facility in hotel.facilities.business">{{facility}}</li>
+
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="ih-row clearfix">
+                                    <div class="col-left-hotel">
+                                        <div class="ih-left ent-lg-icon">
+                                            ENTERTAINMENT
+                                        </div>
+                                    </div>
+                                    <div class="col-right-hotel">
+                                        <div class="ih-right clearfix">
+                                            <ul class="blue-list">
+                                                <li ng-repeat="facility in hotel.facilities.business">{{facility}}</li>
+
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="ih-row clearfix">
+                                    <div class="col-left-hotel">
+                                        <div class="ih-left other-lg-icon">
+                                            (OTHER)
                                         </div>
                                     </div>
                                     <div class="col-right-hotel">

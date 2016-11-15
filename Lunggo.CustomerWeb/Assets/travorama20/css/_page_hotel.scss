@@ -206,6 +206,64 @@
         @include size(32px, 31px);
         background-position: -128px -5px;
     }
+
+    .bussiness-lg-icon:before {
+        background: url(/Assets/travorama20/images/Hotel/business-lg.png) no-repeat;
+        content: '';
+        display: block;
+        width: 40px;
+        height: 40px;
+        margin: 15px auto;
+        background-size: 100%;
+    } .sport-lg-icon:before {
+        background: url(/Assets/travorama20/images/Hotel/sport-lg.png) no-repeat;
+        content: '';
+        display: block;
+        width: 40px;
+        height: 40px;
+        margin: 15px auto;
+        background-size: 100%;
+    } .other-lg-icon:before {
+        background: url(/Assets/travorama20/images/Hotel/other-lg.png) no-repeat;
+        content: '';
+        display: block;
+        width: 40px;
+        height: 40px;
+        margin: 15px auto;
+        background-size: 100%;
+    } .meal-lg-icon:before {
+        background: url(/Assets/travorama20/images/Hotel/meal-lg.png) no-repeat;
+        content: '';
+        display: block;
+        width: 40px;
+        height: 40px;
+        margin: 15px auto;
+        background-size: 100%;
+    } .ent-lg-icon:before {
+        background: url(/Assets/travorama20/images/Hotel/entertainment-lg.png) no-repeat;
+        content: '';
+        display: block;
+        width: 40px;
+        height: 40px;
+        margin: 15px auto;
+        background-size: 100%;
+    } .health-lg-icon:before {
+        background: url(/Assets/travorama20/images/Hotel/health-lg.png) no-repeat;
+        content: '';
+        display: block;
+        width: 40px;
+        height: 40px;
+        margin: 15px auto;
+        background-size: 100%;
+    } .general-lg-icon:before {
+        background: url(/Assets/travorama20/images/Hotel/general-lg.png) no-repeat;
+        content: '';
+        display: block;
+        width: 40px;
+        height: 40px;
+        margin: 15px auto;
+        background-size: 100%;
+    }
     
     /*Bullets*/
     .blue-list {

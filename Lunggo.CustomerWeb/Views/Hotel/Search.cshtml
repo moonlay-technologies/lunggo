@@ -167,11 +167,11 @@
                     </div>
 
                     <div class="hotel-list-container">
-                        <div class="hotel-list clearfix" ng-repeat="hotel in hotels" ng-click="GotoDetailHotel(hotel.hotelCd)" style="cursor:pointer">
-                            <div class="col-left-hotel">
+                        <div class="hotel-list clearfix" ng-repeat="hotel in hotels" ng-click="GotoDetailHotel(hotel.hotelCd)">
+                            <div class="col-2">
                                 <img class="img-list" ng-src="http://photos.hotelbeds.com/giata/{{hotel.mainImage}}" alt="Hotel" onerror="this.src = '/Assets/travorama20/images/Hotel/no-hotel.png'" />
                             </div>
-                            <div class="col-right-hotel">
+                            <div class="col-8">
                                 <div class="clearfix">
                                     <div class="col-8 blue-txt bg">{{hotel.hotelName}}</div>
                                     <div class="col-2 facility">
