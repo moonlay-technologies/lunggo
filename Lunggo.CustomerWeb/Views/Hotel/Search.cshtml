@@ -145,30 +145,31 @@
                     <img src="/Assets/images/load.gif" style="width: 50px; height: 50px; margin-left: 30%; margin-top: 5%">
                 </div>
                 <div class="col-right-result" ng-show="searchDone">
-                    <div class="text-center" ng-if="returnedHotelCount == 0"><h3> Hotel tidak ditemukan</h3></div>
-
-                    <div class="sort clearfix" ng-if="returnedHotelCount > 0">
+                    <div class="sort clearfix" ng-show="totalHotelCount > 0">
                         <div class="col-xs-left"><b>Sort By:</b></div>
                         <div class="col-xs-middle">
-                            <label class="round">
+                            <label class="round" ng-class="{ active : sortBy == sortByType.ascendingPrice }" ng-click="searchDone && changeSorting(sortByType.ascendingPrice)">
                                 <span class="radio"></span>
-                                <input type="radio" name="optradio" class="check-radio" value="false" />
-                                <span class="name">Harga Tertinggi</span>
+                                @*<input type="radio" name="optradio" class="check-radio" value="false" />*@
+                                <span class="name">Harga Terendah</span>
                             </label>
                         </div>
                         <div class="col-xs-right">
-                            <label class="round">
+                            <label class="round" ng-class="{ active : sortBy == sortByType.descendingPrice }" ng-click="searchDone && changeSorting(sortByType.descendingPrice)">
                                 <span class="radio"></span>
-                                <input type="radio" name="optradio" class="check-radio" value="false" />
-                                <span class="name">Harga Terendah</span>
+                                @*<input type="radio" name="optradio" class="check-radio" value="false" />*@
+                                <span class="name">Harga Tertinggi</span>
                             </label>
                         </div>
                     </div>
 
+                    <div class="text-center" ng-show="returnedHotelCount == 0"><h3> Hotel tidak ditemukan</h3></div>
+
+
                     <div class="hotel-list-container">
                         <div class="hotel-list clearfix" ng-repeat="hotel in hotels" ng-click="GotoDetailHotel(hotel.hotelCd)" style="cursor:pointer">
                             <div class="col-left-hotel">
-                                <img class="img-list" ng-src="http://photos.hotelbeds.com/giata/{{hotel.mainImage}}" alt="Hotel" />
+                                <img class="img-list" hotel-list-image ng-src="http://photos.hotelbeds.com/giata/{{hotel.mainImage}}" alt="Hotel" />
                                 @*<img class="img-list" src="/Assets/travorama20/images/Hotel/no-hotel.png" alt="Hotel" />*@
                             </div>
                             <div class="col-right-hotel">
