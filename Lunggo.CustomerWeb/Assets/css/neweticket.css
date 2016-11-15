@@ -343,6 +343,11 @@ Site Footer
   font-family: 'Open Sans', sans-serif;
   font-size: 12px;
   /*Icon*/ }
+  .page-hotel-voucher .col-half {
+    width: 50%;
+    float: left;
+    position: relative;
+    min-height: 1px; }
   .page-hotel-voucher h4 {
     font-size: 16px; }
   .page-hotel-voucher h3 {

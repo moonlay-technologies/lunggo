@@ -22,11 +22,17 @@
     var rooms = new List<HotelRoomForDisplay>();
     var token = "";
     Model.HotelDetail.MainImage = "http://photos.hotelbeds.com/giata/" + Model.HotelDetail.MainImage;
-    var roomImage = "http://photos.hotelbeds.com/giata/" + Model.HotelDetail.ImageUrl.FirstOrDefault();
+    var roomImage = "";
+   
     var textInfo = new CultureInfo("en-US", false).TextInfo;
     var orderedRooms = new List<Tuple<string, int>>();
     try
     {
+        
+        if (Model.HotelDetail.ImageUrl != null && Model.HotelDetail.ImageUrl.Count != 0)
+        {
+            roomImage = "http://photos.hotelbeds.com/giata/" + Model.HotelDetail.ImageUrl.FirstOrDefault();
+        }
         rooms = Model.HotelDetail.Rooms;
         token = Model.Token;
         foreach (var room in rooms)
@@ -82,7 +88,8 @@
         }
         return text.Length == 0 ? "" : text.Substring(0, text.Length - 1);
     }
-
+    
+   
     public string ApplyTitleCase(string input)
     {
         return input[0] + input.Substring(1, input.Length - 1).ToLower();
@@ -304,10 +311,11 @@
                         <div class="rh-content">
                             
                             <div class="rh-row clearfix">
-                                <div class="col-left-hotel">
-                                    <img src="@Model.HotelDetail.MainImage" alt="Hotel Image" id="hotelimg"
-                                         width="{{hotelimgwidth}}"
-                                         height="{{hotelimgheight}}" />
+                                <div class="col-left-hotel"
+                                     style="background: url(@Model.HotelDetail.MainImage); margin-right: 10px; width: 120px; height: 120px; background-size: cover; background-position: center; background-repeat: no-repeat; ">
+                                    @*<img src="@Model.HotelDetail.MainImage" alt="Hotel Image" id="hotelimg"
+                                         max-width="100%"
+                                         max-height="100%" style="padding-right :10px;" />*@
                                 </div>
                                 <div class="col-right-hotel">
                                     <div class="blue-txt bold-txt hotel-title-lg md-txt">{{capitalizeFirstLetter(hotelDetail.hotelName)}}</div>
@@ -346,13 +354,14 @@
                             </div>
                             <div class="rh-row">
                                 <div class="rh-top clearfix">
-                                    <div class="col-left-hotel"><img src="@roomImage" alt="Room Image" id="roomimg"
-                                          width="{{roomimgwidth}}" height="{{roomimgheight}}" />
+                                    <div class="col-left-hotel"
+                                         style="background: url(@roomImage); margin-right: 10px; width: 120px; height: 120px; background-size: cover; background-position: center; background-repeat: no-repeat; ">
+                                        @*<img src="@roomImage" alt="Room Image" id="roomimg" max-width="100%" max-height="100%"
+                                             style="padding-right :10px;" />*@
                                     </div>
                                     <div class="col-right-hotel clearfix">
                                         <span class="hotel-facility facility"></span>
-
-
+                                        
                                         @foreach (var room in rooms)
                                         {
                                             //var index = 1;

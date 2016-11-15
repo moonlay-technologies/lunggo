@@ -10,7 +10,43 @@ app.controller('hotelcheckoutController', [
                 $location.hash('page-2');
             } else {
                 $location.hash('page-1');
-            }        
+            }
+
+            $scope.calculateAspectRatioFit = function (srcWidth, srcHeight) {
+                var maxWidth = 120; // Max width for the image
+                var maxHeight = 120;    // Max height for the image
+                var ratio = 0;  // Used for aspect ratio
+                var height = srcHeight;
+                var width = srcWidth;
+                // Check if the current width is larger than the max
+                if (srcWidth > maxWidth) {
+                    ratio = maxWidth / width;   // get ratio for scaling image
+                    $(this).css("width", maxWidth); // Set new width
+                    $(this).css("height", height * ratio);  // Scale height based on ratio
+                    height = height * ratio;    // Reset height to match scaled image
+                    width = width * ratio;    // Reset width to match scaled image
+                }
+
+                // Check if current height is larger than max
+                if (height > maxHeight) {
+                    ratio = maxHeight / height; // get ratio for scaling image
+                    $(this).css("height", maxHeight);   // Set new height
+                    $(this).css("width", width * ratio);    // Scale width based on ratio
+                    width = width * ratio;    // Reset width to match scaled image
+                    height = height * ratio;    // Reset height to match scaled image
+                }
+                return { width: width, height: height };
+                //return { width:srcWidth * 0.9, height:srcHeight * 0.9 };
+            };
+
+
+            //$scope.hotelimg = document.getElementById("hotelimg");
+            //$scope.roomimg = document.getElementById("roomimg");
+            //$scope.hotelimgheight = $scope.calculateAspectRatioFit($scope.hotelimg.width, $scope.hotelimg.height).height;
+            //$scope.hotelimgwidth = $scope.calculateAspectRatioFit($scope.hotelimg.width, $scope.hotelimg.height).width;
+            //$scope.roomimgheight = $scope.calculateAspectRatioFit($scope.roomimg.width, $scope.roomimg.height).height;
+            //$scope.roomimgwidth = $scope.calculateAspectRatioFit($scope.roomimg.width, $scope.roomimg.height).width;
+            //Change Page
         });
 
         $(window).on('hashchange', function () {
@@ -19,6 +55,12 @@ app.controller('hotelcheckoutController', [
         });
         
         //Declaration From CSHTML
+        $scope.hotelimg = '';
+        $scope.roomimg = '';
+        $scope.hotelimgheight = 120;
+        $scope.hotelimgheight = 120;
+        $scope.roomimgheight = 120;
+        $scope.roomimgwidth = 120;
         $scope.token = token;
         $scope.guestInfo = {};
         $scope.guestInfo.name = '';
@@ -232,40 +274,7 @@ app.controller('hotelcheckoutController', [
 
             }
         }
-        $scope.calculateAspectRatioFit = function (srcWidth, srcHeight) {
-            var maxWidth = 120; // Max width for the image
-            var maxHeight = 120;    // Max height for the image
-            var ratio = 0;  // Used for aspect ratio
-            var height = srcHeight;
-            var width = srcWidth;
-            // Check if the current width is larger than the max
-            if (srcWidth > maxWidth) {
-                ratio = maxWidth / width;   // get ratio for scaling image
-                $(this).css("width", maxWidth); // Set new width
-                $(this).css("height", height * ratio);  // Scale height based on ratio
-                height = height * ratio;    // Reset height to match scaled image
-                width = width * ratio;    // Reset width to match scaled image
-            }
-
-            // Check if current height is larger than max
-            if (height > maxHeight) {
-                ratio = maxHeight / height; // get ratio for scaling image
-                $(this).css("height", maxHeight);   // Set new height
-                $(this).css("width", width * ratio);    // Scale width based on ratio
-                width = width * ratio;    // Reset width to match scaled image
-                height = height * ratio;    // Reset height to match scaled image
-            }
-            return { width: width, height: height };
-            //return { width:srcWidth * 0.9, height:srcHeight * 0.9 };
-        };
-        $scope.hotelimg = document.getElementById("hotelimg");
-        $scope.roomimg = document.getElementById("roomimg");
-        $scope.hotelimgheight = $scope.calculateAspectRatioFit($scope.hotelimg.width, $scope.hotelimg.height).height;
-            $scope.hotelimgwidth = $scope.calculateAspectRatioFit($scope.hotelimg.width, $scope.hotelimg.height).width;
-            $scope.roomimgheight = $scope.calculateAspectRatioFit($scope.roomimg.width, $scope.roomimg.height).height;
-            $scope.roomimgwidth = $scope.calculateAspectRatioFit($scope.roomimg.width, $scope.roomimg.height).width;
-        //Change Page
-       
+        
         $scope.changePage = function (page) {
             $location.hash("page-" + page);
             // change current page variable
@@ -275,6 +284,7 @@ app.controller('hotelcheckoutController', [
 
         }
 
+        
         
         // change page after login
         $scope.form.submit = function () {

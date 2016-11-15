@@ -18,10 +18,30 @@
     var orderedRooms = new List<Tuple<string, int>>();
     var rooms = new List<HotelRoomForDisplay>();
     var sum = 0;
+    var totalAdult = 0;
+    var totalChild = 0;
+    var images = new List<Image>();
+    var hotelImg = "";
+    var roomImg = "";
     try
     {
-
-        rooms = (Model as HotelReservationForDisplay).HotelDetail.Rooms;
+        var rsv = Model as HotelReservationForDisplay;
+        rooms = rsv.HotelDetail.Rooms;
+        images = HotelService.GetInstance().GetHotelDetailFromDb(rsv.HotelDetail.HotelCode).ImageUrl;
+        var orDefault = images.Where(i => i.Type == "GEN").ToList().FirstOrDefault();
+        if (orDefault != null)
+        {
+            hotelImg = images == null
+                ? null
+                : "http://photos.hotelbeds.com/giata/" + orDefault.Path;
+        }
+        var firstOrDefault = images.Where(i => i.Type == "HAB").ToList().FirstOrDefault();
+        if (firstOrDefault != null)
+        {
+            roomImg = images == null
+                ? null
+                : "http://photos.hotelbeds.com/giata/" + firstOrDefault.Path;
+        }
         var rsvNo = Model.RsvNo;
         foreach (var room in rooms)
         {
@@ -30,6 +50,9 @@
             foreach (var rate in room.Rates)
             {
                 sum += rate.RoomCount;
+
+                totalAdult += rate.AdultCount;
+                totalChild += rate.ChildCount;
             }
             orderedRooms.Add(new Tuple<string, int>(roomName, sum)); ;
         }
@@ -150,7 +173,7 @@
                                         <div class="form-group">
                                             <div class="control-label col-xs-3">Tanggal Pemesanan</div>
                                             <div class="col-xs-9">
-                                                <p>@Model.RsvTime.ToString("D", CultureInfo.CreateSpecificCulture("id-ID"))</p>
+                                                <p>@Model.RsvTime.AddHours(7).ToString("f", CultureInfo.CreateSpecificCulture("id-ID")) WIB</p>
                                             </div>
                                         </div>
                                         <div class="form-group">
@@ -188,11 +211,18 @@
                                         <div class="form-group">
                                             <div class="control-label col-xs-3">Status Pembayaran</div>
                                             <div class="col-xs-9">
-                                                <p>@Model.Payment.Status</p>
+                                                <p>@EnumDisplay.PaymentStatus(Model.Payment.Status)</p>
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <div class="control-label col-xs-3">Penumpang</div>
+                                            @if (Model is FlightReservationForDisplay)
+                                            {
+                                                <div class="control-label col-xs-3">Penumpang</div>
+                                            }
+                                            @if (Model is HotelReservationForDisplay)
+                                            {
+                                                <div class="control-label col-xs-3">Tamu</div>
+                                            }
                                             <div class="col-xs-9">
                                                 <ol class="passenger-list">
                                                     @foreach (var pax in Model.Pax)
@@ -203,7 +233,7 @@
                                                                     <p>@EnumDisplay.Title(pax.Title) @pax.Name</p>
                                                                 </div>
                                                                 <div class="col-xs-3">
-                                                                    <span>@pax.Type</span>
+                                                                    <span>@EnumDisplay.PassengerType(pax.Type)</span>
                                                                 </div>
                                                             </div>
                                                         </li>
@@ -262,7 +292,9 @@
                     @* <div class="rh-main-title">Detail Hotel</div>*@
                     <div class="rh-content">
                         <div class="rh-row clearfix">
-                            <div class="col-left-hotel"><img src="@rsv.HotelDetail.MainImage" alt="Alternate Text" /></div>
+                            <div class="col-left-hotel">
+                                <img src="@hotelImg" alt="Hotel Image" max-width="100%" max-height="100%" style="padding-right :10px;" />
+                            </div>
                             <div class="col-right-hotel">
                                 <div class="blue-txt bold-txt hotel-title-lg md-txt">@ToTitleCase(rsv.HotelDetail.HotelName)</div>
                                 <div class="star" ng-show="hotelstar() == 'star'"></div>
@@ -291,7 +323,7 @@
                                         <div class="wb-right bold-txt">@((rsv.HotelDetail.CheckOutDate - rsv.HotelDetail.CheckInDate).Days) Malam</div>
                                     </div>
                                     <div class="wb-container clearfix">
-                                        <div class="wb-left">Kamar</div>
+                                        <div class="wb-left">Jumlah Kamar</div>
                                         <div class="wb-mid">:</div>
                                         <div class="wb-right bold-txt">@sum Kamar</div>
                                     </div>
@@ -300,7 +332,7 @@
                         </div>
                         <div class="rh-row">
                             <div class="rh-top clearfix">
-                                <div class="col-left-hotel"><img src="/Assets/travorama20/images/Hotel/hotel-md.jpg" alt="Alternate Text" /></div>
+                                <div class="col-left-hotel">@*<img src="/Assets/travorama20/images/Hotel/hotel-md.jpg" alt="Alternate Text" />*@</div>
                                 <div class="col-right-hotel clearfix">
                                     <span class="hotel-facility facility"></span>
 
@@ -311,14 +343,14 @@
 
                                         <div class="rh-detail">
                                             <div class="wb-container clearfix">
-                                                <div class="wb-left">@indexroom. Jenis Kamar</div>
+                                                <div class="wb-left">Jenis Kamar</div>
                                                 <div class="wb-mid">:</div>
                                                 <div class="wb-right bold-txt">@ToTitleCase(HotelService.GetInstance().GetHotelRoom(room.RoomCode).RoomDescId)</div>
                                             </div>
 
                                             @foreach (var rate in room.Rates)
                                             {
-                                                @index
+                                                
                                                 var pol = 1;
                                                 <div class="wb-container clearfix">
                                                     <div class="wb-left">Jumlah Kamar</div>
@@ -328,18 +360,21 @@
                                                 <div class="wb-container clearfix">
                                                     <div class="wb-left">Tamu per Kamar</div>
                                                     <div class="wb-mid">:</div>
-                                                    <div class="wb-right bold-txt">@(rate.AdultCount + rate.ChildCount) Orang</div>
+                                                    <div class="wb-right bold-txt">@rate.AdultCount Dewasa, @rate.ChildCount Anak</div>
                                                 </div>
                                                 <div class="wb-container clearfix">
                                                     <div class="wb-left">Tipe Board</div>
                                                     <div class="wb-mid">:</div>
                                                     <div class="wb-right bold-txt">@ToTitleCase(rate.BoardDescription)</div>
                                                 </div>
-                                                <div class="wb-container clearfix">
-                                                    <div class="wb-left">Rate Comment</div>
-                                                    <div class="wb-mid">:</div>
-                                                    <div class="wb-right bold-txt">@String.Join(". ", rate.TermAndCondition)</div>
-                                                </div>
+                                                if (rate.TermAndCondition.Count != 0 && !rate.TermAndCondition.Exists(r => r.Length < 3))
+                                                {
+                                                    <div class="wb-container clearfix">
+                                                        <div class="wb-left">Ketentuan</div>
+                                                        <div class="wb-mid">:</div>
+                                                        <div class="wb-right bold-txt">@String.Join(". ", rate.TermAndCondition)</div>
+                                                    </div>
+                                                }
                                                 <div class="wb-container clearfix">
                                                     <div class="wb-left">Ketentuan Pembatalan</div>
                                                     <div class="wb-mid">:</div>

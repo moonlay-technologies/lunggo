@@ -1038,12 +1038,12 @@ app.controller('confirmationController', [
             }
             return { width: width, height: height };
         };
-        $scope.hotelimg = document.getElementById("hotelimg");
-        $scope.roomimg = document.getElementById("roomimg");
-        $scope.hotelimgheight = $scope.calculateAspectRatioFit($scope.hotelimg.width, $scope.hotelimg.height).height;
-        $scope.hotelimgwidth = $scope.calculateAspectRatioFit($scope.hotelimg.width, $scope.hotelimg.height).width;
-        $scope.roomimgheight = $scope.calculateAspectRatioFit($scope.roomimg.width, $scope.roomimg.height).height;
-        $scope.roomimgwidth = $scope.calculateAspectRatioFit($scope.roomimg.width, $scope.roomimg.height).width;
+        //$scope.hotelimg = document.getElementById("hotelimg");
+        //$scope.roomimg = document.getElementById("roomimg");
+        //$scope.hotelimgheight = $scope.calculateAspectRatioFit($scope.hotelimg.width, $scope.hotelimg.height).height;
+        //$scope.hotelimgwidth = $scope.calculateAspectRatioFit($scope.hotelimg.width, $scope.hotelimg.height).width;
+        //$scope.roomimgheight = $scope.calculateAspectRatioFit($scope.roomimg.width, $scope.roomimg.height).height;
+        //$scope.roomimgwidth = $scope.calculateAspectRatioFit($scope.roomimg.width, $scope.roomimg.height).width;
 
     }
 ]);// confirmation controller

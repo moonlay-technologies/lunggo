@@ -24,12 +24,20 @@
     {
         var rsv = (Model.Reservation as HotelReservationForDisplay);
         images = HotelService.GetInstance().GetHotelDetailFromDb(rsv.HotelDetail.HotelCode).ImageUrl;
-        hotelImg = images == null
-            ? null
-            : images.FirstOrDefault() == null ? null : "http://photos.hotelbeds.com/giata/" + images[0].Path;
-        roomImg = images == null
-            ? null
-            : "http://photos.hotelbeds.com/giata/" + images.Where(i => i.Type == "HAB").ToList()[0].Path;
+        var orDefault = images.Where(i => i.Type == "GEN").ToList().FirstOrDefault();
+        if (orDefault != null)
+        {
+            hotelImg = images == null
+                ? null
+                : "http://photos.hotelbeds.com/giata/" + orDefault.Path;
+        }
+        var firstOrDefault = images.Where(i => i.Type == "HAB").ToList().FirstOrDefault();
+        if (firstOrDefault != null)
+        {
+            roomImg = images == null
+                ? null
+                : "http://photos.hotelbeds.com/giata/" + firstOrDefault.Path;
+        }
         var rooms = rsv.HotelDetail.Rooms;
         rsvNo = Model.RsvNo;
         foreach (var room in rooms)
