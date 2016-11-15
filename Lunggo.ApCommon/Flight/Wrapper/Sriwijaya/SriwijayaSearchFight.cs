@@ -340,19 +340,16 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                                         var ambilJadwal = isiData.MakeRoot()["dd:nth-child(" + ((1 + (3 * code)) + 2) + ")"];
                                         var jadwalRaw = ambilJadwal.Select(x => x.Cq().Text()).FirstOrDefault();
                                         var jadwalParse1 = jadwalRaw.Split(' ').ToList();
-
-                                        var DeptTimeIndex = jadwalParse1[0].IndexOf('\t');
-                                        var ArrTimeIndex = jadwalParse1[5].IndexOf('\t');
-                                        DateTime departureDate = DateTime.Parse(jadwalParse1[0].Substring(DeptTimeIndex + 1));
-                                        DateTime arrivalDate = DateTime.Parse(jadwalParse1[5].Substring(ArrTimeIndex + 1));
-                                        var coba = departureDate.ToString("dd/MM/yyyy");
-                                        var coba1 = arrivalDate.ToString("dd/MM/yyyy");
-                                        string format = "dd/MM/yyyy hh.mm.ss tt";
                                         CultureInfo provider = CultureInfo.InvariantCulture;
-                                        var departureTime = DateTime.ParseExact(coba + " " + jadwalParse1[1]+ " " + jadwalParse1[2], format, provider);
-                                        var arrivalTime = DateTime.ParseExact(coba1 + " " + jadwalParse1[6] + " " + jadwalParse1[7], format, provider);
-                                        var deptime = departureTime.AddHours(-(flight.GetAirportTimeZone(bandara1)));
-                                        var arrtime = arrivalTime.AddHours(-(flight.GetAirportTimeZone(bandara2)));
+                                        var depTimeAja = DateTime.ParseExact(jadwalParse1[0].Trim('\t'), "HH:mm", provider).TimeOfDay;
+                                        var arrTimeAja = DateTime.ParseExact(jadwalParse1[3].Trim('\t'), "HH:mm", provider).TimeOfDay;
+                                        DateTime departureDate = trip0.DepartureDate;
+                                        var depTime = departureDate.Add(depTimeAja);
+                                        var arrTime = arrTimeAja <= depTimeAja
+                                            ? departureDate.Add(arrTimeAja).AddDays(1)
+                                            : departureDate.Add(arrTimeAja);
+                                        var deptime = depTime.AddHours(-(flight.GetAirportTimeZone(bandara1)));
+                                        var arrtime = arrTime.AddHours(-(flight.GetAirportTimeZone(bandara2)));
 
                                         tampungPesawat.Add(codeParse1[0] +"."+ codeParse1[1]);
                                         tampungPesawatString = string.Join(".", tampungPesawat.ToArray());
@@ -372,9 +369,9 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                                             AirlineType = AirlineType.Lcc,
                                             Rbd = rbdEko[code],
                                             DepartureAirport = bandara1,
-                                            DepartureTime = DateTime.SpecifyKind(departureTime,DateTimeKind.Utc),
+                                            DepartureTime = DateTime.SpecifyKind(depTime,DateTimeKind.Utc),
                                             ArrivalAirport = bandara2,
-                                            ArrivalTime = DateTime.SpecifyKind(arrivalTime, DateTimeKind.Utc),
+                                            ArrivalTime = DateTime.SpecifyKind(arrTime, DateTimeKind.Utc),
                                             OperatingAirlineCode = codeParse1[0],
                                             StopQuantity = 0,
                                             Duration = arrtime - deptime,
@@ -386,16 +383,16 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                                     }
 
                                     var prefix =
-                                        "" + tampungPesawatString + "" +
-                                        "." + trip0.OriginAirport + "" +
-                                        "." + trip0.DestinationAirport + "" +
-                                        "?" + trip0.DepartureDate.Year + "" +
-                                        "-" + trip0.DepartureDate.Month + "" +
-                                        "-" + trip0.DepartureDate.Day + "" +
-                                        "|" + conditions.AdultCount + "" +
-                                        "." + conditions.ChildCount + "" +
-                                        "." + conditions.InfantCount + "" +
-                                        "|" + harga + "" +
+                                        string.Join(";", segments.Select(s => s.AirlineCode + ";" + s.FlightNumber)) +
+                                        "." + trip0.OriginAirport +
+                                        "." + trip0.DestinationAirport +
+                                        "?" + trip0.DepartureDate.Year +
+                                        "-" + trip0.DepartureDate.Month +
+                                        "-" + trip0.DepartureDate.Day +
+                                        "|" + conditions.AdultCount +
+                                        "." + conditions.ChildCount +
+                                        "." + conditions.InfantCount +
+                                        "|" + harga +
                                         "." + "1.";
 
                                     var itin = new FlightItinerary
@@ -631,18 +628,16 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                                         var ambilJadwal = isiData.MakeRoot()["dd:nth-child(" + ((1 + (3 * code)) + 2) + ")"];
                                         var jadwalRaw = ambilJadwal.Select(x => x.Cq().Text()).FirstOrDefault();
                                         var jadwalParse1 = jadwalRaw.Split(' ').ToList();
-                                        var DeptTimeIndex = jadwalParse1[0].IndexOf('\t');
-                                        var ArrTimeIndex = jadwalParse1[5].IndexOf('\t');
-                                        DateTime departureDate = DateTime.Parse(jadwalParse1[0].Substring(DeptTimeIndex + 1));
-                                        DateTime arrivalDate = DateTime.Parse(jadwalParse1[5].Substring(ArrTimeIndex + 1));
-                                        var coba = departureDate.ToString("dd/MM/yyyy");
-                                        var coba1 = arrivalDate.ToString("dd/MM/yyyy");
-                                        string format = "dd/MM/yyyy hh.mm.ss tt";
                                         CultureInfo provider = CultureInfo.InvariantCulture;
-                                        var departureTime = DateTime.ParseExact(coba + " " + jadwalParse1[1] + " " + jadwalParse1[2], format, provider);
-                                        var arrivalTime = DateTime.ParseExact(coba1 + " " + jadwalParse1[6] + " " + jadwalParse1[7], format, provider);
-                                        var deptime = departureTime.AddHours(-(flight.GetAirportTimeZone(bandara1)));
-                                        var arrtime = arrivalTime.AddHours(-(flight.GetAirportTimeZone(bandara2)));
+                                        var depTimeAja = DateTime.ParseExact(jadwalParse1[0].Trim('\t'), "HH:mm", provider).TimeOfDay;
+                                        var arrTimeAja = DateTime.ParseExact(jadwalParse1[3].Trim('\t'), "HH:mm", provider).TimeOfDay;
+                                        DateTime departureDate = trip0.DepartureDate;
+                                        var depTime = departureDate.Add(depTimeAja);
+                                        var arrTime = arrTimeAja <= depTimeAja
+                                            ? departureDate.Add(arrTimeAja).AddDays(1)
+                                            : departureDate.Add(arrTimeAja);
+                                        var deptime = depTime.AddHours(-(flight.GetAirportTimeZone(bandara1)));
+                                        var arrtime = arrTime.AddHours(-(flight.GetAirportTimeZone(bandara2)));
                                         tampungPesawat.Add(codeParse1[0] + "." + codeParse1[1]);
                                         tampungPesawatString = string.Join(".", tampungPesawat.ToArray());
                                         segments.Add(new FlightSegment
@@ -652,9 +647,9 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                                             CabinClass = CabinClass.Business,
                                             Rbd = rbdBis[code],
                                             DepartureAirport = bandara1,
-                                            DepartureTime = DateTime.SpecifyKind(departureTime,DateTimeKind.Utc),
+                                            DepartureTime = DateTime.SpecifyKind(depTime,DateTimeKind.Utc),
                                             ArrivalAirport = bandara2,
-                                            ArrivalTime = DateTime.SpecifyKind(arrivalTime,DateTimeKind.Utc),
+                                            ArrivalTime = DateTime.SpecifyKind(arrTime,DateTimeKind.Utc),
                                             OperatingAirlineCode = codeParse1[0],
                                             StopQuantity = 0,
                                             Duration = arrtime - deptime,
@@ -664,16 +659,16 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                                     }
 
                                     var prefix =
-                                        "" + tampungPesawatString + "" +
-                                        "." + trip0.OriginAirport + "" +
-                                        "." + trip0.DestinationAirport + "" +
-                                        "?" + trip0.DepartureDate.Year + "" +
-                                        "-" + trip0.DepartureDate.Month + "" +
-                                        "-" + trip0.DepartureDate.Day + "" +
-                                        "|" + conditions.AdultCount + "" +
-                                        "." + conditions.ChildCount + "" +
-                                        "." + conditions.InfantCount + "" +
-                                        "|" + harga + "" + 
+                                        string.Join(";", segments.Select(s => s.AirlineCode + ";" + s.FlightNumber)) +
+                                        "." + trip0.OriginAirport +
+                                        "." + trip0.DestinationAirport +
+                                        "?" + trip0.DepartureDate.Year +
+                                        "-" + trip0.DepartureDate.Month +
+                                        "-" + trip0.DepartureDate.Day +
+                                        "|" + conditions.AdultCount +
+                                        "." + conditions.ChildCount +
+                                        "." + conditions.InfantCount +
+                                        "|" + harga +
                                         "." + "2.";
 
                                     var itin = new FlightItinerary

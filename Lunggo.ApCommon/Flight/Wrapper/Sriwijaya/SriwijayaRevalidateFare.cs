@@ -262,8 +262,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                                 tampungFareString = string.Join(";", tampungFare.ToArray());
                                 segments.Add(new FlightSegment
                                 {
-                                    AirlineCode = ParseFare[j],
-                                    FlightNumber = ParseFare[j + 1],
+                                    AirlineCode = ParseFare[0].Split(';')[j * 2],
+                                    FlightNumber = ParseFare[0].Split(';')[j * 2 + 1],
                                     CabinClass = (CabinClass)int.Parse(ParseFare[fareCabin]),
                                     AirlineType = AirlineType.Lcc,
                                     Rbd = Rbd[i],
@@ -271,7 +271,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                                     DepartureTime = DateTime.SpecifyKind(departureDate, DateTimeKind.Utc),
                                     ArrivalAirport = bandara[1],
                                     ArrivalTime = DateTime.SpecifyKind(arrivalDate, DateTimeKind.Utc),
-                                    OperatingAirlineCode = ParseFare[j],
+                                    OperatingAirlineCode = ParseFare[0].Split(';')[j * 2],
                                     Duration = arrtime - deptime,
                                     StopQuantity = 0,
                                     IsMealIncluded = true,
@@ -294,6 +294,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                             }
                             catch { }
 
+
                             var itin = new FlightItinerary
                             {
                                 AdultCount = int.Parse(penumpang[0]),
@@ -310,10 +311,9 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                                 TripType = TripType.OneWay,
                                 Supplier = Supplier.Sriwijaya,
                                 Price = new Price(),
-                                AdultPricePortion = hargaAdult/hargaBaru,
-                                ChildPricePortion = hargaChild/hargaBaru,
-                                InfantPricePortion = hargaInfant/hargaBaru,
-                                FareId = Fare,
+                                AdultPricePortion = hargaAdult / hargaBaru,
+                                ChildPricePortion = hargaChild / hargaBaru,
+                                InfantPricePortion = hargaInfant / hargaBaru,
                                 Trips = new List<FlightTrip>
                                 {
                                     new FlightTrip
@@ -326,6 +326,21 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                                 }
                             };
                             itin.Price.SetSupplier(hargaBaru, new Currency("IDR"));
+
+                            var prefix =
+                                        string.Join(";", segments.Select(s => s.AirlineCode + ";" + s.FlightNumber)) +
+                                        "." + itin.Trips[0].OriginAirport +
+                                        "." + itin.Trips[0].DestinationAirport +
+                                        "?" + itin.Trips[0].DepartureDate.Year +
+                                        "-" + itin.Trips[0].DepartureDate.Month +
+                                        "-" + itin.Trips[0].DepartureDate.Day +
+                                        "|" + itin.AdultCount +
+                                        "." + itin.ChildCount +
+                                        "." + itin.InfantCount +
+                                        "|" + hargaBaru +
+                                        "." + (int)itin.RequestedCabinClass + ".";
+                            itin.FareId = prefix + Fare.Split('.').Last();
+
                             hasil.IsSuccess = true;
                             hasil.IsValid = true;
                             hasil.IsPriceChanged = harga != hargaBaru;
@@ -421,8 +436,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                                     tampungFareString = string.Join(";", tampungFare.ToArray());
                                     segments.Add(new FlightSegment
                                     {
-                                        AirlineCode = ParseFare[j],
-                                        FlightNumber = ParseFare[j + 1],
+                                        AirlineCode = ParseFare[0].Split(';')[j * 2],
+                                        FlightNumber = ParseFare[0].Split(';')[j * 2 + 1],
                                         CabinClass = (CabinClass)int.Parse(ParseFare[fareCabin]),
                                         AirlineType = AirlineType.Lcc,
                                         Rbd = Rbd[i],
@@ -430,7 +445,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                                         DepartureTime = DateTime.SpecifyKind(departureDate, DateTimeKind.Utc),
                                         ArrivalAirport = bandara[1],
                                         ArrivalTime = DateTime.SpecifyKind(arrivalDate, DateTimeKind.Utc),
-                                        OperatingAirlineCode = ParseFare[j],
+                                        OperatingAirlineCode = ParseFare[0].Split(';')[j * 2],
                                         Duration = arrtime - deptime,
                                         StopQuantity = 0,
                                         IsMealIncluded = true,
@@ -469,10 +484,9 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                                     TripType = TripType.OneWay,
                                     Supplier = Supplier.Sriwijaya,
                                     Price = new Price(),
-                                    AdultPricePortion = hargaAdult/hargaBaru,
-                                    ChildPricePortion = hargaChild/hargaBaru,
-                                    InfantPricePortion = hargaInfant/hargaBaru,
-                                    FareId = Fare,
+                                    AdultPricePortion = hargaAdult / hargaBaru,
+                                    ChildPricePortion = hargaChild / hargaBaru,
+                                    InfantPricePortion = hargaInfant / hargaBaru,
                                     Trips = new List<FlightTrip>
                                     {
                                         new FlightTrip
@@ -485,6 +499,21 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                                     }
                                 };
                                 itin.Price.SetSupplier(hargaBaru, new Currency("IDR"));
+
+                                var prefix =
+                                        string.Join(";", segments.Select(s => s.AirlineCode + ";" + s.FlightNumber)) +
+                                        "." + itin.Trips[0].OriginAirport +
+                                        "." + itin.Trips[0].DestinationAirport +
+                                        "?" + itin.Trips[0].DepartureDate.Year +
+                                        "-" + itin.Trips[0].DepartureDate.Month +
+                                        "-" + itin.Trips[0].DepartureDate.Day +
+                                        "|" + itin.AdultCount +
+                                        "." + itin.ChildCount +
+                                        "." + itin.InfantCount +
+                                        "|" + hargaBaru +
+                                        "." + (int)itin.RequestedCabinClass + ".";
+                                itin.FareId = prefix + Fare.Split('.').Last();
+
                                 hasil.IsSuccess = true;
                                 hasil.IsValid = true;
                                 hasil.IsPriceChanged = harga != hargaBaru;
@@ -576,8 +605,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                                         tampungFareString = string.Join(";", tampungFare.ToArray());
                                         segments.Add(new FlightSegment
                                         {
-                                            AirlineCode = ParseFare[i],
-                                            FlightNumber = ParseFare[i + 1],
+                                            AirlineCode = ParseFare[0].Split(';')[i * 2],
+                                            FlightNumber = ParseFare[0].Split(';')[i * 2 + 1],
                                             CabinClass = (CabinClass)int.Parse(ParseFare[fareCabin]),
                                             AirlineType = AirlineType.Lcc,
                                             Rbd = Rbd[i],
@@ -585,7 +614,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                                             DepartureTime = DateTime.SpecifyKind(departureDate, DateTimeKind.Utc),
                                             ArrivalAirport = bandara[1],
                                             ArrivalTime = DateTime.SpecifyKind(arrivalDate, DateTimeKind.Utc),
-                                            OperatingAirlineCode = ParseFare[i],
+                                            OperatingAirlineCode = ParseFare[0].Split(';')[i * 2],
                                             Duration = arrtime - deptime,
                                             StopQuantity = 0,
                                             IsMealIncluded = true,
@@ -624,10 +653,9 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                                         TripType = TripType.OneWay,
                                         Supplier = Supplier.Sriwijaya,
                                         Price = new Price(),
-                                        AdultPricePortion = hargaAdult/hargaBaru,
-                                        ChildPricePortion = hargaChild/hargaBaru,
-                                        InfantPricePortion = hargaInfant/hargaBaru,
-                                        FareId = Fare,
+                                        AdultPricePortion = hargaAdult / hargaBaru,
+                                        ChildPricePortion = hargaChild / hargaBaru,
+                                        InfantPricePortion = hargaInfant / hargaBaru,
                                         Trips = new List<FlightTrip>
                                         {
                                             new FlightTrip
@@ -640,9 +668,21 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                                         }
                                     };
                                     itin.Price.SetSupplier(hargaBaru, new Currency("IDR"));
-                                    //hasil.IsSuccess = true;
-                                    //hasil.IsValid = harga == Decimal.Parse(hargaBaru);
-                                    //hasil.NewItinerary = itin;
+
+                                    var prefix =
+                                        string.Join(";", segments.Select(s => s.AirlineCode + ";" + s.FlightNumber)) +
+                                        "." + itin.Trips[0].OriginAirport +
+                                        "." + itin.Trips[0].DestinationAirport +
+                                        "?" + itin.Trips[0].DepartureDate.Year +
+                                        "-" + itin.Trips[0].DepartureDate.Month +
+                                        "-" + itin.Trips[0].DepartureDate.Day +
+                                        "|" + itin.AdultCount +
+                                        "." + itin.ChildCount +
+                                        "." + itin.InfantCount +
+                                        "|" + hargaBaru +
+                                        "." + (int)itin.RequestedCabinClass + ".";
+                                    itin.FareId = prefix + Fare.Split('.').Last();
+
                                     hasil.IsSuccess = true;
                                     hasil.IsValid = true;
                                     hasil.IsPriceChanged = harga != hargaBaru;

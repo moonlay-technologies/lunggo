@@ -136,17 +136,19 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                 {
                     string url = @"Flight/Select";
                     var searchRequest = new RestRequest(url, Method.GET);
-                    searchRequest.AddHeader("Referer", "http://www.airasia.com/id/id/home.page?cid=1");
+                    //searchRequest.AddHeader("Referer", "http://www.airasia.com/id/id/home.page?cid=1");
                     searchRequest.AddQueryParameter("o1", trip0.OriginAirport);
                     searchRequest.AddQueryParameter("d1", trip0.DestinationAirport);
+                    searchRequest.AddQueryParameter("culture", "id-ID");
                     searchRequest.AddQueryParameter("dd1", trip0.DepartureDate.ToString("yyyy-MM-dd"));
+                    searchRequest.AddQueryParameter("r", "true");
                     searchRequest.AddQueryParameter("ADT", conditions.AdultCount.ToString(CultureInfo.InvariantCulture));
                     searchRequest.AddQueryParameter("CHD", conditions.ChildCount.ToString(CultureInfo.InvariantCulture));
                     searchRequest.AddQueryParameter("inl", conditions.InfantCount.ToString(CultureInfo.InvariantCulture));
                     searchRequest.AddQueryParameter("s", "true");
                     searchRequest.AddQueryParameter("mon", "true");
-                    searchRequest.AddQueryParameter("culture", "id-ID");
                     searchRequest.AddQueryParameter("cc", mataUang);
+                    searchRequest.AddQueryParameter("c", "false");
 
                     var searchRetryCount = 0;
                     var stillWaiting = true;
@@ -170,10 +172,10 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                         //            }
                         //    };
                         searchedHtml = html;
-                        stillWaiting = html.Contains("welcome") || html.Contains("Kesalahan") || html.Contains("403");
+                        stillWaiting = html.Length < 1000 || html.Contains("welcome") || html.Contains("<h1>403</h1>") || html.Contains("Kesalahan");
                         searchRetryCount++;
                         if (stillWaiting && searchRetryCount < 25)
-                            Thread.Sleep(2500);
+                            Thread.Sleep(250);
                     } while (stillWaiting && searchRetryCount < 25);
                     availableFares = searchedHtml[".radio-markets"];
                     flightTable = searchedHtml[".avail-table-detail-table"];
