@@ -64,6 +64,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                 request.Occupancies = input.Occupancies;
                 request.HotelCode = input.HotelCode;
                 request.CheckIn = input.CheckIn;
+                request.Nights = input.Nights;
                 request.Checkout = input.CheckIn.AddDays(input.Nights);
                 request.SearchId = generatedSearchId.ToString();
             }
@@ -154,7 +155,6 @@ namespace Lunggo.ApCommon.Hotel.Service
             firstPageHotelDetails = SetPagination(firstPageHotelDetails, input.Page, input.PerPage);
             //AddDetailInfoForDisplayHotel(firstPageHotelDetails);
             var searchType = detailDestination.Type.ToString();
-            var swCv = Stopwatch.StartNew();
             return new SearchHotelOutput
                         {
                             IsSuccess = true,
@@ -173,8 +173,6 @@ namespace Lunggo.ApCommon.Hotel.Service
                             HotelCode = searchType.Equals("Hotel") ? (int?)firstPageHotelDetails.Select(x => x.HotelCode).FirstOrDefault() : null,
 
                         };
-            swCv.Stop();
-            Debug.Print("CONVERT:" + swCv.Elapsed.ToString());
         }
 
         public SearchHotelOutput DoSearchById(SearchHotelInput input)
@@ -222,7 +220,7 @@ namespace Lunggo.ApCommon.Hotel.Service
             return new SearchHotelOutput
             {
                 SearchId = searchResult.SearchId,
-                HotelDetailLists = hotels.Count > 0 ? ConvertToHotelDetailForDisplay(hotels) : null,
+                HotelDetailLists = hotels.Count > 0 ? ConvertToHotelDetailForDisplay(displayHotel) : null,
                 Page = input.Page,
                 PerPage = input.PerPage,
                 PageCount = pageCount,
