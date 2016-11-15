@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Web;
 using CsQuery;
 using CsQuery.StringScanner.ExtensionMethods;
@@ -62,6 +63,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
 
                 // [GET] Search Flight
                 var originCountry = FlightService.GetInstance().GetAirportCountryCode(trip0.OriginAirport);
+                CQ searchedHtml;
                 CQ availableFares;
                 CQ flightTable;
                 string mataUang;
@@ -145,18 +147,34 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                     searchRequest.AddQueryParameter("mon", "true");
                     searchRequest.AddQueryParameter("culture", "id-ID");
                     searchRequest.AddQueryParameter("cc", mataUang);
-                    var searchResponse = client.Execute(searchRequest);
 
-                    var html = searchResponse.Content;
-                    Debug.Print(html.ToString());
+                    var searchRetryCount = 0;
+                    var stillWaiting = true;
 
-                    if (searchResponse.ResponseUri.AbsolutePath != "/Flight/Select" && (searchResponse.StatusCode == HttpStatusCode.OK || searchResponse.StatusCode == HttpStatusCode.Redirect))
-                        return new SearchFlightResult
-                        {
-                            Errors = new List<FlightError> { FlightError.InvalidInputData },
-                            ErrorMessages = new List<string> { "Error while requesting at Flight/Select. Unexpected response path or status code" }
-                        };
-                    var searchedHtml = (CQ)html;
+                    do
+                    {
+                        var searchResponse = client.Execute(searchRequest);
+
+                        var html = searchResponse.Content;
+
+                        //if (searchResponse.ResponseUri.AbsolutePath != "/Flight/Select" &&
+                        //    (searchResponse.StatusCode == HttpStatusCode.OK ||
+                        //     searchResponse.StatusCode == HttpStatusCode.Redirect))
+                        //    return new SearchFlightResult
+                        //    {
+                        //        Errors = new List<FlightError> {FlightError.InvalidInputData},
+                        //        ErrorMessages =
+                        //            new List<string>
+                        //            {
+                        //                "Error while requesting at Flight/Select. Unexpected response path or status code"
+                        //            }
+                        //    };
+                        searchedHtml = html;
+                        stillWaiting = html.Contains("welcome") || html.Contains("Kesalahan") || html.Contains("403");
+                        searchRetryCount++;
+                        if (stillWaiting && searchRetryCount < 25)
+                            Thread.Sleep(2500);
+                    } while (stillWaiting && searchRetryCount < 25);
                     availableFares = searchedHtml[".radio-markets"];
                     flightTable = searchedHtml[".avail-table-detail-table"];
                 }

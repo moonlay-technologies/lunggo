@@ -36,10 +36,10 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
 
             private static RestClient CreateCustomerClient()
             {
-                var client = new RestClient("http://booking.airasia.com");
+                var client = new RestClient("https://booking.airasia.com");
                 client.AddDefaultHeader("Accept-Language", "en-GB,en-US;q=0.8,en;q=0.6");
                 client.AddDefaultHeader("Upgrade-Insecure-Requests", "1");
-                client.AddDefaultHeader("Origin", "https://booking.airasia.com");
+                client.AddDefaultHeader("Origin", "http://www.airasia.com");
                 //client.AddDefaultHeader("Referer", "https://booking2.airasia.com/Payment.aspx");
                 client.UserAgent = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.106 Safari/537.36";
                 client.Proxy = new WebProxy("128.199.91.32", 80)
