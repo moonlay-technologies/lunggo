@@ -152,7 +152,7 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
     }
 
     $('.hotel-date-picker').datepicker({
-        numberOfMonths: 1,
+        numberOfMonths: 2,
         onSelect: function (date) {
             date = date.substring(3, 5) + "/" + date.substring(0, 2) + "/" + date.substring(6, 10);
             //console.log(data);
@@ -240,7 +240,7 @@ jQuery(document).ready(function($) {
 
     //*****
     // date selector
-    $('.form-hotel-checkin').click(function (evt) {
+    $('.form-hotel-checkin, .form-hotel-checkout').click(function (evt) {
         $('.search-calendar-hotel').show();
         showCalendar();
         $('.hotel-date-picker').datepicker('option', 'minDate', new Date());
