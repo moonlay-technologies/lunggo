@@ -79,8 +79,8 @@ namespace Lunggo.ApCommon.Hotel.Service
         {
             if (hotelDetails == null)
                 return null;
-            var convertedHotels = new ConcurrentBag<HotelDetailForDisplay>();
-            Parallel.ForEach(hotelDetails, hotelDetail =>
+            var convertedHotels = new List<HotelDetailForDisplay>();
+            foreach (var hotelDetail in hotelDetails)
             {
                 var hotel = new HotelDetailForDisplay
                 {
@@ -101,12 +101,20 @@ namespace Lunggo.ApCommon.Hotel.Service
                     MainImage =
                         hotelDetail.ImageUrl == null
                             ? null
-                            : hotelDetail.ImageUrl.FirstOrDefault() == null ? null : hotelDetail.ImageUrl[0].Path,
+                            : hotelDetail.ImageUrl == null ? null : hotelDetail.ImageUrl.Where(x=>x.Type=="GEN").Select(x=>x.Path).FirstOrDefault(),
                     // != null ? hotelDetail.ImageUrl.Where(x=>x.Type=="GEN").Select(x=>x.Path).FirstOrDefault(): null,
                     OriginalFare = hotelDetail.OriginalFare,
+                    OriginalTotalFare = hotelDetail.OriginalTotalFare,
                     NetFare = hotelDetail.NetFare,
-                    IsRestaurantAvailable = hotelDetail.IsRestaurantAvailable,
-                    IsWifiAccessAvailable = hotelDetail.WifiAccess,
+                    NetTotalFare = hotelDetail.NetTotalFare,
+                    IsWifiAccessAvailable = hotelDetail.Facilities != null &&
+                            ((hotelDetail.Facilities != null || hotelDetail.Facilities.Count != 0) &&
+                            hotelDetail.Facilities.Any(f => (f.FacilityGroupCode == 60 && f.FacilityCode == 261)
+                            || (f.FacilityGroupCode == 70 && f.FacilityCode == 550))),
+                    IsRestaurantAvailable = hotelDetail.Facilities != null && ((hotelDetail.Facilities != null || hotelDetail.Facilities.Count != 0) &&
+                        hotelDetail.Facilities.Any(f => (f.FacilityGroupCode == 71 && f.FacilityCode == 200)
+                        || (f.FacilityGroupCode == 75 && f.FacilityCode == 840)
+                        || (f.FacilityGroupCode == 75 && f.FacilityCode == 845))),
                     Rooms = ConvertToHotelRoomForDisplay(hotelDetail.Rooms),
                     CheckInDate = hotelDetail.CheckInDate,
                     CheckOutDate = hotelDetail.CheckOutDate,
@@ -119,7 +127,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                     PhonesNumbers = hotelDetail.PhonesNumbers
                 };
                 convertedHotels.Add(hotel);
-            });
+            };
             return convertedHotels.ToList();
         }
 
@@ -127,6 +135,8 @@ namespace Lunggo.ApCommon.Hotel.Service
         public void CalculatePriceHotel(HotelDetail hotel)
         {
             decimal price = 0;
+            int night = 0;
+            int roomCount = 0;
             foreach (var room in hotel.Rooms)
             {
                 foreach (var rate in room.Rates)
@@ -134,15 +144,22 @@ namespace Lunggo.ApCommon.Hotel.Service
                     if (price == 0)
                     {
                         price = rate.Price.Local;
+                        night = rate.NightCount;
+                        roomCount = rate.RoomCount;
                     }
                     else
                     {
                         price = rate.Price.Local < price ? rate.Price.Local:price;
+                        night = rate.NightCount;
+                        roomCount = rate.RoomCount;
                     }
                 }
             }
-            hotel.NetFare = price;
-            hotel.OriginalFare = price*1.01M;
+            hotel.NetTotalFare = price;
+            hotel.OriginalTotalFare = price * 1.01M;
+            hotel.NetFare = Math.Round((hotel.NetTotalFare / roomCount) / night);
+            hotel.OriginalFare = hotel.NetFare*1.01M;
+            
         }
 
         internal HotelDetailForDisplay ConvertToHotelDetailsBaseForDisplay(HotelDetailsBase hotelDetail, decimal originalPrice, decimal netPrice)
@@ -312,6 +329,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                     RoomCount = rateDetail.RateCount == 0 ? rateDetail.RoomCount : rateDetail.RateCount,
                     TimeLimit = rateDetail.TimeLimit,
                     Cancellation = rateDetail.Cancellation,
+                    IsCancel = rateDetail.Cancellation!=null,
                     Offers = rateDetail.Offers,
                     TermAndCondition = rateDetail.TermAndCondition
                 };
@@ -341,10 +359,11 @@ namespace Lunggo.ApCommon.Hotel.Service
                 AdultCount = rate.AdultCount,
                 ChildCount = rate.ChildCount,
                 Allotment = rate.Allotment,
-                //Boards = rateDetail.Boards,
+                Boards = rate.Boards,
                 BoardDescription = GetHotelBoardDescId(rate.Boards),
                 RoomCount = rate.RoomCount,
                 TimeLimit = rate.TimeLimit,
+                IsCancel = rate.Cancellation!= null,
                 Cancellation = rate.Cancellation,
                 Offers = rate.Offers,
                 TermAndCondition = GetRateCommentFromTableStorage(rate.RateCommentsId,
@@ -358,8 +377,12 @@ namespace Lunggo.ApCommon.Hotel.Service
 
         public void SetDisplayPriceHotelRate(HotelRateForDisplay rateDisplay,HotelRate rate)
         {
-            rateDisplay.NetPrice = rate.Price.Local;
-            rateDisplay.OriginalPrice = rateDisplay.NetPrice*1.01M;
+            rateDisplay.NetTotalPrice = rate.Price.Local;
+            rateDisplay.OriginalTotalPrice = rateDisplay.NetTotalPrice*1.01M;
+
+            rateDisplay.NetPrice = Math.Round((rateDisplay.NetTotalPrice / rate.RoomCount) / rate.NightCount);
+            rateDisplay.OriginalPrice = rateDisplay.NetPrice * 1.01M;
+
         }
 
         private static RsvDisplayStatus MapReservationStatus(HotelReservation reservation)

@@ -98,7 +98,13 @@
     <script>
     var langCode = 'en';
     var printTimeout = '';
-
+    var rsvType = '';
+    var totalRoom = 0;
+    var rating = "";
+    var nights = 0;
+    var checkin = "";
+    var checkout = "";
+    var netFare = 0;
     // development only start
     printTimeout = new Date(); // please change this print time out to actual time
     printTimeout.setSeconds(printTimeout.getSeconds() + 7200);
@@ -113,7 +119,8 @@
         $('.print .btn').removeClass('disabled');
     });
     @if (Model is HotelReservationForDisplay)
-        {
+    {
+        var rsvType = "hotel";
             var hotel = Model as HotelReservationForDisplay;
             @:var hotelDetails = '@hotel.HotelDetail';
              @:var rating = '@hotel.HotelDetail.StarRating'

@@ -68,15 +68,21 @@ namespace Lunggo.ApCommon.Hotel.Model
 
         [JsonProperty("originalPrice", NullValueHandling = NullValueHandling.Ignore)]
         public decimal OriginalPrice { get; set; }
+        [JsonProperty("originalTotalPrice", NullValueHandling = NullValueHandling.Ignore)]
+        public decimal OriginalTotalPrice { get; set; }
 
         [JsonProperty("netPrice", NullValueHandling = NullValueHandling.Ignore)]
         public decimal NetPrice { get; set; }
+        [JsonProperty("netTotalPrice", NullValueHandling = NullValueHandling.Ignore)]
+        public decimal NetTotalPrice { get; set; }
 
         [JsonProperty("childrenAges", NullValueHandling = NullValueHandling.Ignore)]
         public List<int> ChildrenAges { get; set; }
         [JsonProperty("tnc", NullValueHandling = NullValueHandling.Ignore)]
         public List<string> TermAndCondition { get; set; }
-       
+        [JsonProperty("isCancel", NullValueHandling = NullValueHandling.Ignore)]
+        public bool IsCancel { get; set; }
+
     }
 
     public class HotelRate : OrderBase
@@ -95,12 +101,14 @@ namespace Lunggo.ApCommon.Hotel.Model
         //public decimal Price { get; set; }
         [JsonProperty("paymenType", NullValueHandling = NullValueHandling.Ignore)]
         public PaymentTypeEnum PaymentType { get; set; }
-        [JsonProperty("boards", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonProperty("board", NullValueHandling = NullValueHandling.Ignore)]
         public string Boards { get; set; }
         [JsonProperty("cancellation", NullValueHandling = NullValueHandling.Ignore)]
         public List<Cancellation> Cancellation { get; set; }
         [JsonProperty("roomCount", NullValueHandling = NullValueHandling.Ignore)]
         public int RoomCount { get; set; }
+        [JsonProperty("nightCount", NullValueHandling = NullValueHandling.Ignore)]
+        public int NightCount { get; set; }
         [JsonProperty("adultCount", NullValueHandling = NullValueHandling.Ignore)]
         public int AdultCount { get; set; }
         [JsonProperty("childCount", NullValueHandling = NullValueHandling.Ignore)]
