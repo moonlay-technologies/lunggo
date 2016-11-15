@@ -152,7 +152,7 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
     }
 
     $('.hotel-date-picker').datepicker({
-        numberOfMonths: 1,
+        numberOfMonths: 2,
         onSelect: function (date) {
             date = date.substring(3, 5) + "/" + date.substring(0, 2) + "/" + date.substring(6, 10);
             //console.log(data);
@@ -229,18 +229,8 @@ jQuery(document).ready(function($) {
 
     //*****
     // show and hide search calendar
-    function showCalendar(target) {
-        target = target || $('.search-calendar-hotel').attr('data-date');
-        $('.search-calendar-hotel').attr('id', target);
-        if (target == 'departure') {
-            $('.search-calendar-hotel .calendar-header .departure').removeClass('hidden');
-            $('.search-calendar-hotel .calendar-header .return').addClass('hidden');
-        } else {
-            $('.search-calendar-hotel .calendar-header .departure').addClass('hidden');
-            $('.search-calendar-hotel .calendar-header .return').removeClass('hidden');
-        }
-        $('.search-calendar-hotel').attr('data-date', target);
-        $('.searchsearch-calendar-hotel').show();
+    function showCalendar() {
+        $('.search-calendar-hotel').show();
     }
 
     function hideCalendar() {
@@ -250,7 +240,7 @@ jQuery(document).ready(function($) {
 
     //*****
     // date selector
-    $('.form-hotel-checkin').click(function (evt) {
+    $('.form-hotel-checkin, .form-hotel-checkout').click(function (evt) {
         $('.search-calendar-hotel').show();
         showCalendar();
         $('.hotel-date-picker').datepicker('option', 'minDate', new Date());

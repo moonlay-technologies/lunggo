@@ -20,6 +20,7 @@
     <script src="/Assets/js/angular-animate.min.js"></script>
     <script src="/Assets/js/angular-route.min.js"></script>*@
     <script src="/Assets/js/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="/Assets/js/jquery.ui.datepicker-id.js"></script>
     <script type="text/javascript" src="/Scripts/bootstrap.min.js"></script>
 }
 
@@ -140,7 +141,7 @@
                         <button class="pull-right" ng-click="filterHotels()">filter button</button>
                     </div>
                 </div>
-               
+
                 <div class="col-right-result">
                     <div class="sort clearfix" ng-show="totalHotelCount > 0">
                         <div class="col-xs-left"><b>Sort By:</b></div>
@@ -169,11 +170,11 @@
 
                     <div class="hotel-list-container" ng-show="searchDone">
                         <div class="hotel-list clearfix pointer" ng-repeat="hotel in hotels" ng-click="GotoDetailHotel(hotel.hotelCd)">
-                            <div class="col-left-hotel">
+                            <div class="col-2">
                                 <img class="img-list" hotel-list-image ng-src="http://photos.hotelbeds.com/giata/{{hotel.mainImage}}" alt="Hotel" />
                                 @*<img class="img-list" src="/Assets/travorama20/images/Hotel/no-hotel.png" alt="Hotel" />*@
                             </div>
-                            <div class="col-right-hotel">
+                            <div class="col-8">
                                 <div class="clearfix">
                                     <div class="col-8 blue-txt bg">{{hotel.hotelName}}</div>
                                     <div class="col-2 facility">
@@ -181,7 +182,7 @@
                                         <span class="meal" ng-show="hotel.restaurant"></span>
                                     </div>
                                 </div>
-
+                
                                 <div ng-class="{
                                      'star e-star': hotel.starRating == 1,
                                      'star star-2 e-star': hotel.starRating == 2,
@@ -189,7 +190,7 @@
                                      'star star-4 e-star': hotel.starRating == 4,
                                      'star star-5': hotel.starRating == 5}">
                                 </div>
-
+                                
                                 <div class="location">
                                     <div>{{hotel.address}}</div>
                                     {{hotel.city}}
@@ -215,15 +216,15 @@
                                         <span class="underline-txt">Rp {{hotel.originalFare | currency:'':0}}</span>
                                         <br /><span class="lg-txt"><b><sup>Rp</sup> {{hotel.netFare | currency:'':0}}</b></span>
                                     </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
                     <div class="pagination" ng-show="searchDone && returnedHotelCount > 0 && pageCount > 1">
                         @*<div class="page-container">
-                <a href="#" class="prev" ng-click="prevPage()"></a>
-                Halaman
-                <a href="#" class="next" ng-click="nextPage()"></a>
-            </div>*@
+                            <a href="#" class="prev" ng-click="prevPage()"></a>
+                            Halaman
+                            <a href="#" class="next" ng-click="nextPage()"></a>
+                        </div>*@
                         Halaman
                         <div class="page-container">
                             <a href="" class="prev" ng-click="page != 1 && prevPage()"></a>

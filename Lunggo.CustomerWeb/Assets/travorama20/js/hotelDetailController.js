@@ -156,6 +156,9 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
             parent2.toggle();
             $(this).closest('.room-list-container li').siblings().find('.hotel-detail, .option').hide();
 
+            $(this).closest('.room-list-container li').find('.room-list').toggleClass('active');
+            $(this).closest('.room-list-container li').siblings().find('.room-list').removeClass('active');
+
             // Slick Slider Detail Hotel
             //$('body .hd-slider').slick({
             //    autoplay: false,

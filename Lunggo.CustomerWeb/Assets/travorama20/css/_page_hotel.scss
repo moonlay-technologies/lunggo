@@ -206,6 +206,64 @@
         @include size(32px, 31px);
         background-position: -128px -5px;
     }
+
+    .bussiness-lg-icon:before {
+        background: url(/Assets/travorama20/images/Hotel/business-lg.png) no-repeat;
+        content: '';
+        display: block;
+        width: 40px;
+        height: 40px;
+        margin: 15px auto;
+        background-size: 100%;
+    } .sport-lg-icon:before {
+        background: url(/Assets/travorama20/images/Hotel/sport-lg.png) no-repeat;
+        content: '';
+        display: block;
+        width: 40px;
+        height: 40px;
+        margin: 15px auto;
+        background-size: 100%;
+    } .other-lg-icon:before {
+        background: url(/Assets/travorama20/images/Hotel/other-lg.png) no-repeat;
+        content: '';
+        display: block;
+        width: 40px;
+        height: 40px;
+        margin: 15px auto;
+        background-size: 100%;
+    } .meal-lg-icon:before {
+        background: url(/Assets/travorama20/images/Hotel/meal-lg.png) no-repeat;
+        content: '';
+        display: block;
+        width: 40px;
+        height: 40px;
+        margin: 15px auto;
+        background-size: 100%;
+    } .ent-lg-icon:before {
+        background: url(/Assets/travorama20/images/Hotel/entertainment-lg.png) no-repeat;
+        content: '';
+        display: block;
+        width: 40px;
+        height: 40px;
+        margin: 15px auto;
+        background-size: 100%;
+    } .health-lg-icon:before {
+        background: url(/Assets/travorama20/images/Hotel/health-lg.png) no-repeat;
+        content: '';
+        display: block;
+        width: 40px;
+        height: 40px;
+        margin: 15px auto;
+        background-size: 100%;
+    } .general-lg-icon:before {
+        background: url(/Assets/travorama20/images/Hotel/general-lg.png) no-repeat;
+        content: '';
+        display: block;
+        width: 40px;
+        height: 40px;
+        margin: 15px auto;
+        background-size: 100%;
+    }
     
     /*Bullets*/
     .blue-list {
@@ -349,17 +407,17 @@
             text-align: center;
             padding: 0;
             @include border-radius(0);
-            border: 1px solid #ccc;
             span {
                 display: block;
                 width: 100%;
-                background: #fff;
+                background: #ddd;
+                border-top: 1px solid #ccc;
                 position: static;
                 font-size: 12px;
                 padding: 5px;
                 &:hover {
                     color: #fff;
-                    background: #999;
+                    background: #1daee4;
                     @include transition(all .3s ease);
                     cursor: pointer;
                 }
@@ -375,7 +433,25 @@
         color: #fff;
         .header-title {padding: 35px 0;}
     }
-
+    /*Search Hotel*/
+    &.search-hotel {
+        li.list-hotel {
+            font-size: 13px;
+            padding: 0!important;
+            border-top: none !important;
+            .list-row {
+                margin: 0 0 0 10px;
+                padding: 12px 10px;
+                border-bottom: 1px solid #e8e8e8;
+                &:hover {background: #eaeaea;} 
+            }
+            &:hover {
+                background: #eaeaea;
+                cursor: pointer;
+            }
+            &:last-child .list-row {border-bottom: none;}
+        }
+    }
     .search-result-form {
         background: #032e55;
         color: #fff;
@@ -383,7 +459,18 @@
         letter-spacing: 0;
         .search-result-form-trigger {padding: 10px 15px;}
         &>.container {max-width: none !important;}
-
+        .search-hotel {
+            top: 405px;
+            left: initial;
+            width: 908px;
+            .location-body {border:$border-default;}
+        }
+        .search-calendar-hotel {
+            top: 405px;
+            left: initial;
+            max-height: 320px;
+            width: 908px;
+        }
         /*form search hotel*/
         form[name="hotel-form"]{
             &.hotel-form {
@@ -394,7 +481,8 @@
                 .form-control {
                     height: 45px;
                     @include border-radius(2px);
-                    &.form-date {
+                    &.select-age {cursor: pointer;}
+                    &.form-date {cursor: pointer;
                         &>.md-txt {
                             float: right;
                             line-height: 30px;
@@ -419,14 +507,21 @@
                     &.form-night, &.form-room, &.form-adult, &.form-child {
                         a.increase {margin-left: 5px;}
                     }
+                    .option {
+                        left: 0;
+                        width: 118.63px;
+                        margin-top: 22px;
+                    }
                 }
                 .form-group {
                     margin-bottom: 10px;
-                    &.form__hotel, &.form__date, &.form__night, &.form__adult, &.form__child {padding-right: 10px;}
+                    &.form__hotel, &.form__date, &.form__night, &.form__adult, &.form__child, &.form__age {padding-right: 10px;}
                     &.form__submit .btn-lg {@include border-radius(2px);}
                 }
+                span.pull-right.bold-txt.darkgrey-txt {line-height: 30px;}
+                .form-sm {width: 16.666666666666668%;}
             }
-        }.form-sm {width: 16.666666666666668%;}
+        }
     }
     
     .main-title {
