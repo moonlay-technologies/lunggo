@@ -80,8 +80,8 @@ namespace Lunggo.ApCommon.Hotel.Model
         public List<int> ChildrenAges { get; set; }
         [JsonProperty("tnc", NullValueHandling = NullValueHandling.Ignore)]
         public List<string> TermAndCondition { get; set; }
-        [JsonProperty("isCancel", NullValueHandling = NullValueHandling.Ignore)]
-        public bool IsCancel { get; set; }
+        [JsonProperty("isRefundable", NullValueHandling = NullValueHandling.Ignore)]
+        public bool IsRefundable { get; set; }
 
     }
 

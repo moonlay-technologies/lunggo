@@ -63,7 +63,7 @@
                         <div class="header-filter">Filter Pencarian</div>
                         <div class="filter-group">
                             <label class="filter-title">Nama Hotel</label>
-                            <input type="text" value="" ng-disabled="hotels.length < 1" class="form-hotel-name form-control">
+                            <input type="text" ng-model="filter.nameFilter" ng-disabled="hotels.length < 1" class="form-hotel-name form-control" tra-on-enter="filterHotels()">
                         </div>
                         <div class="filter-group">
                             <label class="filter-title">Harga Hotel</label> 
@@ -81,23 +81,23 @@
                         <div class="filter-group">
                             <label class="filter-title">Bintang Hotel</label> @*- {{filter.stars}}*@
                             <div class="rating">
-                                <label class="sqr" ng-click="changeFilter('star', 5)" ng-class="{ active: (filter.stars.indexOf(5) > -1) }">
+                                <label class="sqr pointer" ng-click="changeFilter('star', 5)" ng-class="{ active: (filter.stars.indexOf(5) > -1) }">
                                     <span class="checkbox"></span>
                                     <span class="star star-5"></span>
                                 </label>
-                                <label class="sqr" ng-click="changeFilter('star', 4)" ng-class="{ active: (filter.stars.indexOf(4) > -1) }">
+                                <label class="sqr pointer" ng-click="changeFilter('star', 4)" ng-class="{ active: (filter.stars.indexOf(4) > -1) }">
                                     <span class="checkbox"></span>
                                     <span class="star star-4"></span>
                                 </label>
-                                <label class="sqr" ng-click="changeFilter('star', 3)" ng-class="{ active: (filter.stars.indexOf(3) > -1) }">
+                                <label class="sqr pointer" ng-click="changeFilter('star', 3)" ng-class="{ active: (filter.stars.indexOf(3) > -1) }">
                                     <span class="checkbox"></span>
                                     <span class="star star-3"></span>
                                 </label>
-                                <label class="sqr" ng-click="changeFilter('star', 2)" ng-class="{ active: (filter.stars.indexOf(2) > -1) }">
+                                <label class="sqr pointer" ng-click="changeFilter('star', 2)" ng-class="{ active: (filter.stars.indexOf(2) > -1) }">
                                     <span class="checkbox"></span>
                                     <span class="star star-2"></span>
                                 </label>
-                                <label class="sqr" ng-click="changeFilter('star', 1)" ng-class="{ active: (filter.stars.indexOf(1) > -1) }">
+                                <label class="sqr pointer" ng-click="changeFilter('star', 1)" ng-class="{ active: (filter.stars.indexOf(1) > -1) }">
                                     <span class="checkbox"></span>
                                     <span class="star star-1"></span>
                                 </label>
@@ -106,10 +106,10 @@
                         <div class="filter-group" ng-show="hotelFilterDisplayInfo.zoneFilter.length > 0">
                             <label class="filter-title">Hotel Zone:</label><span class="city-name blue-txt"><a href="#">(Jakarta)</a></span>
                             <div class="area" ng-repeat="zoneFilter in hotelFilterDisplayInfo.zoneFilter ">
-                                <label class="sqr city-point" ng-click="changeFilter('zone', zoneFilter)" ng-class="{ active: (filter.zones.indexOf(zoneFilter.code) > -1) }">
+                                <label class="sqr city-point pointer" ng-click="changeFilter('zone', zoneFilter)" ng-class="{ active: (filter.zones.indexOf(zoneFilter.code) > -1) }">
                                     <span class="checkbox"></span>
                                     @*<input type="checkbox" name="check" class="check" value="false" ng-disabled="true" />*@
-                                    <span class="name">{{zoneFilter.name}} - {{(filter.zones.indexOf(zoneFilter.code) > -1)}}</span>
+                                    <span class="name">{{zoneFilter.name}}</span>
                                 </label>
                                 <span class="city-hotel">{{zoneFilter.count}}</span>
                             </div>
@@ -137,37 +137,38 @@
                         </div>
                     </div>
                     <div>
-                        <button class="pull-right" ng-click="searchHotel()">filter button</button>
+                        <button class="pull-right" ng-click="filterHotels()">filter button</button>
                     </div>
-                    
                 </div>
-                <div ng-show="!searchDone">
-                    <img src="/Assets/images/load.gif" style="width: 50px; height: 50px; margin-left: 30%; margin-top: 5%">
-                </div>
-                <div class="col-right-result" ng-show="searchDone">
+               
+                <div class="col-right-result">
                     <div class="sort clearfix" ng-show="totalHotelCount > 0">
                         <div class="col-xs-left"><b>Sort By:</b></div>
                         <div class="col-xs-middle">
-                            <label class="round" ng-class="{ active : sortBy == sortByType.ascendingPrice }" ng-click="searchDone && changeSorting(sortByType.ascendingPrice)">
+                            <label class="round pointer" ng-class="{ active : sortBy == sortByType.ascendingPrice }" ng-click="changeSorting(sortByType.ascendingPrice)">
                                 <span class="radio"></span>
                                 @*<input type="radio" name="optradio" class="check-radio" value="false" />*@
-                                <span class="name">Harga Terendah</span>
+                                <span class="name">Harga Terendah</span> 
                             </label>
                         </div>
                         <div class="col-xs-right">
-                            <label class="round" ng-class="{ active : sortBy == sortByType.descendingPrice }" ng-click="searchDone && changeSorting(sortByType.descendingPrice)">
+                            <label class="round pointer" ng-class="{ active : sortBy == sortByType.descendingPrice }" ng-click="changeSorting(sortByType.descendingPrice)">
                                 <span class="radio"></span>
                                 @*<input type="radio" name="optradio" class="check-radio" value="false" />*@
-                                <span class="name">Harga Tertinggi</span>
+                                <span class="name">Harga Tertinggi</span> {{sortBy}} - {{searchDone}}
                             </label>
                         </div>
                     </div>
 
-                    <div class="text-center" ng-show="returnedHotelCount == 0"><h3> Hotel tidak ditemukan</h3></div>
+                    <div ng-show="!searchDone" class="text-center">
+                        <img src="/Assets/images/load.gif" style="width: 50px; height: 50px; margin-top: 5%;">
+                    </div>
+
+                    <div class="text-center" ng-show="searchDone && returnedHotelCount == 0"><h3> Hotel tidak ditemukan, silakan ganti filter atau destinasi anda.</h3></div>
 
 
-                    <div class="hotel-list-container">
-                        <div class="hotel-list clearfix" ng-repeat="hotel in hotels" ng-click="GotoDetailHotel(hotel.hotelCd)" style="cursor:pointer">
+                    <div class="hotel-list-container" ng-show="searchDone">
+                        <div class="hotel-list clearfix pointer" ng-repeat="hotel in hotels" ng-click="GotoDetailHotel(hotel.hotelCd)">
                             <div class="col-left-hotel">
                                 <img class="img-list" hotel-list-image ng-src="http://photos.hotelbeds.com/giata/{{hotel.mainImage}}" alt="Hotel" />
                                 @*<img class="img-list" src="/Assets/travorama20/images/Hotel/no-hotel.png" alt="Hotel" />*@
@@ -180,7 +181,7 @@
                                         <span class="meal" ng-show="hotel.restaurant"></span>
                                     </div>
                                 </div>
-                
+
                                 <div ng-class="{
                                      'star e-star': hotel.starRating == 1,
                                      'star star-2 e-star': hotel.starRating == 2,
@@ -188,11 +189,12 @@
                                      'star star-4 e-star': hotel.starRating == 4,
                                      'star star-5': hotel.starRating == 5}">
                                 </div>
-                                
+
                                 <div class="location">
                                     <div>{{hotel.address}}</div>
                                     {{hotel.city}}
                                 </div>
+                                @*=================== ini review row ================*@
                                 <div class="review clearfix">
                                     <div class="col-half left">
                                         <b><span class="md-txt">8.0</span> - </b> Sangat Baik
@@ -203,6 +205,7 @@
                                         <br /><span class="grey-txt">540 ulasan</span>
                                     </div>
                                 </div>
+                                @*=================== ini review row ================*@
                                 <div class="price clearfix">
                                     <div class="col-half">
                                         <span class="txt-md"><b>Harga per malam mulai dari:</b></span>
@@ -212,23 +215,22 @@
                                         <span class="underline-txt">Rp {{hotel.originalFare | currency:'':0}}</span>
                                         <br /><span class="lg-txt"><b><sup>Rp</sup> {{hotel.netFare | currency:'':0}}</b></span>
                                     </div>
-                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="pagination" ng-show="returnedHotelCount > 0">
+                    <div class="pagination" ng-show="searchDone && returnedHotelCount > 0 && pageCount > 1">
                         @*<div class="page-container">
-                            <a href="#" class="prev" ng-click="prevPage()"></a>
-                            Halaman
-                            <a href="#" class="next" ng-click="nextPage()"></a>
-                        </div>*@
+                <a href="#" class="prev" ng-click="prevPage()"></a>
+                Halaman
+                <a href="#" class="next" ng-click="nextPage()"></a>
+            </div>*@
                         Halaman
                         <div class="page-container">
-                            <a href="#" class="prev" ng-click="prevPage()"></a>
+                            <a href="" class="prev" ng-click="page != 1 && prevPage()"></a>
                             <ul class="page-list">
                                 <li><a href="#" ng-class="{active : pageNumber == page}" ng-repeat="pageNumber in traGetRange(pageCount) track by $index" ng-click="changePage(pageNumber)">{{pageNumber}}</a></li>
                             </ul>
-                            <a href="#" class="next" ng-click="nextPage()"></a>
+                            <a href="" class="next" ng-click="page != pageCount && nextPage()"></a>
                         </div>
                     </div>
                 </div>
