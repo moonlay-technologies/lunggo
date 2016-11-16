@@ -31,8 +31,8 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
     $scope.hotel.checkinDateDisplay = $scope.hotel.checkinDate.locale("id").format('LL');
     $scope.hotel.nightCount = 2;
     $scope.hotel.checkoutDate = moment().locale("id").add(7, 'days');
-    $scope.hotel.adultCount = 2;
-    $scope.hotel.childCount = 1;
+    $scope.hotel.adultCount = 1;
+    $scope.hotel.childCount = 0;
     $scope.hotel.childrenAges = [0, 0, 0, 0];
 
     $scope.hotel.childrenAgeList = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
@@ -124,7 +124,7 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
         if ($scope.hotel.location == null || $scope.hotel.location.length == 0) {
             $scope.wrongParam = true;
             alert("Silakan pilih lokasi atau hotel dari daftar yang tersedia");
-        } else {
+        } else {2
             location.href = '/id/Hotel/Search/' + $scope.hotel.searchParam();
         }
         

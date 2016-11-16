@@ -95,8 +95,8 @@ if (typeof(angular) == 'object') {
                     var img = $(element);
                     var div = $("<div />").css({
                         background: "url(" + img.attr("src") + ") no-repeat",
-                        width: "143px",
-                        height: "180px",
+                        width: "111px",
+                        height: "140px",
                         "background-size": "cover",
                         "background-position": "center"
                     });
