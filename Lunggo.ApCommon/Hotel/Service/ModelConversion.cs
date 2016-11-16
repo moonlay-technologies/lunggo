@@ -322,7 +322,11 @@ namespace Lunggo.ApCommon.Hotel.Service
                     Offers = rateDetail.Offers,
                     TermAndCondition = rateDetail.TermAndCondition
                 };
-                SetDisplayPriceHotelRate(rate, rateDetail);
+                if (rateDetail.Price != null)
+                {
+                    SetDisplayPriceHotelRate(rate, rateDetail);
+                }
+                
                 convertedRate.Add(rate);
             });
             return convertedRate.ToList();

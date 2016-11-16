@@ -155,10 +155,18 @@
                                     <h4>
                                         <b>INFO PEMESANAN</b>
                                         @*{{ButtonText(flight.rsvStatus,flight.payment.method)}}*@
+                                        @if (Model is FlightReservationForDisplay)
+                                        {
+                                            <button class="pull-right btn btn-yellow" ng-click="submitRsvNo(@Model.RsvNo, @Model.RsvDisplayStatus)">
+                                                {{ButtonText(rsvStatus, paymentMethod, 'flight')}}
+                                            </button>
+                                        }
+                                       @if (Model is HotelReservationForDisplay)
+                                       {
                                         <button class="pull-right btn btn-yellow" ng-click="submitRsvNo(@Model.RsvNo, @Model.RsvDisplayStatus)">
-                                            {{ButtonText(rsvStatus, paymentMethod)}}
+                                            {{ButtonText(rsvStatus, paymentMethod, 'hotel')}}
                                         </button>
-                                       
+                                       }
                                     </h4>
                                 </header>
                                 <section>
@@ -335,8 +343,6 @@
                                 <div class="col-left-hotel">@*<img src="/Assets/travorama20/images/Hotel/hotel-md.jpg" alt="Alternate Text" />*@</div>
                                 <div class="col-right-hotel clearfix">
                                     <span class="hotel-facility facility"></span>
-
-
                                     @foreach (var room in rooms)
                                     {
                                         var index = 1;
