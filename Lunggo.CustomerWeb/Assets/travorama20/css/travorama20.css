@@ -4948,7 +4948,7 @@ file: /Assets/travorama20/css/_page_flight.scss
     display: block;
     width: 40px;
     height: 40px;
-    margin: 15px auto;
+    margin: 0 auto;
     background-size: 100%; }
   .page-hotel .sport-lg-icon:before {
     background: url(/Assets/travorama20/images/Hotel/sport-lg.png) no-repeat;
@@ -4956,7 +4956,7 @@ file: /Assets/travorama20/css/_page_flight.scss
     display: block;
     width: 40px;
     height: 40px;
-    margin: 15px auto;
+    margin: 0 auto;
     background-size: 100%; }
   .page-hotel .other-lg-icon:before {
     background: url(/Assets/travorama20/images/Hotel/other-lg.png) no-repeat;
@@ -4964,7 +4964,7 @@ file: /Assets/travorama20/css/_page_flight.scss
     display: block;
     width: 40px;
     height: 40px;
-    margin: 15px auto;
+    margin: 0 auto;
     background-size: 100%; }
   .page-hotel .meal-lg-icon:before {
     background: url(/Assets/travorama20/images/Hotel/meal-lg.png) no-repeat;
@@ -4972,7 +4972,7 @@ file: /Assets/travorama20/css/_page_flight.scss
     display: block;
     width: 40px;
     height: 40px;
-    margin: 15px auto;
+    margin: 0 auto;
     background-size: 100%; }
   .page-hotel .ent-lg-icon:before {
     background: url(/Assets/travorama20/images/Hotel/entertainment-lg.png) no-repeat;
@@ -4980,7 +4980,7 @@ file: /Assets/travorama20/css/_page_flight.scss
     display: block;
     width: 40px;
     height: 40px;
-    margin: 15px auto;
+    margin: 0 auto;
     background-size: 100%; }
   .page-hotel .health-lg-icon:before {
     background: url(/Assets/travorama20/images/Hotel/health-lg.png) no-repeat;
@@ -4988,7 +4988,7 @@ file: /Assets/travorama20/css/_page_flight.scss
     display: block;
     width: 40px;
     height: 40px;
-    margin: 15px auto;
+    margin: 0 auto;
     background-size: 100%; }
   .page-hotel .general-lg-icon:before {
     background: url(/Assets/travorama20/images/Hotel/general-lg.png) no-repeat;
@@ -4996,7 +4996,7 @@ file: /Assets/travorama20/css/_page_flight.scss
     display: block;
     width: 40px;
     height: 40px;
-    margin: 15px auto;
+    margin: 0 auto;
     background-size: 100%; }
   .page-hotel .blue-list {
     list-style: none;

@@ -210,21 +210,21 @@ app.controller('hotelSearchController', ['$scope', '$log', '$http', '$resource',
     }
     
     //=============== hotel end ======================
-    $scope.$watch('hotels', function (newValue, oldValue, ccc) {
-        $timeout(function () {
-            $("body .img-list").each(function (i, elem) {
-                var img = $(elem);
-                var div = $("<div />").css({
-                    background: "url(" + img.attr("src") + ") no-repeat",
-                    width: "111px",
-                    height: "140px",
-                    "background-size": "cover",
-                    "background-position": "center"
-                });
-                img.replaceWith(div);
-            });
-        }, 0);
-    });
+    //$scope.$watch('hotels', function (newValue, oldValue, ccc) {
+    //    $timeout(function () {
+    //        $("body .img-list").each(function (i, elem) {
+    //            var img = $(elem);
+    //            var div = $("<div />").css({
+    //                background: "url(" + img.attr("src") + ") no-repeat",
+    //                width: "111px",
+    //                height: "140px",
+    //                "background-size": "cover",
+    //                "background-position": "center"
+    //            });
+    //            img.replaceWith(div);
+    //        });
+    //    }, 0);
+    //});
 
     //$scope.resizeImages = function () {
     //    $timeout(function () {

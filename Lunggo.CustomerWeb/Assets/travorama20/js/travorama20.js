@@ -95,8 +95,8 @@ if (typeof(angular) == 'object') {
                     var img = $(element);
                     var div = $("<div />").css({
                         background: "url(" + img.attr("src") + ") no-repeat",
-                        width: "143px",
-                        height: "180px",
+                        width: "111px",
+                        height: "140px",
                         "background-size": "cover",
                         "background-position": "center"
                     });
@@ -134,7 +134,19 @@ if (typeof(angular) == 'object') {
                 };
 
                 attrs.$observe('ngSrc', function (ngSrc) {
-                    isImage(ngSrc).then(function () {
+                    isImage(ngSrc).then(function() {
+                        $log.debug('image exist');
+                    }, function() {
+                        var altImagePath = document.location.origin + '/Assets/travorama20/images/Hotel/no-hotel.png';
+                        $log.debug('image not exist');
+
+                        element.removeAttr('src');
+                        element.attr('src', altImagePath); // set default image
+                    });
+                });
+
+                attrs.$observe('dataThumb', function (dataThumb) {
+                    isImage(dataThumb).then(function () {
                         $log.debug('image exist');
                     }, function () {
                         var altImagePath = document.location.origin + '/Assets/travorama20/images/Hotel/no-hotel.png';
@@ -142,8 +154,9 @@ if (typeof(angular) == 'object') {
 
                         element.removeAttr('src');
                         element.attr('src', altImagePath); // set default image
-                    })
+                    });
                 });
+                
             }
         };
     });
