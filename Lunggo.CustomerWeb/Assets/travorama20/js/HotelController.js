@@ -111,12 +111,4 @@ jQuery(document).ready(function ($) {
         $('.search-hotel').show();
         $('.search-hotel, .select-age .option').hide();
     });
-
-    // Select Age Childeren
-    $('body .select-age').on('click', function (evt) {
-        evt.stopPropagation();
-        $(this).parent().siblings().children('div').children('.option').hide();
-        $(this).children('.option').toggle();
-        $('.search-calendar-hotel, .search-hotel').hide();
-    });
 });
