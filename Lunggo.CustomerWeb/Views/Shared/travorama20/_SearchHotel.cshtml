@@ -32,14 +32,15 @@
                         </ul>*@
                         <ul>
                             <li class="list-hotel" ng-repeat="location in hotel.hotelAutocomplete track by $index" ng-model="hotel.location" ng-click="selectLocation(location)">
-                                <div class="list-row clearfix">
-                                    <div class="col-half">
-                                        <div class="location bold-txt">{{location.name}}</div>
-                                        <div class="zone">{{location.type}}</div>
-
-                                    </div>
-                                    <div class="col-half">
-                                        <div class="blue-txt semibold-txt pull-right">999 Hotel ditemukan</div>
+                                <div class="list-row">
+                                    <div class="lr-wrapper clearfix">
+                                        <div class="col-6">
+                                            <div class="location bold-txt">{{location.name}}</div>
+                                            <div class="zone">{{location.type}}</div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="blue-txt semibold-txt pull-right">999 Hotel ditemukan</div>
+                                        </div>
                                     </div>
                                 </div>
                             </li>

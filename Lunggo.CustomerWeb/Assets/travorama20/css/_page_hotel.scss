@@ -439,10 +439,12 @@
             font-size: 13px;
             padding: 0!important;
             border-top: none !important;
-            .list-row {
-                margin-left: 10px;
-                padding: 12px 15px;
-                border-bottom: 1px solid #e8e8e8;
+            .list-row { margin-left: 10px;
+                .lr-wrapper {
+                    padding: 12px 0;
+                    border-bottom: 1px solid #e8e8e8;
+                    margin: 0 15px;
+                }
                 &:hover {background: #eaeaea;} 
             }
             &:hover {
