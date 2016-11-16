@@ -63,7 +63,6 @@
                         </div>
                         <br />
                         <span class="address">{{hotel.address}} {{hotel.city}}, {{hotel.country}}</span>
-                        <a href="#" class="btn-blue small">Lihat Peta</a>
                     </div>
                     <div class="slider-container clearfix">
                         <div class="">
@@ -71,7 +70,7 @@
                                 <div class="flexslider">
                                     <ul class="slides">
                                         <li data-thumb="{{image}}" ng-repeat="image in hotel.images">
-                                            <img ng-src="{{image}}" alt="alternative" />
+                                            <img alt-image ng-src="{{image}}" alt="alternative" />
                                         </li>
                                     </ul>
                                 </div>
@@ -165,9 +164,8 @@
                         <div class="col-right-rs total-day">{{hotel.nightCount}} Malam <b>( {{hotel.checkinDate | date : 'EEE, dd MMM yyyy'}} - {{hotel.checkoutDate | date : 'EEE, dd MMM yyyy'}} )</b></div>
                     </div>
                     <div class="room-sort clearfix">
-                        <div class="room-sort-left">Tipe Kamar</div>
-                        <div class="room-sort-mid">Jumlah Kamar</div>
-                        <div class="room-sort-right">Harga Kamar</div>
+                        <div class="col-6">Tipe Kamar</div>
+                        <div class="col-4">Harga Kamar</div>
                     </div>
                     <ul class="room-list-container">
                         <li ng-repeat="room in hotel.room track by $index">
@@ -272,13 +270,13 @@
                             <div class="accordion-title accordion md-txt" id="menu-facility">Fasilitas Hotel</div>
                             <div class="accordion-content show">
                                 <div class="ih-row fc clearfix">
-                                    <div class="col-left-hotel">
+                                    <div class="col-2">
                                         <div class="ih-left general-lg-icon">
                                             GENERAL
                                         </div>
                                     </div>
-                                    <div class="col-right-hotel">
-                                        <div class="ih-right clearfix">
+                                    <div class="col-8">
+                                        <div class="ih-right quarter clearfix">
                                             <ul class="blue-list">
                                                 <li ng-repeat="facility in hotel.facilities.general">{{facility}}</li>
                                             </ul>
@@ -286,13 +284,13 @@
                                     </div>
                                 </div>
                                 <div class="ih-row clearfix">
-                                    <div class="col-left-hotel">
+                                    <div class="col-2">
                                         <div class="ih-left health-lg-icon">
                                             HEALTH
                                         </div>
                                     </div>
-                                    <div class="col-right-hotel">
-                                        <div class="ih-right clearfix">
+                                    <div class="col-8">
+                                        <div class="ih-right quarter clearfix">
                                             <ul class="blue-list">
                                                 <li ng-repeat="facility in hotel.facilities.health">{{facility}}</li>
                                             </ul>
@@ -300,13 +298,13 @@
                                     </div>
                                 </div>
                                 <div class="ih-row clearfix">
-                                    <div class="col-left-hotel">
+                                    <div class="col-2">
                                         <div class="ih-left sport-lg-icon">
                                             SPORT
                                         </div>
                                     </div>
-                                    <div class="col-right-hotel">
-                                        <div class="ih-right clearfix">
+                                    <div class="col-8">
+                                        <div class="ih-right quarter clearfix">
                                             <ul class="blue-list">
                                                 <li ng-repeat="facility in hotel.facilities.health">{{facility}}</li>
                                             </ul>
@@ -314,13 +312,13 @@
                                     </div>
                                 </div>
                                 <div class="ih-row clearfix">
-                                    <div class="col-left-hotel">
+                                    <div class="col-2">
                                         <div class="ih-left bussiness-lg-icon">
                                             BUSINESS
                                         </div>
                                     </div>
-                                    <div class="col-right-hotel">
-                                        <div class="ih-right clearfix">
+                                    <div class="col-8">
+                                        <div class="ih-right quarter clearfix">
                                             <ul class="blue-list">
                                                 <li ng-repeat="facility in hotel.facilities.business">{{facility}}</li>
 
@@ -329,13 +327,13 @@
                                     </div>
                                 </div>
                                 <div class="ih-row clearfix">
-                                    <div class="col-left-hotel">
+                                    <div class="col-2">
                                         <div class="ih-left meal-lg-icon">
                                             MEAL
                                         </div>
                                     </div>
-                                    <div class="col-right-hotel">
-                                        <div class="ih-right clearfix">
+                                    <div class="col-8">
+                                        <div class="ih-right quarter clearfix">
                                             <ul class="blue-list">
                                                 <li ng-repeat="facility in hotel.facilities.business">{{facility}}</li>
 
@@ -344,13 +342,13 @@
                                     </div>
                                 </div>
                                 <div class="ih-row clearfix">
-                                    <div class="col-left-hotel">
+                                    <div class="col-2">
                                         <div class="ih-left ent-lg-icon">
                                             ENTERTAINMENT
                                         </div>
                                     </div>
-                                    <div class="col-right-hotel">
-                                        <div class="ih-right clearfix">
+                                    <div class="col-8">
+                                        <div class="ih-right quarter clearfix">
                                             <ul class="blue-list">
                                                 <li ng-repeat="facility in hotel.facilities.business">{{facility}}</li>
 
@@ -359,13 +357,13 @@
                                     </div>
                                 </div>
                                 <div class="ih-row clearfix">
-                                    <div class="col-left-hotel">
+                                    <div class="col-2">
                                         <div class="ih-left other-lg-icon">
                                             OTHER
                                         </div>
                                     </div>
-                                    <div class="col-right-hotel">
-                                        <div class="ih-right clearfix">
+                                    <div class="col-8">
+                                        <div class="ih-right quarter clearfix">
                                             <ul class="blue-list">
                                                 <li ng-repeat="facility in hotel.facilities.other">{{facility}}</li>
                                             </ul>

@@ -245,7 +245,9 @@
                 padding: 14px 25px;
                 border: 1px solid #ccc;
                 background: #fff;
-                .room-rl { cursor:pointer;
+                .room-rl { 
+                    cursor:pointer;
+                    padding: 10px 0;
                     .facility {margin: 5px 0;}
                     .info-room {
                         margin-top: 6px;
@@ -271,7 +273,7 @@
                                 border-top: 4px solid #1daee4;
                                 content: '';
                                 position: absolute;
-                                bottom: 5px;
+                                bottom: 15px;
                                 margin-left: 5px;
                             }
                         }

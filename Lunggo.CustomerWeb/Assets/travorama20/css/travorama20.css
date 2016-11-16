@@ -4950,7 +4950,7 @@ file: /Assets/travorama20/css/_page_flight.scss
     display: block;
     width: 40px;
     height: 40px;
-    margin: 15px auto;
+    margin: 0 auto;
     background-size: 100%; }
   .page-hotel .sport-lg-icon:before {
     background: url(/Assets/travorama20/images/Hotel/sport-lg.png) no-repeat;
@@ -4958,7 +4958,7 @@ file: /Assets/travorama20/css/_page_flight.scss
     display: block;
     width: 40px;
     height: 40px;
-    margin: 15px auto;
+    margin: 0 auto;
     background-size: 100%; }
   .page-hotel .other-lg-icon:before {
     background: url(/Assets/travorama20/images/Hotel/other-lg.png) no-repeat;
@@ -4966,7 +4966,7 @@ file: /Assets/travorama20/css/_page_flight.scss
     display: block;
     width: 40px;
     height: 40px;
-    margin: 15px auto;
+    margin: 0 auto;
     background-size: 100%; }
   .page-hotel .meal-lg-icon:before {
     background: url(/Assets/travorama20/images/Hotel/meal-lg.png) no-repeat;
@@ -4974,7 +4974,7 @@ file: /Assets/travorama20/css/_page_flight.scss
     display: block;
     width: 40px;
     height: 40px;
-    margin: 15px auto;
+    margin: 0 auto;
     background-size: 100%; }
   .page-hotel .ent-lg-icon:before {
     background: url(/Assets/travorama20/images/Hotel/entertainment-lg.png) no-repeat;
@@ -4982,7 +4982,7 @@ file: /Assets/travorama20/css/_page_flight.scss
     display: block;
     width: 40px;
     height: 40px;
-    margin: 15px auto;
+    margin: 0 auto;
     background-size: 100%; }
   .page-hotel .health-lg-icon:before {
     background: url(/Assets/travorama20/images/Hotel/health-lg.png) no-repeat;
@@ -4990,7 +4990,7 @@ file: /Assets/travorama20/css/_page_flight.scss
     display: block;
     width: 40px;
     height: 40px;
-    margin: 15px auto;
+    margin: 0 auto;
     background-size: 100%; }
   .page-hotel .general-lg-icon:before {
     background: url(/Assets/travorama20/images/Hotel/general-lg.png) no-repeat;
@@ -4998,7 +4998,7 @@ file: /Assets/travorama20/css/_page_flight.scss
     display: block;
     width: 40px;
     height: 40px;
-    margin: 15px auto;
+    margin: 0 auto;
     background-size: 100%; }
   .page-hotel .blue-list {
     list-style: none;
@@ -5171,8 +5171,8 @@ file: /Assets/travorama20/css/_page_flight.scss
     padding: 0 !important;
     border-top: none !important; }
     .page-hotel.search-hotel li.list-hotel .list-row {
-      margin: 0 0 0 10px;
-      padding: 12px 10px;
+      margin-left: 10px;
+      padding: 12px 15px;
       border-bottom: 1px solid #e8e8e8; }
       .page-hotel.search-hotel li.list-hotel .list-row:hover {
         background: #eaeaea; }
@@ -5181,6 +5181,8 @@ file: /Assets/travorama20/css/_page_flight.scss
       cursor: pointer; }
     .page-hotel.search-hotel li.list-hotel:last-child .list-row {
       border-bottom: none; }
+    .page-hotel.search-hotel li.list-hotel .blue-txt.semibold-txt.pull-right {
+      margin-top: 15px; }
   .page-hotel .search-result-form {
     background: #032e55;
     color: #fff;
@@ -5637,7 +5639,8 @@ file: /Assets/travorama20/css/_page_flight.scss
             border: 1px solid #ccc;
             background: #fff; }
             .page-hotel .travorama-hotel .detail-hotel .room .room-list .room-right .room-rl {
-              cursor: pointer; }
+              cursor: pointer;
+              padding: 10px 0; }
               .page-hotel .travorama-hotel .detail-hotel .room .room-list .room-right .room-rl .facility {
                 margin: 5px 0; }
               .page-hotel .travorama-hotel .detail-hotel .room .room-list .room-right .room-rl .info-room {
@@ -5666,7 +5669,7 @@ file: /Assets/travorama20/css/_page_flight.scss
                     border-top: 4px solid #1daee4;
                     content: '';
                     position: absolute;
-                    bottom: 5px;
+                    bottom: 15px;
                     margin-left: 5px; }
             .page-hotel .travorama-hotel .detail-hotel .room .room-list .room-right .room-rm {
               display: none; }

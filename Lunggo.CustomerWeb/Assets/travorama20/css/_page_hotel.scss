@@ -213,7 +213,7 @@
         display: block;
         width: 40px;
         height: 40px;
-        margin: 15px auto;
+        margin: 0 auto;
         background-size: 100%;
     } .sport-lg-icon:before {
         background: url(/Assets/travorama20/images/Hotel/sport-lg.png) no-repeat;
@@ -221,7 +221,7 @@
         display: block;
         width: 40px;
         height: 40px;
-        margin: 15px auto;
+        margin: 0 auto;
         background-size: 100%;
     } .other-lg-icon:before {
         background: url(/Assets/travorama20/images/Hotel/other-lg.png) no-repeat;
@@ -229,7 +229,7 @@
         display: block;
         width: 40px;
         height: 40px;
-        margin: 15px auto;
+        margin: 0 auto;
         background-size: 100%;
     } .meal-lg-icon:before {
         background: url(/Assets/travorama20/images/Hotel/meal-lg.png) no-repeat;
@@ -237,7 +237,7 @@
         display: block;
         width: 40px;
         height: 40px;
-        margin: 15px auto;
+        margin: 0 auto;
         background-size: 100%;
     } .ent-lg-icon:before {
         background: url(/Assets/travorama20/images/Hotel/entertainment-lg.png) no-repeat;
@@ -245,7 +245,7 @@
         display: block;
         width: 40px;
         height: 40px;
-        margin: 15px auto;
+        margin: 0 auto;
         background-size: 100%;
     } .health-lg-icon:before {
         background: url(/Assets/travorama20/images/Hotel/health-lg.png) no-repeat;
@@ -253,7 +253,7 @@
         display: block;
         width: 40px;
         height: 40px;
-        margin: 15px auto;
+        margin: 0 auto;
         background-size: 100%;
     } .general-lg-icon:before {
         background: url(/Assets/travorama20/images/Hotel/general-lg.png) no-repeat;
@@ -261,7 +261,7 @@
         display: block;
         width: 40px;
         height: 40px;
-        margin: 15px auto;
+        margin: 0 auto;
         background-size: 100%;
     }
     
@@ -440,8 +440,8 @@
             padding: 0!important;
             border-top: none !important;
             .list-row {
-                margin: 0 0 0 10px;
-                padding: 12px 10px;
+                margin-left: 10px;
+                padding: 12px 15px;
                 border-bottom: 1px solid #e8e8e8;
                 &:hover {background: #eaeaea;} 
             }
@@ -450,6 +450,7 @@
                 cursor: pointer;
             }
             &:last-child .list-row {border-bottom: none;}
+            .blue-txt.semibold-txt.pull-right {margin-top: 15px;}
         }
     }
     .search-result-form {
