@@ -143,7 +143,7 @@ namespace Lunggo.ApCommon.Hotel.Service
             result.MinPrice = sortedHotel.Select(x => x.NetFare).LastOrDefault();
 
             //REMEMBER TO UNCOMMENT THIS
-            Task.Run(() => SaveSearchResultintoDatabaseToCache(result.SearchId, result));
+            Task.Run(() => SaveSearchResultToCache(result.SearchId, result));
 
             List<HotelDetail> firstPageHotelDetails = result.HotelDetails;
 
