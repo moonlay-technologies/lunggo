@@ -116,7 +116,8 @@ namespace Lunggo.WebAPI.ApiSrc.Hotel.Logic
                         ReturnedHotelCount = searchServiceResponse.ReturnedHotelCount,
                         MaxPrice = searchServiceResponse.MaxPrice,
                         MinPrice = searchServiceResponse.MinPrice,
-                        HotelFilterDisplayInfo = searchServiceResponse.HotelFilterDisplayInfo
+                        HotelFilterDisplayInfo = searchServiceResponse.HotelFilterDisplayInfo,
+                        //ExpiryTime = searchServiceResponse.ExpiryTime.TruncateMilliseconds()
                     };
 
                 return new HotelSearchApiResponse
@@ -136,7 +137,6 @@ namespace Lunggo.WebAPI.ApiSrc.Hotel.Logic
                     HotelCode = searchServiceResponse.HotelCode,
                     Room = searchServiceResponse.HotelRoom,
                     FilteredHotelCount = searchServiceResponse.FilteredHotelCount,
-                    
                     StatusCode = HttpStatusCode.OK
                 };
             }

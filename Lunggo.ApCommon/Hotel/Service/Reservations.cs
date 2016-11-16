@@ -42,8 +42,12 @@ namespace Lunggo.ApCommon.Hotel.Service
                     foreach (var rate in r.Rates)
                     {
                         var cid = rate.RateKey != null ? rate.RateKey.Split('|')[0] : rate.RegsId.Split('|')[0];
+                        var cod = rate.RateKey != null ? rate.RateKey.Split('|')[1] : rate.RegsId.Split('|')[1];
                         var checkInDate = new DateTime(Convert.ToInt32(cid.Substring(0, 4)),
                             Convert.ToInt32(cid.Substring(4, 2)), Convert.ToInt32(cid.Substring(6, 2)));
+                        var checkOutDate = new DateTime(Convert.ToInt32(cod.Substring(0, 4)),
+                            Convert.ToInt32(cod.Substring(4, 2)), Convert.ToInt32(cod.Substring(6, 2)));
+                        rate.NightCount = Convert.ToInt32((checkOutDate - checkInDate).TotalDays);
                         rate.TermAndCondition = GetRateCommentFromTableStorage(rate.RateCommentsId,
                         checkInDate).Select(x => x.Description).ToList();
                     }
