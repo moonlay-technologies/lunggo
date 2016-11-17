@@ -1,5 +1,7 @@
-﻿@using Lunggo.ApCommon.Flight.Model
+﻿@using System.Globalization
+@using Lunggo.ApCommon.Flight.Model
 @using Lunggo.ApCommon.Hotel.Model
+@using Lunggo.ApCommon.Hotel.Service
 @using Lunggo.ApCommon.Identity.Users
 @using Lunggo.ApCommon.Payment.Constant
 @using Lunggo.Framework.Context
@@ -12,9 +14,48 @@
     var rsvNo = "";
     var savedCreditCards = Model.SavedCreditCards;
 
+    var orderedRooms = new List<Tuple<string, int>>();
+    var totalpax = 0;
+    var totalAdult = 0;
+    var totalChild = 0;
+    var images = new List<Image>();
+    var hotelImg = "";
+    var roomImg = "";
     try
     {
+        var rsv = (Model.Reservation as HotelReservationForDisplay);
+        images = HotelService.GetInstance().GetHotelDetailFromDb(rsv.HotelDetail.HotelCode).ImageUrl;
+        var orDefault = images.Where(i => i.Type == "GEN").ToList().FirstOrDefault();
+        if (orDefault != null)
+        {
+            hotelImg = images == null
+                ? null
+                : "http://photos.hotelbeds.com/giata/" + orDefault.Path;
+        }
+        var firstOrDefault = images.Where(i => i.Type == "HAB").ToList().FirstOrDefault();
+        if (firstOrDefault != null)
+        {
+            roomImg = images == null
+                ? null
+                : "http://photos.hotelbeds.com/giata/" + firstOrDefault.Path;
+        }
+        var rooms = rsv.HotelDetail.Rooms;
         rsvNo = Model.RsvNo;
+        foreach (var room in rooms)
+        {
+            var roomName = HotelService.GetInstance().GetHotelRoom(room.RoomCode).RoomDescId;
+            var sum = 0;
+            foreach (var rate in room.Rates)
+            {
+                sum += rate.RoomCount;
+                totalpax += (rate.AdultCount + rate.ChildCount) * rate.RoomCount;
+                totalAdult += rate.AdultCount;
+                totalChild += rate.ChildCount;
+            }
+            orderedRooms.Add(new Tuple<string, int>(roomName, sum)); ;
+        }
+
+
     }
     catch
     {
@@ -29,6 +70,49 @@
     ViewBag.SiteHeader = "Payment";
     ViewBag.Title = "Pembayaran";
 }
+
+@functions{
+
+    public string ToTitleCase(string input)
+    {
+
+        var text = "";
+        try
+        {
+            var splittedText = input.Split(' ');
+            foreach (var word in splittedText)
+            {
+                var splittedByStrips = word.Split('-');
+                var w = "";
+                if (splittedByStrips.Count() != 1)
+                {
+                    foreach (var part in splittedByStrips)
+                    {
+                        w += ApplyTitleCase(part) + "-";
+                    }
+                    text += w.Substring(0, w.Length - 1) + " ";
+                }
+                else
+                {
+                    text += word[0] + word.Substring(1, word.Length - 1).ToLower() + " ";
+                }
+            }
+
+        }
+        catch
+        {
+
+        }
+        return text.Length == 0 ? "" : text.Substring(0, text.Length - 1);
+    }
+
+    public string ApplyTitleCase(string input)
+    {
+        return input[0] + input.Substring(1, input.Length - 1).ToLower();
+    }
+
+}
+
 @section AdditionalCSS {
     <link href="/Assets/css/jquery-ui.min.css" rel="stylesheet" />
     <!-- fancybox CSS-->
@@ -41,9 +125,9 @@
     <script src="/Assets/js/angular-animate.min.js"></script>
     <script src="/Assets/js/angular-route.min.js"></script>
     <script src="/Assets/js/jquery.countdown.min.js"></script>
-<script src="/Assets/js/CryptoJS/components/core-min.js"></script>
-<script src="/Assets/js/CryptoJS/rollups/sha512.js"></script>
-<script src="/Assets/js/CryptoJS/components/enc-base64-min.js"></script>
+    <script src="/Assets/js/CryptoJS/components/core-min.js"></script>
+    <script src="/Assets/js/CryptoJS/rollups/sha512.js"></script>
+    <script src="/Assets/js/CryptoJS/components/enc-base64-min.js"></script>
     <!-- veritrans JS -->
     <script src="https://api.sandbox.veritrans.co.id/v2/assets/js/veritrans.min.js"></script>
     <!-- fancybox -->
@@ -77,6 +161,10 @@
     var rsvNo = @Model.RsvNo;
     var paymentDetail = '';
     var flightDetail = '';
+    var trips = '';
+    var hotelDetails = '';
+    var price = '';
+    var originalPrice = '';
     @if (Model.Reservation is FlightReservationForDisplay)
     {
         var reservation = Model.Reservation as FlightReservationForDisplay;
@@ -112,6 +200,17 @@
          }
     }
 
+     @if (Model.Reservation is HotelReservationForDisplay)
+        {
+            var hotel = Model.Reservation as HotelReservationForDisplay;
+            @:var originalFare = '@hotel.HotelDetail.OriginalFare';
+            @:var netFare = '@hotel.HotelDetail.NetFare';
+            @:var totalRoom = '@hotel.HotelDetail.Rooms.SelectMany(r => r.Rates).Sum(p => p.RoomCount)';
+            @:var checkin = '@hotel.HotelDetail.CheckInDate.ToString("D",CultureInfo.CreateSpecificCulture("id-ID"))';
+            @:var checkout = '@hotel.HotelDetail.CheckOutDate.ToString("D", CultureInfo.CreateSpecificCulture("id-ID"))';
+            @:var nights = '@((hotel.HotelDetail.CheckOutDate - hotel.HotelDetail.CheckInDate).Days)';
+            @:var totalpax = '@totalpax';
+        }
     // change current page
     if (getParam('page') == 4) {
         currentPage = getParam('page');
@@ -125,7 +224,9 @@
         phone: '@User.Identity.GetPhoneNumber()',
         email: '@User.Identity.GetEmail()'
     };
+        var langCode = '@OnlineContext.GetActiveLanguageCode()';
 
+        var expirytime = '@Model.TimeLimit';
     </script>
     <!-- angular controller -->
     <script src="/Assets/travorama20/js/paymentController.js"></script>
@@ -146,8 +247,16 @@
                     <div class="summary summary--price">
                         <h3 class="summary__title"><b>RINCIAN</b> HARGA</h3>
                         <div class="summary__body">
+                            
                             <dl>
-                                <dt>Total Tiket</dt>
+                                @if (Model.Reservation is FlightReservationForDisplay)
+                                    {
+                                        <dt>Harga Tiket</dt>
+                                    }
+                                    @if (Model.Reservation is HotelReservationForDisplay)
+                                    {
+                                        <dt>Harga Kamar</dt>
+                                    }
                                 <dd><sup>Rp</sup> {{originalPrice | number}}</dd>
                             </dl>
                             <dl>
