@@ -10,5 +10,6 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Content.Model
     {
         public List<string> providerDetails { get; set; }
         public List<RateCommentContent> rateComments { get; set; }
+        public int total { get; set; }
     }
 }
