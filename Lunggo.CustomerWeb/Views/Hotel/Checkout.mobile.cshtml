@@ -228,7 +228,13 @@
                     <div style="color:red" ng-show="form.incompleteContactEmail">
                         Alamat E-Mail pada Data Kontak Belum Ditambahkan<br /> <br />
                     </div>
-                    <button class="btn btn-yellow form-control" ng-click="validateForm(1)" ng-disabled="BuyerForm.$invalid || buyerInfo.title == titles[0].value">LANJUT</button>
+                    <div style="color:red" ng-show="form.incompleteGuestTitle">
+                        Gelar pada Nama Tamu Belum Ditambahkan <br /> <br />
+                    </div>
+                    <div style="color:red" ng-show="form.incompleteGuestName">
+                        Nama pada Data Tamu Belum Ditambahkan <br /> <br />
+                    </div>
+                    <button class="btn btn-yellow form-control" ng-click="validateForm(1)" >LANJUT</button>
                 </div>
 
             </form>

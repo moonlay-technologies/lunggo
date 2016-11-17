@@ -804,7 +804,7 @@ app.controller('orderDetailController', [
         }
 
         $scope.TakeProfileConfig.TakeProfile();
-        $scope.GetReservation();
+       // $scope.GetReservation();
 
         $scope.currentSection = 'order';
         //$scope.orderDate = new Date(orderDate);

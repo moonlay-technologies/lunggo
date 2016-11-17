@@ -967,7 +967,19 @@ app.controller('checkoutController', [
 // travorama angular app - confirmation controller
 app.controller('confirmationController', [
     '$http', '$scope', function ($http, $scope) {
+        //$scope.PageConfig = $rootScope.PageConfig;
+        //$scope.DatePicker = $rootScope.DatePicker;
 
+        $scope.UserForm = {
+            Confirmation: {
+                Name: '',
+                Bank: {
+                    Name: '',
+                    Number: ''
+                },
+                Amount: 0
+            }
+        };
         $scope.pageLoaded = true;
         $scope.msToTime = function (duration) {
 

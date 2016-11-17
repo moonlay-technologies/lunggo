@@ -540,6 +540,7 @@ app.controller('confirmationController', [
     }
 ]);// confirmation controller
 
+
 // travorama angular app - confirmation controller
 app.controller('thankyouController', [
     '$http', '$scope', function ($http, $scope) {
