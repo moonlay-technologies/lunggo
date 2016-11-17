@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Globalization;
 using System.Linq;
 using System.Web;
@@ -47,18 +48,23 @@ namespace Lunggo.CustomerWeb.Models
         public int RoomCount { get; set; }
         [JsonProperty("childrenAges")]
         public string[] ChildrenAges { get; set; }
+        [JsonProperty("searchParam")]
+        public string SearchParam { get; set; }
 
-        public HotelSearchApiRequest(string queryString)
+        public HotelSearchApiRequest(NameValueCollection query)
         {
-            List<string> query = queryString.Split('.').ToList<string>();
-            Location = query[(int)RequestParam.Location];
-            CheckinDate = DateTime.Parse(query[(int)RequestParam.CheckinDate]);
-            CheckoutDate = DateTime.Parse(query[(int)RequestParam.CheckoutDate]);
-            AdultCount = int.Parse(query[(int)RequestParam.AdultCount]);
-            ChildCount = int.Parse(query[(int)RequestParam.ChildCount]);
-            NightCount = int.Parse(query[(int)RequestParam.NightCount]);
-            RoomCount = int.Parse(query[(int)RequestParam.RoomCount]);
-            ChildrenAges = query[(int)RequestParam.ChildrenAges].Split(',').ToArray<string>();
+            string queryString = query[0];
+            List<string> parameters = queryString.Split('.').ToList<string>();
+            SearchHotelType = parameters[(int)RequestParam.SearchHotelType];
+            Location = parameters[(int)RequestParam.Location];
+            CheckinDate = DateTime.Parse(parameters[(int)RequestParam.CheckinDate]);
+            CheckoutDate = DateTime.Parse(parameters[(int)RequestParam.CheckoutDate]);
+            AdultCount = int.Parse(parameters[(int)RequestParam.AdultCount]);
+            ChildCount = int.Parse(parameters[(int)RequestParam.ChildCount]);
+            NightCount = int.Parse(parameters[(int)RequestParam.NightCount]);
+            RoomCount = int.Parse(parameters[(int)RequestParam.RoomCount]);
+            ChildrenAges = parameters[(int)RequestParam.ChildrenAges].Split(',').ToArray<string>();
+            SearchParam = query.ToString();
         }
     }
 

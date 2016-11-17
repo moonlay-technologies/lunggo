@@ -23,6 +23,8 @@ app.controller('hotelSearchController', ['$scope', '$log', '$http', '$resource',
     $scope.hotel.nightCount = 1;
     $scope.hotel.roomCount = 2;
     $scope.hotel.childrenAges = [];
+    $scope.hotel.searchParam = '';
+
     $scope.searchDone = false;
     $scope.researching = false;
     $scope.filter = {};
@@ -65,6 +67,7 @@ app.controller('hotelSearchController', ['$scope', '$log', '$http', '$resource',
         $scope.hotel.nightCount = (new Date($scope.hotel.checkoutDate) - new Date($scope.hotel.checkinDate)) /(3600 * 24 * 1000);
         $scope.hotel.roomCount = $scope.model.roomCount;
         $scope.hotel.childrenAges = $scope.model.childrenAges;
+        $scope.hotel.searchParam = $scope.model.searchParam;
 
         $scope.searchHotel();
     }
@@ -157,23 +160,12 @@ app.controller('hotelSearchController', ['$scope', '$log', '$http', '$resource',
         return true;
     };
 
-    $scope.hotel.searchParam = function () {
-        return ("?info=" +
-            [$scope.hotel.location,
-             $scope.hotel.checkinDate,
-             $scope.hotel.checkoutDate,
-             $scope.hotel.adultCount,
-             $scope.hotel.childCount,
-             $scope.hotel.nightCount,
-             $scope.hotel.roomCount].join('.')
-        );
-    }
-
     $scope.GotoDetailHotel = function (hotelCd) {
         $log.debug('redirect to detail hotel with hotelCd: ' + hotelCd);
         location.href = '/id/Hotel/DetailHotel/?' +
             "searchId=" + $scope.hotel.searchId + "&" +
-            "hotelCd=" + hotelCd;
+            "hotelCd=" + hotelCd + "&" + 
+            "searchParam=" + $scope.hotel.searchParam;
     }
 
     $scope.changeFilter = function (filterType, value) {

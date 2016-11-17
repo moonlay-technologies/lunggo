@@ -4944,7 +4944,7 @@ file: /Assets/travorama20/css/_page_flight.scss
     width: 32px;
     height: 31px;
     background-position: -128px -5px; }
-  .page-hotel .bussiness-lg-icon:before {
+  .page-hotel .business-lg-icon:before {
     background: url(/Assets/travorama20/images/Hotel/business-lg.png) no-repeat;
     content: '';
     display: block;

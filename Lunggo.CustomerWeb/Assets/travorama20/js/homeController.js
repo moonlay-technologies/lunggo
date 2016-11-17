@@ -124,7 +124,7 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
         if ($scope.hotel.location == null || $scope.hotel.location.length == 0) {
             $scope.wrongParam = true;
             alert("Silakan pilih lokasi atau hotel dari daftar yang tersedia");
-        } else {2
+        } else {
             location.href = '/id/Hotel/Search/' + $scope.hotel.searchParam();
         }
         
