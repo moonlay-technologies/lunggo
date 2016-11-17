@@ -5,6 +5,7 @@ using Lunggo.ApCommon.Hotel.Model;
 using Lunggo.ApCommon.Hotel.Model.Logic;
 using Lunggo.ApCommon.Sequence;
 using Lunggo.Framework.Config;
+using Lunggo.Framework.Extension;
 
 namespace Lunggo.ApCommon.Hotel.Service
 {
@@ -43,7 +44,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                         Boards = rate.Boards, Cancellation = rate.Cancellation, ChildrenAges = id.ChildrenAges,
                         ChildCount = id.ChildCount, Class = rate.Class, Offers = rate.Offers, RoomCount = id.RateCount,
                         PaymentType = rate.PaymentType, RegsId = rate.RegsId, Price = rate.Price,
-                        Type = rate.Type,
+                        Type = rate.Type,NightCount = rate.NightCount,
                         TermAndCondition = GetRateCommentFromTableStorage(rate.RateCommentsId, hotel.CheckInDate).Select(x => x.Description).ToList()
                     }).ToList().FirstOrDefault();
 
@@ -79,7 +80,7 @@ namespace Lunggo.ApCommon.Hotel.Service
             return new SelectHotelRoomOutput
             {
                 Token = token,
-                Timelimit = DateTime.UtcNow.AddMinutes(Convert.ToInt32(ConfigManager.GetInstance().GetConfigValue("hotel","selectCacheTimeOut")))              
+                Timelimit = GetSelectionExpiry(token).TruncateMilliseconds()             
             };
         }
 

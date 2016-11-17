@@ -73,7 +73,7 @@ namespace Lunggo.CustomerWeb.Controllers
                     {
                         Token = token,
                         HotelDetail = hotelDetail,
-                       // ExpiryTime = expiryTime.GetValueOrDefault(),
+                        ExpiryTime = hotelService.GetSelectionExpiry(token).GetValueOrDefault(),
                         //SavedPassengers = savedPassengers,
                         //SavedCreditCards = savedCreditCards
                     });

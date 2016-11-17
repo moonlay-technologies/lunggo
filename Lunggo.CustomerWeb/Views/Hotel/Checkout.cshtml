@@ -100,7 +100,7 @@
     <script>
     var langCode = '@OnlineContext.GetActiveLanguageCode()';
     var hotelDetail = @Html.Raw(Model.HotelDetail.Serialize());
-    var expirytime = '@Model.ExpiryTime';
+    var expirytime = '@Model.ExpiryTime.ToString("o")';
     var originalFare = '@Model.HotelDetail.OriginalFare';
     var netFare = '@Model.HotelDetail.NetFare';
     var totalRoom = '@Model.HotelDetail.Rooms.SelectMany(r => r.Rates).Sum(p => p.RoomCount)';
@@ -619,7 +619,7 @@
         </div>
     </section>
 
-    @*<div class="bookfailed-popup" ng-show="expired">
+    <div class="bookfailed-popup" ng-show="expired">
         <div class="overlay-content">
             <section style="padding-top:60px; padding-left:225px;">
                 <div><img src="/Assets/images/travorama-logo-color.png" height="22px" width="80px"></div>
@@ -631,7 +631,7 @@
                 <a class="btn popup-btn-yellow book-failed" href="{{returnUrl}}"><b>CARI ULANG</b></a>
             </div>
         </div>
-    </div>*@
+    </div>
 
     <div class="loading-popup" ng-show="book.booking">
         <div class="overlay-content">

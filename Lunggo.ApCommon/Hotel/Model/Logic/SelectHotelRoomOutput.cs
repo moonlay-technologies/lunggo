@@ -10,6 +10,6 @@ namespace Lunggo.ApCommon.Hotel.Model.Logic
     public class SelectHotelRoomOutput
     {
         public string Token { get; set; }
-        public DateTime Timelimit { get; set; }
+        public DateTime? Timelimit { get; set; }
     }
 }
