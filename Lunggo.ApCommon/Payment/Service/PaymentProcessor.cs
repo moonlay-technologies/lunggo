@@ -140,6 +140,11 @@ namespace Lunggo.ApCommon.Payment.Service
             return paymentDetails;
         }
 
+        public void ClearPayment(string rsvNo)
+        {
+            ClearPaymentSelection(rsvNo);
+        }
+
         public void UpdatePayment(string rsvNo, PaymentDetails payment)
         {
             var isUpdated = UpdatePaymentToDb(rsvNo, payment);

@@ -12,6 +12,7 @@ using Lunggo.ApCommon.Payment.Model;
 using Lunggo.ApCommon.Payment.Query;
 using Lunggo.Framework.Database;
 using Lunggo.Repository.TableRecord;
+using Lunggo.Repository.TableRepository;
 
 namespace Lunggo.ApCommon.Payment.Service
 {
@@ -59,6 +60,22 @@ namespace Lunggo.ApCommon.Payment.Service
                 var statusCd = GetPaymentStatusQuery.GetInstance().Execute(conn, new { RsvNo = rsvNo }).Single();
                 var status = PaymentStatusCd.Mnemonic(statusCd);
                 return status;
+            }
+        }
+
+        private bool ClearPaymentSelection(string rsvNo)
+        {
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                return PaymentTableRepo.GetInstance().Update(conn, new PaymentTableRecord
+                {
+                    RedirectionUrl = null,
+                    TransferAccount = null,
+                    MethodCd = PaymentMethodCd.Mnemonic(PaymentMethod.Undefined),
+                    MediumCd = PaymentMediumCd.Mnemonic(PaymentMedium.Undefined),
+                    StatusCd = PaymentStatusCd.Mnemonic(PaymentStatus.Pending),
+                    RsvNo = rsvNo
+                }) > 0;
             }
         }
 
