@@ -10,6 +10,7 @@ using Lunggo.ApCommon.Payment.Model;
 using Lunggo.ApCommon.Payment.Service;
 using Lunggo.Framework.Config;
 using Lunggo.Framework.Encoder;
+using Lunggo.Framework.Extension;
 using Newtonsoft.Json;
 
 namespace Lunggo.CustomerWeb.Controllers
@@ -58,14 +59,46 @@ namespace Lunggo.CustomerWeb.Controllers
             return new EmptyResult();
         }
 
+  
         public ActionResult PaymentFinish(VeritransResponse response)
         {
             var rsvNo = response.order_id;
             var flight = FlightService.GetInstance();
+            if (response.status_code == "202")
+            {
+                PaymentService.GetInstance().UpdatePayment(rsvNo, new PaymentDetails { Status = PaymentStatus.Denied });
+                return RedirectToAction("Payment", "Flight", new { RsvNo = rsvNo });
+            }
             PaymentService.GetInstance().UpdatePayment(rsvNo, new PaymentDetails { Status = PaymentStatus.Verifying });
             TempData["AllowThisThankyouPage"] = rsvNo;
             return RedirectToAction("Thankyou", "Flight", new { RsvNo = rsvNo });
         }
+
+        [HttpPost]
+        [ActionName("PaymentFinish")]
+        public ActionResult PaymentFinishPost(string response)
+        {
+            var response2 = response.Deserialize<VeritransNotification>();
+            var rsvNo = response2.order_id;
+            
+            var flight = FlightService.GetInstance();
+            var paymentStatus = MapPaymentStatus(response2);
+            TempData["AllowThisThankyouPage"] = rsvNo;
+            if (paymentStatus == PaymentStatus.Denied)
+            {
+                PaymentService.GetInstance().UpdatePayment(rsvNo, new PaymentDetails
+                {
+                    Method = PaymentMethod.Undefined,
+                    Status = paymentStatus,
+                    RedirectionUrl = null,
+                    TransferAccount = null
+                });
+                return RedirectToAction("Payment", "Flight", new { RsvNo = rsvNo });
+            }
+            PaymentService.GetInstance().UpdatePayment(rsvNo, new PaymentDetails { Status = paymentStatus });
+            return RedirectToAction("Thankyou", "Flight", new { RsvNo = rsvNo });
+        }
+
 
         public ActionResult PaymentUnfinish(VeritransResponse response)
         {
@@ -76,7 +109,29 @@ namespace Lunggo.CustomerWeb.Controllers
             return RedirectToAction("Thankyou", "Flight", new { RsvNo = rsvNo });
         }
 
+        [HttpPost]
+        [ActionName("PaymentUnfinish")]
+        public ActionResult PaymentUnfinishPost(VeritransResponse response)
+        {
+            var rsvNo = response.order_id;
+            var flight = FlightService.GetInstance();
+            PaymentService.GetInstance().UpdatePayment(rsvNo, new PaymentDetails { Status = PaymentStatus.Expired });
+            TempData["AllowThisThankyouPage"] = rsvNo;
+            return RedirectToAction("Thankyou", "Flight", new { RsvNo = rsvNo });
+        }
+
         public ActionResult PaymentError(VeritransResponse response)
+        {
+            var rsvNo = response.order_id;
+            var flight = FlightService.GetInstance();
+            PaymentService.GetInstance().UpdatePayment(rsvNo, new PaymentDetails { Status = PaymentStatus.Expired });
+            TempData["AllowThisThankyouPage"] = rsvNo;
+            return RedirectToAction("Thankyou", "Flight", new { RsvNo = rsvNo });
+        }
+        
+        [HttpPost]
+        [ActionName("PaymentError")]
+        public ActionResult PaymentErrorPost(VeritransResponse response)
         {
             var rsvNo = response.order_id;
             var flight = FlightService.GetInstance();
