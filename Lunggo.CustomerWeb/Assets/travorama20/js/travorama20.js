@@ -79,6 +79,87 @@ if (typeof(angular) == 'object') {
 
     //DataSource.get(SOURCE_FILE, setData, xmlTransform);
 
+    app.directive('hotelListImage', function ($http, $log, $q) {
+        return {
+            restrict: 'A',
+            link: function (scope, element, attrs) {
+                var isImage = function (src) {
+                    var deferred = $q.defer();
+                    var image = new Image();
+                    image.onerror = function () { deferred.reject(false); };
+                    image.onload = function () { deferred.resolve(true); };
+                    image.src = src;
+                    return deferred.promise;
+                };
+                var resizeImages = function () {
+                    var img = $(element);
+                    var div = $("<div />").css({
+                        background: "url(" + img.attr("src") + ") no-repeat",
+                        width: "111px",
+                        height: "140px",
+                        "background-size": "cover",
+                        "background-position": "center"
+                    });
+                    img.replaceWith(div);
+                };
+
+                attrs.$observe('ngSrc', function (ngSrc) {
+                    isImage(ngSrc).then(function () {
+                        $log.debug('image exist');
+                    }, function () {
+                        var altImagePath = document.location.origin + '/Assets/travorama20/images/Hotel/no-hotel.png';
+                        $log.debug('image not exist');
+
+                        element.removeAttr('src');
+                        element.attr('src', altImagePath); // set default image
+                    }).finally(function () {
+                        // Always execute this on both error and success
+                        resizeImages();
+                    });
+                });
+            }
+        };
+    })
+    .directive('altImage', function ($http, $log, $q) {
+        return {
+            restrict: 'A',
+            link: function (scope, element, attrs) {
+                var isImage = function (src) {
+                    var deferred = $q.defer();
+                    var image = new Image();
+                    image.onerror = function () { deferred.reject(false); };
+                    image.onload = function () { deferred.resolve(true); };
+                    image.src = src;
+                    return deferred.promise;
+                };
+
+                attrs.$observe('ngSrc', function (ngSrc) {
+                    isImage(ngSrc).then(function() {
+                        $log.debug('image exist');
+                    }, function() {
+                        var altImagePath = document.location.origin + '/Assets/travorama20/images/Hotel/no-hotel.png';
+                        $log.debug('image not exist');
+
+                        element.removeAttr('src');
+                        element.attr('src', altImagePath); // set default image
+                    });
+                });
+
+                attrs.$observe('dataThumb', function (dataThumb) {
+                    isImage(dataThumb).then(function () {
+                        $log.debug('image exist');
+                    }, function () {
+                        var altImagePath = document.location.origin + '/Assets/travorama20/images/Hotel/no-hotel.png';
+                        $log.debug('image not exist');
+
+                        element.removeAttr('src');
+                        element.attr('src', altImagePath); // set default image
+                    });
+                });
+                
+            }
+        };
+    });
 }
 
 

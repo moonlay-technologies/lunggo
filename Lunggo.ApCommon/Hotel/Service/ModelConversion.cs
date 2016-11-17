@@ -371,7 +371,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                     RoomCount = rateDetail.RateCount == 0 ? rateDetail.RoomCount : rateDetail.RateCount,
                     TimeLimit = rateDetail.TimeLimit,
                     Cancellation = rateDetail.Cancellation,
-                    IsCancel = rateDetail.Cancellation!=null,
+                    IsRefundable = rateDetail.Cancellation!=null,
                     Offers = rateDetail.Offers,
                     TermAndCondition = rateDetail.TermAndCondition
                 };
@@ -405,7 +405,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                 BoardDescription = GetHotelBoardDescId(rate.Boards),
                 RoomCount = rate.RoomCount,
                 TimeLimit = rate.TimeLimit,
-                IsCancel = rate.Cancellation!= null,
+                IsRefundable = rate.Cancellation!= null,
                 Cancellation = rate.Cancellation,
                 Offers = rate.Offers,
                 TermAndCondition = GetRateCommentFromTableStorage(rate.RateCommentsId,

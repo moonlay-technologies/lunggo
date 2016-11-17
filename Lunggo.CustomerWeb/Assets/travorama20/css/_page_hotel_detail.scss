@@ -19,6 +19,7 @@
             }
         }
         .col-right-slider {
+            display: none;
             border: 1px solid #ccc;
             background: #fff;
             .btn-container {
@@ -116,7 +117,7 @@
                 img {
                     opacity: 1;
                     @include transition(none);
-                    height: 57px;
+                    height: 100px;
                 }
                 .flex-active {
                     border: 2px solid #fff;
@@ -143,7 +144,7 @@
                     @include transition(none);
                     @include border-radius(0);
                     top: auto;
-                    bottom: 40px;
+                    bottom: 57px;
                     &:before {
                         font-size: 12px;
                         color: #fff;
@@ -151,7 +152,7 @@
                     }
                 }
             }
-            .slides img {height: 450px;}
+            .slides img {height: 650px;}
         }
     }
     .menu-hotel {
@@ -238,11 +239,15 @@
         }
         .room-list {
             margin-top: 15px;
+            border: none;
+            &.active {border: 3px solid #1daee4;}
             .room-right {
                 padding: 14px 25px;
                 border: 1px solid #ccc;
                 background: #fff;
-                .room-rl {
+                .room-rl { 
+                    cursor:pointer;
+                    padding: 10px 0;
                     .facility {margin: 5px 0;}
                     .info-room {
                         margin-top: 6px;
@@ -268,13 +273,13 @@
                                 border-top: 4px solid #1daee4;
                                 content: '';
                                 position: absolute;
-                                bottom: 5px;
+                                bottom: 15px;
                                 margin-left: 5px;
                             }
                         }
                     }
                 }
-                .room-rm {
+                .room-rm { display: none;
                     .dropdown-container {
                         margin: 10px 0;
                         border-left: 1px solid #ccc;
@@ -300,6 +305,7 @@
                     }
                 }
                 .room-rr {
+                    border-left: 1px solid #ccc;
                     padding-left: 25px;
                     color: #ff7200;
                     line-height: 22px;
@@ -309,10 +315,12 @@
         }
         .hotel-detail {
             border: 3px solid #1daee4;
+            border-top: none;
             background: #fff;
             display: none;
+            .col-left-bottom {display:none;}
             .col-left-top {
-                border-bottom: 1px dashed #1daee4;
+                border-right: 1px dashed #1daee4;
                 .hd-slider {padding: 30px 30px 0;
                     button.slick-arrow {
                         position: absolute;
@@ -392,13 +400,12 @@
                 }
             }
             .col-right-result {
-                border-left: 1px dashed #1daee4;
                 padding: 15px;
                 .hd-right-container {
                     margin: 15px;
                     margin-right: 0;
                     max-height: 270px;
-                    overflow-y: scroll;
+                    overflow-y: hidden;
                     &::-webkit-scrollbar {width: 6px;}
                     &::-webkit-scrollbar-track {background: #ddd;}
                     &::-webkit-scrollbar-thumb {background: #999;}

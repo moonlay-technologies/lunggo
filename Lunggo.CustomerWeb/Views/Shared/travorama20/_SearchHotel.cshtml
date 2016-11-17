@@ -24,15 +24,25 @@
                         <h2 class="text-center">Hasil Tidak Ditemukan</h2>
                     </div>
                     <div class="hotel-autocomplete-result">
-                        <ul>
+                        @*<ul>
                             <li ng-repeat="location in hotel.hotelAutocomplete track by $index" ng-model="hotel.location" ng-click="selectLocation(location)">
                                 <span style="width:83.333333333333336%; display: inline-block; ">{{location.name}}</span>
-                                <span style="width:16.666666666666664%; display: inline-block; float: right;
-                                    font-weight: bolder">{{location.type}}</span>
+                                <span style="width:16.666666666666664%; display: inline-block; float: right;font-weight: bolder">{{location.type}}</span>
                             </li>
-                            @*<li data-code="AQP" data-city="Arequipa">Arequipa (AQP), Rodriguez Ballon, Peru</li>
-                                <li data-code="BAL" data-city="Batman">Batman (BAL), Batman, Turkey</li>
-                                <li data-code="AQP" data-city="Arequipa">Arequipa (AQP), Rodriguez Ballon, Peru</li>*@
+                        </ul>*@
+                        <ul>
+                            <li class="list-hotel" ng-repeat="location in hotel.hotelAutocomplete track by $index" ng-model="hotel.location" ng-click="selectLocation(location)">
+                                <div class="list-row clearfix">
+                                    <div class="col-half">
+                                        <div class="location bold-txt">{{location.name}}</div>
+                                        <div class="zone">{{location.type}}</div>
+
+                                    </div>
+                                    <div class="col-half">
+                                        <div class="blue-txt semibold-txt pull-right">999 Hotel ditemukan</div>
+                                    </div>
+                                </div>
+                            </li>
                         </ul>
                     </div>
                 </section><!-- .location-search -->
