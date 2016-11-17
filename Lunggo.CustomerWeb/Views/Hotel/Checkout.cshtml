@@ -495,7 +495,7 @@
                     </form>
                     <div class="step-button">
                         <button class="btn btn-grey" ng-click="changePage(1)">KEMBALI</button>
-                        <button class="btn btn-yellow go-top" ng-click="book.send()">PESAN</button>
+                        <button class="btn btn-yellow go-top" ng-disabled="book.booking" ng-click="book.send()">PESAN</button>
                     </div>
                 </div><!-- .content-step#step-2 -->
                 <!-- ******************** -->

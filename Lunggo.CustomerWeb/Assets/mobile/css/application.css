@@ -2836,6 +2836,68 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         -moz-border-radius: skewX(30deg);
         -ms-border-radius: skewX(30deg);
         transform: skewX(30deg); }
+    .page.page-checkout .page__header .step__wrapper .step-hotel {
+      float: left;
+      width: 50%;
+      background: #2eb4e7;
+      color: #fff;
+      position: relative;
+      z-index: 2;
+      -webkit-border-radius: skewX(-30deg);
+      -moz-border-radius: skewX(-30deg);
+      -ms-border-radius: skewX(-30deg);
+      transform: skewX(-30deg); }
+      .page.page-checkout .page__header .step__wrapper .step-hotel span {
+        font-size: 13px;
+        font-weight: 600;
+        padding: 10px 15px;
+        display: block;
+        position: relative;
+        z-index: 2;
+        -webkit-border-radius: skewX(30deg);
+        -moz-border-radius: skewX(30deg);
+        -ms-border-radius: skewX(30deg);
+        transform: skewX(30deg); }
+      .page.page-checkout .page__header .step__wrapper .step-hotel:before {
+        background: #2eb4e7; }
+      .page.page-checkout .page__header .step__wrapper .step-hotel:after {
+        background: #2eb4e7; }
+      .page.page-checkout .page__header .step__wrapper .step-hotel.active {
+        background: #032f56; }
+        .page.page-checkout .page__header .step__wrapper .step-hotel.active:before {
+          background: #032f56; }
+        .page.page-checkout .page__header .step__wrapper .step-hotel.active:after {
+          background: #032f56; }
+      .page.page-checkout .page__header .step__wrapper .step-hotel.inactive {
+        background: #a6a6a6; }
+        .page.page-checkout .page__header .step__wrapper .step-hotel.inactive:before {
+          background: #a6a6a6; }
+      .page.page-checkout .page__header .step__wrapper .step-hotel:last-child {
+        border-right: 0; }
+        .page.page-checkout .page__header .step__wrapper .step-hotel:last-child:after {
+          content: '';
+          display: block;
+          position: absolute;
+          height: 100%;
+          width: 100%;
+          top: 0;
+          left: 15px;
+          -webkit-border-radius: skewX(30deg);
+          -moz-border-radius: skewX(30deg);
+          -ms-border-radius: skewX(30deg);
+          transform: skewX(30deg); }
+      .page.page-checkout .page__header .step__wrapper .step-hotel.step-1:before {
+        content: '';
+        display: block;
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        top: 0;
+        left: -15px;
+        -webkit-border-radius: skewX(30deg);
+        -moz-border-radius: skewX(30deg);
+        -ms-border-radius: skewX(30deg);
+        transform: skewX(30deg); }
 
 .page.page-checkout .page__body {
   padding: 0 15px 20px;

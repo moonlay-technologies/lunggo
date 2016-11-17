@@ -8,7 +8,7 @@
         <div class="form-group form__date">
             <div class="field-container">
                 <p class="form-control form-date" ng-click="DatePicker.SetOption({Target : 'departure'}, ' '); PageConfig.SetOverlay('datepicker-hotel')">
-                    Tanggal Masuk <span class="date-placeholder placeholder">{{FlightSearchForm.DepartureDate | date : 'EEE, dd MMM yyyy'}}</span>
+                    Tanggal Masuk <span class="date-placeholder placeholder">{{hotel.checkinDate | date : 'EEE, dd MMM yyyy'}}</span>
                 </p>
             </div>
         </div>
