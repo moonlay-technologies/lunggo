@@ -35,65 +35,78 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
             }
         );
 
-        resource.query({}, {}).$promise.then(function (data) {
+        resource.query({}, {}).$promise.then(function(data) {
             validateResponse(data);
 
             $scope.hotel = data.hotelDetails;
 
             var loadedImages = 0;
-            var tempHotelImagesLarge = [];
-            var tempHotelImagesThumb = [];
+            var tempHotelImages = [];
+            //var tempHotelImagesLarge = [];
+            //var tempHotelImagesThumb = [];
+            //$.each($scope.hotel.images, function(key, value) {
+            //    tempHotelImagesLarge.push("http://photos.hotelbeds.com/giata/bigger/" + value);
+            //    tempHotelImagesThumb.push("http://photos.hotelbeds.com/giata/" + value);
+            //    loadedImages++;
+            //    if (loadedImages == maxImages) {
+            //        return false;
+            //    }
+            //});
+            //$scope.hotel.images = {
+            //    "imageLarge": tempHotelImagesLarge,
+            //    "imageThumb": tempHotelImagesThumb
+            //};
+
             $.each($scope.hotel.images, function (key, value) {
-                tempHotelImagesLarge.push("http://photos.hotelbeds.com/giata/bigger/" + value);
-                tempHotelImagesThumb.push("http://photos.hotelbeds.com/giata/" + value);
                 loadedImages++;
+                tempHotelImages.push("http://photos.hotelbeds.com/giata/bigger/" + value);
                 if (loadedImages == maxImages) {
                     return false;
                 }
             });
-            $scope.hotel.images = {
-                "imageLarge": tempHotelImagesLarge,
-                "imageThumb": tempHotelImagesThumb
-            };
+            $scope.hotel.images = tempHotelImages;
 
-            $.each($scope.hotel.room, function (roomKey, room) {
-                $.each(room.roomImages, function (imageKey, roomImage) {
+
+            $.each($scope.hotel.room, function(roomKey, room) {
+                $.each(room.roomImages, function(imageKey, roomImage) {
                     $scope.hotel.room[roomKey].roomImages[imageKey] = "http://photos.hotelbeds.com/giata/" + roomImage;
-                })
+                });
             });
-            $log.debug($scope.hotel);
             $scope.loc = $scope.hotel.city + ', ' + $scope.hotel.country;
             var cekin = $scope.hotel.room[0].rate.regsId.split(',')[2].split('|')[0];
             var cekout = $scope.hotel.room[0].rate.regsId.split(',')[2].split('|')[1];
             $scope.hotel.checkinDate = new Date(parseInt(cekin.substring(0, 4)), parseInt(cekin.substring(4, 6)) - 1, parseInt(cekin.substring(6, 8)));
             $scope.hotel.checkoutDate = new Date(parseInt(cekout.substring(0, 4)), parseInt(cekout.substring(4, 6)) - 1, parseInt(cekout.substring(6, 8)));
             $scope.hotel.nightCount = new Date($scope.hotel.checkoutDate).getDate() - new Date($scope.hotel.checkinDate).getDate();
-            
+
             accordionFunctions();
             setFacilityDisplay();
             //setTncDisplay();
             setDescriptionDisplay();
-            $timeout(function () { hotelDetailFunctions(); }, 0);
+            $timeout(function() { hotelDetailFunctions(); }, 0);
             $timeout(function() { initiateSlider(); }, 0);
 
-        }, function (error) {
+
+            $log.debug($scope.hotel);
+
+        }, function(error) {
             $log.debug(error);
-           
-        })
+
+        });
     }
     var setDescriptionDisplay = function () {
         if ($scope.hotel.description.length > 0) {
             var description = [];
             var descriptionArray = $scope.hotel.description.split('.');
             var tempDescription = '';
-            $.each(descriptionArray, function (key, value) {
+            $.each(descriptionArray, function(key, value) {
                 value = value + '.';
                 tempDescription = tempDescription + value;
                 if (key % 3 == 0) {
                     description.push(tempDescription);
                     tempDescription = '';
                 }
-            })
+            });
             $scope.hotel.description = description;
         }
     }
@@ -127,13 +140,13 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
     }
 
     var setFacilityDisplay = function () {
-        var hotelFacilityReplacement = []
+        var hotelFacilityReplacement = [];
 
         var facilityOrder = 0;
         var tempFacilityList = null;
-        $.each($scope.hotel.facilities, function (facilityGroup, facility) {
+        $.each($scope.hotel.facilities, function(facilityGroup, facility) {
             tempFacilityList = [[], [], [], []];
-            $.each(facility, function (index, facilityName) {
+            $.each(facility, function(index, facilityName) {
                 if (index % 4 == 0) {
                     tempFacilityList[0].push(facilityName);
                 } else if (index % 4 == 1) {
@@ -143,11 +156,11 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
                 } else if (index % 4 == 3) {
                     tempFacilityList[3].push(facilityName);
                 }
-            })
+            });
 
             facilityOrder = $scope.getFacilityOrder(facilityGroup);
             hotelFacilityReplacement[facilityOrder] = { 'facilityGroup': facilityGroup, 'facilityList': tempFacilityList };
-        })
+        });
 
         $scope.hotel.facilities = hotelFacilityReplacement;
     };
@@ -309,10 +322,10 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
             var elements = angular.element(document.querySelectorAll('#imgtum'));
 
           
-            angular.each(elements, function(key, value) {
-                elements[key].removeAttr('src');
-                elements[key].attr('src', altImagePath); // set default image
-            });
+            //angular.each(elements, function(key, value) {
+            //    elements[key].removeAttr('src');
+            //    elements[key].attr('src', altImagePath); // set default image
+            //});
         }, 0);
 
     }

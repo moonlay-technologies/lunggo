@@ -97,34 +97,34 @@
     /*Slider*/
     .slider {
         margin: 0;
-        background: none; 
+        background: none;
         .lSSlideOuter .lSPager.lSGallery {
             margin: 0;
             padding: 0 40px;
-                background: #000;
-                background: rgba(0,0,0,0.6);
+            background: #000;
+            background: rgba(0,0,0,0.6);
             position: absolute;
             margin-top: -130px !important;
             width: 908px !important;
             z-index: 0;
             &>li {
                 width: 16.666666666666667% !important;
-                    padding: 15px 5px;
+                padding: 15px 5px;
                 margin-right: 0 !important;
                 &.active img {
                     border: 2px solid #fff;
                     opacity: 1;
                 }
-                }
+            }
             img {
                 height: 100px !important;
                 opacity: 0.7;
             }
-                }
+        }
         .lSAction {
             &>a {
                 width: 22px;
-                    top: auto;
+                top: auto; 
                 height: 37px;
                 background: url(/Assets/images/calendar-sprite.png);
                 cursor: pointer;
@@ -135,8 +135,9 @@
                     background-position: -22px 0;
                 }
             }
-        }
+        }                        
     }
+    .pointer {cursor: pointer;}
     .menu-hotel {
         margin-bottom: 20px;
         .mh-title {
@@ -227,7 +228,7 @@
                 padding: 14px 25px;
                 border: 1px solid #ccc;
                 background: #fff;
-                .room-rl {
+                .room-rl { 
                     cursor:pointer;
                     padding: 10px 0;
                     .facility {margin: 5px 0;}
