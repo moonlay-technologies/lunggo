@@ -9,7 +9,7 @@
 
 @section AdditionalCSS{
     <link href="/Assets/css/jquery-ui.min.css" rel="stylesheet" />
-    <link href="/Assets/vendor/flexslider/flexslider.css" rel="stylesheet" />
+    <link href="/Assets/vendor/lightslider/lightslider.css" rel="stylesheet" />
     <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/jquery.slick/1.5.9/slick.css" />
 }
 
@@ -21,26 +21,13 @@
     <script src="/Assets/js/jquery-ui.min.js"></script>
     <script type="text/javascript" src="/Scripts/bootstrap.min.js"></script>
     <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.slick/1.5.9/slick.min.js"></script>
+    <script src="/Assets/vendor/lightslider/lightslider.js"></script>
 }
 
 @section PageJS{
-    <script src="/Assets/vendor/flexslider/jquery.flexslider.js"></script>
     <script src="/Assets/travorama20/js/hotelDetailController.js"></script>
     <script type="text/javascript" src="/Assets/travorama20/js/HotelController.js"></script>
     <script>accordionFunctions()</script>
-    
-    <script>
-        // Big Slider Detail Hotel
-        $(window).load(function () {
-            $('.flexslider').flexslider({
-                animation: "slide",
-                controlNav: "thumbnails",
-                start: function (slider) {
-                    $('body').removeClass('loading');
-                }
-            });
-        });
-    </script>
 }
 
 @Html.Partial("/Views/Hotel/Shared/Desktop/_PageSlider.cshtml")
@@ -66,14 +53,12 @@
                     </div>
                     <div class="slider-container clearfix">
                         <div class="">
-                            <div class="slider">
-                                <div class="flexslider">
-                                    <ul class="slides">
-                                        <li data-thumb="{{image}}" ng-repeat="image in hotel.images">
-                                            <img alt-image ng-src="{{image}}" alt="alternative" />
-                                        </li>
-                                    </ul>
-                                </div>
+                            <div class="slider clearfix">
+                                <ul id="image-gallery" class="gallery list-unstyled cS-hidden">
+                                    <li data-thumb="{{image}}" alt-image ng-repeat="image in hotel.images">
+                                        <div test="{{image}}" alt-image style="background-image: url({{image}}); width: 100%; height: 590px; background-size: cover; background-position: center center;"></div>
+                                    </li>
+                                </ul>
                             </div>
                         </div>
                         <div class="col-right-slider">

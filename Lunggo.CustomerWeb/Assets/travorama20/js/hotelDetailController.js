@@ -30,13 +30,13 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
             }
         );
 
-        resource.query({}, {}).$promise.then(function (data) {
+        resource.query({}, {}).$promise.then(function(data) {
             $scope.hotel = data.hotelDetails;
 
             var loadedImages = 0;
             var tempHotelImages = [];
-            $.each($scope.hotel.images, function (key, value) {
-                
+            $.each($scope.hotel.images, function(key, value) {
+
                 tempHotelImages.push("http://photos.hotelbeds.com/giata/bigger/" + value);
 
                 loadedImages++;
@@ -52,11 +52,14 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
             $scope.hotel.checkinDate = new Date(parseInt(cekin.substring(0, 4)), parseInt(cekin.substring(4, 6)) - 1, parseInt(cekin.substring(6, 8)));
             $scope.hotel.checkoutDate = new Date(parseInt(cekout.substring(0, 4)), parseInt(cekout.substring(4, 6)) - 1, parseInt(cekout.substring(6, 8)));
             $scope.hotel.nightCount = new Date($scope.hotel.checkoutDate).getDate() - new Date($scope.hotel.checkinDate).getDate();
-            
-            accordionFunctions();
-            $timeout(function () { hotelDetailFunctions(); }, 0);
 
-        })
+            accordionFunctions();
+            $timeout(function() { hotelDetailFunctions(); }, 0);
+            $timeout(function() { initiateSlider(); }, 0);
+
+          
+
+        });
     }
 
     $scope.model = {};
@@ -114,15 +117,15 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
         selectService.query({}, {
             "searchId": $scope.searchId,
             "regs": [
-                  {
-                      "regsId": room.rate.regsId,
-                      "rateCount": room.rate.roomCount,
-                      "adultCount": room.rate.adultCount,
-                      "childCount": room.rate.childCount,
-                      "childrenAges": ages
-                  }
+                {
+                    "regsId": room.rate.regsId,
+                    "rateCount": room.rate.roomCount,
+                    "adultCount": room.rate.adultCount,
+                    "childCount": room.rate.childCount,
+                    "childrenAges": ages
+                }
             ]
-        }).$promise.then(function (data) {
+        }).$promise.then(function(data) {
             $scope.token = data.token;
             $scope.tokenLimit = data.timeLimit;
             $log.debug('selected, token = ' + $scope.selectToken);
@@ -130,7 +133,7 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
             $log.debug('going to checkout');
 
             location.href = '/id/Hotel/Checkout/?token=' + $scope.token;
-        })
+        });
     }
 
     var accordionFunctions = function() {
@@ -172,8 +175,47 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
             var parent2 = parent1.closest('.room-list-container li');
             parent2.find('.option').toggle();
             parent2.siblings().find('.hotel-detail, .option').hide();
-        });
+        }); 
     }
     //=============== hotel end ======================
 
+    $scope.$watch('hotel.images', function (newValue, oldValue) {
+        //$('#image-gallery').lightSlider({
+        //    gallery: true,
+        //    item: 1,
+        //    thumbItem: 6,
+        //    slideMargin: 0,
+        //    loop: true,
+        //    keyPress: true,
+        //    onSliderLoad: function () {
+        //        $('#image-gallery').removeClass('cS-hidden');
+        //    }
+        //});
+    });
+
+    var initiateSlider = function() {
+        $('#image-gallery').lightSlider({
+            gallery: true,
+            item: 1,
+            thumbItem: 6,
+            slideMargin: 0,
+            loop: true,
+            keyPress: true,
+            onSliderLoad: function () {
+                $('#image-gallery').removeClass('cS-hidden');
+            }
+        });
+
+        $timeout(function() {
+            var altImagePath = document.location.origin + '/Assets/travorama20/images/Hotel/no-hotel.png';
+            var elements = angular.element(document.querySelectorAll('#imgtum'));
+
+          
+            angular.each(elements, function(key, value) {
+                elements[key].removeAttr('src');
+                elements[key].attr('src', altImagePath); // set default image
+            });
+        }, 0);
+
+    }
 }]);
