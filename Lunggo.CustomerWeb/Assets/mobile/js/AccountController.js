@@ -150,25 +150,25 @@ app.controller('UserAccountController', ['$http', '$scope', '$rootScope', '$loca
         var text = '';
         switch (num) {
             case 1:
-                text = 'Cancel';
+                text = 'Dibatalkan';
                 break;
             case 2:
-                text = 'Pending';
+                text = 'Menunggu Pembayaran';
                 break;
             case 3:
-                text = 'Settled';
+                text = 'Lunas';
                 break;
             case 4:
-                text = 'Denied';
+                text = 'Ditolak';
                 break;
             case 5:
-                text = 'Expired';
+                text = 'Kadaluarsa';
                 break;
             case 6:
-                text = 'Veryfing';
+                text = 'Memverifikasi Pembayaran';
                 break;
             case 7:
-                text = 'Challanged';
+                text = 'Menunggu Konfirmasi Ulang';
                 break;
         }
         return text;

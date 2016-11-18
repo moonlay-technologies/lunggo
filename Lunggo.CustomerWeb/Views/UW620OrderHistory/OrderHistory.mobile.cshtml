@@ -205,7 +205,7 @@
                                     <span>Berangkat</span>
                                 </div>
                                 <div class="col-xs-8">
-                                    <span>: <b>{{flight.itin.trips[0].date | date}}</b></span>
+                                    <span>: <b>{{flight.itin.trips[0].segments[0].departureTime | date : 'EEEE, dd MMMM yyyy , HH:mm' :'UTC'}}</b></span>
                                 </div>
                             </div>
                             <div class="row" ng-show="flight.itin.trips[1].date">
@@ -213,7 +213,7 @@
                                     <span>Kembali</span>
                                 </div>
                                 <div class="col-xs-8">
-                                    <span>: <b>{{flight.itin.trips[1].date | date}}</b></span>
+                                    <span>: <b>{{flight.itin.trips[1].segments[0].departureTime | date: 'EEEE, dd MMMM yyyy , HH:mm' :'UTC'}}</b></span>
                                 </div>
                             </div>
                             <div class="row">
@@ -303,6 +303,14 @@
                                                 </div>
                                                 <div class="col-xs-8">
                                                     <span>: <b>{{totalpax(hotel.hotelDetail).totalAdult}} Dewasa, {{totalpax(hotel.hotelDetail).totalChild}} Anak</b></span>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-xs-4">
+                                                    <span>Status</span>
+                                                </div>
+                                                <div class="col-xs-8">
+                                                    <span>: <b>{{OrderStatus(hotel.payment.status)}}</b></span>
                                                 </div>
                                             </div>
                                             <div class="row">

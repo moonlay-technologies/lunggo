@@ -81,7 +81,7 @@ namespace Lunggo.ApCommon.Hotel.Service
         {
             var filters = filter != null ? filter.Split(',') : null;
             var rsvs = GetOverviewReservationsByUserIdOrEmailFromDb(userId, email, filters, sort, page, itemsPerPage) ?? new List<HotelReservation>();
-            return rsvs.Select(ConvertToReservationForDisplay).ToList();
+            return rsvs.Select(ConvertToReservationForDisplay).Where(r => r.RsvDisplayStatus != RsvDisplayStatus.Expired).ToList().ToList();
         }
 
         private List<HotelReservation> GetOverviewReservationsByUserIdOrEmailFromDb(string userId, string email, string[] filters, string sort, int? page, int? itemsPerPage)
@@ -215,7 +215,7 @@ namespace Lunggo.ApCommon.Hotel.Service
         {
             var filters = filter != null ? filter.Split(',') : null;
             var rsvs = GetOverviewReservationsByDeviceIdFromDb(deviceId, filters, sort, page, itemsPerPage) ?? new List<HotelReservation>();
-            return rsvs.Select(ConvertToReservationForDisplay).ToList();
+            return rsvs.Select(ConvertToReservationForDisplay).Where(r => r.RsvDisplayStatus != RsvDisplayStatus.Expired).ToList();
         }
 
         private List<HotelReservation> GetOverviewReservationsByDeviceIdFromDb(string deviceId, string[] filters, string sort, int? page, int? itemsPerPage)
