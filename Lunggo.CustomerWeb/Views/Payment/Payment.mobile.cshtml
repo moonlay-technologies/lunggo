@@ -23,38 +23,40 @@
     var roomImg = "";
     try
     {
-        var rsv = (Model.Reservation as HotelReservationForDisplay);
-        images = HotelService.GetInstance().GetHotelDetailFromDb(rsv.HotelDetail.HotelCode).ImageUrl;
-        var orDefault = images.Where(i => i.Type == "GEN").ToList().FirstOrDefault();
-        if (orDefault != null)
+        if (Model.Reservation is HotelReservationForDisplay)
         {
-            hotelImg = images == null
-                ? null
-                : "http://photos.hotelbeds.com/giata/" + orDefault.Path;
-        }
-        var firstOrDefault = images.Where(i => i.Type == "HAB").ToList().FirstOrDefault();
-        if (firstOrDefault != null)
-        {
-            roomImg = images == null
-                ? null
-                : "http://photos.hotelbeds.com/giata/" + firstOrDefault.Path;
-        }
-        var rooms = rsv.HotelDetail.Rooms;
-        rsvNo = Model.RsvNo;
-        foreach (var room in rooms)
-        {
-            var roomName = HotelService.GetInstance().GetHotelRoom(room.RoomCode).RoomDescId;
-            var sum = 0;
-            foreach (var rate in room.Rates)
+            var rsv = (Model.Reservation as HotelReservationForDisplay);
+            images = HotelService.GetInstance().GetHotelDetailFromDb(rsv.HotelDetail.HotelCode).ImageUrl;
+            var orDefault = images.Where(i => i.Type == "GEN").ToList().FirstOrDefault();
+            if (orDefault != null)
             {
-                sum += rate.RoomCount;
-                totalpax += (rate.AdultCount + rate.ChildCount) * rate.RoomCount;
-                totalAdult += rate.AdultCount;
-                totalChild += rate.ChildCount;
+                hotelImg = images == null
+                    ? null
+                    : "http://photos.hotelbeds.com/giata/" + orDefault.Path;
             }
-            orderedRooms.Add(new Tuple<string, int>(roomName, sum)); ;
+            var firstOrDefault = images.Where(i => i.Type == "HAB").ToList().FirstOrDefault();
+            if (firstOrDefault != null)
+            {
+                roomImg = images == null
+                    ? null
+                    : "http://photos.hotelbeds.com/giata/" + firstOrDefault.Path;
+            }
+            var rooms = rsv.HotelDetail.Rooms;
+            rsvNo = Model.RsvNo;
+            foreach (var room in rooms)
+            {
+                var roomName = HotelService.GetInstance().GetHotelRoom(room.RoomCode).RoomDescId;
+                var sum = 0;
+                foreach (var rate in room.Rates)
+                {
+                    sum += rate.RoomCount;
+                    totalpax += (rate.AdultCount + rate.ChildCount) * rate.RoomCount;
+                    totalAdult += rate.AdultCount;
+                    totalChild += rate.ChildCount;
+                }
+                orderedRooms.Add(new Tuple<string, int>(roomName, sum)); ;
+            }
         }
-
 
     }
     catch
@@ -165,51 +167,55 @@
     var hotelDetails = '';
     var price = '';
     var originalPrice = '';
+    var totalRoom = '';
+    var checkin = '';
+    var checkout = '';
+    var totalpax = '';
+    var nights = '';
     @if (Model.Reservation is FlightReservationForDisplay)
-    {
-        var reservation = Model.Reservation as FlightReservationForDisplay;
-        @:var trips = @Html.Raw(reservation.Itinerary.Trips.Serialize());
-            @:var price = @reservation.Itinerary.NetTotalFare;
-            @:var originalPrice = '@reservation.Itinerary.OriginalTotalFare';
-        }
-    else
-    {
-        var reservation = Model.Reservation as HotelReservationForDisplay;
-        @:var hotelDetails = @Html.Raw(reservation.HotelDetail.Serialize());
-            @:var price = @reservation.HotelDetail.NetFare;
-            @:var originalPrice = '@reservation.HotelDetail.OriginalFare';
-        }
+        {
+            var reservation = Model.Reservation as FlightReservationForDisplay;
+            @:trips = @Html.Raw(reservation.Itinerary.Trips.Serialize());
+                            @:price = @reservation.Itinerary.NetTotalFare;
+                            @:originalPrice = '@reservation.Itinerary.OriginalTotalFare';
+                        }
+        else
+        {
+            var reservation = Model.Reservation as HotelReservationForDisplay;
+            @:hotelDetails = @Html.Raw(reservation.HotelDetail.Serialize());
+                            @:price = @reservation.HotelDetail.NetFare;
+                            @:originalPrice = '@reservation.HotelDetail.OriginalFare';
+                        }
     var redirectionUrl;
     @if (Model.Reservation.Payment.RedirectionUrl != null) {
-       @:redirectionUrl = '@Model.Reservation.Payment.RedirectionUrl';
-                                            }
+        @:redirectionUrl = '@Model.Reservation.Payment.RedirectionUrl';
+                    }
     @if (Model.Reservation is FlightReservationForDisplay)
     {
         @:var departureDate;
-            var reservation = Model.Reservation as FlightReservationForDisplay;
+                    var reservation = Model.Reservation as FlightReservationForDisplay;
         if (reservation.Itinerary.Trips != null)
          {
              if (reservation.Itinerary.Trips.Count == 2)
              {
                  @:departureDate = '@reservation.Itinerary.Trips[1].DepartureDate';
-                 }
+                         }
              else
              {
                  @:departureDate = '@reservation.Itinerary.Trips[0].DepartureDate';
-                 }
+                         }
          }
     }
-
-     @if (Model.Reservation is HotelReservationForDisplay)
-        {
-            var hotel = Model.Reservation as HotelReservationForDisplay;
-            @:var originalFare = '@hotel.HotelDetail.OriginalFare';
-            @:var netFare = '@hotel.HotelDetail.NetFare';
-            @:var totalRoom = '@hotel.HotelDetail.Rooms.SelectMany(r => r.Rates).Sum(p => p.RoomCount)';
-            @:var checkin = '@hotel.HotelDetail.CheckInDate.ToString("D",CultureInfo.CreateSpecificCulture("id-ID"))';
-            @:var checkout = '@hotel.HotelDetail.CheckOutDate.ToString("D", CultureInfo.CreateSpecificCulture("id-ID"))';
-            @:var nights = '@((hotel.HotelDetail.CheckOutDate - hotel.HotelDetail.CheckInDate).Days)';
-            @:var totalpax = '@totalpax';
+    @if (Model.Reservation is HotelReservationForDisplay)
+    {
+        var hotel = Model.Reservation as HotelReservationForDisplay;
+        @:originalPrice = '@hotel.HotelDetail.OriginalFare';
+            @:price = '@hotel.HotelDetail.NetFare';
+            @:totalRoom = '@hotel.HotelDetail.Rooms.SelectMany(r => r.Rates).Sum(p => p.RoomCount)';
+            @:checkin = '@hotel.HotelDetail.CheckInDate.ToString("D",CultureInfo.CreateSpecificCulture("id-ID"))';
+            @:checkout = '@hotel.HotelDetail.CheckOutDate.ToString("D", CultureInfo.CreateSpecificCulture("id-ID"))';
+            @:nights = '@((hotel.HotelDetail.CheckOutDate - hotel.HotelDetail.CheckInDate).Days)';
+            @:totalpax = '@totalpax';
         }
     // change current page
     if (getParam('page') == 4) {
@@ -224,9 +230,9 @@
         phone: '@User.Identity.GetPhoneNumber()',
         email: '@User.Identity.GetEmail()'
     };
-        var langCode = '@OnlineContext.GetActiveLanguageCode()';
+    var langCode = '@OnlineContext.GetActiveLanguageCode()';
 
-        var expirytime = '@Model.TimeLimit';
+    var expirytime = '@Model.TimeLimit';
     </script>
     <!-- angular controller -->
     <script src="/Assets/travorama20/js/paymentController.js"></script>
@@ -591,17 +597,18 @@
                     <div class="popup__body tnc-body">
                         <div class="container_new">
                             <ol>
-                                <li>Transfer keseluruhan jumlah harga hingga 3 angka terakhir untuk menjaga keamanan transaksi dan dilakukan sebelum batas akhir waktu pembayaran.</li>
+                                <li>Transfer keseluruhan jumlah harga hingga <b>3 angka terakhir</b> untuk menjaga keamanan transaksi dan dilakukan sebelum batas akhir waktu pembayaran.</li>
                                 <li>Transfer antarbank (dari bank yang berbeda) wajib menggunakan metode pembayaran ATM.</li>
-                                <li>Tidak disarankan melakukan transfer dengan LLG/Kliring/SKNBI karena membutuhkan waktu verifikasi yang lebih lama sehingga memungkinkan pemesanan gagal.</li>
-                            </ol>
+                                <li><b>Tidak disarankan</b> melakukan transfer dengan <b>LLG/Kliring/SKNBI</b> karena membutuhkan waktu verifikasi yang lebih lama sehingga memungkinkan pemesanan gagal.</li>
+                                <li>Anda tidak dapat mengganti ke metode pembayaran lain jika telah memilih metode pembayaran ini.</li>
+                             </ol>
                         </div>
                     </div>
                     <div class="popup__footer">
                         <div class="container_new tnc">
                             <div class="row">
                                 <div class="col-xs-6">
-                                    <a class="btn btn-grey btn-block" href="{{PageConfig.ReturnUrl}}" style="width:100%">KEMBALI</a>
+                                    <a class="btn btn-grey btn-block" ng-click="pay.transfer = false;" style="width:100%">KEMBALI</a>
                                 </div>
                                 <div class="col-xs-6">
                                     <input type="submit" class="btn btn-yellow" ng-click="pay.middle('transfer')" value="SETUJU">
@@ -631,7 +638,7 @@
                         <div class="container_new tnc">
                             <div class="row">
                                 <div class="col-xs-6">
-                                    <a class="btn btn-grey btn-block" href="{{PageConfig.ReturnUrl}}">KEMBALI</a>
+                                    <a class="btn btn-grey btn-block" ng-click="pay.virtualAccount = false;">KEMBALI</a>
                                 </div>
                                 <div class="col-xs-6">
                                     <input type="submit" class="btn btn-yellow" ng-click="pay.middle('virtualAccount')" value="SETUJU">

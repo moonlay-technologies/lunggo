@@ -22,39 +22,40 @@
     var roomImg = "";
     try
     {
-        var rsv = (Model.Reservation as HotelReservationForDisplay);
-        images = HotelService.GetInstance().GetHotelDetailFromDb(rsv.HotelDetail.HotelCode).ImageUrl;
-        var orDefault = images.Where(i => i.Type == "GEN").ToList().FirstOrDefault();
-        if (orDefault != null)
+        if (Model.Reservation is HotelReservationForDisplay)
         {
-            hotelImg = images == null
-                ? null
-                : "http://photos.hotelbeds.com/giata/" + orDefault.Path;
-        }
-        var firstOrDefault = images.Where(i => i.Type == "HAB").ToList().FirstOrDefault();
-        if (firstOrDefault != null)
-        {
-            roomImg = images == null
-                ? null
-                : "http://photos.hotelbeds.com/giata/" + firstOrDefault.Path;
-        }
-        var rooms = rsv.HotelDetail.Rooms;
-        rsvNo = Model.RsvNo;
-        foreach (var room in rooms)
-        {
-            var roomName = HotelService.GetInstance().GetHotelRoom(room.RoomCode).RoomDescId;
-            var sum = 0;
-            foreach (var rate in room.Rates)
+            var rsv = (Model.Reservation as HotelReservationForDisplay);
+            images = HotelService.GetInstance().GetHotelDetailFromDb(rsv.HotelDetail.HotelCode).ImageUrl;
+            var orDefault = images.Where(i => i.Type == "GEN").ToList().FirstOrDefault();
+            if (orDefault != null)
             {
-                sum += rate.RoomCount;
-                totalpax += (rate.AdultCount + rate.ChildCount)*rate.RoomCount;
-                totalAdult += rate.AdultCount;
-                totalChild += rate.ChildCount;
+                hotelImg = images == null
+                    ? null
+                    : "http://photos.hotelbeds.com/giata/" + orDefault.Path;
             }
-            orderedRooms.Add(new Tuple<string, int>(roomName, sum)); ;
-        }
-        
-        
+            var firstOrDefault = images.Where(i => i.Type == "HAB").ToList().FirstOrDefault();
+            if (firstOrDefault != null)
+            {
+                roomImg = images == null
+                    ? null
+                    : "http://photos.hotelbeds.com/giata/" + firstOrDefault.Path;
+            }
+            var rooms = rsv.HotelDetail.Rooms;
+            rsvNo = Model.RsvNo;
+            foreach (var room in rooms)
+            {
+                var roomName = HotelService.GetInstance().GetHotelRoom(room.RoomCode).RoomDescId;
+                var sum = 0;
+                foreach (var rate in room.Rates)
+                {
+                    sum += rate.RoomCount;
+                    totalpax += (rate.AdultCount + rate.ChildCount) * rate.RoomCount;
+                    totalAdult += rate.AdultCount;
+                    totalChild += rate.ChildCount;
+                }
+                orderedRooms.Add(new Tuple<string, int>(roomName, sum)); ;
+            }
+        }      
     }
     catch
     {
@@ -162,6 +163,11 @@
     var hotelDetails = '';
     var price = '';
     var originalPrice = '';
+    var totalRoom = '';
+    var checkin = '';
+    var checkout = '';
+    var totalpax = '';
+    var nights = '';
     @if (Model.Reservation is FlightReservationForDisplay)
         {
             var reservation = Model.Reservation as FlightReservationForDisplay;
@@ -199,13 +205,13 @@
     @if (Model.Reservation is HotelReservationForDisplay)
     {
         var hotel = Model.Reservation as HotelReservationForDisplay;
-        @:var originalFare = '@hotel.HotelDetail.OriginalFare';
-        @:var netFare = '@hotel.HotelDetail.NetFare';
-        @:var totalRoom = '@hotel.HotelDetail.Rooms.SelectMany(r => r.Rates).Sum(p => p.RoomCount)';
-        @:var checkin = '@hotel.HotelDetail.CheckInDate.ToString("D",CultureInfo.CreateSpecificCulture("id-ID"))';
-        @:var checkout = '@hotel.HotelDetail.CheckOutDate.ToString("D", CultureInfo.CreateSpecificCulture("id-ID"))';
-        @:var nights = '@((hotel.HotelDetail.CheckOutDate - hotel.HotelDetail.CheckInDate).Days)';
-        @:var totalpax = '@totalpax';
+        @:originalPrice = '@hotel.HotelDetail.OriginalFare';
+        @:price = '@hotel.HotelDetail.NetFare';
+        @:totalRoom = '@hotel.HotelDetail.Rooms.SelectMany(r => r.Rates).Sum(p => p.RoomCount)';
+        @:checkin = '@hotel.HotelDetail.CheckInDate.ToString("D",CultureInfo.CreateSpecificCulture("id-ID"))';
+        @:checkout = '@hotel.HotelDetail.CheckOutDate.ToString("D", CultureInfo.CreateSpecificCulture("id-ID"))';
+        @:nights = '@((hotel.HotelDetail.CheckOutDate - hotel.HotelDetail.CheckInDate).Days)';
+        @:totalpax = '@totalpax';
     }
     // change current page
     if (getParam('page') == 4) {
@@ -244,7 +250,7 @@
                     <div class="content-step" id="step-4">
                         <h3><b>METODE</b> PEMBAYARAN</h3>
 
-
+                        <h4><b>Nomor Reservasi :</b> @Model.RsvNo</h4>
                         <p>Silakan pilih <b>metode pembayaran</b> di bawah ini yang ingin Anda gunakan:</p>
 
                         <div class="payment-wrapper">
@@ -878,14 +884,15 @@
                         <div class="popup-header"><span class="popup-title stripe">Syarat dan Ketentuan Bank Transfer</span></div>
                         <div class="popup-list">
                             <ol>
-                                <li>Transfer keseluruhan jumlah harga hingga 3 angka terakhir untuk menjaga keamanan transaksi dan dilakukan sebelum batas akhir waktu pembayaran.</li>
+                                <li>Transfer keseluruhan jumlah harga hingga <b>3 angka terakhir</b> untuk menjaga keamanan transaksi dan dilakukan sebelum batas akhir waktu pembayaran.</li>
                                 <li>Transfer antarbank (dari bank yang berbeda) wajib menggunakan metode pembayaran ATM.</li>
-                                <li>Tidak disarankan melakukan transfer dengan LLG/Kliring/SKNBI karena membutuhkan waktu verifikasi yang lebih lama sehingga memungkinkan pemesanan gagal.</li>
+                                <li><b>Tidak disarankan</b> melakukan transfer dengan <b>LLG/Kliring/SKNBI</b> karena membutuhkan waktu verifikasi yang lebih lama sehingga memungkinkan pemesanan gagal.</li>
+                                <li>Anda tidak dapat mengganti ke metode pembayaran lain jika telah memilih metode pembayaran ini.</li>
                             </ol>
                         </div>
                         <div class="row">
                             <div class="col-xs-6">
-                                <a class="btn btn-grey btn-block" href="{{PageConfig.ReturnUrl}}" style="width:100%">KEMBALI</a>
+                                <a class="btn btn-grey btn-block" ng-click="pay.transfer = false;" style="width:100%">KEMBALI</a>
                             </div>
                             <div class="col-xs-6">
                                 <input type="submit" class="btn btn-yellow" ng-click="pay.middle('transfer')" value="SETUJU">
@@ -909,7 +916,7 @@
                         </div>
                         <div class="row">
                             <div class="col-xs-6">
-                                <a class="btn btn-grey btn-block" href="{{PageConfig.ReturnUrl}}" style="width:100%">KEMBALI</a>
+                                <a class="btn btn-grey btn-block" ng-click="pay.virtualAccount = false;" style="width:100%">KEMBALI</a>
                             </div>
                             <div class="col-xs-6">
                                 <input type="submit" class="btn btn-yellow" ng-click="pay.middle('virtualAccount')" value="SETUJU">

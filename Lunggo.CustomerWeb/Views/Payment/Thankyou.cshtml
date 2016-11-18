@@ -3,6 +3,7 @@
 @using Lunggo.ApCommon.Hotel.Model
 @using Lunggo.ApCommon.Hotel.Service
 @using Lunggo.ApCommon.Payment.Constant
+@using Lunggo.ApCommon.Product.Constant
 @using Lunggo.Framework.Config
 @using Lunggo.ApCommon.Flight.Model
 @model Lunggo.ApCommon.Product.Model.ReservationForDisplayBase
@@ -13,6 +14,7 @@
     ViewBag.Title = "Terima Kasih";
     //ViewBag.AngularController = "ThankyouController";
     ViewBag.BookingFailed = false;
+    //Model.RsvDisplayStatus = RsvDisplayStatus.Issued;
 }
 
 @{
@@ -31,37 +33,39 @@
     
     try
     {
-        var rsv = Model as HotelReservationForDisplay;
-        rooms = rsv.HotelDetail.Rooms;
-        images = HotelService.GetInstance().GetHotelDetailFromDb(rsv.HotelDetail.HotelCode).ImageUrl;
-        var orDefault = images.Where(i => i.Type == "GEN").ToList().FirstOrDefault();
-        if (orDefault != null)
+        if (Model is HotelReservationForDisplay)
         {
-            hotelImg = images == null
-                ? null
-                : "http://photos.hotelbeds.com/giata/" + orDefault.Path;
-        }
-        var firstOrDefault = images.Where(i => i.Type == "HAB").ToList().FirstOrDefault();
-        if (firstOrDefault != null)
-        {
-            roomImg = images == null
-                ? null
-                : "http://photos.hotelbeds.com/giata/" + firstOrDefault.Path;
-        }
-        //rooms = (Model as HotelReservationForDisplay).HotelDetail.Rooms;
-        var rsvNo = Model.RsvNo;
-        foreach (var room in rooms)
-        {
-            var roomName = HotelService.GetInstance().GetHotelRoom(room.RoomCode).RoomDescId;
-            var sum = 0;
-            foreach (var rate in room.Rates)
+            var rsv = Model as HotelReservationForDisplay;
+            rooms = rsv.HotelDetail.Rooms;
+            var rsvNo = Model.RsvNo;
+            images = HotelService.GetInstance().GetHotelDetailFromDb(rsv.HotelDetail.HotelCode).ImageUrl;
+            var orDefault = images.Where(i => i.Type == "GEN").ToList().FirstOrDefault();
+            if (orDefault != null)
             {
-                sum += rate.RoomCount;
-                totalAdult += rate.AdultCount;
-                totalChild += rate.ChildCount;
-            
+                hotelImg = images == null
+                    ? null
+                    : "http://photos.hotelbeds.com/giata/" + orDefault.Path;
             }
-            orderedRooms.Add(new Tuple<string, int>(roomName, sum)); ;
+            var firstOrDefault = images.Where(i => i.Type == "HAB").ToList().FirstOrDefault();
+            if (firstOrDefault != null)
+            {
+                roomImg = images == null
+                    ? null
+                    : "http://photos.hotelbeds.com/giata/" + firstOrDefault.Path;
+            }
+            foreach (var room in rooms)
+            {
+                var roomName = HotelService.GetInstance().GetHotelRoom(room.RoomCode).RoomDescId;
+                var sum = 0;
+                foreach (var rate in room.Rates)
+                {
+                    sum += rate.RoomCount;
+                    totalAdult += rate.AdultCount;
+                    totalChild += rate.ChildCount;
+                }
+                orderedRooms.Add(new Tuple<string, int>(roomName, sum));
+                ;
+            }
         }
 
     }
