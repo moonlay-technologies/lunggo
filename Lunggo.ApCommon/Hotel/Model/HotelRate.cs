@@ -66,15 +66,15 @@ namespace Lunggo.ApCommon.Hotel.Model
         [JsonProperty("offers", NullValueHandling = NullValueHandling.Ignore)]
         public List<Offer> Offers { get; set; }
 
-        [JsonProperty("originalPrice", NullValueHandling = NullValueHandling.Ignore)]
-        public decimal OriginalPrice { get; set; }
-        [JsonProperty("originalTotalPrice", NullValueHandling = NullValueHandling.Ignore)]
-        public decimal OriginalTotalPrice { get; set; }
+        [JsonProperty("originalFare", NullValueHandling = NullValueHandling.Ignore)]
+        public decimal OriginalFare { get; set; }
+        [JsonProperty("originalTotalFare", NullValueHandling = NullValueHandling.Ignore)]
+        public decimal OriginalTotalFare { get; set; }
 
-        [JsonProperty("netPrice", NullValueHandling = NullValueHandling.Ignore)]
-        public decimal NetPrice { get; set; }
-        [JsonProperty("netTotalPrice", NullValueHandling = NullValueHandling.Ignore)]
-        public decimal NetTotalPrice { get; set; }
+        [JsonProperty("netFare", NullValueHandling = NullValueHandling.Ignore)]
+        public decimal NetFare { get; set; }
+        [JsonProperty("netTotalFare", NullValueHandling = NullValueHandling.Ignore)]
+        public decimal NetTotalFare { get; set; }
 
         [JsonProperty("childrenAges", NullValueHandling = NullValueHandling.Ignore)]
         public List<int> ChildrenAges { get; set; }

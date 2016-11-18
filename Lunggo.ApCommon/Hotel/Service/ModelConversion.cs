@@ -419,11 +419,11 @@ namespace Lunggo.ApCommon.Hotel.Service
 
         public void SetDisplayPriceHotelRate(HotelRateForDisplay rateDisplay,HotelRate rate)
         {
-            rateDisplay.NetTotalPrice = rate.Price.Local;
-            rateDisplay.OriginalTotalPrice = rateDisplay.NetTotalPrice*1.01M;
+            rateDisplay.NetTotalFare = rate.Price.Local;
+            rateDisplay.OriginalTotalFare = rateDisplay.NetTotalFare*1.01M;
 
-            rateDisplay.NetPrice = Math.Round((rateDisplay.NetTotalPrice / rate.RoomCount) / rate.NightCount);
-            rateDisplay.OriginalPrice = rateDisplay.NetPrice * 1.01M;
+            rateDisplay.NetFare = Math.Round((rateDisplay.NetTotalFare / rate.RoomCount) / rate.NightCount);
+            rateDisplay.OriginalFare = rateDisplay.NetFare * 1.01M;
 
             if (!rate.Class.Equals("NRF"))
             {
