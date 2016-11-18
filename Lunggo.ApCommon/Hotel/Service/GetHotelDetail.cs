@@ -20,14 +20,24 @@ namespace Lunggo.ApCommon.Hotel.Service
             var hotelDetail = GetHotelDetailFromDb(input.HotelCode);
             SetHotelFullFacilityCode(hotelDetail);
             decimal originalPrice, netFare;
-            SetDetailFromSearchResult(hotelDetail, input.SearchId, out originalPrice, out netFare);
             if (hotelDetail == null)
                 return new GetHotelDetailOutput
                 {
                     IsSuccess = false,
                     Errors = new List<HotelError> { HotelError.SearchIdNoLongerValid },
-                    ErrorMessages = new List<string> {"SearchID no longer valid"}
+                    ErrorMessages = new List<string> { "SearchID no longer valid" }
                 };
+
+            bool searchIdExpired = false;
+            if (SetDetailFromSearchResult(ref hotelDetail, input.SearchId, out originalPrice, out netFare) == searchIdExpired) {
+                return new GetHotelDetailOutput
+                {
+                    IsSuccess = false,
+                    Errors = new List<HotelError> { HotelError.SearchIdNoLongerValid },
+                    ErrorMessages = new List<string> { "SearchID no longer valid" }
+                };
+            };
+           
             hotelDetail.Rooms = SetRoomPerRate(hotelDetail.Rooms);
             foreach (var room in hotelDetail.Rooms)
             {
@@ -57,10 +67,16 @@ namespace Lunggo.ApCommon.Hotel.Service
             return GetHotelDetailFromTableStorage(hotelCode);
         }
 
-        public void SetDetailFromSearchResult(HotelDetailsBase hotel ,string searchId, out decimal originalPrice, out decimal netFare)
+        public bool SetDetailFromSearchResult(ref HotelDetailsBase hotel ,string searchId, out decimal originalPrice, out decimal netFare)
         {
+            originalPrice = 0;
+            netFare = 0;
+            var hotelTemp = hotel;
+
             var searchResultData = GetSearchHotelResultFromCache(searchId);
-            var searchResulthotel = searchResultData.HotelDetails.SingleOrDefault(p => p.HotelCode == hotel.HotelCode);
+            if (searchResultData == null) return false;
+
+            var searchResulthotel = searchResultData.HotelDetails.SingleOrDefault(p => p.HotelCode == hotelTemp.HotelCode);
             if (searchResulthotel == null)
                 hotel = null;
             hotel.Rooms = searchResulthotel.Rooms;
@@ -71,6 +87,8 @@ namespace Lunggo.ApCommon.Hotel.Service
             SetRegIdsAndTnc(hotel.Rooms, searchResultData.CheckIn, hotel.HotelCode);
             originalPrice = searchResulthotel.OriginalFare;
             netFare = searchResulthotel.NetFare;
+
+            return true;
         }
 
         public void SetHotelFullFacilityCode(HotelDetailsBase hotel)

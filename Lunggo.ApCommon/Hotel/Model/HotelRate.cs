@@ -66,22 +66,22 @@ namespace Lunggo.ApCommon.Hotel.Model
         [JsonProperty("offers", NullValueHandling = NullValueHandling.Ignore)]
         public List<Offer> Offers { get; set; }
 
-        [JsonProperty("originalPrice", NullValueHandling = NullValueHandling.Ignore)]
-        public decimal OriginalPrice { get; set; }
-        [JsonProperty("originalTotalPrice", NullValueHandling = NullValueHandling.Ignore)]
-        public decimal OriginalTotalPrice { get; set; }
+        [JsonProperty("originalFare", NullValueHandling = NullValueHandling.Ignore)]
+        public decimal OriginalFare { get; set; }
+        [JsonProperty("originalTotalFare", NullValueHandling = NullValueHandling.Ignore)]
+        public decimal OriginalTotalFare { get; set; }
 
-        [JsonProperty("netPrice", NullValueHandling = NullValueHandling.Ignore)]
-        public decimal NetPrice { get; set; }
-        [JsonProperty("netTotalPrice", NullValueHandling = NullValueHandling.Ignore)]
-        public decimal NetTotalPrice { get; set; }
+        [JsonProperty("netFare", NullValueHandling = NullValueHandling.Ignore)]
+        public decimal NetFare { get; set; }
+        [JsonProperty("netTotalFare", NullValueHandling = NullValueHandling.Ignore)]
+        public decimal NetTotalFare { get; set; }
 
         [JsonProperty("childrenAges", NullValueHandling = NullValueHandling.Ignore)]
         public List<int> ChildrenAges { get; set; }
         [JsonProperty("tnc", NullValueHandling = NullValueHandling.Ignore)]
         public List<string> TermAndCondition { get; set; }
-        [JsonProperty("isCancel", NullValueHandling = NullValueHandling.Ignore)]
-        public bool IsCancel { get; set; }
+        [JsonProperty("isRefundable", NullValueHandling = NullValueHandling.Ignore)]
+        public bool IsRefundable { get; set; }
 
     }
 
@@ -141,6 +141,8 @@ namespace Lunggo.ApCommon.Hotel.Model
     {
         [JsonProperty("fee", NullValueHandling = NullValueHandling.Ignore)]
         public decimal Fee { get; set; }
+        [JsonProperty("singleFee", NullValueHandling = NullValueHandling.Ignore)]
+        public decimal SingleFee { get; set; }
         [JsonProperty("startTime", NullValueHandling = NullValueHandling.Ignore)]
         public DateTime StartTime { get; set; }
     }

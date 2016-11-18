@@ -14,13 +14,13 @@
 
     // **********
     // Custom Radio
-    $('body .round').on('click', function () {
-        var id = $(this).find('.check-radio');
-        $('body .round').checked = false;
-        $('body .round').removeClass('active');
-        id.checked = true;
-        $(this).addClass('active');
-    });
+    //$('body .round').on('click', function () {
+    //    var id = $(this).find('.check-radio');
+    //    $('body .round').checked = false;
+    //    $('body .round').removeClass('active');
+    //    id.checked = true;
+    //    $(this).addClass('active');
+    //});
 
     // **********
     // Search List Image

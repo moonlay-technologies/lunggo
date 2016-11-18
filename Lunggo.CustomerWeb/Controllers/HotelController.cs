@@ -19,7 +19,7 @@ namespace Lunggo.CustomerWeb.Controllers
             try
             {
                 NameValueCollection query = Request.QueryString;
-                HotelSearchApiRequest model = new HotelSearchApiRequest(query[0]);
+                HotelSearchApiRequest model = new HotelSearchApiRequest(query);
 
                 return View(model);
             }
@@ -30,9 +30,9 @@ namespace Lunggo.CustomerWeb.Controllers
 
         }
 
-        public ActionResult DetailHotel(string searchId, int hotelCd)
+        public ActionResult DetailHotel(string searchId, int hotelCd, string searchParam)
         {
-            return View(new { searchId, hotelCd });
+            return View(new { searchId, hotelCd, searchParam });
         }
 
         //public ActionResult Checkout()

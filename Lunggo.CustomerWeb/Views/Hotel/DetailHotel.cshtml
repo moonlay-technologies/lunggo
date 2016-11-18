@@ -3,8 +3,8 @@
     ViewBag.BodyClass = "page-hotel page-detail";
     ViewBag.Title = "Detail Hotel";
     ViewBag.AngularController = "hotelDetailController";
-    
-  
+
+
 }
 
 @section AdditionalCSS{
@@ -52,14 +52,12 @@
                         <span class="address">{{hotel.address}} {{hotel.city}}, {{hotel.country}}</span>
                     </div>
                     <div class="slider-container clearfix">
-                        <div class="">
-                            <div class="slider clearfix">
-                                <ul id="image-gallery" class="gallery list-unstyled cS-hidden">
-                                    <li data-thumb="{{image}}" alt-image ng-repeat="image in hotel.images">
-                                        <div test="{{image}}" alt-image style="background-image: url({{image}}); width: 100%; height: 590px; background-size: cover; background-position: center center;"></div>
-                                    </li>
-                                </ul>
-                            </div>
+                        <div class="slider clearfix">
+                            <ul id="image-gallery" class="gallery list-unstyled cS-hidden">
+                                <li data-thumb="{{image}}" alt-image ng-repeat="image in hotel.images">
+                                    <div test="{{image}}" alt-image style="background-image: url({{image}}); width: 100%; height: 590px; background-size: cover; background-position: center center;"></div>
+                                </li>
+                            </ul>
                         </div>
                         <div class="col-right-slider">
                             <div class="rs-title md-txt">Review Hotel</div>
@@ -153,14 +151,17 @@
                         <div class="col-4">Harga Kamar</div>
                     </div>
                     <ul class="room-list-container">
-                        <li ng-repeat="room in hotel.room track by $index">
+                        <li ng-show="$index+1 <= roomCount" ng-repeat="room in hotel.room track by $index">
                             <div class="room-list clearfix">
-                                <div class="room-left"><img src="/Assets/travorama20/images/Hotel/room.jpg" alt="Room" /></div>
+                                <div class="room-left" ng-show="room.roomImages.length <= 0"><img ng-src="/Assets/travorama20/images/Hotel/room.jpg" alt="Room" /></div>
+                                <div class="room-left" ng-show="room.roomImages.length > 0"><img alt-image ng-src="{{room.roomImages[0]}}" alt="Room" /></div>
                                 <div class="room-right clearfix">
                                     <div class="room-rl">
                                         <div class="blue-txt md-txt"><b>{{room.roomName}}</b></div>
                                         <div class="facility"></div>
                                         <div class="max-people">Maks <b>{{room.paxCapacity}} orang / kamar</b></div>
+                                        <div ng-show="room.rate.isRefundable">Pembatalan Gratis </div>
+                                        <div ng-show="!room.rate.isRefundable">Kebijakan Pembatalan Berlaku </div>
                                         <div class="info-room">
                                             <span class="info-icon italic-txt">i</span>
                                             <span class="blue-txt sm-txt">Info Kamar</span>
@@ -175,13 +176,13 @@
                                                     <span data-value="y">2</span>
                                                     <span data-value="c">3</span>
                                                     <span data-value="f">4</span>
-                                                </div>
+                                                </div>t
                                             </div>
                                         </div>
                                     </div>
                                     <div class="room-rr">
-                                        <div class="underline-txt">Rp {{room.rate.originalPrice | number}}</div>
-                                        <div class="lg-txt"><b><sup>Rp</sup> {{room.rate.netPrice | number}}</b></div>
+                                        <div class="underline-txt">Rp {{room.rate.originalFare | number}}</div>
+                                        <div class="lg-txt"><b><sup>Rp</sup> {{room.rate.netFare | number}}</b></div>
                                         <div class="xs-txt">*Harga Termasuk Pajak & Service Charge</div>
                                         <a href="" class="btn btn-yellow small" ng-click="bookRoom(room)">PESAN</a>
                                     </div>
@@ -195,8 +196,8 @@
                                                 <img src="/Assets/travorama20/images/Hotel/mini-slider.jpg" />
                                             </div>
                                             @*<div class="item">
-                                                <img src="/Assets/travorama20/images/Hotel/mini-slider.jpg" />
-                                            </div>*@
+                                <img src="/Assets/travorama20/images/Hotel/mini-slider.jpg" />
+                            </div>*@
                                         </div>
                                         <div class="total-img"><b>1</b> / 20</div>
                                     </div>
@@ -212,28 +213,40 @@
                                     <div class="hd-right-container">
                                         <ul class="hd-description">
                                             <li class="hd-point">
+                                                <div class="hd-title blue-txt">Kebijakan Pembatalan</div>
+                                                <div class="hd-txt">
+                                                    <span ng-repeat="cancellation in room.rate.cancellation track by $index">
+                                                        @*Gratis pembatalan sebelum 17-Nov-2016 17:00.*@
+                                                        - Pembatalan setelah <span style="color:#1daee4">{{cancellation.startTime | date:'dd-MMM-yyyy HH:mm'}}</span>
+                                                        akan dikenakan biaya pembatalan sebesar <span style="color:#ff7200">Rp. {{cancellation.fee | number}}</span>.
+                                                        <br />
+                                                    </span>
+                                                </div>
+                                            </li>
+
+                                            <li class="hd-point">
                                                 <div class="hd-title blue-txt">Ketentuan Kamar</div>
                                                 <div class="hd-txt">
-                                                    <span ng-repeat="tnc in room.rate.tnc">{{tnc}} <br/></span>
+                                                    <span ng-repeat="tnc in room.rate.tnc">{{tnc}} <br /></span>
                                                 </div>
                                             </li>
                                             @*<li class="hd-point">
-                                                <div class="hd-title blue-txt">Fasilitas </div>
-                                                <div class="hd-txt clearfix">
-                                                    <ul class="blue-list quarter">
-                                                        <li>Bed</li>
-                                                    </ul>
-                                                    <ul class="blue-list quarter">
-                                                        <li>Bed</li>
-                                                    </ul>
-                                                    <ul class="blue-list quarter">
-                                                        <li>Bed</li>
-                                                    </ul>
-                                                    <ul class="blue-list quarter">
-                                                        <li>Bed</li>
-                                                    </ul>
-                                                </div>
-                                            </li>*@
+                <div class="hd-title blue-txt">Fasilitas </div>
+                <div class="hd-txt clearfix">
+                    <ul class="blue-list quarter">
+                        <li>Bed</li>
+                    </ul>
+                    <ul class="blue-list quarter">
+                        <li>Bed</li>
+                    </ul>
+                    <ul class="blue-list quarter">
+                        <li>Bed</li>
+                    </ul>
+                    <ul class="blue-list quarter">
+                        <li>Bed</li>
+                    </ul>
+                </div>
+            </li>*@
                                         </ul>
                                     </div>
 
@@ -243,7 +256,10 @@
                     </ul>
                     <div class="hotel-result clearfix">
                         <span class="hotel-result-txt">Jumlah Tipe Kamar Tersedia: <b>{{hotel.room.length}}</b></span>
-                        <a href="#" class="btn-hotel-result btn-blue small">Tampilkan semua</a>
+                        <a href="" class="btn-hotel-result btn-blue small" ng-click="togleDisplay()">Tampilkan 
+                            <text ng-show="roomCount == minRoomCount">semua</text>
+                            <text ng-show="roomCount == maxRoomCount">sebagian</text>
+                        </a>
                     </div>
                 </div>
                 <div class="info-hotel">
@@ -253,136 +269,41 @@
                     <div class="ih-accordion">
                         <div class="accordion-wrapper">
                             <div class="accordion-title accordion md-txt" id="menu-facility">Fasilitas Hotel</div>
-                            <div class="accordion-content show">
+                            <div class="accordion-content show" ng-repeat="facilities in hotel.facilities track by $index">
                                 <div class="ih-row fc clearfix">
                                     <div class="col-2">
-                                        <div class="ih-left general-lg-icon">
-                                            GENERAL
+                                        <div class="ih-left" ng-class="{'general-lg-icon':facilities.facilityGroup == 'general',
+                                                                        'health-lg-icon':facilities.facilityGroup == 'health',
+                                                                        'sport-lg-icon':facilities.facilityGroup == 'sport',
+                                                                        'business-lg-icon':facilities.facilityGroup == 'business',
+                                                                        'meal-lg-icon':facilities.facilityGroup == 'meal',
+                                                                        'ent-lg-icon':facilities.facilityGroup == 'entertainment',
+                                                                        'other-lg-icon':facilities.facilityGroup == 'other'}">
+                                            {{facilities.facilityGroup | uppercase}}
                                         </div>
                                     </div>
                                     <div class="col-8">
-                                        <div class="ih-right quarter clearfix">
+                                        <div class="ih-right quarter clearfix" ng-repeat="facilityList in facilities.facilityList">
                                             <ul class="blue-list">
-                                                <li ng-repeat="facility in hotel.facilities.general">{{facility}}</li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="ih-row clearfix">
-                                    <div class="col-2">
-                                        <div class="ih-left health-lg-icon">
-                                            HEALTH
-                                        </div>
-                                    </div>
-                                    <div class="col-8">
-                                        <div class="ih-right quarter clearfix">
-                                            <ul class="blue-list">
-                                                <li ng-repeat="facility in hotel.facilities.health">{{facility}}</li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="ih-row clearfix">
-                                    <div class="col-2">
-                                        <div class="ih-left sport-lg-icon">
-                                            SPORT
-                                        </div>
-                                    </div>
-                                    <div class="col-8">
-                                        <div class="ih-right quarter clearfix">
-                                            <ul class="blue-list">
-                                                <li ng-repeat="facility in hotel.facilities.health">{{facility}}</li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="ih-row clearfix">
-                                    <div class="col-2">
-                                        <div class="ih-left bussiness-lg-icon">
-                                            BUSINESS
-                                        </div>
-                                    </div>
-                                    <div class="col-8">
-                                        <div class="ih-right quarter clearfix">
-                                            <ul class="blue-list">
-                                                <li ng-repeat="facility in hotel.facilities.business">{{facility}}</li>
-
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="ih-row clearfix">
-                                    <div class="col-2">
-                                        <div class="ih-left meal-lg-icon">
-                                            MEAL
-                                        </div>
-                                    </div>
-                                    <div class="col-8">
-                                        <div class="ih-right quarter clearfix">
-                                            <ul class="blue-list">
-                                                <li ng-repeat="facility in hotel.facilities.business">{{facility}}</li>
-
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="ih-row clearfix">
-                                    <div class="col-2">
-                                        <div class="ih-left ent-lg-icon">
-                                            ENTERTAINMENT
-                                        </div>
-                                    </div>
-                                    <div class="col-8">
-                                        <div class="ih-right quarter clearfix">
-                                            <ul class="blue-list">
-                                                <li ng-repeat="facility in hotel.facilities.business">{{facility}}</li>
-
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="ih-row clearfix">
-                                    <div class="col-2">
-                                        <div class="ih-left other-lg-icon">
-                                            OTHER
-                                        </div>
-                                    </div>
-                                    <div class="col-8">
-                                        <div class="ih-right quarter clearfix">
-                                            <ul class="blue-list">
-                                                <li ng-repeat="facility in hotel.facilities.other">{{facility}}</li>
+                                                <li ng-repeat="facilityName in facilityList">{{facilityName}}</li>
                                             </ul>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="accordion-title accordion md-txt" id="menu-desc">Deskripsi Hotel</div>
-                            <div class="accordion-content show">
+                            <div ng-show="hotel.description.length > 0" class="accordion-title accordion md-txt" id="menu-desc">Deskripsi Hotel</div>
+                            <div ng-show="hotel.description.length > 0" class="accordion-content show">
                                 @*<div class="ih-title md-txt">“Clean rooms, Great location, Spotless beds”</div>*@
-                                <div class="ih-desc clearfix">
-                                    {{hotel.description}}
-                                    @*<div class="col-half ih-l">
-                                        This hotel features a fitness centre, an outdoor pool and a rooftop terrace with panoramic city views. It is close to the area's tourist attractions and is minutes on foot from Lavender MRT Station.
-                                        <br /><br />
-                                        This 4-star hotel offers a coffee bar, a 24-hour reception and an express check-in and check-out feature. Corporate amenities include a business centre.
-                                    </div>*@
-                                    @*<div class="col-half ih-r">
-                                        This hotel features a fitness centre, an outdoor pool and a rooftop terrace with panoramic city views. It is close to the area's tourist attractions and is minutes on foot from Lavender MRT Station.
-                                        <br /><br />
-                                        This 4-star hotel offers a coffee bar, a 24-hour reception and an express check-in and check-out feature. Corporate amenities include a business centre.
-                                    </div>*@
+                                <div class="ih-desc clearfix" ng-repeat="description in hotel.description track by $index">
+                                    {{description}}
                                 </div>
                             </div>
-                            <div class="accordion-title accordion md-txt" id="menu-tnc">Syarat & Ketentuan Hotel</div>
-                            <div class="accordion-content show">
+                            <div ng-show="hotel.policy.length > 0" class="accordion-title accordion md-txt" id="menu-tnc">Perlu Diingat</div>
+                            <div ng-show="hotel.policy.length > 0" class="accordion-content show">
                                 <div class="snk-container clearfix">
-                                    Syarat dan Kettentuan Hotel Swiss Bell Hotel - Singapore:
+                                    @*Syarat dan Kettentuan Hotel Swiss Bell Hotel - Singapore:*@
                                     <ul class="blue-list">
-                                        <li>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt</li>
-                                        <li>Adipiscing elit, sed diam nonummy nibh euismod tincidunt</li>
-                                        <li>Dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt</li>
-                                        <li>Amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt</li>
-                                        <li>Ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt</li>
+                                        <li ng-repeat="policy in hotel.policy track by $index">{{policy}}</li>
                                     </ul>
                                 </div>
                             </div>

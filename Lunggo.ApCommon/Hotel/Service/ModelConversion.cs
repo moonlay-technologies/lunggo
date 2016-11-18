@@ -370,8 +370,8 @@ namespace Lunggo.ApCommon.Hotel.Service
                     BoardDescription = GetHotelBoardDescId(rateDetail.Boards),
                     RoomCount = rateDetail.RateCount == 0 ? rateDetail.RoomCount : rateDetail.RateCount,
                     TimeLimit = rateDetail.TimeLimit,
-                    Cancellation = rateDetail.Cancellation,
-                    IsCancel = rateDetail.Cancellation!=null,
+                    Cancellation = (rateDetail.Class != "NRF" && rateDetail.Cancellation != null) ? rateDetail.Cancellation : null,
+                    IsRefundable = (rateDetail.Class != "NRF" && rateDetail.Cancellation != null),
                     Offers = rateDetail.Offers,
                     TermAndCondition = rateDetail.TermAndCondition
                 };
@@ -405,8 +405,8 @@ namespace Lunggo.ApCommon.Hotel.Service
                 BoardDescription = GetHotelBoardDescId(rate.Boards),
                 RoomCount = rate.RoomCount,
                 TimeLimit = rate.TimeLimit,
-                IsCancel = rate.Cancellation!= null,
-                Cancellation = rate.Cancellation,
+                IsRefundable = (rate.Class != "NRF" && rate.Cancellation!=null),
+                Cancellation = (rate.Class != "NRF" && rate.Cancellation != null) ? rate.Cancellation : null,
                 Offers = rate.Offers,
                 TermAndCondition = GetRateCommentFromTableStorage(rate.RateCommentsId,
                     checkInDate).Select(x => x.Description).ToList()
@@ -419,12 +419,21 @@ namespace Lunggo.ApCommon.Hotel.Service
 
         public void SetDisplayPriceHotelRate(HotelRateForDisplay rateDisplay,HotelRate rate)
         {
-            rateDisplay.NetTotalPrice = rate.Price.Local;
-            rateDisplay.OriginalTotalPrice = rateDisplay.NetTotalPrice*1.01M;
+            rateDisplay.NetTotalFare = rate.Price.Local;
+            rateDisplay.OriginalTotalFare = rateDisplay.NetTotalFare*1.01M;
 
-            rateDisplay.NetPrice = Math.Round((rateDisplay.NetTotalPrice / rate.RoomCount) / rate.NightCount);
-            rateDisplay.OriginalPrice = rateDisplay.NetPrice * 1.01M;
+            rateDisplay.NetFare = Math.Round((rateDisplay.NetTotalFare / rate.RoomCount) / rate.NightCount);
+            rateDisplay.OriginalFare = rateDisplay.NetFare * 1.01M;
 
+            if (!rate.Class.Equals("NRF"))
+            {
+                var margin = rate.Price.MarginNominal / rate.Price.Supplier;
+                foreach (var data in rateDisplay.Cancellation)
+                {
+                    data.Fee = data.Fee * (1 + margin);
+                    data.SingleFee = Math.Round((data.Fee/rate.RoomCount)/rate.NightCount);
+                }
+            }
         }
 
         private static RsvDisplayStatus MapReservationStatus(HotelReservation reservation)

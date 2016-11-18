@@ -486,7 +486,7 @@
                                     @ToTitleCase(HotelService.GetInstance().GetHotelBoardDescId(rate.Boards)) x {{nights}} Malam :
                                 </dt>
                                 <dd class="dd-price">
-                                    Rp @(rate.NetPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID")))
+                                    Rp @(rate.NetFare.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID")))
                                 </dd>
                             </dl>
                                 }
