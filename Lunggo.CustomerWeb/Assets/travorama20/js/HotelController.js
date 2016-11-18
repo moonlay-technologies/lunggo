@@ -98,7 +98,7 @@ jQuery(document).ready(function ($) {
 
     function hideCalendar() {
         $('.search-calendar-hotel').hide();
-    }
+}
     $('.close-calendar-hotel').click(function () { hideCalendar(); });
 
     //*****

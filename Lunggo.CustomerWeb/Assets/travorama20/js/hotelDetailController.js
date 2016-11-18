@@ -3,6 +3,8 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
 
     $scope.hotel = {};
     $scope.searchId = '';
+    $scope.searchParam = '';
+
     $scope.hotel.location = "";
     $scope.hotel.checkinDate = "";
     $scope.hotel.checkoutDate = "";
@@ -11,12 +13,15 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
     $scope.hotel.nightCount = "";
     $scope.hotel.roomCount = 2;
 
+    $scope.roomCount = 3;
+    $scope.minRoomCount = 3;
+    $scope.maxRoomCount = 100;
 
     $scope.init = function (model) {
         $log.debug(model);
         $scope.model = model;
         $scope.searchId = model.searchId;
-
+        $scope.searchParam = model.searchParam;
         var maxImages = 6;
 
         var resource = $resource(HotelDetailsConfig.Url + '/:searchId/:hotelCd',
@@ -30,21 +35,32 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
             }
         );
 
-        resource.query({}, {}).$promise.then(function(data) {
+        resource.query({}, {}).$promise.then(function (data) {
+            validateResponse(data);
+
             $scope.hotel = data.hotelDetails;
 
             var loadedImages = 0;
-            var tempHotelImages = [];
-            $.each($scope.hotel.images, function(key, value) {
-
-                tempHotelImages.push("http://photos.hotelbeds.com/giata/bigger/" + value);
-
+            var tempHotelImagesLarge = [];
+            var tempHotelImagesThumb = [];
+            $.each($scope.hotel.images, function (key, value) {
+                tempHotelImagesLarge.push("http://photos.hotelbeds.com/giata/bigger/" + value);
+                tempHotelImagesThumb.push("http://photos.hotelbeds.com/giata/" + value);
                 loadedImages++;
                 if (loadedImages == maxImages) {
                     return false;
                 }
             });
-            $scope.hotel.images = tempHotelImages;
+            $scope.hotel.images = {
+                "imageLarge": tempHotelImagesLarge,
+                "imageThumb": tempHotelImagesThumb
+            };
+
+            $.each($scope.hotel.room, function (roomKey, room) {
+                $.each(room.roomImages, function (imageKey, roomImage) {
+                    $scope.hotel.room[roomKey].roomImages[imageKey] = "http://photos.hotelbeds.com/giata/" + roomImage;
+                })
+            });
             $log.debug($scope.hotel);
             $scope.loc = $scope.hotel.city + ', ' + $scope.hotel.country;
             var cekin = $scope.hotel.room[0].rate.regsId.split(',')[2].split('|')[0];
@@ -52,15 +68,89 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
             $scope.hotel.checkinDate = new Date(parseInt(cekin.substring(0, 4)), parseInt(cekin.substring(4, 6)) - 1, parseInt(cekin.substring(6, 8)));
             $scope.hotel.checkoutDate = new Date(parseInt(cekout.substring(0, 4)), parseInt(cekout.substring(4, 6)) - 1, parseInt(cekout.substring(6, 8)));
             $scope.hotel.nightCount = new Date($scope.hotel.checkoutDate).getDate() - new Date($scope.hotel.checkinDate).getDate();
-
+            
             accordionFunctions();
-            $timeout(function() { hotelDetailFunctions(); }, 0);
+            setFacilityDisplay();
+            //setTncDisplay();
+            setDescriptionDisplay();
+            $timeout(function () { hotelDetailFunctions(); }, 0);
             $timeout(function() { initiateSlider(); }, 0);
 
-          
-
-        });
+        }, function (error) {
+            $log.debug(error);
+           
+        })
     }
+    var setDescriptionDisplay = function () {
+        if ($scope.hotel.description.length > 0) {
+            var description = [];
+            var descriptionArray = $scope.hotel.description.split('.');
+            var tempDescription = '';
+            $.each(descriptionArray, function (key, value) {
+                value = value + '.';
+                tempDescription = tempDescription + value;
+                if (key % 3 == 0) {
+                    description.push(tempDescription);
+                    tempDescription = '';
+                }
+            })
+            $scope.hotel.description = description;
+        }
+    }
+
+    var validateResponse = function (data) {
+        //searchId expired
+        if (data.error == "ERHGHD02") {
+            $log.debug('searchId is expired. (' + $scope.searchId + ') \n redirecting to search with ' + $scope.searchParam)
+            alert('searchId is expired. Redirecting to search.');
+            location.href = location.href = '/id/Hotel/Search/?' + $scope.searchParam;
+        }
+    }
+
+    //var setTncDisplay = function () {
+    //    $.each($scope.hotel.room, function (key, room) {
+    //        var tncArray = room.rate.tnc.split('↵');
+    //        $log.debug(tncArray);
+    //    })
+    //}
+    $scope.getFacilityOrder = function(facilityGroup){
+        switch (facilityGroup) {
+            case 'general': return 0;
+            case 'health': return 1;
+            case 'sport': return 2;
+            case 'business': return 3;
+            case 'meal': return 4;
+            case 'entertainment': return 5;
+            case 'other': return 6;
+            default: $log.debug('unknown facility type deteted.'); break;
+        }
+    }
+
+    var setFacilityDisplay = function () {
+        var hotelFacilityReplacement = []
+
+        var facilityOrder = 0;
+        var tempFacilityList = null;
+        $.each($scope.hotel.facilities, function (facilityGroup, facility) {
+            tempFacilityList = [[], [], [], []];
+            $.each(facility, function (index, facilityName) {
+                if (index % 4 == 0) {
+                    tempFacilityList[0].push(facilityName);
+                } else if (index % 4 == 1) {
+                    tempFacilityList[1].push(facilityName);
+                } else if (index % 4 == 2) {
+                    tempFacilityList[2].push(facilityName);
+                } else if (index % 4 == 3) {
+                    tempFacilityList[3].push(facilityName);
+                }
+            })
+
+            facilityOrder = $scope.getFacilityOrder(facilityGroup);
+            hotelFacilityReplacement[facilityOrder] = { 'facilityGroup': facilityGroup, 'facilityList': tempFacilityList };
+        })
+
+        $scope.hotel.facilities = hotelFacilityReplacement;
+    };
 
     $scope.model = {};
     $scope.hotels = [];
@@ -117,15 +207,15 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
         selectService.query({}, {
             "searchId": $scope.searchId,
             "regs": [
-                {
-                    "regsId": room.rate.regsId,
-                    "rateCount": room.rate.roomCount,
-                    "adultCount": room.rate.adultCount,
-                    "childCount": room.rate.childCount,
-                    "childrenAges": ages
-                }
+                  {
+                      "regsId": room.rate.regsId,
+                      "rateCount": room.rate.roomCount,
+                      "adultCount": room.rate.adultCount,
+                      "childCount": room.rate.childCount,
+                      "childrenAges": ages
+                  }
             ]
-        }).$promise.then(function(data) {
+        }).$promise.then(function (data) {
             $scope.token = data.token;
             $scope.tokenLimit = data.timeLimit;
             $log.debug('selected, token = ' + $scope.selectToken);
@@ -175,7 +265,15 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
             var parent2 = parent1.closest('.room-list-container li');
             parent2.find('.option').toggle();
             parent2.siblings().find('.hotel-detail, .option').hide();
-        }); 
+        });
+    }
+
+    $scope.togleDisplay = function () {
+        if ($scope.roomCount == $scope.maxRoomCount) {
+            $scope.roomCount = $scope.minRoomCount;
+        } else {
+            $scope.roomCount = $scope.maxRoomCount;
+        }
     }
     //=============== hotel end ======================
 
