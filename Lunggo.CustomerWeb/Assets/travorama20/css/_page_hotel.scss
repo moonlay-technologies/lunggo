@@ -206,7 +206,7 @@
         @include size(32px, 31px);
         background-position: -128px -5px;
     }
-
+    
     .business-lg-icon:before {
         background: url(/Assets/travorama20/images/Hotel/business-lg.png) no-repeat;
         content: '';
@@ -439,10 +439,13 @@
             font-size: 13px;
             padding: 0!important;
             border-top: none !important;
-            .list-row {
-                margin-left: 10px;
-                padding: 12px 15px;
-                border-bottom: 1px solid #e8e8e8;
+            .list-row { margin-left: 10px;
+                .lr-wrapper {
+                    padding: 12px 0;
+                    border-bottom: 1px solid #e8e8e8;
+                    margin-left: 15px;
+                    margin-right: 25px;
+                }
                 &:hover {background: #eaeaea;} 
             }
             &:hover {
@@ -522,7 +525,7 @@
                 span.pull-right.bold-txt.darkgrey-txt {line-height: 30px;}
                 .form-sm {width: 16.666666666666668%;}
             }
-        }
+            }
     }
     
     .main-title {

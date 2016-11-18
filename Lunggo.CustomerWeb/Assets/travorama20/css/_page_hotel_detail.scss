@@ -98,61 +98,43 @@
     .slider {
         margin: 0;
         background: none; 
-        .flexslider {
+        .lSSlideOuter .lSPager.lSGallery {
             margin: 0;
-            border: 0;
-            @include border-radius(0);
-            zoom: normal;
-            .flex-control-thumbs {
-                margin: 0;
-                position: absolute;
-                bottom: 0;
-                padding: 0 35px;
+            padding: 0 40px;
                 background: #000;
                 background: rgba(0,0,0,0.6);
-                li {
-                    width: 16.666666666666668%;
+            position: absolute;
+            margin-top: -130px !important;
+            width: 908px !important;
+            z-index: 0;
+            &>li {
+                width: 16.666666666666667% !important;
                     padding: 15px 5px;
-                }
-                img {
-                    opacity: 1;
-                    @include transition(none);
-                    height: 100px;
-                }
-                .flex-active {
+                margin-right: 0 !important;
+                &.active img {
                     border: 2px solid #fff;
-                    @include border-radius(2px);
+                    opacity: 1;
                 }
+                }
+            img {
+                height: 100px !important;
+                opacity: 0.7;
             }
-            .flex-direction-nav {
-                .flex-prev {
-                    left: 0;
-                    margin-left: 15px;
                 }
-                .flex-next {
-                    right: 0;
-                    margin-right: 15px;
-                }
-                a {
-                    width: 10px;
-                    height: 17px;
-                    margin: 0;
-                    z-index: 0; 
-                    opacity: 1; 
-                    color: #fff;
-                    text-shadow: none;
-                    @include transition(none);
-                    @include border-radius(0);
+        .lSAction {
+            &>a {
+                width: 22px;
                     top: auto;
-                    bottom: 57px;
-                    &:before {
-                        font-size: 12px;
-                        color: #fff;
-                        text-shadow: none;
-                    }
+                height: 37px;
+                background: url(/Assets/images/calendar-sprite.png);
+                cursor: pointer;
+                position: absolute;
+                z-index: 1;
+                margin-top: -83px;
+                &.lSNext {
+                    background-position: -22px 0;
                 }
             }
-            .slides img {height: 650px;}
         }
     }
     .menu-hotel {
@@ -245,7 +227,7 @@
                 padding: 14px 25px;
                 border: 1px solid #ccc;
                 background: #fff;
-                .room-rl { 
+                .room-rl {
                     cursor:pointer;
                     padding: 10px 0;
                     .facility {margin: 5px 0;}
@@ -494,7 +476,7 @@
         }
         .ih-row {
             border-top: 1px solid #ccc;
-            padding: 15px;
+            padding: 15px 0;
             &.fc {border-top: none;}
             .ih-left {
                 font-weight: 600;

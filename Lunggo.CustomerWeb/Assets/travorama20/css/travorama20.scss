@@ -263,6 +263,9 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         }
     }
     .hotel-location-search {height:475px; overflow:auto;
+        &::-webkit-scrollbar {width: 6px;}
+        &::-webkit-scrollbar-track {background: #ddd;}
+        &::-webkit-scrollbar-thumb {background: #999;}
         .hotel-autocomplete-pre {
             .text-pre {display:none;}
             .text-loading {display:none;}

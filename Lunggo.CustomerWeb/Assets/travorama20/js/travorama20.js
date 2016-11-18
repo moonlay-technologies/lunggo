@@ -95,7 +95,7 @@ if (typeof(angular) == 'object') {
                     var img = $(element);
                     var div = $("<div />").css({
                         background: "url(" + img.attr("src") + ") no-repeat",
-                        width: "111px",
+                        width: "100%",
                         height: "140px",
                         "background-size": "cover",
                         "background-position": "center"
@@ -145,6 +145,17 @@ if (typeof(angular) == 'object') {
                     });
                 });
 
+                attrs.$observe('src', function (src) {
+                    isImage(src).then(function () {
+                        $log.debug('image exist');
+                    }, function () {
+                        var altImagePath = document.location.origin + '/Assets/travorama20/images/Hotel/no-hotel.png';
+                        $log.debug('image not exist');
+
+                        element.attr('src', altImagePath); // set default image
+                    });
+                });
+
                 attrs.$observe('dataThumb', function (dataThumb) {
                     isImage(dataThumb).then(function () {
                         $log.debug('image exist');
@@ -156,6 +167,30 @@ if (typeof(angular) == 'object') {
                         element.attr('src', altImagePath); // set default image
                     });
                 });
+
+                attrs.$observe('test', function (test) {
+                    isImage(test).then(function () {
+                        $log.debug('image exist');
+                    }, function () {
+                        var altImagePath = document.location.origin + '/Assets/travorama20/images/Hotel/no-hotel.png';
+                        $log.debug('image not exist');
+
+                        element.removeAttr('style');
+                        element.attr('style', "background-image: url(" + altImagePath + "); width: 100%; height: 590px; background-size: cover; background-position: center center;"); // set default image
+                    });
+                });
+
+                //attrs.$observe('altImage', function (altImage) {
+                //    isImage(altImage).then(function () {
+                //        $log.debug('image exist');
+                //    }, function () {
+                //        var altImagePath = document.location.origin + '/Assets/travorama20/images/Hotel/no-hotel.png';
+                //        $log.debug('image not exist');
+
+                //        element.removeAttr('src');
+                //        //element.attr('src', "background-image: url(" + altImagePath + "); width: 100%; height: 450px; background-size: cover; background-position: center center;"); // set default image
+                //    });
+                //});
                 
             }
         };

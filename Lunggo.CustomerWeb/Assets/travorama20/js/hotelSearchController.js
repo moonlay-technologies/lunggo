@@ -14,7 +14,7 @@ app.controller('hotelSearchController', ['$scope', '$log', '$http', '$resource',
     $scope.hotel = {};
     $scope.hotel.searchHotelType = { "location": 'Location', searchId: 'SearchId'};
     $scope.hotel.searchId = null;
-    //$scope.hotel.searchId = "d3eaa926-7bb1-4a08-bfed-824b14968a50";
+    //$scope.hotel.searchId = "fde8cec5-c267-4e6f-88a2-d6cf1219e14c";
     $scope.hotel.location = "BALI";
     $scope.hotel.checkinDate = "12/10/2016";
     $scope.hotel.checkoutDate = "12/11/2016";
@@ -39,7 +39,7 @@ app.controller('hotelSearchController', ['$scope', '$log', '$http', '$resource',
 
     $scope.page = 1;
     $scope.perPage = 20;
-    $scope.pageCount = 0;
+    $scope.pageCount = 1;
     $scope.totalHotelCount = 0;
     $scope.searchHeader = {};
 
@@ -64,7 +64,7 @@ app.controller('hotelSearchController', ['$scope', '$log', '$http', '$resource',
         $scope.hotel.checkoutDate = $scope.model.checkoutDate;
         $scope.hotel.adultCount = $scope.model.adultCount;
         $scope.hotel.childCount = $scope.model.childCount;
-        $scope.hotel.nightCount = (new Date($scope.hotel.checkoutDate) - new Date($scope.hotel.checkinDate)) /(3600 * 24 * 1000);
+        $scope.hotel.nightCount = new Date($scope.hotel.checkoutDate).getDate() - new Date($scope.hotel.checkinDate).getDate();
         $scope.hotel.roomCount = $scope.model.roomCount;
         $scope.hotel.childrenAges = $scope.model.childrenAges;
         $scope.hotel.searchParam = $scope.model.searchParam;
@@ -155,7 +155,7 @@ app.controller('hotelSearchController', ['$scope', '$log', '$http', '$resource',
                 $scope.searchHotel();
                 return false;
             }
-        }
+    }
 
         return true;
     };
