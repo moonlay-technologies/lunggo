@@ -136,36 +136,48 @@ namespace Lunggo.CustomerWeb.Controllers
             var flight = FlightService.GetInstance();
             var payment = PaymentService.GetInstance();
             var reservation = flight.GetReservationForDisplay(rsvNo);
-            //if (reservation.Payment.Status == PaymentStatus.Pending)
-            //{
-            try
+            if (reservation.Payment.Method == PaymentMethod.Undefined)
             {
-                //var savedCreditCards = User.Identity.IsAuthenticated
-                //    ? payment.GetSavedCreditCards(User.Identity.GetEmail())
-                //    : new List<SavedCreditCard>();
-                var x = reservation.Itinerary.Trips;
-                return View(new FlightPaymentData
+                try
                 {
-                    RsvNo = rsvNo,
-                    Reservation = reservation,
-                    TimeLimit = reservation.Payment.TimeLimit.GetValueOrDefault(),
-                    //SavedCreditCards = savedCreditCards
-                });
+                    //var savedCreditCards = User.Identity.IsAuthenticated
+                    //    ? payment.GetSavedCreditCards(User.Identity.GetEmail())
+                    //    : new List<SavedCreditCard>();
+                    var x = reservation.Itinerary.Trips;
+                    return View(new FlightPaymentData
+                    {
+                        RsvNo = rsvNo,
+                        Reservation = reservation,
+                        TimeLimit = reservation.Payment.TimeLimit.GetValueOrDefault(),
+                        //SavedCreditCards = savedCreditCards
+                    });
 
-            }
-            catch
-            {
-                ViewBag.Message = "Failed";
-                return View(new FlightPaymentData
+                }
+                catch
                 {
-                    RsvNo = rsvNo
-                });
+                    ViewBag.Message = "Failed";
+                    return View(new FlightPaymentData
+                    {
+                        RsvNo = rsvNo
+                    });
+                }
             }
-            //}
-            //else
-            //{
-            //    return RedirectToAction("Thankyou", "Flight", new { rsvNo });
-            //}
+            else
+            {
+                if (reservation.Payment.Method == PaymentMethod.BankTransfer || reservation.Payment.Method == PaymentMethod.VirtualAccount)
+                {
+                    return RedirectToAction("Confirmation", "Flight", new { rsvNo });
+                }
+                else if (!string.IsNullOrEmpty(reservation.Payment.RedirectionUrl))
+                {
+                    return Redirect(reservation.Payment.RedirectionUrl);
+                }
+                else
+                {
+                    TempData["AllowThisThankyouPage"] = rsvNo;
+                    return RedirectToAction("Thankyou", "Flight", new { rsvNo });
+                }
+            }
 
         }
 

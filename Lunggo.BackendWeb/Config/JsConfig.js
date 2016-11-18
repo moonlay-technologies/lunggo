@@ -157,7 +157,7 @@ var ResendConfirmationEmailConfig = {
 };
 
 var VeritransTokenConfig = {
-    Url: 'https://api.sandbox.veritrans.co.id/v2/token',
+    Url: 'https://api.sandbox.midtrans.com/v2/token',
     ClientKey: 'VT-client-J8i9AzRyIU49D_v3'
 };
 
