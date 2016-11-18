@@ -60,7 +60,7 @@
                     <a ng-click="PageConfig.ChangePage('profile'); formMessage = ''">Ubah Profil</a>
                 </li>
                 <li class="menu-history">
-                    <a ng-click="PageConfig.ChangePage('history')">Pemesanan Saya</a>
+                    <a ng-click="PageConfig.ChangePage('history')">Pesanan Saya</a>
                 </li>
                 <li class="menu-logout">
                     <a ng-click="logout.getLogout()">Keluar</a>
@@ -158,7 +158,7 @@
 
     <section class="user-history" ng-show="PageConfig.ActivePage == 'history'">
         <header class="page-title">
-            <span>PEMESANAN SAYA</span>
+            <span>PESANAN SAYA</span>
         </header>
         <div class="main-tab">
             <ul class="nav nav-tabs tab-detail">
@@ -197,7 +197,7 @@
                                     <span>Tujuan</span>
                                 </div>
                                 <div class="col-xs-8">
-                                    <span>: <b>{{flight.itin.trips[0].origin}}</b> ke <b>{{flight.itin.trips[0].destination}}</b> ({{FlightType(flight.itin.type)}})</span>
+                                    <span>: <b>{{flight.itin.trips[0].origin}}</b> ke <b>{{flight.itin.trips[0].destination}}</b> {{FlightType(flight.itin.type)}}</span>
                                 </div>
                             </div>
                             <div class="row">

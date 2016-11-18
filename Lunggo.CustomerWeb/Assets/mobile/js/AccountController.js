@@ -4,6 +4,7 @@ app.controller('siteHeaderController', [
     '$http', '$scope', function ($http, $scope) {
         $scope.profileloaded = false;
         $scope.email = '';
+        $scope.name = '';
         $scope.trial = 0;
         $scope.authProfile = {}
         $scope.ProfileConfig = {
@@ -22,6 +23,7 @@ app.controller('siteHeaderController', [
                         $scope.isLogin = true;
                         console.log('Success getting Profile');
                         $scope.email = returnData.data.email;
+                        $scope.name = returnData.data.name;
                         $scope.profileloaded = true;
                         console.log(returnData);
                         $scope.name = returnData.data.name;
@@ -175,11 +177,14 @@ app.controller('UserAccountController', ['$http', '$scope', '$rootScope', '$loca
     $scope.FlightType = function(num) {
         var text = '';
         switch (num) {
-            case 0:
-                text = 'OneWay';
-                break;
             case 1:
-                text = 'Return';
+                text = '(Sejalan)';
+                break;
+            case 2:
+                text = '(Pulang Pergi)';
+                break;
+            default:
+                text = '';
                 break;
         }
         return text;

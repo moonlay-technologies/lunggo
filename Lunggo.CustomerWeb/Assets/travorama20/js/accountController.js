@@ -3,6 +3,7 @@ app.controller('siteHeaderController', [
     '$http', '$scope', function ($http, $scope) {
         $scope.profileloaded = false;
         $scope.email = '';
+        $scope.name = '';
         $scope.trial = 0;
         $scope.returnUrl = document.referrer;
         $scope.authProfile = {}
@@ -22,6 +23,7 @@ app.controller('siteHeaderController', [
                         $scope.isLogin = true;
                         console.log('Success getting Profile');
                         $scope.email = returnData.data.email;
+                        $scope.name = returnData.data.name;
                         $scope.profileloaded = true;
                         //console.log(returnData);
                     }
