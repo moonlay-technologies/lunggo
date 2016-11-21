@@ -119,6 +119,7 @@
             img {
                 height: 100px !important;
                 opacity: 0.7;
+                width: 100%;
             }
         }
         .lSAction {
@@ -224,6 +225,19 @@
             margin-top: 15px;
             border: none;
             &.active {border: 3px solid #1daee4;}
+            .room-pic {
+                width: 100%; 
+                height: 133px; 
+                background-size: cover; 
+                background-position: center center;
+            } 
+            .no-room-pic {
+                background: url(/Assets/travorama20/images/Hotel/room.jpg);
+                width: 100%; 
+                height: 133px; 
+                background-size: cover; 
+                background-position: center center;
+            }
             .room-right {
                 padding: 14px 25px;
                 border: 1px solid #ccc;

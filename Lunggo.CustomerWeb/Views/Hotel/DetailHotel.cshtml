@@ -153,8 +153,8 @@
                     <ul class="room-list-container">
                         <li ng-show="$index+1 <= roomCount" ng-repeat="room in hotel.room track by $index">
                             <div class="room-list clearfix">
-                                <div class="room-left" ng-show="room.roomImages.length <= 0"><img ng-src="/Assets/travorama20/images/Hotel/room.jpg" alt="Room" /></div>
-                                <div class="room-left" ng-show="room.roomImages.length > 0"><img alt-image ng-src="{{room.roomImages[0]}}" alt="Room" /></div>
+                                <div class="room-left" ng-show="room.roomImages.length <= 0"><div class="no-room-pic"></div></div>
+                                <div class="room-left" ng-show="room.roomImages.length > 0"><div class="room-pic" alt-image style="background-image: url({{room.roomImages[0]}});"></div></div>
                                 <div class="room-right clearfix">
                                     <div class="room-rl">
                                         <div class="blue-txt md-txt"><b>{{room.roomName}}</b></div>

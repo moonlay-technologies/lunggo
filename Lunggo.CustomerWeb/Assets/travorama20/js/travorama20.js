@@ -172,7 +172,7 @@ if (typeof(angular) == 'object') {
                     isImage(test).then(function () {
                         $log.debug('image exist');
                     }, function () {
-                        var altImagePath = document.location.origin + '/Assets/travorama20/images/Hotel/no-hotel.png';
+                        var altImagePath = document.location.origin + '/Assets/travorama20/images/Hotel/no-hotel-lg.png';
                         $log.debug('image not exist');
 
                         element.removeAttr('style');
@@ -193,6 +193,18 @@ if (typeof(angular) == 'object') {
                 //});
                 
             }
+        };
+    })
+    .directive('traOnEnter', function () {
+        return function (scope, element, attrs) {
+            element.bind("keydown keypress", function (event) {
+                if (event.which === 13) {
+                    scope.$apply(function () {
+                        scope.$eval(attrs.traOnEnter);
+                    });
+                    event.preventDefault();
+                }
+            });
         };
     });
 }

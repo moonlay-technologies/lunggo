@@ -64,7 +64,7 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
                     return false;
                 }
             });
-            $scope.hotel.images = tempHotelImages;
+            $scope.hotel.images = tempHotelImages
 
 
             $.each($scope.hotel.room, function(roomKey, room) {
@@ -264,13 +264,6 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
 
             $(this).closest('.room-list-container li').find('.room-list').toggleClass('active');
             $(this).closest('.room-list-container li').siblings().find('.room-list').removeClass('active');
-
-            // Slick Slider Detail Hotel
-            //$('body .hd-slider').slick({
-            //    autoplay: false,
-            //    autoplaySpeed: 2500,
-            //    dots: false
-            //});
         });
 
         $("body .change-room").click(function () {
@@ -279,6 +272,19 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
             parent2.find('.option').toggle();
             parent2.siblings().find('.hotel-detail, .option').hide();
         });
+
+        $('#room-gallery').lightSlider({
+            gallery: true,
+            item: 1,
+            thumbItem: 6,
+            slideMargin: 0,
+            loop: true,
+            keyPress: true,
+            onSliderLoad: function () {
+                $('#room-gallery').removeClass('cS-hidden');
+            }
+        });
+        $('#room-gallery .lSSlideOuter .lSPager.lSGallery').hide();
     }
 
     $scope.togleDisplay = function () {
@@ -289,21 +295,7 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
         }
     }
     //=============== hotel end ======================
-
-    $scope.$watch('hotel.images', function (newValue, oldValue) {
-        //$('#image-gallery').lightSlider({
-        //    gallery: true,
-        //    item: 1,
-        //    thumbItem: 6,
-        //    slideMargin: 0,
-        //    loop: true,
-        //    keyPress: true,
-        //    onSliderLoad: function () {
-        //        $('#image-gallery').removeClass('cS-hidden');
-        //    }
-        //});
-    });
-
+    
     var initiateSlider = function() {
         $('#image-gallery').lightSlider({
             gallery: true,
@@ -320,7 +312,6 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
         $timeout(function() {
             var altImagePath = document.location.origin + '/Assets/travorama20/images/Hotel/no-hotel.png';
             var elements = angular.element(document.querySelectorAll('#imgtum'));
-
           
             //angular.each(elements, function(key, value) {
             //    elements[key].removeAttr('src');
