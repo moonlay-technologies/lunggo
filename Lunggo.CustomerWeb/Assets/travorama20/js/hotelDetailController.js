@@ -262,6 +262,20 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
             parent2.toggle();
             $(this).closest('.room-list-container li').siblings().find('.hotel-detail, .option').hide();
 
+            $(this).each(function() {
+                $(this).closest('.room-list-container li').find('#room-gallery').lightSlider({
+                    gallery: true,
+                    item: 1,
+                    thumbItem: 6,
+                    slideMargin: 0,
+                    loop: true,
+                    keyPress: false,
+                    onSliderLoad: function() {
+                        $('#room-gallery').removeClass('cS-hidden');
+                    }
+                });
+            });
+
             $(this).closest('.room-list-container li').find('.room-list').toggleClass('active');
             $(this).closest('.room-list-container li').siblings().find('.room-list').removeClass('active');
         });
@@ -271,18 +285,6 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
             var parent2 = parent1.closest('.room-list-container li');
             parent2.find('.option').toggle();
             parent2.siblings().find('.hotel-detail, .option').hide();
-        });
-
-        $('#room-gallery').lightSlider({
-            gallery: true,
-            item: 1,
-            thumbItem: 6,
-            slideMargin: 0,
-            loop: true,
-            keyPress: true,
-            onSliderLoad: function() {
-                $('#room-gallery').removeClass('cS-hidden');
-            }
         });
     }
 
