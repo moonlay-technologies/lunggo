@@ -5357,7 +5357,7 @@ file: /Assets/travorama20/css/_page_flight.scss
           border-radius: 3px;
           cursor: pointer; }
           .page-hotel .travorama-hotel .search-list .search-list-result .col-right-result .hotel-list > .col-8 {
-            padding-left: 10px; }
+            padding-left: 15px; }
         .page-hotel .travorama-hotel .search-list .search-list-result .col-right-result .facility {
           text-align: right; }
         .page-hotel .travorama-hotel .search-list .search-list-result .col-right-result .location {
@@ -5366,7 +5366,7 @@ file: /Assets/travorama20/css/_page_flight.scss
           line-height: 16px; }
           .page-hotel .travorama-hotel .search-list .search-list-result .col-right-result .location:before {
             position: absolute;
-            left: 10px; }
+            left: 15px; }
         .page-hotel .travorama-hotel .search-list .search-list-result .col-right-result .review {
           padding-bottom: 10px;
           display: none; }
