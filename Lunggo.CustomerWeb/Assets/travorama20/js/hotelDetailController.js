@@ -263,15 +263,15 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
             $(this).closest('.room-list-container li').siblings().find('.hotel-detail, .option').hide();
 
             $(this).each(function() {
-                $(this).closest('.room-list-container li').find('#room-gallery').lightSlider({
+                $(this).closest('.room-list-container li').find('.room-gallery').lightSlider({
                     gallery: true,
                     item: 1,
                     thumbItem: 6,
                     slideMargin: 0,
                     loop: true,
-                    keyPress: false,
+                    keyPress: true,
                     onSliderLoad: function() {
-                        $('#room-gallery').removeClass('cS-hidden');
+                        $('.room-gallery').removeClass('cS-hidden');
                     }
                 });
             });
