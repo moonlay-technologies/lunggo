@@ -6067,7 +6067,7 @@ label.control-label {
     z-index: 1; }
   .checkout-step .step {
     float: left;
-    width: 25%;
+    width: 30%;
     font-size: 21px;
     position: relative;
     z-index: 2;

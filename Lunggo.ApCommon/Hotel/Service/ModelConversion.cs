@@ -47,11 +47,12 @@ namespace Lunggo.ApCommon.Hotel.Service
                 HotelName = hotelDetail.HotelName,
                 Address = hotelDetail.Address,
                 City = hotelDetail.City,
-                ZoneName = GetZoneNameFromDict(hotelDetail.ZoneCode),
+                ZoneName = GetZoneNameFromDict(hotelDetail.DestinationCode+ "-" +hotelDetail.ZoneCode),
                 StarRating = Convert.ToInt32(hotelDetail.StarRating.Substring(0,1)),
                 //ChainName = GetHotelChainDesc(hotelDetail.Chain),
                 AccomodationName = GetHotelAccomodationDescId(hotelDetail.AccomodationType),
-                MainImage = hotelDetail.ImageUrl != null ? string.Concat(baseUrl ,hotelDetail.ImageUrl.Where(x => x.Type == "GEN").Select(x => x.Path).FirstOrDefault()) : null,
+                ImageUrl = hotelDetail.ImageUrl.Where(x => x.Type == "HAB").ToList().Select(y => y.Path).ToList(),
+                MainImage = hotelDetail.ImageUrl != null ? hotelDetail.ImageUrl.Where(x=>x.Type=="GEN").Select(x=>x.Path).FirstOrDefault(): null,
                 OriginalFare = price * 1.01M,
                 NetFare = price,
                 IsRestaurantAvailable = hotelDetail.IsRestaurantAvailable,
@@ -140,7 +141,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                     City = hotelDetail.City,
                     CountryName = GetCountryNameFromDict(hotelDetail.CountryCode).Name,
                     DestinationName = GetDestinationNameFromDict(hotelDetail.DestinationCode).Name,
-                    ZoneName = GetZoneNameFromDict(hotelDetail.ZoneCode),
+                    ZoneName = GetZoneNameFromDict(hotelDetail.DestinationCode + "-" + hotelDetail.ZoneCode),
                     StarRating = hotelDetail.StarCode != 0
                         ? hotelDetail.StarCode
                         : (hotelDetail.StarRating != null
@@ -397,7 +398,11 @@ namespace Lunggo.ApCommon.Hotel.Service
                     Offers = rateDetail.Offers,
                     TermAndCondition = rateDetail.TermAndCondition
                 };
+                if (rateDetail.Price != null)
+                {
                 SetDisplayPriceHotelRate(rate, rateDetail);
+                }
+                
                 convertedRate.Add(rate);
             });
             return convertedRate.ToList();

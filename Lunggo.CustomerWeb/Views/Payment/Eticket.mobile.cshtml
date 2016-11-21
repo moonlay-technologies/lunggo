@@ -1,6 +1,8 @@
 ﻿
+@using Lunggo.ApCommon.Flight.Model
+@using Lunggo.ApCommon.Hotel.Model
 @using Lunggo.ApCommon.Product.Constant
-@model Lunggo.ApCommon.Flight.Model.FlightReservationForDisplay
+@model Lunggo.ApCommon.Product.Model.ReservationForDisplayBase
 
 @{
     ViewBag.Title = "Cetak E-tiket";
@@ -40,29 +42,56 @@
 <div ng-app="Travorama" ng-controller="EticketController">
     @if (Model.RsvDisplayStatus == RsvDisplayStatus.Paid || Model.RsvDisplayStatus == RsvDisplayStatus.Issued)
     {
-
-        <div ng-init="refresh()">
-            <div class="popup__wrapper active">
-                <div class="popup">
-                    <header class="popup__header">
-                        <h4 class="popup__title">Cetak E-Tiket</h4>
-                    </header>
-                    <div class="popup__body">
-                        <div class="container_new">
-                            <span>
-                                Mohon menunggu. E-tiket Anda sedang dalam proses dan akan kami kirimkan secara otomatis ke e-mail Anda.<br />
-                                Jika terjadi masalah, silakan kirim e-mail Anda ke <a href="mailto:cs@travorama.com">cs@travorama.com</a> dan kami akan berusaha untuk membantu Anda.
-                            </span>
+        if (Model is FlightReservationForDisplay)
+        {
+            <div ng-init="refresh()">
+                <div class="popup__wrapper active">
+                    <div class="popup">
+                        <header class="popup__header">
+                            <h4 class="popup__title">Cetak E-Tiket</h4>
+                        </header>
+                        <div class="popup__body">
+                            <div class="container_new">
+                                <span>
+                                    Mohon menunggu. E-tiket Anda sedang dalam proses dan akan kami kirimkan secara otomatis ke e-mail Anda.<br />
+                                    Jika terjadi masalah, silakan kirim e-mail Anda ke <a href="mailto:cs@travorama.com">cs@travorama.com</a> dan kami akan berusaha untuk membantu Anda.
+                                </span>
+                            </div>
                         </div>
-                    </div>
-                    <div class="popup__footer">
-                        <div class="container_new">
-                            <a class="btn btn-block btn-yellow" href="{{returnUrl}}">KEMBALI</a>
+                        <div class="popup__footer">
+                            <div class="container_new">
+                                <a class="btn btn-block btn-yellow" href="{{returnUrl}}">KEMBALI</a>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        }
+        if (Model is HotelReservationForDisplay)
+        {
+            <div ng-init="refresh()">
+                <div class="popup__wrapper active">
+                    <div class="popup">
+                        <header class="popup__header">
+                            <h4 class="popup__title">Cetak Voucher</h4>
+                        </header>
+                        <div class="popup__body">
+                            <div class="container_new">
+                                <span>
+                                    Mohon menunggu. Voucher Anda sedang dalam proses dan akan kami kirimkan secara otomatis ke e-mail Anda.<br />
+                                    Jika terjadi masalah, silakan kirim e-mail Anda ke <a href="mailto:cs@travorama.com">cs@travorama.com</a> dan kami akan berusaha untuk membantu Anda.
+                                </span>
+                            </div>
+                        </div>
+                        <div class="popup__footer">
+                            <div class="container_new">
+                                <a class="btn btn-block btn-yellow" href="{{returnUrl}}">KEMBALI</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
     }
     else if (Model.RsvDisplayStatus == RsvDisplayStatus.VerifyingPayment)
     {
@@ -92,49 +121,100 @@
 
     else if (Model.RsvDisplayStatus == RsvDisplayStatus.PendingPayment)
     {
-        <div class="popup__wrapper active">
-            <div class="popup">
-                <header class="popup__header">
-                    <h4 class="popup__title">E-Tiket Belum Tersedia</h4>
-                </header>
-                <div class="popup__body">
-                    <div class="container_new">
-                        <span>
-                            Pembayaran untuk no. reservasi @Model.RsvNo belum dilakukan. Silakan melakukan pembayaran untuk reservasi tersebut.
-                        </span>
+        if (Model is FlightReservationForDisplay)
+        {
+            <div class="popup__wrapper active">
+                <div class="popup">
+                    <header class="popup__header">
+                        <h4 class="popup__title">E-Tiket Belum Tersedia</h4>
+                    </header>
+                    <div class="popup__body">
+                        <div class="container_new">
+                            <span>
+                                Pembayaran untuk no. reservasi @Model.RsvNo belum dilakukan. Silakan melakukan pembayaran untuk reservasi tersebut.
+                            </span>
+                        </div>
                     </div>
-                </div>
-                <div class="popup__footer">
-                    <div class="container_new">
-                        <a class="btn btn-block btn-yellow" href="{{returnUrl}}">KEMBALI</a>
+                    <div class="popup__footer">
+                        <div class="container_new">
+                            <a class="btn btn-block btn-yellow" href="{{returnUrl}}">KEMBALI</a>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        }
+        else if (Model is HotelReservationForDisplay)
+        {
+            <div class="popup__wrapper active">
+                <div class="popup">
+                    <header class="popup__header">
+                        <h4 class="popup__title">Voucher Belum Tersedia</h4>
+                    </header>
+                    <div class="popup__body">
+                        <div class="container_new">
+                            <span>
+                                Pembayaran untuk no. reservasi @Model.RsvNo belum dilakukan. Silakan melakukan pembayaran untuk reservasi tersebut.
+                            </span>
+                        </div>
+                    </div>
+                    <div class="popup__footer">
+                        <div class="container_new">
+                            <a class="btn btn-block btn-yellow" href="{{returnUrl}}">KEMBALI</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
 
     }
 
-    else 
+    else
     {
-        <div class="popup__wrapper active">
-            <div class="popup">
-                <header class="popup__header">
-                    <h4 class="popup__title">E-Tiket Gagal</h4>
-                </header>
-                <div class="popup__body">
-                    <div class="container_new">
-                        <span>
-                            Mohon maaf, e-tiket Anda gagal diterbitkan. Silakan membuat pemesanan baru dengan metode pembayaran berbeda.
-                        </span>
+        if (Model is FlightReservationForDisplay)
+        {
+            <div class="popup__wrapper active">
+                <div class="popup">
+                    <header class="popup__header">
+                        <h4 class="popup__title">E-Tiket Gagal</h4>
+                    </header>
+                    <div class="popup__body">
+                        <div class="container_new">
+                            <span>
+                                Mohon maaf, e-tiket Anda gagal diterbitkan. Silakan membuat pemesanan baru dengan metode pembayaran berbeda.
+                            </span>
+                        </div>
                     </div>
-                </div>
-                <div class="popup__footer">
-                    <div class="container_new">
-                        <a class="btn btn-block btn-yellow" href="{{returnUrl}}">CARI ULANG</a>
+                    <div class="popup__footer">
+                        <div class="container_new">
+                            <a class="btn btn-block btn-yellow" href="{{returnUrl}}">CARI ULANG</a>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        }
+        else if (Model is HotelReservationForDisplay)
+        {
+            <div class="popup__wrapper active">
+                <div class="popup">
+                    <header class="popup__header">
+                        <h4 class="popup__title">Voucher Gagal</h4>
+                    </header>
+                    <div class="popup__body">
+                        <div class="container_new">
+                            <span>
+                                Mohon maaf, voucher Anda gagal diterbitkan. Silakan membuat pemesanan baru dengan metode pembayaran berbeda.
+                            </span>
+                        </div>
+                    </div>
+                    <div class="popup__footer">
+                        <div class="container_new">
+                            <a class="btn btn-block btn-yellow" href="{{returnUrl}}">CARI ULANG</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+
 
     }
 

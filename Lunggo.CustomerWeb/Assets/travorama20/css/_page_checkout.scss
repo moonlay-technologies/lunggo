@@ -112,7 +112,7 @@ label.control-label {
 .checkout-step {position:relative;
     &:before {content:""; background:#a6a6a6; position:absolute; width:50%; left:0; top:0; height:100%; z-index:1;}
     &:after {content:""; background:#2fb4e6; position:absolute; width:50%; top:0; height:100%; left:50%; z-index:1;}
-    .step {float:left; width:25%; font-size:21px; position:relative; z-index:2; color:#fff; padding:15px; background:#2fb4e6; @include skew-x(-30deg);
+    .step {float:left; width:30%; font-size:21px; position:relative; z-index:2; color:#fff; padding:15px; background:#2fb4e6; @include skew-x(-30deg);
         &+.step {border-left:2px solid #1f99c7;}
         &.active {background:#032e55;}
         &.inactive {background:#a6a6a6;}

@@ -64,6 +64,13 @@ namespace Lunggo.CloudApp.EticketHandler
                                                                      (f.FacilityGroupCode == 75 && f.FacilityCode == 840)
                                                                      ||
                                                                      (f.FacilityGroupCode == 75 && f.FacilityCode == 845)));
+            var images = hotelDetail.ImageUrl;
+            var firstOrDefault = images.Where(i => i.Type == "GEN").ToList().FirstOrDefault();
+            if (firstOrDefault != null)
+                reservation.HotelDetail.MainImage = images == null
+                    ? null
+                    : "http://photos.hotelbeds.com/giata/bigger/" + firstOrDefault.Path;
+
 
             Trace.WriteLine("Parsing Voucher Template for RsvNo " + rsvNo + "...");
             sw.Start();

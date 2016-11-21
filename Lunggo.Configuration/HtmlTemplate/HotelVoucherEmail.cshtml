@@ -44,7 +44,7 @@
             <tr width="100%">
                 <td width="5%"></td>
                 <td colspan="2" width="90%">
-                    <p style="color:#1daee5; text-align: center;">Terima kasih, <b>@Model.Contact.Title. @Model.Contact.Name</b>! Pesanan Anda telah dikonfirmasi.</p>
+                    <p style="color:#1daee5; text-align: center;">Terima kasih, <b>@EnumDisplay.Title(Model.Contact.Title) @Model.Contact.Name</b>! Pesanan Anda telah dikonfirmasi.</p>
                     <p style="text-align: center;">Nomor Reservasi : @Model.RsvNo</p>
                 </td>
                 <td width="5%"></td>
@@ -65,7 +65,7 @@
                             <td width="70%" height="10px"></td>
                         </tr>
                         <tr>
-                            <td width="30%"><img style="width: 100%;" src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/voucher-hotel.jpg")" /></td>
+                            <td width="30%"><img style="width: 100%;" src="@Model.HotelDetail.MainImage" max-width="716" max-height="162" /></td>
                             <td width="70%" style="padding-left: 10px;">
                                 <p style="font-size: 15px; text-transform: uppercase; font-weight: 700; color: #15b1e4;">@Model.HotelDetail.HotelName</p>
                                 @if (Model.HotelDetail.StarRating == 0 || Model.HotelDetail.StarRating == 1)
@@ -119,9 +119,17 @@
                             <td width="30%" style="color:#999;">Check out</td>
                             <td width="70%" style="font-weight: 700; text-align: right;">@Model.HotelDetail.CheckOutDate.ToString("D", CultureInfo.CreateSpecificCulture("id-ID")) - sampai jam 12.00</td>
                         </tr>
+                        <tr style="border-bottom: 1px dashed #ccc; height: 30px;">
+                            <td width="30%" style="color:#999;">Client Reference</td>
+                            <td width="70%" style="font-weight: 700; text-align: right;">@Model.HotelDetail.ClientReference</td>
+                        </tr>
+                        <tr style="border-bottom: 1px dashed #ccc; height: 30px;">
+                            <td width="30%" style="color:#999;">Booking Reference</td>
+                            <td width="70%" style="font-weight: 700; text-align: right;">@Model.HotelDetail.BookingReference</td>
+                        </tr>
                         <tr style="border-bottom: 1px solid #000; height: 50px; vertical-align: text-top;">
                             <td width="30%" style="color:#999; padding-top: 5px;">Dipesan oleh</td>
-                            <td width="70%" style="padding-top: 5px; font-weight: 700; text-align: right;">@Model.Contact.Title. @Model.Contact.Name</td>
+                            <td width="70%" style="padding-top: 5px; font-weight: 700; text-align: right;">@EnumDisplay.Title(Model.Contact.Title) @Model.Contact.Name</td>
                         </tr>
                     </table>
                 </td>

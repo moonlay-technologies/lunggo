@@ -5,7 +5,7 @@ using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Hotel.Constant;
 using Lunggo.ApCommon.Hotel.Model;
 using Lunggo.ApCommon.Hotel.Query;
-using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Sdk.auto.model;
+using Lunggo.ApCommon.Identity.Users;
 using Lunggo.ApCommon.Payment.Model;
 using Lunggo.ApCommon.Product.Constant;
 using Lunggo.ApCommon.Product.Model;
@@ -152,7 +152,7 @@ namespace Lunggo.ApCommon.Hotel.Service
             {
                 return GetRoomIdQuery.GetInstance().Execute(conn, new {RsvNo = rsvNo}).ToList();
             }
-       }
+        }
 
         public List<HotelRateTableRecord> GetRateIdFromDb(List<long> roomIds)
         {
