@@ -80,10 +80,15 @@ namespace Lunggo.ApCommon.Hotel.Service
             if (searchResulthotel == null)
                 hotel = null;
             hotel.Rooms = searchResulthotel.Rooms;
-            foreach (var room in hotel.Rooms)
+
+            if (hotel.ImageUrl != null)
             {
-                room.Images = hotel.ImageUrl.Where(x=>x.Type == "HAB").Select(x => x.Path).ToList();
+                foreach (var room in hotel.Rooms)
+                {
+                    room.Images = hotel.ImageUrl.Where(x => x.Type == "HAB").Select(x => x.Path).ToList();
+                }
             }
+           
             SetRegIdsAndTnc(hotel.Rooms, searchResultData.CheckIn, hotel.HotelCode);
             originalPrice = searchResulthotel.OriginalFare;
             netFare = searchResulthotel.NetFare;
