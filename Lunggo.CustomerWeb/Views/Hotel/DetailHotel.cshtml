@@ -191,13 +191,15 @@
                             <div class="hotel-detail clearfix">
                                 <div class=" col-left-result">
                                     <div class="col-left-top clearfix">
-                                        <div class="hd-slider">
-                                            <div class="item active">
+                                        <div class="sm-slider">
+                                            @*<div class="item active">
                                                 <img src="/Assets/travorama20/images/Hotel/mini-slider.jpg" />
-                                            </div>
-                                            @*<div class="item">
-                                <img src="/Assets/travorama20/images/Hotel/mini-slider.jpg" />
-                            </div>*@
+                                            </div>*@
+                                            <ul id="room-gallery" class="gallery list-unstyled cS-hidden">
+                                                <li data-thumb="{{image}}" alt-image ng-repeat="image in hotel.images">
+                                                    <div test="{{image}}" alt-image style="background-image: url({{image}}); width: 100%; height: 145px; background-size: cover; background-position: center center;"></div>
+                                                </li>
+                                            </ul>
                                         </div>
                                         <div class="total-img"><b>1</b> / 20</div>
                                     </div>
@@ -269,8 +271,8 @@
                     <div class="ih-accordion">
                         <div class="accordion-wrapper">
                             <div class="accordion-title accordion md-txt" id="menu-facility">Fasilitas Hotel</div>
-                            <div class="accordion-content show" ng-repeat="facilities in hotel.facilities track by $index" ng-hide="facilities === undefined">
-                                <div class="ih-row fc clearfix">
+                            <div class="accordion-content show">
+                                <div class="ih-row clearfix" ng-repeat="facilities in hotel.facilities track by $index" ng-hide="facilities === undefined">
                                     <div class="col-2">
                                         <div class="ih-left" ng-class="{'general-lg-icon':facilities.facilityGroup == 'general',
                                                                         'health-lg-icon':facilities.facilityGroup == 'health',

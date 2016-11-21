@@ -280,11 +280,10 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
             slideMargin: 0,
             loop: true,
             keyPress: true,
-            onSliderLoad: function () {
+            onSliderLoad: function() {
                 $('#room-gallery').removeClass('cS-hidden');
             }
         });
-        $('#room-gallery .lSSlideOuter .lSPager.lSGallery').hide();
     }
 
     $scope.togleDisplay = function () {
