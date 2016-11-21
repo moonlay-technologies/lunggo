@@ -262,6 +262,44 @@
                 }
             }
         }
+        .form__visitor {
+            .age-child {
+                background: #ecf0f4;
+                margin-top: 20px;
+                padding: 10px 25px;
+                font-size: 13px;
+                &:before {
+                    content: '';
+                    position: absolute;
+                    margin-top: -30px;
+                    right: 0;
+                    margin-right: 60px;
+                    display: inline-block;
+                    width: 0;
+                    height: 0;
+                    margin-left: 2px;
+                    vertical-align: middle;
+                    border-bottom: 20px dashed #ecf0f4;
+                    border-right: 20px solid #fff;
+                    border-left: 20px solid #fff;
+                }
+                .ac-list {
+                    &>.col-8, &>.col-2 {padding: 10px 0;}
+                    &>.col-2 {border-bottom: 1px solid #ccc;
+                        &:after {
+                            content: '';
+                            display: inline-block;
+                            width: 13px;
+                            height: 8px;
+                            background: url(/Assets/mobile/images/Hotel/arrow-down-grey.png) no-repeat;
+                            float: right;
+                            margin-top: 5px;
+                        }
+                    }
+                    &:last-child {&>.col-2 {border-bottom: none;}}
+                }
+            }
+        }
         &.hotel-form {
             .placeholder {
                 color: #999;

@@ -1726,6 +1726,39 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
               -ms-border-radius: 10px;
               border-radius: 10px;
               margin: 3px; }
+      .page.page-home .form-container .form-wrapper form .form__visitor .age-child {
+        background: #ecf0f4;
+        margin-top: 20px;
+        padding: 10px 25px;
+        font-size: 13px; }
+        .page.page-home .form-container .form-wrapper form .form__visitor .age-child:before {
+          content: '';
+          position: absolute;
+          margin-top: -30px;
+          right: 0;
+          margin-right: 60px;
+          display: inline-block;
+          width: 0;
+          height: 0;
+          margin-left: 2px;
+          vertical-align: middle;
+          border-bottom: 20px dashed #ecf0f4;
+          border-right: 20px solid #fff;
+          border-left: 20px solid #fff; }
+        .page.page-home .form-container .form-wrapper form .form__visitor .age-child .ac-list > .col-8, .page.page-home .form-container .form-wrapper form .form__visitor .age-child .ac-list > .col-2 {
+          padding: 10px 0; }
+        .page.page-home .form-container .form-wrapper form .form__visitor .age-child .ac-list > .col-2 {
+          border-bottom: 1px solid #ccc; }
+          .page.page-home .form-container .form-wrapper form .form__visitor .age-child .ac-list > .col-2:after {
+            content: '';
+            display: inline-block;
+            width: 13px;
+            height: 8px;
+            background: url(/Assets/mobile/images/Hotel/arrow-down-grey.png) no-repeat;
+            float: right;
+            margin-top: 5px; }
+        .page.page-home .form-container .form-wrapper form .form__visitor .age-child .ac-list:last-child > .col-2 {
+          border-bottom: none; }
       .page.page-home .form-container .form-wrapper form.hotel-form .placeholder {
         color: #999;
         float: right;
@@ -2367,6 +2400,39 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
             -ms-border-radius: 10px;
             border-radius: 10px;
             margin: 3px; }
+    .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__visitor .age-child {
+      background: #ecf0f4;
+      margin-top: 20px;
+      padding: 10px 25px;
+      font-size: 13px; }
+      .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__visitor .age-child:before {
+        content: '';
+        position: absolute;
+        margin-top: -30px;
+        right: 0;
+        margin-right: 60px;
+        display: inline-block;
+        width: 0;
+        height: 0;
+        margin-left: 2px;
+        vertical-align: middle;
+        border-bottom: 20px dashed #ecf0f4;
+        border-right: 20px solid #fff;
+        border-left: 20px solid #fff; }
+      .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__visitor .age-child .ac-list > .col-8, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__visitor .age-child .ac-list > .col-2 {
+        padding: 10px 0; }
+      .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__visitor .age-child .ac-list > .col-2 {
+        border-bottom: 1px solid #ccc; }
+        .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__visitor .age-child .ac-list > .col-2:after {
+          content: '';
+          display: inline-block;
+          width: 13px;
+          height: 8px;
+          background: url(/Assets/mobile/images/Hotel/arrow-down-grey.png) no-repeat;
+          float: right;
+          margin-top: 5px; }
+      .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__visitor .age-child .ac-list:last-child > .col-2 {
+        border-bottom: none; }
     .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form.hotel-form .placeholder {
       color: #999;
       float: right;
@@ -4938,6 +5004,39 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
               -ms-border-radius: 10px;
               border-radius: 10px;
               margin: 3px; }
+      .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__visitor .age-child {
+        background: #ecf0f4;
+        margin-top: 20px;
+        padding: 10px 25px;
+        font-size: 13px; }
+        .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__visitor .age-child:before {
+          content: '';
+          position: absolute;
+          margin-top: -30px;
+          right: 0;
+          margin-right: 60px;
+          display: inline-block;
+          width: 0;
+          height: 0;
+          margin-left: 2px;
+          vertical-align: middle;
+          border-bottom: 20px dashed #ecf0f4;
+          border-right: 20px solid #fff;
+          border-left: 20px solid #fff; }
+        .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__visitor .age-child .ac-list > .col-8, .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__visitor .age-child .ac-list > .col-2 {
+          padding: 10px 0; }
+        .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__visitor .age-child .ac-list > .col-2 {
+          border-bottom: 1px solid #ccc; }
+          .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__visitor .age-child .ac-list > .col-2:after {
+            content: '';
+            display: inline-block;
+            width: 13px;
+            height: 8px;
+            background: url(/Assets/mobile/images/Hotel/arrow-down-grey.png) no-repeat;
+            float: right;
+            margin-top: 5px; }
+        .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__visitor .age-child .ac-list:last-child > .col-2 {
+          border-bottom: none; }
       .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form.hotel-form .placeholder {
         color: #999;
         float: right;
