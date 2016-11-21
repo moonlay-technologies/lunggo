@@ -101,11 +101,13 @@ namespace Lunggo.ApCommon.Hotel.Service
             swAv.Stop();
             Debug.Print("AVAIALABILITY:" + swAv.Elapsed.ToString());
             result.SearchId = generatedSearchId.ToString();
+            
 
             if (result.HotelDetails == null)
                 return new SearchHotelOutput()
                     {
                         IsSuccess = true,
+                        Location = result.Location,
                         ReturnedHotelCount = 0,
                         TotalHotelCount = 0,
                         FilteredHotelCount = 0
@@ -142,6 +144,7 @@ namespace Lunggo.ApCommon.Hotel.Service
             var sortedHotel = result.HotelDetails.OrderByDescending(x => x.NetFare);
             result.MaxPrice = sortedHotel.Select(x => x.NetFare).FirstOrDefault();
             result.MinPrice = sortedHotel.Select(x => x.NetFare).LastOrDefault();
+            result.Location = detailDestination.Name;
 
             //REMEMBER TO UNCOMMENT THIS
             Task.Run(() => SaveSearchResultToCache(result.SearchId, result));
@@ -160,6 +163,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                         {
                             IsSuccess = true,
                             SearchId = result.SearchId,
+                            Location = result.Location,
                             FilteredHotelCount = result.HotelDetails.Count,
                             HotelDetailLists = ConvertToHotelDetailForDisplay(firstPageHotelDetails),
                             Page = input.Page,
@@ -201,6 +205,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                 {
                     IsSuccess = true,
                     SearchId = input.SearchId,
+                    Location = searchResult.Location,
                     Page = input.Page,
                     PerPage = input.PerPage,
                     ReturnedHotelCount = 0,
@@ -222,6 +227,7 @@ namespace Lunggo.ApCommon.Hotel.Service
             return new SearchHotelOutput
             {
                 SearchId = searchResult.SearchId,
+                Location = searchResult.Location,
                 HotelDetailLists = hotels.Count > 0 ? ConvertToHotelDetailForDisplay(displayHotel) : null,
                 Page = input.Page,
                 PerPage = input.PerPage,

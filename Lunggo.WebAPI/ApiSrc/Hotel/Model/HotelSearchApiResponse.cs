@@ -11,6 +11,8 @@ namespace Lunggo.WebAPI.ApiSrc.Hotel.Model
     {
         [JsonProperty("searchId", NullValueHandling = NullValueHandling.Ignore)]
         public string SearchId { get; set; }
+        [JsonProperty("location", NullValueHandling = NullValueHandling.Ignore)]
+        public string Location { get; set; }
         [JsonProperty("IsSpecificHotel", NullValueHandling = NullValueHandling.Ignore)]
         public bool? IsSpecificHotel { get; set; }
         [JsonProperty("hotelCd", NullValueHandling = NullValueHandling.Ignore)]
