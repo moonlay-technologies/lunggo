@@ -373,7 +373,8 @@
                                     <div class="summary-top-left flight-airline">
                                         <div class="summary-top-left-top flight-facilities">
                                             <h5>{{flight.trips[0].segments[0].airlineName}}</h5>
-                                            <img ng-src="{{flight.trips[0].segments[0].airlineLogoUrl}}" alt="flight.trips[0].segments[0].airlineName" />
+                                            @*<img ng-src="{{flight.trips[0].segments[0].airlineLogoUrl}}" alt="flight.trips[0].segments[0].airlineName" />*@
+                                            <div class="airline-logo" style="background-image: url({{flight.trips[0].segments[0].airlineLogoUrl}})"></div>
                                         </div>
                                         <div class="summary-top-left-bottom flight-facilities" ng-show="checkMeal(flight.trips[0]) ||
                                          !checkBaggageNaN(minBaggage(flight.trips[0])) || checkTax(flight.trips[0])">

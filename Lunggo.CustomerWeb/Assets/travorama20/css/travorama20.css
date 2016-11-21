@@ -2843,7 +2843,8 @@ file: /Assets/travorama20/css/_page_flight.scss
         width: 25%; }
         .page-flight .flight .flight-summary .flight-summary-left .summary-top .summary-top-left h5 {
           color: #1daee4;
-          font-weight: bold; }
+          font-weight: bold;
+          margin: 14px 0; }
         .page-flight .flight .flight-summary .flight-summary-left .summary-top .summary-top-left img {
           height: 55px; }
       .page-flight .flight .flight-summary .flight-summary-left .summary-top .summary-top-right {
@@ -3428,17 +3429,23 @@ file: /Assets/travorama20/css/_page_flight.scss
     left: -17px;
     top: 7px; }
 
+.page-flight.page-flight-oneway .airline-logo {
+  width: 55px;
+  height: 50px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  margin: 15px auto; }
+
 .page-flight.page-flight-oneway .price-detail-trigger {
   margin-left: 30px; }
   .page-flight.page-flight-oneway .price-detail-trigger:before {
     margin-left: -24px; }
 
 .page-flight.page-flight-oneway .summary-top-left-top.flight-facilities {
-  padding: 12px;
   border-bottom: 1px solid #ccc; }
 
 .page-flight.page-flight-oneway .summary-top-left-bottom.flight-facilities {
-  padding: 10px; }
+  margin: 10px; }
   .page-flight.page-flight-oneway .summary-top-left-bottom.flight-facilities span {
     background: url(/Assets/images/flight-facilities-sprite.png) no-repeat;
     display: inline-block;
@@ -5817,7 +5824,7 @@ file: /Assets/travorama20/css/_page_flight.scss
               border-right: 4px solid transparent;
               border-top: 4px solid #fff;
               content: '';
-              margin-top: 6px;
+              margin-top: -8px;
               position: absolute;
               margin-left: 5px; }
       .page-hotel .travorama-hotel .detail-hotel .info-hotel {
