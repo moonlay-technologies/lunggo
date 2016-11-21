@@ -1,5 +1,5 @@
 ﻿// home controller
-app.controller('homeController', ['$scope', '$log', '$http', '$location', '$resource', '$timeout', function ($scope, $log, $http, $location, $resource, $timeout) {
+app.controller('homeController', ['$scope', '$log', '$http', '$location', '$resource', '$timeout', 'searchService', function ($scope, $log, $http, $location, $resource, $timeout, searchService) {
 
     $scope.departureDate = departureDate;
     $scope.topDestinations = topDestinations;
@@ -119,38 +119,11 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
         }
         
     });
-    $scope.hotel.searchHotel = function (){
-        $log.debug('searching hotel');
-        if ($scope.hotel.location == null || $scope.hotel.location.length == 0) {
-            $scope.wrongParam = true;
-            alert("Silakan pilih lokasi atau hotel dari daftar yang tersedia");
-        } else {
-            location.href = '/id/Hotel/Search/' + $scope.hotel.searchParam();
-        }
-        
-        //$http({
-        //   url: "/id/Hotel/Search", 
-        //   method: "GET",
-        //   params: {aaa : "kode123", bbb : "silubab" }
-        //   })
+
+    $scope.hotel.searchHotel = function () {
+        searchService.gotoHotelSearch($scope.hotel);
     };
-
-    $scope.hotel.searchParam = function () {
-        return ("?info=" +
-            [
-                $scope.hotel.searchHotelType, //hardcoded with 'Location'
-                $scope.hotel.location,
-                $scope.hotel.checkinDate.format("YYYY-MM-DD"),
-                $scope.hotel.checkoutDate.format("YYYY-MM-DD"),
-                $scope.hotel.adultCount,
-                $scope.hotel.childCount,
-                $scope.hotel.nightCount,
-                $scope.hotel.roomCount,
-                $scope.hotel.childrenAges
-            ].join('.')
-        )
-    }
-
+  
     $('.hotel-date-picker').datepicker({
         numberOfMonths: 2,
         onSelect: function (date) {
