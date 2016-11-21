@@ -2,11 +2,13 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using Lunggo.ApCommon.Hotel.Model;
 using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.ApCommon.Payment.Service;
 using Lunggo.ApCommon.Product.Constant;
+using Lunggo.Framework.Config;
 
 namespace Lunggo.ApCommon.Hotel.Service
 {
@@ -37,6 +39,7 @@ namespace Lunggo.ApCommon.Hotel.Service
         {
             if (hotelDetail == null)
                 return null;
+            var baseUrl = ConfigManager.GetInstance().GetConfigValue("hotel", "standardSizeImage");
             var price = hotelDetail.Rooms.SelectMany(r => r.Rates).Sum(p => p.Price.Local);
             var convertedHotel = new HotelDetailForDisplay
             {
@@ -48,7 +51,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                 StarRating = Convert.ToInt32(hotelDetail.StarRating.Substring(0,1)),
                 //ChainName = GetHotelChainDesc(hotelDetail.Chain),
                 AccomodationName = GetHotelAccomodationDescId(hotelDetail.AccomodationType),
-                MainImage = hotelDetail.ImageUrl.Select(x => x.Path).FirstOrDefault(),// != null ? hotelDetail.ImageUrl.Where(x=>x.Type=="GEN").Select(x=>x.Path).FirstOrDefault(): null,
+                MainImage = hotelDetail.ImageUrl != null ? string.Concat(baseUrl ,hotelDetail.ImageUrl.Where(x => x.Type == "GEN").Select(x => x.Path).FirstOrDefault()) : null,
                 OriginalFare = price * 1.01M,
                 NetFare = price,
                 IsRestaurantAvailable = hotelDetail.IsRestaurantAvailable,
@@ -74,6 +77,7 @@ namespace Lunggo.ApCommon.Hotel.Service
         {
             if (hotelDetail == null)
                 return null;
+            var baseUrl = ConfigManager.GetInstance().GetConfigValue("hotel", "standardSizeImage");
             var hotel = new HotelDetailForDisplay
             {
                 HotelCode = hotelDetail.HotelCode,
@@ -93,7 +97,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                 MainImage =
                     hotelDetail.ImageUrl == null
                         ? null
-                        : hotelDetail.ImageUrl == null ? null : hotelDetail.ImageUrl.Where(x => x.Type == "GEN").Select(x => x.Path).FirstOrDefault(),
+                        : hotelDetail.ImageUrl == null ? null : string.Concat(baseUrl, hotelDetail.ImageUrl.Where(x => x.Type == "GEN").Select(x => x.Path).FirstOrDefault()),
                 OriginalFare = hotelDetail.OriginalFare,
                 OriginalTotalFare = hotelDetail.OriginalTotalFare,
                 NetFare = hotelDetail.NetFare,
@@ -124,6 +128,7 @@ namespace Lunggo.ApCommon.Hotel.Service
         {
             if (hotelDetails == null)
                 return null;
+            var baseUrl = ConfigManager.GetInstance().GetConfigValue("hotel", "standardSizeImage");
             var convertedHotels = new List<HotelDetailForDisplay>();
             foreach (var hotelDetail in hotelDetails)
             {
@@ -146,7 +151,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                     MainImage =
                         hotelDetail.ImageUrl == null
                             ? null
-                            : hotelDetail.ImageUrl == null ? null : hotelDetail.ImageUrl.Where(x=>x.Type=="GEN").Select(x=>x.Path).FirstOrDefault(),
+                            : hotelDetail.ImageUrl == null ? null : string.Concat(baseUrl, hotelDetail.ImageUrl.Where(x => x.Type == "GEN").Select(x => x.Path).FirstOrDefault()),
                     OriginalFare = hotelDetail.OriginalFare,
                     OriginalTotalFare = hotelDetail.OriginalTotalFare,
                     NetFare = hotelDetail.NetFare,
@@ -234,7 +239,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                 Review = hotelDetail.Review,
                 Rooms = ConvertToHotelRoomForDisplay(hotelDetail.Rooms),
                 AccomodationName = GetHotelAccomodationMultiDesc(hotelDetail.AccomodationType),
-                ImageUrl = hotelDetail.ImageUrl.Select(x => x.Path).ToList(),
+                ImageUrl = ConcateHotelImageUrl(hotelDetail.ImageUrl),
                 IsWifiAccessAvailable = hotelDetail.Facilities != null &&
                             ((hotelDetail.Facilities != null || hotelDetail.Facilities.Count != 0) &&
                             hotelDetail.Facilities.Any(f => (f.FacilityGroupCode == 60 && f.FacilityCode == 261)
@@ -246,6 +251,15 @@ namespace Lunggo.ApCommon.Hotel.Service
                 Policy = hotelDetail.Facilities == null ? null : hotelDetail.Facilities.Where(x => x.FacilityGroupCode == 85).Select(x => (GetHotelFacilityDescId(Convert.ToInt32(x.FullFacilityCode)))).ToList()
             };
             return hotel;
+        }
+
+        public List<string> ConcateHotelImageUrl(List<Image> images )
+        {
+            if (images == null)
+                return null;
+            var baseUrl = ConfigManager.GetInstance().GetConfigValue("hotel", "bigSizeImage");
+            var imagePath = images.Select(x => x.Path).ToList();
+            return imagePath.Select(image => string.Concat(baseUrl, image)).ToList();
         }
 
         public HotelFacilityForDisplay ConvertFacilityForDisplay(List<HotelFacility> facilities)
@@ -315,7 +329,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                     //TypeName = dictionary.GetHotelRoomRateTypeId(roomDetail.Type),
                     CharacteristicCode = roomDetail.characteristicCd,
                     //CharacteristicName = dictionary.GetHotelRoomRateTypeId(roomDetail.characteristicCd),
-                    Images = roomDetail.Images != null ? roomDetail.Images : null,
+                    Images = roomDetail.Images != null ? ConcateRoomImageUrl(roomDetail.Images) : null,
                     Facilities = roomDetail.Facilities != null ? roomDetail.Facilities : null,
                     SingleRate = ConvertToSingleRateForDisplays(roomDetail.SingleRate),
                     Rates = ConvertToRateForDisplays(roomDetail.Rates)
@@ -339,11 +353,19 @@ namespace Lunggo.ApCommon.Hotel.Service
                     TypeName = dictionary.GetHotelRoomRateTypeId(roomDetail.Type),
                     CharacteristicCode = roomDetail.characteristicCd,
                     CharacteristicName = dictionary.GetHotelRoomRateTypeId(roomDetail.characteristicCd),
-                    Images = roomDetail.Images != null ? roomDetail.Images : null,
+                    Images = roomDetail.Images != null ? ConcateRoomImageUrl(roomDetail.Images) : null,
                     Facilities = roomDetail.Facilities != null ? roomDetail.Facilities : null,
                     Rates = ConvertToRateForDisplays(roomDetail.Rates),
                     SingleRate = ConvertToSingleRateForDisplays(roomDetail.SingleRate)
                 };
+        }
+
+        public List<string> ConcateRoomImageUrl(List<string> imagesPath)
+        {
+            if (imagesPath == null)
+                return null;
+            var baseUrl = ConfigManager.GetInstance().GetConfigValue("hotel", "standardSizeImage");
+            return imagesPath.Select(image => string.Concat(baseUrl, image)).ToList();
         }
 
         internal List<HotelRateForDisplay> ConvertToRateForDisplays(List<HotelRate> rates)
