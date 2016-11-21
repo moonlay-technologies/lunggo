@@ -502,7 +502,7 @@ file: /Assets/travorama20/css/_page_flight.scss
         }
     }
     .summary-top-right-top {padding: 24px 0;}
-    .flight-summary .flight-summary-left .summary-top .summary-top-right {padding-top:0;}
+    .flight-summary .flight-summary-left .summary-top .summary-top-right {padding-top:0; border-left: 1px solid #ccc;}
     .flight .flight-summary .flight-summary-right {
         padding: 20px 15px;
     }
@@ -512,12 +512,11 @@ file: /Assets/travorama20/css/_page_flight.scss
 
         .flight-summary-left {
             .summary-top {border-bottom:0;
-                .summary-top-left {border-right:$border-default;}
                 .summary-top-right {
                     .summary-top-right-top {
                         &:before, &:after {@include clearfix();}
                     }
-                    .summary-top-right-bottom {clear:both; width:100%; border-top:$border-default; text-align:right; padding: 3px 15px;}
+                    .summary-top-right-bottom {clear:both; width:100%; border-top:$border-default; text-align:right; padding: 8px 15px;}
                 }
             }
         }

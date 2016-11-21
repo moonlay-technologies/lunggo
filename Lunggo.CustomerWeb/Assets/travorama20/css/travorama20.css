@@ -3473,15 +3473,14 @@ file: /Assets/travorama20/css/_page_flight.scss
   padding: 24px 0; }
 
 .page-flight.page-flight-oneway .flight-summary .flight-summary-left .summary-top .summary-top-right {
-  padding-top: 0; }
+  padding-top: 0;
+  border-left: 1px solid #ccc; }
 
 .page-flight.page-flight-oneway .flight .flight-summary .flight-summary-right {
   padding: 20px 15px; }
 
 .page-flight.page-flight-oneway .flight .flight-summary-left .summary-top {
   border-bottom: 0; }
-  .page-flight.page-flight-oneway .flight .flight-summary-left .summary-top .summary-top-left {
-    border-right: 1px solid #ccc; }
   .page-flight.page-flight-oneway .flight .flight-summary-left .summary-top .summary-top-right .summary-top-right-top:before, .page-flight.page-flight-oneway .flight .flight-summary-left .summary-top .summary-top-right .summary-top-right-top:after {
     display: block;
     width: 100%;
@@ -3492,7 +3491,7 @@ file: /Assets/travorama20/css/_page_flight.scss
     width: 100%;
     border-top: 1px solid #ccc;
     text-align: right;
-    padding: 3px 15px; }
+    padding: 8px 15px; }
 
 .page-flight.page-flight-oneway .flight .flight-detail-trigger, .page-flight.page-flight-oneway .flight .flight-summary .flight-summary-left .summary-bottom .summary-bottom-right .flight-rules-trigger, .page-flight.page-flight-oneway .flight .flight-rules-trigger, .page-flight.page-flight-oneway .flight .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-button .flight-rules-trigger, .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-button .page-flight.page-flight-oneway .flight .flight-rules-trigger, .page-flight.page-flight-oneway .flight .flight-review-wrapper .flight-review .flight-review-summary .summary-left .flight-button .flight-rules-trigger, .flight-review-wrapper .flight-review .flight-review-summary .summary-left .flight-button .page-flight.page-flight-oneway .flight .flight-rules-trigger {
   margin-left: 30px;
