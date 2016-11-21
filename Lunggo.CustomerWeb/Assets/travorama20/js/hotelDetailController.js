@@ -329,4 +329,27 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
         }, 0);
 
     }
+
+    $scope.isFreeRefund = function (room, index) {
+        if (room.rate.isRefundable) {
+            if (room.rate.cancellation !== undefined && room.rate.cancellation.length > 0) {
+                var cancellation = room.rate.cancellation;
+
+                var cancelTRUE = moment(cancellation[0].startTime).isAfter(moment(), 'day');
+
+
+                if (true) {
+
+                }
+                return cancelTRUE;
+            }
+            else {
+                console.log('room ' + index + ' is refundable but no cancellation rate');
+                return false;
+            }
+        }
+        else {
+            return false;
+        }
+    };
 }]);

@@ -124,6 +124,8 @@ if (typeof(angular) == 'object') {
         return {
             restrict: 'A',
             link: function (scope, element, attrs) {
+                var altImagePath = document.location.origin + '/Assets/travorama20/images/Hotel/no-hotel.png';
+
                 var isImage = function (src) {
                     var deferred = $q.defer();
                     var image = new Image();
@@ -135,11 +137,7 @@ if (typeof(angular) == 'object') {
 
                 attrs.$observe('ngSrc', function (ngSrc) {
                     isImage(ngSrc).then(function() {
-                        $log.debug('image exist');
                     }, function() {
-                        var altImagePath = document.location.origin + '/Assets/travorama20/images/Hotel/no-hotel.png';
-                        $log.debug('image not exist');
-
                         element.removeAttr('src');
                         element.attr('src', altImagePath); // set default image
                     });
@@ -147,22 +145,14 @@ if (typeof(angular) == 'object') {
 
                 attrs.$observe('src', function (src) {
                     isImage(src).then(function () {
-                        $log.debug('image exist');
                     }, function () {
-                        var altImagePath = document.location.origin + '/Assets/travorama20/images/Hotel/no-hotel.png';
-                        $log.debug('image not exist');
-
                         element.attr('src', altImagePath); // set default image
                     });
                 });
 
                 attrs.$observe('dataThumb', function (dataThumb) {
                     isImage(dataThumb).then(function () {
-                        $log.debug('image exist');
                     }, function () {
-                        var altImagePath = document.location.origin + '/Assets/travorama20/images/Hotel/no-hotel.png';
-                        $log.debug('image not exist');
-
                         element.removeAttr('src');
                         element.attr('src', altImagePath); // set default image
                     });
@@ -170,11 +160,7 @@ if (typeof(angular) == 'object') {
 
                 attrs.$observe('test', function (test) {
                     isImage(test).then(function () {
-                        $log.debug('image exist');
                     }, function () {
-                        var altImagePath = document.location.origin + '/Assets/travorama20/images/Hotel/no-hotel.png';
-                        $log.debug('image not exist');
-
                         element.removeAttr('style');
                         element.attr('style', "background-image: url(" + altImagePath + "); width: 100%; height: 590px; background-size: cover; background-position: center center;"); // set default image
                     });

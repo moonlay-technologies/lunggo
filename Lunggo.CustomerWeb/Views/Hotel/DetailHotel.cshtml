@@ -160,7 +160,7 @@
                                         <div class="blue-txt md-txt"><b>{{room.roomName}}</b></div>
                                         <div class="facility"></div>
                                         <div class="max-people">Maks <b>{{room.paxCapacity}} orang / kamar</b></div>
-                                        <div ng-show="room.rate.isRefundable">Pembatalan Gratis </div>
+                                        <div ng-show="roomIsRefundable(room, $index)">Pembatalan Gratis </div>
                                         <div ng-show="!room.rate.isRefundable">Kebijakan Pembatalan Berlaku </div>
                                         <div class="info-room">
                                             <span class="info-icon italic-txt">i</span>
@@ -217,8 +217,8 @@
                                                 <div class="hd-txt">
                                                     <span ng-repeat="cancellation in room.rate.cancellation track by $index">
                                                         @*Gratis pembatalan sebelum 17-Nov-2016 17:00.*@
-                                                        - Pembatalan setelah <span style="color:#1daee4">{{cancellation.startTime | date:'dd-MMM-yyyy HH:mm'}}</span>
-                                                        akan dikenakan biaya pembatalan sebesar <span style="color:#ff7200">Rp. {{cancellation.fee | number}}</span>.
+                                                        - Pembatalan setelah <span style="color:#1daee4">{{cancellation.startTime | date:'dd-MMM-yyyy '}}</span>
+                                                        akan dikenakan biaya pembatalan sebesar <span style="color:#ff7200">Rp. {{cancellation.singleFee | number}}</span>.
                                                         <br />
                                                     </span>
                                                 </div>
