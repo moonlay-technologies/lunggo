@@ -1541,7 +1541,10 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
       .page.page-home .form-container .form-wrapper form .form__departure p, .page.page-home .form-container .form-wrapper form .form__departure p.form-control, .page.page-home .form-container .form-wrapper form .form__departure select.form-control, .page.page-home .form-container .form-wrapper form .form__return p, .page.page-home .form-container .form-wrapper form .form__return p.form-control, .page.page-home .form-container .form-wrapper form .form__return select.form-control, .page.page-home .form-container .form-wrapper form .form__roundtrip p, .page.page-home .form-container .form-wrapper form .form__roundtrip p.form-control, .page.page-home .form-container .form-wrapper form .form__roundtrip select.form-control, .page.page-home .form-container .form-wrapper form .form__passenger p,
       .page.page-home .form-container .form-wrapper form .form__passenger p.form-control,
       .page.page-home .form-container .form-wrapper form .form__passenger select.form-control,
-      .page.page-home .form-container .form-wrapper form .form__flightclass p, .page.page-home .form-container .form-wrapper form .form__flightclass p.form-control, .page.page-home .form-container .form-wrapper form .form__flightclass select.form-control, .page.page-home .form-container .form-wrapper form .form__hotel p, .page.page-home .form-container .form-wrapper form .form__hotel p.form-control, .page.page-home .form-container .form-wrapper form .form__hotel select.form-control, .page.page-home .form-container .form-wrapper form .form__date p, .page.page-home .form-container .form-wrapper form .form__date p.form-control, .page.page-home .form-container .form-wrapper form .form__date select.form-control, .page.page-home .form-container .form-wrapper form .form__time p, .page.page-home .form-container .form-wrapper form .form__time p.form-control, .page.page-home .form-container .form-wrapper form .form__time select.form-control, .page.page-home .form-container .form-wrapper form .form__visitor p, .page.page-home .form-container .form-wrapper form .form__visitor p.form-control, .page.page-home .form-container .form-wrapper form .form__visitor select.form-control {
+      .page.page-home .form-container .form-wrapper form .form__flightclass p, .page.page-home .form-container .form-wrapper form .form__flightclass p.form-control, .page.page-home .form-container .form-wrapper form .form__flightclass select.form-control, .page.page-home .form-container .form-wrapper form .form__hotel p, .page.page-home .form-container .form-wrapper form .form__hotel p.form-control, .page.page-home .form-container .form-wrapper form .form__hotel select.form-control, .page.page-home .form-container .form-wrapper form .form__date p, .page.page-home .form-container .form-wrapper form .form__date p.form-control, .page.page-home .form-container .form-wrapper form .form__date select.form-control, .page.page-home .form-container .form-wrapper form .form__time p, .page.page-home .form-container .form-wrapper form .form__time p.form-control, .page.page-home .form-container .form-wrapper form .form__time select.form-control, .page.page-home .form-container .form-wrapper form .form__visitor p,
+      .page.page-home .form-container .form-wrapper form .form__visitor p.form-control,
+      .page.page-home .form-container .form-wrapper form .form__visitor select.form-control,
+      .page.page-home .form-container .form-wrapper form .form__room p, .page.page-home .form-container .form-wrapper form .form__room p.form-control, .page.page-home .form-container .form-wrapper form .form__room select.form-control {
         -webkit-appearance: none;
         -moz-appearance: none;
         font-size: 13px;
@@ -1559,10 +1562,11 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         .page.page-home .form-container .form-wrapper form .form__departure p span, .page.page-home .form-container .form-wrapper form .form__departure p.form-control span, .page.page-home .form-container .form-wrapper form .form__departure select.form-control span, .page.page-home .form-container .form-wrapper form .form__return p span, .page.page-home .form-container .form-wrapper form .form__return p.form-control span, .page.page-home .form-container .form-wrapper form .form__return select.form-control span, .page.page-home .form-container .form-wrapper form .form__roundtrip p span, .page.page-home .form-container .form-wrapper form .form__roundtrip p.form-control span, .page.page-home .form-container .form-wrapper form .form__roundtrip select.form-control span, .page.page-home .form-container .form-wrapper form .form__passenger p span,
         .page.page-home .form-container .form-wrapper form .form__passenger p.form-control span,
         .page.page-home .form-container .form-wrapper form .form__passenger select.form-control span,
-        .page.page-home .form-container .form-wrapper form .form__flightclass p span, .page.page-home .form-container .form-wrapper form .form__flightclass p.form-control span, .page.page-home .form-container .form-wrapper form .form__flightclass select.form-control span, .page.page-home .form-container .form-wrapper form .form__hotel p span, .page.page-home .form-container .form-wrapper form .form__hotel p.form-control span, .page.page-home .form-container .form-wrapper form .form__hotel select.form-control span, .page.page-home .form-container .form-wrapper form .form__date p span, .page.page-home .form-container .form-wrapper form .form__date p.form-control span, .page.page-home .form-container .form-wrapper form .form__date select.form-control span, .page.page-home .form-container .form-wrapper form .form__time p span, .page.page-home .form-container .form-wrapper form .form__time p.form-control span, .page.page-home .form-container .form-wrapper form .form__time select.form-control span, .page.page-home .form-container .form-wrapper form .form__visitor p span, .page.page-home .form-container .form-wrapper form .form__visitor p.form-control span, .page.page-home .form-container .form-wrapper form .form__visitor select.form-control span {
+        .page.page-home .form-container .form-wrapper form .form__flightclass p span, .page.page-home .form-container .form-wrapper form .form__flightclass p.form-control span, .page.page-home .form-container .form-wrapper form .form__flightclass select.form-control span, .page.page-home .form-container .form-wrapper form .form__hotel p span, .page.page-home .form-container .form-wrapper form .form__hotel p.form-control span, .page.page-home .form-container .form-wrapper form .form__hotel select.form-control span, .page.page-home .form-container .form-wrapper form .form__date p span, .page.page-home .form-container .form-wrapper form .form__date p.form-control span, .page.page-home .form-container .form-wrapper form .form__date select.form-control span, .page.page-home .form-container .form-wrapper form .form__time p span, .page.page-home .form-container .form-wrapper form .form__time p.form-control span, .page.page-home .form-container .form-wrapper form .form__time select.form-control span, .page.page-home .form-container .form-wrapper form .form__visitor p span,
+        .page.page-home .form-container .form-wrapper form .form__visitor p.form-control span,
+        .page.page-home .form-container .form-wrapper form .form__visitor select.form-control span,
+        .page.page-home .form-container .form-wrapper form .form__room p span, .page.page-home .form-container .form-wrapper form .form__room p.form-control span, .page.page-home .form-container .form-wrapper form .form__room select.form-control span {
           float: right; }
-      .page.page-home .form-container .form-wrapper form .form__time .field-container {
-        padding: 10px 0 !important; }
       .page.page-home .form-container .form-wrapper form .form__passenger > .row {
         margin: 0;
         text-align: center; }
@@ -1578,14 +1582,37 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
           padding: 0 10px 0 28px; }
         .page.page-home .form-container .form-wrapper form .field-container.form-infant, .page.page-home .form-container .form-wrapper form .field-container.form-v-child {
           padding: 0 0 0 28px; }
-        .page.page-home .form-container .form-wrapper form .field-container.form-v-adult .field-wrapper, .page.page-home .form-container .form-wrapper form .field-container.form-v-child .field-wrapper {
-          padding: 11px 0; }
+        .page.page-home .form-container .form-wrapper form .field-container.form-v-adult .field-wrapper select.form-control, .page.page-home .form-container .form-wrapper form .field-container.form-v-child .field-wrapper select.form-control {
+          text-align: center;
+          text-align-last: center; }
         .page.page-home .form-container .form-wrapper form .field-container p, .page.page-home .form-container .form-wrapper form .field-container select {
           cursor: pointer; }
         .page.page-home .form-container .form-wrapper form .field-container .field-wrapper {
           padding: 21px 0;
           border-bottom: 1px solid #dddddd;
           text-align: center; }
+          .page.page-home .form-container .form-wrapper form .field-container .field-wrapper.form-adult:before, .page.page-home .form-container .form-wrapper .overlay.overlay--flight-form form .field-container .field-wrapper.form-children:before, .overlay.overlay--flight-form .page.page-home .form-container .form-wrapper form .field-container .field-wrapper.form-children:before, .page.page-home .form-container .form-wrapper .overlay.overlay--flight-form form .field-container .field-wrapper.form-infant:before, .overlay.overlay--flight-form .page.page-home .form-container .form-wrapper form .field-container .field-wrapper.form-infant:before {
+            background-size: 40%;
+            background-repeat: no-repeat;
+            content: '';
+            display: inline-block;
+            vertical-align: middle;
+            position: absolute;
+            left: 0;
+            width: 41px;
+            height: 57px;
+            background-image: url(/Assets/mobile/images/adult.png); }
+          .page.page-home .form-container .form-wrapper form .field-container .field-wrapper.form-child:before {
+            background-size: 40%;
+            background-repeat: no-repeat;
+            content: '';
+            display: inline-block;
+            vertical-align: middle;
+            position: absolute;
+            left: 0;
+            width: 42px;
+            height: 53px;
+            background-image: url(/Assets/mobile/images/child.png); }
       .page.page-home .form-container .form-wrapper form .flip-container {
         padding-top: 50px;
         min-height: 104px; }
@@ -1751,9 +1778,8 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         width: 53px;
         height: 52px;
         background-image: url(/Assets/mobile/images/time.png);
-        margin-left: 12px;
-        margin-top: 10px; }
-      .page.page-home .form-container .form-wrapper form.hotel-form p.form-adult:before, .page.page-home .form-container .form-wrapper .overlay.overlay--flight-form form.hotel-form p.form-children:before, .overlay.overlay--flight-form .page.page-home .form-container .form-wrapper form.hotel-form p.form-children:before, .page.page-home .form-container .form-wrapper .overlay.overlay--flight-form form.hotel-form p.form-infant:before, .overlay.overlay--flight-form .page.page-home .form-container .form-wrapper form.hotel-form p.form-infant:before {
+        margin-left: -28px; }
+      .page.page-home .form-container .form-wrapper form.hotel-form p.form-room:before {
         background-size: 40%;
         background-repeat: no-repeat;
         content: '';
@@ -1761,22 +1787,11 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         vertical-align: middle;
         position: absolute;
         left: 0;
-        width: 41px;
-        height: 57px;
-        background-image: url(/Assets/mobile/images/adult.png);
-        margin-top: 10px; }
-      .page.page-home .form-container .form-wrapper form.hotel-form p.form-child:before {
-        background-size: 40%;
-        background-repeat: no-repeat;
-        content: '';
-        display: inline-block;
-        vertical-align: middle;
-        position: absolute;
-        left: 0;
-        width: 42px;
-        height: 53px;
-        background-image: url(/Assets/mobile/images/child.png);
-        margin-top: 10px; }
+        width: 35px;
+        height: 35px;
+        background-image: url(/Assets/mobile/images/Hotel/room.png);
+        margin-left: -28px;
+        margin-top: -6px; }
       .page.page-home .form-container .form-wrapper form.hotel-form p .vt-title {
         margin-top: 10px;
         text-align: left; }
@@ -2167,7 +2182,10 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__departure p, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__departure p.form-control, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__departure select.form-control, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__return p, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__return p.form-control, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__return select.form-control, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__roundtrip p, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__roundtrip p.form-control, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__roundtrip select.form-control, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__passenger p,
     .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__passenger p.form-control,
     .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__passenger select.form-control,
-    .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__flightclass p, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__flightclass p.form-control, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__flightclass select.form-control, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__hotel p, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__hotel p.form-control, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__hotel select.form-control, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__date p, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__date p.form-control, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__date select.form-control, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__time p, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__time p.form-control, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__time select.form-control, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__visitor p, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__visitor p.form-control, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__visitor select.form-control {
+    .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__flightclass p, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__flightclass p.form-control, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__flightclass select.form-control, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__hotel p, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__hotel p.form-control, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__hotel select.form-control, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__date p, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__date p.form-control, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__date select.form-control, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__time p, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__time p.form-control, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__time select.form-control, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__visitor p,
+    .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__visitor p.form-control,
+    .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__visitor select.form-control,
+    .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__room p, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__room p.form-control, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__room select.form-control {
       -webkit-appearance: none;
       -moz-appearance: none;
       font-size: 13px;
@@ -2185,10 +2203,11 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
       .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__departure p span, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__departure p.form-control span, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__departure select.form-control span, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__return p span, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__return p.form-control span, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__return select.form-control span, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__roundtrip p span, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__roundtrip p.form-control span, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__roundtrip select.form-control span, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__passenger p span,
       .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__passenger p.form-control span,
       .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__passenger select.form-control span,
-      .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__flightclass p span, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__flightclass p.form-control span, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__flightclass select.form-control span, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__hotel p span, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__hotel p.form-control span, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__hotel select.form-control span, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__date p span, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__date p.form-control span, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__date select.form-control span, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__time p span, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__time p.form-control span, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__time select.form-control span, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__visitor p span, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__visitor p.form-control span, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__visitor select.form-control span {
+      .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__flightclass p span, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__flightclass p.form-control span, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__flightclass select.form-control span, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__hotel p span, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__hotel p.form-control span, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__hotel select.form-control span, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__date p span, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__date p.form-control span, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__date select.form-control span, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__time p span, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__time p.form-control span, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__time select.form-control span, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__visitor p span,
+      .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__visitor p.form-control span,
+      .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__visitor select.form-control span,
+      .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__room p span, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__room p.form-control span, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__room select.form-control span {
         float: right; }
-    .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__time .field-container {
-      padding: 10px 0 !important; }
     .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__passenger > .row {
       margin: 0;
       text-align: center; }
@@ -2204,14 +2223,37 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         padding: 0 10px 0 28px; }
       .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .field-container.form-infant, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .field-container.form-v-child {
         padding: 0 0 0 28px; }
-      .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .field-container.form-v-adult .field-wrapper, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .field-container.form-v-child .field-wrapper {
-        padding: 11px 0; }
+      .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .field-container.form-v-adult .field-wrapper select.form-control, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .field-container.form-v-child .field-wrapper select.form-control {
+        text-align: center;
+        text-align-last: center; }
       .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .field-container p, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .field-container select {
         cursor: pointer; }
       .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .field-container .field-wrapper {
         padding: 21px 0;
         border-bottom: 1px solid #dddddd;
         text-align: center; }
+        .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .field-container .field-wrapper.form-adult:before, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .field-container .field-wrapper.form-children:before, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .field-container .field-wrapper.form-infant:before {
+          background-size: 40%;
+          background-repeat: no-repeat;
+          content: '';
+          display: inline-block;
+          vertical-align: middle;
+          position: absolute;
+          left: 0;
+          width: 41px;
+          height: 57px;
+          background-image: url(/Assets/mobile/images/adult.png); }
+        .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .field-container .field-wrapper.form-child:before {
+          background-size: 40%;
+          background-repeat: no-repeat;
+          content: '';
+          display: inline-block;
+          vertical-align: middle;
+          position: absolute;
+          left: 0;
+          width: 42px;
+          height: 53px;
+          background-image: url(/Assets/mobile/images/child.png); }
     .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .flip-container {
       padding-top: 50px;
       min-height: 104px; }
@@ -2377,9 +2419,8 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
       width: 53px;
       height: 52px;
       background-image: url(/Assets/mobile/images/time.png);
-      margin-left: 12px;
-      margin-top: 10px; }
-    .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form.hotel-form p.form-adult:before, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form.hotel-form p.form-children:before, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form.hotel-form p.form-infant:before {
+      margin-left: -28px; }
+    .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form.hotel-form p.form-room:before {
       background-size: 40%;
       background-repeat: no-repeat;
       content: '';
@@ -2387,22 +2428,11 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
       vertical-align: middle;
       position: absolute;
       left: 0;
-      width: 41px;
-      height: 57px;
-      background-image: url(/Assets/mobile/images/adult.png);
-      margin-top: 10px; }
-    .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form.hotel-form p.form-child:before {
-      background-size: 40%;
-      background-repeat: no-repeat;
-      content: '';
-      display: inline-block;
-      vertical-align: middle;
-      position: absolute;
-      left: 0;
-      width: 42px;
-      height: 53px;
-      background-image: url(/Assets/mobile/images/child.png);
-      margin-top: 10px; }
+      width: 35px;
+      height: 35px;
+      background-image: url(/Assets/mobile/images/Hotel/room.png);
+      margin-left: -28px;
+      margin-top: -6px; }
     .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form.hotel-form p .vt-title {
       margin-top: 10px;
       text-align: left; }
@@ -4723,7 +4753,10 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
       .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__departure p, .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__departure p.form-control, .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__departure select.form-control, .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__return p, .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__return p.form-control, .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__return select.form-control, .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__roundtrip p, .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__roundtrip p.form-control, .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__roundtrip select.form-control, .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__passenger p,
       .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__passenger p.form-control,
       .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__passenger select.form-control,
-      .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__flightclass p, .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__flightclass p.form-control, .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__flightclass select.form-control, .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__hotel p, .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__hotel p.form-control, .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__hotel select.form-control, .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__date p, .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__date p.form-control, .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__date select.form-control, .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__time p, .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__time p.form-control, .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__time select.form-control, .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__visitor p, .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__visitor p.form-control, .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__visitor select.form-control {
+      .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__flightclass p, .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__flightclass p.form-control, .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__flightclass select.form-control, .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__hotel p, .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__hotel p.form-control, .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__hotel select.form-control, .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__date p, .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__date p.form-control, .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__date select.form-control, .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__time p, .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__time p.form-control, .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__time select.form-control, .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__visitor p,
+      .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__visitor p.form-control,
+      .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__visitor select.form-control,
+      .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__room p, .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__room p.form-control, .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__room select.form-control {
         -webkit-appearance: none;
         -moz-appearance: none;
         font-size: 13px;
@@ -4741,10 +4774,11 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__departure p span, .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__departure p.form-control span, .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__departure select.form-control span, .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__return p span, .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__return p.form-control span, .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__return select.form-control span, .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__roundtrip p span, .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__roundtrip p.form-control span, .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__roundtrip select.form-control span, .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__passenger p span,
         .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__passenger p.form-control span,
         .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__passenger select.form-control span,
-        .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__flightclass p span, .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__flightclass p.form-control span, .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__flightclass select.form-control span, .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__hotel p span, .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__hotel p.form-control span, .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__hotel select.form-control span, .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__date p span, .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__date p.form-control span, .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__date select.form-control span, .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__time p span, .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__time p.form-control span, .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__time select.form-control span, .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__visitor p span, .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__visitor p.form-control span, .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__visitor select.form-control span {
+        .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__flightclass p span, .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__flightclass p.form-control span, .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__flightclass select.form-control span, .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__hotel p span, .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__hotel p.form-control span, .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__hotel select.form-control span, .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__date p span, .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__date p.form-control span, .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__date select.form-control span, .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__time p span, .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__time p.form-control span, .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__time select.form-control span, .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__visitor p span,
+        .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__visitor p.form-control span,
+        .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__visitor select.form-control span,
+        .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__room p span, .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__room p.form-control span, .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__room select.form-control span {
           float: right; }
-      .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__time .field-container {
-        padding: 10px 0 !important; }
       .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__passenger > .row {
         margin: 0;
         text-align: center; }
@@ -4760,14 +4794,37 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
           padding: 0 10px 0 28px; }
         .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .field-container.form-infant, .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .field-container.form-v-child {
           padding: 0 0 0 28px; }
-        .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .field-container.form-v-adult .field-wrapper, .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .field-container.form-v-child .field-wrapper {
-          padding: 11px 0; }
+        .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .field-container.form-v-adult .field-wrapper select.form-control, .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .field-container.form-v-child .field-wrapper select.form-control {
+          text-align: center;
+          text-align-last: center; }
         .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .field-container p, .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .field-container select {
           cursor: pointer; }
         .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .field-container .field-wrapper {
           padding: 21px 0;
           border-bottom: 1px solid #dddddd;
           text-align: center; }
+          .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .field-container .field-wrapper.form-adult:before, .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper .overlay.overlay--flight-form form .field-container .field-wrapper.form-children:before, .overlay.overlay--flight-form .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .field-container .field-wrapper.form-children:before, .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper .overlay.overlay--flight-form form .field-container .field-wrapper.form-infant:before, .overlay.overlay--flight-form .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .field-container .field-wrapper.form-infant:before {
+            background-size: 40%;
+            background-repeat: no-repeat;
+            content: '';
+            display: inline-block;
+            vertical-align: middle;
+            position: absolute;
+            left: 0;
+            width: 41px;
+            height: 57px;
+            background-image: url(/Assets/mobile/images/adult.png); }
+          .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .field-container .field-wrapper.form-child:before {
+            background-size: 40%;
+            background-repeat: no-repeat;
+            content: '';
+            display: inline-block;
+            vertical-align: middle;
+            position: absolute;
+            left: 0;
+            width: 42px;
+            height: 53px;
+            background-image: url(/Assets/mobile/images/child.png); }
       .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .flip-container {
         padding-top: 50px;
         min-height: 104px; }
@@ -4933,9 +4990,8 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         width: 53px;
         height: 52px;
         background-image: url(/Assets/mobile/images/time.png);
-        margin-left: 12px;
-        margin-top: 10px; }
-      .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form.hotel-form p.form-adult:before, .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper .overlay.overlay--flight-form form.hotel-form p.form-children:before, .overlay.overlay--flight-form .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form.hotel-form p.form-children:before, .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper .overlay.overlay--flight-form form.hotel-form p.form-infant:before, .overlay.overlay--flight-form .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form.hotel-form p.form-infant:before {
+        margin-left: -28px; }
+      .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form.hotel-form p.form-room:before {
         background-size: 40%;
         background-repeat: no-repeat;
         content: '';
@@ -4943,22 +4999,11 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         vertical-align: middle;
         position: absolute;
         left: 0;
-        width: 41px;
-        height: 57px;
-        background-image: url(/Assets/mobile/images/adult.png);
-        margin-top: 10px; }
-      .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form.hotel-form p.form-child:before {
-        background-size: 40%;
-        background-repeat: no-repeat;
-        content: '';
-        display: inline-block;
-        vertical-align: middle;
-        position: absolute;
-        left: 0;
-        width: 42px;
-        height: 53px;
-        background-image: url(/Assets/mobile/images/child.png);
-        margin-top: 10px; }
+        width: 35px;
+        height: 35px;
+        background-image: url(/Assets/mobile/images/Hotel/room.png);
+        margin-left: -28px;
+        margin-top: -6px; }
       .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form.hotel-form p .vt-title {
         margin-top: 10px;
         text-align: left; }
