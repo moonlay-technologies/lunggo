@@ -109,7 +109,7 @@ namespace Lunggo.WebAPI.ApiSrc.Hotel.Logic
                     {
                         StatusCode = HttpStatusCode.OK,
                         SearchId = searchServiceResponse.SearchId,
-                        Location = searchServiceResponse.Location,
+                        DestinationName = searchServiceResponse.DestinationName,
                         Page = searchServiceResponse.Page,
                         PerPage = searchServiceResponse.PerPage,
                         FilteredHotelCount = searchServiceResponse.FilteredHotelCount,
@@ -124,7 +124,7 @@ namespace Lunggo.WebAPI.ApiSrc.Hotel.Logic
                 return new HotelSearchApiResponse
                 {
                     SearchId = searchServiceResponse.SearchId,
-                    Location = searchServiceResponse.Location,
+                    DestinationName = searchServiceResponse.DestinationName,
                     ReturnedHotelCount = searchServiceResponse.ReturnedHotelCount,
                     TotalHotelCount = searchServiceResponse.TotalHotelCount,
                     Hotels = searchServiceResponse.HotelDetailLists,
