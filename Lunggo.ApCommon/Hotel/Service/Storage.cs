@@ -103,6 +103,77 @@ namespace Lunggo.ApCommon.Hotel.Service
             table.Execute(insertOp);
         }
 
+        public void SaveAutoCompleteToTableStorage()
+        {
+            //var autocomplete = new Autocomplete();
+            var tableClient = TableStorageService.GetInstance();
+            var table = tableClient.GetTableByReference("hotelautocomplete");
+            var hotelCdTable = tableClient.GetTableByReference("hotelCodeTable");
+
+            GetInstance()._Autocompletes = new Dictionary<long, Autocomplete>();
+            long index = 1;
+            var newValue = new HotelAutoComplete("hotelAutoComplete", index.ToString());
+            foreach (var country in Countries)
+            {
+                foreach (var destination in country.Destinations)
+                {
+                    newValue.Id = index;
+                    newValue.Code = destination.Code;
+                    newValue.Destination = destination.Name;
+                    newValue.Country = country.Name;
+                    newValue.Type = 1;
+                    var insertOp = TableOperation.InsertOrReplace(newValue);
+                    table.Execute(insertOp);
+                    Console.WriteLine("Success inserting zone for: " + destination.Name + " " + country.Name);
+                    index++;
+
+                    foreach (var zone in destination.Zones)
+                    {
+                        newValue = new HotelAutoComplete("hotelAutoComplete", index.ToString());
+                        newValue.Id = index;
+                        newValue.Code = zone.Code;
+                        newValue.Zone = zone.Name;
+                        newValue.Destination = destination.Name;
+                        newValue.Country = country.Name;
+                        newValue.Type = 2;
+                        insertOp = TableOperation.InsertOrReplace(newValue);
+                        table.Execute(insertOp);
+                        Console.WriteLine("Success inserting destination for: " + destination.Name + "-" + zone.Code);
+                        index++;
+                    }
+                }
+            }
+
+            for (var i = 1; i < 600001; i++)
+            {
+                try
+                {
+                    var hotelDetail = GetHotelDetailFromTableStorage(i);
+                    newValue = new HotelAutoComplete("hotelAutoComplete", index.ToString());
+                    newValue.Id = index;
+                    newValue.Code = hotelDetail.HotelCode.ToString();
+                    newValue.HotelName = hotelDetail.HotelName;
+                    newValue.Destination = GetDestinationNameFromDict(hotelDetail.DestinationCode).Name;
+                    newValue.Zone = GetZoneNameFromDict(hotelDetail.ZoneCode);
+                    newValue.Country = GetCountryNameFromDict(hotelDetail.CountryCode).Name;
+                    newValue.Type = 4;
+                    var insertOp = TableOperation.InsertOrReplace(newValue);
+                    var hotelCode = new HotelCodeExist("hotelCodeExist", hotelDetail.HotelCode.ToString());
+                    var insertHotelCd = TableOperation.InsertOrReplace(hotelCode);
+                    table.Execute(insertOp);
+                    Console.WriteLine("Success inserting data for hotelCode: " + hotelDetail.HotelCode);
+                    hotelCdTable.Execute(insertHotelCd);
+                    Console.WriteLine("Success inserting hotelCd to Table: " + hotelDetail.HotelCode);
+                    index++;
+                }
+                catch
+                {
+                    
+                }
+                
+            }
+        }
+
         public void SaveTruncatedHotelDetailToTableStorage(HotelDetailsBase hotelDetail, int hotelCd)
         {
             HotelDetailWrapper hotel = new HotelDetailWrapper("hotel", hotelCd.ToString());
@@ -206,6 +277,23 @@ namespace Lunggo.ApCommon.Hotel.Service
             return result;
         }
 
+        public HotelAutoComplete GetAutoCompleteFromTableStorage(long code)
+        {
+            var partitionKey = "hotelAutoComplete";
+            var rowKey = code.ToString();
+            var tableClient = TableStorageService.GetInstance();
+            CloudTable table = tableClient.GetTableByReference("hotelautocomplete");
+
+            // Create a retrieve operation that takes a customer entity.
+            TableOperation retrieveOperation = TableOperation.Retrieve<HotelAutoComplete>(partitionKey, rowKey);
+
+            // Execute the retrieve operation.
+            TableResult retrievedResult = table.Execute(retrieveOperation);
+            HotelAutoComplete resultWrapper = (HotelAutoComplete)retrievedResult.Result;
+            //var concatedResult = ConcateData(resultWrapper);
+            //HotelAutoComplete result = resultWrapper.Deserialize<HotelAutoComplete>();
+            return resultWrapper;
+        }
         public List<HotelRateComment> GetRateCommentFromTableStorage(string rateComment, DateTime startDateTime)
         {
             //var partitionKey = "rateComments";

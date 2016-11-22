@@ -288,7 +288,7 @@ namespace Lunggo.ApCommon.Hotel.Service
             //PopulateHotel();
         }
 
-        private static void PopulateAutocomplete()
+        public static void PopulateAutocomplete()
         {
             GetInstance()._Autocompletes = new Dictionary<long, Autocomplete>();
             long index = 1;

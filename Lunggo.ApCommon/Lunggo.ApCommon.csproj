@@ -243,6 +243,7 @@
     <Compile Include="Hotel\Model\HotelFilterDisplayInfo.cs" />
     <Compile Include="Hotel\Model\HotelReservationSearch.cs" />
     <Compile Include="Hotel\Model\HotelReview.cs" />
+    <Compile Include="Hotel\Model\HotelAutoComplete.cs" />
     <Compile Include="Hotel\Model\HotelTableStorage.cs" />
     <Compile Include="Hotel\Model\HotelFacility.cs" />
     <Compile Include="Hotel\Model\HotelRoomFacilities.cs" />
