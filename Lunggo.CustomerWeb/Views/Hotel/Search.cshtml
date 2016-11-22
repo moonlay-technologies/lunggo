@@ -115,7 +115,6 @@
                                 </label>
                                 <span class="city-hotel">{{zoneFilter.count}}</span>
                             </div>
-                            {{filter.zones}}
                         </div>
                         <div class="filter-group" ng-if="false">
                             <label class="filter-title">Tipe Kamar</label>
@@ -172,7 +171,7 @@
                     <div class="hotel-list-container" ng-show="searchDone">
                         <div class="hotel-list clearfix pointer" ng-repeat="hotel in hotels" ng-click="GotoDetailHotel(hotel.hotelCd)">
                             <div class="col-2">
-                                <img class="img-list" hotel-list-image ng-src="http://photos.hotelbeds.com/giata/{{hotel.mainImage}}" alt="Hotel" />
+                                <img class="img-list" hotel-list-image ng-src="{{hotel.mainImage}}" alt="Hotel" />
                                 @*<img class="img-list" src="/Assets/travorama20/images/Hotel/no-hotel.png" alt="Hotel" />*@
                             </div>
                             <div class="col-8">

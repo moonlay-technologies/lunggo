@@ -31,7 +31,7 @@
                             </li>
                         </ul>*@
                         <ul>
-                            <li class="list-hotel" ng-repeat="location in hotelSearch.hotelAutocomplete track by $index" ng-model="hotelSearch.slocation" ng-click="selectLocation(location)">
+                            <li class="list-hotel" ng-repeat="location in hotelSearch.hotelAutocomplete track by $index" @*ng-model="hotelSearch.location"*@ ng-click="selectLocation(location)">
                                 <div class="list-row">
                                     <div class="lr-wrapper clearfix">
                                         <div class="col-6">
@@ -39,7 +39,7 @@
                                             <div class="zone">{{location.type}}</div>
                                         </div>
                                         <div class="col-4">
-                                            <div class="blue-txt semibold-txt pull-right">999 Hotel ditemukan</div>
+                                            <div class="blue-txt semibold-txt pull-right">{{location.numOfHotels}} Hotel ditemukan</div>
                                         </div>
                                     </div>
                                 </div>

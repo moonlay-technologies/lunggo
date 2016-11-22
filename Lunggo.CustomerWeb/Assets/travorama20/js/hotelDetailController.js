@@ -62,7 +62,8 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
 
             $.each($scope.hotel.images, function (key, value) {
                 loadedImages++;
-                tempHotelImages.push("http://photos.hotelbeds.com/giata/bigger/" + value);
+                //tempHotelImages.push("http://photos.hotelbeds.com/giata/bigger/" + value);
+                tempHotelImages.push(value);
                 if (loadedImages == maxImages) {
                     return false;
                 }
@@ -81,12 +82,13 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
             $scope.hotel.checkoutDate = new Date(parseInt(cekout.substring(0, 4)), parseInt(cekout.substring(4, 6)) - 1, parseInt(cekout.substring(6, 8)));
             $scope.hotel.nightCount = new Date($scope.hotel.checkoutDate).getDate() - new Date($scope.hotel.checkinDate).getDate();
 
-            accordionFunctions();
+           
             setFacilityDisplay();
             //setTncDisplay();
             setDescriptionDisplay();
             $timeout(function() { hotelDetailFunctions(); }, 0);
-            $timeout(function() { initiateSlider(); }, 0);
+            $timeout(function () { initiateSlider(); }, 0);
+            $timeout(function () {  accordionFunctions(); }, 0);
 
 
             $log.debug($scope.hotel);
