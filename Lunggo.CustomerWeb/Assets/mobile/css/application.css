@@ -1580,6 +1580,9 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
             width: 42px;
             height: 53px;
             background-image: url(/Assets/mobile/images/child.png); }
+        .page.page-home .form-container .form-wrapper form .field-container select[name='roomclass'], .page.page-home .form-container .form-wrapper form .field-container select[name='nightclass'] {
+          text-align: right;
+          text-align-last: right; }
       .page.page-home .form-container .form-wrapper form .flip-container {
         padding-top: 50px;
         min-height: 104px; }
@@ -1723,8 +1726,14 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
             height: 8px;
             background: url(/Assets/mobile/images/Hotel/arrow-down-grey.png) no-repeat;
             float: right;
-            margin-top: 5px;
-            opacity: 0.4; }
+            margin-top: -12px;
+            opacity: 0.4;
+            position: absolute;
+            right: 0; }
+        .page.page-home .form-container .form-wrapper form .form__visitor .age-child .ac-list select[name='agelist'] {
+          background: #ecf0f4; }
+          .page.page-home .form-container .form-wrapper form .form__visitor .age-child .ac-list select[name='agelist'] option {
+            background: #fff; }
         .page.page-home .form-container .form-wrapper form .form__visitor .age-child .ac-list:last-child > .col-2 {
           border-bottom: none; }
       .page.page-home .form-container .form-wrapper form.hotel-form .placeholder {
@@ -2241,6 +2250,9 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
           width: 42px;
           height: 53px;
           background-image: url(/Assets/mobile/images/child.png); }
+      .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .field-container select[name='roomclass'], .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .field-container select[name='nightclass'] {
+        text-align: right;
+        text-align-last: right; }
     .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .flip-container {
       padding-top: 50px;
       min-height: 104px; }
@@ -2384,8 +2396,14 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
           height: 8px;
           background: url(/Assets/mobile/images/Hotel/arrow-down-grey.png) no-repeat;
           float: right;
-          margin-top: 5px;
-          opacity: 0.4; }
+          margin-top: -12px;
+          opacity: 0.4;
+          position: absolute;
+          right: 0; }
+      .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__visitor .age-child .ac-list select[name='agelist'] {
+        background: #ecf0f4; }
+        .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__visitor .age-child .ac-list select[name='agelist'] option {
+          background: #fff; }
       .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__visitor .age-child .ac-list:last-child > .col-2 {
         border-bottom: none; }
     .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form.hotel-form .placeholder {
@@ -4766,6 +4784,9 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
             width: 42px;
             height: 53px;
             background-image: url(/Assets/mobile/images/child.png); }
+        .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .field-container select[name='roomclass'], .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .field-container select[name='nightclass'] {
+          text-align: right;
+          text-align-last: right; }
       .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .flip-container {
         padding-top: 50px;
         min-height: 104px; }
@@ -4909,8 +4930,14 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
             height: 8px;
             background: url(/Assets/mobile/images/Hotel/arrow-down-grey.png) no-repeat;
             float: right;
-            margin-top: 5px;
-            opacity: 0.4; }
+            margin-top: -12px;
+            opacity: 0.4;
+            position: absolute;
+            right: 0; }
+        .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__visitor .age-child .ac-list select[name='agelist'] {
+          background: #ecf0f4; }
+          .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__visitor .age-child .ac-list select[name='agelist'] option {
+            background: #fff; }
         .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__visitor .age-child .ac-list:last-child > .col-2 {
           border-bottom: none; }
       .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form.hotel-form .placeholder {

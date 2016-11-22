@@ -163,6 +163,10 @@
                     background-image: url(/Assets/mobile/images/child.png);
                 }
             }
+            select[name='roomclass'], select[name='nightclass']{
+                text-align: right;
+                text-align-last: right;
+            }
         }
         .flip-container {
             padding-top: 50px;
@@ -293,9 +297,14 @@
                             height: 8px;
                             background: url(/Assets/mobile/images/Hotel/arrow-down-grey.png) no-repeat;
                             float: right;
-                            margin-top: 5px;
+                            margin-top: -12px;
                             opacity: 0.4;
+                            position: absolute;
+                            right: 0;
                         }
+                    }
+                    select[name='agelist']{background: #ecf0f4;
+                        option {background: #fff;}
                     }
                     &:last-child {&>.col-2 {border-bottom: none;}}
                 }
