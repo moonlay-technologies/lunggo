@@ -3803,6 +3803,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
   /*Fonts*/
   /*Custom Column*/
   /*Button*/
+  /*Bullets*/
   /*Icon*/
   /*Arrow icons*/
   /*Hotel Listing*/
@@ -3891,6 +3892,20 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
       float: right; }
     .page-hotel a.btn-blue.big {
       padding: 6px 20px; }
+  .page-hotel .blue-list {
+    padding-left: 0;
+    margin-bottom: 10px; }
+    .page-hotel .blue-list li {
+      list-style-type: none; }
+      .page-hotel .blue-list li:before {
+        content: '';
+        width: 5px;
+        height: 5px;
+        display: inline-block;
+        background: #2eb4e7;
+        border-radius: 5px;
+        margin-right: 8px;
+        vertical-align: middle; }
   .page-hotel .star-outline, .page-hotel .so-1, .page-hotel .star.e-star.star-4:after, .page-hotel .so-2, .page-hotel .star.e-star.star-3:after, .page-hotel .so-3, .page-hotel .star.e-star.star-2:after, .page-hotel .so-4, .page-hotel .star.e-star:after {
     content: '';
     display: inline-block;
@@ -4369,6 +4384,62 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
       margin: 0 auto; }
     .page-hotel .sh-list .max-visitor:before {
       margin: 0 auto; }
+  .page-hotel .fac-general:after {
+    background: url(/Assets/mobile/images/Hotel/bel.png) no-repeat;
+    content: '';
+    width: 27px;
+    height: 27px;
+    display: block;
+    background-size: 100%;
+    margin: 15px auto; }
+  .page-hotel .fac-meal:after {
+    background: url(/Assets/mobile/images/Hotel/food.png) no-repeat;
+    content: '';
+    width: 26px;
+    height: 26px;
+    display: block;
+    background-size: 100%;
+    margin: 15px auto; }
+  .page-hotel .fac-business:after {
+    background: url(/Assets/mobile/images/Hotel/business.png) no-repeat;
+    content: '';
+    width: 25px;
+    height: 25px;
+    display: block;
+    background-size: 100%;
+    margin: 15px auto; }
+  .page-hotel .fac-ent:after {
+    background: url(/Assets/mobile/images/Hotel/ent.png) no-repeat;
+    content: '';
+    width: 34px;
+    height: 34px;
+    display: block;
+    background-size: 100%;
+    margin: 15px auto; }
+  .page-hotel .fac-health:after {
+    background: url(/Assets/mobile/images/Hotel/health.png) no-repeat;
+    content: '';
+    width: 26px;
+    height: 26px;
+    display: block;
+    background-size: 100%;
+    margin: 15px auto; }
+  .page-hotel .fac-sport:after {
+    background: url(/Assets/mobile/images/Hotel/sport.png) no-repeat;
+    content: '';
+    width: 24px;
+    height: 38px;
+    display: block;
+    background-size: 100%;
+    margin: 15px auto; }
+  .page-hotel .fac-other:after {
+    background: url(/Assets/mobile/images/Hotel/other.png) no-repeat;
+    content: '';
+    width: 25px;
+    height: 26px;
+    display: block;
+    background-size: 100%;
+    margin: 15px auto; }
   .page-hotel .rr-row {
     line-height: 20px; }
     .page-hotel .rr-row.total {
@@ -4517,8 +4588,12 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
       overflow: hidden; }
       .page-hotel .travorama-hotel-mobile .spec-hotel .sh-txt.opened {
         height: auto; }
-    .page-hotel .travorama-hotel-mobile .spec-hotel .sh-facility .sh-list-facility {
-      padding-left: 15px; }
+    .page-hotel .travorama-hotel-mobile .spec-hotel .sh-facility .sh-list-facility .sh-row .col-8 {
+      border-bottom: 1px dashed #b9ecff;
+      margin-bottom: 10px; }
+    .page-hotel .travorama-hotel-mobile .spec-hotel .sh-facility .sh-list-facility .sh-row:last-child .col-8 {
+      border-bottom: none;
+      margin-bottom: 0; }
     .page-hotel .travorama-hotel-mobile .spec-hotel .toggle {
       position: absolute;
       transform: translate(-50%, -50%);

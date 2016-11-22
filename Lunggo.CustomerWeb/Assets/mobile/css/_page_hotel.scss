@@ -69,6 +69,23 @@
         }
     }
 
+    /*Bullets*/
+    .blue-list {
+        padding-left: 0;
+        margin-bottom: 10px;
+        li {list-style-type: none;
+            &:before {
+                content: '';
+                width: 5px;
+                height: 5px;
+                display: inline-block;
+                background: #2eb4e7;
+                border-radius: 5px;
+                margin-right: 8px;
+                vertical-align: middle;
+            }
+        }
+    }
     /*Icon*/
     .star-outline {
         content: '';
@@ -601,6 +618,70 @@
         .like {@extend .like-icon}
         .share {@extend .share-icon}
     }
+    .fac-general:after {
+        background: url(/Assets/mobile/images/Hotel/bel.png) no-repeat;
+        content: '';
+        width: 27px;
+        height: 27px;
+        display: block;
+        background-size: 100%;
+        margin: 15px auto;
+    } 
+    .fac-meal:after {
+        background: url(/Assets/mobile/images/Hotel/food.png) no-repeat;
+        content: '';
+        width: 26px;
+        height: 26px;
+        display: block;
+        background-size: 100%;
+        margin: 15px auto;
+    } 
+    .fac-business:after {
+        background: url(/Assets/mobile/images/Hotel/business.png) no-repeat;
+        content: '';
+        width: 25px;
+        height: 25px;
+        display: block;
+        background-size: 100%;
+        margin: 15px auto;
+    } 
+    .fac-ent:after {
+        background: url(/Assets/mobile/images/Hotel/ent.png) no-repeat;
+        content: '';
+        width: 34px;
+        height: 34px;
+        display: block;
+        background-size: 100%;
+        margin: 15px auto;
+    }     
+    .fac-health:after {
+        background: url(/Assets/mobile/images/Hotel/health.png) no-repeat;
+        content: '';
+        width: 26px;
+        height: 26px;
+        display: block;
+        background-size: 100%;
+        margin: 15px auto;
+    }   
+    .fac-sport:after {
+        background: url(/Assets/mobile/images/Hotel/sport.png) no-repeat;
+        content: '';
+        width: 24px;
+        height: 38px;
+        display: block;
+        background-size: 100%;
+        margin: 15px auto;
+    }   
+    .fac-other:after {
+        background: url(/Assets/mobile/images/Hotel/other.png) no-repeat;
+        content: '';
+        width: 25px;
+        height: 26px;
+        display: block;
+        background-size: 100%;
+        margin: 15px auto;
+    }     
+
     /*Shared Checkout*/
     .rr-row {line-height: 20px;
         &.total {
@@ -617,7 +698,7 @@
         @import 'page_hotel_search';
         @import 'page_hotel_detail';
     }
-
+       
     /*Overlay*/
     .overlay--detail-room {
         &.overlay .overlay__content {padding:0;}
