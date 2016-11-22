@@ -258,7 +258,7 @@
                         <div class="col-2">Alamat</div>
                         <div class="col-8">
                             @ToTitleCase(Model.HotelDetail.Address) @ToTitleCase(Model.HotelDetail.ZoneName),
-                            @ToTitleCase(Model.HotelDetail.DestinationName), @Model.HotelDetail.CountryName
+                            @ToTitleCase(Model.HotelDetail.DestinationName), @Model.HotelDetail.PostalCode, @Model.HotelDetail.CountryName
                         </div>
                     </div>
                     <div class="rr-row clearfix">
@@ -296,11 +296,30 @@
                                     <span>Tamu</span>
                                 </div>
                                 <div class="col-8">
-                                    @rate.AdultCount Dewasa, @rate.ChildCount Anak
+                                   @rate.AdultCount Dewasa @if (rate.ChildCount > 0)
+                                   {
+                                        <span>, @rate.ChildCount Anak </span>
+                                        <span>
+                                            (
+                                            @for (var a = 0; a < rate.ChildrenAges.Count; a++)
+                                            {
+                                                if (a != rate.ChildrenAges.Count - 1)
+                                                {
+                                                    @rate.ChildrenAges[a]
+                                                    <span>Tahun, </span>
+                                                }
+                                                else
+                                                {
+                                                    @rate.ChildrenAges[a] <span>Tahun</span>
+                                                }
+                                            }
+                                            )
+                                        </span>
+                                    }
                                 </div>
                             </div>
 
-                            @if (!rate.TermAndCondition.Exists(r => r.Length < 3))
+                            @if (rate.TermAndCondition.Count != 0 && !rate.TermAndCondition.Exists(r => r.Length < 3))
                             {
                                 <div class="rr-row">
                                     <div class="col-2">
@@ -314,7 +333,7 @@
                             
                             <div class="rr-row">
                                 <div class="col-2">
-                                    <span></span>
+                                    <span>Pembatalan</span>
                                 </div>
                                 <div class="col-8">
                                     @foreach (var policy in rate.Cancellation)
