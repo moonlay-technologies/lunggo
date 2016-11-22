@@ -1817,7 +1817,9 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     .page.page-home .form-container .tab-content .tp-flight .form-wrapper {
       padding: 20px 15px; }
     .page.page-home .form-container .tab-content .tp-hotel .form-wrapper {
-      padding: 0 12px 20px; }
+      padding: 0; }
+      .page.page-home .form-container .tab-content .tp-hotel .form-wrapper .top-wrap, .page.page-home .form-container .tab-content .tp-hotel .form-wrapper .mid-wrap, .page.page-home .form-container .tab-content .tp-hotel .form-wrapper .bottom-wrap {
+        padding: 0 12px; }
     .page.page-home .form-container .col-custom-logo.icon-adult:before {
       width: 36px;
       height: 24px;
@@ -2494,7 +2496,9 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
   .page.page-flight .overlay.overlay--flight-form .overlay__content .tab-content .tp-flight .form-wrapper {
     padding: 20px 15px; }
   .page.page-flight .overlay.overlay--flight-form .overlay__content .tab-content .tp-hotel .form-wrapper {
-    padding: 0 12px 20px; }
+    padding: 0; }
+    .page.page-flight .overlay.overlay--flight-form .overlay__content .tab-content .tp-hotel .form-wrapper .top-wrap, .page.page-flight .overlay.overlay--flight-form .overlay__content .tab-content .tp-hotel .form-wrapper .mid-wrap, .page.page-flight .overlay.overlay--flight-form .overlay__content .tab-content .tp-hotel .form-wrapper .bottom-wrap {
+      padding: 0 12px; }
   .page.page-flight .overlay.overlay--flight-form .overlay__content .col-custom-logo.icon-adult:before {
     width: 36px;
     height: 24px;
@@ -5110,7 +5114,9 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     .page-hotel .overlay.overlay--hotel-form .overlay__content .tab-content .tp-flight .form-wrapper {
       padding: 20px 15px; }
     .page-hotel .overlay.overlay--hotel-form .overlay__content .tab-content .tp-hotel .form-wrapper {
-      padding: 0 12px 20px; }
+      padding: 0; }
+      .page-hotel .overlay.overlay--hotel-form .overlay__content .tab-content .tp-hotel .form-wrapper .top-wrap, .page-hotel .overlay.overlay--hotel-form .overlay__content .tab-content .tp-hotel .form-wrapper .mid-wrap, .page-hotel .overlay.overlay--hotel-form .overlay__content .tab-content .tp-hotel .form-wrapper .bottom-wrap {
+        padding: 0 12px; }
     .page-hotel .overlay.overlay--hotel-form .overlay__content .col-custom-logo.icon-adult:before {
       width: 36px;
       height: 24px;

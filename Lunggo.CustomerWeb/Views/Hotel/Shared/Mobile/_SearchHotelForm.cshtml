@@ -1,58 +1,60 @@
 ﻿<form class="hotel-form" name="hotel-form" ng-submit="FlightSearchForm.Submit()" novalidate>
     <div class="th-form">
-        <div class="form-group form__hotel">
-            <div class="field-container">
-                <p class="form-control form-hotel" ng-click="PageConfig.SetOverlay('hotel-select')">Tujuan <span class="hotel-placeholder">Kota, Wilayah atau Nama Hotel</span></p>
-            </div>
-        </div>
-        <div class="form-group form__date">
-            <div class="field-container">
-                <p class="form-control form-date" ng-click="DatePicker.SetOption({Target : 'departure'}, ' '); PageConfig.SetOverlay('datepicker-hotel')">
-                    Tanggal Masuk <span class="date-placeholder">{{FlightSearchForm.DepartureDate | date : 'EEE, dd MMM yyyy'}}</span>
-                </p>
-            </div>
-        </div>
-        <div class="form-group form__time clearfix">
-            <div class="field-container clearfix">
-                <div class="col-half">
-                    <p class="form-control form-time">Durasi</p>
-                </div>
-                <div class="col-half">
-                    <select class="form-control" name="nightclass">
-                        <option value="">1 Malam</option>
-                        <option value="">2 Malam</option>
-                        <option value="">3 Malam</option>
-                        <option value="">4 Malam</option>
-                        <option value="">5 Malam</option>
-                        <option value="">6 Malam</option>
-                        <option value="">7 Malam</option>
-                        <option value="">8 Malam</option>
-                    </select>
+        <div class="top-wrap">
+            <div class="form-group form__hotel">
+                <div class="field-container">
+                    <p class="form-control form-hotel" ng-click="PageConfig.SetOverlay('hotel-select')">Tujuan <span class="hotel-placeholder">Kota, Wilayah atau Nama Hotel</span></p>
                 </div>
             </div>
-            <div class="checkout-date placeholder">Tanggal Keluar: Rab, 5 Okt 2016</div>
-        </div>
-        <div class="form-group form__room">
-            <div class="field-container clearfix">
-                <div class="col-half">
-                    <p class="form-control form-room">Jumlah Kamar</p>
+            <div class="form-group form__date">
+                <div class="field-container">
+                    <p class="form-control form-date" ng-click="DatePicker.SetOption({Target : 'departure'}, ' '); PageConfig.SetOverlay('datepicker-hotel')">
+                        Tanggal Masuk <span class="date-placeholder">{{FlightSearchForm.DepartureDate | date : 'EEE, dd MMM yyyy'}}</span>
+                    </p>
                 </div>
-                <div class="col-half">
-                    <select class="form-control" name="roomclass">
-                        <option value="">1 Kamar</option>
-                        <option value="">2 Kamar</option>
-                        <option value="">3 Kamar</option>
-                        <option value="">4 Kamar</option>
-                        <option value="">5 Kamar</option>
-                        <option value="">6 Kamar</option>
-                        <option value="">7 Kamar</option>
-                        <option value="">8 Kamar</option>
-                    </select>
+            </div>
+            <div class="form-group form__time clearfix">
+                <div class="field-container clearfix">
+                    <div class="col-half">
+                        <p class="form-control form-time">Durasi</p>
+                    </div>
+                    <div class="col-half">
+                        <select class="form-control" name="nightclass">
+                            <option value="">1 Malam</option>
+                            <option value="">2 Malam</option>
+                            <option value="">3 Malam</option>
+                            <option value="">4 Malam</option>
+                            <option value="">5 Malam</option>
+                            <option value="">6 Malam</option>
+                            <option value="">7 Malam</option>
+                            <option value="">8 Malam</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="checkout-date placeholder">Tanggal Keluar: Rab, 5 Okt 2016</div>
+            </div>
+            <div class="form-group form__room">
+                <div class="field-container clearfix">
+                    <div class="col-half">
+                        <p class="form-control form-room">Jumlah Kamar</p>
+                    </div>
+                    <div class="col-half">
+                        <select class="form-control" name="roomclass">
+                            <option value="">1 Kamar</option>
+                            <option value="">2 Kamar</option>
+                            <option value="">3 Kamar</option>
+                            <option value="">4 Kamar</option>
+                            <option value="">5 Kamar</option>
+                            <option value="">6 Kamar</option>
+                            <option value="">7 Kamar</option>
+                            <option value="">8 Kamar</option>
+                        </select>
+                    </div>
                 </div>
             </div>
         </div>
         <div class="form-group form__visitor clearfix">
-            <div class="clearfix">
+            <div class="mid-wrap clearfix">
                 <div class="field-container form-v-adult col-half">
                     <div class="field-wrapper form-adult">
                         <select class="form-control" name="adultclass">
@@ -158,7 +160,7 @@
             </div>
         </div>
     </div>
-    <div class="form-group form__submit">
+    <div class="bottom-wrap form-group form__submit">
         <button class="btn btn-yellow btn-block btn-lg btnSubmit">CARI HOTEL</button>
     </div>
 </form>

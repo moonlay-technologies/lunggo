@@ -397,7 +397,9 @@
 }
 .tab-content {
     .tp-flight .form-wrapper {padding: 20px 15px;}
-    .tp-hotel .form-wrapper {padding: 0 12px 20px;}
+    .tp-hotel .form-wrapper {padding: 0;
+        .top-wrap, .mid-wrap, .bottom-wrap {padding: 0 12px;} 
+    }
 }
 .col-custom-logo {
     &.icon-adult:before {
