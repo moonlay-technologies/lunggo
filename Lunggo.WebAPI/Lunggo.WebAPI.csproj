@@ -366,6 +366,7 @@
     <None Include="Properties\PublishProfiles\travorama-prod-api__staging2 %284%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-prod-api__staging2 %285%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-prod-api__staging2 %286%29.pubxml" />
+    <None Include="Properties\PublishProfiles\travorama-prod-api__staging2 %287%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-prod-api__staging2.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-qa-api.pubxml" />
     <None Include="Web.Debug.config">

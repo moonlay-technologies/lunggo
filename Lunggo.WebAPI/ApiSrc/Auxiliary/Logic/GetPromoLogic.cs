@@ -73,12 +73,12 @@ namespace Lunggo.WebAPI.ApiSrc.Auxiliary.Logic
                     BannerUrl = "http://www.travorama.com/Assets/images/banner/standard-web-banner.jpg",
                     DetailsUrl = ""
                 },
-                //new FeaturedPromo
-                //{
-                //    Id = "2",
-                //    BannerUrl = "http://www.travorama.com/Assets/images/campaign/PromoBTN/PromoBTN-slider-app.jpg",
-                //    DetailsUrl = "http://www.travorama.com/id/promo/btnwebview"
-                //}
+                new FeaturedPromo
+                {
+                    Id = "2",
+                    BannerUrl = "http://www.travorama.com/Assets/images/campaign/PromoBTN/PromoBTN-slider-app.jpg",
+                    DetailsUrl = "http://www.travorama.com/id/promo/btnwebview"
+                }
             };
         }
     }
