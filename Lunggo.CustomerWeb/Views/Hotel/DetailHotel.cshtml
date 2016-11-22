@@ -3,8 +3,8 @@
     ViewBag.BodyClass = "page-hotel page-detail";
     ViewBag.Title = "Detail Hotel";
     ViewBag.AngularController = "hotelDetailController";
-    
-  
+
+
 }
 
 @section AdditionalCSS{
@@ -30,7 +30,7 @@
     <script>accordionFunctions()</script>
     <script src="/Assets/travorama20/angularDirectory/search/hotelSearch.service.js"></script>
     <script src="/Assets/travorama20/angularDirectory/common/hotelAutocomplete.service.js"></script>
-                }
+}
 
 @Html.Partial("/Views/Hotel/Shared/Desktop/_PageSlider.cshtml")
 <div class="travorama-hotel" ng-init="init(@Newtonsoft.Json.JsonConvert.SerializeObject(Model))">
@@ -59,9 +59,9 @@
                             <ul id="image-gallery" class="gallery list-unstyled cS-hidden">
                                 <li data-thumb="{{image}}" alt-image ng-repeat="image in hotel.images">
                                     <div test="{{image}}" alt-image style="background-image: url({{image}}); width: 100%; height: 590px; background-size: cover; background-position: center center;"></div>
-                                        </li>
-                                    </ul>
-                                </div>
+                                </li>
+                            </ul>
+                        </div>
                         <div class="col-right-slider">
                             <div class="rs-title md-txt">Review Hotel</div>
                             <div class="rs-list rs-rating clearfix">
@@ -156,8 +156,8 @@
                     <ul class="room-list-container">
                         <li ng-show="$index+1 <= roomCount" ng-repeat="room in hotel.room track by $index">
                             <div class="room-list clearfix">
-                                <div class="room-left" ng-show="room.roomImages.length <= 0"><img ng-src="/Assets/travorama20/images/Hotel/room.jpg" alt="Room" /></div>
-                                <div class="room-left" ng-show="room.roomImages.length > 0"><img alt-image ng-src="{{room.roomImages[0]}}" alt="Room" /></div>
+                                <div class="room-left" ng-show="room.roomImages.length <= 0"><div class="no-room-pic"></div></div>
+                                <div class="room-left" ng-show="room.roomImages.length > 0"><div class="room-pic" alt-image style="background-image: url({{room.roomImages[0]}});"></div></div>
                                 <div class="room-right clearfix">
                                     <div class="room-rl">
                                         <div class="blue-txt md-txt"><b>{{room.roomName}}</b></div>
@@ -194,13 +194,18 @@
                             <div class="hotel-detail clearfix">
                                 <div class=" col-left-result">
                                     <div class="col-left-top clearfix">
-                                        <div class="hd-slider">
-                                            <div class="item active">
+                                        <div class="sm-slider">
+                                            @*<div class="item active">
                                                 <img src="/Assets/travorama20/images/Hotel/mini-slider.jpg" />
-                                            </div>
-                                            @*<div class="item">
-                                                <img src="/Assets/travorama20/images/Hotel/mini-slider.jpg" />
-                                            </div>*@
+                            </div>*@
+                                            <ul class="room-gallery gallery list-unstyled cS-hidden">
+                                                <li data-thumb="/Assets/travorama20/images/Hotel/mini-slider.jpg">
+                                                    <div style="background-image: url(/Assets/travorama20/images/Hotel/mini-slider.jpg); width: 100%; height: 145px; background-size: cover; background-position: center center;"></div>
+                                                </li>
+                                                <li data-thumb="/Assets/travorama20/images/Hotel/mini-slider.jpg">
+                                                    <div style="background-image: url(/Assets/travorama20/images/Hotel/mini-slider.jpg); width: 100%; height: 145px; background-size: cover; background-position: center center;"></div>
+                                                </li>
+                                            </ul>
                                         </div>
                                         <div class="total-img"><b>1</b> / 20</div>
                                     </div>
@@ -234,22 +239,22 @@
                                                 </div>
                                             </li>
                                             @*<li class="hd-point">
-                                                <div class="hd-title blue-txt">Fasilitas </div>
-                                                <div class="hd-txt clearfix">
-                                                    <ul class="blue-list quarter">
-                                                        <li>Bed</li>
-                                                    </ul>
-                                                    <ul class="blue-list quarter">
-                                                        <li>Bed</li>
-                                                    </ul>
-                                                    <ul class="blue-list quarter">
-                                                        <li>Bed</li>
-                                                    </ul>
-                                                    <ul class="blue-list quarter">
-                                                        <li>Bed</li>
-                                                    </ul>
-                                                </div>
-                                            </li>*@
+                <div class="hd-title blue-txt">Fasilitas </div>
+                <div class="hd-txt clearfix">
+                    <ul class="blue-list quarter">
+                        <li>Bed</li>
+                    </ul>
+                    <ul class="blue-list quarter">
+                        <li>Bed</li>
+                    </ul>
+                    <ul class="blue-list quarter">
+                        <li>Bed</li>
+                    </ul>
+                    <ul class="blue-list quarter">
+                        <li>Bed</li>
+                    </ul>
+                </div>
+            </li>*@
                                         </ul>
                                     </div>
 
@@ -272,8 +277,8 @@
                     <div class="ih-accordion">
                         <div class="accordion-wrapper">
                             <div class="accordion-title accordion md-txt" id="menu-facility">Fasilitas Hotel</div>
-                            <div class="accordion-content show" ng-repeat="facilities in hotel.facilities track by $index" ng-hide="facilities === undefined">
-                                <div class="ih-row fc clearfix">
+                            <div class="accordion-content show">
+                                <div class="ih-row clearfix" ng-repeat="facilities in hotel.facilities track by $index" ng-hide="facilities === undefined">
                                     <div class="col-2">
                                         <div class="ih-left" ng-class="{'general-lg-icon':facilities.facilityGroup == 'general',
                                                                         'health-lg-icon':facilities.facilityGroup == 'health',

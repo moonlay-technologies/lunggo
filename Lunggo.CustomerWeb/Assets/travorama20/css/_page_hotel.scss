@@ -426,6 +426,19 @@
     }
     
     /*Shared Page*/
+    .search-calendar-hotel {position:absolute; top:150px; width:670px; height:300px;
+        .calendar-body {padding-top:0;}
+        .hotel-date-picker {padding-left:30px; padding-right:30px;}
+        .ui-datepicker {
+            &:before, &:after {@include clearfix();}
+        }
+        .ui-datepicker-group {width:300px; float:left;}
+        .ui-datepicker-group-last {border-top:none !important; border-left:$border-default;}
+        .ui-datepicker-prev {background:url(/Assets/images/calendar-sprite.png) no-repeat; width:22px; height:37px; text-indent:-1000px; top:80px !important; left:-15px !important; overflow:hidden;}
+        .ui-datepicker-next {background:url(/Assets/images/calendar-sprite.png) no-repeat; background-position:-22px; width:22px; height:37px; text-indent:-1000px; top:80px !important; left:auto !important; right:-15px !important; overflow:hidden;}
+        &#departure {left:5px;}
+        &#return {left:155px;}
+    }
     .page-slider {
         background: url('/Assets/travorama20/images/Hotel/header-bg.jpg');
         background-size: cover;
@@ -473,7 +486,7 @@
             top: 405px;
             left: initial;
             max-height: 320px;
-            width: 908px;
+            width: 670px;
         }
         /*form search hotel*/
         form[name="hotel-form"]{

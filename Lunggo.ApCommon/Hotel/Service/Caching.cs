@@ -146,6 +146,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                 {
                 }
             }
+            return DateTime.UtcNow;
         }
 
         public HotelDetailsBase GetSelectedHotelDetailsFromCache(string token)

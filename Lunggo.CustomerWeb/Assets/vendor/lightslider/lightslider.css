@@ -154,7 +154,7 @@
     display: block;
     top: 50%;
     height: 32px;
-    background: red;
+    background-image: none;
     cursor: pointer;
     position: absolute;
     z-index: 99;

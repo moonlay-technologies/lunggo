@@ -167,9 +167,12 @@ if (typeof(angular) == 'object') {
                 attrs.$observe('test', function (test) {
                     isImage(test).then(function () {
                     }, function () {
+                        var altImagePath = document.location.origin + '/Assets/travorama20/images/Hotel/no-hotel-lg.png';
+                        $log.debug('image not exist');
+
                         element.removeAttr('style');
                         element.attr('style', "background-image: url(" + altImagePath + "); width: 100%; height: 590px; background-size: cover; background-position: center center;"); // set default image
-                });
+                    });
                 });
 
                 //attrs.$observe('altImage', function (altImage) {
