@@ -76,8 +76,14 @@ namespace Lunggo.WebAPI.ApiSrc.Auxiliary.Logic
                 new FeaturedPromo
                 {
                     Id = "2",
-                    BannerUrl = "http://www.travorama.com/Assets/images/campaign/PromoBTN/PromoBTN-slider-app.jpg",
-                    DetailsUrl = "http://www.travorama.com/id/promo/btnwebview"
+                    BannerUrl = "http://www.travorama.com/Assets/images/campaign/OnlineRevolution2016/OnlineRevolution-slider-mobile.jpg",
+                    DetailsUrl = "http://www.travorama.com/id/promo/onlinerevolutionwebview"
+                },
+                new FeaturedPromo
+                {
+                    Id = "3",
+                    BannerUrl = "http://www.travorama.com/Assets/images/campaign/MatahariMall2016/MatahariMall-slider-mobile.jpg",
+                    DetailsUrl = "http://www.travorama.com/id/promo/MatahariMallWebView"
                 }
             };
         }

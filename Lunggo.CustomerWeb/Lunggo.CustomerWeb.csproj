@@ -705,7 +705,15 @@
     <Content Include="Assets\images\campaign\malaysia-text.png" />
     <Content Include="Assets\images\campaign\malaysia-thumb.jpg" />
     <Content Include="Assets\images\campaign\malaysia.jpg" />
+    <Content Include="Assets\images\campaign\MatahariMall2016\MatahariMall-page-mobile.jpg" />
+    <Content Include="Assets\images\campaign\MatahariMall2016\MatahariMall-page.jpg" />
+    <Content Include="Assets\images\campaign\MatahariMall2016\MatahariMall-slider-mobile.jpg" />
+    <Content Include="Assets\images\campaign\MatahariMall2016\MatahariMall-slider.jpg" />
     <Content Include="Assets\images\campaign\MobileApp\mobile-app-banner.jpg" />
+    <Content Include="Assets\images\campaign\OnlineRevolution2016\OnlineRevolution-page-mobile.jpg" />
+    <Content Include="Assets\images\campaign\OnlineRevolution2016\OnlineRevolution-page.jpg" />
+    <Content Include="Assets\images\campaign\OnlineRevolution2016\OnlineRevolution-slider-mobile.jpg" />
+    <Content Include="Assets\images\campaign\OnlineRevolution2016\OnlineRevolution-slider.jpg" />
     <Content Include="Assets\images\campaign\PromoBTN\PromoBTN-slider-mobile.jpg" />
     <Content Include="Assets\images\campaign\PromoBTN\PromoBTN-slider-app.jpg" />
     <Content Include="Assets\images\campaign\PromoBTN\PromoBTN-slider-bg.jpg" />
@@ -739,6 +747,12 @@
     <Content Include="Assets\vendor\dotdotdot\jquery.dotdotdot.js" />
     <Content Include="Assets\vendor\dotdotdot\jquery.dotdotdot.min.js" />
     <Content Include="Assets\vendor\dotdotdot\jquery.dotdotdot.min.umd.js" />
+    <Content Include="Campaign\MatahariMall\css\promo-mataharimall.css">
+      <DependentUpon>promo-mataharimall.scss</DependentUpon>
+    </Content>
+    <Content Include="Campaign\MatahariMall\css\promo-mataharimall.min.css">
+      <DependentUpon>promo-mataharimall.css</DependentUpon>
+    </Content>
     <Content Include="Campaign\MobileAppCampaign\css\travorama-mobileApp.css" />
     <Content Include="Campaign\MobileAppCampaign\css\travorama-mobileApp.min.css">
       <DependentUpon>travorama-mobileApp.css</DependentUpon>
@@ -1329,6 +1343,12 @@
     <Content Include="Campaign\Imlek2016\images\wrapper-bg.png" />
     <Content Include="Assets\vendor\transitJS\jquery.transit.min.js" />
     <Content Include="Campaign\Imlek2016\js\imlek2016.js" />
+    <Content Include="Campaign\MatahariMall\css\promo-btn.css">
+      <DependentUpon>promo-mataharimall.scss</DependentUpon>
+    </Content>
+    <Content Include="Campaign\MatahariMall\css\promo-btn.min.css">
+      <DependentUpon>promo-btn.css</DependentUpon>
+    </Content>
     <Content Include="Campaign\PromoBTN\css\promo-btn.css">
       <DependentUpon>promo-btn.scss</DependentUpon>
     </Content>
@@ -1473,6 +1493,7 @@
     <Content Include="Assets\fonts\bootstrap\glyphicons-halflings-regular.ttf" />
     <Content Include="Assets\fonts\bootstrap\glyphicons-halflings-regular.woff" />
     <Content Include="Assets\fonts\bootstrap\glyphicons-halflings-regular.woff2" />
+    <Content Include="Campaign\MatahariMall\css\promo-mataharimall.scss" />
     <None Include="Properties\PublishProfiles\prod-cw %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\dv1-cw.pubxml" />
     <None Include="Properties\PublishProfiles\dv2-cw.pubxml" />
@@ -2834,14 +2855,17 @@
     <Content Include="Views\HelpSection\FAQs.cshtml" />
     <Content Include="Views\HelpSection\How-To.cshtml" />
     <Content Include="Views\StaticPage\TravoramaMobileApp.cshtml" />
-    <Content Include="Views\Promo\Btn.cshtml" />
-    <Content Include="Views\Promo\Btn.mobile.cshtml" />
-    <Content Include="Views\Promo\BtnWebview.cshtml" />
+    <Content Include="Views\Promo\OnlineRevolution.cshtml" />
+    <Content Include="Views\Promo\OnlineRevolution.mobile.cshtml" />
+    <Content Include="Views\Promo\OnlineRevolutionWebview.cshtml" />
     <Content Include="Views\Shared\GlobalError.cshtml" />
     <Content Include="Views\Shared\GlobalError.mobile.cshtml" />
     <Content Include="Views\Hotel\Search.cshtml" />
     <Content Include="Views\StaticPage\GlobalError.cshtml" />
     <Content Include="Views\StaticPage\GlobalError.mobile.cshtml" />
+    <Content Include="Views\Promo\MatahariMallWebview.cshtml" />
+    <Content Include="Views\Promo\MatahariMall.mobile.cshtml" />
+    <Content Include="Views\Promo\MatahariMall.cshtml" />
     <None Include="Views\Template\eticket.cshtml" />
     <Content Include="Views\Template\OrderFlightHistory.cshtml" />
     <Content Include="Views\Template\PrivacyPolicy.cshtml" />

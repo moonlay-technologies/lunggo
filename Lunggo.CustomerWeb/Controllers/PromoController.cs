@@ -9,12 +9,22 @@ namespace Lunggo.CustomerWeb.Controllers
     public class PromoController : Controller
     {
         // GET: Promo
-        public ActionResult Btn()
+        public ActionResult OnlineRevolution()
         {
             return View();
         }
 
-        public ActionResult BtnWebview()
+        public ActionResult OnlineRevolutionWebview()
+        {
+            return View();
+        }
+
+        public ActionResult MatahariMall()
+        {
+            return View();
+        }
+
+        public ActionResult MatahariMallWebView()
         {
             return View();
         }
