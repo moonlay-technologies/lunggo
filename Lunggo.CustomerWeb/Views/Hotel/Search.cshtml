@@ -14,6 +14,7 @@
 }
 @{
     long loc = 0;
+    //var found = HotelService.GetInstance()._Autocompletes.TryGetValue(Convert.ToInt64(Model.Location), out loc);
 }
 @section AdditionalJS {
     @*<script src="/Assets/js/angular.min.js"></script>
@@ -191,8 +192,8 @@
                                 </div>
                                 
                                 <div class="location">
-                                    <div>{{hotel.address}}</div>
-                                    {{hotel.city}}
+                                    <div>{{hotel.address}} {{hotel.zone}}</div>
+                                    {{hotel.city}}<span ng-show ="hotel.postalCd != null || hotel.postalCd.length > 0">, {{hotel.postalCd}}</span>
                                 </div>
                                 @*=================== ini review row ================*@
                                 <div class="review clearfix">

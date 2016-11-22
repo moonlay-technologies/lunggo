@@ -19,6 +19,7 @@
     var totalChild = 0;
     var images = new List<Image>();
     var hotelImg = "";
+    var listAges = new List<int>();
     var roomImg = "";
     try
     {
@@ -52,6 +53,11 @@
                     totalpax += (rate.AdultCount + rate.ChildCount) * rate.RoomCount;
                     totalAdult += rate.AdultCount;
                     totalChild += rate.ChildCount;
+                    if (rate.ChildCount <= 0)
+                    {
+                        continue;
+                    }
+                    listAges.AddRange(rate.ChildrenAges);
                 }
                 orderedRooms.Add(new Tuple<string, int>(roomName, sum)); ;
             }
@@ -772,8 +778,8 @@
                                                     </div>
                                                 </div>
                                                 <div class="wt-bottom">
-                                                    @ToTitleCase(reservation.HotelDetail.Address), @ToTitleCase(reservation.HotelDetail.ZoneName),
-                                                    @ToTitleCase(reservation.HotelDetail.DestinationName), @ToTitleCase(reservation.HotelDetail.CountryName)
+                                                    @ToTitleCase(reservation.HotelDetail.Address) @ToTitleCase(reservation.HotelDetail.ZoneName),
+                                                    @ToTitleCase(reservation.HotelDetail.DestinationName), @reservation.HotelDetail.PostalCode, @ToTitleCase(reservation.HotelDetail.CountryName)
                                                 </div>  
                                             </div>
                                             <div class="widget-bottom">
@@ -820,7 +826,24 @@
                                                 <div class="wb-container clearfix">
                                                     <div class="wb-left">Jumlah Tamu</div>
                                                     <div class="wb-mid">:</div>
-                                                    <div class="wb-right bold-txt">@totalAdult Dewasa, @totalChild Anak</div>
+                                                    <div class="wb-right bold-txt">@totalAdult Dewasa, @if (totalChild > 0)
+                                                    {
+                                                        <span>@totalChild Anak </span>
+                                                        <span>
+                                                            (@for (var a = 0; a < listAges.Count; a++)
+                                                            {
+                                                                if (a != listAges.Count - 1)
+                                                                {
+                                                                    @listAges[a]
+                                                                    <span>Tahun, </span>
+                                                                }
+                                                                else
+                                                                {
+                                                                    @listAges[a] <span>Tahun</span>
+                                                                }
+                                                            })
+                                                        </span>
+                                                    }</div>
                                                 </div>
                                             </div>
                                         </div>

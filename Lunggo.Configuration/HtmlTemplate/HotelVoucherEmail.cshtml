@@ -90,7 +90,7 @@
                                 }
                                 <p>
                                     <img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/location.png")" />@Model.HotelDetail.Address
-                                    @Model.HotelDetail.City, @Model.HotelDetail.CountryName
+                                    @Model.HotelDetail.DestinationName, @Model.HotelDetail.PostalCode, @Model.HotelDetail.CountryName
                                 </p>
                                 <p><img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/phone.png")" /> @Model.HotelDetail.PhonesNumbers[0] </p>
                             </td>
