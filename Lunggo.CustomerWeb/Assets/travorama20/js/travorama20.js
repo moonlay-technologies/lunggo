@@ -22,12 +22,18 @@ if (typeof(angular) == 'object') {
     //}
 
     app.run(function ($rootScope) {
-        $rootScope.traGetRange = function (count) {
+        $rootScope.traGetRange = function (max, min) {
+
+            var startFrom = 1;
+            if (min != null || min !== undefined) {
+                startFrom = min;
+            }
+
             var returnValue = [];
-            if (count < 1) {
+            if (max <= min) {
                 return returnValue;
             }
-            for (var i = 1; i <= count; i++) {
+            for (var i = startFrom; i <= max; i++) {
                 returnValue.push(i)
             }
             return returnValue;
@@ -1986,3 +1992,4 @@ function accordionFunctions() {
         }
     }
 }
+

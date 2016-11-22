@@ -32,7 +32,16 @@ namespace Lunggo.CustomerWeb.Controllers
 
         public ActionResult DetailHotel(string searchId, int hotelCd, string searchParam)
         {
-            return View(new { searchId, hotelCd, searchParam });
+            try
+            {
+                //HotelSearchApiRequest model = new HotelSearchApiRequest(query);
+
+                return View(new { searchId, hotelCd, searchParam });
+            }
+            catch (Exception ex)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, ex.Message);
+            }
         }
 
         //public ActionResult Checkout()

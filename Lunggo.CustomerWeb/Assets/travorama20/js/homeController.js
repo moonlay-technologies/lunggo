@@ -1,5 +1,5 @@
 ﻿// home controller
-app.controller('homeController', ['$scope', '$log', '$http', '$location', '$resource', '$timeout', 'searchService', function ($scope, $log, $http, $location, $resource, $timeout, searchService) {
+app.controller('homeController', ['$scope', '$log', '$http', '$location', '$resource', '$timeout', 'hotelSearchSvc', function ($scope, $log, $http, $location, $resource, $timeout, hotelSearchSvc) {
 
     $scope.departureDate = departureDate;
     $scope.topDestinations = topDestinations;
@@ -121,7 +121,7 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
     });
 
     $scope.hotel.searchHotel = function () {
-        searchService.gotoHotelSearch($scope.hotel);
+        hotelSearchSvc.gotoHotelSearch($scope.hotel);
     };
   
     $('.hotel-date-picker').datepicker({

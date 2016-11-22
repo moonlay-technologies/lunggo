@@ -1,5 +1,5 @@
 ﻿// home controller
-app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource', '$timeout', function ($scope, $log, $http, $resource, $timeout) {
+app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource', '$timeout', 'hotelSearchSvc', function ($scope, $log, $http, $resource, $timeout, hotelSearchSvc) {
 
     $scope.hotel = {};
     $scope.searchId = '';
@@ -17,11 +17,14 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
     $scope.minRoomCount = 3;
     $scope.maxRoomCount = 100;
 
+    hotelSearchSvc.initializeSearchForm($scope);
+
     $scope.init = function (model) {
         $log.debug(model);
         $scope.model = model;
         $scope.searchId = model.searchId;
         $scope.searchParam = model.searchParam;
+
         var maxImages = 6;
 
         var resource = $resource(HotelDetailsConfig.Url + '/:searchId/:hotelCd',
@@ -65,7 +68,6 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
                 }
             });
             $scope.hotel.images = tempHotelImages;
-
 
             $.each($scope.hotel.room, function(roomKey, room) {
                 $.each(room.roomImages, function(imageKey, roomImage) {

@@ -41,11 +41,13 @@
         });
     </script>
     <script>
-        var x = '@long.TryParse(Model.Location, out loc)';
+        var x = '@long.TryParse(Model.SearchParamObject.Location, out loc)';
         var loc = '@HotelService.GetInstance()._Autocompletes[loc].Name';
     </script>
-    <script src="/Assets/travorama20/js/hotelSearchController.js"></script>
     <script type="text/javascript" src="/Assets/travorama20/js/HotelController.js"></script>
+    <script src="/Assets/travorama20/angularDirectory/search/hotelSearch.service.js"></script>
+    <script src="/Assets/travorama20/angularDirectory/common/hotelAutocomplete.service.js"></script>
+<script src="/Assets/travorama20/js/hotelSearchController.js"></script>
 }
 
 @Html.Partial("/Views/Hotel/Shared/Desktop/_PageSlider.cshtml")

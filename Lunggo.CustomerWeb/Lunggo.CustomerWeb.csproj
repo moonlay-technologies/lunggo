@@ -262,6 +262,7 @@
     <Compile Include="Models\FlightSearchData.cs" />
     <Compile Include="Models\FlightSelectData.cs" />
     <Compile Include="Models\FlightThankyouData.cs" />
+    <Compile Include="Models\HotelDetailModel.cs" />
     <Compile Include="Models\HotelSearchModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -369,7 +370,8 @@
     <Content Include="Assets\mobile\images\sand-clock.png" />
     <Content Include="Assets\mobile\images\time.png" />
     <Content Include="Assets\mobile\js\HotelController.js" />
-    <Content Include="Assets\travorama20\angularDirectory\searchService.js" />
+    <Content Include="Assets\travorama20\angularDirectory\common\hotelAutocomplete.service.js" />
+    <Content Include="Assets\travorama20\angularDirectory\search\hotelSearch.service.js" />
     <Content Include="Assets\travorama20\images\Hotel\bed.png" />
     <Content Include="Assets\travorama20\images\Hotel\blue-sprite.png" />
     <Content Include="Assets\travorama20\images\Hotel\business-lg.png" />
