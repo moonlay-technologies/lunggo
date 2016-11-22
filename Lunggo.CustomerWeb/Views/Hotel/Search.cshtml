@@ -19,6 +19,7 @@
     @*<script src="/Assets/js/angular.min.js"></script>
     <script src="/Assets/js/angular-animate.min.js"></script>
     <script src="/Assets/js/angular-route.min.js"></script>*@
+
     <script src="/Assets/js/jquery-ui.min.js"></script>
     <script type="text/javascript" src="/Assets/js/jquery.ui.datepicker-id.js"></script>
     <script type="text/javascript" src="/Scripts/bootstrap.min.js"></script>
@@ -37,7 +38,7 @@
                 }
             });
             $("#amount").val("$" + $("#slider-range").slider("values", 0) +
-              " - $" + $("#slider-range").slider("values", 1));
+                " - $" + $("#slider-range").slider("values", 1));
         });
     </script>
     <script>
@@ -46,6 +47,9 @@
     </script>
     <script src="/Assets/travorama20/js/hotelSearchController.js"></script>
     <script type="text/javascript" src="/Assets/travorama20/js/HotelController.js"></script>
+    <script>
+        
+    </script>
 }
 
 @Html.Partial("/Views/Hotel/Shared/Desktop/_PageSlider.cshtml")
@@ -183,11 +187,11 @@
                                 </div>
                 
                                 <div ng-class="{
-                                     'star e-star': hotel.starRating == 1,
-                                     'star star-2 e-star': hotel.starRating == 2,
-                                     'star star-3 e-star': hotel.starRating == 3,
-                                     'star star-4 e-star': hotel.starRating == 4,
-                                     'star star-5': hotel.starRating == 5}">
+                                         'star e-star': hotel.starRating == 1,
+                                         'star star-2 e-star': hotel.starRating == 2,
+                                         'star star-3 e-star': hotel.starRating == 3,
+                                         'star star-4 e-star': hotel.starRating == 4,
+                                         'star star-5': hotel.starRating == 5}">
                                 </div>
                                 
                                 <div class="location">
@@ -218,19 +222,20 @@
                                 </div>
                             </div>
                         </div>
-                    <div class="pagination" ng-show="searchDone && returnedHotelCount > 0 && pageCount > 1">
-                        @*<div class="page-container">
-                            <a href="#" class="prev" ng-click="prevPage()"></a>
+                        <div class="pagination" ng-show="searchDone && returnedHotelCount > 0 && pageCount > 1">
+                            @*<div class="page-container">
+                                <a href="#" class="prev" ng-click="prevPage()"></a>
+                                Halaman
+                                <a href="#" class="next" ng-click="nextPage()"></a>
+                            </div>*@
                             Halaman
-                            <a href="#" class="next" ng-click="nextPage()"></a>
-                        </div>*@
-                        Halaman
-                        <div class="page-container">
-                            <a href="" class="prev" ng-click="page != 1 && prevPage()"></a>
-                            <ul class="page-list">
-                                <li><a href="#" ng-class="{active : pageNumber == page}" ng-repeat="pageNumber in traGetRange(pageCount) track by $index" ng-click="changePage(pageNumber)">{{pageNumber}}</a></li>
-                            </ul>
-                            <a href="" class="next" ng-click="page != pageCount && nextPage()"></a>
+                            <div class="page-container">
+                                <a href="" class="prev" ng-click="page != 1 && prevPage()"></a>
+                                <ul class="page-list">
+                                    <li><a href="#" ng-class="{active : pageNumber == page}" ng-repeat="pageNumber in traGetRange(pageCount) track by $index" ng-click="changePage(pageNumber)">{{pageNumber}}</a></li>
+                                </ul>
+                                <a href="" class="next" ng-click="page != pageCount && nextPage()"></a>
+                            </div>
                         </div>
                     </div>
                 </div>

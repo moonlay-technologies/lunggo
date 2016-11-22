@@ -1,4 +1,32 @@
 ﻿jQuery(document).ready(function ($) {
+        $('.hotel-date-picker').datepicker({
+            numberOfMonths: 2,
+            onSelect: function (date) {
+                date = date.substring(3, 5) + "/" + date.substring(0, 2) + "/" + date.substring(6, 10);
+                //console.log(data);
+                //$scope.setCheckinDate(data);
+
+                var scope = angular.element($('.hotel-date-picker')).scope();
+                $scope.setCheckinDate(scope, date);
+
+
+                $log.debug("checkinDate = " + date);
+                var target;
+                var chosenDate = new Date(date);
+                $(target + ' .date').html(('0' + chosenDate.getDate()).slice(-2));
+                $(target + ' .month').html(translateMonth(chosenDate.getMonth()));
+                $(target + ' .year').html(chosenDate.getFullYear());
+                $('.search-calendar-hotel').hide();
+                var cd = new Date(date);
+                var checkoutDate = new Date(cd.setDate(cd.getDate() + $scope.hotel.nightCount));
+                var dd = checkoutDate.getDate();
+                var mm = checkoutDate.getMonth() + 1;
+                var yyyy = checkoutDate.getFullYear();
+                var d = yyyy + '-' + mm + '-' + dd;
+                $scope.hotel.checkoutDate = moment(checkoutDate, "MM-DD-YYYY");
+                $log.debug("checkout date = " + $scope.hotel.checkoutDate);
+            }
+        });
     //// **********
     //// Custom Checkbox
     //$('body .sqr').on('click', function () {
