@@ -630,8 +630,16 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     color: #656565;
     padding: 10px;
     font-weight: bold; }
+  .overlay.overlay--airport-select .overlay__content ul.result li.airport, .overlay.overlay--hotel-select .overlay__content ul.result li.airport {
+    padding: 10px 0; }
+  .overlay.overlay--airport-select .overlay__content ul.result li.hotel, .overlay.overlay--hotel-select .overlay__content ul.result li.hotel {
+    padding: 10px 0 30px; }
+    .overlay.overlay--airport-select .overlay__content ul.result li.hotel .hotel__location, .overlay.overlay--hotel-select .overlay__content ul.result li.hotel .hotel__location {
+      font-size: 13px; }
+    .overlay.overlay--airport-select .overlay__content ul.result li.hotel .hotel__link:hover, .overlay.overlay--hotel-select .overlay__content ul.result li.hotel .hotel__link:hover {
+      background: #bfeeff;
+      text-decoration: none; }
   .overlay.overlay--airport-select .overlay__content ul.result li.airport, .overlay.overlay--airport-select .overlay__content ul.result li.hotel, .overlay.overlay--hotel-select .overlay__content ul.result li.airport, .overlay.overlay--hotel-select .overlay__content ul.result li.hotel {
-    padding: 10px 0;
     position: relative; }
     .overlay.overlay--airport-select .overlay__content ul.result li.airport .airport__link, .overlay.overlay--airport-select .overlay__content ul.result li.airport .hotel__link, .overlay.overlay--airport-select .overlay__content ul.result li.hotel .airport__link, .overlay.overlay--airport-select .overlay__content ul.result li.hotel .hotel__link, .overlay.overlay--hotel-select .overlay__content ul.result li.airport .airport__link, .overlay.overlay--hotel-select .overlay__content ul.result li.airport .hotel__link, .overlay.overlay--hotel-select .overlay__content ul.result li.hotel .airport__link, .overlay.overlay--hotel-select .overlay__content ul.result li.hotel .hotel__link {
       position: absolute;
@@ -1437,7 +1445,8 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
   .page.page-home.burger-shown {
     overflow-y: hidden; }
   .page.page-home .form-container {
-    /*Column*/ }
+    /*Column*/
+    /*Font style*/ }
     .page.page-home .form-container .form-wrapper {
       margin: 0 0 15px;
       min-height: 100%;
@@ -1848,6 +1857,12 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
       float: left;
       position: relative;
       min-height: 1px; }
+    .page.page-home .form-container .blue-txt {
+      color: #2fb4e6; }
+    .page.page-home .form-container .semibold-txt {
+      font-weight: 600; }
+    .page.page-home .form-container .bold-txt {
+      font-weight: 700; }
   .page.page-home .overlay.overlay--datepicker {
     overflow: hidden; }
   .page.page-home .calendar-container .ui-datepicker {
@@ -2106,6 +2121,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     padding-bottom: 3px; }
 .page.page-flight .overlay.overlay--flight-form .overlay__content {
   /*Column*/
+  /*Font style*/
   min-height: auto;
   padding: 0; }
   .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper {
@@ -2518,6 +2534,12 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     float: left;
     position: relative;
     min-height: 1px; }
+  .page.page-flight .overlay.overlay--flight-form .overlay__content .blue-txt {
+    color: #2fb4e6; }
+  .page.page-flight .overlay.overlay--flight-form .overlay__content .semibold-txt {
+    font-weight: 600; }
+  .page.page-flight .overlay.overlay--flight-form .overlay__content .bold-txt {
+    font-weight: 700; }
 .page.page-flight .overlay.overlay--datepicker .overlay__content {
   max-width: 340px;
   margin: 0 auto 15px;
@@ -4715,6 +4737,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
       padding: 0 15px 30px; }
   .page-hotel .overlay.overlay--hotel-form .overlay__content {
     /*Column*/
+    /*Font style*/
     min-height: auto;
     padding: 0; }
     .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper {
@@ -5127,3 +5150,9 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
       float: left;
       position: relative;
       min-height: 1px; }
+    .page-hotel .overlay.overlay--hotel-form .overlay__content .blue-txt {
+      color: #2fb4e6; }
+    .page-hotel .overlay.overlay--hotel-form .overlay__content .semibold-txt {
+      font-weight: 600; }
+    .page-hotel .overlay.overlay--hotel-form .overlay__content .bold-txt {
+      font-weight: 700; }
