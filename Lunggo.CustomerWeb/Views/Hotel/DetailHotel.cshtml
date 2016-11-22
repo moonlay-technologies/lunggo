@@ -28,6 +28,8 @@
     <script src="/Assets/travorama20/js/hotelDetailController.js"></script>
     <script type="text/javascript" src="/Assets/travorama20/js/HotelController.js"></script>
     <script>accordionFunctions()</script>
+    <script src="/Assets/travorama20/angularDirectory/search/hotelSearch.service.js"></script>
+    <script src="/Assets/travorama20/angularDirectory/common/hotelAutocomplete.service.js"></script>
                 }
 
 @Html.Partial("/Views/Hotel/Shared/Desktop/_PageSlider.cshtml")
@@ -153,106 +155,106 @@
                     </div>
                     <ul class="room-list-container">
                         <li ng-show="$index+1 <= roomCount" ng-repeat="room in hotel.room track by $index">
-                                        <div class="room-list clearfix">
+                            <div class="room-list clearfix">
                                 <div class="room-left" ng-show="room.roomImages.length <= 0"><img ng-src="/Assets/travorama20/images/Hotel/room.jpg" alt="Room" /></div>
                                 <div class="room-left" ng-show="room.roomImages.length > 0"><img alt-image ng-src="{{room.roomImages[0]}}" alt="Room" /></div>
-                                            <div class="room-right clearfix">
-                                                <div class="room-rl">
-                                                    <div class="blue-txt md-txt"><b>{{room.roomName}}</b></div>
-                                                    <div class="facility"></div>
-                                                    <div class="max-people">Maks <b>{{room.paxCapacity}} orang / kamar</b></div>
-                                        <div ng-show="room.rate.isRefundable">Pembatalan Gratis </div>
+                                <div class="room-right clearfix">
+                                    <div class="room-rl">
+                                        <div class="blue-txt md-txt"><b>{{room.roomName}}</b></div>
+                                        <div class="facility"></div>
+                                        <div class="max-people">Maks <b>{{room.paxCapacity}} orang / kamar</b></div>
+                                        <div ng-show="roomIsRefundable(room, $index)">Pembatalan Gratis </div>
                                         <div ng-show="!room.rate.isRefundable">Kebijakan Pembatalan Berlaku </div>
-                                                    <div class="info-room">
-                                                        <span class="info-icon italic-txt">i</span>
-                                                        <span class="blue-txt sm-txt">Info Kamar</span>
-                                                    </div>
+                                        <div class="info-room">
+                                            <span class="info-icon italic-txt">i</span>
+                                            <span class="blue-txt sm-txt">Info Kamar</span>
+                                        </div>
 
+                                    </div>
+                                    <div class="room-rm">
+                                        <div class="dropdown-container">
+                                            <div class="form-control change-room">
+                                                <span>1</span>
+                                                <div class="option">
+                                                    <span data-value="y">2</span>
+                                                    <span data-value="c">3</span>
+                                                    <span data-value="f">4</span>
                                                 </div>
-                                                <div class="room-rm">
-                                                    <div class="dropdown-container">
-                                                        <div class="form-control change-room">
-                                                            <span>1</span>
-                                                            <div class="option">
-                                                                <span data-value="y">2</span>
-                                                                <span data-value="c">3</span>
-                                                                <span data-value="f">4</span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="room-rr">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="room-rr">
                                         <div class="underline-txt">Rp {{room.rate.originalFare | number}}</div>
                                         <div class="lg-txt"><b><sup>Rp</sup> {{room.rate.netFare | number}}</b></div>
-                                                    <div class="xs-txt">*Harga Termasuk Pajak & Service Charge</div>
-                                                    <a href="" class="btn btn-yellow small" ng-click="bookRoom(room)">PESAN</a>
-                                                </div>
+                                        <div class="xs-txt">*Harga Termasuk Pajak & Service Charge</div>
+                                        <a href="" class="btn btn-yellow small" ng-click="bookRoom(room)">PESAN</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="hotel-detail clearfix">
+                                <div class=" col-left-result">
+                                    <div class="col-left-top clearfix">
+                                        <div class="hd-slider">
+                                            <div class="item active">
+                                                <img src="/Assets/travorama20/images/Hotel/mini-slider.jpg" />
                                             </div>
-                                        </div>
-                                        <div class="hotel-detail clearfix">
-                                            <div class=" col-left-result">
-                                                <div class="col-left-top clearfix">
-                                                    <div class="hd-slider">
-                                                        <div class="item active">
-                                                            <img src="/Assets/travorama20/images/Hotel/mini-slider.jpg" />
-                                                        </div>
                                             @*<div class="item">
-                                                            <img src="/Assets/travorama20/images/Hotel/mini-slider.jpg" />
+                                                <img src="/Assets/travorama20/images/Hotel/mini-slider.jpg" />
                                             </div>*@
-                                                    </div>
-                                                    <div class="total-img"><b>1</b> / 20</div>
-                                                </div>
-                                                <div class="col-left-bottom">
-                                                    <ul class="hd-list">
-                                                        <li class="hd-size">: 3 x 3 m</li>
-                                                        <li class="hd-bed">: {{room.rate.boardDesc}}</li>
-                                                        <li class="hd-view">: City View</li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                            <div class="col-right-result">
-                                                <div class="hd-right-container">
-                                                    <ul class="hd-description">
-                                                        <li class="hd-point">
+                                        </div>
+                                        <div class="total-img"><b>1</b> / 20</div>
+                                    </div>
+                                    <div class="col-left-bottom">
+                                        <ul class="hd-list">
+                                            <li class="hd-size">: 3 x 3 m</li>
+                                            <li class="hd-bed">: {{room.rate.boardDesc}}</li>
+                                            <li class="hd-view">: City View</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="col-right-result">
+                                    <div class="hd-right-container">
+                                        <ul class="hd-description">
+                                            <li class="hd-point">
                                                 <div class="hd-title blue-txt">Kebijakan Pembatalan</div>
-                                                            <div class="hd-txt">
+                                                <div class="hd-txt">
                                                     <span ng-repeat="cancellation in room.rate.cancellation track by $index">
                                                         @*Gratis pembatalan sebelum 17-Nov-2016 17:00.*@
-                                                        - Pembatalan setelah <span style="color:#1daee4">{{cancellation.startTime | date:'dd-MMM-yyyy HH:mm'}}</span>
-                                                        akan dikenakan biaya pembatalan sebesar <span style="color:#ff7200">Rp. {{cancellation.fee | number}}</span>.
+                                                        - Pembatalan setelah <span style="color:#1daee4">{{cancellation.startTime | date:'dd-MMM-yyyy '}}</span>
+                                                        akan dikenakan biaya pembatalan sebesar <span style="color:#ff7200">Rp. {{cancellation.singleFee | number}}</span>.
                                                         <br />
                                                     </span>
-                                                            </div>
-                                                        </li>
+                                                </div>
+                                            </li>
 
-                                                        <li class="hd-point">
+                                            <li class="hd-point">
                                                 <div class="hd-title blue-txt">Ketentuan Kamar</div>
-                                                            <div class="hd-txt">
+                                                <div class="hd-txt">
                                                     <span ng-repeat="tnc in room.rate.tnc">{{tnc}} <br /></span>
-                                                            </div>
-                                                        </li>
+                                                </div>
+                                            </li>
                                             @*<li class="hd-point">
-                                                            <div class="hd-title blue-txt">Fasilitas </div>
-                                                            <div class="hd-txt clearfix">
-                                                                <ul class="blue-list quarter">
-                                                                    <li>Bed</li>
-                                                                </ul>
-                                                                <ul class="blue-list quarter">
-                                                                    <li>Bed</li>
-                                                                </ul>
-                                                                <ul class="blue-list quarter">
-                                                                    <li>Bed</li>
-                                                                </ul>
-                                                                <ul class="blue-list quarter">
-                                                                    <li>Bed</li>
-                                                                </ul>
-                                                            </div>
-            </li>*@
+                                                <div class="hd-title blue-txt">Fasilitas </div>
+                                                <div class="hd-txt clearfix">
+                                                    <ul class="blue-list quarter">
+                                                        <li>Bed</li>
+                                                    </ul>
+                                                    <ul class="blue-list quarter">
+                                                        <li>Bed</li>
+                                                    </ul>
+                                                    <ul class="blue-list quarter">
+                                                        <li>Bed</li>
+                                                    </ul>
+                                                    <ul class="blue-list quarter">
+                                                        <li>Bed</li>
                                                     </ul>
                                                 </div>
+                                            </li>*@
+                                        </ul>
+                                    </div>
 
-                                            </div>
-                                        </div>
+                                </div>
+                            </div>
                         </li>
                     </ul>
                     <div class="hotel-result clearfix">
@@ -291,7 +293,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div><div class="">* fasilitas geratis / free of charge</div>
                             <div ng-show="hotel.description.length > 0" class="accordion-title accordion md-txt" id="menu-desc">Deskripsi Hotel</div>
                             <div ng-show="hotel.description.length > 0" class="accordion-content show">
                                 @*<div class="ih-title md-txt">“Clean rooms, Great location, Spotless beds”</div>*@

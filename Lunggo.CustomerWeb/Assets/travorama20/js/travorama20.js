@@ -22,12 +22,18 @@ if (typeof(angular) == 'object') {
     //}
 
     app.run(function ($rootScope) {
-        $rootScope.traGetRange = function (count) {
+        $rootScope.traGetRange = function (max, min) {
+
+            var startFrom = 1;
+            if (min != null || min !== undefined) {
+                startFrom = min;
+            }
+
             var returnValue = [];
-            if (count < 1) {
+            if (max <= min) {
                 return returnValue;
             }
-            for (var i = 1; i <= count; i++) {
+            for (var i = startFrom; i <= max; i++) {
                 returnValue.push(i)
             }
             return returnValue;
@@ -124,6 +130,8 @@ if (typeof(angular) == 'object') {
         return {
             restrict: 'A',
             link: function (scope, element, attrs) {
+                var altImagePath = document.location.origin + '/Assets/travorama20/images/Hotel/no-hotel.png';
+
                 var isImage = function (src) {
                     var deferred = $q.defer();
                     var image = new Image();
@@ -135,11 +143,7 @@ if (typeof(angular) == 'object') {
 
                 attrs.$observe('ngSrc', function (ngSrc) {
                     isImage(ngSrc).then(function() {
-                        $log.debug('image exist');
                     }, function() {
-                        var altImagePath = document.location.origin + '/Assets/travorama20/images/Hotel/no-hotel.png';
-                        $log.debug('image not exist');
-
                         element.removeAttr('src');
                         element.attr('src', altImagePath); // set default image
                     });
@@ -147,22 +151,14 @@ if (typeof(angular) == 'object') {
 
                 attrs.$observe('src', function (src) {
                     isImage(src).then(function () {
-                        $log.debug('image exist');
                     }, function () {
-                        var altImagePath = document.location.origin + '/Assets/travorama20/images/Hotel/no-hotel.png';
-                        $log.debug('image not exist');
-
                         element.attr('src', altImagePath); // set default image
                     });
                 });
 
                 attrs.$observe('dataThumb', function (dataThumb) {
                     isImage(dataThumb).then(function () {
-                        $log.debug('image exist');
                     }, function () {
-                        var altImagePath = document.location.origin + '/Assets/travorama20/images/Hotel/no-hotel.png';
-                        $log.debug('image not exist');
-
                         element.removeAttr('src');
                         element.attr('src', altImagePath); // set default image
                     });
@@ -170,14 +166,10 @@ if (typeof(angular) == 'object') {
 
                 attrs.$observe('test', function (test) {
                     isImage(test).then(function () {
-                        $log.debug('image exist');
                     }, function () {
-                        var altImagePath = document.location.origin + '/Assets/travorama20/images/Hotel/no-hotel.png';
-                        $log.debug('image not exist');
-
                         element.removeAttr('style');
                         element.attr('style', "background-image: url(" + altImagePath + "); width: 100%; height: 590px; background-size: cover; background-position: center center;"); // set default image
-                    });
+                });
                 });
 
                 //attrs.$observe('altImage', function (altImage) {
@@ -193,6 +185,18 @@ if (typeof(angular) == 'object') {
                 //});
                 
             }
+        };
+    })
+    app.directive('traOnEnter', function () {
+        return function (scope, element, attrs) {
+            element.bind("keydown keypress", function (event) {
+                if (event.which === 13) {
+                    scope.$apply(function () {
+                        scope.$eval(attrs.traOnEnter);
+                    });
+                    event.preventDefault();
+                }
+            });
         };
     });
 }
@@ -1999,3 +2003,4 @@ function accordionFunctions() {
         }
     }
 }
+

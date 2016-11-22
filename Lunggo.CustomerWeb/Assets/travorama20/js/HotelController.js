@@ -59,6 +59,8 @@ function customCheckbox() {
 });
 }
 
+
+
 //********************
 // hotel form search function
 jQuery(document).ready(function ($) {

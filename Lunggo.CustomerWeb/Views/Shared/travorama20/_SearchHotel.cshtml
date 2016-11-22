@@ -25,13 +25,13 @@
                     </div>
                     <div class="hotel-autocomplete-result">
                         @*<ul>
-                            <li ng-repeat="location in hotel.hotelAutocomplete track by $index" ng-model="hotel.location" ng-click="selectLocation(location)">
+                            <li ng-repeat="location in hotelSearch.hotelAutocomplete track by $index" ng-model="hotelSearch.location" ng-click="selectLocation(location)">
                                 <span style="width:83.333333333333336%; display: inline-block; ">{{location.name}}</span>
                                 <span style="width:16.666666666666664%; display: inline-block; float: right;font-weight: bolder">{{location.type}}</span>
                             </li>
                         </ul>*@
                         <ul>
-                            <li class="list-hotel" ng-repeat="location in hotel.hotelAutocomplete track by $index" ng-model="hotel.location" ng-click="selectLocation(location)">
+                            <li class="list-hotel" ng-repeat="location in hotelSearch.hotelAutocomplete track by $index" @*ng-model="hotelSearch.location"*@ ng-click="selectLocation(location)">
                                 <div class="list-row">
                                     <div class="lr-wrapper clearfix">
                                         <div class="col-6">
@@ -39,7 +39,7 @@
                                             <div class="zone">{{location.type}}</div>
                                         </div>
                                         <div class="col-4">
-                                            <div class="blue-txt semibold-txt pull-right">999 Hotel ditemukan</div>
+                                            <div class="blue-txt semibold-txt pull-right">{{location.numOfHotels}} Hotel ditemukan</div>
                                         </div>
                                     </div>
                                 </div>

@@ -1,5 +1,5 @@
 ﻿// home controller
-app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource', '$timeout', function ($scope, $log, $http, $resource, $timeout) {
+app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource', '$timeout', 'hotelSearchSvc', function ($scope, $log, $http, $resource, $timeout, hotelSearchSvc) {
 
     $scope.hotel = {};
     $scope.searchId = '';
@@ -17,11 +17,14 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
     $scope.minRoomCount = 3;
     $scope.maxRoomCount = 100;
 
+    hotelSearchSvc.initializeSearchForm($scope);
+
     $scope.init = function (model) {
         $log.debug(model);
         $scope.model = model;
         $scope.searchId = model.searchId;
         $scope.searchParam = model.searchParam;
+
         var maxImages = 6;
 
         var resource = $resource(HotelDetailsConfig.Url + '/:searchId/:hotelCd',
@@ -59,13 +62,13 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
 
             $.each($scope.hotel.images, function (key, value) {
                 loadedImages++;
-                tempHotelImages.push("http://photos.hotelbeds.com/giata/bigger/" + value);
+                //tempHotelImages.push("http://photos.hotelbeds.com/giata/bigger/" + value);
+                tempHotelImages.push(value);
                 if (loadedImages == maxImages) {
                     return false;
                 }
             });
             $scope.hotel.images = tempHotelImages;
-
 
             $.each($scope.hotel.room, function(roomKey, room) {
                 $.each(room.roomImages, function(imageKey, roomImage) {
@@ -79,12 +82,13 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
             $scope.hotel.checkoutDate = new Date(parseInt(cekout.substring(0, 4)), parseInt(cekout.substring(4, 6)) - 1, parseInt(cekout.substring(6, 8)));
             $scope.hotel.nightCount = new Date($scope.hotel.checkoutDate).getDate() - new Date($scope.hotel.checkinDate).getDate();
 
-            accordionFunctions();
+           
             setFacilityDisplay();
             //setTncDisplay();
             setDescriptionDisplay();
             $timeout(function() { hotelDetailFunctions(); }, 0);
-            $timeout(function() { initiateSlider(); }, 0);
+            $timeout(function () { initiateSlider(); }, 0);
+            $timeout(function () {  accordionFunctions(); }, 0);
 
 
             $log.debug($scope.hotel);
@@ -329,4 +333,27 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
         }, 0);
 
     }
+
+    $scope.isFreeRefund = function (room, index) {
+        if (room.rate.isRefundable) {
+            if (room.rate.cancellation !== undefined && room.rate.cancellation.length > 0) {
+                var cancellation = room.rate.cancellation;
+
+                var cancelTRUE = moment(cancellation[0].startTime).isAfter(moment(), 'day');
+
+
+                if (true) {
+
+                }
+                return cancelTRUE;
+            }
+            else {
+                console.log('room ' + index + ' is refundable but no cancellation rate');
+                return false;
+            }
+        }
+        else {
+            return false;
+        }
+    };
 }]);
