@@ -17,13 +17,25 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
     $scope.minRoomCount = 3;
     $scope.maxRoomCount = 100;
 
-    hotelSearchSvc.initializeSearchForm($scope);
 
     $scope.init = function (model) {
         $log.debug(model);
-        $scope.model = model;
         $scope.searchId = model.searchId;
         $scope.searchParam = model.searchParam;
+
+        hotelSearchSvc.initializeSearchForm($scope, model.searchParamObject);
+
+        ////$scope.hotel.searchId = $scope.model.searchId;
+        //$scope.hotelSearch.location = model.searchParamObject.location;
+        //$scope.hotelSearch.checkinDate = model.searchParamObject.checkinDate;
+        //$scope.hotelSearch.checkoutDate = model.searchParamObject.checkoutDate;
+        //$scope.hotelSearch.adultCount = model.searchParamObject.adultCount;
+        //$scope.hotelSearch.childCount = model.searchParamObject.childCount;
+        //$scope.hotelSearch.nightCount = new Date($scope.hotelSearch.checkoutDate).getDate() - new Date($scope.hotelSearch.checkinDate).getDate();
+        //$scope.hotelSearch.roomCount = model.searchParamObject.roomCount;
+        //$scope.hotelSearch.childrenAges = model.searchParamObject.childrenAges;
+        //$scope.hotelSearch.searchParamObject = model.searchParamObject;
+        //$scope.hotelSearch.searchParam = model.searchParam;
 
         var maxImages = 6;
 
@@ -45,21 +57,6 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
 
             var loadedImages = 0;
             var tempHotelImages = [];
-            //var tempHotelImagesLarge = [];
-            //var tempHotelImagesThumb = [];
-            //$.each($scope.hotel.images, function(key, value) {
-            //    tempHotelImagesLarge.push("http://photos.hotelbeds.com/giata/bigger/" + value);
-            //    tempHotelImagesThumb.push("http://photos.hotelbeds.com/giata/" + value);
-            //    loadedImages++;
-            //    if (loadedImages == maxImages) {
-            //        return false;
-            //    }
-            //});
-            //$scope.hotel.images = {
-            //    "imageLarge": tempHotelImagesLarge,
-            //    "imageThumb": tempHotelImagesThumb
-            //};
-
             $.each($scope.hotel.images, function (key, value) {
                 loadedImages++;
                 //tempHotelImages.push("http://photos.hotelbeds.com/giata/bigger/" + value);
@@ -72,7 +69,8 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
 
             $.each($scope.hotel.room, function(roomKey, room) {
                 $.each(room.roomImages, function(imageKey, roomImage) {
-                    $scope.hotel.room[roomKey].roomImages[imageKey] = "http://photos.hotelbeds.com/giata/" + roomImage;
+                    //$scope.hotel.room[roomKey].roomImages[imageKey] = "http://photos.hotelbeds.com/giata/" + roomImage;
+                    $scope.hotel.room[roomKey].roomImages[imageKey] = roomImage;
                 });
             });
             $scope.loc = $scope.hotel.city + ', ' + $scope.hotel.country;
@@ -82,14 +80,12 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
             $scope.hotel.checkoutDate = new Date(parseInt(cekout.substring(0, 4)), parseInt(cekout.substring(4, 6)) - 1, parseInt(cekout.substring(6, 8)));
             $scope.hotel.nightCount = new Date($scope.hotel.checkoutDate).getDate() - new Date($scope.hotel.checkinDate).getDate();
 
-           
             setFacilityDisplay();
             //setTncDisplay();
             setDescriptionDisplay();
             $timeout(function() { hotelDetailFunctions(); }, 0);
             $timeout(function () { initiateSlider(); }, 0);
             $timeout(function () {  accordionFunctions(); }, 0);
-
 
             $log.debug($scope.hotel);
 
@@ -175,10 +171,7 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
     $scope.hotelFilterDisplayInfo = undefined;
     $scope.filterDisabled = true;
 
-    //@Url.Action("Search", "Hotel")?zzz={{departureDate}}" method="POST"
     //=============== hotel start ======================
-
-  
 
     $scope.hotel.searchHotel = function () {
         $log.debug('searching hotel');
