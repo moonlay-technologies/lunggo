@@ -26,6 +26,7 @@ namespace Lunggo.ApCommon.Hotel.Model.Logic
         public decimal MinPrice { get; set; }
         public bool IsSpecificHotel { get; set; }
         public int? HotelCode { get; set; }
+        public string DestinationName { get; set; }
         public HotelFilterDisplayInfo HotelFilterDisplayInfo { get; set; }
     }
 }

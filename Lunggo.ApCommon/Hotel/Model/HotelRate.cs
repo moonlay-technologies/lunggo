@@ -82,6 +82,10 @@ namespace Lunggo.ApCommon.Hotel.Model
         public List<string> TermAndCondition { get; set; }
         [JsonProperty("isRefundable", NullValueHandling = NullValueHandling.Ignore)]
         public bool IsRefundable { get; set; }
+        [JsonProperty("isFreeCancel", NullValueHandling = NullValueHandling.Ignore)]
+        public bool IsFreeCancel { get; set; }
+        [JsonProperty("freeUntil", NullValueHandling = NullValueHandling.Ignore)]
+        public DateTime? FreeUntil { get; set; }
 
     }
 

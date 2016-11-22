@@ -9,6 +9,7 @@ using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.ApCommon.Payment.Service;
 using Lunggo.ApCommon.Product.Constant;
 using Lunggo.Framework.Config;
+using Lunggo.Framework.Extension;
 
 namespace Lunggo.ApCommon.Hotel.Service
 {
@@ -275,38 +276,59 @@ namespace Lunggo.ApCommon.Hotel.Service
                     case 70:
                         if (displayFacilities.General == null)
                             displayFacilities.General = new List<string>();
+                        if(!data.IsFree)
+                            displayFacilities.General.Add(GetHotelFacilityDescId(Convert.ToInt32(data.FullFacilityCode)) +" *");
+                        else
                         displayFacilities.General.Add(GetHotelFacilityDescId(Convert.ToInt32(data.FullFacilityCode)));
                         break;
                     case 71:
                         if (displayFacilities.Meal == null)
                             displayFacilities.Meal = new List<string>();
+                        if (!data.IsFree)
+                            displayFacilities.Meal.Add(GetHotelFacilityDescId(Convert.ToInt32(data.FullFacilityCode)) + " *");
+                        else
                         displayFacilities.Meal.Add(GetHotelFacilityDescId(Convert.ToInt32(data.FullFacilityCode)));
                         break;
                     case 72:
                         if (displayFacilities.Business == null)
                             displayFacilities.Business = new List<string>();
+                        if (!data.IsFree)
+                            displayFacilities.Business.Add(GetHotelFacilityDescId(Convert.ToInt32(data.FullFacilityCode)) + " *");
+                        else
                         displayFacilities.Business.Add(GetHotelFacilityDescId(Convert.ToInt32(data.FullFacilityCode)));
                         break;
                     case 73:
                         if (displayFacilities.Entertainment == null)
                             displayFacilities.Entertainment = new List<string>();
+                        if (!data.IsFree)
+                            displayFacilities.Entertainment.Add(GetHotelFacilityDescId(Convert.ToInt32(data.FullFacilityCode)) + " *");
+                        else
                         displayFacilities.Entertainment.Add(
                             GetHotelFacilityDescId(Convert.ToInt32(data.FullFacilityCode)));
                         break;
                     case 74:
                         if (displayFacilities.Health == null)
                             displayFacilities.Health = new List<string>();
+                        if (!data.IsFree)
+                            displayFacilities.Health.Add(GetHotelFacilityDescId(Convert.ToInt32(data.FullFacilityCode)) + " *");
+                        else
                         displayFacilities.Health.Add(GetHotelFacilityDescId(Convert.ToInt32(data.FullFacilityCode)));
                         break;
                     case 90:
                         if (displayFacilities.Sport == null)
                             displayFacilities.Sport = new List<string>();
+                        if (!data.IsFree)
+                            displayFacilities.Sport.Add(GetHotelFacilityDescId(Convert.ToInt32(data.FullFacilityCode)) + " *");
+                        else
                         displayFacilities.Sport.Add(GetHotelFacilityDescId(Convert.ToInt32(data.FullFacilityCode)));
                         break;
                     default:
                         if (displayFacilities.Other == null)
                             displayFacilities.Other = new List<string>();
                         if (data.MustDisplay)
+                            if (!data.IsFree)
+                                displayFacilities.Other.Add(GetHotelFacilityDescId(Convert.ToInt32(data.FullFacilityCode)) + " *");
+                            else
                             displayFacilities.Other.Add(GetHotelFacilityDescId(Convert.ToInt32(data.FullFacilityCode)));
                         break;
                 }
@@ -394,13 +416,14 @@ namespace Lunggo.ApCommon.Hotel.Service
                     BoardDescription = GetHotelBoardDescId(rateDetail.Boards),
                     RoomCount = rateDetail.RateCount == 0 ? rateDetail.RoomCount : rateDetail.RateCount,
                     TimeLimit = rateDetail.TimeLimit,
-                    Cancellation = (rateDetail.Class != "NRF" && rateDetail.Cancellation != null) ? rateDetail.Cancellation : null,
-                    IsRefundable = (rateDetail.Class != "NRF" && rateDetail.Cancellation != null),
+                    //Cancellation = (rateDetail.Class != "NRF" && rateDetail.Cancellation != null) ? rateDetail.Cancellation : null,
+                    //IsRefundable = (rateDetail.Class != "NRF" && rateDetail.Cancellation != null),
                     Offers = rateDetail.Offers,
                     TermAndCondition = rateDetail.TermAndCondition
                 };
                 if (rateDetail.Price != null)
                 {
+                SetTimeCancellation(rate, rateDetail);
                 SetDisplayPriceHotelRate(rate, rateDetail);
                 }
                 
@@ -433,17 +456,43 @@ namespace Lunggo.ApCommon.Hotel.Service
                 BoardDescription = GetHotelBoardDescId(rate.Boards),
                 RoomCount = rate.RoomCount,
                 TimeLimit = rate.TimeLimit,
-                IsRefundable = (rate.Class != "NRF" && rate.Cancellation!=null),
-                Cancellation = (rate.Class != "NRF" && rate.Cancellation != null) ? rate.Cancellation : null,
                 Offers = rate.Offers,
                 TermAndCondition = GetRateCommentFromTableStorage(rate.RateCommentsId,
                     checkInDate).Select(x => x.Description).ToList()
             };
+            SetTimeCancellation(result, rate);
             SetDisplayPriceHotelRate(result, rate);
             return result;
         }
 
 
+        public void SetTimeCancellation(HotelRateForDisplay rateDisplay, HotelRate rate)
+        {
+            var idTimezone = TimeZoneInfo.CreateCustomTimeZone("id", new TimeSpan(0, 7, 0, 0), "Indonesia WIB", "Standar Indonesia");
+            rateDisplay.IsRefundable = (rate.Class != "NRF" && rate.Cancellation != null);
+            //rateDisplay.Cancellation = (rate.Class != "NRF" && rate.Cancellation != null) ? rate.Cancellation : null;
+            if (rateDisplay.IsRefundable)
+            {
+                rateDisplay.Cancellation = new List<Cancellation>();
+                rate.Cancellation= rate.Cancellation.OrderBy(e => e.StartTime).ToList();
+                foreach (var data in rate.Cancellation)
+                {
+                    var obj = new Cancellation
+                    {
+                        Fee = data.Fee,
+                        StartTime = TimeZoneInfo.ConvertTimeFromUtc(data.StartTime.AddDays(-1),idTimezone)
+                    };
+                    rateDisplay.Cancellation.Add(obj);
+                }
+                if (rate.Cancellation[0].StartTime.AddDays(-1) > DateTime.UtcNow)
+                {
+                    DateTime freeUntil = rate.Cancellation[0].StartTime.AddDays(-1).AddMinutes(-1);
+                    rateDisplay.IsFreeCancel = true;
+                    freeUntil = TimeZoneInfo.ConvertTimeFromUtc(freeUntil, idTimezone);
+                    rateDisplay.FreeUntil = freeUntil;
+                }
+            }
+        }
 
         public void SetDisplayPriceHotelRate(HotelRateForDisplay rateDisplay,HotelRate rate)
         {
@@ -453,7 +502,7 @@ namespace Lunggo.ApCommon.Hotel.Service
             rateDisplay.NetFare = Math.Round((rateDisplay.NetTotalFare / rate.RoomCount) / rate.NightCount);
             rateDisplay.OriginalFare = rateDisplay.NetFare * 1.01M;
 
-            if (!rate.Class.Equals("NRF"))
+            if (!rate.Class.Equals("NRF") && rateDisplay.Cancellation != null)
             {
                 var margin = rate.Price.MarginNominal / rate.Price.Supplier;
                 foreach (var data in rateDisplay.Cancellation)
