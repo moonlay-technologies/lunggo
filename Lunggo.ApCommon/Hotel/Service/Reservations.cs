@@ -44,6 +44,7 @@ namespace Lunggo.ApCommon.Hotel.Service
             try
             {
                 var rsv = GetReservation(rsvNo);
+                rsv.HotelDetails.PostalCode = GetHotelDetailFromTableStorage(rsv.HotelDetails.HotelCode).PostalCode;
                 foreach (var r in rsv.HotelDetails.Rooms)
                 {
                     foreach (var rate in r.Rates)

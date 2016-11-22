@@ -70,7 +70,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                 PhonesNumbers = hotelDetail.PhonesNumbers,
                 CountryName = GetCountryNameFromDict(hotelDetail.CountryCode).Name,
                 DestinationName = GetDestinationNameFromDict(hotelDetail.DestinationCode).Name,
-
+                PostalCode = hotelDetail.PostalCode
             };
                 
             
@@ -123,7 +123,8 @@ namespace Lunggo.ApCommon.Hotel.Service
                     SupplierName = hotelDetail.SupplierName,
                     BookingReference = hotelDetail.BookingReference,
                     ClientReference = hotelDetail.ClientReference,
-                    PhonesNumbers = hotelDetail.PhonesNumbers
+                    PhonesNumbers = hotelDetail.PhonesNumbers,
+                    PostalCode = hotelDetail.PostalCode
                 };
                 convertedHotels.Add(hotel);
             });

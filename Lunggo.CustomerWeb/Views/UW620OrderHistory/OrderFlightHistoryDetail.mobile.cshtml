@@ -333,7 +333,7 @@
                                 <div class="col-2">Alamat</div>
                                 <div class="col-8">
                                     @ToTitleCase(reservation.HotelDetail.Address) @ToTitleCase(reservation.HotelDetail.ZoneName),
-                                    @ToTitleCase(reservation.HotelDetail.DestinationName), @reservation.HotelDetail.CountryName
+                                    @ToTitleCase(reservation.HotelDetail.DestinationName), @reservation.HotelDetail.PostalCode, @reservation.HotelDetail.CountryName
                                 </div>
                             </div>
                             <div class="rr-row clearfix">
@@ -371,7 +371,26 @@
                                             <span>Tamu</span>
                                         </div>
                                         <div class="col-8">
-                                            @rate.AdultCount Dewasa, @rate.ChildCount Anak
+                                            @rate.AdultCount Dewasa @if (rate.ChildCount > 0)
+                                            {
+                                                <span>, @rate.ChildCount Anak </span>
+                                                <span>
+                                                    (
+                                                    @for (var a = 0; a < rate.ChildrenAges.Count; a++)
+                                                    {
+                                                        if (a != rate.ChildrenAges.Count - 1)
+                                                        {
+                                                            @rate.ChildrenAges[a]
+                                                            <span>Tahun, </span>
+                                                        }
+                                                        else
+                                                        {
+                                                            @rate.ChildrenAges[a] <span>Tahun</span>
+                                                        }
+                                                    }
+                                                    )
+                                                </span>
+                                            }
                                         </div>
                                     </div>
 

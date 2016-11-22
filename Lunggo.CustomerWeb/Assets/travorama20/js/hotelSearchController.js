@@ -14,6 +14,7 @@ app.controller('hotelSearchController', ['$scope', '$log', '$http', '$resource',
     $scope.hotel = {};
     $scope.hotel.searchHotelType = { "location": 'Location', searchId: 'SearchId'};
     $scope.hotel.searchId = null;
+    $scope.loc = loc;
     //$scope.hotel.searchId = "d3eaa926-7bb1-4a08-bfed-824b14968a50";
     $scope.hotel.location = "BALI";
     $scope.hotel.checkinDate = "12/10/2016";

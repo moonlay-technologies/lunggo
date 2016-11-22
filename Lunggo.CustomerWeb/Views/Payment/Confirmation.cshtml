@@ -469,8 +469,8 @@
                                                 <div class="star star-4" ng-show="hotelstar() == 'star star-4'"></div>
                                                 <div class="star star-5" ng-show="hotelstar() == 'star star-5'"></div>
                                                 <div class="rh-location">
-                                                    @ToTitleCase(reservation.HotelDetail.Address), @ToTitleCase(reservation.HotelDetail.ZoneName),
-                                                    @ToTitleCase(reservation.HotelDetail.DestinationName), @ToTitleCase(reservation.HotelDetail.CountryName)<br/>
+                                                    @ToTitleCase(reservation.HotelDetail.Address) @ToTitleCase(reservation.HotelDetail.ZoneName),
+                                                    @ToTitleCase(reservation.HotelDetail.DestinationName), @reservation.HotelDetail.PostalCode, @ToTitleCase(reservation.HotelDetail.CountryName)<br/>
                                                 </div>
                                                 <div><br/></div>
                                                 <div class="rh-detail">
@@ -531,7 +531,27 @@
                                                                 <div class="wb-container clearfix">
                                                                     <div class="wb-left">Tamu per Kamar</div>
                                                                     <div class="wb-mid">:</div>
-                                                                    <div class="wb-right bold-txt">@(rate.AdultCount ) Dewasa, @rate.ChildCount Anak</div>
+                                                                    <div class="wb-right bold-txt">@(rate.AdultCount ) Dewasa @if (rate.ChildCount > 0)
+                                                                        {
+                                                                            <span>, @rate.ChildCount Anak </span>
+                                                                            <span>
+                                                                                (
+                                                                                @for (var a = 0; a < rate.ChildrenAges.Count; a++)
+                                                                                {
+                                                                                    if (a != rate.ChildrenAges.Count - 1)
+                                                                                    {
+                                                                                        @rate.ChildrenAges[a]
+                                                                                        <span>Tahun, </span>
+                                                                                    }
+                                                                                    else
+                                                                                    {
+                                                                                        @rate.ChildrenAges[a] <span>Tahun</span>
+                                                                                    }
+                                                                                }
+                                                                                )
+                                                                            </span>
+                                                                        }
+                                                                    </div>
                                                                 </div>
                                                                 <div class="wb-container clearfix">
                                                                     <div class="wb-left">Tipe Board</div>

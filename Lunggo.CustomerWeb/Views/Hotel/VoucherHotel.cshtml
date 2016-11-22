@@ -41,12 +41,12 @@
             <div class="hotel-wrapper">
                 <div class="hotel-top">
                     <p>
-                        <img class="img-email"  src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/email/mail.png")" /><span class="blue-txt">cs@travorama.com</span>
+                        <img class="img-email" src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/email/mail.png")" /><span class="blue-txt">cs@travorama.com</span>
                     </p>
                     <div style="background: url(@Model.HotelDetail.MainImage); width: 716px; height: 162px; background-size: cover; background-position: center; background-repeat: no-repeat" class=" img-hotel">
 
                     </div>
-                    
+
                 </div>
                 <div class="hotel-middle">
                     <div class="row">
@@ -80,7 +80,7 @@
                                     <p class="star star-5"></p>
                                 }
                                 <p class="grey-txt">
-                                    <img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/location.png")" /> @Model.HotelDetail.Address @Model.HotelDetail.City, @Model.HotelDetail.CountryName
+                                    <img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/location.png")" /> @Model.HotelDetail.Address @Model.HotelDetail.DestinationName, @Model.HotelDetail.PostalCode, @Model.HotelDetail.CountryName
                                 </p>
                                 <p class="grey-txt">
                                     <img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/phone.png")" /> @Model.HotelDetail.PhonesNumbers[0]
@@ -129,7 +129,28 @@
                                 <p>Jumlah Tamu per Kamar</p>
                             </div>
                             <div class="col-xs-9">
-                                <p>: @Model.HotelDetail.Rooms[0].Rates[0].AdultCount Dewasa, @Model.HotelDetail.Rooms[0].Rates[0].ChildCount Anak</p>
+                                <p>
+                                    : @Model.HotelDetail.Rooms[0].Rates[0].AdultCount Dewasa @if (Model.HotelDetail.Rooms[0].Rates[0].ChildCount > 0)
+                                    {
+                                        <span>, @Model.HotelDetail.Rooms[0].Rates[0].ChildCount Anak </span>
+                                        <span>
+                                            (
+                                            @for (var a = 0; a < Model.HotelDetail.Rooms[0].Rates[0].ChildrenAges.Count; a++)
+                                            {
+                                                if (a != Model.HotelDetail.Rooms[0].Rates[0].ChildrenAges.Count - 1)
+                                                {
+                                                    @Model.HotelDetail.Rooms[0].Rates[0].ChildrenAges[a]
+                                                    <span>Tahun, </span>
+                                                }
+                                                else
+                                                {
+                                                    @Model.HotelDetail.Rooms[0].Rates[0].ChildrenAges[a] <span>Tahun</span>
+                                                }
+                                            }
+                                            )
+                                        </span>
+                                    }
+                                </p>
                             </div>
                         </div>
                         <div class="row grey-txt">
@@ -160,7 +181,7 @@
                                 </div>
                             </div>
                         }
-                        
+
                         @if (Model.HotelDetail.SpecialRequest != null && Model.HotelDetail.SpecialRequest.Length != 0)
                         {
                             <div class="row grey-txt">
@@ -203,7 +224,7 @@
                                         <span><img class="img-swim" src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/swim.png")" />Kolam Renang</span>
                                     }
                                 </p>
-                                
+
                                 @if (Model.HotelDetail.Facilities.Other.Count != 0)
                                 {
                                     var facilities = Model.HotelDetail.Facilities.Other.Where(f => f.Length > 0).ToList();
@@ -213,7 +234,7 @@
                                     }
                                     else
                                     {
-                                        <div class = "col-half">
+                                        <div class="col-half">
                                             @for (var i = 0; i < facilities.Count / 2; i++)
                                             {
                                                 <p>@facilities[i]</p>
@@ -228,7 +249,7 @@
                                         </div>
                                     }
                                 }
-                                
+
                             </div>
                         </div>
                         <div class="row grey-txt">
@@ -252,7 +273,7 @@
                             </div>
                         </div>
 
-                       
+
                     </div>
                 </div>
             </div>

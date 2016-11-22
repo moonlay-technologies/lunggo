@@ -40,7 +40,7 @@ namespace Lunggo.BackendWeb
             AppInitializer.Init();
             HotelService.GetInstance().CommenceIssueHotel(new IssueHotelTicketInput
             {
-                RsvNo = "286146542579"
+                RsvNo = "288036543579"
             });
             //var hotelDetail = HotelService.GetInstance().GetHotelDetailFromTableStorage(24408);
             //var image1 = hotelDetail.ImageUrl.Where(u => u.Type == "GEN").Take(1).FirstOrDefault();

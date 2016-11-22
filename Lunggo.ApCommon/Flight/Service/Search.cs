@@ -21,6 +21,8 @@ namespace Lunggo.ApCommon.Flight.Service
     {
         public SearchFlightOutput SearchFlight(SearchFlightInput input)
         {
+            var minuteTimeout = int.Parse(ConfigManager.GetInstance().GetConfigValue("flight", "SearchResultCacheTimeout"));
+            var timeout = DateTime.UtcNow.AddMinutes(minuteTimeout);
             var gottenSupplierCount = input.Progress / (100 / Suppliers.Count);
             var searchedSupplierIds = GetSearchedSupplierIndicesFromCache(input.SearchId);
             var requestedSupplierIds = searchedSupplierIds.Skip(gottenSupplierCount).ToList();
@@ -41,10 +43,10 @@ namespace Lunggo.ApCommon.Flight.Service
                 if (!isSupplierSearching)
                 {
                     var queue = QueueService.GetInstance().GetQueueByReference("FlightCrawl" + unsearchedSupplierId);
-                    queue.AddMessage(new CloudQueueMessage(input.SearchId), timeToLive: new TimeSpan(0, 0, searchTimeout));
+                    queue.AddMessage(new CloudQueueMessage(input.SearchId + '|' + timeout), timeToLive: new TimeSpan(0, 0, searchTimeout));
 
                     var timeoutQueue = QueueService.GetInstance().GetQueueByReference("FlightCrawlTimeout" + unsearchedSupplierId);
-                    timeoutQueue.AddMessage(new CloudQueueMessage(input.SearchId), initialVisibilityDelay: new TimeSpan(0, 0, searchTimeout));
+                    timeoutQueue.AddMessage(new CloudQueueMessage(input.SearchId + '|' + timeout), initialVisibilityDelay: new TimeSpan(0, 0, searchTimeout));
                 }
             }
 
@@ -110,13 +112,13 @@ namespace Lunggo.ApCommon.Flight.Service
             return output;
         }
 
-        public void CommenceSearchFlight(string searchId, int supplierIndex)
+        public void CommenceSearchFlight(string searchId, int supplierIndex, DateTime searchTimeOut)
         {
             var conditions = DecodeSearchConditions(searchId);
-            SearchFlightInternal(conditions, supplierIndex);
+            SearchFlightInternal(conditions, supplierIndex, searchTimeOut);
         }
 
-        private void SearchFlightInternal(SearchFlightConditions conditions, int supplierIndex)
+        private void SearchFlightInternal(SearchFlightConditions conditions, int supplierIndex, DateTime searchflightTimeout)
         {
             var supplier = Suppliers[supplierIndex];
 
@@ -195,7 +197,7 @@ namespace Lunggo.ApCommon.Flight.Service
                     AddPriceMargin(itinList);
                 }
             }
-            SaveSearchedItinerariesToCache(itinLists, searchId, timeout, supplierIndex);
+            SaveSearchedItinerariesToCache(itinLists, searchId, timeout, supplierIndex, searchflightTimeout);
             SaveCurrencyStatesToCache(searchId, Currency.GetAllCurrencies(), timeout);
             SaveSearchedSupplierIndexToCache(searchId, supplierIndex, timeout);
             InvalidateSearchingStatusInCache(searchId, supplierIndex);
@@ -203,21 +205,23 @@ namespace Lunggo.ApCommon.Flight.Service
 
         public void SetSearchAsEmptyIfNotSet(string searchId, int supplierIndex)
         {
+            var searchParam = searchId.Split('|')[0];
+            var searchFlightTimeOut = DateTime.Parse(searchId.Split('|')[1]);
             var searchExpiry = GetSearchedItinerariesExpiry(searchId, supplierIndex);
             if (searchExpiry == null)
             {
                 var cacheTimeout = int.Parse(ConfigManager.GetInstance().GetConfigValue("flight", "SearchResultCacheTimeout"));
                 var emptyLists = new List<List<FlightItinerary>> { new List<FlightItinerary>() };
 
-                var conditions = DecodeSearchConditions(searchId);
+                var conditions = DecodeSearchConditions(searchParam);
                 var conditionsList = new List<SearchFlightConditions> { conditions };
                 if (conditions.Trips.Count > 1)
                     conditionsList.ForEach(c => emptyLists.Add(new List<FlightItinerary>()));
 
-                SaveSearchedItinerariesToCache(emptyLists, searchId, cacheTimeout, supplierIndex);
-                SaveCurrencyStatesToCache(searchId, Currency.GetAllCurrencies(), cacheTimeout);
-                SaveSearchedSupplierIndexToCache(searchId, supplierIndex, cacheTimeout);
-                InvalidateSearchingStatusInCache(searchId, supplierIndex);
+                SaveSearchedItinerariesToCache(emptyLists, searchParam, cacheTimeout, supplierIndex, searchFlightTimeOut);
+                SaveCurrencyStatesToCache(searchParam, Currency.GetAllCurrencies(), cacheTimeout);
+                SaveSearchedSupplierIndexToCache(searchParam, supplierIndex, cacheTimeout);
+                InvalidateSearchingStatusInCache(searchParam, supplierIndex);
             }
         }
 
