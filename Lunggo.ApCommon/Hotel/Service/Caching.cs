@@ -73,7 +73,7 @@ namespace Lunggo.ApCommon.Hotel.Service
             {
                 try
                 {
-                    redisDb.StringSet(redisKey, redisValue);
+                    redisDb.StringSet(redisKey, redisValue, TimeSpan.FromMinutes(timeout));
                     return;
         }
                 catch

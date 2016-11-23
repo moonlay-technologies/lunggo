@@ -12,7 +12,7 @@ angular.module('travorama').factory('hotelSearchSvc', ['$log', '$resource', '$ti
             }
         );
 
-  
+
 
     factory.searchHotel = function (hotelSearch, filter, pagination) {
         $log.debug('using search service. searching...');
@@ -60,17 +60,32 @@ angular.module('travorama').factory('hotelSearchSvc', ['$log', '$resource', '$ti
         scope.hotelSearch = {};
         scope.hotelSearch.searchHotelType = { "location": 'Location', searchId: 'SearchId' };
 
-        scope.hotelSearch.location = searchParamObject.location;
-        scope.hotelSearch.locationDisplay = "";
-        scope.hotelSearch.checkinDate = searchParamObject.checkinDate;
-        scope.hotelSearch.checkoutDate = searchParamObject.checkoutDate;
+        if (searchParamObject != null && searchParamObject !== undefined) {
+            scope.hotelSearch.location = searchParamObject.location;
+            scope.hotelSearch.locationDisplay = "";
+            scope.hotelSearch.checkinDate = searchParamObject.checkinDate;
+            scope.hotelSearch.checkoutDate = searchParamObject.checkoutDate;
 
-        scope.hotelSearch.adultCount = searchParamObject.adultCount != null ? searchParamObject.adultCount : 1;
-        scope.hotelSearch.childCount = searchParamObject.childCount != null ? searchParamObject.childCount : 0;
+            scope.hotelSearch.adultCount = searchParamObject.adultCount != null ? searchParamObject.adultCount : 1;
+            scope.hotelSearch.childCount = searchParamObject.childCount != null ? searchParamObject.childCount : 0;
 
-        scope.hotelSearch.nightCount = searchParamObject.nightCount != null ? searchParamObject.nightCount : 1;
-        scope.hotelSearch.roomCount = searchParamObject.roomCount != null ? searchParamObject.roomCount : 2;
-        scope.hotelSearch.childrenAges = searchParamObject.childrenAges != null ? searchParamObject.childrenAges : [0, 0, 0, 0];
+            scope.hotelSearch.nightCount = searchParamObject.nightCount != null ? searchParamObject.nightCount : 1;
+            scope.hotelSearch.roomCount = searchParamObject.roomCount != null ? searchParamObject.roomCount : 2;
+            scope.hotelSearch.childrenAges = searchParamObject.childrenAges != null ? searchParamObject.childrenAges : [0, 0, 0, 0];
+        }
+        else {
+            scope.hotelSearch.location = null;
+            scope.hotelSearch.locationDisplay = "";
+            scope.hotelSearch.checkinDate = "11-11-2017";
+            scope.hotelSearch.checkoutDate = "15-15-2017";
+
+            scope.hotelSearch.adultCount = 1;
+            scope.hotelSearch.childCount = 0;
+
+            scope.hotelSearch.nightCount = 1;
+            scope.hotelSearch.roomCount = 2;
+            scope.hotelSearch.childrenAges = [0, 0, 0, 0];
+        }
 
         scope.hotelSearch.adultCountMin = 1;
         scope.hotelSearch.adultCountMax = 5;
@@ -83,8 +98,8 @@ angular.module('travorama').factory('hotelSearchSvc', ['$log', '$resource', '$ti
 
         scope.hotelSearch.roomCountMin = 1;
         scope.hotelSearch.roomCountMax = 8;
-        
-           //$scope.hotel.searchId = $scope.model.searchId;
+
+        //$scope.hotel.searchId = $scope.model.searchId;
         //$scope.hotelSearch.location = model.searchParamObject.location;
         //$scope.hotelSearch.checkinDate = model.searchParamObject.checkinDate;
         //$scope.hotelSearch.checkoutDate = model.searchParamObject.checkoutDate;
