@@ -29,8 +29,12 @@ namespace Lunggo.ApCommon.Hotel.Model
         public string Destination { get; set; }
         public string Zone { get; set; }
         public string Country { get; set; }
+        public int HotelCount { get; set; }
 
     }
+
+    
+
 
     public class HotelCodeExist : TableEntity
     {

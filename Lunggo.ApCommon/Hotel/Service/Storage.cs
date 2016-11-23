@@ -122,6 +122,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                     newValue.Destination = destination.Name;
                     newValue.Country = country.Name;
                     newValue.Type = 1;
+                    newValue.HotelCount = GetHotelListByLocationFromStorage(destination.Code).Count;
                     var insertOp = TableOperation.InsertOrReplace(newValue);
                     table.Execute(insertOp);
                     Console.WriteLine("Success inserting index: " + index + " for destination: " + destination.Name);
@@ -136,6 +137,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                         newValue.Destination = destination.Name;
                         newValue.Country = country.Name;
                         newValue.Type = 2;
+                        newValue.HotelCount = GetHotelListByLocationFromStorage(zone.Code).Count;
                         insertOp = TableOperation.InsertOrReplace(newValue);
                         table.Execute(insertOp);
                         Console.WriteLine("Success inserting index: " + index + " for zoneCode: " + zone.Code);
@@ -294,6 +296,29 @@ namespace Lunggo.ApCommon.Hotel.Service
             //HotelAutoComplete result = resultWrapper.Deserialize<HotelAutoComplete>();
             return resultWrapper;
         }
+
+        public List<HotelAutoComplete> GetAutocompleteBatch()
+        {
+            var table = TableStorageService.GetInstance().GetTableByReference("hotelautocomplete");
+            var query =
+                new TableQuery<DynamicTableEntity>()
+                    .Where(TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal,
+                        "hotelAutoComplete"));
+            var autocompletes = table.ExecuteQuery(query).Select(r => new HotelAutoComplete
+            {
+                Type = r["Type"].Int32Value.GetValueOrDefault(),
+                HotelName = r.Properties.ContainsKey("HotelName") ? r["HotelName"].StringValue : "",
+                Code = r["Code"].StringValue ,
+                Destination = r["Destination"].StringValue,
+                Zone = r.Properties.ContainsKey("Zone") ? r["Zone"].StringValue : "",
+                Id = r["Id"].Int64Value.GetValueOrDefault(),
+                Country = r["Country"].StringValue,
+                HotelCount = r.Properties.ContainsKey("HotelCount") ? r["HotelCount"].Int32Value.GetValueOrDefault() : 0
+            }).ToList();
+             
+            return autocompletes;
+        }
+
         public List<HotelRateComment> GetRateCommentFromTableStorage(string rateComment, DateTime startDateTime)
         {
             //var partitionKey = "rateComments";

@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Web.Services.Description;
 using Lunggo.ApCommon.Autocomplete;
-using Lunggo.ApCommon.Flight.Service;
+using Lunggo.ApCommon.Hotel.Constant;
 using Lunggo.ApCommon.Hotel.Service;
 using Lunggo.WebAPI.ApiSrc.Autocomplete.Model;
 
@@ -27,25 +28,35 @@ namespace Lunggo.WebAPI.ApiSrc.Autocomplete.Logic
             var hotelLocations = new List<HotelAutocompleteApi>();
             foreach (var item in hotelLocationIds)
             {
-                var hotelDict = hotel._Autocompletes[item];
+                var hotelDict = hotel.AutoCompletes.First(h => h.Id == item);
                 var input = new HotelAutocompleteApi();
-                input.Name = hotelDict.Name;
-                input.Id = hotelDict.Id;
-                input.Type = hotelDict.Type.ToString();
-                if (hotelDict.Type.ToString() != "Hotel")
+                switch (hotelDict.Type)
                 {
-                    input.NumOfHotels = 0;
+                    case 1:
+                        input.Name = hotelDict.Destination + ", " + hotelDict.Country;
+                        //input.NumOfHotels = hotel.GetHotelListByLocationFromStorage(hotelDict.Code).Count;
+                        break;
+                    case 2:
+                        input.Name = hotelDict.Zone + ", " + hotelDict.Destination + ", " + hotelDict.Country;
+                        //input.NumOfHotels = hotel.GetHotelListByLocationFromStorage(hotelDict.Code).Count;
+                        break;
+                    case 4:
+                        input.Name = hotelDict.HotelName + ", " + hotelDict.Destination + ", " + hotelDict.Country;
+                        //input.NumOfHotels = 0;
+                        break;
                 }
                 
+                input.Id = hotelDict.Id;
+                input.Type = AutocompleteTypeCd.Mnemonic(hotelDict.Type).ToString();
                 hotelLocations.Add(input);
             }
 
             var zones =
-                hotelLocations.Where(c => c.Type == HotelService.AutocompleteType.Zone.ToString()).Take(zone).ToList();
+                hotelLocations.Where(c => c.Type == "Zone").Take(zone).ToList();
 
-            var dests = hotelLocations.Where(c => c.Type == HotelService.AutocompleteType.Destination.ToString()).Take(dest).ToList();
+            var dests = hotelLocations.Where(c => c.Type == "Destination").Take(dest).ToList();
 
-            var hotels = hotelLocations.Where(c => c.Type == HotelService.AutocompleteType.Hotel.ToString()).Take(hotelNum).ToList();
+            var hotels = hotelLocations.Where(c => c.Type == "Hotel").Take(hotelNum).ToList();
 
             var hotelAutocompleteApis = new List<HotelAutocompleteApi>();
             hotelAutocompleteApis.AddRange(zones);

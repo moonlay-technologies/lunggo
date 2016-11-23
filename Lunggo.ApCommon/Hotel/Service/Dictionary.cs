@@ -168,6 +168,7 @@ namespace Lunggo.ApCommon.Hotel.Service
 
         //FOR AUTOCOMPLETE
         public Dictionary<long, Autocomplete> _Autocompletes; 
+        public List<HotelAutoComplete> AutoCompletes = new List<HotelAutoComplete>();
 
         public static Dictionary<string, string> HotelSegmentDictId;
         public static Dictionary<string, string> HotelSegmentDictEng;
@@ -256,6 +257,7 @@ namespace Lunggo.ApCommon.Hotel.Service
             _hotelChainFilePath = Path.Combine(_configPath, HotelchainFileName);
             _hotelCategoryFilePath = Path.Combine(_configPath, HotelCategoryFileName);
             _hotelFacilitiesFilter = Path.Combine(_configPath, HotelFacilityFilterGroupFileName);	
+            AutoCompletes = HotelService.GetInstance().GetAutocompleteBatch();
             PopulateHotelSegmentDict(_hotelSegmentFilePath);
 
             PopulateHotelAccomodationDict(_hotelAccomodationFilePath);
@@ -284,7 +286,7 @@ namespace Lunggo.ApCommon.Hotel.Service
             PopulateHotelDestinationDict(Countries);
             PopulateHotelZoneDict(Countries);
             //PopulateHotelCodeAndZoneDict(Countries);
-            PopulateAutocomplete();
+            //PopulateAutocomplete();
             //PopulateHotel();
         }
 
