@@ -232,6 +232,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                 ZoneName = GetZoneNameFromDict(hotelDetail.ZoneCode),
                 StarRating = GetSimpleCodeByCategoryCode(hotelDetail.StarRating),
                 ChainName = GetHotelChainDesc(hotelDetail.Chain),
+                DestinationName = hotelDetail.DestinationName,
                 OriginalFare = originalPrice,
                 NetFare = netPrice,
                 Pois = hotelDetail.Pois,

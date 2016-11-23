@@ -1,6 +1,7 @@
 ﻿// home controller
 app.controller('hotelSearchController', ['$scope', '$log', '$http', '$resource', '$timeout', 'hotelSearchSvc', 'hotelAutocompleteSvc', function ($scope, $log, $http, $resource, $timeout, hotelSearchSvc, hotelAutocompleteSvc) {
 
+    $scope.destinationName = "";
     $scope.model = {};
     $scope.hotels = [];
     $scope.totalActualHotel = '';
@@ -82,6 +83,7 @@ app.controller('hotelSearchController', ['$scope', '$log', '$http', '$resource',
 
             if (data.searchId !== undefined) $scope.hotelSearch.searchId = data.searchId;
 
+            $scope.destinationName = data.destinationName;
             $scope.hotels = data.hotels;
             $scope.totalActualHotel = data.returnedHotelCount;
             $scope.returnedHotelCount = data.returnedHotelCount;

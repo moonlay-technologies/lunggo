@@ -1,6 +1,7 @@
 ﻿// home controller
 app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource', '$timeout', 'hotelSearchSvc', function ($scope, $log, $http, $resource, $timeout, hotelSearchSvc) {
 
+    $scope.destinationName = "";
     $scope.hotel = {};
     $scope.searchId = '';
     $scope.searchParam = '';
@@ -54,6 +55,7 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
             validateResponse(data);
 
             $scope.hotel = data.hotelDetails;
+            $scope.destinationName = data.destinationName;
 
             var loadedImages = 0;
             var tempHotelImages = [];
