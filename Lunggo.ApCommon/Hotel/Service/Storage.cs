@@ -124,7 +124,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                     newValue.Type = 1;
                     var insertOp = TableOperation.InsertOrReplace(newValue);
                     table.Execute(insertOp);
-                    Console.WriteLine("Success inserting zone for: " + destination.Name + " " + country.Name);
+                    Console.WriteLine("Success inserting index: " + index + " for destination: " + destination.Name);
                     index++;
 
                     foreach (var zone in destination.Zones)
@@ -138,7 +138,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                         newValue.Type = 2;
                         insertOp = TableOperation.InsertOrReplace(newValue);
                         table.Execute(insertOp);
-                        Console.WriteLine("Success inserting destination for: " + destination.Name + "-" + zone.Code);
+                        Console.WriteLine("Success inserting index: " + index + " for zoneCode: " + zone.Code);
                         index++;
                     }
                 }
@@ -154,14 +154,14 @@ namespace Lunggo.ApCommon.Hotel.Service
                     newValue.Code = hotelDetail.HotelCode.ToString();
                     newValue.HotelName = hotelDetail.HotelName;
                     newValue.Destination = GetDestinationNameFromDict(hotelDetail.DestinationCode).Name;
-                    newValue.Zone = GetZoneNameFromDict(hotelDetail.ZoneCode);
+                    newValue.Zone = GetZoneNameFromDict(hotelDetail.DestinationCode + "-" + hotelDetail.ZoneCode);
                     newValue.Country = GetCountryNameFromDict(hotelDetail.CountryCode).Name;
                     newValue.Type = 4;
                     var insertOp = TableOperation.InsertOrReplace(newValue);
                     var hotelCode = new HotelCodeExist("hotelCodeExist", hotelDetail.HotelCode.ToString());
                     var insertHotelCd = TableOperation.InsertOrReplace(hotelCode);
                     table.Execute(insertOp);
-                    Console.WriteLine("Success inserting data for hotelCode: " + hotelDetail.HotelCode);
+                    Console.WriteLine("Success inserting index: " + index + " for hotelCode: " + hotelDetail.HotelCode);
                     hotelCdTable.Execute(insertHotelCd);
                     Console.WriteLine("Success inserting hotelCd to Table: " + hotelDetail.HotelCode);
                     index++;

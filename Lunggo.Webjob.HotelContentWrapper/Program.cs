@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Lunggo.ApCommon.Hotel.Model;
 using Lunggo.ApCommon.Hotel.Service;
 using Lunggo.ApCommon.Hotel.Wrapper.Content;
 using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Content;
@@ -25,9 +26,7 @@ namespace Lunggo.Webjob.HotelContentWrapper
             // Begin timing.
             stopwatch.Start();
 
-            var hotel = new GetHotel();
             var service = HotelService.GetInstance();
-            //var autcom = service.GetAutoCompleteFromTableStorage(1);
             Console.WriteLine("Starting to save autocomplete....");
             service.SaveAutoCompleteToTableStorage();
             Console.WriteLine("Done saving autocomplete");
