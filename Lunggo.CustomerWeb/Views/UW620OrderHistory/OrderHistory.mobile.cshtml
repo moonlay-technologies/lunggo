@@ -60,7 +60,7 @@
                     <a ng-click="PageConfig.ChangePage('profile'); formMessage = ''">Ubah Profil</a>
                 </li>
                 <li class="menu-history">
-                    <a ng-click="PageConfig.ChangePage('history')">Pemesanan Saya</a>
+                    <a ng-click="PageConfig.ChangePage('history')">Pesanan Saya</a>
                 </li>
                 <li class="menu-logout">
                     <a ng-click="logout.getLogout()">Keluar</a>
@@ -158,7 +158,7 @@
 
     <section class="user-history" ng-show="PageConfig.ActivePage == 'history'">
         <header class="page-title">
-            <span>PEMESANAN SAYA</span>
+            <span>PESANAN SAYA</span>
         </header>
         <div class="main-tab">
             <ul class="nav nav-tabs tab-detail">
@@ -169,6 +169,9 @@
                     <a class="tab-hotel order" data-toggle="tab" href="#order-hotel">Hotel</a>
                 </li>
             </ul>
+            <div ng-show="loading">
+                <img src="/Assets/images/load.gif" style="width: 50px; height: 50px; margin-left: 45%; margin-top: 5%">
+            </div>
             <div class="tab-content tab-order">
                 <div id="order-flight" class="tab-pane tp-flight active">
                     <ul class="history-list">
@@ -194,7 +197,7 @@
                                     <span>Tujuan</span>
                                 </div>
                                 <div class="col-xs-8">
-                                    <span>: <b>{{flight.itin.trips[0].origin}}</b> ke <b>{{flight.itin.trips[0].destination}}</b> ({{FlightType(flight.itin.type)}})</span>
+                                    <span>: <b>{{flight.itin.trips[0].origin}}</b> ke <b>{{flight.itin.trips[0].destination}}</b> {{FlightType(flight.itin.type)}}</span>
                                 </div>
                             </div>
                             <div class="row">
@@ -202,7 +205,7 @@
                                     <span>Berangkat</span>
                                 </div>
                                 <div class="col-xs-8">
-                                    <span>: <b>{{flight.itin.trips[0].date | date}}</b></span>
+                                    <span>: <b>{{flight.itin.trips[0].segments[0].departureTime | date : 'EEEE, dd MMMM yyyy , HH:mm' :'UTC'}}</b></span>
                                 </div>
                             </div>
                             <div class="row" ng-show="flight.itin.trips[1].date">
@@ -210,7 +213,7 @@
                                     <span>Kembali</span>
                                 </div>
                                 <div class="col-xs-8">
-                                    <span>: <b>{{flight.itin.trips[1].date | date}}</b></span>
+                                    <span>: <b>{{flight.itin.trips[1].segments[0].departureTime | date: 'EEEE, dd MMMM yyyy , HH:mm' :'UTC'}}</b></span>
                                 </div>
                             </div>
                             <div class="row">
@@ -230,81 +233,98 @@
                     </ul>
                 </div>
                 <div id="order-hotel" class="tab-pane tp-hotel">
-                    <ul class="history-list">
-                        <li class="">
-                            <div class="order-wrapper">
-                                <div class="order hotel page-hotel">
-                                    <div class="order-top">
-                                        <div class="ot clearfix">
-                                            <div class="col-2"><img src="/Assets/travorama20/images/Hotel/hotel-sm.jpg" alt="Alternate Text" /></div>
-                                            <div class="col-8">
-                                                <span class="blue-txt bold-txt">Bliss Hotel Singapore</span>
-                                                <br /><span class="star star-4"></span>
-                                                <div class="wt-location">
-                                                    Kios Tower AB No. 26, Jl. Karet Pasar Gang Tiong No: 62 ; Jakarta Barat
+                    <h3 ng-if="hotellist.length == 0">Belum ada pemesanan.</h3>
+                    <div ng-if="hotellist.length > 0">
+                        <ul class="history-list">
+                            <li class="" ng-repeat="hotel in hotellist track by $index"
+                                ng-class="{'done' : hotel.payment.status == 3, 'pending' : hotel.payment.status == 2 ||  hotel.payment.status == 6, 'canceled' : hotel.payment.status == 1 || hotel.payment.status == 4 || hotel.payment.status == 5 || hotel.payment.status == 8}">
+                                <div class="order-wrapper">
+                                    <div class="order hotel page-hotel">
+                                        <div class="order-top">
+                                            <div class="ot clearfix">
+                                                <div class="col-2"><img src="{{getPhotoUrl(hotel.hotelDetail.mainImage)}}" alt="Hotel Image" /></div>
+                                                <div class="col-8">
+                                                    <span class="blue-txt bold-txt">{{hotel.hotelDetail.hotelName}}</span><br />
+                                                    <span class="star" ng-if="hotel.hotelDetail.starRating == 1"></span>
+                                                    <span class="star star-2" ng-if="hotel.hotelDetail.starRating == 2"></span>
+                                                    <span class="star star-3" ng-if="hotel.hotelDetail.starRating == 3"></span>
+                                                    <span class="star star-4" ng-if="hotel.hotelDetail.starRating == 4"></span>
+                                                    <span class="star star-5" ng-if="hotel.hotelDetail.starRating == 5"></span>
+                                                    <div class="wt-location">
+                                                        {{hotel.hotelDetail.address}}{{hotel.hotelDetail.zone}}, {{hotel.hotelDetail.destination}}, {{hotel.hotelDetail.country}}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="order-bottom">
+                                            <div class="row">
+                                                <div class="col-xs-4">
+                                                    <span>Check in</span>
+                                                </div>
+                                                <div class="col-xs-8">
+                                                    <span>: <b>{{hotel.hotelDetail.checkIn | date : 'EEEE, dd MMM yyyy'}}</b></span>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-xs-4">
+                                                    <span>Check out</span>
+                                                </div>
+                                                <div class="col-xs-8">
+                                                    <span>: <b>{{hotel.hotelDetail.checkOut | date : 'EEEE, dd MMM yyyy'}}</b></span>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-xs-4">
+                                                    <span>Malam</span>
+                                                </div>
+                                                <div class="col-xs-8">
+                                                    <span>: <b>{{nightcount(hotel.hotelDetail)}} Malam</b></span>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-xs-4">
+                                                    <span>Kamar</span>
+                                                </div>
+                                                <div class="col-xs-8">
+                                                    <span>: <b>{{sumRoom(hotel.hotelDetail)}} Kamar</b></span>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-xs-4">
+                                                    <span>Jenis Kamar</span>
+                                                </div>
+                                                <div class="col-xs-8">
+                                                    <span>: <b>{{titleCase(totalRoom(hotel.hotelDetail))}}</b></span>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-xs-4">
+                                                    <span>Tamu per Kamar</span>
+                                                </div>
+                                                <div class="col-xs-8">
+                                                    <span>: <b>{{totalpax(hotel.hotelDetail).totalAdult}} Dewasa, {{totalpax(hotel.hotelDetail).totalChild}} Anak</b></span>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-xs-4">
+                                                    <span>Status</span>
+                                                </div>
+                                                <div class="col-xs-8">
+                                                    <span>: <b>{{OrderStatus(hotel.payment.status)}}</b></span>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-xs-12">
+                                                    <a ng-href="@Url.Action("OrderFlightHistoryDetail", "UW620OrderHistory")?rsvNo={{hotel.rsvNo}}" class="btn btn-yellow">Detail</a>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="order-bottom">
-                                        <div class="row">
-                                            <div class="col-xs-4">
-                                                <span>Check in</span>
-                                            </div>
-                                            <div class="col-xs-8">
-                                                <span>: <b>5 November 2016</b></span>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-xs-4">
-                                                <span>Check out</span>
-                                            </div>
-                                            <div class="col-xs-8">
-                                                <span>: <b>9 November 2016</b></span>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-xs-4">
-                                                <span>Malam</span>
-                                            </div>
-                                            <div class="col-xs-8">
-                                                <span>: <b>3 Malam</b></span>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-xs-4">
-                                                <span>Kamar</span>
-                                            </div>
-                                            <div class="col-xs-8">
-                                                <span>: <b>2 Kamar</b></span>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-xs-4">
-                                                <span>Jenis Kamar</span>
-                                            </div>
-                                            <div class="col-xs-8">
-                                                <span>: <b>Superior Room</b></span>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-xs-4">
-                                                <span>Tamu per Kamar</span>
-                                            </div>
-                                            <div class="col-xs-8">
-                                                <span>: <b>2 Orang</b></span>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-xs-12">
-                                                <a class="btn btn-yellow">Detail</a>
-                                            </div>
-                                        </div>
-                                    </div>
                                 </div>
-                            </div>
-                        </li>
-                    </ul>
+                            </li>
+                        </ul>
+                    </div>
+                    
                 </div>
             </div>
         </div>

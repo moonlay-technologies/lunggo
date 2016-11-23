@@ -297,6 +297,12 @@
     <Content Include="Assets\bootstrap\bootstrap.min.css">
       <DependentUpon>bootstrap.css</DependentUpon>
     </Content>
+    <Content Include="Assets\css\application.css">
+      <DependentUpon>application.scss</DependentUpon>
+    </Content>
+    <Content Include="Assets\css\application.min.css">
+      <DependentUpon>application.css</DependentUpon>
+    </Content>
     <Content Include="Assets\css\application.scss" />
     <Content Include="Assets\css\bootstrap.min.css" />
     <Content Include="Assets\css\eticket.css">
@@ -384,6 +390,7 @@
     <Content Include="Assets\travorama20\images\Hotel\meal-lg.png" />
     <Content Include="Assets\travorama20\images\Hotel\mini-slider.jpg" />
     <Content Include="Assets\travorama20\images\Hotel\next-white.png" />
+    <Content Include="Assets\travorama20\images\Hotel\no-hotel-lg.png" />
     <Content Include="Assets\travorama20\images\Hotel\no-hotel.png" />
     <Content Include="Assets\travorama20\images\Hotel\other-lg.png" />
     <Content Include="Assets\travorama20\images\Hotel\prev-white.png" />

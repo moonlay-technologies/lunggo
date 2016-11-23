@@ -1,5 +1,7 @@
 ﻿@using System.Globalization
 @using System.Security.Cryptography.X509Certificates
+@using System.Web.UI.WebControls
+@using CsQuery.EquationParser.Implementation.Functions
 @using Lunggo.ApCommon.Hotel.Model
 @using Lunggo.ApCommon.Hotel.Service
 @using Lunggo.ApCommon.Identity.Users
@@ -21,10 +23,20 @@
 @{
     var rooms = new List<HotelRoomForDisplay>();
     var token = "";
+    Model.HotelDetail.MainImage = "http://photos.hotelbeds.com/giata/" + Model.HotelDetail.MainImage;
+    var roomImage = "";
+    var sumAdult = 0;
+    var sumChild = 0;
     var textInfo = new CultureInfo("en-US", false).TextInfo;
     var orderedRooms = new List<Tuple<string, int>>();
+    var listAges = new List<int>();
     try
     {
+        
+        if (Model.HotelDetail.ImageUrl != null && Model.HotelDetail.ImageUrl.Count != 0)
+        {
+            roomImage = "http://photos.hotelbeds.com/giata/" + Model.HotelDetail.ImageUrl.FirstOrDefault();
+        }
         rooms = Model.HotelDetail.Rooms;
         token = Model.Token;
         foreach (var room in rooms)
@@ -34,6 +46,13 @@
             foreach (var rate in room.Rates)
             {
                 sum += rate.RoomCount;
+                sumAdult += rate.AdultCount;
+                sumChild += rate.ChildCount;
+                if (rate.ChildCount <= 0)
+                {
+                    continue;
+            }
+                listAges.AddRange(rate.ChildrenAges);
             }
             orderedRooms.Add(new Tuple<string, int>(roomName, sum));;
         }
@@ -81,6 +100,7 @@
         return text.Length == 0 ? "" : text.Substring(0, text.Length - 1);
     }
 
+   
     public string ApplyTitleCase(string input)
     {
         return input[0] + input.Substring(1, input.Length - 1).ToLower();
@@ -131,7 +151,7 @@
             <div class="col-left">
                 <div class="content-step" id="step-1" ng-show="currentPage == 1">
                     <h3><b>DETAIL</b> PEMESAN</h3>
-                    <div class="travorama-login" ng-class="{'active' : loginShown}" ng-if="!loggedIn">
+                    <div class="travorama-login hide" ng-class="{'active' : loginShown}" ng-if="!loggedIn">
                         <a class="login-toggle" ng-click="toggleLogin()"><b>Masuk</b> dengan akun <b>TRAVORAMA</b><span class="caret"></span></a>
                         <div class="login-content">
                             <form class="form register-form form-horizontal" name="loginForm" novalidate ng-submit="form.submit()">
@@ -226,8 +246,8 @@
                                 </label>
                             </div>
 
+                            <div ng-show ="diffPerson">
                             <h3><b>DETAIL</b> TAMU</h3>
-
                             <div class="form-group" ng-class="{'has-error' : buyerForm.guestTitle.$touched && buyerForm.guestTitle.$invalid}">
                                 <label class="control-label important">Titel :</label>
                                 <div>
@@ -250,6 +270,10 @@
                                     <input type="text" class="form-control nama" value=guestInfo.name id="buyer-name" placeholder="Nama Lengkap" name="name" ng-model="guestInfo.name" required />
                                 </div>
                             </div>
+                            </div>
+
+
+                            
 
                             @*<div class="form-group">
                                     <label class="control-label">Country of Residence</label>
@@ -296,8 +320,14 @@
                     <div class="rh-container review-hotel">
                         <div class="rh-main-title">Detail Hotel</div>
                         <div class="rh-content">
+                            
                             <div class="rh-row clearfix">
-                                <div class="col-left-hotel"><img src="@Model.HotelDetail.MainImage" alt="Alternate Text" /></div>
+                                <div class="col-left-hotel"
+                                     style="background: url(@Model.HotelDetail.MainImage); margin-right: 10px; width: 120px; height: 120px; background-size: cover; background-position: center; background-repeat: no-repeat; ">
+                                    @*<img src="@Model.HotelDetail.MainImage" alt="Hotel Image" id="hotelimg"
+                                         max-width="100%"
+                                         max-height="100%" style="padding-right :10px;" />*@
+                                </div>
                                 <div class="col-right-hotel">
                                     <div class="blue-txt bold-txt hotel-title-lg md-txt">{{capitalizeFirstLetter(hotelDetail.hotelName)}}</div>
                                     <div class="star" ng-show="hotelstar() == 'star'"></div>
@@ -307,7 +337,7 @@
                                     <div class="star star-5" ng-show="hotelstar() == 'star star-5'"></div>
                                     <div class="rh-location">
                                         @ToTitleCase(Model.HotelDetail.Address), @ToTitleCase(Model.HotelDetail.ZoneName), 
-                                        @ToTitleCase(Model.HotelDetail.DestinationName), @Model.HotelDetail.CountryName
+                                        @ToTitleCase(Model.HotelDetail.DestinationName), @Model.HotelDetail.PostalCode, @Model.HotelDetail.CountryName
                                     </div>
                                     <div class="rh-detail">
                                         <div class="wb-container clearfix">
@@ -335,14 +365,17 @@
                             </div>
                             <div class="rh-row">
                                 <div class="rh-top clearfix">
-                                    <div class="col-left-hotel"><img src="/Assets/travorama20/images/Hotel/hotel-md.jpg" alt="Alternate Text" /></div>
+                                    <div class="col-left-hotel"
+                                         style="background: url(@roomImage); margin-right: 10px; width: 120px; height: 120px; background-size: cover; background-position: center; background-repeat: no-repeat; ">
+                                        @*<img src="@roomImage" alt="Room Image" id="roomimg" max-width="100%" max-height="100%"
+                                             style="padding-right :10px;" />*@
+                                    </div>
                                     <div class="col-right-hotel clearfix">
                                         <span class="hotel-facility facility"></span>
 
-
                                         @foreach (var room in rooms)
                                         {
-                                            var index = 1;
+                                            //var index = 1;
                                             <div class="rh-detail">
                                                 <div class="wb-container clearfix">
                                                     <div class="wb-left">Jenis Kamar</div>
@@ -352,7 +385,7 @@
 
                                                 @foreach (var rate in room.Rates)
                                                 {
-                                                    @index
+                                                    @*@index*@
                                                     var pol = 1;
                                                     <div class="wb-container clearfix">
                                                         <div class="wb-left">Jumlah Kamar</div>
@@ -362,18 +395,41 @@
                                                     <div class="wb-container clearfix">
                                                         <div class="wb-left">Tamu per Kamar</div>
                                                         <div class="wb-mid">:</div>
-                                                        <div class="wb-right bold-txt">@(rate.AdultCount + rate.ChildCount) Orang</div>
+                                                        <div class="wb-right bold-txt">@rate.AdultCount Dewasa
+                                                            @if (@rate.ChildCount > 0)
+                                                            {
+                                                                <span>, @rate.ChildCount Anak </span> 
+                                                                <span>(
+                                                                    @for (var a = 0; a < rate.ChildrenAges.Count; a++)
+                                                                    {
+                                                                        if (a != rate.ChildrenAges.Count - 1)
+                                                                        {
+                                                                            @rate.ChildrenAges[a]
+                                                                            <span>Tahun, </span>
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            @rate.ChildrenAges[a] <span>Tahun</span>
+                                                                        }
+                                                                    }
+                                                                    )
+                                                                </span>
+                                                            }</div>
                                                     </div>
                                                     <div class="wb-container clearfix">
                                                         <div class="wb-left">Tipe Board</div>
                                                         <div class="wb-mid">:</div>
                                                         <div class="wb-right bold-txt">@ToTitleCase(rate.BoardDescription)</div>
                                                     </div>
+                                                    if (!rate.TermAndCondition.Exists(r => r.Length < 3))
+                                                    {
                                                     <div class="wb-container clearfix">
-                                                        <div class="wb-left">Rate Comment</div>
+                                                            <div class="wb-left">Ketentuan</div>
                                                         <div class="wb-mid">:</div>
                                                         <div class="wb-right bold-txt">@String.Join(". ", rate.TermAndCondition)</div>
                                                     </div>
+                                                    }
+
                                                     <div class="wb-container clearfix">
                                                         <div class="wb-left">Ketentuan Pembatalan</div>
                                                         <div class="wb-mid">:</div>
@@ -382,17 +438,18 @@
                                                             {
                                                                 foreach (var policy in rate.Cancellation)
                                                             {
-                                                                    <div>
-                                                                        @pol. Biaya pembatalan: Rp @(policy.Fee.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID")))<br />
-                                                                        Mulai berlaku: @policy.StartTime.ToString("D", CultureInfo.CreateSpecificCulture("id-ID")) <br />
-                                                                    </div>
+                                                                <div>
+                                                                    @pol. 
+                                                                    Biaya pembatalan: Rp @(policy.Fee.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID")))<br />
+                                                                    Mulai berlaku: @policy.StartTime.ToString("D", CultureInfo.CreateSpecificCulture("id-ID")) <br />
+                                                                </div>
                                                                 pol++;
                                                             }
                                                             }
                                                         </div>
                                                     </div>
 
-                                                            index++;
+                                                    //index++;
                                                 }
 
                                             </div>
@@ -467,7 +524,7 @@
                     </form>
                     <div class="step-button">
                         <button class="btn btn-grey" ng-click="changePage(1)">KEMBALI</button>
-                        <button class="btn btn-yellow go-top" ng-click="book.send()">PESAN</button>
+                        <button class="btn btn-yellow go-top" ng-disabled="book.booking" ng-click="book.send()">PESAN</button>
                     </div>
                 </div><!-- .content-step#step-2 -->
                 <!-- ******************** -->
@@ -486,7 +543,7 @@
                             <dl class="total-room">
                                 <dt class="dt-title">
                                     @rate.RoomCount @ToTitleCase(room.RoomName)
-                                    @ToTitleCase(HotelService.GetInstance().GetHotelBoardDescId(rate.Boards)) x {{nights}} Malam :
+                                    @ToTitleCase(HotelService.GetInstance().GetHotelBoardDescId(rate.Boards)) x {{nights}} Malam
                                 </dt>
                                 <dd class="dd-price">
                                     Rp @(rate.NetFare.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID")))
@@ -496,7 +553,7 @@
                             }
 
                             <dl class="service-room" ng-show="roomService > 0">
-                                <dt class="dt-title">Pelayanan Kamar :</dt>
+                                <dt class="dt-title">Pelayanan Kamar </dt>
                                 <dd class="dd-price">Rp {{roomService | number}}</dd>
                             </dl>
                             <dl class="total-price">
@@ -516,7 +573,7 @@
                                 <div class="widget-content">
                                     <div class="widget-top">
                                         <div class="wt-top clearfix">
-                                            <div class="col-left-hotel"><img src="/Assets/travorama20/images/Hotel/hotel-sm.jpg" alt="Alternate Text" /></div>
+                                            <div class="col-left-hotel"><img src="@Model.HotelDetail.MainImage" alt="Alternate Text" /></div>
                                             <div class="col-right-hotel">
                                                 <span class="blue-txt bold-txt">{{capitalizeFirstLetter(hotelDetail.hotelName)}}</span>
                                                 <br />
@@ -528,8 +585,8 @@
                                             </div>
                                         </div>
                                         <div class="wt-bottom">
-                                            {{capitalizeFirstLetter(hotelDetail.address)}}, @ToTitleCase(Model.HotelDetail.ZoneName),
-                                            @ToTitleCase(Model.HotelDetail.DestinationName), @Model.HotelDetail.CountryName
+                                            {{capitalizeFirstLetter(hotelDetail.address)}} @ToTitleCase(Model.HotelDetail.ZoneName),
+                                            @ToTitleCase(Model.HotelDetail.DestinationName), @Model.HotelDetail.PostalCode, @Model.HotelDetail.CountryName
                                         </div>
                                     </div>
                                     <div class="widget-bottom">
@@ -575,11 +632,30 @@
                                             </div>
                                         </div>
                                         <div class="wb-container clearfix">
-                                            <div class="wb-left">Tamu per Kamar</div>
+                                            <div class="wb-left">Total Tamu</div>
                                             <div class="wb-mid">:</div>
                                             <div class="wb-right bold-txt">
-                                                {{totalpax()}} Orang
+                                                @sumAdult Dewasa, @if (sumChild > 0)
+                                                {
+                                                    <span>@sumChild Anak </span>
+                                                    <span>
+                                                        (@for (var a = 0; a < listAges.Count; a++)
+                                                        {
+                                                            if (a != listAges.Count - 1)
+                                                            {
+                                                                @listAges[a]
+                                                                <span>Tahun, </span>
+                                                            }
+                                                            else
+                                                            {
+                                                                @listAges[a] <span>Tahun</span>
+                                                            }
+                                                        })
+                                                    </span>
+                                                }
                                             </div>
+
+                                            
                                         </div>
                                     </div>
                                 </div>

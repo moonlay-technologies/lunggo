@@ -524,20 +524,32 @@ app.controller('checkoutController', [
                         headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') }
                     }).then(function (returnData) {
                         //console.log(returnData);
-                        if (returnData.data.status == '200' && (returnData.data.rsvNo != '' || returnData.data.rsvNo != null)) {
-                            if (returnData.data.price != null) {
+                        if (returnData.data.status == '200' && (returnData.data.rsvNo != null || returnData.data.rsvNo != '' )) {
+                            if (returnData.data.itinChanged) {
+                                $scope.book.isSuccess = false;
+                                $scope.book.checked = true;
+                                $scope.book.booking = false;
+                            }
+
+                            else if (returnData.data.priceChanged) {
                                 $scope.book.isPriceChanged = true;
                                 $scope.book.isSuccess = true;
                                 $scope.book.newPrice = returnData.data.price;
                                 $scope.book.checked = false;
                                 $scope.book.booking = false;
                             }
-                            else {
+
+                            else if (returnData.data.rsvNo != null && returnData.data.rsvNo.length != 0) {
                                 $scope.book.isSuccess = true;
                                 $scope.book.rsvNo = returnData.data.rsvNo;
-
                                 $('form#rsvno input#rsvno-input').val(returnData.data.rsvNo);
                                 $('form#rsvno').submit();
+                                $scope.book.checked = true;
+                                $scope.book.booking = false;
+                            }
+                           
+                            else  {
+                                $scope.book.isSuccess = false;
                                 $scope.book.checked = true;
                                 $scope.book.booking = false;
                             }
@@ -967,7 +979,19 @@ app.controller('checkoutController', [
 // travorama angular app - confirmation controller
 app.controller('confirmationController', [
     '$http', '$scope', function ($http, $scope) {
+        //$scope.PageConfig = $rootScope.PageConfig;
+        //$scope.DatePicker = $rootScope.DatePicker;
 
+        $scope.UserForm = {
+            Confirmation: {
+                Name: '',
+                Bank: {
+                    Name: '',
+                    Number: ''
+                },
+                Amount: 0
+            }
+        };
         $scope.pageLoaded = true;
         $scope.msToTime = function (duration) {
 
@@ -1013,6 +1037,37 @@ app.controller('confirmationController', [
                 return 'star star-5';
             }
         }
+        $scope.calculateAspectRatioFit = function (srcWidth, srcHeight) {
+            var maxWidth = 120; // Max width for the image
+            var maxHeight = 120;    // Max height for the image
+            var ratio = 0;  // Used for aspect ratio
+            var height = srcHeight;
+            var width = srcWidth;
+            // Check if the current width is larger than the max
+            if (srcWidth > maxWidth) {
+                ratio = maxWidth / width;   // get ratio for scaling image
+                $(this).css("width", maxWidth); // Set new width
+                $(this).css("height", height * ratio);  // Scale height based on ratio
+                height = height * ratio;    // Reset height to match scaled image
+                width = width * ratio;    // Reset width to match scaled image
+            }
+
+            // Check if current height is larger than max
+            if (height > maxHeight) {
+                ratio = maxHeight / height; // get ratio for scaling image
+                $(this).css("height", maxHeight);   // Set new height
+                $(this).css("width", width * ratio);    // Scale width based on ratio
+                width = width * ratio;    // Reset width to match scaled image
+                height = height * ratio;    // Reset height to match scaled image
+            }
+            return { width: width, height: height };
+        };
+        //$scope.hotelimg = document.getElementById("hotelimg");
+        //$scope.roomimg = document.getElementById("roomimg");
+        //$scope.hotelimgheight = $scope.calculateAspectRatioFit($scope.hotelimg.width, $scope.hotelimg.height).height;
+        //$scope.hotelimgwidth = $scope.calculateAspectRatioFit($scope.hotelimg.width, $scope.hotelimg.height).width;
+        //$scope.roomimgheight = $scope.calculateAspectRatioFit($scope.roomimg.width, $scope.roomimg.height).height;
+        //$scope.roomimgwidth = $scope.calculateAspectRatioFit($scope.roomimg.width, $scope.roomimg.height).width;
 
     }
 ]);// confirmation controller

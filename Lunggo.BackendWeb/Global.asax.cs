@@ -38,9 +38,17 @@ namespace Lunggo.BackendWeb
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
             AppInitializer.Init();
+            //HotelService.GetInstance().CommenceIssueHotel(new IssueHotelTicketInput
+            //{
+            //    RsvNo = "286146542579"
+            //});
+            //var hotelDetail = HotelService.GetInstance().GetHotelDetailFromTableStorage(24408);
+            //var image1 = hotelDetail.ImageUrl.Where(u => u.Type == "GEN").Take(1).FirstOrDefault();
+            //var image2 = hotelDetail.ImageUrl.Where(u => u.Order == 1).Take(1).FirstOrDefault();
+            //Console.WriteLine("Done");
 
             //HotelService.GetInstance().SaveHotelDetailByLocation();
-            var x = HotelService.GetInstance().GetHotelDetailByLocation("JAV");
+            //var x = HotelService.GetInstance().GetHotelDetailByLocation("JAV");
             //HotelService.GetInstance().CommenceIssueHotel(new IssueHotelTicketInput
             //{
             //    RsvNo = "284796541379"

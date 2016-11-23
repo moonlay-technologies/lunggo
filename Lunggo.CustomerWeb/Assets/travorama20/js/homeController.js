@@ -120,11 +120,11 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
         }
         
     });
-
+        
     $scope.hotel.searchHotel = function () {
         hotelSearchSvc.gotoHotelSearch($scope.hotelSearch);
     };
-  
+
     $('.hotel-date-picker').datepicker({
         numberOfMonths: 2,
         onSelect: function (date) {

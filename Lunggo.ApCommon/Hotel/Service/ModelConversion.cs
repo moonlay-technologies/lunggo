@@ -48,11 +48,12 @@ namespace Lunggo.ApCommon.Hotel.Service
                 HotelName = hotelDetail.HotelName,
                 Address = hotelDetail.Address,
                 City = hotelDetail.City,
-                ZoneName = GetZoneNameFromDict(hotelDetail.ZoneCode),
+                ZoneName = GetZoneNameFromDict(hotelDetail.DestinationCode+ "-" +hotelDetail.ZoneCode),
                 StarRating = Convert.ToInt32(hotelDetail.StarRating.Substring(0,1)),
                 //ChainName = GetHotelChainDesc(hotelDetail.Chain),
                 AccomodationName = GetHotelAccomodationDescId(hotelDetail.AccomodationType),
-                MainImage = hotelDetail.ImageUrl != null ? string.Concat(baseUrl ,hotelDetail.ImageUrl.Where(x => x.Type == "GEN").Select(x => x.Path).FirstOrDefault()) : null,
+                ImageUrl = hotelDetail.ImageUrl.Where(x => x.Type == "HAB").ToList().Select(y => y.Path).ToList(),
+                MainImage = hotelDetail.ImageUrl != null ? hotelDetail.ImageUrl.Where(x=>x.Type=="GEN").Select(x=>x.Path).FirstOrDefault(): null,
                 OriginalFare = price * 1.01M,
                 NetFare = price,
                 IsRestaurantAvailable = hotelDetail.IsRestaurantAvailable,
@@ -69,7 +70,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                 PhonesNumbers = hotelDetail.PhonesNumbers,
                 CountryName = GetCountryNameFromDict(hotelDetail.CountryCode).Name,
                 DestinationName = GetDestinationNameFromDict(hotelDetail.DestinationCode).Name,
-
+                PostalCode = hotelDetail.PostalCode
             };
             return convertedHotel;
         }
@@ -141,7 +142,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                     City = hotelDetail.City,
                     CountryName = GetCountryNameFromDict(hotelDetail.CountryCode).Name,
                     DestinationName = GetDestinationNameFromDict(hotelDetail.DestinationCode).Name,
-                    ZoneName = GetZoneNameFromDict(hotelDetail.ZoneCode),
+                    ZoneName = GetZoneNameFromDict(hotelDetail.DestinationCode + "-" + hotelDetail.ZoneCode),
                     StarRating = hotelDetail.StarCode != 0
                         ? hotelDetail.StarCode
                         : (hotelDetail.StarRating != null
@@ -173,7 +174,8 @@ namespace Lunggo.ApCommon.Hotel.Service
                     SupplierName = hotelDetail.SupplierName,
                     BookingReference = hotelDetail.BookingReference,
                     ClientReference = hotelDetail.ClientReference,
-                    PhonesNumbers = hotelDetail.PhonesNumbers
+                    PhonesNumbers = hotelDetail.PhonesNumbers,
+                    PostalCode = hotelDetail.PostalCode
                 };
                 convertedHotels.Add(hotel);
             };
@@ -278,7 +280,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                         if(!data.IsFree)
                             displayFacilities.General.Add(GetHotelFacilityDescId(Convert.ToInt32(data.FullFacilityCode)) +" *");
                         else
-                            displayFacilities.General.Add(GetHotelFacilityDescId(Convert.ToInt32(data.FullFacilityCode)));
+                        displayFacilities.General.Add(GetHotelFacilityDescId(Convert.ToInt32(data.FullFacilityCode)));
                         break;
                     case 71:
                         if (displayFacilities.Meal == null)
@@ -286,7 +288,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                         if (!data.IsFree)
                             displayFacilities.Meal.Add(GetHotelFacilityDescId(Convert.ToInt32(data.FullFacilityCode)) + " *");
                         else
-                            displayFacilities.Meal.Add(GetHotelFacilityDescId(Convert.ToInt32(data.FullFacilityCode)));
+                        displayFacilities.Meal.Add(GetHotelFacilityDescId(Convert.ToInt32(data.FullFacilityCode)));
                         break;
                     case 72:
                         if (displayFacilities.Business == null)
@@ -294,7 +296,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                         if (!data.IsFree)
                             displayFacilities.Business.Add(GetHotelFacilityDescId(Convert.ToInt32(data.FullFacilityCode)) + " *");
                         else
-                            displayFacilities.Business.Add(GetHotelFacilityDescId(Convert.ToInt32(data.FullFacilityCode)));
+                        displayFacilities.Business.Add(GetHotelFacilityDescId(Convert.ToInt32(data.FullFacilityCode)));
                         break;
                     case 73:
                         if (displayFacilities.Entertainment == null)
@@ -302,7 +304,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                         if (!data.IsFree)
                             displayFacilities.Entertainment.Add(GetHotelFacilityDescId(Convert.ToInt32(data.FullFacilityCode)) + " *");
                         else
-                            displayFacilities.Entertainment.Add(
+                        displayFacilities.Entertainment.Add(
                             GetHotelFacilityDescId(Convert.ToInt32(data.FullFacilityCode)));
                         break;
                     case 74:
@@ -311,7 +313,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                         if (!data.IsFree)
                             displayFacilities.Health.Add(GetHotelFacilityDescId(Convert.ToInt32(data.FullFacilityCode)) + " *");
                         else
-                            displayFacilities.Health.Add(GetHotelFacilityDescId(Convert.ToInt32(data.FullFacilityCode)));
+                        displayFacilities.Health.Add(GetHotelFacilityDescId(Convert.ToInt32(data.FullFacilityCode)));
                         break;
                     case 90:
                         if (displayFacilities.Sport == null)
@@ -319,7 +321,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                         if (!data.IsFree)
                             displayFacilities.Sport.Add(GetHotelFacilityDescId(Convert.ToInt32(data.FullFacilityCode)) + " *");
                         else
-                            displayFacilities.Sport.Add(GetHotelFacilityDescId(Convert.ToInt32(data.FullFacilityCode)));
+                        displayFacilities.Sport.Add(GetHotelFacilityDescId(Convert.ToInt32(data.FullFacilityCode)));
                         break;
                     default:
                         if (displayFacilities.Other == null)
@@ -328,7 +330,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                             if (!data.IsFree)
                                 displayFacilities.Other.Add(GetHotelFacilityDescId(Convert.ToInt32(data.FullFacilityCode)) + " *");
                             else
-                                displayFacilities.Other.Add(GetHotelFacilityDescId(Convert.ToInt32(data.FullFacilityCode)));
+                            displayFacilities.Other.Add(GetHotelFacilityDescId(Convert.ToInt32(data.FullFacilityCode)));
                         break;
                 }
             }
@@ -420,8 +422,12 @@ namespace Lunggo.ApCommon.Hotel.Service
                     Offers = rateDetail.Offers,
                     TermAndCondition = rateDetail.TermAndCondition
                 };
+                if (rateDetail.Price != null)
+                {
                 SetTimeCancellation(rate, rateDetail);
                 SetDisplayPriceHotelRate(rate, rateDetail);
+                }
+                
                 convertedRate.Add(rate);
             });
             return convertedRate.ToList();

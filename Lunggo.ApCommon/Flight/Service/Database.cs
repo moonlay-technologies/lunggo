@@ -91,7 +91,7 @@ namespace Lunggo.ApCommon.Flight.Service
                     Pax = new List<Pax>(),
                     Payment = PaymentDetails.GetFromDb(rsvNo),
                     State = ReservationState.GetFromDb(rsvNo),
-                    User = User.GetFromDb(reservationRecord.UserId)
+                    User = User.GetFromDb(reservationRecord.UserId),
                 };
 
                 if (reservation.Contact == null || reservation.Payment == null || reservation.State == null)

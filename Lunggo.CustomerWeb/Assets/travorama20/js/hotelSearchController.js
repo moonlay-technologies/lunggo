@@ -53,7 +53,7 @@ app.controller('hotelSearchController', ['$scope', '$log', '$http', '$resource',
         $scope.hotelSearch.checkoutDate = $scope.model.searchParamObject.checkoutDate;
         $scope.hotelSearch.adultCount = $scope.model.searchParamObject.adultCount;
         $scope.hotelSearch.childCount = $scope.model.searchParamObject.childCount;
-        $scope.hotelSearch.nightCount = new Date($scope.hotelSearch.checkoutDate).getDate() - new Date($scope.hotelSearch.checkinDate).getDate();
+        $scope.hotelSearch.nightCount = $scope.model.searchParamObject.nightCount;//new Date($scope.hotelSearch.checkoutDate).getDate() - new Date($scope.hotelSearch.checkinDate).getDate();
         $scope.hotelSearch.roomCount = $scope.model.searchParamObject.roomCount;
         $scope.hotelSearch.childrenAges = $scope.model.searchParamObject.childrenAges;
         $scope.hotelSearch.searchParamObject = $scope.model.searchParamObject;
@@ -88,7 +88,7 @@ app.controller('hotelSearchController', ['$scope', '$log', '$http', '$resource',
             $scope.totalActualHotel = data.returnedHotelCount;
             $scope.returnedHotelCount = data.returnedHotelCount;
             $scope.filteredHotelCount = data.filteredHotelCount;
-
+            
             $scope.page = data.page;
             $scope.perPage = data.perPage;
             $scope.pageCount = data.pageCount;
@@ -97,7 +97,7 @@ app.controller('hotelSearchController', ['$scope', '$log', '$http', '$resource',
             if (isFirstload) {
                 $scope.filter.minPrice = data.minPrice;
                 $scope.filter.maxPrice = data.maxPrice;
-                initiatePriceSlider();
+            initiatePriceSlider();
 
                 $scope.hotelFilterDisplayInfo = data.hotelFilterDisplayInfo;
                 isFirstload = false;
@@ -123,7 +123,7 @@ app.controller('hotelSearchController', ['$scope', '$log', '$http', '$resource',
                 $scope.searchHotel();
                 return false;
             }
-    }
+        }
 
         return true;
     };
