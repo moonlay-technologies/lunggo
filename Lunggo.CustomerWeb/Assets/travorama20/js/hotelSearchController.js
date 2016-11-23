@@ -56,7 +56,7 @@ app.controller('hotelSearchController', ['$scope', '$log', '$http', '$resource',
         $scope.hotelSearch.roomCount = $scope.model.searchParamObject.roomCount;
         $scope.hotelSearch.childrenAges = $scope.model.searchParamObject.childrenAges;
         $scope.hotelSearch.searchParamObject = $scope.model.searchParamObject;
-        $scope.hotelSearch.searchParam = $scope.model.searchParamObject.searchParam;
+        $scope.hotelSearch.searchParam = $scope.model.searchParam;
 
         $scope.searchHotel();
     }

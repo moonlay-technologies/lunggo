@@ -34,9 +34,12 @@ namespace Lunggo.CustomerWeb.Controllers
         {
             try
             {
-                //HotelSearchApiRequest model = new HotelSearchApiRequest(query);
+                NameValueCollection query = HttpUtility.ParseQueryString(searchParam);
+                HotelSearchApiRequest model = new HotelSearchApiRequest(query);
+                searchParam = model.SearchParam;
+                var searchParamObject = model.SearchParamObject;
 
-                return View(new { searchId, hotelCd, searchParam });
+                return View(new { searchId, hotelCd, searchParam, searchParamObject });
             }
             catch (Exception ex)
             {
