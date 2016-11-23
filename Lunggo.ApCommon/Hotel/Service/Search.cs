@@ -75,7 +75,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                 request.Occupancies = input.Occupancies;
                 request.SearchId = generatedSearchId.ToString();
 
-                switch (detailDestination.Type)
+                switch (AutocompleteTypeCd.Mnemonic(detailDestination.Type))
                 {
                     case AutocompleteType.Zone:
                         request.Zone = detailDestination.Code;
@@ -115,7 +115,7 @@ namespace Lunggo.ApCommon.Hotel.Service
             var dict = new Dictionary<int, HotelDetailsBase>();
             var details = new HotelDetailsBase();
             //GetHotelDetailByLocation(request.Destination);
-            switch (detailDestination.Type)
+            switch (AutocompleteTypeCd.Mnemonic(detailDestination.Type))
             {
                 case AutocompleteType.Zone:
                     dict = GetHotelDetailByLocation(request.Zone);

@@ -110,7 +110,6 @@ namespace Lunggo.ApCommon.Hotel.Service
             var table = tableClient.GetTableByReference("hotelautocomplete");
             var hotelCdTable = tableClient.GetTableByReference("hotelCodeTable");
 
-            GetInstance()._Autocompletes = new Dictionary<long, Autocomplete>();
             long index = 1;
             var newValue = new HotelAutoComplete("hotelAutoComplete", index.ToString());
             foreach (var country in Countries)

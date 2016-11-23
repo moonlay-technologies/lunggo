@@ -13,7 +13,25 @@
     <link href="/Assets/css/jquery-ui.min.css" rel="stylesheet" />
 }
 @{
-    long loc = 0;
+    long location = 0;
+    var x = long.TryParse(Model.Location, out location);
+    var loc = "";
+    var foundLocation = HotelService.GetInstance().AutoCompletes.Where( c => c.Id == location).ToList()[0];
+    if (foundLocation != null)
+    {
+        if (foundLocation.Type == 1)
+        {
+            loc = foundLocation.Destination + ", " + foundLocation.Country;
+        }
+        else if(foundLocation.Type == 2)
+        {
+            loc = foundLocation.Zone + ", " + foundLocation.Destination + ", " + foundLocation.Country;
+        }
+        else if (foundLocation.Type == 4)
+        {
+            loc = foundLocation.HotelName + ", " + foundLocation.Destination + ", " + foundLocation.Country;
+        }
+    }
     //var found = HotelService.GetInstance()._Autocompletes.TryGetValue(Convert.ToInt64(Model.Location), out loc);
 }
 @section AdditionalJS {
@@ -41,8 +59,9 @@
         });
     </script>
     <script>
-        var x = '@long.TryParse(Model.Location, out loc)';
-        var loc = '@HotelService.GetInstance()._Autocompletes[loc].Name';
+        
+        var loc = '@loc';
+   
     </script>
     <script src="/Assets/travorama20/js/hotelSearchController.js"></script>
  <script src="/Assets/travorama20/js/homeController.js"></script>

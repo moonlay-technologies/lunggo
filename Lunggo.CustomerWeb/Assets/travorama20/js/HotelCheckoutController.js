@@ -229,7 +229,7 @@ app.controller('hotelcheckoutController', [
 
         $scope.validateForm = function (page) {
             if (page == 1) {
-                if (!$scope.CheckTitle($scope.buyerInfo.title)) {
+                if (!$scope.CheckTitle($scope.buyerInfo)) {
                     $scope.form.incompleteContactTitle = true;
                 } else {
                     $scope.form.incompleteContactTitle = false;
@@ -254,7 +254,7 @@ app.controller('hotelcheckoutController', [
                     $scope.form.incompleteContactEmail = false;
                 }
 
-                if (!$scope.CheckTitle($scope.guestInfo.title)) {
+                if (!$scope.CheckTitle($scope.guestInfo)) {
                     $scope.form.incompleGuestTitle = true;
                 } else {
                     $scope.form.incompleteGuestTitle = false;

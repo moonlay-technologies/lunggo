@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Web;
+using Lunggo.ApCommon.Hotel.Constant;
 using Lunggo.ApCommon.Hotel.Model;
 using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Sdk.auto.model;
 
@@ -156,14 +157,6 @@ namespace Lunggo.ApCommon.Hotel.Service
             public AutocompleteType Type;
             public long Id;
             public string Code;
-        }
-
-        public enum AutocompleteType
-        {
-            Destination = 1,
-            Zone = 2,
-            Area = 3,
-            Hotel = 4
         }
 
         //FOR AUTOCOMPLETE
@@ -897,13 +890,17 @@ namespace Lunggo.ApCommon.Hotel.Service
         //    }
         //}
         //GET METHOD REGARDING AUTOCOMPLETE
-        public Autocomplete GetLocationById(long id)
+        public HotelAutoComplete GetLocationById(long id)
         {
-            var value = new Autocomplete();
-            _Autocompletes.TryGetValue(id, out value);
-            return value;
+            var value = AutoCompletes.First(c => c.Id == id);
+            if (value != null)
+            {
+                return value;
             }
-                
+
+            return new HotelAutoComplete();
+        }
+
         //GET METHODS REGARDING SEGMENT
         public string GetHotelSegmentId(string code)
         {
