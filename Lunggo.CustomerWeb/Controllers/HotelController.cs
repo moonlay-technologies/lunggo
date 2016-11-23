@@ -19,7 +19,7 @@ namespace Lunggo.CustomerWeb.Controllers
             try
             {
                 NameValueCollection query = Request.QueryString;
-                HotelSearchApiRequest model = new HotelSearchApiRequest(query[0]);
+                HotelSearchApiRequest model = new HotelSearchApiRequest(query);
 
                 return View(model);
             }
@@ -30,9 +30,21 @@ namespace Lunggo.CustomerWeb.Controllers
 
         }
 
-        public ActionResult DetailHotel(string searchId, int hotelCd)
+        public ActionResult DetailHotel(string searchId, int hotelCd, string searchParam)
         {
-            return View(new { searchId, hotelCd });
+            try
+            {
+                NameValueCollection query = HttpUtility.ParseQueryString(searchParam);
+                HotelSearchApiRequest model = new HotelSearchApiRequest(query);
+                searchParam = model.SearchParam;
+                var searchParamObject = model.SearchParamObject;
+
+                return View(new { searchId, hotelCd, searchParam, searchParamObject });
+            }
+            catch (Exception ex)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, ex.Message);
+            }
         }
 
         //public ActionResult Checkout()
@@ -73,7 +85,7 @@ namespace Lunggo.CustomerWeb.Controllers
                     {
                         Token = token,
                         HotelDetail = hotelDetail,
-                       // ExpiryTime = expiryTime.GetValueOrDefault(),
+                        ExpiryTime = hotelService.GetSelectionExpiry(token).GetValueOrDefault(),
                         //SavedPassengers = savedPassengers,
                         //SavedCreditCards = savedCreditCards
                     });

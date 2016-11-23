@@ -4,6 +4,7 @@ app.controller('siteHeaderController', [
     '$http', '$scope', function ($http, $scope) {
         $scope.profileloaded = false;
         $scope.email = '';
+        $scope.name = '';
         $scope.trial = 0;
         $scope.authProfile = {}
         $scope.ProfileConfig = {
@@ -22,6 +23,7 @@ app.controller('siteHeaderController', [
                         $scope.isLogin = true;
                         console.log('Success getting Profile');
                         $scope.email = returnData.data.email;
+                        $scope.name = returnData.data.name;
                         $scope.profileloaded = true;
                         console.log(returnData);
                         $scope.name = returnData.data.name;
@@ -148,25 +150,25 @@ app.controller('UserAccountController', ['$http', '$scope', '$rootScope', '$loca
         var text = '';
         switch (num) {
             case 1:
-                text = 'Cancel';
+                text = 'Dibatalkan';
                 break;
             case 2:
-                text = 'Pending';
+                text = 'Menunggu Pembayaran';
                 break;
             case 3:
-                text = 'Settled';
+                text = 'Lunas';
                 break;
             case 4:
-                text = 'Denied';
+                text = 'Ditolak';
                 break;
             case 5:
-                text = 'Expired';
+                text = 'Kadaluarsa';
                 break;
             case 6:
-                text = 'Veryfing';
+                text = 'Memverifikasi Pembayaran';
                 break;
             case 7:
-                text = 'Challanged';
+                text = 'Menunggu Konfirmasi Ulang';
                 break;
         }
         return text;
@@ -175,11 +177,14 @@ app.controller('UserAccountController', ['$http', '$scope', '$rootScope', '$loca
     $scope.FlightType = function(num) {
         var text = '';
         switch (num) {
-            case 0:
-                text = 'OneWay';
-                break;
             case 1:
-                text = 'Return';
+                text = '(Sejalan)';
+                break;
+            case 2:
+                text = '(Pulang Pergi)';
+                break;
+            default:
+                text = '';
                 break;
         }
         return text;
@@ -448,6 +453,70 @@ app.controller('UserAccountController', ['$http', '$scope', '$rootScope', '$loca
 
     //Get Transaction History
 
+    $scope.totalpax = function (hotel) {
+        var sumAdult = 0;
+        var sumChild = 0;
+
+        for (var i = 0; i < hotel.room.length; i++) {
+            for (var j = 0; j < hotel.room[i].rates.length; j++) {
+                sumAdult += hotel.room[i].rates[j].adultCount;
+                sumChild += hotel.room[i].rates[j].childCount;
+            }
+        }
+
+        return { 'totalAdult': sumAdult, 'totalChild': sumChild };
+    }
+    $scope.totalRoom = function (hotel) {
+        var rooms = [];
+
+        for (var i = 0; i < hotel.room.length; i++) {
+            for (var j = 0; j < hotel.room[i].rates.length; j++) {
+                room = {
+                    'roomName': hotel.room[i].roomName, 'boardType': hotel.room[i].rates[j].boardDesc,
+                    'roomCount': hotel.room[i].rates[j].roomCount
+                };
+                rooms.push(room);
+            }
+        }
+
+        var roomstc = '';
+        for (var k = 0; k < rooms.length; k++) {
+            roomstc += parseInt(rooms[k].roomCount) + ' ' + rooms[k].roomName + ' ' + rooms[k].boardType + ', ';
+        }
+        roomstc = roomstc.substring(0, roomstc.length - 2);
+        return roomstc;
+    }
+
+    $scope.sumRoom = function (hotel) {
+        var sumRoom = 0;
+        for (var i = 0; i < hotel.room.length; i++) {
+            for (var j = 0; j < hotel.room[i].rates.length; j++) {
+                sumRoom += hotel.room[i].rates[j].roomCount;
+            }
+        }
+        return sumRoom;
+    }
+    $scope.nightcount = function (hotel) {
+        var checkin = new Date(hotel.checkIn);
+        var checkout = new Date(hotel.checkOut);
+        return (checkout - checkin) / (24 * 3600 * 1000);
+    }
+
+    $scope.titleCase = function (sentence) {
+        return sentence.replace(/\w\S*/g, function (txt) { return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase(); });
+    }
+
+    $scope.getPhotoUrl = function (url) {
+        return 'http://photos.hotelbeds.com/giata/small/' + url;
+    }
+
+    $scope.submitRsvNo = function (rsvNo, rsvStatus) {
+        $('form#rsvno input#rsvno-input').val(rsvNo);
+        $('form#rsvno input#message-input').val(rsvStatus);
+        $('form#rsvno').submit();
+    }
+
+    $scope.loading = false;
     $scope.trxHistory = {
         getTrxHistory: function () {
             if ($scope.trial > 3) {
@@ -456,15 +525,18 @@ app.controller('UserAccountController', ['$http', '$scope', '$rootScope', '$loca
             //Check Authorization
             var authAccess = getAuthAccess();
             if (authAccess == 2) {
+                $scope.loading = true;
                 $http({
                     method: 'GET',
                     url: TrxHistoryConfig.Url,
                     headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') }
                 }).then(function (returnData) {
                     if (returnData.data.status == "200") {
+                        $scope.loading = false;
                         console.log('Success getting Transaction');
                         console.log(returnData);
                         $scope.flightlist = returnData.data.flights;
+                        $scope.hotellist = returnData.data.hotels;
                         var flights = [];
 
                         for (var i = 0; i < $scope.flightlist.length; i++) {
@@ -532,6 +604,7 @@ app.controller('OrderDetailController', ['$http', '$scope', '$rootScope', functi
     $scope.rsvNo = rsvNo;
     $scope.var = 3;
     $scope.flight = [];
+    $scope.hotel = [];
     $scope.title = function(title) {
         if (title == '1')
             return 'Tn.';
@@ -556,6 +629,8 @@ app.controller('OrderDetailController', ['$http', '$scope', '$rootScope', functi
         $('form#rsvno').submit();
     }
 
+    $scope.rsvStatus = rsvStatus;
+    $scope.paymentMethod = paymentMethod;
     $scope.methodpayment = function(types) {
         if (types == 1)
             return 'Kartu Kredit';
@@ -610,7 +685,7 @@ app.controller('OrderDetailController', ['$http', '$scope', '$rootScope', functi
             return 'Gagal';
     }
 
-    $scope.ButtonText = function (status, method) {
+    $scope.ButtonText = function (status, method, type) {
         if (status == 1) { return 'Halaman Pembayaran'; }
 
         else if (status == 2 || status == 3) {
@@ -629,7 +704,13 @@ app.controller('OrderDetailController', ['$http', '$scope', '$rootScope', functi
             return 'Lihat Detail';
         }
 
-        else if (status == 4 || status == 5) { return 'Cetak E-tiket'; }
+        else if (status == 4 || status == 5) {
+            if (type == 'flight') {
+                return 'Cetak E-tiket';
+            } else {
+                return 'Cetak Voucher';
+            }
+        }
 
         else if (status == 6 || status == 8) { return 'Cari Penerbangan'; }
 
@@ -639,6 +720,56 @@ app.controller('OrderDetailController', ['$http', '$scope', '$rootScope', functi
         window.location.href = "/";
     }
     $scope.datafailed = false;
+
+    $scope.TakeProfileConfig = {
+        TakeProfile: function () {
+            if ($scope.trial > 3) {
+                $scope.trial = 0;
+            }
+            //Check Authorization
+            var authAccess = getAuthAccess();
+            if (authAccess == 2) {
+                $http({
+                    method: 'GET',
+                    url: GetProfileConfig.Url,
+                    async: false,
+                    headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') }
+                }).then(function (returnData) {
+                    if (returnData.data.status == "200") {
+                        console.log('Success getting Profile');
+                        $scope.userProfile =
+                            {
+                                email: returnData.data.email,
+                                name: returnData.data.name,
+                                countryCallCd: returnData.data.countryCallCd,
+                                phone: returnData.data.phone
+                            };
+                        $scope.isLogin = true;
+                    }
+                    else {
+                        console.log('There is an error');
+                        console.log('Error : ' + returnData.data.error);
+                        console.log(returnData);
+                    }
+                }).catch(function (returnData) {
+                    $scope.trial++;
+                    if (refreshAuthAccess() && $scope.trial < 4) //refresh cookie
+                    {
+                        $scope.TakeProfileConfig.TakeProfile();
+                    }
+                    else {
+                        console.log('Failed to Get Profile');
+                    }
+                });
+            }
+            else {
+                console.log('Not Authorized to get the profile');
+            }
+
+        }
+    }
+
+    
     $scope.getRsv = function () {
         if ($scope.trial > 3) {
             $scope.trial = 0;
@@ -653,6 +784,7 @@ app.controller('OrderDetailController', ['$http', '$scope', '$rootScope', functi
             }).then(function (returnData) {
                 if (returnData.data.status == "200") {
                     $scope.flight = returnData.data.flight;
+                    $scope.hotel = returnData.data.hotels;
                     $scope.datafailed = false;
                     $scope.isExist = true;
                 }
@@ -671,7 +803,7 @@ app.controller('OrderDetailController', ['$http', '$scope', '$rootScope', functi
 
                     $scope.datafailed = true;
                     console.log(returnData);
-                    window.location.href = "/";
+                   // window.location.href = "/";
                 }
             }).catch(function (returnData) {
                 $scope.trial++;
@@ -692,8 +824,8 @@ app.controller('OrderDetailController', ['$http', '$scope', '$rootScope', functi
         }
         
     }
-
-    $scope.getRsv();
+    $scope.TakeProfileConfig.TakeProfile();
+    //$scope.getRsv();
 
 }]);// Order Detail Controller
 

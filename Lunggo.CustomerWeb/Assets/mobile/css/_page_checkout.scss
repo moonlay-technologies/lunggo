@@ -24,6 +24,26 @@
                 // step 1 
                 &.step-1:before {content:''; display:block; position:absolute; height:100%; width:100%; top:0; left:-15px; @include skew-x(30deg);}
             }
+            .step-hotel {float:left; width:50%; background:#2eb4e7; color:#fff; position:relative; z-index:2; @include skew-x(-30deg);
+                span {font-size:13px; font-weight:600; padding:10px 15px; display:block; position:relative; z-index:2; @include skew-x(30deg);}
+                &:before {background:#2eb4e7;}
+                &:after {background:#2eb4e7;}
+                // if active
+                &.active {background:#032f56;
+                    &:before {background:#032f56;}
+                    &:after {background:#032f56;}
+                }
+                // if inactive
+                &.inactive {background:#a6a6a6;
+                    &:before {background:#a6a6a6;}
+                }
+                // if last child
+                &:last-child {border-right:0;
+                    &:after {content:''; display:block; position:absolute; height:100%; width:100%; top:0; left:15px; @include skew-x(30deg);}
+                }
+                // step 1 
+                &.step-1:before {content:''; display:block; position:absolute; height:100%; width:100%; top:0; left:-15px; @include skew-x(30deg);}
+            }
         }
     }
 

@@ -22,7 +22,6 @@
     <link rel="stylesheet" href="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/css/bootstrap.min.css")" />
     <link rel="stylesheet" href="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/css/font-awesome.min.css")" />
     <link rel="stylesheet" href="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/css/neweticket.css")" />
-
 </head>
 <body class="eticket">
     <div class="page page-hotel-voucher">
@@ -44,7 +43,10 @@
                     <p>
                         <img class="img-email" src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/email/mail.png")" /><span class="blue-txt">cs@travorama.com</span>
                     </p>
-                    <img class="img-hotel" src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/voucher-hotel-bg.jpg")" />
+                    <div style="background: url(@Model.HotelDetail.MainImage); width: 716px; height: 162px; background-size: cover; background-position: center; background-repeat: no-repeat" class=" img-hotel">
+
+                    </div>
+
                 </div>
                 <div class="hotel-middle">
                     <div class="row">
@@ -78,7 +80,7 @@
                                     <p class="star star-5"></p>
                                 }
                                 <p class="grey-txt">
-                                    <img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/location.png")" /> @Model.HotelDetail.Address @Model.HotelDetail.City, @Model.HotelDetail.CountryName
+                                    <img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/location.png")" /> @Model.HotelDetail.Address @Model.HotelDetail.DestinationName, @Model.HotelDetail.PostalCode, @Model.HotelDetail.CountryName
                                 </p>
                                 <p class="grey-txt">
                                     <img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/phone.png")" /> @Model.HotelDetail.PhonesNumbers[0]
@@ -103,43 +105,23 @@
                                 <p style=""><b>Nama Tamu</b></p>
                             </div>
                             <div class="col-xs-9">
-                                <p style="">: <b>@Model.Pax[0].Title @Model.Pax[0].Name</b></p>
+                                <p style="">: <b>@EnumDisplay.Title(Model.Pax[0].Title) @Model.Pax[0].Name</b></p>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-xs-3"></div>
+                            <div class="col-xs-3">
+                                <p style=""><b>Check-In</b></p>
+                            </div>
                             <div class="col-xs-9">
-                                <div class="hotel-booked">
-                                    <div class="row">
-                                        <div class="col-xs-3">
-                                            <span class="blue-txt">Check-in from</span>
-                                        </div>
-                                        <div class="col-xs-3">
-                                            <span>.........................</span>
-                                        </div>
-                                        <div class="col-xs-3">
-                                            <span class="blue-txt">Check-out until</span>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-xs-3">
-                                            <span class="blue-txt md-txt"><b>@Model.HotelDetail.CheckInDate.ToString("D", CultureInfo.CreateSpecificCulture("id-ID"))</b></span>
-                                        </div>
-                                        <div class="col-xs-3"></div>
-                                        <div class="col-xs-3">
-                                            <span class="blue-txt md-txt"><b>@Model.HotelDetail.CheckOutDate.ToString("D", CultureInfo.CreateSpecificCulture("id-ID"))</b></span>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-xs-3">
-                                            <span class="grey-txt">14.00</span>
-                                        </div>
-                                        <div class="col-xs-3"></div>
-                                        <div class="col-xs-3">
-                                            <span class="grey-txt">12.00</span>
-                                        </div>
-                                    </div>
-                                </div>
+                                <p style="">: <b>@Model.HotelDetail.CheckInDate.ToString("D", CultureInfo.CreateSpecificCulture("id-ID"))</b></p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <p style=""><b>Check-Out</b></p>
+                            </div>
+                            <div class="col-xs-9">
+                                <p style="">: <b>@Model.HotelDetail.CheckOutDate.ToString("D", CultureInfo.CreateSpecificCulture("id-ID"))</b></p>
                             </div>
                         </div>
                         <div class="row grey-txt">
@@ -147,7 +129,28 @@
                                 <p>Jumlah Tamu per Kamar</p>
                             </div>
                             <div class="col-xs-9">
-                                <p>: @(Model.HotelDetail.Rooms[0].Rates[0].AdultCount + Model.HotelDetail.Rooms[0].Rates[0].ChildCount) orang</p>
+                                <p>
+                                    : @Model.HotelDetail.Rooms[0].Rates[0].AdultCount Dewasa @if (Model.HotelDetail.Rooms[0].Rates[0].ChildCount > 0)
+                                    {
+                                        <span>, @Model.HotelDetail.Rooms[0].Rates[0].ChildCount Anak </span>
+                                        <span>
+                                            (
+                                            @for (var a = 0; a < Model.HotelDetail.Rooms[0].Rates[0].ChildrenAges.Count; a++)
+                                            {
+                                                if (a != Model.HotelDetail.Rooms[0].Rates[0].ChildrenAges.Count - 1)
+                                                {
+                                                    @Model.HotelDetail.Rooms[0].Rates[0].ChildrenAges[a]
+                                                    <span>Tahun, </span>
+                                                }
+                                                else
+                                                {
+                                                    @Model.HotelDetail.Rooms[0].Rates[0].ChildrenAges[a] <span>Tahun</span>
+                                                }
+                                            }
+                                            )
+                                        </span>
+                                    }
+                                </p>
                             </div>
                         </div>
                         <div class="row grey-txt">
@@ -166,15 +169,18 @@
                                 <p>: @Model.HotelDetail.Rooms[0].Rates[0].RoomCount</p>
                             </div>
                         </div>
-
-                        <div class="row grey-txt">
-                            <div class="col-xs-3">
-                                <p>Rate Comment</p>
+                        @if (Model.HotelDetail.Rooms[0].Rates[0].TermAndCondition.Count != 0
+                            && !Model.HotelDetail.Rooms[0].Rates[0].TermAndCondition.Exists(r => r.Length < 3))
+                        {
+                            <div class="row grey-txt">
+                                <div class="col-xs-3">
+                                    <p>Ketentuan</p>
+                                </div>
+                                <div class="col-xs-9">
+                                    <p>: @String.Join(". ", Model.HotelDetail.Rooms[0].Rates[0].TermAndCondition)</p>
+                                </div>
                             </div>
-                            <div class="col-xs-9">
-                                <p>: @String.Join(". ", Model.HotelDetail.Rooms[0].Rates[0].TermAndCondition)</p>
-                            </div>
-                        </div>
+                        }
 
                         @if (Model.HotelDetail.SpecialRequest != null && Model.HotelDetail.SpecialRequest.Length != 0)
                         {
@@ -211,32 +217,53 @@
                                 <p>
                                     @if (Model.HotelDetail.IsWifiAccessAvailable)
                                     {
-                                        <span><img class="img-wifi" src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/wifi.png")" />Free Wifi</span>
+                                        <span><img class="img-wifi" src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/wifi.png")" />Wi-fi</span>
                                     }
                                     @if (Model.HotelDetail.IsRestaurantAvailable)
                                     {
                                         <span><img class="img-swim" src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/swim.png")" />Kolam Renang</span>
                                     }
                                 </p>
-                                @for (var f = 0; f < Model.HotelDetail.Facilities.Other.Count; f++)
+
+                                @if (Model.HotelDetail.Facilities.Other.Count != 0)
                                 {
-                                    if (Model.HotelDetail.Facilities.Other[f].Length != 0)
+                                    var facilities = Model.HotelDetail.Facilities.Other.Where(f => f.Length > 0).ToList();
+                                    if (facilities.Count == 1)
                                     {
-
-                                        <p>@Model.HotelDetail.Facilities.Other[f]</p>
-
+                                        <p>@facilities[0]</p>
+                                    }
+                                    else
+                                    {
+                                        <div class="col-half">
+                                            @for (var i = 0; i < facilities.Count / 2; i++)
+                                            {
+                                                <p>@facilities[i]</p>
+                                            }
+                                        </div>
+                                        <div class="col-half">
+                                            @for (var j = facilities.Count / 2;
+                                                j < facilities.Count; j++)
+                                            {
+                                                <p>@facilities[j]</p>
+                                            }
+                                        </div>
                                     }
                                 }
+
+                            </div>
+                        </div>
+                        <div class="row grey-txt">
+                            <div class="col-xs-3">
+                                <p>Client Reference</p>
+                            </div>
+                            <div class="col-xs-9">
+                                <p>: @Model.HotelDetail.ClientReference</p>
                             </div>
                         </div>
 
-
                         <div class="row grey-txt">
-                            <div class="col-xs-3">
-                                <p></p>
-                            </div>
-                            <div class="col-xs-9">
-                                <p>
+                            <div class="col-xs-12">
+                                <p style="font-size: 8px; font-style: italic">
                                     &quot;Payable through @Model.HotelDetail.SupplierName, acting as agent for the service operating
 
                                     company, details of which can be provided upon request&quot;. VAT: @Model.HotelDetail.SupplierVat
@@ -246,14 +273,7 @@
                             </div>
                         </div>
 
-                        <div class="row grey-txt">
-                            <div class="col-xs-3">
-                                <p>Client Reference</p>
-                            </div>
-                            <div class="col-xs-9">
-                                <p>: @Model.HotelDetail.ClientReference</p>
-                            </div>
-                        </div>
+
                     </div>
                 </div>
             </div>

@@ -160,7 +160,7 @@
                                         </td> @*tipe kamar*@ @*board*@
                                         <td class="qty">@Model.HotelDetail.Rooms[j].Rates[k].RoomCount </td>@*jumlah kamar*@
                                         <td class="price"></td>
-                                        <td class="total">@Model.HotelDetail.Rooms[j].Rates[k].NetPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</td>
+                                        <td class="total">@Model.HotelDetail.Rooms[j].Rates[k].NetFare.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</td>
                                     </tr>
                                     i++;
                                 }

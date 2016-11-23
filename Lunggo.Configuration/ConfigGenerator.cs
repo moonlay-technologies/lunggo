@@ -72,6 +72,7 @@ namespace Lunggo.Configuration
                 "WebJob-FlightSearch.FlightCrawler6",
                 "CloudApp.EticketHandler",
                 "WebJob.BankTransferChecking",
+                "WebJob.HotelContentWrapper",
                 "CloudApp.CaptchaReader"
             };
             Console.WriteLine("####################Starting Configuration Generation");

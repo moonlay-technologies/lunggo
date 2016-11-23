@@ -247,7 +247,7 @@ file: /Assets/travorama20/css/_page_flight.scss
                 .summary-top {border-bottom:$border-default;
                     &:before, &:after {@include clearfix();}
                     .summary-top-left {text-align:center; float:left; width:25%;
-                        h5 {color:$color-main-blue; font-weight:bold;}
+                        h5 {color:$color-main-blue; font-weight:bold; margin: 14px 0;}
                         img {height:55px;}
                     }
                     .summary-top-right {float:left; width:75%; padding-top:15px;
@@ -462,15 +462,21 @@ file: /Assets/travorama20/css/_page_flight.scss
 // page flight oneway
 .page-flight.page-flight-oneway {
     // single listing & baggage style
+    .airline-logo {
+        width: 55px;
+        height: 50px;
+        background-size: cover;
+        background-repeat: no-repeat;
+        margin: 15px auto;
+    } 
     .price-detail-trigger {margin-left: 30px;
         &:before {margin-left: -24px;}
     }
     .summary-top-left-top.flight-facilities {
-        padding: 12px;
         border-bottom: 1px solid #ccc;
     }
     .summary-top-left-bottom.flight-facilities {
-        padding: 10px;
+        margin: 10px;
         span {background:url(/Assets/images/flight-facilities-sprite.png) no-repeat; display:inline-block; margin-right: 5px;
             &.flight-baggage {   
                 width: 20px;
@@ -496,7 +502,7 @@ file: /Assets/travorama20/css/_page_flight.scss
         }
     }
     .summary-top-right-top {padding: 24px 0;}
-    .flight-summary .flight-summary-left .summary-top .summary-top-right {padding-top:0;}
+    .flight-summary .flight-summary-left .summary-top .summary-top-right {padding-top:0; border-left: 1px solid #ccc;}
     .flight .flight-summary .flight-summary-right {
         padding: 20px 15px;
     }
@@ -506,12 +512,11 @@ file: /Assets/travorama20/css/_page_flight.scss
 
         .flight-summary-left {
             .summary-top {border-bottom:0;
-                .summary-top-left {border-right:$border-default;}
                 .summary-top-right {
                     .summary-top-right-top {
                         &:before, &:after {@include clearfix();}
                     }
-                    .summary-top-right-bottom {clear:both; width:100%; border-top:$border-default; text-align:right; padding: 3px 15px;}
+                    .summary-top-right-bottom {clear:both; width:100%; border-top:$border-default; text-align:right; padding: 8px 15px;}
                 }
             }
         }

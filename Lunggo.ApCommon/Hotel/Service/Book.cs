@@ -9,6 +9,7 @@ using Lunggo.ApCommon.Hotel.Model.Logic;
 using Lunggo.ApCommon.Hotel.Constant;
 using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds;
 using Lunggo.ApCommon.Identity.Auth;
+using Lunggo.ApCommon.Identity.Users;
 using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.ApCommon.Payment.Model;
 using Lunggo.ApCommon.Payment.Service;
@@ -136,6 +137,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                             rate.PaymentType = ratea.PaymentType;
                             rate.Type = ratea.Type;
                             rate.RateCommentsId = ratea.RateCommentsId;
+                            rate.NightCount = ratea.NightCount;
                             rate.TermAndCondition =
                                 GetRateCommentFromTableStorage(ratea.RateCommentsId, hotel.CheckInDate)
                                     .Select(x => x.Description)
@@ -271,7 +273,10 @@ namespace Lunggo.ApCommon.Hotel.Service
                     DeviceId = deviceId,
                     Language = "id", //OnlineContext.GetActiveLanguageCode();
                     Currency = new Currency("IDR"), //OnlineContext.GetActiveCurrencyCode());
-                }
+                },
+                User = HttpContext.Current.User.Identity.IsUserAuthorized()
+                    ? HttpContext.Current.User.Identity.GetUser()
+                    : null
             };
 
             PaymentService.GetInstance().GetUniqueCode(rsvDetail.RsvNo, null, null);
