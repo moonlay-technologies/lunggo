@@ -3045,6 +3045,7 @@
     <Content Include="Views\Payment\Payment.cshtml" />
     <Content Include="Views\Payment\Payment.mobile.cshtml" />
     <Content Include="Views\Hotel\HotelInvoice.cshtml" />
+    <Content Include="Views\Hotel\Shared\Mobile\_PriceDetail.cshtml" />
     <None Include="Views\Template\eticket.cshtml" />
     <Content Include="Views\Template\OrderFlightHistory.cshtml" />
     <Content Include="Views\Template\PrivacyPolicy.cshtml" />

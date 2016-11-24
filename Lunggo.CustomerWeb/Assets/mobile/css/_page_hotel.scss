@@ -76,7 +76,9 @@
     .blue-list {
         padding-left: 0;
         margin-bottom: 10px;
-        li {list-style-type: none;
+        li {
+            list-style-type: none;
+            padding-left: 15px;
             &:before {
                 content: '';
                 width: 5px;
@@ -84,8 +86,10 @@
                 display: inline-block;
                 background: #2eb4e7;
                 border-radius: 5px;
-                margin-right: 8px;
                 vertical-align: middle;
+                position: absolute;
+                margin-left: -15px;
+                margin-top: 5px;
             }
         }
     }
@@ -126,9 +130,10 @@
                 margin: 3px;
             }
         }
-        input {display:none;}
+        input[name="check"] {display:none;}
         span.title {width:100%; padding-left:30px; display:block;}
     }
+
     /*Icon*/
     .star-outline {
         content: '';
@@ -744,10 +749,63 @@
     /*Shared Checkout*/
     .rr-row {line-height: 20px;
         &.total {
-            border-top: 1px solid #e9e9e9;
+            border-top: 1px solid #999;
             margin-top: 10px;
             padding: 10px 0 15px;
         }
+    }
+    .price-detail {
+        .rr-row {
+            font-size: 13px;
+            padding-left: 15px;
+            &:before {
+                background: #ff7200;
+                width: 8px;
+                height: 8px;
+                display: inline-block;
+                position: absolute;
+                color: black;
+                margin-top: 5px;
+                margin-left: -15px;
+            }
+            &:last-child {                           
+                padding-left: 0;
+                margin-left: 15px;
+                &:before {background: none;}
+            }
+        }
+    }
+    .book-detail {
+        font-size: 13px;
+        .rr-row {
+            font-size: 13px;
+            padding: 10px 0;
+            &:last-child {        
+                border-top: 1px solid #e8e8e8;                   
+                border-bottom: 1px solid #e8e8e8;    
+                margin-bottom: 20px;               
+            }
+        }
+    }
+    .book-hotel {
+        font-size: 13px;
+        margin-bottom: 10px;
+        .fb-row:first-child {margin-top: 10px;}
+        .col-6:before {content:': '}
+    }
+    .guest-detail {
+        font-size: 13px;
+        margin-bottom: 10px;
+        .rr-row {
+            border-top: 1px solid #e8e8e8;
+            padding-top: 10px;
+            margin-bottom: 10px;
+            &:first-child {
+                border-top: none;
+                padding-top: 0;
+            }
+        }
+        .col-8:before {content:': '}
     }
     .rr-detail {margin: 20px 0;}
     .rr-title {margin-bottom: 10px;}
@@ -815,6 +873,18 @@
     /*Page Checkout Hotel*/
     &.page-checkout {
         background: #f9f9f9;
+        .summary.summary--payment label {
+            background: none;
+            margin-bottom: 0;
+            padding: 0;
+            border-top: none;
+            float: none;
+            section {
+                background: #fff;
+                margin-bottom: 10px;
+            }
+        }
+        
         .page__header .step__wrapper .step span {
             font-size: 20px;
             font-weight: 400;
@@ -835,27 +905,6 @@
                 .review-room {
                     padding: 0 15px;
                     border-bottom: 1px solid #e9e9e9;
-                }
-                .price-detail {
-                    .rr-row {
-                        font-size: 13px;
-                        padding-left: 15px;
-                        &:before {
-                            background: #ff7200;
-                            width: 8px;
-                            height: 8px;
-                            display: inline-block;
-                            position: absolute;
-                            color: black;
-                            margin-top: 5px;
-                            margin-left: -15px;
-                        }
-                        &:last-child {                           
-                            padding-left: 0;
-                            margin-left: 15px;
-                            &:before {background: none;}
-                        }
-                    }
                 }
                 .tnc-box {
                     background: #ddd;

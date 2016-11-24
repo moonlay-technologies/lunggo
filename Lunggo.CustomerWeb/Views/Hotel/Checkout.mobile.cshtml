@@ -162,7 +162,7 @@
             </form>
         </div>
     </div>
-    <div class=" page-step-2" ng-show="PageConfig.ActivePage == 2" @*style="display: none;"*@>
+    <div class=" page-step-2" ng-show="PageConfig.ActivePage == 2" style="display: none;">
         <div class="review-hotel">
             <h3 class="summary__title"><b>REVIEW</b> PESANAN</h3>
             <div class="form-group">
@@ -245,25 +245,7 @@
                     </div>
                 </div>
             </div>
-            <div class="price-detail clearfix">
-                <h3 class="summary__title"><b>RINCIAN</b> HARGA</h3>
-                <div class="rr-row clearfix">
-                    <div class="col-half">1 Deluxe 2 Kings Bed Rooms  x 3 night</div>
-                    <div class="col-half right-txt semibold-txt">Rp 999.999.999</div>
-                </div>
-                <div class="rr-row clearfix">
-                    <div class="col-half">1 Standard Twin Rooms x 4 night</div>
-                    <div class="col-half right-txt semibold-txt">Rp 999.999.999</div>
-                </div>
-                <div class="rr-row clearfix">
-                    <div class="col-half">Pelayanan Kamar</div>
-                    <div class="col-half right-txt semibold-txt">Rp 999.999.999</div>
-                </div>
-                <div class="rr-row clearfix total">
-                    <div class="col-half bold-txt lg-txt">Total</div>
-                    <div class="col-half bold-txt lg-txt right-txt orange-txt">Rp 999.999.999</div>
-                </div>
-            </div>
+            @Html.Partial("/Views/Hotel/Shared/Mobile/_PriceDetail.cshtml")
             <div class="tnc-box italic-txt">
                 *Harga ini masih bisa berubah, harga final maskapai akan dikonfirmasi kembali pada proses pembayaran
             </div>
@@ -272,7 +254,7 @@
             </div>
         </div>
     </div>
-    <div class=" page-step-3" ng-show="PageConfig.ActivePage == 3" style="display: none;">
+    <div class=" page-step-3" ng-show="PageConfig.ActivePage == 3" @*style="display: none;"*@>
         <div class="payment clearfix">
             <h3 class="summary__title"><b>METODE</b> PEMBAYARAN</h3>
             <div class="summary summary--payment">
@@ -336,6 +318,7 @@
                     </form>
                 </div>
             </div>
+            @Html.Partial("/Views/Hotel/Shared/Mobile/_PriceDetail.cshtml")
             <div class="summary summary--voucher">
                 <div class="container_new">
                     <h4>Punya kupon Travorama?</h4>
@@ -361,26 +344,55 @@
                     </form>
                 </div>
             </div>
-            <div class="price-detail clearfix">
-                <h3 class="summary__title"><b>RINCIAN</b> HARGA</h3>
+            <div class="book-detail clearfix">
+                <h3 class="summary__title"><b>RINCIAN</b> PEMESANAN</h3>
                 <div class="rr-row clearfix">
-                    <div class="col-half">Padma Hotel Bandung Premiere Suit (x1)</div>
-                    <div class="col-half right-txt">Rp 4.800.216</div>
+                    <div class="col-half semibold-txt">No. Pesanan</div>
+                    <div class="col-half right-txt semibold-txt">1234567890</div>
                 </div>
                 <div class="rr-row clearfix">
-                    <div class="col-half blue-txt">Tax</div>
-                    <div class="col-half blue-txt right-txt">Included</div>
-                </div>
-                <div class="rr-row clearfix">
-                    <div class="col-half blue-txt">Convenience Fee</div>
-                    <div class="col-half blue-txt right-txt">- Rp 287</div>
-                </div>
-                <div class="rr-row clearfix total">
-                    <div class="col-half bold-txt lg-txt">Total</div>
-                    <div class="col-half bold-txt lg-txt right-txt">Rp 4.799.928</div>
+                    <div class="col-half semibold-txt">Harga Total</div>
+                    <div class="col-half bold-txt lg-txt right-txt orange-txt">Rp 999.999.999</div>
                 </div>
             </div>
-            <div class="widget countdown clearfix">
+            <div class="book-hotel clearfix">
+                <div class="blue-txt bold-txt lg-txt">Bliss Hotel Singapore</div>
+                <div class="clearfix">
+                    <div class="fb-row clearfix">
+                        <div class="col-4">Check in</div>
+                        <div class="col-6 bold-txt">5 November 2016</div>
+                    </div>
+                    <div class="fb-row clearfix">
+                        <div class="col-4">Check out</div>
+                        <div class="col-6 bold-txt">9 November 2016</div>
+                    </div>
+                    <div class="fb-row clearfix">
+                        <div class="col-4">Malam</div>
+                        <div class="col-6 bold-txt">3 Malam</div>
+                    </div>
+                    <div class="fb-row clearfix">
+                        <div class="col-4">Kamar</div>
+                        <div class="col-6 bold-txt">2 Kamar</div>
+                    </div>
+                </div>
+            </div>
+            <div class="guest-detail clearfix">
+                <h3 class="summary__title"><b>RINCIAN</b> TAMU</h3>
+                <div class="clearfix">
+                    <div class="rr-row clearfix">
+                        <div class="lg-txt">Deluxe 2 Kings Bed Rooms</div>
+                        <div class="col-2">Tamu</div>
+                        <div class="col-8">Anonymous</div>
+                    </div>
+                    <div class="rr-row clearfix">
+                        <div class="lg-txt">Deluxe Twin Bed Rooms</div>
+                        <div class="col-2">Tamu</div>
+                        <div class="col-8">Anonymous</div>
+                    </div>
+                </div>
+                
+            </div>
+            @*<div class="widget countdown clearfix">
                 <h3 class="widget-title"><b>SISA</b> WAKTU</h3>
                 <div class="widget-content">
                     <p>Sisa waktu Anda untuk melakukan pembayaran</p>
@@ -401,7 +413,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div>*@
             <div class="step-button">
                 <form name="finalForm" id="finalForm" ng-submit="pay.setPaymentMethod()">
                     <div class="hidden">
@@ -417,7 +429,7 @@
                         <p>Payment Method</p>
                         <input type="text" name="Payment.Method" value="" ng-model="paymentMethod" />
                     </div>
-                    <p>*Dengan klik tombol ‘Bayar’, Anda telah setuju dengan <a href="@Url.Action("Terms","staticpage")" target="_blank">syarat &amp; ketentuan</a> dan <a href="@Url.Action("Privacy","staticpage")" target="_blank">kebijakan privasi</a></p>
+                    @*<p>*Dengan klik tombol ‘Bayar’, Anda telah setuju dengan <a href="@Url.Action("Terms","staticpage")" target="_blank">syarat &amp; ketentuan</a> dan <a href="@Url.Action("Privacy","staticpage")" target="_blank">kebijakan privasi</a></p>*@
                     @*<a class="btn btn-grey" ng-click="changePage(3)" ng-disabled="checkoutForm.loading">KEMBALI</a>*@
                     <div class="form-group">
                         <button type="submit" class="btn btn-yellow form-control" ng-disabled="(checkoutForm.loading || !paymentMethod) || !creditCardForm.$valid">BAYAR</button>

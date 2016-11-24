@@ -4040,7 +4040,8 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     padding-left: 0;
     margin-bottom: 10px; }
     .page-hotel .blue-list li {
-      list-style-type: none; }
+      list-style-type: none;
+      padding-left: 15px; }
       .page-hotel .blue-list li:before {
         content: '';
         width: 5px;
@@ -4048,8 +4049,10 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         display: inline-block;
         background: #2eb4e7;
         border-radius: 5px;
-        margin-right: 8px;
-        vertical-align: middle; }
+        vertical-align: middle;
+        position: absolute;
+        margin-left: -15px;
+        margin-top: 5px; }
   .page-hotel .sqr-blue-list {
     padding-left: 15px;
     list-style: none;
@@ -4098,7 +4101,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
       border-radius: 12px;
       vertical-align: middle;
       margin: 3px; }
-    .page-hotel label input {
+    .page-hotel label input[name="check"] {
       display: none; }
     .page-hotel label span.title {
       width: 100%;
@@ -4659,9 +4662,54 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
   .page-hotel .rr-row {
     line-height: 20px; }
     .page-hotel .rr-row.total {
-      border-top: 1px solid #e9e9e9;
+      border-top: 1px solid #999;
       margin-top: 10px;
       padding: 10px 0 15px; }
+  .page-hotel .price-detail .rr-row {
+    font-size: 13px;
+    padding-left: 15px; }
+    .page-hotel .price-detail .rr-row:before {
+      background: #ff7200;
+      width: 8px;
+      height: 8px;
+      display: inline-block;
+      position: absolute;
+      color: black;
+      margin-top: 5px;
+      margin-left: -15px; }
+    .page-hotel .price-detail .rr-row:last-child {
+      padding-left: 0;
+      margin-left: 15px; }
+      .page-hotel .price-detail .rr-row:last-child:before {
+        background: none; }
+  .page-hotel .book-detail {
+    font-size: 13px; }
+    .page-hotel .book-detail .rr-row {
+      font-size: 13px;
+      padding: 10px 0; }
+      .page-hotel .book-detail .rr-row:last-child {
+        border-top: 1px solid #e8e8e8;
+        border-bottom: 1px solid #e8e8e8;
+        margin-bottom: 20px; }
+  .page-hotel .book-hotel {
+    font-size: 13px;
+    margin-bottom: 10px; }
+    .page-hotel .book-hotel .fb-row:first-child {
+      margin-top: 10px; }
+    .page-hotel .book-hotel .col-6:before {
+      content: ': '; }
+  .page-hotel .guest-detail {
+    font-size: 13px;
+    margin-bottom: 10px; }
+    .page-hotel .guest-detail .rr-row {
+      border-top: 1px solid #e8e8e8;
+      padding-top: 10px;
+      margin-bottom: 10px; }
+      .page-hotel .guest-detail .rr-row:first-child {
+        border-top: none;
+        padding-top: 0; }
+    .page-hotel .guest-detail .col-8:before {
+      content: ': '; }
   .page-hotel .rr-detail {
     margin: 20px 0; }
   .page-hotel .rr-title {
@@ -4868,6 +4916,15 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     padding-left: 15px; }
   .page-hotel.page-checkout {
     background: #f9f9f9; }
+    .page-hotel.page-checkout .summary.summary--payment label {
+      background: none;
+      margin-bottom: 0;
+      padding: 0;
+      border-top: none;
+      float: none; }
+      .page-hotel.page-checkout .summary.summary--payment label section {
+        background: #fff;
+        margin-bottom: 10px; }
     .page-hotel.page-checkout .page__header .step__wrapper .step span {
       font-size: 20px;
       font-weight: 400;
@@ -4885,23 +4942,6 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
       .page-hotel.page-checkout .checkout-content .review-hotel .review-room {
         padding: 0 15px;
         border-bottom: 1px solid #e9e9e9; }
-      .page-hotel.page-checkout .checkout-content .review-hotel .price-detail .rr-row {
-        font-size: 13px;
-        padding-left: 15px; }
-        .page-hotel.page-checkout .checkout-content .review-hotel .price-detail .rr-row:before {
-          background: #ff7200;
-          width: 8px;
-          height: 8px;
-          display: inline-block;
-          position: absolute;
-          color: black;
-          margin-top: 5px;
-          margin-left: -15px; }
-        .page-hotel.page-checkout .checkout-content .review-hotel .price-detail .rr-row:last-child {
-          padding-left: 0;
-          margin-left: 15px; }
-          .page-hotel.page-checkout .checkout-content .review-hotel .price-detail .rr-row:last-child:before {
-            background: none; }
       .page-hotel.page-checkout .checkout-content .review-hotel .tnc-box {
         background: #ddd;
         padding: 15px 10px;
