@@ -86,7 +86,7 @@
                         <div class="header-filter">Filter Pencarian</div>
                         <div class="filter-group">
                             <label class="filter-title">Nama Hotel</label>
-                            <input type="text" ng-model="filter.nameFilter" ng-disabled="hotels.length < 1" class="form-hotel-name form-control" tra-on-enter="filterHotels()">
+                            <input type="text" ng-pattern="/^[a-zA-Z]*$/" ng-model="filter.nameFilter" ng-disabled="hotels.length < 1" class="form-hotel-name form-control" tra-on-enter="filterHotels()">
                         </div>
                         <div class="filter-group">
                             <label class="filter-title">Harga Hotel</label> 
@@ -127,7 +127,7 @@
                             </div>
                         </div>
                         <div class="filter-group" ng-show="hotelFilterDisplayInfo.zoneFilter.length > 0">
-                            <label class="filter-title">Hotel Zone:</label><span class="city-name blue-txt"><a href="#">(Jakarta)</a></span>
+                            <label class="filter-title">Hotel Zone:</label><span class="city-name blue-txt"><a href="" ng-click="filter.zones = null">({{hotelSearch.destinationName}})</a></span>
                             <div class="area" ng-repeat="zoneFilter in hotelFilterDisplayInfo.zoneFilter ">
                                 <label class="sqr city-point pointer" ng-click="changeFilter('zone', zoneFilter)" ng-class="{ active: (filter.zones.indexOf(zoneFilter.code) > -1) }">
                                     <span class="checkbox"></span>
@@ -135,6 +135,17 @@
                                     <span class="name">{{zoneFilter.name}}</span>
                                 </label>
                                 <span class="city-hotel">{{zoneFilter.count}}</span>
+                            </div>
+                        </div>
+                        <div class="filter-group" ng-show="hotelFilterDisplayInfo.facilityFilter.length > 0">
+                            <label class="filter-title">Fasilitas:</label><span class="city-name blue-txt"><a href="" ng-click="filter.facilities = null">(Reset)</a></span>
+                            <div class="area" ng-repeat="facilityFilter in hotelFilterDisplayInfo.facilityFilter">
+                                <label class="sqr city-point pointer" ng-click="changeFilter('facility', facilityFilter)" ng-class="{ active: (filter.facilities.indexOf(facilityFilter.code) > -1) }">
+                                    <span class="checkbox"></span>
+                                    @*<input type="checkbox" name="check" class="check" value="false" ng-disabled="true" />*@
+                                    <span class="name">{{facilityFilter.name}}</span>
+                                </label>
+                                <span class="city-hotel">{{facilityFilter.count}}</span>
                             </div>
                         </div>
                         <div class="filter-group" ng-if="false">
@@ -158,9 +169,9 @@
                             </div>
                         </div>
                     </div>
-                    <div>
+                    @*<div>
                         <button class="pull-right" ng-click="filterHotels()">filter button</button>
-                    </div>
+                    </div>*@
                 </div>
 
                 <div class="col-right-result">
@@ -254,10 +265,10 @@
                             </ul>
                             <a href="" class="next" ng-click="page != pageCount && nextPage()"></a>
                         </div>
-                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 </div>

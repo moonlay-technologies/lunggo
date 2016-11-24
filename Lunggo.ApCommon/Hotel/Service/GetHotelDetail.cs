@@ -74,12 +74,14 @@ namespace Lunggo.ApCommon.Hotel.Service
             var hotelTemp = hotel;
 
             var searchResultData = GetSearchHotelResultFromCache(searchId);
+            
             if (searchResultData == null) return false;
 
             var searchResulthotel = searchResultData.HotelDetails.SingleOrDefault(p => p.HotelCode == hotelTemp.HotelCode);
             if (searchResulthotel == null)
                 hotel = null;
             hotel.Rooms = searchResulthotel.Rooms;
+            hotel.DestinationName = searchResultData.DestinationName;
 
             if (hotel.ImageUrl != null)
             {
