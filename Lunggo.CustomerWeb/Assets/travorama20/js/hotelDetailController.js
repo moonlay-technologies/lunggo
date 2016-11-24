@@ -51,7 +51,7 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
             var cekout = $scope.hotel.room[0].rate.regsId.split(',')[2].split('|')[1];
             $scope.hotel.checkinDate = new Date(parseInt(cekin.substring(0, 4)), parseInt(cekin.substring(4, 6)) - 1, parseInt(cekin.substring(6, 8)));
             $scope.hotel.checkoutDate = new Date(parseInt(cekout.substring(0, 4)), parseInt(cekout.substring(4, 6)) - 1, parseInt(cekout.substring(6, 8)));
-            $scope.hotel.nightCount = new Date($scope.hotel.checkoutDate).getDate() - new Date($scope.hotel.checkinDate).getDate();
+            $scope.hotel.nightCount = (new Date($scope.hotel.checkoutDate) - new Date($scope.hotel.checkinDate)) / (3600 * 24 * 1000);
             
             accordionFunctions();
             $timeout(function () { hotelDetailFunctions(); }, 0);

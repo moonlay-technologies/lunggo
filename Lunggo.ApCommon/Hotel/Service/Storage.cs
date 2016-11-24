@@ -225,10 +225,11 @@ namespace Lunggo.ApCommon.Hotel.Service
 
         public List<HotelAutoComplete> GetAutocompleteFromBlob()
         {
-            var blob = BlobStorageService.GetInstance().GetByteArrayByFileInContainer("autocompleteIndonesia", "HotelAutocompleteIndonesia");
+            var blob = BlobStorageService.GetInstance().GetByteArrayByFileInContainer("autocomplete", "HotelAutocomplete");
             var value = (RedisValue)blob;
-            return value.DeconvertTo<List<HotelAutoComplete>>();
+            return value.DeconvertTo<List<HotelAutoComplete>>().Where(c => c.Country == "Indonesia").ToList();
         }
+
         public HotelAutoComplete GetAutoCompleteFromTableStorage(long code)
         {
             var partitionKey = "hotelAutoComplete";

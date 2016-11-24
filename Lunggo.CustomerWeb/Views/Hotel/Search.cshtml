@@ -209,8 +209,8 @@
                                 </div>
                                 
                                 <div class="location">
-                                    <div>{{hotel.address}} {{hotel.zone}}</div>
-                                    {{hotel.city}}<span ng-show ="hotel.postalCd != null || hotel.postalCd.length > 0">, {{hotel.postalCd}}</span>
+                                    <div>{{toTitleCase(hotel.address)}} {{toTitleCase(hotel.zone)}}</div>
+                                    {{toTitleCase(hotel.city)}}<span ng-show ="hotel.postalCd != null || hotel.postalCd.length > 0">, {{hotel.postalCd}}</span>
                                 </div>
                                 <div class="review clearfix">
                                     <div class="col-half left">
