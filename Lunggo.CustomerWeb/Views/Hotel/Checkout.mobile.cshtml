@@ -30,6 +30,7 @@
 @section PageJS{
     <!-- angular controller -->
     <script src="/Assets/travorama20/js/paymentController.js"></script>
+    <script src="/Assets/mobile/js/HotelController.js"></script>
 }
 
 <header class="page__header">
@@ -52,15 +53,22 @@
                 </div>
 
                 <div class="form-group important">
-                    <label class="control-label">Nama Lengkap : </label>
-                    <input type="text" value="" @*pattern="[a-zA-Z\s]+"*@ ng-model="buyerInfo.name" name="name" class="form-control nama" placeholder="Nama Lengkap" required />
+                    <label class="control-label">Nama Depan (dan Nama Tengah)<span class="imp"></span> : </label>
+                    <input type="text" value="" @*pattern="[a-zA-Z\s]+"*@ ng-model="buyerInfo.name" name="name" class="form-control nama" placeholder="Nama Depan" required />
+                    @*<div ng-show="!checkName(buyerInfo.name)" style="color:red">
+                        Nama tidak boleh mengandung karakter selain alfabet dan spasi
+                    </div>*@
+                </div>
+                <div class="form-group important">
+                    <label class="control-label">Nama Belakang/Nama Keluarga<span class="imp"></span> : </label>
+                    <input type="text" value="" @*pattern="[a-zA-Z\s]+"*@ ng-model="buyerInfo.name" name="name" class="form-control nama" placeholder="Nama Belakang" required />
                     @*<div ng-show="!checkName(buyerInfo.name)" style="color:red">
                         Nama tidak boleh mengandung karakter selain alfabet dan spasi
                     </div>*@
                 </div>
 
                 <div class="form-group important">
-                    <label class="control-label">Nomor Telepon : </label>
+                    <label class="control-label">Nomor Telepon<span class="imp"></span> : </label>
                     <div class="row">
                         <div class="col-xs-12 bottom-divider">
                             <p><small>Kode Negara</small></p>
@@ -77,13 +85,68 @@
                 </div>
 
                 <div class="form-group important" ng-class="{'has-error' : BuyerForm.email.$touched && BuyerForm.email.$invalid}">
-                    <label class=" control-label">Masukkan alamat e-mail Anda : </label>
+                    <label class=" control-label">Masukkan alamat e-mail Anda<span class="imp"></span> : </label>
                     <input type="email" value="" ng-model="buyerInfo.email" name="Email" class="form-control" placeholder="Ex: name@domain.com" required />
                 </div>
                     
-                <div class="form-group important" ng-class="{'has-error' : BuyerForm.email.$touched && BuyerForm.email.$invalid}">
-                    <label class=" control-label">Special Request : </label>
-                    <textarea class="form-control ng-pristine ng-untouched ng-valid" name="special-request"></textarea>
+                <div class="form-group">
+                    <div class="form-box">
+                        <div class="fb-header"><b>Kamar</b> : Deluxe 2 Kings Bed Rooms</div>
+                        <div class="fb-body">
+                            <div class="fb-top">Tamu per Kamar : <b>4 Orang</b></div>
+                            <div class="fb-bottom">
+                                <div class="form-group">
+                                    <label class="control-label">Titel : </label>
+                                    <select class="form-control" name="title" ng-model="buyerInfo.title" ng-init="buyerInfo.title = titles[0].value">
+                                        <option ng-repeat="title in titles" value="{{title.value}}">{{title.name}}</option>
+                                    </select>
+                                </div>
+                                <div class="form-group important">
+                                    <label class="control-label">Nama Lengkap Tamu : </label>
+                                    <input type="text" value="" @*pattern="[a-zA-Z\s]+"*@ ng-model="buyerInfo.name" name="name" class="form-control nama" placeholder="Nama Lengkap" required />
+                                </div>
+                                <div class="fb-note">
+                                    <div>Catatan Khusus:</div>
+                                    <ul class="sqr-blue-list md-txt">
+                                        <li>
+                                            <div class="blue-txt semibold-txt">Room Policy</div>
+                                            <div class="grey-txt">Lorem ipsum dolor sit amet.</div>
+                                        </li>
+                                        <li>
+                                            <div class="blue-txt semibold-txt">Room Policy</div>
+                                            <div class="grey-txt">Lorem ipsum dolor sit amet.</div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="form-box">
+                        <div class="fb-header"><b>Permintaan Khusus</b> (opsional)</div>
+                        <div class="fb-body">
+                            <textarea name="fb-request" placeholder="Write your special request in English or Indonesian."></textarea>
+                            <div class="fb-bed clearfix">
+                                Your Bed Preference (if available):
+                                <label class="checkbox">
+                                    <div class="switch"></div>
+                                    <span class="md-txt os-regular title">2 extra-large doubles <span class="double-bed"></span></span>
+                                    <input type="checkbox" name="check" class="check" value="false">
+                                </label>
+                                <label class="checkbox">
+                                    <div class="switch"></div>
+                                    <span class="md-txt os-regular title">2 singles <span class="single-bed"></span><span class="single-bed"></span>, 1 extra-large double <span class="double-bed"></span></span>
+                                    <input type="checkbox" name="check" class="check" value="false">
+                                </label>
+                            </div>
+                            <div class="fb-est md-txt">
+                                <p>Your estimated time of arrival</p>
+                                <div class="bold-txt">24 hour reception:</div>
+                                <div>You can arrive any time you like - <br /> your room will be ready <b>at 15:00</b></div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="form-group">

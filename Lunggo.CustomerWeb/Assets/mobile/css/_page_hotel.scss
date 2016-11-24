@@ -43,7 +43,10 @@
     .right-txt {text-align: right;}
     .center-txt {text-align: center;}
     .summary__title {margin: 20px 0;}
-
+    .imp:after {
+        content: '*';
+        color: #ff0000;
+    }
     /*Custom Column*/
     .col-custom-logo, .col-custom-field, .col-half, .col-2, .col-3, .col-4, .col-6, .col-8 {
         float: left;
@@ -85,6 +88,46 @@
                 vertical-align: middle;
             }
         }
+    }
+    .sqr-blue-list {
+        padding-left: 20px;
+        list-style: none;
+        margin: 0;
+        li:before {
+            width: 8px;
+            height: 8px;
+            display: inline-block;
+            background: #1daee4;
+            content: '';
+            margin-left: -20px;
+            position: absolute;
+            margin-top: 4px;
+        }
+    }
+    /*Checkbox*/
+    label {
+        display: block;
+        float: left;
+        width: 100%;
+        border: 0;
+        margin: 0;
+        padding: 10px 0;
+        position: relative;
+        .switch {float:left; width:20px; height:20px; content:""; background:#fff; border:3px solid #fff; position:absolute; top:50%; margin-top:-10px; @include border-radius(20px); border: 1px solid #e8e8e8;}
+        &.active {
+            .switch:before {
+                background: #2fb4e6;
+                display: block;
+                width: 12px;
+                height: 12px;
+                content: '';
+                @include border-radius(12px);
+                vertical-align: middle;
+                margin: 3px;
+            }
+        }
+        input {display:none;}
+        span.title {width:100%; padding-left:30px; display:block;}
     }
     /*Icon*/
     .star-outline {
@@ -503,6 +546,22 @@
         width: 13px;
         height: 8px;
     }
+    .single-bed {
+        background: url(/Assets/mobile/images/Hotel/single-bed.png) no-repeat;
+        width: 16px;
+        height: 11px;
+        display: inline-block;
+        vertical-align: middle;
+        background-size: 100%;
+    }
+    .double-bed {
+        background: url(/Assets/mobile/images/Hotel/double-bed.png) no-repeat;
+        width: 21px;
+        height: 11px;
+        display: inline-block;
+        vertical-align: middle;
+        background-size: 100%;
+    }
 
     /*Hotel Listing*/
     .dh-list-, .hotel-list-container {
@@ -630,8 +689,8 @@
     .fac-meal:after {
         background: url(/Assets/mobile/images/Hotel/food.png) no-repeat;
         content: '';
-        width: 33px;
-        height: 26px;
+        width: 23px;
+        height: 33px;
         display: block;
         background-size: 100%;
         margin: 15px auto;
@@ -698,7 +757,26 @@
         @import 'page_hotel_search';
         @import 'page_hotel_detail';
     }
-       
+    .form-box {
+        font-size: 13px;
+        .fb-header {
+            padding: 10px 15px;
+            background: #2fb4e6;
+            color: #fff;
+        }
+        .fb-body {
+            padding: 15px;
+            background: #fff;
+            border: 1px solid #ccc;
+        }
+        .fb-top {
+            border-bottom: 1px solid #e8e8e8;
+            padding-bottom: 15px;
+            margin-bottom: 15px;
+        }
+        .sqr-blue-list {padding-top: 5px;}
+    }
+   
     /*Overlay*/
     .overlay--detail-room {
         &.overlay .overlay__content {padding:0;}
@@ -755,8 +833,20 @@
             }
             .widget {margin: 5px 0 30px;}
         }
+        .form-box {
+            textarea[name="fb-request"] {
+                width: 100%;
+                height: 100px;
+                border: 1px solid #ccc;
+                resize: none;
+                padding: 10px;
+                font-size: 11px;
+            }
+            .fb-bed {
+                margin: 15px 0;
+            }
+        }
     }
-
     /*Page Thankyou Hotel*/
     &.page-thankyou {
         background: #f9f9f9;
