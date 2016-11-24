@@ -25,20 +25,20 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
 
     $scope.hotel = {};
     //$scope.hotelSearch = {};
-    $scope.hotelSearch.searchHotelType = 'Location';
-    $scope.hotelSearch.location = "";
-    $scope.hotelSearch.locationDisplay = "";
-    $scope.hotelSearch.checkinDate = moment().locale("id").add(5, 'days');
-    $scope.hotelSearch.checkinDateDisplay = $scope.hotelSearch.checkinDate.locale("id").format('LL');
-    $scope.hotelSearch.nightCount = 2;
-    $scope.hotelSearch.checkoutDate = moment().locale("id").add(7, 'days');
-    $scope.hotelSearch.adultCount = 1;
-    $scope.hotelSearch.childCount = 0;
-    $scope.hotelSearch.childrenAges = [0, 0, 0, 0];
+    //$scope.hotelSearch.searchHotelType = 'Location';
+    //$scope.hotelSearch.location = "";
+    //$scope.hotelSearch.locationDisplay = "";
+    //$scope.hotelSearch.checkinDate = moment().locale("id").add(5, 'days');
+    //$scope.hotelSearch.checkinDateDisplay = $scope.hotelSearch.checkinDate.locale("id").format('LL');
+    //$scope.hotelSearch.nightCount = 2;
+    //$scope.hotelSearch.checkoutDate = moment().locale("id").add(7, 'days');
+    //$scope.hotelSearch.adultCount = 1;
+    //$scope.hotelSearch.childCount = 0;
+    //$scope.hotelSearch.childrenAges = [0, 0, 0, 0];
 
-    $scope.hotelSearch.childrenAgeList = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
+    //$scope.hotelSearch.childrenAgeList = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
 
-    $scope.hotelSearch.roomCount = 1;
+    //$scope.hotelSearch.roomCount = 1;
 
     //$scope.hotel.adultCountMin = 1;
     //$scope.hotel.adultCountMax = 5;

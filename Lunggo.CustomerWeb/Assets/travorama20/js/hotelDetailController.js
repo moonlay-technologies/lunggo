@@ -24,19 +24,10 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
         $scope.searchId = model.searchId;
         $scope.searchParam = model.searchParam;
 
-        hotelSearchSvc.initializeSearchForm($scope, model.searchParamObject);
-
-        ////$scope.hotel.searchId = $scope.model.searchId;
-        //$scope.hotelSearch.location = model.searchParamObject.location;
-        //$scope.hotelSearch.checkinDate = model.searchParamObject.checkinDate;
-        //$scope.hotelSearch.checkoutDate = model.searchParamObject.checkoutDate;
-        //$scope.hotelSearch.adultCount = model.searchParamObject.adultCount;
-        //$scope.hotelSearch.childCount = model.searchParamObject.childCount;
-        //$scope.hotelSearch.nightCount = new Date($scope.hotelSearch.checkoutDate).getDate() - new Date($scope.hotelSearch.checkinDate).getDate();
-        //$scope.hotelSearch.roomCount = model.searchParamObject.roomCount;
-        //$scope.hotelSearch.childrenAges = model.searchParamObject.childrenAges;
         //$scope.hotelSearch.searchParamObject = model.searchParamObject;
         //$scope.hotelSearch.searchParam = model.searchParam;
+
+        hotelSearchSvc.initializeSearchForm($scope, model.searchParamObject);
 
         var maxImages = 6;
 
@@ -55,7 +46,9 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
             validateResponse(data);
 
             $scope.hotel = data.hotelDetails;
-            $scope.destinationName = data.destinationName;
+            //$scope.destinationName = data.destinationName;
+            $scope.hotelSearch.locationDisplay = $scope.hotel.destinationName;
+            $scope.hotelSearch.destinationName = $scope.hotel.destinationName;
 
             var loadedImages = 0;
             var tempHotelImages = [];
@@ -118,7 +111,8 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
         if (data.error == "ERHGHD02") {
             $log.debug('searchId is expired. (' + $scope.searchId + ') \n redirecting to search with ' + $scope.searchParam)
             alert('searchId is expired. Redirecting to search.');
-            location.href = location.href = '/id/Hotel/Search/?' + $scope.searchParam;
+            hotelSearchSvc.gotoHotelSearch($scope.searchParam);
+            //location.href = location.href = '/id/Hotel/Search/?' + $scope.searchParam;
         }
     }
 

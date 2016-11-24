@@ -27,12 +27,14 @@ app.controller('hotelSearchController', ['$scope', '$log', '$http', '$resource',
     //$scope.hotel.searchParam = '';
 
     $scope.searchDone = false;
+    $scope.finishLoad = false;
+
     $scope.researching = false;
     $scope.filter = {};
     $scope.filter.nameFilter = "";
     $scope.filter.minPrice = 0;
     $scope.filter.maxPrice = 0;
-    $scope.filter.zones = null;
+    $scope.filter.zones = [];
     $scope.filter.stars = null;
     $scope.filter.facilities = null;
     $scope.sortByType = { "ascendingPrice": "ASCENDINGPRICE", "descendingPrice": "DESCENDINGPRICE"};
@@ -51,13 +53,17 @@ app.controller('hotelSearchController', ['$scope', '$log', '$http', '$resource',
         $scope.hotelSearch.location = $scope.model.searchParamObject.location;
         $scope.hotelSearch.checkinDate = $scope.model.searchParamObject.checkinDate;
         $scope.hotelSearch.checkoutDate = $scope.model.searchParamObject.checkoutDate;
+        $scope.hotelSearch.destinationCheckinDate = $scope.model.searchParamObject.checkinDate;
+        $scope.hotelSearch.destinationCheckoutDate = $scope.model.searchParamObject.checkoutDate;
         $scope.hotelSearch.adultCount = $scope.model.searchParamObject.adultCount;
         $scope.hotelSearch.childCount = $scope.model.searchParamObject.childCount;
         $scope.hotelSearch.nightCount = $scope.model.searchParamObject.nightCount;//new Date($scope.hotelSearch.checkoutDate).getDate() - new Date($scope.hotelSearch.checkinDate).getDate();
+        $scope.hotelSearch.destinationNightCount = $scope.model.searchParamObject.nightCount;
         $scope.hotelSearch.roomCount = $scope.model.searchParamObject.roomCount;
         $scope.hotelSearch.childrenAges = $scope.model.searchParamObject.childrenAges;
         $scope.hotelSearch.searchParamObject = $scope.model.searchParamObject;
-        $scope.hotelSearch.searchParam = $scope.model.searchParam;
+        //$scope.hotelSearch.searchParam = $scope.model.searchParam;
+        $scope.searchParam = model.searchParam;
 
         $scope.searchHotel();
     }
@@ -75,6 +81,7 @@ app.controller('hotelSearchController', ['$scope', '$log', '$http', '$resource',
         $scope.searchDone = false;
         $scope.pageCount = 0;
 
+        $timeout(function () { }, 1);
         searchPromise().then(function (data) {
             var flag = false;
             if (validateResponse(data) == false) {
@@ -83,7 +90,8 @@ app.controller('hotelSearchController', ['$scope', '$log', '$http', '$resource',
 
             if (data.searchId !== undefined) $scope.hotelSearch.searchId = data.searchId;
 
-            $scope.destinationName = data.destinationName;
+            $scope.hotelSearch.destinationName = data.destinationName;
+            $scope.hotelSearch.locationDisplay = data.destinationName;
             $scope.hotels = data.hotels;
             $scope.totalActualHotel = data.returnedHotelCount;
             $scope.returnedHotelCount = data.returnedHotelCount;
@@ -110,7 +118,9 @@ app.controller('hotelSearchController', ['$scope', '$log', '$http', '$resource',
         }).finally(function () {
             if ($scope.researching == false) {
                 $scope.searchDone = true;
+                $scope.finishLoad = true;
             }
+
         });
     };
 
@@ -133,7 +143,7 @@ app.controller('hotelSearchController', ['$scope', '$log', '$http', '$resource',
         location.href = '/id/Hotel/DetailHotel/?' +
             "searchId=" + $scope.hotelSearch.searchId + "&" +
             "hotelCd=" + hotelCd + "&" + 
-            "searchParam=" + $scope.hotelSearch.searchParam;
+            "searchParam=" + $scope.searchParam;
     }
 
     $scope.changeFilter = function (filterType, value) {
@@ -162,6 +172,20 @@ app.controller('hotelSearchController', ['$scope', '$log', '$http', '$resource',
                 }
                 else {
                     $scope.filter.zones.splice(zoneCodeIndex, 1);
+                }
+            }
+        }
+        else if (filterType == 'facility') {
+            if ($scope.filter.facilities == null) {
+                $scope.filter.facilities = [value.code];
+            }
+            else {
+                var facilityCodeIndex = $scope.filter.facilities.indexOf(value.code);
+                if (facilityCodeIndex < 0) {
+                    $scope.filter.facilities.push(value.code);
+                }
+                else {
+                    $scope.filter.facilities.splice(facilityCodeIndex, 1);
                 }
             }
         }
@@ -234,5 +258,33 @@ app.controller('hotelSearchController', ['$scope', '$log', '$http', '$resource',
         $scope.searchHotel();
 
     };
+
+    var filterHotels = function () {
+        if ($scope.finishLoad) {
+            $scope.page = 1;
+            $scope.searchHotel();
+        }
+    }
+
+    $scope.$watch('filter.nameFilter', function (newValue, oldValue, scope) {
+        filterHotels();
+    }, true);
+
+    var watchGroup = ['filter.minPrice', 'filter.maxPrice']
+    $scope.$watchGroup(watchGroup, function (newValue, oldValue, scope) {
+        filterHotels();
+    }, true);
+
+    $scope.$watch('filter.zones', function (newValue, oldValue, scope) {
+        filterHotels();
+    }, true);
+
+    $scope.$watch('filter.stars', function (newValue, oldValue, scope) {
+        filterHotels();
+    }, true);
+
+    $scope.$watch('filter.facilities', function (newValue, oldValue, scope) {
+        filterHotels();
+    }, true);
 
 }]);

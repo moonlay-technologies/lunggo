@@ -8,7 +8,7 @@
                 <div class="field-container">
                     <div class="form-control form-date">
                         <span class="sm-txt grey-txt">Tanggal Masuk</span>
-                        <span class="pull-right bold-txt darkgrey-txt">28 Oktober 2016</span>
+                        <span class="pull-right bold-txt darkgrey-txt">{{hotelSearch.checkinDate | date: 'EEE, dd MMM yyyy'}}</span>
                     </div>
                 </div>
             </div>
@@ -112,7 +112,7 @@
             </div>
         </div>
         <div class="form-group form__submit room-left">
-            <button class="btn btn-yellow btn-block btn-lg btnSubmit">CARI HOTEL</button>
+            <button class="btn btn-yellow btn-block btn-lg btnSubmit" ng-click="hotelSearch.getHotels();">CARI HOTEL</button>
         </div>
     </div>
 </form>

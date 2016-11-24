@@ -156,20 +156,21 @@
                     <ul class="room-list-container">
                         <li ng-show="$index+1 <= roomCount" ng-repeat="room in hotel.room track by $index">
                             <div class="room-list clearfix">
-                                <div class="room-left" ng-show="room.roomImages.length <= 0"><div class="no-room-pic"></div></div>
-                                <div class="room-left" ng-show="room.roomImages.length > 0"><div class="room-pic" alt-image style="background-image: url({{room.roomImages[0]}});"></div></div>
+                                <div class="room-left" ng-show="room.roomImages === undefined || room.roomImages.length <= 0"><div class="no-room-pic"></div></div>
+                                <div class="room-left" ng-show="room.roomImages !== undefined && room.roomImages.length > 0"><div class="room-pic" alt-image style="background-image: url({{room.roomImages[0]}});"></div></div>
                                 <div class="room-right clearfix">
                                     <div class="room-rl">
                                         <div class="blue-txt md-txt"><b>{{room.roomName}}</b></div>
                                         <div class="facility"></div>
                                         <div class="max-people">Maks <b>{{room.paxCapacity}} orang / kamar</b></div>
-                                        <div ng-show="roomIsRefundable(room, $index)">Pembatalan Gratis </div>
-                                        <div ng-show="!room.rate.isRefundable">Kebijakan Pembatalan Berlaku </div>
+                                        @*<div ng-show="roomIsRefundable(room, $index)">Pembatalan Gratis </div>*@
+                                        <div ng-show="room.rate.isFreeCancel">Pembatalan Gratis </div>
+                                        <div ng-show="!room.rate.isFreeCancel && room.rate.isRefundable">Kebijakan Pembatalan Berlaku </div>
+                                        <div ng-show="!room.rate.isFreeCancel && !room.rate.isRefundable">TIdak Dapat Dibatalkan </div>
                                         <div class="info-room">
                                             <span class="info-icon italic-txt">i</span>
                                             <span class="blue-txt sm-txt">Info Kamar</span>
                                         </div>
-
                                     </div>
                                     <div class="room-rm">
                                         <div class="dropdown-container">
@@ -197,17 +198,17 @@
                                         <div class="sm-slider">
                                             @*<div class="item active">
                                                 <img src="/Assets/travorama20/images/Hotel/mini-slider.jpg" />
-                            </div>*@
+                                            </div>*@
                                             <ul class="room-gallery gallery list-unstyled cS-hidden">
-                                                <li data-thumb="/Assets/travorama20/images/Hotel/mini-slider.jpg">
-                                                    <div style="background-image: url(/Assets/travorama20/images/Hotel/mini-slider.jpg); width: 100%; height: 145px; background-size: cover; background-position: center center;"></div>
+                                                <li data-thumb="{{roomImage}}" ng-repeat="roomImage in room.roomImages track by $index">
+                                                    <div style="background-image: url({{roomImage}}); width: 100%; height: 145px; background-size: cover; background-position: center center;"></div>
+                                                    <div class="total-img"><b>{{$index+1}}</b> / {{room.roomImages.length}}</div>
                                                 </li>
-                                                <li data-thumb="/Assets/travorama20/images/Hotel/mini-slider.jpg">
+                                                @*<li data-thumb="/Assets/travorama20/images/Hotel/mini-slider.jpg">
                                                     <div style="background-image: url(/Assets/travorama20/images/Hotel/mini-slider.jpg); width: 100%; height: 145px; background-size: cover; background-position: center center;"></div>
-                                                </li>
+                                                </li>*@
                                             </ul>
                                         </div>
-                                        <div class="total-img"><b>1</b> / 20</div>
                                     </div>
                                     <div class="col-left-bottom">
                                         <ul class="hd-list">
@@ -223,12 +224,14 @@
                                             <li class="hd-point">
                                                 <div class="hd-title blue-txt">Kebijakan Pembatalan</div>
                                                 <div class="hd-txt">
-                                                    <span ng-repeat="cancellation in room.rate.cancellation track by $index">
+                                                    <div ng-show="room.rate.isFreeCancel">- 
+                                                        Gratis pembatalan sebelum <span style="color:#1daee4">{{room.rate.freeUntil | date:'dd-MMM-yyyy HH:mm'}}</span> WIB.
+                                                    </div>
+                                                    <div ng-repeat="cancellation in room.rate.cancellation track by $index">
                                                         @*Gratis pembatalan sebelum 17-Nov-2016 17:00.*@
-                                                        - Pembatalan setelah <span style="color:#1daee4">{{cancellation.startTime | date:'dd-MMM-yyyy '}}</span>
+                                                        - Pembatalan setelah <span style="color:#1daee4">{{cancellation.startTime | date:'dd-MMM-yyyy HH:mm'}}</span> WIB
                                                         akan dikenakan biaya pembatalan sebesar <span style="color:#ff7200">Rp. {{cancellation.singleFee | number}}</span>.
-                                                        <br />
-                                                    </span>
+                                                    </div>
                                                 </div>
                                             </li>
 
