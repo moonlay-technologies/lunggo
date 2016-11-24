@@ -78,9 +78,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\WindowsAzure.Storage.4.3.0\lib\net40\Microsoft.WindowsAzure.Storage.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.8.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -112,6 +112,7 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Config\BackendWeb\mandrill.properties" />
+    <None Include="Config\BackendWeb\sendGrid.properties" />
     <None Include="Config\BackendWeb\sriwijaya.properties">
       <SubType>Designer</SubType>
     </None>
@@ -166,10 +167,12 @@
     <None Include="Config\CloudApp.CaptchaReader\redis.properties">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Config\CloudApp.CaptchaReader\sendGrid.properties" />
     <None Include="Config\CloudApp.CaptchaReader\sriwijaya.properties">
       <SubType>Designer</SubType>
     </None>
     <None Include="Config\CloudApp.EticketHandler\Garuda.properties" />
+    <None Include="Config\CloudApp.EticketHandler\sendGrid.properties" />
     <None Include="Config\Common\Airline.csv" />
     <None Include="Config\Common\Airport.csv" />
     <None Include="Config\Common\Country.csv" />
@@ -196,6 +199,7 @@
     <None Include="Config\CustomerWeb\redis.properties">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Config\CustomerWeb\sendGrid.properties" />
     <None Include="Config\CustomerWeb\sriwijaya.properties" />
     <None Include="Config\CustomerWeb\veritrans.properties" />
     <None Include="Config\CustomerWeb\zendesk.properties" />
@@ -223,6 +227,7 @@
     <None Include="Config\WebAPI\mandrill.properties">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Config\WebAPI\sendGrid.properties" />
     <None Include="Config\WebAPI\sriwijaya.properties">
       <SubType>Designer</SubType>
     </None>
@@ -308,9 +313,11 @@
     <None Include="Config\WebJob.BankTransferChecking\redis.properties">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Config\WebJob.BankTransferChecking\sendGrid.properties" />
     <None Include="Config\WebJob.BankTransferChecking\sriwijaya.properties" />
     <None Include="Config\WebJob.BankTransferChecking\veritrans.properties" />
     <None Include="Config\WebJob.BankTransferChecking\zendesk.properties" />
+    <None Include="Config\WebJob.CurrencyCrawler\sendGrid.properties" />
     <None Include="Config\WebJob.EmailQueueHandler\airAsia.properties">
       <SubType>Designer</SubType>
     </None>
@@ -335,6 +342,7 @@
     <None Include="Config\WebJob.EmailQueueHandler\redis.properties">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Config\WebJob.EmailQueueHandler\sendGrid.properties" />
     <None Include="Config\WebJob.EmailQueueHandler\sriwijaya.properties">
       <SubType>Designer</SubType>
     </None>
@@ -536,6 +544,7 @@
     <None Include="Config\WebJob.FlightProcessor\redis.properties">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Config\WebJob.FlightProcessor\sendGrid.properties" />
     <None Include="Config\WebJob.FlightProcessor\sriwijaya.properties">
       <SubType>Designer</SubType>
     </None>
@@ -592,6 +601,7 @@
     <None Include="Config\WebJob.PriceIdentifierGenerator\redis.properties">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Config\WebJob.PriceIdentifierGenerator\sendGrid.properties" />
     <None Include="Config\WebJob.PriceIdentifierGenerator\sriwijaya.properties">
       <SubType>Designer</SubType>
     </None>
@@ -687,6 +697,7 @@
     <None Include="Config\WebJob.TicketQueueHandler\redis.properties">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Config\WebJob.TicketQueueHandler\sendGrid.properties" />
     <None Include="Config\WebJob.TicketQueueHandler\zendesk.properties" />
     <None Include="Config\WebJob.EmailQueueHandler\zendesk.properties" />
     <None Include="Config\CloudApp.EticketHandler\redis.properties">

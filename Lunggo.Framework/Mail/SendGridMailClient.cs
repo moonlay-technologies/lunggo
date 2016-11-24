@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net.Mail;
 using System.Text;
@@ -7,17 +8,20 @@ using System.Threading.Tasks;
 using System;
 using Mandrill;
 using System.Web.Script.Serialization;
+using Microsoft.Azure.NotificationHubs.Messaging;
 using SendGrid;
+using FileInfo = Lunggo.Framework.SharedModel.FileInfo;
 
 
 namespace Lunggo.Framework.Mail
 {
     public partial class MailService
     {
-        public class SendGridMailClient
+        private class SendGridMailClient : MailClient
         {
             private static readonly SendGridMailClient ClientInstance = new SendGridMailClient();
-            private SendGrid.Web _apiOfSendGrid = new SendGrid.Web("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");
+            private SendGrid.Web _apiOfSendGrid;// = new SendGrid.Web("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");
+            private bool _isInitialized;
             private enum RecipientType
             {
                 To,
@@ -31,10 +35,21 @@ namespace Lunggo.Framework.Mail
             {
                 return ClientInstance;
             }
-            internal void SendEmail<T>(T objectParam, MailModel mailModel, string template)
+
+            internal override void Init(string apiKey)
+            {
+                if (!_isInitialized)
+                {
+                    _apiOfSendGrid = new SendGrid.Web(apiKey);
+                    _isInitialized = true;
+                }
+            }
+
+            internal override void SendEmail<T>(T objectParam, MailModel mailModel, string template)
             {
                 var emailMessage = GenerateMessage(objectParam, mailModel, template);
                 _apiOfSendGrid.DeliverAsync(emailMessage);
+
             }
 
             private SendGridMessage GenerateMessage<T>(T objectParam, MailModel mailModel, string template)
@@ -46,8 +61,15 @@ namespace Lunggo.Framework.Mail
                     To = GenerateMessageAddressTo(mailModel),
                     Html = HtmlTemplate.HtmlTemplateService.GetInstance().GenerateTemplate(objectParam, template)
                 };
+                if (mailModel.ListFileInfo != null && mailModel.ListFileInfo.Count > 0)
+                    foreach (var file in mailModel.ListFileInfo)
+                    {
+                        sendGridMessage.AddAttachment(file.Data, file.FileName);
+                    }
+
                 return sendGridMessage;
             }
+            
             private MailAddress[] GenerateMessageAddressTo(MailModel mailModel)
             {
                 var addresses = new List<MailAddress>();

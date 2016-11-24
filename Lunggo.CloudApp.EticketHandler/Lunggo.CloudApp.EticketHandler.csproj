@@ -62,7 +62,6 @@
     </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.8.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
-      <Private>True</Private>
     </Reference>
     <Reference Include="NReco.PdfGenerator">
       <HintPath>..\packages\NReco.PdfGenerator.1.1.6.0\lib\net20\NReco.PdfGenerator.dll</HintPath>

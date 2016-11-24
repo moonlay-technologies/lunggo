@@ -268,6 +268,15 @@ namespace Lunggo.Framework.BlobStorage
                 return byteArrayOfBlob;
             }
 
+            internal MemoryStream GetMemoryStreamByFileInContainer(string fileName, string container)
+            {
+                CloudBlockBlob blobToGet = GetBlobFromStorage(fileName, container);
+                var streamOfBlob = new MemoryStream();
+                blobToGet.DownloadToStream(streamOfBlob);
+                streamOfBlob.Seek(0, SeekOrigin.Begin);
+                return streamOfBlob;
+            }
+
             internal CloudBlockBlob GetBlobFromStorage(string fileUriName, string container)
             {
                 try

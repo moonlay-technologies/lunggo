@@ -92,7 +92,7 @@ namespace Lunggo.WebJob.EmailQueueHandler
 
         private static void InitMailService()
         {
-            var apiKey = ConfigManager.GetInstance().GetConfigValue("mandrill", "apiKey");
+            var apiKey = ConfigManager.GetInstance().GetConfigValue("sendGrid", "apikey");
             var mailService = MailService.GetInstance();
             mailService.Init(apiKey);
         }

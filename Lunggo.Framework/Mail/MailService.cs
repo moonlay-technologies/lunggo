@@ -4,7 +4,8 @@
     {
         private static readonly MailService Instance = new MailService();
         private bool _isInitialized;
-        private static readonly MandrillMailClient Client = MandrillMailClient.GetClientInstance();
+        private static readonly SendGridMailClient Client = SendGridMailClient.GetInstance();
+        //private static readonly MandrillMailClient Client = MandrillMailClient.GetClientInstance();
 
         private MailService()
         {
@@ -30,9 +31,9 @@
             Client.SendEmail(objectParam, mailModel, type);
         }
 
-        public void SendPlainEmail(MailModel mailModel, string content)
-        {
-            Client.SendPlainEmail(mailModel, content);
-        }
+        //public void SendPlainEmail(MailModel mailModel, string content)
+        //{
+        //    Client.SendPlainEmail(mailModel, content);
+        //}
     }
 }

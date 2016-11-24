@@ -51,7 +51,7 @@ namespace Lunggo.Framework.Mail
                 _apiOfMandrill.SendMessage(emailMessageRequest);
             }
 
-            internal override void SendPlainEmail(MailModel mailModel, string content)
+            internal void SendPlainEmail(MailModel mailModel, string content)
             {
                 var emailMessage = new EmailMessage
                 {
