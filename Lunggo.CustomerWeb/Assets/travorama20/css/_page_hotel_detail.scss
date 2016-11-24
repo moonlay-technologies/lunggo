@@ -19,6 +19,7 @@
             }
         }
         .col-right-slider {
+            display: none;
             border: 1px solid #ccc;
             background: #fff;
             .btn-container {
@@ -96,64 +97,48 @@
     /*Slider*/
     .slider {
         margin: 0;
-        background: none; 
-        .flexslider {
+        background: none;
+        .lSSlideOuter .lSPager.lSGallery {
             margin: 0;
-            border: 0;
-            @include border-radius(0);
-            zoom: normal;
-            .flex-control-thumbs {
-                margin: 0;
-                position: absolute;
-                bottom: 0;
-                padding: 0 35px;
-                background: #000;
-                background: rgba(0,0,0,0.6);
-                li {
-                    width: 16.666666666666668%;
-                    padding: 15px 5px;
-                }
-                img {
-                    opacity: 1;
-                    @include transition(none);
-                    height: 57px;
-                }
-                .flex-active {
+            padding: 0 40px;
+            background: #000;
+            background: rgba(0,0,0,0.6);
+            position: absolute;
+            margin-top: -130px !important;
+            width: 908px !important;
+            z-index: 0;
+            &>li {
+                width: 16.666666666666667% !important;
+                padding: 15px 5px;
+                margin-right: 0 !important;
+                &.active img {
                     border: 2px solid #fff;
-                    @include border-radius(2px);
+                    opacity: 1;
                 }
             }
-            .flex-direction-nav {
-                .flex-prev {
-                    left: 0;
-                    margin-left: 15px;
-                }
-                .flex-next {
-                    right: 0;
-                    margin-right: 15px;
-                }
-                a {
-                    width: 10px;
-                    height: 17px;
-                    margin: 0;
-                    z-index: 0; 
-                    opacity: 1; 
-                    color: #fff;
-                    text-shadow: none;
-                    @include transition(none);
-                    @include border-radius(0);
-                    top: auto;
-                    bottom: 40px;
-                    &:before {
-                        font-size: 12px;
-                        color: #fff;
-                        text-shadow: none;
-                    }
-                }
+            img {
+                height: 100px !important;
+                opacity: 0.7;
+                width: 100%;
             }
-            .slides img {height: 450px;}
         }
+        .lSAction {
+            &>a {
+                width: 22px;
+                top: auto; 
+                height: 37px;
+                background: url(/Assets/images/calendar-sprite.png);
+                cursor: pointer;
+                position: absolute;
+                z-index: 1;
+                margin-top: -83px;
+                &.lSNext {
+                    background-position: -22px 0;
+                }
+            }
+        }                        
     }
+    .pointer {cursor: pointer;}
     .menu-hotel {
         margin-bottom: 20px;
         .mh-title {
@@ -238,11 +223,28 @@
         }
         .room-list {
             margin-top: 15px;
+            border: none;
+            &.active {border: 3px solid #1daee4;}
+            .room-pic {
+                width: 100%; 
+                height: 133px; 
+                background-size: cover; 
+                background-position: center center;
+            } 
+            .no-room-pic {
+                background: url(/Assets/travorama20/images/Hotel/room.jpg);
+                width: 100%; 
+                height: 133px; 
+                background-size: cover; 
+                background-position: center center;
+            }
             .room-right {
                 padding: 14px 25px;
                 border: 1px solid #ccc;
                 background: #fff;
-                .room-rl {
+                .room-rl { 
+                    cursor:pointer;
+                    padding: 10px 0;
                     .facility {margin: 5px 0;}
                     .info-room {
                         margin-top: 6px;
@@ -268,13 +270,13 @@
                                 border-top: 4px solid #1daee4;
                                 content: '';
                                 position: absolute;
-                                bottom: 5px;
+                                bottom: 15px;
                                 margin-left: 5px;
                             }
                         }
                     }
                 }
-                .room-rm {
+                .room-rm { display: none;
                     .dropdown-container {
                         margin: 10px 0;
                         border-left: 1px solid #ccc;
@@ -300,6 +302,7 @@
                     }
                 }
                 .room-rr {
+                    border-left: 1px solid #ccc;
                     padding-left: 25px;
                     color: #ff7200;
                     line-height: 22px;
@@ -309,43 +312,51 @@
         }
         .hotel-detail {
             border: 3px solid #1daee4;
+            border-top: none;
             background: #fff;
             display: none;
-            .col-left-top {
-                border-bottom: 1px dashed #1daee4;
-                .hd-slider {padding: 30px 30px 0;
-                    button.slick-arrow {
-                        position: absolute;
-                        z-index: 1;
-                        font-size: 0;
-                        padding: 0;
-                        width: 30px;
-                        height: 30px;
-                        @include border-radius(30px);
-                        top: 50%;
-                        -webkit-appearance: none;
-                        background: #1daee4;
-                        box-shadow: none;
-                        border: 0;
-                        &.slick-prev {
-                            margin-left: -15px;
+            .col-left-bottom {display:none;}
+            .col-left-top {                 
+                border-right: 1px dashed #1daee4;
+                .sm-slider {padding: 30px 30px 0;
+                    .lSSlideOuter .lSPager.lSGallery {display:none;}
+                    .lSAction {
+                        &>a {
+                            position: absolute;
+                            z-index: 1;
+                            font-size: 0;
+                            padding: 0;
+                            width: 30px;
+                            height: 30px;
+                            @include border-radius(30px);
+                            top: 50%;
+                            -webkit-appearance: none;
+                            background: #1daee4;
+                            box-shadow: none;
+                            border: 0;
+                            opacity: 1;
+                            -webkit-transition: none;
+                            transition: none;
+                        }
+                        &>.lSPrev {
+                            left: 0;
                             &:after {
                                 content: '';
                                 background: url(/Assets/travorama20/images/Hotel/prev-white.png) no-repeat;
                                 width: 9px;
                                 height: 14px;
                                 display: inline-block;
+                                margin: 8px 10px;
                             }
-                        }
-                        &.slick-next {
+                        } &>.lSNext {
                             right: 0;
-                            margin-right: 15px;
                             &:after {
                                 content: '';
                                 background: url(/Assets/travorama20/images/Hotel/next-white.png) no-repeat;
                                 width: 9px;
                                 height: 14px;
                                 display: inline-block;
+                                margin: 8px 10px;
                             }
                         }
                     }
@@ -392,13 +403,12 @@
                 }
             }
             .col-right-result {
-                border-left: 1px dashed #1daee4;
                 padding: 15px;
                 .hd-right-container {
                     margin: 15px;
                     margin-right: 0;
                     max-height: 270px;
-                    overflow-y: scroll;
+                    overflow-y: hidden;
                     &::-webkit-scrollbar {width: 6px;}
                     &::-webkit-scrollbar-track {background: #ddd;}
                     &::-webkit-scrollbar-thumb {background: #999;}
@@ -442,7 +452,7 @@
                     border-right: 4px solid transparent;
                     border-top: 4px solid #fff;
                     content: '';
-                    margin-top: 6px;
+                    margin-top: -8px;
                     position: absolute;
                     margin-left: 5px;
                 }
@@ -487,8 +497,8 @@
         }
         .ih-row {
             border-top: 1px solid #ccc;
-            padding: 15px;
-            &.fc {border-top: none;}
+            padding: 15px 0;
+            &:first-child {border-top: none;}
             .ih-left {
                 font-weight: 600;
                 text-align: center;

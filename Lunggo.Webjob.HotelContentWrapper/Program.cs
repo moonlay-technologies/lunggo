@@ -31,16 +31,16 @@ namespace Lunggo.Webjob.HotelContentWrapper
             var service = HotelService.GetInstance();
             var rate = new GetRateComment();
             Console.WriteLine("Getting Hotel Detail");
-            hotel.GetHotelData(1,128000);
+            hotel.GetHotelData(1, 1000);
 
             Console.WriteLine("Update Hotel List by Location Content");
             service.UpdateHotelListByLocationContent();
 
             Console.WriteLine("Update Hotel Detail by Location Content");
-            //rate.GetRateCommentData(); //TODO
+            service.SaveHotelDetailByLocation();
 
             Console.WriteLine("RateComment");
-            rate.GetRateCommentData();
+            rate.GetRateCommentData(1, 1000);
             
             stopwatch.Stop();
             Debug.Print("Done in : {0}", stopwatch.Elapsed);

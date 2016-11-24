@@ -22,12 +22,18 @@ if (typeof(angular) == 'object') {
     //}
 
     app.run(function ($rootScope) {
-        $rootScope.traGetRange = function (count) {
+        $rootScope.traGetRange = function (max, min) {
+
+            var startFrom = 1;
+            if (min != null || min !== undefined) {
+                startFrom = min;
+            }
+
             var returnValue = [];
-            if (count < 1) {
+            if (max <= min) {
                 return returnValue;
             }
-            for (var i = 1; i <= count; i++) {
+            for (var i = startFrom; i <= max; i++) {
                 returnValue.push(i)
             }
             return returnValue;
@@ -79,6 +85,123 @@ if (typeof(angular) == 'object') {
 
     //DataSource.get(SOURCE_FILE, setData, xmlTransform);
 
+    app.directive('hotelListImage', function ($http, $log, $q) {
+        return {
+            restrict: 'A',
+            link: function (scope, element, attrs) {
+                var isImage = function (src) {
+                    var deferred = $q.defer();
+                    var image = new Image();
+                    image.onerror = function () { deferred.reject(false); };
+                    image.onload = function () { deferred.resolve(true); };
+                    image.src = src;
+                    return deferred.promise;
+                };
+                var resizeImages = function () {
+                    var img = $(element);
+                    var div = $("<div />").css({
+                        background: "url(" + img.attr("src") + ") no-repeat",
+                        width: "100%",
+                        height: "140px",
+                        "background-size": "cover",
+                        "background-position": "center"
+                    });
+                    img.replaceWith(div);
+                };
+
+                attrs.$observe('ngSrc', function (ngSrc) {
+                    isImage(ngSrc).then(function () {
+                        $log.debug('image exist');
+                    }, function () {
+                        var altImagePath = document.location.origin + '/Assets/travorama20/images/Hotel/no-hotel.png';
+                        $log.debug('image not exist');
+
+                        element.removeAttr('src');
+                        element.attr('src', altImagePath); // set default image
+                    }).finally(function () {
+                        // Always execute this on both error and success
+                        resizeImages();
+                    });
+                });
+            }
+        };
+    })
+    .directive('altImage', function ($http, $log, $q) {
+        return {
+            restrict: 'A',
+            link: function (scope, element, attrs) {
+                var altImagePath = document.location.origin + '/Assets/travorama20/images/Hotel/no-hotel.png';
+
+                var isImage = function (src) {
+                    var deferred = $q.defer();
+                    var image = new Image();
+                    image.onerror = function () { deferred.reject(false); };
+                    image.onload = function () { deferred.resolve(true); };
+                    image.src = src;
+                    return deferred.promise;
+                };
+
+                attrs.$observe('ngSrc', function (ngSrc) {
+                    isImage(ngSrc).then(function() {
+                    }, function() {
+                        element.removeAttr('src');
+                        element.attr('src', altImagePath); // set default image
+                    });
+                });
+
+                attrs.$observe('src', function (src) {
+                    isImage(src).then(function () {
+                    }, function () {
+                        element.attr('src', altImagePath); // set default image
+                    });
+                });
+
+                attrs.$observe('dataThumb', function (dataThumb) {
+                    isImage(dataThumb).then(function () {
+                    }, function () {
+                        element.removeAttr('src');
+                        element.attr('src', altImagePath); // set default image
+                    });
+                });
+
+                attrs.$observe('test', function (test) {
+                    isImage(test).then(function () {
+                    }, function () {
+                        var altImagePath = document.location.origin + '/Assets/travorama20/images/Hotel/no-hotel-lg.png';
+                        $log.debug('image not exist');
+
+                        element.removeAttr('style');
+                        element.attr('style', "background-image: url(" + altImagePath + "); width: 100%; height: 590px; background-size: cover; background-position: center center;"); // set default image
+                    });
+                });
+
+                //attrs.$observe('altImage', function (altImage) {
+                //    isImage(altImage).then(function () {
+                //        $log.debug('image exist');
+                //    }, function () {
+                //        var altImagePath = document.location.origin + '/Assets/travorama20/images/Hotel/no-hotel.png';
+                //        $log.debug('image not exist');
+
+                //        element.removeAttr('src');
+                //        //element.attr('src', "background-image: url(" + altImagePath + "); width: 100%; height: 450px; background-size: cover; background-position: center center;"); // set default image
+                //    });
+                //});
+                
+            }
+        };
+    })
+    app.directive('traOnEnter', function () {
+        return function (scope, element, attrs) {
+            element.bind("keydown keypress", function (event) {
+                if (event.which === 13) {
+                    scope.$apply(function () {
+                        scope.$eval(attrs.traOnEnter);
+                    });
+                    event.preventDefault();
+                }
+            });
+        };
+    });
 }
 
 
@@ -1072,6 +1195,7 @@ function flightPageSearchFormFunctions() {
             Cookies.set('adult', flightPageSearchFormParam.passenger.adult, { expires: 9999 });
             Cookies.set('child', flightPageSearchFormParam.passenger.child, { expires: 9999 });
             Cookies.set('infant', flightPageSearchFormParam.passenger.infant, { expires: 9999 });
+
         } else {
             Cookies.set('adult', flightPageSearchFormParam.passenger.adult, { expires: 9999 });
             Cookies.set('child', flightPageSearchFormParam.passenger.child, { expires: 9999 });
@@ -1084,7 +1208,10 @@ function flightPageSearchFormFunctions() {
         var returnDate = (('0' + flightPageSearchFormParam.returnDate.getDate()).slice(-2) + ('0' + (flightPageSearchFormParam.returnDate.getMonth() + 1)).slice(-2) + flightPageSearchFormParam.returnDate.getFullYear().toString().substr(2, 2));
         var departureParam = flightPageSearchFormParam.origin + flightPageSearchFormParam.destination + departureDate;
         var returnParam = flightPageSearchFormParam.destination + flightPageSearchFormParam.origin + returnDate;
+        //var passengerParam = flightPageSearchFormParam.passenger.adult.toString() + flightPageSearchFormParam.passenger.child.toString() + flightPageSearchFormParam.passenger.infant.toString() + flightPageSearchFormParam.cabin;
         var passengerParam = flightPageSearchFormParam.passenger.adult.toString() + flightPageSearchFormParam.passenger.child.toString() + flightPageSearchFormParam.passenger.infant.toString() + flightPageSearchFormParam.cabin;
+
+        //FlightSearchConfig.flightForm.adult
         var flightSearchParam;
         // generate flight search param
         if (flightPageSearchFormParam.type == 'return') {
@@ -1602,18 +1729,25 @@ function flightFormSearchFunctions() {
         if (Cookies.get('adult')) {
             $('.passenger-input.adult').text(Cookies.get('adult'));
             FlightSearchConfig.flightForm.adult = Cookies.get('adult');
+            flightPageSearchFormParam.passenger.adult = Cookies.get('adult');
+            //FlightSearchConfig.flightForm.passenger.adult
+            FlightSearchConfig.flightForm.passenger.adult = parseInt(Cookies.get('adult'));
         } else {
             $('.passenger-input.adult').text('1');
         }
         if (Cookies.get('child')) {
             $('.passenger-input.child').text(Cookies.get('child'));
             FlightSearchConfig.flightForm.child = Cookies.get('child');
+            //flightPageSearchFormParam.passenger.child = Cookies.get('child');
+            FlightSearchConfig.flightForm.passenger.child = parseInt(Cookies.get('child'));
         } else {
             $('.passenger-input.child').text('0');
         }
         if (Cookies.get('infant')) {
             $('.passenger-input.infant').text(Cookies.get('infant'));
             FlightSearchConfig.flightForm.infant = Cookies.get('infant');
+            //flightPageSearchFormParam.passenger.infant = Cookies.get('infant');
+            FlightSearchConfig.flightForm.passenger.infant = parseInt(Cookies.get('infant'));
         } else {
             $('.passenger-input.infant').text('0');
         }
@@ -1872,3 +2006,4 @@ function accordionFunctions() {
         }
     }
 }
+

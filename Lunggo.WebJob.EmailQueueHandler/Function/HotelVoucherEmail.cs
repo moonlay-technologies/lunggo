@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Text;
 using Lunggo.ApCommon.Hotel.Model;
 using Lunggo.ApCommon.Hotel.Service;
@@ -31,8 +32,13 @@ namespace Lunggo.WebJob.EmailQueueHandler.Function
             var summaryBytes = blobService.GetByteArrayByFileInContainer(rsvNo, "Reservation");
             var summaryJson = Encoding.UTF8.GetString(summaryBytes);
             var summary = JsonConvert.DeserializeObject<HotelReservationForDisplay>(summaryJson);
-            var roomcd = HotelService.GetInstance().GetHotelRoom(summary.HotelDetail.Rooms[0].RoomCode).RoomDescId;
-            var boards = @HotelService.GetInstance().GetHotelBoardDescId(summary.HotelDetail.Rooms[0].Rates[0].Boards);
+            var hotelCd = summary.HotelDetail.HotelCode;
+            var images = HotelService.GetInstance().GetHotelDetailFromDb(hotelCd).ImageUrl;
+            var firstOrDefault = images.Where(i => i.Type == "GEN").ToList().FirstOrDefault();
+            if (firstOrDefault != null)
+                summary.HotelDetail.MainImage = images == null
+                    ? null
+                    : "http://photos.hotelbeds.com/giata/" + firstOrDefault.Path;
             sw.Stop();
             Console.WriteLine("Done Getting Required Files and Data from Storage. (" + sw.Elapsed.TotalSeconds + "s)");
             sw.Reset();

@@ -10,6 +10,8 @@ namespace Lunggo.ApCommon.Hotel.Model
 
     public class HotelFilter
     {
+        [JsonProperty("nameFilter")]
+        public string NameFilter { get; set; }
         [JsonProperty("priceFilter")]
         public PriceFilter PriceFilter { get; set; }
         [JsonProperty("starFilter")]

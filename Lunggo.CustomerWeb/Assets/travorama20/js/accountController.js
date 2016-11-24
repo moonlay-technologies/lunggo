@@ -3,6 +3,7 @@ app.controller('siteHeaderController', [
     '$http', '$scope', function ($http, $scope) {
         $scope.profileloaded = false;
         $scope.email = '';
+        $scope.name = '';
         $scope.trial = 0;
         $scope.returnUrl = document.referrer;
         $scope.authProfile = {}
@@ -22,6 +23,7 @@ app.controller('siteHeaderController', [
                         $scope.isLogin = true;
                         console.log('Success getting Profile');
                         $scope.email = returnData.data.email;
+                        $scope.name = returnData.data.name;
                         $scope.profileloaded = true;
                         //console.log(returnData);
                     }
@@ -149,6 +151,62 @@ app.controller('accountController', [
             $scope.currentSection = name;
         }
 
+        $scope.totalpax = function (hotel) {
+            var sumAdult = 0;
+            var sumChild = 0;
+
+            for (var i = 0; i < hotel.room.length; i++) {
+                for (var j = 0; j < hotel.room[i].rates.length; j++) {
+                    sumAdult += hotel.room[i].rates[j].adultCount;
+                    sumChild += hotel.room[i].rates[j].childCount;
+                }
+            }
+
+            return { 'totalAdult': sumAdult, 'totalChild': sumChild };
+        }
+        $scope.totalRoom = function(hotel) {
+            var rooms = [];
+
+            for (var i = 0; i < hotel.room.length; i++) {
+                for (var j = 0; j < hotel.room[i].rates.length; j++) {
+                    room = {
+                        'roomName': hotel.room[i].roomName, 'boardType': hotel.room[i].rates[j].boardDesc,
+                        'roomCount': hotel.room[i].rates[j].roomCount
+                    };
+                    rooms.push(room);
+                }
+            }
+
+            var roomstc = '';
+            for (var k = 0; k < rooms.length; k++) {
+                roomstc += parseInt(rooms[k].roomCount) + ' ' + rooms[k].roomName + ' ' + rooms[k].boardType + ', ';
+            }
+            roomstc = roomstc.substring(0, roomstc.length - 2);
+            return roomstc;
+        }
+
+        $scope.sumRoom = function (hotel) {
+            var sumRoom = 0;
+            for (var i = 0; i < hotel.room.length; i++) {
+                for (var j = 0; j < hotel.room[i].rates.length; j++) {
+                    sumRoom += hotel.room[i].rates[j].roomCount;
+                }
+            }
+            return sumRoom;
+        }
+        $scope.nightcount = function(hotel) {
+            var checkin = new Date(hotel.checkIn);
+            var checkout = new Date(hotel.checkOut);
+            return (checkout - checkin) / (24 * 3600 * 1000);
+        }
+
+        $scope.titleCase = function(sentence) {
+            return sentence.replace(/\w\S*/g, function (txt) { return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase(); });
+        }
+
+        $scope.getPhotoUrl = function(url) {
+            return 'http://photos.hotelbeds.com/giata/small/' + url;
+        }
         //Get Profile
         $scope.TakeProfileConfig = {
             TakeProfile: function () {
@@ -196,22 +254,25 @@ app.controller('accountController', [
         }
 
         //Get Transaction History
-
+        $scope.loading = false;
         $scope.trxHistory = {
             getTrxHistory: function () {
                 if ($scope.trial > 3) {
                     $scope.trial = 0;
                 }
                 var authAccess = getAuthAccess();
+                $scope.loading = true;
                 if (authAccess == 2) {
                     $http({
                         method: 'GET',
                         url: TrxHistoryConfig.Url,
                         headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') }
                     }).then(function (returnData) {
+                        $scope.loading = false;
                         if (returnData.data.status == "200") {
                             console.log('Success getting Transaction');
                             $scope.flightlist = returnData.data.flights;
+                            $scope.hotellist = returnData.data.hotels;
                         }
                         else {
                             console.log('There is an error');
@@ -514,7 +575,7 @@ app.controller('orderDetailController', [
 
         $scope.pageLoaded = true;
         $scope.trial = 0;
-        $scope.isExist = false;
+        $scope.isExist = true;
         $scope.getTime = function (dateTime) {
             return new Date(dateTime);
         }
@@ -526,6 +587,8 @@ app.controller('orderDetailController', [
             countryCallCd: '',
             phone: ''
         }
+        $scope.rsvStatus = rsvStatus;
+        $scope.paymentMethod = paymentMethod;
 
         // Pass Data into MVC Controller
         $scope.submitRsvNo = function (rsvNo, rsvStatus) {
@@ -657,7 +720,7 @@ app.controller('orderDetailController', [
                 return 'Gagal';
         }
 
-        $scope.ButtonText = function (status, method) {
+        $scope.ButtonText = function (status, method, type) {
             if (status == 1) { return 'Halaman Pembayaran'; }
 
             else if (status == 2 || status == 3) {
@@ -676,7 +739,14 @@ app.controller('orderDetailController', [
                 return 'Lihat Detail';
             }
 
-            else if (status == 4 || status == 5) { return 'Cetak E-tiket'; }
+            else if (status == 4 || status == 5) {
+                if (type == 'flight') {
+                    return 'Cetak E-tiket';
+                } else {
+                    return 'Cetak Voucher';
+                }
+                 
+            }
 
             else if (status == 6 || status == 8) { return 'Cari Penerbangan'; }
 
@@ -736,7 +806,7 @@ app.controller('orderDetailController', [
         }
 
         $scope.TakeProfileConfig.TakeProfile();
-        $scope.GetReservation();
+       // $scope.GetReservation();
 
         $scope.currentSection = 'order';
         //$scope.orderDate = new Date(orderDate);

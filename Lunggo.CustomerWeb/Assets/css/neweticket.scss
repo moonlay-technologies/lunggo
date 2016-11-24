@@ -150,6 +150,12 @@ Site Footer
 .page-hotel-voucher {
     font-family: 'Open Sans', sans-serif;
     font-size: 12px;
+    .col-half {
+       width: 50%;
+       float: left;
+       position: relative;
+       min-height: 1px;
+    }
     h4 {font-size: 16px;}
     h3 {font-size: 20px;}
     .page-content {padding-bottom: 1cm;}

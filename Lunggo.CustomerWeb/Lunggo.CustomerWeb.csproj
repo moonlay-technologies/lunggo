@@ -63,6 +63,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.AspNet.Identity.Owin.2.2.1\lib\net45\Microsoft.AspNet.Identity.Owin.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Azure.KeyVault.Core">
+      <HintPath>..\packages\Microsoft.Azure.KeyVault.Core.1.0.0\lib\net40\Microsoft.Azure.KeyVault.Core.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Data.Edm">
       <HintPath>..\packages\Microsoft.Data.Edm.5.6.4\lib\net40\Microsoft.Data.Edm.dll</HintPath>
@@ -98,16 +101,12 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.Owin.Security.OAuth.3.0.1\lib\net45\Microsoft.Owin.Security.OAuth.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.WindowsAzure.Configuration, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Microsoft.WindowsAzure.ConfigurationManager.3.1.0\lib\net40\Microsoft.WindowsAzure.Configuration.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.WindowsAzure.ServiceRuntime, Version=2.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
       <Private>False</Private>
     </Reference>
-    <Reference Include="Microsoft.WindowsAzure.Storage, Version=4.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+    <Reference Include="Microsoft.WindowsAzure.Storage, Version=7.2.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\WindowsAzure.Storage.4.3.0\lib\net40\Microsoft.WindowsAzure.Storage.dll</HintPath>
+      <HintPath>..\packages\WindowsAzure.Storage.7.2.1\lib\net40\Microsoft.WindowsAzure.Storage.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -262,6 +261,7 @@
     <Compile Include="Models\FlightSearchData.cs" />
     <Compile Include="Models\FlightSelectData.cs" />
     <Compile Include="Models\FlightThankyouData.cs" />
+    <Compile Include="Models\HotelDetailModel.cs" />
     <Compile Include="Models\HotelSearchModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -295,6 +295,12 @@
     </Content>
     <Content Include="Assets\bootstrap\bootstrap.min.css">
       <DependentUpon>bootstrap.css</DependentUpon>
+    </Content>
+    <Content Include="Assets\css\application.css">
+      <DependentUpon>application.scss</DependentUpon>
+    </Content>
+    <Content Include="Assets\css\application.min.css">
+      <DependentUpon>application.css</DependentUpon>
     </Content>
     <Content Include="Assets\css\application.scss" />
     <Content Include="Assets\css\bootstrap.min.css" />
@@ -369,19 +375,29 @@
     <Content Include="Assets\mobile\images\sand-clock.png" />
     <Content Include="Assets\mobile\images\time.png" />
     <Content Include="Assets\mobile\js\HotelController.js" />
+    <Content Include="Assets\travorama20\angularDirectory\common\hotelAutocomplete.service.js" />
+    <Content Include="Assets\travorama20\angularDirectory\search\hotelSearch.service.js" />
     <Content Include="Assets\travorama20\images\Hotel\bed.png" />
     <Content Include="Assets\travorama20\images\Hotel\blue-sprite.png" />
+    <Content Include="Assets\travorama20\images\Hotel\business-lg.png" />
     <Content Include="Assets\travorama20\images\Hotel\down.png" />
+    <Content Include="Assets\travorama20\images\Hotel\entertainment-lg.png" />
+    <Content Include="Assets\travorama20\images\Hotel\general-lg.png" />
+    <Content Include="Assets\travorama20\images\Hotel\health-lg.png" />
     <Content Include="Assets\travorama20\images\Hotel\hotel-md.jpg" />
     <Content Include="Assets\travorama20\images\Hotel\hotel-sm.jpg" />
+    <Content Include="Assets\travorama20\images\Hotel\meal-lg.png" />
     <Content Include="Assets\travorama20\images\Hotel\mini-slider.jpg" />
     <Content Include="Assets\travorama20\images\Hotel\next-white.png" />
+    <Content Include="Assets\travorama20\images\Hotel\no-hotel-lg.png" />
     <Content Include="Assets\travorama20\images\Hotel\no-hotel.png" />
+    <Content Include="Assets\travorama20\images\Hotel\other-lg.png" />
     <Content Include="Assets\travorama20\images\Hotel\prev-white.png" />
     <Content Include="Assets\travorama20\images\Hotel\print.png" />
     <Content Include="Assets\travorama20\images\Hotel\room.jpg" />
     <Content Include="Assets\travorama20\images\Hotel\size.png" />
     <Content Include="Assets\travorama20\images\Hotel\sort.png" />
+    <Content Include="Assets\travorama20\images\Hotel\sport-lg.png" />
     <Content Include="Assets\travorama20\images\Hotel\triangle-grey.png" />
     <Content Include="Assets\travorama20\images\Hotel\up.png" />
     <Content Include="Assets\travorama20\images\Hotel\view.png" />
@@ -389,7 +405,6 @@
     <Content Include="Assets\travorama20\js\hotelDetailController.js" />
     <Content Include="Assets\travorama20\js\hotelSearchController.js" />
     <Content Include="Assets\travorama20\js\HotelController.js" />
-    <Content Include="Assets\vendor\flexslider\flexslider.css" />
     <Content Include="Assets\css\font-awesome.min.css" />
     <Content Include="Assets\css\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Assets\css\images\ui-bg_flat_75_ffffff_40x100.png" />
@@ -412,7 +427,6 @@
     </Content>
     <Content Include="Assets\css\invoice.scss" />
     <Content Include="Areas\Api\Views\web.config" />
-    <Content Include="Assets\vendor\flexslider\flexslider.less" />
     <Content Include="Assets\css\jquery-ui.min.css" />
     <Content Include="Assets\css\jquery.range.css" />
     <Content Include="Assets\css\landingPage.css">
@@ -452,7 +466,6 @@
     <Content Include="Assets\fonts\DINR-webfont.ttf" />
     <Content Include="Assets\fonts\DINR-webfont.woff" />
     <Content Include="Assets\fonts\DINR-webfont.woff2" />
-    <Content Include="Assets\vendor\flexslider\fonts\flexslider-icon.svg" />
     <Content Include="Assets\fonts\fontawesome-webfont.eot" />
     <Content Include="Assets\fonts\fontawesome-webfont.svg" />
     <Content Include="Assets\fonts\fontawesome-webfont.ttf" />
@@ -813,7 +826,6 @@
     <Content Include="Assets\mobile\images\prev.png" />
     <Content Include="Assets\mobile\images\promo-logo-notif.png" />
     <Content Include="Assets\mobile\js\PromoController.js" />
-    <Content Include="Assets\vendor\flexslider\jquery.flexslider.js" />
     <Content Include="Assets\travorama20\css\global-error.css">
       <DependentUpon>global-error.scss</DependentUpon>
     </Content>
@@ -848,6 +860,8 @@
     <Content Include="Assets\vendor\dotdotdot\jquery.dotdotdot.js" />
     <Content Include="Assets\vendor\dotdotdot\jquery.dotdotdot.min.js" />
     <Content Include="Assets\vendor\dotdotdot\jquery.dotdotdot.min.umd.js" />
+    <Content Include="Assets\vendor\lightslider\lightslider.css" />
+    <Content Include="Assets\vendor\lightslider\lightslider.js" />
     <Content Include="Campaign\MobileAppCampaign\css\travorama-mobileApp.css" />
     <Content Include="Campaign\MobileAppCampaign\css\travorama-mobileApp.min.css">
       <DependentUpon>travorama-mobileApp.css</DependentUpon>
@@ -1460,7 +1474,9 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\bootstrap.css.map" />
-    <Content Include="Config\application.properties" />
+    <Content Include="Config\application.properties">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Config\Airport.csv" />
     <Content Include="Config\HotelLocation.csv" />
     <Content Include="Config\Country.csv" />
@@ -1573,9 +1589,6 @@
     <Content Include="Assets\travorama20\css\_page_hotel.scss" />
     <Content Include="Assets\travorama20\css\_page_hotel_detail.scss" />
     <Content Include="Assets\travorama20\css\_page_hotel_search.scss" />
-    <Content Include="Assets\vendor\flexslider\fonts\flexslider-icon.eot" />
-    <Content Include="Assets\vendor\flexslider\fonts\flexslider-icon.ttf" />
-    <Content Include="Assets\vendor\flexslider\fonts\flexslider-icon.woff" />
     <Content Include="Assets\travorama20\css\_footer.scss" />
     <Content Include="Assets\travorama20\css\_header.scss" />
     <Content Include="Assets\travorama20\css\_page_index.scss" />
@@ -1643,6 +1656,7 @@
     <None Include="Properties\PublishProfiles\travorama-prod-cw__staging2.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-qa-cw %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-qa-cw %283%29.pubxml" />
+    <None Include="Properties\PublishProfiles\travorama-qa-cw %284%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-qa-cw.pubxml" />
     <None Include="Scripts\jquery-2.1.0.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
