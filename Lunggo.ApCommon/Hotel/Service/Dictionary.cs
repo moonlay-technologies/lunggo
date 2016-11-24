@@ -250,7 +250,7 @@ namespace Lunggo.ApCommon.Hotel.Service
             _hotelChainFilePath = Path.Combine(_configPath, HotelchainFileName);
             _hotelCategoryFilePath = Path.Combine(_configPath, HotelCategoryFileName);
             _hotelFacilitiesFilter = Path.Combine(_configPath, HotelFacilityFilterGroupFileName);	
-            AutoCompletes = HotelService.GetInstance().GetAutocompleteBatch();
+            AutoCompletes = HotelService.GetInstance().GetAutocompleteFromBlob();
             PopulateHotelSegmentDict(_hotelSegmentFilePath);
 
             PopulateHotelAccomodationDict(_hotelAccomodationFilePath);

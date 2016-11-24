@@ -24,12 +24,10 @@ namespace Lunggo.Webjob.HotelContentWrapper
             Stopwatch stopwatch = new Stopwatch();
 
             // Begin timing.
-            stopwatch.Start();
 
             var service = HotelService.GetInstance();
-            Console.WriteLine("Starting to save autocomplete....");
-            service.SaveAutoCompleteToTableStorage();
-            Console.WriteLine("Done saving autocomplete");
+            stopwatch.Start();
+            var tes = service.GetHotelCodesFromBlob();
             stopwatch.Stop();
             Debug.Print("Done in : {0}", stopwatch.Elapsed);
             Console.WriteLine("Done in : {0}", stopwatch.Elapsed);

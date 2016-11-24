@@ -13,7 +13,7 @@ namespace Lunggo.ApCommon.Trie
         internal TrieNode AirportIndex = new TrieNode();
         internal TrieNode HotelLocationIndex = new TrieNode();
         internal TrieNode HotelAutocompleteIndex = new TrieNode();
-        public List<HotelAutoComplete> AutoCompletes = HotelService.GetInstance().GetAutocompleteBatch(); 
+        public List<HotelAutoComplete> AutoCompletes = HotelService.GetInstance().GetAutocompleteFromBlob(); 
         private TrieIndexService()
         {
             

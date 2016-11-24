@@ -18,6 +18,7 @@ namespace Lunggo.ApCommon.Hotel.Service
 {
     public partial class HotelService
     {
+        //HOTEL LIST PER LOCATION
         public void SaveHotelLocationInStorage(string destination, string zoneOrArea, int hotelCode)
         {
             var table = TableStorageService.GetInstance().GetTableByReference("hotelLocations");
@@ -57,6 +58,49 @@ namespace Lunggo.ApCommon.Hotel.Service
             }
         }
 
+        //AUTOCOMPLETE AND ALL HOTEL CODES        
+        public List<string> GetAvailableHotelCodesFromStorage()
+        {
+            var table = TableStorageService.GetInstance().GetTableByReference("hotelCodeTable");
+            var query =
+                    new TableQuery<DynamicTableEntity>()
+                        .Where(TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal, "hotelCodeExist"))
+                        .Select(new[] { "RowKey" });
+            var hotelCodes =
+                table.ExecuteQuery(query).Select(r =>  r.RowKey).ToList();
+            return hotelCodes;
+        }
+
+        public void SaveHotelCodesToBlob()
+        {
+            Console.WriteLine("Start saving hotelCodes to blob");
+            var hotelCodes = GetAvailableHotelCodesFromStorage();
+            BlobStorageService.GetInstance().WriteFileToBlob(new BlobWriteDto
+            {
+                FileBlobModel = new FileBlobModel
+                {
+                    Container = "AvailableHotelCodes",
+                    FileInfo = new FileInfo
+                    {
+                        ContentType = "",
+                        FileData = hotelCodes.ToCacheObject(),
+                        FileName = "availableHotelCodes"
+                    }
+                },
+                SaveMethod = SaveMethod.Force
+            });
+
+            Console.WriteLine("Done saving hotelCodes to blob");
+
+        }
+
+        public List<string> GetHotelCodesFromBlob()
+        {
+            var blob = BlobStorageService.GetInstance().GetByteArrayByFileInContainer("availableHotelCodes", "AvailableHotelCodes");
+            var value = (RedisValue)blob;
+            return value.DeconvertTo<List<String>>();
+        }
+
         public void SaveHotelDetailByLocation()
         {
             var location = GetAllLocations();
@@ -84,25 +128,6 @@ namespace Lunggo.ApCommon.Hotel.Service
             }
         }
 
-        public Dictionary<int, HotelDetailsBase> GetHotelDetailByLocation(string location)
-        {
-            var blob = BlobStorageService.GetInstance().GetByteArrayByFileInContainer(location, "HotelDetailByLocation");
-            var value = (RedisValue) blob;
-            return value.DeconvertTo<Dictionary<int, HotelDetailsBase>>();
-        }
-
-        public void SaveHotelDetailToTableStorage(HotelDetailsBase hotelDetail, int hotelCd)
-        {
-            HotelDetailWrapper hotel = new HotelDetailWrapper("hotel", hotelCd.ToString());
-            var data = hotelDetail.Serialize();
-            var splittedData = SplitByLength(data, 30000);
-            DivideData(hotel, splittedData);
-            var tableClient = TableStorageService.GetInstance();
-            var table = tableClient.GetTableByReference("hoteldetail");
-            var insertOp = TableOperation.InsertOrReplace(hotel);
-            table.Execute(insertOp);
-        }
-
         public void SaveAutoCompleteToTableStorage()
         {
             //var autocomplete = new Autocomplete();
@@ -111,11 +136,12 @@ namespace Lunggo.ApCommon.Hotel.Service
             var hotelCdTable = tableClient.GetTableByReference("hotelCodeTable");
 
             long index = 1;
-            var newValue = new HotelAutoComplete("hotelAutoComplete", index.ToString());
+
             foreach (var country in Countries)
             {
                 foreach (var destination in country.Destinations)
                 {
+                    var newValue = new HotelAutoComplete("hotelAutoComplete", index.ToString());
                     newValue.Id = index;
                     newValue.Code = destination.Code;
                     newValue.Destination = destination.Name;
@@ -149,8 +175,8 @@ namespace Lunggo.ApCommon.Hotel.Service
             {
                 try
                 {
+                    var newValue = new HotelAutoComplete("hotelAutoComplete", index.ToString());
                     var hotelDetail = GetHotelDetailFromTableStorage(i);
-                    newValue = new HotelAutoComplete("hotelAutoComplete", index.ToString());
                     newValue.Id = index;
                     newValue.Code = hotelDetail.HotelCode.ToString();
                     newValue.HotelName = hotelDetail.HotelName;
@@ -169,10 +195,98 @@ namespace Lunggo.ApCommon.Hotel.Service
                 }
                 catch
                 {
-                    
+
                 }
-                
+
             }
+        }
+        public void SaveHotelAutocompleteToBlob()
+        {
+            Console.WriteLine("Start saving autocomplete to blob");
+            var autocomplete = AutoCompletes;
+            BlobStorageService.GetInstance().WriteFileToBlob(new BlobWriteDto
+            {
+                FileBlobModel = new FileBlobModel
+                {
+                    Container = "HotelAutocompleteIndonesia",
+                    FileInfo = new FileInfo
+                    {
+                        ContentType = "",
+                        FileData = autocomplete.ToCacheObject(),
+                        FileName = "autocompleteIndonesia"
+                    }
+                },
+                SaveMethod = SaveMethod.Force
+            });
+
+            Console.WriteLine("Done saving autocomplete to blob");
+            
+        }
+
+        public List<HotelAutoComplete> GetAutocompleteFromBlob()
+        {
+            var blob = BlobStorageService.GetInstance().GetByteArrayByFileInContainer("autocompleteIndonesia", "HotelAutocompleteIndonesia");
+            var value = (RedisValue)blob;
+            return value.DeconvertTo<List<HotelAutoComplete>>();
+        }
+        public HotelAutoComplete GetAutoCompleteFromTableStorage(long code)
+        {
+            var partitionKey = "hotelAutoComplete";
+            var rowKey = code.ToString();
+            var tableClient = TableStorageService.GetInstance();
+            CloudTable table = tableClient.GetTableByReference("hotelautocomplete");
+
+            // Create a retrieve operation that takes a customer entity.
+            TableOperation retrieveOperation = TableOperation.Retrieve<HotelAutoComplete>(partitionKey, rowKey);
+
+            // Execute the retrieve operation.
+            TableResult retrievedResult = table.Execute(retrieveOperation);
+            HotelAutoComplete resultWrapper = (HotelAutoComplete)retrievedResult.Result;
+            //var concatedResult = ConcateData(resultWrapper);
+            //HotelAutoComplete result = resultWrapper.Deserialize<HotelAutoComplete>();
+            return resultWrapper;
+        }
+
+        public List<HotelAutoComplete> GetAutocompleteBatch()
+        {
+            var table = TableStorageService.GetInstance().GetTableByReference("hotelautocomplete");
+            var query =
+                new TableQuery<DynamicTableEntity>()
+                    .Where(TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal,
+                        "hotelAutoComplete"));
+            var autocompletes = table.ExecuteQuery(query).Select(r => new HotelAutoComplete
+            {
+                Type = r["Type"].Int32Value.GetValueOrDefault(),
+                HotelName = r.Properties.ContainsKey("HotelName") ? r["HotelName"].StringValue : "",
+                Code = r["Code"].StringValue,
+                Destination = r["Destination"].StringValue,
+                Zone = r.Properties.ContainsKey("Zone") ? r["Zone"].StringValue : "",
+                Id = r["Id"].Int64Value.GetValueOrDefault(),
+                Country = r["Country"].StringValue,
+                HotelCount = r.Properties.ContainsKey("HotelCount") ? r["HotelCount"].Int32Value.GetValueOrDefault() : 0
+            }).ToList();
+
+            return autocompletes;
+        }
+
+        //HOTEL DETAILS
+        public Dictionary<int, HotelDetailsBase> GetHotelDetailByLocation(string location)
+        {
+            var blob = BlobStorageService.GetInstance().GetByteArrayByFileInContainer(location, "HotelDetailByLocation");
+            var value = (RedisValue) blob;
+            return value.DeconvertTo<Dictionary<int, HotelDetailsBase>>();
+        }
+
+        public void SaveHotelDetailToTableStorage(HotelDetailsBase hotelDetail, int hotelCd)
+        {
+            HotelDetailWrapper hotel = new HotelDetailWrapper("hotel", hotelCd.ToString());
+            var data = hotelDetail.Serialize();
+            var splittedData = SplitByLength(data, 30000);
+            DivideData(hotel, splittedData);
+            var tableClient = TableStorageService.GetInstance();
+            var table = tableClient.GetTableByReference("hoteldetail");
+            var insertOp = TableOperation.InsertOrReplace(hotel);
+            table.Execute(insertOp);
         }
 
         public void SaveTruncatedHotelDetailToTableStorage(HotelDetailsBase hotelDetail, int hotelCd)
@@ -214,7 +328,6 @@ namespace Lunggo.ApCommon.Hotel.Service
             var insertOp = TableOperation.InsertOrReplace(rateCom);
             table.Execute(insertOp);
         }
-
         
         public void DivideData(HotelDetailWrapper hotel, IEnumerable<string> splittedData)
         {
@@ -276,46 +389,6 @@ namespace Lunggo.ApCommon.Hotel.Service
             var concatedResult = ConcateData(resultWrapper);
             HotelDetailsBase result = concatedResult.Deserialize<HotelDetailsBase>();
             return result;
-        }
-
-        public HotelAutoComplete GetAutoCompleteFromTableStorage(long code)
-        {
-            var partitionKey = "hotelAutoComplete";
-            var rowKey = code.ToString();
-            var tableClient = TableStorageService.GetInstance();
-            CloudTable table = tableClient.GetTableByReference("hotelautocomplete");
-
-            // Create a retrieve operation that takes a customer entity.
-            TableOperation retrieveOperation = TableOperation.Retrieve<HotelAutoComplete>(partitionKey, rowKey);
-
-            // Execute the retrieve operation.
-            TableResult retrievedResult = table.Execute(retrieveOperation);
-            HotelAutoComplete resultWrapper = (HotelAutoComplete)retrievedResult.Result;
-            //var concatedResult = ConcateData(resultWrapper);
-            //HotelAutoComplete result = resultWrapper.Deserialize<HotelAutoComplete>();
-            return resultWrapper;
-        }
-
-        public List<HotelAutoComplete> GetAutocompleteBatch()
-        {
-            var table = TableStorageService.GetInstance().GetTableByReference("hotelautocomplete");
-            var query =
-                new TableQuery<DynamicTableEntity>()
-                    .Where(TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal,
-                        "hotelAutoComplete"));
-            var autocompletes = table.ExecuteQuery(query).Select(r => new HotelAutoComplete
-            {
-                Type = r["Type"].Int32Value.GetValueOrDefault(),
-                HotelName = r.Properties.ContainsKey("HotelName") ? r["HotelName"].StringValue : "",
-                Code = r["Code"].StringValue ,
-                Destination = r["Destination"].StringValue,
-                Zone = r.Properties.ContainsKey("Zone") ? r["Zone"].StringValue : "",
-                Id = r["Id"].Int64Value.GetValueOrDefault(),
-                Country = r["Country"].StringValue,
-                HotelCount = r.Properties.ContainsKey("HotelCount") ? r["HotelCount"].Int32Value.GetValueOrDefault() : 0
-            }).ToList();
-             
-            return autocompletes;
         }
 
         public List<HotelRateComment> GetRateCommentFromTableStorage(string rateComment, DateTime startDateTime)
