@@ -35,13 +35,13 @@
 
 <header class="page__header">
     <div class="step__wrapper">
-        <div class="step step-1" ng-class="{'active' : PageConfig.ActivePage == 1, 'inactive' : PageConfig.ActivePage > 1}"><span>01. Data <br />Kontak</span></div>
-        <div class="step step-2" ng-class="{'active' : PageConfig.ActivePage == 2, 'inactive' : PageConfig.ActivePage > 2}"><span>02. Review <br />Pesanan</span></div>
-        <div class="step step-3" ng-class="{'active' : PageConfig.ActivePage == 3, 'inactive' : PageConfig.ActivePage > 3}"><span>03. <br />Pembayaran</span></div>
+        <div class="step step-1" ng-class="{'active' : PageConfig.ActivePage == 1, 'inactive' : PageConfig.ActivePage > 1}"><span class="xlg-txt">01</span></div>
+        <div class="step step-2" ng-class="{'active' : PageConfig.ActivePage == 2, 'inactive' : PageConfig.ActivePage > 2}"><span class="xlg-txt">02</span></div>
+        <div class="step step-3" ng-class="{'active' : PageConfig.ActivePage == 3, 'inactive' : PageConfig.ActivePage > 3}"><span class="xlg-txt">03</span></div>
     </div>
 </header>
 <section class="checkout-content">
-    <div class=" page-step-1" ng-show="PageConfig.ActivePage == 1" @*style="display: none;"*@>
+    <div class=" page-step-1" ng-show="PageConfig.ActivePage == 1" style="display: none;">
         <div class="form-hotel">
             <h3><b>DATA</b> KONTAK</h3>
             <form name="BuyerForm" novalidate>
@@ -51,7 +51,6 @@
                         <option ng-repeat="title in titles" value="{{title.value}}">{{title.name}}</option>
                     </select>
                 </div>
-
                 <div class="form-group important">
                     <label class="control-label">Nama Depan (dan Nama Tengah)<span class="imp"></span> : </label>
                     <input type="text" value="" @*pattern="[a-zA-Z\s]+"*@ ng-model="buyerInfo.name" name="name" class="form-control nama" placeholder="Nama Depan" required />
@@ -66,7 +65,6 @@
                         Nama tidak boleh mengandung karakter selain alfabet dan spasi
                     </div>*@
                 </div>
-
                 <div class="form-group important">
                     <label class="control-label">Nomor Telepon<span class="imp"></span> : </label>
                     <div class="row">
@@ -83,12 +81,10 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="form-group important" ng-class="{'has-error' : BuyerForm.email.$touched && BuyerForm.email.$invalid}">
                     <label class=" control-label">Masukkan alamat e-mail Anda<span class="imp"></span> : </label>
                     <input type="email" value="" ng-model="buyerInfo.email" name="Email" class="form-control" placeholder="Ex: name@domain.com" required />
                 </div>
-                    
                 <div class="form-group">
                     <div class="form-box">
                         <div class="fb-header"><b>Kamar</b> : Deluxe 2 Kings Bed Rooms</div>
@@ -148,7 +144,6 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="form-group">
                     @*<div style="color:red" ng-show="form.incompleteContactTitle">
                         Gelar pada Nama Kontak Belum Ditambahkan <br /> <br />
@@ -164,67 +159,116 @@
                     </div>*@
                     <button class="btn btn-yellow form-control" ng-click="validateForm(1)" @*ng-disabled="BuyerForm.$invalid || buyerInfo.title == titles[0].value"*@>LANJUT</button>
                 </div>
-
             </form>
-
         </div>
     </div>
-    <div class=" page-step-2" ng-show="PageConfig.ActivePage == 2" style="display: none;">
+    <div class=" page-step-2" ng-show="PageConfig.ActivePage == 2" @*style="display: none;"*@>
         <div class="review-hotel">
-            <div class="review-room clearfix">
-                <h3 class="summary__title"><b>REVIEW</b> PESANAN</h3>
-                <div class="blue-txt semibold-txt lg-txt">Booking ID 1298319028</div>
-
-                <div class="rr-detail">
-                    <div class="rr-title semibold-txt lg-txt">Padma Hotel Bandung</div>
-                    <div class="rr-row clearfix">
-                        <div class="col-2">Check-in</div>
-                        <div class="col-8">Sat, 22 Oct 2016, 14:00</div>
-                    </div>
-                    <div class="rr-row clearfix">
-                        <div class="col-2">Check-out</div>
-                        <div class="col-8">Sun, 23 Oct 2016, 12:00</div>
-                    </div>
-                    <div class="rr-row clearfix">
-                        <div class="col-2">Duration</div>
-                        <div class="col-8">1 night(s)</div>
+            <h3 class="summary__title"><b>REVIEW</b> PESANAN</h3>
+            <div class="form-group">
+                <div class="form-box">
+                    <div class="fb-hotel">
+                        <div class="fb-header"><b>Detail Hotel</b></div>
+                        <div class="fb-body">
+                            <div class="fb-hotel">
+                                <div class="clearfix">
+                                    <div class="col-6 blue-txt bold-txt">B Hotel Bali & Spa</div>
+                                    <div class="col-4"><span class="star star-4 e-star pull-right"></span></div>
+                                </div>
+                                <div class="location sm-txt">Kios Tower AB No. 26, Jl. Karet Pasar Gang Tiong No: 62</div>
+                                <div class="fb-img" style="background-image: url(/Assets/mobile/images/Hotel/hotel-detail-lg.jpg)"></div>
+                                <div class="md-txt clearfix">
+                                    <div class="fb-row clearfix">
+                                        <div class="col-4">Check in</div>
+                                        <div class="col-6 bold-txt">5 November 2016</div>
+                                    </div>
+                                    <div class="fb-row clearfix">
+                                        <div class="col-4">Check out</div>
+                                        <div class="col-6 bold-txt">9 November 2016</div>
+                                    </div>
+                                    <div class="fb-row clearfix">
+                                        <div class="col-4">Malam</div>
+                                        <div class="col-6 bold-txt">3 Malam</div>
+                                    </div>
+                                    <div class="fb-row clearfix">
+                                        <div class="col-4">Kamar</div>
+                                        <div class="col-6 bold-txt">2 Kamar</div>
+                                    </div>
+                                </div>
+                                <div class="fb-req md-txt">
+                                    <p class="bold-txt">Permintaan khusus:</p>
+                                    <div>Dolor sit amet, consectetuer adipiscing elit, sed diam nonummy. ectetuer adipiscing elit, sed diam nonummy. </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-
-                <div class="rr-detail">
-                    <div class="rr-title semibold-txt lg-txt">Room : Premier Suite (x1)</div>
-                    <div class="rr-row">Capacity 2 guest(s)/room</div>
-                    <div class="rr-row">Breakfast included, Free WiFi</div>
-                </div>
-
-                <div class="rr-detail">
-                    <div class="rr-title semibold-txt lg-txt">Nama Tamu</div>
-                    <div class="rr-row">Jared Letto</div>
-                </div>
-
-                <div class="rr-detail">
-                    <div class="rr-title semibold-txt lg-txt">Special Request</div>
-                    <div class="rr-row">-</div>
+            </div>
+            <div class="form-group">
+                <div class="form-box">
+                    <div class="fb-header"><b>Detail Kamar</b></div>
+                    <div class="fb-body">
+                        <div class="fb-room">
+                            <div class="clearfix">
+                                <div class="col-8"><div class="blue-txt bold-txt">Deluxe 2 Kings Bed Rooms</div></div>
+                                <div class="col-2"><span class="meal-icon pull-right"></span><span class="wifi-icon pull-right"></span></div>
+                            </div>
+                            <div class="fb-img" style="background-image: url(/Assets/mobile/images/Hotel/hotel-detail-xlg.jpg)"></div>
+                            <div class="md-txt clearfix">
+                                <div class="fb-row clearfix">
+                                    <div class="col-4">Jumlah Kamar</div>
+                                    <div class="col-6 bold-txt">2 Kamar</div>
+                                </div>
+                                <div class="fb-row clearfix">
+                                    <div class="col-4">Tamu per Kamar</div>
+                                    <div class="col-6 bold-txt">2 Orang</div>
+                                </div>
+                            </div>
+                            <ul class="blue-list blue-txt md-txt">
+                                <li>Extra bed belum termasuk</li>
+                                <li>Free Cancelation sebelum H-5 tanggal booking</li>
+                            </ul>
+                            <div class="fb-note">
+                                <div>Catatan Khusus:</div>
+                                <ul class="sqr-blue-list md-txt">
+                                    <li>
+                                        <div class="blue-txt semibold-txt">Room Policy</div>
+                                        <div class="grey-txt">Lorem ipsum dolor sit amet.</div>
+                                    </li>
+                                    <li>
+                                        <div class="blue-txt semibold-txt">Room Policy</div>
+                                        <div class="grey-txt">Lorem ipsum dolor sit amet.</div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="price-detail clearfix">
                 <h3 class="summary__title"><b>RINCIAN</b> HARGA</h3>
                 <div class="rr-row clearfix">
-                    <div class="col-half">Padma Hotel Bandung Premiere Suit (x1)</div>
-                    <div class="col-half right-txt">Rp 4.800.216</div>
+                    <div class="col-half">1 Deluxe 2 Kings Bed Rooms  x 3 night</div>
+                    <div class="col-half right-txt semibold-txt">Rp 999.999.999</div>
                 </div>
                 <div class="rr-row clearfix">
-                    <div class="col-half blue-txt">Tax</div>
-                    <div class="col-half blue-txt right-txt">Included</div>
+                    <div class="col-half">1 Standard Twin Rooms x 4 night</div>
+                    <div class="col-half right-txt semibold-txt">Rp 999.999.999</div>
                 </div>
                 <div class="rr-row clearfix">
-                    <div class="col-half blue-txt">Convenience Fee</div>
-                    <div class="col-half blue-txt right-txt">- Rp 287</div>
+                    <div class="col-half">Pelayanan Kamar</div>
+                    <div class="col-half right-txt semibold-txt">Rp 999.999.999</div>
                 </div>
                 <div class="rr-row clearfix total">
                     <div class="col-half bold-txt lg-txt">Total</div>
-                    <div class="col-half bold-txt lg-txt right-txt">Rp 4.799.928</div>
+                    <div class="col-half bold-txt lg-txt right-txt orange-txt">Rp 999.999.999</div>
                 </div>
+            </div>
+            <div class="tnc-box italic-txt">
+                *Harga ini masih bisa berubah, harga final maskapai akan dikonfirmasi kembali pada proses pembayaran
+            </div>
+            <div class="form-group">
+                <button class="btn btn-yellow form-control" ng-click="validateForm(1)" @*ng-disabled="BuyerForm.$invalid || buyerInfo.title == titles[0].value"*@>LANJUT</button>
             </div>
         </div>
     </div>

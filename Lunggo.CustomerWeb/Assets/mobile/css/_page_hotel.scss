@@ -90,18 +90,18 @@
         }
     }
     .sqr-blue-list {
-        padding-left: 20px;
+        padding-left: 15px;
         list-style: none;
         margin: 0;
         li:before {
-            width: 8px;
-            height: 8px;
+            width: 5px;
+            height: 5px;
             display: inline-block;
             background: #1daee4;
             content: '';
-            margin-left: -20px;
+            margin-left: -15px;
             position: absolute;
-            margin-top: 4px;
+            margin-top: 5px;
         }
     }
     /*Checkbox*/
@@ -765,7 +765,7 @@
             color: #fff;
         }
         .fb-body {
-            padding: 15px;
+            padding: 20px 15px;
             background: #fff;
             border: 1px solid #ccc;
         }
@@ -815,18 +815,53 @@
     /*Page Checkout Hotel*/
     &.page-checkout {
         background: #f9f9f9;
+        .page__header .step__wrapper .step span {
+            font-size: 20px;
+            font-weight: 400;
+            padding: 8px 25px;
+        }
+        .wifi-icon, .meal-icon {
+            background-size: 80%;
+            position: relative;
+            vertical-align: top;
+        }
         .checkout-content {
             .form-hotel {
                 padding: 5px 15px 30px;
                 textarea[name="special-request"] {height: 80px;}
             }
             .review-hotel {
-                margin: 5px 0 30px;
+                margin: 20px 15px;
                 .review-room {
                     padding: 0 15px;
                     border-bottom: 1px solid #e9e9e9;
                 }
-                .price-detail {padding: 0 15px;}
+                .price-detail {
+                    .rr-row {
+                        font-size: 13px;
+                        padding-left: 15px;
+                        &:before {
+                            background: #ff7200;
+                            width: 8px;
+                            height: 8px;
+                            display: inline-block;
+                            position: absolute;
+                            color: black;
+                            margin-top: 5px;
+                            margin-left: -15px;
+                        }
+                        &:last-child {                           
+                            padding-left: 0;
+                            margin-left: 15px;
+                            &:before {background: none;}
+                        }
+                    }
+                }
+                .tnc-box {
+                    background: #ddd;
+                    padding: 15px 10px;
+                    margin: 10px 0 20px;
+                }
             }
             .payment {
                 padding: 5px 15px 15px;
@@ -844,6 +879,42 @@
             }
             .fb-bed {
                 margin: 15px 0;
+            }
+            .fb-img {
+                width: 100%;
+                height: 110px;
+                background-size: cover;
+                background-position: center center;
+                background-repeat: no-repeat;
+            }                
+            .fb-row .col-6:before {content: ': '}
+            .fb-hotel {
+                .star {margin-right: 19px;}
+                .location {
+                    padding-left: 15px;
+                    margin: 10px 0;
+                    &:before {
+                        @extend .maps-icon;
+                        opacity: .4;
+                        margin-left: -15px;
+                        background-size: 70%;
+                        background-repeat: no-repeat;
+                    }
+                }
+                .fb-img {margin-bottom: 20px;}
+                .fb-req {margin-top: 20px;}
+            }
+            .fb-room {
+                border-top: 1px solid #e8e8e8;
+                padding-top: 15px;
+                margin-bottom: 15px;
+                &:first-child {
+                    border-top: none;
+                    padding-top: 0;
+                }
+                &:last-child {margin-bottom: 0;}
+                .fb-img {margin: 10px 0 15px;}
+                .blue-list {margin: 10px 0 20px !important;}
             }
         }
     }

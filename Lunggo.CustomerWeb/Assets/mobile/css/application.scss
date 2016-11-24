@@ -1034,6 +1034,8 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
                                 content: '';
                                 @include border-radius(14px);
                                 vertical-align: middle;
+                                padding: 3px;
+                                margin:0;
                             }
                         }
                         input {display:none;}
@@ -1055,6 +1057,8 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
                                 content: '';
                                 @include border-radius(14px);
                                 vertical-align: middle;
+                                padding: 3px;
+                                margin:0;
                             }
                         }
                         input {display:none;}
