@@ -144,10 +144,10 @@ namespace Lunggo.ApCommon.Hotel.Service
             var sortedHotel = result.HotelDetails.OrderByDescending(x => x.NetFare);
             result.MaxPrice = sortedHotel.Select(x => x.NetFare).FirstOrDefault();
             result.MinPrice = sortedHotel.Select(x => x.NetFare).LastOrDefault();
-            result.DestinationName = detailDestination.Name;
+            result.DestinationName = detailDestination.Destination;
 
             //REMEMBER TO UNCOMMENT THIS
-            Task.Run(() => SaveSearchResultToCache(result.SearchId, result));
+            Task.Run(() => SaveSearchResultintoDatabaseToCache(result.SearchId, result));
 
             List<HotelDetail> firstPageHotelDetails = result.HotelDetails;
 
@@ -160,24 +160,24 @@ namespace Lunggo.ApCommon.Hotel.Service
             //AddDetailInfoForDisplayHotel(firstPageHotelDetails);
             var searchType = detailDestination.Type.ToString();
             return new SearchHotelOutput
-                        {
-                            IsSuccess = true,
-                            SearchId = result.SearchId,
-                            DestinationName = result.DestinationName,
-                            FilteredHotelCount = result.HotelDetails.Count,
-                            HotelDetailLists = ConvertToHotelDetailForDisplay(firstPageHotelDetails),
-                            Page = input.Page,
-                            PerPage = input.PerPage,
-                            PageCount = pageCount,
-                            ReturnedHotelCount = firstPageHotelDetails.Count,
-                            TotalHotelCount = result.HotelDetails.Count,
-                            HotelFilterDisplayInfo = result.HotelFilterDisplayInfo,
-                            MaxPrice = result.MaxPrice,
-                            MinPrice = result.MinPrice,
-                            IsSpecificHotel = searchType.Equals("Hotel"),
-                            HotelCode = searchType.Equals("Hotel") ? (int?)firstPageHotelDetails.Select(x => x.HotelCode).FirstOrDefault() : null,
-                            //ExpiryTime = GetSearchHotelResultExpiry(result.SearchId)
-                        };
+            {
+                IsSuccess = true,
+                SearchId = result.SearchId,
+                DestinationName = result.DestinationName,
+                FilteredHotelCount = result.HotelDetails.Count,
+                HotelDetailLists = ConvertToHotelDetailForDisplay(firstPageHotelDetails),
+                Page = input.Page,
+                PerPage = input.PerPage,
+                PageCount = pageCount,
+                ReturnedHotelCount = firstPageHotelDetails.Count,
+                TotalHotelCount = result.HotelDetails.Count,
+                HotelFilterDisplayInfo = result.HotelFilterDisplayInfo,
+                MaxPrice = result.MaxPrice,
+                MinPrice = result.MinPrice,
+                IsSpecificHotel = searchType.Equals("Hotel"),
+                HotelCode = searchType.Equals("Hotel") ? (int?)firstPageHotelDetails.Select(x => x.HotelCode).FirstOrDefault() : null,
+                //ExpiryTime = GetSearchHotelResultExpiry(result.SearchId)
+            };
         }
 
         public SearchHotelOutput DoSearchById(SearchHotelInput input)

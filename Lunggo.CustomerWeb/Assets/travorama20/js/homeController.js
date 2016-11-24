@@ -144,12 +144,12 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
             $(target + ' .year').html(chosenDate.getFullYear());
             $('.search-calendar-hotel').hide();
             var cd = new Date(date);
-            var checkoutDate = new Date(cd.setDate(cd.getDate() + $scope.hotel.nightCount));
+            var checkoutDate = new Date(cd.setDate(cd.getDate() + $scope.hotelSearch.nightCount));
             var dd = checkoutDate.getDate();
             var mm = checkoutDate.getMonth() + 1;
             var yyyy = checkoutDate.getFullYear();
             var d = yyyy + '-' + mm + '-' + dd;
-            $scope.hotel.checkoutDate = moment(checkoutDate, "MM-DD-YYYY");
+            $scope.hotelSearch.checkoutDate = moment(checkoutDate, "MM-DD-YYYY");
             $log.debug("checkout date = " + $scope.hotel.checkoutDate);
         }
     });

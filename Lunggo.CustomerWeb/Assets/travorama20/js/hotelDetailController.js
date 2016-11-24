@@ -16,7 +16,7 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
     $scope.roomCount = 3;
     $scope.minRoomCount = 3;
     $scope.maxRoomCount = 100;
-
+    $scope.pageLoaded = true;
 
     $scope.init = function (model) {
         $log.debug(model);
@@ -341,4 +341,9 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
             return false;
         }
     };
+
+    $scope.toTitleCase = function(str)
+    {
+        return str.replace(/\w\S*/g, function (txt) { return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase(); });
+    }
 }]);

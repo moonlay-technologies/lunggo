@@ -26,9 +26,9 @@ namespace Lunggo.ApCommon.Hotel.Service
             {
                 try
                 {
-            redisDb.StringSet(redisKey, redisValue);
+                    redisDb.StringSet(redisKey, redisValue);
                     return;
-        }
+                }       
                 catch
                 {
 
@@ -75,7 +75,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                 {
                     redisDb.StringSet(redisKey, redisValue, TimeSpan.FromMinutes(timeout));
                     return;
-        }
+                }
                 catch
                 {
 
@@ -97,7 +97,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                 {
                     redisDb.StringSet(redisKey, redisValue, TimeSpan.FromMinutes(timeout));
                     return;
-        }
+                }
                 catch
                 {
 
@@ -117,9 +117,9 @@ namespace Lunggo.ApCommon.Hotel.Service
                 try
                 {
                     cacheObject = redisDb.StringGet(redisKey);
-            var searchResult = cacheObject.DeconvertTo<SearchHotelResult>();
-            return searchResult;
-        }
+                    var searchResult = cacheObject.DeconvertTo<SearchHotelResult>();
+                    return searchResult;
+                }
                 catch
                 {
 
@@ -148,13 +148,7 @@ namespace Lunggo.ApCommon.Hotel.Service
             }
             return DateTime.UtcNow;
         }
-
-                }
-            }
-            return new SearchHotelResult();
-            
-        }
-
+        
         public HotelDetailsBase GetSelectedHotelDetailsFromCache(string token)
         {
             var redisService = RedisService.GetInstance();
@@ -214,14 +208,6 @@ namespace Lunggo.ApCommon.Hotel.Service
             //}
         }
 
-            if (cacheObject == "")
-            {
-                return new DateTime();
-            }
-            var timeToLive = redisDb.KeyTimeToLive(redisKey).GetValueOrDefault();
-            var expiryTime = DateTime.UtcNow + timeToLive;
-            return expiryTime;
-        }
         public DateTime? GetSearchedHotelDetailsExpiry(string searchId)
         {
             for (var i = 0; i < 3; i++)
