@@ -1,8 +1,9 @@
 ﻿<form class="hotel-form" name="hotel-form" ng-submit="FlightSearchForm.Submit()" novalidate>
     <div class="th-form">
+        <div class="top-wrap">
         <div class="form-group form__hotel">
             <div class="field-container">
-                <p class="form-control form-hotel" ng-click="PageConfig.SetOverlay('hotel-select')">Tujuan <span class="hotel-placeholder placeholder">Kota, Wilayah atau Nama Hotel</span></p>
+                    <p class="form-control form-hotel" ng-click="PageConfig.SetOverlay('hotel-select')">Tujuan <span class="hotel-placeholder">Kota, Wilayah atau Nama Hotel</span></p>
             </div>
         </div>
         <div class="form-group form__date">
@@ -12,26 +13,154 @@
                 </p>
             </div>
         </div>
-        <div class="form-group form__time">
+            <div class="form-group form__time clearfix">
             <div class="field-container clearfix">
-                <p class="form-control form-time"><span class="duration-title">Durasi</span><span class="placeholder">malam</span><input class="time-placeholder" type="text" name="hotel-night" value="1"></p>
+                    <div class="col-half">
+                        <p class="form-control form-time">Durasi</p>
             </div>
+                    <div class="col-half">
+                        <select class="form-control" name="nightclass">
+                            <option value="">1 Malam</option>
+                            <option value="">2 Malam</option>
+                            <option value="">3 Malam</option>
+                            <option value="">4 Malam</option>
+                            <option value="">5 Malam</option>
+                            <option value="">6 Malam</option>
+                            <option value="">7 Malam</option>
+                            <option value="">8 Malam</option>
+                        </select>
+                    </div>
+                </div>
             <div class="checkout-date placeholder">Tanggal Keluar: Rab, 5 Okt 2016</div>
         </div>
+            <div class="form-group form__room">
+                <div class="field-container clearfix">
+                    <div class="col-half">
+                        <p class="form-control form-room">Jumlah Kamar</p>
+                    </div>
+                    <div class="col-half">
+                        <select class="form-control" name="roomclass">
+                            <option value="">1 Kamar</option>
+                            <option value="">2 Kamar</option>
+                            <option value="">3 Kamar</option>
+                            <option value="">4 Kamar</option>
+                            <option value="">5 Kamar</option>
+                            <option value="">6 Kamar</option>
+                            <option value="">7 Kamar</option>
+                            <option value="">8 Kamar</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="form-group form__visitor clearfix">
+            <div class="mid-wrap clearfix">
             <div class="field-container form-v-adult col-half">
-                <div class="field-wrapper">
-                    <p class="form-control form-adult clearfix" ng-click="PageConfig.SetOverlay('visitor-hotel')"><input class="col-4" type="text" name="hotel-visitor" value="2"><span class="vt-title col-6">Dewasa</span></p>
+                    <div class="field-wrapper form-adult">
+                        <select class="form-control" name="adultclass">
+                            <option value="">1 Dewasa</option>
+                            <option value="">2 Dewasa</option>
+                            <option value="">3 Dewasa</option>
+                            <option value="">4 Dewasa</option>
+                            <option value="">5 Dewasa</option>
+                        </select>
                 </div>
             </div>
             <div class="field-container form-v-child col-half">
-                <div class="field-wrapper">
-                    <p class="form-control form-child clearfix" ng-click="PageConfig.SetOverlay('visitor-hotel')"><input class="col-4" type="text" name="hotel-visitor" value="1"><span class="vt-title col-6">Anak</span></p>
+                    <div class="field-wrapper form-child">
+                        <select class="form-control" name="childclass">
+                            <option value="0">0 Anak</option>
+                            <option value="1">1 Anak</option>
+                            <option value="2">2 Anak</option>
+                            <option value="3">3 Anak</option>
+                            <option value="4">4 Anak</option>
+                        </select>
+                    </div>
                 </div>
+            </div>
+            <div class="age-child clearfix">
+                <div id="ac-1" class="ac-list clearfix">
+                    <div class="col-8">Anak 1 usia</div>
+                    <div class="col-2">
+                        <select class="form-control" name="agelist">
+                            <option value="0">0 th</option>
+                            <option value="1">1 th</option>
+                            <option value="2">2 th</option>
+                            <option value="3">3 th</option>
+                            <option value="4">4 th</option>
+                            <option value="1">5 th</option>
+                            <option value="2">6 th</option>
+                            <option value="3">7 th</option>
+                            <option value="4">4 th</option>
+                            <option value="1">8 th</option>
+                            <option value="2">9 th</option>
+                            <option value="3">10 th</option>
+                            <option value="4">11 th</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="ac-list clearfix">
+                    <div id="ac-2" class="col-8">Anak 2 usia</div>
+                    <div class="col-2">
+                        <select class="form-control" name="agelist">
+                            <option value="0">0 th</option>
+                            <option value="1">1 th</option>
+                            <option value="2">2 th</option>
+                            <option value="3">3 th</option>
+                            <option value="4">4 th</option>
+                            <option value="1">5 th</option>
+                            <option value="2">6 th</option>
+                            <option value="3">7 th</option>
+                            <option value="4">4 th</option>
+                            <option value="1">8 th</option>
+                            <option value="2">9 th</option>
+                            <option value="3">10 th</option>
+                            <option value="4">11 th</option>
+                        </select>
+                    </div>
+                </div>
+                <div id="ac-3" class="ac-list clearfix">
+                    <div class="col-8">Anak 3 usia</div>
+                    <div class="col-2">
+                        <select class="form-control" name="agelist">
+                            <option value="0">0 th</option>
+                            <option value="1">1 th</option>
+                            <option value="2">2 th</option>
+                            <option value="3">3 th</option>
+                            <option value="4">4 th</option>
+                            <option value="1">5 th</option>
+                            <option value="2">6 th</option>
+                            <option value="3">7 th</option>
+                            <option value="4">4 th</option>
+                            <option value="1">8 th</option>
+                            <option value="2">9 th</option>
+                            <option value="3">10 th</option>
+                            <option value="4">11 th</option>
+                        </select>
+                    </div>                </div>
+                <div id="ac-4" class="ac-list clearfix">
+                    <div class="col-8">Anak 4 usia</div>
+                    <div class="col-2">
+                        <select class="form-control" name="agelist">
+                            <option value="0">0 th</option>
+                            <option value="1">1 th</option>
+                            <option value="2">2 th</option>
+                            <option value="3">3 th</option>
+                            <option value="4">4 th</option>
+                            <option value="1">5 th</option>
+                            <option value="2">6 th</option>
+                            <option value="3">7 th</option>
+                            <option value="4">4 th</option>
+                            <option value="1">8 th</option>
+                            <option value="2">9 th</option>
+                            <option value="3">10 th</option>
+                            <option value="4">11 th</option>
+                        </select>
+                    </div>                </div>
             </div>
         </div>
     </div>
-    <div class="form-group form__submit">
+    <div class="bottom-wrap form-group form__submit">
         <button class="btn btn-yellow btn-block btn-lg btnSubmit">CARI HOTEL</button>
     </div>
 </form>

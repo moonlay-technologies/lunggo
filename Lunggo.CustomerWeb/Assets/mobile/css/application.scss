@@ -486,7 +486,12 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         }
         .autocomplete-loading {}
         ul.result {
-            li.airport, li.hotel {padding:10px 0; position:relative;
+            li.airport {padding:10px 0;}
+            li.hotel {padding:10px 0 30px;
+                .hotel__location {font-size: 13px;}
+                .hotel__link:hover {background: #bfeeff; text-decoration: none;}
+            }
+            li.airport, li.hotel {position:relative;
                 .airport__link, .hotel__link {position:absolute; display:block; width:100%; height:100%; left:0; top:0; z-index:2; }
                 .airport__code, .hotel__code {display:inline-block; vertical-align:middle; font-weight:bold; font-size:32px; padding-left:15px; padding-right:15px; color:$color-main-blue; width:30%; text-align:center;}
                 .airport__detail, .hotel__detail {display:inline-block; vertical-align:-webkit-baseline-middle; font-size:12px; line-height:14px; width:65%;
@@ -1029,6 +1034,8 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
                                 content: '';
                                 @include border-radius(14px);
                                 vertical-align: middle;
+                                padding: 3px;
+                                margin:0;
                             }
                         }
                         input {display:none;}
@@ -1050,6 +1057,8 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
                                 content: '';
                                 @include border-radius(14px);
                                 vertical-align: middle;
+                                padding: 3px;
+                                margin:0;
                             }
                         }
                         input {display:none;}
