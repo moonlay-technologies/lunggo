@@ -1,4 +1,4 @@
-angular.module('travorama').factory('hotelSearchSvc', ['$log', '$resource', '$timeout', function ($log, $resource, $timeout) {
+﻿angular.module('travorama').factory('hotelSearchSvc', ['$log', '$resource', '$timeout', function ($log, $resource, $timeout) {
     var factory = {};
 
     factory.resource = $resource(HotelSearchConfig.Url,
@@ -12,7 +12,7 @@ angular.module('travorama').factory('hotelSearchSvc', ['$log', '$resource', '$ti
             }
         );
 
-
+  
 
     factory.searchHotel = function (hotelSearch, filter, pagination) {
         $log.debug('using search service. searching...');
@@ -98,8 +98,8 @@ angular.module('travorama').factory('hotelSearchSvc', ['$log', '$resource', '$ti
 
         scope.hotelSearch.roomCountMin = 1;
         scope.hotelSearch.roomCountMax = 8;
-
-        //$scope.hotel.searchId = $scope.model.searchId;
+        
+           //$scope.hotel.searchId = $scope.model.searchId;
         //$scope.hotelSearch.location = model.searchParamObject.location;
         //$scope.hotelSearch.checkinDate = model.searchParamObject.checkinDate;
         //$scope.hotelSearch.checkoutDate = model.searchParamObject.checkoutDate;
