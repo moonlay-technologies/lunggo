@@ -337,7 +337,7 @@
                                     <div class="star star-5" ng-show="hotelstar() == 'star star-5'"></div>
                                     <div class="rh-location">
                                         @ToTitleCase(Model.HotelDetail.Address), @ToTitleCase(Model.HotelDetail.ZoneName), 
-                                        @ToTitleCase(Model.HotelDetail.DestinationName), @Model.HotelDetail.PostalCode, @Model.HotelDetail.CountryName
+                                        @ToTitleCase(Model.HotelDetail.DestinationName) @Model.HotelDetail.PostalCode, @Model.HotelDetail.CountryName
                                     </div>
                                     <div class="rh-detail">
                                         <div class="wb-container clearfix">
@@ -586,7 +586,7 @@
                                         </div>
                                         <div class="wt-bottom">
                                             {{capitalizeFirstLetter(hotelDetail.address)}} @ToTitleCase(Model.HotelDetail.ZoneName),
-                                            @ToTitleCase(Model.HotelDetail.DestinationName), @Model.HotelDetail.PostalCode, @Model.HotelDetail.CountryName
+                                            @ToTitleCase(Model.HotelDetail.DestinationName) @Model.HotelDetail.PostalCode, @Model.HotelDetail.CountryName
                                         </div>
                                     </div>
                                     <div class="widget-bottom">

@@ -204,7 +204,7 @@ namespace Lunggo.Framework.BlobStorage
 
                     CheckContainerAndCreateIfNotExist(newBlob.Container);
 
-                    newBlob.StartCopyFromBlob(previousBlob);
+                    newBlob.StartCopy(previousBlob);
                     previousBlob.Delete();
                 }
                 catch (StorageException ex)
@@ -222,7 +222,7 @@ namespace Lunggo.Framework.BlobStorage
 
                     CheckContainerAndCreateIfNotExist(newBlob.Container);
 
-                    newBlob.StartCopyFromBlob(previousBlob);
+                    newBlob.StartCopy(previousBlob);
                 }
                 catch (StorageException ex)
                 {

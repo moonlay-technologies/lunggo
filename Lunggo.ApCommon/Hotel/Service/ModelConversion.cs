@@ -469,7 +469,7 @@ namespace Lunggo.ApCommon.Hotel.Service
         public void SetTimeCancellation(HotelRateForDisplay rateDisplay, HotelRate rate)
         {
             var idTimezone = TimeZoneInfo.CreateCustomTimeZone("id", new TimeSpan(0, 7, 0, 0), "Indonesia WIB", "Standar Indonesia");
-            rateDisplay.IsRefundable = (rate.Class != "NRF" && rate.Cancellation != null);
+            rateDisplay.IsRefundable = (rate.Cancellation != null);
             //rateDisplay.Cancellation = (rate.Class != "NRF" && rate.Cancellation != null) ? rate.Cancellation : null;
             if (rateDisplay.IsRefundable)
             {
@@ -502,7 +502,7 @@ namespace Lunggo.ApCommon.Hotel.Service
             rateDisplay.NetFare = Math.Round((rateDisplay.NetTotalFare / rate.RoomCount) / rate.NightCount);
             rateDisplay.OriginalFare = rateDisplay.NetFare * 1.01M;
 
-            if (!rate.Class.Equals("NRF") && rateDisplay.Cancellation != null)
+            if (rateDisplay.Cancellation != null)
             {
                 var margin = rate.Price.MarginNominal / rate.Price.Supplier;
                 foreach (var data in rateDisplay.Cancellation)
