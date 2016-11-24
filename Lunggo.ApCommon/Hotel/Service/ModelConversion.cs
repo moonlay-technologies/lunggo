@@ -2,11 +2,14 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using Lunggo.ApCommon.Hotel.Model;
 using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.ApCommon.Payment.Service;
 using Lunggo.ApCommon.Product.Constant;
+using Lunggo.Framework.Config;
+using Lunggo.Framework.Extension;
 
 namespace Lunggo.ApCommon.Hotel.Service
 {
@@ -22,11 +25,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                 CancellationTime = hotelReservation.CancellationTime,
                 CancellationType = hotelReservation.CancellationType,
                 Contact = hotelReservation.Contact,
-                HotelDetail = ConvertToHotelDetailForDisplay(
-                new List<HotelDetail>
-                {
-                    hotelReservation.HotelDetails
-                }).ToList()[0],
+                HotelDetail = ConvertToHotelDetailWithRoomForDisplay(hotelReservation.HotelDetails),
                 Pax = ConvertToPaxForDisplay(hotelReservation.Pax),
                 RsvNo = hotelReservation.RsvNo,
                 Payment = PaymentService.GetInstance().ConvertToPaymentDetailsForDisplay(hotelReservation.Payment),
@@ -41,6 +40,7 @@ namespace Lunggo.ApCommon.Hotel.Service
         {
             if (hotelDetail == null)
                 return null;
+            var baseUrl = ConfigManager.GetInstance().GetConfigValue("hotel", "standardSizeImage");
             var price = hotelDetail.Rooms.SelectMany(r => r.Rates).Sum(p => p.Price.Local);
             var convertedHotel = new HotelDetailForDisplay
             {
@@ -72,16 +72,68 @@ namespace Lunggo.ApCommon.Hotel.Service
                 DestinationName = GetDestinationNameFromDict(hotelDetail.DestinationCode).Name,
                 PostalCode = hotelDetail.PostalCode
             };
-                
-            
             return convertedHotel;
         }
+
+        internal HotelDetailForDisplay ConvertToHotelDetailWithRoomForDisplay(HotelDetail hotelDetail)
+        {
+            if (hotelDetail == null)
+                return null;
+            var baseUrl = ConfigManager.GetInstance().GetConfigValue("hotel", "standardSizeImage");
+                var hotel = new HotelDetailForDisplay
+                {
+                    HotelCode = hotelDetail.HotelCode,
+                    HotelName = hotelDetail.HotelName,
+                    Address = hotelDetail.Address,
+                    City = hotelDetail.City,
+                    CountryName = GetCountryNameFromDict(hotelDetail.CountryCode).Name,
+                    DestinationName = GetDestinationNameFromDict(hotelDetail.DestinationCode).Name,
+                    ZoneName = GetZoneNameFromDict(hotelDetail.DestinationCode + "-" + hotelDetail.ZoneCode),
+                    StarRating = hotelDetail.StarCode != 0
+                        ? hotelDetail.StarCode
+                        : (hotelDetail.StarRating != null
+                            ? Convert.ToInt32(hotelDetail.StarRating.Substring(0, 1))
+                            : 0),
+                    //ChainName = GetHotelChainDesc(hotelDetail.Chain),
+                    //AccomodationName = GetHotelAccomodationDescId(hotelDetail.AccomodationType),
+                    MainImage =
+                        hotelDetail.ImageUrl == null
+                            ? null
+                        : hotelDetail.ImageUrl == null ? null : string.Concat(baseUrl, hotelDetail.ImageUrl.Where(x => x.Type == "GEN").Select(x => x.Path).FirstOrDefault()),
+                    OriginalFare = hotelDetail.OriginalFare,
+                OriginalTotalFare = hotelDetail.OriginalTotalFare,
+                    NetFare = hotelDetail.NetFare,
+                NetTotalFare = hotelDetail.NetTotalFare,
+                IsWifiAccessAvailable = hotelDetail.Facilities != null &&
+                        ((hotelDetail.Facilities != null || hotelDetail.Facilities.Count != 0) &&
+                        hotelDetail.Facilities.Any(f => (f.FacilityGroupCode == 60 && f.FacilityCode == 261)
+                        || (f.FacilityGroupCode == 70 && f.FacilityCode == 550))),
+                IsRestaurantAvailable = hotelDetail.Facilities != null && ((hotelDetail.Facilities != null || hotelDetail.Facilities.Count != 0) &&
+                    hotelDetail.Facilities.Any(f => (f.FacilityGroupCode == 71 && f.FacilityCode == 200)
+                    || (f.FacilityGroupCode == 75 && f.FacilityCode == 840)
+                    || (f.FacilityGroupCode == 75 && f.FacilityCode == 845))),
+                    Rooms = ConvertToHotelRoomForDisplay(hotelDetail.Rooms),
+                    CheckInDate = hotelDetail.CheckInDate,
+                    CheckOutDate = hotelDetail.CheckOutDate,
+                    NightCount = hotelDetail.NightCount,
+                    SpecialRequest = hotelDetail.SpecialRequest,
+                    SupplierVat = hotelDetail.SupplierVat,
+                    SupplierName = hotelDetail.SupplierName,
+                    BookingReference = hotelDetail.BookingReference,
+                    ClientReference = hotelDetail.ClientReference,
+                    PhonesNumbers = hotelDetail.PhonesNumbers,
+                    PostalCode = hotelDetail.PostalCode
+                };
+            return hotel;
+        }
+
         internal List<HotelDetailForDisplay> ConvertToHotelDetailForDisplay(List<HotelDetail> hotelDetails)
         {
             if (hotelDetails == null)
                 return null;
-            var convertedHotels = new ConcurrentBag<HotelDetailForDisplay>();
-            Parallel.ForEach(hotelDetails, hotelDetail =>
+            var baseUrl = ConfigManager.GetInstance().GetConfigValue("hotel", "standardSizeImage");
+            var convertedHotels = new List<HotelDetailForDisplay>();
+            foreach (var hotelDetail in hotelDetails)
             {
                 var hotel = new HotelDetailForDisplay
                 {
@@ -102,10 +154,11 @@ namespace Lunggo.ApCommon.Hotel.Service
                     MainImage =
                         hotelDetail.ImageUrl == null
                             ? null
-                            : hotelDetail.ImageUrl.FirstOrDefault() == null ? null : hotelDetail.ImageUrl[0].Path,
-                    // != null ? hotelDetail.ImageUrl.Where(x=>x.Type=="GEN").Select(x=>x.Path).FirstOrDefault(): null,
+                            : hotelDetail.ImageUrl == null ? null : string.Concat(baseUrl, hotelDetail.ImageUrl.Where(x => x.Type == "GEN").Select(x => x.Path).FirstOrDefault()),
                     OriginalFare = hotelDetail.OriginalFare,
+                    OriginalTotalFare = hotelDetail.OriginalTotalFare,
                     NetFare = hotelDetail.NetFare,
+                    NetTotalFare = hotelDetail.NetTotalFare,
                     IsWifiAccessAvailable = hotelDetail.Facilities != null &&
                             ((hotelDetail.Facilities != null || hotelDetail.Facilities.Count != 0) &&
                             hotelDetail.Facilities.Any(f => (f.FacilityGroupCode == 60 && f.FacilityCode == 261)
@@ -114,7 +167,6 @@ namespace Lunggo.ApCommon.Hotel.Service
                         hotelDetail.Facilities.Any(f => (f.FacilityGroupCode == 71 && f.FacilityCode == 200)
                         || (f.FacilityGroupCode == 75 && f.FacilityCode == 840)
                         || (f.FacilityGroupCode == 75 && f.FacilityCode == 845))),
-                    Rooms = ConvertToHotelRoomForDisplay(hotelDetail.Rooms),
                     CheckInDate = hotelDetail.CheckInDate,
                     CheckOutDate = hotelDetail.CheckOutDate,
                     NightCount = hotelDetail.NightCount,
@@ -127,7 +179,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                     PostalCode = hotelDetail.PostalCode
                 };
                 convertedHotels.Add(hotel);
-            });
+            };
             return convertedHotels.ToList();
         }
 
@@ -135,6 +187,8 @@ namespace Lunggo.ApCommon.Hotel.Service
         public void CalculatePriceHotel(HotelDetail hotel)
         {
             decimal price = 0;
+            int night = 0;
+            int roomCount = 0;
             foreach (var room in hotel.Rooms)
             {
                 foreach (var rate in room.Rates)
@@ -142,22 +196,28 @@ namespace Lunggo.ApCommon.Hotel.Service
                     if (price == 0)
                     {
                         price = rate.Price.Local;
+                        night = rate.NightCount;
+                        roomCount = rate.RoomCount;
                     }
                     else
                     {
                         price = rate.Price.Local < price ? rate.Price.Local:price;
+                        night = rate.NightCount;
+                        roomCount = rate.RoomCount;
                     }
                 }
             }
-            hotel.NetFare = price;
-            hotel.OriginalFare = price*1.01M;
+            hotel.NetTotalFare = price;
+            hotel.OriginalTotalFare = price * 1.01M;
+            hotel.NetFare = Math.Round((hotel.NetTotalFare / roomCount) / night);
+            hotel.OriginalFare = hotel.NetFare*1.01M;
+            
         }
 
         internal HotelDetailForDisplay ConvertToHotelDetailsBaseForDisplay(HotelDetailsBase hotelDetail, decimal originalPrice, decimal netPrice)
         {
             if (hotelDetail == null)
                 return null;
-            //var convertedHotels = new List<HotelDetailForDisplay>();
             var hotel = new HotelDetailForDisplay
             {
                 HotelCode = hotelDetail.HotelCode,
@@ -183,7 +243,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                 Review = hotelDetail.Review,
                 Rooms = ConvertToHotelRoomForDisplay(hotelDetail.Rooms),
                 AccomodationName = GetHotelAccomodationMultiDesc(hotelDetail.AccomodationType),
-                ImageUrl = hotelDetail.ImageUrl.Select(x => x.Path).ToList(),
+                ImageUrl = ConcateHotelImageUrl(hotelDetail.ImageUrl),
                 IsWifiAccessAvailable = hotelDetail.Facilities != null &&
                             ((hotelDetail.Facilities != null || hotelDetail.Facilities.Count != 0) &&
                             hotelDetail.Facilities.Any(f => (f.FacilityGroupCode == 60 && f.FacilityCode == 261)
@@ -197,6 +257,15 @@ namespace Lunggo.ApCommon.Hotel.Service
             return hotel;
         }
 
+        public List<string> ConcateHotelImageUrl(List<Image> images )
+        {
+            if (images == null)
+                return null;
+            var baseUrl = ConfigManager.GetInstance().GetConfigValue("hotel", "bigSizeImage");
+            var imagePath = images.Select(x => x.Path).ToList();
+            return imagePath.Select(image => string.Concat(baseUrl, image)).ToList();
+        }
+
         public HotelFacilityForDisplay ConvertFacilityForDisplay(List<HotelFacility> facilities)
         {
             var displayFacilities = new HotelFacilityForDisplay();
@@ -208,38 +277,59 @@ namespace Lunggo.ApCommon.Hotel.Service
                     case 70:
                         if (displayFacilities.General == null)
                             displayFacilities.General = new List<string>();
+                        if(!data.IsFree)
+                            displayFacilities.General.Add(GetHotelFacilityDescId(Convert.ToInt32(data.FullFacilityCode)) +" *");
+                        else
                         displayFacilities.General.Add(GetHotelFacilityDescId(Convert.ToInt32(data.FullFacilityCode)));
                         break;
                     case 71:
                         if (displayFacilities.Meal == null)
                             displayFacilities.Meal = new List<string>();
+                        if (!data.IsFree)
+                            displayFacilities.Meal.Add(GetHotelFacilityDescId(Convert.ToInt32(data.FullFacilityCode)) + " *");
+                        else
                         displayFacilities.Meal.Add(GetHotelFacilityDescId(Convert.ToInt32(data.FullFacilityCode)));
                         break;
                     case 72:
                         if (displayFacilities.Business == null)
                             displayFacilities.Business = new List<string>();
+                        if (!data.IsFree)
+                            displayFacilities.Business.Add(GetHotelFacilityDescId(Convert.ToInt32(data.FullFacilityCode)) + " *");
+                        else
                         displayFacilities.Business.Add(GetHotelFacilityDescId(Convert.ToInt32(data.FullFacilityCode)));
                         break;
                     case 73:
                         if (displayFacilities.Entertainment == null)
                             displayFacilities.Entertainment = new List<string>();
+                        if (!data.IsFree)
+                            displayFacilities.Entertainment.Add(GetHotelFacilityDescId(Convert.ToInt32(data.FullFacilityCode)) + " *");
+                        else
                         displayFacilities.Entertainment.Add(
                             GetHotelFacilityDescId(Convert.ToInt32(data.FullFacilityCode)));
                         break;
                     case 74:
                         if (displayFacilities.Health == null)
                             displayFacilities.Health = new List<string>();
+                        if (!data.IsFree)
+                            displayFacilities.Health.Add(GetHotelFacilityDescId(Convert.ToInt32(data.FullFacilityCode)) + " *");
+                        else
                         displayFacilities.Health.Add(GetHotelFacilityDescId(Convert.ToInt32(data.FullFacilityCode)));
                         break;
                     case 90:
                         if (displayFacilities.Sport == null)
                             displayFacilities.Sport = new List<string>();
+                        if (!data.IsFree)
+                            displayFacilities.Sport.Add(GetHotelFacilityDescId(Convert.ToInt32(data.FullFacilityCode)) + " *");
+                        else
                         displayFacilities.Sport.Add(GetHotelFacilityDescId(Convert.ToInt32(data.FullFacilityCode)));
                         break;
                     default:
                         if (displayFacilities.Other == null)
                             displayFacilities.Other = new List<string>();
                         if (data.MustDisplay)
+                            if (!data.IsFree)
+                                displayFacilities.Other.Add(GetHotelFacilityDescId(Convert.ToInt32(data.FullFacilityCode)) + " *");
+                            else
                             displayFacilities.Other.Add(GetHotelFacilityDescId(Convert.ToInt32(data.FullFacilityCode)));
                         break;
                 }
@@ -264,7 +354,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                     //TypeName = dictionary.GetHotelRoomRateTypeId(roomDetail.Type),
                     CharacteristicCode = roomDetail.characteristicCd,
                     //CharacteristicName = dictionary.GetHotelRoomRateTypeId(roomDetail.characteristicCd),
-                    Images = roomDetail.Images != null ? roomDetail.Images : null,
+                    Images = roomDetail.Images != null ? ConcateRoomImageUrl(roomDetail.Images) : null,
                     Facilities = roomDetail.Facilities != null ? roomDetail.Facilities : null,
                     SingleRate = ConvertToSingleRateForDisplays(roomDetail.SingleRate),
                     Rates = ConvertToRateForDisplays(roomDetail.Rates)
@@ -288,11 +378,19 @@ namespace Lunggo.ApCommon.Hotel.Service
                     TypeName = dictionary.GetHotelRoomRateTypeId(roomDetail.Type),
                     CharacteristicCode = roomDetail.characteristicCd,
                     CharacteristicName = dictionary.GetHotelRoomRateTypeId(roomDetail.characteristicCd),
-                    Images = roomDetail.Images != null ? roomDetail.Images : null,
+                    Images = roomDetail.Images != null ? ConcateRoomImageUrl(roomDetail.Images) : null,
                     Facilities = roomDetail.Facilities != null ? roomDetail.Facilities : null,
                     Rates = ConvertToRateForDisplays(roomDetail.Rates),
                     SingleRate = ConvertToSingleRateForDisplays(roomDetail.SingleRate)
                 };
+        }
+
+        public List<string> ConcateRoomImageUrl(List<string> imagesPath)
+        {
+            if (imagesPath == null)
+                return null;
+            var baseUrl = ConfigManager.GetInstance().GetConfigValue("hotel", "standardSizeImage");
+            return imagesPath.Select(image => string.Concat(baseUrl, image)).ToList();
         }
 
         internal List<HotelRateForDisplay> ConvertToRateForDisplays(List<HotelRate> rates)
@@ -319,13 +417,15 @@ namespace Lunggo.ApCommon.Hotel.Service
                     BoardDescription = GetHotelBoardDescId(rateDetail.Boards),
                     RoomCount = rateDetail.RateCount == 0 ? rateDetail.RoomCount : rateDetail.RateCount,
                     TimeLimit = rateDetail.TimeLimit,
-                    Cancellation = rateDetail.Cancellation,
+                    //Cancellation = (rateDetail.Class != "NRF" && rateDetail.Cancellation != null) ? rateDetail.Cancellation : null,
+                    //IsRefundable = (rateDetail.Class != "NRF" && rateDetail.Cancellation != null),
                     Offers = rateDetail.Offers,
                     TermAndCondition = rateDetail.TermAndCondition
                 };
                 if (rateDetail.Price != null)
                 {
-                    SetDisplayPriceHotelRate(rate, rateDetail);
+                SetTimeCancellation(rate, rateDetail);
+                SetDisplayPriceHotelRate(rate, rateDetail);
                 }
                 
                 convertedRate.Add(rate);
@@ -353,25 +453,65 @@ namespace Lunggo.ApCommon.Hotel.Service
                 AdultCount = rate.AdultCount,
                 ChildCount = rate.ChildCount,
                 Allotment = rate.Allotment,
-                //Boards = rateDetail.Boards,
+                Boards = rate.Boards,
                 BoardDescription = GetHotelBoardDescId(rate.Boards),
                 RoomCount = rate.RoomCount,
                 TimeLimit = rate.TimeLimit,
-                Cancellation = rate.Cancellation,
                 Offers = rate.Offers,
                 TermAndCondition = GetRateCommentFromTableStorage(rate.RateCommentsId,
                     checkInDate).Select(x => x.Description).ToList()
             };
+            SetTimeCancellation(result, rate);
             SetDisplayPriceHotelRate(result, rate);
             return result;
         }
 
 
+        public void SetTimeCancellation(HotelRateForDisplay rateDisplay, HotelRate rate)
+        {
+            var idTimezone = TimeZoneInfo.CreateCustomTimeZone("id", new TimeSpan(0, 7, 0, 0), "Indonesia WIB", "Standar Indonesia");
+            rateDisplay.IsRefundable = (rate.Cancellation != null);
+            //rateDisplay.Cancellation = (rate.Class != "NRF" && rate.Cancellation != null) ? rate.Cancellation : null;
+            if (rateDisplay.IsRefundable)
+            {
+                rateDisplay.Cancellation = new List<Cancellation>();
+                rate.Cancellation= rate.Cancellation.OrderBy(e => e.StartTime).ToList();
+                foreach (var data in rate.Cancellation)
+                {
+                    var obj = new Cancellation
+                    {
+                        Fee = data.Fee,
+                        StartTime = TimeZoneInfo.ConvertTimeFromUtc(data.StartTime.AddDays(-1),idTimezone)
+                    };
+                    rateDisplay.Cancellation.Add(obj);
+                }
+                if (rate.Cancellation[0].StartTime.AddDays(-1) > DateTime.UtcNow)
+                {
+                    DateTime freeUntil = rate.Cancellation[0].StartTime.AddDays(-1).AddMinutes(-1);
+                    rateDisplay.IsFreeCancel = true;
+                    freeUntil = TimeZoneInfo.ConvertTimeFromUtc(freeUntil, idTimezone);
+                    rateDisplay.FreeUntil = freeUntil;
+                }
+            }
+        }
 
         public void SetDisplayPriceHotelRate(HotelRateForDisplay rateDisplay,HotelRate rate)
         {
-            rateDisplay.NetPrice = rate.Price.Local;
-            rateDisplay.OriginalPrice = rateDisplay.NetPrice*1.01M;
+            rateDisplay.NetTotalFare = rate.Price.Local;
+            rateDisplay.OriginalTotalFare = rateDisplay.NetTotalFare*1.01M;
+
+            rateDisplay.NetFare = Math.Round((rateDisplay.NetTotalFare / rate.RoomCount) / rate.NightCount);
+            rateDisplay.OriginalFare = rateDisplay.NetFare * 1.01M;
+
+            if (rateDisplay.Cancellation != null)
+            {
+                var margin = rate.Price.MarginNominal / rate.Price.Supplier;
+                foreach (var data in rateDisplay.Cancellation)
+                {
+                    data.Fee = data.Fee * (1 + margin);
+                    data.SingleFee = Math.Round((data.Fee/rate.RoomCount)/rate.NightCount);
+                }
+            }
         }
 
         private static RsvDisplayStatus MapReservationStatus(HotelReservation reservation)

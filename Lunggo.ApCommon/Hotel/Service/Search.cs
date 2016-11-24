@@ -21,6 +21,7 @@ using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Sdk.auto.model;
 using Lunggo.ApCommon.Payment.Model;
 using Lunggo.ApCommon.Product.Model;
 using Lunggo.Framework.Documents;
+using Lunggo.Framework.Extension;
 using Lunggo.Framework.SharedModel;
 
 namespace Lunggo.ApCommon.Hotel.Service
@@ -64,6 +65,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                 request.Occupancies = input.Occupancies;
                 request.HotelCode = input.HotelCode;
                 request.CheckIn = input.CheckIn;
+                request.Nights = input.Nights;
                 request.Checkout = input.CheckIn.AddDays(input.Nights);
                 request.SearchId = generatedSearchId.ToString();
             }
@@ -100,10 +102,12 @@ namespace Lunggo.ApCommon.Hotel.Service
             Debug.Print("AVAIALABILITY:" + swAv.Elapsed.ToString());
             result.SearchId = generatedSearchId.ToString();
 
+
             if (result.HotelDetails == null)
                 return new SearchHotelOutput()
                     {
                         IsSuccess = true,
+                        DestinationName = result.DestinationName,
                         ReturnedHotelCount = 0,
                         TotalHotelCount = 0,
                         FilteredHotelCount = 0
@@ -119,7 +123,7 @@ namespace Lunggo.ApCommon.Hotel.Service
             {
                 case AutocompleteType.Zone:
                     dict = GetHotelDetailByLocation(request.Zone);
-                    result.HotelDetails = ApplyHotelDetails(dict, result.HotelDetails);
+            result.HotelDetails = ApplyHotelDetails(dict, result.HotelDetails);
                     break;
                 case AutocompleteType.Destination:
                     dict = GetHotelDetailByLocation(request.Destination);
@@ -140,9 +144,10 @@ namespace Lunggo.ApCommon.Hotel.Service
             var sortedHotel = result.HotelDetails.OrderByDescending(x => x.NetFare);
             result.MaxPrice = sortedHotel.Select(x => x.NetFare).FirstOrDefault();
             result.MinPrice = sortedHotel.Select(x => x.NetFare).LastOrDefault();
+            result.DestinationName = detailDestination.Name;
 
             //REMEMBER TO UNCOMMENT THIS
-            Task.Run(() => SaveSearchResultintoDatabaseToCache(result.SearchId, result));
+            Task.Run(() => SaveSearchResultToCache(result.SearchId, result));
 
             List<HotelDetail> firstPageHotelDetails = result.HotelDetails;
 
@@ -154,11 +159,11 @@ namespace Lunggo.ApCommon.Hotel.Service
             firstPageHotelDetails = SetPagination(firstPageHotelDetails, input.Page, input.PerPage);
             //AddDetailInfoForDisplayHotel(firstPageHotelDetails);
             var searchType = detailDestination.Type.ToString();
-            var swCv = Stopwatch.StartNew();
             return new SearchHotelOutput
                         {
                             IsSuccess = true,
                             SearchId = result.SearchId,
+                            DestinationName = result.DestinationName,
                             FilteredHotelCount = result.HotelDetails.Count,
                             HotelDetailLists = ConvertToHotelDetailForDisplay(firstPageHotelDetails),
                             Page = input.Page,
@@ -171,10 +176,8 @@ namespace Lunggo.ApCommon.Hotel.Service
                             MinPrice = result.MinPrice,
                             IsSpecificHotel = searchType.Equals("Hotel"),
                             HotelCode = searchType.Equals("Hotel") ? (int?)firstPageHotelDetails.Select(x => x.HotelCode).FirstOrDefault() : null,
-
+                            //ExpiryTime = GetSearchHotelResultExpiry(result.SearchId)
                         };
-            swCv.Stop();
-            Debug.Print("CONVERT:" + swCv.Elapsed.ToString());
         }
 
         public SearchHotelOutput DoSearchById(SearchHotelInput input)
@@ -202,6 +205,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                 {
                     IsSuccess = true,
                     SearchId = input.SearchId,
+                    DestinationName = searchResult.DestinationName,
                     Page = input.Page,
                     PerPage = input.PerPage,
                     ReturnedHotelCount = 0,
@@ -210,6 +214,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                     HotelFilterDisplayInfo = searchResult.HotelFilterDisplayInfo,
                     MaxPrice = searchResult.MaxPrice,
                     MinPrice = searchResult.MinPrice,
+                    //ExpiryTime = GetSearchHotelResultExpiry(input.SearchId)
                 };
             int pageCount = 0;
             input.Page = input.Page != 0 ? input.Page : 1;
@@ -222,7 +227,8 @@ namespace Lunggo.ApCommon.Hotel.Service
             return new SearchHotelOutput
             {
                 SearchId = searchResult.SearchId,
-                HotelDetailLists = hotels.Count > 0 ? ConvertToHotelDetailForDisplay(hotels) : null,
+                DestinationName = searchResult.DestinationName,
+                HotelDetailLists = hotels.Count > 0 ? ConvertToHotelDetailForDisplay(displayHotel) : null,
                 Page = input.Page,
                 PerPage = input.PerPage,
                 PageCount = pageCount,
@@ -232,7 +238,8 @@ namespace Lunggo.ApCommon.Hotel.Service
                 FilteredHotelCount = hotels.Count,
                 MaxPrice = searchResult.MaxPrice,
                 MinPrice = searchResult.MinPrice,
-                IsSuccess = true
+                IsSuccess = true,
+                //ExpiryTime = GetSearchHotelResultExpiry(input.SearchId)
             };
         }
 

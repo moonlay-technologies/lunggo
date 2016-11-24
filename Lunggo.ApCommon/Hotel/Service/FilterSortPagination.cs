@@ -28,6 +28,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                     }
                 }
                 hotels = hotels.Where(p =>
+                    (string.IsNullOrEmpty(filterParam.NameFilter) || p.HotelName.IndexOf(filterParam.NameFilter, StringComparison.CurrentCultureIgnoreCase)> -1) &&
                 (filterParam.ZoneFilter == null || filterParam.ZoneFilter.Contains(p.ZoneCode)) &&
                 (filterParam.AccommodationTypeFilter == null || filterParam.AccommodationTypeFilter.Contains(p.AccomodationType)) &&
                 (facilityData.Count == 0 || facilityData.Any(e => p.Facilities.Select(x => x.FacilityGroupCode + "" + x.FacilityCode ).ToList().Contains(e))) &&

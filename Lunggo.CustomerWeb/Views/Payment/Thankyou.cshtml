@@ -36,7 +36,7 @@
         {
             var rsv = Model as HotelReservationForDisplay;
             rooms = rsv.HotelDetail.Rooms;
-            var rsvNo = Model.RsvNo;
+        var rsvNo = Model.RsvNo;
             images = HotelService.GetInstance().GetHotelDetailFromDb(rsv.HotelDetail.HotelCode).ImageUrl;
             var orDefault = images.Where(i => i.Type == "GEN").ToList().FirstOrDefault();
             if (orDefault != null)
@@ -52,19 +52,19 @@
                     ? null
                     : "http://photos.hotelbeds.com/giata/" + firstOrDefault.Path;
             }
-            foreach (var room in rooms)
+        foreach (var room in rooms)
+        {
+            var roomName = HotelService.GetInstance().GetHotelRoom(room.RoomCode).RoomDescId;
+            var sum = 0;
+            foreach (var rate in room.Rates)
             {
-                var roomName = HotelService.GetInstance().GetHotelRoom(room.RoomCode).RoomDescId;
-                var sum = 0;
-                foreach (var rate in room.Rates)
-                {
-                    sum += rate.RoomCount;
+                sum += rate.RoomCount;
                     totalAdult += rate.AdultCount;
                     totalChild += rate.ChildCount;
-                }
+            }
                 orderedRooms.Add(new Tuple<string, int>(roomName, sum));
                 ;
-            }
+        }
         }
 
     }
@@ -147,7 +147,7 @@
         $('.print .btn').removeClass('disabled');
     });
     @if (Model is HotelReservationForDisplay)
-    {
+        {
         var rsvType = "hotel";
             var hotel = Model as HotelReservationForDisplay;
             @:var hotelDetails = '@hotel.HotelDetail';
@@ -190,9 +190,9 @@
                     @*<div class="text-center"><img src="/Assets/images/loading-image-dark.gif" width="50%" alt="loading" /></div>*@
                     <div class="popup-btn">
                         <a class="btn popup-btn-yellow" href="{{returnUrl}}"><b>KEMBALI</b></a>
-                    </div>
                 </div>
             </div>
+        </div>
         </div>
     }
     else if (Model.Payment.Status == PaymentStatus.Denied || Model.Payment.Status == PaymentStatus.Failed)
@@ -231,7 +231,7 @@
             <div class="container">
                 @if (Model is FlightReservationForDisplay)
                 {
-                    <p>Terima kasih telah memesan penerbangan di Travorama.com. Anda dapat mencetak e-tiket Anda melalui tombol berikut atau mengunduhnya di e-mail Anda:<b> @Model.Contact.Email</b> .</p>
+                <p>Terima kasih telah memesan penerbangan di Travorama.com. Anda dapat mencetak e-tiket Anda melalui tombol berikut atau mengunduhnya di e-mail Anda:<b> @Model.Contact.Email</b> .</p>
 
                 }
                 @if (Model is HotelReservationForDisplay)
@@ -248,7 +248,7 @@
                                 <a href="@Url.Action("Eticket", "Payment", new { Model.RsvNo })" class="btn btn-yellow block">
                                     @if (Model is FlightReservationForDisplay)
                                     {
-                                        <span>CEK E-TIKET</span>
+                                    <span>CEK E-TIKET</span>
                                     }
                                     @if (Model is HotelReservationForDisplay)
                                     {
@@ -304,7 +304,7 @@
                                             </div>
                                         }
                                     </div>
-
+                                    
                                     @if (Model is FlightReservationForDisplay)
                                     {
                                         var reservation = Model as FlightReservationForDisplay;
@@ -404,7 +404,7 @@
                                             }
                                         </div>
                                     }
-
+                                    
                                     @if (Model is HotelReservationForDisplay)
                                     {
                                         var reservation = Model as HotelReservationForDisplay;
@@ -511,11 +511,11 @@
                                                                         </div>
                                                                         if (rate.TermAndCondition.Count != 0 && !rate.TermAndCondition.Exists(r => r.Length < 3))
                                                                         {
-                                                                            <div class="wb-container clearfix">
+                                                                        <div class="wb-container clearfix">
                                                                                 <div class="wb-left">Ketentuan</div>
-                                                                                <div class="wb-mid">:</div>
-                                                                                <div class="wb-right bold-txt">@String.Join(". ", rate.TermAndCondition)</div>
-                                                                            </div>
+                                                                            <div class="wb-mid">:</div>
+                                                                            <div class="wb-right bold-txt">@String.Join(". ", rate.TermAndCondition)</div>
+                                                                        </div>
                                                                         }
                                                                         <div class="wb-container clearfix">
                                                                             <div class="wb-left">Ketentuan Pembatalan</div>
@@ -546,10 +546,10 @@
                                                         </div>
                                                     </div>
                                                     @*<div class="rh-bottom">
-                                                            <div class="rhb-content">
-                                                                Dolor sit amet, consectetuer adipiscing elit, sed diam nonummy. ectetuer adipiscing elit, sed diam nonummy. Lorem ipsum dolor sit amet, consectuer ectetuer. Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
-                                                            </div>
-                                                        </div>*@
+                            <div class="rhb-content">
+                                Dolor sit amet, consectetuer adipiscing elit, sed diam nonummy. ectetuer adipiscing elit, sed diam nonummy. Lorem ipsum dolor sit amet, consectuer ectetuer. Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
+                            </div>
+                        </div>*@
                                                 </div>
                                             </div>
                                         </div>
@@ -592,7 +592,7 @@
                                                             @ToTitleCase(HotelService.GetInstance().GetHotelBoardDescId(rate.Boards)) x {{nights}} Malam :
                                                         </dt>
                                                         <dd class="dd-price">
-                                                            Rp @(rate.NetPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID")))
+                                                            Rp @(rate.NetFare.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID")))
                                                         </dd>
                                                     </dl>
                                                 }
@@ -618,7 +618,7 @@
                                                 <dd>Rp @Model.Payment.FinalPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</dd>
                                             </dl>
                                         }
-
+                                        
                                     </div>
 
                                     <div class="payment-detail">
@@ -659,4 +659,4 @@
 
         </div>
     }
-    </div>
+</div>

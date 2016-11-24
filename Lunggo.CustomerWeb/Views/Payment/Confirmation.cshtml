@@ -39,7 +39,7 @@
         {
             var rsv = Model as HotelReservationForDisplay;
             rooms = rsv.HotelDetail.Rooms;
-            var rsvNo = Model.RsvNo;
+        var rsvNo = Model.RsvNo;
             images = HotelService.GetInstance().GetHotelDetailFromDb(rsv.HotelDetail.HotelCode).ImageUrl;
             var orDefault = images.Where(i => i.Type == "GEN").ToList().FirstOrDefault();
             if (orDefault != null)
@@ -55,20 +55,20 @@
                     ? null
                     : "http://photos.hotelbeds.com/giata/" + firstOrDefault.Path;
             }
-            foreach (var room in rooms)
+        foreach (var room in rooms)
+        {
+            var roomName = HotelService.GetInstance().GetHotelRoom(room.RoomCode).RoomDescId;
+            var sum = 0;
+            foreach (var rate in room.Rates)
             {
-                var roomName = HotelService.GetInstance().GetHotelRoom(room.RoomCode).RoomDescId;
-                var sum = 0;
-                foreach (var rate in room.Rates)
-                {
-                    sum += rate.RoomCount;
+                sum += rate.RoomCount;
                     totalAdult += rate.AdultCount;
                     totalChild += rate.ChildCount;
-                }
+            }
                 orderedRooms.Add(new Tuple<string, int>(roomName, sum));
                 ;
-            }
         }
+    }
     }
     catch
     {
@@ -158,8 +158,8 @@
     var checkout = '';
     var nights = '';
     @if (Model is HotelReservationForDisplay)
-    {
-        var hotel = Model as HotelReservationForDisplay;
+        {
+            var hotel = Model as HotelReservationForDisplay;
         @:hotelDetails = '@hotel.HotelDetail';
         @:rating = '@hotel.HotelDetail.StarRating'
         @:originalFare = '@hotel.HotelDetail.OriginalFare';
@@ -168,7 +168,7 @@
         @:checkin = '@hotel.HotelDetail.CheckInDate.ToString("D", CultureInfo.CreateSpecificCulture("id-ID"))';
         @:checkout = '@hotel.HotelDetail.CheckOutDate.ToString("D", CultureInfo.CreateSpecificCulture("id-ID"))';
         @:nights = '@((hotel.HotelDetail.CheckOutDate - hotel.HotelDetail.CheckInDate).Days)';
-    }
+            }
     </script>
     <!-- angular controller -->
     <script src="/Assets/travorama20/js/checkoutController.js"></script>
@@ -327,7 +327,7 @@
                             <div class="confirm-passenger">
                                 @if (Model is FlightReservationForDisplay)
                                 {
-                                    <h4><b>INFO PENUMPANG</b></h4>
+                                <h4><b>INFO PENUMPANG</b></h4>
                                 }
                                 @if (Model is HotelReservationForDisplay)
                                 {
@@ -506,7 +506,7 @@
                                                 </div>
                                                 <div class="col-right-hotel clearfix">
                                                     <span class="hotel-facility facility"></span>
-                                                   
+
 
                                                     @foreach (var room in rooms)
                                                     {
@@ -560,11 +560,11 @@
                                                                 </div>
                                                                 if (rate.TermAndCondition.Count != 0 && !rate.TermAndCondition.Exists(r => r.Length < 3))
                                                                 {
-                                                                    <div class="wb-container clearfix">
+                                                                <div class="wb-container clearfix">
                                                                         <div class="wb-left">Ketentuan</div>
-                                                                        <div class="wb-mid">:</div>
-                                                                        <div class="wb-right bold-txt">@String.Join(". ", rate.TermAndCondition)</div>
-                                                                    </div>
+                                                                    <div class="wb-mid">:</div>
+                                                                    <div class="wb-right bold-txt">@String.Join(". ", rate.TermAndCondition)</div>
+                                                                </div>
                                                                 }
 
                                                                 <div class="wb-container clearfix">

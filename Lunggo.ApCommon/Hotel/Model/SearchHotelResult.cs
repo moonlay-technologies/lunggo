@@ -23,6 +23,8 @@ namespace Lunggo.ApCommon.Hotel.Model
         public decimal MaxPrice { get; set; }
         [JsonProperty("minPrice", NullValueHandling = NullValueHandling.Ignore)]
         public decimal MinPrice { get; set; }
+        [JsonProperty("destinationName", NullValueHandling = NullValueHandling.Ignore)]
+        public string DestinationName { get; set; }
         [JsonProperty("hotelFilterDisplayInfo", NullValueHandling = NullValueHandling.Ignore)]
         public HotelFilterDisplayInfo HotelFilterDisplayInfo { get; set; }
     }

@@ -38,14 +38,22 @@ namespace Lunggo.BackendWeb
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
             AppInitializer.Init();
-            HotelService.GetInstance().CommenceIssueHotel(new IssueHotelTicketInput
-            {
-                RsvNo = "288036543579"
-            });
+            //HotelService.GetInstance().CommenceIssueHotel(new IssueHotelTicketInput
+            //{
+            //    RsvNo = "286146542579"
+            //});
             //var hotelDetail = HotelService.GetInstance().GetHotelDetailFromTableStorage(24408);
             //var image1 = hotelDetail.ImageUrl.Where(u => u.Type == "GEN").Take(1).FirstOrDefault();
             //var image2 = hotelDetail.ImageUrl.Where(u => u.Order == 1).Take(1).FirstOrDefault();
             //Console.WriteLine("Done");
+
+            //HotelService.GetInstance().SaveHotelDetailByLocation();
+            //var x = HotelService.GetInstance().GetHotelDetailByLocation("JAV");
+            //HotelService.GetInstance().CommenceIssueHotel(new IssueHotelTicketInput
+            //{
+            //    RsvNo = "284796541379"
+            //});
+
             //HotelService.GetInstance().Search(new SearchHotelInput
             //{
             //    Occupancies = new List<Occupancy>
@@ -57,16 +65,18 @@ namespace Lunggo.BackendWeb
             //            RoomCount = 1,
             //            ChildrenAges = new List<int>{7,8}
             //        },
-            //        new Occupancy
+            //         new Occupancy
             //        {
-            //            AdultCount = 1,
+            //            AdultCount = 2,
             //            ChildCount = 0,
-            //            RoomCount = 3,
+            //            RoomCount = 2,
             //        }
             //    },
-            //    CheckIn = new DateTime(2017,6,23),
-            //    Checkout = new DateTime(2017, 6,25),
-            //    HotelCode = 195728
+            //    CheckIn = new DateTime(2017, 6, 23),
+            //    Nights = 2,
+            //    Location = 16151,
+            //    SearchHotelType = SearchHotelType.Location,
+
             //});
         }
     }

@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Globalization;
 using System.Linq;
 using System.Web;
@@ -29,6 +30,49 @@ namespace Lunggo.CustomerWeb.Models
    
     public class HotelSearchApiRequest
     {
+        //[JsonProperty("searchHotelType")]
+        //public string SearchHotelType { get; set; }
+        //[JsonProperty("location")]
+        //public string Location { get; set; }
+        //[JsonProperty("checkinDate")]
+        //public DateTime CheckinDate { get; set; }
+        //[JsonProperty("checkoutDate")]
+        //public DateTime CheckoutDate { get; set; }
+        //[JsonProperty("adultCount")]
+        //public int AdultCount { get; set; }
+        //[JsonProperty("childCount")]
+        //public int ChildCount { get; set; }
+        //[JsonProperty("nightCount")]
+        //public int NightCount { get; set; }
+        //[JsonProperty("roomCount")]
+        //public int RoomCount { get; set; }
+        //[JsonProperty("childrenAges")]
+        //public string[] ChildrenAges { get; set; }
+        [JsonProperty("searchParam")]
+        public string SearchParam { get; set; }
+        [JsonProperty("searchParamObject")]
+        public SearchParameter SearchParamObject { get; set; }
+
+        public HotelSearchApiRequest(NameValueCollection query)
+        {
+            string queryString = query[0];
+            List<string> parameters = queryString.Split('.').ToList<string>();
+            SearchParamObject = new SearchParameter();
+            SearchParamObject.SearchHotelType = parameters[(int)RequestParam.SearchHotelType];
+            SearchParamObject.Location = parameters[(int)RequestParam.Location];
+            SearchParamObject.CheckinDate = DateTime.Parse(parameters[(int)RequestParam.CheckinDate]);
+            SearchParamObject.CheckoutDate = DateTime.Parse(parameters[(int)RequestParam.CheckoutDate]);
+            SearchParamObject.AdultCount = int.Parse(parameters[(int)RequestParam.AdultCount]);
+            SearchParamObject.ChildCount = int.Parse(parameters[(int)RequestParam.ChildCount]);
+            SearchParamObject.NightCount = int.Parse(parameters[(int)RequestParam.NightCount]);
+            SearchParamObject.RoomCount = int.Parse(parameters[(int)RequestParam.RoomCount]);
+            SearchParamObject.ChildrenAges = parameters[(int)RequestParam.ChildrenAges].Split(',').ToArray<string>();
+            SearchParam = query.ToString();
+        }
+    }
+
+    public class SearchParameter
+    {
         [JsonProperty("searchHotelType")]
         public string SearchHotelType { get; set; }
         [JsonProperty("location")]
@@ -47,20 +91,8 @@ namespace Lunggo.CustomerWeb.Models
         public int RoomCount { get; set; }
         [JsonProperty("childrenAges")]
         public string[] ChildrenAges { get; set; }
-
-        public HotelSearchApiRequest(string queryString)
-        {
-            List<string> query = queryString.Split('.').ToList<string>();
-            Location = query[(int)RequestParam.Location];
-            CheckinDate = DateTime.Parse(query[(int)RequestParam.CheckinDate]);
-            CheckoutDate = DateTime.Parse(query[(int)RequestParam.CheckoutDate]);
-            AdultCount = int.Parse(query[(int)RequestParam.AdultCount]);
-            ChildCount = int.Parse(query[(int)RequestParam.ChildCount]);
-            NightCount = int.Parse(query[(int)RequestParam.NightCount]);
-            RoomCount = int.Parse(query[(int)RequestParam.RoomCount]);
-            ChildrenAges = query[(int)RequestParam.ChildrenAges].Split(',').ToArray<string>();
-        }
     }
+
 
     public class HotelRequestFilter
     {

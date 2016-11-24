@@ -51,7 +51,7 @@
                 if (rate.ChildCount <= 0)
                 {
                     continue;
-                }
+            }
                 listAges.AddRange(rate.ChildrenAges);
             }
             orderedRooms.Add(new Tuple<string, int>(roomName, sum));;
@@ -99,7 +99,7 @@
         }
         return text.Length == 0 ? "" : text.Substring(0, text.Length - 1);
     }
-    
+
    
     public string ApplyTitleCase(string input)
     {
@@ -120,7 +120,7 @@
     <script>
     var langCode = '@OnlineContext.GetActiveLanguageCode()';
     var hotelDetail = @Html.Raw(Model.HotelDetail.Serialize());
-    var expirytime = '@Model.ExpiryTime';
+    var expirytime = '@Model.ExpiryTime.ToString("o")';
     var originalFare = '@Model.HotelDetail.OriginalFare';
     var netFare = '@Model.HotelDetail.NetFare';
     var totalRoom = '@Model.HotelDetail.Rooms.SelectMany(r => r.Rates).Sum(p => p.RoomCount)';
@@ -245,33 +245,33 @@
                                     <span class="name italic-txt semibold-txt">Saya tidak menginap di sini. Saya membuatkan reservasi untuk orang lain.</span>
                                 </label>
                             </div>
-                        
+
                             <div ng-show ="diffPerson">
-                                <h3><b>DETAIL</b> TAMU</h3>
-                                <div class="form-group" ng-class="{'has-error' : buyerForm.guestTitle.$touched && buyerForm.guestTitle.$invalid}">
-                                    <label class="control-label important">Titel :</label>
-                                    <div>
-                                        <select class="form-control" id="buyer-title" name="guestTitle" ng-model="guestInfo.title" ng-init="guestInfo.title = titles[0].value">
-                                            <option ng-repeat="title in titles" value="{{title.value}}">{{title.name}}</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-group" ng-class="{'has-error' : buyerForm.guestName.$touched && buyerForm.guestName.$invalid}">
-                                    <label class="control-label important">Nama Lengkap :</label>
-                                    <div ng-hide="loggedIn">
-                                        <input type="text" pattern="[a-zA-Z\s]+" class="form-control nama" value="" id="buyer-name" placeholder="Nama Lengkap"
-                                               name="guestName" ng-model="guestInfo.name" required />
-                                        <div ng-show="!checkName(guestInfo.name)" style="color:red">
-                                            Nama tidak boleh mengandung karakter selain alfabet dan spasi
-                                        </div>
-                                    </div>
-                                    <div ng-hide="!loggedIn">
-                                        <!--Jika udah Login-->
-                                        <input type="text" class="form-control nama" value=guestInfo.name id="buyer-name" placeholder="Nama Lengkap" name="name" ng-model="guestInfo.name" required />
-                                    </div>
+                            <h3><b>DETAIL</b> TAMU</h3>
+                            <div class="form-group" ng-class="{'has-error' : buyerForm.guestTitle.$touched && buyerForm.guestTitle.$invalid}">
+                                <label class="control-label important">Titel :</label>
+                                <div>
+                                    <select class="form-control" id="buyer-title" name="guestTitle" ng-model="guestInfo.title" ng-init="guestInfo.title = titles[0].value">
+                                        <option ng-repeat="title in titles" value="{{title.value}}">{{title.name}}</option>
+                                    </select>
                                 </div>
                             </div>
-                            
+                            <div class="form-group" ng-class="{'has-error' : buyerForm.guestName.$touched && buyerForm.guestName.$invalid}">
+                                <label class="control-label important">Nama Lengkap :</label>
+                                <div ng-hide="loggedIn">
+                                    <input type="text" pattern="[a-zA-Z\s]+" class="form-control nama" value="" id="buyer-name" placeholder="Nama Lengkap"
+                                           name="guestName" ng-model="guestInfo.name" required />
+                                    <div ng-show="!checkName(guestInfo.name)" style="color:red">
+                                        Nama tidak boleh mengandung karakter selain alfabet dan spasi
+                                    </div>
+                                </div>
+                                <div ng-hide="!loggedIn">
+                                    <!--Jika udah Login-->
+                                    <input type="text" class="form-control nama" value=guestInfo.name id="buyer-name" placeholder="Nama Lengkap" name="name" ng-model="guestInfo.name" required />
+                                </div>
+                            </div>
+                            </div>
+
 
                             
 
@@ -372,7 +372,7 @@
                                     </div>
                                     <div class="col-right-hotel clearfix">
                                         <span class="hotel-facility facility"></span>
-                                        
+
                                         @foreach (var room in rooms)
                                         {
                                             //var index = 1;
@@ -423,18 +423,20 @@
                                                     </div>
                                                     if (!rate.TermAndCondition.Exists(r => r.Length < 3))
                                                     {
-                                                        <div class="wb-container clearfix">
+                                                    <div class="wb-container clearfix">
                                                             <div class="wb-left">Ketentuan</div>
-                                                            <div class="wb-mid">:</div>
-                                                            <div class="wb-right bold-txt">@String.Join(". ", rate.TermAndCondition)</div>
-                                                        </div>
+                                                        <div class="wb-mid">:</div>
+                                                        <div class="wb-right bold-txt">@String.Join(". ", rate.TermAndCondition)</div>
+                                                    </div>
                                                     }
 
                                                     <div class="wb-container clearfix">
                                                         <div class="wb-left">Ketentuan Pembatalan</div>
                                                         <div class="wb-mid">:</div>
                                                         <div class="wb-right bold-txt">
-                                                            @foreach (var policy in rate.Cancellation)
+                                                            @if (rate.Cancellation != null)
+                                                            {
+                                                                foreach (var policy in rate.Cancellation)
                                                             {
                                                                 <div>
                                                                     @pol. 
@@ -442,6 +444,7 @@
                                                                     Mulai berlaku: @policy.StartTime.ToString("D", CultureInfo.CreateSpecificCulture("id-ID")) <br />
                                                                 </div>
                                                                 pol++;
+                                                            }
                                                             }
                                                         </div>
                                                     </div>
@@ -543,7 +546,7 @@
                                     @ToTitleCase(HotelService.GetInstance().GetHotelBoardDescId(rate.Boards)) x {{nights}} Malam
                                 </dt>
                                 <dd class="dd-price">
-                                    Rp @(rate.NetPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID")))
+                                    Rp @(rate.NetFare.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID")))
                                 </dd>
                             </dl>
                                 }
@@ -695,7 +698,7 @@
         </div>
     </section>
 
-    @*<div class="bookfailed-popup" ng-show="expired">
+    <div class="bookfailed-popup" ng-show="expired">
         <div class="overlay-content">
             <section style="padding-top:60px; padding-left:225px;">
                 <div><img src="/Assets/images/travorama-logo-color.png" height="22px" width="80px"></div>
@@ -707,7 +710,7 @@
                 <a class="btn popup-btn-yellow book-failed" href="{{returnUrl}}"><b>CARI ULANG</b></a>
             </div>
         </div>
-    </div>*@
+    </div>
 
     <div class="loading-popup" ng-show="book.booking">
         <div class="overlay-content">
