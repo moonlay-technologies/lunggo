@@ -4146,7 +4146,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
       width: 68px; }
     .page-hotel .star.e-star.star-5 {
       width: 85px; }
-  .page-hotel .maps-icon, .page-hotel .travorama-hotel-mobile .detail-hotel .dh-location:before, .page-hotel.page-checkout .form-box .fb-hotel .location:before {
+  .page-hotel .maps-icon, .page-hotel .travorama-hotel-mobile .detail-hotel .dh-location:before, .page-hotel .fb-hotel .location:before {
     content: '';
     width: 13px;
     height: 18px;
@@ -4888,6 +4888,27 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
       margin-bottom: 15px; }
     .page-hotel .form-box .sqr-blue-list {
       padding-top: 5px; }
+  .page-hotel .fb-hotel .star {
+    margin-right: 19px; }
+  .page-hotel .fb-hotel .location {
+    padding-left: 15px;
+    margin: 10px 0; }
+    .page-hotel .fb-hotel .location:before {
+      opacity: .4;
+      margin-left: -15px;
+      background-size: 70%;
+      background-repeat: no-repeat; }
+  .page-hotel .fb-hotel .fb-img {
+    width: 100%;
+    height: 110px;
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    margin-bottom: 10px; }
+  .page-hotel .fb-hotel .fb-req {
+    margin-top: 20px; }
+  .page-hotel .fb-hotel .fb-row .col-6:before {
+    content: ': '; }
   .page-hotel .overlay--detail-room.overlay .overlay__content {
     padding: 0; }
   .page-hotel .overlay--detail-room .dr-container .dr-title {
@@ -4960,29 +4981,8 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
       font-size: 11px; }
     .page-hotel.page-checkout .form-box .fb-bed {
       margin: 15px 0; }
-    .page-hotel.page-checkout .form-box .fb-img {
-      width: 100%;
-      height: 110px;
-      background-size: cover;
-      background-position: center center;
-      background-repeat: no-repeat; }
-    .page-hotel.page-checkout .form-box .fb-row .col-6:before {
-      content: ': '; }
-    .page-hotel.page-checkout .form-box .fb-hotel .star {
-      margin-right: 19px; }
-    .page-hotel.page-checkout .form-box .fb-hotel .location {
-      padding-left: 15px;
-      margin: 10px 0; }
-      .page-hotel.page-checkout .form-box .fb-hotel .location:before {
-        opacity: .4;
-        margin-left: -15px;
-        background-size: 70%;
-        background-repeat: no-repeat; }
-    .page-hotel.page-checkout .form-box .fb-hotel .fb-img {
-      margin-bottom: 20px; }
-    .page-hotel.page-checkout .form-box .fb-hotel .fb-req {
-      margin-top: 20px; }
     .page-hotel.page-checkout .form-box .fb-room {
+      font-size: 13px;
       border-top: 1px solid #e8e8e8;
       padding-top: 15px;
       margin-bottom: 15px; }
@@ -5027,10 +5027,15 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
           background-size: cover;
           background-position: center; }
   .page-hotel.page-thankyou {
+    font-size: 13px;
     background: #f9f9f9; }
-    .page-hotel.page-thankyou .thankyou-page .tp-timer {
-      padding: 5px 15px 15px;
-      border: 1px solid #e9e9e9; }
+    .page-hotel.page-thankyou h3 {
+      margin: 20px 0;
+      font-size: 14px; }
+    .page-hotel.page-thankyou .fb-hotel, .page-hotel.page-thankyou .price-detail, .page-hotel.page-thankyou .guest-detail {
+      margin-bottom: 20px; }
+    .page-hotel.page-thankyou .thankyou-page {
+      padding: 5px 15px 15px; }
       .page-hotel.page-thankyou .thankyou-page .tp-timer .tp-title {
         font-size: 20px;
         text-align: center;
@@ -5083,11 +5088,8 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
             background-size: 100%;
             margin-top: 5px;
             margin-left: -100px; }
-    .page-hotel.page-thankyou .thankyou-page .review-room, .page-hotel.page-thankyou .thankyou-page .price-detail {
-      padding: 0 15px;
-      border-bottom: 1px solid #e9e9e9; }
-    .page-hotel.page-thankyou .thankyou-page .tp-payment {
-      padding: 0 15px 30px; }
+      .page-hotel.page-thankyou .thankyou-page .tp-payment {
+        padding-bottom: 30px; }
   .page-hotel .overlay.overlay--hotel-form .overlay__content {
     /*Column*/
     /*Font style*/

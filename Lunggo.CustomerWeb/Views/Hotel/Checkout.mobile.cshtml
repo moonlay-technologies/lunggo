@@ -170,7 +170,8 @@
                     <div class="fb-hotel">
                         <div class="fb-header"><b>Detail Hotel</b></div>
                         <div class="fb-body">
-                            <div class="fb-hotel">
+                            @Html.Partial("/Views/Hotel/Shared/Mobile/_HotelDetail.cshtml")
+                            @*<div class="fb-hotel">
                                 <div class="clearfix">
                                     <div class="col-6 blue-txt bold-txt">B Hotel Bali & Spa</div>
                                     <div class="col-4"><span class="star star-4 e-star pull-right"></span></div>
@@ -199,7 +200,7 @@
                                     <p class="bold-txt">Permintaan khusus:</p>
                                     <div>Dolor sit amet, consectetuer adipiscing elit, sed diam nonummy. ectetuer adipiscing elit, sed diam nonummy. </div>
                                 </div>
-                            </div>
+                            </div>*@
                         </div>
                     </div>
                 </div>
@@ -210,27 +211,27 @@
                     <div class="fb-body">
                         <div class="fb-room">
                             <div class="clearfix">
-                                <div class="col-8"><div class="blue-txt bold-txt">Deluxe 2 Kings Bed Rooms</div></div>
+                                <div class="col-8"><div class="blue-txt bold-txt lg-txt">Deluxe 2 Kings Bed Rooms</div></div>
                                 <div class="col-2"><span class="meal-icon pull-right"></span><span class="wifi-icon pull-right"></span></div>
                             </div>
                             <div class="fb-img" style="background-image: url(/Assets/mobile/images/Hotel/hotel-detail-xlg.jpg)"></div>
-                            <div class="md-txt clearfix">
+                            <div class="clearfix">
                                 <div class="fb-row clearfix">
-                                    <div class="col-4">Jumlah Kamar</div>
-                                    <div class="col-6 bold-txt">2 Kamar</div>
+                                    <div class="col-6">Jumlah Kamar</div>
+                                    <div class="col-4 bold-txt">2 Kamar</div>
                                 </div>
                                 <div class="fb-row clearfix">
-                                    <div class="col-4">Tamu per Kamar</div>
-                                    <div class="col-6 bold-txt">2 Orang</div>
+                                    <div class="col-6">Tamu per Kamar</div>
+                                    <div class="col-4 bold-txt">2 Orang</div>
                                 </div>
                             </div>
-                            <ul class="blue-list blue-txt md-txt">
+                            <ul class="blue-list blue-txt">
                                 <li>Extra bed belum termasuk</li>
                                 <li>Free Cancelation sebelum H-5 tanggal booking</li>
                             </ul>
                             <div class="fb-note">
                                 <div>Catatan Khusus:</div>
-                                <ul class="sqr-blue-list md-txt">
+                                <ul class="sqr-blue-list">
                                     <li>
                                         <div class="blue-txt semibold-txt">Room Policy</div>
                                         <div class="grey-txt">Lorem ipsum dolor sit amet.</div>
@@ -377,7 +378,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="guest-detail clearfix">
+                @Html.Partial("/Views/Hotel/Shared/Mobile/_GuestDetail.cshtml")
+                @*<div class="guest-detail clearfix">
                     <h3 class="summary__title"><b>RINCIAN</b> TAMU</h3>
                     <div class="clearfix">
                         <div class="rr-row clearfix">
@@ -391,8 +393,7 @@
                             <div class="col-8">Anonymous</div>
                         </div>
                     </div>
-
-                </div>
+                </div>*@
 
                 <div class="step-button">
                     <form name="finalForm" id="finalForm" ng-submit="pay.setPaymentMethod()">

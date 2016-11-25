@@ -48,13 +48,11 @@
             </div>
             <div class="print-payment"><a href="#" class="btn btn-blue md-txt">Tanda Bukti Pembayaran</a></div>
             <div class="blue-txt bold-txt no-order">No.Pesanan: 1234567890F</div>
-            <div class="tp-id">
-                <div class="summary__title lg-txt"><b>NAMA</b> TAMU</div>
-                <div class="rr-row darkgrey-txt semibold-txt">JARED LETTO</div>
-                <div class="rr-row phone darkgrey-txt">+6280102938098 / patriciaaviani@yahoo.com</div>
-            </div>
         </div>
-        <div class="review-room clearfix">
+        @Html.Partial("/Views/Hotel/Shared/Mobile/_GuestDetail.cshtml")
+        @Html.Partial("/Views/Hotel/Shared/Mobile/_HotelDetail.cshtml")
+        @Html.Partial("/Views/Hotel/Shared/Mobile/_PriceDetail.cshtml")
+        @*<div class="review-room clearfix">
             <div class="summary__title lg-txt"><b>DETAIL</b> PESANAN</div>
             <div class="blue-txt semibold-txt lg-txt">Booking ID 1298319028</div>
 
@@ -79,26 +77,7 @@
                 <div class="rr-row">Capacity 2 guest(s)/room</div>
                 <div class="rr-row">Breakfast included, Free WiFi</div>
             </div>
-        </div>
-        <div class="price-detail clearfix">
-            <div class="summary__title lg-txt"><b>RINCIAN</b> HARGA</div>
-            <div class="rr-row clearfix">
-                <div class="col-half">Padma Hotel Bandung Premiere Suit (x1)</div>
-                <div class="col-half right-txt">Rp 4.800.216</div>
-            </div>
-            <div class="rr-row clearfix">
-                <div class="col-half blue-txt">Tax</div>
-                <div class="col-half blue-txt right-txt">Included</div>
-            </div>
-            <div class="rr-row clearfix">
-                <div class="col-half blue-txt">Convenience Fee</div>
-                <div class="col-half blue-txt right-txt">- Rp 287</div>
-            </div>
-            <div class="rr-row clearfix total">
-                <div class="col-half bold-txt lg-txt">Total</div>
-                <div class="col-half bold-txt lg-txt right-txt">Rp 4.799.928</div>
-            </div>
-        </div>
+        </div>*@
         <div class="tp-payment">
             <div class="summary__title lg-txt"><b>METODE</b> PEMBAYARAN</div>
             <div class="rr-detail blue-txt semibold-txt">(Credit Card)</div>
