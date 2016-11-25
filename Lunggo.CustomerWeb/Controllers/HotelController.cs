@@ -119,6 +119,10 @@ namespace Lunggo.CustomerWeb.Controllers
         //    return View(new { searchId, hotelCd });
         //}
 
+        public ActionResult Confirmation()
+        {
+            return View();
+        }
         public ActionResult Thankyou()
         {
             return View();

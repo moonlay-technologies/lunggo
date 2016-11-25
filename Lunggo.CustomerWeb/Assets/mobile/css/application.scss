@@ -880,10 +880,11 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         width: 100%;
         font-size: 13px;
         font-weight: 600;
-        &.active:after {content: "\2796"}
+        &.active:after {content: "-"}
         &:after {
-            content: '\02795';
-            font-size: 13px;
+            content: '+';
+            font-size: 18px;
+            line-height: 16px;
             color: #fff;
             float: right;
             margin-left: 5px;

@@ -1093,10 +1093,11 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
   font-size: 13px;
   font-weight: 600; }
   .accordion-wrapper .accordion-title.active:after {
-    content: "\2796"; }
+    content: "-"; }
   .accordion-wrapper .accordion-title:after {
-    content: '\02795';
-    font-size: 13px;
+    content: '+';
+    font-size: 18px;
+    line-height: 16px;
     color: #fff;
     float: right;
     margin-left: 5px; }
@@ -4994,6 +4995,37 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         margin: 10px 0 15px; }
       .page-hotel.page-checkout .form-box .fb-room .blue-list {
         margin: 10px 0 20px !important; }
+    .page-hotel.page-checkout .payment-method {
+      font-size: 13px; }
+      .page-hotel.page-checkout .payment-method .select-bank-wrapper {
+        margin-bottom: 20px; }
+      .page-hotel.page-checkout .payment-method form[name="selectBankForm"] label {
+        padding-bottom: 0; }
+        .page-hotel.page-checkout .payment-method form[name="selectBankForm"] label .iw-bank {
+          background: #028ec3;
+          width: 10%;
+          display: inline-block;
+          float: left;
+          height: 50px;
+          position: relative; }
+        .page-hotel.page-checkout .payment-method form[name="selectBankForm"] label input[name="selectBank"] {
+          left: 50%;
+          position: absolute;
+          top: 50%;
+          transform: translate(-50%, -50%);
+          margin: 0; }
+        .page-hotel.page-checkout .payment-method form[name="selectBankForm"] label .bank-list {
+          width: 90%;
+          padding: 6px 12px;
+          background: #fff;
+          border: 1px solid #e8e8e8;
+          float: left;
+          height: 50px; }
+        .page-hotel.page-checkout .payment-method form[name="selectBankForm"] label .bank {
+          width: 100px;
+          height: 37px;
+          background-size: cover;
+          background-position: center; }
   .page-hotel.page-thankyou {
     background: #f9f9f9; }
     .page-hotel.page-thankyou .thankyou-page .tp-timer {

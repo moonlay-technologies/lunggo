@@ -966,6 +966,44 @@
                 .blue-list {margin: 10px 0 20px !important;}
             }
         }
+        .payment-method {
+            font-size: 13px;
+            .select-bank-wrapper {margin-bottom: 20px;}
+            form[name="selectBankForm"] {
+                label {padding-bottom: 0;
+                    .iw-bank {
+                        background: #028ec3;
+                        width: 10%;
+                        display: inline-block;
+                        float: left;
+                        height: 50px;
+                        position: relative;
+                    }
+                    input[name="selectBank"] {
+                        left: 50%;
+                        position: absolute;
+                        top: 50%;
+                        transform: translate(-50%, -50%);
+                        margin: 0;
+                    }
+                    .bank-list {
+                        width: 90%;
+                        padding: 6px 12px;
+                        background: #fff;
+                        border: 1px solid #e8e8e8;
+                        float: left;
+                        height: 50px;
+                    }
+                    .bank {
+                        width: 100px;
+                        height: 37px;
+                        background-size: cover;
+                        background-position: center;
+                    }
+                }
+            }
+        }
+        
     }
     /*Page Thankyou Hotel*/
     &.page-thankyou {
