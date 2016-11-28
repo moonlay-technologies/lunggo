@@ -60,13 +60,13 @@
         scope.hotelSearch = {};
         scope.hotelSearch.searchHotelType = { "location": 'Location', searchId: 'SearchId' };
 
-        scope.hotelSearch.filter = {};
-        scope.hotelSearch.filter.nameFilter = "";
-        scope.hotelSearch.filter.minPrice = 0;
-        scope.hotelSearch.filter.maxPrice = 0;
-        scope.hotelSearch.filter.zones = null;
-        scope.hotelSearch.filter.stars = null;
-        scope.hotelSearch.filter.facilities = null;
+        scope.filter = {};
+        scope.filter.nameFilter = "";
+        scope.filter.minPrice = 0;
+        scope.filter.maxPrice = 0;
+        scope.filter.zones = null;
+        scope.filter.stars = null;
+        scope.filter.facilities = null;
 
         scope.hotelSearch.sortByType = { "ascendingPrice": "ASCENDINGPRICE", "descendingPrice": "DESCENDINGPRICE" };
         scope.hotelSearch.sortBy = scope.hotelSearch.sortByType.ascendingPrice;

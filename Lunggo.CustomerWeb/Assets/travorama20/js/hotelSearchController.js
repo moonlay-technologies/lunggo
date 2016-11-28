@@ -358,9 +358,20 @@ app.controller('hotelSearchController', ['$scope', '$log', '$http', '$resource',
         filterHotels();
     }, true);
 
-    var watchGroup = ['filter.minPrice', 'filter.maxPrice']
-    $scope.$watchGroup(watchGroup, function (newValue, oldValue, scope) {
-        filterHotels();
+    //var watchGroup = ['filter.minPrice', 'filter.maxPrice']
+    //$scope.$watchGroup(watchGroup, function (newValue, oldValue, scope) {
+        
+    //}, true);
+    $scope.$watch('filter.minPrice', function (newValue, oldValue, scope) {
+        if (oldValue != 0 && oldValue !== undefined) {
+            filterHotels();
+        }
+    }, true);
+
+    $scope.$watch('filter.maxPrice', function (newValue, oldValue, scope) {
+        if (oldValue != 0 && oldValue !== undefined) {
+            filterHotels();
+        }
     }, true);
 
     $scope.$watch('filter.zones', function (newValue, oldValue, scope) {

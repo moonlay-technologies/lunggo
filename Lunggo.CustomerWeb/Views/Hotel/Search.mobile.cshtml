@@ -96,12 +96,12 @@
                     <div class="filter-group__content">
                         <div class="slider-price" id="slider-range"></div>
                         <div class="slider-minmax">
-                            <span>Rp 500.000</span>
-                            <span class="pull-right">Rp 100.000.000</span>
+                            <span>{{filter.minPrice | number}}</span>
+                            <span class="pull-right">{{filter.maxPrice | number}}</span>
                         </div>
                         <div class="hidden">
-                            <input type="text" name="priceSliderValueMin" value="" class="price-slider-min" ng-model="priceFilterParam.current[0]" />
-                            <input type="text" name="priceSliderValueMax" value="" class="price-slider-max" ng-model="priceFilterParam.current[1]" />
+                            <input type="text" name="priceSliderValueMin" value="" class="price-slider-min" ng-model="filter.minPrice" />
+                            <input type="text" name="priceSliderValueMax" value="" class="price-slider-max" ng-model="filter.maxPrice" />
                         </div>
 
                     </div>
