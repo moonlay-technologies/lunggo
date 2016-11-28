@@ -858,7 +858,7 @@
         .fb-req {margin-top: 20px;}
         .fb-row .col-6:before {content: ': '}
     }
-    
+
     /*Overlay*/
     .overlay--detail-room {
         &.overlay .overlay__content {padding:0;}
@@ -936,6 +936,14 @@
                     margin: 10px 0 20px;
                 }
             }
+                    }
+                }
+                .tnc-box {
+                    background: #ddd;
+                    padding: 15px 10px;
+                    margin: 10px 0 20px;
+                }
+            }
             .payment {
                 padding: 5px 15px 15px;
             }
@@ -1003,7 +1011,7 @@
                     }
                 }
             }
-        }
+    }
         
     }
     /*Page Thankyou Hotel*/

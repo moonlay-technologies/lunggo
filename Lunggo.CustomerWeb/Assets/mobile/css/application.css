@@ -5088,7 +5088,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
             background-size: 100%;
             margin-top: 5px;
             margin-left: -100px; }
-      .page-hotel.page-thankyou .thankyou-page .tp-payment {
+    .page-hotel.page-thankyou .thankyou-page .tp-payment {
         padding-bottom: 30px; }
   .page-hotel .overlay.overlay--hotel-form .overlay__content {
     /*Column*/
