@@ -19,9 +19,12 @@
     <div class="container clearfix">
         <div class="col-8">
             <div class="result-form-left">
-                <span class="md-txt">Hasil Pencarian Hotel di: <b>{{hotelSearch.locationDisplay}}</b></span><br />
-                <span class="">{{hotelSearch.nightCount}} Malam <b>( {{hotelSearch.checkinDate | date : 'EEE, dd MMM yyyy'}} - {{hotelSearch.checkoutDate | date : 'EEE, dd MMM yyyy'}} )</b></span>
+                <span class="md-txt">Hasil Pencarian Hotel di: <b>{{hotelSearch.destinationName}}</b></span><br />
+                <span class="">{{hotelSearch.destinationNightCount}} Malam <b>( {{hotelSearch.destinationCheckinDate | date : 'EEE, dd MMM yyyy'}} - {{hotelSearch.destinationCheckoutDate | date : 'EEE, dd MMM yyyy'}} )</b></span>
             </div>
+            @*<div>cekindate {{hotelSearch.checkinDate}} | {{hotelSearch.checkinDate | date : 'EEE, dd MMM yyyy'}}</div>
+            <div>out {{hotelSearch.checkoutDate}}</div>
+            <div>checkinDateDisplay {{hotelSearch.checkinDateDisplay}}</div>*@
         </div>
         <div class="col-2">
             <div class="result-form-right">
