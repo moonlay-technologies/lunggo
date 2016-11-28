@@ -13,12 +13,12 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
     $scope.hotel.childCount = 1;
     $scope.hotel.nightCount = "";
     $scope.hotel.roomCount = 2;
-
+    $scope.returnUrl = "/";
     $scope.roomCount = 3;
     $scope.minRoomCount = 3;
     $scope.maxRoomCount = 100;
     $scope.pageLoaded = true;
-
+    $scope.searchDone = false;
     $scope.init = function (model) {
         $log.debug(model);
         $scope.searchId = model.searchId;
@@ -44,7 +44,7 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
 
         resource.query({}, {}).$promise.then(function(data) {
             validateResponse(data);
-
+            $scope.searchDone = true;
             $scope.hotel = data.hotelDetails;
             //$scope.destinationName = data.destinationName;
             $scope.hotelSearch.locationDisplay = $scope.hotel.destinationName;
@@ -200,6 +200,8 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
               }
           }
       );
+    $scope.selectFailed = false;
+    $scope.booking = false;
     $scope.bookRoom = function (room) {
         var childrenages = room.rate.regsId.split(',')[2].split('|')[10];
         var ages = [];
@@ -209,7 +211,8 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
                 ages.push(parseInt(age[i]));
             }
         }
-
+        $scope.booking = true;
+        
         selectService.query({}, {
             "searchId": $scope.searchId,
             "regs": [
@@ -222,13 +225,19 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
                   }
             ]
         }).$promise.then(function (data) {
-            $scope.token = data.token;
-            $scope.tokenLimit = data.timeLimit;
-            $log.debug('selected, token = ' + $scope.selectToken);
+            $scope.booking = false;
+            if (data.status != 200 || data.token == null) {
+                $scope.selectFailed = true;
+            } else {
+                $scope.token = data.token;
+                $scope.tokenLimit = data.timeLimit;
+                $log.debug('selected, token = ' + $scope.selectToken);
 
-            $log.debug('going to checkout');
+                $log.debug('going to checkout');
 
-            location.href = '/id/Hotel/Checkout/?token=' + $scope.token;
+                location.href = '/id/Hotel/Checkout/?token=' + $scope.token;
+            }
+            
         });
     }
 

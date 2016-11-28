@@ -779,7 +779,7 @@
                                                 </div>
                                                 <div class="wt-bottom">
                                                     @ToTitleCase(reservation.HotelDetail.Address) @ToTitleCase(reservation.HotelDetail.ZoneName),
-                                                    @ToTitleCase(reservation.HotelDetail.DestinationName), @reservation.HotelDetail.PostalCode, @ToTitleCase(reservation.HotelDetail.CountryName)
+                                                    @ToTitleCase(reservation.HotelDetail.DestinationName) @reservation.HotelDetail.PostalCode, @ToTitleCase(reservation.HotelDetail.CountryName)
                                                 </div>  
                                             </div>
                                             <div class="widget-bottom">
@@ -826,9 +826,9 @@
                                                 <div class="wb-container clearfix">
                                                     <div class="wb-left">Jumlah Tamu</div>
                                                     <div class="wb-mid">:</div>
-                                                    <div class="wb-right bold-txt">@totalAdult Dewasa, @if (totalChild > 0)
+                                                    <div class="wb-right bold-txt">@totalAdult Dewasa @if (totalChild > 0)
                                                     {
-                                                        <span>@totalChild Anak </span>
+                                                        <span>, @totalChild Anak </span>
                                                         <span>
                                                             (@for (var a = 0; a < listAges.Count; a++)
                                                             {

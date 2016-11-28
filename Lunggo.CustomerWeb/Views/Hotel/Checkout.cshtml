@@ -24,6 +24,7 @@
     var rooms = new List<HotelRoomForDisplay>();
     var token = "";
     Model.HotelDetail.MainImage = "http://photos.hotelbeds.com/giata/" + Model.HotelDetail.MainImage;
+    var night = (Model.HotelDetail.CheckOutDate - Model.HotelDetail.CheckInDate).Days;
     var roomImage = "";
     var sumAdult = 0;
     var sumChild = 0;
@@ -336,7 +337,7 @@
                                     <div class="star star-4" ng-show="hotelstar() == 'star star-4'"></div>
                                     <div class="star star-5" ng-show="hotelstar() == 'star star-5'"></div>
                                     <div class="rh-location">
-                                        @ToTitleCase(Model.HotelDetail.Address), @ToTitleCase(Model.HotelDetail.ZoneName), 
+                                        @ToTitleCase(Model.HotelDetail.Address) @ToTitleCase(Model.HotelDetail.ZoneName), 
                                         @ToTitleCase(Model.HotelDetail.DestinationName), @Model.HotelDetail.PostalCode, @Model.HotelDetail.CountryName
                                     </div>
                                     <div class="rh-detail">
@@ -426,7 +427,7 @@
                                                     <div class="wb-container clearfix">
                                                             <div class="wb-left">Ketentuan</div>
                                                         <div class="wb-mid">:</div>
-                                                        <div class="wb-right bold-txt">@String.Join(". ", rate.TermAndCondition)</div>
+                                                        <div class="wb-right bold-txt">@ToTitleCase(String.Join(". ", rate.TermAndCondition))</div>
                                                     </div>
                                                     }
 
@@ -440,8 +441,7 @@
                                                             {
                                                                 <div>
                                                                     @pol. 
-                                                                    Biaya pembatalan: Rp @(policy.Fee.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID")))<br />
-                                                                    Mulai berlaku: @policy.StartTime.ToString("D", CultureInfo.CreateSpecificCulture("id-ID")) <br />
+                                                                    Pembatalan setelah tanggal @policy.StartTime.ToString("D", CultureInfo.CreateSpecificCulture("id-ID")) akan dikenakan biaya sebesar Rp @(policy.SingleFee.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))) per kamar<br />
                                                                 </div>
                                                                 pol++;
                                                             }
@@ -546,12 +546,12 @@
                                     @ToTitleCase(HotelService.GetInstance().GetHotelBoardDescId(rate.Boards)) x {{nights}} Malam
                                 </dt>
                                 <dd class="dd-price">
-                                    Rp @(rate.NetFare.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID")))
+                                    Rp @((rate.NetFare * rate.RoomCount * night).ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID")))
                                 </dd>
                             </dl>
                                 }
                             }
-
+                            
                             <dl class="service-room" ng-show="roomService > 0">
                                 <dt class="dt-title">Pelayanan Kamar </dt>
                                 <dd class="dd-price">Rp {{roomService | number}}</dd>
@@ -586,7 +586,7 @@
                                         </div>
                                         <div class="wt-bottom">
                                             {{capitalizeFirstLetter(hotelDetail.address)}} @ToTitleCase(Model.HotelDetail.ZoneName),
-                                            @ToTitleCase(Model.HotelDetail.DestinationName), @Model.HotelDetail.PostalCode, @Model.HotelDetail.CountryName
+                                            @ToTitleCase(Model.HotelDetail.DestinationName) @Model.HotelDetail.PostalCode, @Model.HotelDetail.CountryName
                                         </div>
                                     </div>
                                     <div class="widget-bottom">
@@ -635,9 +635,9 @@
                                             <div class="wb-left">Total Tamu</div>
                                             <div class="wb-mid">:</div>
                                             <div class="wb-right bold-txt">
-                                                @sumAdult Dewasa, @if (sumChild > 0)
+                                                @sumAdult Dewasa @if (sumChild > 0)
                                                 {
-                                                    <span>@sumChild Anak </span>
+                                                    <span>, @sumChild Anak </span>
                                                     <span>
                                                         (@for (var a = 0; a < listAges.Count; a++)
                                                         {

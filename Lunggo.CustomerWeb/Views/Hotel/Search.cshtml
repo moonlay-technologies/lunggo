@@ -92,8 +92,8 @@
                             <label class="filter-title">Harga Hotel</label> 
                             <div class="slider-price slider-range" id="slider-range"></div>
                             <div class="slider-minmax">
-                                <span>{{filter.minPrice | number}}</span>
-                                <span class="pull-right">{{filter.maxPrice | number}}</span>
+                                <span>Rp {{filter.minPrice | number}}</span>
+                                <span class="pull-right">Rp {{filter.maxPrice | number}}</span>
                             </div>
                             <div class="hidden">
                                 <input type="text" name="priceSliderValueMin" value="" class="slider-range-min" ng-model="filter.minPrice" />
@@ -225,7 +225,7 @@
                                 
                                 <div class="location">
                                     <div>{{toTitleCase(hotel.address)}} {{toTitleCase(hotel.zone)}}</div>
-                                    {{toTitleCase(hotel.city)}}<span ng-show ="hotel.postalCd != null || hotel.postalCd.length > 0">, {{hotel.postalCd}}</span>
+                                    {{toTitleCase(hotel.city)}}<span ng-show ="hotel.postalCd != null || hotel.postalCd.length > 0"> {{hotel.postalCd}}</span>
                                 </div>
                                 @*=================== ini review row ================*@
                                 <div class="review clearfix">

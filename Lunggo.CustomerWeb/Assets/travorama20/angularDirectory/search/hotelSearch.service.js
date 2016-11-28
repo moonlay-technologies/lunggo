@@ -213,6 +213,7 @@
                 var mm = checkoutDate.getMonth() + 1;
                 var yyyy = checkoutDate.getFullYear();
                 var d = yyyy + '-' + mm + '-' + dd;
+                scope.hotelSearch.checkoutDate = moment(checkoutDate, "MM-DD-YYYY");
                 $log.debug("checkout date = " + scope.hotelSearch.checkoutDate);
             }
         });

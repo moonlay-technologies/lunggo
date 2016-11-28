@@ -19,7 +19,7 @@
 @{
     var payment = Model.Payment.Status;
     var timeout = ConfigManager.GetInstance().GetConfigValue("flight", "paymentTimeout");
-    //Model.Payment.Status = PaymentStatus.Settled;
+    // Model.Payment.Status = PaymentStatus.Settled;
 
     var timelimit = Model.Payment.TimeLimit.GetValueOrDefault();
     var orderedRooms = new List<Tuple<string, int>>();
@@ -29,14 +29,15 @@
     var images = new List<Image>();
     var hotelImg = "";
     var roomImg = "";
-    
+    var night = 0;
     try
     {
         if (Model is HotelReservationForDisplay)
         {
             var rsv = Model as HotelReservationForDisplay;
             rooms = rsv.HotelDetail.Rooms;
-        var rsvNo = Model.RsvNo;
+            var rsvNo = Model.RsvNo;
+            night = (rsv.HotelDetail.CheckOutDate - rsv.HotelDetail.CheckInDate).Days;
             images = HotelService.GetInstance().GetHotelDetailFromDb(rsv.HotelDetail.HotelCode).ImageUrl;
             var orDefault = images.Where(i => i.Type == "GEN").ToList().FirstOrDefault();
             if (orDefault != null)
@@ -427,7 +428,7 @@
                                                         <div class="star star-5" ng-show="hotelstar() == 'star star-5'"></div>
                                                         <div class="rh-location">
                                                             @ToTitleCase(reservation.HotelDetail.Address) @ToTitleCase(reservation.HotelDetail.ZoneName),
-                                                            @ToTitleCase(reservation.HotelDetail.DestinationName), @reservation.HotelDetail.PostalCode, @ToTitleCase(reservation.HotelDetail.CountryName)
+                                                            @ToTitleCase(reservation.HotelDetail.DestinationName) @reservation.HotelDetail.PostalCode, @ToTitleCase(reservation.HotelDetail.CountryName)
                                                         </div>
                                                         <div class="rh-detail">
                                                             <div class="wb-container clearfix">
@@ -514,7 +515,7 @@
                                                                         <div class="wb-container clearfix">
                                                                                 <div class="wb-left">Ketentuan</div>
                                                                             <div class="wb-mid">:</div>
-                                                                            <div class="wb-right bold-txt">@String.Join(". ", rate.TermAndCondition)</div>
+                                                                            <div class="wb-right bold-txt">@ToTitleCase(String.Join(". ", rate.TermAndCondition))</div>
                                                                         </div>
                                                                         }
                                                                         <div class="wb-container clearfix">
@@ -524,8 +525,7 @@
                                                                                 @foreach (var policy in rate.Cancellation)
                                                                                 {
                                                                                     <div>
-                                                                                        @pol. Biaya pembatalan: Rp @(policy.Fee.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID")))<br />
-                                                                                        Mulai berlaku: @policy.StartTime.ToString("D", CultureInfo.CreateSpecificCulture("id-ID")) <br />
+                                                                                        @pol. Pembatalan setelah tanggal @policy.StartTime.ToString("D", CultureInfo.CreateSpecificCulture("id-ID")) akan dikenakan biaya sebesar Rp @(policy.SingleFee.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))) per kamar <br />
                                                                                     </div>
                                                                                     pol++;
                                                                                 }
@@ -562,7 +562,7 @@
                                         {
                                             <dl>
                                                 <dt>Tiket Pesawat <span>(@Model.Pax.Count Penumpang)</span></dt>
-                                                <dd>Rp @(Model.Payment.OriginalPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID")))</dd>
+                                                <dd>Rp @((Model.Payment.OriginalPrice).ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID")))</dd>
                                             </dl>
                                             if (Model.Payment.DiscountNominal > 0)
                                             {
@@ -582,6 +582,7 @@
                                         }
                                         @if (Model is HotelReservationForDisplay)
                                         {
+                                            var rsv = Model as HotelReservationForDisplay;
                                             foreach (var room in rooms)
                                             {
                                                 foreach (var rate in room.Rates)
@@ -592,7 +593,7 @@
                                                             @ToTitleCase(HotelService.GetInstance().GetHotelBoardDescId(rate.Boards)) x {{nights}} Malam :
                                                         </dt>
                                                         <dd class="dd-price">
-                                                            Rp @(rate.NetFare.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID")))
+                                                            Rp @((rate.NetFare * rate.RoomCount * night).ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID")))
                                                         </dd>
                                                     </dl>
                                                 }

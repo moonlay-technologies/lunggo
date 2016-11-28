@@ -470,7 +470,7 @@
                                                 <div class="star star-5" ng-show="hotelstar() == 'star star-5'"></div>
                                                 <div class="rh-location">
                                                     @ToTitleCase(reservation.HotelDetail.Address) @ToTitleCase(reservation.HotelDetail.ZoneName),
-                                                    @ToTitleCase(reservation.HotelDetail.DestinationName), @reservation.HotelDetail.PostalCode, @ToTitleCase(reservation.HotelDetail.CountryName)<br/>
+                                                    @ToTitleCase(reservation.HotelDetail.DestinationName) @reservation.HotelDetail.PostalCode, @ToTitleCase(reservation.HotelDetail.CountryName)<br/>
                                                 </div>
                                                 <div><br/></div>
                                                 <div class="rh-detail">
@@ -563,7 +563,7 @@
                                                                 <div class="wb-container clearfix">
                                                                         <div class="wb-left">Ketentuan</div>
                                                                     <div class="wb-mid">:</div>
-                                                                    <div class="wb-right bold-txt">@String.Join(". ", rate.TermAndCondition)</div>
+                                                                    <div class="wb-right bold-txt">@ToTitleCase(String.Join(". ", rate.TermAndCondition))</div>
                                                                 </div>
                                                                 }
 
@@ -574,8 +574,7 @@
                                                                         @foreach (var policy in rate.Cancellation)
                                                                         {
                                                                             <div>
-                                                                                @pol. Biaya pembatalan: Rp @(policy.Fee.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID")))<br />
-                                                                                Mulai berlaku: @policy.StartTime.ToString("D", CultureInfo.CreateSpecificCulture("id-ID")) <br />
+                                                                                @pol. Pembatalan setelah tanggal @policy.StartTime.ToString("D", CultureInfo.CreateSpecificCulture("id-ID")) akan dikenakan biaya sebesar Rp @(policy.SingleFee.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))) per kamar <br />
                                                                             </div>
                                                                             pol++;
                                                                         }

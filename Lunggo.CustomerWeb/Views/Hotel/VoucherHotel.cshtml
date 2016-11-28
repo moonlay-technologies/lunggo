@@ -126,6 +126,14 @@
                         </div>
                         <div class="row grey-txt">
                             <div class="col-xs-3">
+                                <p>Tipe Kamar</p>
+                            </div>
+                            <div class="col-xs-9">
+                                <p>: @HotelService.GetInstance().GetHotelRoom(Model.HotelDetail.Rooms[0].RoomCode).RoomDescId @HotelService.GetInstance().GetHotelBoardDescId(Model.HotelDetail.Rooms[0].Rates[0].Boards)</p>
+                            </div>
+                        </div>
+                        <div class="row grey-txt">
+                            <div class="col-xs-3">
                                 <p>Jumlah Tamu per Kamar</p>
                             </div>
                             <div class="col-xs-9">
@@ -153,14 +161,7 @@
                                 </p>
                             </div>
                         </div>
-                        <div class="row grey-txt">
-                            <div class="col-xs-3">
-                                <p>Tipe Kamar</p>
-                            </div>
-                            <div class="col-xs-9">
-                                <p>: @HotelService.GetInstance().GetHotelRoom(Model.HotelDetail.Rooms[0].RoomCode).RoomDescId @HotelService.GetInstance().GetHotelBoardDescId(Model.HotelDetail.Rooms[0].Rates[0].Boards)</p>
-                            </div>
-                        </div>
+                        
                         <div class="row grey-txt">
                             <div class="col-xs-3">
                                 <p>Jumlah Kamar</p>

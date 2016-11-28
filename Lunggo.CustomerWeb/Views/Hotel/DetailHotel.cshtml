@@ -51,7 +51,7 @@
                                      'star-5':hotel.starRating.indexOf('5')>-1}">
                         </div>
                         <br />
-                        <span class="address" style="text-transform: capitalize">{{hotel.address}} {{hotel.city}}, {{hotel.postalCd}}, {{hotel.country}}</span>
+                        <span class="address" style="text-transform: capitalize">{{hotel.address}} {{hotel.city}} {{hotel.postalCd}}, {{hotel.country}}</span>
                         @*<a href="#" class="btn-blue small">Lihat Peta</a>*@
                     </div>
                     <div class="slider-container clearfix">
@@ -153,7 +153,11 @@
                         <div class="col-6">Tipe Kamar</div>
                         <div class="col-4">Harga Kamar</div>
                     </div>
+                    <span ng-show="!searchDone" class="text-center">
+                        <img src="/Assets/images/load.gif" style="width: 50px; height: 50px; margin-top: 5%; margin-left : 40%">
+                    </span>
                     <ul class="room-list-container">
+                        
                         <li ng-show="$index+1 <= roomCount" ng-repeat="room in hotel.room track by $index">
                             <div class="room-list clearfix">
                                 <div class="room-left" ng-show="room.roomImages === undefined || room.roomImages.length <= 0"><div class="no-room-pic"></div></div>
@@ -225,14 +229,14 @@
                                                 <div class="hd-title blue-txt">Kebijakan Pembatalan</div>
                                                 <div class="hd-txt">
                                                     <div ng-show="room.rate.isFreeCancel">- 
-                                                        Gratis pembatalan sebelum <span style="color:#1daee4">{{room.rate.freeUntil | date:'dd-MMM-yyyy HH:mm'}}</span> WIB.
+                                                        Gratis pembatalan sebelum <span style="color:#1daee4">{{room.rate.freeUntil | date:'dd MMM yyyy HH:mm'}}</span> WIB.
                                                     </div>
                                                     <div ng-repeat="cancellation in room.rate.cancellation track by $index">
                                                         @*Gratis pembatalan sebelum 17-Nov-2016 17:00.*@
                                                         - Pembatalan setelah <span style="color:#1daee4">{{cancellation.startTime | date:'dd MMM yyyy '}}</span>
                                                         akan dikenakan biaya pembatalan sebesar <span style="color:#ff7200">Rp {{cancellation.singleFee | number}}</span>.
                                                         <br />
-                                                    </span>
+                                                    </div>
                                                 </div>
                                             </li>
 
@@ -323,6 +327,32 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+    
+    
+    <div class="select-flight" ng-show="booking">
+        <div class=" overlay-content">
+            <section style="padding-top:60px; padding-left:225px;">
+                <div><img src="/Assets/images/travorama-logo-color.png" height="22px" width="80px"></div>
+                <div style="padding-top:20px;"><span style="color: #15b1e4; font-size:20px"><b>Mohon Tunggu...</b></span></div>
+                <div><img src="~/Assets/images/popup/paymentyellowstrip.png" /></div>
+                <div style="padding-top:5px;"><span style="font-size:14px">Mengalihkan Anda ke halaman checkout.</span></div>
+            </section>
+        </div>
+    </div>
+
+    <div class="bookfailed-popup" ng-show="selectFailed">
+        <div class="overlay-content">
+            <section style="padding-top:60px; padding-left:225px;">
+                <div><img src="/Assets/images/travorama-logo-color.png" height="22px" width="80px"></div>
+                <div style="padding-top:25px;"><span style="color: #15b1e4; font-size:26px"><b>Mohon maaf...</b></span></div>
+                <div style="padding-top:5px;"><span style="font-size:13px">Hotel ini <span style="color: #15b1e4;font-size:13px"><b>sudah tidak tersedia</b></span>.</span></div>
+                <div><span style="font-size:13px">Silakan klik tombol di bawah untuk kembali ke halaman awal.</span></div>
+            </section>
+            <div align="right" style="padding-right:30px;padding-top:30px;">
+                <a class="btn popup-btn-yellow book-failed" href="{{returnUrl}}"><b>CARI ULANG</b></a>
             </div>
         </div>
     </div>

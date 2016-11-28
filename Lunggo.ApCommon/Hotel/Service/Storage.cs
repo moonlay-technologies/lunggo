@@ -58,6 +58,32 @@ namespace Lunggo.ApCommon.Hotel.Service
             }
         }
 
+        public void SaveHotelDetailByLocation()
+        {
+            var location = GetAllLocations();
+            foreach (var loc in location)
+            {
+                Console.WriteLine("location: " + loc);
+                var hotelCds = GetHotelListByLocationFromStorage(loc);
+                var hotelDetailDict = hotelCds.ToDictionary(hotelCd => hotelCd, GetHotelDetailFromTableStorage);
+
+                BlobStorageService.GetInstance().WriteFileToBlob(new BlobWriteDto
+                {
+                    FileBlobModel = new FileBlobModel
+                    {
+                        Container = "HotelDetailByLocation",
+                        FileInfo = new FileInfo
+                        {
+                            ContentType = "",
+                            FileData = hotelDetailDict.ToCacheObject(),
+                            FileName = loc
+                        }
+                    },
+                    SaveMethod = SaveMethod.Force
+                });
+                Console.WriteLine("Done saving hotel details for location: " + loc);
+            }
+        }
         //AUTOCOMPLETE AND ALL HOTEL CODES        
         public List<string> GetAvailableHotelCodesFromStorage()
         {
@@ -101,33 +127,6 @@ namespace Lunggo.ApCommon.Hotel.Service
             return value.DeconvertTo<List<String>>();
         }
 
-        public void SaveHotelDetailByLocation()
-        {
-            var location = GetAllLocations();
-            foreach (var loc in location)
-            {
-                Console.WriteLine("location: " + loc);
-                var hotelCds = GetHotelListByLocationFromStorage(loc);
-                var hotelDetailDict = hotelCds.ToDictionary(hotelCd => hotelCd, GetHotelDetailFromTableStorage);
-
-                BlobStorageService.GetInstance().WriteFileToBlob(new BlobWriteDto
-                    {
-                        FileBlobModel = new FileBlobModel
-                        {
-                            Container = "HotelDetailByLocation",
-                            FileInfo = new FileInfo
-                            {
-                                ContentType = "",
-                                FileData = hotelDetailDict.ToCacheObject(),
-                                FileName = loc
-                            }
-                        },
-                        SaveMethod = SaveMethod.Force
-                    });
-                Console.WriteLine("Done saving hotel details for location: " + loc);
-            }
-        }
-
         public void SaveAutoCompleteToTableStorage()
         {
             //var autocomplete = new Autocomplete();
@@ -135,47 +134,49 @@ namespace Lunggo.ApCommon.Hotel.Service
             var table = tableClient.GetTableByReference("hotelautocomplete");
             var hotelCdTable = tableClient.GetTableByReference("hotelCodeTable");
 
-            long index = 1;
+            long index = 146964;
 
-            foreach (var country in Countries)
-            {
-                foreach (var destination in country.Destinations)
-                {
-                    var newValue = new HotelAutoComplete("hotelAutoComplete", index.ToString());
-                    newValue.Id = index;
-                    newValue.Code = destination.Code;
-                    newValue.Destination = destination.Name;
-                    newValue.Country = country.Name;
-                    newValue.Type = 1;
-                    newValue.HotelCount = GetHotelListByLocationFromStorage(destination.Code).Count;
-                    var insertOp = TableOperation.InsertOrReplace(newValue);
-                    table.Execute(insertOp);
-                    Console.WriteLine("Success inserting index: " + index + " for destination: " + destination.Name);
-                    index++;
+            //foreach (var country in Countries)
+            //{
+            //    foreach (var destination in country.Destinations)
+            //    {
+            //        var newValue = new HotelAutoComplete("hotelAutoComplete", index.ToString());
+            //        newValue.Id = index;
+            //        newValue.Code = destination.Code;
+            //        newValue.Destination = destination.Name;
+            //        newValue.Country = country.Name;
+            //        newValue.Type = 1;
+            //        newValue.HotelCount = GetHotelListByLocationFromStorage(destination.Code).Count;
+            //        var insertOp = TableOperation.InsertOrReplace(newValue);
+            //        table.Execute(insertOp);
+            //        Console.WriteLine("Success inserting index: " + index + " for destination: " + destination.Name);
+            //        index++;
 
-                    foreach (var zone in destination.Zones)
-                    {
-                        newValue = new HotelAutoComplete("hotelAutoComplete", index.ToString());
-                        newValue.Id = index;
-                        newValue.Code = zone.Code;
-                        newValue.Zone = zone.Name;
-                        newValue.Destination = destination.Name;
-                        newValue.Country = country.Name;
-                        newValue.Type = 2;
-                        newValue.HotelCount = GetHotelListByLocationFromStorage(zone.Code).Count;
-                        insertOp = TableOperation.InsertOrReplace(newValue);
-                        table.Execute(insertOp);
-                        Console.WriteLine("Success inserting index: " + index + " for zoneCode: " + zone.Code);
-                        index++;
-                    }
-                }
-            }
+            //        foreach (var zone in destination.Zones)
+            //        {
+            //            newValue = new HotelAutoComplete("hotelAutoComplete", index.ToString());
+            //            newValue.Id = index;
+            //            newValue.Code = zone.Code;
+            //            newValue.Zone = zone.Name;
+            //            newValue.Destination = destination.Name;
+            //            newValue.Country = country.Name;
+            //            newValue.Type = 2;
+            //            newValue.HotelCount = GetHotelListByLocationFromStorage(zone.Code).Count;
+            //            insertOp = TableOperation.InsertOrReplace(newValue);
+            //            table.Execute(insertOp);
+            //            Console.WriteLine("Success inserting index: " + index + " for zoneCode: " + zone.Code);
+            //            index++;
+            //        }
+            //    }
+            //}
 
-            for (var i = 1; i < 600001; i++)
+            for (var i = 533962; i < 700001; i++)
             {
                 try
                 {
+                    
                     var newValue = new HotelAutoComplete("hotelAutoComplete", index.ToString());
+                    Console.WriteLine("hotel code: " + i);
                     var hotelDetail = GetHotelDetailFromTableStorage(i);
                     newValue.Id = index;
                     newValue.Code = hotelDetail.HotelCode.ToString();

@@ -29,18 +29,8 @@ namespace Lunggo.Webjob.HotelContentWrapper
 
             var hotel = new GetHotel();
             var service = HotelService.GetInstance();
-            var rate = new GetRateComment();
-            Console.WriteLine("Getting Hotel Detail");
-            hotel.GetHotelData(1, 1000);
-
-            Console.WriteLine("Update Hotel List by Location Content");
-            service.UpdateHotelListByLocationContent();
-
-            Console.WriteLine("Update Hotel Detail by Location Content");
-            service.SaveHotelDetailByLocation();
-
-            Console.WriteLine("RateComment");
-            rate.GetRateCommentData(1, 1000);
+            Console.WriteLine("start!");
+            service.SaveAutoCompleteToTableStorage();
             
             stopwatch.Stop();
             Debug.Print("Done in : {0}", stopwatch.Elapsed);
