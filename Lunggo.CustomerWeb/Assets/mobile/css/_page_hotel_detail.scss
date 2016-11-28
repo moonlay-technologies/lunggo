@@ -117,7 +117,18 @@
         &.opened {height: auto;}
     }
     .sh-facility {
-        .sh-list-facility {padding-left: 15px;}
+        .sh-list-facility {
+            .sh-row {
+                .col-8 {
+                    border-bottom: 1px dashed #b9ecff;
+                    margin-bottom: 10px;
+                }
+                &:last-child .col-8 {
+                    border-bottom: none;
+                    margin-bottom: 0;
+                }
+            }
+        }
     }
     .toggle {
         position: absolute;

@@ -391,34 +391,43 @@
         <section class="overlay__content">
 
             <div class="autocomplete-input">
-                <input type="text" class="form-control" name="name" value="" placeholder="Masukkan kota/ lokasi hotel tujuan" ng-model="FlightSearchForm.AutoComplete.Keyword" ng-change="FlightSearchForm.AutoComplete.GetAirport()" />
+                <input type="text" class="form-control" name="name" value="" placeholder="Masukkan kota/ lokasi hotel tujuan" />
             </div><!-- .autocomplete-input -->
 
-            <div class="autocomplete-preload" ng-show="FlightSearchForm.AutoComplete.Keyword.length < FlightSearchForm.AutoComplete.MinLength">
-                <div class="list__header">
-                    <h4>POPULAR DESTINATION</h4>
-                </div>
+            <div class="autocomplete-preload">
                 <ul class="result">
-                    <li class="hotel" ng-repeat="result in PageConfig.PopularDestination.Popular">
-                        <a class="hotel__link"></a>
-                        <span class="hotel__code">CGK</span>
-                        <div class="hotel__detail">
-                            <p class="hotel__location">Jakarta, Indonesia</p>
-                            <p class="result">999 Hotel</p>
-                        </div>
+                    <li class="hotel">
+                        <a class="hotel__link clearfix">
+                            <div class="hotel__location bold-txt">Jakarta, Indonesia</div>
+                            <div class="col-half">
+                                <div class="hotel__detail">Kota</div>
+                            </div>
+                            <div class="col-half">
+                                <div class="result blue-txt semibold-txt pull-right">999 Hotel</div>
+                            </div>
+                        </a>
                     </li>
-                </ul>
-                <div class="list__header">
-                    <h4>INDONESIA</h4>
-                </div>
-                <ul class="result">
-                    <li class="hotel" ng-repeat="result in PageConfig.PopularDestination.Indonesia">
-                        <a class="hotel__link"></a>
-                        <span class="hotel__code">CGK</span>
-                        <div class="hotel__detail">
-                            <p class="hotel__location">Jakarta, Indonesia</p>
-                            <p class="result">999 Hotel</p>
-                        </div>
+                    <li class="hotel">
+                        <a class="hotel__link clearfix">
+                            <div class="hotel__location bold-txt">Jakarta, Indonesia</div>
+                            <div class="col-half">
+                                <div class="hotel__detail">Kota</div>
+                            </div>
+                            <div class="col-half">
+                                <div class="result blue-txt semibold-txt pull-right">999 Hotel</div>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="hotel">
+                        <a class="hotel__link clearfix">
+                            <div class="hotel__location bold-txt">Jakarta, Indonesia</div>
+                            <div class="col-half">
+                                <div class="hotel__detail">Kota</div>
+                            </div>
+                            <div class="col-half">
+                                <div class="result blue-txt semibold-txt pull-right">999 Hotel</div>
+                            </div>
+                        </a>
                     </li>
                 </ul>
             </div><!-- .autocomplete-preload -->
