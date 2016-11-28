@@ -1,5 +1,5 @@
 ﻿// home controller
-app.controller('hotelSearchController', ['$scope', '$log', '$http', '$resource', '$timeout', 'hotelSearchSvc', 'hotelAutocompleteSvc', function ($scope, $log, $http, $resource, $timeout, hotelSearchSvc, hotelAutocompleteSvc) {
+app.controller('hotelSearchController', ['$scope', '$log', '$http', '$resource', '$timeout', 'hotelSearchSvc', function ($scope, $log, $http, $resource, $timeout, hotelSearchSvc) {
 
     $scope.destinationName = "";
     $scope.model = {};
@@ -25,6 +25,94 @@ app.controller('hotelSearchController', ['$scope', '$log', '$http', '$resource',
     //$scope.hotel.roomCount = 2;
     //$scope.hotel.childrenAges = [];
     //$scope.hotel.searchParam = '';
+
+    //new { checkinDate
+    //:
+    //"2016-12-03T00:00:00"
+    //checkoutDate
+    //:
+    //"2016-12-05"
+    //hotelFilter
+    //:
+    //{priceFilter: {minPrice: 200000, maxPrice: 1800000}, zoneFilter: [], starFilter: null,…}
+    //facilityFilter
+    //:
+    //null
+    //nameFilter
+    //:
+    //""
+    //priceFilter
+    //:
+    //{minPrice: 200000, maxPrice: 1800000}
+    //maxPrice
+    //:
+    //1800000
+    //minPrice
+    //:
+    //200000
+    //starFilter
+    //:
+    //null
+    //zoneFilter
+    //:
+    //[]
+    //hotelSorting
+    //:
+    //"ASCENDINGPRICE"
+    //location
+    //:
+    //"16162"
+    //nightCount
+    //:
+    //2
+    //occupancies
+    //:
+    //[{adultCount: 1, childCount: 0, roomCount: 1, childrenAges: ["0", "0", "0", "0"]}]
+    //0
+    //:
+    //{adultCount: 1, childCount: 0, roomCount: 1, childrenAges: ["0", "0", "0", "0"]}
+    //adultCount
+    //:
+    //1
+    //childCount
+    //:
+    //0
+    //childrenAges
+    //:
+    //["0", "0", "0", "0"]
+    //0
+    //:
+    //"0"
+    //1
+    //:
+    //"0"
+    //2
+    //:
+    //"0"
+    //3
+    //:
+    //"0"
+    //roomCount
+    //:
+    //1
+    //page
+    //:
+    //1
+    //perPage
+    //:
+    //20
+    //regsId
+    //:
+    //null
+    //searchHotelType
+    //:
+    //"SearchId"
+    //searchId
+    //:
+    //"5ef8e473-31eb-457b-a138-ab17c288620b"
+
+
+
 
     $scope.searchDone = false;
     $scope.finishLoad = false;

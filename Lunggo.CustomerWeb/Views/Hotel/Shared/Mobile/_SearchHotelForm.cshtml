@@ -1,4 +1,4 @@
-﻿<form class="hotel-form" name="hotel-form" ng-submit="FlightSearchForm.Submit()" novalidate>
+﻿<form class="hotel-form" name="hotel-form" novalidate>
     <div class="th-form">
         <div class="top-wrap">
         <div class="form-group form__hotel">
@@ -202,6 +202,6 @@
         </div>
     </div>
     <div class="bottom-wrap form-group form__submit">
-        <button class="btn btn-yellow btn-block btn-lg btnSubmit">CARI HOTEL</button>
+        <button class="btn btn-yellow btn-block btn-lg btnSubmit" ng-click="hotel.searchHotel()">CARI HOTEL</button>
     </div>
 </form>

@@ -132,13 +132,13 @@
             return value;
         }
 
-        // **********
-        // Slick Slider Detail Hotel
-        $('.dh-slider').slick({
-            autoplay: true,
-            autoplaySpeed: 2500,
-            dots: false
-        });
+        //// **********
+        //// Slick Slider Detail Hotel
+        //$('.dh-slider').slick({
+        //    autoplay: true,
+        //    autoplaySpeed: 2500,
+        //    dots: false
+        //});
 
         // **********
         // Slider
