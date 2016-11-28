@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using Lunggo.ApCommon.Hotel.Service;
@@ -12,6 +14,7 @@ using Lunggo.Framework.Config;
 using Lunggo.Framework.Database;
 using Lunggo.Framework.Documents;
 using Lunggo.Framework.TableStorage;
+using RestSharp;
 
 namespace Lunggo.Webjob.HotelContentWrapper
 {
@@ -41,7 +44,14 @@ namespace Lunggo.Webjob.HotelContentWrapper
 
             Console.WriteLine("RateComment");
             rate.GetRateCommentData(1, 1000);
-            
+
+
+            //var hotelService = HotelService.GetInstance();
+            //hotelService.UpdateHotelImage();
+
+            ///*Try to get file name*/
+            //var blobService = BlobStorageService.GetInstance();
+            //blobService.GetFileNameList("hotelimage");
             stopwatch.Stop();
             Debug.Print("Done in : {0}", stopwatch.Elapsed);
             Console.WriteLine("Done in : {0}", stopwatch.Elapsed);
