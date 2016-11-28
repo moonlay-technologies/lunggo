@@ -51,7 +51,9 @@
     factory.gotoHotelSearch = function (hotelSearch) {
         $log.debug('using search service. going to hotel search...');
         var param = searchParam(hotelSearch);
-        location.href = '/id/Hotel/Search/' + param;
+        if (param != false) {
+            location.href = '/id/Hotel/Search/' + param;
+        }
     };
 
     factory.initializeSearchForm = function (scope, searchParamObject) {
@@ -224,11 +226,14 @@
         if (hotelSearch.location == null || hotelSearch.location.length == 0) {
             //$scope.wrongParam = true;
             alert("Silakan pilih lokasi atau hotel dari daftar yang tersedia");
+            //return false;
         }
+
 
         return "?info=" + [
             hotelSearch.searchHotelType.location,
-            hotelSearch.location,
+            //hotelSearch.location,
+            16162,
             moment(hotelSearch.checkinDate).format("YYYY-MM-DD"),
             moment(hotelSearch.checkoutDate).format("YYYY-MM-DD"),
             hotelSearch.adultCount,

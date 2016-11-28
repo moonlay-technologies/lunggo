@@ -3,7 +3,7 @@
     ViewBag.BodyClass = "page-hotel page-search";
     ViewBag.Title = "Pencarian Hotel";
     ViewBag.CurrentPage = "search-hotel";
-    ViewBag.AngularController = "HotelController";
+    ViewBag.AngularController = "hotelSearchController";
 }
 
 @section AdditionalCSS{
@@ -11,19 +11,26 @@
 }
 
 @section AdditionalJS {
-    <script src="/Assets/js/angular.min.js"></script>
+    @*<script src="/Assets/js/angular.min.js"></script>
     <script src="/Assets/js/angular-animate.min.js"></script>
     <script src="/Assets/js/angular-route.min.js"></script>
-    <script src="/Assets/js/jquery-ui.min.js"></script>
+    <script src="/Assets/js/jquery-ui.min.js"></script>*@
     <script type="text/javascript" src="/Scripts/bootstrap.min.js"></script>
     <script type="text/javascript" src="/Assets/vendor/dotdotdot/jquery.dotdotdot.min.js"></script>
 }
 
 @section PageJS{
     <script src="/Assets/mobile/js/HotelController.js"></script>
+
+@*<script type="text/javascript" src="/Assets/travorama20/js/HotelController.js"></script>*@
+<script src="/Assets/travorama20/angularDirectory/search/hotelSearch.service.js"></script>
+<script src="/Assets/travorama20/angularDirectory/common/hotelAutocomplete.service.js"></script>
+<script src="/Assets/travorama20/js/hotelSearchController.js"></script>
+
+
 }
 
-<div class="travorama-hotel-mobile">
+<div class="travorama-hotel-mobile" ng-init="init(@Newtonsoft.Json.JsonConvert.SerializeObject(Model))">
     <div class="top-content">
         @Html.Partial("/Views/Hotel/Shared/Mobile/_Summary.cshtml")
         <div class="hotel-sort-filter clearfix">
@@ -52,7 +59,7 @@
                     </div>
                 </div>
             </li>
-            <li>
+            @*<li>
                 <div class="hotel-list clearfix">
                     <div class="col-left-hotel"><div class="img-list" style="background-image: url(/Assets/mobile/images/Hotel/hotel-list-lg.jpg);"></div></div>
                     <div class="col-right-hotel">
@@ -68,7 +75,7 @@
                         </div>
                     </div>
                 </div>
-            </li>
+            </li>*@
         </ul>
     </div>
 
