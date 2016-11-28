@@ -19,7 +19,7 @@
 @{
     var payment = Model.Payment.Status;
     var timeout = ConfigManager.GetInstance().GetConfigValue("flight", "paymentTimeout");
-    // Model.Payment.Status = PaymentStatus.Settled;
+    Model.Payment.Status = PaymentStatus.Settled;
 
     var timelimit = Model.Payment.TimeLimit.GetValueOrDefault();
     var orderedRooms = new List<Tuple<string, int>>();
@@ -134,6 +134,7 @@
     var checkin = "";
     var checkout = "";
     var netFare = 0;
+    var page = 'Flight';
     // development only start
     printTimeout = new Date(); // please change this print time out to actual time
     printTimeout.setSeconds(printTimeout.getSeconds() + 7200);
@@ -148,18 +149,19 @@
         $('.print .btn').removeClass('disabled');
     });
     @if (Model is HotelReservationForDisplay)
-        {
+    {
         var rsvType = "hotel";
-            var hotel = Model as HotelReservationForDisplay;
-            @:var hotelDetails = '@hotel.HotelDetail';
-             @:var rating = '@hotel.HotelDetail.StarRating'
-                @:var originalFare = '@hotel.HotelDetail.OriginalFare';
-                    @:var netFare = '@hotel.HotelDetail.NetFare';
-                    @:var totalRoom = '@hotel.HotelDetail.Rooms.SelectMany(r => r.Rates).Sum(p => p.RoomCount)';
-                    @:var checkin = '@hotel.HotelDetail.CheckInDate.ToString("D",CultureInfo.CreateSpecificCulture("id-ID"))';
-                @:var checkout = '@hotel.HotelDetail.CheckOutDate.ToString("D", CultureInfo.CreateSpecificCulture("id-ID"))';
-                @:var nights = '@((hotel.HotelDetail.CheckOutDate - hotel.HotelDetail.CheckInDate).Days)';
-                }
+        var hotel = Model as HotelReservationForDisplay;
+        @:var hotelDetails = '@hotel.HotelDetail';
+        @:var rating = '@hotel.HotelDetail.StarRating'
+        @:var originalFare = '@hotel.HotelDetail.OriginalFare';
+        @:var netFare = '@hotel.HotelDetail.NetFare';
+        @:var totalRoom = '@hotel.HotelDetail.Rooms.SelectMany(r => r.Rates).Sum(p => p.RoomCount)';
+        @:var checkin = '@hotel.HotelDetail.CheckInDate.ToString("D",CultureInfo.CreateSpecificCulture("id-ID"))';
+        @:var checkout = '@hotel.HotelDetail.CheckOutDate.ToString("D", CultureInfo.CreateSpecificCulture("id-ID"))';
+        @:var nights = '@((hotel.HotelDetail.CheckOutDate - hotel.HotelDetail.CheckInDate).Days)';
+        @:page = 'Hotel';
+    }
     </script>
     <!-- angular controller -->
     <script src="/Assets/mobile/js/ThankYouController.js"></script>
