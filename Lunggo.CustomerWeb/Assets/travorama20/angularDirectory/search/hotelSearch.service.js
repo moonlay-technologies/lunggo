@@ -1,4 +1,4 @@
-﻿angular.module('travorama').factory('hotelSearchSvc', ['$log', '$resource', '$timeout', function ($log, $resource, $timeout) {
+﻿app.factory('hotelSearchSvc', ['$log', '$resource', '$timeout', function ($log, $resource, $timeout) {
     var factory = {};
 
     factory.resource = $resource(HotelSearchConfig.Url,

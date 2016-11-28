@@ -1,12 +1,41 @@
 ﻿// home controller
 app.controller('homeController', ['$scope', '$log', '$http', '$location', '$resource', '$timeout', 'hotelSearchSvc', function ($scope, $log, $http, $location, $resource, $timeout, hotelSearchSvc) {
 
-    $scope.departureDate = departureDate;
-    $scope.topDestinations = topDestinations;
-    $scope.flightDestination = {
-        name: indexPageDestination,
-        code: indexPageDestinationsCode
-    };
+    // =========================== FLIGHT =========================================
+    // **********
+    // variables
+    //$scope.PageConfig = $rootScope.PageConfig;
+    //$scope.FlightSearchForm = $rootScope.FlightSearchForm;
+
+    //$scope.PageConfig.Loaded = true;
+
+    //jQuery(document).ready(function ($) {
+    //    function showAgeChild() {
+    //        var val = $('body .form-child select').val();
+    //        val = parseInt(val);
+    //        $('body .age-child').hide();
+
+    //        if (val > 0) {
+    //            $('body .age-child').show();
+    //        }
+    //    }
+    //    $('body .form-child select').change(showAgeChild);
+    //    showAgeChild();
+    //});
+    // =========================== FLIGHT =========================================
+
+    $scope.departureDate = moment().add(1, 'day').format('DDMMYY');
+    //(DateTime.Now.AddDays(1).ToString("ddMMyy")
+    //if (!angular.isUndefined(topDestinations)) {
+    //    $scope.topDestinations = topDestinations;
+    //}
+
+    //if (!angular.isUndefined(indexPageDestination) && !angular.isUndefined(indexPageDestinationsCode)) {
+    //    $scope.flightDestination = {
+    //        name: indexPageDestination,
+    //        code: indexPageDestinationsCode
+    //    };
+    //}
 
     $scope.hotelCalendar = {};
     $scope.hotelCalendar.show = true;
@@ -17,6 +46,11 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
         }else if (tab == 'flight') {
             $scope.view.showHotelSearch = false;
             $('.search-calendar-hotel').hide();
+        }
+    }
+    $scope.placeholderFilter = function (qqq) {
+        if ($scope.hotelSearch.locationDisplay == "") {
+            $scope.hotelSearch.locationDisplay = "Kota, Wilayah atau Nama Hotel";
         }
     }
 
@@ -57,51 +91,9 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
     $scope.searchlocation = false;
     $scope.wrongParam = false;
 
-    //$scope.addValue = function (variableName, amount) {
-    //    var minCount = 1;
-    //    if (variableName == 'adultCount') {
-    //        $scope.hotel.adultCount = $scope.hotel.adultCount + amount;
-    //        if ($scope.hotel.adultCount < $scope.hotel.adultCountMin) $scope.hotel.adultCount++;
-    //        else if ($scope.hotel.adultCount > $scope.hotel.adultCountMax) $scope.hotel.adultCount--;
-    //    }
-    //    else if (variableName == 'childCount') {
-    //        $scope.hotel.childCount = $scope.hotel.childCount + amount;
-    //        if ($scope.hotel.childCount < $scope.hotel.childCountMin) $scope.hotel.childCount++;
-    //        else if ($scope.hotel.childCount > $scope.hotel.childCountMax) $scope.hotel.childCount--;
-    //    }
-    //    else if (variableName == 'nightCount') {
-    //        $scope.hotel.nightCount = $scope.hotel.nightCount + amount;
-    //        if ($scope.hotel.nightCount < $scope.hotel.nightCountMin) $scope.hotel.nightCount++;
-    //        else if ($scope.hotel.nightCount > $scope.hotel.nightCountMax) $scope.hotel.nightCount--;
-    //    }
-    //    else if (variableName == 'roomCount') {
-    //        $scope.hotel.roomCount = $scope.hotel.roomCount + amount;
-    //        if ($scope.hotel.roomCount < $scope.hotel.roomCountMin) $scope.hotel.roomCount++;
-    //        else if ($scope.hotel.roomCount > $scope.hotel.roomCountMax) $scope.hotel.roomCount--;
-    //    }
-    //}
-
-    //var resource = $resource(HotelAutocompleteConfig.Url + '/:prefix',
-    //       { prefix: '@prefix'},
-    //       {
-    //           query: {
-    //               method: 'GET',
-    //               params: { },
-    //               isArray: false
-    //           }
-    //       }
-    //   );
-
-    //$scope.$watch('hotel.locationDisplay', function (newValue, oldValue, ccc) {
-    //    if (newValue.length >= 3) {
-    //        resource.query({ prefix: newValue }).$promise.then(function (data) {
-    //            $timeout(function () {
-    //                $scope.hotel.hotelAutocomplete = data.hotelAutocomplete;
-    //                $log.debug($scope.hotel.hotelAutocomplete);
-    //            }, 0);
-    //        });
-    //    }
-    //});
+    $scope.init = function (model) {
+        $log.debug(model);
+    }
 
     $scope.setCheckinDate = function (scope, date) {
         scope.$apply(function () {

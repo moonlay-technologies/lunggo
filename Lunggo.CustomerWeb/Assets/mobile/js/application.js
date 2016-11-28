@@ -1,9 +1,9 @@
 ﻿// check if angular exist
 if (typeof (angular) == 'object') {
     
-    var app = angular.module('travoramaMobile', ['ngRoute']);
+    var app = angular.module('travoramaMobile', ['ngRoute', 'ngResource']);
     // root scope
-    app.run(function ($rootScope) {
+    app.run(function ($rootScope, $log) {
         $rootScope.travoramaModuleName = 'travoramaMobile';
 
         $.datepicker.setDefaults(
@@ -475,8 +475,7 @@ if (typeof (angular) == 'object') {
                     $rootScope.FlightSearchForm.DepartureDate = new Date($rootScope.FlightSearchForm.DepartureDate);
                     $rootScope.FlightSearchForm.ReturnDate = new Date($rootScope.FlightSearchForm.ReturnDate);
                 }
-                console.log($rootScope.FlightSearchForm.DepartureDate);
-                console.log($rootScope.FlightSearchForm.ReturnDate);
+                
                 $('.ui-datepicker').datepicker({
                     
                     onSelect: function (date) {

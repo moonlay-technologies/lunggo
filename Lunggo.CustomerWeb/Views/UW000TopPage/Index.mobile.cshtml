@@ -2,7 +2,7 @@
     Layout = "/Views/Shared/mobile/_Layout.cshtml";
     ViewBag.Title = "Enjoy Your Every Moment";
     ViewBag.BodyClass = "page page-home";
-    ViewBag.AngularController = "HomePageController";
+    ViewBag.AngularController = "homeController";
     ViewBag.CurrentPage = "home";
     ViewBag.SiteHeader = "mobile-home-page";
 }
@@ -13,14 +13,15 @@
 }
 
 @section AdditionalJS {
-    <script src="/Assets/js/angular.min.js"></script>
+    @*<script src="/Assets/js/angular.min.js"></script>
     <script src="/Assets/js/angular-animate.min.js"></script>
-    <script src="/Assets/js/angular-route.min.js"></script>
+    <script src="/Assets/js/angular-route.min.js"></script>*@
     <script src="/Config/JsConfig.js"></script>
     <!-- jquery datepicker -->
     <script src="/Assets/js/jquery-ui.min.js"></script>
     <script type="text/javascript" src="/Assets/js/jquery.ui.datepicker-id.js"></script>
     <script src="/Scripts/bootstrap.min.js"></script>
+
     <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.slick/1.5.9/slick.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery.ui.touch-punch/0.2.3/jquery.ui.touch-punch.min.js"></script>
 }
@@ -37,6 +38,8 @@
         });
     </script>
     <script src="/Assets/mobile/js/HomeController.js"></script>
+    <script src="/Assets/travorama20/angularDirectory/search/hotelSearch.service.js"></script>
+    <script src="/Assets/Travorama20/js/homeController.js"></script>
 }
 
 <div class="page-loading form-container" ng-class="{'page-loaded' : PageConfig.Loaded}">

@@ -24,7 +24,7 @@
     ViewBag.DestinationCode = "";
     ViewBag.DestinationName = "";
 
-    if (ViewBag.Destination != null)
+    if (!string.IsNullOrEmpty(ViewBag.Destination))
     {
 
         string destination = ViewBag.Destination;
@@ -138,7 +138,7 @@
 
 }
 
-<section class="section-search">
+<section class="section-search" ng-init="init(@Newtonsoft.Json.JsonConvert.SerializeObject(Model))">
     <div class="container">
         <div class="search-form">
             <header class="tab-header">
@@ -285,7 +285,7 @@
                     </form>
                 </div><!-- .tab-flight -->
                 <div class="tab-hotel tab-pane clearfix active" id="hotel">
-                   
+
                     <h3 class="text-center">Cari <b>Kamar Hotel</b><br /><span class="sub-title">(Domestik &amp; Internasional)</span></h3>
                     <form class="form form-horizontal form-hotel page-hotel" ng-submit="hotel.searchHotel()" autocomplete="off">
 
@@ -424,7 +424,7 @@
         @Html.Partial("/Views/Shared/Travorama20/_SearchLocation.cshtml")
         @Html.Partial("/Views/Shared/Travorama20/_SearchHotel.cshtml")
     </div><!-- .container -->
-    @if (ViewBag.DestinationName == null || ViewBag.DestinationName == "" )
+    @if (ViewBag.DestinationName == null || ViewBag.DestinationName == "")
     {
         <div class="page-slider">
             <div class="slider-wrapper" id="index-wrapper">
@@ -480,15 +480,17 @@
                 </div>
             </div>
         </div><!-- .slider -->
-    }else{
-        <div class="page-slider" style="background-image:url('/Assets/images/campaign/@(ViewBag.DestinationName.Replace(" ","")).jpg');">    
+    }
+    else
+    {
+        <div class="page-slider" style="background-image:url('/Assets/images/campaign/@(ViewBag.DestinationName.Replace(" ","")).jpg');">
             <div class="slider-text hidden">
                 <h1><img src="/Assets/images/enjoyyoureverymoment.png" alt="Enjoy Your Every Moment" /></h1>
                 <p>Ke mana pun Anda ingin bepergian, kami menyediakan pilihan penerbangan <br /> domestik dan internasional dari 900 maskapai</p>
             </div>
         </div><!-- .slider -->
     }
-        
+
 </section><!-- .section-search -->
 
 <section class="section-reason">
