@@ -24,8 +24,8 @@
                         <p class="form-control form-time">Durasi</p>
             </div>
                 <div class="col-half">
-                    <select class="form-control" name="nightclass" ng-model="hotelSearch.nightCount" ng-init="hotelSearch.nightCount = hotelSearch.nightrange[1]" >
-                        <option ng-repeat="number in hotelSearch.nightrange" value="{{number}}">{{number}} Malam</option>
+                    <select class="form-control" name="nightclass" ng-model="hotelSearch.nightCount">
+                        <option ng-selected="{{number == hotelSearch.nightCount}}" ng-repeat="number in hotelSearch.nightrange" value="{{number}}">{{number}} Malam</option>
                     </select>
                 </div>
                 </div>
