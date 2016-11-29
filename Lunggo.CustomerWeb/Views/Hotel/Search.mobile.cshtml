@@ -1,4 +1,7 @@
-﻿@{
+﻿@using Lunggo.ApCommon.Hotel.Service
+@using Lunggo.Framework.Extension
+@model Lunggo.CustomerWeb.Models.HotelSearchApiRequest
+@{
     Layout = "/Views/Shared/mobile/_Layout.cshtml";
     ViewBag.BodyClass = "page-hotel page-search";
     ViewBag.Title = "Pencarian Hotel";
@@ -6,6 +9,27 @@
     ViewBag.AngularController = "hotelSearchController";
 }
 
+@{
+    long location = 0;
+    var x = long.TryParse(Model.SearchParamObject.Location, out location);
+    var loc = "";
+    var foundLocation = HotelService.GetInstance().AutoCompletes.Where(c => c.Id == location).ToList()[0];
+    if (foundLocation != null)
+    {
+        if (foundLocation.Type == 1)
+        {
+            loc = foundLocation.Destination + ", " + foundLocation.Country;
+        }
+        else if (foundLocation.Type == 2)
+        {
+            loc = foundLocation.Zone + ", " + foundLocation.Destination + ", " + foundLocation.Country;
+        }
+        else if (foundLocation.Type == 4)
+        {
+            loc = foundLocation.HotelName + ", " + foundLocation.Destination + ", " + foundLocation.Country;
+        }
+    }
+}
 @section AdditionalCSS{
     <link href="/Assets/css/jquery-ui.min.css" rel="stylesheet" />
 }
@@ -20,9 +44,26 @@
 }
 
 @section PageJS{
+    <script>
+        
+        $(function () {
+            $("#slider-range").slider({
+                range: true,
+                min: 0,
+                max: 500,
+                values: [75, 300],
+                slide: function (event, ui) {
+                    $("#amount").val("$" + ui.values[0] + " - $" + ui.values[1]);
+                }
+            });
+            $("#amount").val("$" + $("#slider-range").slider("values", 0) +
+                " - $" + $("#slider-range").slider("values", 1));
+        });
+    </script>
+    <script>var loc = '@loc';</script>
     <script src="/Assets/mobile/js/HotelController.js"></script>
 
-@*<script type="text/javascript" src="/Assets/travorama20/js/HotelController.js"></script>*@
+<script type="text/javascript" src="/Assets/travorama20/js/HotelController.js"></script>
 <script src="/Assets/travorama20/angularDirectory/search/hotelSearch.service.js"></script>
 <script src="/Assets/travorama20/angularDirectory/common/hotelAutocomplete.service.js"></script>
 <script src="/Assets/travorama20/js/hotelSearchController.js"></script>
@@ -41,19 +82,27 @@
         </div>
     </div>
     <div class="search-list">
+        <div ng-show="!searchDone" class="text-center">
+            <img src="/Assets/images/load.gif" style="width: 30px; height: 30px; margin-top: 5%;">
+        </div>
         <ul class="hotel-list-container">
-            <li>
-                <div class="hotel-list clearfix">
-                    <div class="col-left-hotel"><div class="img-list" style="background-image: url(/Assets/mobile/images/Hotel/hotel-list-lg.jpg);"></div></div>
+            <li>@*ng-click="GotoDetailHotel(hotel.hotelCd)"*@
+                <div class="hotel-list clearfix" ng-repeat="hotel in hotels" >
+                    <div class="col-left-hotel"><div class="img-list" style="background-image: url({{hotel.mainImage}});"></div></div>
                     <div class="col-right-hotel">
-                        <div class="blue-txt bold-txt lg-txt">Bliss Hotel Singapore</div>
-                        <div class="star star-4 e-star"></div>
-                        <div class="location grey-txt">Denpasar Selatan</div>
+                        <div class="blue-txt bold-txt lg-txt">{{hotel.hotelName}}</div>
+                        <div class="star" ng-if="hotel.starRating == 1"></div>
+                        <div class="star star-2 " ng-if="hotel.starRating == 2"></div>
+                        <div class="star star-3 " ng-if="hotel.starRating == 3"></div>
+                        <div class="star star-4 " ng-if="hotel.starRating == 4"></div>
+                        <div class="star star-5 " ng-if ="hotel.starRating == 5"></div>
+                        <div class="location grey-txt">{{toTitleCase(hotel.address)}} {{toTitleCase(hotel.zone)}} <span ng-show="hotel.postalCd != null || hotel.postalCd.length > 0"> {{hotel.postalCd}}</span>
+                        </div>
                         <div class="price orange-txt">
                             <div class="txt-md semibold-txt">Harga per malam mulai dari:</div>
-                            <div class="underline-txt sm-txt">Rp 899.999.999</div>
+                            <div class="underline-txt sm-txt">Rp {{hotel.originalFare | currency:'':0}}</div>
                             <a href="/id/Hotel/DetailHotel" class="detail"></a>
-                            <div class="lg-txt"><b><sup>Rp</sup> 999.999.999</b></div>
+                            <div class="lg-txt"><b><sup>Rp</sup> {{hotel.netFare | currency:'':0}}</b></div>
                             <span class="xs-txt">(*Termasuk Pajak & Service Charge)</span>
                         </div>
                     </div>
@@ -84,20 +133,20 @@
         <header class="overlay__header">
             <h3 class="overlay__title">
                 FILTER
-                <span class="overlay__close" ng-click="SetOverlay()">X</span>
+                <span class="overlay__close" ng-click="PageConfig.SetOverlay('')">X</span>
             </h3>
         </header>
         <section class="overlay__content">
             <form name="filter" id="filter-hotel">
                 <div class="filter-group filter-group--price">
                     <div class="filter-group__header">
-                        <h4 class="filter-group__title">Harga (permalam)</h4>
+                        <h4 class="filter-group__title">Harga (per Malam)</h4>
                     </div>
                     <div class="filter-group__content">
-                        <div class="slider-price" id="slider-range"></div>
+                        <div class="slider-price slider-range" id="slider-range"></div>
                         <div class="slider-minmax">
-                            <span>{{filter.minPrice | number}}</span>
-                            <span class="pull-right">{{filter.maxPrice | number}}</span>
+                            <span>Rp {{filter.minPrice | number}}</span>
+                            <span class="pull-right">Rp {{filter.maxPrice | number}}</span>
                         </div>
                         <div class="hidden">
                             <input type="text" name="priceSliderValueMin" value="" class="price-slider-min" ng-model="filter.minPrice" />
@@ -111,30 +160,30 @@
                         <h4 class="filter-group__title">Peringkat Bintang Hotel</h4>
                     </div>
                     <div class="filter-group__content">
-                        <label class="checkbox">
+                        <label class="checkbox" ng-click="changeFilter('star', 1)" ng-class="{ 'active' : checkboxFilter.Star[0]}">
                             <div class="switch"></div>
                             <span class="star"></span>
-                            <input type="checkbox" name="check" class="check" value="false" />
+                            @*<input type="checkbox" name="check" class="check" ng-model="checkboxFilter.Star[0]" />*@
                         </label>
-                        <label class="checkbox">
+                        <label class="checkbox" ng-click="changeFilter('star', 2)" ng-class="{ 'active' : checkboxFilter.Star[1]}">
                             <div class="switch"></div>
                             <span class="star star-2"></span>
-                            <input type="checkbox" name="check" class="check" value="false" />
+                            @*<input type="checkbox" name="check" class="check" ng-model="checkboxFilter.Star[1]" />*@
                         </label>
-                        <label class="checkbox">
+                        <label class="checkbox" ng-click="changeFilter('star', 3)" ng-class="{ active: (filter.stars.indexOf(3) > -1) }">
                             <div class="switch"></div>
                             <span class="star star-3"></span>
-                            <input type="checkbox" name="check" class="check" value="false" />
+                            @*<input type="checkbox" name="check" class="check" ng-model="checkboxFilter.Star[2]" />*@
                         </label>
-                        <label class="checkbox">
+                        <label class="checkbox" ng-click="changeFilter('star', 4)" ng-class="{ active: (filter.stars.indexOf(4) > -1) }">
                             <div class="switch"></div>
                             <span class="star star-4"></span>
-                            <input type="checkbox" name="check" class="check" value="false" />
+                            @*<input type="checkbox" name="check" class="check"  ng-model="checkboxFilter.Star[3]" />*@
                         </label>
-                        <label class="checkbox">
-                            <div class="switch"></div>
+                        <label class="checkbox" ng-click="changeFilter('star', 5)" ng-class="{ active: (filter.stars.indexOf(5) > -1) }" >
+                            <div class=" switch"></div>
                             <span class="star star-5"></span>
-                            <input type="checkbox" name="check" class="check" value="false" />
+                            @*<input type="checkbox" name="check" class="check" ng-model="checkboxFilter.Star[4]" />*@
                         </label>
                     </div>
                 </div>
@@ -143,188 +192,88 @@
                         <h4 class="filter-group__title">Fasilitas</h4>
                     </div>
                     <div class="filter-group__content sh-list clearfix">
-                        <div class="col-half">
-                            <label class="checkbox">
+                        <div class="col-half" ng-repeat="facilityFilter in hotelFilterDisplayInfo.facilityFilter">
+                            <label class="checkbox" ng-click="changeFilter('facility', facilityFilter)" ng-class="{ active: (filter.facilities.indexOf(facilityFilter.code) > -1) }">
                                 <div class="switch"></div>
-                                <span class="bed-white">Bed</span>
-                                <input type="checkbox" name="check" class="check" value="false" />
+                                <span>{{facilityFilter.name}} ({{facilityFilter.count}})</span>
+                                @*<input type="checkbox" name="check" class="check" value="false" />*@
                             </label>
-                            <label class="checkbox">
-                                <div class="switch"></div>
-                                <span class="meal-white">Breakfast</span>
-                                <input type="checkbox" name="check" class="check" value="false" />
-                            </label>
-                            <label class="checkbox">
-                                <div class="switch"></div>
-                                <span class="ac-white">AC</span>
-                                <input type="checkbox" name="check" class="check" value="false" />
-                            </label>
-                            <label class="checkbox">
-                                <div class="switch"></div>
-                                <span class="pool-white">Pool</span>
-                                <input type="checkbox" name="check" class="check" value="false" />
-                            </label>
-                            <label class="checkbox">
-                                <div class="switch"></div>
-                                <span class="car-white">Car</span>
-                                <input type="checkbox" name="check" class="check" value="false" />
-                            </label>
-                            <label class="checkbox">
-                                <div class="switch"></div>
-                                <span class="bed-white">Bed</span>
-                                <input type="checkbox" name="check" class="check" value="false" />
-                            </label>
-                            <label class="checkbox">
-                                <div class="switch"></div>
-                                <span class="meal-white">Breakfast</span>
-                                <input type="checkbox" name="check" class="check" value="false" />
-                            </label>
-                            <label class="checkbox">
-                                <div class="switch"></div>
-                                <span class="ac-white">AC</span>
-                                <input type="checkbox" name="check" class="check" value="false" />
-                            </label>
-                            <label class="checkbox">
-                                <div class="switch"></div>
-                                <span class="pool-white">Pool</span>
-                                <input type="checkbox" name="check" class="check" value="false" />
-                            </label>
-                            <label class="checkbox">
-                                <div class="switch"></div>
-                                <span class="car-white">Car</span>
-                                <input type="checkbox" name="check" class="check" value="false" />
-                            </label>
+                            @*<label class="checkbox">
+                <div class="switch"></div>
+                <span class="meal-white">Breakfast</span>
+                <input type="checkbox" name="check" class="check" value="false" />
+            </label>
+            <label class="checkbox">
+                <div class="switch"></div>
+                <span class="ac-white">AC</span>
+                <input type="checkbox" name="check" class="check" value="false" />
+            </label>
+            <label class="checkbox">
+                <div class="switch"></div>
+                <span class="pool-white">Pool</span>
+                <input type="checkbox" name="check" class="check" value="false" />
+            </label>
+            <label class="checkbox">
+                <div class="switch"></div>
+                <span class="car-white">Car</span>
+                <input type="checkbox" name="check" class="check" value="false" />
+            </label>
+            <label class="checkbox">
+                <div class="switch"></div>
+                <span class="bed-white">Bed</span>
+                <input type="checkbox" name="check" class="check" value="false" />
+            </label>
+            <label class="checkbox">
+                <div class="switch"></div>
+                <span class="meal-white">Breakfast</span>
+                <input type="checkbox" name="check" class="check" value="false" />
+            </label>
+            <label class="checkbox">
+                <div class="switch"></div>
+                <span class="ac-white">AC</span>
+                <input type="checkbox" name="check" class="check" value="false" />
+            </label>
+            <label class="checkbox">
+                <div class="switch"></div>
+                <span class="pool-white">Pool</span>
+                <input type="checkbox" name="check" class="check" value="false" />
+            </label>
+            <label class="checkbox">
+                <div class="switch"></div>
+                <span class="car-white">Car</span>
+                <input type="checkbox" name="check" class="check" value="false" />
+            </label>*@
                         </div>
-                        <div class="col-half">
-                            <label class="checkbox">
+                        @*<div class="col-half" ng-repeat="facilityFilter in hotelFilterDisplayInfo.facilityFilter.slice(8, hotelFilterDisplayInfo.facilityFilter.length)">
+                            <label class="checkbox" ng-click="changeFilter('facility', facilityFilter)" ng-class="{ active: (filter.facilities.indexOf(facilityFilter.code) > -1) }">
                                 <div class="switch"></div>
-                                <span class="wifi-white">Public WiFi</span>
-                                <input type="checkbox" name="check" class="check" value="false" />
+                                <span>{{facilityFilter.name}} ({{facilityFilter.count}})</span>
+                                @*<input type="checkbox" name="check" class="check" value="false" />
                             </label>
-                            <label class="checkbox">
-                                <div class="switch"></div>
-                                <span class="bell-white">Room Service</span>
-                                <input type="checkbox" name="check" class="check" value="false" />
-                            </label>
-                            <label class="checkbox">
-                                <div class="switch"></div>
-                                <span class="tv-white">TV</span>
-                                <input type="checkbox" name="check" class="check" value="false" />
-                            </label>
-                            <label class="checkbox">
-                                <div class="switch"></div>
-                                <span class="bed-white">Bed</span>
-                                <input type="checkbox" name="check" class="check" value="false" />
-                            </label>
-                            <label class="checkbox">
-                                <div class="switch"></div>
-                                <span class="meal-white">Breakfast</span>
-                                <input type="checkbox" name="check" class="check" value="false" />
-                            </label>
-                            <label class="checkbox">
-                                <div class="switch"></div>
-                                <span class="bed-white">Bed</span>
-                                <input type="checkbox" name="check" class="check" value="false" />
-                            </label>
-                            <label class="checkbox">
-                                <div class="switch"></div>
-                                <span class="meal-white">Breakfast</span>
-                                <input type="checkbox" name="check" class="check" value="false" />
-                            </label>
-                            <label class="checkbox">
-                                <div class="switch"></div>
-                                <span class="ac-white">AC</span>
-                                <input type="checkbox" name="check" class="check" value="false" />
-                            </label>
-                            <label class="checkbox">
-                                <div class="switch"></div>
-                                <span class="pool-white">Pool</span>
-                                <input type="checkbox" name="check" class="check" value="false" />
-                            </label>
-                            <label class="checkbox">
-                                <div class="switch"></div>
-                                <span class="car-white">Car</span>
-                                <input type="checkbox" name="check" class="check" value="false" />
-                            </label>
-                        </div>
+                            
+                        </div>*@
                     </div>
-                    <a class="toggle" href="#"><span class="sh-open"></span><span class="sh-close"></span></a>
+                    <a class="toggle"><span class="sh-open"></span><span class="sh-close"></span></a>
                 </div>
-                <div class="filter-group filter-group--area">
+                <div class="filter-group filter-group--area" ng-show="hotelFilterDisplayInfo.zoneFilter.length > 0">
                     <div class="filter-group__header">
                         <h4 class="filter-group__title">Area</h4>
                     </div>
-                    <div class="filter-group__content clearfix">
-                        <div class="col-half">
-                            <label class="checkbox">
+                    <div class="filter-group__content sh-list clearfix">
+                        <div class="col-half" ng-repeat="zoneFilter in hotelFilterDisplayInfo.zoneFilter ">
+                            <label class="checkbox" ng-click="changeFilter('zone', zoneFilter)" ng-class="{ active: (filter.zones.indexOf(zoneFilter.code) > -1) }">
                                 <div class="switch"></div>
-                                <span>Ubud</span>
-                                <input type="checkbox" name="check" class="check" value="false" />
-                            </label>
-                            <label class="checkbox">
-                                <div class="switch"></div>
-                                <span>Kuta</span>
-                                <input type="checkbox" name="check" class="check" value="false" />
-                            </label>
-                        </div>
-                        <div class="col-half">
-                            <label class="checkbox">
-                                <div class="switch"></div>
-                                <span>Seminyak</span>
-                                <input type="checkbox" name="check" class="check" value="false" />
-                            </label>
-                            <label class="checkbox">
-                                <div class="switch"></div>
-                                <span>Legian</span>
-                                <input type="checkbox" name="check" class="check" value="false" />
+                                <span>{{zoneFilter.name}}</span>
+                                @*<input type="checkbox" name="check" class="check" value="false" />*@
                             </label>
                         </div>
                     </div>
+                    <a class="toggle"><span class="sh-open"></span><span class="sh-close"></span></a>
                 </div>
-                <div class="filter-group filter-group--room">
-                    <div class="filter-group__header">
-                        <h4 class="filter-group__title">Jenis Kamar</h4>
-                    </div>
-                    <div class="filter-group__content clearfix">
-                        <div class="col-half">
-                            <label class="checkbox">
-                                <div class="switch"></div>
-                                <span>Single</span>
-                                <input type="checkbox" name="check" class="check" value="false" />
-                            </label>
-                            <label class="checkbox">
-                                <div class="switch"></div>
-                                <span>Triple</span>
-                                <input type="checkbox" name="check" class="check" value="false" />
-                            </label>
-                            <label class="checkbox">
-                                <div class="switch"></div>
-                                <span>Twin</span>
-                                <input type="checkbox" name="check" class="check" value="false" />
-                            </label>
-                        </div>
-                        <div class="col-half">
-                            <label class="checkbox">
-                                <div class="switch"></div>
-                                <span>Queen</span>
-                                <input type="checkbox" name="check" class="check" value="false" />
-                            </label>
-                            <label class="checkbox">
-                                <div class="switch"></div>
-                                <span>Double</span>
-                                <input type="checkbox" name="check" class="check" value="false" />
-                            </label>
-                            <label class="checkbox">
-                                <div class="switch"></div>
-                                <span>King</span>
-                                <input type="checkbox" name="check" class="check" value="false" />
-                            </label>
-                        </div>
-                    </div>
-                </div>
+                
             </form>
             <div class="reset">
-                <button class="btn btn-reset" id="reset">Reset</button>
+                <button class="btn btn-reset" id="reset" ng-click ="resetButtonFilter()">Reset</button>
             </div>
         </section>
     </div>
@@ -334,7 +283,7 @@
         <header class="overlay__header">
             <h3 class="overlay__title">
                 SORTIR
-                <span class="overlay__close" ng-click="SetOverlay()">X</span>
+                <span class="overlay__close" ng-click="PageConfig.SetOverlay('')">X</span>
             </h3>
         </header>
         <section class="overlay__content">

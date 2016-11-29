@@ -9,7 +9,9 @@ app.controller('hotelSearchController', ['$scope', '$log', '$http', '$resource',
 
     $scope.filterDisabled = true;
     var isFirstload = true;
-
+    $scope.checkboxFilter = {
+        Star: [false, false, false, false, false]
+    }
     //@Url.Action("Search", "Hotel")?zzz={{departureDate}}" method="POST"
     //=============== hotel start ======================
     //$scope.hotel = {};
@@ -127,7 +129,7 @@ app.controller('hotelSearchController', ['$scope', '$log', '$http', '$resource',
     $scope.filter.facilities = null;
     $scope.sortByType = { "ascendingPrice": "ASCENDINGPRICE", "descendingPrice": "DESCENDINGPRICE"};
     $scope.sortBy = $scope.sortByType.ascendingPrice;
-
+    
     $scope.page = 1;
     $scope.perPage = 20;
     $scope.pageCount = 1;
@@ -140,6 +142,8 @@ app.controller('hotelSearchController', ['$scope', '$log', '$http', '$resource',
         //$scope.hotel.searchId = $scope.model.searchId;
         $scope.hotelSearch.location = $scope.model.searchParamObject.location;
         $scope.hotelSearch.checkinDate = $scope.model.searchParamObject.checkinDate;
+        $scope.hotelSearch.checkinDateDisplay = moment($scope.hotelSearch.checkinDate).locale("id").format('LL');
+        $scope.hotelSearch.checkoutDateDisplay = moment($scope.hotelSearch.checkoutDate).locale("id").format('LL');
         $scope.hotelSearch.checkoutDate = $scope.model.searchParamObject.checkoutDate;
         $scope.hotelSearch.destinationCheckinDate = $scope.model.searchParamObject.checkinDate;
         $scope.hotelSearch.destinationCheckoutDate = $scope.model.searchParamObject.checkoutDate;
@@ -163,6 +167,8 @@ app.controller('hotelSearchController', ['$scope', '$log', '$http', '$resource',
         });
     }
 
+    $scope.minPrice = '';
+    $scope.maxPrice = '';
     hotelSearchSvc.initializeSearchForm($scope);
 
     $scope.searchHotel = function (filter, sort) {
@@ -193,6 +199,8 @@ app.controller('hotelSearchController', ['$scope', '$log', '$http', '$resource',
             if (isFirstload) {
                 $scope.filter.minPrice = data.minPrice;
                 $scope.filter.maxPrice = data.maxPrice;
+                $scope.minPrice = data.minPrice;
+                $scope.maxPrice = data.maxPrice;
             initiatePriceSlider();
 
                 $scope.hotelFilterDisplayInfo = data.hotelFilterDisplayInfo;
@@ -389,5 +397,23 @@ app.controller('hotelSearchController', ['$scope', '$log', '$http', '$resource',
     $scope.toTitleCase = function(str)
     {
         return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+    }
+
+    $('.overlay .filter-group--facility a').on('click touchstart', function () {
+        $('.overlay .filter-group--facility a').toggleClass('active');
+        $('.overlay .sh-list').toggleClass('opened');
+    });
+
+    $('.overlay .filter-group--area').on('click touchstart', function () {
+        $('.overlay .filter-group--facility a').toggleClass('active');
+        $('.overlay .sh-list').toggleClass('opened');
+    });
+
+    $scope.resetButtonFilter = function() {
+        $scope.filter.stars = [];
+        $scope.filter.zones = [];
+        $scope.filter.facilities = [];
+        $scope.filter.minPrice = $scope.minPrice - ($scope.minPrice % 100000);
+        $scope.filter.maxPrice = $scope.maxPrice + (100000 - $scope.maxPrice % 100000);
     }
 }]);

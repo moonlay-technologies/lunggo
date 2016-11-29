@@ -21,8 +21,8 @@
 
 <div class="hotel-summary">
     <div class="summary-left">
-        <div><b>Denpasar</b>, 2 Kamar</div>
-        <div class="semibold-txt">1 Malam (4 Okt 2016 - 5 Okt 2016)</div>
+        <div><b>{{loc}}</b>, {{hotelSearch.roomCount}} Kamar</div>
+        <div class="semibold-txt">{{hotelSearch.nightCount}} Malam ({{hotelSearch.checkinDateDisplay}} - {{hotelSearch.checkoutDateDisplay}})</div>
     </div>
     <a ng-click="SetOverlay('hotel-form')" class="summary-right"><span>GANTI</span></a>
 </div>
