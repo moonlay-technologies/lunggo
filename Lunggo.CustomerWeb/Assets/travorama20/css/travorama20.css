@@ -5175,6 +5175,11 @@ file: /Assets/travorama20/css/_page_flight.scss
       border-bottom: none; }
     .page-hotel.search-hotel li.list-hotel .blue-txt.semibold-txt.pull-right {
       margin-top: 15px; }
+    .page-hotel.search-hotel li.list-hotel .location {
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      min-width: 320px;
+      overflow: hidden; }
   .page-hotel .search-result-form {
     background: #032e55;
     color: #fff;

@@ -473,6 +473,12 @@
             }
             &:last-child .list-row {border-bottom: none;}
             .blue-txt.semibold-txt.pull-right {margin-top: 15px;}
+            .location {
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                min-width: 320px;
+                overflow: hidden;
+            }
         }
     }
     .search-result-form {
