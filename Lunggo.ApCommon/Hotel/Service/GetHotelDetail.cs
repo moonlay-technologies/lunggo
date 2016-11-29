@@ -29,15 +29,14 @@ namespace Lunggo.ApCommon.Hotel.Service
                     ErrorMessages = new List<string> {"SearchID no longer valid"}
                 };
             hotelDetail.Rooms = SetRoomPerRate(hotelDetail.Rooms);
+            hotelDetail.Rooms = FilterRoomByCapacity(hotelDetail.Rooms);
             foreach (var room in hotelDetail.Rooms)
             {
-                
                     var cid = room.SingleRate.RateKey != null ? room.SingleRate.RateKey.Split('|')[0] : room.SingleRate.RegsId.Split('|')[0];
                     var checkInDate = new DateTime(Convert.ToInt32(cid.Substring(0, 4)),
                          Convert.ToInt32(cid.Substring(4, 2)), Convert.ToInt32(cid.Substring(6, 2)));
                     room.SingleRate.TermAndCondition = GetRateCommentFromTableStorage(room.SingleRate.RateCommentsId,
                         checkInDate).Select(x => x.Description).ToList();
-                
             }
 
             return new GetHotelDetailOutput
@@ -85,6 +84,7 @@ namespace Lunggo.ApCommon.Hotel.Service
             var roomList = new List<HotelRoom>();
             foreach (var room in hotelRoom)
             {
+
                 foreach (var rate in room.Rates)
                 {
                     var singleRoom = new HotelRoom
@@ -103,6 +103,43 @@ namespace Lunggo.ApCommon.Hotel.Service
             }
             return roomList;
         }
+
+        public List<HotelRoom> FilterRoomByCapacity(List<HotelRoom> rooms)
+        {
+            var maxPax = 0;
+            var maxAdult = 0;
+            var maxChild = 0;
+            var roomList = new List<HotelRoom>();
+            //Take Max Pax first
+            foreach (var room in rooms)
+            {
+                var totalPax = room.SingleRate.AdultCount + room.SingleRate.ChildCount;
+                if (maxPax == 0)
+                {
+                    maxPax = totalPax;
+                }
+                if (totalPax > maxPax)
+                {
+                    maxPax = totalPax;
+                }
+                if (room.SingleRate.AdultCount > maxAdult)
+                    maxAdult = room.SingleRate.AdultCount;
+                if (room.SingleRate.ChildCount > maxChild)
+                    maxChild = room.SingleRate.ChildCount;
+            }
+
+            foreach (var room in rooms)
+            {
+                var roomPax = GetPaxCapacity(room.RoomCode);
+                var roomAdult = GetMaxAdult(room.RoomCode);
+                var roomChild = GetMaxChild(room.RoomCode);
+                if (roomPax >= maxPax && roomAdult >= maxAdult && roomChild >= maxChild)
+                {
+                    roomList.Add(room);
+                }
+            }
+            return roomList;
+        } 
 
     }
 }

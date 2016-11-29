@@ -4,9 +4,11 @@ using System.Configuration;
 using System.Net.Http;
 using System.Security.Cryptography;
 using System.Text;
+using Lunggo.ApCommon.Hotel.Constant;
 using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Content.Model;
 using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Sdk.auto.messages;
 using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Sdk.types;
+using Lunggo.Framework.Config;
 using Newtonsoft.Json;
 
 namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Sdk
@@ -48,6 +50,24 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Sdk
             this.version = new HotelApiVersion(HotelApiVersion.versions.V1);
             this.basePath = environment;
             CheckHotelApiClientConfig();
+        }
+
+        public HotelApiClient(HotelApiType apiType)
+        {
+            this.apiKey = ConfigManager.GetInstance().GetConfigValue("hotel", "apiKey");
+            this.sharedSecret = ConfigManager.GetInstance().GetConfigValue("hotel", "apiSecret");
+            this.version = new HotelApiVersion(HotelApiVersion.versions.V1);
+            if (apiType == HotelApiType.BookingApi)
+            {
+                this.basePath = ConfigManager.GetInstance().GetConfigValue("hotel", "apiUrl");
+            }
+            else
+            {
+                this.basePath = ConfigManager.GetInstance().GetConfigValue("hotel", "contentUrl");
+            }
+            Console.WriteLine("Url : "+this.basePath);
+            CheckHotelApiClientConfig();
+
         }
 
         public HotelApiClient(string apiKey, string sharedSecret, string environment, HotelApiVersion version)

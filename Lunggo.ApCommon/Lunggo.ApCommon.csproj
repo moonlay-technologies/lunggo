@@ -231,6 +231,7 @@
     <Compile Include="Flight\Model\FlightReservationSearch.cs" />
     <Compile Include="Flight\Model\FlightRsvRule.cs" />
     <Compile Include="Hotel\Constant\AccomodationType.cs" />
+    <Compile Include="Hotel\Constant\HotelApiType.cs" />
     <Compile Include="Hotel\Constant\HotelError.cs" />
     <Compile Include="Hotel\Constant\PaymentType.cs" />
     <Compile Include="Hotel\Constant\CheckRateStatus.cs" />

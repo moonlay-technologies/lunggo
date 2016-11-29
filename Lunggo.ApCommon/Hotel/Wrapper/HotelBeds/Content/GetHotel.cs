@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
 using System.Globalization;
 using System.Threading;
+using Lunggo.ApCommon.Hotel.Constant;
 using Lunggo.ApCommon.Hotel.Model;
 using Lunggo.ApCommon.Hotel.Service;
 using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Content.Model;
@@ -27,9 +28,23 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.Content
 
             try
             {
-                var client = new HotelApiClient("p8zy585gmgtkjvvecb982azn", "QrwuWTNf8a",
-                    "https://api.test.hotelbeds.com/hotel-content-api");
-                //https://api.test.hotelbeds.com/hotel-content-api/1.0/hotels?fields=all&language=ENG&from=1&to=100&useSecondaryLanguage=false
+                //var client = new HotelApiClient("zvwtnf83dj86bf58sejb6e3f", "HBbpT4u3xE",
+                //    "https://api.test.hotelbeds.com/hotel-content-api");
+                var client = new HotelApiClient(HotelApiType.ContentApi);
+                //StatusRS status = client.status();
+
+                //if (status != null && status.error == null)
+                //    Debug.Print("StatusRS: " + status.status);
+                //else if (status != null && status.error != null)
+                //{
+                //    Debug.Print("StatusRS: " + status.status + " " + status.error.code + ": " + status.error.message);
+                //    return;
+                //}
+                //else if (status == null)
+                //{
+                //    Debug.Print("StatusRS: Is not available.");
+                //    return;
+                //}
                 var total = GetTotalHotel(client);
                 var isValid = true;
                 do

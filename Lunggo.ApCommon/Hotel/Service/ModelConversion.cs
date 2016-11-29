@@ -205,9 +205,9 @@ namespace Lunggo.ApCommon.Hotel.Service
                 }
             }
             hotel.NetTotalFare = price;
-            hotel.OriginalTotalFare = price * 1.01M;
+            hotel.OriginalTotalFare = Math.Round(price * 1.01M);
             hotel.NetFare = Math.Round((hotel.NetTotalFare / roomCount) / night);
-            hotel.OriginalFare = hotel.NetFare*1.01M;
+            hotel.OriginalFare = Math.Round(hotel.NetFare*1.01M);
             
         }
 
@@ -491,17 +491,17 @@ namespace Lunggo.ApCommon.Hotel.Service
         public void SetDisplayPriceHotelRate(HotelRateForDisplay rateDisplay,HotelRate rate)
         {
             rateDisplay.NetTotalPrice = rate.Price.Local;
-            rateDisplay.OriginalTotalPrice = rateDisplay.NetTotalPrice*1.01M;
+            rateDisplay.OriginalTotalPrice = Math.Round(rateDisplay.NetTotalPrice*1.01M);
 
             rateDisplay.NetPrice = Math.Round((rateDisplay.NetTotalPrice / rate.RoomCount) / rate.NightCount);
-            rateDisplay.OriginalPrice = rateDisplay.NetPrice * 1.01M;
+            rateDisplay.OriginalPrice = Math.Round(rateDisplay.NetPrice * 1.01M);
 
             if (!rate.Class.Equals("NRF") && rateDisplay.Cancellation != null)
             {
                 var margin = rate.Price.MarginNominal / rate.Price.Supplier;
                 foreach (var data in rateDisplay.Cancellation)
                 {
-                    data.Fee = data.Fee * (1 + margin);
+                    data.Fee = Math.Round(data.Fee * (1 + margin));
                     data.SingleFee = Math.Round((data.Fee/rate.RoomCount)/rate.NightCount);
                 }
             }

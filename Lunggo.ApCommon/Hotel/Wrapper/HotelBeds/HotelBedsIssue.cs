@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Lunggo.ApCommon.Hotel.Constant;
 using Lunggo.ApCommon.Hotel.Model;
 using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Sdk;
 using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Sdk.auto.common;
@@ -12,7 +13,8 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds
     {
         public HotelIssueTicketResult IssueHotel(HotelIssueInfo hotelIssueInfo)
         {
-            var client = new HotelApiClient("p8zy585gmgtkjvvecb982azn", "QrwuWTNf8a", "https://api.test.hotelbeds.com/hotel-api");
+            //var client = new HotelApiClient("p8zy585gmgtkjvvecb982azn", "QrwuWTNf8a", "https://api.test.hotelbeds.com/hotel-api");
+            var client = new HotelApiClient(HotelApiType.BookingApi);
             var booking = new Booking();
 
             var firstname = hotelIssueInfo.Pax[0].FirstName;

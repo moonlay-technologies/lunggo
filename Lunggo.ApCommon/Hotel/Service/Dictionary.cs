@@ -1075,6 +1075,15 @@ namespace Lunggo.ApCommon.Hotel.Service
             return code == null ? 0 : Rooms.Where(room => room.RoomCd == code).Select(room => room.MaxAdult).FirstOrDefault();
         }
 
+        public int GetMaxChild(string code)
+        {
+            if (code == null)
+            {
+                return 0;
+            }
+            return Rooms.Where(room => room.RoomCd == code).Select(room => room.MaxChild).FirstOrDefault();
+        }
+
         public int GetPaxCapacity(string code)
         {
             if (code == null)
