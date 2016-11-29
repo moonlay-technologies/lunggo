@@ -242,6 +242,7 @@
                 padding: 14px 25px;
                 border: 1px solid #ccc;
                 background: #fff;
+                height: 133px;
                 .room-rl { 
                     cursor:pointer;
                     padding: 10px 0;
@@ -317,7 +318,6 @@
             display: none;
             .col-left-bottom {display:none;}
             .col-left-top {                 
-                border-right: 1px dashed #1daee4;
                 .sm-slider {padding: 30px 30px 0;
                     .lSSlideOuter .lSPager.lSGallery {display:none;}
                     .lSAction {
@@ -331,12 +331,12 @@
                             @include border-radius(30px);
                             top: 50%;
                             -webkit-appearance: none;
-                            background: #1daee4;
+                            border: 15px solid #1daee4;
                             box-shadow: none;
-                            border: 0;
                             opacity: 1;
                             -webkit-transition: none;
                             transition: none;
+                            margin-top: -30px;
                         }
                         &>.lSPrev {
                             left: 0;
@@ -347,6 +347,9 @@
                                 height: 14px;
                                 display: inline-block;
                                 margin: 8px 10px;
+                                position: absolute;
+                                margin-left: -5px;
+                                margin-top: -7px;
                             }
                         } &>.lSNext {
                             right: 0;
@@ -357,6 +360,9 @@
                                 height: 14px;
                                 display: inline-block;
                                 margin: 8px 10px;
+                                position: absolute;
+                                margin-left: -5px;
+                                margin-top: -7px;
                             }
                         }
                     }
@@ -404,12 +410,15 @@
             }
             .col-right-result {
                 padding: 15px;
+                border-left: 1px dashed #1daee4;
+                min-height: 212px;
                 .hd-right-container {
                     margin: 15px;
                     margin-right: 0;
+                    padding-right: 15px;
                     max-height: 270px;
-                    overflow-y: hidden;
-                    &::-webkit-scrollbar {width: 6px;}
+                    overflow-y: auto;
+                    &::-webkit-scrollbar {width: 13px;}
                     &::-webkit-scrollbar-track {background: #ddd;}
                     &::-webkit-scrollbar-thumb {background: #999;}
                 }
@@ -435,6 +444,7 @@
                             margin-right: 10px;
                         }
                     }
+                    .hd-txt {padding-left: 20px;}
                 }
             }
         }
@@ -493,6 +503,7 @@
                         }
                     }
                 }
+                .tnc-hotel {margin-top: 15px;}
             }
         }
         .ih-row {
