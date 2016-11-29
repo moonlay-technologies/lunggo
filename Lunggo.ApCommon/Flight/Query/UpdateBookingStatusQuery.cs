@@ -29,7 +29,7 @@ namespace Lunggo.ApCommon.Flight.Query
             clauseBuilder.Append(
                 @"WHEN @BookingStatusCd = 'TKTG' THEN ");
             clauseBuilder.Append(
-                    @"CASE WHEN (BookingStatusCd = 'BOOK') ");
+                    @"CASE WHEN ((BookingStatusCd = 'BOOK') OR (BookingStatusCd = 'FAIL')) ");
             clauseBuilder.Append(
                         @"THEN @BookingStatusCd ");
             clauseBuilder.Append(
@@ -49,7 +49,7 @@ namespace Lunggo.ApCommon.Flight.Query
             clauseBuilder.Append(
                 @"WHEN @BookingStatusCd = 'TKTD' THEN ");
             clauseBuilder.Append(
-                    @"CASE WHEN ((BookingStatusCd = 'BOOK') OR (BookingStatusCd = 'TKTG')) ");
+                    @"CASE WHEN ((BookingStatusCd = 'BOOK') OR (BookingStatusCd = 'TKTG') OR (BookingStatusCd = 'FAIL')) ");
             clauseBuilder.Append(
                         @"THEN @BookingStatusCd ");
             clauseBuilder.Append(

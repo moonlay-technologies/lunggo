@@ -245,34 +245,44 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Mystifly
 
         private static void CalculateBreakdownPortion(FlightItinerary flightItinerary, PricedItinerary pricedItinerary)
         {
-            var adultBreakdown =
+            var singleAdultBreakdown =
                 pricedItinerary.AirItineraryPricingInfo.PTC_FareBreakdowns.SingleOrDefault(
                     ptc => ptc.PassengerTypeQuantity.Code == PassengerType.ADT);
-            var childBreakdown =
+            var singleChildBreakdown =
                 pricedItinerary.AirItineraryPricingInfo.PTC_FareBreakdowns.SingleOrDefault(
                     ptc => ptc.PassengerTypeQuantity.Code == PassengerType.CHD);
-            var infantBreakdown =
+            var singleInfantBreakdown =
                 pricedItinerary.AirItineraryPricingInfo.PTC_FareBreakdowns.SingleOrDefault(
                     ptc => ptc.PassengerTypeQuantity.Code == PassengerType.INF);
 
-            var totalBreakdownPrice =
+            var totalSinglesPrice =
                 pricedItinerary.AirItineraryPricingInfo.PTC_FareBreakdowns.Sum(ptc => decimal.Parse(ptc.PassengerFare.TotalFare.Amount));
 
-            if (adultBreakdown != null)
+            decimal singleAdultPortion = 0, singleChildPortion = 0, singleInfantPortion = 0;
+
+            if (singleAdultBreakdown != null)
             {
-                var adultPrice = decimal.Parse(adultBreakdown.PassengerFare.TotalFare.Amount);
-                flightItinerary.AdultPricePortion = adultPrice / totalBreakdownPrice;
+                var singleAdultPrice = decimal.Parse(singleAdultBreakdown.PassengerFare.TotalFare.Amount);
+                singleAdultPortion = singleAdultPrice / totalSinglesPrice;
             }
-            if (childBreakdown != null)
+            if (singleChildBreakdown != null)
             {
-                var childPrice = decimal.Parse(childBreakdown.PassengerFare.TotalFare.Amount);
-                flightItinerary.ChildPricePortion = childPrice / totalBreakdownPrice;
+                var singleChildPrice = decimal.Parse(singleChildBreakdown.PassengerFare.TotalFare.Amount);
+                singleChildPortion = singleChildPrice / totalSinglesPrice;
             }
-            if (infantBreakdown != null)
+            if (singleInfantBreakdown != null)
             {
-                var infantPrice = decimal.Parse(infantBreakdown.PassengerFare.TotalFare.Amount);
-                flightItinerary.InfantPricePortion = infantPrice / totalBreakdownPrice;
+                var singleInfantPrice = decimal.Parse(singleInfantBreakdown.PassengerFare.TotalFare.Amount);
+                singleInfantPortion = singleInfantPrice / totalSinglesPrice;
             }
+
+            var totalPortion = singleAdultPortion*flightItinerary.AdultCount +
+                               singleChildPortion*flightItinerary.ChildCount +
+                               singleInfantPortion*flightItinerary.InfantCount;
+
+            flightItinerary.AdultPricePortion = singleAdultPortion*flightItinerary.AdultCount/totalPortion;
+            flightItinerary.ChildPricePortion = singleChildPortion*flightItinerary.ChildCount/totalPortion;
+            flightItinerary.InfantPricePortion = singleInfantPortion*flightItinerary.InfantCount/totalPortion;
         }
 
         private static bool ItineraryValid(PricedItinerary pricedItinerary)
