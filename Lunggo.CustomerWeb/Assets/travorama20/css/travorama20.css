@@ -5331,6 +5331,8 @@ file: /Assets/travorama20/css/_page_flight.scss
         padding-left: 30px; }
         .page-hotel .travorama-hotel .search-list .search-list-result .col-right-result .sort .col-xs-left {
           margin-top: 5px; }
+        .page-hotel .travorama-hotel .search-list .search-list-result .col-right-result .hl-wrapper {
+          display: block; }
         .page-hotel .travorama-hotel .search-list .search-list-result .col-right-result .hotel-list {
           margin-top: 15px;
           padding: 14px;

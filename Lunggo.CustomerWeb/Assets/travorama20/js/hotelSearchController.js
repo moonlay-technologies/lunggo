@@ -1,5 +1,5 @@
 ﻿// home controller
-app.controller('hotelSearchController', ['$scope', '$log', '$http', '$resource', '$timeout', 'hotelSearchSvc', 'hotelAutocompleteSvc', function ($scope, $log, $http, $resource, $timeout, hotelSearchSvc, hotelAutocompleteSvc) {
+app.controller('hotelSearchController', ['$scope', '$log', '$window', '$http', '$resource', '$timeout', 'hotelSearchSvc', 'hotelAutocompleteSvc', function ($scope, $log, $window, $http, $resource, $timeout, hotelSearchSvc, hotelAutocompleteSvc) {
 
     $scope.destinationName = "";
     $scope.model = {};
@@ -37,7 +37,7 @@ app.controller('hotelSearchController', ['$scope', '$log', '$http', '$resource',
     $scope.filter.zones = [];
     $scope.filter.stars = null;
     $scope.filter.facilities = null;
-    $scope.sortByType = { "ascendingPrice": "ASCENDINGPRICE", "descendingPrice": "DESCENDINGPRICE"};
+    $scope.sortByType = { "ascendingPrice": "ASCENDINGPRICE", "descendingPrice": "DESCENDINGPRICE" };
     $scope.sortBy = $scope.sortByType.ascendingPrice;
 
     $scope.page = 1;
@@ -69,7 +69,7 @@ app.controller('hotelSearchController', ['$scope', '$log', '$http', '$resource',
     }
 
     var searchPromise = function () {
-        var pagination = { 'sortBy': $scope.sortBy, 'page': $scope.page, 'perPage' : $scope.perPage };
+        var pagination = { 'sortBy': $scope.sortBy, 'page': $scope.page, 'perPage': $scope.perPage };
         return hotelSearchSvc.searchHotel($scope.hotelSearch, $scope.filter, pagination).$promise.then(function (data) {
             return data;
         });
@@ -96,7 +96,7 @@ app.controller('hotelSearchController', ['$scope', '$log', '$http', '$resource',
             $scope.totalActualHotel = data.returnedHotelCount;
             $scope.returnedHotelCount = data.returnedHotelCount;
             $scope.filteredHotelCount = data.filteredHotelCount;
-            
+
             $scope.page = data.page;
             $scope.perPage = data.perPage;
             $scope.pageCount = data.pageCount;
@@ -105,7 +105,7 @@ app.controller('hotelSearchController', ['$scope', '$log', '$http', '$resource',
             if (isFirstload) {
                 $scope.filter.minPrice = data.minPrice;
                 $scope.filter.maxPrice = data.maxPrice;
-            initiatePriceSlider();
+                initiatePriceSlider();
 
                 $scope.hotelFilterDisplayInfo = data.hotelFilterDisplayInfo;
                 isFirstload = false;
@@ -140,10 +140,15 @@ app.controller('hotelSearchController', ['$scope', '$log', '$http', '$resource',
 
     $scope.GotoDetailHotel = function (hotelCd) {
         $log.debug('redirect to detail hotel with hotelCd: ' + hotelCd);
-        location.href = '/id/Hotel/DetailHotel/?' +
+        //location.href = '/id/Hotel/DetailHotel/?' +
+        //    "searchId=" + $scope.hotelSearch.searchId + "&" +
+        //    "hotelCd=" + hotelCd + "&" +
+        //    "searchParam=" + $scope.searchParam;
+
+        $window.open('/id/Hotel/DetailHotel/?' +
             "searchId=" + $scope.hotelSearch.searchId + "&" +
-            "hotelCd=" + hotelCd + "&" + 
-            "searchParam=" + $scope.searchParam;
+            "hotelCd=" + hotelCd + "&" +
+            "searchParam=" + $scope.searchParam, '_blank');
     }
 
     $scope.changeFilter = function (filterType, value) {
@@ -219,7 +224,7 @@ app.controller('hotelSearchController', ['$scope', '$log', '$http', '$resource',
             }
         });
     }
-    
+
     //$scope.$watch('hotel.locationDisplay', function (newValue, oldValue) {
     //    if (newValue.length >= 3) {
     //        hotelAutocompleteSvc.resource.get({ prefix: newValue }).$promise.then(function (data) {

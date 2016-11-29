@@ -17,10 +17,6 @@
     //var found = HotelService.GetInstance()._Autocompletes.TryGetValue(Convert.ToInt64(Model.Location), out loc);
 }
 @section AdditionalJS {
-    @*<script src="/Assets/js/angular.min.js"></script>
-    <script src="/Assets/js/angular-animate.min.js"></script>
-    <script src="/Assets/js/angular-route.min.js"></script>*@
-
     <script src="/Assets/js/jquery-ui.min.js"></script>
     <script type="text/javascript" src="/Assets/js/jquery.ui.datepicker-id.js"></script>
     <script type="text/javascript" src="/Scripts/bootstrap.min.js"></script>
@@ -81,7 +77,6 @@
                                 <input type="text" name="priceSliderValueMax" value="" class="slider-range-max" ng-model="filter.maxPrice" />
                             </div>
                         </div>
-
                         <div class="filter-group">
                             <label class="filter-title">Bintang Hotel</label> @*- {{filter.stars}}*@
                             <div class="rating">
@@ -150,11 +145,7 @@
                             </div>
                         </div>
                     </div>
-                    @*<div>
-                        <button class="pull-right" ng-click="filterHotels()">filter button</button>
-                    </div>*@
                 </div>
-
                 <div class="col-right-result">
                     <div class="sort clearfix" ng-show="totalHotelCount > 0">
                         <div class="col-xs-left"><b>Sort By:</b></div>
@@ -173,83 +164,75 @@
                             </label>
                         </div>
                     </div>
-
                     <div ng-show="!searchDone" class="text-center">
                         <img src="/Assets/images/load.gif" style="width: 50px; height: 50px; margin-top: 5%;">
                     </div>
-
                     <div class="text-center" ng-show="searchDone && returnedHotelCount == 0"><h3> Hotel tidak ditemukan, silakan ganti filter atau destinasi anda.</h3></div>
-
-
                     <div class="hotel-list-container" ng-show="searchDone">
-                        <div class="hotel-list clearfix pointer" ng-repeat="hotel in hotels" ng-click="GotoDetailHotel(hotel.hotelCd)">
-                            <div class="col-2">
-                                <img class="img-list" hotel-list-image ng-src="{{hotel.mainImage}}" alt="Hotel" />
-                                @*<img class="img-list" src="/Assets/travorama20/images/Hotel/no-hotel.png" alt="Hotel" />*@
-                            </div>
-                            <div class="col-8">
-                                <div class="clearfix">
-                                    <div class="col-8 blue-txt bg">{{hotel.hotelName}}</div>
-                                    <div class="col-2 facility">
-                                        <span class="wifi" ng-show="hotel.isWifiAccessAvailable"></span>
-                                        <span class="meal" ng-show="hotel.restaurant"></span>
-                                    </div>
+                        <a ng-repeat="hotel in hotels" ng-click="GotoDetailHotel(hotel.hotelCd)" class="hl-wrapper">
+                        @*<a ng-repeat="hotel in hotels" ng-href="{{hotel.hotelCd}}" target="_blank" style="display: block">*@
+                            <div class="hotel-list clearfix pointer">
+                                <div class="col-2">
+                                    <img class="img-list" hotel-list-image ng-src="{{hotel.mainImage}}" alt="Hotel" />
                                 </div>
-                
-                                <div ng-class="{
+                                <div class="col-8">
+                                    <div class="clearfix">
+                                        <div class="col-8 blue-txt bg">{{hotel.hotelName}}</div>
+                                        <div class="col-2 facility">
+                                            <span class="wifi" ng-show="hotel.isWifiAccessAvailable"></span>
+                                            <span class="meal" ng-show="hotel.restaurant"></span>
+                                        </div>
+                                    </div>
+                                    <div ng-class="{
                                      'star': hotel.starRating == 1,
                                      'star star-2': hotel.starRating == 2,
                                      'star star-3': hotel.starRating == 3,
                                      'star star-4': hotel.starRating == 4,
                                      'star star-5': hotel.starRating == 5}">
-                                </div>
-                                
-                                <div class="location">
-                                    <div>{{hotel.address}} {{hotel.zone}}</div>
-                                    {{hotel.city}}<span ng-show ="hotel.postalCd != null || hotel.postalCd.length > 0"> {{hotel.postalCd}}</span>
-                                </div>
-                                @*=================== ini review row ================*@
-                                <div class="review clearfix">
-                                    <div class="col-half left">
-                                        <b><span class="md-txt">8.0</span> - </b> Sangat Baik
-                                        <br /><span class="grey-txt">540 ulasan</span>
                                     </div>
-                                    <div class="col-half">
-                                        <span class="trip-advisor"></span>
-                                        <br /><span class="grey-txt">540 ulasan</span>
+                                    <div class="location">
+                                        <div>{{hotel.address}} {{hotel.zone}}</div>
+                                        {{hotel.city}}<span ng-show="hotel.postalCd != null || hotel.postalCd.length > 0"> {{hotel.postalCd}}</span>
                                     </div>
-                                </div>
-                                @*=================== ini review row ================*@
-                                <div class="price clearfix">
-                                    <div class="col-half">
-                                        <span class="txt-md"><b>Harga per malam mulai dari:</b></span>
-                                        <br /><span class="xs-txt">(*Termasuk Pajak & Service Charge)</span>
+                                    @*=================== ini review row ================*@
+                                    <div class="review clearfix">
+                                        <div class="col-half left">
+                                            <b><span class="md-txt">8.0</span> - </b> Sangat Baik
+                                            <br /><span class="grey-txt">540 ulasan</span>
+                                        </div>
+                                        <div class="col-half">
+                                            <span class="trip-advisor"></span>
+                                            <br /><span class="grey-txt">540 ulasan</span>
+                                        </div>
                                     </div>
-                                    <div class="col-half">
-                                        <span class="underline-txt">Rp {{hotel.originalFare | currency:'':0}}</span>
-                                        <br /><span class="lg-txt"><b><sup>Rp</sup> {{hotel.netFare | currency:'':0}}</b></span>
+                                    @*=================== ini review row ================*@
+                                    <div class="price clearfix">
+                                        <div class="col-half">
+                                            <span class="txt-md"><b>Harga per malam mulai dari:</b></span>
+                                            <br /><span class="xs-txt">(*Termasuk Pajak & Service Charge)</span>
+                                        </div>
+                                        <div class="col-half">
+                                            <span class="underline-txt">Rp {{hotel.originalFare | currency:'':0}}</span>
+                                            <br /><span class="lg-txt"><b><sup>Rp</sup> {{hotel.netFare | currency:'':0}}</b></span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    <div class="pagination" ng-show="searchDone && returnedHotelCount > 0 && pageCount > 1">
-                        @*<div class="page-container">
-                            <a href="#" class="prev" ng-click="prevPage()"></a>
+                        </a>
+                        
+                        <div class="pagination" ng-show="searchDone && returnedHotelCount > 0 && pageCount > 1">
                             Halaman
-                            <a href="#" class="next" ng-click="nextPage()"></a>
-                        </div>*@
-                        Halaman
-                        <div class="page-container">
-                            <a href="" class="prev" ng-click="page != 1 && prevPage()"></a>
-                            <ul class="page-list">
-                                <li><a href="#" ng-class="{active : pageNumber == page}" ng-repeat="pageNumber in traGetRange(pageCount) track by $index" ng-click="changePage(pageNumber)">{{pageNumber}}</a></li>
-                            </ul>
-                            <a href="" class="next" ng-click="page != pageCount && nextPage()"></a>
+                            <div class="page-container">
+                                <a href="" class="prev" ng-click="page != 1 && prevPage()"></a>
+                                <ul class="page-list">
+                                    <li><a href="#" ng-class="{active : pageNumber == page}" ng-repeat="pageNumber in traGetRange(pageCount) track by $index" ng-click="changePage(pageNumber)">{{pageNumber}}</a></li>
+                                </ul>
+                                <a href="" class="next" ng-click="page != pageCount && nextPage()"></a>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 </div>
