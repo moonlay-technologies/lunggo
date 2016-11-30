@@ -36,6 +36,7 @@
     .grey-txt {color: #999;}
     .green-txt {color: #3a8e1b;}
     .orange-txt {color: #ff7200;}
+    .white-txt {color: #ffffff;}
     .right-txt {text-align: right;}
     .bg-title {
         font-size: 19px;
@@ -451,6 +452,7 @@
         color: #fff;
         .header-title {padding: 35px 0;}
     }
+    
     /*Search Hotel*/
     &.search-hotel {
         li.list-hotel {
@@ -480,6 +482,7 @@
                 overflow: hidden;
             }
         }
+        
     }
     .search-result-form {
         background: #032e55;

@@ -170,7 +170,7 @@ jQuery(document).ready(function($) {
     $('.form-hotel-location').click(function (evt) {
         evt.stopPropagation();
         $('.search-hotel').show();
-        $('.search-calendar-hotel, .select-age .option').hide();
+        $('.search-calendar-hotel, .select-age .option, .form-hotel-night .option, .form-hotel-room .option, .form-child-age').hide();
     });
 
     //hideHotel hotel
@@ -208,7 +208,7 @@ jQuery(document).ready(function($) {
         $('.hotel-date-picker').datepicker('option', 'minDate', new Date());
         evt.stopPropagation();
         $('.search-hotel').show();
-        $('.search-hotel, .select-age .option').hide();
+        $('.search-hotel, .select-age .option, .form-hotel-night .option, .form-hotel-room .option, .form-child-age').hide();
     });
 
     // Select Age Childeren
@@ -216,6 +216,32 @@ jQuery(document).ready(function($) {
         evt.stopPropagation();
         $(this).parent().siblings().children('div').children('.option').hide();
         $(this).children('.option').toggle();
-        $('.search-calendar-hotel, .search-hotel').hide();
+        $('.search-calendar-hotel, .search-hotel, .child .option, .adult .option').hide();
+    });
+
+    $('body .form-hotel-night').on('click', function () {
+        $(this).children('.option').toggle();
+        $('.search-calendar-hotel, .search-hotel, .form-hotel-room .option, .form-child-age').hide();
+    });
+
+    $('body .form-hotel-room').on('click', function () {
+        $(this).children('.option').toggle();
+        $('.search-calendar-hotel, .search-hotel, .form-hotel-night .option').hide();
+    });
+
+    $('body .adult').on('click', function () {
+        $(this).children('.option').toggle();
+        $('.child .option, .select-age .option').hide();
+    });
+
+    $('body .child').on('click', function () {
+        $(this).children('.option').toggle();
+        $('.adult .option, .select-age .option').hide();
+    });
+
+    $('body .form-child-age').hide();
+    $('body .form-hotel-room span').on('click', function () {
+        $('body .form-child-age').show();
     });
 });
+ 
