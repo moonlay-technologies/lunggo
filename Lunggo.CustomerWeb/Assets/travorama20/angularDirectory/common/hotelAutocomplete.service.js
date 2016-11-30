@@ -1,4 +1,4 @@
-﻿angular.module('travorama').factory('hotelAutocompleteSvc', ['$log', '$resource', function ($log, $resource) {
+﻿app.factory('hotelAutocompleteSvc', ['$log', '$resource', function ($log, $resource) {
     var factory = {};
 
     factory.resource = $resource(HotelAutocompleteConfig.Url + '/:prefix',

@@ -57,7 +57,7 @@
 @section AdditionalCSS{
     <link href="/Assets/css/jquery-ui.min.css" rel="stylesheet" />
     <link href="/Assets/vendor/lightslider/lightslider.css" rel="stylesheet" />
-    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/jquery.slick/1.5.9/slick.css" />
+    <link rel="stylesheet" type="text/css" href="/Assets/vendor/slick/slick.css" />
 }
 
 @section AdditionalJS {
@@ -67,7 +67,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="/Assets/js/jquery-ui.min.js"></script>
     <script type="text/javascript" src="/Scripts/bootstrap.min.js"></script>
-    <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.slick/1.5.9/slick.min.js"></script>
+    <script type="text/javascript" src="/Assets/vendor/slick/slick.min.js"></script>
     <script src="/Assets/vendor/lightslider/lightslider.js"></script>
 }
 
@@ -92,10 +92,10 @@
                         <span class="slider-title-lg blue-txt">{{hotel.hotelName}}</span>
                         <div class="" ng-class="{
                                      '':hotel.starRating.indexOf('0')>-1,
-                                     'star-1 e-star':hotel.starRating.indexOf('1')>-1,
-                                     'star-2 e-star':hotel.starRating.indexOf('2')>-1,
-                                     'star-3 e-star':hotel.starRating.indexOf('3')>-1,
-                                     'star-4 e-star':hotel.starRating.indexOf('4')>-1,
+                                     'star-1':hotel.starRating.indexOf('1')>-1,
+                                     'star-2':hotel.starRating.indexOf('2')>-1,
+                                     'star-3':hotel.starRating.indexOf('3')>-1,
+                                     'star-4':hotel.starRating.indexOf('4')>-1,
                                      'star-5':hotel.starRating.indexOf('5')>-1}">
                         </div>
                         <br />
@@ -250,7 +250,7 @@
                                         <div class="sm-slider">
                                             @*<div class="item active">
                                                 <img src="/Assets/travorama20/images/Hotel/mini-slider.jpg" />
-                            </div>*@
+                                            </div>*@
                                             <ul class="room-gallery gallery list-unstyled cS-hidden">
                                                 <li data-thumb="{{roomImage}}" ng-repeat="roomImage in room.roomImages track by $index">
                                                     <div style="background-image: url({{roomImage}}); width: 100%; height: 145px; background-size: cover; background-position: center center;"></div>
@@ -276,41 +276,29 @@
                                             <li class="hd-point">
                                                 <div class="hd-title blue-txt">Kebijakan Pembatalan</div>
                                                 <div class="hd-txt">
-                                                    <div ng-show="room.rate.isFreeCancel">- 
-                                                        Gratis pembatalan sebelum <span style="color:#1daee4">{{room.rate.freeUntil | date:'dd MMM yyyy HH:mm'}}</span> WIB.
-                                                    </div>
-                                                    <div ng-repeat="cancellation in room.rate.cancellation track by $index">
-                                                        @*Gratis pembatalan sebelum 17-Nov-2016 17:00.*@
-                                                        - Pembatalan setelah <span style="color:#1daee4">{{cancellation.startTime | date:'dd MMM yyyy '}}</span>
-                                                        akan dikenakan biaya pembatalan sebesar <span style="color:#ff7200">Rp {{cancellation.singleFee | number}}</span>.
-                                                        <br />
-                                                    </div>
+                                                    <ul class="blue-list" style="margin-bottom: 0;">
+                                                        <li ng-show="room.rate.isFreeCancel">
+                                                            Gratis pembatalan sebelum <span style="color:#1daee4">{{room.rate.freeUntil | date:'dd MMM yyyy HH:mm'}}</span> WIB.
+                                                        </li>
+                                                    </ul>
+                                                    <ul class="blue-list">
+                                                        <li ng-repeat="cancellation in room.rate.cancellation track by $index">
+                                                            @*Gratis pembatalan sebelum 17-Nov-2016 17:00.*@
+                                                            - Pembatalan setelah <span style="color:#1daee4">{{cancellation.startTime | date:'dd MMM yyyy '}}</span>
+                                                            akan dikenakan biaya pembatalan sebesar <span style="color:#ff7200">Rp {{cancellation.singleFee | number}}</span>.
+                                                        </li>
+                                                    </ul>
                                                 </div>
                                             </li>
 
                                             <li class="hd-point">
                                                 <div class="hd-title blue-txt">Ketentuan Kamar</div>
                                                 <div class="hd-txt">
-                                                    <span ng-repeat="tnc in room.rate.tnc">{{tnc}} <br /></span>
+                                                    <ul class="blue-list">
+                                                        <li ng-repeat="tnc in room.rate.tnc">{{tnc}}</li>
+                                                    </ul>
                                                 </div>
                                             </li>
-                                            @*<li class="hd-point">
-                <div class="hd-title blue-txt">Fasilitas </div>
-                <div class="hd-txt clearfix">
-                    <ul class="blue-list quarter">
-                        <li>Bed</li>
-                    </ul>
-                    <ul class="blue-list quarter">
-                        <li>Bed</li>
-                    </ul>
-                    <ul class="blue-list quarter">
-                        <li>Bed</li>
-                    </ul>
-                    <ul class="blue-list quarter">
-                        <li>Bed</li>
-                    </ul>
-                </div>
-            </li>*@
                                         </ul>
                                     </div>
 
@@ -355,7 +343,8 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div><div class="">* fasilitas berbayar</div>
+                                <div class="tnc-hotel italic-txt">* Fasilitas berbayar</div>
+                                </div>
                             <div ng-show="hotel.description.length > 0" class="accordion-title accordion md-txt" id="menu-desc">Deskripsi Hotel</div>
                             <div ng-show="hotel.description.length > 0" class="accordion-content show">
                                 @*<div class="ih-title md-txt">“Clean rooms, Great location, Spotless beds”</div>*@
@@ -377,7 +366,7 @@
                 </div>
             </div>
         </div>
-    </div>
+            </div>
     
     
     <div class="select-flight" ng-show="booking">

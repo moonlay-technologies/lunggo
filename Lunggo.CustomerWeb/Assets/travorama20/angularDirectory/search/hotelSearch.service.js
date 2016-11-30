@@ -76,6 +76,19 @@
         scope.hotelSearch.page = 1;
         scope.hotelSearch.perPage = 20;
 
+        var defaultValue = {
+            locationCode: 16084,
+            locationDisplay: "Bali, Indonesia",
+            checkinDate: moment().locale("id").add(5, 'days'),
+            checkoutDate: moment().locale("id").add(7, 'days'),
+
+            adultCount :1,
+            childCount: 0,
+            nightCount: 2,
+            destinationNightCount: 2,
+            roomCount: 1,
+            childrenAges : [0,0,0,0]
+        }
 
         if (searchParamObject != null && searchParamObject !== undefined) {
             scope.hotelSearch.location = searchParamObject.location;
@@ -96,21 +109,22 @@
             scope.hotelSearch.childrenAges = searchParamObject.childrenAges != null ? searchParamObject.childrenAges : [0, 0, 0, 0];
         }
         else {
-            scope.hotelSearch.location = 16084;
-            scope.hotelSearch.locationDisplay = "Bali, Indonesia";
-            scope.hotelSearch.checkinDate = moment().locale("id").add(5, 'days');
-            scope.hotelSearch.checkoutDate = moment().locale("id").add(7, 'days');
-            scope.hotelSearch.destinationCheckinDate = scope.hotelSearch.checkinDate.locale("id").format('LL');;
-            scope.hotelSearch.destinationCheckoutDate = scope.hotelSearch.checkoutDate.locale("id").format('LL');;
+            scope.hotelSearch.location = defaultValue.locationCode;
+            scope.hotelSearch.locationDisplay = defaultValue.locationDisplay;
+            scope.hotelSearch.checkinDate = defaultValue.checkinDate;
+            scope.hotelSearch.checkoutDate = defaultValue.checkoutDate;
+            scope.hotelSearch.destinationCheckinDate = scope.hotelSearch.checkinDate.locale("id").format('LL');
+            scope.hotelSearch.destinationCheckoutDate = scope.hotelSearch.checkoutDate.locale("id").format('LL');
+            
             scope.hotelSearch.checkinDateDisplay = scope.hotelSearch.checkinDate.locale("id").format('LL');
             scope.hotelSearch.checkoutDateDisplay = scope.hotelSearch.checkoutDate.locale("id").format('LL');
 
-            scope.hotelSearch.adultCount = 1;
-            scope.hotelSearch.childCount = 0;
-            scope.hotelSearch.nightCount = 2;
-            scope.hotelSearch.destinationNightCount = 2;
-            scope.hotelSearch.roomCount = 1;
-            scope.hotelSearch.childrenAges = [0, 0, 0, 0];
+            scope.hotelSearch.adultCount = defaultValue.adultCount;
+            scope.hotelSearch.childCount = defaultValue.childCount;
+            scope.hotelSearch.nightCount = defaultValue.nightCount;
+            scope.hotelSearch.destinationNightCount = defaultValue.nightCount;
+            scope.hotelSearch.roomCount = defaultValue.roomCount;
+            scope.hotelSearch.childrenAges = defaultValue.childrenAges;
         }
 
         scope.hotelSearch.adultCountMin = 1;

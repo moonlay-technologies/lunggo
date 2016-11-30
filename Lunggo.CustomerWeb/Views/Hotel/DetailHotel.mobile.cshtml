@@ -57,29 +57,22 @@
 }
 @section AdditionalCSS{
     <link href="/Assets/css/jquery-ui.min.css" rel="stylesheet" />
-    <link href="/Assets/vendor/flexslider/flexslider.css" rel="stylesheet" />
-    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/jquery.slick/1.5.9/slick.css" />
+    @*<link href="/Assets/vendor/flexslider/flexslider.css" rel="stylesheet" />*@
+    <link rel="stylesheet" type="text/css" href="/Assets/vendor/slick/slick.css" />
 }
 
 @section AdditionalJS {
-    <script src="/Assets/js/angular.min.js"></script>
-    <script src="/Assets/js/angular-animate.min.js"></script>
-    <script src="/Assets/js/angular-route.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="/Assets/js/jquery-ui.min.js"></script>
+  
     <script type="text/javascript" src="/Scripts/bootstrap.min.js"></script>
-    <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.slick/1.5.9/slick.min.js"></script>
+    <script type="text/javascript" src="/Assets/vendor/slick/slick.min.js"></script>
     <script type="text/javascript" src="/Assets/vendor/dotdotdot/jquery.dotdotdot.min.js"></script>
 }
 
 @section PageJS{
-<script>var loc = '@loc';</script>
-    <script src="/Assets/travorama20/js/hotelDetailController.js"></script>
-    <script type="text/javascript" src="/Assets/travorama20/js/HotelController.js"></script>
-    <script src="/Assets/vendor/flexslider/jquery.flexslider.js"></script>
-    <script src="/Assets/mobile/js/HotelController.js"></script>
+    
+<script src="/Assets/travorama20/js/hotelDetailController.js"></script>
+    @*<script src="/Assets/mobile/js/HotelController.js"></script>*@
     <script src="/Assets/travorama20/angularDirectory/search/hotelSearch.service.js"></script>
-    <script src="/Assets/travorama20/angularDirectory/common/hotelAutocomplete.service.js"></script>
 }
 <div class="travorama-hotel-mobile" ng-init="init(@Newtonsoft.Json.JsonConvert.SerializeObject(Model))">
     <div class="top-content">
@@ -89,8 +82,8 @@
                 <a href="#" attr-link="#detail-menu">UMUM</a>
                 <a href="#" attr-link="#spec-menu">RINCIAN</a>
             </div>*@
+            </div>
         </div>
-    </div>
     <div class="detail-hotel-container">
         <div class="detail-tab detail-hotel" id="detail-menu">
             <div class="dh-slider">
@@ -142,22 +135,22 @@
                                     <span class="xs-txt">(*Termasuk Pajak)</span>
                                 </div>
                                 <a href="#" class="blue-txt downline-txt sm-txt" ng-click="PageConfig.SetOverlay('detail-room'); seeRoomDetail(room)">Detail Info Kamar</a>
-                                <div class="facility">
-                                    <span class="wifi"></span>
-                                    <span class="meal"></span>
-                                    <span class="ac"></span>
-                                </div>
-                                <div class="room clearfix">
+                                    <div class="facility">
+                                        <span class="wifi"></span>
+                                        <span class="meal"></span>
+                                        <span class="ac"></span>
+                                    </div>
+                                    <div class="room clearfix">
                                     @*<span class="room-title darkgrey-txt semibold-txt">Kamar</span>
-                                    <div class="counter-room clearfix">
-                                        <span class="btn-room btn-min"></span>
-                                        <input type="text" name="counter" class="result-room semibold-txt" value="0" readonly="readonly" />
-                                        <span class="btn-room btn-plus" attr-limit="9"></span>
+                                        <div class="counter-room clearfix">
+                                            <span class="btn-room btn-min"></span>
+                                            <input type="text" name="counter" class="result-room semibold-txt" value="0" readonly="readonly" />
+                                            <span class="btn-room btn-plus" attr-limit="9"></span>
                                     </div>*@
-                                    <a href="#" class="btn btn-yellow small">PESAN</a>
+                                        <a href="#" class="btn btn-yellow small">PESAN</a>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
                     </li>
                 </ul>
             </div>
@@ -200,32 +193,32 @@
                     </div>
                     
                     @*<ul class="col-half sh-list">
-                            <li class="bed-blue">Bed</li>
-                            <li class="meal-blue">Breakfast</li>
-                            <li class="bell-blue">Room Service</li>
-                            <li class="wifi-blue">Public WiFi</li>
-                            <li class="bed-blue">Bed</li>
-                            <li class="meal-grey">Breakfast</li>
-                            <li class="bell-grey">Room Service</li>
-                            <li class="wifi-grey">Public WiFi</li>
-                        </ul>
-                        <ul class="col-half sh-list">
-                            <li class="pool-blue">Swimming Pool</li>
-                            <li class="meal-blue">Breakfast</li>
-                            <li class="tv-blue">TV</li>
-                            <li class="car-blue">Hotel Car</li>
-                            <li class="ac-grey">AC</li>
-                            <li class="tv-blue">TV</li>
-                            <li class="car-blue">Hotel Car</li>
-                            <li class="ac-blue">AC</li>
-                        </ul>*@
+                        <li class="bed-blue">Bed</li>
+                        <li class="meal-blue">Breakfast</li>
+                        <li class="bell-blue">Room Service</li>
+                        <li class="wifi-blue">Public WiFi</li>
+                        <li class="bed-blue">Bed</li>
+                        <li class="meal-grey">Breakfast</li>
+                        <li class="bell-grey">Room Service</li>
+                        <li class="wifi-grey">Public WiFi</li>
+                    </ul>
+                    <ul class="col-half sh-list">
+                        <li class="pool-blue">Swimming Pool</li>
+                        <li class="meal-blue">Breakfast</li>
+                        <li class="tv-blue">TV</li>
+                        <li class="car-blue">Hotel Car</li>
+                        <li class="ac-grey">AC</li>
+                        <li class="tv-blue">TV</li>
+                        <li class="car-blue">Hotel Car</li>
+                        <li class="ac-blue">AC</li>
+                    </ul>*@
                 </div>
             </div>
             <div class="sh-policy" ng-show="hotel.policy.length > 0">
                 <div class="sh-title darkgrey-txt lg-txt bold-txt">Perlu Diingat</div>
                 <div ng-show="loading" class="text-center">
                     <img src="/Assets/images/load.gif" style="width: 30px; height: 30px; margin-top: 5%;">
-                </div>
+            </div>
                 <div class="sh-policy-txt darkgrey-txt">
                     <ul>
                         <li ng-repeat="policy in hotel.policy track by $index">{{policy}}</li>
@@ -305,8 +298,8 @@
                                 @*<li class="check-in col-3 sm-txt"><span class="grey-txt">Check In</span> 14.00-24.00</li>
                                 <li class="check-out col-3 sm-txt"><span class="grey-txt">Check Out</span> 12.00</li>
                                 <li class="max-visitor col-3 sm-txt"><span class="grey-txt">Max Orang</span> 2 Orang</li>*@
-                            </ul>
-                        </div>
+                                </ul>
+                            </div>
                         
                     </div>
                 </div>

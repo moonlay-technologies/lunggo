@@ -36,6 +36,7 @@
     .grey-txt {color: #999;}
     .green-txt {color: #3a8e1b;}
     .orange-txt {color: #ff7200;}
+    .white-txt {color: #ffffff;}
     .right-txt {text-align: right;}
     .bg-title {
         font-size: 19px;
@@ -267,19 +268,24 @@
     
     /*Bullets*/
     .blue-list {
-        list-style: none;
-        padding-left: 20px;
-        display: inline-block;
-        float: left;
-        & > li:before {
-            content: '';
-            display: inline-block;
-            width: 5px;
-            height: 5px;
-            background: #1daee4;
-            vertical-align: middle;
-            margin-right: 10px;
-            @include border-radius(5px);
+        padding-left: 0;
+        margin-bottom: 10px;
+        li {
+            list-style-type: none;
+            padding-left: 15px;
+            &:before {
+                content: '';
+                width: 5px;
+                height: 5px;
+                display: inline-block;
+                background: #2eb4e7;
+                border-radius: 5px;
+                vertical-align: middle;
+                position: absolute;
+                margin-left: -15px;
+                margin-top: 5px;
+                @include border-radius(5px);
+            }
         }
     }
 
@@ -446,6 +452,7 @@
         color: #fff;
         .header-title {padding: 35px 0;}
     }
+    
     /*Search Hotel*/
     &.search-hotel {
         li.list-hotel {
@@ -454,7 +461,8 @@
             border-top: none !important;
             .list-row { margin-left: 10px;
                 .lr-wrapper {
-                    padding: 12px 0;
+                    padding: 10px 0;
+                    line-height: 16px;
                     border-bottom: 1px solid #e8e8e8;
                     margin-left: 15px;
                     margin-right: 25px;
@@ -467,7 +475,14 @@
             }
             &:last-child .list-row {border-bottom: none;}
             .blue-txt.semibold-txt.pull-right {margin-top: 15px;}
+            .location {
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                min-width: 320px;
+                overflow: hidden;
+            }
         }
+        
     }
     .search-result-form {
         background: #032e55;

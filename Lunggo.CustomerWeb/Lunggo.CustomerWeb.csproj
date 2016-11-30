@@ -872,6 +872,8 @@
     <Content Include="Assets\vendor\dotdotdot\jquery.dotdotdot.min.umd.js" />
     <Content Include="Assets\vendor\lightslider\lightslider.css" />
     <Content Include="Assets\vendor\lightslider\lightslider.js" />
+    <Content Include="Assets\vendor\slick\slick.css" />
+    <Content Include="Assets\vendor\slick\slick.min.js" />
     <Content Include="Campaign\MobileAppCampaign\css\travorama-mobileApp.css" />
     <Content Include="Campaign\MobileAppCampaign\css\travorama-mobileApp.min.css">
       <DependentUpon>travorama-mobileApp.css</DependentUpon>
