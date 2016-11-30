@@ -142,6 +142,8 @@ img {max-width:100%;}
 
 .display-block {display:block !important;}
 
+.pointer {cursor: pointer;}
+
 .btn {@include border-radius($border-radius-default);}
 .btn.btn-yellow {background: $color-yellow; color:#000000; font-weight:bold; border-radius: 2px; box-shadow: none;}
 .btn.btn-grey, .btn.btn-gray {background:#adadad; color:#fff; font-weight:bold; box-shadow: none;}

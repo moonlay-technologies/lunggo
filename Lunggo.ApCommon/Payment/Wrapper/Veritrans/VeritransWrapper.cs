@@ -85,21 +85,22 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
 
                         var log = LogService.GetInstance();
                         var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
-                        log.Post(
-                            "```Payment Log```"
-                            + "\n`*Environment :* " + env.ToUpper()
-                            + "\n*PAYMENT DETAILS :*\n"
-                            + payment.Serialize()
-                                + "\n*TRANSAC DETAILS :*\n"
-                                + transactionDetail.Serialize()
+                        if (env == "production")
+                            log.Post(
+                                "```Payment Log```"
+                                + "\n`*Environment :* " + env.ToUpper()
+                                + "\n*PAYMENT DETAILS :*\n"
+                                + payment.Serialize()
+                                    + "\n*TRANSAC DETAILS :*\n"
+                                    + transactionDetail.Serialize()
                                 //+ "\n*ITEM DETAILS :*\n"
                                 //+ itemDetails.Serialize()
-                                + "\n*REQUEST :*\n"
-                                + _temp
-                            + "\n*RESPONSE :*\n"
-                            + content.Serialize()
-                            + "\n*Platform :* "
-                            + Client.GetPlatformType(HttpContext.Current.User.Identity.GetClientId()));
+                                    + "\n*REQUEST :*\n"
+                                    + _temp
+                                + "\n*RESPONSE :*\n"
+                                + content.Serialize()
+                                + "\n*Platform :* "
+                                + Client.GetPlatformType(HttpContext.Current.User.Identity.GetClientId()));
                     }
                     return payment;
                 case PaymentMethod.VirtualAccount:
@@ -119,21 +120,22 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
 
                         var log = LogService.GetInstance();
                         var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
-                        log.Post(
-                            "```Payment Log```"
-                            + "\n`*Environment :* " + env.ToUpper()
-                            + "\n*PAYMENT DETAILS :*\n"
-                            + payment.Serialize()
-                                + "\n*TRANSAC DETAILS :*\n"
-                                + transactionDetail.Serialize()
+                        if (env == "production")
+                            log.Post(
+                                "```Payment Log```"
+                                + "\n`*Environment :* " + env.ToUpper()
+                                + "\n*PAYMENT DETAILS :*\n"
+                                + payment.Serialize()
+                                    + "\n*TRANSAC DETAILS :*\n"
+                                    + transactionDetail.Serialize()
                                 //+ "\n*ITEM DETAILS :*\n"
                                 //+ itemDetails.Serialize()
-                                + "\n*REQUEST :*\n"
-                                + _temp
-                            + "\n*RESPONSE :*\n"
-                            + content.Serialize()
-                            + "\n*Platform :* "
-                            + Client.GetPlatformType(HttpContext.Current.User.Identity.GetClientId()));
+                                    + "\n*REQUEST :*\n"
+                                    + _temp
+                                + "\n*RESPONSE :*\n"
+                                + content.Serialize()
+                                + "\n*Platform :* "
+                                + Client.GetPlatformType(HttpContext.Current.User.Identity.GetClientId()));
                     }
                     return payment;
 
@@ -153,21 +155,22 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
 
                         var log = LogService.GetInstance();
                         var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
-                        log.Post(
-                            "```Payment Log```"
-                            + "\n`*Environment :* " + env.ToUpper()
-                            + "\n*PAYMENT DETAILS :*\n"
-                            + payment.Serialize()
-                                + "\n*TRANSAC DETAILS :*\n"
-                                + transactionDetail.Serialize()
+                        if (env == "production")
+                            log.Post(
+                                "```Payment Log```"
+                                + "\n`*Environment :* " + env.ToUpper()
+                                + "\n*PAYMENT DETAILS :*\n"
+                                + payment.Serialize()
+                                    + "\n*TRANSAC DETAILS :*\n"
+                                    + transactionDetail.Serialize()
                                 //+ "\n*ITEM DETAILS :*\n"
                                 //+ itemDetails.Serialize()
-                                + "\n*REQUEST :*\n"
-                                + _temp
-                            + "\n*RESPONSE :*\n"
-                            + content.Serialize()
-                            + "\n*Platform :* "
-                            + Client.GetPlatformType(HttpContext.Current.User.Identity.GetClientId()));
+                                    + "\n*REQUEST :*\n"
+                                    + _temp
+                                + "\n*RESPONSE :*\n"
+                                + content.Serialize()
+                                + "\n*Platform :* "
+                                + Client.GetPlatformType(HttpContext.Current.User.Identity.GetClientId()));
                     }
                     return payment;
 
@@ -188,21 +191,22 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
 
                         var log = LogService.GetInstance();
                         var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
-                        log.Post(
-                            "```Payment Log```"
-                            + "\n`*Environment :* " + env.ToUpper()
-                            + "\n*PAYMENT DETAILS :*\n"
-                            + payment.Serialize()
-                                + "\n*TRANSAC DETAILS :*\n"
-                                + transactionDetail.Serialize()
+                        if (env == "production")
+                            log.Post(
+                                "```Payment Log```"
+                                + "\n`*Environment :* " + env.ToUpper()
+                                + "\n*PAYMENT DETAILS :*\n"
+                                + payment.Serialize()
+                                    + "\n*TRANSAC DETAILS :*\n"
+                                    + transactionDetail.Serialize()
                                 //+ "\n*ITEM DETAILS :*\n"
                                 //+ itemDetails.Serialize()
-                                + "\n*REQUEST :*\n"
-                                + _temp
-                            + "\n*RESPONSE :*\n"
-                            + content.Serialize()
-                            + "\n*Platform :* "
-                            + Client.GetPlatformType(HttpContext.Current.User.Identity.GetClientId()));
+                                    + "\n*REQUEST :*\n"
+                                    + _temp
+                                + "\n*RESPONSE :*\n"
+                                + content.Serialize()
+                                + "\n*Platform :* "
+                                + Client.GetPlatformType(HttpContext.Current.User.Identity.GetClientId()));
                     }
                     return payment;
 
@@ -223,21 +227,22 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
 
                         var log = LogService.GetInstance();
                         var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
-                        log.Post(
-                            "```Payment Log```"
-                            + "\n`*Environment :* " + env.ToUpper()
-                            + "\n*PAYMENT DETAILS :*\n"
-                            + payment.Serialize()
-                                + "\n*TRANSAC DETAILS :*\n"
-                                + transactionDetail.Serialize()
+                        if (env == "production")
+                            log.Post(
+                                "```Payment Log```"
+                                + "\n`*Environment :* " + env.ToUpper()
+                                + "\n*PAYMENT DETAILS :*\n"
+                                + payment.Serialize()
+                                    + "\n*TRANSAC DETAILS :*\n"
+                                    + transactionDetail.Serialize()
                                 //+ "\n*ITEM DETAILS :*\n"
                                 //+ itemDetails.Serialize()
-                                + "\n*REQUEST :*\n"
-                                + _temp
-                            + "\n*RESPONSE :*\n"
-                            + content.Serialize()
-                            + "\n*Platform :* "
-                            + Client.GetPlatformType(HttpContext.Current.User.Identity.GetClientId()));
+                                    + "\n*REQUEST :*\n"
+                                    + _temp
+                                + "\n*RESPONSE :*\n"
+                                + content.Serialize()
+                                + "\n*Platform :* "
+                                + Client.GetPlatformType(HttpContext.Current.User.Identity.GetClientId()));
                     }
                     return payment;
 
