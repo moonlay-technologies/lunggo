@@ -3,12 +3,12 @@
     ViewBag.BodyClass = "page-hotel page-detail";
     ViewBag.Title = "Detail Hotel";
     ViewBag.CurrentPage = "detail-hotel";
-    ViewBag.AngularController = "HotelController";
+    ViewBag.AngularController = "hotelDetailController";
 }
 
 @section AdditionalCSS{
     <link href="/Assets/css/jquery-ui.min.css" rel="stylesheet" />
-    <link href="/Assets/vendor/flexslider/flexslider.css" rel="stylesheet" />
+    @*<link href="/Assets/vendor/flexslider/flexslider.css" rel="stylesheet" />*@
     <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/jquery.slick/1.5.9/slick.css" />
 }
 
@@ -25,8 +25,8 @@
 
 @section PageJS{
     
-    <script src="/Assets/vendor/flexslider/jquery.flexslider.js"></script>
     <script src="/Assets/mobile/js/HotelController.js"></script>
+    <script src="/Assets/travorama20/angularDirectory/search/hotelSearch.service.js"></script>
 }
 <div class="travorama-hotel-mobile">
     <div class="top-content">
