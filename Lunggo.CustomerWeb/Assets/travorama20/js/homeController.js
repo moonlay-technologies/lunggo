@@ -97,12 +97,12 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
         $log.debug(model);
     }
 
-    $scope.setCheckinDate = function (scope, date) {
-        scope.$apply(function () {
-            scope.hotelSearch.checkinDate = moment(date, "MM-DD-YYYY");
-            scope.hotelSearch.checkinDateDisplay = $scope.hotelSearch.checkinDate.locale("id").format('LL');
-        });
-    }
+    //$scope.setCheckinDate = function (scope, date) {
+    //    scope.$apply(function () {
+    //        scope.hotelSearch.checkinDate = moment(date, "MM-DD-YYYY");
+    //        scope.hotelSearch.checkinDateDisplay = $scope.hotelSearch.checkinDate.locale("id").format('LL');
+    //    });
+    //}
 
     //$scope.$watch('hotel.nightCount', function (newValue, oldValue) {
     //    //var scope = angular.element($('.hotel-date-picker')).scope();
