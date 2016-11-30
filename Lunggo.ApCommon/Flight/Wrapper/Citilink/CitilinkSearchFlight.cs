@@ -67,12 +67,12 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                 {
                     var cobaAmbilTable = (CQ)htmlRespon;
 
-                    var isi = cobaAmbilTable[".w99>tbody>tr:not([class^='trSSR'])"];
+                    var isi = cobaAmbilTable["#availabilityTable0>label"].MakeRoot();
 
                     int i = isi.Count();
 
                     var itins = new List<FlightItinerary>();
-                    for (int j = 2; j <= i; j++)
+                    for (int j = 0; j < i; j++)
                     {
                         var cabinClass = conditions.CabinClass;
                         switch (cabinClass)
@@ -80,24 +80,14 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                             case CabinClass.Economy:
                                 #region
                                 var FlightTrips = new FlightTrip();
-                                var tunjuk = isi.MakeRoot()["tr:nth-child(" + j + ")"];
+                                var tunjuk = isi[j];
 
                                 //FareID
-                                string FID;
-                                var ambilFID = tunjuk.MakeRoot()[".fareCol2>p:nth-child(1)>input"];
-                                try
-                                {
-                                    FID = ambilFID.Select(x => x.Cq().Attr("value")).FirstOrDefault().Trim();
-                                }
-                                catch (Exception)
-                                {
-                                    new SearchFlightResult
-                                    {
-                                        Itineraries = new List<FlightItinerary>(),
-                                        IsSuccess = true
-                                    };
+                                var ambilFID = tunjuk.Cq().MakeRoot()["[type='radio']"];
+                                var FID = ambilFID.Select(x => x.GetAttribute("value")).FirstOrDefault();
+                                if (FID == null)
                                     continue;
-                                }
+                                FID = FID.Trim();
 
                                 var ParseFID1 = FID.Split('|').ToList();
                                 var ParseFID2 = ParseFID1[1].Split('~').ToList();
@@ -108,8 +98,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                                 string Acode;
                                 string Fnumber;
 
-                                if ((ParseFID2.Count - 1) / 8 == 1)
-                                {
+                                //if ((ParseFID2.Count - 1) / 8 == 1)
+                                //{
                                     url = "TaxAndFeeInclusiveDisplayAjax-resource.aspx";
                                     var fareRequest = new RestRequest(url, Method.GET);
                                     fareRequest.AddQueryParameter("flightKeys", FID);
@@ -157,8 +147,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                                     var hargaInfant = 0M;
                                     var adultTax = adultIns + adultPsc + adultVat;
                                     var childTax = childPsc + childIns + childVat;
-                                    
-                                    var taxTable = ambilDataAjax[".itern-rgt-txt-2>p>span"];
+
+                                    var taxTable = ambilDataAjax[".twoblocks.resume-block>div:last-of-type>strong"];
                                     try
                                     {
                                         hargaAdult = decimal.Parse(taxTable[0].InnerText.Split('.')[1]) + adultTax;
@@ -170,7 +160,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                                             hargaInfant += infantTax;
                                         }
                                         
-                                    } catch { }
+                                    } 
+                                    catch { }
 
                                     var segments = new List<FlightSegment>();
 
@@ -282,10 +273,9 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                                     itin.Price.SetSupplier(harga, new Currency("IDR", Payment.Constant.Supplier.Citilink));
                                     //if (itin.Trips[0].Segments.Count < 2)
                                     itins.Add(itin);
-                                }
+                                //}
 
                                 hasil.IsSuccess = true;
-                                hasil.Itineraries = itins.Where(itin => itin.Price.SupplierCurrency.Rate != 0).ToList();
                                 #endregion
                                 break;
 
@@ -298,6 +288,9 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                                 break;
                         }
                     }
+
+                    hasil.Itineraries = itins.Where(it => it.Price.SupplierCurrency.Rate != 0).ToList();
+
                     if (hasil.Itineraries == null)
                         return new SearchFlightResult
                         {

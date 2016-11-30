@@ -355,8 +355,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                 var paymentGetresponse = client.Execute(paymentGetRequest);
                 var html = paymentGetresponse.Content;
                 CQ detailFlight = (CQ)html;
-                var getPrice = detailFlight["#priceDisplayBody>table:last"].Children().Children().Last().Last().Text().Trim().Split('\n');
-                var harga = getPrice[1].Trim().Replace("Rp.", "").Replace(",", "");
+                var getPrice = detailFlight[".total>dd"].Text().Trim().Split('.');
+                var harga = getPrice[1].Trim().Replace(",", "");
                 var fixPrice = decimal.Parse(harga);
 
                 //Cek Harga di Final
