@@ -1,5 +1,5 @@
 ﻿// home controller
-app.controller('hotelSearchController', ['$scope', '$log', '$http', '$resource', '$timeout', 'hotelSearchSvc', function ($scope, $log, $http, $resource, $timeout, hotelSearchSvc) {
+app.controller('hotelSearchController', ['$scope', '$log', '$window', '$http', '$resource', '$timeout', 'hotelSearchSvc', function ($scope, $log, $window, $http, $resource, $timeout, hotelSearchSvc) {
 
     $scope.destinationName = "";
     $scope.model = {};
@@ -238,10 +238,15 @@ app.controller('hotelSearchController', ['$scope', '$log', '$http', '$resource',
 
     $scope.GotoDetailHotel = function (hotelCd) {
         $log.debug('redirect to detail hotel with hotelCd: ' + hotelCd);
-        location.href = '/id/Hotel/DetailHotel/?' +
+        //location.href = '/id/Hotel/DetailHotel/?' +
+        //    "searchId=" + $scope.hotelSearch.searchId + "&" +
+        //    "hotelCd=" + hotelCd + "&" +
+        //    "searchParam=" + $scope.searchParam;
+
+        $window.open('/id/Hotel/DetailHotel/?' +
             "searchId=" + $scope.hotelSearch.searchId + "&" +
-            "hotelCd=" + hotelCd + "&" + 
-            "searchParam=" + $scope.searchParam;
+            "hotelCd=" + hotelCd + "&" +
+            "searchParam=" + $scope.searchParam, '_blank');
     }
 
     $scope.changeFilter = function (filterType, value) {
