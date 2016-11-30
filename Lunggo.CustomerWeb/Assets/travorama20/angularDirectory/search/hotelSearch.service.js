@@ -91,7 +91,11 @@
             scope.hotelSearch.location = searchParamObject.location;
             scope.hotelSearch.locationDisplay = "";
 
+            $log.debug("scope.hotelSearch.checkinDate = " + scope.hotelSearch.checkinDate);
             scope.hotelSearch.checkinDate = searchParamObject.checkinDate;
+            $log.debug("scope.hotelSearch.checkinDate = " + scope.hotelSearch.checkinDate);
+
+
             scope.hotelSearch.checkoutDate = searchParamObject.checkoutDate;
             scope.hotelSearch.destinationCheckinDate = searchParamObject.checkinDate;
             scope.hotelSearch.destinationCheckoutDate = searchParamObject.checkoutDate;
@@ -108,7 +112,10 @@
         else {
             scope.hotelSearch.location = defaultValue.locationCode;
             scope.hotelSearch.locationDisplay = defaultValue.locationDisplay;
+            $log.debug("scope.hotelSearch.checkinDate = " + scope.hotelSearch.checkinDate);
+
             scope.hotelSearch.checkinDate = defaultValue.checkinDate;
+            $log.debug("scope.hotelSearch.checkinDate = " + scope.hotelSearch.checkinDate);
             scope.hotelSearch.checkoutDate = defaultValue.checkoutDate;
 
             scope.hotelSearch.destinationCheckinDate = scope.hotelSearch.checkinDate;
@@ -228,7 +235,9 @@
 
         scope.setCheckinDate = function (scopeElement, date) {
             scopeElement.$apply(function () {
-                scopeElement.hotelSearch.checkinDate = moment(date)
+                $log.debug("scopeElement.hotelSearch.checkinDate = " + scopeElement.hotelSearch.checkinDate);
+                scopeElement.hotelSearch.checkinDate = moment(date).toISOString();
+                $log.debug("scopeElement.hotelSearch.checkinDate = " + scopeElement.hotelSearch.checkinDate);
                 scopeElement.hotelSearch.checkoutDate = moment(date).add(scopeElement.hotelSearch.nightCount, 'days').toISOString();
                 //scopeElement.hotelSearch.checkinDateDisplay = scope.hotelSearch.checkinDate.locale("id").format('LL');
             });
@@ -236,7 +245,9 @@
 
         factory.setCheckinDate = function (scopeElement, date) {
             scopeElement.$apply(function () {
-                scopeElement.hotelSearch.checkinDate = moment(date)
+                $log.debug("scopeElement.hotelSearch.checkinDate = " + scopeElement.hotelSearch.checkinDate);
+                scopeElement.hotelSearch.checkinDate = moment(date).toISOString();
+                $log.debug("scopeElement.hotelSearch.checkinDate = " + scopeElement.hotelSearch.checkinDate);
                 scopeElement.hotelSearch.checkoutDate = moment(date).add(scopeElement.hotelSearch.nightCount, 'days').toISOString();
                 scope.hotelSearch.checkinDateDisplay = moment(scopeElement.hotelSearch.checkinDate).locale("id").format('LL');
                 scope.hotelSearch.checkoutDateDisplay = moment(scopeElement.hotelSearch.checkoutDate).locale("id").format('LL');
