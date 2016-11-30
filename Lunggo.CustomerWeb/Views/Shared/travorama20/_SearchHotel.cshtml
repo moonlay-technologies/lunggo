@@ -15,7 +15,7 @@
                     </nav>
                 </header>*@
             <section class="tab-content">
-                <section class="hotel-location-search">
+                <section class="hotel-location-search custom-scroll">
                     <div class="hotel-autocomplete-pre">
                         <h3 class="text-center text-pre">Masukkan Kata Kunci Anda (Minimal 3 huruf)</h3>
                         <h3 class="text-center text-loading">Mencari lokasi</h3>
@@ -25,11 +25,11 @@
                     </div>
                     <div class="hotel-autocomplete-result">
                         @*<ul>
-                            <li ng-repeat="location in hotelSearch.hotelAutocomplete track by $index" ng-model="hotelSearch.location" ng-click="selectLocation(location)">
-                                <span style="width:83.333333333333336%; display: inline-block; ">{{location.name}}</span>
-                                <span style="width:16.666666666666664%; display: inline-block; float: right;font-weight: bolder">{{location.type}}</span>
-                            </li>
-                        </ul>*@
+                    <li ng-repeat="location in hotelSearch.hotelAutocomplete track by $index" ng-model="hotelSearch.location" ng-click="selectLocation(location)">
+                        <span style="width:83.333333333333336%; display: inline-block; ">{{location.name}}</span>
+                        <span style="width:16.666666666666664%; display: inline-block; float: right;font-weight: bolder">{{location.type}}</span>
+                    </li>
+                </ul>*@
                         <ul>
                             <li class="list-hotel" ng-repeat="location in hotelSearch.hotelAutocomplete track by $index" @*ng-model="hotelSearch.location"*@ ng-click="selectLocation(location)">
                                 <div class="list-row">
@@ -59,4 +59,166 @@
             </div>
         </section>
     </section>
+</div>
+<div class="form-child-age page-hotel custom-scroll">
+    <ul class="fc-wrapper">
+        <li class="clearfix">
+            <div class="form-group hotel-visitor col-4 clearfix">
+                <div class="fc-title bold-txt blue-txt md-txt">Kamar 1</div>
+                <div class="col-half dropdown-container">
+                    <div class="form-control form-hotel-visitor adult clearfix">
+                        <div class="col-4"><span class="grey-txt">Dewasa</span></div>
+                        <div class="col-6 input-hotel">1</div>
+                        <div class="option">
+                            <span data-value="">1</span>
+                            <span data-value="">2</span>
+                            <span data-value="">3</span>
+                            <span data-value="">4</span>
+                            <span data-value="">5</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-half dropdown-container">
+                    <div class="form-control form-hotel-visitor child clearfix">
+                        <div class="col-4"><span class="grey-txt">Anak</span></div>
+                        <div class="col-6 input-hotel">1</div>
+                        <div class="option">
+                            <span data-value="">1</span>
+                            <span data-value="">2</span>
+                            <span data-value="">3</span>
+                            <span data-value="">4</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group hotel-visitor col-6 clearfix">
+                <div class="fc-title white-txt md-txt">Usia Anak (th)</div>
+                <div class="quarter dropdown-container">
+                    <div class="form-control form-hotel-visitor select-age clearfix">
+                        <div class="col-6"><span class="grey-txt">Anak 1</span></div>
+                        <div class="col-4 input-hotel">1</div>
+                        <div class="option">
+                            <span data-value="">0</span>
+                            <span data-value="">1</span>
+                            <span data-value="">2</span>
+                            <span data-value="">3</span>
+                            <span data-value="">4</span>
+                            <span data-value="">5</span>
+                            <span data-value="">6</span>
+                            <span data-value="">7</span>
+                            <span data-value="">8</span>
+                            <span data-value="">9</span>
+                            <span data-value="">10</span>
+                            <span data-value="">11</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="quarter dropdown-container">
+                    <div class="form-control form-hotel-visitor select-age clearfix">
+                        <div class="col-6"><span class="grey-txt">Anak 2</span></div>
+                        <div class="col-4 input-hotel">1</div>
+                        <div class="option">
+                            <span data-value="">0</span>
+                            <span data-value="">1</span>
+                            <span data-value="">2</span>
+                            <span data-value="">3</span>
+                            <span data-value="">4</span>
+                            <span data-value="">5</span>
+                            <span data-value="">6</span>
+                            <span data-value="">7</span>
+                            <span data-value="">8</span>
+                            <span data-value="">9</span>
+                            <span data-value="">10</span>
+                            <span data-value="">11</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="quarter dropdown-container">
+                    <div class="form-control form-hotel-visitor select-age clearfix">
+                        <div class="col-6"><span class="grey-txt">Anak 3</span></div>
+                        <div class="col-4 input-hotel">1</div>
+                        <div class="option">
+                            <span data-value="">0</span>
+                            <span data-value="">1</span>
+                            <span data-value="">2</span>
+                            <span data-value="">3</span>
+                            <span data-value="">4</span>
+                            <span data-value="">5</span>
+                            <span data-value="">6</span>
+                            <span data-value="">7</span>
+                            <span data-value="">8</span>
+                            <span data-value="">9</span>
+                            <span data-value="">10</span>
+                            <span data-value="">11</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="quarter dropdown-container">
+                    <div class="form-control form-hotel-visitor select-age clearfix">
+                        <div class="col-6"><span class="grey-txt">Anak 4</span></div>
+                        <div class="col-4 input-hotel">1</div>
+                        <div class="option">
+                            <span data-value="">0</span>
+                            <span data-value="">1</span>
+                            <span data-value="">2</span>
+                            <span data-value="">3</span>
+                            <span data-value="">4</span>
+                            <span data-value="">5</span>
+                            <span data-value="">6</span>
+                            <span data-value="">7</span>
+                            <span data-value="">8</span>
+                            <span data-value="">9</span>
+                            <span data-value="">10</span>
+                            <span data-value="">11</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </li>
+    </ul>
+</div>
+
+<div class="form-group hotel-age-children" ng-show="hotelSearch.childCount > 0">
+    <div class="btn-age">Usia Anak</div>
+    <div class="age-container clearfix">
+        <div class="col-xs-3 dropdown-container" ng-show="hotelSearch.childCount > 0">
+            <div class="form-control select-age">
+                <small>Anak 1</small>
+                <span>{{hotelSearch.childrenAges[0]}}</span>
+                <div class="option">
+                    <span data-value="" ng-repeat="age in hotelSearch.childrenAgeList" ng-click="setChildAge(0, age)">{{age}}</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-3 dropdown-container" ng-show="hotelSearch.childCount > 1">
+            <div class="form-control select-age">
+                <small>Anak 2</small>
+                <span>{{hotelSearch.childrenAges[1]}}</span>
+                <div class="option">
+                    <span data-value="" ng-repeat="age in hotelSearch.childrenAgeList" ng-click="setChildAge(1, age)">{{age}}</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-3 dropdown-container" ng-show="hotelSearch.childCount > 2">
+            <div class="form-control select-age">
+
+                <small>Anak 3</small>
+                <span>{{hotelSearch.childrenAges[2]}}</span>
+                <div class="option">
+                    <span data-value="" ng-repeat="age in hotelSearch.childrenAgeList" ng-click="setChildAge(2, age)">{{age}}</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-3 dropdown-container" ng-show="hotelSearch.childCount > 3">
+            <div class="form-control select-age">
+                <small>Anak 4</small>
+                <span>{{hotelSearch.childrenAges[3]}}</span>
+                <div class="option">
+                    <span data-value="" ng-repeat="age in hotelSearch.childrenAgeList" ng-click="setChildAge(3, age)">{{age}}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>

@@ -8,21 +8,20 @@
 }
 
 @section AdditionalCSS{
-    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/jquery.slick/1.5.9/slick.css" />
+    <link rel="stylesheet" type="text/css" href="/Assets/vendor/slick/slick.css" />
     <link href="/Assets/css/jquery-ui.min.css" rel="stylesheet" />
 }
 
 @section AdditionalJS {
     @*<script src="/Assets/js/angular.min.js"></script>
-        <script src="/Assets/js/angular-animate.min.js"></script>
+    <script src="/Assets/js/angular-animate.min.js"></script>
         <script src="/Assets/js/angular-route.min.js"></script>*@
     <script src="/Config/JsConfig.js"></script>
     <!-- jquery datepicker -->
     <script src="/Assets/js/jquery-ui.min.js"></script>
     <script type="text/javascript" src="/Assets/js/jquery.ui.datepicker-id.js"></script>
     <script src="/Scripts/bootstrap.min.js"></script>
-
-    <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.slick/1.5.9/slick.min.js"></script>
+    <script type="text/javascript" src="/Assets/vendor/slick/slick.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery.ui.touch-punch/0.2.3/jquery.ui.touch-punch.min.js"></script>
 }
 
@@ -40,7 +39,7 @@
             prevArrow: '<button type="button" class="slick-prev hidden">Back</button>',
             nextArrow: '<button type="button" class="slick-next hidden">Next</button>'
         });
-</script>
+    </script>
     @*<script src="/Assets/mobile/js/HomeController.js"></script>*@
     <script src="/Assets/travorama20/angularDirectory/search/hotelSearch.service.js"></script>
     <script src="/Assets/Travorama20/js/homeController.js"></script>
@@ -135,7 +134,7 @@
                                     <div class="field-wrapper">
                                         <p class="form-control" ng-click="FlightSearchForm.PassengerPicker.Reset('adult'); PageConfig.SetOverlay('passenger-select')">{{FlightSearchForm.Passenger[0]}} Dewasa</p>
                                         @*<p class="form-control" ng-show="FlightSearchForm.Passenger[1] > 0" ng-click="FlightSearchForm.PassengerPicker.Reset('children'); PageConfig.SetOverlay('passenger-select')">, {{FlightSearchForm.Passenger[1]}} Anak</p>
-                                            <p class="form-control" ng-show="FlightSearchForm.Passenger[2] > 0" ng-click="FlightSearchForm.PassengerPicker.Reset('infant'); PageConfig.SetOverlay('passenger-select')">, {{FlightSearchForm.Passenger[2]}} Bayi</p>*@
+                                    <p class="form-control" ng-show="FlightSearchForm.Passenger[2] > 0" ng-click="FlightSearchForm.PassengerPicker.Reset('infant'); PageConfig.SetOverlay('passenger-select')">, {{FlightSearchForm.Passenger[2]}} Bayi</p>*@
                                     </div>
                                 </div>
                                 <div class="col-custom-logo icon-child"></div>
@@ -328,7 +327,7 @@
                     </li>
                 </ul>
             </div><!-- .autocomplete-preload -->
-        
+
             <div class="autocomplete-loading">
                 <h4 class="text-center text-loading">Mencari Bandara</h4>
             </div>
@@ -412,7 +411,7 @@
                             </div>
                             <div class="col-half">
                                 <div class="result blue-txt semibold-txt pull-right">{{location.numOfHotels}} Hotel</div>
-                            </div>
+                        </div>
                         </a>
                     </li>
                     @*<li class="hotel">
@@ -420,10 +419,10 @@
                             <div class="hotel__location bold-txt">Jakarta, Indonesia</div>
                             <div class="col-half">
                                 <div class="hotel__detail">Kota</div>
-                            </div>
+                </div>
                             <div class="col-half">
                                 <div class="result blue-txt semibold-txt pull-right">999 Hotel</div>
-                            </div>
+                        </div>
                         </a>
                     </li>
                     <li class="hotel">
@@ -440,16 +439,16 @@
                 </ul>
             </div><!-- .autocomplete-preload -->
             @*<div class="autocomplete-loading">
-                    <h4 class="text-center text-loading">Mencari Bandara</h4>
-                </div>
+                <h4 class="text-center text-loading">Mencari Bandara</h4>
+            </div>
 
-                <div class="autocomplete-no-result">
-                    <h4 class="text-center">Hasil tidak ditemukan</h4>
-                </div>
+            <div class="autocomplete-no-result">
+                <h4 class="text-center">Hasil tidak ditemukan</h4>
+            </div>
 
-                <div class="autocomplete-result">
-                    <ul class="result" ng-click="PageConfig.SetOverlay()"></ul>
-                </div>*@
+            <div class="autocomplete-result">
+                <ul class="result" ng-click="PageConfig.SetOverlay()"></ul>
+            </div>*@
         </section><!-- .overlay__content -->
     </div>
     <!-- overlay hotel date -->

@@ -35,10 +35,6 @@
     //var found = HotelService.GetInstance()._Autocompletes.TryGetValue(Convert.ToInt64(Model.Location), out loc);
 }
 @section AdditionalJS {
-    @*<script src="/Assets/js/angular.min.js"></script>
-    <script src="/Assets/js/angular-animate.min.js"></script>
-    <script src="/Assets/js/angular-route.min.js"></script>*@
-
     <script src="/Assets/js/jquery-ui.min.js"></script>
     <script type="text/javascript" src="/Assets/js/jquery.ui.datepicker-id.js"></script>
     <script type="text/javascript" src="/Scripts/bootstrap.min.js"></script>
@@ -100,7 +96,6 @@
                                 <input type="text" name="priceSliderValueMax" value="" class="slider-range-max" ng-model="filter.maxPrice" />
                             </div>
                         </div>
-
                         <div class="filter-group">
                             <label class="filter-title">Bintang Hotel</label> @*- {{filter.stars}}*@
                             <div class="rating">
@@ -169,11 +164,7 @@
                             </div>
                         </div>
                     </div>
-                    @*<div>
-                        <button class="pull-right" ng-click="filterHotels()">filter button</button>
-                    </div>*@
                 </div>
-
                 <div class="col-right-result">
                     <div class="sort clearfix" ng-show="totalHotelCount > 0">
                         <div class="col-xs-left"><b>Urut Berdasarkan:</b></div>
@@ -192,19 +183,16 @@
                             </label>
                         </div>
                     </div>
-
                     <div ng-show="!searchDone" class="text-center">
                         <img src="/Assets/images/load.gif" style="width: 50px; height: 50px; margin-top: 5%;">
                     </div>
-
                     <div class="text-center" ng-show="searchDone && returnedHotelCount == 0"><h3> Hotel tidak ditemukan, silakan ganti filter atau destinasi anda.</h3></div>
-
-
                     <div class="hotel-list-container" ng-show="searchDone">
-                        <div class="hotel-list clearfix pointer" ng-repeat="hotel in hotels" ng-click="GotoDetailHotel(hotel.hotelCd)">
+                        <a ng-repeat="hotel in hotels" ng-click="GotoDetailHotel(hotel.hotelCd)" class="hl-wrapper">
+                        @*<a ng-repeat="hotel in hotels" ng-href="{{hotel.hotelCd}}" target="_blank" style="display: block">*@
+                            <div class="hotel-list clearfix pointer">
                             <div class="col-2">
                                 <img class="img-list" hotel-list-image ng-src="{{hotel.mainImage}}" alt="Hotel" />
-                                @*<img class="img-list" src="/Assets/travorama20/images/Hotel/no-hotel.png" alt="Hotel" />*@
                             </div>
                             <div class="col-8">
                                 <div class="clearfix">
@@ -214,15 +202,13 @@
                                         <span class="meal" ng-show="hotel.restaurant"></span>
                                     </div>
                                 </div>
-                
                                 <div ng-class="{
-                                     'star e-star': hotel.starRating == 1,
-                                     'star star-2 e-star': hotel.starRating == 2,
-                                     'star star-3 e-star': hotel.starRating == 3,
-                                     'star star-4 e-star': hotel.starRating == 4,
+                                     'star': hotel.starRating == 1,
+                                     'star star-2': hotel.starRating == 2,
+                                     'star star-3': hotel.starRating == 3,
+                                     'star star-4': hotel.starRating == 4,
                                      'star star-5': hotel.starRating == 5}">
                                 </div>
-                                
                                 <div class="location">
                                     <div>{{toTitleCase(hotel.address)}} {{toTitleCase(hotel.zone)}}</div>
                                     {{toTitleCase(hotel.city)}}<span ng-show ="hotel.postalCd != null || hotel.postalCd.length > 0"> {{hotel.postalCd}}</span>
@@ -251,12 +237,9 @@
                                 </div>
                             </div>
                         </div>
+                        </a>
+                        
                     <div class="pagination" ng-show="searchDone && returnedHotelCount > 0 && pageCount > 1">
-                        @*<div class="page-container">
-                            <a href="#" class="prev" ng-click="prevPage()"></a>
-                            Halaman
-                            <a href="#" class="next" ng-click="nextPage()"></a>
-                        </div>*@
                         Halaman
                         <div class="page-container">
                             <a href="" class="prev" ng-click="page != 1 && prevPage()"></a>
