@@ -105,6 +105,13 @@
             }
         }
     }
+    .dh-img {
+        width: 100%; 
+        height: 200px; 
+        background-size: cover; 
+        background-position: center center;
+        background-repeat: no-repeat;
+    }
 }
 .spec-hotel {
     .sh-title {margin-bottom: 15px;}
