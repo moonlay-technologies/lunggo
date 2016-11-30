@@ -118,13 +118,13 @@
             $(this).children('img').remove();
         });
 
-        $('.slider-wrapper').slick({
-            autoplay: true,
-            autoplaySpeed: 3000,
-            dots: true,
-            prevArrow: '<button type="button" class="slick-prev hidden">Back</button>',
-            nextArrow: '<button type="button" class="slick-next hidden">Next</button>'
-        });
+        //$('.slider-wrapper').slick({
+        //    autoplay: true,
+        //    autoplaySpeed: 3000,
+        //    dots: true,
+        //    prevArrow: '<button type="button" class="slick-prev hidden">Back</button>',
+        //    nextArrow: '<button type="button" class="slick-next hidden">Next</button>'
+        //});
     </script>
     <script src="/Assets/travorama20/angularDirectory/search/hotelSearch.service.js"></script>
 <script src="/Assets/Travorama20/js/homeController.js"></script>
@@ -290,9 +290,7 @@
                             <div class="col-xs-6">
                                 <div class="form-hotel-checkin">
                                     <span class="grey-txt">Tanggal Check in</span>
-                                    <span class="date">21</span>
-                                    <span class="month">Des</span>
-                                    <span class="year">2016</span>
+                                    <span class="date-hotel">{{hotelSearch.checkinDateDisplay}}</span>
                                 </div>
                             </div>
                             <div class="col-xs-6">

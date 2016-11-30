@@ -127,7 +127,7 @@ $button-border: #c9cdd2;
     margin: 0;
 }
 
-html {height: 100%}
+html {height: 100%;}
 
 body {margin:0; background:#f9f9f9; font-family:'Open Sans', sans-serif; font-size:12px; padding-top:$header-height; letter-spacing: 0; -webkit-font-smoothing: antialiased;}
 
@@ -879,6 +879,13 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         }
         section {text-align:center; padding:5px;}
     }
+}
+
+.clearer {
+    clear:both;
+}
+.pointer {
+    cursor:pointer;
 }
 
 /*ACCORDION*/

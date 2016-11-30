@@ -11,10 +11,8 @@
                 background-repeat: no-repeat;
             }
             .col-right-hotel {
+                &:after {@extend .arrow-detail;}
                 .star {margin-top: 3px;}
-                .price {
-                    .detail {@extend .arrow-detail}
-                }
                 .location{
                     &:before { margin: 5px 0;
                         content: '';

@@ -1,12 +1,59 @@
-﻿@{
+﻿@using Lunggo.ApCommon.Hotel.Service
+@model Lunggo.CustomerWeb.Models.HotelDetailModel.HotelDetail
+@{
     Layout = "/Views/Shared/Travorama20/_Layout20150929.cshtml";
     ViewBag.BodyClass = "page-hotel page-detail";
     ViewBag.Title = "Detail Hotel";
     ViewBag.AngularController = "hotelDetailController";
-
-
+}
+@{
+   
+    var hotelCd = Model.HotelCode;
+    var hotelDetail = HotelService.GetInstance().GetHotelDetailFromTableStorage(Convert.ToInt32(hotelCd));
+    var loc = ToTitleCase(hotelDetail.HotelName + ", " + hotelDetail.City) ;
 }
 
+@functions{
+
+    public string ToTitleCase(string input)
+    {
+
+        var text = "";
+        try
+        {
+            var splittedText = input.Split(' ');
+            foreach (var word in splittedText)
+            {
+                var splittedByStrips = word.Split('-');
+                var w = "";
+                if (splittedByStrips.Count() != 1)
+                {
+                    foreach (var part in splittedByStrips)
+                    {
+                        w += ApplyTitleCase(part) + "-";
+                    }
+                    text += w.Substring(0, w.Length - 1) + " ";
+                }
+                else
+                {
+                    text += word[0] + word.Substring(1, word.Length - 1).ToLower() + " ";
+                }
+            }
+
+        }
+        catch
+        {
+
+        }
+        return text.Length == 0 ? "" : text.Substring(0, text.Length - 1);
+    }
+
+    public string ApplyTitleCase(string input)
+    {
+        return input[0] + input.Substring(1, input.Length - 1).ToLower();
+    }
+
+}
 @section AdditionalCSS{
     <link href="/Assets/css/jquery-ui.min.css" rel="stylesheet" />
     <link href="/Assets/vendor/lightslider/lightslider.css" rel="stylesheet" />
@@ -25,6 +72,7 @@
 }
 
 @section PageJS{
+    <script>var loc = '@loc';</script>
     <script src="/Assets/travorama20/js/hotelDetailController.js"></script>
     <script type="text/javascript" src="/Assets/travorama20/js/HotelController.js"></script>
     <script>accordionFunctions()</script>
@@ -269,7 +317,7 @@
                 </div>
                 <div class="info-hotel">
                     <div class="top-title clearfix">
-                        <div class="col-left-rs bg-title"><b>Pilih</b> Kamar </div>
+                        <div class="col-left-rs bg-title"><b>Fasilitas</b> </div>
                     </div>
                     <div class="ih-accordion">
                         <div class="accordion-wrapper">

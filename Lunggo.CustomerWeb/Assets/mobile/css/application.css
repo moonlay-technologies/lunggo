@@ -1094,6 +1094,12 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     text-align: center;
     padding: 5px; }
 
+.clearer {
+  clear: both; }
+
+.pointer {
+  cursor: pointer; }
+
 /*ACCORDION*/
 .accordion-wrapper .accordion-title {
   background-color: #35b6e7;
@@ -4497,7 +4503,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     background-size: 100%;
     vertical-align: middle;
     margin-right: 10px; }
-  .page-hotel .arrow-detail, .page-hotel .travorama-hotel-mobile .search-list .hotel-list-container .hotel-list .col-right-hotel .price .detail {
+  .page-hotel .arrow-detail, .page-hotel .travorama-hotel-mobile .search-list .hotel-list-container .hotel-list .col-right-hotel:after {
     background: url(/Assets/mobile/images/Hotel/arrow-orange.png);
     display: block;
     width: 8px;
@@ -4505,7 +4511,9 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     position: absolute;
     right: 0;
     margin-right: 15px;
-    vertical-align: middle; }
+    vertical-align: middle;
+    content: '';
+    margin-top: -55px; }
   .page-hotel .arrow-down, .page-hotel .travorama-hotel-mobile .detail-hotel .dh-listing .dh-list-container .dh-list:before {
     content: '';
     display: block;

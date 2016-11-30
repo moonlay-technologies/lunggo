@@ -47,6 +47,15 @@ namespace Lunggo.CustomerWeb.Models
             }
         }
 
+        public class HotelDetail
+        {
+            [JsonProperty("searchId")]
+            public string SearchId{ get; set; }
+            [JsonProperty("hotelCd")]
+            public int HotelCode { get; set; }
+            [JsonProperty("searchParam")]
+            public string SearchParam { get; set; }   
+        }
         public class SearchParameter
         {
             [JsonProperty("searchHotelType")]
