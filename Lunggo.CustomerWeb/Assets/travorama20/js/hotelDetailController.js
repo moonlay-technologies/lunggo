@@ -19,11 +19,14 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
     $scope.maxRoomCount = 100;
     $scope.pageLoaded = true;
     $scope.searchDone = false;
+    $scope.loc = loc;
+    $scope.selectedRoom = '';
+    $scope.loading = false;
     $scope.init = function (model) {
         $log.debug(model);
         $scope.searchId = model.searchId;
         $scope.searchParam = model.searchParam;
-
+        $scope.loading = true;
         //$scope.hotelSearch.searchParamObject = model.searchParamObject;
         //$scope.hotelSearch.searchParam = model.searchParam;
 
@@ -42,7 +45,8 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
             }
         );
 
-        resource.query({}, {}).$promise.then(function(data) {
+        resource.query({}, {}).$promise.then(function (data) {
+            $scope.loading = false;
             validateResponse(data);
             $scope.searchDone = true;
             $scope.hotel = data.hotelDetails;
@@ -60,7 +64,7 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
                     return false;
                 }
             });
-            $scope.hotel.images = tempHotelImages
+            $scope.hotel.images = tempHotelImages;
 
             $.each($scope.hotel.room, function(roomKey, room) {
                 $.each(room.roomImages, function(imageKey, roomImage) {
@@ -68,7 +72,7 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
                     $scope.hotel.room[roomKey].roomImages[imageKey] = roomImage;
                 });
             });
-            $scope.loc = $scope.hotel.city + ', ' + $scope.hotel.country;
+            
             var cekin = $scope.hotel.room[0].rate.regsId.split(',')[2].split('|')[0];
             var cekout = $scope.hotel.room[0].rate.regsId.split(',')[2].split('|')[1];
             $scope.hotel.checkinDate = new Date(parseInt(cekin.substring(0, 4)), parseInt(cekin.substring(4, 6)) - 1, parseInt(cekin.substring(6, 8)));
@@ -200,6 +204,10 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
               }
           }
       );
+
+    $scope.seeRoomDetail = function(room) {
+        $scope.selectedRoom = room;
+    }
     $scope.selectFailed = false;
     $scope.booking = false;
     $scope.bookRoom = function (room) {

@@ -68,7 +68,10 @@
         scope.filter.stars = null;
         scope.filter.facilities = null;
 
-        scope.hotelSearch.sortByType = { "ascendingPrice": "ASCENDINGPRICE", "descendingPrice": "DESCENDINGPRICE" };
+        scope.hotelSearch.sortByType = {
+            "ascendingPrice": "ASCENDINGPRICE", "descendingPrice": "DESCENDINGPRICE",
+            "ascendingStar": "ASCENDINGSTAR", "descendingStar": "DESCENDINGSTAR"
+        };
         scope.hotelSearch.sortBy = scope.hotelSearch.sortByType.ascendingPrice;
         scope.hotelSearch.page = 1;
         scope.hotelSearch.perPage = 20;
@@ -97,8 +100,8 @@
             scope.hotelSearch.locationDisplay = "Bali, Indonesia";
             scope.hotelSearch.checkinDate = moment().locale("id").add(5, 'days');
             scope.hotelSearch.checkoutDate = moment().locale("id").add(7, 'days');
-            scope.hotelSearch.destinationCheckinDate = scope.hotelSearch.checkinDate;
-            scope.hotelSearch.destinationCheckoutDate = scope.hotelSearch.checkoutDate;
+            scope.hotelSearch.destinationCheckinDate = scope.hotelSearch.checkinDate.locale("id").format('LL');;
+            scope.hotelSearch.destinationCheckoutDate = scope.hotelSearch.checkoutDate.locale("id").format('LL');;
             scope.hotelSearch.checkinDateDisplay = scope.hotelSearch.checkinDate.locale("id").format('LL');
             scope.hotelSearch.checkoutDateDisplay = scope.hotelSearch.checkoutDate.locale("id").format('LL');
 

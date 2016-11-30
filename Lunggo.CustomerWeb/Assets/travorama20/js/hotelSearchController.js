@@ -129,7 +129,10 @@ app.controller('hotelSearchController', ['$scope', '$log', '$http', '$resource',
     $scope.filter.zones = [];
     $scope.filter.stars = null;
     $scope.filter.facilities = null;
-    $scope.sortByType = { "ascendingPrice": "ASCENDINGPRICE", "descendingPrice": "DESCENDINGPRICE"};
+    $scope.sortByType = {
+        "ascendingPrice": "ASCENDINGPRICE", "descendingPrice": "DESCENDINGPRICE",
+        "ascendingStar": "ASCENDINGSTAR", "descendingStar": "DESCENDINGSTAR"
+    };
     $scope.sortBy = $scope.sortByType.ascendingPrice;
     
     $scope.page = 1;
