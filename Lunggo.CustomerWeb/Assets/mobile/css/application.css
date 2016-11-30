@@ -110,6 +110,14 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
   -ms-border-radius: 2px;
   border-radius: 2px; }
 
+.img-loading {
+  width: 30px;
+  height: 30px;
+  left: 50%;
+  top: 50%;
+  position: absolute;
+  transform: translate(-50%, -50%); }
+
 .site-header {
   position: fixed;
   top: 0;
@@ -4570,6 +4578,10 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     max-height: 110px; }
   .page-hotel .dh-list .col-right-hotel, .page-hotel .hotel-list .col-right-hotel {
     padding-left: 10px; }
+  .page-hotel .dh-list .col-left-hotel, .page-hotel .hotel-list .col-left-hotel {
+    width: 33.333333333333336%; }
+  .page-hotel .dh-list .col-right-hotel, .page-hotel .hotel-list .col-right-hotel {
+    width: 66.66666666666666%; }
   .page-hotel .dh-list .col-left-hotel, .page-hotel .dh-list .col-right-hotel, .page-hotel .hotel-list .col-left-hotel, .page-hotel .hotel-list .col-right-hotel {
     float: left; }
   .page-hotel .top-content .hotel-sort-filter .hotel-sort-filter-action a,
@@ -4789,8 +4801,8 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
       .page-hotel .travorama-hotel-mobile .search-list .hotel-list-container .hotel-list {
         padding: 15px 10px; }
         .page-hotel .travorama-hotel-mobile .search-list .hotel-list-container .hotel-list .img-list {
-          width: 98px;
-          height: 119px;
+          width: 100%;
+          height: 134px;
           background-size: cover;
           background-position: center center;
           background-repeat: no-repeat; }

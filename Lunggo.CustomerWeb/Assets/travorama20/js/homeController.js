@@ -252,5 +252,9 @@ jQuery(document).ready(function ($) {
     $('body .form-hotel-room span').on('click', function () {
         $('body .form-child-age').show();
     });
+
+    $('body input[name="FormAgeSubmit"]').on('click', function () {
+        $('body .form-child-age').hide();
+    });
 });
  

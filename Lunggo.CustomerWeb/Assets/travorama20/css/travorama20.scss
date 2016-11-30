@@ -215,7 +215,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     .location-header {height:40px; background:#4e4e4e; color:#fff; font-weight:600; font-size:17px; padding:10px 15px;
         .close-location, .close-hotel {float:right; cursor:pointer;}
     }
-    .location-body {color:#333;
+    .location-body {color:#333; height: 400px;
         .location-recommend {
             .tab-header {background:#eaeaea; width:100%; padding:0 30px; position:relative;
                 a.nav-click {width:30px; height:60px; display:block; background-color:#999999; position:absolute; background-image:url(/Assets/images/nav-sprite.png); background-repeat:no-repeat;

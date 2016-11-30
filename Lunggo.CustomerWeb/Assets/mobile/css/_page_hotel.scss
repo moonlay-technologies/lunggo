@@ -580,6 +580,8 @@
     .dh-list, .hotel-list {
         .col-left-hotel>img {max-height: 110px;}
         .col-right-hotel {padding-left: 10px;}
+        .col-left-hotel {width: 33.333333333333336%;}
+        .col-right-hotel {width: 66.66666666666666%;}
         .col-left-hotel, .col-right-hotel {float: left;}
     }
 
