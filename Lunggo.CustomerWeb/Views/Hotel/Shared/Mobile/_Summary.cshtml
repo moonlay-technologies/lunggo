@@ -25,7 +25,7 @@
         <div><b>{{loc}}</b>, {{hotelSearch.roomCount}} Kamar</div>
         <div class="semibold-txt">{{hotelSearch.nightCount}} Malam ({{hotelSearch.checkinDateDisplay}} - {{hotelSearch.checkoutDateDisplay}})</div>
     </div>
-    <a ng-click="SetOverlay('hotel-form')" class="summary-right"><span>GANTI</span></a>
+    <a ng-click="PageConfig.SetOverlay('hotel-form')" class="summary-right"><span>GANTI</span></a>
 </div>
 
 <!-- .overlay - change flight -->
@@ -33,7 +33,7 @@
     <header class="overlay__header">
         <h3 class="overlay__title">
             <b>GANTI HOTEL</b>
-            <span class="overlay__close" ng-click="SetOverlay()">X</span>
+            <span class="overlay__close" ng-click="PageConfig.SetOverlay()">X</span>
         </h3>
     </header><!-- .overlay__header -->
     <section class="overlay__content">

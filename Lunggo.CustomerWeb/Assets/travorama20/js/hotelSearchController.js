@@ -12,7 +12,7 @@ app.controller('hotelSearchController', ['$scope', '$log', '$http', '$resource',
     $scope.checkboxFilter = {
         Star: [false, false, false, false, false]
     }
-
+    $scope.returnUrl = "/";
     
     //@Url.Action("Search", "Hotel")?zzz={{departureDate}}" method="POST"
     //=============== hotel start ======================
@@ -176,6 +176,9 @@ app.controller('hotelSearchController', ['$scope', '$log', '$http', '$resource',
     $scope.maxPrice = '';
     hotelSearchSvc.initializeSearchForm($scope);
 
+    $scope.selectLocation = function(location) {
+        hotelSearchSvc.selectLocation(location);
+    }
     $scope.searchHotel = function (filter, sort) {
         $scope.searchDone = false;
         $scope.pageCount = 0;
@@ -225,10 +228,12 @@ app.controller('hotelSearchController', ['$scope', '$log', '$http', '$resource',
         });
     };
 
+    $scope.expired = false;
     var validateResponse = function (data) {
         if (data.error != undefined || data.error != null) {
             if (data.error == "ERHSEA02") {
                 $log.debug('search id expired. researching...');
+                $scope.expired = true;
                 $scope.hotelSearch.searchId = null;
                 $scope.researching = true;
                 $scope.searchHotel();
@@ -239,9 +244,14 @@ app.controller('hotelSearchController', ['$scope', '$log', '$http', '$resource',
         return true;
     };
 
+    $scope.hotel  = {
+        searchHotel : function () {
+            hotelSearchSvc.gotoHotelSearch($scope.hotelSearch);
+        }
+    }
     $scope.GotoDetailHotel = function (hotelCd) {
         $log.debug('redirect to detail hotel with hotelCd: ' + hotelCd);
-        location.href = '/id/Hotel/DetailHotel/?' +
+        location.href = '/id/Hotel/DetailHotel?' +
             "searchId=" + $scope.hotelSearch.searchId + "&" +
             "hotelCd=" + hotelCd + "&" + 
             "searchParam=" + $scope.searchParam;
