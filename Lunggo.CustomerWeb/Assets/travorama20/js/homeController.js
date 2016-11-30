@@ -119,6 +119,21 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
         hotelSearchSvc.gotoHotelSearch($scope.hotelSearch);
     };
 
+    $scope.HotelSearchForm = {
+        AutoComplete: {
+            Keyword: '',
+            MinLength: 3,
+            GetLocation: function () {
+                hotelSearchSvc.getLocation($scope.HotelSearchForm.AutoComplete.Keyword);
+            },
+
+        },
+    }
+
+    $('.form-hotel-location').click(function () {
+        $(this).select();
+    });
+
     $('.hotel-date-picker').datepicker({
         numberOfMonths: 2,
         onSelect: function (date) {

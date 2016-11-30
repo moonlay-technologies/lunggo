@@ -263,11 +263,9 @@
         if (hotelSearch.location == null || hotelSearch.location.length == 0) {
             //$scope.wrongParam = true;
             alert("Silakan pilih lokasi atau hotel dari daftar yang tersedia");
-            //return false;
-        }
-
-
-        return "?info=" + [
+            return false;
+        } else {
+            return "?info=" + [
             hotelSearch.searchHotelType.location,
             hotelSearch.location,
             moment(hotelSearch.checkinDate).format("YYYY-MM-DD"),
@@ -277,7 +275,10 @@
             hotelSearch.nightCount,
             hotelSearch.roomCount,
             hotelSearch.childrenAges
-        ].join('.');
+            ].join('.');
+        }
+
+        
     };
 
     return factory;

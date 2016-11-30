@@ -12,6 +12,8 @@ app.controller('hotelSearchController', ['$scope', '$log', '$http', '$resource',
     $scope.checkboxFilter = {
         Star: [false, false, false, false, false]
     }
+
+    
     //@Url.Action("Search", "Hotel")?zzz={{departureDate}}" method="POST"
     //=============== hotel start ======================
     //$scope.hotel = {};

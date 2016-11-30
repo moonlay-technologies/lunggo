@@ -626,31 +626,6 @@ if (typeof (angular) == 'object') {
                     hotelSearchSvc.getLocation($rootScope.HotelSearchForm.AutoComplete.Keyword);
                 },
                 
-                Reset: function (target) {
-                    //$rootScope.FlightSearchForm.AutoComplete.Target = target || 'departure';
-
-                    //$rootScope.FlightSearchForm.AutoComplete.Keyword = '';
-                    //$rootScope.FlightSearchForm.AutoComplete.Result = [];
-                    //$rootScope.FlightSearchForm.AutoComplete.Loading = false;
-                },
-                SetAirport: function (target, airport) {
-                    //if (target == 'departure') {
-                    //    if ($rootScope.FlightSearchForm.AirportDestination.City == airport.City) {
-                    //        $('.btnSubmit').addClass('disabled');
-                    //    } else {
-                    //        $('.btnSubmit').removeClass('disabled');
-                    //    }
-                    //    $rootScope.FlightSearchForm.AirportOrigin = airport;
-                    //} else {
-                    //    if ($rootScope.FlightSearchForm.AirportOrigin.City == airport.City) {
-                    //        $('.btnSubmit').addClass('disabled');
-                    //    } else {
-                    //        $('.btnSubmit').removeClass('disabled');
-                    //    }
-                    //    $rootScope.FlightSearchForm.AirportDestination = airport;
-                    //}
-                    //console.log(airport);
-                }
             },
         }
         // flight search form
