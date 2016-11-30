@@ -118,13 +118,13 @@
             $(this).children('img').remove();
         });
 
-        //$('.slider-wrapper').slick({
-        //    autoplay: true,
-        //    autoplaySpeed: 3000,
-        //    dots: true,
-        //    prevArrow: '<button type="button" class="slick-prev hidden">Back</button>',
-        //    nextArrow: '<button type="button" class="slick-next hidden">Next</button>'
-        //});
+        $('.slider-wrapper').slick({
+            autoplay: true,
+            autoplaySpeed: 3000,
+            dots: true,
+            prevArrow: '<button type="button" class="slick-prev hidden">Back</button>',
+            nextArrow: '<button type="button" class="slick-next hidden">Next</button>'
+        });
     </script>
     <script src="/Assets/travorama20/angularDirectory/search/hotelSearch.service.js"></script>
 <script src="/Assets/Travorama20/js/homeController.js"></script>
@@ -278,27 +278,31 @@
                     </form>
                 </div><!-- .tab-flight -->
                 <div class="tab-hotel tab-pane clearfix active" id="hotel">
-                   
+                    
                     <h3 class="text-center">Cari <b>Kamar Hotel</b><br /><span class="sub-title">(Domestik &amp; Internasional)</span></h3>
+                    @*<h3 class="text-center">{{hotelSearch.checkinDate | date:'dd-MM-yyy'}} - {{"2016-12-05T08:57:32.520Z" | date:'dd'}}</h3>*@
                     <form class="form form-horizontal form-hotel page-hotel" ng-submit="hotel.searchHotel()" autocomplete="off">
                         <div class="form-group hotel-location ">
                             <div class="col-xs-12">
                                 <input type="text" name="hotelLocation" value="" class="form-hotel-location form-control" placeholder="Kota, Wilayah atau Nama Hotel" ng-model="hotelSearch.locationDisplay" ng-click="view.showHotelSearch = true" />
                             </div>
                         </div>
+
                         <div class="form-group hotel-date">
                             <div class="col-xs-6">
                                 <div class="form-hotel-checkin">
-                                    <span class="grey-txt">Tanggal Check in</span>
-                                    <span class="date-hotel">{{hotelSearch.checkinDateDisplay}}</span>
+                                    <span class="grey-txt">Tanggal Check in </span>
+                                    <span class="date">{{hotelSearch.checkinDate.format() | date : 'dd'}}</span>
+                                    <span class="month">{{hotelSearch.checkinDate.format() | date : 'MMM'}}</span>
+                                    <span class="year">{{hotelSearch.checkinDate.format() | date : 'yyyy'}}</span>
                                 </div>
                             </div>
                             <div class="col-xs-6">
                                 <div class="form-hotel-checkout disabled">
                                     <span class="grey-txt">Tanggal Check out</span>
-                                    <span class="date">22</span>
-                                    <span class="month">Feb</span>
-                                    <span class="year">2017</span>
+                                    <span class="date">{{hotelSearch.checkoutDate.format() | date : 'dd'}}</span>
+                                    <span class="month">{{hotelSearch.checkoutDate.format() | date : 'MMM'}}</span>
+                                    <span class="year">{{hotelSearch.checkoutDate.format() | date : 'yyyy'}}</span>
                                 </div>
                             </div>
                         </div>
@@ -308,13 +312,8 @@
                                     <div class="col-4"><span class="grey-txt">Malam</span></div>
                                     <div class="col-6 input-hotel">1</div>
                                     <div class="option">
-                                        <span data-value="">1</span>
-                                        <span data-value="">2</span>
-                                        <span data-value="">3</span>
-                                        <span data-value="">4</span>
-                                        <span data-value="">5</span>
-                                        <span data-value="">6</span>
-                                        <span data-value="">7</span>
+                                        <span data-value="" ng-repeat="nightCount in tra-get-range(hotelSearch.nightCountMax, hotelSearch.nightCountMin) track by $index">{{nightCount}}</span>
+                                       
                                     </div>
                                 </div>
                             </div>
