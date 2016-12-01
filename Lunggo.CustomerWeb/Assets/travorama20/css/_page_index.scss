@@ -462,6 +462,11 @@ file : /Assets/travorama20/css/_page_index.scss
         z-index: 3;
         padding: 30px;
         overflow-y: auto;
+        input[name='FormAgeSubmit'] {
+            padding: 10px 0;
+            font-size: 14px;
+            height: auto;
+        }
         .form-control {cursor: pointer;
             &.adult, &.child, &.select-age {
                 .option {

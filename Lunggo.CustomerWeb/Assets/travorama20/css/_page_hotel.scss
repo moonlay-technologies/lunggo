@@ -495,7 +495,7 @@
             top: 405px;
             left: initial;
             width: 908px;
-            .location-body {border:$border-default;}
+            .location-body {border:$border-default; height: 475px;}
         }
         .search-calendar-hotel {
             top: 405px;
@@ -512,6 +512,7 @@
                 display: none;
                 .form-control {
                     height: 45px;
+                    padding: 6px 8px;
                     @include border-radius(2px);
                     &.select-age {cursor: pointer;}
                     &.form-date {cursor: pointer;
@@ -520,35 +521,31 @@
                             line-height: 30px;
                         }
                     }
-                    a {
-                        &.increase {
-                            display: block;
-                            width: 10px;
-                            height: 10px;
-                            border-left: 6px solid transparent;
-                            border-right: 6px solid transparent;
-                            border-bottom: 6px solid #777;
-                        }      
-                        &.decrease {
-                            @extend a.increase;
-                            border-bottom: none;
-                            border-top: 6px solid #777;
-                            margin-top: 10px;
-                        }
-                    }    
-                    &.form-night, &.form-room, &.form-adult, &.form-child {
-                        a.increase {margin-left: 5px;}
-                    }
                     .option {
                         left: 0;
                         width: 118.63px;
                         margin-top: 22px;
+                    }
+                    .date {
+                        float: left;
+                        font-size: 24px;
+                        line-height: 28px;
+                        width: 30px;
+                    }
+                    .month {
+                        display: block;
+                        line-height: 18px;
+                    }
+                    .year {
+                        display: block;
+                        line-height: 4px;
                     }
                 }
                 .form-group {
                     margin-bottom: 10px;
                     &.form__hotel, &.form__date, &.form__night, &.form__adult, &.form__child, &.form__age {padding-right: 10px;}
                     &.form__submit .btn-lg {@include border-radius(2px);}
+                    input.change-hotel {font-size: 12px;}
                 }
                 span.pull-right.bold-txt.darkgrey-txt {line-height: 30px;}
                 .form-sm {width: 16.666666666666668%;}

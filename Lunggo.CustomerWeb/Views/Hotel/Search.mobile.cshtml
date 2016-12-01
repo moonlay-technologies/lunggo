@@ -85,12 +85,12 @@
         </div>
     </div>
     <div class="search-list">
-        <div ng-show="!searchDone" class="text-center">
-            <img src="/Assets/images/load.gif" style="width: 30px; height: 30px; margin-top: 5%;">
+        <div ng-show="!searchDone" class="text-center img-loading">
+            <img src="/Assets/images/load.gif">
         </div>
         <ul class="hotel-list-container">
-            <li>
-                <div class="hotel-list clearfix" ng-repeat="hotel in hotels" ng-click="GotoDetailHotel(hotel.hotelCd)">
+            <li ng-repeat="hotel in hotels" ng-click="GotoDetailHotel(hotel.hotelCd)">
+                <div class="hotel-list clearfix">
                     <div class="col-left-hotel"><div class="img-list" hotel-list-image style="background-image: url({{hotel.mainImage}});"></div></div>
                     <div class="col-right-hotel">
                         <div class="blue-txt bold-txt lg-txt">{{hotel.hotelName}}</div>

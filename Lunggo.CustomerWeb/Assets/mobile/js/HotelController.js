@@ -134,11 +134,11 @@
 
         //// **********
         //// Slick Slider Detail Hotel
-        //$('.dh-slider').slick({
-        //    autoplay: true,
-        //    autoplaySpeed: 2500,
-        //    dots: false
-        //});
+        $('.dh-slider').slick({
+            autoplay: true,
+            autoplaySpeed: 2500,
+            dots: false
+        });
 
         // **********
         // Slider

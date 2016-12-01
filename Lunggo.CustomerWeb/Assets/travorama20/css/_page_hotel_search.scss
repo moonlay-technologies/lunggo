@@ -64,8 +64,12 @@
         }
         .col-right-result {
             padding-left: 30px;
-            .sort .col-xs-left {margin-top: 5px;}
+            .sort .col-2 {margin-top: 5px;}
             .hl-wrapper {display: block;}
+            .hl-select {
+                display: block;
+                text-decoration: none;
+            }
             .hotel-list {
                 margin-top: 15px;
                 padding: 14px;
