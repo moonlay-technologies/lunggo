@@ -78,6 +78,11 @@ span.close {
   display: block;
   width: 100%; }
 
+.result-form-right .btn-yellow {
+  height: auto;
+  font-size: 14px;
+  border-radius: 2px; }
+
 .section-title.stripe {
   font-weight: 600;
   background: url(/Assets/images/yellow-stripe.png) center bottom no-repeat;

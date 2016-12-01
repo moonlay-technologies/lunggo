@@ -104,7 +104,7 @@
                 box-shadow: none;
                 @include border-radius(0);
                 display: inline;
-                background: $color-white;
+                background: #fff;
                 span {float:right;}
             }
         }
@@ -137,7 +137,7 @@
                 cursor: pointer;
             }
             .field-wrapper {
-                padding: 21px 0;
+                padding: 10px 0;
                 border-bottom: 1px solid #dddddd;
                 text-align: center;
                 &.form-adult:before {
@@ -150,6 +150,7 @@
                     left: 0;
                     @include size(41px, 57px);
                     background-image: url(/Assets/mobile/images/adult.png);
+                    margin-left: 5px;
                 }
                 &.form-child:before {
                     background-size: 40%;
@@ -267,10 +268,14 @@
             }
         }
         .form__visitor {
+            .mid-title {padding: 10px 0;}
+            select[name='adultclass'], select[name='childclass'] {background: #ecf0f4;
+                option {background: #fff;}
+            }
             .age-child {
                 background: #ecf0f4;
                 margin-top: 20px;
-                padding: 10px 25px;
+                padding: 10px 0 20px;
                 font-size: 13px;
                 &:before {
                     content: '';
@@ -287,9 +292,9 @@
                     border-right: 20px solid #fff;
                     border-left: 20px solid #fff;
                 }
-                .ac-list {
-                    &>.col-8, &>.col-2 {padding: 10px 0;}
-                    &>.col-2 {border-bottom: 1px solid #ccc;
+                .ac-list { padding: 0 12px;
+                    &>.col-6 {padding: 10px;}
+                    &>.col-4 {
                         &:after {
                             content: '';
                             display: inline-block;
@@ -297,13 +302,16 @@
                             height: 8px;
                             background: url(/Assets/mobile/images/Hotel/arrow-down-grey.png) no-repeat;
                             float: right;
-                            margin-top: -12px;
+                            margin-top: -22px;
                             opacity: 0.4;
                             position: absolute;
-                            right: 0;
+                            right: 10px;
                         }
                     }
-                    select[name='agelist']{background: #ecf0f4;
+                    select[name='agelist']{
+                        background: #ecf0f4;
+                        padding: 10px 30px;
+                        border-bottom: 1px solid #ddd;
                         option {background: #fff;}
                     }
                     &:last-child {&>.col-2 {border-bottom: none;}}
@@ -444,3 +452,5 @@ input[name="hotel-night"], input[name="hotel-visitor"] {
 .blue-txt {color: #2fb4e6;}
 .semibold-txt {font-weight: 600;}
 .bold-txt {font-weight: 700;}
+.right-txt {text-align: right;}
+.sm-txt {font-size: 9px;}

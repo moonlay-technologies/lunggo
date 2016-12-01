@@ -156,12 +156,7 @@ jQuery(document).ready(function ($) {
         $(this).children('.option').toggle();
         $('.search-calendar-hotel, .search-hotel, .form-room .option, .select-age .option, .form-adult .option, .form-child .option').hide();
     });
-
-    $('body .form-room').on('click', function () {
-        $(this).children('.option').toggle();
-        $('.search-calendar-hotel, .search-hotel, .form-night .option, .select-age .option, .form-adult .option, .form-child .option').hide();
-    });
-
+   
     $('body .form-adult').on('click', function () {
         $(this).children('.option').toggle();
         $('.search-calendar-hotel, .search-hotel, .form-room .option, .form-night .option, .select-age .option, .form-child .option').hide();
@@ -171,4 +166,15 @@ jQuery(document).ready(function ($) {
         $(this).children('.option').toggle();
         $('.search-calendar-hotel, .search-hotel, .form-room .option, .form-night .option, .select-age .option, .form-adult .option').hide();
     });
+
+    $('body .form-room').on('click', function () {
+        $(this).children('.option').toggle();
+        $('.search-calendar-hotel, .search-hotel, .form-night .option, .select-age .option, .form-adult .option, .form-child .option').hide();
+    });
+
+    $('body .room-row').hide();
+    $('body .form-room span').on('click', function () {
+        $('body .room-row').show();
+    });
+
 });

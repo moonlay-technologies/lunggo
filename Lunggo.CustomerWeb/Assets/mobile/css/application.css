@@ -1563,7 +1563,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         -ms-border-radius: 0;
         border-radius: 0;
         display: inline;
-        background: #ffffff; }
+        background: #fff; }
         .page.page-home .form-container .form-wrapper form .form__departure p span, .page.page-home .form-container .form-wrapper form .form__departure p.form-control span, .page.page-home .form-container .form-wrapper form .form__departure select.form-control span, .page.page-home .form-container .form-wrapper form .form__return p span, .page.page-home .form-container .form-wrapper form .form__return p.form-control span, .page.page-home .form-container .form-wrapper form .form__return select.form-control span, .page.page-home .form-container .form-wrapper form .form__roundtrip p span, .page.page-home .form-container .form-wrapper form .form__roundtrip p.form-control span, .page.page-home .form-container .form-wrapper form .form__roundtrip select.form-control span, .page.page-home .form-container .form-wrapper form .form__passenger p span, .page.page-home .form-container .form-wrapper form .form__passenger p.form-control span, .page.page-home .form-container .form-wrapper form .form__passenger select.form-control span, .page.page-home .form-container .form-wrapper form .form__flightclass p span, .page.page-home .form-container .form-wrapper form .form__flightclass p.form-control span, .page.page-home .form-container .form-wrapper form .form__flightclass select.form-control span, .page.page-home .form-container .form-wrapper form .form__hotel p span, .page.page-home .form-container .form-wrapper form .form__hotel p.form-control span, .page.page-home .form-container .form-wrapper form .form__hotel select.form-control span, .page.page-home .form-container .form-wrapper form .form__date p span, .page.page-home .form-container .form-wrapper form .form__date p.form-control span, .page.page-home .form-container .form-wrapper form .form__date select.form-control span, .page.page-home .form-container .form-wrapper form .form__time p span, .page.page-home .form-container .form-wrapper form .form__time p.form-control span, .page.page-home .form-container .form-wrapper form .form__time select.form-control span, .page.page-home .form-container .form-wrapper form .form__visitor p span, .page.page-home .form-container .form-wrapper form .form__visitor p.form-control span, .page.page-home .form-container .form-wrapper form .form__visitor select.form-control span, .page.page-home .form-container .form-wrapper form .form__room p span, .page.page-home .form-container .form-wrapper form .form__room p.form-control span, .page.page-home .form-container .form-wrapper form .form__room select.form-control span {
           float: right; }
       .page.page-home .form-container .form-wrapper form .form__passenger > .row {
@@ -1586,7 +1586,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         .page.page-home .form-container .form-wrapper form .field-container p, .page.page-home .form-container .form-wrapper form .field-container select {
           cursor: pointer; }
         .page.page-home .form-container .form-wrapper form .field-container .field-wrapper {
-          padding: 21px 0;
+          padding: 10px 0;
           border-bottom: 1px solid #dddddd;
           text-align: center; }
           .page.page-home .form-container .form-wrapper form .field-container .field-wrapper.form-adult:before, .page.page-home .form-container .form-wrapper .overlay.overlay--flight-form form .field-container .field-wrapper.form-children:before, .overlay.overlay--flight-form .page.page-home .form-container .form-wrapper form .field-container .field-wrapper.form-children:before, .page.page-home .form-container .form-wrapper .overlay.overlay--flight-form form .field-container .field-wrapper.form-infant:before, .overlay.overlay--flight-form .page.page-home .form-container .form-wrapper form .field-container .field-wrapper.form-infant:before {
@@ -1599,7 +1599,8 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
             left: 0;
             width: 41px;
             height: 57px;
-            background-image: url(/Assets/mobile/images/adult.png); }
+            background-image: url(/Assets/mobile/images/adult.png);
+            margin-left: 5px; }
           .page.page-home .form-container .form-wrapper form .field-container .field-wrapper.form-child:before {
             background-size: 40%;
             background-repeat: no-repeat;
@@ -1727,10 +1728,16 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
               -ms-border-radius: 10px;
               border-radius: 10px;
               margin: 3px; }
+      .page.page-home .form-container .form-wrapper form .form__visitor .mid-title {
+        padding: 10px 0; }
+      .page.page-home .form-container .form-wrapper form .form__visitor select[name='adultclass'], .page.page-home .form-container .form-wrapper form .form__visitor select[name='childclass'] {
+        background: #ecf0f4; }
+        .page.page-home .form-container .form-wrapper form .form__visitor select[name='adultclass'] option, .page.page-home .form-container .form-wrapper form .form__visitor select[name='childclass'] option {
+          background: #fff; }
       .page.page-home .form-container .form-wrapper form .form__visitor .age-child {
         background: #ecf0f4;
         margin-top: 20px;
-        padding: 10px 25px;
+        padding: 10px 0 20px;
         font-size: 13px; }
         .page.page-home .form-container .form-wrapper form .form__visitor .age-child:before {
           content: '';
@@ -1746,27 +1753,29 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
           border-bottom: 20px dashed #ecf0f4;
           border-right: 20px solid #fff;
           border-left: 20px solid #fff; }
-        .page.page-home .form-container .form-wrapper form .form__visitor .age-child .ac-list > .col-8, .page.page-home .form-container .form-wrapper form .form__visitor .age-child .ac-list > .col-2 {
-          padding: 10px 0; }
-        .page.page-home .form-container .form-wrapper form .form__visitor .age-child .ac-list > .col-2 {
-          border-bottom: 1px solid #ccc; }
-          .page.page-home .form-container .form-wrapper form .form__visitor .age-child .ac-list > .col-2:after {
+        .page.page-home .form-container .form-wrapper form .form__visitor .age-child .ac-list {
+          padding: 0 12px; }
+          .page.page-home .form-container .form-wrapper form .form__visitor .age-child .ac-list > .col-6 {
+            padding: 10px; }
+          .page.page-home .form-container .form-wrapper form .form__visitor .age-child .ac-list > .col-4:after {
             content: '';
             display: inline-block;
             width: 13px;
             height: 8px;
             background: url(/Assets/mobile/images/Hotel/arrow-down-grey.png) no-repeat;
             float: right;
-            margin-top: -12px;
+            margin-top: -22px;
             opacity: 0.4;
             position: absolute;
-            right: 0; }
-        .page.page-home .form-container .form-wrapper form .form__visitor .age-child .ac-list select[name='agelist'] {
-          background: #ecf0f4; }
-          .page.page-home .form-container .form-wrapper form .form__visitor .age-child .ac-list select[name='agelist'] option {
-            background: #fff; }
-        .page.page-home .form-container .form-wrapper form .form__visitor .age-child .ac-list:last-child > .col-2 {
-          border-bottom: none; }
+            right: 10px; }
+          .page.page-home .form-container .form-wrapper form .form__visitor .age-child .ac-list select[name='agelist'] {
+            background: #ecf0f4;
+            padding: 10px 30px;
+            border-bottom: 1px solid #ddd; }
+            .page.page-home .form-container .form-wrapper form .form__visitor .age-child .ac-list select[name='agelist'] option {
+              background: #fff; }
+          .page.page-home .form-container .form-wrapper form .form__visitor .age-child .ac-list:last-child > .col-2 {
+            border-bottom: none; }
       .page.page-home .form-container .form-wrapper form.hotel-form .placeholder {
         color: #999;
         float: right;
@@ -1887,6 +1896,10 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
       font-weight: 600; }
     .page.page-home .form-container .bold-txt {
       font-weight: 700; }
+    .page.page-home .form-container .right-txt {
+      text-align: right; }
+    .page.page-home .form-container .sm-txt {
+      font-size: 9px; }
   .page.page-home .overlay.overlay--datepicker {
     overflow: hidden; }
   .page.page-home .calendar-container .ui-datepicker {
@@ -2242,7 +2255,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
       -ms-border-radius: 0;
       border-radius: 0;
       display: inline;
-      background: #ffffff; }
+      background: #fff; }
       .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__departure p span, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__departure p.form-control span, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__departure select.form-control span, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__return p span, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__return p.form-control span, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__return select.form-control span, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__roundtrip p span, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__roundtrip p.form-control span, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__roundtrip select.form-control span, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__passenger p span, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__passenger p.form-control span, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__passenger select.form-control span, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__flightclass p span, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__flightclass p.form-control span, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__flightclass select.form-control span, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__hotel p span, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__hotel p.form-control span, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__hotel select.form-control span, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__date p span, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__date p.form-control span, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__date select.form-control span, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__time p span, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__time p.form-control span, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__time select.form-control span, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__visitor p span, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__visitor p.form-control span, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__visitor select.form-control span, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__room p span, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__room p.form-control span, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__room select.form-control span {
         float: right; }
     .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__passenger > .row {
@@ -2265,7 +2278,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
       .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .field-container p, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .field-container select {
         cursor: pointer; }
       .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .field-container .field-wrapper {
-        padding: 21px 0;
+        padding: 10px 0;
         border-bottom: 1px solid #dddddd;
         text-align: center; }
         .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .field-container .field-wrapper.form-adult:before, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .field-container .field-wrapper.form-children:before, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .field-container .field-wrapper.form-infant:before {
@@ -2278,7 +2291,8 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
           left: 0;
           width: 41px;
           height: 57px;
-          background-image: url(/Assets/mobile/images/adult.png); }
+          background-image: url(/Assets/mobile/images/adult.png);
+          margin-left: 5px; }
         .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .field-container .field-wrapper.form-child:before {
           background-size: 40%;
           background-repeat: no-repeat;
@@ -2406,10 +2420,16 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
             -ms-border-radius: 10px;
             border-radius: 10px;
             margin: 3px; }
+    .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__visitor .mid-title {
+      padding: 10px 0; }
+    .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__visitor select[name='adultclass'], .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__visitor select[name='childclass'] {
+      background: #ecf0f4; }
+      .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__visitor select[name='adultclass'] option, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__visitor select[name='childclass'] option {
+        background: #fff; }
     .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__visitor .age-child {
       background: #ecf0f4;
       margin-top: 20px;
-      padding: 10px 25px;
+      padding: 10px 0 20px;
       font-size: 13px; }
       .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__visitor .age-child:before {
         content: '';
@@ -2425,27 +2445,29 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         border-bottom: 20px dashed #ecf0f4;
         border-right: 20px solid #fff;
         border-left: 20px solid #fff; }
-      .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__visitor .age-child .ac-list > .col-8, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__visitor .age-child .ac-list > .col-2 {
-        padding: 10px 0; }
-      .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__visitor .age-child .ac-list > .col-2 {
-        border-bottom: 1px solid #ccc; }
-        .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__visitor .age-child .ac-list > .col-2:after {
+      .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__visitor .age-child .ac-list {
+        padding: 0 12px; }
+        .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__visitor .age-child .ac-list > .col-6 {
+          padding: 10px; }
+        .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__visitor .age-child .ac-list > .col-4:after {
           content: '';
           display: inline-block;
           width: 13px;
           height: 8px;
           background: url(/Assets/mobile/images/Hotel/arrow-down-grey.png) no-repeat;
           float: right;
-          margin-top: -12px;
+          margin-top: -22px;
           opacity: 0.4;
           position: absolute;
-          right: 0; }
-      .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__visitor .age-child .ac-list select[name='agelist'] {
-        background: #ecf0f4; }
-        .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__visitor .age-child .ac-list select[name='agelist'] option {
-          background: #fff; }
-      .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__visitor .age-child .ac-list:last-child > .col-2 {
-        border-bottom: none; }
+          right: 10px; }
+        .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__visitor .age-child .ac-list select[name='agelist'] {
+          background: #ecf0f4;
+          padding: 10px 30px;
+          border-bottom: 1px solid #ddd; }
+          .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__visitor .age-child .ac-list select[name='agelist'] option {
+            background: #fff; }
+        .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__visitor .age-child .ac-list:last-child > .col-2 {
+          border-bottom: none; }
     .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form.hotel-form .placeholder {
       color: #999;
       float: right;
@@ -2566,6 +2588,10 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     font-weight: 600; }
   .page.page-flight .overlay.overlay--flight-form .overlay__content .bold-txt {
     font-weight: 700; }
+  .page.page-flight .overlay.overlay--flight-form .overlay__content .right-txt {
+    text-align: right; }
+  .page.page-flight .overlay.overlay--flight-form .overlay__content .sm-txt {
+    font-size: 9px; }
 .page.page-flight .overlay.overlay--datepicker .overlay__content {
   max-width: 340px;
   margin: 0 auto 15px;
@@ -5184,7 +5210,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         -ms-border-radius: 0;
         border-radius: 0;
         display: inline;
-        background: #ffffff; }
+        background: #fff; }
         .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__departure p span, .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__departure p.form-control span, .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__departure select.form-control span, .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__return p span, .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__return p.form-control span, .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__return select.form-control span, .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__roundtrip p span, .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__roundtrip p.form-control span, .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__roundtrip select.form-control span, .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__passenger p span, .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__passenger p.form-control span, .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__passenger select.form-control span, .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__flightclass p span, .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__flightclass p.form-control span, .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__flightclass select.form-control span, .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__hotel p span, .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__hotel p.form-control span, .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__hotel select.form-control span, .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__date p span, .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__date p.form-control span, .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__date select.form-control span, .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__time p span, .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__time p.form-control span, .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__time select.form-control span, .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__visitor p span, .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__visitor p.form-control span, .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__visitor select.form-control span, .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__room p span, .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__room p.form-control span, .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__room select.form-control span {
           float: right; }
       .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__passenger > .row {
@@ -5207,7 +5233,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .field-container p, .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .field-container select {
           cursor: pointer; }
         .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .field-container .field-wrapper {
-          padding: 21px 0;
+          padding: 10px 0;
           border-bottom: 1px solid #dddddd;
           text-align: center; }
           .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .field-container .field-wrapper.form-adult:before, .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper .overlay.overlay--flight-form form .field-container .field-wrapper.form-children:before, .overlay.overlay--flight-form .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .field-container .field-wrapper.form-children:before, .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper .overlay.overlay--flight-form form .field-container .field-wrapper.form-infant:before, .overlay.overlay--flight-form .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .field-container .field-wrapper.form-infant:before {
@@ -5220,7 +5246,8 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
             left: 0;
             width: 41px;
             height: 57px;
-            background-image: url(/Assets/mobile/images/adult.png); }
+            background-image: url(/Assets/mobile/images/adult.png);
+            margin-left: 5px; }
           .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .field-container .field-wrapper.form-child:before {
             background-size: 40%;
             background-repeat: no-repeat;
@@ -5348,10 +5375,16 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
               -ms-border-radius: 10px;
               border-radius: 10px;
               margin: 3px; }
+      .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__visitor .mid-title {
+        padding: 10px 0; }
+      .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__visitor select[name='adultclass'], .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__visitor select[name='childclass'] {
+        background: #ecf0f4; }
+        .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__visitor select[name='adultclass'] option, .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__visitor select[name='childclass'] option {
+          background: #fff; }
       .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__visitor .age-child {
         background: #ecf0f4;
         margin-top: 20px;
-        padding: 10px 25px;
+        padding: 10px 0 20px;
         font-size: 13px; }
         .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__visitor .age-child:before {
           content: '';
@@ -5367,27 +5400,29 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
           border-bottom: 20px dashed #ecf0f4;
           border-right: 20px solid #fff;
           border-left: 20px solid #fff; }
-        .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__visitor .age-child .ac-list > .col-8, .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__visitor .age-child .ac-list > .col-2 {
-          padding: 10px 0; }
-        .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__visitor .age-child .ac-list > .col-2 {
-          border-bottom: 1px solid #ccc; }
-          .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__visitor .age-child .ac-list > .col-2:after {
+        .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__visitor .age-child .ac-list {
+          padding: 0 12px; }
+          .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__visitor .age-child .ac-list > .col-6 {
+            padding: 10px; }
+          .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__visitor .age-child .ac-list > .col-4:after {
             content: '';
             display: inline-block;
             width: 13px;
             height: 8px;
             background: url(/Assets/mobile/images/Hotel/arrow-down-grey.png) no-repeat;
             float: right;
-            margin-top: -12px;
+            margin-top: -22px;
             opacity: 0.4;
             position: absolute;
-            right: 0; }
-        .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__visitor .age-child .ac-list select[name='agelist'] {
-          background: #ecf0f4; }
-          .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__visitor .age-child .ac-list select[name='agelist'] option {
-            background: #fff; }
-        .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__visitor .age-child .ac-list:last-child > .col-2 {
-          border-bottom: none; }
+            right: 10px; }
+          .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__visitor .age-child .ac-list select[name='agelist'] {
+            background: #ecf0f4;
+            padding: 10px 30px;
+            border-bottom: 1px solid #ddd; }
+            .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__visitor .age-child .ac-list select[name='agelist'] option {
+              background: #fff; }
+          .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__visitor .age-child .ac-list:last-child > .col-2 {
+            border-bottom: none; }
       .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form.hotel-form .placeholder {
         color: #999;
         float: right;
@@ -5508,3 +5543,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
       font-weight: 600; }
     .page-hotel .overlay.overlay--hotel-form .overlay__content .bold-txt {
       font-weight: 700; }
+    .page-hotel .overlay.overlay--hotel-form .overlay__content .right-txt {
+      text-align: right; }
+    .page-hotel .overlay.overlay--hotel-form .overlay__content .sm-txt {
+      font-size: 9px; }
