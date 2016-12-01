@@ -1,19 +1,68 @@
-﻿<div class="price-detail clearfix">
+﻿@using System.Globalization
+@model Lunggo.ApCommon.Hotel.Model.HotelDetailForDisplay
+@{
+    var night = (Model.CheckOutDate - Model.CheckInDate).Days;
+}
+@functions{
+
+    public string ToTitleCase(string input)
+    {
+
+        var text = "";
+        try
+        {
+            var splittedText = input.Split(' ');
+            foreach (var word in splittedText)
+            {
+                var splittedByStrips = word.Split('-');
+                var w = "";
+                if (splittedByStrips.Count() != 1)
+                {
+                    foreach (var part in splittedByStrips)
+                    {
+                        w += ApplyTitleCase(part) + "-";
+                    }
+                    text += w.Substring(0, w.Length - 1) + " ";
+                }
+                else
+                {
+                    text += word[0] + word.Substring(1, word.Length - 1).ToLower() + " ";
+                }
+            }
+        }
+        catch{}
+        return text.Length == 0 ? "" : text.Substring(0, text.Length - 1);
+    }
+
+    public string ApplyTitleCase(string input)
+    {
+        return input[0] + input.Substring(1, input.Length - 1).ToLower();
+    }
+
+}
+<div class="price-detail clearfix">
     <h3 class="summary__title"><b>RINCIAN</b> HARGA</h3>
-    <div class="rr-row clearfix">
-        <div class="col-half">1 Deluxe 2 Kings Bed Rooms  x 3 night</div>
-        <div class="col-half right-txt semibold-txt">Rp 999.999.999</div>
-    </div>
-    <div class="rr-row clearfix">
+    @foreach (var room in Model.Rooms)
+    {
+        foreach (var rate in room.Rates)
+        {
+            <div class="rr-row clearfix">
+                <div class="col-half">@rate.RoomCount @ToTitleCase(room.RoomName) @ToTitleCase(rate.BoardDescription) x @night Malam</div>
+                <div class="col-half right-txt semibold-txt">Rp @((rate.NetFare * rate.RoomCount * night).ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID")))</div>
+            </div>
+        }
+    }
+    
+    @*<div class="rr-row clearfix">
         <div class="col-half">1 Standard Twin Rooms x 4 night</div>
         <div class="col-half right-txt semibold-txt">Rp 999.999.999</div>
-    </div>
+    </div>*@
     <div class="rr-row clearfix">
         <div class="col-half">Pelayanan Kamar</div>
-        <div class="col-half right-txt semibold-txt">Rp 999.999.999</div>
+        <div class="col-half right-txt semibold-txt">Rp {{roomService}}</div>
     </div>
     <div class="rr-row clearfix total">
         <div class="col-half bold-txt lg-txt">Total</div>
-        <div class="col-half bold-txt lg-txt right-txt orange-txt">Rp 999.999.999</div>
+        <div class="col-half bold-txt lg-txt right-txt orange-txt">Rp {{netFare + roomService | number}}</div>
     </div>
 </div>

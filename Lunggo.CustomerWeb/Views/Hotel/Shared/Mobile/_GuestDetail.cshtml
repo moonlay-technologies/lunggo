@@ -1,15 +1,28 @@
-﻿<div class="guest-detail clearfix">
+﻿@using Lunggo.ApCommon.Constant
+@model Lunggo.ApCommon.Product.Model.ReservationForDisplayBase
+
+<div class="guest-detail clearfix">
     <h3 class="summary__title"><b>RINCIAN</b> TAMU</h3>
     <div class="clearfix">
         <div class="rr-row clearfix">
-            <div class="">Deluxe 2 Kings Bed Rooms</div>
-            <div class="col-2">Tamu</div>
-            <div class="col-8">Anonymous</div>
+            @*<div class="">Deluxe 2 Kings Bed Rooms</div>*@
+            <div>Nama Pemesan</div>
+            <div>@EnumDisplay.Title(Model.Contact.Title) @Model.Contact.Name</div>
         </div>
         <div class="rr-row clearfix">
-            <div class="">Deluxe Twin Bed Rooms</div>
-            <div class="col-2">Tamu</div>
-            <div class="col-8">Anonymous</div>
+            @*<div class="">Deluxe Twin Bed Rooms</div>*@
+            <div>E-Mail</div>
+            <div>@Model.Contact.Email</div>
+        </div>
+        <div class="rr-row clearfix">
+            @*<div class="">Deluxe Twin Bed Rooms</div>*@
+            <div>Nomor Telepon</div>
+            <div>@Model.Contact.Phone</div>
+        </div>
+        <div class="rr-row clearfix">
+            @*<div class="">Deluxe Twin Bed Rooms</div>*@
+            <div>Tamu</div>
+            <div>@EnumDisplay.Title(Model.Pax[0].Title) @Model.Pax[0].Name</div>
         </div>
     </div>
 </div>

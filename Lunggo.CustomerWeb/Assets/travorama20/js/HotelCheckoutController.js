@@ -88,7 +88,7 @@ app.controller('hotelcheckoutController', [
             { name: 'Ny.', value: 'Mistress' },
             { name: 'Nn.', value: 'Miss' }
         ];
-       
+        $scope.hotelimg = hotelImg;
         $scope.language = langCode;
         $interval(function () {
             var nowTime = new Date();
