@@ -21,7 +21,7 @@ using Terminal = Lunggo.ApCommon.Hotel.Model.Terminal;
 
 namespace Lunggo.ApCommon.Hotel.Wrapper.Content
 {
-    public class GetHotel
+    public partial class HotelBedsService
     {
         public void GetHotelData(int from, int to)
         {

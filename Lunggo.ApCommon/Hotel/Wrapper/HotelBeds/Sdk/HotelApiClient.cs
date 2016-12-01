@@ -282,8 +282,145 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Sdk
                 throw e;
             }
         }
- 
 
+        public AccomodationRS GetAccomodation(List<Tuple<string, string>> param)
+        {
+            try
+            {
+                HotelApiPaths.HOTEL_ACCOMODATION hotelAccomodation = new HotelApiPaths.HOTEL_ACCOMODATION();
+                AccomodationRS repsonse = callRemoteApi<AccomodationRS, Tuple<string, string>[]>(null, hotelAccomodation, param);
+                return repsonse;
+            }
+            catch (HotelSDKException e)
+            {
+                throw e;
+            }
+        }
+
+        public BoardRS GetBoard(List<Tuple<string, string>> param)
+        {
+            try
+            {
+                HotelApiPaths.HOTEL_BOARD hotelBoard = new HotelApiPaths.HOTEL_BOARD();
+                BoardRS repsonse = callRemoteApi<BoardRS, Tuple<string, string>[]>(null, hotelBoard, param);
+                return repsonse;
+            }
+            catch (HotelSDKException e)
+            {
+                throw e;
+            }
+        }
+
+        public CategoryRS GetCategory(List<Tuple<string, string>> param)
+        {
+            try
+            {
+                HotelApiPaths.HOTEL_CATEGORY hotelCategory = new HotelApiPaths.HOTEL_CATEGORY();
+                CategoryRS repsonse = callRemoteApi<CategoryRS, Tuple<string, string>[]>(null, hotelCategory, param);
+                return repsonse;
+            }
+            catch (HotelSDKException e)
+            {
+                throw e;
+            }
+        }
+
+        public ChainRS GetChain(List<Tuple<string, string>> param)
+        {
+            try
+            {
+                HotelApiPaths.HOTEL_CHAIN hotelChain= new HotelApiPaths.HOTEL_CHAIN();
+                ChainRS repsonse = callRemoteApi<ChainRS, Tuple<string, string>[]>(null, hotelChain, param);
+                return repsonse;
+            }
+            catch (HotelSDKException e)
+            {
+                throw e;
+            }
+        }
+        public CountryRS GetCountry(List<Tuple<string, string>> param)
+        {
+            try
+            {
+                HotelApiPaths.HOTEL_COUNTRY hotelCountry = new HotelApiPaths.HOTEL_COUNTRY();
+                CountryRS repsonse = callRemoteApi<CountryRS, Tuple<string, string>[]>(null, hotelCountry, param);
+                return repsonse;
+            }
+            catch (HotelSDKException e)
+            {
+                throw e;
+            }
+        }
+
+        public DestinationRS GetDestination(List<Tuple<string, string>> param)
+        {
+            try
+            {
+                HotelApiPaths.HOTEL_DESTINATION hotelDestination = new HotelApiPaths.HOTEL_DESTINATION();
+                DestinationRS repsonse = callRemoteApi<DestinationRS, Tuple<string, string>[]>(null, hotelDestination, param);
+                return repsonse;
+            }
+            catch (HotelSDKException e)
+            {
+                throw e;
+            }
+        }
+
+        public FacilityGroupRS GetFacilityGroup(List<Tuple<string, string>> param)
+        {
+            try
+            {
+                HotelApiPaths.HOTEL_FACILITYGROUP hotelFacilityGroup = new HotelApiPaths.HOTEL_FACILITYGROUP();
+                FacilityGroupRS repsonse = callRemoteApi<FacilityGroupRS, Tuple<string, string>[]>(null, hotelFacilityGroup, param);
+                return repsonse;
+            }
+            catch (HotelSDKException e)
+            {
+                throw e;
+            }
+        }
+
+        public FacilityRS GetFacility(List<Tuple<string, string>> param)
+        {
+            try
+            {
+                HotelApiPaths.HOTEL_FACILITY hotelFacility = new HotelApiPaths.HOTEL_FACILITY();
+                FacilityRS repsonse = callRemoteApi<FacilityRS, Tuple<string, string>[]>(null, hotelFacility, param);
+                return repsonse;
+            }
+            catch (HotelSDKException e)
+            {
+                throw e;
+            }
+        }
+
+        public RoomRS GetRoom(List<Tuple<string, string>> param)
+        {
+            try
+            {
+                HotelApiPaths.HOTEL_ROOM hotelRoom= new HotelApiPaths.HOTEL_ROOM();
+                RoomRS repsonse = callRemoteApi<RoomRS, Tuple<string, string>[]>(null, hotelRoom, param);
+                return repsonse;
+            }
+            catch (HotelSDKException e)
+            {
+                throw e;
+            }
+        }
+
+        public SegmentRS GetSegment(List<Tuple<string, string>> param)
+        {
+            try
+            {
+                HotelApiPaths.HOTEL_SEGMENT hotelSegment = new HotelApiPaths.HOTEL_SEGMENT();
+                SegmentRS repsonse = callRemoteApi<SegmentRS, Tuple<string, string>[]>(null, hotelSegment, param);
+                return repsonse;
+            }
+            catch (HotelSDKException e)
+            {
+                throw e;
+            }
+        }
 
         private T callRemoteApi<T, U>(U request, HotelApiPaths.HotelApiPathsBase path, List<Tuple<string, string>> param)
         {
@@ -297,8 +434,15 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Sdk
                                             AutomaticDecompression = System.Net.DecompressionMethods.GZip
                                         }))
                 {
+                    
                     if (request == null && (path.GetType() != typeof(HotelApiPaths.STATUS)
-                        && path.GetType() != typeof(HotelApiPaths.BOOKING_CANCEL) && path.GetType() != typeof(HotelApiPaths.BOOKING_DETAIL) && path.GetType() != typeof(HotelApiPaths.BOOKING_LIST) && path.GetType() != typeof(HotelApiPaths.HOTEL_LIST) && path.GetType() != typeof(HotelApiPaths.HOTEL_RATECOMMENT)))
+                        && path.GetType() != typeof(HotelApiPaths.BOOKING_CANCEL) && path.GetType() != typeof(HotelApiPaths.BOOKING_DETAIL) 
+                        && path.GetType() != typeof(HotelApiPaths.BOOKING_LIST) && path.GetType() != typeof(HotelApiPaths.HOTEL_LIST)
+                        && path.GetType() != typeof(HotelApiPaths.HOTEL_RATECOMMENT) && path.GetType() != typeof(HotelApiPaths.HOTEL_ACCOMODATION)
+                        && path.GetType() != typeof(HotelApiPaths.HOTEL_BOARD) && path.GetType() != typeof(HotelApiPaths.HOTEL_CHAIN)
+                        && path.GetType() != typeof(HotelApiPaths.HOTEL_COUNTRY) && path.GetType() != typeof(HotelApiPaths.HOTEL_DESTINATION)
+                        && path.GetType() != typeof(HotelApiPaths.HOTEL_FACILITY) && path.GetType() != typeof(HotelApiPaths.HOTEL_FACILITYGROUP)
+                        && path.GetType() != typeof(HotelApiPaths.HOTEL_ROOM) && path.GetType() != typeof(HotelApiPaths.HOTEL_SEGMENT) && path.GetType() != typeof(HotelApiPaths.HOTEL_CATEGORY))) 
                         throw new Exception("Object request can't be null");
 
                     client.BaseAddress = new Uri(path.getUrl(this.basePath, this.version));
