@@ -114,7 +114,7 @@ file : /Assets/travorama20/css/_page_index.scss
                         .sub-title {font-size: 14px;}
                     }
                     .form-group {
-                        &.hotel-location, &.hotel-date, &.hotel-room, &.hotel-visitor, &.hotel-age-children {margin-bottom: 10px;}
+                        &.hotel-location, &.hotel-date, &.hotel-room-night, &.hotel-visitor, &.hotel-age-children {margin-bottom: 10px;}
                     }
                     // hotel location
                     .form-group.hotel-location {
@@ -143,7 +143,7 @@ file : /Assets/travorama20/css/_page_index.scss
                             color: #fff;
                         }
                     }
-                    .form-group.hotel-room {
+                    .form-group.hotel-room-night {
                         &>div:first-child {padding-right: 5px;}
                         &>div:last-child {padding-left: 5px;}
                         //
@@ -177,6 +177,31 @@ file : /Assets/travorama20/css/_page_index.scss
                         }   
                         .form-hotel-room {@extend .form-hotel-night;}    
                         .option {display:none; z-index:3; width:100%; text-align:center; padding:0; position:absolute;}
+                    }
+                    .form-group.hotel-detail {
+                        .col-xs-12.white-txt {
+                            margin: 15px 0 10px;
+                            &:after {
+                                height: 1px;
+                                background: #fff;
+                                content: '';
+                                display: inline-block;
+                                width: 55%;
+                                float: right;
+                                margin-top: 10px;
+                            }
+                        }
+                        .total {
+                            font-size: 42px;
+                            line-height: 28px;
+                        }
+                        .total-adult {
+                            border-right: 1px solid;
+                            padding-right: 12px;
+                        }
+                        .total-child {
+                            padding-left: 12px;
+                        }
                     }
                     // hotel submit
                     input[type="submit"] {padding:10px 0; height:auto; font-size:14px;}
