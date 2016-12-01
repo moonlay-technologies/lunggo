@@ -90,8 +90,38 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
 
 
             $timeout(function () {
-                //// **********
-                //// Slick Slider Detail Hotel
+                // **********
+                // Search Detail Tab
+                $('body .detail-tab').each(function (index, item) {
+                    if (index > 0) {
+                        $(item).hide();
+                    }
+                });
+                $('body .hotel-detail-menu-action a').on('click touchstart', function () {
+                    var id = $(this).attr('attr-link');
+                    $('body .detail-tab').hide();
+                    $(id).show();
+                });
+
+                // **********
+                // Shorten Area
+
+                // Search Detail
+                $('body .sh-desc a').on('click touchstart', function () {
+                    $('body .sh-desc a').toggleClass('active');
+                    $('body .sh-txt').toggleClass('opened');
+                });
+
+                // **********
+                // Open Detail Room
+                $('body .dh-list').on('click', function () {
+                    var id = $(this).parent().find('.dh-list-detail');
+                    id.toggleClass('active');
+                    $(this).toggleClass('active');
+                });
+
+                // **********
+                // Slick Slider Detail Hotel
                 $('.dh-slider').slick({
                     autoplay: true,
                     autoplaySpeed: 2500,

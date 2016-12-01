@@ -4414,7 +4414,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     right: 0;
     margin-right: 20px;
     vertical-align: middle;
-    margin-top: 10px; }
+    top: 50%; }
   .page-hotel .arrow-up, .page-hotel .travorama-hotel-mobile .detail-hotel .dh-listing .dh-list-container .dh-list.active:before {
     content: '';
     display: block;
@@ -4425,7 +4425,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     right: 0;
     margin-right: 20px;
     vertical-align: middle;
-    margin-top: 10px; }
+    top: 50%; }
   .page-hotel .arrow-down-yellow, .page-hotel .travorama-hotel-mobile .filter-group--facility .sh-open, .page-hotel .travorama-hotel-mobile .filter-group--area .sh-open {
     display: block;
     background: url(/Assets/mobile/images/Hotel/arrow-down-yellow.png);
@@ -4746,17 +4746,29 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         .page-hotel .travorama-hotel-mobile .detail-hotel .dh-listing .dh-list-container > li:first-child {
           border-top: none; }
       .page-hotel .travorama-hotel-mobile .detail-hotel .dh-listing .dh-list-container .dh-list {
-        padding: 10px 15px; }
+        padding: 10px 15px;
+        position: relative; }
         .page-hotel .travorama-hotel-mobile .detail-hotel .dh-listing .dh-list-container .dh-list .col-right-hotel .sm-txt.grey-txt {
           margin: 5px 0; }
+      .page-hotel .travorama-hotel-mobile .detail-hotel .dh-listing .dh-list-container .dh-img-sm {
+        width: 100%;
+        height: 108px;
+        background-size: cover;
+        background-position: center center;
+        background-repeat: no-repeat; }
+      .page-hotel .travorama-hotel-mobile .detail-hotel .dh-listing .dh-list-container .dh-img-lg {
+        width: 100%;
+        height: 120px;
+        background-size: cover;
+        background-position: center center;
+        background-repeat: no-repeat; }
       .page-hotel .travorama-hotel-mobile .detail-hotel .dh-listing .dh-list-container .dh-list-detail {
         display: none;
         padding: 15px;
         background: #eceff4; }
         .page-hotel .travorama-hotel-mobile .detail-hotel .dh-listing .dh-list-container .dh-list-detail.active {
-          display: block; }
-        .page-hotel .travorama-hotel-mobile .detail-hotel .dh-listing .dh-list-container .dh-list-detail .dh-top img {
-          width: 100%; }
+          display: block;
+          position: relative; }
         .page-hotel .travorama-hotel-mobile .detail-hotel .dh-listing .dh-list-container .dh-list-detail .dh-bottom {
           margin-top: 15px; }
           .page-hotel .travorama-hotel-mobile .detail-hotel .dh-listing .dh-list-container .dh-list-detail .dh-bottom > .sm-txt.grey-txt {
@@ -4811,12 +4823,12 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
               border: 1px solid #ccc; }
             .page-hotel .travorama-hotel-mobile .detail-hotel .dh-listing .dh-list-container .dh-list-detail .dh-bottom .room > a.btn-yellow {
               float: right; }
-    .page-hotel .travorama-hotel-mobile .detail-hotel .dh-img {
-      width: 100%;
-      height: 200px;
-      background-size: cover;
-      background-position: center center;
-      background-repeat: no-repeat; }
+        .page-hotel .travorama-hotel-mobile .detail-hotel .dh-listing .dh-list-container .dh-list-detail .checkout-btn {
+          position: absolute;
+          right: 0;
+          bottom: 0;
+          margin-bottom: 15px;
+          margin-right: 15px; }
     .page-hotel .travorama-hotel-mobile .spec-hotel .sh-title {
       margin-bottom: 15px; }
     .page-hotel .travorama-hotel-mobile .spec-hotel .sh-desc {
@@ -4849,6 +4861,12 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         display: none; }
       .page-hotel .travorama-hotel-mobile .spec-hotel .toggle.active .sh-close {
         display: block; }
+    .page-hotel .travorama-hotel-mobile .dh-img {
+      width: 100%;
+      height: 240px;
+      background-size: cover;
+      background-position: center center;
+      background-repeat: no-repeat; }
   .page-hotel .form-box {
     font-size: 13px; }
     .page-hotel .form-box .fb-header {
