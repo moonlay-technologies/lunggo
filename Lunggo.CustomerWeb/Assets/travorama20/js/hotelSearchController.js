@@ -13,7 +13,7 @@ app.controller('hotelSearchController', ['$scope', '$log', '$http', '$resource',
         Star: [false, false, false, false, false]
     }
     $scope.returnUrl = "/";
-    
+    $scope.bottomPage = false;
     //@Url.Action("Search", "Hotel")?zzz={{departureDate}}" method="POST"
     //=============== hotel start ======================
     //$scope.hotel = {};
@@ -179,7 +179,7 @@ app.controller('hotelSearchController', ['$scope', '$log', '$http', '$resource',
     $scope.selectLocation = function(location) {
         hotelSearchSvc.selectLocation(location);
     }
-    $scope.searchHotel = function (filter, sort) {
+    $scope.searchHotel = function (filter, sort, isMobile) {
         $scope.searchDone = false;
         $scope.pageCount = 0;
 
@@ -194,7 +194,13 @@ app.controller('hotelSearchController', ['$scope', '$log', '$http', '$resource',
 
             $scope.hotelSearch.destinationName = data.destinationName;
             $scope.hotelSearch.locationDisplay = data.destinationName;
-            $scope.hotels = data.hotels;
+            if (isMobile) {
+                $scope.hotels.push.apply($scope.hotels,data.hotels);
+                $scope.bottomPage = false;
+            } else {
+                $scope.hotels = data.hotels;
+            }
+            
             $scope.totalActualHotel = data.returnedHotelCount;
             $scope.returnedHotelCount = data.returnedHotelCount;
             $scope.filteredHotelCount = data.filteredHotelCount;
@@ -330,17 +336,19 @@ app.controller('hotelSearchController', ['$scope', '$log', '$http', '$resource',
             }
         });
     }
-    
-    //$scope.$watch('hotel.locationDisplay', function (newValue, oldValue) {
-    //    if (newValue.length >= 3) {
-    //        hotelAutocompleteSvc.resource.get({ prefix: newValue }).$promise.then(function (data) {
-    //            $timeout(function () {
-    //                $scope.hotel.hotelAutocomplete = data.hotelAutocomplete;
-    //                $log.debug($scope.hotel.hotelAutocomplete);
-    //            }, 0);
-    //        });
-    //    }
-    //});
+   
+    $(window).scroll(function () {
+        var a = $(window).scrollTop();
+        var b = $(window).height();
+        var c = $(document).height();
+        if (Math.round($(window).scrollTop()) + $(window).height() == $(document).height()) {
+            $scope.page++;
+            $scope.bottomPage = true;
+            window.scrollTo(0, document.body.scrollHeight);
+            $scope.searchHotel('','',true);
+        }
+    });
+  
 
     $scope.prevPage = function () {
         $scope.page--;
@@ -430,5 +438,10 @@ app.controller('hotelSearchController', ['$scope', '$log', '$http', '$resource',
         $scope.filter.facilities = [];
         $scope.filter.minPrice = $scope.minPrice - ($scope.minPrice % 100000);
         $scope.filter.maxPrice = $scope.maxPrice + (100000 - $scope.maxPrice % 100000);
+        $('.slider-range').slider({
+            values: [$scope.filter.minPrice, $scope.filter.maxPrice]
+        });
     }
+
+    
 }]);
