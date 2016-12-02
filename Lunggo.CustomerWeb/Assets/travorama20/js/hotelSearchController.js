@@ -257,9 +257,9 @@ app.controller('hotelSearchController', ['$scope', '$log', '$window', '$http', '
     }
     $scope.GotoDetailHotel = function (hotelCd) {
         $log.debug('redirect to detail hotel with hotelCd: ' + hotelCd);
-        location.href = '/id/Hotel/DetailHotel?' +
+        $window.open('/id/Hotel/DetailHotel?' +
             "searchId=" + $scope.hotelSearch.searchId + "&" +
-            "hotelCd=" + hotelCd + "&" + 
+            "hotelCd=" + hotelCd + "&" +
             "searchParam=" + $scope.searchParam, '_blank');
     }
 
