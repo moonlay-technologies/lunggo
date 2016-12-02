@@ -1,5 +1,5 @@
 ﻿// home controller
-app.controller('hotelSearchController', ['$scope', '$log', '$http', '$resource', '$timeout', 'hotelSearchSvc', function ($scope, $log, $http, $resource, $timeout, hotelSearchSvc) {
+app.controller('hotelSearchController', ['$scope', '$log', '$window', '$http', '$resource', '$timeout', 'hotelSearchSvc', function ($scope, $log, $window, $http, $resource, $timeout, hotelSearchSvc) {
 
     $scope.destinationName = "";
     $scope.model = {};
@@ -198,7 +198,7 @@ app.controller('hotelSearchController', ['$scope', '$log', '$http', '$resource',
                 $scope.hotels.push.apply($scope.hotels,data.hotels);
                 $scope.bottomPage = false;
             } else {
-                $scope.hotels = data.hotels;
+            $scope.hotels = data.hotels;
             }
             
             $scope.totalActualHotel = data.returnedHotelCount;
@@ -260,7 +260,7 @@ app.controller('hotelSearchController', ['$scope', '$log', '$http', '$resource',
         location.href = '/id/Hotel/DetailHotel?' +
             "searchId=" + $scope.hotelSearch.searchId + "&" +
             "hotelCd=" + hotelCd + "&" + 
-            "searchParam=" + $scope.searchParam;
+            "searchParam=" + $scope.searchParam, '_blank');
     }
 
     $scope.changeFilter = function (filterType, value) {
@@ -336,7 +336,7 @@ app.controller('hotelSearchController', ['$scope', '$log', '$http', '$resource',
             }
         });
     }
-   
+    
     $(window).scroll(function () {
         var a = $(window).scrollTop();
         var b = $(window).height();

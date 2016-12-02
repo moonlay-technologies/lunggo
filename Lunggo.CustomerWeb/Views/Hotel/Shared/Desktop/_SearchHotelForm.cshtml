@@ -1,44 +1,63 @@
 ﻿<form class="hotel-form" name="hotel-form" ng-submit="FlightSearchForm.Submit()" novalidate>
     <div class="th-form clearfix">
         <div class="clearfix">
-            <div class="form-group form__hotel quarter">
+            <div class="form-group form__hotel col-4">
                 <input type="text" value="" class="change-hotel form-control" placeholder="Kota, Wilayah atau Nama Hotel" ng-model="hotelSearch.locationDisplay" ng-click="view.showHotelSearch = true">
             </div>
-            <div class="form-group form__date quarter">
-                <div class="field-container">
-                    <div class="form-control form-date">
-                        <span class="sm-txt grey-txt">Tanggal Masuk</span>
-                        <span class="pull-right bold-txt darkgrey-txt">{{hotelSearch.checkinDate | date: 'EEE, dd MMM yyyy'}}</span>
-                    </div>
-                </div>
-            </div>
-            <div class="form-group form__night quarter">
-                <div class="field-container">
-                    <div class="form-control form-night">
-                        <div class="col-half">
-                            <span class="sm-txt grey-txt">Malam</span>
-                        </div>
-                        <div class="col-half clearfix">
-                            <div class="col-8 input-hotel xlg-txt right-txt semibold-txt darkgrey-txt">{{hotelSearch.nightCount}}</div>
-                            <div class="col-2 clearfix">
-                                <a href="" class="increase" ng-click="addValue('nightCount', 1)"></a>
-                                <a href="" class="decrease" ng-click="addValue('nightCount', -1)"></a>
+            <div class="col-6 clearfix">
+                <div class="form-group form__date quarter">
+                    <div class="field-container">
+                        <div class="form-control form-date clearfix">
+                            <div class="sm-txt col-half grey-txt">Check in</div>
+                            @*<div class="pull-right bold-txt darkgrey-txt">{{hotelSearch.checkinDate | date: 'EEE, dd MMM yyyy'}}</div>*@
+                            <div class="col-half">
+                                <span class="date semibold-txt darkgrey-txt">21</span>
+                                <span class="sm-txt month darkgrey-txt">Des</span>
+                                <span class="sm-txt year darkgrey-txt">2016</span>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="form-group form__room quarter">
-                <div class="field-container">
-                    <div class="form-control form-room">
-                        <div class="col-half">
-                            <span class="sm-txt grey-txt">Kamar</span>
+                <div class="form-group form__date quarter">
+                    <div class="field-container">
+                        <div class="form-control form-date">
+                            <div class="sm-txt col-half grey-txt">Check out</div>
+                            <div class="col-half">
+                                <span class="date semibold-txt darkgrey-txt">22</span>
+                                <span class="sm-txt month darkgrey-txt">Des</span>
+                                <span class="sm-txt year darkgrey-txt">2016</span>
+                            </div>
                         </div>
-                        <div class="col-half clearfix">
-                            <div class="col-8 input-hotel xlg-txt right-txt semibold-txt darkgrey-txt">{{hotelSearch.roomCount}}</div>
-                            <div class="col-2 clearfix">
-                                <a href="" class="increase" ng-click="addValue('roomCount', 1)"></a>
-                                <a href="" class="decrease" ng-click="addValue('roomCount', -1)"></a>
+                    </div>
+                </div>
+                <div class="form-group form__night quarter">
+                    <div class="field-container">
+                        <div class="form-control form-night">
+                            <div class="col-half">
+                                <span class="sm-txt grey-txt">Malam</span>
+                            </div>
+                            <div class="col-half clearfix">
+                                <div class="col-8 input-hotel xlg-txt right-txt semibold-txt darkgrey-txt">{{hotelSearch.nightCount}}</div>
+                                <div class="col-2 clearfix">
+                                    <a href="" class="increase" ng-click="addValue('nightCount', 1)"></a>
+                                    <a href="" class="decrease" ng-click="addValue('nightCount', -1)"></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group form__room quarter">
+                    <div class="field-container">
+                        <div class="form-control form-room">
+                            <div class="col-half">
+                                <span class="sm-txt grey-txt">Kamar</span>
+                            </div>
+                            <div class="col-half clearfix">
+                                <div class="col-8 input-hotel xlg-txt right-txt semibold-txt darkgrey-txt">{{hotelSearch.roomCount}}</div>
+                                <div class="col-2 clearfix">
+                                    <a href="" class="increase" ng-click="addValue('roomCount', 1)"></a>
+                                    <a href="" class="decrease" ng-click="addValue('roomCount', -1)"></a>
+                                </div>
                             </div>
                         </div>
                     </div>

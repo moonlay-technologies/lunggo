@@ -22,16 +22,30 @@
             } 
             .dh-list {
                 padding: 10px 15px;
+                position: relative;
                 .col-right-hotel .sm-txt.grey-txt {margin: 5px 0;}
                 &:before {@extend .arrow-down;}
                 &.active:before {@extend .arrow-up;}
+            }
+            .dh-img-sm {
+                width: 100%;
+                height: 108px;
+                background-size: cover;
+                background-position: center center;
+                background-repeat: no-repeat;
+            }
+            .dh-img-lg {
+                width: 100%;
+                height: 120px;
+                background-size: cover;
+                background-position: center center;
+                background-repeat: no-repeat;
             }
             .dh-list-detail {
                 display: none;
                 padding: 15px;
                 background: #eceff4;
-                &.active {display: block;}
-                .dh-top img {width: 100%;}
+                &.active {display: block; position: relative;}
                 .dh-bottom {
                     margin-top: 15px;
                     &>.sm-txt.grey-txt {
@@ -102,6 +116,13 @@
                         &>a.btn-yellow {float:right;}
                     }
                 }
+                .checkout-btn {
+                    position: absolute;
+                    right: 0;
+                    bottom: 0;
+                    margin-bottom: 15px;
+                    margin-right: 15px;
+                }
             }
         }
     }
@@ -144,4 +165,11 @@
     }
     .sh-open {@extend .arrow-down-grey;}
     .sh-close {@extend .arrow-up-grey;}
+}
+.dh-img {
+    width: 100%; 
+    height: 240px; 
+    background-size: cover; 
+    background-position: center center;
+    background-repeat: no-repeat;
 }

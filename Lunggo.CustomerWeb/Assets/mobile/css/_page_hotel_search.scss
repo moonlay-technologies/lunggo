@@ -4,17 +4,15 @@
         .hotel-list {
             padding: 15px 10px;
             .img-list {
-                width: 98px;
-                height: 119px;
+                width: 100%;
+                height: 134px;
                 background-size: cover;
                 background-position: center center;
                 background-repeat: no-repeat;
             }
             .col-right-hotel {
+                &:after {@extend .arrow-detail;}
                 .star {margin-top: 3px;}
-                .price {
-                    .detail {@extend .arrow-detail}
-                }
                 .location{
                     &:before { margin: 5px 0;
                         content: '';

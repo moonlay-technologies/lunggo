@@ -498,6 +498,8 @@
         right: 0;
         margin-right: 15px;
         vertical-align: middle;
+        content: '';
+        margin-top: -55px;
     }
     .arrow-down {
         content: '';
@@ -509,7 +511,7 @@
         right: 0;
         margin-right: 20px;
         vertical-align: middle;
-        margin-top: 10px;
+        top: 50%;
     }
     .arrow-up {
         content: '';
@@ -521,7 +523,7 @@
         right: 0;
         margin-right: 20px;
         vertical-align: middle;
-        margin-top: 10px;
+        top: 50%;
     }
     .arrow-down-yellow {
         display: block;
@@ -580,6 +582,8 @@
     .dh-list, .hotel-list {
         .col-left-hotel>img {max-height: 110px;}
         .col-right-hotel {padding-left: 10px;}
+        .col-left-hotel {width: 33.333333333333336%;}
+        .col-right-hotel {width: 66.66666666666666%;}
         .col-left-hotel, .col-right-hotel {float: left;}
     }
 
