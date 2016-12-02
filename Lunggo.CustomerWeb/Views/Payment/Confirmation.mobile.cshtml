@@ -13,7 +13,7 @@
 @{
     Layout = "/Views/Shared/mobile/_Layout.cshtml";
     ViewBag.Title = "Konfirmasi Pembayaran";
-    ViewBag.BodyClass = "page page-confirmation page-hotel";
+    ViewBag.BodyClass = "page page-confirmation page-hotel page-checkout";
     ViewBag.AngularController = "confirmationController";
 
     var beneficiaryBankList = new List<SelectListItem>
@@ -540,26 +540,18 @@
         {
             var reservation = Model as HotelReservationForDisplay;
 
-           
-                @*@Html.Partial("/Views/Hotel/Shared/Mobile/_PriceDetail.cshtml")*@
-
-            <div class=" page-hotel review-hotel" style="background:#f9f9f9">
+            <div class=" page-hotel review-hotel" style="background-color: #f9f9f9">
                 <div class="review-room clearfix">
-
-                    <span>Nomor Reservasi: <b>@Model.RsvNo</b></span>
-
+                    
                     @Html.Partial("/Views/Hotel/Shared/Mobile/_GuestDetail.cshtml")
                     <h3 class="summary__title"><b>REVIEW</b> PESANAN</h3>
-                    <div class="form-box">
-                        <div class="fb-hotel">
-                            <div class="fb-header"><b>Detail Hotel</b></div>
-                            <div class="fb-body">
-                                @Html.Partial("/Views/Hotel/Shared/Mobile/_HotelDetail.cshtml", reservation.HotelDetail)
-                            </div>
-                        </div>
+                    <div class="form-group">
+                        @Html.Partial("/Views/Hotel/Shared/Mobile/_HotelDetail.cshtml", reservation.HotelDetail)
                     </div>
+                    
                 </div>
                 @Html.Partial("/Views/Hotel/Shared/Mobile/_RoomDetail.cshtml", reservation.HotelDetail)
+                @Html.Partial("/Views/Hotel/Shared/Mobile/_PriceDetail.cshtml", reservation)
             </div>
         }
         <div class="col-sm-12">

@@ -443,5 +443,28 @@ app.controller('hotelSearchController', ['$scope', '$log', '$http', '$resource',
         });
     }
 
+    $scope.getPageNumberList = function (pageCount, currentPage) {
+
+        var maxPage = 10;
+
+        var returnValue = [];
+        if (pageCount <= maxPage) {
+            for (var p = 1; p <= pageCount; p++)
+                returnValue.push(p);
+        } else {
+            if (currentPage < maxPage) {
+                for (var p = 1; p <= maxPage; p++)
+                    returnValue.push(p);
+            } else if (currentPage >= maxPage && currentPage < pageCount - maxPage) {
+                for (var p = currentPage - 5; p <= currentPage + 4; p++)
+                    returnValue.push(p);
+            } else if (currentPage >= pageCount - maxPage) {
+                for (var p = pageCount - maxPage; p <= pageCount; p++)
+                    returnValue.push(p);
+            }
+        }
+        
+        return returnValue;
+    };
     
 }]);

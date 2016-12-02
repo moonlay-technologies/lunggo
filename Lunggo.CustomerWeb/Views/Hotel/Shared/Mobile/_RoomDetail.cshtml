@@ -96,7 +96,7 @@
                 {
                     <div class="fb-room">
                         <div class="clearfix">
-                            <div class="col-8"><div class="blue-txt bold-txt lg-txt">@ToTitleCase(room.RoomName) @ToTitleCase(rate.BoardDescription)</div></div>
+                            <div class="col-8"><div class="blue-txt bold-txt lg-txt" style="text-transform: capitalize">@ToTitleCase(room.RoomName) @ToTitleCase(rate.BoardDescription)</div></div>
                             @*<div class="col-2"><span class="meal-icon pull-right"></span><span class="wifi-icon pull-right"></span></div>*@
                         </div>
                         <div class="fb-img" style="background-image: url(@roomImg)"></div>
@@ -154,20 +154,40 @@
                             }
 
                         </ul>
-                        <div class="fb-note">
-                            <div>Catatan Khusus:</div>
-                            <ul class="sqr-blue-list">
-
-                                @foreach (var tnc in rate.TermAndCondition)
+                        @if (rate.TermAndCondition.Count > 0 || (Model.Policy != null && Model.Policy.Count > 0))
+                        {
+                            <div class="fb-note">
+                                <div>Catatan Khusus:</div>
+                                @if (rate.TermAndCondition.Count > 0)
                                 {
-                                    <li>
-                                        <div class="blue-txt semibold-txt">Ketentuan Kamar</div>
-                                        <div class="grey-txt">@tnc</div>
-                                    </li>
-                                }
+                                    <ul class="sqr-blue-list">
+                                        @foreach (var tnc in rate.TermAndCondition)
+                                        {
+                                            <li>
+                                                <div class="blue-txt semibold-txt">Ketentuan Kamar</div>
+                                                <div class="grey-txt">@tnc</div>
+                                            </li>
+                                        }
 
-                            </ul>
+                                    </ul>
+                                }
+                                @if (Model.Policy != null && Model.Policy.Count > 0)
+                                {
+                                    <ul class="sqr-blue-list">
+                                        @foreach (var policy in Model.Policy)
+                                        {
+                                            <li>
+                                                <div class="blue-txt semibold-txt">Perlu Diingat</div>
+                                                <div class="grey-txt">@policy</div>
+                                            </li>
+                                        }
+
+                                    </ul>
+                                }
+                                
                         </div>
+                        }
+                        
                     </div>
                 }
 
