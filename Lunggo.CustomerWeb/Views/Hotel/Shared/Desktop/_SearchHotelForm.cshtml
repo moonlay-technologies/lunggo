@@ -12,8 +12,8 @@
                             @*<div class="pull-right bold-txt darkgrey-txt">{{hotelSearch.checkinDate | date: 'EEE, dd MMM yyyy'}}</div>*@
                             <div class="col-half">
                                 <span class="date semibold-txt darkgrey-txt">21</span>
-                                <span class="sm-txt month darkgrey-txt">Des</span>
-                                <span class="sm-txt year darkgrey-txt">2016</span>
+                                <span class="sm-txt month darkgrey-txt bold-txt">Des</span>
+                                <span class="sm-txt year darkgrey-txt bold-txt">2016</span>
                             </div>
                         </div>
                     </div>
@@ -24,8 +24,8 @@
                             <div class="sm-txt col-half grey-txt">Check out</div>
                             <div class="col-half">
                                 <span class="date semibold-txt darkgrey-txt">22</span>
-                                <span class="sm-txt month darkgrey-txt">Des</span>
-                                <span class="sm-txt year darkgrey-txt">2016</span>
+                                <span class="sm-txt month darkgrey-txt bold-txt">Des</span>
+                                <span class="sm-txt year darkgrey-txt bold-txt">2016</span>
                             </div>
                         </div>
                     </div>
@@ -33,15 +33,16 @@
                 <div class="form-group form__night quarter">
                     <div class="field-container">
                         <div class="form-control form-night">
-                            <div class="col-half">
-                                <span class="sm-txt grey-txt">Malam</span>
-                            </div>
-                            <div class="col-half clearfix">
-                                <div class="col-8 input-hotel xlg-txt right-txt semibold-txt darkgrey-txt">{{hotelSearch.nightCount}}</div>
-                                <div class="col-2 clearfix">
-                                    <a href="" class="increase" ng-click="addValue('nightCount', 1)"></a>
-                                    <a href="" class="decrease" ng-click="addValue('nightCount', -1)"></a>
-                                </div>
+                            <div class="col-4"><span class="sm-txt grey-txt">Malam</span></div>
+                            <div class="col-6 input-hotel xlg-txt right-txt semibold-txt darkgrey-txt">1</div>
+                            <div class="option">
+                                <span data-value="">1</span>
+                                <span data-value="">2</span>
+                                <span data-value="">3</span>
+                                <span data-value="">4</span>
+                                <span data-value="">5</span>
+                                <span data-value="">6</span>
+                                <span data-value="">7</span>
                             </div>
                         </div>
                     </div>
@@ -49,88 +50,139 @@
                 <div class="form-group form__room quarter">
                     <div class="field-container">
                         <div class="form-control form-room">
-                            <div class="col-half">
-                                <span class="sm-txt grey-txt">Kamar</span>
-                            </div>
-                            <div class="col-half clearfix">
-                                <div class="col-8 input-hotel xlg-txt right-txt semibold-txt darkgrey-txt">{{hotelSearch.roomCount}}</div>
-                                <div class="col-2 clearfix">
-                                    <a href="" class="increase" ng-click="addValue('roomCount', 1)"></a>
-                                    <a href="" class="decrease" ng-click="addValue('roomCount', -1)"></a>
-                                </div>
+                            <div class="col-4"><span class="sm-txt grey-txt">Jumlah Kamar</span></div>
+                            <div class="col-6 input-hotel xlg-txt right-txt semibold-txt darkgrey-txt">1</div>
+                            <div class="option">
+                                <span data-value="">1</span>
+                                <span data-value="">2</span>
+                                <span data-value="">3</span>
+                                <span data-value="">4</span>
+                                <span data-value="">5</span>
+                                <span data-value="">6</span>
+                                <span data-value="">7</span>
+                                <span data-value="">8</span>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="room-right clearfix">
-            <div class="form-group form__adult form-sm">
-                <div class="form-control form-adult clearfix">
-                    <div class="col-half">
-                        <span class="sm-txt grey-txt">Dewasa</span>
+        <div class="clearfix">
+            <div class="room-row clearfix">
+                <div class="white-txt bold-txt md-txt">Kamar 1</div>
+                <div class="col-4">
+                    <div class="form-group form__adult col-half">
+                        <div class="form-control form-adult clearfix">
+                            <div class="col-4"><span class="sm-txt grey-txt">Dewasa</span></div>
+                            <div class="col-6 input-hotel xlg-txt right-txt semibold-txt darkgrey-txt">2</div>
+                            <div class="option">
+                                <span data-value="">1</span>
+                                <span data-value="">2</span>
+                                <span data-value="">3</span>
+                                <span data-value="">4</span>
+                                <span data-value="">5</span>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-half clearfix">
-                        <div class="col-8 input-hotel xlg-txt right-txt semibold-txt darkgrey-txt">{{hotelSearch.adultCount}}</div>
-                        <div class="col-2 clearfix">
-                            <a href="" class="increase" ng-click="addValue('adultCount', 1)"></a>
-                            <a href="" class="decrease" ng-click="addValue('adultCount', -1)"></a>
+                    <div class="form-group form__child col-half">
+                        <div class="form-control form-child">
+                            <div class="col-4"><span class="sm-txt grey-txt">Anak</span></div>
+                            <div class="col-6 input-hotel xlg-txt right-txt semibold-txt darkgrey-txt">2</div>
+                            <div class="option">
+                                <span data-value="">1</span>
+                                <span data-value="">2</span>
+                                <span data-value="">3</span>
+                                <span data-value="">4</span>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="form-group form__child form-sm">
-                <div class="form-control form-child">
-                    <div class="col-half">
-                        <span class="sm-txt grey-txt">Anak</span>
-                    </div>
-                    <div class="col-half clearfix">
-                        <div class="col-8 input-hotel xlg-txt right-txt semibold-txt darkgrey-txt">{{hotelSearch.childCount}}</div>
-                        <div class="col-2 clearfix">
-                            <a href="" class="increase" ng-click="addValue('childCount', 1)"></a>
-                            <a href="" class="decrease" ng-click="addValue('childCount', -1)"></a>
+                <div class="col-6">
+                    <div class="form-group form__child quarter">
+                        <div class="form-control select-age">
+                            <div class="col-6"><span class="sm-txt grey-txt">Usia Anak 1 (th)</span></div>
+                            <div class="col-4 input-hotel xlg-txt right-txt semibold-txt darkgrey-txt">2</div>
+                            <div class="option">
+                                <span data-value="">0</span>
+                                <span data-value="">1</span>
+                                <span data-value="">2</span>
+                                <span data-value="">3</span>
+                                <span data-value="">4</span>
+                                <span data-value="">5</span>
+                                <span data-value="">6</span>
+                                <span data-value="">7</span>
+                                <span data-value="">8</span>
+                                <span data-value="">9</span>
+                                <span data-value="">10</span>
+                                <span data-value="">11</span>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </div>
-            <div class="form-group form__age dropdown-container form-sm" ng-show="hotelSearch.childCount >= 1">
-                <div class="form-control select-age">
-                    <span class="sm-txt grey-txt">Usia Anak 1</span>
-                    <span class="semibold-txt darkgrey-txt xlg-txt pull-right">{{hotelSearch.childrenAges[0]}}</span>
-                    <div class="option">
-                        <span data-value="" ng-repeat="age in traGetRange(11, 0)" ng-click="setChildAge(0, age)">{{age}}</span>
+                    <div class="form-group form__child quarter">
+                        <div class="form-control select-age">
+                            <div class="col-6"><span class="sm-txt grey-txt">Usia Anak 2 (th)</span></div>
+                            <div class="col-4 input-hotel xlg-txt right-txt semibold-txt darkgrey-txt">2</div>
+                            <div class="option">
+                                <span data-value="">0</span>
+                                <span data-value="">1</span>
+                                <span data-value="">2</span>
+                                <span data-value="">3</span>
+                                <span data-value="">4</span>
+                                <span data-value="">5</span>
+                                <span data-value="">6</span>
+                                <span data-value="">7</span>
+                                <span data-value="">8</span>
+                                <span data-value="">9</span>
+                                <span data-value="">10</span>
+                                <span data-value="">11</span>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
-            <div class="form-group form__age dropdown-container form-sm" ng-show="hotelSearch.childCount >= 2">
-                <div class="form-control select-age">
-                    <span class="sm-txt grey-txt">Usia Anak 2</span>
-                    <span class="semibold-txt darkgrey-txt xlg-txt pull-right">{{hotelSearch.childrenAges[1]}}</span>
-                    <div class="option">
-                        <span data-value="" ng-repeat="age in traGetRange(11, 0)" ng-click="setChildAge(1, age)">{{age}}</span>
+                    <div class="form-group form__child quarter">
+                        <div class="form-control select-age">
+                            <div class="col-6"><span class="sm-txt grey-txt">Usia Anak 3 (th)</span></div>
+                            <div class="col-4 input-hotel xlg-txt right-txt semibold-txt darkgrey-txt">2</div>
+                            <div class="option">
+                                <span data-value="">0</span>
+                                <span data-value="">1</span>
+                                <span data-value="">2</span>
+                                <span data-value="">3</span>
+                                <span data-value="">4</span>
+                                <span data-value="">5</span>
+                                <span data-value="">6</span>
+                                <span data-value="">7</span>
+                                <span data-value="">8</span>
+                                <span data-value="">9</span>
+                                <span data-value="">10</span>
+                                <span data-value="">11</span>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
-            <div class="form-group form__age dropdown-container form-sm" ng-show="hotelSearch.childCount >= 3">
-                <div class="form-control select-age">
-                    <span class="sm-txt grey-txt">Usia Anak 3</span>
-                    <span class="semibold-txt darkgrey-txt xlg-txt pull-right">{{hotelSearch.childrenAges[2]}}</span>
-                    <div class="option">
-                        <span data-value="" ng-repeat="age in traGetRange(11, 0)" ng-click="setChildAge(2, age)">{{age}}</span>
-                    </div>
-                </div>
-            </div>
-            <div class="form-group form__age dropdown-container form-sm" ng-show="hotelSearch.childCount >= 4">
-                <div class="form-control select-age">
-                    <span class="sm-txt grey-txt">Usia Anak 4</span>
-                    <span class="semibold-txt darkgrey-txt xlg-txt pull-right">{{hotelSearch.childrenAges[3]}}</span>
-                    <div class="option">
-                        <span data-value="" ng-repeat="age in traGetRange(11, 0)" ng-click="setChildAge(3, age)">{{age}}</span>
+                    <div class="form-group form__child quarter">
+                        <div class="form-control select-age">
+                            <div class="col-6"><span class="sm-txt grey-txt">Usia Anak 4 (th)</span></div>
+                            <div class="col-4 input-hotel xlg-txt right-txt semibold-txt darkgrey-txt">2</div>
+                            <div class="option">
+                                <span data-value="">0</span>
+                                <span data-value="">1</span>
+                                <span data-value="">2</span>
+                                <span data-value="">3</span>
+                                <span data-value="">4</span>
+                                <span data-value="">5</span>
+                                <span data-value="">6</span>
+                                <span data-value="">7</span>
+                                <span data-value="">8</span>
+                                <span data-value="">9</span>
+                                <span data-value="">10</span>
+                                <span data-value="">11</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="form-group form__submit room-left">
+        
+        <div class="form-group form__submit pull-left">
             <button class="btn btn-yellow btn-block btn-lg btnSubmit" ng-click="hotelSearch.getHotels();">CARI HOTEL</button>
         </div>
     </div>

@@ -43,6 +43,17 @@
     @*<script src="/Assets/mobile/js/HomeController.js"></script>*@
     <script src="/Assets/travorama20/angularDirectory/search/hotelSearch.service.js"></script>
     <script src="/Assets/Travorama20/js/homeController.js"></script>
+    <script>
+        jQuery(document).ready(function () {
+            $('.form__visitor').hide();
+            $('select[name="roomclass"]').click(function() {
+                var val = $(this).val();
+                if (val != null) {
+                    $('.form__visitor').toggle();
+                }
+            });
+        })
+    </script>
 }
 
 <div class="page-loading form-container" ng-class="{'page-loaded' : PageConfig.Loaded}">

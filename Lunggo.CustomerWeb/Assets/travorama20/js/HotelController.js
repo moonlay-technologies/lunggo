@@ -141,7 +141,7 @@ jQuery(document).ready(function ($) {
         $('.hotel-date-picker').datepicker('option', 'minDate', new Date());
         evt.stopPropagation();
         $('.search-hotel').show();
-        $('.search-hotel, .select-age .option').hide();
+        $('.search-hotel, .select-age .option, .form-room .option, .form-night .option, .form-adult .option, .form-child .option').hide();
     });
 
     // Select Age Childeren
@@ -149,6 +149,32 @@ jQuery(document).ready(function ($) {
         evt.stopPropagation();
         $(this).parent().siblings().children('div').children('.option').hide();
         $(this).children('.option').toggle();
-        $('.search-calendar-hotel, .search-hotel').hide();
+        $('.search-calendar-hotel, .search-hotel, .form-room .option, .form-night .option, .form-adult .option, .form-child .option').hide();
     });
+
+    $('body .form-night').on('click', function () {
+        $(this).children('.option').toggle();
+        $('.search-calendar-hotel, .search-hotel, .form-room .option, .select-age .option, .form-adult .option, .form-child .option').hide();
+    });
+   
+    $('body .form-adult').on('click', function () {
+        $(this).children('.option').toggle();
+        $('.search-calendar-hotel, .search-hotel, .form-room .option, .form-night .option, .select-age .option, .form-child .option').hide();
+    });
+
+    $('body .form-child').on('click', function () {
+        $(this).children('.option').toggle();
+        $('.search-calendar-hotel, .search-hotel, .form-room .option, .form-night .option, .select-age .option, .form-adult .option').hide();
+    });
+
+    $('body .form-room').on('click', function () {
+        $(this).children('.option').toggle();
+        $('.search-calendar-hotel, .search-hotel, .form-night .option, .select-age .option, .form-adult .option, .form-child .option').hide();
+    });
+
+    $('body .room-row').hide();
+    $('body .form-room span').on('click', function () {
+        $('body .room-row').show();
+    });
+
 });
