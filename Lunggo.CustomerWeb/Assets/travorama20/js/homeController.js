@@ -256,5 +256,12 @@ jQuery(document).ready(function ($) {
     $('body input[name="FormAgeSubmit"]').on('click', function () {
         $('body .form-child-age').hide();
     });
+
+    //Mobile Search
+    $('.form__visitor').hide();
+    $('select[name="roomclass"]').change(function () {
+        var value = $(this).val();
+        if (value != '') { $('.form__visitor').show(); }
+    });
 });
  
