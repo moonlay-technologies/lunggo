@@ -83,7 +83,7 @@ namespace Lunggo.ApCommon.Campaign.Service
             var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
             var dateNow = DateTime.UtcNow.AddHours(7).Date;
             return env != "production" || (dateNow >= new DateTime(2016, 9, 20) &&
-                                           dateNow <= new DateTime(2016, 11, 20));
+                                           dateNow <= new DateTime(2016, 12, 31));
         }
 
         private bool IsBinGranted(string bin6)
