@@ -1,5 +1,5 @@
 ﻿using System;
-using Lunggo.Hotel.Search.Object;
+//using Lunggo.Hotel.Search.Object;
 
 namespace Lunggo.ApCommon.Model
 {
@@ -7,19 +7,19 @@ namespace Lunggo.ApCommon.Model
     {
         public long HotelId { get; set; }
 
-        public SearchServiceRequest ToSearchServiceRequest()
-        {
-            SearchServiceRequest serviceRequest =  new SearchServiceRequest();
-            try
-            {
-                //process serviceRequest
-            }
-            catch (Exception)
-            {
+        //public SearchServiceRequest ToSearchServiceRequest()
+        //{
+        //    SearchServiceRequest serviceRequest =  new SearchServiceRequest();
+        //    try
+        //    {
+        //        //process serviceRequest
+        //    }
+        //    catch (Exception)
+        //    {
                 
-                throw;
-            }
-            return serviceRequest;
-        }
+        //        throw;
+        //    }
+        //    return serviceRequest;
+        //}
     }
 }
