@@ -128,16 +128,19 @@
                 padding: 0 0 0 28px;
             }
             &.form-v-adult, &.form-v-child {
-                .field-wrapper select.form-control {
-                    text-align: center;
-                    text-align-last: center;
+                .field-wrapper {
+                    padding: 10px 0;
+                    select.form-control {
+                        text-align: center;
+                        text-align-last: center;
+                    }
                 }
             }
             p, select {
                 cursor: pointer;
             }
             .field-wrapper {
-                padding: 10px 0;
+                padding: 21px 0;
                 border-bottom: 1px solid #dddddd;
                 text-align: center;
                 &.form-adult:before {
