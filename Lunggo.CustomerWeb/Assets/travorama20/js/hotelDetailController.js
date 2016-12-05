@@ -83,7 +83,7 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
             //setTncDisplay();
             setDescriptionDisplay();
             $timeout(function() { hotelDetailFunctions(); }, 0);
-            //$timeout(function () { initiateSlider(); }, 0);
+            $timeout(function () { initiateSlider(); }, 0);
             $timeout(function () {  accordionFunctions(); }, 0);
 
             $log.debug($scope.hotel);
