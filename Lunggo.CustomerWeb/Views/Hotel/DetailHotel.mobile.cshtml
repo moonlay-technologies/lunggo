@@ -90,7 +90,7 @@
                 <a href="#" attr-link="#detail-menu">UMUM</a>
                 <a href="#" attr-link="#spec-menu">RINCIAN</a>
             </div>
-            </div>
+        </div>
         </div>
     <div class="detail-hotel-container">
         <div class="detail-tab detail-hotel" id="detail-menu">
@@ -116,7 +116,7 @@
                     </div>
                 </div>
             </div>
-            <div class="dh-location sm-txt" >
+            <div class="dh-location sm-txt">
                 {{hotel.address}} {{hotel.city}} {{hotel.postalCd}}, {{hotel.country}}
             </div>
             <div class="dh-listing">
@@ -124,6 +124,14 @@
                 <div ng-show="loading" class="text-center">
                     <img src="/Assets/images/load.gif" style="width: 30px; height: 30px; margin-top: 5%;">
                 </div>
+                @*<div>
+                    <span class="hotel-result-txt">Jumlah Tipe Kamar Tersedia: <b>{{hotel.room.length}}</b></span>
+                    <a href="" class="btn-hotel-result btn-blue small" ng-click="togleDisplay()">
+                        Tampilkan
+                        <text ng-show="roomCount == minRoomCount">semua</text>
+                        <text ng-show="roomCount == maxRoomCount">sebagian</text>
+                    </a>
+                </div>*@
                 <ul class="dh-list-container">
                     <li ng-show="$index+1 <= roomCount" ng-repeat="room in hotel.room track by $index">
                         <div class="dh-list clearfix">
@@ -164,16 +172,18 @@
                                 </div>
                                 <a href="#" class="blue-txt downline-txt sm-txt" ng-click="PageConfig.SetOverlay('detail-room'); seeRoomDetail(room)">Detail Info Kamar</a>
                                 @*<div class="facility">
-                                    <span class="wifi"></span>
-                                    <span class="meal"></span>
-                                    <span class="ac"></span>
-                                </div>*@
-                                <a href="#" class="checkout-btn btn btn-yellow small">PESAN</a>
+                                        <span class="wifi"></span>
+                                        <span class="meal"></span>
+                                        <span class="ac"></span>
+                                    </div>*@
+                                <a ng-click="bookRoom(room)" class="checkout-btn btn btn-yellow small">PESAN</a>
                             </div>
                         </div>
                     </li>
                 </ul>
             </div>
+            
+            
         </div>
         <div class="detail-tab spec-hotel" id="spec-menu">
             <div class="sh-desc" ng-show="hotel.description.length > 0">
@@ -203,10 +213,7 @@
                          
                         </div>
                         <div class="col-8 clearfix">
-                            <ul class="col-half blue-list" ng-repeat="facilityList in facilities.facilityList.slice(0, facilities.facilityList.length/2)">
-                                <li ng-repeat="facilityName in facilityList"> {{facilityName}}</li>
-                            </ul>
-                            <ul class="col-half blue-list" ng-repeat="facilityList in facilities.facilityList.slice(facilities.facilityList.length/2, facilities.facilityList.length)">
+                            <ul class="col-half blue-list" ng-repeat="facilityList in facilities.facilityList.slice(0, facilities.facilityList.length)">
                                 <li ng-repeat="facilityName in facilityList"> {{facilityName}}</li>
                             </ul>
                         </div>
@@ -233,6 +240,7 @@
                         <li class="ac-blue">AC</li>
                     </ul>*@
                 </div>
+                * Fasilitas Berbayar
             </div>
             <div class="sh-policy" ng-show="hotel.policy.length > 0">
                 <div class="sh-title darkgrey-txt lg-txt bold-txt">Perlu Diingat</div>
@@ -294,7 +302,7 @@
                                 <div class="lg-txt"><b><sup>Rp</sup> {{selectedRoom.rate.netFare}}</b></div>
                                 <span class="xs-txt">(*Termasuk Pajak)</span>
                             </div>
-                            <a ng-click="bookRoom(room)" class="btn btn-yellow small">PESAN</a>
+                            <a ng-click="bookRoom(selectedRoom)" class="btn btn-yellow small">PESAN</a>
                         </div>
                         <div class="dr-policy">
                             <div class="bold-txt lg-txt darkgrey-txt">Kebijakan Pembatalan</div>
@@ -317,11 +325,105 @@
                                 @*<li class="check-in col-3 sm-txt"><span class="grey-txt">Check In</span> 14.00-24.00</li>
                                 <li class="check-out col-3 sm-txt"><span class="grey-txt">Check Out</span> 12.00</li>
                                 <li class="max-visitor col-3 sm-txt"><span class="grey-txt">Max Orang</span> 2 Orang</li>*@
-                            </ul>
+                                </ul>
                         </div>
+
                     </div>
                 </div>
             </div>
         </section>
+    </div>
+
+    <div class="overlay overlay--theme--blue overlay--hotel-select" ng-class="{'active' : (PageConfig.ActiveOverlay == 'hotel-select')}">
+        <header class="overlay__header">
+            <h3 class="overlay__title">
+                <small>PILIH HOTEL TUJUAN</small>
+                <span class="overlay__close" ng-click="PageConfig.SetOverlay();">X</span>
+            </h3>
+        </header><!-- .overlay__header -->
+        <section class="overlay__content">
+
+            <div class="autocomplete-input">
+                <input type="text" class="form-control" name="name" value="" placeholder="Masukkan Kota/Lokasi Hotel Tujuan" ng-model="HotelSearchForm.AutoComplete.Keyword" ng-change="HotelSearchForm.AutoComplete.GetLocation()" />
+            </div><!-- .autocomplete-input -->
+            @*ng-model="hotelSearch.locationDisplay" placeholder="Masukkan kota/ lokasi hotel tujuan"*@
+            <div class="autocomplete-preload">
+                <ul class="result">
+                    <li class="hotel" ng-repeat="location in hotelSearch.hotelAutocomplete track by $index" ng-click="PageConfig.SetOverlay('hotel-form'); selectLocation(location)">
+                        <a class="hotel__link clearfix">
+                            <div class="hotel__location bold-txt">{{location.name}}</div>
+                            <div class="col-half">
+                                <div class="hotel__detail">{{location.type}}</div>
+                            </div>
+                            <div class="col-half">
+                                <div class="result blue-txt semibold-txt pull-right">{{location.numOfHotels}} Hotel</div>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+            </div><!-- .autocomplete-preload -->
+            @*<div class="autocomplete-loading">
+                        <h4 class="text-center text-loading">Mencari Bandara</h4>
+                    </div>
+
+                <div class="autocomplete-no-result">
+                    <h4 class="text-center">Hasil tidak ditemukan</h4>
+                            </div>
+
+                <div class="autocomplete-result">
+                    <ul class="result" ng-click="PageConfig.SetOverlay()"></ul>
+                </div>*@
+        </section><!-- .overlay__content -->
+                    </div>
+    <!-- overlay hotel date -->
+    <div class="overlay overlay--theme--blue overlay--datepicker overlay--datepicker-hoteldate" ng-class="{ 'active' : (PageConfig.ActiveOverlay == 'datepicker-hotel') }">
+        <header class="overlay__header">
+            <h3 class="overlay__title">
+                Pilih Tanggal Masuk
+                <span class="overlay__close" ng-click="PageConfig.SetOverlay('hotel-form')">X</span>
+            </h3>
+        </header><!-- .overlay__header -->
+        <section class="overlay__content">
+            <div class="overlay-selector">
+                <div class="overlay-selector__body">
+                    <div class="calendar-container">
+                        <div class="ui-datepicker return-date" id="checkInDate"></div>
+                </div>
+            </div>
+            </div>
+        </section>
+    </div><!-- .overlay--datepicker-->
+    <div class="popup__wrapper popup--revalidate" ng-class="{'active': booking}">
+        <div class="popup">
+
+            <div class="revalidate-image">
+                <img src="/assets/mobile/images/revalidate-plane.png" alt="Revalidating" />
+            </div>
+
+            <div class="revalidate-anim">
+
+            </div>
+
+            <p>Sedang Memvalidasi<br />Pemesanan Anda</p>
+
+        </div>
+    </div>
+    
+    <div class="popup__wrapper" ng-class="{'active': selectFailed}">
+        <div class="popup">
+            <header class="popup__header">
+                <h4 class="popup__title">Mohon Maaf...</h4>
+            </header>
+            <div class="popup__body">
+                <div class="container_new">
+                    <span>Hotel ini sudah tidak tersedia. Silakan klik tombol di bawah untuk kembali ke halaman awal.</span>
+                </div>
+            </div>
+            <div class="popup__footer">
+                <div class="container_new">
+                    <a class="btn btn-block btn-yellow" href="{{returnUrl}}">KEMBALI</a>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

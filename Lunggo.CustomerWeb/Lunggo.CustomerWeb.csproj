@@ -3057,6 +3057,7 @@
     <Content Include="Views\Hotel\Shared\Mobile\_HotelDetail.cshtml" />
     <Content Include="Views\Hotel\Shared\Mobile\_GuestDetail.cshtml" />
     <Content Include="Views\Hotel\Shared\Desktop\_ChildrenAgeForm.cshtml" />
+    <Content Include="Views\Hotel\Shared\Mobile\_RoomDetail.cshtml" />
     <None Include="Views\Template\eticket.cshtml" />
     <Content Include="Views\Template\OrderFlightHistory.cshtml" />
     <Content Include="Views\Template\PrivacyPolicy.cshtml" />

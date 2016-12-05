@@ -148,28 +148,30 @@ namespace Lunggo.ApCommon.Hotel.Service
                     //Facilities
                     var keys = facilityDict.Keys;
                     var hotelFacilityDict = new Dictionary<string, bool>();
-                    foreach (var facility in hotelDetail.Facilities)
+                    if (hotelDetail.Facilities != null)
                     {
-                        var concatedFacility = facility.FacilityGroupCode + "" + facility.FacilityCode;
+                        foreach (var facility in hotelDetail.Facilities)
+                        {
+                            var concatedFacility = facility.FacilityGroupCode + "" + facility.FacilityCode;
 
+                            foreach (var key in keys)
+                            {
+                                if (!hotelFacilityDict.ContainsKey(key))
+                                    hotelFacilityDict[key] = false;
+                                if (HotelFacilityFilters[key].FacilityCode.Contains(concatedFacility))
+                                {
+                                    hotelFacilityDict[key] = true;
+                                }
+                            }
+
+                        }
                         foreach (var key in keys)
                         {
-                            if (!hotelFacilityDict.ContainsKey(key))
-                                hotelFacilityDict[key] = false;
-                            if (HotelFacilityFilters[key].FacilityCode.Contains(concatedFacility))
-                            {
-                                hotelFacilityDict[key] = true;
-                            }
+                            facilityDict[key].Count += hotelFacilityDict[key] ? 1 : 0;
                         }
-
                     }
-                    foreach (var key in keys)
-                    {
-                        facilityDict[key].Count += hotelFacilityDict[key] ? 1 : 0;
-                    }
+                } 
 
-
-                }
                 filter.ZoneFilter = new List<ZoneFilterInfo>();
                 filter.AccomodationFilter = new List<AccomodationFilterInfo>();
                 filter.FacilityFilter = new List<FacilitiesFilterInfo>();

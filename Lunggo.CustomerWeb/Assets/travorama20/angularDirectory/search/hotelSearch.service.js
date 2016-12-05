@@ -164,6 +164,11 @@
             scope.view.showHotelSearch = false;
         }
 
+        factory.selectLocation = function (location) {
+            scope.hotelSearch.location = location.id;
+            scope.hotelSearch.locationDisplay = location.name;
+            scope.view.showHotelSearch = false;
+        }
         scope.setChildAge = function (index, age) {
             scope.hotelSearch.childrenAges[index] = age;
         }

@@ -493,7 +493,7 @@ if (typeof (angular) == 'object') {
                             var scope = angular.element($('.ui-datepicker')).scope();
                             hotelSearchSvc.setCheckinDate(scope, datex);
                             $log.debug("checkinDate = " + datex);
-
+                            $rootScope.PageConfig.SetOverlay('hotel-form');
 
                         } else {
                             $rootScope.DatePicker.Settings.SelectedDate = new Date(trsdate);
