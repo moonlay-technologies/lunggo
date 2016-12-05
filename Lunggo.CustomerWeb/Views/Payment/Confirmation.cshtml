@@ -457,9 +457,10 @@
                                     <div class="rh-content">
                                         <div class="rh-row clearfix">
                                             <div class="col-left-hotel">
-                                                <img src="@hotelImg" alt="Alternate Text" id="hotelimg"
+                                                @*<img src="@hotelImg" alt="Alternate Text" id="hotelimg"
                                                      max-width="100%" max-height="100%"
-                                                     style="padding-right :10px;" />
+                                                     style="padding-right :10px;" />*@
+                                                <div class="img-md" id="hotelimg" style="background-image: url(@hotelImg);"></div>
                                             </div>
                                             <div class="col-right-hotel">
                                                 <div class="blue-txt bold-txt hotel-title-lg md-txt">@ToTitleCase(reservation.HotelDetail.HotelName)</div>
