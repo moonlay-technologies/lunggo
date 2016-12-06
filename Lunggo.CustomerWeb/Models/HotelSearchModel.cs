@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Lunggo.ApCommon.Hotel.Model;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -21,11 +22,12 @@ namespace Lunggo.CustomerWeb.Models
         Location       = 1, 
         CheckinDate    = 2, 
         CheckoutDate   = 3, 
-        AdultCount     = 4, 
-        ChildCount     = 5, 
-        NightCount     = 6, 
-        RoomCount      = 7,
-        ChildrenAges   = 8
+        //AdultCount     = 4, 
+        //ChildCount     = 5, 
+        NightCount     = 4, 
+        RoomCount      = 5,
+        Occupancies = 6,
+        //ChildrenAges   = 8
     }
    
     public class HotelSearchApiRequest
@@ -62,11 +64,35 @@ namespace Lunggo.CustomerWeb.Models
             SearchParamObject.Location = parameters[(int)RequestParam.Location];
             SearchParamObject.CheckinDate = DateTime.Parse(parameters[(int)RequestParam.CheckinDate]);
             SearchParamObject.CheckoutDate = DateTime.Parse(parameters[(int)RequestParam.CheckoutDate]);
-            SearchParamObject.AdultCount = int.Parse(parameters[(int)RequestParam.AdultCount]);
-            SearchParamObject.ChildCount = int.Parse(parameters[(int)RequestParam.ChildCount]);
             SearchParamObject.NightCount = int.Parse(parameters[(int)RequestParam.NightCount]);
             SearchParamObject.RoomCount = int.Parse(parameters[(int)RequestParam.RoomCount]);
-            SearchParamObject.ChildrenAges = parameters[(int)RequestParam.ChildrenAges].Split(',').ToArray<string>();
+            SearchParamObject.Occupancies = new List<Occupancy>();
+            var occupancyquery = parameters[(int) RequestParam.Occupancies].Split('|');
+            foreach (var occ in occupancyquery)
+            {
+                var splittedData = occ.Split('~').ToList();
+                var occupancy = new Occupancy
+                {
+                    AdultCount = int.Parse(splittedData[0]),
+                    ChildCount = int.Parse(splittedData[1]),
+                    ChildrenAges = new List<int>(),
+                    RoomCount = 1
+                };
+                if (splittedData.Count == 3)
+                {
+                    var ages = splittedData[2].Split(',');
+                    foreach (var age in ages)
+                    {
+                        occupancy.ChildrenAges.Add(int.Parse(age));
+                    }
+                }
+
+                SearchParamObject.Occupancies.Add(occupancy);
+            }
+            //SearchParamObject.AdultCount = int.Parse(parameters[(int)RequestParam.AdultCount]);
+            //SearchParamObject.ChildCount = int.Parse(parameters[(int)RequestParam.ChildCount]);
+            
+            //SearchParamObject.ChildrenAges = parameters[(int)RequestParam.ChildrenAges].Split(',').ToArray<string>();
             SearchParam = query.ToString();
         }
     }
@@ -81,19 +107,24 @@ namespace Lunggo.CustomerWeb.Models
         public DateTime CheckinDate { get; set; }
         [JsonProperty("checkoutDate")]
         public DateTime CheckoutDate { get; set; }
-        [JsonProperty("adultCount")]
-        public int AdultCount { get; set; }
-        [JsonProperty("childCount")]
-        public int ChildCount { get; set; }
         [JsonProperty("nightCount")]
         public int NightCount { get; set; }
         [JsonProperty("roomCount")]
         public int RoomCount { get; set; }
+        [JsonProperty("occupancies")]
+        public List<Occupancy> Occupancies { get; set; }
+    }
+
+    public class HotelSearchOccupancy
+    {
+        [JsonProperty("adultCount")]
+        public int AdultCount { get; set; }
+        [JsonProperty("childCount")]
+        public int ChildCount { get; set; }
+
         [JsonProperty("childrenAges")]
         public string[] ChildrenAges { get; set; }
     }
-
-
     public class HotelRequestFilter
     {
         [JsonProperty("priceFilter")]
