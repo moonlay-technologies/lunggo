@@ -84,26 +84,18 @@
 }
 
 @section AdditionalCSS{
-    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/jquery.slick/1.5.9/slick.css" />
-    
-    @*@if (ViewBag.Campaign)
-    {
-        <!-- imlek start -->
-        <link href="/Campaign/Imlek2016/css/imlek2016.min.css" rel="stylesheet" />
-        <!-- imlek end -->
-    }*@
-
+    <link rel="stylesheet" type="text/css" href="/Assets/vendor/slick/slick.css" />
 }
 
 @section AdditionalJS{
     <!-- additional Angular JS-->
-    <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.slick/1.5.9/slick.min.js"></script>
     <script src="/Assets/js/js.cookie.js"></script>
     <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>-->
     <!-- jquery datepicker -->
     <script src="/Assets/js/jquery-ui.min.js"></script>
     <script type="text/javascript" src="/Assets/js/jquery.ui.datepicker-id.js"></script>
     <script type="text/javascript" src="/Scripts/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/Assets/vendor/slick/slick.min.js"></script>
 }
 
 @section PageJS{
@@ -134,8 +126,7 @@
         });
     </script>
     <script src="/Assets/travorama20/angularDirectory/search/hotelSearch.service.js"></script>
-<script src="/Assets/Travorama20/js/homeController.js"></script>
-
+    <script src="/Assets/Travorama20/js/homeController.js"></script>
 }
 
 <section class="section-search">
@@ -285,113 +276,66 @@
                     </form>
                 </div><!-- .tab-flight -->
                 <div class="tab-hotel tab-pane clearfix active" id="hotel">
-                   
+                    
                     <h3 class="text-center">Cari <b>Kamar Hotel</b><br /><span class="sub-title">(Domestik &amp; Internasional)</span></h3>
+                    @*<h3 class="text-center">{{hotelSearch.checkinDate | date:'dd-MM-yyy'}} - {{"2016-12-05T08:57:32.520Z" | date:'dd'}}</h3>*@
                     <form class="form form-horizontal form-hotel page-hotel" ng-submit="hotel.searchHotel()" autocomplete="off">
-
                         <div class="form-group hotel-location ">
                             <div class="col-xs-12">
                                 <input type="text" name="hotelLocation" value="" class="form-hotel-location form-control" placeholder="Kota, Wilayah atau Nama Hotel" ng-model="hotelSearch.locationDisplay" ng-click="view.showHotelSearch = true" />
                             </div>
                         </div>
-                        <div class="form-hotel-checkin">
-                            <small>Tanggal Masuk</small>
-                            <span class="date-hotel">{{hotelSearch.checkinDateDisplay}}</span>
-                        </div>
-                        <div class="form-group hotel-room">
-                            <div class="col-xs-6">
-                                <div class="form-hotel-night clearfix">
-                                    <div class="col-4"><small>Malam</small></div>
-                                    <div class="col-6 clearfix">
-                                        <div class="col-8 input-hotel">{{hotelSearch.nightCount}}</div>
-                                        <div class="col-2 clearfix">
-                                            <a href="" class="increase" ng-click="addValue('nightCount', 1)"></a>
-                                            <a href="" class="decrease" ng-click="addValue('nightCount', -1)"></a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xs-6">
-                                <div class="form-hotel-room">
-                                    <div class="col-4"><small>Kamar</small></div>
-                                    <div class="col-6 clearfix">
-                                        <div class="col-8 input-hotel">{{hotelSearch.roomCount}}</div>
-                                        <div class="col-2 clearfix">
-                                            <a href="" class="increase" ng-click="addValue('roomCount', 1)"></a>
-                                            <a href="" class="decrease" ng-click="addValue('roomCount', -1)"></a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group hotel-visitor">
-                            <div class="col-xs-6">
-                                <div class="form-hotel-visitor adult" data-toggle="tooltip" data-placement="left" title="Tidak boleh kosong">
-                                    <div class="col-4"><small>Dewasa</small></div>
-                                    <div class="col-6 clearfix">
-                                        <div class="col-8 input-hotel">{{hotelSearch.adultCount}}</div>
-                                        <div class="col-2 clearfix">
-                                            <a href="" class="increase" ng-click="addValue('adultCount', 1)"></a>
-                                            <a href="" class="decrease" ng-click="addValue('adultCount', -1)"></a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xs-6">
-                                <div class="form-hotel-visitor child">
-                                    <div class="col-4"><small>Anak</small></div>
-                                    <div class="col-6 clearfix">
-                                        <div class="col-8 input-hotel">{{hotelSearch.childCount}}</div>
-                                        <div class="col-2 clearfix">
-                                            <a href="" class="increase" ng-click="addValue('childCount', 1)"></a>
-                                            <a href="" class="decrease" ng-click="addValue('childCount', -1)"></a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group hotel-age-children" ng-show="hotelSearch.childCount > 0">
-                            <div class="btn-age">Usia Anak</div>
-                            <div class="age-container clearfix">
-                                <div class="col-xs-3 dropdown-container" ng-show="hotelSearch.childCount > 0">
-                                    <div class="form-control select-age">
-                                        <small>Anak 1</small>
-                                        <span>{{hotelSearch.childrenAges[0]}}</span>
-                                        <div class="option">
-                                            <span data-value="" ng-repeat="age in hotelSearch.childrenAgeList" ng-click="setChildAge(0, age)">{{age}}</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-xs-3 dropdown-container" ng-show="hotelSearch.childCount > 1">
-                                    <div class="form-control select-age">
-                                        <small>Anak 2</small>
-                                        <span>{{hotelSearch.childrenAges[1]}}</span>
-                                        <div class="option">
-                                            <span data-value="" ng-repeat="age in hotelSearch.childrenAgeList" ng-click="setChildAge(1, age)">{{age}}</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-xs-3 dropdown-container" ng-show="hotelSearch.childCount > 2">
-                                    <div class="form-control select-age">
 
-                                        <small>Anak 3</small>
-                                        <span>{{hotelSearch.childrenAges[2]}}</span>
-                                        <div class="option">
-                                            <span data-value="" ng-repeat="age in hotelSearch.childrenAgeList" ng-click="setChildAge(2, age)">{{age}}</span>
-                                        </div>
-                                    </div>
+                        <div class="form-group hotel-date">
+                            <div class="col-xs-6">
+                                <div class="form-hotel-checkin">
+                                    <span class="grey-txt">Tanggal Check in </span>
+                                    <span class="date">{{hotelSearch.checkinDate.format() | date : 'dd'}}</span>
+                                    <span class="month">{{hotelSearch.checkinDate.format() | date : 'MMM'}}</span>
+                                    <span class="year">{{hotelSearch.checkinDate.format() | date : 'yyyy'}}</span>
                                 </div>
-                                <div class="col-xs-3 dropdown-container" ng-show="hotelSearch.childCount > 3">
-                                    <div class="form-control select-age">
-                                        <small>Anak 4</small>
-                                        <span>{{hotelSearch.childrenAges[3]}}</span>
-                                        <div class="option">
-                                            <span data-value="" ng-repeat="age in hotelSearch.childrenAgeList" ng-click="setChildAge(3, age)">{{age}}</span>
-                                        </div>
+                            </div>
+                            <div class="col-xs-6">
+                                <div class="form-hotel-checkout disabled">
+                                    <span class="grey-txt">Tanggal Check out</span>
+                                    <span class="date">{{hotelSearch.checkoutDate.format() | date : 'dd'}}</span>
+                                    <span class="month">{{hotelSearch.checkoutDate.format() | date : 'MMM'}}</span>
+                                    <span class="year">{{hotelSearch.checkoutDate.format() | date : 'yyyy'}}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group hotel-room-night">
+                            <div class="col-xs-6 dropdown-container">
+                                <div class="form-control form-hotel-night clearfix">
+                                    <div class="col-4"><span class="grey-txt">Malam</span></div>
+                                    <div class="col-6 input-hotel">{{hotelSearch.nightCount}}</div>
+                                    <div class="option" ng-model="hotelSearch.nightCount">
+                                        <span data-value="" ng-repeat="nightCount in hotelSearch.nightrange track by $index"
+                                              ng-click="hotelSearch.nightCount = nightCount">{{nightCount}}</span>
                                     </div>
                                 </div>
                             </div>
-
+                            <div class="col-xs-6 dropdown-container">
+                                <div class="form-control form-hotel-room clearfix">
+                                    <div class="col-4"><span class="grey-txt">Jumlah Kamar</span></div>
+                                    <div class="col-6 input-hotel">{{hotelSearch.roomCount}}</div>
+                                    <div class="option" ng-model="hotelSearch.roomCount" >
+                                        <span data-value="" ng-repeat="roomCount in hotelSearch.roomrange track by $index"
+                                              ng-click="hotelSearch.roomCount = roomCount">{{roomCount}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group hotel-detail clearfix">
+                            <div class="col-xs-12 white-txt">Rincian Jumlah Tamu</div>
+                            <div class="col-xs-6 white-txt total-adult clearfix">
+                                <div class="col-half title semibold-txt">Jumlah Dewasa</div>
+                                <span class="text-right semibold-txt col-half total">2</span>
+                            </div>
+                            <div class="col-xs-6 white-txt total-child clearfix">
+                                <div class="col-half title semibold-txt">Jumlah Anak</div>
+                                <span class="text-right semibold-txt col-half total">2</span>
+                            </div>
                         </div>
                         <div class="form-group hotel-submit">
                             <div class="col-xs-12">
@@ -423,6 +367,7 @@
         @Html.Partial("/Views/Shared/Travorama20/_SearchCalendar.cshtml")
         @Html.Partial("/Views/Shared/Travorama20/_SearchLocation.cshtml")
         @Html.Partial("/Views/Shared/Travorama20/_SearchHotel.cshtml")
+        @Html.Partial("/Views/Hotel/Shared/Desktop/_ChildrenAgeForm.cshtml")
     </div><!-- .container -->
     @if (ViewBag.DestinationName == null || ViewBag.DestinationName == "" )
     {

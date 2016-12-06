@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
 using System.Linq;
-using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using Lunggo.ApCommon.Hotel.Service;
@@ -13,7 +11,6 @@ using Lunggo.Framework.Config;
 using Lunggo.Framework.Database;
 using Lunggo.Framework.Documents;
 using Lunggo.Framework.TableStorage;
-using RestSharp;
 
 namespace Lunggo.Webjob.HotelContentWrapper
 {
@@ -29,30 +26,8 @@ namespace Lunggo.Webjob.HotelContentWrapper
 
             var hotel = new HotelBedsService();
             var service = HotelService.GetInstance();
-            /*Save Hotel Beds Content*/
-            //hotel.GetAccomodation(1, 1000);
-            //hotel.GetBoard(1, 1000);
-            //hotel.GetCategory(1, 1000);
-            //hotel.GetChain(1, 1000);
-            //hotel.GetCountry(1, 1000);
-            //hotel.GetDestination(1, 500);
-            //hotel.GetFacility(1, 1000);
-            //hotel.GetFacilityGroup(1, 1000);
-            //hotel.GetRoom(1, 1000);
-            //hotel.GetSegment(1, 1000);
-            //var rate = new GetRateComment();
-
-            //Console.WriteLine("Getting Hotel Detail");
-            //hotel.GetHotelData(1, 1000);
-
-            //Console.WriteLine("Update Hotel List by Location Content");
-            //service.UpdateHotelListByLocationContent();
-
-            //Console.WriteLine("Update Hotel Detail by Location Content");
-            //service.SaveHotelDetailByLocation();
-
-            //Console.WriteLine("RateComment");
-            //rate.GetRateCommentData(1, 1000);
+            Console.WriteLine("start!");
+            service.SaveAutoCompleteToTableStorage();
 
             var hotelService = HotelService.GetInstance();
             hotelService.UpdateHotelImage();

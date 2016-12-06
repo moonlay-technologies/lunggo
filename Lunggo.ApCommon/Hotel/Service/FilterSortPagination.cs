@@ -151,77 +151,78 @@ namespace Lunggo.ApCommon.Hotel.Service
                     {
                         var keys = facilityDict.Keys;
                         var hotelFacilityDict = new Dictionary<string, bool>();
-                        foreach (var facility in hotelDetail.Facilities)
+                        if (hotelDetail.Facilities != null)
                         {
-                            var concatedFacility = facility.FacilityGroupCode + "" + facility.FacilityCode;
+                            foreach (var facility in hotelDetail.Facilities)
+                            {
+                                var concatedFacility = facility.FacilityGroupCode + "" + facility.FacilityCode;
 
+                                foreach (var key in keys)
+                                {
+                                    if (!hotelFacilityDict.ContainsKey(key))
+                                        hotelFacilityDict[key] = false;
+                                    if (HotelFacilityFilters[key].FacilityCode.Contains(concatedFacility))
+                                    {
+                                        hotelFacilityDict[key] = true;
+                                    }
+                                }
+
+                            }
                             foreach (var key in keys)
                             {
-                                if (!hotelFacilityDict.ContainsKey(key))
-                                    hotelFacilityDict[key] = false;
-                                if (HotelFacilityFilters[key].FacilityCode.Contains(concatedFacility))
-                                {
-                                    hotelFacilityDict[key] = true;
-                                }
+                                facilityDict[key].Count += hotelFacilityDict[key] ? 1 : 0;
                             }
-
                         }
-                        foreach (var key in keys)
-                        {
-                            facilityDict[key].Count += hotelFacilityDict[key] ? 1 : 0;
-                        }    
                     }
-                    
 
+                    filter.ZoneFilter = new List<ZoneFilterInfo>();
+                    filter.AccomodationFilter = new List<AccomodationFilterInfo>();
+                    filter.FacilityFilter = new List<FacilitiesFilterInfo>();
+                    filter.StarFilter = new List<StarFilterInfo>();
 
-                }
-                filter.ZoneFilter = new List<ZoneFilterInfo>();
-                filter.AccomodationFilter = new List<AccomodationFilterInfo>();
-                filter.FacilityFilter = new List<FacilitiesFilterInfo>();
-                filter.StarFilter = new List<StarFilterInfo>();
-
-                if (isByDestination)
-                {
-                    foreach (var zone in zoneDict.Keys)
+                    if (isByDestination)
                     {
-                        filter.ZoneFilter.Add(new ZoneFilterInfo
+                        foreach (var zone in zoneDict.Keys)
                         {
-                            Code = zoneDict[zone].Code,
-                            Count = zoneDict[zone].Count,
-                            Name = zoneDict[zone].Name,
+                            filter.ZoneFilter.Add(new ZoneFilterInfo
+                            {
+                                Code = zoneDict[zone].Code,
+                                Count = zoneDict[zone].Count,
+                                Name = zoneDict[zone].Name,
+                            });
+                        }
+                    }
+
+                    foreach (var accomodation in accDict.Keys)
+                    {
+                        filter.AccomodationFilter.Add(new AccomodationFilterInfo
+                        {
+                            Code = accDict[accomodation].Code,
+                            Count = accDict[accomodation].Count,
+                            Name = accDict[accomodation].Name
                         });
                     }
-                }
 
-                foreach (var accomodation in accDict.Keys)
-                {
-                    filter.AccomodationFilter.Add(new AccomodationFilterInfo
+                    foreach (var key in facilityDict.Keys)
                     {
-                        Code = accDict[accomodation].Code,
-                        Count = accDict[accomodation].Count,
-                        Name = accDict[accomodation].Name
-                    });
-                }
+                        filter.FacilityFilter.Add(new FacilitiesFilterInfo
+                        {
+                            Code = facilityDict[key].Code,
+                            Count = facilityDict[key].Count,
+                            Name = facilityDict[key].Name
+                        });
+                    }
 
-                foreach (var key in facilityDict.Keys)
-                {
-                    filter.FacilityFilter.Add(new FacilitiesFilterInfo
+                    foreach (var key in starDict.Keys)
                     {
-                        Code = facilityDict[key].Code,
-                        Count = facilityDict[key].Count,
-                        Name = facilityDict[key].Name
-                    });
-                }
+                        filter.StarFilter.Add(new StarFilterInfo
+                        {
+                            Code = starDict[key].Code,
+                            Count = starDict[key].Count
+                        });
+                    }
 
-                foreach (var key in starDict.Keys)
-                {
-                    filter.StarFilter.Add(new StarFilterInfo
-                    {
-                        Code = starDict[key].Code,
-                        Count = starDict[key].Count
-                    });
                 }
-
             }
             catch (Exception e)
             {
@@ -229,6 +230,7 @@ namespace Lunggo.ApCommon.Hotel.Service
             }
 
             return filter;
+ 
         }
 
         //Star Filter

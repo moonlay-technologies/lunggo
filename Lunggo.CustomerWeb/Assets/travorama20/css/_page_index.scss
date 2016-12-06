@@ -114,7 +114,7 @@ file : /Assets/travorama20/css/_page_index.scss
                         .sub-title {font-size: 14px;}
                     }
                     .form-group {
-                        &.hotel-location, &.hotel-date, &.hotel-room, &.hotel-visitor, &.hotel-age-children {margin-bottom: 10px;}
+                        &.hotel-location, &.hotel-date, &.hotel-room-night, &.hotel-visitor, &.hotel-age-children {margin-bottom: 10px;}
                     }
                     // hotel location
                     .form-group.hotel-location {
@@ -125,15 +125,7 @@ file : /Assets/travorama20/css/_page_index.scss
                         &>div:first-child {padding-right: 5px;}
                         &>div:last-child {padding-left: 5px;}
                     }
-                    .form-hotel-checkout {cursor: pointer; background:#fff; color:#6a6a6a; padding:10px 8px; @include border-radius($border-radius-default); border:$border-default; font-weight:600;
-                        &:before, &:after {@include clearfix();}
-                        small {display:block; font-weight:normal;}
-                        .date {float:left; font-size:42px; width:60px; line-height: 42px;}
-                        .month {display:block; font-size:17px; line-height: 26px;}
-                        .year {display:block; font-size:17px; line-height: 10px;}
-                        .date-hotel {font-size: 18px; line-height: 25px; font-weight: 700;}
-                    }
-                    .form-hotel-checkin {cursor: pointer; margin-bottom: 10px; text-align: center; background:#fff; color:#6a6a6a; padding:10px 8px; @include border-radius($border-radius-default); border:$border-default; font-weight:600;
+                    .form-hotel-checkout, .form-hotel-checkin {cursor: pointer; background:#fff; color:#6a6a6a; padding:10px 8px; @include border-radius($border-radius-default); border:$border-default; font-weight:600;
                         &:before, &:after {@include clearfix();}
                         small {display:block; font-weight:normal;}
                         .date {float:left; font-size:42px; width:60px; line-height: 42px;}
@@ -151,11 +143,11 @@ file : /Assets/travorama20/css/_page_index.scss
                             color: #fff;
                         }
                     }
-                    .form-group.hotel-room, .form-group.hotel-visitor {
+                    .form-group.hotel-room-night {
                         &>div:first-child {padding-right: 5px;}
                         &>div:last-child {padding-left: 5px;}
                         //
-                        .form-hotel-night, .form-hotel-visitor {background:#fff; padding: 10px 8px; color:#6a6a6a; @include border-radius($border-radius-default); border:$border-default; position:relative; height:50px;
+                        .form-hotel-night {background:#fff; padding: 8px; color:#6a6a6a; @include border-radius($border-radius-default); border:$border-default; position:relative; height:50px;
                             small {font-size:10px; line-height:0;}
                             /*.visitor-input {width:50px; position:absolute; top:25px; right:5px; border:0; text-align:right; font-size:30px; padding:0; line-height:0; margin:0; letter-spacing:0; font-weight:600;}*/
                             /*input {width:50px; position:absolute; right:5px; border:0; text-align:right; font-size:30px; padding:0; line-height:0; margin:0; letter-spacing:0; font-weight:600; height: 30px; background: transparent;}*/
@@ -186,9 +178,48 @@ file : /Assets/travorama20/css/_page_index.scss
                         .form-hotel-room {@extend .form-hotel-night;}    
                         .option {display:none; z-index:3; width:100%; text-align:center; padding:0; position:absolute;}
                     }
+                    .form-group.hotel-detail {
+                        .col-xs-12.white-txt {
+                            margin: 15px 0 10px;
+                            &:after {
+                                height: 1px;
+                                background: #fff;
+                                content: '';
+                                display: inline-block;
+                                width: 55%;
+                                float: right;
+                                margin-top: 10px;
+                            }
+                        }
+                        .total {
+                            font-size: 42px;
+                            line-height: 28px;
+                        }
+                        .total-adult {
+                            border-right: 1px solid;
+                            padding-right: 12px;
+                        }
+                        .total-child {
+                            padding-left: 12px;
+                        }
+                    }
                     // hotel submit
                     input[type="submit"] {padding:10px 0; height:auto; font-size:14px;}
-
+                    
+                    /*Custom Dropdown*/
+                    .dropdown-container {
+                        .form-control { cursor: pointer;
+                            &.form-hotel-night, &.select-age {
+                                .option {position:absolute; top:100%; left:0; display:none; width:100%; z-index:2; font-size:12px; border: none;
+                                    &>span {display:block; color:#000; padding:10px; background:#ddd; cursor:pointer; line-height: 10px;
+                                        &+span {border-top:$border-default;}
+                                        &:hover {background:$color-main-blue; color:#fff;}
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    
                     /*Hotel Age Childern*/
                     .form-group.hotel-age-children {
                         .btn-age {
@@ -237,12 +268,6 @@ file : /Assets/travorama20/css/_page_index.scss
                                     margin-left: 12px;
                                     line-height: 12px;
                                     color: #999;
-                                }
-                                .option {position:absolute; top:100%; left:0; display:none; width:100%; z-index:2; font-size:12px; border: none; padding: 0 6px;
-                                    &>span {display:block; color:#000; padding:10px; background:#ddd; cursor:pointer; line-height: 10px;
-                                        &+span {border-top:$border-default;}
-                                        &:hover {background:$color-main-blue; color:#fff;}
-                                    }
                                 }
                             }
                         }
@@ -447,5 +472,61 @@ file : /Assets/travorama20/css/_page_index.scss
     .search-hotel {
         width: 600px; 
         .location-body .location-recommend .tab-header nav {width: 100%;}
+    }
+    
+    .form-child-age {
+        display: none;
+        width: 600px;
+        height: 400px;
+        display: block;
+        min-height: 520px;
+        background: rgba(0,0,0,0.85);
+        position: absolute;
+        top: 0px;
+        left: 325px;
+        z-index: 3;
+        padding: 30px;
+        overflow-y: auto;
+        input[name='FormAgeSubmit'] {
+            padding: 10px 0;
+            font-size: 14px;
+            height: auto;
+        }
+        .form-control {cursor: pointer;
+            &.adult, &.child, &.select-age {
+                .option {
+                    left: 0;
+                    top: 48px;
+                }
+            }
+        }
+        .form-group.hotel-visitor {
+            &>div {padding-right: 5px;
+                &:last-child {padding-right: 0;}
+            }
+            .form-hotel-visitor {background:#fff; padding: 8px 6px; color:#6a6a6a; @include border-radius($border-radius-default); border:$border-default; position:relative; height:50px;
+                .input-hotel {
+                    font-size: 26px;
+                    font-weight: 600;
+                    line-height: 36px;
+                    text-align: right;
+                }            
+            }
+            &.col-4 {padding-right: 50px;}
+        }
+        .fc-title {margin-bottom: 10px;}
+        .fc-wrapper {
+            padding: 0;
+            list-style: none;
+            margin: 0;
+            li {
+                border-bottom: 1px solid #555;
+                margin-bottom: 20px;
+                &:last-child {
+                    border-bottom: none;
+                    margin-bottom: 0;
+                }
+            }
+        }   
     }
 }

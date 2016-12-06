@@ -2,32 +2,36 @@
     Layout = "/Views/Shared/mobile/_Layout.cshtml";
     ViewBag.Title = "Enjoy Your Every Moment";
     ViewBag.BodyClass = "page page-home";
-    ViewBag.AngularController = "HomePageController";
+    ViewBag.AngularController = "homeController";
     ViewBag.CurrentPage = "home";
     ViewBag.SiteHeader = "mobile-home-page";
 }
 
 @section AdditionalCSS{
-    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/jquery.slick/1.5.9/slick.css" />
+    <link rel="stylesheet" type="text/css" href="/Assets/vendor/slick/slick.css" />
     <link href="/Assets/css/jquery-ui.min.css" rel="stylesheet" />
 }
 
 @section AdditionalJS {
-    <script src="/Assets/js/angular.min.js"></script>
+    @*<script src="/Assets/js/angular.min.js"></script>
     <script src="/Assets/js/angular-animate.min.js"></script>
-    <script src="/Assets/js/angular-route.min.js"></script>
+        <script src="/Assets/js/angular-route.min.js"></script>*@
     <script src="/Config/JsConfig.js"></script>
     <!-- jquery datepicker -->
     <script src="/Assets/js/jquery-ui.min.js"></script>
     <script type="text/javascript" src="/Assets/js/jquery.ui.datepicker-id.js"></script>
     <script src="/Scripts/bootstrap.min.js"></script>
-    <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.slick/1.5.9/slick.min.js"></script>
+    <script type="text/javascript" src="/Assets/vendor/slick/slick.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery.ui.touch-punch/0.2.3/jquery.ui.touch-punch.min.js"></script>
 }
 
 @section PageJS {
     <script>
         //Banner Slider
+        @*var indexPageDestination = '@ViewBag.DestinationName' || '';
+        var indexPageDestinationsCode = '@ViewBag.DestinationCode' || '';
+        var topDestinations = @Html.Raw(ViewBag.LocationList);
+        var departureDate = '@(DateTime.Now.AddDays(1).ToString("ddMMyy"))';*@
         $('.carousel-inner').slick({
             autoplay: true,
             autoplaySpeed: 2500,
@@ -36,7 +40,20 @@
             nextArrow: '<button type="button" class="slick-next hidden">Next</button>'
         });
     </script>
-    <script src="/Assets/mobile/js/HomeController.js"></script>
+    @*<script src="/Assets/mobile/js/HomeController.js"></script>*@
+    <script src="/Assets/travorama20/angularDirectory/search/hotelSearch.service.js"></script>
+    <script src="/Assets/Travorama20/js/homeController.js"></script>
+    <script>
+        jQuery(document).ready(function () {
+            $('.form__visitor').hide();
+            $('select[name="roomclass"]').click(function() {
+                var val = $(this).val();
+                if (val != null) {
+                    $('.form__visitor').toggle();
+                }
+            });
+        })
+    </script>
 }
 
 <div class="page-loading form-container" ng-class="{'page-loaded' : PageConfig.Loaded}">
@@ -213,6 +230,7 @@
             </div>
         </section>
     </div><!-- .overlay--datepicker-->
+    
     <!-- overlay airport selector -->
     <div class="overlay overlay--theme--blue overlay--airport-select" ng-class="{'active' : (PageConfig.ActiveOverlay == 'airport-select')}">
         <header class="overlay__header">
@@ -391,38 +409,46 @@
         <section class="overlay__content">
 
             <div class="autocomplete-input">
-                <input type="text" class="form-control" name="name" value="" placeholder="Masukkan kota/ lokasi hotel tujuan" ng-model="FlightSearchForm.AutoComplete.Keyword" ng-change="FlightSearchForm.AutoComplete.GetAirport()" />
+                <input type="text" class="form-control" name="name" value="" placeholder="Masukkan Kota/Lokasi Hotel Tujuan" ng-model="HotelSearchForm.AutoComplete.Keyword" ng-change="HotelSearchForm.AutoComplete.GetLocation()" />
             </div><!-- .autocomplete-input -->
-
-            <div class="autocomplete-preload" ng-show="FlightSearchForm.AutoComplete.Keyword.length < FlightSearchForm.AutoComplete.MinLength">
-                <div class="list__header">
-                    <h4>POPULAR DESTINATION</h4>
-                </div>
+            @*ng-model="hotelSearch.locationDisplay" placeholder="Masukkan kota/ lokasi hotel tujuan"*@
+            <div class="autocomplete-preload">
                 <ul class="result">
-                    <li class="hotel" ng-repeat="result in PageConfig.PopularDestination.Popular">
-                        <a class="hotel__link"></a>
-                        <span class="hotel__code">CGK</span>
-                        <div class="hotel__detail">
-                            <p class="hotel__location">Jakarta, Indonesia</p>
-                            <p class="result">999 Hotel</p>
+                    <li class="hotel" ng-repeat="location in hotelSearch.hotelAutocomplete track by $index" ng-click="selectLocation(location); PageConfig.SetOverlay();">
+                        <a class="hotel__link clearfix">
+                            <div class="hotel__location bold-txt">{{location.name}}</div>
+                            <div class="col-half">
+                                <div class="hotel__detail">{{location.type}}</div>
+                            </div>
+                            <div class="col-half">
+                                <div class="result blue-txt semibold-txt pull-right">{{location.numOfHotels}} Hotel</div>
                         </div>
+                        </a>
                     </li>
-                </ul>
-                <div class="list__header">
-                    <h4>INDONESIA</h4>
+                    @*<li class="hotel">
+                        <a class="hotel__link clearfix">
+                            <div class="hotel__location bold-txt">Jakarta, Indonesia</div>
+                            <div class="col-half">
+                                <div class="hotel__detail">Kota</div>
                 </div>
-                <ul class="result">
-                    <li class="hotel" ng-repeat="result in PageConfig.PopularDestination.Indonesia">
-                        <a class="hotel__link"></a>
-                        <span class="hotel__code">CGK</span>
-                        <div class="hotel__detail">
-                            <p class="hotel__location">Jakarta, Indonesia</p>
-                            <p class="result">999 Hotel</p>
+                            <div class="col-half">
+                                <div class="result blue-txt semibold-txt pull-right">999 Hotel</div>
                         </div>
+                        </a>
                     </li>
+                    <li class="hotel">
+                        <a class="hotel__link clearfix">
+                            <div class="hotel__location bold-txt">Jakarta, Indonesia</div>
+                            <div class="col-half">
+                                <div class="hotel__detail">Kota</div>
+                            </div>
+                            <div class="col-half">
+                                <div class="result blue-txt semibold-txt pull-right">999 Hotel</div>
+                            </div>
+                        </a>
+                    </li>*@
                 </ul>
             </div><!-- .autocomplete-preload -->
-
             @*<div class="autocomplete-loading">
                 <h4 class="text-center text-loading">Mencari Bandara</h4>
             </div>
@@ -448,7 +474,7 @@
             <div class="overlay-selector">
                 <div class="overlay-selector__body">
                     <div class="calendar-container">
-                        <div class="ui-datepicker return-date" id="returnDate"></div>
+                        <div class="ui-datepicker return-date" id="checkInDate"></div>
                     </div>
                 </div>
             </div>

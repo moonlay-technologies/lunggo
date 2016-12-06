@@ -312,7 +312,7 @@
                                 <div class="star star-5" ng-show="hotelstar() == 'star star-5'"></div>
                                 <div class="rh-location">
                                     @ToTitleCase(rsv.HotelDetail.Address) @ToTitleCase(rsv.HotelDetail.ZoneName),
-                                    @ToTitleCase(rsv.HotelDetail.DestinationName), @rsv.HotelDetail.PostalCode, @ToTitleCase(rsv.HotelDetail.CountryName)
+                                    @ToTitleCase(rsv.HotelDetail.DestinationName) @rsv.HotelDetail.PostalCode, @ToTitleCase(rsv.HotelDetail.CountryName)
                                 </div>
                                 <div class="rh-detail">
                                     <div class="wb-container clearfix">
@@ -366,9 +366,9 @@
                                                 <div class="wb-container clearfix">
                                                     <div class="wb-left">Tamu per Kamar</div>
                                                     <div class="wb-mid">:</div>
-                                                    <div class="wb-right bold-txt">@rate.AdultCount Dewasa, @if (rate.ChildCount > 0)
+                                                    <div class="wb-right bold-txt">@rate.AdultCount Dewasa @if (rate.ChildCount > 0)
                                                     {
-                                                        <span>@rate.ChildCount Anak </span>
+                                                        <span>, @rate.ChildCount Anak </span>
                                                         <span>
                                                             (
                                                             @for (var a = 0; a < rate.ChildrenAges.Count; a++)
@@ -397,7 +397,7 @@
                                                     <div class="wb-container clearfix">
                                                         <div class="wb-left">Ketentuan</div>
                                                         <div class="wb-mid">:</div>
-                                                        <div class="wb-right bold-txt">@String.Join(". ", rate.TermAndCondition)</div>
+                                                        <div class="wb-right bold-txt">@ToTitleCase(String.Join(". ", rate.TermAndCondition))</div>
                                                     </div>
                                                 }
                                                 <div class="wb-container clearfix">
@@ -407,8 +407,7 @@
                                                         @foreach (var policy in rate.Cancellation)
                                                         {
                                                             <div>
-                                                                @pol. Biaya pembatalan: Rp @(policy.Fee.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID")))<br />
-                                                                Mulai berlaku: @policy.StartTime.ToString("D", CultureInfo.CreateSpecificCulture("id-ID")) <br />
+                                                                @pol. Pembatalan setelah tanggal @policy.StartTime.ToString("D", CultureInfo.CreateSpecificCulture("id-ID")) akan dikenakan biaya sebesar Rp @(policy.SingleFee.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))) per kamar <br />
                                                             </div>
                                                             pol++;
                                                         }

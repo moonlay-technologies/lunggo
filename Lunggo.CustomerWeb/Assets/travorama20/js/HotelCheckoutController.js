@@ -88,7 +88,7 @@ app.controller('hotelcheckoutController', [
             { name: 'Ny.', value: 'Mistress' },
             { name: 'Nn.', value: 'Miss' }
         ];
-       
+        $scope.hotelimg = hotelImg;
         $scope.language = langCode;
         $interval(function () {
             var nowTime = new Date();
@@ -254,7 +254,7 @@ app.controller('hotelcheckoutController', [
                     $scope.form.incompleteContactEmail = false;
                 }
 
-                if (!$scope.CheckTitle($scope.guestInfo.title)) {
+                if (!$scope.CheckTitle($scope.guestInfo)) {
                     $scope.form.incompleGuestTitle = true;
                 } else {
                     $scope.form.incompleteGuestTitle = false;

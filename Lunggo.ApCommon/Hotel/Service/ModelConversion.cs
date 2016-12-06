@@ -80,29 +80,29 @@ namespace Lunggo.ApCommon.Hotel.Service
             if (hotelDetail == null)
                 return null;
             var baseUrl = ConfigManager.GetInstance().GetConfigValue("hotel", "standardSizeImage");
-            var hotel = new HotelDetailForDisplay
-            {
-                HotelCode = hotelDetail.HotelCode,
-                HotelName = hotelDetail.HotelName,
-                Address = hotelDetail.Address,
-                City = hotelDetail.City,
-                CountryName = GetCountryNameFromDict(hotelDetail.CountryCode).Name,
-                DestinationName = GetDestinationNameFromDict(hotelDetail.DestinationCode).Name,
-                ZoneName = GetZoneNameFromDict(hotelDetail.ZoneCode),
-                StarRating = hotelDetail.StarCode != 0
-                    ? hotelDetail.StarCode
-                    : (hotelDetail.StarRating != null
-                        ? Convert.ToInt32(hotelDetail.StarRating.Substring(0, 1))
-                        : 0),
-                //ChainName = GetHotelChainDesc(hotelDetail.Chain),
-                //AccomodationName = GetHotelAccomodationDescId(hotelDetail.AccomodationType),
-                MainImage =
-                    hotelDetail.ImageUrl == null
-                        ? null
+                var hotel = new HotelDetailForDisplay
+                {
+                    HotelCode = hotelDetail.HotelCode,
+                    HotelName = hotelDetail.HotelName,
+                    Address = hotelDetail.Address,
+                    City = hotelDetail.City,
+                    CountryName = GetCountryNameFromDict(hotelDetail.CountryCode).Name,
+                    DestinationName = GetDestinationNameFromDict(hotelDetail.DestinationCode).Name,
+                    ZoneName = GetZoneNameFromDict(hotelDetail.DestinationCode + "-" + hotelDetail.ZoneCode),
+                    StarRating = hotelDetail.StarCode != 0
+                        ? hotelDetail.StarCode
+                        : (hotelDetail.StarRating != null
+                            ? Convert.ToInt32(hotelDetail.StarRating.Substring(0, 1))
+                            : 0),
+                    //ChainName = GetHotelChainDesc(hotelDetail.Chain),
+                    //AccomodationName = GetHotelAccomodationDescId(hotelDetail.AccomodationType),
+                    MainImage =
+                        hotelDetail.ImageUrl == null
+                            ? null
                         : hotelDetail.ImageUrl == null ? null : string.Concat(baseUrl, hotelDetail.ImageUrl.Where(x => x.Type == "GEN").Select(x => x.Path).FirstOrDefault()),
-                OriginalFare = hotelDetail.OriginalFare,
+                    OriginalFare = hotelDetail.OriginalFare,
                 OriginalTotalFare = hotelDetail.OriginalTotalFare,
-                NetFare = hotelDetail.NetFare,
+                    NetFare = hotelDetail.NetFare,
                 NetTotalFare = hotelDetail.NetTotalFare,
                 IsWifiAccessAvailable = hotelDetail.Facilities != null &&
                         ((hotelDetail.Facilities != null || hotelDetail.Facilities.Count != 0) &&
@@ -112,17 +112,18 @@ namespace Lunggo.ApCommon.Hotel.Service
                     hotelDetail.Facilities.Any(f => (f.FacilityGroupCode == 71 && f.FacilityCode == 200)
                     || (f.FacilityGroupCode == 75 && f.FacilityCode == 840)
                     || (f.FacilityGroupCode == 75 && f.FacilityCode == 845))),
-                Rooms = ConvertToHotelRoomForDisplay(hotelDetail.Rooms),
-                CheckInDate = hotelDetail.CheckInDate,
-                CheckOutDate = hotelDetail.CheckOutDate,
-                NightCount = hotelDetail.NightCount,
-                SpecialRequest = hotelDetail.SpecialRequest,
-                SupplierVat = hotelDetail.SupplierVat,
-                SupplierName = hotelDetail.SupplierName,
-                BookingReference = hotelDetail.BookingReference,
-                ClientReference = hotelDetail.ClientReference,
-                PhonesNumbers = hotelDetail.PhonesNumbers
-            };
+                    Rooms = ConvertToHotelRoomForDisplay(hotelDetail.Rooms),
+                    CheckInDate = hotelDetail.CheckInDate,
+                    CheckOutDate = hotelDetail.CheckOutDate,
+                    NightCount = hotelDetail.NightCount,
+                    SpecialRequest = hotelDetail.SpecialRequest,
+                    SupplierVat = hotelDetail.SupplierVat,
+                    SupplierName = hotelDetail.SupplierName,
+                    BookingReference = hotelDetail.BookingReference,
+                    ClientReference = hotelDetail.ClientReference,
+                    PhonesNumbers = hotelDetail.PhonesNumbers,
+                    PostalCode = hotelDetail.PostalCode
+                };
             return hotel;
         }
 
@@ -142,7 +143,8 @@ namespace Lunggo.ApCommon.Hotel.Service
                     City = hotelDetail.City,
                     CountryName = GetCountryNameFromDict(hotelDetail.CountryCode).Name,
                     DestinationName = GetDestinationNameFromDict(hotelDetail.DestinationCode).Name,
-                    ZoneName = GetZoneNameFromDict(hotelDetail.DestinationCode + "-" + hotelDetail.ZoneCode),
+                    ZoneName = hotelDetail.ZoneCode.Split('-').Length == 2 ?
+                    GetZoneNameFromDict(hotelDetail.ZoneCode) : GetZoneNameFromDict(hotelDetail.DestinationCode + "-" + hotelDetail.ZoneCode),
                     StarRating = hotelDetail.StarCode != 0
                         ? hotelDetail.StarCode
                         : (hotelDetail.StarRating != null

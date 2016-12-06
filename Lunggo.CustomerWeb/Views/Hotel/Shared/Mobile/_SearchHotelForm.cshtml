@@ -1,37 +1,107 @@
-﻿<form class="hotel-form" name="hotel-form" ng-submit="FlightSearchForm.Submit()" novalidate>
+﻿<form class="hotel-form" name="hotel-form" novalidate ng-class="{'active' : (PageConfig.ActiveOverlay == 'hotel-form')}">
     <div class="th-form">
+        <div class="top-wrap">
         <div class="form-group form__hotel">
-            <div class="field-container">
-                <p class="form-control form-hotel" ng-click="PageConfig.SetOverlay('hotel-select')">Tujuan <span class="hotel-placeholder placeholder">Kota, Wilayah atau Nama Hotel</span></p>
+            <div class="field-container" ng-click="PageConfig.SetOverlay('hotel-select')">
+                @*<p class="form-control form-hotel" ng-click="PageConfig.SetOverlay('hotel-select')">Tujuan <span class="hotel-placeholder">Kota, Wilayah atau Nama Hotel</span></p>*@
+                <p class="form-control form-hotel">
+                    Tujuan
+                    <span class="hotel-placeholder" placeholder="Kota, Wilayah atau Nama Hotel">{{hotelSearch.locationDisplay}}</span>
+                </p>
+                @*| filter:placeholderFilter(hotelSearch.locationDisplay)*@
             </div>
         </div>
         <div class="form-group form__date">
             <div class="field-container">
-                <p class="form-control form-date" ng-click="DatePicker.SetOption({Target : 'departure'}, ' '); PageConfig.SetOverlay('datepicker-hotel')">
-                    Tanggal Masuk <span class="date-placeholder placeholder">{{hotel.checkinDate | date : 'EEE, dd MMM yyyy'}}</span>
+                <p class="form-control form-date" ng-click="DatePicker.SetOption({Target : 'checkin'}, ' ', 'hotel'); PageConfig.SetOverlay('datepicker-hotel')">
+                        Tanggal Masuk <span class="date-placeholder placeholder">{{hotelSearch.checkinDateDisplay}}</span>
                 </p>
             </div>
         </div>
-        <div class="form-group form__time">
+            <div class="form-group form__time clearfix">
             <div class="field-container clearfix">
-                <p class="form-control form-time"><span class="duration-title">Durasi</span><span class="placeholder">malam</span><input class="time-placeholder" type="text" name="hotel-night" value="1"></p>
+                    <div class="col-half">
+                        <p class="form-control form-time">Durasi</p>
             </div>
-            <div class="checkout-date placeholder">Tanggal Keluar: Rab, 5 Okt 2016</div>
+                <div class="col-half">
+                    <select class="form-control" name="nightclass" ng-model="hotelSearch.nightCount">
+                        <option ng-selected="{{number == hotelSearch.nightCount}}" ng-repeat="number in hotelSearch.nightrange" value="{{number}}">{{number}} Malam</option>
+                    </select>
+                </div>
+                </div>
+            <div class="checkout-date placeholder">Tanggal Keluar: {{hotelSearch.checkoutDateDisplay}}</div>
+        </div>
+            <div class="form-group form__room">
+                <div class="field-container clearfix">
+                    <div class="col-half">
+                        <p class="form-control form-room">Jumlah Kamar</p>
+                    </div>
+                    <div class="col-half">
+                        <select class="form-control" name="roomclass" ng-model="hotelSearch.roomCount">
+                            <option ng-repeat="number in hotelSearch.roomrange" value="{{number}}">{{number}} Kamar</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="form-group form__visitor clearfix">
-            <div class="field-container form-v-adult col-half">
-                <div class="field-wrapper">
-                    <p class="form-control form-adult clearfix" ng-click="PageConfig.SetOverlay('visitor-hotel')"><input class="col-4" type="text" name="hotel-visitor" value="2"><span class="vt-title col-6">Dewasa</span></p>
+            <div class="age-child clearfix">
+            <div class="mid-wrap clearfix">
+                    <div class="mid-title col-2">
+                        Kamar 1:
+                    </div>
+                    <div class="field-container form-v-adult col-4">
+                    <div class="field-wrapper form-adult">
+                        <select class="form-control" name="adultclass" ng-model="hotelSearch.adultCount">
+                                <option ng-repeat="number in hotelSearch.adultrange" value="{{number}}">{{number}} Dewasa</option>
+                        </select>
+                    </div>
+                </div>
+                    <div class="field-container form-v-child col-4">
+                    <div class="field-wrapper form-child">
+                        <select class="form-control" name="childclass" ng-model="hotelSearch.childCount">
+                            <option ng-repeat="number in hotelSearch.childrange" value="{{number}}">{{number}} Anak</option>
+                        </select>
+                    </div>
                 </div>
             </div>
-            <div class="field-container form-v-child col-half">
-                <div class="field-wrapper">
-                    <p class="form-control form-child clearfix" ng-click="PageConfig.SetOverlay('visitor-hotel')"><input class="col-4" type="text" name="hotel-visitor" value="1"><span class="vt-title col-6">Anak</span></p>
+                <div id="ac-1" class="ac-list clearfix" ng-show ="hotelSearch.childCount >= 1 && hotelSearch.childCount <= 4">
+                    <div class="col-6 blue-txt semibold-txt right-txt">Anak 1 Usia :</div>
+                    <div class="col-4">
+                        <select class="form-control" name="agelist" ng-model="hotelSearch.childrenAges[0]">
+                            <option ng-repeat="age in hotelSearch.childagerange" value="{{age}}">{{age}} Tahun</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="ac-list clearfix" ng-show="hotelSearch.childCount >= 2 && hotelSearch.childCount <= 4">
+                    <div class="col-6 blue-txt semibold-txt right-txt">Anak 2 Usia :</div>
+                    <div class="col-4">
+                        <select class="form-control" name="agelist" ng-model="hotelSearch.childrenAges[1]">
+                            <option ng-repeat="age in hotelSearch.childagerange" value="{{age}}">{{age}} Tahun</option>
+                        </select>
+                    </div>
+                </div>
+                <div id="ac-3" class="ac-list clearfix" ng-show="hotelSearch.childCount >= 3 && hotelSearch.childCount <= 4">
+                    <div class="col-6 blue-txt semibold-txt right-txt">Anak 3 Usia :</div>
+                    <div class="col-4">
+                        <select class="form-control" name="agelist" ng-model="hotelSearch.childrenAges[2]">
+                            <option ng-repeat="age in hotelSearch.childagerange" value="{{age}}">{{age}} Tahun</option>
+                        </select>
+                    </div>
+                </div>
+                <div id="ac-4" class="ac-list clearfix" ng-show="hotelSearch.childCount == 4">
+                    <div class="col-6 blue-txt semibold-txt right-txt">Anak 4 Usia :</div>
+                    <div class="col-4">
+                        <select class="form-control" name="agelist" ng-model="hotelSearch.childrenAges[3]">
+                            <option ng-repeat="age in hotelSearch.childagerange" value="{{age}}">{{age}} Tahun</option>
+                        </select>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="form-group form__submit">
-        <button class="btn btn-yellow btn-block btn-lg btnSubmit">CARI HOTEL</button>
+    <div class="bottom-wrap form-group form__submit">
+        <button class="btn btn-yellow btn-block btn-lg btnSubmit" ng-click="hotel.searchHotel()">CARI HOTEL</button>
     </div>
 </form>
+

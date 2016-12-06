@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Web;
+using Lunggo.ApCommon.Hotel.Constant;
 using Lunggo.ApCommon.Hotel.Model;
 using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Sdk.auto.model;
 
@@ -158,16 +159,9 @@ namespace Lunggo.ApCommon.Hotel.Service
             public string Code;
         }
 
-        public enum AutocompleteType
-        {
-            Destination = 1,
-            Zone = 2,
-            Area = 3,
-            Hotel = 4
-        }
-
         //FOR AUTOCOMPLETE
         public Dictionary<long, Autocomplete> _Autocompletes; 
+        public List<HotelAutoComplete> AutoCompletes = new List<HotelAutoComplete>();
 
         public static Dictionary<string, string> HotelSegmentDictId;
         public static Dictionary<string, string> HotelSegmentDictEng;
@@ -256,6 +250,7 @@ namespace Lunggo.ApCommon.Hotel.Service
             _hotelChainFilePath = Path.Combine(_configPath, HotelchainFileName);
             _hotelCategoryFilePath = Path.Combine(_configPath, HotelCategoryFileName);
             _hotelFacilitiesFilter = Path.Combine(_configPath, HotelFacilityFilterGroupFileName);	
+            AutoCompletes = GetAutocompleteFromBlob();
             PopulateHotelSegmentDict(_hotelSegmentFilePath);
 
             PopulateHotelAccomodationDict(_hotelAccomodationFilePath);
@@ -284,11 +279,11 @@ namespace Lunggo.ApCommon.Hotel.Service
             PopulateHotelDestinationDict(Countries);
             PopulateHotelZoneDict(Countries);
             //PopulateHotelCodeAndZoneDict(Countries);
-            PopulateAutocomplete();
+            //PopulateAutocomplete();
             //PopulateHotel();
         }
 
-        private static void PopulateAutocomplete()
+        public static void PopulateAutocomplete()
         {
             GetInstance()._Autocompletes = new Dictionary<long, Autocomplete>();
             long index = 1;
@@ -895,13 +890,17 @@ namespace Lunggo.ApCommon.Hotel.Service
         //    }
         //}
         //GET METHOD REGARDING AUTOCOMPLETE
-        public Autocomplete GetLocationById(long id)
+        public HotelAutoComplete GetLocationById(long id)
         {
-            var value = new Autocomplete();
-            _Autocompletes.TryGetValue(id, out value);
-            return value;
+            var value = AutoCompletes.First(c => c.Id == id);
+            if (value != null)
+            {
+                return value;
             }
-                
+
+            return new HotelAutoComplete();
+        }
+
         //GET METHODS REGARDING SEGMENT
         public string GetHotelSegmentId(string code)
         {

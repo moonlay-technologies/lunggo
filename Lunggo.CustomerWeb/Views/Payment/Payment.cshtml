@@ -42,26 +42,26 @@
                     : "http://photos.hotelbeds.com/giata/" + firstOrDefault.Path;
             }
             var rooms = rsv.HotelDetail.Rooms;
-            rsvNo = Model.RsvNo;
-            foreach (var room in rooms)
+        rsvNo = Model.RsvNo;
+        foreach (var room in rooms)
+        {
+            var roomName = HotelService.GetInstance().GetHotelRoom(room.RoomCode).RoomDescId;
+            var sum = 0;
+            foreach (var rate in room.Rates)
             {
-                var roomName = HotelService.GetInstance().GetHotelRoom(room.RoomCode).RoomDescId;
-                var sum = 0;
-                foreach (var rate in room.Rates)
-                {
-                    sum += rate.RoomCount;
+                sum += rate.RoomCount;
                     totalpax += (rate.AdultCount + rate.ChildCount) * rate.RoomCount;
                     totalAdult += rate.AdultCount;
                     totalChild += rate.ChildCount;
                     if (rate.ChildCount <= 0)
                     {
                         continue;
-                    }
+            }
                     listAges.AddRange(rate.ChildrenAges);
                 }
-                orderedRooms.Add(new Tuple<string, int>(roomName, sum)); ;
-            }
-        }      
+            orderedRooms.Add(new Tuple<string, int>(roomName, sum)); ;
+        }
+    }
     }
     catch
     {
@@ -826,9 +826,9 @@
                                                 <div class="wb-container clearfix">
                                                     <div class="wb-left">Jumlah Tamu</div>
                                                     <div class="wb-mid">:</div>
-                                                    <div class="wb-right bold-txt">@totalAdult Dewasa, @if (totalChild > 0)
+                                                    <div class="wb-right bold-txt">@totalAdult Dewasa @if (totalChild > 0)
                                                     {
-                                                        <span>@totalChild Anak </span>
+                                                        <span>, @totalChild Anak </span>
                                                         <span>
                                                             (@for (var a = 0; a < listAges.Count; a++)
                                                             {

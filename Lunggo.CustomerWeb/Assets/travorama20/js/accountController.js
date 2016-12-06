@@ -7,6 +7,16 @@ app.controller('siteHeaderController', [
         $scope.trial = 0;
         $scope.returnUrl = document.referrer;
         $scope.authProfile = {}
+        //$scope.page = page || null? 'Flight' : page;
+
+        $scope.windowlocation = window.location.pathname;
+        $scope.whatpage = function() {
+            var page = $scope.windowlocation.split('/')[2];
+            if (page == 'Flight') //|| $scope.page == 'Flight'
+                return 1;
+            else if (page == 'Hotel') //|| $scope.page == 'Hotel'
+                return 2;
+        }
         $scope.ProfileConfig = {
             getProfile: function () {
                 if ($scope.trial > 3) {

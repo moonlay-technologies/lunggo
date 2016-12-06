@@ -29,22 +29,39 @@ namespace Lunggo.CustomerWeb.Controllers
             }
 
         }
+        //public ActionResult Search()
+        //{
+        //    return View();
+        //    }
+        //public ActionResult DetailHotel()
+        //    {
+        //    return View();
+        //    }
+        //public ActionResult Checkout()
+        //{
+        //    //try
+        //    //{
+        //    //    NameValueCollection query = HttpUtility.ParseQueryString(searchParam);
+        //    //    HotelSearchApiRequest model = new HotelSearchApiRequest(query);
+        //    //    searchParam = model.SearchParam;
+        //    //    var searchParamObject = model.SearchParamObject;
 
+        //    //    return View(new { searchId, hotelCd, searchParam, searchParamObject });
+        //    //}
+        //    //catch (Exception ex)
+        //    //{
+        //    //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest, ex.Message);
+        //    //}
+        //    return View();
+        //}
         public ActionResult DetailHotel(string searchId, int hotelCd, string searchParam)
         {
-            try
+            return View(new HotelDetailModel.HotelDetail
             {
-                NameValueCollection query = HttpUtility.ParseQueryString(searchParam);
-                HotelSearchApiRequest model = new HotelSearchApiRequest(query);
-                searchParam = model.SearchParam;
-                var searchParamObject = model.SearchParamObject;
-
-                return View(new { searchId, hotelCd, searchParam, searchParamObject });
-            }
-            catch (Exception ex)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, ex.Message);
-            }
+                HotelCode = hotelCd,
+                SearchId = searchId,
+                SearchParam = searchParam
+            });
         }
 
         //public ActionResult Checkout()
@@ -71,7 +88,7 @@ namespace Lunggo.CustomerWeb.Controllers
                     ViewBag.Message = "BookExpired";
                     return View();
                 }
-           
+
                 try
                 {
                     var hotelService = HotelService.GetInstance();
@@ -120,6 +137,10 @@ namespace Lunggo.CustomerWeb.Controllers
         //    return View(new { searchId, hotelCd });
         //}
 
+        public ActionResult Confirmation()
+        {
+            return View();
+        }
         public ActionResult Thankyou()
         {
             return View();

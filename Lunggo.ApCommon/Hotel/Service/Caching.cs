@@ -26,9 +26,9 @@ namespace Lunggo.ApCommon.Hotel.Service
             {
                 try
                 {
-            redisDb.StringSet(redisKey, redisValue);
+                    redisDb.StringSet(redisKey, redisValue);
                     return;
-        }
+                }       
                 catch
                 {
 
@@ -75,7 +75,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                 {
                     redisDb.StringSet(redisKey, redisValue, TimeSpan.FromMinutes(timeout));
                     return;
-        }
+                }
                 catch
                 {
 
@@ -84,7 +84,7 @@ namespace Lunggo.ApCommon.Hotel.Service
              //, expiry - timeNow
         }
 
-        public void SaveSearchResultToCache(string token, SearchHotelResult searchResult)
+        public void SaveSearchResultintoDatabaseToCache(string token, SearchHotelResult searchResult)
         {
             var redisService = RedisService.GetInstance();
             var redisKey = "HotelSearchResult:" + token;
@@ -97,7 +97,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                 {
                     redisDb.StringSet(redisKey, redisValue, TimeSpan.FromMinutes(timeout));
                     return;
-        }
+                }
                 catch
                 {
 
@@ -117,9 +117,9 @@ namespace Lunggo.ApCommon.Hotel.Service
                 try
                 {
                     cacheObject = redisDb.StringGet(redisKey);
-            var searchResult = cacheObject.DeconvertTo<SearchHotelResult>();
-            return searchResult;
-        }
+                    var searchResult = cacheObject.DeconvertTo<SearchHotelResult>();
+                    return searchResult;
+                }
                 catch
                 {
 
@@ -148,7 +148,7 @@ namespace Lunggo.ApCommon.Hotel.Service
             }
             return DateTime.UtcNow;
         }
-
+        
         public HotelDetailsBase GetSelectedHotelDetailsFromCache(string token)
         {
             var redisService = RedisService.GetInstance();
@@ -201,7 +201,13 @@ namespace Lunggo.ApCommon.Hotel.Service
             var timeToLive = redisDb.KeyTimeToLive(redisKey).GetValueOrDefault();
             var expiryTime = DateTime.UtcNow + timeToLive;
             return expiryTime;
+            //}
+            //catch
+            //{
+            //    return DateTime.UtcNow;
+            //}
         }
+
         public DateTime? GetSearchedHotelDetailsExpiry(string searchId)
         {
             for (var i = 0; i < 3; i++)
@@ -218,7 +224,7 @@ namespace Lunggo.ApCommon.Hotel.Service
             catch
             {
                    
-                }
+            }
             }
                 return null;
             }
