@@ -9,11 +9,10 @@
                     <div class="field-container">
                         <div class="form-control form-date clearfix">
                             <div class="sm-txt col-half grey-txt">Check in</div>
-                            @*<div class="pull-right bold-txt darkgrey-txt">{{hotelSearch.checkinDate.format() | date: 'EEE, dd MMM yyyy'}}</div>*@
                             <div class="col-half">
-                                <span class="date semibold-txt darkgrey-txt">{{hotelSearch.checkinDateDisplay.split(' ')[0]}}</span>
-                                <span class="sm-txt month darkgrey-txt bold-txt">{{hotelSearch.checkinDateDisplay.split(' ')[1].substring(0,3)}}</span>
-                                <span class="sm-txt year darkgrey-txt bold-txt">{{hotelSearch.checkinDateDisplay.split(' ')[2]}}</span>
+                                <span class="date semibold-txt darkgrey-txt">{{changeSearch.checkinDateDisplay.split(' ')[0]}}</span>
+                                <span class="sm-txt month darkgrey-txt bold-txt">{{changeSearch.checkinDateDisplay.split(' ')[1].substring(0,3)}}</span>
+                                <span class="sm-txt year darkgrey-txt bold-txt">{{changeSearch.checkinDateDisplay.split(' ')[2]}}</span>
                             </div>
                             
                         </div>
@@ -24,13 +23,14 @@
                         <div class="form-control form-date">
                             <div class="sm-txt col-half grey-txt">Check out</div>
                             <div class="col-half">
-                                <span class="date semibold-txt darkgrey-txt">{{hotelSearch.checkoutDateDisplay.split(' ')[0]}}</span>
-                                <span class="sm-txt month darkgrey-txt bold-txt">{{hotelSearch.checkoutDateDisplay.split(' ')[1].substring(0,3)}}</span>
-                                <span class="sm-txt year darkgrey-txt bold-txt">{{hotelSearch.checkoutDateDisplay.split(' ')[2]}}</span>
+                                <span class="date semibold-txt darkgrey-txt">{{changeSearch.checkoutDateDisplay.split(' ')[0]}}</span>
+                                <span class="sm-txt month darkgrey-txt bold-txt">{{changeSearch.checkoutDateDisplay.split(' ')[1].substring(0,3)}}</span>
+                                <span class="sm-txt year darkgrey-txt bold-txt">{{changeSearch.checkoutDateDisplay.split(' ')[2]}}</span>
                             </div>
                         </div>
                     </div>
                 </div>
+                
                 <div class="form-group form__night quarter">
                     <div class="field-container">
                         <div class="form-control form-night">

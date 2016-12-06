@@ -162,7 +162,6 @@ app.controller('hotelSearchController', ['$scope', '$log', '$window', '$http', '
         $scope.hotelSearch.searchParamObject = $scope.model.searchParamObject;
         //$scope.hotelSearch.searchParam = $scope.model.searchParam;
         $scope.searchParam = model.searchParam;
-
         $scope.searchHotel();
     }
 
@@ -263,7 +262,7 @@ app.controller('hotelSearchController', ['$scope', '$log', '$window', '$http', '
             "hotelCd=" + hotelCd + "&" +
             "searchParam=" + $scope.searchParam, '_blank');
     }
-
+    
     $scope.changeFilter = function (filterType, value) {
         if (filterType == 'star') {
             if ($scope.filter.stars == null) {

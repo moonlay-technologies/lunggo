@@ -147,7 +147,7 @@
             }
             
         }
-
+        scope.changeSearch = scope.hotelSearch;
         scope.hotelSearch.adultCountMin = 1;
         scope.hotelSearch.adultCountMax = 5;
         scope.hotelSearch.adultrange = [1, 2, 3, 4, 5];
