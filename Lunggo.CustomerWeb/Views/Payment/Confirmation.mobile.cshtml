@@ -554,8 +554,8 @@
                 @Html.Partial("/Views/Hotel/Shared/Mobile/_PriceDetail.cshtml", reservation)
             </div>
         }
-        <div class="col-sm-12">
-            <a href="@Url.Action("Thankyou", "Payment", new { Model.RsvNo })" class="btn btn-yellow" style="width:100%"> SAYA SUDAH BAYAR</a>
+        <div class="form-group">
+            <a href="@Url.Action("Thankyou", "Payment", new { Model.RsvNo })" class="btn btn-yellow form-control" style="width: 100%; height: 40px; font-size: 15px; line-height: 24px;"> SAYA SUDAH BAYAR</a>
         </div>
     </div>
 

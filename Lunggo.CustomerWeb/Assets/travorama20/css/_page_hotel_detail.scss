@@ -191,6 +191,7 @@
     .room {
         padding: 20px 0 15px;
         border-top: 1px solid #ccc;
+        position: relative;
         .total-day {text-align: right;}
         .room-sort {
             font-weight: 700;
@@ -223,8 +224,11 @@
         }
         .room-list {
             margin-top: 15px;
-            border: none;
-            &.active {border: 3px solid #1daee4;}
+            border: 1px solid #ccc;
+            &.active {
+                border: none;
+                box-shadow: 0 4px 12px #337ab7;
+            }
             .room-pic {
                 width: 100%; 
                 height: 133px; 
@@ -240,7 +244,6 @@
             }
             .room-right {
                 padding: 14px 25px;
-                border: 1px solid #ccc;
                 background: #fff;
                 height: 133px;
                 .room-rl { 
@@ -312,8 +315,8 @@
             }
         }
         .hotel-detail {
-            border: 3px solid #1daee4;
-            border-top: none;
+            box-shadow: 0 4px 12px #337ab7;
+            border-top: 1px solid #cccccc;
             background: #fff;
             display: none;
             .col-left-bottom {display:none;}
@@ -412,6 +415,7 @@
                 padding: 15px;
                 border-left: 1px dashed #1daee4;
                 min-height: 212px;
+                position: relative;
                 .hd-right-container {
                     margin: 15px;
                     margin-right: 0;

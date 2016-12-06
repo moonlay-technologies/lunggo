@@ -767,7 +767,10 @@
                                         <div class="widget-content">
                                             <div class="widget-top">
                                                 <div class="wt-top clearfix">
-                                                    <div class="col-left-hotel"><img src="@hotelImg" alt="{{capitalizeFirstLetter(hotelDetails.hotelName)}}" /></div>
+                                                    <div class="col-left-hotel">
+                                                        <div class="img-sm" style="background-image: url(@hotelImg);"></div>
+                                                        @*<img src="@hotelImg" alt="{{capitalizeFirstLetter(hotelDetails.hotelName)}}" />*@
+                                                    </div>
                                                     <div class="col-right-hotel">
                                                         <span class="blue-txt bold-txt">{{capitalizeFirstLetter(hotelDetails.hotelName)}}</span>
                                                         <div class="star" ng-show="hotelstar() == 'star'"></div>
