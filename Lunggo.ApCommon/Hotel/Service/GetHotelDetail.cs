@@ -29,7 +29,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                     ErrorMessages = new List<string> {"SearchID no longer valid"}
                 };
             hotelDetail.Rooms = SetRoomPerRate(hotelDetail.Rooms);
-            hotelDetail.Rooms = FilterRoomByCapacity(hotelDetail.Rooms);
+            //hotelDetail.Rooms = FilterRoomByCapacity(hotelDetail.Rooms);
             if (hotelDetail.Rooms.Count != 0)
             {
                 foreach (var room in hotelDetail.Rooms)
