@@ -257,6 +257,47 @@ jQuery(document).ready(function ($) {
         $('body .form-child-age').hide();
     });
 
+    //Home Page Search Form Hotel
+    $('body #header-flight').click(function () {
+        var link = $(this).find('a').attr('href','#plane');
+        var item = $(this).closest('.site-header').parent();
+
+        item.parent().find('.tab-header').find('.flight').addClass('active');
+        item.parent().find('.tab-header').find('.hotel').removeClass('active');
+        item.parent().find('#plane').addClass('active');
+        item.parent().find('#hotel').removeClass('active');
+
+        if ($(link).attr('href') == '#plane') {
+            link.parent().addClass('active');
+            link.parent().siblings().removeClass('active');
+        }
+    });
+
+    $('body #header-hotel').click(function () {
+        var link = $(this).find('a').attr('href', '#hotel');
+        var item = $(this).closest('.site-header').parent();
+
+        item.parent().find('.tab-header').find('.hotel').addClass('active');
+        item.parent().find('.tab-header').find('.flight').removeClass('active');
+        item.parent().find('#hotel').addClass('active');
+        item.parent().find('#plane').removeClass('active');
+
+        if ($(link).attr('href') == '#hotel') {
+            link.parent().addClass('active');
+            link.parent().siblings().removeClass('active');
+        }
+    });
+
+    $('body .tab-header li').click(function () {
+        if ($(this).hasClass('flight')) {
+            $(this).closest('.site-content').parent().find('.menu-main').find('#header-flight').addClass('active');
+            $(this).closest('.site-content').parent().find('.menu-main').find('#header-flight').siblings().removeClass('active');
+        } else if ($(this).hasClass('hotel')) {
+            $(this).closest('.site-content').parent().find('.menu-main').find('#header-hotel').addClass('active');
+            $(this).closest('.site-content').parent().find('.menu-main').find('#header-hotel').siblings().removeClass('active');
+        }
+    });
+
     //Mobile Home Page
     $('select[name="roomclass"]').on('change', function () {
         var toNumb = parseInt($('select[name="roomclass"]').val());
