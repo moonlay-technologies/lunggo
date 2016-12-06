@@ -1755,6 +1755,8 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
           border-bottom: 20px dashed #ecf0f4;
           border-right: 20px solid #fff;
           border-left: 20px solid #fff; }
+        .page.page-home .form-container .form-wrapper form .form__visitor .age-child .ag-list-2 {
+          display: none; }
         .page.page-home .form-container .form-wrapper form .form__visitor .age-child .ac-list {
           padding: 0 12px; }
           .page.page-home .form-container .form-wrapper form .form__visitor .age-child .ac-list > .col-6 {
@@ -2449,6 +2451,8 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         border-bottom: 20px dashed #ecf0f4;
         border-right: 20px solid #fff;
         border-left: 20px solid #fff; }
+      .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__visitor .age-child .ag-list-2 {
+        display: none; }
       .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__visitor .age-child .ac-list {
         padding: 0 12px; }
         .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__visitor .age-child .ac-list > .col-6 {
@@ -5410,6 +5414,8 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
           border-bottom: 20px dashed #ecf0f4;
           border-right: 20px solid #fff;
           border-left: 20px solid #fff; }
+        .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__visitor .age-child .ag-list-2 {
+          display: none; }
         .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__visitor .age-child .ac-list {
           padding: 0 12px; }
           .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__visitor .age-child .ac-list > .col-6 {

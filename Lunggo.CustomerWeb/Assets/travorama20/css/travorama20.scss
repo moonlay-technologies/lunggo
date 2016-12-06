@@ -94,6 +94,14 @@ body {overflow-x: hidden; margin: 0; font-family:'Open Sans', sans-serif; letter
 
 hr {border-top:$border-default;}
 
+.img-loading {
+    width: 50px;
+    height: 50px;
+    left: 50%;
+    top: 50%;
+    position: absolute;
+    transform: translate(-50%, -50%);
+}
 .page-loading {display:none;}
 .page-loaded {display:block;}
 
