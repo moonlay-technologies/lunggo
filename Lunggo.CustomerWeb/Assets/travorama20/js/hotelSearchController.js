@@ -231,7 +231,7 @@ app.controller('hotelSearchController', ['$scope', '$log', '$window', '$http', '
                 $scope.searchDone = true;
                 $scope.finishLoad = true;
             }
-
+            
         });
     };
 
