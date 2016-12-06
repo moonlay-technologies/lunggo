@@ -386,6 +386,9 @@
     <Content Include="Assets\mobile\images\time.png" />
     <Content Include="Assets\mobile\js\HotelController.js" />
     <Content Include="Assets\travorama20\angularDirectory\common\hotelAutocomplete.service.js" />
+    <Content Include="Assets\travorama20\angularDirectory\hotelSearchForm\hotelSearchFormDir.js" />
+    <Content Include="Assets\travorama20\angularDirectory\hotelSearchForm\hotelSearchFormDirMobile.js" />
+    <Content Include="Assets\travorama20\angularDirectory\hotelSearchForm\hotelSearchFormTemplate.html" />
     <Content Include="Assets\travorama20\angularDirectory\search\hotelSearch.service.js" />
     <Content Include="Assets\travorama20\images\Hotel\bed.png" />
     <Content Include="Assets\travorama20\images\Hotel\blue-sprite.png" />
