@@ -29,6 +29,7 @@ namespace Lunggo.Webjob.HotelContentWrapper
 
             var hotel = new HotelBedsService();
             var service = HotelService.GetInstance();
+            /*Save Hotel Beds Content*/
             //hotel.GetAccomodation(1, 1000);
             //hotel.GetBoard(1, 1000);
             //hotel.GetCategory(1, 1000);
@@ -37,9 +38,10 @@ namespace Lunggo.Webjob.HotelContentWrapper
             //hotel.GetDestination(1, 500);
             //hotel.GetFacility(1, 1000);
             //hotel.GetFacilityGroup(1, 1000);
-            hotel.GetRoom(1, 1000);
+            //hotel.GetRoom(1, 1000);
             //hotel.GetSegment(1, 1000);
             //var rate = new GetRateComment();
+
             //Console.WriteLine("Getting Hotel Detail");
             //hotel.GetHotelData(1, 1000);
 
@@ -52,9 +54,8 @@ namespace Lunggo.Webjob.HotelContentWrapper
             //Console.WriteLine("RateComment");
             //rate.GetRateCommentData(1, 1000);
 
-
-            //var hotelService = HotelService.GetInstance();
-            //hotelService.UpdateHotelImage();
+            var hotelService = HotelService.GetInstance();
+            hotelService.UpdateHotelImage();
 
             ///*Try to get file name*/
             //var blobService = BlobStorageService.GetInstance();

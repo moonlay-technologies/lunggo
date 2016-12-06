@@ -113,14 +113,10 @@ namespace Lunggo.ApCommon.Hotel.Service
         {
             //Get hotelDetail
             //Get hotelImage
-            //
             var baseBiggerUrl = ConfigManager.GetInstance().GetConfigValue("hotel", "bigSizeImage");
             
-            //var url1 = string.Concat(baseBiggerUrl, ); //http://photos.hotelbeds.com/giata/bigger/14/140021/140021a_hb_t_002.jpg
-            //var url2 = string.Concat(baseBiggerUrl, dua);
-            //var url3 = string.Concat(baseBiggerUrl, tiga);
             var blobService = BlobStorageService.GetInstance();
-            for (var i = 1; i <= 7; i++)
+            for (var i = 1; i <= 600000; i++)
             {
                 try
                 {
