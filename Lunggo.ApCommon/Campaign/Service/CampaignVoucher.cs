@@ -1,4 +1,5 @@
-﻿using System.Runtime.InteropServices;
+﻿using System.Linq;
+using System.Runtime.InteropServices;
 using System.Security.Principal;
 using System.Web;
 using Lunggo.ApCommon.Campaign.Constant;
@@ -32,6 +33,12 @@ namespace Lunggo.ApCommon.Campaign.Service
                 return response;
             }
 
+            if (voucher.ProductType != null && !voucher.ProductType.Contains(rsvNo[0]))
+            {
+                response.VoucherStatus = VoucherStatus.ProductNotEligible;
+                return response;
+            }
+
             if (user.Identity.IsAuthenticated && user.Identity.IsUserAuthorized())
                 response.Email = user.Identity.GetEmail();
             response.VoucherCode = voucherCode;
@@ -61,6 +68,13 @@ namespace Lunggo.ApCommon.Campaign.Service
                     IsFlat = false
                 };
             }
+
+            if (voucher.MaxBudget.HasValue && (voucher.MaxBudget - voucher.UsedBudget < response.TotalDiscount))
+            {
+                response.VoucherStatus = VoucherStatus.NoBudgetRemaining;
+                return response;
+            }
+
             response.VoucherStatus = validationStatus;
             return response;
         }
@@ -69,7 +83,14 @@ namespace Lunggo.ApCommon.Campaign.Service
         {
             var response = ValidateVoucherRequest(rsvNo, voucherCode);
             if (response.VoucherStatus == VoucherStatus.Success)
-                response.VoucherStatus = VoucherDecrement(voucherCode);
+            {
+                var isUseBudgetSuccess = UseBudget(voucherCode, response.TotalDiscount);
+                var isVoucherDecrementSuccess = VoucherDecrement(voucherCode);
+                if (isUseBudgetSuccess && isVoucherDecrementSuccess)
+                    response.VoucherStatus = VoucherStatus.Success;
+                else 
+                    response.VoucherStatus = VoucherStatus.UpdateError;
+            }
             return response;
         }
 
@@ -129,32 +150,37 @@ namespace Lunggo.ApCommon.Campaign.Service
                 response.DiscountedPrice = 50000M;
             }
         }
-        private VoucherStatus VoucherDecrement(string voucherCode)
+        private bool VoucherDecrement(string voucherCode)
         {
             try
             {
-                if (UpdateDb.VoucherDecrement(voucherCode))
-                    return VoucherStatus.Success;
-                else
-                    return VoucherStatus.NoVoucherRemaining;
+                return UpdateDb.VoucherDecrement(voucherCode);
             }
             catch (Exception)
             {
-                return VoucherStatus.UpdateError;
+                return false;
             }
         }
-        private VoucherStatus VoucherIncrement(string voucherCode)
+        private bool VoucherIncrement(string voucherCode)
         {
             try
             {
-                if (UpdateDb.VoucherIncrement(voucherCode))
-                    return VoucherStatus.Success;
-                else
-                    return VoucherStatus.UpdateError;
+                return UpdateDb.VoucherIncrement(voucherCode);
             }
             catch (Exception)
             {
-                return VoucherStatus.UpdateError;
+                return false;
+            }
+        }
+        private bool UseBudget(string voucherCode, decimal discount)
+        {
+            try
+            {
+                return UpdateDb.UseBudget(voucherCode, discount);
+            }
+            catch (Exception)
+            {
+                return false;
             }
         }
     }

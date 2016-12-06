@@ -86,6 +86,18 @@ namespace Lunggo.WebAPI.ApiSrc.Payment.Logic
                         StatusCode = HttpStatusCode.BadRequest,
                         ErrorCode = "ERPVCH07"
                     };
+                case VoucherStatus.ProductNotEligible:
+                    return new CheckVoucherApiResponse
+                    {
+                        StatusCode = HttpStatusCode.Accepted,
+                        ErrorCode = "ERPVCH08"
+                    };
+                case VoucherStatus.NoBudgetRemaining:
+                    return new CheckVoucherApiResponse
+                    {
+                        StatusCode = HttpStatusCode.Accepted,
+                        ErrorCode = "ERPVCH09"
+                    };
                 default:
                     return ApiResponseBase.Error500();
             }

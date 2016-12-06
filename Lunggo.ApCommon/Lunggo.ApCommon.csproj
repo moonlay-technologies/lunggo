@@ -196,6 +196,7 @@
     <Compile Include="Campaign\Database\Query\GetCampaignVoucherRecordQuery.cs" />
     <Compile Include="Campaign\Database\Query\GetMemberRecordQuery.cs" />
     <Compile Include="Campaign\Database\Query\GetVoucherRecipientsRecordQuery.cs" />
+    <Compile Include="Campaign\Database\Query\UseBudgetQuery.cs" />
     <Compile Include="Campaign\Database\Query\VoucherDecrementQuery.cs" />
     <Compile Include="Campaign\Database\Query\VoucherIncrementQuery.cs" />
     <Compile Include="Campaign\Model\CampaignVoucher.cs" />
