@@ -35,19 +35,10 @@
                     <div class="field-container">
                         <div class="form-control form-night">
                             <div class="col-4"><span class="sm-txt grey-txt">Malam</span></div>
-                            <div class="col-6 input-hotel xlg-txt right-txt semibold-txt darkgrey-txt">1</div>
-                            <div class="option" ng-model="hotelSearch.roomCount">
-                                <span data-value="" ng-repeat="roomCount in hotelSearch.roomrange track by $index"
-                                      ng-click="hotelSearch.roomCount = roomCount">{{roomCount}}</span>
-                            </div>
-                            <div class="option">
-                                <span data-value="">1</span>
-                                <span data-value="">2</span>
-                                <span data-value="">3</span>
-                                <span data-value="">4</span>
-                                <span data-value="">5</span>
-                                <span data-value="">6</span>
-                                <span data-value="">7</span>
+                            <div class="col-6 input-hotel xlg-txt right-txt semibold-txt darkgrey-txt">{{changeSearch.nightCount}}</div>
+                            <div class="option" ng-model="changeSearch.nightCount">
+                                <span data-value="" ng-repeat="nightCount in hotelSearch.nightrange track by $index"
+                                      ng-click="changeSearch.nightCount = nightCount">{{nightCount}}</span>
                             </div>
                         </div>
                     </div>
@@ -56,16 +47,10 @@
                     <div class="field-container">
                         <div class="form-control form-room">
                             <div class="col-4"><span class="sm-txt grey-txt">Jumlah Kamar</span></div>
-                            <div class="col-6 input-hotel xlg-txt right-txt semibold-txt darkgrey-txt">1</div>
-                            <div class="option">
-                                <span data-value="">1</span>
-                                <span data-value="">2</span>
-                                <span data-value="">3</span>
-                                <span data-value="">4</span>
-                                <span data-value="">5</span>
-                                <span data-value="">6</span>
-                                <span data-value="">7</span>
-                                <span data-value="">8</span>
+                            <div class="col-6 input-hotel xlg-txt right-txt semibold-txt darkgrey-txt">{{changeSearch.roomCount}}</div>
+                            <div class="option" ng-model="changeSearch.roomCount">
+                                <span data-value="" ng-repeat="roomCount in hotelSearch.roomrange track by $index"
+                                      ng-click="changeSearch.roomCount = roomCount">{{roomCount}}</span>
                             </div>
                         </div>
                     </div>
