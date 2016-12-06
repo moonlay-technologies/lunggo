@@ -257,11 +257,31 @@ jQuery(document).ready(function ($) {
         $('body .form-child-age').hide();
     });
 
-    //Mobile Search
-    $('.form__visitor').hide();
-    $('select[name="roomclass"]').change(function () {
-        var value = $(this).val();
-        if (value != '') { $('.form__visitor').show(); }
+    //Mobile Home Page
+    $('select[name="roomclass"]').on('change', function () {
+        var toNumb = parseInt($('select[name="roomclass"]').val());
+        var a = $(this).closest('.form__room').parent();
+        var b = a.parent().children('.form__visitor');
+
+        var oldItem = b.children('.age-child').find('.ag-list');
+        var oldItem2 = b.children('.age-child').find('.ag-list-2');
+
+        var counter = 1;
+
+        if (oldItem2.html() == '') {
+            var itemc = oldItem.find('.ag-wrap').clone();
+            oldItem2.html(itemc);
+        }
+        var newitem = oldItem2.find('.ag-wrap').clone();
+        oldItem.html('');
+
+        for (i = 0; i < toNumb; i++) {
+            newitem.attr('id', 'item-' + counter);
+
+            var item = newitem.clone();
+
+            oldItem.append(item);
+            counter++;
+        };
     });
 });
- 

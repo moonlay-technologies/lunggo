@@ -47,58 +47,61 @@
         <div class="form-group form__visitor clearfix">
             <div class="age-child clearfix">
                 <div class="ag-list clearfix">
-                    <div class="mid-wrap clearfix">
-                        <div class="mid-title col-2">
-                            Kamar 1:
+                    <div class="ag-wrap">
+                        <div class="mid-wrap clearfix">
+                            <div class="mid-title col-2">
+                                Kamar 1:
+                            </div>
+                            <div class="field-container form-v-adult col-4">
+                                <div class="field-wrapper form-adult">
+                                    <select class="form-control" name="adultclass" ng-model="hotelSearch.adultCount">
+                                        <option ng-repeat="number in hotelSearch.adultrange" value="{{number}}">{{number}} Dewasa</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="field-container form-v-child col-4">
+                                <div class="field-wrapper form-child">
+                                    <select class="form-control" name="childclass" ng-model="hotelSearch.childCount">
+                                        <option ng-repeat="number in hotelSearch.childrange" value="{{number}}">{{number}} Anak</option>
+                                    </select>
+                                </div>
+                            </div>
                         </div>
-                        <div class="field-container form-v-adult col-4">
-                            <div class="field-wrapper form-adult">
-                                <select class="form-control" name="adultclass" ng-model="hotelSearch.adultCount">
-                                    <option ng-repeat="number in hotelSearch.adultrange" value="{{number}}">{{number}} Dewasa</option>
+                        <div id="ac-1" class="ac-list clearfix" ng-show="hotelSearch.childCount >= 1 && hotelSearch.childCount <= 4">
+                            <div class="col-6 blue-txt semibold-txt right-txt">Anak 1 Usia :</div>
+                            <div class="col-4">
+                                <select class="form-control" name="agelist" ng-model="hotelSearch.childrenAges[0]">
+                                    <option ng-repeat="age in hotelSearch.childagerange" value="{{age}}">{{age}} Tahun</option>
                                 </select>
                             </div>
                         </div>
-                        <div class="field-container form-v-child col-4">
-                            <div class="field-wrapper form-child">
-                                <select class="form-control" name="childclass" ng-model="hotelSearch.childCount">
-                                    <option ng-repeat="number in hotelSearch.childrange" value="{{number}}">{{number}} Anak</option>
+                        <div id="ac-2" class="ac-list clearfix" ng-show="hotelSearch.childCount >= 2 && hotelSearch.childCount <= 4">
+                            <div class="col-6 blue-txt semibold-txt right-txt">Anak 2 Usia :</div>
+                            <div class="col-4">
+                                <select class="form-control" name="agelist" ng-model="hotelSearch.childrenAges[1]">
+                                    <option ng-repeat="age in hotelSearch.childagerange" value="{{age}}">{{age}} Tahun</option>
                                 </select>
                             </div>
                         </div>
-                    </div>
-                    <div id="ac-1" class="ac-list clearfix" ng-show="hotelSearch.childCount >= 1 && hotelSearch.childCount <= 4">
-                        <div class="col-6 blue-txt semibold-txt right-txt">Anak 1 Usia :</div>
-                        <div class="col-4">
-                            <select class="form-control" name="agelist" ng-model="hotelSearch.childrenAges[0]">
-                                <option ng-repeat="age in hotelSearch.childagerange" value="{{age}}">{{age}} Tahun</option>
-                            </select>
+                        <div id="ac-3" class="ac-list clearfix" ng-show="hotelSearch.childCount >= 3 && hotelSearch.childCount <= 4">
+                            <div class="col-6 blue-txt semibold-txt right-txt">Anak 3 Usia :</div>
+                            <div class="col-4">
+                                <select class="form-control" name="agelist" ng-model="hotelSearch.childrenAges[2]">
+                                    <option ng-repeat="age in hotelSearch.childagerange" value="{{age}}">{{age}} Tahun</option>
+                                </select>
+                            </div>
                         </div>
-                    </div>
-                    <div id="ac-2" class="ac-list clearfix" ng-show="hotelSearch.childCount >= 2 && hotelSearch.childCount <= 4">
-                        <div class="col-6 blue-txt semibold-txt right-txt">Anak 2 Usia :</div>
-                        <div class="col-4">
-                            <select class="form-control" name="agelist" ng-model="hotelSearch.childrenAges[1]">
-                                <option ng-repeat="age in hotelSearch.childagerange" value="{{age}}">{{age}} Tahun</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div id="ac-3" class="ac-list clearfix" ng-show="hotelSearch.childCount >= 3 && hotelSearch.childCount <= 4">
-                        <div class="col-6 blue-txt semibold-txt right-txt">Anak 3 Usia :</div>
-                        <div class="col-4">
-                            <select class="form-control" name="agelist" ng-model="hotelSearch.childrenAges[2]">
-                                <option ng-repeat="age in hotelSearch.childagerange" value="{{age}}">{{age}} Tahun</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div id="ac-4" class="ac-list clearfix" ng-show="hotelSearch.childCount == 4">
-                        <div class="col-6 blue-txt semibold-txt right-txt">Anak 4 Usia :</div>
-                        <div class="col-4">
-                            <select class="form-control" name="agelist" ng-model="hotelSearch.childrenAges[3]">
-                                <option ng-repeat="age in hotelSearch.childagerange" value="{{age}}">{{age}} Tahun</option>
-                            </select>
+                        <div id="ac-4" class="ac-list clearfix" ng-show="hotelSearch.childCount == 4">
+                            <div class="col-6 blue-txt semibold-txt right-txt">Anak 4 Usia :</div>
+                            <div class="col-4">
+                                <select class="form-control" name="agelist" ng-model="hotelSearch.childrenAges[3]">
+                                    <option ng-repeat="age in hotelSearch.childagerange" value="{{age}}">{{age}} Tahun</option>
+                                </select>
+                            </div>
                         </div>
                     </div>
                 </div>
+                <div class="ag-list-2 clearfix" style="display: none"></div>
             </div>
         </div>
     </div>
