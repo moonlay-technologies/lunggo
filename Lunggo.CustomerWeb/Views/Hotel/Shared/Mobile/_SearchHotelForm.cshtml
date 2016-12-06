@@ -1,4 +1,4 @@
-﻿<form class="hotel-form" name="hotel-form" novalidate>
+﻿<form class="hotel-form" name="hotel-form" novalidate ng-class="{'active' : (PageConfig.ActiveOverlay == 'hotel-form')}">
     <div class="th-form">
         <div class="top-wrap">
         <div class="form-group form__hotel">
@@ -46,25 +46,25 @@
         </div>
         <div class="form-group form__visitor clearfix">
             <div class="age-child clearfix">
-                <div class="mid-wrap clearfix">
+            <div class="mid-wrap clearfix">
                     <div class="mid-title col-2">
                         Kamar 1:
                     </div>
                     <div class="field-container form-v-adult col-4">
-                        <div class="field-wrapper form-adult">
-                            <select class="form-control" name="adultclass" ng-model="hotelSearch.adultCount">
+                    <div class="field-wrapper form-adult">
+                        <select class="form-control" name="adultclass" ng-model="hotelSearch.adultCount">
                                 <option ng-repeat="number in hotelSearch.adultrange" value="{{number}}">{{number}} Dewasa</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="field-container form-v-child col-4">
-                        <div class="field-wrapper form-child">
-                            <select class="form-control" name="childclass" ng-model="hotelSearch.childCount">
-                                <option ng-repeat="number in hotelSearch.childrange" value="{{number}}">{{number}} Anak</option>
-                            </select>
-                        </div>
+                        </select>
                     </div>
                 </div>
+                    <div class="field-container form-v-child col-4">
+                    <div class="field-wrapper form-child">
+                        <select class="form-control" name="childclass" ng-model="hotelSearch.childCount">
+                            <option ng-repeat="number in hotelSearch.childrange" value="{{number}}">{{number}} Anak</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
                 <div id="ac-1" class="ac-list clearfix" ng-show ="hotelSearch.childCount >= 1 && hotelSearch.childCount <= 4">
                     <div class="col-6 blue-txt semibold-txt right-txt">Anak 1 Usia :</div>
                     <div class="col-4">
@@ -104,3 +104,4 @@
         <button class="btn btn-yellow btn-block btn-lg btnSubmit" ng-click="hotel.searchHotel()">CARI HOTEL</button>
     </div>
 </form>
+

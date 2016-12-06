@@ -126,8 +126,8 @@
         });
     </script>
     <script src="/Assets/travorama20/angularDirectory/search/hotelSearch.service.js"></script>
-<script src="/Assets/Travorama20/js/homeController.js"></script>
-
+    <script src="/Assets/Travorama20/js/homeController.js"></script>
+    <script src="/Assets/travorama20/angularDirectory/hotelSearchForm/hotelSearchFormDir.js"></script>
 }
 
 <section class="section-search">
@@ -287,18 +287,6 @@
                             </div>
                         </div>
 
-                        @*<div class="form-group hotel-location ">
-                            <div class="col-xs-12">
-                                <input type="text" name="hotelLocation" value="" class="form-hotel-location form-control" placeholder="Kota, Wilayah atau Nama Hotel" ng-value="hotelSearch.checkinDate.format() | date : 'dd'" ng-click="view.showHotelSearch = true" />
-                            </div>
-                        </div>
-
-                        <div class="form-group hotel-location ">
-                            <div class="col-xs-12">
-                                <input type="text" name="hotelLocation" value="" class="form-hotel-location form-control" placeholder="Kota, Wilayah atau Nama Hotel" ng-value="hotelSearch.checkinDate" ng-click="view.showHotelSearch = true" />
-                            </div>
-                        </div>*@
-
                         <div class="form-group hotel-date">
                             <div class="col-xs-6">
                                 <div class="form-hotel-checkin">
@@ -322,9 +310,9 @@
                                 <div class="form-control form-hotel-night clearfix">
                                     <div class="col-4"><span class="grey-txt">Malam</span></div>
                                     <div class="col-6 input-hotel">{{hotelSearch.nightCount}}</div>
-                                    <div class="option">
-                                        <span data-value="" ng-repeat="nightCount in traGetRange(hotelSearch.nightCountMax, hotelSearch.nightCountMin) track by $index" ng-click="hotelSearch.nightCount = nightCount">{{nightCount}}</span>
-                                       
+                                    <div class="option" ng-model="hotelSearch.nightCount">
+                                        <span data-value="" ng-repeat="nightCount in hotelSearch.nightrange track by $index"
+                                              ng-click="hotelSearch.nightCount = nightCount">{{nightCount}}</span>
                                     </div>
                                 </div>
                             </div>
@@ -332,8 +320,9 @@
                                 <div class="form-control form-hotel-room clearfix">
                                     <div class="col-4"><span class="grey-txt">Jumlah Kamar</span></div>
                                     <div class="col-6 input-hotel">{{hotelSearch.roomCount}}</div>
-                                    <div class="option">
-                                        <span data-value="" ng-repeat="roomCount in traGetRange(hotelSearch.roomCountMax, hotelSearch.roomCountMin) track by $index" ng-click="hotelSearch.roomCount = roomCount">{{roomCount}}</span>
+                                    <div class="option" ng-model="hotelSearch.roomCount" >
+                                        <span data-value="" ng-repeat="roomCount in hotelSearch.roomrange track by $index"
+                                              ng-click="hotelSearch.roomCount = roomCount">{{roomCount}}</span>
                                     </div>
                                 </div>
                             </div>

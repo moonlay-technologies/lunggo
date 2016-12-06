@@ -13,7 +13,7 @@
 @{
     Layout = "/Views/Shared/mobile/_Layout.cshtml";
     ViewBag.Title = "Konfirmasi Pembayaran";
-    ViewBag.BodyClass = "page page-confirmation";
+    ViewBag.BodyClass = "page page-confirmation page-hotel page-checkout";
     ViewBag.AngularController = "confirmationController";
 
     var beneficiaryBankList = new List<SelectListItem>
@@ -40,21 +40,7 @@
             var rsv = Model as HotelReservationForDisplay;
             rooms = rsv.HotelDetail.Rooms;
             var rsvNo = Model.RsvNo;
-            images = HotelService.GetInstance().GetHotelDetailFromDb(rsv.HotelDetail.HotelCode).ImageUrl;
-            var orDefault = images.Where(i => i.Type == "GEN").ToList().FirstOrDefault();
-            if (orDefault != null)
-            {
-                hotelImg = images == null
-                    ? null
-                    : "http://photos.hotelbeds.com/giata/" + orDefault.Path;
-            }
-            var firstOrDefault = images.Where(i => i.Type == "HAB").ToList().FirstOrDefault();
-            if (firstOrDefault != null)
-            {
-                roomImg = images == null
-                    ? null
-                    : "http://photos.hotelbeds.com/giata/" + firstOrDefault.Path;
-            }
+            
             foreach (var room in rooms)
             {
                 var roomName = HotelService.GetInstance().GetHotelRoom(room.RoomCode).RoomDescId;
@@ -176,14 +162,14 @@
 
     <!-- angular controller -->
     <script src="/Assets/travorama20/js/CheckoutController.js"></script>
-   
+    <script src="/Assets/travorama20/angularDirectory/search/hotelSearch.service.js"></script>
     <script>
         accordionFunctions();
     </script>
 }
 
 <div class="confirmation-content" ng-app="travorama" ng-controller="confirmationController">
-    <div class="container-page">
+    <div class="container-page travorama-hotel-mobile thankyou-page">
         <div class="instruction">
             @if (Model.Payment.Method == PaymentMethod.VirtualAccount)
             {
@@ -554,163 +540,25 @@
         {
             var reservation = Model as HotelReservationForDisplay;
 
-            <div class=" page-hotel review-hotel" style="background:#f9f9f9">
+            <div class=" page-hotel review-hotel" style="background-color: #f9f9f9">
                 <div class="review-room clearfix">
                     
-                    <span>Nomor Reservasi: <b>@Model.RsvNo</b></span>
-                    <div class="summary summary--passenger">
-                        <h3><b>DAFTAR</b> TAMU</h3>
-                        <div class="summary__body">
-                            <ol>
-                                @foreach (var passenger in Model.Pax)
-                                {
-                                    <li>
-                                        <b>
-                                            <span>@EnumDisplay.Title(passenger.Title.GetValueOrDefault()) </span>
-                                            @passenger.Name
-                                        </b>
-
-                                    </li>
-                                }
-                            </ol>
-                        </div><!-- .summary__body -->
-                    </div><!-- .summary--passenger -->
+                    @Html.Partial("/Views/Hotel/Shared/Mobile/_GuestDetail.cshtml")
                     <h3 class="summary__title"><b>REVIEW</b> PESANAN</h3>
-                    
-                    <div class="rr-detail">
-                        <div class="rr-title semibold-txt lg-txt">Hotel @reservation.HotelDetail.HotelName</div>
-
-                        @if (reservation.HotelDetail.StarRating == 1)
-                        {
-                            <div class="star"></div>
-                        }
-
-                        @if (reservation.HotelDetail.StarRating == 2)
-                        {
-                            <div class="star star-2"></div>
-                        }
-                        @if (reservation.HotelDetail.StarRating == 3)
-                        {
-                            <div class="star star-3"></div>
-                        }
-                        @if (reservation.HotelDetail.StarRating == 4)
-                        {
-                            <div class="star star-4"></div>
-                        }
-                        @if (reservation.HotelDetail.StarRating == 5)
-                        {
-                            <div class="star star-5"></div>
-                        }
-
-                        <div class="rr-row clearfix">
-                            <div class="col-2">Alamat</div>
-                            <div class="col-8">
-                                @ToTitleCase(reservation.HotelDetail.Address) @ToTitleCase(reservation.HotelDetail.ZoneName),
-                                @ToTitleCase(reservation.HotelDetail.DestinationName), @reservation.HotelDetail.PostalCode, @reservation.HotelDetail.CountryName
-                            </div>
-                        </div>
-                        <div class="rr-row clearfix">
-                            <div class="col-2">Check-in</div>
-                            <div class="col-8">@reservation.HotelDetail.CheckInDate.ToString("D", CultureInfo.CreateSpecificCulture("id-ID"))</div>
-                        </div>
-                        <div class="rr-row clearfix">
-                            <div class="col-2">Check-out</div>
-                            <div class="col-8">@reservation.HotelDetail.CheckOutDate.ToString("D", CultureInfo.CreateSpecificCulture("id-ID"))</div>
-                        </div>
-                        <div class="rr-row clearfix">
-                            <div class="col-2">Jumlah Malam</div>
-                            <div class="col-8">@((reservation.HotelDetail.CheckOutDate - reservation.HotelDetail.CheckInDate).Days) Malam</div>
-                        </div>
+                    <div class="form-group">
+                        @Html.Partial("/Views/Hotel/Shared/Mobile/_HotelDetail.cshtml", reservation.HotelDetail)
                     </div>
-
-                    <div class="rr-title semibold-txt lg-txt">Kamar</div>
-
-                    @foreach (var room in reservation.HotelDetail.Rooms)
-                    {
-                        foreach (var rate in room.Rates)
-                        {
-                            var pol = 1;
-                            <div class="rr-detail">
-                                <div class="rr-title semibold-txt lg-txt">@index. @rate.RoomCount @ToTitleCase(room.RoomName)</div>
-                                <div class="rr-row">
-                                    <div class="col-2">Board</div>
-                                    <div class="col-8">
-                                        @ToTitleCase(rate.BoardDescription)
-                                    </div>
-
-                                </div>
-                                <div class="rr-row">
-                                    <div class="col-2">
-                                        <span>Tamu</span>
-                                    </div>
-                                    <div class="col-8">
-                                        @rate.AdultCount Dewasa @if (rate.ChildCount > 0)
-                                                                {
-                                                                    <span>, @rate.ChildCount Anak </span>
-                                                                    <span>
-                                                                        (
-                                                                        @for (var a = 0; a < rate.ChildrenAges.Count; a++)
-                                                                        {
-                                                                            if (a != rate.ChildrenAges.Count - 1)
-                                                                            {
-                                                                                @rate.ChildrenAges[a]
-                                                                                <span>Tahun, </span>
-                                                                            }
-                                                                            else
-                                                                            {
-                                                                                @rate.ChildrenAges[a]
-                                                                                <span>Tahun</span>
-                                                                            }
-                                                                        }
-                                                                        )
-                                                                    </span>
-                                                                }
-                                    </div>
-                                </div>
-
-                                @if (!rate.TermAndCondition.Exists(r => r.Length < 3))
-                                {
-                                    <div class="rr-row">
-                                        <div class="col-2">
-                                            <span>Ketentuan</span>
-                                        </div>
-                                        <div class="col-8">
-                                            @String.Join(". ", rate.TermAndCondition)
-                                        </div>
-                                    </div>
-                                }
-
-                                <div class="rr-row">
-                                    <div class="col-2">
-                                        <span></span>
-                                    </div>
-                                    <div class="col-8">
-                                        @foreach (var policy in rate.Cancellation)
-                                        {
-                                            <div>
-                                                @pol.
-                                                Biaya pembatalan: Rp @(policy.Fee.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID")))<br />
-                                                Mulai berlaku: @policy.StartTime.ToString("D", CultureInfo.CreateSpecificCulture("id-ID")) <br />
-                                            </div>
-                                            pol++;
-                                        }
-                                    </div>
-                                </div>
-
-
-                            </div>
-                            index++;
-                        }
-                    }
+                    
                 </div>
+                @Html.Partial("/Views/Hotel/Shared/Mobile/_RoomDetail.cshtml", reservation.HotelDetail)
+                @Html.Partial("/Views/Hotel/Shared/Mobile/_PriceDetail.cshtml", reservation)
             </div>
-
-
         }
         <div class="col-sm-12">
             <a href="@Url.Action("Thankyou", "Payment", new { Model.RsvNo })" class="btn btn-yellow" style="width:100%"> SAYA SUDAH BAYAR</a>
         </div>
     </div>
+
 </div><!-- .confirmation-content -->
 
 @*<div class="overlay datepicker" ng-class="{'active' : PageConfig.Overlay == 'datepicker'}">

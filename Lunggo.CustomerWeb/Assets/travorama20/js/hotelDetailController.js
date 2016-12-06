@@ -138,7 +138,7 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
         });
     }
     var setDescriptionDisplay = function () {
-        if ($scope.hotel.description.length > 0) {
+        if ($scope.hotel.description != null && $scope.hotel.description.length > 0) {
             var description = [];
             var descriptionArray = $scope.hotel.description.split('.');
             var tempDescription = '';

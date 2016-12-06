@@ -45,7 +45,7 @@ if (typeof(angular) == 'object') {
                 return returnValue;
             }
             for (var i = count; i >= 1; i++) {
-                returnValue.push(i)
+                returnValue.push(i);
             }
             return returnValue;
         };

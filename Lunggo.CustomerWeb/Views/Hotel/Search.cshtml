@@ -244,14 +244,15 @@
                         <div class="page-container">
                             <a href="" class="prev" ng-click="page != 1 && prevPage()"></a>
                             <ul class="page-list">
-                                <li><a href="#" ng-class="{active : pageNumber == page}" ng-repeat="pageNumber in traGetRange(pageCount) track by $index" ng-click="changePage(pageNumber)">{{pageNumber}}</a></li>
+                                <li><a href="#" ng-class="{active : pageNumber == page}" ng-repeat="pageNumber in getPageNumberList(pageCount, page) track by $index" ng-click="changePage(pageNumber)">{{pageNumber}}</a></li>
                             </ul>
                             <a href="" class="next" ng-click="page != pageCount && nextPage()"></a>
                         </div>
+                        
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+    </div>
 </div>

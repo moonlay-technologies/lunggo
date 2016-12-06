@@ -12,8 +12,8 @@ app.controller('hotelSearchController', ['$scope', '$log', '$window', '$http', '
     $scope.checkboxFilter = {
         Star: [false, false, false, false, false]
     }
-
-    
+    $scope.returnUrl = "/";
+    $scope.bottomPage = false;
     //@Url.Action("Search", "Hotel")?zzz={{departureDate}}" method="POST"
     //=============== hotel start ======================
     //$scope.hotel = {};
@@ -176,7 +176,10 @@ app.controller('hotelSearchController', ['$scope', '$log', '$window', '$http', '
     $scope.maxPrice = '';
     hotelSearchSvc.initializeSearchForm($scope);
 
-    $scope.searchHotel = function (filter, sort) {
+    $scope.selectLocation = function(location) {
+        hotelSearchSvc.selectLocation(location);
+    }
+    $scope.searchHotel = function (filter, sort, isMobile) {
         $scope.searchDone = false;
         $scope.pageCount = 0;
 
@@ -191,7 +194,13 @@ app.controller('hotelSearchController', ['$scope', '$log', '$window', '$http', '
 
             $scope.hotelSearch.destinationName = data.destinationName;
             $scope.hotelSearch.locationDisplay = data.destinationName;
+            if (isMobile) {
+                $scope.hotels.push.apply($scope.hotels,data.hotels);
+                $scope.bottomPage = false;
+            } else {
             $scope.hotels = data.hotels;
+            }
+            
             $scope.totalActualHotel = data.returnedHotelCount;
             $scope.returnedHotelCount = data.returnedHotelCount;
             $scope.filteredHotelCount = data.filteredHotelCount;
@@ -225,10 +234,12 @@ app.controller('hotelSearchController', ['$scope', '$log', '$window', '$http', '
         });
     };
 
+    $scope.expired = false;
     var validateResponse = function (data) {
         if (data.error != undefined || data.error != null) {
             if (data.error == "ERHSEA02") {
                 $log.debug('search id expired. researching...');
+                $scope.expired = true;
                 $scope.hotelSearch.searchId = null;
                 $scope.researching = true;
                 $scope.searchHotel();
@@ -239,14 +250,14 @@ app.controller('hotelSearchController', ['$scope', '$log', '$window', '$http', '
         return true;
     };
 
+    $scope.hotel  = {
+        searchHotel : function () {
+            hotelSearchSvc.gotoHotelSearch($scope.hotelSearch);
+        }
+    }
     $scope.GotoDetailHotel = function (hotelCd) {
         $log.debug('redirect to detail hotel with hotelCd: ' + hotelCd);
-        //location.href = '/id/Hotel/DetailHotel/?' +
-        //    "searchId=" + $scope.hotelSearch.searchId + "&" +
-        //    "hotelCd=" + hotelCd + "&" +
-        //    "searchParam=" + $scope.searchParam;
-
-        $window.open('/id/Hotel/DetailHotel/?' +
+        $window.open('/id/Hotel/DetailHotel?' +
             "searchId=" + $scope.hotelSearch.searchId + "&" +
             "hotelCd=" + hotelCd + "&" +
             "searchParam=" + $scope.searchParam, '_blank');
@@ -326,16 +337,18 @@ app.controller('hotelSearchController', ['$scope', '$log', '$window', '$http', '
         });
     }
     
-    //$scope.$watch('hotel.locationDisplay', function (newValue, oldValue) {
-    //    if (newValue.length >= 3) {
-    //        hotelAutocompleteSvc.resource.get({ prefix: newValue }).$promise.then(function (data) {
-    //            $timeout(function () {
-    //                $scope.hotel.hotelAutocomplete = data.hotelAutocomplete;
-    //                $log.debug($scope.hotel.hotelAutocomplete);
-    //            }, 0);
-    //        });
-    //    }
-    //});
+    $(window).scroll(function () {
+        var a = $(window).scrollTop();
+        var b = $(window).height();
+        var c = $(document).height();
+        if (Math.round($(window).scrollTop()) + $(window).height() == $(document).height()) {
+            $scope.page++;
+            $scope.bottomPage = true;
+            window.scrollTo(0, document.body.scrollHeight);
+            $scope.searchHotel('','',true);
+        }
+    });
+  
 
     $scope.prevPage = function () {
         $scope.page--;
@@ -425,5 +438,33 @@ app.controller('hotelSearchController', ['$scope', '$log', '$window', '$http', '
         $scope.filter.facilities = [];
         $scope.filter.minPrice = $scope.minPrice - ($scope.minPrice % 100000);
         $scope.filter.maxPrice = $scope.maxPrice + (100000 - $scope.maxPrice % 100000);
+        $('.slider-range').slider({
+            values: [$scope.filter.minPrice, $scope.filter.maxPrice]
+        });
     }
+
+    $scope.getPageNumberList = function (pageCount, currentPage) {
+
+        var maxPage = 10;
+
+        var returnValue = [];
+        if (pageCount <= maxPage) {
+            for (var p = 1; p <= pageCount; p++)
+                returnValue.push(p);
+        } else {
+            if (currentPage < maxPage) {
+                for (var p = 1; p <= maxPage; p++)
+                    returnValue.push(p);
+            } else if (currentPage >= maxPage && currentPage < pageCount - maxPage) {
+                for (var p = currentPage - 5; p <= currentPage + 4; p++)
+                    returnValue.push(p);
+            } else if (currentPage >= pageCount - maxPage) {
+                for (var p = pageCount - maxPage; p <= pageCount; p++)
+                    returnValue.push(p);
+            }
+        }
+        
+        return returnValue;
+    };
+    
 }]);
