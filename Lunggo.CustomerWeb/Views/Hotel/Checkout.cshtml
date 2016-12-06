@@ -568,7 +568,9 @@
                                 <div class="widget-content">
                                     <div class="widget-top">
                                         <div class="wt-top clearfix">
-                                            <div class="col-left-hotel"><img src="@Model.HotelDetail.MainImage" alt="Alternate Text" /></div>
+                                            <div class="col-left-hotel">
+                                                <div class="img-sm" style="background-image: url(@Model.HotelDetail.MainImage);"></div>
+                                            </div>
                                             <div class="col-right-hotel">
                                                 <span class="blue-txt bold-txt">{{capitalizeFirstLetter(hotelDetail.hotelName)}}</span>
                                                 <br />

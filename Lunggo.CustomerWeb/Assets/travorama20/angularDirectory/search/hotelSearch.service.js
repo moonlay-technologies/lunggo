@@ -52,15 +52,6 @@
         }
     };
 
-    //factory.myarray = [];
-    //factory.getNumber = function (num) {
-    //    factory.myarray = [];
-
-    //    for (var i = 0; i <= num - 1; i++) {
-    //        factory.myarray.push(i);
-    //    }
-
-    //}
     factory.initializeSearchForm = function (scope, searchParamObject) {
         scope.hotelSearch = {};
         scope.hotelSearch.searchHotelType = { "location": 'Location', searchId: 'SearchId' };
@@ -80,7 +71,7 @@
         scope.hotelSearch.sortBy = scope.hotelSearch.sortByType.ascendingPrice;
         scope.hotelSearch.page = 1;
         scope.hotelSearch.perPage = 20;
-        scope.hotelSearch.occupanciesStart = [];
+        scope.hotelSearch.occupancies = [];
         
         var defaultValue = {
             locationCode: 16084,
@@ -117,6 +108,15 @@
 
             scope.hotelSearch.roomCount = searchParamObject.roomCount != null ? searchParamObject.roomCount : 2;
             scope.hotelSearch.childrenAges = searchParamObject.childrenAges != null ? searchParamObject.childrenAges : [0, 0, 0, 0];
+
+            scope.hotelSearch.childrenAges = defaultValue.childrenAges;
+            for (var i = 0; i <= 7; i++) {
+                scope.hotelSearch.occupancies.push({
+                    adultCount: 1,
+                    childCount: 0,
+                    childrenAges: [0, 0, 0, 0]
+                });
+            }
         }
         else {
             scope.hotelSearch.location = defaultValue.locationCode;
@@ -139,7 +139,7 @@
             scope.hotelSearch.roomCount = defaultValue.roomCount;
             scope.hotelSearch.childrenAges = defaultValue.childrenAges;
             for (var i = 0; i <= 7; i++) {
-                scope.hotelSearch.occupanciesStart.push({
+                scope.hotelSearch.occupancies.push({
                     adultCount: 1,
                     childCount: 0,
                     childrenAges: [0, 0, 0, 0]
@@ -147,7 +147,7 @@
             }
             
         }
-
+        scope.changeSearch = scope.hotelSearch;
         scope.hotelSearch.adultCountMin = 1;
         scope.hotelSearch.adultCountMax = 5;
         scope.hotelSearch.adultrange = [1, 2, 3, 4, 5];
@@ -221,28 +221,6 @@
             };
         });
 
-        //scope.$watch('hotelSearch.roomCount', function (newValue, oldValue) {
-        //    var diff = Math.abs(newValue - oldValue);
-        //    if (newValue > oldValue) {
-        //        for (var i = 1; i <= diff; i++) {
-        //            scope.hotelSearch.occupancies.push({
-        //                adultCount: 1,
-        //                childCount: 2,
-        //                childrenAges: [6, 8]
-        //            });
-        //            ////var x = scope.hotelSearch.occupancies.length - 1;
-                    
-        //            //$(".adult").append('<hotel-search-form-directive></hotel-search-form-directive>');
-        //        }
-
-
-        //    } else if (newValue < oldValue) {
-        //        var dim = scope.hotelSearch.occupancies.length;
-        //        scope.hotelSearch.occupancies.splice(dim - diff, dim);
-        //    }
-        //    //scope.getNumber(scope.hotelSearch.roomCount);
-        //});
-
         factory.getLocation = function (newValue) {
             if (newValue.length >= 3) {
                 scope.hotelSearch.autocompleteResource.get({ prefix: newValue }).$promise.then(function (data) {
@@ -283,7 +261,8 @@
                 scopeElement.hotelSearch.checkinDate = moment(date);
                 $log.debug("scopeElement.hotelSearch.checkinDate = " + scopeElement.hotelSearch.checkinDate);
                 scopeElement.hotelSearch.checkoutDate = moment(date).add(scopeElement.hotelSearch.nightCount, 'days');
-                //scopeElement.hotelSearch.checkinDateDisplay = scope.hotelSearch.checkinDate.locale("id").format('LL');
+                scopeElement.hotelSearch.checkinDateDisplay = scopeElement.hotelSearch.checkinDate.locale("id").format('LL');
+                scopeElement.hotelSearch.checkoutDateDisplay = scopeElement.hotelSearch.checkoutDate.locale("id").format('LL');
             });
         }
 
@@ -320,20 +299,14 @@
                 $log.debug("checkout date = " + scope.hotelSearch.checkoutDate);
                 scope.hotelSearch.checkinDate = moment(scope.hotelSearch.checkinDate).locale("id");
                 scope.hotelSearch.checkoutDate = moment(scope.hotelSearch.checkoutDate).locale("id");
+                //scope.hotelSearch.checkinDateDisplay = scope.hotelSearch.checkinDate.format('LL');
+                //scope.hotelSearch.checkoutDateDisplay = scope.hotelSearch.checkoutDate.format('LL');
             }
         });
 
 
     }
 
-    //scope.nights = function(min, max) {
-    //    var n = [];
-    //    for (var i = min; i <= max; i++) {
-    //        n.push(i);
-    //    }
-
-    //    return n;
-    //}
     var searchParam = function (hotelSearch) {
         if (hotelSearch.location == null || hotelSearch.location.length == 0) {
             //$scope.wrongParam = true;
@@ -342,10 +315,10 @@
         } else {
             var occupancyQuery = [];
             for (var r = 0; r < hotelSearch.roomCount; r++) {
-                var q1 = [hotelSearch.occupanciesStart[r].adultCount, hotelSearch.occupanciesStart[r].childCount].join('~');
+                var q1 = [hotelSearch.occupancies[r].adultCount, hotelSearch.occupancies[r].childCount].join('~');
                 var age = '';
-                if (hotelSearch.occupanciesStart[r].childCount > 0) {
-                    var realAge = hotelSearch.occupanciesStart[r].childrenAges.slice(0, hotelSearch.occupanciesStart[r].childCount);
+                if (hotelSearch.occupancies[r].childCount > 0) {
+                    var realAge = hotelSearch.occupancies[r].childrenAges.slice(0, hotelSearch.occupancies[r].childCount);
                     age = realAge.join(',');
                     q1 = [q1, age].join('~');
                 }
@@ -365,12 +338,9 @@
             occquery
             ].join('.');
             return completequery;
-        }
-
-        
+        }     
     };
-    
-
+   
     return factory;
 }]);
 

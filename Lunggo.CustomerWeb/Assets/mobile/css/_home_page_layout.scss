@@ -128,16 +128,19 @@
                 padding: 0 0 0 28px;
             }
             &.form-v-adult, &.form-v-child {
-                .field-wrapper select.form-control {
-                    text-align: center;
-                    text-align-last: center;
+                .field-wrapper {
+                    padding: 10px 0;
+                    select.form-control {
+                        text-align: center;
+                        text-align-last: center;
+                    }
                 }
             }
             p, select {
                 cursor: pointer;
             }
             .field-wrapper {
-                padding: 10px 0;
+                padding: 21px 0;
                 border-bottom: 1px solid #dddddd;
                 text-align: center;
                 &.form-adult:before {
@@ -292,7 +295,8 @@
                     border-right: 20px solid #fff;
                     border-left: 20px solid #fff;
                 }
-                .ac-list { padding: 0 12px;
+                .ag-list-2 {display: none;}
+                .ac-list {padding: 0 12px;
                     &>.col-6 {padding: 10px;}
                     &>.col-4 {
                         &:after {

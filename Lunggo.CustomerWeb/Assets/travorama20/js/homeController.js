@@ -106,7 +106,7 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
 
             var scope = angular.element($('.hotel-date-picker')).scope();
             $scope.setCheckinDate(scope, date);
-            
+
             $log.debug("checkinDate = " + date);
             var target;
             var chosenDate = new Date(date);
@@ -260,6 +260,34 @@ jQuery(document).ready(function ($) {
     $('body input[name="FormAgeSubmit"]').on('click', function () {
         $('body .form-child-age').hide();
     });
+
+    //Mobile Home Page
+    //$('select[name="roomclass"]').on('change', function () {
+    //    var toNumb = parseInt($('select[name="roomclass"]').val());
+    //    var a = $(this).closest('.form__room').parent();
+    //    var b = a.parent().children('.form__visitor');
+
+    //    var oldItem = b.children('.age-child').find('.ag-list');
+    //    var oldItem2 = b.children('.age-child').find('.ag-list-2');
+
+    //    var counter = 1;
+
+    //    if (oldItem2.html() == '') {
+    //        var itemc = oldItem.find('.ag-wrap').clone();
+    //        oldItem2.html(itemc);
+    //    }
+    //    var newitem = oldItem2.find('.ag-wrap').clone();
+    //    oldItem.html('');
+
+    //    for (i = 0; i < toNumb; i++) {
+    //        newitem.attr('id', 'item-' + counter);
+
+    //        var item = newitem.clone();
+
+    //        oldItem.append(item);
+    //        counter++;
+    //    };
+    //});
 });
  
 //$scope.hotelSearch = {};

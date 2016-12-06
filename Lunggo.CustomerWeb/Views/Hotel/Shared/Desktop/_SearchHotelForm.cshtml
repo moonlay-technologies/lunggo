@@ -1,4 +1,4 @@
-﻿<form class="hotel-form" name="hotel-form" ng-submit="FlightSearchForm.Submit()" novalidate>
+﻿<form class="hotel-form" name="hotel-form" @*ng-submit="FlightSearchForm.Submit()"*@ novalidate>
     <div class="th-form clearfix">
         <div class="clearfix">
             <div class="form-group form__hotel col-4">
@@ -9,12 +9,12 @@
                     <div class="field-container">
                         <div class="form-control form-date clearfix">
                             <div class="sm-txt col-half grey-txt">Check in</div>
-                            @*<div class="pull-right bold-txt darkgrey-txt">{{hotelSearch.checkinDate | date: 'EEE, dd MMM yyyy'}}</div>*@
                             <div class="col-half">
-                                <span class="date semibold-txt darkgrey-txt">21</span>
-                                <span class="sm-txt month darkgrey-txt bold-txt">Des</span>
-                                <span class="sm-txt year darkgrey-txt bold-txt">2016</span>
+                                <span class="date semibold-txt darkgrey-txt">{{changeSearch.checkinDateDisplay.split(' ')[0]}}</span>
+                                <span class="sm-txt month darkgrey-txt bold-txt">{{changeSearch.checkinDateDisplay.split(' ')[1].substring(0,3)}}</span>
+                                <span class="sm-txt year darkgrey-txt bold-txt">{{changeSearch.checkinDateDisplay.split(' ')[2]}}</span>
                             </div>
+                            
                         </div>
                     </div>
                 </div>
@@ -23,26 +23,22 @@
                         <div class="form-control form-date">
                             <div class="sm-txt col-half grey-txt">Check out</div>
                             <div class="col-half">
-                                <span class="date semibold-txt darkgrey-txt">22</span>
-                                <span class="sm-txt month darkgrey-txt bold-txt">Des</span>
-                                <span class="sm-txt year darkgrey-txt bold-txt">2016</span>
+                                <span class="date semibold-txt darkgrey-txt">{{changeSearch.checkoutDateDisplay.split(' ')[0]}}</span>
+                                <span class="sm-txt month darkgrey-txt bold-txt">{{changeSearch.checkoutDateDisplay.split(' ')[1].substring(0,3)}}</span>
+                                <span class="sm-txt year darkgrey-txt bold-txt">{{changeSearch.checkoutDateDisplay.split(' ')[2]}}</span>
                             </div>
                         </div>
                     </div>
                 </div>
+                
                 <div class="form-group form__night quarter">
                     <div class="field-container">
                         <div class="form-control form-night">
                             <div class="col-4"><span class="sm-txt grey-txt">Malam</span></div>
-                            <div class="col-6 input-hotel xlg-txt right-txt semibold-txt darkgrey-txt">1</div>
-                            <div class="option">
-                                <span data-value="">1</span>
-                                <span data-value="">2</span>
-                                <span data-value="">3</span>
-                                <span data-value="">4</span>
-                                <span data-value="">5</span>
-                                <span data-value="">6</span>
-                                <span data-value="">7</span>
+                            <div class="col-6 input-hotel xlg-txt right-txt semibold-txt darkgrey-txt">{{changeSearch.nightCount}}</div>
+                            <div class="option" ng-model="changeSearch.nightCount">
+                                <span data-value="" ng-repeat="nightCount in hotelSearch.nightrange track by $index"
+                                      ng-click="changeSearch.nightCount = nightCount">{{nightCount}}</span>
                             </div>
                         </div>
                     </div>
@@ -51,16 +47,10 @@
                     <div class="field-container">
                         <div class="form-control form-room">
                             <div class="col-4"><span class="sm-txt grey-txt">Jumlah Kamar</span></div>
-                            <div class="col-6 input-hotel xlg-txt right-txt semibold-txt darkgrey-txt">1</div>
-                            <div class="option">
-                                <span data-value="">1</span>
-                                <span data-value="">2</span>
-                                <span data-value="">3</span>
-                                <span data-value="">4</span>
-                                <span data-value="">5</span>
-                                <span data-value="">6</span>
-                                <span data-value="">7</span>
-                                <span data-value="">8</span>
+                            <div class="col-6 input-hotel xlg-txt right-txt semibold-txt darkgrey-txt">{{changeSearch.roomCount}}</div>
+                            <div class="option" ng-model="changeSearch.roomCount">
+                                <span data-value="" ng-repeat="roomCount in hotelSearch.roomrange track by $index"
+                                      ng-click="changeSearch.roomCount = roomCount">{{roomCount}}</span>
                             </div>
                         </div>
                     </div>
