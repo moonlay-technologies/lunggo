@@ -103,7 +103,7 @@ namespace Lunggo.ApCommon.Hotel.Service
             result.SearchId = generatedSearchId.ToString();
             
 
-            if (result.HotelDetails == null)
+            if (result.HotelDetails == null || result.HotelDetails.Count == 0)
                 return new SearchHotelOutput()
                     {
                         IsSuccess = true,
@@ -112,6 +112,16 @@ namespace Lunggo.ApCommon.Hotel.Service
                         TotalHotelCount = 0,
                         FilteredHotelCount = 0
                     };
+            result.HotelDetails = FilterSearchRoomByCapacity(result.HotelDetails, input.Occupancies);
+            if (result.HotelDetails.Count == 0)
+                return new SearchHotelOutput()
+                {
+                    IsSuccess = true,
+                    DestinationName = result.DestinationName,
+                    ReturnedHotelCount = 0,
+                    TotalHotelCount = 0,
+                    FilteredHotelCount = 0
+                };
             var swPr = Stopwatch.StartNew();
             AddPriceMargin(result.HotelDetails);
             swPr.Stop();

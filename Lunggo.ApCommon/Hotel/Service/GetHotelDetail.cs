@@ -30,15 +30,18 @@ namespace Lunggo.ApCommon.Hotel.Service
                 };
             hotelDetail.Rooms = SetRoomPerRate(hotelDetail.Rooms);
             hotelDetail.Rooms = FilterRoomByCapacity(hotelDetail.Rooms);
-            foreach (var room in hotelDetail.Rooms)
+            if (hotelDetail.Rooms.Count != 0)
             {
+                foreach (var room in hotelDetail.Rooms)
+                {
                     var cid = room.SingleRate.RateKey != null ? room.SingleRate.RateKey.Split('|')[0] : room.SingleRate.RegsId.Split('|')[0];
                     var checkInDate = new DateTime(Convert.ToInt32(cid.Substring(0, 4)),
                          Convert.ToInt32(cid.Substring(4, 2)), Convert.ToInt32(cid.Substring(6, 2)));
                     room.SingleRate.TermAndCondition = GetRateCommentFromTableStorage(room.SingleRate.RateCommentsId,
                         checkInDate).Select(x => x.Description).ToList();
+                }
             }
-
+            
             return new GetHotelDetailOutput
             {
                 IsSuccess = true,
@@ -117,23 +120,20 @@ namespace Lunggo.ApCommon.Hotel.Service
                 if (maxPax == 0)
                 {
                     maxPax = totalPax;
+                    maxAdult = room.SingleRate.AdultCount;
+                    maxChild = room.SingleRate.ChildCount;
                 }
                 if (totalPax > maxPax)
                 {
                     maxPax = totalPax;
-                }
-                if (room.SingleRate.AdultCount > maxAdult)
                     maxAdult = room.SingleRate.AdultCount;
-                if (room.SingleRate.ChildCount > maxChild)
                     maxChild = room.SingleRate.ChildCount;
+                }
             }
 
             foreach (var room in rooms)
             {
-                var roomPax = GetPaxCapacity(room.RoomCode);
-                var roomAdult = GetMaxAdult(room.RoomCode);
-                var roomChild = GetMaxChild(room.RoomCode);
-                if (roomPax >= maxPax && roomAdult >= maxAdult && roomChild >= maxChild)
+                if (room.SingleRate.AdultCount == maxAdult && room.SingleRate.ChildCount == maxChild)
                 {
                     roomList.Add(room);
                 }
