@@ -54,6 +54,7 @@
 
     factory.initializeSearchForm = function (scope, searchParamObject) {
         scope.hotelSearch = {};
+        scope.changeParam = {};
         scope.hotelSearch.searchHotelType = { "location": 'Location', searchId: 'SearchId' };
 
         scope.filter = {};
@@ -147,7 +148,7 @@
             }
             
         }
-        scope.changeSearch = scope.hotelSearch;
+        scope.changeParam = scope.hotelSearch;
         scope.hotelSearch.adultCountMin = 1;
         scope.hotelSearch.adultCountMax = 5;
         scope.hotelSearch.adultrange = [1, 2, 3, 4, 5];
@@ -221,6 +222,18 @@
             };
         });
 
+        scope.$watch('changeParam.locationDisplay', function (newValue, oldValue) {
+            if (newValue.length >= 3) {
+                scope.changeParam.autocompleteResource.get({ prefix: newValue }).$promise.then(function (data) {
+                    $timeout(function () {
+                        scope.changeParam.hotelAutocomplete = data.hotelAutocomplete;
+                        $log.debug('changeParam autocomlete');
+                        $log.debug(scope.changeParam.hotelAutocomplete);
+                    }, 0);
+                });
+            };
+        });
+
         factory.getLocation = function (newValue) {
             if (newValue.length >= 3) {
                 scope.hotelSearch.autocompleteResource.get({ prefix: newValue }).$promise.then(function (data) {
@@ -255,6 +268,16 @@
             }
         );
 
+        scope.changeParam.autocompleteResource = $resource(HotelAutocompleteConfig.Url + '/:prefix',
+            { prefix: '@prefix' },
+            {
+                get: {
+                    method: 'GET',
+                    params: {},
+                    isArray: false
+                }
+            }
+        );
         scope.setCheckinDate = function (scopeElement, date) {
             scopeElement.$apply(function () {
                 $log.debug("scopeElement.hotelSearch.checkinDate = " + scopeElement.hotelSearch.checkinDate);
