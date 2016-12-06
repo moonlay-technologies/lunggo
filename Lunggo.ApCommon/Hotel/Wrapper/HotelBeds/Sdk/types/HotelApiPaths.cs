@@ -134,5 +134,94 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Sdk.types
                 endpoint = "types/ratecomments?fields=${fields}&language=${language}&from=${from}&to=${to}&useSecondaryLanguage=${useSecondaryLanguage}";
             }
         }
+
+        public class HOTEL_ACCOMODATION : HotelApiPathsBase
+        {
+            public HOTEL_ACCOMODATION()
+            {
+                httpMethod = new HttpMethod("GET");
+                endpoint = "types/accommodations?fields=${fields}&language=${language}&from=${from}&to=${to}&useSecondaryLanguage=${useSecondaryLanguage}";
+            }
+        }
+
+        public class HOTEL_BOARD : HotelApiPathsBase
+        {
+            public HOTEL_BOARD()
+            {
+                httpMethod = new HttpMethod("GET");
+                endpoint = "types/boards?fields=${fields}&language=${language}&from=${from}&to=${to}&useSecondaryLanguage=${useSecondaryLanguage}";
+            }
+        }
+
+        public class HOTEL_CATEGORY : HotelApiPathsBase
+        {
+            public HOTEL_CATEGORY()
+            {
+                httpMethod = new HttpMethod("GET");
+                endpoint = "types/categories?fields=${fields}&language=${language}&from=${from}&to=${to}&useSecondaryLanguage=${useSecondaryLanguage}";
+            }
+        }
+        public class HOTEL_CHAIN : HotelApiPathsBase
+        {
+            public HOTEL_CHAIN()
+            {
+                httpMethod = new HttpMethod("GET");
+                endpoint = "types/chains?fields=${fields}&language=${language}&from=${from}&to=${to}&useSecondaryLanguage=${useSecondaryLanguage}";
+            }
+        }
+
+        public class HOTEL_COUNTRY : HotelApiPathsBase
+        {
+            public HOTEL_COUNTRY()
+            {
+                httpMethod = new HttpMethod("GET");
+                endpoint = "locations/countries?fields=${fields}&language=${language}&from=${from}&to=${to}&useSecondaryLanguage=${useSecondaryLanguage}";
+            }
+        }
+
+        public class HOTEL_DESTINATION : HotelApiPathsBase
+        {
+            public HOTEL_DESTINATION()
+            {
+                httpMethod = new HttpMethod("GET");
+                endpoint = "locations/destinations?fields=${fields}&language=${language}&from=${from}&to=${to}&useSecondaryLanguage=${useSecondaryLanguage}";
+            }
+        }
+
+        public class HOTEL_FACILITY : HotelApiPathsBase
+        {
+            public HOTEL_FACILITY()
+            {
+                httpMethod = new HttpMethod("GET");
+                endpoint = "types/facilities?fields=${fields}&language=${language}&from=${from}&to=${to}&useSecondaryLanguage=${useSecondaryLanguage}";
+            }
+        }
+
+        public class HOTEL_FACILITYGROUP : HotelApiPathsBase
+        {
+            public HOTEL_FACILITYGROUP()
+            {
+                httpMethod = new HttpMethod("GET");
+                endpoint = "types/facilitygroups?fields=${fields}&language=${language}&from=${from}&to=${to}&useSecondaryLanguage=${useSecondaryLanguage}";
+            }
+        }
+
+        public class HOTEL_ROOM : HotelApiPathsBase
+        {
+            public HOTEL_ROOM()
+            {
+                httpMethod = new HttpMethod("GET");
+                endpoint = "types/rooms?fields=${fields}&language=${language}&from=${from}&to=${to}&useSecondaryLanguage=${useSecondaryLanguage}";
+            }
+        }
+
+        public class HOTEL_SEGMENT : HotelApiPathsBase
+        {
+            public HOTEL_SEGMENT()
+            {
+                httpMethod = new HttpMethod("GET");
+                endpoint = "types/segments?fields=${fields}&language=${language}&from=${from}&to=${to}&useSecondaryLanguage=${useSecondaryLanguage}";
+            }
+        }
     }
 }
