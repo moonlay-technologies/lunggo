@@ -122,14 +122,6 @@
                 @*<div ng-show="loading" class="text-center">
                     <img src="/Assets/images/load.gif" style="width: 30px; height: 30px; margin-top: 5%;">
                 </div>*@
-                @*<div>
-                        <span class="hotel-result-txt">Jumlah Tipe Kamar Tersedia: <b>{{hotel.room.length}}</b></span>
-                        <a href="" class="btn-hotel-result btn-blue small" ng-click="togleDisplay()">
-                            Tampilkan
-                            <text ng-show="roomCount == minRoomCount">semua</text>
-                            <text ng-show="roomCount == maxRoomCount">sebagian</text>
-                        </a>
-                    </div>*@
                 <ul class="dh-list-container">
                     <li ng-show="$index+1 <= roomCount" ng-repeat="room in hotel.room track by $index">
                         <div class="dh-list clearfix">
@@ -179,6 +171,14 @@
                         </div>
                     </li>
                 </ul>
+                <div class="btn-show">
+                    @*<span class="hotel-result-txt">Jumlah Tipe Kamar Tersedia: <b>{{hotel.room.length}}</b></span>*@
+                    <a href="" class="orange-txt" ng-click="togleDisplay()">
+                        Tampilkan
+                        <span class="more" ng-show="roomCount == minRoomCount">semua</span>
+                        <span class="less" ng-show="roomCount == maxRoomCount">sebagian</span>
+                    </a>
+                </div>
             </div>
         </div>
         <div class="detail-tab spec-hotel" id="spec-menu">

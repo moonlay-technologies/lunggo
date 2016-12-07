@@ -4989,6 +4989,29 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
           bottom: 0;
           margin-bottom: 15px;
           margin-right: 15px; }
+    .page-hotel .travorama-hotel-mobile .detail-hotel .btn-show {
+      text-align: center;
+      margin: 5px 0 20px; }
+      .page-hotel .travorama-hotel-mobile .detail-hotel .btn-show a.orange-txt {
+        text-decoration: none; }
+        .page-hotel .travorama-hotel-mobile .detail-hotel .btn-show a.orange-txt:hover {
+          text-decoration: underline; }
+      .page-hotel .travorama-hotel-mobile .detail-hotel .btn-show .less:after {
+        content: '';
+        width: 13px;
+        height: 8px;
+        background: url(/Assets/mobile/images/Hotel/arrow-up-orange.png);
+        display: inline-block;
+        margin-left: 7px;
+        vertical-align: middle; }
+      .page-hotel .travorama-hotel-mobile .detail-hotel .btn-show .more:after {
+        content: '';
+        width: 13px;
+        height: 8px;
+        background: url(/Assets/mobile/images/Hotel/arrow-down-orange.png);
+        display: inline-block;
+        margin-left: 7px;
+        vertical-align: middle; }
     .page-hotel .travorama-hotel-mobile .spec-hotel .sh-title {
       margin-bottom: 15px; }
     .page-hotel .travorama-hotel-mobile .spec-hotel .sh-desc {
