@@ -6,10 +6,6 @@ $(function() {
 if (typeof(angular) == 'object') {
     var app = angular.module('travorama', ['ngRoute', 'ngResource']);
 
-    app.config(function ($logProvider) {
-        $logProvider.debugEnabled(true);
-    });
-
     //function myFunction(xml) {
     //    var x, i, xmlDoc, txt;
     //    xmlDoc = xml.responseXML;
