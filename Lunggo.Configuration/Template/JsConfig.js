@@ -111,6 +111,10 @@ var LoginConfig = {
     Url: '$apiUrl$$loginPath$'
 };
 
+var RefundConfig = {
+    Url: '$apiUrl$$refundPath$'
+};
+
 var GetProfileConfig = {
     Url: '$apiUrl$$getProfilePath$'
 };
@@ -158,6 +162,10 @@ var uniqueCodePaymentConfig = {
 
 var LoginMobileConfig = {
     Url: '$mobileUrl$$loginPath$'
+};
+
+var RefundMobileConfig = {
+    Url: '$mobileUrl$$refundPath$'
 };
 
 var RegisterMobileConfig = {

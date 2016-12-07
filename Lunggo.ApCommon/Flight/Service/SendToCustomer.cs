@@ -103,5 +103,14 @@ namespace Lunggo.ApCommon.Flight.Service
             queue.AddMessage(new CloudQueueMessage(concattedMsg));
         }
 
+        /*Refund*/
+
+        public void Refund(string rsvNo, string name, string email)
+        {
+            var queueService = QueueService.GetInstance();
+            var queue = queueService.GetQueueByReference("refundemail");
+            var concattedMsg = rsvNo + "|" + name + "|" + email;
+            queue.AddMessage(new CloudQueueMessage(concattedMsg));
+        }
     }
 }

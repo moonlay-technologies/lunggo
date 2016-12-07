@@ -357,10 +357,9 @@ namespace Lunggo.Configuration
             const string hotelDetailsPath = @"/v1/hotel/gethoteldetail";
             const string hotelSelectPath = @"/v1/hotel/select";
             const string hotelBookPath = @"/v1/hotel/book";
+            const string refundPath = @"/v1/refund";
             var veritransTokenPath = _configDictionary["@@.*.veritrans.tokenEndPoint@@"];
             var veritransClientKey = _configDictionary["@@.*.veritrans.clientKey@@"];
-
-
 
             var fileTemplate = new StringTemplate(ReadFileToEnd(JsConfigTemplatePath));
             fileTemplate.Reset();
@@ -395,6 +394,7 @@ namespace Lunggo.Configuration
             fileTemplate.SetAttribute("hotelDetailsPath", hotelDetailsPath);
             fileTemplate.SetAttribute("hotelSelectPath", hotelSelectPath);
             fileTemplate.SetAttribute("hotelBookPath", hotelBookPath);
+            fileTemplate.SetAttribute("refund", refundPath);
             fileTemplate.SetAttribute("mobileUrl", mobileUrl);
 
             var fileContent = fileTemplate.ToString();

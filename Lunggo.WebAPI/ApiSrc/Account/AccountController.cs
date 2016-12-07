@@ -81,6 +81,23 @@ namespace Lunggo.WebAPI.ApiSrc.Account
 
         [HttpPost]
         [LunggoCorsPolicy]
+        [Route("v1/refund")]
+        public ApiResponseBase Refund()
+        {
+            RefundApiRequest request = null;
+            try
+            {
+                request = ApiRequestBase.DeserializeRequest<RefundApiRequest>();
+                var apiResponse = AccountLogic.Refund(request);
+                return apiResponse;
+            }
+            catch (Exception e)
+            {
+                return ApiResponseBase.ExceptionHandling(e, request);
+            }
+        }
+        [HttpPost]
+        [LunggoCorsPolicy]
         [Authorize]
         [Route("v1/resendconfirmationemail")]
         public ApiResponseBase ResendConfirmationEmail()

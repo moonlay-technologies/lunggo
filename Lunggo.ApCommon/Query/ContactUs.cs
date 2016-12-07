@@ -12,4 +12,11 @@ namespace Lunggo.ApCommon.Query
         public string Email { get; set; }
         public string Message { get; set; }
     }
+
+    public class Refund
+    {
+        public string RsvNo { get; set; }
+        public string Name { get; set; }
+        public string Email { get; set; }
+    }
 }
