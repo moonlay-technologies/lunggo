@@ -4,6 +4,77 @@ app.config(function ($logProvider) {
     $logProvider.debugEnabled(debugEnabled);
 });
 
+app.run(function ($rootScope) {
+    $rootScope.traGetRange = function (max, min) {
+
+        var startFrom = 1;
+        if (min != null || min !== undefined) {
+            startFrom = min;
+        }
+
+        var returnValue = [];
+        if (max <= min) {
+            return returnValue;
+        }
+        for (var i = startFrom; i <= max; i++) {
+            returnValue.push(i)
+        }
+        return returnValue;
+    };
+
+    $rootScope.traGetRangeDesc = function (count) {
+        var returnValue = [];
+        if (count < 1) {
+            return returnValue;
+        }
+        for (var i = count; i >= 1; i++) {
+            returnValue.push(i);
+        }
+        return returnValue;
+    };
+});
+
+app.directive('hotelListImage', function ($http, $log, $q) {
+    return {
+        restrict: 'A',
+        link: function (scope, element, attrs) {
+            var isImage = function (src) {
+                var deferred = $q.defer();
+                var image = new Image();
+                image.onerror = function () { deferred.reject(false); };
+                image.onload = function () { deferred.resolve(true); };
+                image.src = src;
+                return deferred.promise;
+            };
+            var resizeImages = function () {
+                var img = $(element);
+                var div = $("<div />").css({
+                    background: "url(" + img.attr("src") + ") no-repeat",
+                    width: "100%",
+                    height: "140px",
+                    "background-size": "cover",
+                    "background-position": "center"
+                });
+                img.replaceWith(div);
+            };
+
+            attrs.$observe('ngSrc', function (ngSrc) {
+                isImage(ngSrc).then(function () {
+                    $log.debug('image exist');
+                }, function () {
+                    var altImagePath = document.location.origin + '/Assets/travorama20/images/Hotel/no-hotel.png';
+                    $log.debug('image not exist');
+
+                    element.removeAttr('src');
+                    element.attr('src', altImagePath); // set default image
+                }).finally(function () {
+                    // Always execute this on both error and success
+                    resizeImages();
+                });
+            });
+        }
+    };
+});
 app.directive('altImage', function ($http, $log, $q) {
     return {
         restrict: 'A',

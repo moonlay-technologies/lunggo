@@ -3,7 +3,7 @@ $(function() {
     $('[data-toggle="tooltip"]').tooltip();
 });
 
-if (typeof(angular) == 'object') {
+if (typeof (angular) == 'object') {
     var app = angular.module('travorama', ['ngRoute', 'ngResource']);
 
     //function myFunction(xml) {
@@ -16,37 +16,6 @@ if (typeof(angular) == 'object') {
     //    }
     //    document.getElementById("demo").innerHTML = txt;
     //}
-
-    app.run(function ($rootScope) {
-        $rootScope.traGetRange = function (max, min) {
-
-            var startFrom = 1;
-            if (min != null || min !== undefined) {
-                startFrom = min;
-            }
-
-            var returnValue = [];
-            if (max <= min) {
-                return returnValue;
-            }
-            for (var i = startFrom; i <= max; i++) {
-                returnValue.push(i)
-            }
-            return returnValue;
-        };
-
-        $rootScope.traGetRangeDesc = function (count) {
-            var returnValue = [];
-            if (count < 1) {
-                return returnValue;
-            }
-            for (var i = count; i >= 1; i++) {
-                returnValue.push(i);
-            }
-            return returnValue;
-        };
-    });
-
 
     app.factory('DataSource', ['$http', function ($http) {
         return {
@@ -80,125 +49,7 @@ if (typeof(angular) == 'object') {
     };
 
     //DataSource.get(SOURCE_FILE, setData, xmlTransform);
-
-    app.directive('hotelListImage', function ($http, $log, $q) {
-        return {
-            restrict: 'A',
-            link: function (scope, element, attrs) {
-                var isImage = function (src) {
-                    var deferred = $q.defer();
-                    var image = new Image();
-                    image.onerror = function () { deferred.reject(false); };
-                    image.onload = function () { deferred.resolve(true); };
-                    image.src = src;
-                    return deferred.promise;
-                };
-                var resizeImages = function () {
-                    var img = $(element);
-                    var div = $("<div />").css({
-                        background: "url(" + img.attr("src") + ") no-repeat",
-                        width: "100%",
-                        height: "140px",
-                        "background-size": "cover",
-                        "background-position": "center"
-                    });
-                    img.replaceWith(div);
-                };
-
-                attrs.$observe('ngSrc', function (ngSrc) {
-                    isImage(ngSrc).then(function () {
-                        $log.debug('image exist');
-                    }, function () {
-                        var altImagePath = document.location.origin + '/Assets/travorama20/images/Hotel/no-hotel.png';
-                        $log.debug('image not exist');
-
-                        element.removeAttr('src');
-                        element.attr('src', altImagePath); // set default image
-                    }).finally(function () {
-                        // Always execute this on both error and success
-                        resizeImages();
-                    });
-                });
-            }
-        };
-    })
-    .directive('altImage', function ($http, $log, $q) {
-        return {
-            restrict: 'A',
-            link: function (scope, element, attrs) {
-                var altImagePath = document.location.origin + '/Assets/travorama20/images/Hotel/no-hotel.png';
-
-                var isImage = function (src) {
-                    var deferred = $q.defer();
-                    var image = new Image();
-                    image.onerror = function () { deferred.reject(false); };
-                    image.onload = function () { deferred.resolve(true); };
-                    image.src = src;
-                    return deferred.promise;
-                };
-
-                attrs.$observe('ngSrc', function (ngSrc) {
-                    isImage(ngSrc).then(function() {
-                    }, function() {
-                        element.removeAttr('src');
-                        element.attr('src', altImagePath); // set default image
-                    });
-                });
-
-                attrs.$observe('src', function (src) {
-                    isImage(src).then(function () {
-                    }, function () {
-                        element.attr('src', altImagePath); // set default image
-                    });
-                });
-
-                attrs.$observe('dataThumb', function (dataThumb) {
-                    isImage(dataThumb).then(function () {
-                    }, function () {
-                        element.removeAttr('src');
-                        element.attr('src', altImagePath); // set default image
-                    });
-                });
-
-                attrs.$observe('test', function (test) {
-                    isImage(test).then(function () {
-                    }, function () {
-                        var altImagePath = document.location.origin + '/Assets/travorama20/images/Hotel/no-hotel-lg.png';
-                        $log.debug('image not exist');
-
-                        element.removeAttr('style');
-                        element.attr('style', "background-image: url(" + altImagePath + "); width: 100%; height: 590px; background-size: cover; background-position: center center;"); // set default image
-                    });
-                });
-
-                //attrs.$observe('altImage', function (altImage) {
-                //    isImage(altImage).then(function () {
-                //        $log.debug('image exist');
-                //    }, function () {
-                //        var altImagePath = document.location.origin + '/Assets/travorama20/images/Hotel/no-hotel.png';
-                //        $log.debug('image not exist');
-
-                //        element.removeAttr('src');
-                //        //element.attr('src', "background-image: url(" + altImagePath + "); width: 100%; height: 450px; background-size: cover; background-position: center center;"); // set default image
-                //    });
-                //});
-                
-            }
-        };
-    })
-    app.directive('traOnEnter', function () {
-        return function (scope, element, attrs) {
-            element.bind("keydown keypress", function (event) {
-                if (event.which === 13) {
-                    scope.$apply(function () {
-                        scope.$eval(attrs.traOnEnter);
-                    });
-                    event.preventDefault();
-                }
-            });
-        };
-    });
-}
+};
 
 
 
