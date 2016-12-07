@@ -146,6 +146,33 @@ namespace Lunggo.Repository.TableRecord
 		        IncrementLog("DisplayName");
 		    }
 		}
+        public String ProductType
+        {
+            get { return _ProductType; }
+            set
+            {
+                _ProductType = value;
+                IncrementLog("ProductType");
+            }
+        }
+        public Decimal? MaxBudget
+        {
+            get { return _MaxBudget; }
+            set
+            {
+                _MaxBudget = value;
+                IncrementLog("MaxBudget");
+            }
+        }
+        public Decimal? UsedBudget
+        {
+            get { return _UsedBudget; }
+            set
+            {
+                _UsedBudget = value;
+                IncrementLog("UsedBudget");
+            }
+        }
 
 		
 		private long? _CampaignId;
@@ -163,6 +190,9 @@ namespace Lunggo.Repository.TableRecord
 		private Boolean? _Status;
 		private String _CampaignTypeCd;
 		private String _DisplayName;
+        private String _ProductType;
+        private Decimal? _MaxBudget;
+        private Decimal? _UsedBudget;
 
 
 		public static CampaignTableRecord CreateNewInstance()
@@ -209,6 +239,9 @@ namespace Lunggo.Repository.TableRecord
 				new ColumnMetadata("Status", false),
 				new ColumnMetadata("CampaignTypeCd", false),
 				new ColumnMetadata("DisplayName", false),
+				new ColumnMetadata("ProductType", false),
+				new ColumnMetadata("MaxBudget", false),
+				new ColumnMetadata("UsedBudget", false),
 
             };
         }

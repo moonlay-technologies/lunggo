@@ -181,7 +181,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                         var rate = new HotelRate
                         {
                             Boards = rateRecord.Board,
-                            RoomCount = rateRecord.RoomCount.GetValueOrDefault(),
+                            RateCount = rateRecord.RoomCount.GetValueOrDefault(),
                             AdultCount = rateRecord.AdultCount.GetValueOrDefault(),
                             ChildCount = rateRecord.ChildCount.GetValueOrDefault()
 

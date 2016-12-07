@@ -49,7 +49,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                 Address = hotelDetail.Address,
                 City = hotelDetail.City,
                 ZoneName = GetZoneNameFromDict(hotelDetail.DestinationCode+ "-" +hotelDetail.ZoneCode),
-                StarRating = Convert.ToInt32(hotelDetail.StarRating.Substring(0,1)),
+                StarRating = Convert.ToInt32(GetSimpleCodeByCategoryCode(hotelDetail.StarRating)),
                 //ChainName = GetHotelChainDesc(hotelDetail.Chain),
                 AccomodationName = GetHotelAccomodationDescId(hotelDetail.AccomodationType),
                 ImageUrl = hotelDetail.ImageUrl.Where(x => x.Type == "HAB").ToList().Select(y => y.Path).ToList(),
@@ -92,7 +92,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                     StarRating = hotelDetail.StarCode != 0
                         ? hotelDetail.StarCode
                         : (hotelDetail.StarRating != null
-                            ? Convert.ToInt32(hotelDetail.StarRating.Substring(0, 1))
+                            ? GetSimpleCodeByCategoryCode(hotelDetail.StarRating)
                             : 0),
                     //ChainName = GetHotelChainDesc(hotelDetail.Chain),
                     //AccomodationName = GetHotelAccomodationDescId(hotelDetail.AccomodationType),
@@ -198,20 +198,20 @@ namespace Lunggo.ApCommon.Hotel.Service
                     {
                         price = rate.Price.Local;
                         night = rate.NightCount;
-                        roomCount = rate.RoomCount;
+                        roomCount = rate.RateCount;
                     }
                     else
                     {
                         price = rate.Price.Local < price ? rate.Price.Local:price;
                         night = rate.NightCount;
-                        roomCount = rate.RoomCount;
+                        roomCount = rate.RateCount;
                     }
                 }
             }
             hotel.NetTotalFare = price;
-            hotel.OriginalTotalFare = price * 1.01M;
+            hotel.OriginalTotalFare = Math.Round(price * 1.01M);
             hotel.NetFare = Math.Round((hotel.NetTotalFare / roomCount) / night);
-            hotel.OriginalFare = hotel.NetFare*1.01M;
+            hotel.OriginalFare = Math.Round(hotel.NetFare*1.01M);
             
         }
 
@@ -282,7 +282,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                         if(!data.IsFree)
                             displayFacilities.General.Add(GetHotelFacilityDescId(Convert.ToInt32(data.FullFacilityCode)) +" *");
                         else
-                        displayFacilities.General.Add(GetHotelFacilityDescId(Convert.ToInt32(data.FullFacilityCode)));
+                            displayFacilities.General.Add(GetHotelFacilityDescId(Convert.ToInt32(data.FullFacilityCode)));
                         break;
                     case 71:
                         if (displayFacilities.Meal == null)
@@ -290,7 +290,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                         if (!data.IsFree)
                             displayFacilities.Meal.Add(GetHotelFacilityDescId(Convert.ToInt32(data.FullFacilityCode)) + " *");
                         else
-                        displayFacilities.Meal.Add(GetHotelFacilityDescId(Convert.ToInt32(data.FullFacilityCode)));
+                            displayFacilities.Meal.Add(GetHotelFacilityDescId(Convert.ToInt32(data.FullFacilityCode)));
                         break;
                     case 72:
                         if (displayFacilities.Business == null)
@@ -298,7 +298,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                         if (!data.IsFree)
                             displayFacilities.Business.Add(GetHotelFacilityDescId(Convert.ToInt32(data.FullFacilityCode)) + " *");
                         else
-                        displayFacilities.Business.Add(GetHotelFacilityDescId(Convert.ToInt32(data.FullFacilityCode)));
+                            displayFacilities.Business.Add(GetHotelFacilityDescId(Convert.ToInt32(data.FullFacilityCode)));
                         break;
                     case 73:
                         if (displayFacilities.Entertainment == null)
@@ -306,7 +306,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                         if (!data.IsFree)
                             displayFacilities.Entertainment.Add(GetHotelFacilityDescId(Convert.ToInt32(data.FullFacilityCode)) + " *");
                         else
-                        displayFacilities.Entertainment.Add(
+                            displayFacilities.Entertainment.Add(
                             GetHotelFacilityDescId(Convert.ToInt32(data.FullFacilityCode)));
                         break;
                     case 74:
@@ -315,7 +315,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                         if (!data.IsFree)
                             displayFacilities.Health.Add(GetHotelFacilityDescId(Convert.ToInt32(data.FullFacilityCode)) + " *");
                         else
-                        displayFacilities.Health.Add(GetHotelFacilityDescId(Convert.ToInt32(data.FullFacilityCode)));
+                            displayFacilities.Health.Add(GetHotelFacilityDescId(Convert.ToInt32(data.FullFacilityCode)));
                         break;
                     case 90:
                         if (displayFacilities.Sport == null)
@@ -323,7 +323,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                         if (!data.IsFree)
                             displayFacilities.Sport.Add(GetHotelFacilityDescId(Convert.ToInt32(data.FullFacilityCode)) + " *");
                         else
-                        displayFacilities.Sport.Add(GetHotelFacilityDescId(Convert.ToInt32(data.FullFacilityCode)));
+                            displayFacilities.Sport.Add(GetHotelFacilityDescId(Convert.ToInt32(data.FullFacilityCode)));
                         break;
                     default:
                         if (displayFacilities.Other == null)
@@ -332,7 +332,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                             if (!data.IsFree)
                                 displayFacilities.Other.Add(GetHotelFacilityDescId(Convert.ToInt32(data.FullFacilityCode)) + " *");
                             else
-                            displayFacilities.Other.Add(GetHotelFacilityDescId(Convert.ToInt32(data.FullFacilityCode)));
+                                displayFacilities.Other.Add(GetHotelFacilityDescId(Convert.ToInt32(data.FullFacilityCode)));
                         break;
                 }
             }
@@ -417,7 +417,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                     Allotment = rateDetail.Allotment,
                     Boards = rateDetail.Boards,
                     BoardDescription = GetHotelBoardDescId(rateDetail.Boards),
-                    RoomCount = rateDetail.RateCount == 0 ? rateDetail.RoomCount : rateDetail.RateCount,
+                    RoomCount = rateDetail.RateCount,
                     TimeLimit = rateDetail.TimeLimit,
                     //Cancellation = (rateDetail.Class != "NRF" && rateDetail.Cancellation != null) ? rateDetail.Cancellation : null,
                     //IsRefundable = (rateDetail.Class != "NRF" && rateDetail.Cancellation != null),
@@ -457,7 +457,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                 Allotment = rate.Allotment,
                 Boards = rate.Boards,
                 BoardDescription = GetHotelBoardDescId(rate.Boards),
-                RoomCount = rate.RoomCount,
+                RoomCount = rate.RateCount,
                 TimeLimit = rate.TimeLimit,
                 Offers = rate.Offers,
                 TermAndCondition = GetRateCommentFromTableStorage(rate.RateCommentsId,
@@ -500,18 +500,18 @@ namespace Lunggo.ApCommon.Hotel.Service
         public void SetDisplayPriceHotelRate(HotelRateForDisplay rateDisplay,HotelRate rate)
         {
             rateDisplay.NetTotalFare = rate.Price.Local;
-            rateDisplay.OriginalTotalFare = rateDisplay.NetTotalFare*1.01M;
+            rateDisplay.OriginalTotalFare = Math.Round(rateDisplay.NetTotalFare*1.01M);
 
-            rateDisplay.NetFare = Math.Round((rateDisplay.NetTotalFare / rate.RoomCount) / rate.NightCount);
-            rateDisplay.OriginalFare = rateDisplay.NetFare * 1.01M;
+            rateDisplay.NetFare = Math.Round((rateDisplay.NetTotalFare / rate.RateCount) / rate.NightCount);
+            rateDisplay.OriginalFare = Math.Round(rateDisplay.NetFare * 1.01M);
 
             if (rateDisplay.Cancellation != null)
             {
                 var margin = rate.Price.MarginNominal / rate.Price.Supplier;
                 foreach (var data in rateDisplay.Cancellation)
                 {
-                    data.Fee = data.Fee * (1 + margin);
-                    data.SingleFee = Math.Round((data.Fee/rate.RoomCount)/rate.NightCount);
+                    data.Fee = Math.Round(data.Fee * (1 + margin));
+                    data.SingleFee = Math.Round((data.Fee/rate.RateCount)/rate.NightCount);
                 }
             }
         }

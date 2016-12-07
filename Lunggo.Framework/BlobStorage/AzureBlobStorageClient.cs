@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Text;
 using Lunggo.Framework.Exceptions;
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Blob;
@@ -339,38 +340,16 @@ namespace Lunggo.Framework.BlobStorage
 
             internal List<string> GetListFileName(string containerName)
             {
-                CloudBlobContainer container = this._blobStorageClient.GetContainerReference(containerName.ToLower()+"/1");
-                var listBlobs = container.ListBlobs();
+                CloudBlobContainer container = this._blobStorageClient.GetContainerReference(containerName.ToLower());
                 var fileNameList = new List<string>();
-                CloudBlobDirectory folder = container.GetDirectoryReference("GEN");
-                var blobs = folder.ListBlobs(true);
-                Debug.Print("Hasil : {0}", folder.Uri);
-                foreach (IListBlobItem item in blobs)
+                CloudBlobDirectory folder = container.GetDirectoryReference("1");
+                var listFileBlob = folder.ListBlobs(true);
+                foreach (var blobItem in listFileBlob)
                 {
-                    Debug.Print("OK : {0}",item.Uri);
+                    var temp = blobItem.Uri.Segments.Skip(2);
+                    fileNameList.Add(string.Join("",temp.ToArray()));
                 }
-                //foreach (IListBlobItem item in folder.ListBlobs())
-                //{
-                //    fileNameList.Add(string.Format("Directory {0}", item.Uri));
-                //}
 
-                //foreach (IListBlobItem item in folder.ListBlobs(null,false))
-                //{
-                //    Debug.Print("Directory{0}", item.Uri);
-                //}
-
-                //Method 2. Loop over container and grab folders.
-                //foreach (IListBlobItem item in container.ListBlobs(null, false))
-                //{
-                //    if (item.GetType() == typeof(CloudBlobDirectory))
-                //    {
-                //        // we know this is a sub directory now
-                //        CloudBlobDirectory subFolder = (CloudBlobDirectory)item;
-
-                //        Debug.Print("Directory: {0}", subFolder.Uri);
-                //    }
-                //}
-                //fileNameList = temp.OfType<CloudBlockBlob>().Select(b => b.Name).ToList();
                 return fileNameList;
             }
 
@@ -382,3 +361,5 @@ namespace Lunggo.Framework.BlobStorage
         }
     }
 }
+
+

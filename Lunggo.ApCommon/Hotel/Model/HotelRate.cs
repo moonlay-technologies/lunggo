@@ -109,8 +109,6 @@ namespace Lunggo.ApCommon.Hotel.Model
         public string Boards { get; set; }
         [JsonProperty("cancellation", NullValueHandling = NullValueHandling.Ignore)]
         public List<Cancellation> Cancellation { get; set; }
-        [JsonProperty("roomCount", NullValueHandling = NullValueHandling.Ignore)]
-        public int RoomCount { get; set; }
         [JsonProperty("nightCount", NullValueHandling = NullValueHandling.Ignore)]
         public int NightCount { get; set; }
         [JsonProperty("adultCount", NullValueHandling = NullValueHandling.Ignore)]

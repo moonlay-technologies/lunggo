@@ -70,7 +70,7 @@ namespace Lunggo.ApCommon.Hotel.Service
             {
                 occupancies.AddRange(room.Rates.Select(rate => new Occupancy
                 {
-                    RoomCount = rate.RoomCount,
+                    RoomCount = rate.RateCount,
                     AdultCount = rate.AdultCount,
                     ChildCount = rate.ChildCount,
                     ChildrenAges = rate.ChildrenAges
@@ -79,7 +79,6 @@ namespace Lunggo.ApCommon.Hotel.Service
 
             occupancies = occupancies.Distinct().ToList();
             var rateFound = Enumerable.Repeat(false, occupancies.Count).ToList();
-            var index = 0;
             var allCurrency = Currency.GetAllCurrencies();
             Guid generatedSearchId = Guid.NewGuid();
             SaveAllCurrencyToCache(generatedSearchId.ToString(), allCurrency);
@@ -135,10 +134,11 @@ namespace Lunggo.ApCommon.Hotel.Service
                     var roomCd = sampleRatekey[5];
                     var someData = sampleRatekey[6];
                     var board = sampleRatekey[7];
-                    var roomCount = rate.RoomCount;
+                    var roomCount = rate.RateCount;
                     var adultCount = rate.AdultCount;
                     var childCount = rate.ChildCount;
                     var childrenAges = sampleRatekey[10];
+                    var index = room.Rates.IndexOf(rate);
 
                     foreach (var rooma in searchResult.HotelDetails[0].Rooms)
                     {
@@ -171,7 +171,6 @@ namespace Lunggo.ApCommon.Hotel.Service
                                     rate.Price.SetSupplier(ratea.Price.OriginalIdr, rate.Price.SupplierCurrency);
                                     rate.RateCommentsId = ratea.RateCommentsId;
                                     rateFound[index] = true;
-                                    index++;
                                 }
                             }
                         }

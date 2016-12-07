@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Lunggo.ApCommon.Hotel.Constant;
 using Lunggo.ApCommon.Hotel.Model;
 using Lunggo.ApCommon.Hotel.Service;
 using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Sdk;
@@ -13,14 +14,15 @@ using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Sdk.auto.model;
 
 namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Content
 {
-    public class GetRateComment
+    public partial class HotelBedsService
     {
         public void GetRateCommentData(int from, int to)
         {
             try
             {
-                var client = new HotelApiClient("p8zy585gmgtkjvvecb982azn", "QrwuWTNf8a",
-                    "https://api.test.hotelbeds.com/hotel-content-api");
+                //var client = new HotelApiClient("zvwtnf83dj86bf58sejb6e3f", "HBbpT4u3xE",
+                //    "https://api.test.hotelbeds.com/hotel-content-api");
+                var client = new HotelApiClient(HotelApiType.ContentApi);
                 var total = GetTotalRateComment(client);
                 var isValid = true;
                 do

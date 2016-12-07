@@ -209,12 +209,12 @@ namespace Lunggo.ApCommon.Hotel.Service
             {
                 FileBlobModel = new FileBlobModel
                 {
-                    Container = "HotelAutocompleteIndonesia",
+                    Container = "HotelAutocomplete",
                     FileInfo = new FileInfo
                     {
                         ContentType = "",
                         FileData = autocomplete.ToCacheObject(),
-                        FileName = "autocompleteIndonesia"
+                        FileName = "autocomplete"
                     }
                 },
                 SaveMethod = SaveMethod.Force
@@ -228,7 +228,7 @@ namespace Lunggo.ApCommon.Hotel.Service
         {
             var blob = BlobStorageService.GetInstance().GetByteArrayByFileInContainer("autocomplete", "HotelAutocomplete");
             var value = (RedisValue)blob;
-            return value.DeconvertTo<List<HotelAutoComplete>>().Where(c => c.Country == "Indonesia").ToList();
+            return value.DeconvertTo<List<HotelAutoComplete>>().Where(c => !(c.Type == 4 && c.Country != "Indonesia")).ToList();
         }
 
         public HotelAutoComplete GetAutoCompleteFromTableStorage(long code)

@@ -52,7 +52,6 @@ namespace Lunggo.ApCommon.Hotel.Service
             }
 
             var rateFound = Enumerable.Repeat(false, occupancies.Count).ToList();
-            var index = 0;
 
             occupancies = occupancies.Distinct().ToList();
             var checkin = bookInfo.Rooms[0].Rates[0].RateKey.Split('|')[0];
@@ -99,7 +98,8 @@ namespace Lunggo.ApCommon.Hotel.Service
                 };
             }
 
-            foreach (var rate in bookInfo.Rooms.SelectMany(room => room.Rates))
+            var rates = bookInfo.Rooms.SelectMany(room => room.Rates).ToList();
+            foreach (var rate in rates)
             {
                 var sampleRatekey = rate.RateKey.Split('|');
                 var roomCd = sampleRatekey[5];
@@ -109,6 +109,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                 var adultCount = rate.AdultCount;
                 var childCount = rate.ChildCount;
                 var childrenAges = "";
+                var index = rates.IndexOf(rate);
 
                 if (rate.ChildCount != 0)
                 {
@@ -124,7 +125,8 @@ namespace Lunggo.ApCommon.Hotel.Service
                         {
                             var ratekey = ratea.RateKey.Split('|');
                             if (Convert.ToInt32(ratekey[4]) != bookInfo.HotelCode || ratekey[5] != roomCd ||
-                                ratekey[6] != someData || ratekey[7] != board ||
+                                //ratekey[6] != someData || 
+                                ratekey[7] != board ||
                                 Convert.ToInt32(ratekey[9].Split('~')[0]) != roomCount
                                 || Convert.ToInt32(ratekey[9].Split('~')[1]) != adultCount
                                 || Convert.ToInt32(ratekey[9].Split('~')[2]) != childCount
@@ -143,7 +145,6 @@ namespace Lunggo.ApCommon.Hotel.Service
                                     .Select(x => x.Description)
                                     .ToList();
                             rateFound[index] = true;
-                            index++;
                         }
                     }
                 }

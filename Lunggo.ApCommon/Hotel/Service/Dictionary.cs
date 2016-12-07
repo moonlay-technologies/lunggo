@@ -250,7 +250,7 @@ namespace Lunggo.ApCommon.Hotel.Service
             _hotelChainFilePath = Path.Combine(_configPath, HotelchainFileName);
             _hotelCategoryFilePath = Path.Combine(_configPath, HotelCategoryFileName);
             _hotelFacilitiesFilter = Path.Combine(_configPath, HotelFacilityFilterGroupFileName);	
-            AutoCompletes = HotelService.GetInstance().GetAutocompleteFromBlob();
+            AutoCompletes = GetAutocompleteFromBlob();
             PopulateHotelSegmentDict(_hotelSegmentFilePath);
 
             PopulateHotelAccomodationDict(_hotelAccomodationFilePath);
@@ -1072,6 +1072,15 @@ namespace Lunggo.ApCommon.Hotel.Service
         public int GetMaxAdult(string code)
         {
             return code == null ? 0 : Rooms.Where(room => room.RoomCd == code).Select(room => room.MaxAdult).FirstOrDefault();
+        }
+
+        public int GetMaxChild(string code)
+        {
+            if (code == null)
+            {
+                return 0;
+            }
+            return Rooms.Where(room => room.RoomCd == code).Select(room => room.MaxChild).FirstOrDefault();
         }
 
         public int GetPaxCapacity(string code)

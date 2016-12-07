@@ -23,6 +23,15 @@ namespace Lunggo.ApCommon.Campaign.Service
                     return rowAffected > 0;
                 }
             }
+
+            internal static bool UseBudget(string voucherCode, decimal discount)
+            {
+                using (var conn = DbService.GetInstance().GetOpenConnection())
+                {
+                    int rowAffected = UseBudgetQuery.GetInstance().Execute(conn, new { VoucherCode = voucherCode, Discount = discount });
+                    return rowAffected > 0;
+                }
+            }
         }
     }
 }
