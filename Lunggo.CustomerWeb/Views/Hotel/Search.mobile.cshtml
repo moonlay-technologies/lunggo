@@ -91,7 +91,7 @@
         <ul class="hotel-list-container">
             <li ng-repeat="hotel in hotels" ng-click="GotoDetailHotel(hotel.hotelCd)">
                 <div class="hotel-list clearfix">
-                    <div class="col-left-hotel"><div class="img-list" hotel-list-image style="background-image: url({{hotel.mainImage}});"></div></div>
+                    <div class="col-left-hotel"><div class="img-list" alt-image style="background-image: url({{hotel.mainImage}});"></div></div>
                     <div class="col-right-hotel">
                         <div class="blue-txt bold-txt lg-txt">{{hotel.hotelName}}</div>
                         <div class="star" ng-if="hotel.starRating == 1"></div>

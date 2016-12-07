@@ -300,8 +300,8 @@ jQuery(document).ready(function ($) {
             $(this).closest('.site-content').parent().find('.menu-main').find('#header-hotel').addClass('active');
             $(this).closest('.site-content').parent().find('.menu-main').find('#header-hotel').siblings().removeClass('active');
         }
-    });
-
+});
+ 
     //Mobile Home Page
     //$('select[name="roomclass"]').on('change', function () {
     //    var toNumb = parseInt($('select[name="roomclass"]').val());

@@ -11,7 +11,7 @@
 
     var hotelCd = Model.HotelCode;
     var hotelDetail = HotelService.GetInstance().GetHotelDetailFromTableStorage(Convert.ToInt32(hotelCd));
-
+    
     var loc = ToTitleCase(hotelDetail.HotelName + ", " + hotelDetail.City);
 
 }
@@ -72,7 +72,7 @@
 }
 
 @section PageJS{
-    <script src="/Assets/travorama20/js/hotelDetailController.js"></script>
+<script src="/Assets/travorama20/js/hotelDetailController.js"></script>
     <script src="/Assets/mobile/js/HotelController.js"></script>
     <script src="/Assets/travorama20/angularDirectory/search/hotelSearch.service.js"></script>
 }
@@ -85,17 +85,28 @@
                 <a href="#" attr-link="#spec-menu">RINCIAN</a>
             </div>
         </div>
-    </div>
+        </div>
     <div class="detail-hotel-container">
         <div class="detail-tab detail-hotel" id="detail-menu">
             <div class="dh-slider">
-                <div class="item active">
+                <div class="item" ng-if="hotel.images.length >= 1">
                     <div class="dh-img" style="background-image: url({{hotel.images[0]}});"></div>
                 </div>
-                <div class="item">
+                <div class="item" ng-if="hotel.images.length >= 2">
                     <div class="dh-img" style="background-image: url({{hotel.images[1]}});"></div>
                 </div>
-
+                <div class="item" ng-if="hotel.images.length >= 3">
+                    <div class="dh-img" style="background-image: url({{hotel.images[2]}});"></div>
+            </div>
+                <div class="item" ng-if="hotel.images.length >= 4">
+                    <div class="dh-img" style="background-image: url({{hotel.images[3]}});"></div>
+                </div>
+                <div class="item" ng-if="hotel.images.length >= 5">
+                    <div class="dh-img" style="background-image: url({{hotel.images[4]}});"></div>
+                </div>
+                <div class="item" ng-if="hotel.images.length >= 6">
+                    <div class="dh-img" style="background-image: url({{hotel.images[5]}});"></div>
+                </div>
                 <div ng-show="loading" class="text-center">
                     <img src="/Assets/images/load.gif" class="img-loading">
                 </div>
@@ -112,8 +123,8 @@
                         <a href="#" class="like"></a>
                         <a href="#" class="share"></a>
                     </div>*@
+                    </div>
                 </div>
-            </div>
             <div class="dh-location sm-txt">
                 {{hotel.address}} {{hotel.city}} {{hotel.postalCd}}, {{hotel.country}}
             </div>
@@ -195,7 +206,7 @@
             <div class="sh-facility">
                 <div class="sh-title darkgrey-txt lg-txt bold-txt">Fasilitas Utama Hotel</div>
                 @*<div ng-show="loading" class="text-center">
-                        <img src="/Assets/images/load.gif" style="width: 30px; height: 30px; margin-top: 5%;">
+                    <img src="/Assets/images/load.gif" style="width: 30px; height: 30px; margin-top: 5%;">
                     </div>*@
                 <div class="sh-list-facility grey-txt clearfix">
                     <div class="sh-row clearfix" ng-repeat="facilities in hotel.facilities track by $index" ng-hide="facilities === undefined">
@@ -206,7 +217,7 @@
                                                                         'fac-meal':facilities.facilityGroup == 'meal',
                                                                         'fac-ent':facilities.facilityGroup == 'entertainment',
                                                                         'fac-other':facilities.facilityGroup == 'other'}">
-
+                         
                         </div>
                         <div class="col-8 clearfix">
                             <ul class="col-half blue-list" ng-repeat="facilityList in facilities.facilityList.slice(0, facilities.facilityList.length)">
@@ -214,27 +225,27 @@
                             </ul>
                         </div>
                     </div>
-
+                    
                     @*<ul class="col-half sh-list">
-                            <li class="bed-blue">Bed</li>
-                            <li class="meal-blue">Breakfast</li>
-                            <li class="bell-blue">Room Service</li>
-                            <li class="wifi-blue">Public WiFi</li>
-                            <li class="bed-blue">Bed</li>
-                            <li class="meal-grey">Breakfast</li>
-                            <li class="bell-grey">Room Service</li>
-                            <li class="wifi-grey">Public WiFi</li>
-                        </ul>
-                        <ul class="col-half sh-list">
-                            <li class="pool-blue">Swimming Pool</li>
-                            <li class="meal-blue">Breakfast</li>
-                            <li class="tv-blue">TV</li>
-                            <li class="car-blue">Hotel Car</li>
-                            <li class="ac-grey">AC</li>
-                            <li class="tv-blue">TV</li>
-                            <li class="car-blue">Hotel Car</li>
-                            <li class="ac-blue">AC</li>
-                        </ul>*@
+                        <li class="bed-blue">Bed</li>
+                        <li class="meal-blue">Breakfast</li>
+                        <li class="bell-blue">Room Service</li>
+                        <li class="wifi-blue">Public WiFi</li>
+                        <li class="bed-blue">Bed</li>
+                        <li class="meal-grey">Breakfast</li>
+                        <li class="bell-grey">Room Service</li>
+                        <li class="wifi-grey">Public WiFi</li>
+                    </ul>
+                    <ul class="col-half sh-list">
+                        <li class="pool-blue">Swimming Pool</li>
+                        <li class="meal-blue">Breakfast</li>
+                        <li class="tv-blue">TV</li>
+                        <li class="car-blue">Hotel Car</li>
+                        <li class="ac-grey">AC</li>
+                        <li class="tv-blue">TV</li>
+                        <li class="car-blue">Hotel Car</li>
+                        <li class="ac-blue">AC</li>
+                    </ul>*@
                 </div>
                 * Fasilitas Berbayar
             </div>
@@ -242,7 +253,7 @@
                 <div class="sh-title darkgrey-txt lg-txt bold-txt">Perlu Diingat</div>
                 <div ng-show="loading" class="text-center">
                     <img src="/Assets/images/load.gif" style="width: 30px; height: 30px; margin-top: 5%;">
-                </div>
+            </div>
                 <div class="sh-policy-txt darkgrey-txt">
                     <ul>
                         <li ng-repeat="policy in hotel.policy track by $index">{{policy}}</li>
@@ -277,12 +288,24 @@
                             </div>
                         </div>
                         <div class="dr-slider dh-slider">
-                            <div class="item active">
+                            <div class="item" ng-if="selectedRoom.roomImages.length >= 1">
                                 <div class="dh-img" style="background-image: url({{selectedRoom.roomImages[0]}});"></div>
                             </div>
-                            <div class="item">
+                            @*<div class="item" ng-if="selectedRoom.roomImages.length >= 2">
                                 <div class="dh-img" style="background-image: url({{selectedRoom.roomImages[1]}});"></div>
                             </div>
+                            <div class="item" ng-if="selectedRoom.roomImages.length >= 3">
+                                <div class="dh-img" style="background-image: url({{selectedRoom.roomImages[2]}});"></div>
+                            </div>
+                            <div class="item" ng-if="selectedRoom.roomImages.length >= 4">
+                                <div class="dh-img" style="background-image: url({{selectedRoom.roomImages[3]}});"></div>
+                            </div>
+                            <div class="item" ng-if="selectedRoom.roomImages.length >= 5">
+                                <div class="dh-img" style="background-image: url({{selectedRoom.roomImages[4]}});"></div>
+                            </div>
+                            <div class="item" ng-if="selectedRoom.roomImages.length >= 6">
+                                <div class="dh-img" style="background-image: url({{selectedRoom.roomImages[5]}});"></div>
+                            </div>*@
                         </div>
                         <div class="dr-detail">
                             <div class="bold-txt lg-txt darkgrey-txt">{{selectedRoom.roomName}} ({{selectedRoom.rate.boardDesc}})</div>
@@ -319,9 +342,9 @@
                             <ul class="blue-list dr-txt darkgrey-txt">
                                 <li ng-repeat="tnc in selectedRoom.rate.tnc">{{tnc}} <br /></li>
                                 @*<li class="check-in col-3 sm-txt"><span class="grey-txt">Check In</span> 14.00-24.00</li>
-                                    <li class="check-out col-3 sm-txt"><span class="grey-txt">Check Out</span> 12.00</li>
-                                    <li class="max-visitor col-3 sm-txt"><span class="grey-txt">Max Orang</span> 2 Orang</li>*@
-                            </ul>
+                                <li class="check-out col-3 sm-txt"><span class="grey-txt">Check Out</span> 12.00</li>
+                                <li class="max-visitor col-3 sm-txt"><span class="grey-txt">Max Orang</span> 2 Orang</li>*@
+                                </ul>
                         </div>
 
                     </div>
@@ -370,7 +393,7 @@
                     <ul class="result" ng-click="PageConfig.SetOverlay()"></ul>
                 </div>*@
         </section><!-- .overlay__content -->
-    </div>
+                    </div>
     <!-- overlay hotel date -->
     <div class="overlay overlay--theme--blue overlay--datepicker overlay--datepicker-hoteldate" ng-class="{ 'active' : (PageConfig.ActiveOverlay == 'datepicker-hotel') }">
         <header class="overlay__header">
@@ -384,8 +407,8 @@
                 <div class="overlay-selector__body">
                     <div class="calendar-container">
                         <div class="ui-datepicker return-date" id="checkInDate"></div>
-                    </div>
                 </div>
+            </div>
             </div>
         </section>
     </div><!-- .overlay--datepicker-->
@@ -404,7 +427,7 @@
 
         </div>
     </div>
-
+    
     <div class="popup__wrapper" ng-class="{'active': selectFailed}">
         <div class="popup">
             <header class="popup__header">
