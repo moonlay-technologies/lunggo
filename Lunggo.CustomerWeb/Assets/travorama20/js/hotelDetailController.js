@@ -5,8 +5,9 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
     $scope.hotel = {};
     $scope.searchId = '';
     $scope.searchParam = '';
+    
 
-    $scope.hotel.location = "";
+    $scope.hotel.location = '';
     $scope.hotel.checkinDate = "";
     $scope.hotel.checkoutDate = "";
     $scope.hotel.adultCount = 3;
@@ -136,7 +137,16 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
             $log.debug(error);
 
         });
+        $scope.hotelSearch.location = $scope.getLocationCode();
     }
+
+    $scope.getLocationCode = function() {
+        var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+        var locationCode = hashes[2].split('.')[1];
+        return locationCode;
+    }
+
+    
     var setDescriptionDisplay = function () {
         if ($scope.hotel.description != null && $scope.hotel.description.length > 0) {
             var description = [];
@@ -403,4 +413,8 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
     {
         return str.replace(/\w\S*/g, function (txt) { return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase(); });
     }
+
+    $('.change-hotel.form-control').click(function () {
+        $(this).select();
+    });
 }]);

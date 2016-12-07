@@ -11,7 +11,9 @@
 
     var hotelCd = Model.HotelCode;
     var hotelDetail = HotelService.GetInstance().GetHotelDetailFromTableStorage(Convert.ToInt32(hotelCd));
+    
     var loc = ToTitleCase(hotelDetail.HotelName + ", " + hotelDetail.City);
+
 }
 
 @functions{
@@ -139,7 +141,7 @@
                                 <div class="dh-img-sm" style="background-image: url({{room.roomImages[0]}});"></div>
                             </div>
                             <div class="col-right-hotel">
-                                <div class="bold-txt lg-txt darkgrey-txt">{{room.roomName}}</div>
+                                <div class="bold-txt lg-txt darkgrey-txt" style="text-transform:capitalize">{{room.roomName}}</div>
                                 <div class="sm-txt grey-txt">
                                     <div ng-show="room.rate.isFreeCancel">Pembatalan Gratis </div>
                                     <div ng-show="!room.rate.isFreeCancel && room.rate.isRefundable">Kebijakan Pembatalan Berlaku </div>
@@ -157,7 +159,7 @@
                         <div class="dh-list-detail clearfix">
                             <div class="dh-img-lg" style="background-image: url({{room.roomImages[0]}});"></div>
                             <div class="dh-bottom">
-                                <div class="bold-txt lg-txt darkgrey-txt">{{room.roomName}}</div>
+                                <div class="bold-txt lg-txt darkgrey-txt" style="text-transform:capitalize">{{room.roomName}}</div>
                                 <div class="sm-txt grey-txt">
                                     <div ng-show="room.rate.isFreeCancel">Pembatalan Gratis </div>
                                     <div ng-show="!room.rate.isFreeCancel && room.rate.isRefundable">Kebijakan Pembatalan Berlaku </div>

@@ -152,16 +152,16 @@ app.controller('hotelSearchController', ['$scope', '$log', '$window', '$http', '
         $scope.hotelSearch.checkoutDate = $scope.model.searchParamObject.checkoutDate;
         $scope.hotelSearch.destinationCheckinDate = $scope.model.searchParamObject.checkinDate;
         $scope.hotelSearch.destinationCheckoutDate = $scope.model.searchParamObject.checkoutDate;
-        $scope.hotelSearch.adultCount = $scope.model.searchParamObject.adultCount;
-        $scope.hotelSearch.childCount = $scope.model.searchParamObject.childCount;
+        //$scope.hotelSearch.adultCount = $scope.model.searchParamObject.adultCount;
+        //$scope.hotelSearch.childCount = $scope.model.searchParamObject.childCount;
         $scope.hotelSearch.nightCount = $scope.model.searchParamObject.nightCount;//new Date($scope.hotelSearch.checkoutDate).getDate() - new Date($scope.hotelSearch.checkinDate).getDate();
         $scope.hotelSearch.destinationNightCount = $scope.model.searchParamObject.nightCount;
         $scope.hotelSearch.roomCount = $scope.model.searchParamObject.roomCount;
-        $scope.hotelSearch.childrenAges = $scope.model.searchParamObject.childrenAges;
+        $scope.hotelSearch.occupancies = $scope.model.searchParamObject.occupancies;
+        //$scope.hotelSearch.childrenAges = $scope.model.searchParamObject.childrenAges;
         $scope.hotelSearch.searchParamObject = $scope.model.searchParamObject;
         //$scope.hotelSearch.searchParam = $scope.model.searchParam;
         $scope.searchParam = model.searchParam;
-
         $scope.searchHotel();
     }
 
@@ -230,7 +230,7 @@ app.controller('hotelSearchController', ['$scope', '$log', '$window', '$http', '
                 $scope.searchDone = true;
                 $scope.finishLoad = true;
             }
-
+            
         });
     };
 
@@ -262,7 +262,7 @@ app.controller('hotelSearchController', ['$scope', '$log', '$window', '$http', '
             "hotelCd=" + hotelCd + "&" +
             "searchParam=" + $scope.searchParam, '_blank');
     }
-
+    
     $scope.changeFilter = function (filterType, value) {
         if (filterType == 'star') {
             if ($scope.filter.stars == null) {
@@ -467,4 +467,7 @@ app.controller('hotelSearchController', ['$scope', '$log', '$window', '$http', '
         return returnValue;
     };
     
+    $('.change-hotel.form-control').click(function () {
+        $(this).select();
+    });
 }]);
