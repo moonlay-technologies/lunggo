@@ -323,7 +323,7 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
         $('body .room-rl').on('click', function () {
             var parent1 = $(this).closest('.room-list').find('.room-left');
             var parent2 = parent1.closest('.room-list-container li').find('.hotel-detail');
-            parent2.toggle();
+            parent2.slideToggle('.4s');
             $(this).closest('.room-list-container li').siblings().find('.hotel-detail, .option').hide();
 
             $(this).each(function() {
@@ -340,8 +340,13 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
                 });
             });
 
-            $(this).closest('.room-list-container li').find('.room-list').toggleClass('active');
-            $(this).closest('.room-list-container li').siblings().find('.room-list').removeClass('active');
+            var list = $(this).closest('.room-list-container li');
+
+            list.find('.room-list').toggleClass('active');
+            list.siblings().find('.room-list').removeClass('active');
+
+            list.toggleClass('active');
+            list.siblings().removeClass('active');
         });
 
         $("body .change-room").click(function () {
