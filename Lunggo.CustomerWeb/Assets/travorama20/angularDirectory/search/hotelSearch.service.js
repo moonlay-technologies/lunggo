@@ -147,7 +147,7 @@
             }
             
         }
-        scope.changeSearch = scope.hotelSearch;
+        
         scope.hotelSearch.adultCountMin = 1;
         scope.hotelSearch.adultCountMax = 5;
         scope.hotelSearch.adultrange = [1, 2, 3, 4, 5];
@@ -164,6 +164,8 @@
         scope.hotelSearch.roomCountMin = 1;
         scope.hotelSearch.roomCountMax = 8;
 
+        scope.hotelSearch.totalAdult = 0;
+        scope.hotelSearch.totalChildren = 0;
         scope.hotelSearch.getHotels = function (param) {
             factory.gotoHotelSearch(this);
 
@@ -221,7 +223,7 @@
             };
         });
 
-        factory.getLocation = function (newValue) {
+       factory.getLocation = function (newValue) {
             if (newValue.length >= 3) {
                 scope.hotelSearch.autocompleteResource.get({ prefix: newValue }).$promise.then(function (data) {
                     $timeout(function () {
@@ -233,9 +235,6 @@
         };
 
         scope.$watch('hotelSearch.nightCount', function (newValue, oldValue) {
-            //var scope = angular.element($('.hotel-date-picker')).scope();
-            //$scope.setCheckinDate(scope, $scope.hotel.checkinDate);
-            //$scope.hotel.checkoutDate = $scope.hotel.checkinDate;
             if (oldValue != newValue) {
                 var cod = moment(scope.hotelSearch.checkinDate);
                 scope.hotelSearch.checkoutDate = moment(cod).add(scope.hotelSearch.nightCount, 'days');
@@ -244,6 +243,25 @@
 
         });
 
+        scope.$watch('hotelSearch.roomCount', function (newValue) {
+            scope.hotelSearch.totalAdult = 0;
+            scope.hotelSearch.totalChildren = 0;
+            for (var i = 0; i < newValue; i++) {
+                scope.hotelSearch.totalAdult += scope.hotelSearch.occupancies[i].adultCount;
+                scope.hotelSearch.totalChildren += scope.hotelSearch.occupancies[i].childCount;
+            }
+
+        });
+
+        for (var x = 0; x < scope.hotelSearch.occupancies.length; x++) {
+            scope.$watch("hotelSearch.occupancies['" + x + "'].adultCount", function (val, oldVal) {
+                scope.hotelSearch.totalAdult = scope.hotelSearch.totalAdult - oldVal + val;
+            });
+            scope.$watch("hotelSearch.occupancies['" + x + "'].childCount", function (val, oldVal) {
+                scope.hotelSearch.totalChildren = scope.hotelSearch.totalChildren - oldVal + val;
+            });
+        }
+        
         scope.hotelSearch.autocompleteResource = $resource(HotelAutocompleteConfig.Url + '/:prefix',
             { prefix: '@prefix' },
             {
@@ -255,6 +273,11 @@
             }
         );
 
+        scope.getLocationCode = function () {
+            var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+            var locationCode = hashes[2].split('.')[1];
+            return locationCode;
+        }
         scope.setCheckinDate = function (scopeElement, date) {
             scopeElement.$apply(function () {
                 $log.debug("scopeElement.hotelSearch.checkinDate = " + scopeElement.hotelSearch.checkinDate);

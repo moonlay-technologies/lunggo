@@ -135,19 +135,23 @@ namespace Lunggo.ApCommon.Hotel.Service
             {
                 case AutocompleteType.Zone:
                     dict = GetHotelDetailByLocation(request.Zone);
-            result.HotelDetails = ApplyHotelDetails(dict, result.HotelDetails);
+                    result.HotelDetails = ApplyHotelDetails(dict, result.HotelDetails);
+                    result.DestinationName = detailDestination.Zone + ", " + detailDestination.Destination + ", " + detailDestination.Country;
                     break;
                 case AutocompleteType.Destination:
                     dict = GetHotelDetailByLocation(request.Destination);
                     result.HotelDetails = ApplyHotelDetails(dict, result.HotelDetails);
+                    result.DestinationName = detailDestination.Destination + ", " + detailDestination.Country;
                     break;
                 case AutocompleteType.Area:
                     dict = GetHotelDetailByLocation(request.Area);
                     result.HotelDetails = ApplyHotelDetails(dict, result.HotelDetails);
+                    result.DestinationName = detailDestination.Destination + ", " + detailDestination.Country;
                     break;
                 case AutocompleteType.Hotel:
                     details = GetHotelDetailFromDb(request.HotelCode);
                     result.HotelDetails = ApplyHotelDetails(details, result.HotelDetails);
+                    result.DestinationName = details.HotelName + ", " +detailDestination.Destination + ", " + detailDestination.Country;
                     break;
             };
             
@@ -156,7 +160,7 @@ namespace Lunggo.ApCommon.Hotel.Service
             var sortedHotel = result.HotelDetails.OrderByDescending(x => x.NetFare);
             result.MaxPrice = sortedHotel.Select(x => x.NetFare).FirstOrDefault();
             result.MinPrice = sortedHotel.Select(x => x.NetFare).LastOrDefault();
-            result.DestinationName = detailDestination.Destination;
+            //result.DestinationName = detailDestination.Destination;
 
             //REMEMBER TO UNCOMMENT THIS
             Task.Run(() => SaveSearchResultintoDatabaseToCache(result.SearchId, result));
