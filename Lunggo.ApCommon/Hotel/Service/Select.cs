@@ -97,7 +97,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                         AdultCount = paxData.AdultCount,
                         Boards = newRate.Boards,
                         Cancellation = newRate.Cancellation,
-                        ChildrenAges = newRate.ChildrenAges,
+                        ChildrenAges = paxData.ChildrenAges,
                         ChildCount = paxData.ChildCount,
                         Class = newRate.Class,
                         Offers = newRate.Offers,
