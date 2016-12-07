@@ -17,7 +17,6 @@ using Lunggo.ApCommon.Hotel.Model;
 using Lunggo.ApCommon.Hotel.Model.Logic;
 using Lunggo.ApCommon.Hotel.Query;
 using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds;
-using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Sdk.auto.model;
 using Lunggo.ApCommon.Payment.Model;
 using Lunggo.ApCommon.Product.Model;
 using Lunggo.Framework.Documents;
@@ -97,13 +96,16 @@ namespace Lunggo.ApCommon.Hotel.Service
             }
 
             var swAv = Stopwatch.StartNew();
+            var realOccupancies = request.Occupancies;
+            request.Occupancies = PreProcessOccupancies(request.Occupancies);
             var result = hotelBedsClient.SearchHotel(request);
+            result.Occupancies = realOccupancies;
             swAv.Stop();
             Debug.Print("AVAIALABILITY:" + swAv.Elapsed.ToString());
             result.SearchId = generatedSearchId.ToString();
 
 
-            if (result.HotelDetails == null)
+            if (result.HotelDetails == null || result.HotelDetails.Count == 0)
                 return new SearchHotelOutput()
                     {
                         IsSuccess = true,
@@ -112,6 +114,16 @@ namespace Lunggo.ApCommon.Hotel.Service
                         TotalHotelCount = 0,
                         FilteredHotelCount = 0
                     };
+            //result.HotelDetails = FilterSearchRoomByCapacity(result.HotelDetails, input.Occupancies);
+            if (result.HotelDetails.Count == 0)
+                return new SearchHotelOutput()
+                {
+                    IsSuccess = true,
+                    DestinationName = result.DestinationName,
+                    ReturnedHotelCount = 0,
+                    TotalHotelCount = 0,
+                    FilteredHotelCount = 0
+                };
             var swPr = Stopwatch.StartNew();
             AddPriceMargin(result.HotelDetails);
             swPr.Stop();
@@ -423,6 +435,36 @@ namespace Lunggo.ApCommon.Hotel.Service
                 }
             }
             return shortlistHotel;
+        }
+
+        public List<Occupancy> PreProcessOccupancies(List<Occupancy> paxData)
+        {
+            var maxAdult = 0;
+            var maxChild = 0;
+            List<int> childAges = new List<int>();
+            var occupancies = new List<Occupancy>();
+            foreach (var data in paxData)
+            {
+                if (data.AdultCount > maxAdult)
+                    maxAdult = data.AdultCount;
+                if (data.ChildCount > maxChild)
+                {
+                    maxChild = data.ChildCount;
+                    foreach (var age in data.ChildrenAges)
+                    {
+                        childAges.Add(age);
+                    }
+                }  
+            }
+            var pax = new Occupancy
+            {
+                RoomCount = paxData.Count,
+                AdultCount = maxAdult,
+                ChildCount = maxChild,
+                ChildrenAges = childAges,
+            };
+            occupancies.Add(pax);
+            return occupancies;
         }
     }
 }

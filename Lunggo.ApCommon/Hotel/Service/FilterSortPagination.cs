@@ -6,6 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Lunggo.ApCommon.Hotel.Constant;
 using Lunggo.ApCommon.Hotel.Model;
+using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Sdk.auto.model;
+using Occupancy = Lunggo.ApCommon.Hotel.Model.Occupancy;
 
 namespace Lunggo.ApCommon.Hotel.Service
 {
@@ -263,5 +265,58 @@ namespace Lunggo.ApCommon.Hotel.Service
             return shortedList;
         }
 
+        public List<HotelDetail> FilterSearchRoomByCapacity(List<HotelDetail> hotels, List<Occupancy> occupancies )
+        {
+            var maxPax = 0;
+            var maxAdult = 0;
+            var maxChild = 0;
+            var roomCount = occupancies.Count;
+            var hotelList = new List<HotelDetail>();
+            foreach (var data in occupancies)
+            {
+                var totalPax = data.AdultCount + data.ChildCount;
+                if (maxPax == 0)
+                {
+                    maxPax = totalPax;
+                }
+                if (totalPax > maxPax)
+                {
+                    maxPax = totalPax;
+                }
+                if (data.AdultCount > maxAdult)
+                    maxAdult = data.AdultCount;
+                if (data.ChildCount > maxChild)
+                    maxChild = data.ChildCount;
+            }
+            foreach (var hotel in hotels)
+            {
+                var roomList = new List<HotelRoom>();
+                foreach (var room in hotel.Rooms)
+                {
+                    var roomPax = GetPaxCapacity(room.RoomCode);
+                    var roomAdult = GetMaxAdult(room.RoomCode);
+                    var roomChild = GetMaxChild(room.RoomCode);
+                    var rateList = new List<HotelRate>();
+                    foreach (var rate in room.Rates)
+                    {
+                        if (roomPax >= maxPax && roomAdult >= maxAdult && roomChild >= maxChild && rate.Allotment >= roomCount)
+                        {
+                            rateList.Add(rate);
+                        }    
+                    }
+                    room.Rates = rateList;
+                    if (room.Rates.Count != 0)
+                    {
+                        roomList.Add(room);    
+                    }
+                }
+                if (roomList.Count != 0)
+                {
+                    hotel.Rooms = roomList;
+                    hotelList.Add(hotel);
+                }
+            }
+            return hotelList;
+        } 
     }
 }

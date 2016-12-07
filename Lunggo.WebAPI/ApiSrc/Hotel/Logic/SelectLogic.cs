@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net;
+using Lunggo.ApCommon.Hotel.Constant;
 using Lunggo.ApCommon.Hotel.Model.Logic;
 using Lunggo.ApCommon.Hotel.Service;
 using Lunggo.Framework.Config;
@@ -85,12 +86,54 @@ namespace Lunggo.WebAPI.ApiSrc.Hotel.Logic
             {
                 return new HotelSelectRoomApiResponse();
             }
-            return new HotelSelectRoomApiResponse
+
+            if (selectHotelRoomServiceResponse.IsSuccess)
             {
-                StatusCode = HttpStatusCode.OK,
-                Token = selectHotelRoomServiceResponse.Token,
-                TimeLimit = selectHotelRoomServiceResponse.Timelimit
-            };
+                return new HotelSelectRoomApiResponse
+                {
+                    StatusCode = HttpStatusCode.OK,
+                    Token = selectHotelRoomServiceResponse.Token,
+                    TimeLimit = selectHotelRoomServiceResponse.Timelimit
+                };
+            }
+            else
+            {
+                if (selectHotelRoomServiceResponse.Errors == null)
+                    return new HotelSelectRoomApiResponse
+                    {
+                        StatusCode = HttpStatusCode.BadRequest,
+                        ErrorCode = "ERHSEA99"
+                    };
+
+                switch (selectHotelRoomServiceResponse.Errors[0])
+                {
+                    case HotelError.InvalidInputData:
+                        return new HotelSelectRoomApiResponse
+                        {
+                            StatusCode = HttpStatusCode.InternalServerError,
+                            ErrorCode = "ERRGEN99"
+                        };
+                    case HotelError.SearchIdNoLongerValid:
+                        return new HotelSelectRoomApiResponse
+                        {
+                            StatusCode = HttpStatusCode.Accepted,
+                            ErrorCode = "ERHSEA04"
+                        };
+                    case HotelError.RateKeyNotFound:
+                        return new HotelSelectRoomApiResponse
+                        {
+                            StatusCode = HttpStatusCode.Accepted,
+                            ErrorCode = "ERHSEA05"
+                        };
+                    default:
+                        return new HotelSelectRoomApiResponse
+                        {
+                            StatusCode = HttpStatusCode.InternalServerError,
+                            ErrorCode = "ERRGEN99"
+                        };
+                }
+            }
+            
         }
     }
 }
