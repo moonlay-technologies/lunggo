@@ -665,7 +665,7 @@ app.controller('orderDetailController', [
             }
             //Check Authorization
             var authAccess = getAuthAccess();
-            if (authAccess == 2) {
+            if (authAccess == 2 || authAccess == 1) {
                 $http({
                     method: 'POST',
                     data: {

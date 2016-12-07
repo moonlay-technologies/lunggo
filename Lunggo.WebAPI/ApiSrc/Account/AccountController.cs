@@ -81,6 +81,7 @@ namespace Lunggo.WebAPI.ApiSrc.Account
 
         [HttpPost]
         [LunggoCorsPolicy]
+        [Authorize]
         [Route("v1/refund")]
         public ApiResponseBase Refund()
         {
