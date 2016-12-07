@@ -112,7 +112,7 @@ var LoginConfig = {
 };
 
 var RefundConfig = {
-    Url: 'https://api.local.travorama.com'
+    Url: 'https://api.local.travorama.com/v1/refund'
 };
 
 var GetProfileConfig = {
@@ -165,7 +165,7 @@ var LoginMobileConfig = {
 };
 
 var RefundMobileConfig = {
-    Url: 'http://m.local.travorama.com'
+    Url: 'http://m.local.travorama.com/v1/refund'
 };
 
 var RegisterMobileConfig = {

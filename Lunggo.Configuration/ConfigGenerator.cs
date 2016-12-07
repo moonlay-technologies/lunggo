@@ -394,7 +394,7 @@ namespace Lunggo.Configuration
             fileTemplate.SetAttribute("hotelDetailsPath", hotelDetailsPath);
             fileTemplate.SetAttribute("hotelSelectPath", hotelSelectPath);
             fileTemplate.SetAttribute("hotelBookPath", hotelBookPath);
-            fileTemplate.SetAttribute("refund", refundPath);
+            fileTemplate.SetAttribute("refundPath", refundPath);
             fileTemplate.SetAttribute("mobileUrl", mobileUrl);
 
             var fileContent = fileTemplate.ToString();

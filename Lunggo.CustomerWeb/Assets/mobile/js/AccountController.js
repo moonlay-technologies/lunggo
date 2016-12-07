@@ -825,6 +825,60 @@ app.controller('OrderDetailController', ['$http', '$scope', '$rootScope', functi
         
     }
     $scope.TakeProfileConfig.TakeProfile();
+
+    $scope.overlay = true;
+    $scope.close = function () {
+        $scope.overlay = false;
+    }
+    $scope.sentRefund = false;
+    $scope.sendingRefund = false;
+    $scope.failedsentRefund = false;
+    $scope.askRefund = function () {
+        if ($scope.trial > 3) {
+            $scope.trial = 0;
+        }
+        //Check Authorization
+        var authAccess = getAuthAccess();
+        $scope.sendingRefund = true;
+        if (authAccess == 2 || authAccess == 1) {
+            $http({
+                method: 'POST',
+                data: {
+                    name: $scope.name,
+                    rsvNo: $scope.rsvNo,
+                    email: $scope.email
+                },
+                url: RefundConfig.Url,
+                headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') }
+            }).then(function (returnData) {
+                $scope.sendingRefund = false;
+                if (returnData.data.status == "200") {
+                    $scope.sentRefund = true;
+                }
+                else {
+                    $scope.failedsentRefund = true;
+                    console.log('There is an error');
+                    console.log('Error : ' + returnData.data.error);
+                    console.log(returnData);
+                }
+            }).catch(function (returnData) {
+
+                $scope.trial++;
+                if (refreshAuthAccess() && $scope.trial < 4) //refresh cookie
+                {
+                    $scope.askRefund();
+                }
+                else {
+                    $scope.sendingRefund = false;
+                    $scope.failedsentRefund = true;
+                    console.log('Failed to Ask Refund');
+                }
+            });
+        }
+        else {
+            console.log('Not Authorized to Ask Refund');
+        }
+    }
     //$scope.getRsv();
 
 }]);// Order Detail Controller

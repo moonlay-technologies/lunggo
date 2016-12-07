@@ -592,7 +592,7 @@ app.controller('orderDetailController', [
         $scope.rsvNo = rsvNo;
         $scope.name = name;
         $scope.email = email;
-
+        
         $scope.userProfile = {
             email: '',
             name: '',
@@ -658,13 +658,21 @@ app.controller('orderDetailController', [
 
             }
         }
-       
+
+        $scope.overlay = true;
+        $scope.closeOverlay = function () {
+            $scope.overlay = false;
+        }
+        $scope.sentRefund = false;
+        $scope.sendingRefund = false;
+        $scope.failedsentRefund = false;
         $scope.askRefund = function () {
             if ($scope.trial > 3) {
                 $scope.trial = 0;
             }
             //Check Authorization
             var authAccess = getAuthAccess();
+            $scope.sendingRefund = true;
             if (authAccess == 2 || authAccess == 1) {
                 $http({
                     method: 'POST',
@@ -676,23 +684,26 @@ app.controller('orderDetailController', [
                     url: RefundConfig.Url,
                     headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') }
                 }).then(function (returnData) {
+                    $scope.sendingRefund = false;
                     if (returnData.data.status == "200") {
-                        alert('Success sending');
-                       
+                        $scope.sentRefund = true;                      
                     }
                     else {
-                        alert('failed')
+                        $scope.failedsentRefund = true;
                         console.log('There is an error');
                         console.log('Error : ' + returnData.data.error);
                         console.log(returnData);
                     }
                 }).catch(function (returnData) {
+
                     $scope.trial++;
                     if (refreshAuthAccess() && $scope.trial < 4) //refresh cookie
                     {
                         $scope.askRefund();
                     }
                     else {
+                        $scope.sendingRefund = false;
+                        $scope.failedsentRefund = true;
                         console.log('Failed to Ask Refund');
                     }
                 });
@@ -700,7 +711,6 @@ app.controller('orderDetailController', [
             else {
                 console.log('Not Authorized to Ask Refund');
             }
-
         }
         
         $scope.flight = [];

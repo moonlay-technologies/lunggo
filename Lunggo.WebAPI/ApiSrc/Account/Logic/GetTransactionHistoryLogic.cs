@@ -22,20 +22,20 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
             var identity = HttpContext.Current.User.Identity as ClaimsIdentity ?? new ClaimsIdentity();
             var flight = FlightService.GetInstance();
             var hotel = HotelService.GetInstance();
-            var rsvs = identity.IsUserAuthorized() 
-                ? flight.GetOverviewReservationsByUserIdOrEmail(identity.GetUser().Id, identity.GetEmail(), filter, sort, page, itemsPerPage)
-                : flight.GetOverviewReservationsByDeviceId(identity.GetDeviceId(), filter, sort, page, itemsPerPage);
+            //var rsvs = identity.IsUserAuthorized() 
+            //    ? flight.GetOverviewReservationsByUserIdOrEmail(identity.GetUser().Id, identity.GetEmail(), filter, sort, page, itemsPerPage)
+            //    : flight.GetOverviewReservationsByDeviceId(identity.GetDeviceId(), filter, sort, page, itemsPerPage);
 
             var rsvsHotel = identity.IsUserAuthorized()
                 ? hotel.GetOverviewReservationsByUserIdOrEmail(identity.GetUser().Id, identity.GetEmail(), filter, sort, page, itemsPerPage)
                 : hotel.GetOverviewReservationsByDeviceId(identity.GetDeviceId(), filter, sort, page, itemsPerPage);
             //rsvs = FilterTransactionHistory(filter, rsvs);
-            rsvs = SortTransactionHistory(sort, rsvs);
+            //rsvs = SortTransactionHistory(sort, rsvs);
             rsvsHotel = SortTransactionHistory(sort, rsvsHotel);
             //rsvs = PageTransactionHistory(page, itemsPerPage, rsvs);
             return new TransactionHistoryApiResponse
             {
-                FlightReservations = rsvs,
+                //FlightReservations = rsvs,
                 HotelReservations = rsvsHotel,
                 StatusCode = HttpStatusCode.OK
             };

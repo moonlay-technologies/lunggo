@@ -76,6 +76,8 @@
         var rsvNo = @Model.RsvNo;
         var rsvStatus = '@Convert.ToInt32(Model.RsvDisplayStatus)';
         var paymentMethod = '@Convert.ToInt32(Model.Payment.Method)';
+        var name = '@Model.Contact.Name';
+        var email = '@Model.Contact.Email';
     </script>
     <!-- angular controller -->
 
@@ -171,9 +173,10 @@
                             <button class="pull-right btn btn-yellow" ng-click="submitRsvNo(@Model.RsvNo, @Model.RsvDisplayStatus)">
                                 {{ButtonText(rsvStatus, paymentMethod, 'hotel')}}
                             </button>
+                           
                         }
-                       
-                        
+
+
                         @*<span ng-if="flight.payment.status == 2">
                             <button href="@Url.Action("Eticket", "Flight", new {rsvNo = Model.RsvNo})" class="pull-right btn btn-yellow" disabled>@Html.I18NString("CW00198")</button>
                         </span>
@@ -272,6 +275,12 @@
                     <header>
                         <h4><b>@Html.I18NString("CW00199")</b></h4>
                     </header>
+                    @if (Model.Payment.Status == PaymentStatus.Settled)
+                    {
+                        <button class="pull-right btn btn-yellow" ng-click="askRefund()">
+                            Refund
+                        </button>
+                    }
                     <section>
                         @foreach (var trip in rsv.Itinerary.Trips)
                         {
@@ -307,7 +316,7 @@
                 <div class=" page-hotel review-hotel" style="background:#f9f9f9; padding: 10px;">
                     <div class="review-room clearfix">
                         <h3 class="summary__title"><b>REVIEW</b> PESANAN</h3>
-
+                        
                         <div class="form-group">
                             @Html.Partial("/Views/Hotel/Shared/Mobile/_HotelDetail.cshtml", reservation.HotelDetail)
                         </div>
@@ -352,5 +361,53 @@
 
         </section>
     </div><!-- .history-content -->
-
+    
+    <div class="popup__wrapper" ng-class="{'active': sentRefund && !sendingRefund && overlay}">
+        <div class="popup">
+            <header class="popup__header">
+                <h4 class="popup__title">Pengiriman Berhasil</h4>
+            </header>
+            <div class="popup__body">
+                <div class="container_new">
+                    <span>Permohonan Anda akan kami proses. Silakan menunggu respons dari kami.</span>
+                </div>
+            </div>
+            <div class="popup__footer">
+                <div class="container_new">
+                    <a class="btn btn-block btn-yellow" ng-click="closeOverlay()">Tutup</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="popup__wrapper" ng-class="{'active': sendingRefund}">
+        <div class="popup">
+            <header class="popup__header">
+                <h4 class="popup__title">Mohon Tunggu</h4>
+            </header>
+            <div class="popup__body">
+                <div class="container_new">
+                    <span>Sedang mengirimkan permohonan refund Anda.</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="popup__wrapper" ng-class="{'active': failedsentRefund && overlay}">
+        <div class="popup">
+            <header class="popup__header">
+                <h4 class="popup__title">Mohon Maaf</h4>
+            </header>
+            <div class="popup__body">
+                <div class="container_new">
+                    <span>Silakan ulangi permohonan refund lagi atau hubungi kami <a href="/id/contact">di sini</a></span>
+                </div>
+            </div>
+            <div class="popup__footer">
+                <div class="container_new">
+                    <a class="btn btn-block btn-yellow" ng-click="closeOverlay()">Tutup</a>
+                </div>
+            </div>
+        </div>
+    </div>
 </section><!-- .account-content -->
