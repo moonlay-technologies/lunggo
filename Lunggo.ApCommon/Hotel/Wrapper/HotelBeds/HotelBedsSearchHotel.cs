@@ -148,7 +148,7 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds
                                 {
                                     AdultCount = x.adults,
                                     ChildCount = x.children,
-                                    RoomCount = x.rooms,
+                                    RateCount = x.rooms,
                                     NightCount = condition.Nights,
                                     Allotment = x.allotment,
                                     PaymentType = PaymentTypeCd.Mnemonic(x.paymentType),

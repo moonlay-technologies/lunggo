@@ -4,6 +4,7 @@ using System.Linq;
 using Lunggo.ApCommon.Hotel.Constant;
 using Lunggo.ApCommon.Hotel.Model;
 using Lunggo.ApCommon.Hotel.Model.Logic;
+using Lunggo.ApCommon.Product.Model;
 using Lunggo.ApCommon.Sequence;
 using Lunggo.Framework.Config;
 using Lunggo.Framework.Extension;
@@ -58,7 +59,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                     {
                         RateCount = id.RateCount, RateKey = rate.RateKey, AdultCount = id.AdultCount, 
                         Boards = rate.Boards, Cancellation = rate.Cancellation, ChildrenAges = id.ChildrenAges,
-                        ChildCount = id.ChildCount, Class = rate.Class, Offers = rate.Offers, RoomCount = id.RateCount,
+                        ChildCount = id.ChildCount, Class = rate.Class, Offers = rate.Offers, 
                         PaymentType = rate.PaymentType, RegsId = rate.RegsId, Price = rate.Price,
                         Type = rate.Type,NightCount = rate.NightCount,
                         TermAndCondition = GetRateCommentFromTableStorage(rate.RateCommentsId, hotel.CheckInDate).Select(x => x.Description).ToList()
@@ -100,10 +101,9 @@ namespace Lunggo.ApCommon.Hotel.Service
                         ChildCount = paxData.ChildCount,
                         Class = newRate.Class,
                         Offers = newRate.Offers,
-                        RoomCount = paxData.RoomCount,
                         PaymentType = newRate.PaymentType,
                         RegsId = EncryptRegsId(data.HotelCode,data.RoomCode,fixRateKey),
-                        Price = newRate.Price,
+                        Price = new Price(),
                         Type = newRate.Type,
                         NightCount = newRate.NightCount,
                         TermAndCondition =
@@ -111,6 +111,10 @@ namespace Lunggo.ApCommon.Hotel.Service
                                 .Select(x => x.Description)
                                 .ToList()
                     };
+                    fixRate.Price.SetSupplier(newRate.Price.Supplier/newRate.RateCount*paxData.RoomCount,
+                        newRate.Price.SupplierCurrency);
+                    fixRate.Price.SetMargin(newRate.Price.Margin);
+                    fixRate.Price.CalculateFinalAndLocal(newRate.Price.LocalCurrency);
                     rateList.Add(fixRate);
                 }
                 if (rateList.Count == 0)

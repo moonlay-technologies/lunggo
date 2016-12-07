@@ -107,7 +107,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                                 Boards = rateRecord.Board,
                                 Cancellation = rateRecord.Cancellation.Deserialize<List<Cancellation>>(),
                                 PaymentType = PaymentTypeCd.Mnemonic(rateRecord.PaymentType),
-                                RoomCount = rateRecord.RoomCount.GetValueOrDefault(),
+                                RateCount = rateRecord.RoomCount.GetValueOrDefault(),
                                 Price = Price.GetFromDb(rateRecord.PriceId.GetValueOrDefault()),
                                 RateCommentsId = rateRecord.RateComment,
                                 ChildrenAges = rateRecord.ChildrenAges != null ? rateRecord.ChildrenAges.Deserialize<List<int>>() : null
@@ -287,7 +287,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                             InsertPgId = "0",
                             PriceId = rate.Price.InsertToDb(),
                             RoomId = roomId,
-                            RoomCount = rate.RoomCount,
+                            RoomCount = rate.RateCount,
                             RateKey =  rate.RateKey,
                             PaymentType = PaymentTypeCd.MnemonicToString(rate.PaymentType),
                             ChildrenAges = rate.ChildrenAges != null ? rate.ChildrenAges.Serialize() : null,

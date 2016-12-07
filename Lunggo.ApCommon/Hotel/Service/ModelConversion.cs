@@ -49,7 +49,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                 Address = hotelDetail.Address,
                 City = hotelDetail.City,
                 ZoneName = GetZoneNameFromDict(hotelDetail.DestinationCode+ "-" +hotelDetail.ZoneCode),
-                StarRating = Convert.ToInt32(hotelDetail.StarRating.Substring(0,1)),
+                StarRating = Convert.ToInt32(GetSimpleCodeByCategoryCode(hotelDetail.StarRating)),
                 //ChainName = GetHotelChainDesc(hotelDetail.Chain),
                 AccomodationName = GetHotelAccomodationDescId(hotelDetail.AccomodationType),
                 ImageUrl = hotelDetail.ImageUrl.Where(x => x.Type == "HAB").ToList().Select(y => y.Path).ToList(),
@@ -92,7 +92,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                     StarRating = hotelDetail.StarCode != 0
                         ? hotelDetail.StarCode
                         : (hotelDetail.StarRating != null
-                            ? Convert.ToInt32(hotelDetail.StarRating.Substring(0, 1))
+                            ? GetSimpleCodeByCategoryCode(hotelDetail.StarRating)
                             : 0),
                     //ChainName = GetHotelChainDesc(hotelDetail.Chain),
                     //AccomodationName = GetHotelAccomodationDescId(hotelDetail.AccomodationType),
@@ -198,13 +198,13 @@ namespace Lunggo.ApCommon.Hotel.Service
                     {
                         price = rate.Price.Local;
                         night = rate.NightCount;
-                        roomCount = rate.RoomCount;
+                        roomCount = rate.RateCount;
                     }
                     else
                     {
                         price = rate.Price.Local < price ? rate.Price.Local:price;
                         night = rate.NightCount;
-                        roomCount = rate.RoomCount;
+                        roomCount = rate.RateCount;
                     }
                 }
             }
@@ -417,7 +417,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                     Allotment = rateDetail.Allotment,
                     Boards = rateDetail.Boards,
                     BoardDescription = GetHotelBoardDescId(rateDetail.Boards),
-                    RoomCount = rateDetail.RateCount == 0 ? rateDetail.RoomCount : rateDetail.RateCount,
+                    RoomCount = rateDetail.RateCount,
                     TimeLimit = rateDetail.TimeLimit,
                     //Cancellation = (rateDetail.Class != "NRF" && rateDetail.Cancellation != null) ? rateDetail.Cancellation : null,
                     //IsRefundable = (rateDetail.Class != "NRF" && rateDetail.Cancellation != null),
@@ -457,7 +457,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                 Allotment = rate.Allotment,
                 Boards = rate.Boards,
                 BoardDescription = GetHotelBoardDescId(rate.Boards),
-                RoomCount = rate.RoomCount,
+                RoomCount = rate.RateCount,
                 TimeLimit = rate.TimeLimit,
                 Offers = rate.Offers,
                 TermAndCondition = GetRateCommentFromTableStorage(rate.RateCommentsId,
@@ -502,7 +502,7 @@ namespace Lunggo.ApCommon.Hotel.Service
             rateDisplay.NetTotalFare = rate.Price.Local;
             rateDisplay.OriginalTotalFare = Math.Round(rateDisplay.NetTotalFare*1.01M);
 
-            rateDisplay.NetFare = Math.Round((rateDisplay.NetTotalFare / rate.RoomCount) / rate.NightCount);
+            rateDisplay.NetFare = Math.Round((rateDisplay.NetTotalFare / rate.RateCount) / rate.NightCount);
             rateDisplay.OriginalFare = Math.Round(rateDisplay.NetFare * 1.01M);
 
             if (rateDisplay.Cancellation != null)
@@ -511,7 +511,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                 foreach (var data in rateDisplay.Cancellation)
                 {
                     data.Fee = Math.Round(data.Fee * (1 + margin));
-                    data.SingleFee = Math.Round((data.Fee/rate.RoomCount)/rate.NightCount);
+                    data.SingleFee = Math.Round((data.Fee/rate.RateCount)/rate.NightCount);
                 }
             }
         }
