@@ -467,4 +467,7 @@ app.controller('hotelSearchController', ['$scope', '$log', '$window', '$http', '
         return returnValue;
     };
     
+    $('.change-hotel.form-control').click(function () {
+        $(this).select();
+    });
 }]);

@@ -7,7 +7,6 @@
     ViewBag.AngularController = "hotelDetailController";
 }
 @{
-   
     var hotelCd = Model.HotelCode;
     var hotelDetail = HotelService.GetInstance().GetHotelDetailFromTableStorage(Convert.ToInt32(hotelCd));
     var loc = ToTitleCase(hotelDetail.HotelName + ", " + hotelDetail.City) ;
