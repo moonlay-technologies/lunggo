@@ -137,6 +137,7 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
             $log.debug(error);
 
         });
+        $scope.hotelSearch.location = $scope.getLocationCode();
     }
 
     $scope.getLocationCode = function() {
