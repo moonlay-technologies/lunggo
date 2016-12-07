@@ -116,9 +116,13 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
                 // **********
                 // Open Detail Room
                 $('body .dh-list').on('click', function () {
-                    var id = $(this).parent().find('.dh-list-detail');
+                    var id = $(this).parent();
+
                     id.toggleClass('active');
-                    $(this).toggleClass('active');
+                    id.siblings().removeClass('active');
+
+                    id.find('.dh-list-detail').toggleClass('active');
+                    id.siblings().find('.dh-list-detail').removeClass('active');
                 });
 
                 // **********

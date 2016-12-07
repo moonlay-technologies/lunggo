@@ -17,15 +17,17 @@
             padding: 0;
             margin: 0;
             list-style: none;
-            &>li{border-top: 1px solid #e9e9e9;
+            &>li{
+                border-top: 1px solid #e9e9e9;
+                position: relative;
                 &:first-child {border-top:none;}
+                &:before {@extend .arrow-down;}
+                &.active:after {@extend .arrow-up;  top: 15%;}
             } 
             .dh-list {
                 padding: 10px 15px;
                 position: relative;
                 .col-right-hotel .sm-txt.grey-txt {margin: 5px 0;}
-                &:before {@extend .arrow-down;}
-                &.active:before {@extend .arrow-up;}
             }
             .dh-img-sm {
                 width: 100%;
@@ -128,7 +130,7 @@
     }
     .btn-show {
         text-align: center;
-        margin: 5px 0 20px;
+        margin: 15px 0 20px;
         a.orange-txt {
         text-decoration: none;
             &:hover {
