@@ -77,9 +77,9 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
             });
             $scope.hotel.images = tempHotelImages;
 
+            // apakah code di bawah ini sudah efektif?
             $.each($scope.hotel.room, function(roomKey, room) {
                 $.each(room.roomImages, function(imageKey, roomImage) {
-                    //$scope.hotel.room[roomKey].roomImages[imageKey] = "http://photos.hotelbeds.com/giata/" + roomImage;
                     $scope.hotel.room[roomKey].roomImages[imageKey] = roomImage;
                 });
             });
