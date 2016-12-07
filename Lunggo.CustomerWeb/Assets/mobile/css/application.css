@@ -4046,6 +4046,9 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     min-height: 110px;
     text-align: center; }
 
+.page-hotel.no-scroll {
+  overflow: auto !important; }
+
 .page-hotel {
   /*General*/
   font-family: 'Open Sans', sans-serif;
