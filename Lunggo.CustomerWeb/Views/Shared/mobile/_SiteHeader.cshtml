@@ -26,18 +26,18 @@
         {
             <a class="flight-swap" ng-click="FlightFunctions.SwapFlight()"></a>
         }
-        @if (ViewBag.CurrentPage == "search-hotel")
-        {
-            <a class="change-hotel"></a>
-        }
-        @if (ViewBag.CurrentPage == "detail-hotel")
-        {
-            <a class="login-hotel"></a>
-        }
-        @*@if (ViewBag.FlightDetail == "true")
-            {
-                <a class="flight-detail" ng-click="PageConfig.SetOverlay('flight-detail')">Detail</a>
-            }*@
+        @*@if (ViewBag.CurrentPage == "search-hotel")
+             {
+                 <a class="change-hotel"></a>
+             }
+             @if (ViewBag.CurrentPage == "detail-hotel")
+             {
+                 <a class="login-hotel"></a>
+             }
+            @if (ViewBag.FlightDetail == "true")
+                 {
+                     <a class="flight-detail" ng-click="PageConfig.SetOverlay('flight-detail')">Detail</a>
+                 }*@
     </div>
 
     <div class="burger-content" ng-class="{'active' : PageConfig.BurgerShown}">
@@ -57,13 +57,13 @@
         <div class="burger-content__body">
             <ul>
                 <section ng-if="isLogin == true">
-                    
+
                     @*<div ng-if ="name != null">
-                        <li class="account" >
-                            <a ng-click="PageConfig.ToggleBurger()" href="@Url.Action("OrderHistory", "UW620OrderHistory")">{{name}}</a>
-                        </li>
-                    </div>*@
-                    
+                            <li class="account" >
+                                <a ng-click="PageConfig.ToggleBurger()" href="@Url.Action("OrderHistory", "UW620OrderHistory")">{{name}}</a>
+                            </li>
+                        </div>*@
+
                     <div>
                         <li class="account" ng-if="name.length != 0">
                             <a href="@Url.Action("OrderHistory", "UW620OrderHistory")">{{name}}</a>
@@ -72,17 +72,17 @@
                             <a href="@Url.Action("OrderHistory", "UW620OrderHistory")">{{email}}</a>
                         </li>
                         @*<li class="account" ng-if="name.length == 0">
-                            <a ng-click="PageConfig.ToggleBurger()" href="@Url.Action("OrderHistory", "UW620OrderHistory")">{{email}}</a>
-                        </li>*@
+                                <a ng-click="PageConfig.ToggleBurger()" href="@Url.Action("OrderHistory", "UW620OrderHistory")">{{email}}</a>
+                            </li>*@
                     </div>
 
                     <li class="logout hidden @(ViewBag.CurrentPage == "Log Out" ? "active" : "") ">
                         <a href="@Url.Action("Logout","Account")">Keluar</a>
                     </li>
-                   
+
                 </section>
 
-                <section ng-if ="!isLogin">
+                <section ng-if="!isLogin">
                     <li class="login">
                         <a href="@Url.Action("Login","Account")">Masuk</a>
                     </li>

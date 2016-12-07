@@ -1103,6 +1103,11 @@
             @import 'home_page_layout';
             min-height: auto;
             padding: 0;
+            &>.form-wrapper {
+                padding:0;
+                .top-wrap {padding: 0 15px;}
+                .ag-list {margin: 0 15px;}
+            }
         }
     }
 }
