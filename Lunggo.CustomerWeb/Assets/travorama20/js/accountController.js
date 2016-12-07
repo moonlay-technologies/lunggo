@@ -590,6 +590,8 @@ app.controller('orderDetailController', [
             return new Date(dateTime);
         }
         $scope.rsvNo = rsvNo;
+        $scope.name = name;
+        $scope.email = email;
 
         $scope.userProfile = {
             email: '',
@@ -656,7 +658,51 @@ app.controller('orderDetailController', [
 
             }
         }
+       
+        $scope.askRefund = function () {
+            if ($scope.trial > 3) {
+                $scope.trial = 0;
+            }
+            //Check Authorization
+            var authAccess = getAuthAccess();
+            if (authAccess == 2) {
+                $http({
+                    method: 'POST',
+                    data: {
+                        name: $scope.name,
+                        rsvNo: $scope.rsvNo,
+                        email : $scope.email
+                    },
+                    url: RefundConfig.Url,
+                    headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') }
+                }).then(function (returnData) {
+                    if (returnData.data.status == "200") {
+                        alert('Success sending');
+                       
+                    }
+                    else {
+                        alert('failed')
+                        console.log('There is an error');
+                        console.log('Error : ' + returnData.data.error);
+                        console.log(returnData);
+                    }
+                }).catch(function (returnData) {
+                    $scope.trial++;
+                    if (refreshAuthAccess() && $scope.trial < 4) //refresh cookie
+                    {
+                        $scope.askRefund();
+                    }
+                    else {
+                        console.log('Failed to Ask Refund');
+                    }
+                });
+            }
+            else {
+                console.log('Not Authorized to Ask Refund');
+            }
 
+        }
+        
         $scope.flight = [];
         $scope.hotel = [];
         $scope.title = function (title) {

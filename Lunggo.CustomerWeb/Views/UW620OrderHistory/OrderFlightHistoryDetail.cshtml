@@ -115,10 +115,11 @@
 @section PageJS{
     <script>
     var langCode = 'en';
-    var rsvNo = @Model.RsvNo;
+    var rsvNo = '@Model.RsvNo';
     var rsvStatus = '@Convert.ToInt32(Model.RsvDisplayStatus)';
-    var paymentMethod = '@Convert.ToInt32(Model.Payment.Method)';
-
+        var paymentMethod = '@Convert.ToInt32(Model.Payment.Method)';
+        var name = '@Model.Contact.Name';
+    var email = '@Model.Contact.Email';
     @*var orderDate = '@Model.RsvTime.ToString("u")';
     //var refundDate = '@(Model.Payment.Refund != null ? Model.Payment.Refund.Time.ToString("u") : "")';*@
     </script>
@@ -161,13 +162,17 @@
                                                 {{ButtonText(rsvStatus, paymentMethod, 'flight')}}
                                             </button>
                                         }
-                                       @if (Model is HotelReservationForDisplay)
-                                       {
-                                        <button class="pull-right btn btn-yellow" ng-click="submitRsvNo(@Model.RsvNo, @Model.RsvDisplayStatus)">
-                                            {{ButtonText(rsvStatus, paymentMethod, 'hotel')}}
-                                        </button>
-                                       }
+                                        @if (Model is HotelReservationForDisplay)
+                                        {
+                                            <button class="pull-right btn btn-yellow" ng-click="submitRsvNo(@Model.RsvNo, @Model.RsvDisplayStatus)">
+                                                {{ButtonText(rsvStatus, paymentMethod, 'hotel')}}
+                                            </button>
+                                        }
                                     </h4>
+                                    
+                                    <button class="pull-right btn btn-yellow" ng-click="askRefund()">
+                                        Refund
+                                    </button>
                                 </header>
                                 <section>
                                     <div class="form form-horizontal">

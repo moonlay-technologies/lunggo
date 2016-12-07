@@ -1,78 +1,291 @@
-﻿@model Lunggo.ApCommon.Voucher.VoucherEmailModel
+﻿@using System.Globalization
+@using Lunggo.ApCommon.Hotel.Service
+@using Lunggo.Framework.Config
+@using Lunggo.ApCommon.Constant
+@model Lunggo.ApCommon.Hotel.Model.HotelReservationForDisplay
+@{
+    ViewBag.SiteHeader = "header-email";
+}
 
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Travorama </title>
+
+    <link rel="shortcut icon" type="image/ico" href="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/favico.ico")" />
+
+    <title>Travorama - eTicket</title>
+
+    <!-- stylesheets -->
+    <link rel="stylesheet" href="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/css/bootstrap.min.css")" />
+    <link rel="stylesheet" href="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/css/font-awesome.min.css")" />
+    <link rel="stylesheet" href="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/css/neweticket.css")" />
 </head>
-<body style="font-size:14px;">
+<body class="eticket">
+    <div class="page page-hotel-voucher">
+        <header class="page-header">
+            <div class="row">
+                <div class="col-xs-4">
+                    <img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/travorama-logo-color.png")" />
+                </div>
+                <div class="col-xs-8">
+                    <div class="page-header-right pull-right">
+                        <div class="page-title"><h3><span class="black-txt">HOTEL</span> VOUCHER</h3></div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <section class="page-content">
+            <div class="hotel-wrapper">
+                <div class="hotel-top">
+                    <p>
+                        <img class="img-email" src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/email/mail.png")" /><span class="blue-txt">cs@travorama.com</span>
+                    </p>
+                    <div style="background: url(@Model.HotelDetail.MainImage); width: 716px; height: 162px; background-size: cover; background-position: center; background-repeat: no-repeat" class=" img-hotel">
 
-    <table style="border-collapse:collapse; width:600px; margin-left:auto; margin-right:auto; font-family:helvetica, 'myriad pro', arial, sans-serif;" border="0" cellpadding="0" cellspacing="0">
-        <tr>
-            <td width="600px" style="text-align:center; border-bottom:1px solid #ccc;">
-                <br />
-                <img src="http://travorama.com/Assets/images/email/travorama-logo.jpg" alt="Travorama" />
-                <br />
-                <br />
-            </td>
-        </tr>
-    </table>
+                    </div>
 
-    <table style="border-collapse:collapse; width:600px; margin-left:auto; margin-right:auto; font-family:helvetica, 'myriad pro', arial, sans-serif;" border="0" cellpadding="0" cellspacing="0">
-        <tr>
-            <td colspan="3" width="600px">
-                &nbsp;
-            </td>
-        </tr>
-        <tr>
-            <td width="50px"></td>
-            <td width="500px" style="vertical-align:top;">
+                </div>
+                <div class="hotel-middle">
+                    <div class="row">
+                        <div class="col-xs-2">
+                            <h4>
+                                Nomor Reservasi
+                                <h4 class="blue-txt"><b>@Model.RsvNo</b></h4>
+                            </h4>
+                        </div>
+                        <div class="col-xs-10">
+                            <div class="right-side">
+                                <h4 class="blue-txt uppercase"><b>@Model.HotelDetail.HotelName</b></h4>
+                                @if (Model.HotelDetail.StarRating == 0 || Model.HotelDetail.StarRating == 1)
+                                {
+                                    <p class="star"></p>
+                                }
+                                @if (Model.HotelDetail.StarRating == 2)
+                                {
+                                    <p class="star star-2"></p>
+                                }
+                                @if (Model.HotelDetail.StarRating == 3)
+                                {
+                                    <p class="star star-3"></p>
+                                }
+                                @if (Model.HotelDetail.StarRating == 4)
+                                {
+                                    <p class="star star-4"></p>
+                                }
+                                @if (Model.HotelDetail.StarRating == 5)
+                                {
+                                    <p class="star star-5"></p>
+                                }
+                                <p class="grey-txt">
+                                    <img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/location.png")" /> @Model.HotelDetail.Address @Model.HotelDetail.DestinationName, @Model.HotelDetail.PostalCode, @Model.HotelDetail.CountryName
+                                </p>
+                                <p class="grey-txt">
+                                    <img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/phone.png")" /> @Model.HotelDetail.PhonesNumbers[0]
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="hotel-bottom">
+                    <h3><b>DETAIL PEMESANAN</b></h3>
+                    <div class="hotel-detail">
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <p style=""><b>Nomor Reservasi</b></p>
+                            </div>
+                            <div class="col-xs-9">
+                                <p style="">: <b>@Model.RsvNo</b></p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <p style=""><b>Nama Tamu</b></p>
+                            </div>
+                            <div class="col-xs-9">
+                                <p style="">: <b>@EnumDisplay.Title(Model.Pax[0].Title) @Model.Pax[0].Name</b></p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <p style=""><b>Check-In</b></p>
+                            </div>
+                            <div class="col-xs-9">
+                                <p style="">: <b>@Model.HotelDetail.CheckInDate.ToString("D", CultureInfo.CreateSpecificCulture("id-ID"))</b></p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <p style=""><b>Check-Out</b></p>
+                            </div>
+                            <div class="col-xs-9">
+                                <p style="">: <b>@Model.HotelDetail.CheckOutDate.ToString("D", CultureInfo.CreateSpecificCulture("id-ID"))</b></p>
+                            </div>
+                        </div>
 
-                <p>Dear @Model.Email</p>
-                <p>Terima kasih telah bergabung di Newsletter Travorama.</p>
-                <p>Anda mendapatkan voucher hingga Rp 500.000 yang bisa anda gunakan untuk pembelian tiket pesawat di Travorama. Kode voucher hanya berlaku untuk pembelian pertama.</p>
+                        @foreach (var room in Model.HotelDetail.Rooms)
+                        {
+                            foreach (var rate in room.Rates)
+                            {
+                                <div class="row grey-txt">
+                                    <div class="col-xs-3">
+                                        <p>Tipe Kamar</p>
+                                    </div>
+                                    <div class="col-xs-9">
+                                        <p>: @HotelService.GetInstance().GetHotelRoom(room.RoomCode).RoomDescId @HotelService.GetInstance().GetHotelBoardDescId(rate.Boards)</p>
+                                    </div>
+                                </div>
+                                <div class="row grey-txt">
+                                    <div class="col-xs-3">
+                                        <p>Jumlah Tamu per Kamar</p>
+                                    </div>
+                                    <div class="col-xs-9">
+                                        <p>
+                                            : @rate.AdultCount Dewasa @if (rate.ChildCount > 0)
+                                            {
+                                                <span>, @rate.ChildCount Anak </span>
+                                                <span>
+                                                    (
+                                                    @for (var a = 0; a < rate.ChildrenAges.Count; a++)
+                                                    {
+                                                        if (a != rate.ChildrenAges.Count - 1)
+                                                        {
+                                                            @rate.ChildrenAges[a]
+                                                            <span>Tahun, </span>
+                                                        }
+                                                        else
+                                                        {
+                                                            @rate.ChildrenAges[a] <span>Tahun</span>
+                                                        }
+                                                    }
+                                                    )
+                                                </span>
+                                            }
+                                        </p>
+                                    </div>
+                                </div>
 
-                <h3>KODE VOUCHER : @Model.VoucherCode</h3>
+                                <div class="row grey-txt">
+                                    <div class="col-xs-3">
+                                        <p>Jumlah Kamar</p>
+                                    </div>
+                                    <div class="col-xs-9">
+                                        <p>: @rate.RoomCount</p>
+                                    </div>
+                                </div>
+                                if (rate.TermAndCondition.Count != 0 && !rate.TermAndCondition.Exists(r => r.Length < 3))
+                                {
+                                    <div class="row grey-txt">
+                                        <div class="col-xs-3">
+                                            <p>Ketentuan</p>
+                                        </div>
+                                        <div class="col-xs-9">
+                                            <p>: @String.Join(". ", rate.TermAndCondition)</p>
+                                        </div>
+                                    </div>
+                                }
+                            }
+                        }
 
-                <p>Syarat dan Ketentuan Penggunaan Voucher:</p>
 
-                <ol>
-                    <li>Voucher bernilai hingga Rp 500.000 <b>hanya berlaku untuk pembelian pertama</b></li>
-                    <li>Voucher berlaku untuk pembelian tiket penerbangan dengan rute domestik &amp; internasional.</li>
-                    <li>Voucher tidak dapat ditukarkan dengan uang.</li>
-                    <li>Voucher ini tidak dapat digabungkan dengan promo atau kode voucher lain.</li>
-                    <li>Masa berlaku voucher hingga 31 Desember 2015.</li>
-                </ol>
+                        @if (Model.HotelDetail.SpecialRequest != null && Model.HotelDetail.SpecialRequest.Length != 0)
+                        {
+                            <div class="row grey-txt">
+                                <div class="col-xs-3">
+                                    <p style="color: #525252;">Permintaan Khusus</p>
+                                </div>
+                                <div class="col-xs-9">
+                                    <p style="">@Model.HotelDetail.SpecialRequest</p>
+                                </div>
+                            </div>
+                        }
+                        <div class="row grey-txt">
+                            <div class="col-xs-3">
+                                <p>Termasuk Sarapan?</p>
+                            </div>
+                            <div class="col-xs-9">
+                                @if (Model.HotelDetail.Rooms[0].Rates[0].Boards != "RO")
+                                {
+                                    <p> : Ya</p>
+                                }
+                                @if (Model.HotelDetail.Rooms[0].Rates[0].Boards == "RO")
+                                {
+                                    <p> : Tidak</p>
+                                }
+                            </div>
+                        </div>
 
-            </td>
-            <td width="50px"></td>
-        </tr>
-        <tr>
-            <td colspan="3" width="500px" style="padding-bottom:10px;">
-                &nbsp;
-            </td>
-        </tr>
+                        <div class="row grey-txt">
+                            <div class="col-xs-3">
+                                <p>Fasilitas</p>
+                            </div>
+                            <div class="col-xs-9">
+                                <p>
+                                    @if (Model.HotelDetail.IsWifiAccessAvailable)
+                                    {
+                                        <span><img class="img-wifi" src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/wifi.png")" />Wi-fi</span>
+                                    }
+                                    @if (Model.HotelDetail.IsRestaurantAvailable)
+                                    {
+                                        <span><img class="img-swim" src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/swim.png")" />Kolam Renang</span>
+                                    }
+                                </p>
 
-    </table>
+                                @if (Model.HotelDetail.Facilities.Other.Count != 0)
+                                {
+                                    var facilities = Model.HotelDetail.Facilities.Other.Where(f => f.Length > 0).ToList();
+                                    if (facilities.Count == 1)
+                                    {
+                                        <p>@facilities[0]</p>
+                                    }
+                                    else
+                                    {
+                                        <div class="col-half">
+                                            @for (var i = 0; i < facilities.Count / 2; i++)
+                                            {
+                                                <p>@facilities[i]</p>
+                                            }
+                                        </div>
+                                        <div class="col-half">
+                                            @for (var j = facilities.Count / 2;
+                                                j < facilities.Count; j++)
+                                            {
+                                                <p>@facilities[j]</p>
+                                            }
+                                        </div>
+                                    }
+                                }
 
-    <table style="border-collapse:collapse; width:600px; margin-left:auto; margin-right:auto; font-family:helvetica, 'myriad pro', arial, sans-serif;" border="0" cellpadding="0" cellspacing="0">
-        <tr>
-            <td width="50px" style="background-color:#f2f2f2; background:#f2f2f2;">&nbsp;</td>
-            <td width="500px" style="background-color:#f2f2f2; background:#f2f2f2;">
-                <p style="text-align:center; font-size:12px; padding-top:10px; padding-right:0; padding-bottom:10px; padding-left:0;">Travorama, equity tower 25th floor, scbd lot 9, jl. jendral sudirman kav 52 -53</p>
-                <p style="text-align:center; font-size:12px; margin-bottom:5px;"><b>Layanan Customer:</b></p>
-                <p style="text-align:center; font-size:12px; margin-top:0;"><a href="mailto:cs@travorama.com" style="color:#0050ef; text-decoration:none;"> <img src="http://travorama.com/Assets/images/email/mail-icon.png" alt="M" /> cs@travorama.com</a></p>
-                <p style="text-align:center; font-size:12px; margin-bottom:5px;"><b>Follow kami di :</b></p>
-                <p style="text-align:center; font-size:12px; margin-top:0;">
-                    <a href="http://www.facebook.com/travorama" style="color:#0050ef; text-decoration:none;"> <img src="http://travorama.com/Assets/images/email/facebook-icon.png" alt="F" /> www.facebook.com/travorama</a>  | <a href="http://twitter.com/travoramaid" style="color:#0050ef; text-decoration:none;"> <img src="http://travorama.com/Assets/images/email/twitter-icon.png" alt="T" /> &#64;travoramaid</a>  | <a href="http://instagram.com/travorama" style="color:#0050ef; text-decoration:none;"><img src="http://travorama.com/Assets/images/email/instagram-icon.png" alt="I" /> &#64;travorama</a>
-                </p>
-            </td>
-            <td width="50px" style="background-color:#f2f2f2; background:#f2f2f2;">&nbsp;</td>
-        </tr>
-    </table>
+                            </div>
+                        </div>
+                        <div class="row grey-txt">
+                            <div class="col-xs-3">
+                                <p>Client Reference</p>
+                            </div>
+                            <div class="col-xs-9">
+                                <p>: @Model.HotelDetail.ClientReference</p>
+                            </div>
+                        </div>
 
+                        <div class="row grey-txt">
+                            <div class="col-xs-12">
+                                <p style="font-size: 8px; font-style: italic">
+                                    &quot;Payable through @Model.HotelDetail.SupplierName, acting as agent for the service operating
+
+                                    company, details of which can be provided upon request&quot;. VAT: @Model.HotelDetail.SupplierVat
+
+                                    Reference: @Model.HotelDetail.BookingReference
+                                </p>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
 </body>
 </html>
