@@ -106,7 +106,7 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
 
             var scope = angular.element($('.hotel-date-picker')).scope();
             $scope.setCheckinDate(scope, date);
-            
+
             $log.debug("checkinDate = " + date);
             var target;
             var chosenDate = new Date(date);
@@ -260,50 +260,73 @@ jQuery(document).ready(function ($) {
     $('body input[name="FormAgeSubmit"]').on('click', function () {
         $('body .form-child-age').hide();
     });
+
+    //Home Page Search Form Hotel
+    $('body .menu-main li').click(function () {
+        if ($(this).is('#header-flight')) {
+            var itemF = $(this).closest('.site-header').parent();
+            
+            itemF.parent().find('.tab-header').find('.flight').addClass('active');
+            itemF.parent().find('.tab-header').find('.flight').siblings().removeClass('active');
+            itemF.parent().find('#plane').addClass('active');
+            itemF.parent().find('#plane').siblings().removeClass('active');
+
+            var linkF = $(this).find('a').attr('href', '#plane');
+
+            linkF.parent().addClass('active');
+            linkF.parent().siblings().removeClass('active');
+
+        } else if ($(this).is('#header-hotel')) {
+            var item = $(this).closest('.site-header').parent();
+
+            item.parent().find('.tab-header').find('.hotel').addClass('active');
+            item.parent().find('.tab-header').find('.hotel').siblings().removeClass('active');
+            item.parent().find('#hotel').addClass('active');
+            item.parent().find('#hotel').siblings().removeClass('active');
+
+            var link = $(this).find('a').attr('href', '#hotel');
+
+            link.parent().addClass('active');
+            link.parent().siblings().removeClass('active');
+
+        }
+    });
+
+    $('body .tab-header li').click(function () {
+        if ($(this).hasClass('flight')) {
+            $(this).closest('.site-content').parent().find('.menu-main').find('#header-flight').addClass('active');
+            $(this).closest('.site-content').parent().find('.menu-main').find('#header-flight').siblings().removeClass('active');
+        } else if ($(this).hasClass('hotel')) {
+            $(this).closest('.site-content').parent().find('.menu-main').find('#header-hotel').addClass('active');
+            $(this).closest('.site-content').parent().find('.menu-main').find('#header-hotel').siblings().removeClass('active');
+        }
 });
  
-//$scope.hotelSearch = {};
-//$scope.hotelSearch.searchHotelType = 'Location';
-//$scope.hotelSearch.location = "";
-//$scope.hotelSearch.locationDisplay = "";
-//$scope.hotelSearch.checkinDate = moment().locale("id").add(5, 'days');
-//$scope.hotelSearch.checkinDateDisplay = $scope.hotelSearch.checkinDate.locale("id").format('LL');
-//$scope.hotelSearch.nightCount = 2;
-//$scope.hotelSearch.checkoutDate = moment().locale("id").add(7, 'days');
-//$scope.hotelSearch.adultCount = 1;
-//$scope.hotelSearch.childCount = 0;
-//$scope.hotelSearch.childrenAges = [0, 0, 0, 0];
+    //Mobile Home Page
+    $('select[name="roomclass"]').on('change', function () {
+        var toNumb = parseInt($('select[name="roomclass"]').val());
+        var a = $(this).closest('.form__room').parent();
+        var b = a.parent().children('.form__visitor');
 
-//$scope.hotelSearch.childrenAgeList = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
+        var oldItem = b.children('.age-child').find('.ag-list');
+        var oldItem2 = b.children('.age-child').find('.ag-list-2');
 
-//$scope.hotelSearch.roomCount = 1;
+        var counter = 1;
 
-//$scope.hotel.adultCountMin = 1;
-//$scope.hotel.adultCountMax = 5;
+        if (oldItem2.html() == '') {
+            var itemc = oldItem.find('.ag-wrap').clone();
+            oldItem2.html(itemc);
+        }
+        var newitem = oldItem2.find('.ag-wrap').clone();
+        oldItem.html('');
 
-//$scope.hotel.childCountMin = 0;
-//$scope.hotel.childCountMax = 4;
+        for (i = 0; i < toNumb; i++) {
+            newitem.attr('id', 'item-' + counter);
 
-//$scope.hotel.nightCountMin = 1;
-//$scope.hotel.nightCountMax = 7;
+            var item = newitem.clone();
 
-//$scope.hotel.roomCountMin = 1;
-//$scope.hotel.roomCountMax = 8;
-
-//$scope.setCheckinDate = function (scope, date) {
-//    scope.$apply(function () {
-//        scope.hotelSearch.checkinDate = moment(date, "MM-DD-YYYY");
-//        scope.hotelSearch.checkinDateDisplay = $scope.hotelSearch.checkinDate.locale("id").format('LL');
-//    });
-//}
-
-//$scope.$watch('hotel.nightCount', function (newValue, oldValue) {
-//    //var scope = angular.element($('.hotel-date-picker')).scope();
-//    //$scope.setCheckinDate(scope, $scope.hotel.checkinDate);
-//    //$scope.hotel.checkoutDate = $scope.hotel.checkinDate;
-//    if (oldValue != newValue) {
-//        var cod = moment($scope.hotel.checkinDate);
-//        $scope.hotel.checkoutDate = moment(cod).add($scope.hotel.nightCount, 'days');
-//    }
-
-//});
+            oldItem.append(item);
+            counter++;
+        };
+    });
+});

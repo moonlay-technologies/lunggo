@@ -1468,7 +1468,7 @@
     <Content Include="Campaign\PromoBTN\images\credit-card.png" />
     <Content Include="Campaign\PromoBTN\images\debit.png" />
     <Content Include="Campaign\PromoBTN\images\top-banner.jpg" />
-    <Content Include="checkin.png" />
+    <Content Include="Views\Term\checkin.png" />
     <Content Include="Config\Airline.csv" />
     <Content Include="Config\i18n_message.xml">
       <SubType>Designer</SubType>

@@ -83,7 +83,7 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
             //setTncDisplay();
             setDescriptionDisplay();
             $timeout(function() { hotelDetailFunctions(); }, 0);
-            //$timeout(function () { initiateSlider(); }, 0);
+            $timeout(function () { initiateSlider(); }, 0);
             $timeout(function () {  accordionFunctions(); }, 0);
 
             $log.debug($scope.hotel);
@@ -351,11 +351,23 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
     }
     //=============== hotel end ======================
 
-    var initiateSlider = function() {
-        $timeout(function() {
+    var initiateSlider = function () {
+        $('#image-gallery').lightSlider({
+            gallery: true,
+            item: 1,
+            thumbItem: 6,
+            slideMargin: 0,
+            loop: true,
+            keyPress: true,
+            onSliderLoad: function () {
+                $('#image-gallery').removeClass('cS-hidden');
+            }
+        });
+
+        $timeout(function () {
             var altImagePath = document.location.origin + '/Assets/travorama20/images/Hotel/no-hotel.png';
             var elements = angular.element(document.querySelectorAll('#imgtum'));
-          
+
             //angular.each(elements, function(key, value) {
             //    elements[key].removeAttr('src');
             //    elements[key].attr('src', altImagePath); // set default image

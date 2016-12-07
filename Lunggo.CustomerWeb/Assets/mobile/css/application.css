@@ -1612,13 +1612,15 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
           padding: 0 10px 0 28px; }
         .page.page-home .form-container .form-wrapper form .field-container.form-infant, .page.page-home .form-container .form-wrapper form .field-container.form-v-child {
           padding: 0 0 0 28px; }
-        .page.page-home .form-container .form-wrapper form .field-container.form-v-adult .field-wrapper select.form-control, .page.page-home .form-container .form-wrapper form .field-container.form-v-child .field-wrapper select.form-control {
-          text-align: center;
-          text-align-last: center; }
+        .page.page-home .form-container .form-wrapper form .field-container.form-v-adult .field-wrapper, .page.page-home .form-container .form-wrapper form .field-container.form-v-child .field-wrapper {
+          padding: 10px 0; }
+          .page.page-home .form-container .form-wrapper form .field-container.form-v-adult .field-wrapper select.form-control, .page.page-home .form-container .form-wrapper form .field-container.form-v-child .field-wrapper select.form-control {
+            text-align: center;
+            text-align-last: center; }
         .page.page-home .form-container .form-wrapper form .field-container p, .page.page-home .form-container .form-wrapper form .field-container select {
           cursor: pointer; }
         .page.page-home .form-container .form-wrapper form .field-container .field-wrapper {
-          padding: 10px 0;
+          padding: 21px 0;
           border-bottom: 1px solid #dddddd;
           text-align: center; }
           .page.page-home .form-container .form-wrapper form .field-container .field-wrapper.form-adult:before, .page.page-home .form-container .form-wrapper .overlay.overlay--flight-form form .field-container .field-wrapper.form-children:before, .overlay.overlay--flight-form .page.page-home .form-container .form-wrapper form .field-container .field-wrapper.form-children:before, .page.page-home .form-container .form-wrapper .overlay.overlay--flight-form form .field-container .field-wrapper.form-infant:before, .overlay.overlay--flight-form .page.page-home .form-container .form-wrapper form .field-container .field-wrapper.form-infant:before {
@@ -1785,6 +1787,8 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
           border-bottom: 20px dashed #ecf0f4;
           border-right: 20px solid #fff;
           border-left: 20px solid #fff; }
+        .page.page-home .form-container .form-wrapper form .form__visitor .age-child .ag-list-2 {
+          display: none; }
         .page.page-home .form-container .form-wrapper form .form__visitor .age-child .ac-list {
           padding: 0 12px; }
           .page.page-home .form-container .form-wrapper form .form__visitor .age-child .ac-list > .col-6 {
@@ -2318,13 +2322,15 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         padding: 0 10px 0 28px; }
       .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .field-container.form-infant, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .field-container.form-v-child {
         padding: 0 0 0 28px; }
-      .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .field-container.form-v-adult .field-wrapper select.form-control, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .field-container.form-v-child .field-wrapper select.form-control {
-        text-align: center;
-        text-align-last: center; }
+      .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .field-container.form-v-adult .field-wrapper, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .field-container.form-v-child .field-wrapper {
+        padding: 10px 0; }
+        .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .field-container.form-v-adult .field-wrapper select.form-control, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .field-container.form-v-child .field-wrapper select.form-control {
+          text-align: center;
+          text-align-last: center; }
       .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .field-container p, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .field-container select {
         cursor: pointer; }
       .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .field-container .field-wrapper {
-        padding: 10px 0;
+        padding: 21px 0;
         border-bottom: 1px solid #dddddd;
         text-align: center; }
         .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .field-container .field-wrapper.form-adult:before, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .field-container .field-wrapper.form-children:before, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .field-container .field-wrapper.form-infant:before {
@@ -2491,6 +2497,8 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         border-bottom: 20px dashed #ecf0f4;
         border-right: 20px solid #fff;
         border-left: 20px solid #fff; }
+      .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__visitor .age-child .ag-list-2 {
+        display: none; }
       .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__visitor .age-child .ac-list {
         padding: 0 12px; }
         .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__visitor .age-child .ac-list > .col-6 {
@@ -4777,7 +4785,6 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
       margin-top: 10px;
       padding: 10px 0 15px; }
   .page-hotel .price-detail .rr-row {
-    font-size: 13px;
     padding-left: 15px; }
     .page-hotel .price-detail .rr-row:before {
       background: #ff7200;
@@ -4793,24 +4800,20 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
       margin-left: 15px; }
       .page-hotel .price-detail .rr-row:last-child:before {
         background: none; }
-  .page-hotel .book-detail {
-    font-size: 13px; }
-    .page-hotel .book-detail .rr-row {
-      font-size: 13px;
-      padding: 10px 0; }
-      .page-hotel .book-detail .rr-row:last-child {
-        border-top: 1px solid #e8e8e8;
-        border-bottom: 1px solid #e8e8e8;
-        margin-bottom: 20px; }
-  .page-hotel .book-hotel {
+  .page-hotel .book-detail .rr-row {
     font-size: 13px;
+    padding: 10px 0; }
+    .page-hotel .book-detail .rr-row:last-child {
+      border-top: 1px solid #e8e8e8;
+      border-bottom: 1px solid #e8e8e8;
+      margin-bottom: 20px; }
+  .page-hotel .book-hotel {
     margin-bottom: 10px; }
     .page-hotel .book-hotel .fb-row:first-child {
       margin-top: 10px; }
     .page-hotel .book-hotel .col-6:before {
       content: ': '; }
   .page-hotel .guest-detail {
-    font-size: 13px;
     margin-bottom: 10px; }
     .page-hotel .guest-detail .rr-row {
       border-top: 1px solid #e8e8e8;
@@ -4851,6 +4854,21 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
           vertical-align: middle;
           background-size: 100%;
           margin-right: 5px; }
+      @media only screen and (min-width: 414px) and (max-height: 736px) {
+        .page-hotel .travorama-hotel-mobile .search-list .hotel-list-container .hotel-list .img-list {
+          height: 154px; } }
+      @media only screen and (min-width: 375px) and (max-height: 667px) {
+        .page-hotel .travorama-hotel-mobile .search-list .hotel-list-container .hotel-list .img-list {
+          height: 144px; } }
+      @media only screen and (min-width: 320px) and (max-height: 640px) {
+        .page-hotel .travorama-hotel-mobile .search-list .hotel-list-container .hotel-list .img-list {
+          height: 144px; } }
+      @media only screen and (max-width: 320px) and (height: 568px) {
+        .page-hotel .travorama-hotel-mobile .search-list .hotel-list-container .hotel-list .img-list {
+          height: 134px; } }
+      @media only screen and (max-width: 320px) and (height: 480px) {
+        .page-hotel .travorama-hotel-mobile .search-list .hotel-list-container .hotel-list .img-list {
+          height: 134px; } }
     .page-hotel .travorama-hotel-mobile .filter-group--facility .sh-list, .page-hotel .travorama-hotel-mobile .filter-group--area .sh-list {
       height: 170px;
       overflow: hidden; }
@@ -5006,22 +5024,20 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
       background-size: cover;
       background-position: center center;
       background-repeat: no-repeat; }
-  .page-hotel .form-box {
-    font-size: 13px; }
-    .page-hotel .form-box .fb-header {
-      padding: 10px 15px;
-      background: #2fb4e6;
-      color: #fff; }
-    .page-hotel .form-box .fb-body {
-      padding: 20px 15px;
-      background: #fff;
-      border: 1px solid #ccc; }
-    .page-hotel .form-box .fb-top {
-      border-bottom: 1px solid #e8e8e8;
-      padding-bottom: 15px;
-      margin-bottom: 15px; }
-    .page-hotel .form-box .sqr-blue-list {
-      padding-top: 5px; }
+  .page-hotel .form-box .fb-header {
+    padding: 10px 15px;
+    background: #2fb4e6;
+    color: #fff; }
+  .page-hotel .form-box .fb-body {
+    padding: 20px 15px;
+    background: #fff;
+    border: 1px solid #ccc; }
+  .page-hotel .form-box .fb-top {
+    border-bottom: 1px solid #e8e8e8;
+    padding-bottom: 15px;
+    margin-bottom: 15px; }
+  .page-hotel .form-box .sqr-blue-list {
+    padding-top: 5px; }
   .page-hotel .fb-hotel .star {
     margin-right: 19px; }
   .page-hotel .fb-hotel .location {
@@ -5116,7 +5132,6 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     .page-hotel.page-checkout .form-box .fb-bed {
       margin: 15px 0; }
     .page-hotel.page-checkout .form-box .fb-room {
-      font-size: 13px;
       border-top: 1px solid #e8e8e8;
       padding-top: 15px;
       margin-bottom: 15px; }
@@ -5160,6 +5175,18 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
           height: 37px;
           background-size: cover;
           background-position: center; }
+    .page-hotel.page-checkout .form-request {
+      font-size: 13px;
+      margin: 15px 0; }
+      .page-hotel.page-checkout .form-request textarea[name="form-request"] {
+        width: 100%;
+        font-size: 11px;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 2px;
+        height: 80px;
+        margin-top: 10px;
+        resize: none; }
   .page-hotel.page-thankyou {
     font-size: 13px;
     background: #f9f9f9; }
@@ -5353,13 +5380,15 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
           padding: 0 10px 0 28px; }
         .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .field-container.form-infant, .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .field-container.form-v-child {
           padding: 0 0 0 28px; }
-        .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .field-container.form-v-adult .field-wrapper select.form-control, .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .field-container.form-v-child .field-wrapper select.form-control {
-          text-align: center;
-          text-align-last: center; }
+        .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .field-container.form-v-adult .field-wrapper, .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .field-container.form-v-child .field-wrapper {
+          padding: 10px 0; }
+          .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .field-container.form-v-adult .field-wrapper select.form-control, .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .field-container.form-v-child .field-wrapper select.form-control {
+            text-align: center;
+            text-align-last: center; }
         .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .field-container p, .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .field-container select {
           cursor: pointer; }
         .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .field-container .field-wrapper {
-          padding: 10px 0;
+          padding: 21px 0;
           border-bottom: 1px solid #dddddd;
           text-align: center; }
           .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .field-container .field-wrapper.form-adult:before, .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper .overlay.overlay--flight-form form .field-container .field-wrapper.form-children:before, .overlay.overlay--flight-form .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .field-container .field-wrapper.form-children:before, .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper .overlay.overlay--flight-form form .field-container .field-wrapper.form-infant:before, .overlay.overlay--flight-form .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .field-container .field-wrapper.form-infant:before {
@@ -5526,6 +5555,8 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
           border-bottom: 20px dashed #ecf0f4;
           border-right: 20px solid #fff;
           border-left: 20px solid #fff; }
+        .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__visitor .age-child .ag-list-2 {
+          display: none; }
         .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__visitor .age-child .ac-list {
           padding: 0 12px; }
           .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__visitor .age-child .ac-list > .col-6 {

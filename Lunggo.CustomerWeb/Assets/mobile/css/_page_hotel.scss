@@ -760,7 +760,6 @@
     }
     .price-detail {
         .rr-row {
-            font-size: 13px;
             padding-left: 15px;
             &:before {
                 background: #ff7200;
@@ -780,7 +779,6 @@
         }
     }
     .book-detail {
-        font-size: 13px;
         .rr-row {
             font-size: 13px;
             padding: 10px 0;
@@ -792,13 +790,11 @@
         }
     }
     .book-hotel {
-        font-size: 13px;
         margin-bottom: 10px;
         .fb-row:first-child {margin-top: 10px;}
         .col-6:before {content:': '}
     }
     .guest-detail {
-        font-size: 13px;
         margin-bottom: 10px;
         .rr-row {
             border-top: 1px solid #e8e8e8;
@@ -820,7 +816,6 @@
         @import 'page_hotel_detail';
     }
     .form-box {
-        font-size: 13px;
         .fb-header {
             padding: 10px 15px;
             background: #2fb4e6;
@@ -958,7 +953,6 @@
                 margin: 15px 0;
             }            
             .fb-room {
-                font-size: 13px;
                 border-top: 1px solid #e8e8e8;
                 padding-top: 15px;
                 margin-bottom: 15px;
@@ -1007,7 +1001,21 @@
                     }
                 }
             }
-    }
+        }
+        .form-request {
+            font-size: 13px;
+            margin: 15px 0;
+            textarea[name="form-request"] {
+                width: 100%;
+                font-size: 11px;
+                padding: 10px;
+                border: 1px solid #ccc;
+                border-radius: 2px;
+                height: 80px;
+                margin-top: 10px;
+                resize: none;
+            }
+        }
         
     }
     /*Page Thankyou Hotel*/

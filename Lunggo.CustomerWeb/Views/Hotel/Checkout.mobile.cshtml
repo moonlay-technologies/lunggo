@@ -230,7 +230,7 @@
                 </div>
                     </div>
                 </div>*@
-                <input type="checkbox" name="diffPerson" ng-model="diffPerson" value="false" ng-change="cleanGuestInfo()"> Saya membuat reservasi untuk orang lain.<br>
+                <input type="checkbox" name="diffPerson" ng-model="diffPerson" value="false" ng-change="cleanGuestInfo()"> <span class="italic-txt bold-txt">Saya membuat reservasi untuk orang lain.</span><br>
                 <div ng-show ="diffPerson">
                     <h3><b>DATA</b> TAMU</h3>
                     <div class="form-group">
@@ -247,31 +247,18 @@
                         </div>
                     </div>
                 </div>
-                
-                <div class="form-group">
+                @*<div class="form-group">
                     <div class="form-box">
                         <div class="fb-header"><b>Permintaan Khusus</b> (opsional)</div>
                         <div class="fb-body">
                             <textarea name="fb-request" placeholder="Silakan tulis permintaan khusus Anda di sini" ng-model="buyerInfo.message"></textarea>
-                            @*<div class="fb-bed clearfix">
-                        Your Bed Preference (if available):
-                        <label class="checkbox">
-                            <div class="switch"></div>
-                            <span class="md-txt os-regular title">2 extra-large doubles <span class="double-bed"></span></span>
-                            <input type="checkbox" name="check" class="check" value="false">
-                        </label>
-                        <label class="checkbox">
-                            <div class="switch"></div>
-                            <span class="md-txt os-regular title">2 singles <span class="single-bed"></span><span class="single-bed"></span>, 1 extra-large double <span class="double-bed"></span></span>
-                            <input type="checkbox" name="check" class="check" value="false">
-                        </label>
-                    </div>
-                    <div class="fb-est md-txt">
-                        <p>Your estimated time of arrival</p>
-                        <div class="bold-txt">24 hour reception:</div>
-                        <div>You can arrive any time you like - <br /> your room will be ready <b>at 15:00</b></div>
-                    </div>*@
                         </div>
+                    </div>
+                </div>*@
+                <div class="form-group">
+                    <div class="form-request">
+                        <div class="">Permintaan Khusus (opsional)</div>
+                        <textarea name="form-request" placeholder="Silakan tulis permintaan khusus Anda di sini" ng-model="buyerInfo.message"></textarea>
                     </div>
                 </div>
                 <div class="form-group">
@@ -312,8 +299,7 @@
                 </div>
             </div>
             @Html.Partial("/Views/Hotel/Shared/Mobile/_RoomDetail.cshtml", Model.HotelDetail)
-            
-            <div class="form-group">
+            @*<div class="form-group">
                 <div class="form-box">
                     <div class="fb-header"><b>Detail Pemesan</b></div>
                     <div class="fb-body">
@@ -337,8 +323,28 @@
                         </div>
                     </div>
                 </div>
+            </div>*@
+            <div class="guest-detail clearfix">
+                <h3 class="summary__title"><b>DETAIL </b>PEMESAN</h3>
+                <div class="clearfix">
+                    <div class="rr-row clearfix">
+                        <div style="font-weight: bold">Nama Pemesan</div>
+                        <div>{{changeTitle(buyerInfo.title)}} {{buyerInfo.name}}</div>
+                    </div>
+                    <div class="rr-row clearfix">
+                        <div style="font-weight: bold">E-Mail</div>
+                        <div>{{buyerInfo.email}}</div>
+                    </div>
+                    <div class="rr-row clearfix">
+                        <div style="font-weight: bold">Nomor Telepon</div>
+                        <div>+{{buyerInfo.countryCode}}{{buyerInfo.phone}}</div>
+                    </div>
+                    <div class="rr-row clearfix">
+                        <div style="font-weight: bold">Tamu</div>
+                        <div>{{changeTitle(guestInfo.title)}} {{guestInfo.name}}</div>
+                    </div>
+                </div>
             </div>
-
             @Html.Partial("/Views/Hotel/Shared/Mobile/_PriceDetail.cshtml", new HotelReservationForDisplay
             {
                 HotelDetail = Model.HotelDetail
@@ -349,9 +355,9 @@
             <form action="" method="post" name="submitForm" id="rsvno" class="hidden">
                 <input type="text" name="RsvNo" value="" id="rsvno-input" />
             </form>
-            <div class="form-group">
-                <button class="btn btn-grey form-control" ng-click="changePage(1)">KEMBALI</button>
-                <button class="btn btn-yellow form-control" ng-disabled="book.booking" ng-click="book.send()">PESAN</button>
+            <div class="form-group clearfix">
+                <div class="col-xs-6"><button class="btn btn-grey form-control" ng-click="changePage(1)">KEMBALI</button></div>
+                <div class="col-xs-6"><button class="btn btn-yellow form-control" ng-disabled="book.booking" ng-click="book.send()">PESAN</button></div>
             </div>
         </div>
     </div>

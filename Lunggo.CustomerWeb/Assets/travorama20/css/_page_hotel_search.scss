@@ -64,6 +64,7 @@
         }
         .col-right-result {
             padding-left: 30px;
+            position: relative;
             .sort .col-2 {margin-top: 5px;}
             .hl-wrapper {display: block;}
             .hl-select {
@@ -78,6 +79,10 @@
                 border-radius: 3px;
                 cursor:pointer;
                 &>.col-8 {padding-left: 15px;}
+                &:hover {
+                    box-shadow: 3px 4px 10px #337ab7;
+                    transition: .4s;
+                }
             }
             .facility {
                 text-align: right;
@@ -88,6 +93,7 @@
                 margin: 7px 0;
                 margin-left: 20px;
                 line-height: 16px;
+                color: #000;
                 &:before {
                     @extend .maps-icon;
                     position: absolute;
