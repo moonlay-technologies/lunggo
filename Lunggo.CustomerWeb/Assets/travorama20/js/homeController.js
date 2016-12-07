@@ -261,6 +261,47 @@ jQuery(document).ready(function ($) {
         $('body .form-child-age').hide();
     });
 
+    //Home Page Search Form Hotel
+    $('body .menu-main li').click(function () {
+        if ($(this).is('#header-flight')) {
+            var itemF = $(this).closest('.site-header').parent();
+            
+            itemF.parent().find('.tab-header').find('.flight').addClass('active');
+            itemF.parent().find('.tab-header').find('.flight').siblings().removeClass('active');
+            itemF.parent().find('#plane').addClass('active');
+            itemF.parent().find('#plane').siblings().removeClass('active');
+
+            var linkF = $(this).find('a').attr('href', '#plane');
+
+            linkF.parent().addClass('active');
+            linkF.parent().siblings().removeClass('active');
+
+        } else if ($(this).is('#header-hotel')) {
+            var item = $(this).closest('.site-header').parent();
+
+            item.parent().find('.tab-header').find('.hotel').addClass('active');
+            item.parent().find('.tab-header').find('.hotel').siblings().removeClass('active');
+            item.parent().find('#hotel').addClass('active');
+            item.parent().find('#hotel').siblings().removeClass('active');
+
+            var link = $(this).find('a').attr('href', '#hotel');
+
+            link.parent().addClass('active');
+            link.parent().siblings().removeClass('active');
+
+        }
+    });
+
+    $('body .tab-header li').click(function () {
+        if ($(this).hasClass('flight')) {
+            $(this).closest('.site-content').parent().find('.menu-main').find('#header-flight').addClass('active');
+            $(this).closest('.site-content').parent().find('.menu-main').find('#header-flight').siblings().removeClass('active');
+        } else if ($(this).hasClass('hotel')) {
+            $(this).closest('.site-content').parent().find('.menu-main').find('#header-hotel').addClass('active');
+            $(this).closest('.site-content').parent().find('.menu-main').find('#header-hotel').siblings().removeClass('active');
+        }
+});
+ 
     //Mobile Home Page
     //$('select[name="roomclass"]').on('change', function () {
     //    var toNumb = parseInt($('select[name="roomclass"]').val());
