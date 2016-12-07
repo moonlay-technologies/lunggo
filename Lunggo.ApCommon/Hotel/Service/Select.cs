@@ -96,7 +96,12 @@ namespace Lunggo.ApCommon.Hotel.Service
                         RateKey = fixRateKey,
                         AdultCount = paxData.AdultCount,
                         Boards = newRate.Boards,
-                        Cancellation = newRate.Cancellation,
+                        Cancellation =  newRate.Cancellation.Select(x=> new Cancellation
+                        {
+                            Fee = x.Fee,
+                            SingleFee = x.SingleFee,
+                            StartTime = x.StartTime
+                        }).ToList(),
                         ChildrenAges = newRate.ChildrenAges,
                         ChildCount = paxData.ChildCount,
                         Class = newRate.Class,
@@ -115,6 +120,10 @@ namespace Lunggo.ApCommon.Hotel.Service
                         newRate.Price.SupplierCurrency);
                     fixRate.Price.SetMargin(newRate.Price.Margin);
                     fixRate.Price.CalculateFinalAndLocal(newRate.Price.LocalCurrency);
+                    foreach (var item in fixRate.Cancellation)
+                    {
+                        item.Fee = item.Fee/newRate.RateCount*paxData.RoomCount;
+                    }
                     rateList.Add(fixRate);
                 }
                 if (rateList.Count == 0)
