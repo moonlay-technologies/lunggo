@@ -258,33 +258,33 @@ jQuery(document).ready(function ($) {
     });
 
     //Home Page Search Form Hotel
-    $('body #header-flight').click(function () {
-        var link = $(this).find('a').attr('href','#plane');
-        var item = $(this).closest('.site-header').parent();
+    $('body .menu-main li').click(function () {
+        if ($(this).is('#header-flight')) {
+            var itemF = $(this).closest('.site-header').parent();
+            
+            itemF.parent().find('.tab-header').find('.flight').addClass('active');
+            itemF.parent().find('.tab-header').find('.flight').siblings().removeClass('active');
+            itemF.parent().find('#plane').addClass('active');
+            itemF.parent().find('#plane').siblings().removeClass('active');
 
-        item.parent().find('.tab-header').find('.flight').addClass('active');
-        item.parent().find('.tab-header').find('.hotel').removeClass('active');
-        item.parent().find('#plane').addClass('active');
-        item.parent().find('#hotel').removeClass('active');
+            var linkF = $(this).find('a').attr('href', '#plane');
 
-        if ($(link).attr('href') == '#plane') {
+            linkF.parent().addClass('active');
+            linkF.parent().siblings().removeClass('active');
+
+        } else if ($(this).is('#header-hotel')) {
+            var item = $(this).closest('.site-header').parent();
+
+            item.parent().find('.tab-header').find('.hotel').addClass('active');
+            item.parent().find('.tab-header').find('.hotel').siblings().removeClass('active');
+            item.parent().find('#hotel').addClass('active');
+            item.parent().find('#hotel').siblings().removeClass('active');
+
+            var link = $(this).find('a').attr('href', '#hotel');
+
             link.parent().addClass('active');
             link.parent().siblings().removeClass('active');
-        }
-    });
 
-    $('body #header-hotel').click(function () {
-        var link = $(this).find('a').attr('href', '#hotel');
-        var item = $(this).closest('.site-header').parent();
-
-        item.parent().find('.tab-header').find('.hotel').addClass('active');
-        item.parent().find('.tab-header').find('.flight').removeClass('active');
-        item.parent().find('#hotel').addClass('active');
-        item.parent().find('#plane').removeClass('active');
-
-        if ($(link).attr('href') == '#hotel') {
-            link.parent().addClass('active');
-            link.parent().siblings().removeClass('active');
         }
     });
 
