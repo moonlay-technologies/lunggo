@@ -85,22 +85,22 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
 
                         var log = LogService.GetInstance();
                         var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
-                        if (env == "production")
-                            log.Post(
-                                "```Payment Log```"
-                                + "\n`*Environment :* " + env.ToUpper()
-                                + "\n*PAYMENT DETAILS :*\n"
-                                + payment.Serialize()
-                                    + "\n*TRANSAC DETAILS :*\n"
-                                    + transactionDetail.Serialize()
-                                //+ "\n*ITEM DETAILS :*\n"
-                                //+ itemDetails.Serialize()
-                                    + "\n*REQUEST :*\n"
-                                    + _temp
-                                + "\n*RESPONSE :*\n"
-                                + content.Serialize()
-                                + "\n*Platform :* "
-                                + Client.GetPlatformType(HttpContext.Current.User.Identity.GetClientId()));
+                        log.Post(
+                            "```Payment Log```"
+                            + "\n`*Environment :* " + env.ToUpper()
+                            + "\n*PAYMENT DETAILS :*\n"
+                            + payment.Serialize()
+                                + "\n*TRANSAC DETAILS :*\n"
+                                + transactionDetail.Serialize()
+                            //+ "\n*ITEM DETAILS :*\n"
+                            //+ itemDetails.Serialize()
+                                + "\n*REQUEST :*\n"
+                                + _temp
+                            + "\n*RESPONSE :*\n"
+                            + content.Serialize()
+                            + "\n*Platform :* "
+                            + Client.GetPlatformType(HttpContext.Current.User.Identity.GetClientId()),
+                            env == "production" ? "#logging-prod" : "#logging-dev");
                     }
                     return payment;
                 case PaymentMethod.VirtualAccount:
@@ -120,7 +120,6 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
 
                         var log = LogService.GetInstance();
                         var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
-                        if (env == "production")
                             log.Post(
                                 "```Payment Log```"
                                 + "\n`*Environment :* " + env.ToUpper()
@@ -135,7 +134,8 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
                                 + "\n*RESPONSE :*\n"
                                 + content.Serialize()
                                 + "\n*Platform :* "
-                                + Client.GetPlatformType(HttpContext.Current.User.Identity.GetClientId()));
+                                + Client.GetPlatformType(HttpContext.Current.User.Identity.GetClientId()),
+                                env == "production" ? "#logging-prod" : "#logging-dev");
                     }
                     return payment;
 
@@ -155,7 +155,6 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
 
                         var log = LogService.GetInstance();
                         var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
-                        if (env == "production")
                             log.Post(
                                 "```Payment Log```"
                                 + "\n`*Environment :* " + env.ToUpper()
@@ -170,7 +169,8 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
                                 + "\n*RESPONSE :*\n"
                                 + content.Serialize()
                                 + "\n*Platform :* "
-                                + Client.GetPlatformType(HttpContext.Current.User.Identity.GetClientId()));
+                                + Client.GetPlatformType(HttpContext.Current.User.Identity.GetClientId()),
+                                env == "production" ? "#logging-prod" : "#logging-dev");
                     }
                     return payment;
 
@@ -191,7 +191,6 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
 
                         var log = LogService.GetInstance();
                         var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
-                        if (env == "production")
                             log.Post(
                                 "```Payment Log```"
                                 + "\n`*Environment :* " + env.ToUpper()
@@ -206,7 +205,8 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
                                 + "\n*RESPONSE :*\n"
                                 + content.Serialize()
                                 + "\n*Platform :* "
-                                + Client.GetPlatformType(HttpContext.Current.User.Identity.GetClientId()));
+                                + Client.GetPlatformType(HttpContext.Current.User.Identity.GetClientId()),
+                                env == "production" ? "#logging-prod" : "#logging-dev");
                     }
                     return payment;
 
@@ -227,7 +227,6 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
 
                         var log = LogService.GetInstance();
                         var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
-                        if (env == "production")
                             log.Post(
                                 "```Payment Log```"
                                 + "\n`*Environment :* " + env.ToUpper()
@@ -242,7 +241,8 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
                                 + "\n*RESPONSE :*\n"
                                 + content.Serialize()
                                 + "\n*Platform :* "
-                                + Client.GetPlatformType(HttpContext.Current.User.Identity.GetClientId()));
+                                + Client.GetPlatformType(HttpContext.Current.User.Identity.GetClientId()),
+                                env == "production" ? "#logging-prod" : "#logging-dev");
                     }
                     return payment;
 

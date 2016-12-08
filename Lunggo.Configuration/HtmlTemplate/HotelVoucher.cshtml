@@ -166,13 +166,30 @@
                                         </p>
                                     </div>
                                 </div>
-
                                 <div class="row grey-txt">
                                     <div class="col-xs-3">
                                         <p>Jumlah Kamar</p>
                                     </div>
                                     <div class="col-xs-9">
                                         <p>: @rate.RoomCount</p>
+                                    </div>
+                                </div>
+                                <div class="row grey-txt">
+                                    <div class="col-xs-3">
+                                        <p>Ketentuan Pembatalan</p>
+                                    </div>
+                                    <div class="col-xs-9">
+                                        <p>
+                                            @if (rate.Cancellation != null)
+                                            {
+                                                foreach (var policy in rate.Cancellation)
+                                                {
+                                                    <div>
+                                                        - Pembatalan setelah tanggal @policy.StartTime.ToString("D", CultureInfo.CreateSpecificCulture("id-ID")) akan dikenakan biaya sebesar Rp @(policy.Fee.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))) per kamar<br />
+                                                    </div>
+                                                }
+                                            }
+                                        </p>
                                     </div>
                                 </div>
                                 if (rate.TermAndCondition.Count != 0 && !rate.TermAndCondition.Exists(r => r.Length < 3))

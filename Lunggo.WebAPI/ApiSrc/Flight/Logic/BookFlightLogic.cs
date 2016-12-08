@@ -30,7 +30,6 @@ namespace Lunggo.WebAPI.ApiSrc.Flight.Logic
                 {
                     var log = LogService.GetInstance();
                     var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
-                    if (env == "production")
                         log.Post(
                             "```Booking API Log```"
                             + "\n`*Environment :* " + env.ToUpper()
@@ -43,7 +42,8 @@ namespace Lunggo.WebAPI.ApiSrc.Flight.Logic
                             + "\n*Platform :* "
                             + Client.GetPlatformType(HttpContext.Current.User.Identity.GetClientId())
                             + "\n*Itinerary :* \n"
-                            + FlightService.GetInstance().GetItineraryForDisplay(request.Token).Serialize());
+                            + FlightService.GetInstance().GetItineraryForDisplay(request.Token).Serialize(),
+                            env == "production" ? "#logging-prod" : "#logging-dev");
                 }
                 return apiResponse;
             }
