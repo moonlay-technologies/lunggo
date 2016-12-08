@@ -339,14 +339,6 @@
 
     }
 
-    //scope.nights = function(min, max) {
-    //    var n = [];
-    //    for (var i = min; i <= max; i++) {
-    //        n.push(i);
-    //    }
-
-    //    return n;
-    //}
     var searchParam = function (hotelSearch) {
         if (hotelSearch.location == null || hotelSearch.location.length == 0) {
             //$scope.wrongParam = true;

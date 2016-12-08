@@ -20,6 +20,7 @@
                         </div>
                     </div>
                 </div>
+               
                 <div class="form-group form__date quarter">
                     <div class="field-container">
                         <div class="form-control form-date">
@@ -32,7 +33,7 @@
                         </div>
                     </div>
                 </div>
-                
+            
                 <div class="form-group form__night quarter">
                     <div class="field-container">
                         <div class="form-control form-night">
@@ -93,8 +94,8 @@
                             <div class="col-6"><span class="sm-txt grey-txt">Usia Anak {{$index}} (th)</span></div>
                             <div class="col-4 input-hotel xlg-txt right-txt semibold-txt darkgrey-txt">{{hotelSearch.occupancies[n].childrenAges[child]}}</div>
                             <div class="option" ng-model="hotelSearch.occupancies[n].childrenAges[child]" >
-                                <span data-value="" ng-repeat="childAge in hotelSearch.childagerange"
-                                      ng-click="(hotelSearch.occupancies[n].childrenAges[child] = childAge)" ng-init="hotelSearch.occupancies[n].childrenAges = [0,0,0,0]; hotelSearch.occupancies[n].childrenAges[child] = hotelSearch.occupancies[n].childrenAges[child]|| 0">{{childAge}}</span>
+                                <span data-value="" ng-repeat="childAge in hotelSearch.childagerange" @*hotelSearch.occupancies[n].childrenAges = [0,0,0,0]; *@
+                                      ng-click="(hotelSearch.occupancies[n].childrenAges[child] = childAge)" ng-init="hotelSearch.occupancies[n].childrenAges[child] = hotelSearch.occupancies[n].childrenAges[child] || 0">{{childAge}}</span>
                             </div>
                         </div>
                     </div>

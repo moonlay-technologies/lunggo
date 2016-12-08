@@ -20,6 +20,10 @@
         <div class="col-8">
             <div class="result-form-left">
                 <span class="md-txt">Hasil Pencarian Hotel di: <b>{{loc}}</b ></span><br /> {{tes}}
+                @*<div ng-repeat ="occ in hotelSearch.occupancies track by $index">
+                    <p>Kamar {{$index+1}}</p>
+                    <p ng-repeat ="age in occ.childrenAges">{{age}}</p>
+                </div>*@
                 <span class="">{{hotelSearch.destinationNightCount}} Malam <b>( {{hotelSearch.destinationCheckinDate | date : 'EEEE, dd MMM yyyy'}} - {{hotelSearch.destinationCheckoutDate | date : 'EEEE, dd MMM yyyy'}} )</b></span>
             </div>
             @*<div>cekindate {{hotelSearch.checkinDate}} | {{hotelSearch.checkinDate | date : 'EEE, dd MMM yyyy'}}</div>
