@@ -26,17 +26,17 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
                 ? flight.GetOverviewReservationsByUserIdOrEmail(identity.GetUser().Id, identity.GetEmail(), filter, sort, page, itemsPerPage)
                 : flight.GetOverviewReservationsByDeviceId(identity.GetDeviceId(), filter, sort, page, itemsPerPage);
 
-            //var rsvsHotel = identity.IsUserAuthorized()
-            //    ? hotel.GetOverviewReservationsByUserIdOrEmail(identity.GetUser().Id, identity.GetEmail(), filter, sort, page, itemsPerPage)
-            //    : hotel.GetOverviewReservationsByDeviceId(identity.GetDeviceId(), filter, sort, page, itemsPerPage);
+            var rsvsHotel = identity.IsUserAuthorized()
+                ? hotel.GetOverviewReservationsByUserIdOrEmail(identity.GetUser().Id, identity.GetEmail(), filter, sort, page, itemsPerPage)
+                : hotel.GetOverviewReservationsByDeviceId(identity.GetDeviceId(), filter, sort, page, itemsPerPage);
             rsvs = FilterTransactionHistory(filter, rsvs);
             rsvs = SortTransactionHistory(sort, rsvs);
-            //rsvsHotel = SortTransactionHistory(sort, rsvsHotel);
+            rsvsHotel = SortTransactionHistory(sort, rsvsHotel);
             rsvs = PageTransactionHistory(page, itemsPerPage, rsvs);
             return new TransactionHistoryApiResponse
             {
                 FlightReservations = rsvs,
-                //HotelReservations = rsvsHotel,
+                HotelReservations = rsvsHotel,
                 StatusCode = HttpStatusCode.OK
             };
         }
