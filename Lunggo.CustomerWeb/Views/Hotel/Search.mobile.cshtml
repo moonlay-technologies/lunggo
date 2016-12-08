@@ -39,39 +39,17 @@
         <script src="/Assets/js/angular-animate.min.js"></script>
         <script src="/Assets/js/angular-route.min.js"></script>
         <script src="/Assets/js/jquery-ui.min.js"></script>*@
-
-
     <script type="text/javascript" src="/Assets/js/jquery.ui.datepicker-id.js"></script>
     <script type="text/javascript" src="/Scripts/bootstrap.min.js"></script>
-    <script type="text/javascript" src="/Assets/vendor/dotdotdot/jquery.dotdotdot.min.js"></script>
 }
 
 @section PageJS{
-    <script>
-
-        $(function () {
-            $("#slider-range").slider({
-                range: true,
-                min: 0,
-                max: 500,
-                values: [75, 300],
-                slide: function (event, ui) {
-                    $("#amount").val("$" + ui.values[0] + " - $" + ui.values[1]);
-                }
-            });
-            $("#amount").val("$" + $("#slider-range").slider("values", 0) +
-                " - $" + $("#slider-range").slider("values", 1));
-        });
-    </script>
     <script>var loc = '@loc';</script>
     <script src="/Assets/mobile/js/HotelController.js"></script>
-
     <script type="text/javascript" src="/Assets/travorama20/js/HotelController.js"></script>
     <script src="/Assets/travorama20/angularDirectory/search/hotelSearch.service.js"></script>
     <script src="/Assets/travorama20/angularDirectory/common/hotelAutocomplete.service.js"></script>
     <script src="/Assets/travorama20/js/hotelSearchController.js"></script>
-
-
 }
 
 <div class="travorama-hotel-mobile" ng-init="init(@Newtonsoft.Json.JsonConvert.SerializeObject(Model))">
@@ -85,8 +63,8 @@
         </div>
     </div>
     <div class="search-list">
-        <div ng-show="!searchDone" class="text-center img-loading">
-            <img src="/Assets/images/load.gif">
+        <div ng-show="!searchDone" class="text-center" style="height: 320px;">
+            <img class="img-loading" src="/Assets/images/load.gif">
         </div>
         <ul class="hotel-list-container">
             <li ng-repeat="hotel in hotels" ng-click="GotoDetailHotel(hotel.hotelCd)">
@@ -113,7 +91,7 @@
                 </div>
             </li>
             <div ng-show="bottomPage" class="text-center">
-                <img src="/Assets/images/load.gif" style="width: 30px; height: 30px; margin-top: 5%;">
+                <img src="/Assets/images/load.gif" style="width: 30px; height: 30px; margin: 20px 0 30px;">
             </div>
         </ul>
     </div>
@@ -181,7 +159,7 @@
                     <div class="filter-group__header">
                         <h4 class="filter-group__title">Fasilitas</h4>
                     </div>
-                    <div class="filter-group__content sh-list clearfix">
+                    <div class="filter-group__content short-txt clearfix">
                         <div class="col-half" ng-repeat="facilityFilter in hotelFilterDisplayInfo.facilityFilter">
                             <label class="checkbox" ng-click="changeFilter('facility', facilityFilter)" ng-class="{ active: (filter.facilities.indexOf(facilityFilter.code) > -1) }">
                                 <div class="switch"></div>
@@ -243,13 +221,13 @@
 
                             </div>*@
                     </div>
-                    <a class="toggle"><span class="sh-open"></span><span class="sh-close"></span></a>
+                    <a class="open-txt"></a>
                 </div>
                 <div class="filter-group filter-group--area" ng-show="hotelFilterDisplayInfo.zoneFilter.length > 0">
                     <div class="filter-group__header">
                         <h4 class="filter-group__title">Area</h4>
                     </div>
-                    <div class="filter-group__content sh-list clearfix">
+                    <div class="filter-group__content short-txt clearfix">
                         <div class="col-half" ng-repeat="zoneFilter in hotelFilterDisplayInfo.zoneFilter ">
                             <label class="checkbox" ng-click="changeFilter('zone', zoneFilter)" ng-class="{ active: (filter.zones.indexOf(zoneFilter.code) > -1) }">
                                 <div class="switch"></div>
@@ -258,9 +236,8 @@
                             </label>
                         </div>
                     </div>
-                    <a class="toggle"><span class="sh-open"></span><span class="sh-close"></span></a>
+                    <a class="open-txt"></a>
                 </div>
-
             </form>
             <div class="reset">
                 <button class="btn btn-reset" id="reset" ng-click="resetButtonFilter()">Reset</button>

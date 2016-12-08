@@ -2290,7 +2290,7 @@ file : /Assets/travorama20/css/_page_index.scss
   top: 0px;
   left: 325px;
   z-index: 3;
-  padding: 20px;
+  padding: 30px 20px;
   overflow-y: auto; }
   .page-index .form-child-age input[name='FormAgeSubmit'] {
     padding: 10px 0;
@@ -2333,7 +2333,7 @@ file : /Assets/travorama20/css/_page_index.scss
     margin: 0; }
     .page-index .form-child-age .fc-wrapper li {
       border-bottom: 1px solid #555;
-      margin-bottom: 20px; }
+      margin-bottom: 15px; }
       .page-index .form-child-age .fc-wrapper li:last-child {
         border-bottom: none;
         margin-bottom: 0; }

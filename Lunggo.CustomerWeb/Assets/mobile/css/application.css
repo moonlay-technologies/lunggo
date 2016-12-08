@@ -4463,14 +4463,14 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     margin-right: 20px;
     vertical-align: middle;
     top: 50%; }
-  .page-hotel .arrow-down-yellow, .page-hotel .travorama-hotel-mobile .filter-group--facility .sh-open, .page-hotel .travorama-hotel-mobile .filter-group--area .sh-open {
+  .page-hotel .arrow-down-yellow, .page-hotel .open-txt, .page-hotel .travorama-hotel-mobile .filter-group--facility .sh-open, .page-hotel .travorama-hotel-mobile .filter-group--area .sh-open {
     display: block;
     background: url(/Assets/mobile/images/Hotel/arrow-down-yellow.png);
     width: 13px;
     height: 8px;
     margin: 10px auto 0;
     background-size: 100%; }
-  .page-hotel .arrow-up-yellow, .page-hotel .travorama-hotel-mobile .filter-group--facility .sh-close, .page-hotel .travorama-hotel-mobile .filter-group--area .sh-close {
+  .page-hotel .arrow-up-yellow, .page-hotel .open-txt.active, .page-hotel .travorama-hotel-mobile .filter-group--facility .sh-close, .page-hotel .travorama-hotel-mobile .filter-group--area .sh-close {
     display: block;
     background: url(/Assets/mobile/images/Hotel/arrow-up-yellow.png);
     width: 13px;
@@ -4519,6 +4519,11 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     width: 66.66667%; }
   .page-hotel .dh-list .col-left-hotel, .page-hotel .dh-list .col-right-hotel, .page-hotel .hotel-list .col-left-hotel, .page-hotel .hotel-list .col-right-hotel {
     float: left; }
+  .page-hotel .short-txt {
+    height: 170px;
+    overflow: hidden; }
+    .page-hotel .short-txt.open {
+      height: auto; }
   .page-hotel .top-content .hotel-sort-filter .hotel-sort-filter-action a, .page-hotel .top-content .hotel-detail-menu .hotel-detail-menu-action a {
     float: left;
     color: #fff;
@@ -4725,6 +4730,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     /* imports */
     /*Shorten Text*/ }
     .page-hotel .travorama-hotel-mobile .search-list {
+      position: relative;
       font-size: 11px; }
       .page-hotel .travorama-hotel-mobile .search-list .hotel-list-container .hotel-list {
         padding: 15px 10px; }

@@ -589,6 +589,16 @@
     }
 
     /*Shared Page*/
+    .short-txt {
+	    height: 170px;
+        overflow: hidden;
+        &.open {height: auto;}
+    }
+    .open-txt {
+        @extend .arrow-down-yellow;
+        &.active {@extend .arrow-up-yellow;}
+    }
+
     .top-content {
         .hotel-sort-filter .hotel-sort-filter-action a,
         .hotel-detail-menu .hotel-detail-menu-action a {

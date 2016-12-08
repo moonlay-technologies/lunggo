@@ -134,7 +134,7 @@ app.controller('hotelSearchController', ['$scope', '$log', '$window', '$http', '
         "ascendingStar": "ASCENDINGSTAR", "descendingStar": "DESCENDINGSTAR"
     };
     $scope.sortBy = $scope.sortByType.ascendingPrice;
-    
+
     $scope.page = 1;
     $scope.perPage = 20;
     $scope.pageCount = 1;
@@ -166,7 +166,7 @@ app.controller('hotelSearchController', ['$scope', '$log', '$window', '$http', '
     }
 
     var searchPromise = function () {
-        var pagination = { 'sortBy': $scope.sortBy, 'page': $scope.page, 'perPage' : $scope.perPage };
+        var pagination = { 'sortBy': $scope.sortBy, 'page': $scope.page, 'perPage': $scope.perPage };
         return hotelSearchSvc.searchHotel($scope.hotelSearch, $scope.filter, pagination).$promise.then(function (data) {
             return data;
         });
@@ -176,7 +176,7 @@ app.controller('hotelSearchController', ['$scope', '$log', '$window', '$http', '
     $scope.maxPrice = '';
     hotelSearchSvc.initializeSearchForm($scope);
 
-    $scope.selectLocation = function(location) {
+    $scope.selectLocation = function (location) {
         hotelSearchSvc.selectLocation(location);
     }
     $scope.searchHotel = function (filter, sort, isMobile) {
@@ -195,16 +195,16 @@ app.controller('hotelSearchController', ['$scope', '$log', '$window', '$http', '
             $scope.hotelSearch.destinationName = data.destinationName;
             $scope.hotelSearch.locationDisplay = data.destinationName;
             if (isMobile) {
-                $scope.hotels.push.apply($scope.hotels,data.hotels);
+                $scope.hotels.push.apply($scope.hotels, data.hotels);
                 $scope.bottomPage = false;
             } else {
-            $scope.hotels = data.hotels;
+                $scope.hotels = data.hotels;
             }
-            
+
             $scope.totalActualHotel = data.returnedHotelCount;
             $scope.returnedHotelCount = data.returnedHotelCount;
             $scope.filteredHotelCount = data.filteredHotelCount;
-            
+
             $scope.page = data.page;
             $scope.perPage = data.perPage;
             $scope.pageCount = data.pageCount;
@@ -215,7 +215,7 @@ app.controller('hotelSearchController', ['$scope', '$log', '$window', '$http', '
                 $scope.filter.maxPrice = data.maxPrice;
                 $scope.minPrice = data.minPrice;
                 $scope.maxPrice = data.maxPrice;
-            initiatePriceSlider();
+                initiatePriceSlider();
 
                 $scope.hotelFilterDisplayInfo = data.hotelFilterDisplayInfo;
                 isFirstload = false;
@@ -230,7 +230,7 @@ app.controller('hotelSearchController', ['$scope', '$log', '$window', '$http', '
                 $scope.searchDone = true;
                 $scope.finishLoad = true;
             }
-            
+
         });
     };
 
@@ -250,8 +250,8 @@ app.controller('hotelSearchController', ['$scope', '$log', '$window', '$http', '
         return true;
     };
 
-    $scope.hotel  = {
-        searchHotel : function () {
+    $scope.hotel = {
+        searchHotel: function () {
             hotelSearchSvc.gotoHotelSearch($scope.hotelSearch);
         }
     }
@@ -262,7 +262,7 @@ app.controller('hotelSearchController', ['$scope', '$log', '$window', '$http', '
             "hotelCd=" + hotelCd + "&" +
             "searchParam=" + $scope.searchParam, '_blank');
     }
-    
+
     $scope.changeFilter = function (filterType, value) {
         if (filterType == 'star') {
             if ($scope.filter.stars == null) {
@@ -336,7 +336,7 @@ app.controller('hotelSearchController', ['$scope', '$log', '$window', '$http', '
             }
         });
     }
-    
+
     $(window).scroll(function () {
         var a = $(window).scrollTop();
         var b = $(window).height();
@@ -345,10 +345,10 @@ app.controller('hotelSearchController', ['$scope', '$log', '$window', '$http', '
             $scope.page++;
             $scope.bottomPage = true;
             window.scrollTo(0, document.body.scrollHeight);
-            $scope.searchHotel('','',true);
+            $scope.searchHotel('', '', true);
         }
     });
-  
+
 
     $scope.prevPage = function () {
         $scope.page--;
@@ -391,7 +391,7 @@ app.controller('hotelSearchController', ['$scope', '$log', '$window', '$http', '
 
     //var watchGroup = ['filter.minPrice', 'filter.maxPrice']
     //$scope.$watchGroup(watchGroup, function (newValue, oldValue, scope) {
-        
+
     //}, true);
     $scope.$watch('filter.minPrice', function (newValue, oldValue, scope) {
         if (oldValue != 0 && oldValue !== undefined) {
@@ -417,22 +417,16 @@ app.controller('hotelSearchController', ['$scope', '$log', '$window', '$http', '
         filterHotels();
     }, true);
 
-    $scope.toTitleCase = function(str)
-    {
-        return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+    $scope.toTitleCase = function (str) {
+        return str.replace(/\w\S*/g, function (txt) { return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase(); });
     }
 
-    $('.overlay .filter-group--facility a').on('click touchstart', function () {
-        $('.overlay .filter-group--facility a').toggleClass('active');
-        $('.overlay .sh-list').toggleClass('opened');
+    $('.open-txt').click(function () {
+        $(this).toggleClass('active');
+        $(this).parent().find('.short-txt').toggleClass('open');
     });
 
-    $('.overlay .filter-group--area').on('click touchstart', function () {
-        $('.overlay .filter-group--facility a').toggleClass('active');
-        $('.overlay .sh-list').toggleClass('opened');
-    });
-
-    $scope.resetButtonFilter = function() {
+    $scope.resetButtonFilter = function () {
         $scope.filter.stars = [];
         $scope.filter.zones = [];
         $scope.filter.facilities = [];
@@ -463,10 +457,10 @@ app.controller('hotelSearchController', ['$scope', '$log', '$window', '$http', '
                     returnValue.push(p);
             }
         }
-        
+
         return returnValue;
     };
-    
+
     $('.change-hotel.form-control').click(function () {
         $(this).select();
     });

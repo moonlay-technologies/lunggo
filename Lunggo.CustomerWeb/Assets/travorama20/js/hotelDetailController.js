@@ -142,7 +142,6 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
                     autoplaySpeed: 2500,
                     dots: false
                 });
-
             }, 0);
 
         }, function (error) {

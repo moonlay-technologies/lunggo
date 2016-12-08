@@ -289,25 +289,27 @@
                                     </div>*@
                             </div>
                         </div>
-                        <div class="dr-slider dh-slider">
-                            <div class="item" ng-if="selectedRoom.roomImages.length >= 1">
+                        <div class="dh-slider dr-slider">
+                            <div class="item" @*ng-if="selectedRoom.roomImages.length >= 1"*@>
                                 <div class="dh-img" style="background-image: url({{selectedRoom.roomImages[0]}});"></div>
+                            </div><div class="item" @*ng-if="selectedRoom.roomImages.length >= 1"*@>
+                                <div class="dh-img" style="background-image: url({{selectedRoom.roomImages[1]}});"></div>
                             </div>
-                            @*<div class="item" ng-if="selectedRoom.roomImages.length >= 2">
-                                    <div class="dh-img" style="background-image: url({{selectedRoom.roomImages[1]}});"></div>
-                                </div>
-                                <div class="item" ng-if="selectedRoom.roomImages.length >= 3">
-                                    <div class="dh-img" style="background-image: url({{selectedRoom.roomImages[2]}});"></div>
-                                </div>
-                                <div class="item" ng-if="selectedRoom.roomImages.length >= 4">
-                                    <div class="dh-img" style="background-image: url({{selectedRoom.roomImages[3]}});"></div>
-                                </div>
-                                <div class="item" ng-if="selectedRoom.roomImages.length >= 5">
-                                    <div class="dh-img" style="background-image: url({{selectedRoom.roomImages[4]}});"></div>
-                                </div>
-                                <div class="item" ng-if="selectedRoom.roomImages.length >= 6">
-                                    <div class="dh-img" style="background-image: url({{selectedRoom.roomImages[5]}});"></div>
-                                </div>*@
+                            <div class="item" @*ng-if="selectedRoom.roomImages.length >= 2"*@>
+                                <div class="dh-img" style="background-image: url({{selectedRoom.roomImages[1]}});"></div>
+                            </div>
+                            <div class="item" @*ng-if="selectedRoom.roomImages.length >= 3"*@>
+                                <div class="dh-img" style="background-image: url({{selectedRoom.roomImages[2]}});"></div>
+                            </div>
+                            <div class="item" @*ng-if="selectedRoom.roomImages.length >= 4"*@>
+                                <div class="dh-img" style="background-image: url({{selectedRoom.roomImages[3]}});"></div>
+                            </div>
+                            <div class="item" @*ng-if="selectedRoom.roomImages.length >= 5"*@>
+                                <div class="dh-img" style="background-image: url({{selectedRoom.roomImages[4]}});"></div>
+                            </div>
+                            <div class="item" @*ng-if="selectedRoom.roomImages.length >= 6"*@>
+                                <div class="dh-img" style="background-image: url({{selectedRoom.roomImages[5]}});"></div>
+                            </div>
                         </div>
                         <div class="dr-detail">
                             <div class="bold-txt lg-txt darkgrey-txt">{{selectedRoom.roomName}} ({{selectedRoom.rate.boardDesc}})</div>
