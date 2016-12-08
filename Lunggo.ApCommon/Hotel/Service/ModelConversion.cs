@@ -511,7 +511,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                 foreach (var data in rateDisplay.Cancellation)
                 {
                     data.Fee = Math.Round(data.Fee * (1 + margin));
-                    data.SingleFee = Math.Round((data.Fee/rate.RateCount)/rate.NightCount);
+                    data.SingleFee = Math.Round((data.Fee / rate.RateCount / rate.NightCount));
                 }
             }
         }

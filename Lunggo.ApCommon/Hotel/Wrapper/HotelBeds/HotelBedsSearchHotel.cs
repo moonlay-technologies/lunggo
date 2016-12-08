@@ -163,7 +163,7 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds
                                     Boards = x.boardCode,
                                     Cancellation = x.cancellationPolicies == null ? null : x.cancellationPolicies.Select(y => new Cancellation
                                     {
-                                        Fee = y.amount,
+                                        Fee = y.amount*condition.Nights,
                                         StartTime = y.from.ToUniversalTime()
                                     }).ToList(),
                                     Class = x.rateClass,
