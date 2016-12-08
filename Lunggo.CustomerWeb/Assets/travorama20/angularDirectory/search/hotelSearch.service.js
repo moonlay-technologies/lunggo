@@ -54,6 +54,9 @@
 
     factory.initializeSearchForm = function (scope, searchParamObject) {
         scope.hotelSearch = {};
+        scope.changeSearch = {
+            occupancies : []
+        };
         scope.hotelSearch.searchHotelType = { "location": 'Location', searchId: 'SearchId' };
 
         scope.filter = {};
@@ -94,29 +97,20 @@
             $log.debug("scope.hotelSearch.checkinDate = " + scope.hotelSearch.checkinDate);
             scope.hotelSearch.checkinDate = searchParamObject.checkinDate;
             $log.debug("scope.hotelSearch.checkinDate = " + scope.hotelSearch.checkinDate);
-
-
             scope.hotelSearch.checkoutDate = searchParamObject.checkoutDate;
-            scope.hotelSearch.destinationCheckinDate = searchParamObject.checkinDate;
-            scope.hotelSearch.destinationCheckoutDate = searchParamObject.checkoutDate;
+            scope.hotelSearch.checkinDateDisplay = moment(searchParamObject.checkinDate).locale("id").format('LL');
+            scope.hotelSearch.checkoutDateDisplay = moment(searchParamObject.checkoutDate).locale("id").format('LL');
 
-            scope.hotelSearch.adultCount = searchParamObject.adultCount != null ? searchParamObject.adultCount : 1;
-            scope.hotelSearch.childCount = searchParamObject.childCount != null ? searchParamObject.childCount : 0;
+            scope.hotelSearch.destinationCheckinDate = moment(searchParamObject.checkinDate).locale("id").format('LL');
+            scope.hotelSearch.destinationCheckoutDate = moment(searchParamObject.checkoutDate).locale("id").format('LL');
 
             scope.hotelSearch.nightCount = searchParamObject.nightCount != null ? searchParamObject.nightCount : 2;
             scope.hotelSearch.destinationNightCount = searchParamObject.nightCount != null ? searchParamObject.nightCount : 2;
 
             scope.hotelSearch.roomCount = searchParamObject.roomCount != null ? searchParamObject.roomCount : 2;
-            scope.hotelSearch.childrenAges = searchParamObject.childrenAges != null ? searchParamObject.childrenAges : [0, 0, 0, 0];
 
             scope.hotelSearch.childrenAges = defaultValue.childrenAges;
-            for (var i = 0; i <= 7; i++) {
-                scope.hotelSearch.occupancies.push({
-                    adultCount: 1,
-                    childCount: 0,
-                    childrenAges: [0, 0, 0, 0]
-                });
-            }
+            scope.hotelSearch.occupancies = searchParamObject.occupancies;
         }
         else {
             scope.hotelSearch.location = defaultValue.locationCode;
@@ -147,7 +141,8 @@
             }
             
         }
-        
+        //scope.changeSearch = scope.hotelSearch;
+
         scope.hotelSearch.adultCountMin = 1;
         scope.hotelSearch.adultCountMax = 5;
         scope.hotelSearch.adultrange = [1, 2, 3, 4, 5];
@@ -327,6 +322,18 @@
             }
         });
 
+        scope.initChildrenAges = function(n) {
+            if (n < scope.hotelSearch.roomCount) {
+                for (var c = 0; c < scope.hotelSearch.occupancies[n].childCount; c++) {
+                    scope.hotelSearch.occupancies[n].childrenAges[c] = hotelSearch.occupancies[n].childrenAges[c];
+                }
+                for (var y = 0; y < 4 - scope.hotelSearch.occupancies[n].childCount; y++) {
+                    scope.hotelSearch.occupancies[n].childrenAges.push(0);
+                }
+            } else {
+                scope.hotelSearch.occupancies[n].childrenAges = [0, 0, 0, 0];
+            } 
+        }
 
     }
 

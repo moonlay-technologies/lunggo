@@ -1,4 +1,4 @@
-﻿<form class="hotel-form" name="hotel-form" @*ng-submit="FlightSearchForm.Submit()"*@ novalidate>
+﻿<form class="hotel-form" name="hotel-form" novalidate>
     <div class="th-form clearfix">
         <div class="clearfix">
             <div class="form-group form__hotel col-4">
@@ -9,14 +9,14 @@
             <div class="col-6 clearfix">
                 <div class="form-group form__date quarter">
                     <div class="field-container">
-                        <div class="form-control form-date clearfix">
+                        <div class="form-control form-date clearfix" ng-click="hotelSearch.chooseDate()">
                             <div class="sm-txt col-half grey-txt">Check in</div>
                             <div class="col-half">
                                 <span class="date semibold-txt darkgrey-txt">{{hotelSearch.checkinDateDisplay.split(' ')[0]}}</span>
                                 <span class="sm-txt month darkgrey-txt bold-txt">{{hotelSearch.checkinDateDisplay.split(' ')[1].substring(0,3)}}</span>
                                 <span class="sm-txt year darkgrey-txt bold-txt">{{hotelSearch.checkinDateDisplay.split(' ')[2]}}</span>
                             </div>
-                            
+
                         </div>
                     </div>
                 </div>
@@ -94,7 +94,7 @@
                             <div class="col-4 input-hotel xlg-txt right-txt semibold-txt darkgrey-txt">{{hotelSearch.occupancies[n].childrenAges[child]}}</div>
                             <div class="option" ng-model="hotelSearch.occupancies[n].childrenAges[child]" >
                                 <span data-value="" ng-repeat="childAge in hotelSearch.childagerange" @*hotelSearch.occupancies[n].childrenAges = [0,0,0,0]; *@
-                                      ng-click="(hotelSearch.occupancies[n].childrenAges[child] = childAge)" ng-init="hotelSearch.occupancies[n].childrenAges[child] = hotelSearch.occupancies[n].childrenAges[child]|| 0">{{childAge}}</span>
+                                      ng-click="(hotelSearch.occupancies[n].childrenAges[child] = childAge)" ng-init="initChildrenAges(n)">{{childAge}}</span>
                             </div>
                         </div>
                     </div>
