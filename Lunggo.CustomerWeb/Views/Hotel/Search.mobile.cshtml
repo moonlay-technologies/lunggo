@@ -150,30 +150,25 @@
                         <h4 class="filter-group__title">Peringkat Bintang Hotel</h4>
                     </div>
                     <div class="filter-group__content">
-                        <label class="checkbox" ng-click="changeFilter('star', 1)" ng-class="{ 'active' : checkboxFilter.Star[0]}">
+                        <label class="checkbox" ng-click="changeFilter('star', 1)" ng-class="{ active : (filter.stars.indexOf(1) > -1)}">
                             <div class="switch"></div>
                             <span class="star"></span>
-                            @*<input type="checkbox" name="check" class="check" ng-model="checkboxFilter.Star[0]" />*@
                         </label>
-                        <label class="checkbox" ng-click="changeFilter('star', 2)" ng-class="{ 'active' : checkboxFilter.Star[1]}">
+                        <label class="checkbox" ng-click="changeFilter('star', 2)" ng-class="{ active : (filter.stars.indexOf(2) > -1)}">
                             <div class="switch"></div>
                             <span class="star star-2"></span>
-                            @*<input type="checkbox" name="check" class="check" ng-model="checkboxFilter.Star[1]" />*@
                         </label>
-                        <label class="checkbox" ng-click="changeFilter('star', 3)" ng-class="{ active: (filter.stars.indexOf(3) > -1) }">
+                        <label class="checkbox" ng-click="changeFilter('star', 3)" ng-class="{ active : (filter.stars.indexOf(3) > -1) }">
                             <div class="switch"></div>
                             <span class="star star-3"></span>
-                            @*<input type="checkbox" name="check" class="check" ng-model="checkboxFilter.Star[2]" />*@
                         </label>
                         <label class="checkbox" ng-click="changeFilter('star', 4)" ng-class="{ active: (filter.stars.indexOf(4) > -1) }">
                             <div class="switch"></div>
                             <span class="star star-4"></span>
-                            @*<input type="checkbox" name="check" class="check"  ng-model="checkboxFilter.Star[3]" />*@
                         </label>
-                        <label class="checkbox" ng-click="changeFilter('star', 5)" ng-class="{ active: (filter.stars.indexOf(5) > -1) }" >
+                        <label class="checkbox" ng-click="changeFilter('star', 5)" ng-class="{ active: (filter.stars.indexOf(5) > -1) }">
                             <div class=" switch"></div>
                             <span class="star star-5"></span>
-                            @*<input type="checkbox" name="check" class="check" ng-model="checkboxFilter.Star[4]" />*@
                         </label>
                     </div>
                 </div>
@@ -183,7 +178,7 @@
                     </div>
                     <div class="filter-group__content sh-list clearfix">
                         <div class="col-half" ng-repeat="facilityFilter in hotelFilterDisplayInfo.facilityFilter">
-                            <label class="checkbox" ng-click="changeFilter('facility', facilityFilter)" ng-class="{ active: (filter.facilities.indexOf(facilityFilter.code) > -1) }">
+                            <label class="checkbox" ng-click="changeFilter('facility', facilityFilter)" ng-class="{ 'active': (filter.facilities.indexOf(facilityFilter.code) > -1) }">
                                 <div class="switch"></div>
                                 <span>{{facilityFilter.name}} ({{facilityFilter.count}})</span>
                                 @*<input type="checkbox" name="check" class="check" value="false" />*@
@@ -251,7 +246,7 @@
                     </div>
                     <div class="filter-group__content sh-list clearfix">
                         <div class="col-half" ng-repeat="zoneFilter in hotelFilterDisplayInfo.zoneFilter ">
-                            <label class="checkbox" ng-click="changeFilter('zone', zoneFilter)" ng-class="{ active: (filter.zones.indexOf(zoneFilter.code) > -1) }">
+                            <label class="checkbox" ng-click="changeFilter('zone', zoneFilter)" ng-class="{ 'active': (filter.zones.indexOf(zoneFilter.code) > -1) }">
                                 <div class="switch"></div>
                                 <span>{{zoneFilter.name}}</span>
                                 @*<input type="checkbox" name="check" class="check" value="false" />*@
