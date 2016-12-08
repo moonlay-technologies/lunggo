@@ -114,6 +114,9 @@ var LoginConfig = {
 var RefundConfig = {
     Url: '$apiUrl$$refundPath$'
 };
+var RescheduleConfig = {
+    Url: '$apiUrl$$reschedulePath$'
+}
 
 var GetProfileConfig = {
     Url: '$apiUrl$$getProfilePath$'
@@ -166,6 +169,10 @@ var LoginMobileConfig = {
 
 var RefundMobileConfig = {
     Url: '$mobileUrl$$refundPath$'
+};
+
+var RescheduleMobileConfig = {
+    Url: '$mobileUrl$$reschedulePath$'
 };
 
 var RegisterMobileConfig = {

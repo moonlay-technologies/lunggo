@@ -19,4 +19,12 @@ namespace Lunggo.ApCommon.Query
         public string Name { get; set; }
         public string Email { get; set; }
     }
+
+    public class Reschedule
+    {
+        public string RsvNo { get; set; }
+        public string Name { get; set; }
+        public string Email { get; set; }
+        public string Message { get; set; }
+    }
 }

@@ -1,0 +1,19 @@
+﻿@using System.Globalization
+@using Lunggo.ApCommon.Constant
+@using Lunggo.Framework.Config
+@model Lunggo.ApCommon.Query.Reschedule
+@{ var env = ConfigManager.GetInstance().GetConfigValue("general", "environment"); }
+<html>
+    <head>
+        <title>
+            One Person Request Reschedule
+        </title>
+    </head>
+    <body>
+        <p>@(env != "production" ? "THIS IS A TEST EMAIL. PLEASE IGNORE THIS DREADED EMAIL. SORRY FOR THE INCONVENIENCE." : "")</p>
+        <p>Name: @Model.Name</p>
+        <p>E-mail address : @Model.Email</p>
+        <p>RsvNo: @Model.RsvNo</p>
+        <p>Message: @Model.Message</p>
+    </body>
+</html>

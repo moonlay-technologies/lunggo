@@ -208,8 +208,23 @@
                                                         <div class="action" ng-show="paymentstatus(flight.payment.status) == 'Lunas'">
                                                             <button class="btn btn-yellow" ng-click="askRefund(flight.rsvNo, flight.contact.name, flight.contact.email)">Refund</button>
                                                         </div>
+                                                        <button class="pull-right btn btn-yellow" ng-click="askReschedule()">
+                                                            Reschedule
+                                                        </button>
                                                     </div>
                                                 </div>
+                                            </section>
+                                            
+                                            <section ng-show="isReschedule">
+                                                <form>
+                                                    <h4>Permohonan Reschedule</h4>
+                                                    <textarea class="form-control ng-pristine ng-untouched ng-valid" name="rescheduleMessage" ng-model="message"
+                                                              placeholder="Silakan masukkan isi permohonan reschedule Anda di sini"></textarea>
+                                                    <button class="pull-right btn btn-yellow"
+                                                            ng-click="sendReschedule(flight.contact.name, flight.contact.email, message)">
+                                                        Kirim
+                                                    </button>
+                                                </form>
                                             </section>
                                         </div>
                                     </div>
@@ -294,7 +309,7 @@
                 <div style="padding-top:20px;"><span style="color: #15b1e4; font-size:20px"><b>Pengiriman Berhasil</b></span></div>
                 <div><img src="~/Assets/images/popup/paymentyellowstrip.png" /></div>
                 <div style="padding-top:5px;"><span style="font-size:14px"></span></div>
-                <div style="padding-top:5px;"><span style="font-size:14px">Permohonan Anda akan kami proses. Silakan menunggu respons dari kami.</span></div>
+                <div style="padding-top:5px;"><span style="font-size:14px">Permohonan Anda akan kami proses. Kami akan menghubungi Anda melalui e-mail.</span></div>
             </section>
             <div align="right" style="padding-right:30px;padding-top:30px;">
                 <a class="btn popup-btn-yellow book-failed" ng-click="closeOverlay()"><b>Tutup</b></a>
@@ -320,6 +335,48 @@
                 <div><img src="/Assets/images/travorama-logo-color.png" height="22px" width="80px"></div>
                 <div style="padding-top:25px;"><span style="color: #15b1e4; font-size:26px"><b>Mohon maaf...</b></span></div>
                 <div style="padding-top:5px;"><span style="font-size:13px">Silakan ulangi permohonan refund lagi atau hubungi kami <a href="/id/contact">di sini</a></span></div>
+                <div align="right" style="padding-right:50px"><img src="/Assets/images/popup/smallyellowstrip.png"></div>
+            </section>
+            <div align="right" style="padding-right:30px;padding-top:30px;">
+                <a class="btn popup-btn-yellow book-failed" ng-click="closeOverlay()"><b>Tutup</b></a>
+            </div>
+        </div>
+    </div>
+    
+
+    <div class="bookfailed-popup" ng-show="sentReschedule && !sendingReschedule && overlay">
+        <div class=" overlay-content">
+            <section style="padding-top:60px; padding-left:225px;">
+                <div><img src="/Assets/images/travorama-logo-color.png" height="22px" width="80px"></div>
+                <div style="padding-top:20px;"><span style="color: #15b1e4; font-size:20px"><b>Pengiriman Berhasil</b></span></div>
+                <div><img src="~/Assets/images/popup/paymentyellowstrip.png" /></div>
+                <div style="padding-top:5px;"><span style="font-size:14px"></span></div>
+                <div style="padding-top:5px;"><span style="font-size:14px">Permohonan Anda akan kami proses. Kami akan menghubungi Anda melalui e-mail.</span></div>
+            </section>
+            <div align="right" style="padding-right:30px;padding-top:30px;">
+                <a class="btn popup-btn-yellow book-failed" ng-click="closeOverlay()"><b>Tutup</b></a>
+            </div>
+        </div>
+    </div>
+
+    <div class="bookfailed-popup" ng-show="sendingReschedule">
+        <div class=" overlay-content">
+            <section style="padding-top:60px; padding-left:225px;">
+                <div><img src="/Assets/images/travorama-logo-color.png" height="22px" width="80px"></div>
+                <div style="padding-top:20px;"><span style="color: #15b1e4; font-size:20px"><b>Mohon Tunggu...</b></span></div>
+                <div><img src="~/Assets/images/popup/paymentyellowstrip.png" /></div>
+                <div style="padding-top:5px;"><span style="font-size:14px"></span></div>
+                <div style="padding-top:5px;"><span style="font-size:14px">Sedang mengirimkan permohonan reschedule Anda</span></div>
+            </section>
+        </div>
+    </div>
+
+    <div class="bookfailed-popup" ng-show="failedsentReschedule && overlay">
+        <div class="overlay-content">
+            <section style="padding-top:60px; padding-left:225px;">
+                <div><img src="/Assets/images/travorama-logo-color.png" height="22px" width="80px"></div>
+                <div style="padding-top:25px;"><span style="color: #15b1e4; font-size:26px"><b>Mohon maaf...</b></span></div>
+                <div style="padding-top:5px;"><span style="font-size:13px">Silakan ulangi permohonan reschedule atau hubungi kami <a href="/id/contact">di sini</a></span></div>
                 <div align="right" style="padding-right:50px"><img src="/Assets/images/popup/smallyellowstrip.png"></div>
             </section>
             <div align="right" style="padding-right:30px;padding-top:30px;">

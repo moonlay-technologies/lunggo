@@ -114,6 +114,9 @@ var LoginConfig = {
 var RefundConfig = {
     Url: 'https://api.local.travorama.com/v1/refund'
 };
+var RescheduleConfig = {
+    Url: 'https://api.local.travorama.com/v1/reschedule'
+}
 
 var GetProfileConfig = {
     Url: 'https://api.local.travorama.com/v1/profile'
@@ -166,6 +169,10 @@ var LoginMobileConfig = {
 
 var RefundMobileConfig = {
     Url: 'http://m.local.travorama.com/v1/refund'
+};
+
+var RescheduleMobileConfig = {
+    Url: 'http://m.local.travorama.com/v1/reschedule'
 };
 
 var RegisterMobileConfig = {

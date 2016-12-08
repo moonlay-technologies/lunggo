@@ -97,6 +97,26 @@ namespace Lunggo.WebAPI.ApiSrc.Account
                 return ApiResponseBase.ExceptionHandling(e, request);
             }
         }
+
+        [HttpPost]
+        [LunggoCorsPolicy]
+        //[Authorize]
+        [Route("v1/reschedule")]
+        public ApiResponseBase Reschedule()
+        {
+            RescheduleApiRequest request = null;
+            try
+            {
+                request = ApiRequestBase.DeserializeRequest<RescheduleApiRequest>();
+                var apiResponse = AccountLogic.Reschedule(request);
+                return apiResponse;
+            }
+            catch (Exception e)
+            {
+                return ApiResponseBase.ExceptionHandling(e, request);
+            }
+        }
+
         [HttpPost]
         [LunggoCorsPolicy]
         [Authorize]

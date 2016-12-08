@@ -215,6 +215,7 @@
   <ItemGroup>
     <Compile Include="ApiSrc\Account\AccountController.cs" />
     <Compile Include="ApiSrc\Account\Logic\ChangePasswordLogic.cs" />
+    <Compile Include="ApiSrc\Account\Logic\RescheduleLogic.cs" />
     <Compile Include="ApiSrc\Account\Logic\RefundLogic.cs" />
     <Compile Include="ApiSrc\Account\Logic\GetProfileLogic.cs" />
     <Compile Include="ApiSrc\Account\Logic\ForgotPasswordLogic.cs" />
@@ -233,7 +234,9 @@
     <Compile Include="ApiSrc\Account\Model\ForgotPasswordApiRequest.cs" />
     <Compile Include="ApiSrc\Account\Model\GetProfileApiResponse.cs" />
     <Compile Include="ApiSrc\Account\Model\ConfirmEmailApiRequest.cs" />
+    <Compile Include="ApiSrc\Account\Model\RescheduleApiRequest.cs" />
     <Compile Include="ApiSrc\Account\Model\RefundApiRequest.cs" />
+    <Compile Include="ApiSrc\Account\Model\RescheduleApiResponse.cs" />
     <Compile Include="ApiSrc\Account\Model\RefundApiResponse.cs" />
     <Compile Include="ApiSrc\Account\Model\LoginApiResponse.cs" />
     <Compile Include="ApiSrc\Account\Model\GetReservationApiResponse.cs" />
