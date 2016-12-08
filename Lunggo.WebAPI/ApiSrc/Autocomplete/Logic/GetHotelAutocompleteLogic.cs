@@ -52,15 +52,16 @@ namespace Lunggo.WebAPI.ApiSrc.Autocomplete.Logic
             }
 
             var zones =
-                hotelLocations.Where(c => c.Type == "Zone").Take(zone).ToList();
+                hotelLocations.Where(c => c.Type == "Zone").Take(zone).ToList().OrderByDescending(c => c.NumOfHotels).ToList();
 
-            var dests = hotelLocations.Where(c => c.Type == "Destination").Take(dest).ToList();
+            var dests = hotelLocations.Where(c => c.Type == "Destination").Take(dest).ToList().OrderByDescending( c => c.NumOfHotels).ToList();
 
             var hotels = hotelLocations.Where(c => c.Type == "Hotel").Take(hotelNum).ToList();
 
             var hotelAutocompleteApis = new List<HotelAutocompleteApi>();
-            hotelAutocompleteApis.AddRange(zones);
+            
             hotelAutocompleteApis.AddRange(dests);
+            hotelAutocompleteApis.AddRange(zones);
             hotelAutocompleteApis.AddRange(hotels);
 
             return new HotelAutocompleteApiResponse
