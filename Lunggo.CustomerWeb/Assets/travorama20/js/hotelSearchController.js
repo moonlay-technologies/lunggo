@@ -148,8 +148,9 @@ app.controller('hotelSearchController', ['$scope', '$log', '$window', '$http', '
         $scope.hotelSearch.location = $scope.model.searchParamObject.location;
         $scope.hotelSearch.checkinDate = $scope.model.searchParamObject.checkinDate;
         $scope.hotelSearch.checkinDateDisplay = moment($scope.hotelSearch.checkinDate).locale("id").format('LL');
-        $scope.hotelSearch.checkoutDateDisplay = moment($scope.hotelSearch.checkoutDate).locale("id").format('LL');
         $scope.hotelSearch.checkoutDate = $scope.model.searchParamObject.checkoutDate;
+        $scope.hotelSearch.checkoutDateDisplay = moment($scope.hotelSearch.checkoutDate).locale("id").format('LL');
+        
         $scope.hotelSearch.destinationCheckinDate = $scope.model.searchParamObject.checkinDate;
         $scope.hotelSearch.destinationCheckoutDate = $scope.model.searchParamObject.checkoutDate;
         //$scope.hotelSearch.adultCount = $scope.model.searchParamObject.adultCount;
