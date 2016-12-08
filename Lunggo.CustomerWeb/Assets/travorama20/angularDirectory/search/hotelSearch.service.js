@@ -298,16 +298,16 @@
             });
         }
 
-        //factory.setCheckinDate = function (scopeElement, date) {
-        //    scopeElement.$apply(function () {
-        //        $log.debug("scopeElement.hotelSearch.checkinDate = " + scopeElement.hotelSearch.checkinDate);
-        //        scopeElement.hotelSearch.checkinDate = moment(date).toISOString();
-        //        $log.debug("scopeElement.hotelSearch.checkinDate = " + scopeElement.hotelSearch.checkinDate);
-        //        scopeElement.hotelSearch.checkoutDate = moment(date).add(scopeElement.hotelSearch.nightCount, 'days').toISOString();
-        //        scope.hotelSearch.checkinDateDisplay = moment(scopeElement.hotelSearch.checkinDate).locale("id").format('LL');
-        //        scope.hotelSearch.checkoutDateDisplay = moment(scopeElement.hotelSearch.checkoutDate).locale("id").format('LL');
-        //    });
-        //}
+        factory.setCheckinDate = function (scopeElement, date) {
+            scopeElement.$apply(function () {
+                $log.debug("scopeElement.hotelSearch.checkinDate = " + scopeElement.hotelSearch.checkinDate);
+                scopeElement.hotelSearch.checkinDate = moment(date).toISOString();
+                $log.debug("scopeElement.hotelSearch.checkinDate = " + scopeElement.hotelSearch.checkinDate);
+                scopeElement.hotelSearch.checkoutDate = moment(date).add(scopeElement.hotelSearch.nightCount, 'days').toISOString();
+                scope.hotelSearch.checkinDateDisplay = moment(scopeElement.hotelSearch.checkinDate).locale("id").format('LL');
+                scope.hotelSearch.checkoutDateDisplay = moment(scopeElement.hotelSearch.checkoutDate).locale("id").format('LL');
+            });
+        }
 
         $('.hotel-date-picker').datepicker({
             numberOfMonths: 2,
