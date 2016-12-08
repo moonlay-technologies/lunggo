@@ -7,32 +7,39 @@
             </div>
 
             <div class="col-6 clearfix">
-                <div class="form-group form__date quarter">
+                <div class="form-group form__date col-half">
                     <div class="field-container">
                         <div class="form-control form-date clearfix">
-                            <div class="sm-txt col-half grey-txt">Check in</div>
-                            <div class="col-half">
-                                <span class="date semibold-txt darkgrey-txt">{{hotelSearch.checkinDateDisplay.split(' ')[0]}}</span>
-                                <span class="sm-txt month darkgrey-txt bold-txt">{{hotelSearch.checkinDateDisplay.split(' ')[1].substring(0,3)}}</span>
-                                <span class="sm-txt year darkgrey-txt bold-txt">{{hotelSearch.checkinDateDisplay.split(' ')[2]}}</span>
-                            </div>
-                            
+                            <div class="sm-txt grey-txt">Tanggal Check in</div>
+                            <div class="pull-right md-txt bold-txt darkgrey-txt" style="line-height: 10px;">{{hotelSearch.checkinDateDisplay}}</div>
                         </div>
                     </div>
                 </div>
-                <div class="form-group form__date quarter">
-                    <div class="field-container">
-                        <div class="form-control form-date">
-                            <div class="sm-txt col-half grey-txt">Check out</div>
-                            <div class="col-half">
-                                <span class="date semibold-txt darkgrey-txt">{{hotelSearch.checkoutDateDisplay.split(' ')[0]}}</span>
-                                <span class="sm-txt month darkgrey-txt bold-txt">{{hotelSearch.checkoutDateDisplay.split(' ')[1].substring(0,3)}}</span>
-                                <span class="sm-txt year darkgrey-txt bold-txt">{{hotelSearch.checkoutDateDisplay.split(' ')[2]}}</span>
+                @*<div class="form-group form__date quarter">
+                        <div class="field-container">
+                            <div class="form-control form-date clearfix">
+                                <div class="sm-txt col-half grey-txt">Check in</div>
+                                <div class="col-half">
+                                    <span class="date semibold-txt darkgrey-txt">{{hotelSearch.checkinDateDisplay.split(' ')[0]}}</span>
+                                    <span class="sm-txt month darkgrey-txt bold-txt">{{hotelSearch.checkinDateDisplay.split(' ')[1].substring(0,3)}}</span>
+                                    <span class="sm-txt year darkgrey-txt bold-txt">{{hotelSearch.checkinDateDisplay.split(' ')[2]}}</span>
+                                </div>
+
                             </div>
                         </div>
                     </div>
-                </div>
-                
+                    <div class="form-group form__date quarter">
+                        <div class="field-container">
+                            <div class="form-control form-date">
+                                <div class="sm-txt col-half grey-txt">Check out</div>
+                                <div class="col-half">
+                                    <span class="date semibold-txt darkgrey-txt">{{hotelSearch.checkoutDateDisplay.split(' ')[0]}}</span>
+                                    <span class="sm-txt month darkgrey-txt bold-txt">{{hotelSearch.checkoutDateDisplay.split(' ')[1].substring(0,3)}}</span>
+                                    <span class="sm-txt year darkgrey-txt bold-txt">{{hotelSearch.checkoutDateDisplay.split(' ')[2]}}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>*@
                 <div class="form-group form__night quarter">
                     <div class="field-container">
                         <div class="form-control form-night">
@@ -45,7 +52,7 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="form-group form__room quarter">
                     <div class="field-container">
                         <div class="form-control form-room">
@@ -92,7 +99,7 @@
                         <div class="form-control select-age">
                             <div class="col-6"><span class="sm-txt grey-txt">Usia Anak {{$index}} (th)</span></div>
                             <div class="col-4 input-hotel xlg-txt right-txt semibold-txt darkgrey-txt">{{hotelSearch.occupancies[n].childrenAges[child]}}</div>
-                            <div class="option" ng-model="hotelSearch.occupancies[n].childrenAges[child]" >
+                            <div class="option" ng-model="hotelSearch.occupancies[n].childrenAges[child]">
                                 <span data-value="" ng-repeat="childAge in hotelSearch.childagerange"
                                       ng-click="(hotelSearch.occupancies[n].childrenAges[child] = childAge)" ng-init="hotelSearch.occupancies[n].childrenAges = [0,0,0,0]; hotelSearch.occupancies[n].childrenAges[child] = hotelSearch.occupancies[n].childrenAges[child]|| 0">{{childAge}}</span>
                             </div>
@@ -101,7 +108,7 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="form-group form__submit pull-left">
             <button class="btn btn-yellow btn-block btn-lg btnSubmit" ng-click="hotelSearch.getHotels(hotelSearch)">CARI HOTEL</button>
         </div>

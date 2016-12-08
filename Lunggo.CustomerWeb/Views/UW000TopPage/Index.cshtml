@@ -8,7 +8,7 @@
     ViewBag.Title = "Enjoy Your Every Moment";
     ViewBag.AngularController = "homeController";
     //ViewBag.Campaign = true;
-    
+
     // location
     ViewBag.LocationData = new Dictionary<string, string>();
     ViewBag.LocationData["Jakarta"] = "[{'name' : 'Surabaya','origin' : 'SUB','price' : '500000'},{'name' : 'Medan','origin' : 'KNO',	'price' : '700000'},{'name' : 'Denpasar','origin' : 'DPS','price' : '500000'},{'name' : 'Semarang','origin' : 'SRG','price' : '300000'},{'name' : 'Singapore','origin' : 'SIN','price' : '200000'},{'name' : 'Yogyakarta','origin' : 'JOG','price' : '300000'},{'name' : 'Balikpapan','origin' : 'BPN','price' : '600000'},{'name' : 'Makassar','origin' : 'UPG','price' : '600000'},{'name' : 'Batam','origin' : 'BTH','price' : '500000'}]";
@@ -276,7 +276,7 @@
                     </form>
                 </div><!-- .tab-flight -->
                 <div class="tab-hotel tab-pane clearfix active" id="hotel">
-                    
+
                     <h3 class="text-center">Cari <b>Kamar Hotel</b><br /><span class="sub-title">(Domestik &amp; Internasional)</span></h3>
                     @*<h3 class="text-center">{{hotelSearch.checkinDate | date:'dd-MM-yyy'}} - {{"2016-12-05T08:57:32.520Z" | date:'dd'}}</h3>*@
                     <form class="form form-horizontal form-hotel page-hotel" ng-submit="hotel.searchHotel()" autocomplete="off">
@@ -287,23 +287,31 @@
                         </div>
 
                         <div class="form-group hotel-date">
-                            <div class="col-xs-6">
-                                <div class="form-hotel-checkin">
-                                    <span class="grey-txt">Tanggal Check in </span>
-                                    <span class="date">{{hotelSearch.checkinDate.format() | date : 'dd'}}</span>
-                                    <span class="month">{{hotelSearch.checkinDate.format() | date : 'MMM'}}</span>
-                                    <span class="year">{{hotelSearch.checkinDate.format() | date : 'yyyy'}}</span>
-                                </div>
-                            </div>
-                            <div class="col-xs-6">
-                                <div class="form-hotel-checkout disabled">
-                                    <span class="grey-txt">Tanggal Check out</span>
-                                    <span class="date">{{hotelSearch.checkoutDate.format() | date : 'dd'}}</span>
-                                    <span class="month">{{hotelSearch.checkoutDate.format() | date : 'MMM'}}</span>
-                                    <span class="year">{{hotelSearch.checkoutDate.format() | date : 'yyyy'}}</span>
+                            <div class="col-xs-12">
+                                <div class="form-hotel-checkin text-center">
+                                    <span class="grey-txt">Tanggal Check in</span>
+                                    <div class="date-hotel">{{hotelSearch.checkinDateDisplay}}</div>
                                 </div>
                             </div>
                         </div>
+                        @*<div class="form-group hotel-date">
+                                <div class="col-xs-6">
+                                    <div class="form-hotel-checkin">
+                                        <span class="grey-txt">Tanggal Check in </span>
+                                        <span class="date">{{hotelSearch.checkinDate.format() | date : 'dd'}}</span>
+                                        <span class="month">{{hotelSearch.checkinDate.format() | date : 'MMM'}}</span>
+                                        <span class="year">{{hotelSearch.checkinDate.format() | date : 'yyyy'}}</span>
+                                    </div>
+                                </div>
+                                <div class="col-xs-6">
+                                    <div class="form-hotel-checkout disabled">
+                                        <span class="grey-txt">Tanggal Check out</span>
+                                        <span class="date">{{hotelSearch.checkoutDate.format() | date : 'dd'}}</span>
+                                        <span class="month">{{hotelSearch.checkoutDate.format() | date : 'MMM'}}</span>
+                                        <span class="year">{{hotelSearch.checkoutDate.format() | date : 'yyyy'}}</span>
+                                    </div>
+                                </div>
+                            </div>*@
                         <div class="form-group hotel-room-night">
                             <div class="col-xs-6 dropdown-container">
                                 <div class="form-control form-hotel-night clearfix">
@@ -319,7 +327,7 @@
                                 <div class="form-control form-hotel-room clearfix">
                                     <div class="col-4"><span class="grey-txt">Jumlah Kamar</span></div>
                                     <div class="col-6 input-hotel">{{hotelSearch.roomCount}}</div>
-                                    <div class="option" ng-model="hotelSearch.roomCount" >
+                                    <div class="option" ng-model="hotelSearch.roomCount">
                                         <span data-value="" ng-repeat="roomCount in hotelSearch.roomrange track by $index"
                                               ng-click="hotelSearch.roomCount = roomCount">{{roomCount}}</span>
                                     </div>
@@ -369,7 +377,7 @@
         @Html.Partial("/Views/Shared/Travorama20/_SearchHotel.cshtml")
         @Html.Partial("/Views/Hotel/Shared/Desktop/_ChildrenAgeForm.cshtml")
     </div><!-- .container -->
-    @if (ViewBag.DestinationName == null || ViewBag.DestinationName == "" )
+    @if (ViewBag.DestinationName == null || ViewBag.DestinationName == "")
     {
         <div class="page-slider">
             <div class="slider-wrapper" id="index-wrapper">
@@ -425,15 +433,17 @@
                 </div>
             </div>
         </div><!-- .slider -->
-    }else{
-        <div class="page-slider" style="background-image:url('/Assets/images/campaign/@(ViewBag.DestinationName.Replace(" ","")).jpg');">    
+    }
+    else
+    {
+        <div class="page-slider" style="background-image:url('/Assets/images/campaign/@(ViewBag.DestinationName.Replace(" ","")).jpg');">
             <div class="slider-text hidden">
                 <h1><img src="/Assets/images/enjoyyoureverymoment.png" alt="Enjoy Your Every Moment" /></h1>
                 <p>Ke mana pun Anda ingin bepergian, kami menyediakan pilihan penerbangan <br /> domestik dan internasional dari 900 maskapai</p>
             </div>
         </div><!-- .slider -->
     }
-        
+
 </section><!-- .section-search -->
 
 <section class="section-reason">
@@ -441,7 +451,8 @@
         <img src="/Assets/images/choose-travorama.png" alt="Why choose Travorama" />
     </div>
 </section>
-@if (ViewBag.DestinationName == null || ViewBag.Destinationname == ""){
+@if (ViewBag.DestinationName == null || ViewBag.Destinationname == "")
+{
     <section class="section-popular">
         <div class="container">
             <h2 class="section-title stripe text-center">TUJUAN <span>TERPOPULER</span></h2>
@@ -453,7 +464,7 @@
                             <h3>
                                 <small>Penerbangan ke</small> <b>Jakarta</b>
                             </h3>
-                            
+
                         </a>
                         <img src="/Assets/images/pop-jakarta.jpg" alt="Jakarta, Indonesia" />
                     </div>
@@ -462,7 +473,7 @@
                             <h3>
                                 <small>Penerbangan ke</small> <b>Bali</b>
                             </h3>
-                            
+
                         </a>
                         <img src="/Assets/images/pop-bali.jpg" alt="Bali, Indonesia" />
                     </div>
@@ -471,7 +482,7 @@
                             <h3>
                                 <small>Penerbangan ke</small> <b>Malaysia</b>
                             </h3>
-                            
+
                         </a>
                         <img src="/Assets/images/pop-malaysia.jpg" alt="Malaysia" />
                     </div>
@@ -482,7 +493,7 @@
                             <h3>
                                 <small>Penerbangan ke</small> <b>Yogyakarta</b>
                             </h3>
-                            
+
                         </a>
                         <img src="/Assets/images/pop-yogyakarta.jpg" alt="Yogyakarta, Indonesia" />
                     </div>
@@ -491,7 +502,7 @@
                             <h3>
                                 <small>Penerbangan ke</small> <b>Singapura</b>
                             </h3>
-                            
+
                         </a>
                         <img src="/Assets/images/pop-singapore.jpg" alt="Singapore" />
                     </div>
@@ -502,7 +513,7 @@
                             <h3>
                                 <small>Penerbangan ke</small> <b>Bandung</b>
                             </h3>
-                            
+
                         </a>
                         <img src="/Assets/images/pop-bandung.jpg" alt="Bandung, Indonesia" />
                     </div>
@@ -511,7 +522,7 @@
                             <h3>
                                 <small>Penerbangan ke</small> <b>Surabaya</b>
                             </h3>
-                            
+
                         </a>
                         <img src="/Assets/images/pop-surabaya.jpg" alt="Surabaya, Indonesia" />
                     </div>
@@ -536,11 +547,11 @@ else
     <section class="section-popular">
         <div class="container">
             <h2 class="section-title stripe text-center">RUTE PENERBANGAN <span>TERPOPULER</span></h2>
-            
+
             <div class="route-wrapper" ng-app="travorama" ng-controller="homeController">
-            
+
                 <div class="row">
-                    
+
                     <div class="col-xs-4" ng-repeat="destination in topDestinations">
                         <div class="route">
                             <header>
@@ -554,7 +565,7 @@ else
                         </div>
                     </div>
 
-                </div>    
+                </div>
 
             </div><!-- .destination-wrapper -->
 
@@ -566,7 +577,7 @@ else
     <div class="container">
 
         <img class="subscribe-bg" src="/Assets/images/subscribe-bg.jpg" alt="Email" />
-        
+
         <div class="row subscribe-after">
             <div class="col-xs-10 col-xs-offset-2">
                 <div>

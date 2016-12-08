@@ -13,11 +13,8 @@
             .col-right-hotel {
                 &:after {@extend .arrow-detail;}
                 .star {margin-top: 3px;}
-                .price {
-                    margin-top: 5px;
-                }
                 .location {
-                    margin-left: 15px;
+                    margin: 5px 0 5px 15px;
                     &:before {
                         content: '';
                         background: url(/Assets/mobile/images/Hotel/location-grey.png) no-repeat;
@@ -28,7 +25,6 @@
                         background-size: 100%;
                         position: absolute;
                         margin-left: -15px;
-                        margin-top: 4px;
                     }
                 }
             }

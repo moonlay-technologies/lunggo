@@ -5,7 +5,7 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
     $scope.hotel = {};
     $scope.searchId = '';
     $scope.searchParam = '';
-    
+
 
     $scope.hotel.location = '';
     $scope.hotel.checkinDate = "";
@@ -24,7 +24,7 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
     $scope.selectedRoom = '';
     $scope.loading = false;
 
-    
+
 
     $scope.init = function (model) {
         $log.debug(model);
@@ -78,24 +78,24 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
             $scope.hotel.images = tempHotelImages;
 
             // apakah code di bawah ini sudah efektif?
-            $.each($scope.hotel.room, function(roomKey, room) {
-                $.each(room.roomImages, function(imageKey, roomImage) {
+            $.each($scope.hotel.room, function (roomKey, room) {
+                $.each(room.roomImages, function (imageKey, roomImage) {
                     $scope.hotel.room[roomKey].roomImages[imageKey] = roomImage;
                 });
             });
-            
+
             var cekin = $scope.hotel.room[0].rate.regsId.split(',')[2].split('|')[0];
             var cekout = $scope.hotel.room[0].rate.regsId.split(',')[2].split('|')[1];
             $scope.hotel.checkinDate = new Date(parseInt(cekin.substring(0, 4)), parseInt(cekin.substring(4, 6)) - 1, parseInt(cekin.substring(6, 8)));
             $scope.hotel.checkoutDate = new Date(parseInt(cekout.substring(0, 4)), parseInt(cekout.substring(4, 6)) - 1, parseInt(cekout.substring(6, 8)));
             $scope.hotel.nightCount = (new Date($scope.hotel.checkoutDate) - new Date($scope.hotel.checkinDate)) / (3600 * 24 * 1000);
-            
+
             setFacilityDisplay();
             //setTncDisplay();
             setDescriptionDisplay();
-            $timeout(function() { hotelDetailFunctions(); }, 0);
-            //$timeout(function () { initiateSlider(); }, 0);
-            $timeout(function () {  accordionFunctions(); }, 0);
+            $timeout(function () { hotelDetailFunctions(); }, 0);
+            $timeout(function () { initiateSlider(); }, 0);
+            $timeout(function () { accordionFunctions(); }, 0);
 
             $log.debug($scope.hotel);
 
@@ -142,31 +142,29 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
                     autoplaySpeed: 2500,
                     dots: false
                 });
+
             }, 0);
 
-           
-
-
-        }, function(error) {
+        }, function (error) {
             $log.debug(error);
 
         });
         $scope.hotelSearch.location = $scope.getLocationCode();
     }
 
-    $scope.getLocationCode = function() {
+    $scope.getLocationCode = function () {
         var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
         var locationCode = hashes[2].split('.')[1];
         return locationCode;
     }
 
-    
+
     var setDescriptionDisplay = function () {
         if ($scope.hotel.description != null && $scope.hotel.description.length > 0) {
             var description = [];
             var descriptionArray = $scope.hotel.description.split('.');
             var tempDescription = '';
-            $.each(descriptionArray, function(key, value) {
+            $.each(descriptionArray, function (key, value) {
                 value = value + '.';
                 tempDescription = tempDescription + value;
                 if (key % 3 == 0) {
@@ -194,7 +192,7 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
     //        $log.debug(tncArray);
     //    })
     //}
-    $scope.getFacilityOrder = function(facilityGroup){
+    $scope.getFacilityOrder = function (facilityGroup) {
         switch (facilityGroup) {
             case 'general': return 0;
             case 'health': return 1;
@@ -212,9 +210,9 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
 
         var facilityOrder = 0;
         var tempFacilityList = null;
-        $.each($scope.hotel.facilities, function(facilityGroup, facility) {
+        $.each($scope.hotel.facilities, function (facilityGroup, facility) {
             tempFacilityList = [[], [], [], []];
-            $.each(facility, function(index, facilityName) {
+            $.each(facility, function (index, facilityName) {
                 if (index % 4 == 0) {
                     tempFacilityList[0].push(facilityName);
                 } else if (index % 4 == 1) {
@@ -223,7 +221,7 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
                     tempFacilityList[2].push(facilityName);
                 } else if (index % 4 == 3) {
                     tempFacilityList[3].push(facilityName);
-    }
+                }
             });
 
             facilityOrder = $scope.getFacilityOrder(facilityGroup);
@@ -267,13 +265,13 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
           {
               query: {
                   method: 'POST',
-                  params: { },
+                  params: {},
                   isArray: false
               }
           }
       );
 
-    $scope.seeRoomDetail = function(room) {
+    $scope.seeRoomDetail = function (room) {
         $scope.selectedRoom = room;
     }
     $scope.selectFailed = false;
@@ -288,7 +286,7 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
             }
         }
         $scope.booking = true;
-        
+
         selectService.query({}, {
             "searchId": $scope.searchId,
             "regs": [
@@ -313,11 +311,11 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
 
                 location.href = '/id/Hotel/Checkout/?token=' + $scope.token;
             }
-            
+
         });
     }
 
-    var accordionFunctions = function() {
+    var accordionFunctions = function () {
         //Accordion Help Section by W3School
         $timeout(function () {
             var acc = document.getElementsByClassName("accordion");
@@ -332,7 +330,7 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
         }, 0);
     }
 
-    var hotelDetailFunctions = function(parameters) {
+    var hotelDetailFunctions = function (parameters) {
         // Open Room Detail
         $('body .room-rl').on('click', function () {
             var parent1 = $(this).closest('.room-list').find('.room-left');
@@ -340,7 +338,7 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
             parent2.slideToggle('.4s');
             $(this).closest('.room-list-container li').siblings().find('.hotel-detail, .option').hide();
 
-            $(this).each(function() {
+            $(this).each(function () {
                 $(this).closest('.room-list-container li').find('.room-gallery').lightSlider({
                     gallery: true,
                     item: 1,
@@ -348,7 +346,7 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
                     slideMargin: 0,
                     loop: true,
                     keyPress: true,
-                    onSliderLoad: function() {
+                    onSliderLoad: function () {
                         $('.room-gallery').removeClass('cS-hidden');
                     }
                 });
@@ -428,8 +426,7 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
         }
     };
 
-    $scope.toTitleCase = function(str)
-    {
+    $scope.toTitleCase = function (str) {
         return str.replace(/\w\S*/g, function (txt) { return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase(); });
     }
 
