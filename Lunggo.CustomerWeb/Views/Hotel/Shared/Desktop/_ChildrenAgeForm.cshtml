@@ -1,8 +1,8 @@
 ﻿<div class="form-child-age page-hotel custom-scroll">
     <ul class="fc-wrapper">
-        <li class="fc-list clearfix" ng-repeat="n in [0,1,2,3,4,5,6,7] track by $index" ng-show ="hotelSearch.roomCount > $index">
+        <li class="fc-list clearfix" ng-repeat="n in [0,1,2,3,4,5,6,7] track by $index" ng-show="hotelSearch.roomCount > $index">
             <div class="form-group hotel-visitor col-4 clearfix">
-                <div class="fc-title bold-txt blue-txt md-txt">Kamar {{n+1}}</div>
+                <div class="fc-title bold-txt blue-txt">Kamar {{n+1}}</div>
                 <div class="col-half dropdown-container">
                     <div class="form-control form-hotel-visitor adult clearfix">
                         <div class="col-4"><span class="grey-txt">Dewasa</span></div>
@@ -13,7 +13,7 @@
                         </div>
                     </div>
                 </div>
-               
+
                 <div class="col-half dropdown-container">
                     <div class="form-control form-hotel-visitor child clearfix">
                         <div class="col-4"><span class="grey-txt">Anak</span></div>
@@ -27,7 +27,7 @@
             </div>
 
             <div class="form-group hotel-visitor col-6 clearfix" ng-show="hotelSearch.occupancies[n].childCount > 0">
-                <div class="fc-title white-txt md-txt">Usia Anak (th)</div>
+                <div class="fc-title white-txt">Usia Anak (th)</div>
                 <div class="quarter dropdown-container" ng-repeat="child in [0,1,2,3] track by $index"
                      ng-show="hotelSearch.occupancies[n].childCount > $index">
                     <div class="form-control form-hotel-visitor select-age clearfix">

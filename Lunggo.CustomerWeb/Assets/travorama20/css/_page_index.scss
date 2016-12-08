@@ -193,8 +193,8 @@ file : /Assets/travorama20/css/_page_index.scss
                             }
                         }
                         .total {
-                            font-size: 42px;
-                            line-height: 28px;
+                            font-size: 30px;
+                            line-height: 30px;
                         }
                         .total-adult {
                             border-right: 1px solid;
@@ -486,7 +486,7 @@ file : /Assets/travorama20/css/_page_index.scss
         top: 0px;
         left: 325px;
         z-index: 3;
-        padding: 30px;
+        padding: 20px;
         overflow-y: auto;
         input[name='FormAgeSubmit'] {
             padding: 10px 0;
@@ -502,6 +502,7 @@ file : /Assets/travorama20/css/_page_index.scss
             }
         }
         .form-group.hotel-visitor {
+            margin-bottom: 15px;
             &>div {padding-right: 5px;
                 &:last-child {padding-right: 0;}
             }
@@ -515,7 +516,7 @@ file : /Assets/travorama20/css/_page_index.scss
             }
             &.col-4 {padding-right: 50px;}
         }
-        .fc-title {margin-bottom: 10px;}
+        .fc-title {margin-bottom: 5px;}
         .fc-wrapper {
             padding: 0;
             list-style: none;
