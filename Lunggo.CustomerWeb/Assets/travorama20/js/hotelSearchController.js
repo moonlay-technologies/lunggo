@@ -423,12 +423,12 @@ app.controller('hotelSearchController', ['$scope', '$log', '$window', '$http', '
         return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
     }
 
-    $('.overlay .filter-group--facility a').on('click touchstart', function () {
+    $('.overlay .filter-group--facility a').on('click', function () { //click or click touchstart
         $('.overlay .filter-group--facility a').toggleClass('active');
         $('.overlay .sh-list').toggleClass('opened');
     });
 
-    $('.overlay .filter-group--area').on('click touchstart', function () {
+    $('.overlay .filter-group--area').on('click', function () {
         $('.overlay .filter-group--facility a').toggleClass('active');
         $('.overlay .sh-list').toggleClass('opened');
     });
