@@ -575,7 +575,7 @@
                                                                         @foreach (var policy in rate.Cancellation)
                                                                         {
                                                                             <div>
-                                                                                @pol. Pembatalan setelah tanggal @policy.StartTime.ToString("D", CultureInfo.CreateSpecificCulture("id-ID")) akan dikenakan biaya sebesar Rp @(policy.SingleFee.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))) per kamar <br />
+                                                                                @pol. Pembatalan setelah tanggal @policy.StartTime.ToString("D", CultureInfo.CreateSpecificCulture("id-ID")) akan dikenakan biaya sebesar Rp @(policy.Fee.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))) per kamar <br />
                                                                             </div>
                                                                             pol++;
                                                                         }

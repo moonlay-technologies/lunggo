@@ -85,8 +85,8 @@
                                     
                                     @*<input type="number" name="countryCallCd" ng-model="editProfile.countryCallCd" value="editProfile.countryCallCd" class="form-control" placeholder="Kode Negara" ng-show="userProfile.edit" ng-disabled="userProfile.updating" />*@
                                     <!--<select class="form-control" ng-show="userProfile.edit" ng-model="editProfile.country" ng-disabled="userProfile.updating">
-                                    <option ng-repeat="country in countries" value="{{country.dial_code}}" ng-selected="country.dial_code == userProfile.country">{{country.name}}</option>
-                                    </select> -->
+                                            <option ng-repeat="country in countries" value="{{country.dial_code}}" ng-selected="country.dial_code == userProfile.country">{{country.name}}</option>
+                                        </select> -->
                                 </div>
                             </div>
 
@@ -100,14 +100,14 @@
                                 </div>
                             </div>
                             <!--<div class="form-group">
-                                <div class="col-xs-3">
-                                    <p class="control-label">Alamat</p>
-                                </div>
-                                <div class="col-xs-9">
-                                    <p class="form-control-static" ng-hide="userProfile.edit">{{userProfile.address}}</p>
-                                    <input type="text" name="address" ng-model="editProfile.address" class="form-control" placeholder="Alamat" ng-show="userProfile.edit" required ng-disabled="userProfile.updating" />
-                                </div>
-                            </div> -->
+                                    <div class="col-xs-3">
+                                        <p class="control-label">Alamat</p>
+                                    </div>
+                                    <div class="col-xs-9">
+                                        <p class="form-control-static" ng-hide="userProfile.edit">{{userProfile.address}}</p>
+                                        <input type="text" name="address" ng-model="editProfile.address" class="form-control" placeholder="Alamat" ng-show="userProfile.edit" required ng-disabled="userProfile.updating" />
+                                    </div>
+                                </div> -->
 
                         </form>
 
@@ -205,6 +205,9 @@
                                                         <div class="action">
                                                             <button class="btn btn-yellow" ng-click="submitRsvNo(flight.rsvNo)">@Html.I18NString("CW00175")</button>
                                                         </div>
+                                                        <div class="action" ng-show="paymentstatus(flight.payment.status) == 'Lunas'">
+                                                            <button class="btn btn-yellow" ng-click="askRefund(flight.rsvNo, flight.contact.name, flight.contact.email)">Refund</button>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </section>
@@ -282,5 +285,46 @@
             </section><!-- .account-content -->
         </div>
 
+    </div>
+    
+    <div class="bookfailed-popup" ng-show="sentRefund && !sendingRefund && overlay">
+        <div class=" overlay-content">
+            <section style="padding-top:60px; padding-left:225px;">
+                <div><img src="/Assets/images/travorama-logo-color.png" height="22px" width="80px"></div>
+                <div style="padding-top:20px;"><span style="color: #15b1e4; font-size:20px"><b>Pengiriman Berhasil</b></span></div>
+                <div><img src="~/Assets/images/popup/paymentyellowstrip.png" /></div>
+                <div style="padding-top:5px;"><span style="font-size:14px"></span></div>
+                <div style="padding-top:5px;"><span style="font-size:14px">Permohonan Anda akan kami proses. Silakan menunggu respons dari kami.</span></div>
+            </section>
+            <div align="right" style="padding-right:30px;padding-top:30px;">
+                <a class="btn popup-btn-yellow book-failed" ng-click="closeOverlay()"><b>Tutup</b></a>
+            </div>
+        </div>
+    </div>
+
+    <div class="bookfailed-popup" ng-show="sendingRefund">
+        <div class=" overlay-content">
+            <section style="padding-top:60px; padding-left:225px;">
+                <div><img src="/Assets/images/travorama-logo-color.png" height="22px" width="80px"></div>
+                <div style="padding-top:20px;"><span style="color: #15b1e4; font-size:20px"><b>Mohon Tunggu...</b></span></div>
+                <div><img src="~/Assets/images/popup/paymentyellowstrip.png" /></div>
+                <div style="padding-top:5px;"><span style="font-size:14px"></span></div>
+                <div style="padding-top:5px;"><span style="font-size:14px">Sedang mengirimkan permohonan refund Anda</span></div>
+            </section>
+        </div>
+    </div>
+
+    <div class="bookfailed-popup" ng-show="failedsentRefund && overlay">
+        <div class="overlay-content">
+            <section style="padding-top:60px; padding-left:225px;">
+                <div><img src="/Assets/images/travorama-logo-color.png" height="22px" width="80px"></div>
+                <div style="padding-top:25px;"><span style="color: #15b1e4; font-size:26px"><b>Mohon maaf...</b></span></div>
+                <div style="padding-top:5px;"><span style="font-size:13px">Silakan ulangi permohonan refund lagi atau hubungi kami <a href="/id/contact">di sini</a></span></div>
+                <div align="right" style="padding-right:50px"><img src="/Assets/images/popup/smallyellowstrip.png"></div>
+            </section>
+            <div align="right" style="padding-right:30px;padding-top:30px;">
+                <a class="btn popup-btn-yellow book-failed" ng-click="closeOverlay()"><b>Tutup</b></a>
+            </div>
+        </div>
     </div>
 </div>

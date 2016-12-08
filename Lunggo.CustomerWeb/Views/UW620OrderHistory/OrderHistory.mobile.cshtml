@@ -227,8 +227,11 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-xs-12">
+                                <div class="col-xs-6">
                                     <a ng-href="@Url.Action("OrderFlightHistoryDetail", "UW620OrderHistory")?rsvNo={{flight.rsvNo}}" class="btn btn-yellow">Detail</a>
+                                </div>
+                                <div class="col-xs-6" ng-show="OrderStatus(flight.payment.status) = 'Lunas'">
+                                    <a ng-click="askRefund(flight.rsvNo, flight.contact.name, flight.contact.email)" class="btn btn-yellow">Refund</a>
                                 </div>
                             </div>
                         </li>
@@ -331,4 +334,53 @@
             </div>
         </div>
     </section><!-- .user-history -->
+    
+    <div class="popup__wrapper" ng-class="{'active': sentRefund && !sendingRefund && overlay}">
+        <div class="popup">
+            <header class="popup__header">
+                <h4 class="popup__title">Pengiriman Berhasil</h4>
+            </header>
+            <div class="popup__body">
+                <div class="container_new">
+                    <span>Permohonan Anda akan kami proses. Silakan menunggu respons dari kami.</span>
+                </div>
+            </div>
+            <div class="popup__footer">
+                <div class="container_new">
+                    <a class="btn btn-block btn-yellow" ng-click="close()">Tutup</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="popup__wrapper" ng-class="{'active': sendingRefund}">
+        <div class="popup">
+            <header class="popup__header">
+                <h4 class="popup__title">Mohon Tunggu</h4>
+            </header>
+            <div class="popup__body">
+                <div class="container_new">
+                    <span>Sedang mengirimkan permohonan refund Anda.</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="popup__wrapper" ng-class="{'active': failedsentRefund && overlay}">
+        <div class="popup">
+            <header class="popup__header">
+                <h4 class="popup__title">Mohon Maaf</h4>
+            </header>
+            <div class="popup__body">
+                <div class="container_new">
+                    <span>Silakan ulangi permohonan refund lagi atau hubungi kami <a href="/id/contact">di sini</a></span>
+                </div>
+            </div>
+            <div class="popup__footer">
+                <div class="container_new">
+                    <a class="btn btn-block btn-yellow" ng-click="closeOverlay()">Tutup</a>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

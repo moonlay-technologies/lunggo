@@ -436,7 +436,7 @@
                                                             {
                                                                 <div>
                                                                     @pol. 
-                                                                    Pembatalan setelah tanggal @policy.StartTime.ToString("D", CultureInfo.CreateSpecificCulture("id-ID")) akan dikenakan biaya sebesar Rp @(policy.SingleFee.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))) per kamar<br />
+                                                                    Pembatalan setelah tanggal @policy.StartTime.ToString("D", CultureInfo.CreateSpecificCulture("id-ID")) akan dikenakan biaya sebesar Rp @(policy.Fee.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))) per kamar<br />
                                                                 </div>
                                                                 pol++;
                                                             }
@@ -449,18 +449,12 @@
 
                                             </div>
                                             <ul class="blue-txt semibold-txt blue-list rh-tnc">
-                                                @*<li>Extra bed belum termasuk</li>*@
-                                                @*<li>Free cancelation sebelum H-5 tanggal booking</li>*@
+                                      
                                             </ul>
                                         }
 
                                     </div>
                                 </div>
-                                @*<div class="rh-bottom">
-                                        <div class="rhb-content">
-                                            Dolor sit amet, consectetuer adipiscing elit, sed diam nonummy. ectetuer adipiscing elit, sed diam nonummy. Lorem ipsum dolor sit amet, consectuer ectetuer. Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
-                                        </div>
-                                    </div>*@
                             </div>
                         </div>
                     </div>
