@@ -5,7 +5,7 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
     $scope.hotel = {};
     $scope.searchId = '';
     $scope.searchParam = '';
-
+    
 
     $scope.hotel.location = '';
     $scope.hotel.checkinDate = "";
@@ -24,7 +24,7 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
     $scope.selectedRoom = '';
     $scope.loading = false;
 
-
+    
 
     $scope.init = function (model) {
         $log.debug(model);
@@ -35,63 +35,8 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
         //$scope.hotelSearch.searchParamObject = model.searchParamObject;
         //$scope.hotelSearch.searchParam = model.searchParam;
 
-        var mydata = $scope.searchParam.split('.');
-        var location = mydata[1];
-        var cekin = mydata[2];
-        var cekout = mydata[3];
-        var nightcount = mydata[4];
-        var roomcount = mydata[5];
-        var occupancies = mydata[6].split('|');
+        hotelSearchSvc.initializeSearchForm($scope, model.searchParamObject);
 
-        var searchParamObject = {
-            nightCount: nightcount,
-            roomCount: roomcount,
-            checkinDate: moment(cekin, "YYYY-MM-DD"),
-            checkoutDate: moment(cekout, "YYYY-MM-DD"),
-            occupancies:[]
-        }
-
-        for (var x = 0; x < occupancies.length; x++) {
-            var occdata = occupancies[x].split('~');
-            var ages = [];
-            if (occdata.length == 3) {
-                var agedata = occdata[2].split(',');
-                for (var a = 0; a < agedata.length; a++) {
-                    ages.push(parseInt(agedata[a]));
-                }
-                for (var b = 0; b < 4 - agedata.length; b++) {
-                    ages.push(0);
-                }
-            } else {
-                ages = [0, 0, 0, 0];
-            }
-            searchParamObject.occupancies.push({
-                adultCount: occdata[0],
-                childCount: occdata[1],
-                childrenAges: occdata[1] == 0 ? [0, 0, 0, 0] : ages
-            });
-        }
-
-        for (var m = 0; m < 8 - roomcount; m++) {
-            searchParamObject.occupancies.push({
-                adultCount: 1,
-                childCount: 0,
-                childrenAges: [0, 0, 0, 0]
-            });
-        }
-        hotelSearchSvc.initializeSearchForm($scope, searchParamObject);
-        
-        
-
-        //$scope.hotelSearch.checkinDate = moment(cekin, "YYYY-MM-DD");
-        //$scope.hotelSearch.checkoutDate = moment(cekout, "YYYY-MM-DD");
-        //$scope.hotelSearch.checkinDateDisplay = moment(cekin,"YYYY-MM-DD").locale("id").format('LL');
-        //$scope.hotelSearch.checkoutDateDisplay = moment(cekout, "YYYY-MM-DD").locale("id").format('LL');
-
-        //$scope.hotelSearch.destinationCheckinDate = moment(cekin, "YYYY-MM-DD").locale("id").format('LL');
-        //$scope.hotelSearch.destinationCheckoutDate = moment(cekout, "YYYY-MM-DD").locale("id").format('LL');
-        
-        var maxImages = 6;
 
         var resource = $resource(HotelDetailsConfig.Url + '/:searchId/:hotelCd',
             {},
@@ -116,21 +61,31 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
             $scope.hotelSearch.destinationName = $scope.hotel.destinationName;
 
             var loadedImages = 0;
+            var maxImages = 6;
             var tempHotelImages = [];
 
             //Remove broken images
+            var imageCount = $scope.hotel.images.length;
+            var imageIndex = 0;
+            var finishedSlider = 0;
             $.each($scope.hotel.images, function (key, value) {
                 imageSvc.isImage(value).then(function () {
-                    if (loadedImages != maxImages) {
+                    if (loadedImages < maxImages) {
                         loadedImages++;
-                        //tempHotelImages.push("http://photos.hotelbeds.com/giata/bigger/" + value);
                         tempHotelImages.push(value);
-                    } else return false;
+                        $scope.hotel.images = tempHotelImages;
+                    }
+                    else return false;
                 }, function () {
                     return; //equivalent of continue
+                }).finally(function () {
+                    imageIndex++;
+                    if (!finishedSlider && loadedImages == 1 || (imageIndex + 1 == imageCount && loadedImages < maxImages)) {
+                        $timeout(function () { initiateSlider(); }, 0);
+                        finishedSlider = true;
+                    }
                 });
             });
-            $scope.hotel.images = tempHotelImages;
 
             // apakah code di bawah ini sudah efektif?
             $.each($scope.hotel.room, function (roomKey, room) {
@@ -138,19 +93,18 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
                     $scope.hotel.room[roomKey].roomImages[imageKey] = roomImage;
                 });
             });
-
+            
             var cekin = $scope.hotel.room[0].rate.regsId.split(',')[2].split('|')[0];
             var cekout = $scope.hotel.room[0].rate.regsId.split(',')[2].split('|')[1];
             $scope.hotel.checkinDate = new Date(parseInt(cekin.substring(0, 4)), parseInt(cekin.substring(4, 6)) - 1, parseInt(cekin.substring(6, 8)));
             $scope.hotel.checkoutDate = new Date(parseInt(cekout.substring(0, 4)), parseInt(cekout.substring(4, 6)) - 1, parseInt(cekout.substring(6, 8)));
             $scope.hotel.nightCount = (new Date($scope.hotel.checkoutDate) - new Date($scope.hotel.checkinDate)) / (3600 * 24 * 1000);
-
+            
             setFacilityDisplay();
             //setTncDisplay();
             setDescriptionDisplay();
-            $timeout(function () { hotelDetailFunctions(); }, 0);
-            $timeout(function () { initiateSlider(); }, 0);
-            $timeout(function () { accordionFunctions(); }, 0);
+            $timeout(function() { hotelDetailFunctions(); }, 0);
+            $timeout(function () {  accordionFunctions(); }, 0);
 
             $log.debug($scope.hotel);
 
@@ -212,7 +166,7 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
         return locationCode;
     }
 
-
+    
     var setDescriptionDisplay = function () {
         if ($scope.hotel.description != null && $scope.hotel.description.length > 0) {
             var description = [];
@@ -235,7 +189,7 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
         if (data.error == "ERHGHD02") {
             $log.debug('searchId is expired. (' + $scope.searchId + ') \n redirecting to search with ' + $scope.searchParam)
             alert('searchId is expired. Redirecting to search.');
-            hotelSearchSvc.gotoHotelSearch($scope.searchParam);
+            hotelSearchSvc.gotoHotelSearch($scope.hotelSearch);
             //location.href = location.href = '/id/Hotel/Search/?' + $scope.searchParam;
         }
     }
@@ -275,7 +229,7 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
                     tempFacilityList[2].push(facilityName);
                 } else if (index % 4 == 3) {
                     tempFacilityList[3].push(facilityName);
-                }
+    }
             });
 
             facilityOrder = $scope.getFacilityOrder(facilityGroup);
@@ -340,7 +294,7 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
             }
         }
         $scope.booking = true;
-
+        
         selectService.query({}, {
             "searchId": $scope.searchId,
             "regs": [
@@ -365,7 +319,7 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
 
                 location.href = '/id/Hotel/Checkout/?token=' + $scope.token;
             }
-
+            
         });
     }
 
