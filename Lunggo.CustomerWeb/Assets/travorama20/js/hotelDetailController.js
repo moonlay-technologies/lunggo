@@ -90,8 +90,7 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
 
         //$scope.hotelSearch.destinationCheckinDate = moment(cekin, "YYYY-MM-DD").locale("id").format('LL');
         //$scope.hotelSearch.destinationCheckoutDate = moment(cekout, "YYYY-MM-DD").locale("id").format('LL');
-        
-        var maxImages = 6;
+
 
         var resource = $resource(HotelDetailsConfig.Url + '/:searchId/:hotelCd',
             {},
@@ -116,20 +115,29 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
             $scope.hotelSearch.destinationName = $scope.hotel.destinationName;
 
             var loadedImages = 0;
+            var maxImages = 6;
             var tempHotelImages = [];
 
             //Remove broken images
+            var imageCount = $scope.hotel.images.length;
+            var imageIndex = 0;
+            var finishedSlider = 0;
             $.each($scope.hotel.images, function (key, value) {
                 imageSvc.isImage(value).then(function () {
-                    if (loadedImages != maxImages) {
+                    if (loadedImages < maxImages) {
                         loadedImages++;
-                        //tempHotelImages.push("http://photos.hotelbeds.com/giata/bigger/" + value);
                         tempHotelImages.push(value);
-                    } else return false;
+                        $scope.hotel.images = tempHotelImages;
+                    }
+                    else return false;
                 }, function () {
                     return; //equivalent of continue
-                }).finally(function() {
-                    $scope.hotel.images = tempHotelImages;
+                }).finally(function () {
+                    imageIndex++;
+                    if (!finishedSlider && loadedImages == 1 || (imageIndex + 1 == imageCount && loadedImages < maxImages)) {
+                        $timeout(function () { initiateSlider(); }, 0);
+                        finishedSlider = true;
+                    }
                 });
             });
 
@@ -150,7 +158,7 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
             //setTncDisplay();
             setDescriptionDisplay();
             $timeout(function() { hotelDetailFunctions(); }, 0);
-            $timeout(function () { initiateSlider(); }, 0);
+            //$timeout(function () { initiateSlider(); }, 0);
             $timeout(function () {  accordionFunctions(); }, 0);
 
             $log.debug($scope.hotel);
@@ -235,7 +243,7 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
         if (data.error == "ERHGHD02") {
             $log.debug('searchId is expired. (' + $scope.searchId + ') \n redirecting to search with ' + $scope.searchParam)
             alert('searchId is expired. Redirecting to search.');
-            hotelSearchSvc.gotoHotelSearch($scope.searchParam);
+            hotelSearchSvc.gotoHotelSearch($scope.hotelSearch);
             //location.href = location.href = '/id/Hotel/Search/?' + $scope.searchParam;
         }
     }
