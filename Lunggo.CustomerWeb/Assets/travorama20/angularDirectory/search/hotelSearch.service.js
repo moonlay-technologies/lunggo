@@ -52,6 +52,15 @@
         }
     };
 
+    //factory.myarray = [];
+    //factory.getNumber = function (num) {
+    //    factory.myarray = [];
+
+    //    for (var i = 0; i <= num - 1; i++) {
+    //        factory.myarray.push(i);
+    //    }
+
+    //}
     factory.initializeSearchForm = function (scope, searchParamObject) {
         scope.hotelSearch = {};
         scope.changeSearch = {
@@ -142,7 +151,7 @@
             
         }
         //scope.changeSearch = scope.hotelSearch;
-
+        
         scope.hotelSearch.adultCountMin = 1;
         scope.hotelSearch.adultCountMax = 5;
         scope.hotelSearch.adultrange = [1, 2, 3, 4, 5];
@@ -284,16 +293,16 @@
             });
         }
 
-        factory.setCheckinDate = function (scopeElement, date) {
-            scopeElement.$apply(function () {
-                $log.debug("scopeElement.hotelSearch.checkinDate = " + scopeElement.hotelSearch.checkinDate);
-                scopeElement.hotelSearch.checkinDate = moment(date).toISOString();
-                $log.debug("scopeElement.hotelSearch.checkinDate = " + scopeElement.hotelSearch.checkinDate);
-                scopeElement.hotelSearch.checkoutDate = moment(date).add(scopeElement.hotelSearch.nightCount, 'days').toISOString();
-                scope.hotelSearch.checkinDateDisplay = moment(scopeElement.hotelSearch.checkinDate).locale("id").format('LL');
-                scope.hotelSearch.checkoutDateDisplay = moment(scopeElement.hotelSearch.checkoutDate).locale("id").format('LL');
-            });
-        }
+        //factory.setCheckinDate = function (scopeElement, date) {
+        //    scopeElement.$apply(function () {
+        //        $log.debug("scopeElement.hotelSearch.checkinDate = " + scopeElement.hotelSearch.checkinDate);
+        //        scopeElement.hotelSearch.checkinDate = moment(date).toISOString();
+        //        $log.debug("scopeElement.hotelSearch.checkinDate = " + scopeElement.hotelSearch.checkinDate);
+        //        scopeElement.hotelSearch.checkoutDate = moment(date).add(scopeElement.hotelSearch.nightCount, 'days').toISOString();
+        //        scope.hotelSearch.checkinDateDisplay = moment(scopeElement.hotelSearch.checkinDate).locale("id").format('LL');
+        //        scope.hotelSearch.checkoutDateDisplay = moment(scopeElement.hotelSearch.checkoutDate).locale("id").format('LL');
+        //    });
+        //}
 
         $('.hotel-date-picker').datepicker({
             numberOfMonths: 2,

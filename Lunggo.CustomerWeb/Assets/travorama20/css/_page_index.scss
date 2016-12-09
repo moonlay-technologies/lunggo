@@ -128,6 +128,7 @@ file : /Assets/travorama20/css/_page_index.scss
                     .form-hotel-checkout, .form-hotel-checkin {cursor: pointer; background:#fff; color:#6a6a6a; padding:10px 8px; @include border-radius($border-radius-default); border:$border-default; font-weight:600;
                         &:before, &:after {@include clearfix();}
                         small {display:block; font-weight:normal;}
+                        span.grey-txt {font-weight: 400;}
                         .date {float:left; font-size:42px; width:60px; line-height: 42px;}
                         .month {display:block; font-size:17px; line-height: 26px;}
                         .year {display:block; font-size:17px; line-height: 10px;}

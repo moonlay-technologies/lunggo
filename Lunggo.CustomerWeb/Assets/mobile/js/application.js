@@ -474,7 +474,7 @@ if (typeof (angular) == 'object') {
                 if (position == 'search-single' || position == 'search-return') {
                     $rootScope.FlightSearchForm.DepartureDate = new Date($rootScope.FlightSearchForm.DepartureDate);
                     $rootScope.FlightSearchForm.ReturnDate = new Date($rootScope.FlightSearchForm.ReturnDate);
-                } 
+                }
 
                 $('.ui-datepicker').datepicker({
 
@@ -491,7 +491,7 @@ if (typeof (angular) == 'object') {
                             //Jum, 16 Des 2016
                             var datex = new Date(trsdate);
                             var scope = angular.element($('.ui-datepicker')).scope();
-                            hotelSearchSvc.setCheckinDate(scope, datex);
+                            scope.setCheckinDate(scope, datex);
                             $log.debug("checkinDate = " + datex);
                             $rootScope.PageConfig.SetOverlay('hotel-form');
 
@@ -894,7 +894,6 @@ if (typeof (angular) == 'object') {
             $rootScope.FlightSearchForm.ReturnDate = returnDate;
         }
     });//app.run
-
 }
 
 // --------------------
