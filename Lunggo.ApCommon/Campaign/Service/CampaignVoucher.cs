@@ -176,16 +176,7 @@ namespace Lunggo.ApCommon.Campaign.Service
                 response.DiscountedPrice = 50000M;
             }
         }
-        private bool VoucherDecrement(string voucherCode)
-        {
-            try
-            {
-                return UpdateDb.VoucherDecrement(voucherCode);
-            }
-            catch (Exception)
-            {
-                return false;
-        }
+
         private bool VoucherDecrement(string voucherCode)
         {
             try
@@ -197,6 +188,18 @@ namespace Lunggo.ApCommon.Campaign.Service
                 return false;
             }
         }
+
+        //private bool VoucherDecrement(string voucherCode)
+        //{
+        //    try
+        //    {
+        //        return UpdateDb.VoucherDecrement(voucherCode);
+        //    }
+        //    catch (Exception)
+        //    {
+        //        return false;
+        //    }
+        //}
         private bool VoucherIncrement(string voucherCode)
         {
             try
