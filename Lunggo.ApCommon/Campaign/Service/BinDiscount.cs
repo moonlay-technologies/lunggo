@@ -31,6 +31,14 @@ namespace Lunggo.ApCommon.Campaign.Service
                     ReplaceMargin = true
                 };
 
+            if (!rsvNo.StartsWith("1"))
+                return new BinDiscount
+                {
+                    Amount = 0,
+                    IsAvailable = false,
+                    DisplayName = "BTN"
+                };
+
             var rsv = FlightService.GetInstance().GetReservation(rsvNo);
             var isAvailable = IsPanAndEmailEligibleInCache("btn", hashedPan, rsv.Contact.Email);
             var isValid = IsPromoValid(rsv, bin, hashedPan, voucherCode);

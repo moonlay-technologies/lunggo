@@ -111,6 +111,7 @@ app.controller('hotelSearchController', ['$scope', '$log', '$window', '$http', '
         $scope.pageCount = 0;
 
         $timeout(function () { }, 1);
+
         searchPromise().then(function (data) {
             
             if (validateResponse(data) == false) {
