@@ -590,12 +590,10 @@ function flightPageSearchFormFunctions() {
     // show flight location. Origin and Destination
     // on flight origin focus
     $('.form-flight-origin').click(function () {
-        $scope.searchlocation = true;
         $(this).select();
         showLocation('origin');
     });
     $('.form-flight-destination').click(function () {
-        $scope.searchlocation = true;
         $(this).select();
         showLocation('destination');
     });
