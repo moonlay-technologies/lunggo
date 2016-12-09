@@ -14,8 +14,8 @@
 
 @section AdditionalJS {
     @*<script src="/Assets/js/angular.min.js"></script>
-    <script src="/Assets/js/angular-animate.min.js"></script>
-        <script src="/Assets/js/angular-route.min.js"></script>*@
+        <script src="/Assets/js/angular-animate.min.js"></script>
+            <script src="/Assets/js/angular-route.min.js"></script>*@
     <script src="/Config/JsConfig.js"></script>
     <!-- jquery datepicker -->
     <script src="/Assets/js/jquery-ui.min.js"></script>
@@ -137,7 +137,7 @@
                                     <div class="field-wrapper">
                                         <p class="form-control" ng-click="FlightSearchForm.PassengerPicker.Reset('adult'); PageConfig.SetOverlay('passenger-select')">{{FlightSearchForm.Passenger[0]}} Dewasa</p>
                                         @*<p class="form-control" ng-show="FlightSearchForm.Passenger[1] > 0" ng-click="FlightSearchForm.PassengerPicker.Reset('children'); PageConfig.SetOverlay('passenger-select')">, {{FlightSearchForm.Passenger[1]}} Anak</p>
-                                    <p class="form-control" ng-show="FlightSearchForm.Passenger[2] > 0" ng-click="FlightSearchForm.PassengerPicker.Reset('infant'); PageConfig.SetOverlay('passenger-select')">, {{FlightSearchForm.Passenger[2]}} Bayi</p>*@
+                                            <p class="form-control" ng-show="FlightSearchForm.Passenger[2] > 0" ng-click="FlightSearchForm.PassengerPicker.Reset('infant'); PageConfig.SetOverlay('passenger-select')">, {{FlightSearchForm.Passenger[2]}} Bayi</p>*@
                                     </div>
                                 </div>
                                 <div class="col-custom-logo icon-child"></div>
@@ -222,7 +222,6 @@
             </div>
         </section>
     </div><!-- .overlay--datepicker-->
-    
     <!-- overlay airport selector -->
     <div class="overlay overlay--theme--blue overlay--airport-select" ng-class="{'active' : (PageConfig.ActiveOverlay == 'airport-select')}">
         <header class="overlay__header">
@@ -412,53 +411,53 @@
                             <div class="col-half">
                                 <div class="hotel__detail">{{location.type}}</div>
                             </div>
-                            <div class="col-half">
+                            <div class="col-half" ng-show="location.type !=  'Hotel'">
                                 <div class="result blue-txt semibold-txt pull-right">{{location.numOfHotels}} Hotel</div>
-                        </div>
+                            </div>
                         </a>
                     </li>
                     @*<li class="hotel">
-                        <a class="hotel__link clearfix">
-                            <div class="hotel__location bold-txt">Jakarta, Indonesia</div>
-                            <div class="col-half">
-                                <div class="hotel__detail">Kota</div>
-                </div>
-                            <div class="col-half">
-                                <div class="result blue-txt semibold-txt pull-right">999 Hotel</div>
+                                <a class="hotel__link clearfix">
+                                    <div class="hotel__location bold-txt">Jakarta, Indonesia</div>
+                                    <div class="col-half">
+                                        <div class="hotel__detail">Kota</div>
                         </div>
-                        </a>
-                    </li>
-                    <li class="hotel">
-                        <a class="hotel__link clearfix">
-                            <div class="hotel__location bold-txt">Jakarta, Indonesia</div>
-                            <div class="col-half">
-                                <div class="hotel__detail">Kota</div>
-                            </div>
-                            <div class="col-half">
-                                <div class="result blue-txt semibold-txt pull-right">999 Hotel</div>
-                            </div>
-                        </a>
-                    </li>*@
+                                    <div class="col-half">
+                                        <div class="result blue-txt semibold-txt pull-right">999 Hotel</div>
+                                </div>
+                                </a>
+                            </li>
+                            <li class="hotel">
+                                <a class="hotel__link clearfix">
+                                    <div class="hotel__location bold-txt">Jakarta, Indonesia</div>
+                                    <div class="col-half">
+                                        <div class="hotel__detail">Kota</div>
+                                    </div>
+                                    <div class="col-half">
+                                        <div class="result blue-txt semibold-txt pull-right">999 Hotel</div>
+                                    </div>
+                                </a>
+                            </li>*@
                 </ul>
             </div><!-- .autocomplete-preload -->
             @*<div class="autocomplete-loading">
-                <h4 class="text-center text-loading">Mencari Bandara</h4>
-            </div>
+                    <h4 class="text-center text-loading">Mencari Bandara</h4>
+                </div>
 
-            <div class="autocomplete-no-result">
-                <h4 class="text-center">Hasil tidak ditemukan</h4>
-            </div>
+                <div class="autocomplete-no-result">
+                    <h4 class="text-center">Hasil tidak ditemukan</h4>
+                </div>
 
-            <div class="autocomplete-result">
-                <ul class="result" ng-click="PageConfig.SetOverlay()"></ul>
-            </div>*@
+                <div class="autocomplete-result">
+                    <ul class="result" ng-click="PageConfig.SetOverlay()"></ul>
+                </div>*@
         </section><!-- .overlay__content -->
     </div>
     <!-- overlay hotel date -->
     <div class="overlay overlay--theme--blue overlay--datepicker overlay--datepicker-hoteldate" ng-class="{ 'active' : (PageConfig.ActiveOverlay == 'datepicker-hotel') }">
         <header class="overlay__header">
             <h3 class="overlay__title">
-                Pilih Tanggal Masuk
+                Pilih Tanggal Check in
                 <span class="overlay__close" ng-click="PageConfig.SetOverlay()">X</span>
             </h3>
         </header><!-- .overlay__header -->

@@ -33,20 +33,6 @@
         });
 
         // **********
-        // Shorten Area
-
-        // Search Detail
-        $('body .sh-desc a').on('click touchstart', function () {
-            $('body .sh-desc a').toggleClass('active');
-            $('body .sh-txt').toggleClass('opened');
-        });
-        // Filter
-        $('.overlay .filter-group--facility a').on('click touchstart', function () {
-            $('.overlay .filter-group--facility a').toggleClass('active');
-            $('.overlay .sh-list').toggleClass('opened');
-        });
-
-        // **********
         // Custom Checkbox
         $('body .checkbox').on('click', function () {
             var id = $(this).find('.check');

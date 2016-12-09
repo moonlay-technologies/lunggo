@@ -62,7 +62,7 @@ namespace Lunggo.WebAPI.ApiSrc.Autocomplete.Logic
             
             hotelAutocompleteApis.AddRange(dests);
             hotelAutocompleteApis.AddRange(zones);
-            hotelAutocompleteApis.AddRange(hotels);
+            //hotelAutocompleteApis.AddRange(hotels);
 
             return new HotelAutocompleteApiResponse
             {

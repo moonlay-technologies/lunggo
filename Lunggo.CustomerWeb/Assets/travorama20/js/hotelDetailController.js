@@ -90,8 +90,7 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
 
         //$scope.hotelSearch.destinationCheckinDate = moment(cekin, "YYYY-MM-DD").locale("id").format('LL');
         //$scope.hotelSearch.destinationCheckoutDate = moment(cekout, "YYYY-MM-DD").locale("id").format('LL');
-        
-        var maxImages = 6;
+
 
         var resource = $resource(HotelDetailsConfig.Url + '/:searchId/:hotelCd',
             {},
@@ -116,25 +115,35 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
             $scope.hotelSearch.destinationName = $scope.hotel.destinationName;
 
             var loadedImages = 0;
+            var maxImages = 6;
             var tempHotelImages = [];
 
             //Remove broken images
+            var imageCount = $scope.hotel.images.length;
+            var imageIndex = 0;
+            var finishedSlider = 0;
             $.each($scope.hotel.images, function (key, value) {
                 imageSvc.isImage(value).then(function () {
-                    if (loadedImages != maxImages) {
+                    if (loadedImages < maxImages) {
                         loadedImages++;
-                        //tempHotelImages.push("http://photos.hotelbeds.com/giata/bigger/" + value);
                         tempHotelImages.push(value);
-                    } else return false;
+                        $scope.hotel.images = tempHotelImages;
+                    }
+                    else return false;
                 }, function () {
                     return; //equivalent of continue
+                }).finally(function () {
+                    imageIndex++;
+                    if (!finishedSlider && loadedImages == 1 || (imageIndex + 1 == imageCount && loadedImages < maxImages)) {
+                        $timeout(function () { initiateSlider(); }, 0);
+                        finishedSlider = true;
+                    }
                 });
             });
-            $scope.hotel.images = tempHotelImages;
 
             // apakah code di bawah ini sudah efektif?
-            $.each($scope.hotel.room, function(roomKey, room) {
-                $.each(room.roomImages, function(imageKey, roomImage) {
+            $.each($scope.hotel.room, function (roomKey, room) {
+                $.each(room.roomImages, function (imageKey, roomImage) {
                     $scope.hotel.room[roomKey].roomImages[imageKey] = roomImage;
                 });
             });
@@ -181,9 +190,13 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
                 // **********
                 // Open Detail Room
                 $('body .dh-list').on('click', function () {
-                    var id = $(this).parent().find('.dh-list-detail');
+                    var id = $(this).parent();
+
                     id.toggleClass('active');
-                    $(this).toggleClass('active');
+                    id.siblings().removeClass('active');
+
+                    id.find('.dh-list-detail').toggleClass('active');
+                    id.siblings().find('.dh-list-detail').removeClass('active');
                 });
 
                 // **********
@@ -195,17 +208,14 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
                 });
             }, 0);
 
-           
-
-
-        }, function(error) {
+        }, function (error) {
             $log.debug(error);
 
         });
         $scope.hotelSearch.location = $scope.getLocationCode();
     }
 
-    $scope.getLocationCode = function() {
+    $scope.getLocationCode = function () {
         var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
         var locationCode = hashes[2].split('.')[1];
         return locationCode;
@@ -217,7 +227,7 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
             var description = [];
             var descriptionArray = $scope.hotel.description.split('.');
             var tempDescription = '';
-            $.each(descriptionArray, function(key, value) {
+            $.each(descriptionArray, function (key, value) {
                 value = value + '.';
                 tempDescription = tempDescription + value;
                 if (key % 3 == 0) {
@@ -234,7 +244,7 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
         if (data.error == "ERHGHD02") {
             $log.debug('searchId is expired. (' + $scope.searchId + ') \n redirecting to search with ' + $scope.searchParam)
             alert('searchId is expired. Redirecting to search.');
-            hotelSearchSvc.gotoHotelSearch($scope.searchParam);
+            hotelSearchSvc.gotoHotelSearch($scope.hotelSearch);
             //location.href = location.href = '/id/Hotel/Search/?' + $scope.searchParam;
         }
     }
@@ -245,7 +255,7 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
     //        $log.debug(tncArray);
     //    })
     //}
-    $scope.getFacilityOrder = function(facilityGroup){
+    $scope.getFacilityOrder = function (facilityGroup) {
         switch (facilityGroup) {
             case 'general': return 0;
             case 'health': return 1;
@@ -263,9 +273,9 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
 
         var facilityOrder = 0;
         var tempFacilityList = null;
-        $.each($scope.hotel.facilities, function(facilityGroup, facility) {
+        $.each($scope.hotel.facilities, function (facilityGroup, facility) {
             tempFacilityList = [[], [], [], []];
-            $.each(facility, function(index, facilityName) {
+            $.each(facility, function (index, facilityName) {
                 if (index % 4 == 0) {
                     tempFacilityList[0].push(facilityName);
                 } else if (index % 4 == 1) {
@@ -318,13 +328,13 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
           {
               query: {
                   method: 'POST',
-                  params: { },
+                  params: {},
                   isArray: false
               }
           }
       );
 
-    $scope.seeRoomDetail = function(room) {
+    $scope.seeRoomDetail = function (room) {
         $scope.selectedRoom = room;
     }
     $scope.selectFailed = false;
@@ -368,7 +378,7 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
         });
     }
 
-    var accordionFunctions = function() {
+    var accordionFunctions = function () {
         //Accordion Help Section by W3School
         $timeout(function () {
             var acc = document.getElementsByClassName("accordion");
@@ -383,15 +393,15 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
         }, 0);
     }
 
-    var hotelDetailFunctions = function(parameters) {
+    var hotelDetailFunctions = function (parameters) {
         // Open Room Detail
         $('body .room-rl').on('click', function () {
             var parent1 = $(this).closest('.room-list').find('.room-left');
             var parent2 = parent1.closest('.room-list-container li').find('.hotel-detail');
-            parent2.toggle();
+            parent2.slideToggle('.4s');
             $(this).closest('.room-list-container li').siblings().find('.hotel-detail, .option').hide();
 
-            $(this).each(function() {
+            $(this).each(function () {
                 $(this).closest('.room-list-container li').find('.room-gallery').lightSlider({
                     gallery: true,
                     item: 1,
@@ -399,14 +409,19 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
                     slideMargin: 0,
                     loop: true,
                     keyPress: true,
-                    onSliderLoad: function() {
+                    onSliderLoad: function () {
                         $('.room-gallery').removeClass('cS-hidden');
                     }
                 });
             });
 
-            $(this).closest('.room-list-container li').find('.room-list').toggleClass('active');
-            $(this).closest('.room-list-container li').siblings().find('.room-list').removeClass('active');
+            var list = $(this).closest('.room-list-container li');
+
+            list.find('.room-list').toggleClass('active');
+            list.siblings().find('.room-list').removeClass('active');
+
+            list.toggleClass('active');
+            list.siblings().removeClass('active');
         });
 
         $("body .change-room").click(function () {
@@ -474,8 +489,7 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
         }
     };
 
-    $scope.toTitleCase = function(str)
-    {
+    $scope.toTitleCase = function (str) {
         return str.replace(/\w\S*/g, function (txt) { return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase(); });
     }
 
