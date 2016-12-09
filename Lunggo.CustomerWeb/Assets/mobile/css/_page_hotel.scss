@@ -1,4 +1,5 @@
-﻿.page-hotel {
+﻿&.page-hotel.no-scroll {overflow: auto !important;}
+.page-hotel {
     /*General*/
     font-family: 'Open Sans', sans-serif;
     font-weight: 400;
@@ -588,6 +589,16 @@
     }
 
     /*Shared Page*/
+    .short-txt {
+	    height: 170px;
+        overflow: hidden;
+        &.open {height: auto;}
+    }
+    .open-txt {
+        @extend .arrow-down-yellow;
+        &.active {@extend .arrow-up-yellow;}
+    }
+
     .top-content {
         .hotel-sort-filter .hotel-sort-filter-action a,
         .hotel-detail-menu .hotel-detail-menu-action a {
@@ -614,6 +625,7 @@
         }
     }
     .dh-slider {
+        position: relative;
         button.slick-arrow {
             position: absolute;
             z-index: 1;
@@ -878,7 +890,7 @@
                     margin-right: 15px;
                 }
             }
-            .dr-info {padding-bottom: 0;
+            .dr-info {
                 &> .sh-list {
                     padding:0;
                     &> li {
@@ -1102,6 +1114,11 @@
             @import 'home_page_layout';
             min-height: auto;
             padding: 0;
+            &>.form-wrapper {
+                padding:0;
+                .top-wrap {padding: 0 15px;}
+                .ag-list {margin: 0 15px;}
+            }
         }
     }
 }

@@ -187,6 +187,9 @@
                             </div>
                         </div>
                     </div>
+                    <span ng-show="!searchDone" class="text-center">
+                        <img src="/Assets/images/load.gif" class="img-loading">
+                    </span>
                 </div>
                 <div class="menu-hotel clearfix">
                     <div class="col-left-hotel mh-title md-txt">Informasi Hotel</div>
@@ -313,9 +316,9 @@
                             <text ng-show="roomCount == maxRoomCount">sebagian</text>
                         </a>
                     </div>
-                    <span ng-show="!searchDone" class="text-center">
+                    @*<span ng-show="!searchDone" class="text-center">
                         <img src="/Assets/images/load.gif" class="img-loading">
-                    </span>
+                    </span>*@
                 </div>
                 <div class="info-hotel">
                     <div class="top-title clearfix">

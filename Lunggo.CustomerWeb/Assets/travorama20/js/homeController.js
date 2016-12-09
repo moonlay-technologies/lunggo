@@ -47,9 +47,10 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
         } else if (tab == 'flight') {
             $scope.view.showHotelSearch = false;
             $('.search-calendar-hotel').hide();
+            $('.form-child-age').hide();
         }
     }
-    
+
     $scope.placeholderFilter = function (qqq) {
         if ($scope.hotelSearch.locationDisplay == "") {
             $scope.hotelSearch.locationDisplay = "Kota, Wilayah atau Nama Hotel";
@@ -265,7 +266,7 @@ jQuery(document).ready(function ($) {
     $('body .menu-main li').click(function () {
         if ($(this).is('#header-flight')) {
             var itemF = $(this).closest('.site-header').parent();
-            
+
             itemF.parent().find('.tab-header').find('.flight').addClass('active');
             itemF.parent().find('.tab-header').find('.flight').siblings().removeClass('active');
             itemF.parent().find('#plane').addClass('active');
@@ -300,8 +301,8 @@ jQuery(document).ready(function ($) {
             $(this).closest('.site-content').parent().find('.menu-main').find('#header-hotel').addClass('active');
             $(this).closest('.site-content').parent().find('.menu-main').find('#header-hotel').siblings().removeClass('active');
         }
-});
- 
+    });
+
     //Mobile Home Page
     //$('select[name="roomclass"]').on('change', function () {
     //    var toNumb = parseInt($('select[name="roomclass"]').val());
@@ -330,7 +331,7 @@ jQuery(document).ready(function ($) {
     //    };
     //});
 });
- 
+
 //$scope.hotelSearch = {};
 //$scope.hotelSearch.searchHotelType = 'Location';
 //$scope.hotelSearch.location = "";

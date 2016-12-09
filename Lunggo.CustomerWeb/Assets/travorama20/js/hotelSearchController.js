@@ -9,14 +9,14 @@ app.controller('hotelSearchController', ['$scope', '$log', '$window', '$http', '
 
     $scope.filterDisabled = true;
     var isFirstload = true;
-    
+
     $scope.returnUrl = "/";
     $scope.bottomPage = false;
     $scope.changeSearch = {
         occupancies: [],
         location: location,
     }
-    
+
     $scope.searchDone = false;
     $scope.finishLoad = false;
 
@@ -49,7 +49,7 @@ app.controller('hotelSearchController', ['$scope', '$log', '$window', '$http', '
         $scope.hotelSearch.checkinDateDisplay = moment($scope.hotelSearch.checkinDate).locale("id").format('LL');
         $scope.hotelSearch.checkoutDate = $scope.model.searchParamObject.checkoutDate;
         $scope.hotelSearch.checkoutDateDisplay = moment($scope.hotelSearch.checkoutDate).locale("id").format('LL');
-        
+
         $scope.hotelSearch.destinationCheckinDate = $scope.model.searchParamObject.checkinDate;
         $scope.hotelSearch.destinationCheckoutDate = $scope.model.searchParamObject.checkoutDate;
         $scope.hotelSearch.nightCount = $scope.model.searchParamObject.nightCount;//new Date($scope.hotelSearch.checkoutDate).getDate() - new Date($scope.hotelSearch.checkinDate).getDate();
@@ -70,7 +70,7 @@ app.controller('hotelSearchController', ['$scope', '$log', '$window', '$http', '
                 }
             }
         }
-        
+
         $scope.changeSearch.checkinDate = $scope.model.searchParamObject.checkinDate;
         $scope.changeSearch.checkoutDate = $scope.model.searchParamObject.checkoutDate;
         $scope.changeSearch.checkinDateDisplay = $scope.hotelSearch.checkinDateDisplay;
@@ -103,7 +103,7 @@ app.controller('hotelSearchController', ['$scope', '$log', '$window', '$http', '
     $scope.maxPrice = '';
     hotelSearchSvc.initializeSearchForm($scope);
 
-    $scope.selectLocation = function(location) {
+    $scope.selectLocation = function (location) {
         hotelSearchSvc.selectLocation(location);
     }
     $scope.searchHotel = function (filter, sort, isMobile) {
@@ -113,13 +113,13 @@ app.controller('hotelSearchController', ['$scope', '$log', '$window', '$http', '
         $timeout(function () { }, 1);
 
         searchPromise().then(function (data) {
-            
+
             if (validateResponse(data) == false) {
                 return false;
             } else $scope.researching = false;
 
             if (data.searchId !== undefined) {
-            
+
                 $scope.hotelSearch.searchId = data.searchId;
                 $scope.changeSearch.searchId = data.searchId;
             }
@@ -127,7 +127,7 @@ app.controller('hotelSearchController', ['$scope', '$log', '$window', '$http', '
             $scope.hotelSearch.destinationName = data.destinationName;
             $scope.hotelSearch.locationDisplay = data.destinationName;
             if (isMobile) {
-                $scope.hotels.push.apply($scope.hotels,data.hotels);
+                $scope.hotels.push.apply($scope.hotels, data.hotels);
                 $scope.bottomPage = false;
             } else {
             $scope.hotels = data.hotels;
@@ -182,8 +182,8 @@ app.controller('hotelSearchController', ['$scope', '$log', '$window', '$http', '
         return true;
     };
 
-    $scope.hotel  = {
-        searchHotel : function () {
+    $scope.hotel = {
+        searchHotel: function () {
             hotelSearchSvc.gotoHotelSearch($scope.hotelSearch);
         }
     }
@@ -274,7 +274,7 @@ app.controller('hotelSearchController', ['$scope', '$log', '$window', '$http', '
             $scope.page++;
             $scope.bottomPage = true;
             window.scrollTo(0, document.body.scrollHeight);
-            $scope.searchHotel('','',true);
+            $scope.searchHotel('', '', true);
         }
     });
   
@@ -346,22 +346,26 @@ app.controller('hotelSearchController', ['$scope', '$log', '$window', '$http', '
         filterHotels();
     }, true);
 
-    $scope.toTitleCase = function(str)
-    {
-        return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+    $scope.toTitleCase = function (str) {
+        return str.replace(/\w\S*/g, function (txt) { return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase(); });
     }
 
-    $('.overlay .filter-group--facility a').on('click', function () { //click or click touchstart
-        $('.overlay .filter-group--facility a').toggleClass('active');
-        $('.overlay .sh-list').toggleClass('opened');
+    //$('.overlay .filter-group--facility a').on('click', function () { //click or click touchstart
+    //    $('.overlay .filter-group--facility a').toggleClass('active');
+    //    $('.overlay .sh-list').toggleClass('opened');
+    //});
+
+    //$('.overlay .filter-group--area').on('click', function () {
+    //    $('.overlay .filter-group--facility a').toggleClass('active');
+    //    $('.overlay .sh-list').toggleClass('opened');
+    //});
+
+    $('.open-txt').click(function () {
+        $(this).toggleClass('active');
+        $(this).parent().find('.short-txt').toggleClass('open');
     });
 
-    $('.overlay .filter-group--area').on('click', function () {
-        $('.overlay .filter-group--facility a').toggleClass('active');
-        $('.overlay .sh-list').toggleClass('opened');
-    });
-
-    $scope.resetButtonFilter = function() {
+    $scope.resetButtonFilter = function () {
         $scope.filter.stars = [];
         $scope.filter.zones = [];
         $scope.filter.facilities = [];
