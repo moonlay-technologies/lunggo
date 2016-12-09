@@ -62,7 +62,8 @@ namespace Lunggo.ApCommon.Hotel.Service
                         ChildCount = id.ChildCount, Class = rate.Class, Offers = rate.Offers, 
                         PaymentType = rate.PaymentType, RegsId = rate.RegsId, Price = rate.Price,
                         Type = rate.Type,NightCount = rate.NightCount,
-                        TermAndCondition = GetRateCommentFromTableStorage(rate.RateCommentsId, hotel.CheckInDate).Select(x => x.Description).ToList()
+                        TermAndCondition = GetRateCommentFromTableStorage(rate.RateCommentsId, hotel.CheckInDate).Select(x => x.Description).ToList(),
+                        RateCommentsId = rate.RateCommentsId
                     }).ToList().FirstOrDefault();
 
                 var searchResultData = GetSearchHotelResultFromCache(input.SearchId);

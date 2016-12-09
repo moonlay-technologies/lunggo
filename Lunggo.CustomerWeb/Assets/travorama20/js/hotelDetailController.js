@@ -31,11 +31,66 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
         $scope.searchId = model.searchId;
         $scope.searchParam = model.searchParam;
         $scope.loading = true;
+
         //$scope.hotelSearch.searchParamObject = model.searchParamObject;
         //$scope.hotelSearch.searchParam = model.searchParam;
 
-        hotelSearchSvc.initializeSearchForm($scope, model.searchParamObject);
+        var mydata = $scope.searchParam.split('.');
+        var location = mydata[1];
+        var cekin = mydata[2];
+        var cekout = mydata[3];
+        var nightcount = mydata[4];
+        var roomcount = mydata[5];
+        var occupancies = mydata[6].split('|');
 
+        var searchParamObject = {
+            nightCount: nightcount,
+            roomCount: roomcount,
+            checkinDate: moment(cekin, "YYYY-MM-DD"),
+            checkoutDate: moment(cekout, "YYYY-MM-DD"),
+            occupancies:[]
+        }
+
+        for (var x = 0; x < occupancies.length; x++) {
+            var occdata = occupancies[x].split('~');
+            var ages = [];
+            if (occdata.length == 3) {
+                var agedata = occdata[2].split(',');
+                for (var a = 0; a < agedata.length; a++) {
+                    ages.push(parseInt(agedata[a]));
+                }
+                for (var b = 0; b < 4 - agedata.length; b++) {
+                    ages.push(0);
+                }
+            } else {
+                ages = [0, 0, 0, 0];
+            }
+            searchParamObject.occupancies.push({
+                adultCount: occdata[0],
+                childCount: occdata[1],
+                childrenAges: occdata[1] == 0 ? [0, 0, 0, 0] : ages
+            });
+        }
+
+        for (var m = 0; m < 8 - roomcount; m++) {
+            searchParamObject.occupancies.push({
+                adultCount: 1,
+                childCount: 0,
+                childrenAges: [0, 0, 0, 0]
+            });
+        }
+        hotelSearchSvc.initializeSearchForm($scope, searchParamObject);
+        
+        
+
+        //$scope.hotelSearch.checkinDate = moment(cekin, "YYYY-MM-DD");
+        //$scope.hotelSearch.checkoutDate = moment(cekout, "YYYY-MM-DD");
+        //$scope.hotelSearch.checkinDateDisplay = moment(cekin,"YYYY-MM-DD").locale("id").format('LL');
+        //$scope.hotelSearch.checkoutDateDisplay = moment(cekout, "YYYY-MM-DD").locale("id").format('LL');
+
+        //$scope.hotelSearch.destinationCheckinDate = moment(cekin, "YYYY-MM-DD").locale("id").format('LL');
+        //$scope.hotelSearch.destinationCheckoutDate = moment(cekout, "YYYY-MM-DD").locale("id").format('LL');
+        
         var maxImages = 6;
 
         var resource = $resource(HotelDetailsConfig.Url + '/:searchId/:hotelCd',

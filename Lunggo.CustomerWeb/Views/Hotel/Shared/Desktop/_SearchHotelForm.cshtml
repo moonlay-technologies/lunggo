@@ -1,4 +1,4 @@
-﻿<form class="hotel-form" name="hotel-form" @*ng-submit="FlightSearchForm.Submit()"*@ novalidate>
+﻿<form class="hotel-form" name="hotel-form" novalidate>
     <div class="th-form clearfix">
         <div class="clearfix">
             <div class="form-group form__hotel col-4">
@@ -40,6 +40,7 @@
                             </div>
                         </div>
                     </div>*@
+
                 <div class="form-group form__night quarter">
                     <div class="field-container">
                         <div class="form-control form-night">
@@ -99,9 +100,9 @@
                         <div class="form-control select-age">
                             <div class="col-6"><span class="sm-txt grey-txt">Usia Anak {{$index}} (th)</span></div>
                             <div class="col-4 input-hotel xlg-txt right-txt semibold-txt darkgrey-txt">{{hotelSearch.occupancies[n].childrenAges[child]}}</div>
-                            <div class="option" ng-model="hotelSearch.nightCount">
-                                <span data-value="" ng-repeat="nightCount in hotelSearch.nightrange track by $index"
-                                      ng-click="hotelSearch.nightCount = nightCount">{{nightCount}}</span>
+                            <div class="option" ng-model="hotelSearch.occupancies[n].childrenAges[child]">
+                                <span data-value="" ng-repeat="childAge in hotelSearch.childagerange" @*hotelSearch.occupancies[n].childrenAges = [0,0,0,0]; *@
+                                      ng-click="(hotelSearch.occupancies[n].childrenAges[child] = childAge)" ng-init="initChildrenAges(n)">{{childAge}}</span>
                             </div>
                         </div>
                     </div>

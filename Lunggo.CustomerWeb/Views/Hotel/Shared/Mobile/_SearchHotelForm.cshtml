@@ -85,7 +85,7 @@
                                 <div class="col-6 blue-txt semibold-txt right-txt">Usia Anak ({{$index+1}}) :</div>
                                 <div class="col-4">
                                     <select class="form-control" name="agelist" ng-model="hotelSearch.occupancies[n].childrenAges[child]">
-                                        <option ng-repeat="age in hotelSearch.childagerange" value="{{age}}" ng-init="hotelSearch.occupancies[n].childrenAges = hotelSearch.occupancies[n].childrenAges || [0,0,0,0];" ng-selected="age == hotelSearch.occupancies[n].childrenAges[child] || age == 0"
+                                        <option ng-repeat="age in hotelSearch.childagerange" value="{{age}}" ng-init="initChildrenAges(n)" ng-selected="age == hotelSearch.occupancies[n].childrenAges[child] || age == 0"
                                                 ng-click="hotelSearch.occupancies[n].childrenAges[child] = age">
                                             {{age}} Tahun
                                         </option>
