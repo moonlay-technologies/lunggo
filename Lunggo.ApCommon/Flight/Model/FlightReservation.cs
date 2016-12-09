@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Lunggo.ApCommon.Flight.Constant;
 using System;
 
@@ -28,5 +29,10 @@ namespace Lunggo.ApCommon.Flight.Model
         }
 
         public List<FlightItinerary> Itineraries { get; set; }
+
+        public override decimal GetTotalSupplierPrice()
+        {
+            return Itineraries.Sum(i => i.Price.Supplier);
+        }
     }
 }

@@ -47,5 +47,7 @@ namespace Lunggo.ApCommon.Product.Model
         public User User { get; set; }
         public ReservationState State { get; set; }
         public List<Pax> Pax { get; set; }
+
+        public abstract decimal GetTotalSupplierPrice();
     }
 }

@@ -7,9 +7,10 @@ using Lunggo.ApCommon.Campaign.Model;
 using System;
 using Lunggo.ApCommon.Constant;
 using Lunggo.ApCommon.Flight.Service;
-
+using Lunggo.ApCommon.Hotel.Service;
 using Lunggo.ApCommon.Identity.Users;
 using Lunggo.ApCommon.Payment.Model;
+using Lunggo.ApCommon.Product.Model;
 using Lunggo.Framework.Http;
 
 namespace Lunggo.ApCommon.Campaign.Service
@@ -43,6 +44,19 @@ namespace Lunggo.ApCommon.Campaign.Service
                 response.Email = user.Identity.GetEmail();
             response.VoucherCode = voucherCode;
 
+            var contact = Contact.GetFromDb(rsvNo);
+            if (contact == null)
+            {
+                response.VoucherStatus = VoucherStatus.ReservationNotFound;
+                return response;
+            }
+
+            if (!IsPhoneAndEmailEligibleInCache(voucherCode, contact.CountryCallingCode + contact.Phone, contact.Email))
+            {
+                response.VoucherStatus = VoucherStatus.EmailNotEligible;
+                return response;
+            }
+
             var paymentDetails = PaymentDetails.GetFromDb(rsvNo);
             if (paymentDetails == null)
             {
@@ -69,7 +83,15 @@ namespace Lunggo.ApCommon.Campaign.Service
                 };
             }
 
-            if (voucher.MaxBudget.HasValue && (voucher.MaxBudget - voucher.UsedBudget < response.TotalDiscount))
+            ReservationBase rsv;
+            if (rsvNo.StartsWith("1"))
+                rsv = FlightService.GetInstance().GetReservation(rsvNo);
+            else
+                rsv = HotelService.GetInstance().GetReservation(rsvNo);
+
+            var cost = rsv.GetTotalSupplierPrice();
+            if (voucher.MaxBudget.HasValue &&
+                (voucher.MaxBudget - voucher.UsedBudget < cost - paymentDetails.FinalPriceIdr*0.97M))
             {
                 response.VoucherStatus = VoucherStatus.NoBudgetRemaining;
                 return response;
@@ -84,11 +106,15 @@ namespace Lunggo.ApCommon.Campaign.Service
             var response = ValidateVoucherRequest(rsvNo, voucherCode);
             if (response.VoucherStatus == VoucherStatus.Success)
             {
-                var isUseBudgetSuccess = UseBudget(voucherCode, response.TotalDiscount);
+                var isUseBudgetSuccess = !rsvNo.StartsWith("2") || UseHotelBudget(voucherCode, rsvNo);
                 var isVoucherDecrementSuccess = VoucherDecrement(voucherCode);
                 if (isUseBudgetSuccess && isVoucherDecrementSuccess)
+                {
                     response.VoucherStatus = VoucherStatus.Success;
-                else 
+                    var contact = Contact.GetFromDb(rsvNo);
+                    SavePhoneAndEmailInCache(voucherCode, contact.CountryCallingCode + contact.Phone, contact.Email);
+                }
+                else
                     response.VoucherStatus = VoucherStatus.UpdateError;
             }
             return response;
@@ -172,11 +198,11 @@ namespace Lunggo.ApCommon.Campaign.Service
                 return false;
             }
         }
-        private bool UseBudget(string voucherCode, decimal discount)
+        private bool UseHotelBudget(string voucherCode, string rsvNo)
         {
             try
             {
-                return UpdateDb.UseBudget(voucherCode, discount);
+                return UpdateDb.UseHotelBudget(voucherCode, rsvNo);
             }
             catch (Exception)
             {
