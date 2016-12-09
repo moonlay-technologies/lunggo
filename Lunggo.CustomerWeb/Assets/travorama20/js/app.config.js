@@ -17,7 +17,7 @@ app.run(function ($rootScope) {
             return returnValue;
         }
         for (var i = startFrom; i <= max; i++) {
-            returnValue.push(i)
+            returnValue.push(i);
         }
         return returnValue;
     };
