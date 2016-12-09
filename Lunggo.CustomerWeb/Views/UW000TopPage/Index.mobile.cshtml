@@ -25,27 +25,46 @@
 
 @section PageJS {
     <script>
-        $('.carousel-inner').slick({
-            autoplay: true,
-            autoplaySpeed: 2500,
-            dots: true,
-            prevArrow: '<button type="button" class="slick-prev hidden">Back</button>',
-            nextArrow: '<button type="button" class="slick-next hidden">Next</button>'
+        jQuery(document).ready(function ($) {
+            //Harbolnas modal box
+            $(window).load(function () {
+                $('#myModalMobile').modal('show');
+            });
+
+            // slider
+            $('.carousel-inner').slick({
+                autoplay: true,
+                autoplaySpeed: 2500,
+                dots: true,
+                prevArrow: '<button type="button" class="slick-prev hidden">Back</button>',
+                nextArrow: '<button type="button" class="slick-next hidden">Next</button>'
+            });
         });
     </script>
     <script src="/Assets/mobile/js/HomeController.js"></script>
 }
 
 <div class="page-loading form-container" ng-class="{'page-loaded' : PageConfig.Loaded}">
+    <!-- Modal Box Harbolnas -->
+    <div class="modal fade" id="myModalMobile">
+        <div class="modal-box">
+            <img src="/Assets/images/campaign/Harbolnas2016/Harbolnas_popup_mobile.jpg" alt="Harbolnas 2016" />
+            <a class="custom-close close" data-dismiss="modal"></a>
+        </div>
+    </div>
+
     <div class="carousel-inner" role="listbox">
         <div class="item active">
-            <a href="http://onelink.to/travoramaapp"><img src="/Assets/images/banner/download-app.jpg" alt="Download Applikasi Travorama!" /></a>
+            <a href="/id/Promo/Harbolnas2016"><img src="/Assets/images/campaign/Harbolnas2016/Harbolnas_banner-mobile.jpg" alt="Harbolnas 2016" /></a>
+        </div>
+        <div class="item">
+            <a href="/id/Promo/MatahariMall"><img src="/Assets/images/campaign/MatahariMall2016/MatahariMall-slider-mobile.jpg" alt="Matahari Mall" /></a>
         </div>
         <div class="item">
             <a href="/id/Promo/OnlineRevolution"><img src="/Assets/images/campaign/OnlineRevolution2016/OnlineRevolution-slider-mobile.jpg" alt="Online Revolution" /></a>
         </div>
         <div class="item">
-            <a href="/id/Promo/MatahariMall"><img src="/Assets/images/campaign/MatahariMall2016/MatahariMall-slider-mobile.jpg" alt="Matahari Mall" /></a>
+            <a href="http://onelink.to/travoramaapp"><img src="/Assets/images/banner/download-app.jpg" alt="Download Applikasi Travorama!" /></a>
         </div>
     </div>
     <div class="form-wrapper">
@@ -55,7 +74,7 @@
                     <div class="form-group form__origin">
                         <div class="title-destination">Asal</div>
                         <p class="form-control" ng-click="FlightSearchForm.AutoComplete.Reset('departure'); PageConfig.SetOverlay('airport-select')">
-                            <span class="code-airport">{{FlightSearchForm.AirportOrigin.Code}}</span><br/><span class="city">{{FlightSearchForm.AirportOrigin.City}}</span>
+                            <span class="code-airport">{{FlightSearchForm.AirportOrigin.Code}}</span><br /><span class="city">{{FlightSearchForm.AirportOrigin.City}}</span>
                         </p>
                     </div>
                 </div>
@@ -63,7 +82,7 @@
 
                     <div class="flip-container" ng-click="flip()">
                         <a class="flip" href="#"><span class="icon-flip"></span></a>
-                    
+
                     </div>
                 </div>
                 <div class="col-xs-5">
@@ -119,7 +138,7 @@
                         <div class="field-wrapper">
                             <p class="form-control" ng-click="FlightSearchForm.PassengerPicker.Reset('adult'); PageConfig.SetOverlay('passenger-select')">{{FlightSearchForm.Passenger[0]}} Dewasa</p>
                             @*<p class="form-control" ng-show="FlightSearchForm.Passenger[1] > 0" ng-click="FlightSearchForm.PassengerPicker.Reset('children'); PageConfig.SetOverlay('passenger-select')">, {{FlightSearchForm.Passenger[1]}} Anak</p>
-                            <p class="form-control" ng-show="FlightSearchForm.Passenger[2] > 0" ng-click="FlightSearchForm.PassengerPicker.Reset('infant'); PageConfig.SetOverlay('passenger-select')">, {{FlightSearchForm.Passenger[2]}} Bayi</p>*@
+                                <p class="form-control" ng-show="FlightSearchForm.Passenger[2] > 0" ng-click="FlightSearchForm.PassengerPicker.Reset('infant'); PageConfig.SetOverlay('passenger-select')">, {{FlightSearchForm.Passenger[2]}} Bayi</p>*@
                         </div>
                     </div>
                     <div class="col-custom-logo icon-child"></div>

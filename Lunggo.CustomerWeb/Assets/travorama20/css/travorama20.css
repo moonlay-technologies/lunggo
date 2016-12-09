@@ -912,6 +912,20 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
       .accordion-wrapper .accordion-content.show > ol > li {
         margin-bottom: 10px; }
 
+/*Modal Box*/
+.modal-box {
+  background: url(/Assets/images/campaign/Harbolnas2016/Harbolnas_popup.jpg) no-repeat;
+  min-height: 520px;
+  width: 780px;
+  left: 50%;
+  top: 50%;
+  position: absolute;
+  transform: translate(-50%, -50%); }
+  .modal-box > .custom-close {
+    width: 30px;
+    height: 30px;
+    margin: 17px 24px 0 0; }
+
 /*--------------------*/
 /* imports */
 @media (max-width: 1199px) {

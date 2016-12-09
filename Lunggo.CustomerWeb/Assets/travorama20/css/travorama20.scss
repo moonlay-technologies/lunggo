@@ -523,6 +523,22 @@ border:1px solid #CE9A01;-webkit-box-shadow: #FFF563 0px 1px 0px inset;-moz-box-
     }
 }
 
+/*Modal Box*/
+.modal-box {
+    background: url(/Assets/images/campaign/Harbolnas2016/Harbolnas_popup.jpg) no-repeat;
+    min-height: 520px;
+    width: 780px;
+    left: 50%;
+    top: 50%;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    &>.custom-close {
+        width: 30px;
+        height: 30px;
+        margin: 17px 24px 0 0;
+    }
+}
+
 /*--------------------*/
 /* imports */
 @import 'screenSmall';
