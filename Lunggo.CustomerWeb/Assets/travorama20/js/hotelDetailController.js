@@ -36,7 +36,6 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
 
         hotelSearchSvc.initializeSearchForm($scope, model.searchParamObject);
 
-        var maxImages = 6;
 
         var resource = $resource(HotelDetailsConfig.Url + '/:searchId/:hotelCd',
             {},
@@ -61,21 +60,31 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
             $scope.hotelSearch.destinationName = $scope.hotel.destinationName;
 
             var loadedImages = 0;
+            var maxImages = 6;
             var tempHotelImages = [];
 
             //Remove broken images
+            var imageCount = $scope.hotel.images.length;
+            var imageIndex = 0;
+            var finishedSlider = 0;
             $.each($scope.hotel.images, function (key, value) {
                 imageSvc.isImage(value).then(function () {
-                    if (loadedImages != maxImages) {
+                    if (loadedImages < maxImages) {
                         loadedImages++;
-                        //tempHotelImages.push("http://photos.hotelbeds.com/giata/bigger/" + value);
                         tempHotelImages.push(value);
-                    } else return false;
+                        $scope.hotel.images = tempHotelImages;
+                    }
+                    else return false;
                 }, function () {
                     return; //equivalent of continue
+                }).finally(function () {
+                    imageIndex++;
+                    if (!finishedSlider && loadedImages == 1 || (imageIndex + 1 == imageCount && loadedImages < maxImages)) {
+                        $timeout(function () { initiateSlider(); }, 0);
+                        finishedSlider = true;
+                    }
                 });
             });
-            $scope.hotel.images = tempHotelImages;
 
             // apakah code di bawah ini sudah efektif?
             $.each($scope.hotel.room, function(roomKey, room) {
@@ -94,7 +103,6 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
             //setTncDisplay();
             setDescriptionDisplay();
             $timeout(function() { hotelDetailFunctions(); }, 0);
-            //$timeout(function () { initiateSlider(); }, 0);
             $timeout(function () {  accordionFunctions(); }, 0);
 
             $log.debug($scope.hotel);
