@@ -128,9 +128,10 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
                     } else return false;
                 }, function () {
                     return; //equivalent of continue
+                }).finally(function() {
+                    $scope.hotel.images = tempHotelImages;
                 });
             });
-            $scope.hotel.images = tempHotelImages;
 
             // apakah code di bawah ini sudah efektif?
             $.each($scope.hotel.room, function(roomKey, room) {
@@ -149,7 +150,7 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
             //setTncDisplay();
             setDescriptionDisplay();
             $timeout(function() { hotelDetailFunctions(); }, 0);
-            //$timeout(function () { initiateSlider(); }, 0);
+            $timeout(function () { initiateSlider(); }, 0);
             $timeout(function () {  accordionFunctions(); }, 0);
 
             $log.debug($scope.hotel);
