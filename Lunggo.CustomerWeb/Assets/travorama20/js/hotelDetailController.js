@@ -187,7 +187,7 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
         if (data.error == "ERHGHD02") {
             $log.debug('searchId is expired. (' + $scope.searchId + ') \n redirecting to search with ' + $scope.searchParam)
             alert('searchId is expired. Redirecting to search.');
-            hotelSearchSvc.gotoHotelSearch($scope.searchParam);
+            hotelSearchSvc.gotoHotelSearch($scope.hotelSearch);
             //location.href = location.href = '/id/Hotel/Search/?' + $scope.searchParam;
         }
     }

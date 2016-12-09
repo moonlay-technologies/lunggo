@@ -104,7 +104,7 @@
                     <div class="slider-container clearfix">
                         <div class="slider clearfix">
                             <ul id="image-gallery" class="gallery list-unstyled cS-hidden">
-                                <li data-thumb="{{image}}" alt-image ng-repeat="image in hotel.images">
+                                <li data-thumb="{{image}}" alt-image ng-repeat="image in hotel.images track by $index">
                                     <div test="{{image}}" alt-image style="background-image: url({{image}}); width: 100%; height: 590px; background-size: cover; background-position: center center;"></div>
                                 </li>
                             </ul>
@@ -290,7 +290,7 @@
                                                 <div class="hd-title blue-txt">Ketentuan Kamar</div>
                                                 <div class="hd-txt">
                                                     <ul class="blue-list">
-                                                        <li ng-repeat="tnc in room.rate.tnc">{{tnc}}</li>
+                                                        <li ng-repeat="tnc in room.rate.tnc track by $index">{{tnc}}</li>
                                                     </ul>
                                                 </div>
                                             </li>
@@ -334,9 +334,9 @@
                                         </div>
                                     </div>
                                     <div class="col-8">
-                                        <div class="ih-right quarter clearfix" ng-repeat="facilityList in facilities.facilityList">
+                                        <div class="ih-right quarter clearfix" ng-repeat="facilityList in facilities.facilityList track by $index">
                                             <ul class="blue-list">
-                                                <li ng-repeat="facilityName in facilityList">{{facilityName}}</li>
+                                                <li ng-repeat="facilityName in facilityList track by $index">{{facilityName}}</li>
                                             </ul>
                                         </div>
                                     </div>
