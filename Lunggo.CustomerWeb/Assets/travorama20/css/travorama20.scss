@@ -22,7 +22,7 @@ $mobile-app: '../images/mobile-app.png';
 /*--------------------*/
 /* mixins */
 @mixin letter-spacing($value){
-    letter-spacing:$value;    
+    letter-spacing:$value;
 }
 
 @mixin border-radius($radius){
@@ -269,20 +269,20 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         }
     }
     .location-search {padding:10px; height:475px; overflow:auto;
-        .autocomplete-pre {
-            .text-pre {display:none;}
-            .text-loading {display:none;}
-        }
-        .autocomplete-no-result {display:none;}
-        .autocomplete-result {
-            ul {margin:0; padding:0;
-                li {padding:10px; list-style:none; cursor:pointer;
-                    &:hover {background:$color-main-blue;}
+            .autocomplete-pre {
+                .text-pre {display:none;}
+                .text-loading {display:none;}
+            }
+            .autocomplete-no-result {display:none;}
+            .autocomplete-result {
+                ul {margin:0; padding:0;
+                    li {padding:10px; list-style:none; cursor:pointer;
+                        &:hover {background:$color-main-blue;}
+                    }
+                    li+li {border-top:$border-default;}
                 }
-                li+li {border-top:$border-default;}
             }
         }
-    }
     .hotel-location-search {height:475px; overflow:auto;
         .hotel-autocomplete-pre {
             .text-pre {display:none;}
@@ -324,7 +324,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     background-repeat: no-repeat; 
     background-size: cover; 
     background-position: center center;
-}
+    }
 
 .img-md {
     width: 120px;
@@ -594,6 +594,22 @@ border:1px solid #CE9A01;-webkit-box-shadow: #FFF563 0px 1px 0px inset;-moz-box-
                 &>li {margin-bottom: 10px;}
             }
         }
+    }
+}
+
+/*Modal Box*/
+.modal-box {
+    background: url(/Assets/images/campaign/Harbolnas2016/Harbolnas_popup.jpg) no-repeat;
+    min-height: 520px;
+    width: 780px;
+    left: 50%;
+    top: 50%;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    &>.custom-close {
+        width: 30px;
+        height: 30px;
+        margin: 17px 24px 0 0;
     }
 }
 

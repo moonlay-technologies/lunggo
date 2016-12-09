@@ -1,0 +1,175 @@
+﻿body.page-promo.promo-harbolnas-mobile-app {padding-top:0;}
+.promo-harbolnas {
+    letter-spacing: normal;
+    /*Desktop*/
+	.top-section a {
+        background-image: url("/Assets/images/campaign/Harbolnas2016/Harbolnas_landingpage.jpg");
+        display: block;
+        width: 100%;
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        min-height: 520px;
+	}
+	.bottom-section {
+		margin: 40px 0 60px;
+		&>.container {
+		    max-width: none;
+		    padding: 0 6px;
+		}
+        .section-title {
+            font-size: 23px;
+            font-weight: 600;
+            .blue-text {font-weight: 700;}
+            &:after {
+                background: url(/Assets/images/yellow-stripe.png) center bottom no-repeat;
+                height: 18px;
+                content: '';
+                display: block;
+                width: 100%;
+                background-size: 30%;
+            }
+        }
+	}
+    .content-banner {
+		font-size: 11px;
+		margin-top: 50px;
+		.promo-desc {
+            font-weight: 600;
+            line-height: 24px;
+		}
+		.booking, .tnc, .how-to {margin-top: 25px;}
+        ol.list-number {
+		    list-style: none;
+    	    counter-reset: main-number;
+		    padding-left: 25px;
+            margin: 6px 0;
+    	    &>li {
+			    position: relative;
+    		    line-height: 24px;
+    		    &:before{
+				    content: counter(main-number);
+                    counter-increment: main-number;
+                    position: absolute;
+                    text-align: center;
+                    -webkit-border-radius: 18px;
+                    -moz-border-radius: 18px;
+                    -ms-border-radius: 18px;
+                    border-radius: 18px;
+                    font-size: 8px;
+                    font-weight: 600;
+                    width: 18px;
+                    height: 18px;
+                    background: #1eafe4;
+                    margin-left: -26px;
+                    color: #fff;
+                    top: 2px;
+                    line-height: 18px;
+    		    }
+    	    }
+	    }
+		.title-italic {
+			font-style: italic;
+			font-size: 14px;
+			font-weight: 700;
+            margin-bottom: 15px;
+		}
+	}
+	.blue-text {color: #1eafe4;}	
+	.bold-title {
+		font-weight: 700;
+		line-height: 24px;
+	}
+
+    /*Mobile*/
+    img.img-promo {
+        display: block;
+        width: 100%;
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        min-height: 110px;
+        text-align: center;
+    }
+    .tab-promo {
+        .section-title {
+            font-size: 16px;
+            font-weight: 600;
+            line-height: 18px;
+            margin: 10px 0 20px;
+            padding: 0;
+            .blue-text {font-weight: 700;}
+            &:after {
+                background: url(/Assets/images/yellow-stripe.png) center bottom no-repeat;
+                height: 18px;
+                content: '';
+                display: block;
+                width: 100%;
+                background-size: 50%;
+                margin: 0 auto;
+            }
+        }
+        ol.list-number {
+		    list-style: none;
+    	    counter-reset: main-number;
+		    padding-left: 25px;
+            margin: 6px 0;
+    	    &>li {
+			    position: relative;
+    		    line-height: 15px;
+                margin-bottom: 12px;
+    		    &:before{
+				    content: counter(main-number);
+                    counter-increment: main-number;
+                    position: absolute;
+                    text-align: center;
+                    -webkit-border-radius: 18px;
+                    -moz-border-radius: 18px;
+                    -ms-border-radius: 18px;
+                    border-radius: 18px;
+                    font-size: 8px;
+                    font-weight: 600;
+                    width: 18px;
+                    height: 18px;
+                    background: #1eafe4;
+                    margin-left: -26px;
+                    color: #fff;
+                    top: 2px;
+                    line-height: 18px;
+    		    }
+    	    }
+	    }
+        .tab-detail.nav-tabs {border: none;
+            &>li {padding: 0;
+                &.active > a, & > a {
+                    border-radius: 0;
+                    border: none;
+                    margin: 0;
+                    text-align: center;
+                    font-size: 10px;
+                    font-weight: 700;
+                    padding: 8px;
+                    height: 42px;
+                    line-height: 12px;
+                }
+                & > a {
+                    color: #f9f9f9;
+                    background: #028ec3;
+                }
+                &.active > a {
+                    color: #028ec3;
+                    background: #f9f9f9;
+                }
+            }
+
+        }
+        &>.tab-content {padding: 20px 10px 10px;
+            .price-detail-mobile {
+                & > .flight-title {
+                    padding: 10px 0;
+                    margin-bottom: 10px;
+                }
+            }
+        }
+    }
+}
