@@ -1720,6 +1720,8 @@ file : /Assets/travorama20/css/_page_index.scss
           .page-index .section-search .search-form .tab-content .tab-hotel .form-hotel-checkout small, .page-index .section-search .search-form .tab-content .tab-hotel .form-hotel-checkin small {
             display: block;
             font-weight: normal; }
+          .page-index .section-search .search-form .tab-content .tab-hotel .form-hotel-checkout span.grey-txt, .page-index .section-search .search-form .tab-content .tab-hotel .form-hotel-checkin span.grey-txt {
+            font-weight: 400; }
           .page-index .section-search .search-form .tab-content .tab-hotel .form-hotel-checkout .date, .page-index .section-search .search-form .tab-content .tab-hotel .form-hotel-checkin .date {
             float: left;
             font-size: 42px;
@@ -5540,7 +5542,7 @@ file: /Assets/travorama20/css/_page_flight.scss
             padding-left: 15px; }
           .page-hotel .travorama-hotel .search-list .search-list-result .col-right-result .hotel-list:hover {
             box-shadow: 3px 4px 10px #337ab7;
-            transition: 0.4s; }
+            transition: .4s; }
         .page-hotel .travorama-hotel .search-list .search-list-result .col-right-result .facility {
           text-align: right; }
         .page-hotel .travorama-hotel .search-list .search-list-result .col-right-result .location {

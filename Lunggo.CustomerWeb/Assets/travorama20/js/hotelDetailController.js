@@ -1,5 +1,5 @@
 ﻿// home controller
-app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource', '$timeout', 'hotelSearchSvc', function ($scope, $log, $http, $resource, $timeout, hotelSearchSvc) {
+app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource', '$timeout', 'hotelSearchSvc', 'imageSvc', function ($scope, $log, $http, $resource, $timeout, hotelSearchSvc, imageSvc) {
 
     $scope.destinationName = "";
     $scope.hotel = {};
@@ -23,6 +23,9 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
     $scope.loc = loc;
     $scope.selectedRoom = '';
     $scope.loading = false;
+
+    
+
     $scope.init = function (model) {
         $log.debug(model);
         $scope.searchId = model.searchId;
@@ -101,6 +104,8 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
             }
         );
 
+
+
         resource.query({}, {}).$promise.then(function (data) {
             $scope.loading = false;
             validateResponse(data);
@@ -112,19 +117,24 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
 
             var loadedImages = 0;
             var tempHotelImages = [];
+
+            //Remove broken images
             $.each($scope.hotel.images, function (key, value) {
-                loadedImages++;
-                //tempHotelImages.push("http://photos.hotelbeds.com/giata/bigger/" + value);
-                tempHotelImages.push(value);
-                if (loadedImages == maxImages) {
-                    return false;
-                }
+                imageSvc.isImage(value).then(function () {
+                    if (loadedImages != maxImages) {
+                        loadedImages++;
+                        //tempHotelImages.push("http://photos.hotelbeds.com/giata/bigger/" + value);
+                        tempHotelImages.push(value);
+                    } else return false;
+                }, function () {
+                    return; //equivalent of continue
+                });
             });
             $scope.hotel.images = tempHotelImages;
 
+            // apakah code di bawah ini sudah efektif?
             $.each($scope.hotel.room, function(roomKey, room) {
                 $.each(room.roomImages, function(imageKey, roomImage) {
-                    //$scope.hotel.room[roomKey].roomImages[imageKey] = "http://photos.hotelbeds.com/giata/" + roomImage;
                     $scope.hotel.room[roomKey].roomImages[imageKey] = roomImage;
                 });
             });
@@ -139,7 +149,7 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
             //setTncDisplay();
             setDescriptionDisplay();
             $timeout(function() { hotelDetailFunctions(); }, 0);
-            $timeout(function () { initiateSlider(); }, 0);
+            //$timeout(function () { initiateSlider(); }, 0);
             $timeout(function () {  accordionFunctions(); }, 0);
 
             $log.debug($scope.hotel);

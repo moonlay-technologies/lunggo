@@ -27,6 +27,17 @@
                 }
             }
         }
+        @media only screen and (min-width: 414px) and (max-height: 736px) {
+            .hotel-list .img-list {height: 154px;}
+        } @media only screen and (min-width: 375px) and (max-height: 667px) {
+            .hotel-list .img-list {height: 144px;}
+        } @media only screen and (min-width: 320px) and (max-height: 640px) {
+            .hotel-list .img-list {height: 144px;}
+        } @media only screen and (max-width: 320px) and (height: 568px) {
+            .hotel-list .img-list {height: 134px;}
+        } @media only screen and (max-width: 320px) and (height: 480px) {
+            .hotel-list .img-list {height: 134px;}
+        }
     }
 }
 
@@ -48,3 +59,4 @@
     .sh-open {@extend .arrow-down-yellow;}
     .sh-close {@extend .arrow-up-yellow;}
 }
+

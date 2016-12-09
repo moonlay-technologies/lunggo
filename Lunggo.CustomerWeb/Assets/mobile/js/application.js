@@ -474,7 +474,7 @@ if (typeof (angular) == 'object') {
                 if (position == 'search-single' || position == 'search-return') {
                     $rootScope.FlightSearchForm.DepartureDate = new Date($rootScope.FlightSearchForm.DepartureDate);
                     $rootScope.FlightSearchForm.ReturnDate = new Date($rootScope.FlightSearchForm.ReturnDate);
-                } 
+                }
 
                 $('.ui-datepicker').datepicker({
 
@@ -894,7 +894,6 @@ if (typeof (angular) == 'object') {
             $rootScope.FlightSearchForm.ReturnDate = returnDate;
         }
     });//app.run
-
 }
 
 // --------------------
