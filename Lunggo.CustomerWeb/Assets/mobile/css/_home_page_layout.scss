@@ -1,6 +1,5 @@
 ﻿.form-wrapper {
     margin: 0 0 15px;
-    padding: 20px 12px;
     min-height: 100%;
     background: none; 
     border: 0;
@@ -86,17 +85,15 @@
                 background-position-x: 80%;
             }
         }
-        .middle-form {
-            margin-bottom: 24px;
-            .form-group {
-                position: relative;
-            }
-        }
+        .middle-form .form-group {position: relative;}
         .top-form {
             max-width: 300px;
             margin: 0px auto;
         }
-        .form__departure, .form__return, .form__roundtrip, .form__passenger, .form__flightclass {
+        .form__submit {margin-top: 24px;}
+        .form__departure, .form__return, .form__roundtrip, .form__passenger, 
+        .form__flightclass, .form__hotel, .form__date, .form__time, .form__visitor, 
+        .form__room {
             p, p.form-control, select.form-control {
                 @include appearance(none);
                 font-size:13px;
@@ -107,7 +104,7 @@
                 box-shadow: none;
                 @include border-radius(0);
                 display: inline;
-                background: $color-white;
+                background: #fff;
                 span {float:right;}
             }
         }
@@ -119,15 +116,25 @@
             border-bottom: $border-form;
             padding: 21px 0;
             margin-left: 30px;
-            &.form-adult, &.form-child, &.form-infant {
+            &.form-adult, &.form-child, &.form-infant,
+            &.form-v-adult, &.form-v-child {
                 border-bottom: none;
                 margin-left: 0;
             }
-            &.form-adult, &.form-child {
-                padding: 0 10px 0 30px;
+            &.form-adult, &.form-child, &.form-v-adult {
+                padding: 0 10px 0 28px;
             }
-            &.form-infant {
-                padding: 0 0 0 30px;
+            &.form-infant, &.form-v-child {
+                padding: 0 0 0 28px;
+            }
+            &.form-v-adult, &.form-v-child {
+                .field-wrapper {
+                    padding: 10px 0;
+                    select.form-control {
+                        text-align: center;
+                        text-align-last: center;
+                    }
+                }
             }
             p, select {
                 cursor: pointer;
@@ -136,6 +143,33 @@
                 padding: 21px 0;
                 border-bottom: 1px solid #dddddd;
                 text-align: center;
+                &.form-adult:before {
+                    background-size: 40%;
+                    background-repeat: no-repeat;
+                    content: '';
+                    display: inline-block;
+                    vertical-align: middle;
+                    position: absolute;
+                    left: 0;
+                    @include size(41px, 57px);
+                    background-image: url(/Assets/mobile/images/adult.png);
+                    margin-left: 5px;
+                }
+                &.form-child:before {
+                    background-size: 40%;
+                    background-repeat: no-repeat;
+                    content: '';
+                    display: inline-block;
+                    vertical-align: middle;
+                    position: absolute;
+                    left: 0;
+                    @include size(42px, 53px);
+                    background-image: url(/Assets/mobile/images/child.png);
+                }
+            }
+            select[name='roomclass'], select[name='nightclass']{
+                text-align: right;
+                text-align-last: right;
             }
         }
         .flip-container {
@@ -199,8 +233,185 @@
                 }
             }
         }
+        .form__slider {margin-top: 20px;
+            .sa-title {font-size: 13px;}
+            .range-title {
+                .range-max {float:right;}
+            }
+            .ui-slider-horizontal {
+                margin: 10px 0;
+                background: $color-main-blue;
+                border: none !important;
+                border-radius: 0;
+                height: 9px;
+                .ui-slider-range {
+                    background: #ecf0f4;
+                    border-radius: 0;
+                }
+                .ui-slider-handle {
+                    -webkit-border-radius: 1px 1px 5px #666;
+                    -moz-border-radius: 1px 1px 5px #666;
+                    -ms-border-radius: 1px 1px 5px #666;
+                    box-shadow: 1px 1px 5px #666;
+                    width: 16px;
+                    height: 16px;
+                    background: #ffffff;
+                    border: 0;
+                    @include border-radius(16px);
+                    &:after {
+                        content: '';
+                        width: 10px;
+                        height: 10px;
+                        display: inline-block;
+                        background: #2fb4e6;
+                        @include border-radius(10px);
+                        margin: 3px;
+                    }
+                }
+            }
+        }
+        .form__visitor {
+            .mid-title {padding: 10px 0;}
+            select[name='adultclass'], select[name='childclass'] {background: #ecf0f4;
+                option {background: #fff;}
+            }
+            .age-child {
+                background: #ecf0f4;
+                margin-top: 20px;
+                padding: 10px 0 20px;
+                font-size: 13px;
+                &:before {
+                    content: '';
+                    position: absolute;
+                    margin-top: -30px;
+                    right: 0;
+                    margin-right: 60px;
+                    display: inline-block;
+                    width: 0;
+                    height: 0;
+                    margin-left: 2px;
+                    vertical-align: middle;
+                    border-bottom: 20px dashed #ecf0f4;
+                    border-right: 20px solid #fff;
+                    border-left: 20px solid #fff;
+                }
+                .ag-list-2 {display: none;}
+                .ac-list {padding: 0 12px;
+                    &>.col-6 {padding: 10px;}
+                    &>.col-4 {
+                        &:after {
+                            content: '';
+                            display: inline-block;
+                            width: 13px;
+                            height: 8px;
+                            background: url(/Assets/mobile/images/Hotel/arrow-down-grey.png) no-repeat;
+                            float: right;
+                            margin-top: -22px;
+                            opacity: 0.4;
+                            position: absolute;
+                            right: 10px;
+                        }
+                    }
+                    select[name='agelist']{
+                        background: #ecf0f4;
+                        padding: 10px 30px;
+                        border-bottom: 1px solid #ddd;
+                        option {background: #fff;}
+                    }
+                    &:last-child {&>.col-2 {border-bottom: none;}}
+                }
+            }
+        }
+        &.hotel-form {
+            .placeholder {
+                color: #999;
+                float: right;
+                font-size: 13px
+            }
+            .checkout-date {
+                margin-top: 6px;
+                font-size: 13px;
+                width: 100%;
+                text-align: right;
+            }
+            p {
+                &.form-hotel:before {
+                    background-size: 40%;
+                    background-repeat: no-repeat;
+                    content: '';
+                    display: inline-block;
+                    vertical-align: middle;
+                    position: absolute;
+                    left: 0;
+                    @include size(47px, 52px);
+                    background-image: url(/Assets/mobile/images/find.png);
+                    margin-left: 12px;
+                }
+                &.form-date:before {
+                    background-size: 40%;
+                    background-repeat: no-repeat;
+                    content: '';
+                    display: inline-block;
+                    vertical-align: middle;
+                    position: absolute;
+                    left: 0;
+                    @include size(47px, 46px);
+                    background-image: url(/Assets/mobile/images/date.png);
+                    margin-left: 12px;
+                }
+                &.form-time{
+                    .duration-title {    
+                        float: left;
+                        margin-top: 10px;
+                    }
+                    .placeholder {margin-top: 10px;}
+                    input[name="hotel-night"] {
+                        float: right;
+                        width: 60px;
+                    }
+                    &:before {
+                        background-size: 40%;
+                        background-repeat: no-repeat;
+                        content: '';
+                        display: inline-block;
+                        vertical-align: middle;
+                        position: absolute;
+                        left: 0;
+                        @include size(53px, 52px);
+                        background-image: url(/Assets/mobile/images/time.png);
+                        margin-left: -28px;
+                    }
+                }
+                &.form-room{
+                    &:before {
+                        background-size: 40%;
+                        background-repeat: no-repeat;
+                        content: '';
+                        display: inline-block;
+                        vertical-align: middle;
+                        position: absolute;
+                        left: 0;
+                        width: 35px;
+                        height: 35px;
+                        background-image: url(/Assets/mobile/images/Hotel/room.png);
+                        margin-left: -28px;
+                        margin-top: -6px;
+                    }
+                }
+                .vt-title {
+                    margin-top: 10px;
+                    text-align: left;
+                }
+            }
+            
+        }
     }    
-    
+}
+.tab-content {
+    .tp-flight .form-wrapper {padding: 20px 15px;}
+    .tp-hotel .form-wrapper {padding: 0;
+        .top-wrap, .mid-wrap, .bottom-wrap {padding: 0 12px;} 
+    }
 }
 .col-custom-logo {
     &.icon-adult:before {
@@ -220,9 +431,30 @@
         top: 20px; 
     }
 }
-.col-custom-field {width: 33.333333333333332%}
-.col-custom-logo, .col-custom-field {
+
+input[name="hotel-night"], input[name="hotel-visitor"] {
+    padding: 10px;
+    text-align: right;
+    display: inline;
+    box-shadow: none;
+    border: none;
+    background: transparent;
+    border-radius: 0;
+}
+
+/*Column*/
+.col-custom-field {width: 33.333333333333332%;}
+.col-half {width: 50%;}
+.col-2 {width: 20%;} .col-4 {width: 40%;} .col-6 {width: 60%;} .col-8 {width: 80%;} 
+.col-custom-logo, .col-custom-field, .col-half, .col-2, .col-4, .col-6, .col-8 {
     float: left;
     position: relative;
     min-height: 1px;
 }
+
+/*Font style*/
+.blue-txt {color: #2fb4e6;}
+.semibold-txt {font-weight: 600;}
+.bold-txt {font-weight: 700;}
+.right-txt {text-align: right;}
+.sm-txt {font-size: 9px;}

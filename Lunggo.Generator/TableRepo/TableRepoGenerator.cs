@@ -49,7 +49,7 @@ namespace Lunggo.Generator.TableRepo
             //String connectionString = @"Data Source=(LocalDB)\v11.0;AttachDbFilename=""D:\Bayu\Lunggo\Lunggo.Driver\dodol.mdf"";Integrated Security=True;";
             //String connectionString = @"Data Source=""playdb.cloudapp.net, 63778"";Initial Catalog=Travorama;Persist Security Info=True;User ID=developer;Password=Standar1234";
             //String connectionString = @"Server=tcp:esk54ibs1w.database.windows.net,1433;Database=travorama-qa;User ID=developer@esk54ibs1w;Password=Standar1234;Trusted_Connection=False;Encrypt=True;Connection Timeout=30;";
-            String connectionString = @"Server=tcp:travorama-development-sql-server.database.windows.net,1433;Database=travorama-dv2;User ID=developer@travorama-development-sql-server;Password=Standar1234;Trusted_Connection=False;Encrypt=True;Connection Timeout=30;";
+            String connectionString = @"Server=tcp:travorama-development-sql-server.database.windows.net,1433;Database=travorama-local;User ID=developer@travorama-development-sql-server;Password=Standar1234;Trusted_Connection=False;Encrypt=True;Connection Timeout=30;";
             String destinationPath = String.Empty;
             String configurationXmlPath = @"test.xml";
             

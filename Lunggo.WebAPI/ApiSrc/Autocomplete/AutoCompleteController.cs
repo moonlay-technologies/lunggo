@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Net;
 using System.Web.Http;
+using Lunggo.ApCommon.Hotel.Service;
 using Lunggo.Framework.Cors;
 using Lunggo.WebAPI.ApiSrc.Autocomplete.Logic;
 using Lunggo.WebAPI.ApiSrc.Autocomplete.Model;
@@ -46,13 +47,13 @@ namespace Lunggo.WebAPI.ApiSrc.Autocomplete
 
         [HttpGet]
         [LunggoCorsPolicy]
-        [Authorize]
-        [Route("v1/autocomplete/hotellocations/{prefix}")]
-        public ApiResponseBase HotelLocations(string prefix)
+        [Route("v1/autocomplete/hotel/{prefix}")]
+        [Route("v1/autocomplete/hotel/{prefix}/{dest}/{zone}/{hotel}")]
+        public ApiResponseBase HotelLocations(string prefix, int dest = 10, int zone = 10, int hotel = 10)
         {
             try
             {
-                return AutocompleteLogic.GetHotelLocationAutocomplete(prefix);
+                return AutocompleteLogic.GetHotelAutocomplete(prefix, dest, zone, hotel);
             }
             catch (Exception e)
             {

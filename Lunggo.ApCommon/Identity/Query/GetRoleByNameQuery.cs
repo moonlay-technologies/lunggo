@@ -5,7 +5,7 @@ using Lunggo.Framework.Database;
 namespace Lunggo.ApCommon.Identity.Query
 {
 
-    public class GetRoleByNameQuery : QueryBase<GetRoleByNameQuery, GetRoleByAnyQueryRecord>
+    public class GetRoleByNameQuery : DbQueryBase<GetRoleByNameQuery, GetRoleByAnyQueryRecord>
     {
         private GetRoleByNameQuery()
         {

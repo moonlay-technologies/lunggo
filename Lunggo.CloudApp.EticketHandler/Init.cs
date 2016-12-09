@@ -1,5 +1,6 @@
 ﻿using Lunggo.ApCommon.Constant;
 using Lunggo.ApCommon.Flight.Service;
+using Lunggo.ApCommon.Hotel.Service;
 using Lunggo.Framework.BlobStorage;
 using Lunggo.Framework.Config;
 using Lunggo.Framework.Database;
@@ -26,6 +27,7 @@ namespace Lunggo.CloudApp.EticketHandler
             InitMailService();
             InitBlobStorageService();
             InitFlightService();
+            InitHotelService();
         }
 
         private static void InitConfigurationManager()
@@ -38,6 +40,12 @@ namespace Lunggo.CloudApp.EticketHandler
         {
             var flight = FlightService.GetInstance();
             flight.Init("Config/");
+        }
+
+        private static void InitHotelService()
+        {
+            var hotel = HotelService.GetInstance();
+            hotel.Init("Config/");
         }
 
         private static void InitDatabaseService()

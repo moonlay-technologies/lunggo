@@ -3,7 +3,7 @@ using Lunggo.Framework.Database;
 
 namespace Lunggo.BackendWeb.Query
 {
-    public class GetSearchHotelDetail : QueryBase<GetSearchHotelDetail, GetSearchHotelRecord>
+    public class GetSearchHotelDetail : DbQueryBase<GetSearchHotelDetail, GetSearchHotelRecord>
     {
         protected override string GetQuery(dynamic condition = null)
         {

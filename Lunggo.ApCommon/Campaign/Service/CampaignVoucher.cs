@@ -1,4 +1,5 @@
-﻿using System.Runtime.InteropServices;
+﻿using System.Linq;
+using System.Runtime.InteropServices;
 using System.Security.Principal;
 using System.Web;
 using Lunggo.ApCommon.Campaign.Constant;
@@ -6,9 +7,10 @@ using Lunggo.ApCommon.Campaign.Model;
 using System;
 using Lunggo.ApCommon.Constant;
 using Lunggo.ApCommon.Flight.Service;
-
+using Lunggo.ApCommon.Hotel.Service;
 using Lunggo.ApCommon.Identity.Users;
 using Lunggo.ApCommon.Payment.Model;
+using Lunggo.ApCommon.Product.Model;
 using Lunggo.Framework.Http;
 
 namespace Lunggo.ApCommon.Campaign.Service
@@ -32,9 +34,28 @@ namespace Lunggo.ApCommon.Campaign.Service
                 return response;
             }
 
+            if (voucher.ProductType != null && !voucher.ProductType.Contains(rsvNo[0]))
+            {
+                response.VoucherStatus = VoucherStatus.ProductNotEligible;
+                return response;
+            }
+
             if (user.Identity.IsAuthenticated && user.Identity.IsUserAuthorized())
                 response.Email = user.Identity.GetEmail();
             response.VoucherCode = voucherCode;
+
+            var contact = Contact.GetFromDb(rsvNo);
+            if (contact == null)
+            {
+                response.VoucherStatus = VoucherStatus.ReservationNotFound;
+                return response;
+            }
+
+            if (!IsPhoneAndEmailEligibleInCache(voucherCode, contact.CountryCallingCode + contact.Phone, contact.Email))
+            {
+                response.VoucherStatus = VoucherStatus.EmailNotEligible;
+                return response;
+            }
 
             var paymentDetails = PaymentDetails.GetFromDb(rsvNo);
             if (paymentDetails == null)
@@ -61,6 +82,21 @@ namespace Lunggo.ApCommon.Campaign.Service
                     IsFlat = false
                 };
             }
+
+            ReservationBase rsv;
+            if (rsvNo.StartsWith("1"))
+                rsv = FlightService.GetInstance().GetReservation(rsvNo);
+            else
+                rsv = HotelService.GetInstance().GetReservation(rsvNo);
+
+            var cost = rsv.GetTotalSupplierPrice();
+            if (voucher.MaxBudget.HasValue &&
+                (voucher.MaxBudget - voucher.UsedBudget < cost - paymentDetails.FinalPriceIdr*0.97M))
+            {
+                response.VoucherStatus = VoucherStatus.NoBudgetRemaining;
+                return response;
+            }
+
             response.VoucherStatus = validationStatus;
             return response;
         }
@@ -69,7 +105,18 @@ namespace Lunggo.ApCommon.Campaign.Service
         {
             var response = ValidateVoucherRequest(rsvNo, voucherCode);
             if (response.VoucherStatus == VoucherStatus.Success)
-                response.VoucherStatus = VoucherDecrement(voucherCode);
+            {
+                var isUseBudgetSuccess = !rsvNo.StartsWith("2") || UseHotelBudget(voucherCode, rsvNo);
+                var isVoucherDecrementSuccess = VoucherDecrement(voucherCode);
+                if (isUseBudgetSuccess && isVoucherDecrementSuccess)
+                {
+                    response.VoucherStatus = VoucherStatus.Success;
+                    var contact = Contact.GetFromDb(rsvNo);
+                    SavePhoneAndEmailInCache(voucherCode, contact.CountryCallingCode + contact.Phone, contact.Email);
+                }
+                else
+                    response.VoucherStatus = VoucherStatus.UpdateError;
+            }
             return response;
         }
 
@@ -129,32 +176,37 @@ namespace Lunggo.ApCommon.Campaign.Service
                 response.DiscountedPrice = 50000M;
             }
         }
-        private VoucherStatus VoucherDecrement(string voucherCode)
+        private bool VoucherDecrement(string voucherCode)
         {
             try
             {
-                if (UpdateDb.VoucherDecrement(voucherCode))
-                    return VoucherStatus.Success;
-                else
-                    return VoucherStatus.NoVoucherRemaining;
+                return UpdateDb.VoucherDecrement(voucherCode);
             }
             catch (Exception)
             {
-                return VoucherStatus.UpdateError;
+                return false;
             }
         }
-        private VoucherStatus VoucherIncrement(string voucherCode)
+        private bool VoucherIncrement(string voucherCode)
         {
             try
             {
-                if (UpdateDb.VoucherIncrement(voucherCode))
-                    return VoucherStatus.Success;
-                else
-                    return VoucherStatus.UpdateError;
+                return UpdateDb.VoucherIncrement(voucherCode);
             }
             catch (Exception)
             {
-                return VoucherStatus.UpdateError;
+                return false;
+            }
+        }
+        private bool UseHotelBudget(string voucherCode, string rsvNo)
+        {
+            try
+            {
+                return UpdateDb.UseHotelBudget(voucherCode, rsvNo);
+            }
+            catch (Exception)
+            {
+                return false;
             }
         }
     }

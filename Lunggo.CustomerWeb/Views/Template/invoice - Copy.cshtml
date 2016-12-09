@@ -117,7 +117,7 @@
                                     <td class="no">@k.</td>
                                     <td class="item">Tiket Pesawat</td>
                                     <td class="description">@Model.Itinerary.Trips[k].Segments[k].AirlineName @Model.Itinerary.Trips[k].OriginAirport-@Model.Itinerary.Trips[k].DestinationAirport @Model.Itinerary.Trips[k].DepartureDate.ToString("dd MMMM yyyy", CultureInfo.CreateSpecificCulture("id-ID"))</td>
-                                    <td class="qty">@Model.Passengers.Count</td>
+                                    <td class="qty">@Model.Pax.Count</td>
                                     <td class="price"></td>
                                     <td class="total">@Model.Payment.FinalPriceIdr.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</td>
                                     @{ k++; }

@@ -73,7 +73,7 @@ namespace Lunggo.ApCommon.Product.Model
             }
         }
 
-        private class GetUsedMarginQuery : QueryBase<GetUsedMarginQuery, UsedMarginTableRecord>
+        private class GetUsedMarginQuery : DbQueryBase<GetUsedMarginQuery, UsedMarginTableRecord>
         {
             protected override string GetQuery(dynamic condition = null)
             {

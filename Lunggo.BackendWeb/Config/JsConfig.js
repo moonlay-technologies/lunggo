@@ -4,15 +4,6 @@ var SystemConfig = {
     SystemBusy: false
 };
 
-var SearchHotelConfig = {
-    Url: 'https://api.local.travorama.com/v1/hotels',
-    ResultCount: 24
-};
-
-var SearchRoomConfig = {
-    Url: 'https://api.local.travorama.com/v1/rooms'
-};
-
 var FlightSearchConfig = {
     Url: 'https://api.local.travorama.com/v1/flight/',
     // generate search URL
@@ -93,7 +84,7 @@ var GetRulesConfig = {
 };
 
 var HotelAutocompleteConfig = {
-    Url: 'https://api.local.travorama.com/v1/autocomplete/hotellocation/'
+    Url: 'https://api.local.travorama.com/v1/autocomplete/hotel/'
 };
 
 var FlightAutocompleteConfig = {
@@ -193,6 +184,22 @@ var ResendConfirmationEmailMobileConfig = {
     Url: 'http://m.local.travorama.com/v1/resendconfirmationemail'
 };
 
+var HotelSearchConfig = {
+    Url: 'https://api.local.travorama.com/v1/hotel/search'
+};
+
+var HotelDetailsConfig = {
+    Url: 'https://api.local.travorama.com/v1/hotel/gethoteldetail'
+};
+
+var HotelSelectConfig = {
+    Url: 'https://api.local.travorama.com/v1/hotel/select'
+};
+
+var HotelBookConfig = {
+    Url: 'https://api.local.travorama.com/v1/hotel/book',
+    working: false
+};
 function setCookie(cname, cvalue, expTime) {
 
     if (cname != "accesstoken") {

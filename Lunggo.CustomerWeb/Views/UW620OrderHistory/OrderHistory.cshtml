@@ -8,12 +8,15 @@
     
     //var rsvs = Model.OrderByDescending(rsv => rsv.RsvTime).ToList();
 }
-
+@{
+    
+}
 @section AdditionalJS{
     <!-- additional Angular JS-->
     <script src="/Assets/js/angular.min.js"></script>
     <script src="/Assets/js/angular-animate.min.js"></script>
     <script src="/Assets/js/angular-route.min.js"></script>
+    <script type="text/javascript" src="/Scripts/bootstrap.min.js"></script>
 }
 
 @section PageJS{
@@ -164,37 +167,114 @@
                         <h2><b>@Html.I18NString("CW00195")</b> @Html.I18NString("CW00196")</h2>
                     </header>
                     <section class="content-body">
-                        <h3 ng-if="flightlist.length == 0">Belum ada pemesanan.</h3>
-                        <div ng-if="flightlist.length > 0" ng-repeat="flight in flightlist track by $index">
-                            <div class="order-wrapper">
-                                <div class="order flight">
-                                    <header>
-                                        <span> Nomor Pesanan : {{flight.rsvNo}}</span>
-                                    </header>
-                                    <section class="container">
-                                        <div class="row">
-                                            <div class="col-xs-10">
-                                                <div class="detail">
-                                                    <p>@Html.I18NString("CW00197") : <b>{{flight.itin.trips[0].origin}}</b> to <b>{{flight.itin.trips[0].destination}}</b></p>
-                                                    <p ng-if="flight.itin.trips.length > 1">@Html.I18NString("CW00057"): {{flight.itin.trips[0].segments[0].departureTime | date : 'dd - MMMM - yyyy , HH:mm' :'UTC'}} | @Html.I18NString("CW00058"): {{flight.itin.trips[1].segments[0].departureTime | date : 'dd - MMMM - yyyy , HH:mm' :'UTC'}}</p>
-                                                    <p ng-if="flight.itin.trips.length < 2">@Html.I18NString("CW00057"): {{flight.itin.trips[0].segments[0].departureTime | date : 'dd - MMMM - yyyy , HH:mm' :'UTC'}}</p>
-                                                    <p>Status : <span class="success">{{paymentstatus(flight.payment.status)}}</span></p>
+                        <header class="tab-header">
+                            <nav>
+                                <ul>
+                                    <li class="flight-history active"><a data-toggle="tab" href="#flight-history">Pesawat</a></li>
+                                    <li class="hotel-history"><a data-toggle="tab" href="#hotel-history">Hotel</a></li>
+                                </ul>
+                            </nav>
+                        </header>
+                        <div ng-show="loading">
+                            <img src="/Assets/images/load.gif" style="width: 50px; height: 50px; margin-left: 45%; margin-top: 5%">
+                        </div>
+                        <div class="tab-content">
+                            <div class="tab-flight-history tab-pane cleafix active" id="flight-history">
+                                
+                                <h3 ng-if="flightlist.length == 0">Belum ada pemesanan.</h3>
+                                <div ng-if="flightlist.length > 0" ng-repeat="flight in flightlist track by $index">
+                                    <div class="order-wrapper">
+                                        <div class="order flight">
+                                            <header>
+                                                <span> Nomor Pesanan : {{flight.rsvNo}}</span>
+                                            </header>
+                                            <section class="container">
+                                                <div class="row">
+                                                    <div class="col-xs-10">
+                                                        <div class="detail">
+                                                            <p>@Html.I18NString("CW00197") : <b>{{flight.itin.trips[0].origin}}</b> to <b>{{flight.itin.trips[0].destination}}</b></p>
+                                                            <p ng-if="flight.itin.trips.length > 1">@Html.I18NString("CW00057"): {{flight.itin.trips[0].segments[0].departureTime | date : 'EEEE, dd MMMM yyyy , HH:mm' :'UTC'}} | @Html.I18NString("CW00058"): {{flight.itin.trips[1].segments[0].departureTime | date : 'EEEE, dd MMMM yyyy , HH:mm' :'UTC'}}</p>
+                                                            <p ng-if="flight.itin.trips.length < 2">@Html.I18NString("CW00057"): {{flight.itin.trips[0].segments[0].departureTime | date : 'EEEE, dd MMMM yyyy , HH:mm' :'UTC'}}</p>
+                                                            <p>Status : <span class="success">{{paymentstatus(flight.payment.status)}}</span></p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xs-2">
+                                                        <form action="" method="post" name="submitForm" id="rsvno" class="hidden">
+                                                            <input type="text" name="RsvNo" value="" id="rsvno-input" />
+                                                        </form>
+                                                        <div class="action">
+                                                            <button class="btn btn-yellow" ng-click="submitRsvNo(flight.rsvNo)">@Html.I18NString("CW00175")</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </section>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-hotel-history tab-pane cleafix" id="hotel-history">
+                                
+                                <h3 ng-if="hotellist.length == 0">Belum ada pemesanan.</h3>
+                                <div ng-if="hotellist.length > 0" ng-repeat="hotel in hotellist track by $index">
+                                    <div class="order-wrapper">
+                                        <div class="order hotel page-hotel">
+                                            <div class="order-top ">
+                                                <div class="ot clearfix">
+                                                    <div class="ot-left"><img src="{{getPhotoUrl(hotel.hotelDetail.mainImage)}}" alt="Hotel Image" /></div>
+                                                    <div class="ot-right" style="width:60%">
+                                                        <span class="blue-txt bold-txt">{{hotel.hotelDetail.hotelName}}</span><br />
+                                                        <span class="star" ng-if="hotel.hotelDetail.starRating == 1"></span>
+                                                        <span class="star star-2" ng-if="hotel.hotelDetail.starRating == 2"></span>
+                                                        <span class="star star-3" ng-if="hotel.hotelDetail.starRating == 3"></span>
+                                                        <span class="star star-4" ng-if="hotel.hotelDetail.starRating == 4"></span>
+                                                        <span class="star star-5" ng-if="hotel.hotelDetail.starRating == 5"></span>
+                                                        <div class="wt-location">
+                                                            {{hotel.hotelDetail.address}}{{hotel.hotelDetail.zone}}, {{hotel.hotelDetail.destination}}, {{hotel.hotelDetail.country}}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="action-hotel" style="margin-top:-80px">
+                                                    <button class="btn btn-yellow" ng-click="submitRsvNo(hotel.rsvNo)">DETAIL</button>
                                                 </div>
                                             </div>
-                                            <div class="col-xs-2">
-                                                <form action="" method="post" name="submitForm" id="rsvno" class="hidden">
-                                                    <input type="text" name="RsvNo" value="" id="rsvno-input" />
-                                                </form>
-                                                <div class="action">
-                                                    <button class="btn btn-yellow" ng-click="submitRsvNo(flight.rsvNo)">@Html.I18NString("CW00175")</button>
+                                            <div class="order-bottom">
+                                                <div class="wb-container clearfix">
+                                                    <div class="ot-left">Check in</div>
+                                                    <div class="ot-right bold-txt">{{hotel.hotelDetail.checkIn | date : 'EEEE, dd MMM yyyy'}}
+                                                    </div>
+                                                    <div class="wb-container clearfix">
+                                                        <div class="ot-left">Check out</div>
+                                                        <div class="ot-right bold-txt">{{hotel.hotelDetail.checkOut | date : 'EEEE, dd MMM yyyy'}}</div>
+                                                    </div>
+                                                    <div class="wb-container clearfix">
+                                                        <div class="ot-left">Malam</div>
+                                                        <div class="ot-right bold-txt">{{nightcount(hotel.hotelDetail)}} Malam</div>
+                                                    </div>
+                                                    <div class="wb-container clearfix">
+                                                        <div class="ot-left">Jumlah Kamar</div>
+                                                        <div class="ot-right bold-txt">{{sumRoom(hotel.hotelDetail)}} Kamar</div>
+                                                    </div>
+                                                    <div class="wb-container clearfix">
+                                                        <div class="ot-left">Jenis Kamar</div>
+                                                        <div class="ot-right bold-txt">{{titleCase(totalRoom(hotel.hotelDetail))}}</div>
+                                                    </div>
+                                                    <div class="wb-container clearfix">
+                                                        <div class="ot-left">Jumlah Tamu</div>
+                                                        <div class="ot-right bold-txt">{{totalpax(hotel.hotelDetail).totalAdult}} Dewasa, {{totalpax(hotel.hotelDetail).totalChild}} Anak</div>
+                                                    </div>
+                                                    <div class="wb-container clearfix">
+                                                        <div class="ot-left">Status</div>
+                                                        <div class="ot-right bold-txt">{{paymentstatus(hotel.payment.status)}}</div>
+                                                    </div>
+
                                                 </div>
+                                                
                                             </div>
                                         </div>
-                                    </section>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-
                     </section>
 
                 </div><!-- .history-content -->

@@ -3,9 +3,55 @@ $(function() {
     $('[data-toggle="tooltip"]').tooltip();
 });
 
-if (typeof(angular) == 'object') {
-    var app = angular.module('travorama', ['ngRoute']);
-}
+if (typeof (angular) == 'object') {
+    var app = angular.module('travorama', ['ngRoute', 'ngResource']);
+
+    //function myFunction(xml) {
+    //    var x, i, xmlDoc, txt;
+    //    xmlDoc = xml.responseXML;
+    //    txt = "";
+    //    x = xmlDoc.getElementsByTagName('book');
+    //    for (i = 0; i < x.length; i++) {
+    //        txt += x[i].getAttribute('category') + "<br>";
+    //    }
+    //    document.getElementById("demo").innerHTML = txt;
+    //}
+
+    app.factory('DataSource', ['$http', function ($http) {
+        return {
+            get: function (file, callback, transform) {
+                $http.get(
+                    file,
+                    { transformResponse: transform }
+                ).
+                success(function (data, status) {
+                    console.log("Request succeeded");
+                    callback(data);
+                }).
+                error(function (data, status) {
+                    console.log("Request failed " + status);
+                });
+            }
+        };
+    }]);
+
+    var SOURCE_FILE = "/Config/application.properties";
+
+    xmlTransform = function (data) {
+        console.log("transform data");
+        var x2js = new X2JS();
+        var json = x2js.xml_str2json(data);
+        return json.guitars.guitar;
+    };
+
+    setData = function (data) {
+        $scope.dataSet = data;
+    };
+
+    //DataSource.get(SOURCE_FILE, setData, xmlTransform);
+};
+
+
 
 //********************
 // variables
@@ -544,10 +590,12 @@ function flightPageSearchFormFunctions() {
     // show flight location. Origin and Destination
     // on flight origin focus
     $('.form-flight-origin').click(function () {
+        $scope.searchlocation = true;
         $(this).select();
         showLocation('origin');
     });
     $('.form-flight-destination').click(function () {
+        $scope.searchlocation = true;
         $(this).select();
         showLocation('destination');
     });
@@ -736,6 +784,7 @@ function flightPageSearchFormFunctions() {
 
     // show and hide search location
     function showLocation(place) {
+        
         place = place || $('.search-location').attr('data-place');
         $('.search-location .location-recommend').show();
         $('.search-location .location-search').hide();
@@ -993,6 +1042,7 @@ function flightPageSearchFormFunctions() {
             Cookies.set('adult', flightPageSearchFormParam.passenger.adult, { expires: 9999 });
             Cookies.set('child', flightPageSearchFormParam.passenger.child, { expires: 9999 });
             Cookies.set('infant', flightPageSearchFormParam.passenger.infant, { expires: 9999 });
+
         } else {
             Cookies.set('adult', flightPageSearchFormParam.passenger.adult, { expires: 9999 });
             Cookies.set('child', flightPageSearchFormParam.passenger.child, { expires: 9999 });
@@ -1005,7 +1055,10 @@ function flightPageSearchFormFunctions() {
         var returnDate = (('0' + flightPageSearchFormParam.returnDate.getDate()).slice(-2) + ('0' + (flightPageSearchFormParam.returnDate.getMonth() + 1)).slice(-2) + flightPageSearchFormParam.returnDate.getFullYear().toString().substr(2, 2));
         var departureParam = flightPageSearchFormParam.origin + flightPageSearchFormParam.destination + departureDate;
         var returnParam = flightPageSearchFormParam.destination + flightPageSearchFormParam.origin + returnDate;
+        //var passengerParam = flightPageSearchFormParam.passenger.adult.toString() + flightPageSearchFormParam.passenger.child.toString() + flightPageSearchFormParam.passenger.infant.toString() + flightPageSearchFormParam.cabin;
         var passengerParam = flightPageSearchFormParam.passenger.adult.toString() + flightPageSearchFormParam.passenger.child.toString() + flightPageSearchFormParam.passenger.infant.toString() + flightPageSearchFormParam.cabin;
+
+        //FlightSearchConfig.flightForm.adult
         var flightSearchParam;
         // generate flight search param
         if (flightPageSearchFormParam.type == 'return') {
@@ -1523,18 +1576,25 @@ function flightFormSearchFunctions() {
         if (Cookies.get('adult')) {
             $('.passenger-input.adult').text(Cookies.get('adult'));
             FlightSearchConfig.flightForm.adult = Cookies.get('adult');
+            flightPageSearchFormParam.passenger.adult = Cookies.get('adult');
+            //FlightSearchConfig.flightForm.passenger.adult
+            FlightSearchConfig.flightForm.passenger.adult = parseInt(Cookies.get('adult'));
         } else {
             $('.passenger-input.adult').text('1');
         }
         if (Cookies.get('child')) {
             $('.passenger-input.child').text(Cookies.get('child'));
             FlightSearchConfig.flightForm.child = Cookies.get('child');
+            //flightPageSearchFormParam.passenger.child = Cookies.get('child');
+            FlightSearchConfig.flightForm.passenger.child = parseInt(Cookies.get('child'));
         } else {
             $('.passenger-input.child').text('0');
         }
         if (Cookies.get('infant')) {
             $('.passenger-input.infant').text(Cookies.get('infant'));
             FlightSearchConfig.flightForm.infant = Cookies.get('infant');
+            //flightPageSearchFormParam.passenger.infant = Cookies.get('infant');
+            FlightSearchConfig.flightForm.passenger.infant = parseInt(Cookies.get('infant'));
         } else {
             $('.passenger-input.infant').text('0');
         }
@@ -1793,3 +1853,4 @@ function accordionFunctions() {
         }
     }
 }
+

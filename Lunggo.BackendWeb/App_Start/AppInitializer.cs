@@ -2,12 +2,15 @@
 using System.Web.WebPages;
 using Lunggo.ApCommon.Constant;
 using Lunggo.ApCommon.Flight.Service;
+using Lunggo.ApCommon.Hotel.Service;
 using Lunggo.ApCommon.Payment;
 using Lunggo.ApCommon.Payment.Service;
+using Lunggo.Framework.BlobStorage;
 using Lunggo.Framework.BrowserDetection;
 using Lunggo.Framework.Config;
 using Lunggo.Framework.Core;
 using Lunggo.Framework.Database;
+using Lunggo.Framework.Documents;
 using Lunggo.Framework.HtmlTemplate;
 using Lunggo.Framework.I18nMessage;
 using Lunggo.Framework.Mail;
@@ -29,7 +32,7 @@ namespace Lunggo.BackendWeb
             InitRedisService();
             InitDatabaseService();
             InitQueueService();
-            //InitLogger();
+            InitBlobStorageService();
             InitFlightService();
             InitPaymentService();
             InitBrowserDetectionService();
@@ -37,6 +40,24 @@ namespace Lunggo.BackendWeb
             InitMailService();
             InitHtmlTemplateService();
             InitTableStorageService();
+            InitDocumentsService();
+            InitHotelService();
+        }
+
+        private static void InitBlobStorageService()
+        {
+            var connString = ConfigManager.GetInstance().GetConfigValue("azureStorage", "connectionString");
+            var blobStorageService = BlobStorageService.GetInstance();
+            blobStorageService.Init(connString);
+        }
+
+        private static void InitDocumentsService()
+        {
+            var endpoint = ConfigManager.GetInstance().GetConfigValue("documentDb", "endpoint");
+            var authKey = ConfigManager.GetInstance().GetConfigValue("documentDb", "authorizationKey");
+            var dbName = ConfigManager.GetInstance().GetConfigValue("documentDb", "databaseName");
+            var collectionName = ConfigManager.GetInstance().GetConfigValue("documentDb", "collectionName");
+            DocumentService.GetInstance().Init(endpoint, authKey, dbName, collectionName);
         }
 
         private static void InitMailService()
@@ -109,6 +130,12 @@ namespace Lunggo.BackendWeb
         {
             var flight = FlightService.GetInstance();
             flight.Init("Config");
+        }
+
+        private static void InitHotelService()
+        {
+            var hotel = HotelService.GetInstance();
+            hotel.Init("config");
         }
 
         private static void InitPaymentService()

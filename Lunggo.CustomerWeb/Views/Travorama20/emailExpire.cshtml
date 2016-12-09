@@ -191,7 +191,7 @@
                         </table>
                     }
                     <table width="100%" cellpadding="0" cellspacing="0" style="border-bottom: 1px dotted #15b1e4;margin-bottom: 20px; ">
-                        @{ var i = @Model.Passengers.Count; }
+                        @{ var i = @Model.Pax.Count; }
                         @{ var j = 1; }
                         <tr>
                             <td width="25%" rowspan="@i">
@@ -201,14 +201,14 @@
                                 <p style="color: #15b1e4; text-align: center;">:</p>
                             </td>
                             <td>
-                                <p style="color: #15b1e4; text-align: left;">1. @Model.Passengers[0].FirstName @Model.Passengers[0].LastName</p>
+                                <p style="color: #15b1e4; text-align: left;">1. @Model.Pax[0].FirstName @Model.Pax[0].LastName</p>
                             </td>
                             <td width="20%"></td>
                             <td width="5%" style="padding-right: 1%;">
                                 <hr style="border-color:#15b1e4;" />
                             </td>
                             <td width="7%">
-                                @Model.Passengers[0].Type
+                                @Model.Pax[0].Type
                             </td>
                         </tr>
                         @for (int k = 1; k < i; k++)
@@ -218,14 +218,14 @@
                                     <p style="color: #15b1e4; text-align: center;">:</p>
                                 </td>
                                 <td>
-                                    <p style="color: #15b1e4; text-align: left;">@(k + 1). @Model.Passengers[k].FirstName @Model.Passengers[k].LastName</p>
+                                    <p style="color: #15b1e4; text-align: left;">@(k + 1). @Model.Pax[k].FirstName @Model.Pax[k].LastName</p>
                                 </td>
                                 <td width="20%"></td>
                                 <td width="5%" style="padding-right: 1%;">
                                     <hr style="border-color:#15b1e4;" />
                                 </td>
                                 <td width="7%">
-                                    @Model.Passengers[k].Type
+                                    @Model.Pax[k].Type
                                 </td>
                             </tr>
                         }

@@ -13,7 +13,9 @@
         UpdateError = 8,
         VoucherNotFound = 9,
         VoucherAlreadyUsed = 10,
-        ReservationNotFound = 11
+        ReservationNotFound = 11,
+        ProductNotEligible = 12,
+        NoBudgetRemaining = 13
     }
 
     internal class VoucherStatusCd

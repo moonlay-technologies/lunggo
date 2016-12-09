@@ -3,7 +3,7 @@ using System.Text;
 
 namespace Lunggo.ApCommon.Campaign.Database.Query
 {
-    internal class GetMemberRecordQuery : QueryBase<GetMemberRecordQuery, string>
+    internal class GetMemberRecordQuery : DbQueryBase<GetMemberRecordQuery, string>
     {
         protected override string GetQuery(dynamic condition = null)
         {

@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
+using System.Linq;
+using System.Text;
 using Lunggo.Framework.Exceptions;
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Blob;
@@ -204,7 +207,7 @@ namespace Lunggo.Framework.BlobStorage
 
                     CheckContainerAndCreateIfNotExist(newBlob.Container);
 
-                    newBlob.StartCopyFromBlob(previousBlob);
+                    newBlob.StartCopy(previousBlob);
                     previousBlob.Delete();
                 }
                 catch (StorageException ex)
@@ -222,7 +225,7 @@ namespace Lunggo.Framework.BlobStorage
 
                     CheckContainerAndCreateIfNotExist(newBlob.Container);
 
-                    newBlob.StartCopyFromBlob(previousBlob);
+                    newBlob.StartCopy(previousBlob);
                 }
                 catch (StorageException ex)
                 {
@@ -335,6 +338,21 @@ namespace Lunggo.Framework.BlobStorage
                 return blobs;
             }
 
+            internal List<string> GetListFileName(string containerName)
+            {
+                CloudBlobContainer container = this._blobStorageClient.GetContainerReference(containerName.ToLower());
+                var fileNameList = new List<string>();
+                CloudBlobDirectory folder = container.GetDirectoryReference("1");
+                var listFileBlob = folder.ListBlobs(true);
+                foreach (var blobItem in listFileBlob)
+                {
+                    var temp = blobItem.Uri.Segments.Skip(2);
+                    fileNameList.Add(string.Join("",temp.ToArray()));
+                }
+
+                return fileNameList;
+            }
+
             private class BlobModel
             {
                 internal string BlobName { get; set; }
@@ -343,3 +361,5 @@ namespace Lunggo.Framework.BlobStorage
         }
     }
 }
+
+

@@ -1,0 +1,284 @@
+﻿@using System.Globalization
+@using Lunggo.ApCommon.Hotel.Service
+@using Lunggo.Framework.Config
+@using Lunggo.ApCommon.Constant
+@model Lunggo.ApCommon.Hotel.Model.HotelReservationForDisplay
+@{
+    ViewBag.SiteHeader = "header-email";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <link rel="shortcut icon" type="image/ico" href="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/favico.ico")" />
+
+    <title>Travorama - eTicket</title>
+
+    <!-- stylesheets -->
+    <link rel="stylesheet" href="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/css/bootstrap.min.css")" />
+    <link rel="stylesheet" href="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/css/font-awesome.min.css")" />
+    <link rel="stylesheet" href="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/css/neweticket.css")" />
+</head>
+<body class="eticket">
+    <div class="page page-hotel-voucher">
+        <header class="page-header">
+            <div class="row">
+                <div class="col-xs-4">
+                    <img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/travorama-logo-color.png")" />
+                </div>
+                <div class="col-xs-8">
+                    <div class="page-header-right pull-right">
+                        <div class="page-title"><h3><span class="black-txt">HOTEL</span> VOUCHER</h3></div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <section class="page-content">
+            <div class="hotel-wrapper">
+                <div class="hotel-top">
+                    <p>
+                        <img class="img-email" src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/email/mail.png")" /><span class="blue-txt">cs@travorama.com</span>
+                    </p>
+                    <div style="background: url(@Model.HotelDetail.MainImage); width: 716px; height: 162px; background-size: cover; background-position: center; background-repeat: no-repeat" class=" img-hotel">
+
+                    </div>
+
+                </div>
+                <div class="hotel-middle">
+                    <div class="row">
+                        <div class="col-xs-2">
+                            <h4>
+                                Nomor Reservasi
+                                <h4 class="blue-txt"><b>@Model.RsvNo</b></h4>
+                            </h4>
+                        </div>
+                        <div class="col-xs-10">
+                            <div class="right-side">
+                                <h4 class="blue-txt uppercase"><b>@Model.HotelDetail.HotelName</b></h4>
+                                @if (Model.HotelDetail.StarRating == 0 || Model.HotelDetail.StarRating == 1)
+                                {
+                                    <p class="star"></p>
+                                }
+                                @if (Model.HotelDetail.StarRating == 2)
+                                {
+                                    <p class="star star-2"></p>
+                                }
+                                @if (Model.HotelDetail.StarRating == 3)
+                                {
+                                    <p class="star star-3"></p>
+                                }
+                                @if (Model.HotelDetail.StarRating == 4)
+                                {
+                                    <p class="star star-4"></p>
+                                }
+                                @if (Model.HotelDetail.StarRating == 5)
+                                {
+                                    <p class="star star-5"></p>
+                                }
+                                <p class="grey-txt">
+                                    <img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/location.png")" /> @Model.HotelDetail.Address @Model.HotelDetail.DestinationName, @Model.HotelDetail.PostalCode, @Model.HotelDetail.CountryName
+                                </p>
+                                <p class="grey-txt">
+                                    <img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/phone.png")" /> @Model.HotelDetail.PhonesNumbers[0]
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="hotel-bottom">
+                    <h3><b>DETAIL PEMESANAN</b></h3>
+                    <div class="hotel-detail">
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <p style=""><b>Nomor Reservasi</b></p>
+                            </div>
+                            <div class="col-xs-9">
+                                <p style="">: <b>@Model.RsvNo</b></p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <p style=""><b>Nama Tamu</b></p>
+                            </div>
+                            <div class="col-xs-9">
+                                <p style="">: <b>@EnumDisplay.Title(Model.Pax[0].Title) @Model.Pax[0].Name</b></p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <p style=""><b>Check-In</b></p>
+                            </div>
+                            <div class="col-xs-9">
+                                <p style="">: <b>@Model.HotelDetail.CheckInDate.ToString("D", CultureInfo.CreateSpecificCulture("id-ID"))</b></p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <p style=""><b>Check-Out</b></p>
+                            </div>
+                            <div class="col-xs-9">
+                                <p style="">: <b>@Model.HotelDetail.CheckOutDate.ToString("D", CultureInfo.CreateSpecificCulture("id-ID"))</b></p>
+                            </div>
+                        </div>
+                        <div class="row grey-txt">
+                            <div class="col-xs-3">
+                                <p>Tipe Kamar</p>
+                            </div>
+                            <div class="col-xs-9">
+                                <p>: @HotelService.GetInstance().GetHotelRoom(Model.HotelDetail.Rooms[0].RoomCode).RoomDescId @HotelService.GetInstance().GetHotelBoardDescId(Model.HotelDetail.Rooms[0].Rates[0].Boards)</p>
+                            </div>
+                        </div>
+                        <div class="row grey-txt">
+                            <div class="col-xs-3">
+                                <p>Jumlah Tamu per Kamar</p>
+                            </div>
+                            <div class="col-xs-9">
+                                <p>
+                                    : @Model.HotelDetail.Rooms[0].Rates[0].AdultCount Dewasa @if (Model.HotelDetail.Rooms[0].Rates[0].ChildCount > 0)
+                                    {
+                                        <span>, @Model.HotelDetail.Rooms[0].Rates[0].ChildCount Anak </span>
+                                        <span>
+                                            (
+                                            @for (var a = 0; a < Model.HotelDetail.Rooms[0].Rates[0].ChildrenAges.Count; a++)
+                                            {
+                                                if (a != Model.HotelDetail.Rooms[0].Rates[0].ChildrenAges.Count - 1)
+                                                {
+                                                    @Model.HotelDetail.Rooms[0].Rates[0].ChildrenAges[a]
+                                                    <span>Tahun, </span>
+                                                }
+                                                else
+                                                {
+                                                    @Model.HotelDetail.Rooms[0].Rates[0].ChildrenAges[a] <span>Tahun</span>
+                                                }
+                                            }
+                                            )
+                                        </span>
+                                    }
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <div class="row grey-txt">
+                            <div class="col-xs-3">
+                                <p>Jumlah Kamar</p>
+                            </div>
+                            <div class="col-xs-9">
+                                <p>: @Model.HotelDetail.Rooms[0].Rates[0].RoomCount</p>
+                            </div>
+                        </div>
+                        @if (Model.HotelDetail.Rooms[0].Rates[0].TermAndCondition.Count != 0
+                            && !Model.HotelDetail.Rooms[0].Rates[0].TermAndCondition.Exists(r => r.Length < 3))
+                        {
+                            <div class="row grey-txt">
+                                <div class="col-xs-3">
+                                    <p>Ketentuan</p>
+                                </div>
+                                <div class="col-xs-9">
+                                    <p>: @String.Join(". ", Model.HotelDetail.Rooms[0].Rates[0].TermAndCondition)</p>
+                                </div>
+                            </div>
+                        }
+
+                        @if (Model.HotelDetail.SpecialRequest != null && Model.HotelDetail.SpecialRequest.Length != 0)
+                        {
+                            <div class="row grey-txt">
+                                <div class="col-xs-3">
+                                    <p style="color: #525252;">Permintaan Khusus</p>
+                                </div>
+                                <div class="col-xs-9">
+                                    <p style="">@Model.HotelDetail.SpecialRequest</p>
+                                </div>
+                            </div>
+                        }
+                        <div class="row grey-txt">
+                            <div class="col-xs-3">
+                                <p>Termasuk Sarapan?</p>
+                            </div>
+                            <div class="col-xs-9">
+                                @if (Model.HotelDetail.Rooms[0].Rates[0].Boards != "RO")
+                                {
+                                    <p> : Ya</p>
+                                }
+                                @if (Model.HotelDetail.Rooms[0].Rates[0].Boards == "RO")
+                                {
+                                    <p> : Tidak</p>
+                                }
+                            </div>
+                        </div>
+
+                        <div class="row grey-txt">
+                            <div class="col-xs-3">
+                                <p>Fasilitas</p>
+                            </div>
+                            <div class="col-xs-9">
+                                <p>
+                                    @if (Model.HotelDetail.IsWifiAccessAvailable)
+                                    {
+                                        <span><img class="img-wifi" src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/wifi.png")" />Wi-fi</span>
+                                    }
+                                    @if (Model.HotelDetail.IsRestaurantAvailable)
+                                    {
+                                        <span><img class="img-swim" src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/swim.png")" />Kolam Renang</span>
+                                    }
+                                </p>
+
+                                @if (Model.HotelDetail.Facilities.Other.Count != 0)
+                                {
+                                    var facilities = Model.HotelDetail.Facilities.Other.Where(f => f.Length > 0).ToList();
+                                    if (facilities.Count == 1)
+                                    {
+                                        <p>@facilities[0]</p>
+                                    }
+                                    else
+                                    {
+                                        <div class="col-half">
+                                            @for (var i = 0; i < facilities.Count / 2; i++)
+                                            {
+                                                <p>@facilities[i]</p>
+                                            }
+                                        </div>
+                                        <div class="col-half">
+                                            @for (var j = facilities.Count / 2;
+                                                j < facilities.Count; j++)
+                                            {
+                                                <p>@facilities[j]</p>
+                                            }
+                                        </div>
+                                    }
+                                }
+
+                            </div>
+                        </div>
+                        <div class="row grey-txt">
+                            <div class="col-xs-3">
+                                <p>Client Reference</p>
+                            </div>
+                            <div class="col-xs-9">
+                                <p>: @Model.HotelDetail.ClientReference</p>
+                            </div>
+                        </div>
+
+                        <div class="row grey-txt">
+                            <div class="col-xs-12">
+                                <p style="font-size: 8px; font-style: italic">
+                                    &quot;Payable through @Model.HotelDetail.SupplierName, acting as agent for the service operating
+
+                                    company, details of which can be provided upon request&quot;. VAT: @Model.HotelDetail.SupplierVat
+
+                                    Reference: @Model.HotelDetail.BookingReference
+                                </p>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</body>
+</html>

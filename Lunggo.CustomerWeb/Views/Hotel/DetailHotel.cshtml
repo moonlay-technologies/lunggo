@@ -1,0 +1,391 @@
+﻿@using Lunggo.ApCommon.Hotel.Service
+@model Lunggo.CustomerWeb.Models.HotelDetailModel.HotelDetail
+@{
+    Layout = "/Views/Shared/Travorama20/_Layout20150929.cshtml";
+    ViewBag.BodyClass = "page-hotel page-detail";
+    ViewBag.Title = "Detail Hotel";
+    ViewBag.AngularController = "hotelDetailController";
+}
+@{
+    var hotelCd = Model.HotelCode;
+    var hotelDetail = HotelService.GetInstance().GetHotelDetailFromTableStorage(Convert.ToInt32(hotelCd));
+    var loc = ToTitleCase(hotelDetail.HotelName + ", " + hotelDetail.City) ;
+}
+
+@functions{
+
+    public string ToTitleCase(string input)
+    {
+
+        var text = "";
+        try
+        {
+            var splittedText = input.Split(' ');
+            foreach (var word in splittedText)
+            {
+                var splittedByStrips = word.Split('-');
+                var w = "";
+                if (splittedByStrips.Count() != 1)
+                {
+                    foreach (var part in splittedByStrips)
+                    {
+                        w += ApplyTitleCase(part) + "-";
+                    }
+                    text += w.Substring(0, w.Length - 1) + " ";
+                }
+                else
+                {
+                    text += word[0] + word.Substring(1, word.Length - 1).ToLower() + " ";
+                }
+            }
+
+        }
+        catch
+        {
+
+        }
+        return text.Length == 0 ? "" : text.Substring(0, text.Length - 1);
+    }
+
+    public string ApplyTitleCase(string input)
+    {
+        return input[0] + input.Substring(1, input.Length - 1).ToLower();
+    }
+
+}
+@section AdditionalCSS{
+    <link href="/Assets/css/jquery-ui.min.css" rel="stylesheet" />
+    <link href="/Assets/vendor/lightslider/lightslider.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="/Assets/vendor/slick/slick.css" />
+}
+
+@section AdditionalJS {
+    <script src="/Assets/js/angular.min.js"></script>
+    <script src="/Assets/js/angular-animate.min.js"></script>
+    <script src="/Assets/js/angular-route.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="/Assets/js/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="/Scripts/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/Assets/vendor/slick/slick.min.js"></script>
+    <script src="/Assets/vendor/lightslider/lightslider.js"></script>
+}
+
+@section PageJS{
+    <script>var loc = '@loc';</script>
+    <script src="/Assets/travorama20/js/hotelDetailController.js"></script>
+    <script type="text/javascript" src="/Assets/travorama20/js/HotelController.js"></script>
+    <script>accordionFunctions()</script>
+    <script src="/Assets/travorama20/angularDirectory/search/hotelSearch.service.js"></script>
+    <script src="/Assets/travorama20/angularDirectory/common/hotelAutocomplete.service.js"></script>
+}
+
+@Html.Partial("/Views/Hotel/Shared/Desktop/_PageSlider.cshtml")
+<div class="travorama-hotel" ng-init="init(@Newtonsoft.Json.JsonConvert.SerializeObject(Model))" ng-class="{'page-loaded' : pageLoaded}">
+    <div class="container">
+        <div class="detail-hotel-content">
+            @Html.Partial("/Views/Hotel/Shared/Desktop/_BreadCrumb.cshtml")
+
+            <div class="detail-hotel">
+                <div class="big-slider">
+                    <div class="top-desc">
+                        <span class="slider-title-lg blue-txt">{{hotel.hotelName}}</span>
+                        <div class="" ng-class="{
+                                     '':hotel.starRating.indexOf('0')>-1,
+                                     'star-1':hotel.starRating.indexOf('1')>-1,
+                                     'star-2':hotel.starRating.indexOf('2')>-1,
+                                     'star-3':hotel.starRating.indexOf('3')>-1,
+                                     'star-4':hotel.starRating.indexOf('4')>-1,
+                                     'star-5':hotel.starRating.indexOf('5')>-1}">
+                        </div>
+                        <br />
+                        <span class="address" style="text-transform: capitalize">{{hotel.address}} {{hotel.city}} {{hotel.postalCd}}, {{hotel.country}}</span>
+                        @*<a href="#" class="btn-blue small">Lihat Peta</a>*@
+                    </div>
+                    <div class="slider-container clearfix">
+                        <div class="slider clearfix">
+                            <ul id="image-gallery" class="gallery list-unstyled cS-hidden">
+                                <li data-thumb="{{image}}" alt-image ng-repeat="image in hotel.images">
+                                    <div test="{{image}}" alt-image style="background-image: url({{image}}); width: 100%; height: 590px; background-size: cover; background-position: center center;"></div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-right-slider">
+                            <div class="rs-title md-txt">Review Hotel</div>
+                            <div class="rs-list rs-rating clearfix">
+                                <div class="col-left-rs"><span class="rs-txt-big blue-txt">8.0</span></div>
+                                <div class="col-right-rs">
+                                    Sangat Baik <br />
+                                    <span class="blue-txt italic-txt sm-txt">Dari 100 Ulasan</span>
+                                </div>
+                            </div>
+                            <div class="rs-list rs-review">
+                                <div class="blue-txt"><b>Ulasan dari Travorama</b></div>
+                                <div class="review-bar clearfix">
+                                    <div class="rb-container clearfix">
+                                        <div class="rb-left">Kebersihan</div>
+                                        <div class="rb-mid">:</div>
+                                        <div class="rb-right">
+                                            <div class="bar-horizontal">
+                                                <span class="bar-range"></span>
+                                            </div>
+                                            <span class="total-review blue-txt">(8.6)</span>
+                                        </div>
+                                    </div>
+                                    <div class="rb-container clearfix">
+                                        <div class="rb-left">Kenyamanan</div>
+                                        <div class="rb-mid">:</div>
+                                        <div class="rb-right">
+                                            <div class="bar-horizontal">
+                                                <span class="bar-range"></span>
+                                            </div>
+                                            <span class="total-review blue-txt">(8.6)</span>
+                                        </div>
+                                    </div>
+                                    <div class="rb-container clearfix">
+                                        <div class="rb-left">Pelayanan</div>
+                                        <div class="rb-mid">:</div>
+                                        <div class="rb-right">
+                                            <div class="bar-horizontal">
+                                                <span class="bar-range"></span>
+                                            </div>
+                                            <span class="total-review blue-txt">(8.6)</span>
+                                        </div>
+                                    </div>
+                                    <div class="rb-container clearfix">
+                                        <div class="rb-left">Makanan</div>
+                                        <div class="rb-mid">:</div>
+                                        <div class="rb-right">
+                                            <div class="bar-horizontal">
+                                                <span class="bar-range"></span>
+                                            </div>
+                                            <span class="total-review blue-txt">(8.6)</span>
+                                        </div>
+                                    </div>
+                                    <div class="rb-container clearfix">
+                                        <div class="rb-left">Lokasi</div>
+                                        <div class="rb-mid">:</div>
+                                        <div class="rb-right">
+                                            <div class="bar-horizontal">
+                                                <span class="bar-range"></span>
+                                            </div>
+                                            <span class="total-review blue-txt">(8.6)</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="btn-container"><a class="btn-blue big" href="#">Selengkapnya</a></div>
+
+                            </div>
+                            <div class="rs-list rs-ta">
+                                <div class="ta-title green-txt"><b>Rating dari TripAdvisor</b></div>
+                                <div class="grey-txt sm-txt italic-txt">Dari 900 ulasan</div>
+                                <div class="btn-container"><a class="btn-green" href="#">Selengkapnya</a></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-hotel clearfix">
+                    <div class="col-left-hotel mh-title md-txt">Informasi Hotel</div>
+                    <ul class=" col-right-hotel mh-container">
+                        <li class="mh-list"><a href="#menu-facility">Fasilitas Hotel</a></li>
+                        <li class="mh-list"><a href="#menu-desc">Deskripsi Hotel</a></li>
+                        <li class="mh-list"><a href="#menu-tnc">Syarat & Ketentuan Hotel</a></li>
+                    </ul>
+                </div>
+                <div class="room clearfix">
+                    <div class="top-title clearfix">
+                        <div class="col-left-rs bg-title"><b>Pilih</b> Kamar </div>
+                        <div class="col-right-rs total-day">{{hotel.nightCount}} Malam <b>( {{hotel.checkinDate | date : 'EEEE, dd MMM yyyy'}} - {{hotel.checkoutDate | date : 'EEEE, dd MMM yyyy'}} )</b></div>
+                    </div>
+                    <div class="room-sort clearfix">
+                        <div class="col-6">Tipe Kamar</div>
+                        <div class="col-4">Harga Kamar</div>
+                    </div>
+                    <ul class="room-list-container">
+                        <li ng-show="$index+1 <= roomCount" ng-repeat="room in hotel.room track by $index">
+                            <div class="room-list clearfix">
+                                <div class="room-left" ng-show="room.roomImages === undefined || room.roomImages.length <= 0"><div class="no-room-pic"></div></div>
+                                <div class="room-left" ng-show="room.roomImages !== undefined && room.roomImages.length > 0"><div class="room-pic" alt-image style="background-image: url({{room.roomImages[0]}});"></div></div>
+                                <div class="room-right clearfix">
+                                    <div class="room-rl">
+                                        <div class="blue-txt md-txt"><b>{{room.roomName}}</b></div>
+                                        <div class="facility"></div>
+                                        <div class="max-people">Maks <b>{{room.paxCapacity}} orang / kamar</b></div>
+                                        @*<div ng-show="roomIsRefundable(room, $index)">Pembatalan Gratis </div>*@
+                                        <div ng-show="room.rate.isFreeCancel">Pembatalan Gratis </div>
+                                        <div ng-show="!room.rate.isFreeCancel && room.rate.isRefundable">Kebijakan Pembatalan Berlaku </div>
+                                        <div ng-show="!room.rate.isFreeCancel && !room.rate.isRefundable">TIdak Dapat Dibatalkan </div>
+                                        <div class="info-room">
+                                            <span class="info-icon italic-txt">i</span>
+                                            <span class="blue-txt sm-txt">Info Kamar</span>
+                                        </div>
+                                    </div>
+                                    <div class="room-rm">
+                                        <div class="dropdown-container">
+                                            <div class="form-control change-room">
+                                                <span>1</span>
+                                                <div class="option">
+                                                    <span data-value="y">2</span>
+                                                    <span data-value="c">3</span>
+                                                    <span data-value="f">4</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="room-rr">
+                                        <div class="underline-txt">Rp {{room.rate.originalFare | number}}</div>
+                                        <div class="lg-txt"><b><sup>Rp</sup> {{room.rate.netFare | number}}</b></div>
+                                        <div class="xs-txt">*Harga Termasuk Pajak & Service Charge</div>
+                                        <a href="" class="btn btn-yellow small" ng-click="bookRoom(room)">PESAN</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="hotel-detail clearfix">
+                                <div class=" col-left-result">
+                                    <div class="col-left-top clearfix">
+                                        <div class="sm-slider">
+                                            @*<div class="item active">
+                                                <img src="/Assets/travorama20/images/Hotel/mini-slider.jpg" />
+                                            </div>*@
+                                            <ul class="room-gallery gallery list-unstyled cS-hidden">
+                                                <li data-thumb="{{roomImage}}" ng-repeat="roomImage in room.roomImages track by $index">
+                                                    <div style="background-image: url({{roomImage}}); width: 100%; height: 145px; background-size: cover; background-position: center center;"></div>
+                                                    <div class="total-img"><b>{{$index+1}}</b> / {{room.roomImages.length}}</div>
+                                                </li>
+                                                @*<li data-thumb="/Assets/travorama20/images/Hotel/mini-slider.jpg">
+                                                    <div style="background-image: url(/Assets/travorama20/images/Hotel/mini-slider.jpg); width: 100%; height: 145px; background-size: cover; background-position: center center;"></div>
+                                                </li>*@
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="col-left-bottom">
+                                        <ul class="hd-list">
+                                            <li class="hd-size">: 3 x 3 m</li>
+                                            <li class="hd-bed">: {{room.rate.boardDesc}}</li>
+                                            <li class="hd-view">: City View</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="col-right-result">
+                                    <div class="hd-right-container">
+                                        <ul class="hd-description">
+                                            <li class="hd-point">
+                                                <div class="hd-title blue-txt">Kebijakan Pembatalan</div>
+                                                <div class="hd-txt">
+                                                    <ul class="blue-list" style="margin-bottom: 0;">
+                                                        <li ng-show="room.rate.isFreeCancel">
+                                                            Gratis pembatalan sebelum <span style="color:#1daee4">{{room.rate.freeUntil | date:'dd MMM yyyy HH:mm'}}</span> WIB.
+                                                        </li>
+                                                    </ul>
+                                                    <ul class="blue-list">
+                                                        <li ng-repeat="cancellation in room.rate.cancellation track by $index">
+                                                            @*Gratis pembatalan sebelum 17-Nov-2016 17:00.*@
+                                                            - Pembatalan setelah <span style="color:#1daee4">{{cancellation.startTime | date:'dd MMM yyyy '}}</span>
+                                                            akan dikenakan biaya pembatalan sebesar <span style="color:#ff7200">Rp {{cancellation.singleFee | number}}</span>.
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </li>
+
+                                            <li class="hd-point">
+                                                <div class="hd-title blue-txt">Ketentuan Kamar</div>
+                                                <div class="hd-txt">
+                                                    <ul class="blue-list">
+                                                        <li ng-repeat="tnc in room.rate.tnc">{{tnc}}</li>
+                                                    </ul>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="hotel-result clearfix">
+                        <span class="hotel-result-txt">Jumlah Tipe Kamar Tersedia: <b>{{hotel.room.length}}</b></span>
+                        <a href="" class="btn-hotel-result btn-blue small" ng-click="togleDisplay()">
+                            Tampilkan
+                            <text ng-show="roomCount == minRoomCount">semua</text>
+                            <text ng-show="roomCount == maxRoomCount">sebagian</text>
+                        </a>
+                    </div>
+                    <span ng-show="!searchDone" class="text-center">
+                        <img src="/Assets/images/load.gif" class="img-loading">
+                    </span>
+                </div>
+                <div class="info-hotel">
+                    <div class="top-title clearfix">
+                        <div class="col-left-rs bg-title"><b>Fasilitas</b> </div>
+                    </div>
+                    <div class="ih-accordion">
+                        <div class="accordion-wrapper">
+                            <div class="accordion-title accordion md-txt" id="menu-facility">Fasilitas Hotel</div>
+                            <div class="accordion-content show">
+                                <div class="ih-row clearfix" ng-repeat="facilities in hotel.facilities track by $index" ng-hide="facilities === undefined">
+                                    <div class="col-2">
+                                        <div class="ih-left" ng-class="{'general-lg-icon':facilities.facilityGroup == 'general',
+                                                                        'health-lg-icon':facilities.facilityGroup == 'health',
+                                                                        'sport-lg-icon':facilities.facilityGroup == 'sport',
+                                                                        'business-lg-icon':facilities.facilityGroup == 'business',
+                                                                        'meal-lg-icon':facilities.facilityGroup == 'meal',
+                                                                        'ent-lg-icon':facilities.facilityGroup == 'entertainment',
+                                                                        'other-lg-icon':facilities.facilityGroup == 'other'}">
+                                            {{facilities.facilityGroup | uppercase}}
+                                        </div>
+                                    </div>
+                                    <div class="col-8">
+                                        <div class="ih-right quarter clearfix" ng-repeat="facilityList in facilities.facilityList">
+                                            <ul class="blue-list">
+                                                <li ng-repeat="facilityName in facilityList">{{facilityName}}</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tnc-hotel italic-txt">* Fasilitas berbayar</div>
+                            </div>
+                            <div ng-show="hotel.description.length > 0" class="accordion-title accordion md-txt" id="menu-desc">Deskripsi Hotel</div>
+                            <div ng-show="hotel.description.length > 0" class="accordion-content show">
+                                @*<div class="ih-title md-txt">“Clean rooms, Great location, Spotless beds”</div>*@
+                                <div class="ih-desc clearfix" ng-repeat="description in hotel.description track by $index">
+                                    {{description}}
+                                </div>
+                            </div>
+                            <div ng-show="hotel.policy.length > 0" class="accordion-title accordion md-txt" id="menu-tnc">Perlu Diingat</div>
+                            <div ng-show="hotel.policy.length > 0" class="accordion-content show">
+                                <div class="snk-container clearfix">
+                                    @*Syarat dan Kettentuan Hotel Swiss Bell Hotel - Singapore:*@
+                                    <ul class="blue-list">
+                                        <li ng-repeat="policy in hotel.policy track by $index">{{policy}}</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="select-flight" ng-show="booking">
+        <div class=" overlay-content">
+            <section style="padding-top:60px; padding-left:225px;">
+                <div><img src="/Assets/images/travorama-logo-color.png" height="22px" width="80px"></div>
+                <div style="padding-top:20px;"><span style="color: #15b1e4; font-size:20px"><b>Mohon Tunggu...</b></span></div>
+                <div><img src="~/Assets/images/popup/paymentyellowstrip.png" /></div>
+                <div style="padding-top:5px;"><span style="font-size:14px">Mengalihkan Anda ke halaman checkout.</span></div>
+            </section>
+        </div>
+    </div>
+    <div class="bookfailed-popup" ng-show="selectFailed">
+        <div class="overlay-content">
+            <section style="padding-top:60px; padding-left:225px;">
+                <div><img src="/Assets/images/travorama-logo-color.png" height="22px" width="80px"></div>
+                <div style="padding-top:25px;"><span style="color: #15b1e4; font-size:26px"><b>Mohon maaf...</b></span></div>
+                <div style="padding-top:5px;"><span style="font-size:13px">Hotel ini <span style="color: #15b1e4;font-size:13px"><b>sudah tidak tersedia</b></span>.</span></div>
+                <div><span style="font-size:13px">Silakan klik tombol di bawah untuk kembali ke halaman awal.</span></div>
+            </section>
+            <div align="right" style="padding-right:30px;padding-top:30px;">
+                <a class="btn popup-btn-yellow book-failed" href="{{returnUrl}}"><b>CARI ULANG</b></a>
+            </div>
+        </div>
+    </div>
+</div>

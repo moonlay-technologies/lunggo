@@ -3,7 +3,7 @@ using Lunggo.Framework.Database;
 
 namespace Lunggo.ApCommon.Flight.Query
 {
-    internal class UpdateBookingStatusQuery : NoReturnQueryBase<UpdateBookingStatusQuery>
+    internal class UpdateBookingStatusQuery : NoReturnDbQueryBase<UpdateBookingStatusQuery>
     {
         protected override string GetQuery(dynamic condition = null)
         {

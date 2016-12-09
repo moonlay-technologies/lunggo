@@ -1,22 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Net;
-using System.Net.Mail;
 using System.Web;
 using Lunggo.ApCommon.Flight.Constant;
-using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Model.Logic;
 using Lunggo.ApCommon.Flight.Service;
 using Lunggo.ApCommon.Identity.Auth;
 using Lunggo.ApCommon.Identity.Users;
 using Lunggo.ApCommon.Product.Constant;
-using Lunggo.ApCommon.Product.Model;
 using Lunggo.Framework.Config;
 using Lunggo.Framework.Context;
 using Lunggo.Framework.Extension;
 using Lunggo.Framework.Log;
-using Lunggo.Framework.Mail;
 using Lunggo.WebAPI.ApiSrc.Common.Model;
 using Lunggo.WebAPI.ApiSrc.Flight.Model;
 
@@ -36,19 +30,20 @@ namespace Lunggo.WebAPI.ApiSrc.Flight.Logic
                 {
                     var log = LogService.GetInstance();
                     var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
-                    log.Post(
-                        "```Booking API Log```"
-                        + "\n`*Environment :* " + env.ToUpper()
-                        + "\n*REQUEST :*\n"
-                        + request.Serialize()
-                        + "\n*RESPONSE :*\n"
-                        + apiResponse.Serialize()
-                        + "\n*LOGIC RESPONSE :*\n"
-                        + bookServiceResponse.Serialize()
-                        + "\n*Platform :* "
-                        + Client.GetPlatformType(HttpContext.Current.User.Identity.GetClientId())
-                        + "\n*Itinerary :* \n"
-                        + FlightService.GetInstance().GetItineraryForDisplay(request.Token).Serialize());
+                        log.Post(
+                            "```Booking API Log```"
+                            + "\n`*Environment :* " + env.ToUpper()
+                            + "\n*REQUEST :*\n"
+                            + request.Serialize()
+                            + "\n*RESPONSE :*\n"
+                            + apiResponse.Serialize()
+                            + "\n*LOGIC RESPONSE :*\n"
+                            + bookServiceResponse.Serialize()
+                            + "\n*Platform :* "
+                            + Client.GetPlatformType(HttpContext.Current.User.Identity.GetClientId())
+                            + "\n*Itinerary :* \n"
+                            + FlightService.GetInstance().GetItineraryForDisplay(request.Token).Serialize(),
+                            env == "production" ? "#logging-prod" : "#logging-dev");
                 }
                 return apiResponse;
             }

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using Lunggo.ApCommon.Product.Constant;
 
 namespace Lunggo.ApCommon.Campaign.Model
 {
@@ -19,5 +21,8 @@ namespace Lunggo.ApCommon.Campaign.Model
         public String CampaignTypeCd { get; set; }
         public bool? CampaignStatus { get; set; }
         public bool? IsSingleUsage { get; set; }
+        public String ProductType { get; set; }
+        public Decimal? MaxBudget { get; set; }
+        public Decimal? UsedBudget { get; set; }
     }
 }

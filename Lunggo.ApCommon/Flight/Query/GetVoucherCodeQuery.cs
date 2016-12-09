@@ -3,7 +3,7 @@ using Lunggo.Framework.Database;
 
 namespace Lunggo.ApCommon.Flight.Query
 {
-    internal class GetVoucherCodeQuery : QueryBase<GetVoucherCodeQuery, string>
+    internal class GetVoucherCodeQuery : DbQueryBase<GetVoucherCodeQuery, string>
     {
         protected override string GetQuery(dynamic condition = null)
         {

@@ -1,31 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Security.Claims;
-using System.Text;
 using System.Threading.Tasks;
 using System.Web;
-using Lunggo.ApCommon.Campaign.Model;
-using Lunggo.ApCommon.Campaign.Service;
 using Lunggo.ApCommon.Flight.Constant;
-
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Model.Logic;
 using Lunggo.ApCommon.Identity.Auth;
 using Lunggo.ApCommon.Identity.Users;
-using Lunggo.ApCommon.Payment;
 using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.ApCommon.Payment.Model;
 using Lunggo.ApCommon.Payment.Service;
 using Lunggo.ApCommon.Product.Constant;
 using Lunggo.ApCommon.Product.Model;
 using Lunggo.ApCommon.Sequence;
-using Lunggo.ApCommon.Voucher;
-using System.Diagnostics;
 using Lunggo.Framework.Config;
 using Lunggo.Framework.Context;
-using Lunggo.Framework.Extension;
 
 namespace Lunggo.ApCommon.Flight.Service
 {

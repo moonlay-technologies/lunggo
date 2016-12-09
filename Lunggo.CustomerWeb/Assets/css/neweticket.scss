@@ -146,3 +146,95 @@ Site Footer
 .page-footer {position:absolute; width:100%; bottom:0; padding-bottom:10px; -webkit-print-color-adjust:exact; 
 }
 
+/*Voucher Hotel*/
+.page-hotel-voucher {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 12px;
+    .col-half {
+       width: 50%;
+       float: left;
+       position: relative;
+       min-height: 1px;
+    }
+    h4 {font-size: 16px;}
+    h3 {font-size: 20px;}
+    .page-content {padding-bottom: 1cm;}
+    .black-txt {color: #000000;}
+    .blue-txt {color: #15b1e4;}
+    .grey-txt {color: #525252;}
+    .uppercase {text-transform: uppercase;}
+    .md-txt {font-size: 15px;}
+    .hotel-wrapper {width: 100%;
+        .hotel-top {
+            margin: 1cm 0 0.5cm;
+            &>p {
+                border-bottom: 2px solid #15b1e4;
+                margin-bottom: 0.5cm;
+            }
+        }
+        .hotel-middle {margin-top: 0.5cm;
+            .right-side {
+                padding-left: 30px; 
+                border-left: 1px solid #ddd;
+                p {margin-bottom: 0.25cm;}
+            }
+        }
+        .hotel-bottom {
+            margin-top: 0.5cm;
+            border-top: 1px solid #ddd;
+            .hotel-detail .row {margin-bottom: 0.25cm;}
+        }
+        .img-wifi, .img-phone, .img-email{padding-right: 5px;}
+        .img-swim {
+            padding-right: 5px; 
+            padding-left: 15px;
+        }
+        .img-hotel {width: 100%;}
+    }
+
+    /*Icon*/
+    .star-outline {
+        content: '';
+        display: inline-block;
+        background: url(/Assets/travorama20/images/Hotel/star-outline.png);
+        height: 16px;
+    } .so-1 {
+        @extend .star-outline;
+        width: 19px;
+        margin-left: 68px;
+    } .so-2 {
+        @extend .star-outline;
+        width: 38px;
+        margin-left: 51px;
+    } .so-3 {
+        @extend .star-outline;
+        width: 57px;
+        margin-left: 34px;
+    } .so-4 {
+        @extend .star-outline;
+        width: 76px;
+        margin-left: 17px;
+    }
+    .star {
+        display: block;
+        background: url(/Assets/travorama20/images/Hotel/star.png);
+        height: 16px;
+        width: 17px;
+        &.star-2 {width: 34px;} 
+        &.star-3 {width: 51px;}
+        &.star-4 {width: 68px;}
+        &.star-5 {width: 85px;}
+        
+        &.e-star {
+            &:after {@extend .so-4;}
+            &.star-2 {width: 34px;
+                &:after {@extend .so-3;}
+            } &.star-3 {width: 51px; 
+                &:after {@extend .so-2;}
+            } &.star-4 {width: 68px;
+                &:after {@extend .so-1;}
+            } &.star-5 {width: 85px;}
+        }
+    }
+}
+

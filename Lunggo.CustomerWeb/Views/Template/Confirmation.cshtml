@@ -5,7 +5,7 @@
 @using Lunggo.ApCommon.Payment.Constant
 @using Lunggo.Framework.Config
 @using Lunggo.ApCommon.Flight.Model
-@model Lunggo.ApCommon.Flight.Model.FlightReservationForDisplay
+@model Lunggo.ApCommon.Product.Model.ReservationForDisplayBase
 
 @{
     Layout = "/Views/Shared/Travorama20/_Layout20150929.cshtml";
@@ -205,77 +205,33 @@
                                 <div class="confirm-passenger">
                                     <h4><b>INFO PENUMPANG</b></h4>
                                     <ol>
-                                        @foreach (var passenger in Model.Passengers)
+                                        @foreach (var passenger in Model.Pax)
                                         {
-                                            <li><p>@EnumDisplay.PassengerType(passenger.Type) : @EnumDisplay.Title(passenger.Title) @passenger.FirstName @passenger.LastName</p></li>
+                                            <li><p>@EnumDisplay.PassengerType(passenger.Type) : @EnumDisplay.Title(passenger.Title) @passenger.Name</p></li>
                                         }
                                     </ol>
 
                                 </div>
-                                <div class="confirm-order">
-                                    <h4><b>DETAIL PENERBANGAN</b></h4>
+                                @if (Model is FlightReservationForDisplay)
+                                {
+                                    var reservation = Model as FlightReservationForDisplay;
+                                    <div class="confirm-order">
+                                        <h4><b>DETAIL PENERBANGAN</b></h4>
 
-                                    <div class="confirm-flight departure">
-                                        <p>Berangkat : </p>
-                                        <div class="row">
-                                            
-                                            @foreach (var segment in Model.Itinerary.Trips[0].Segments)
-                                            {
-                                                if (segment != Model.Itinerary.Trips[0].Segments.First())
-                                                {
-                                                    var transitDuration = segment.DepartureTime - prevSegment.ArrivalTime;
-                                                    <div class="col-xs-12" style="padding-top:5px;">
-                                                        <p style="width:100%; text-align:center;border-bottom:1px dashed #15b1e4; line-height:0.3em;margin:10px 0 20px;">
-                                                            <span style="background:#f4f4f4;padding:0 10px;color:#15b1e4;">Transit di @segment.DepartureCity (@segment.DepartureAirport) selama @transitDuration.ToString()</span>
-                                                        </p>
-                                                    </div>
-                                                    <!-- .transit -->
-                                                }
-                                                <div class="col-xs-2">
-                                                    <p><img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + segment.AirlineLogoUrl)" alt="@segment.AirlineName" class="flight-airline" /></p>
-                                                    <p><span>@segment.AirlineName</span></p>
-                                                </div>
-                                                <div class="col-xs-10">
-                                                    <div class="col-xs-12">
-                                                        <div class="col-xs-4">
-                                                            <p style="text-align:left; padding:0px; margin:0px;">@segment.DepartureTime.ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID"))</p>
-                                                            <p style="font-size: 12px; text-align:left; padding:0px; margin:0px;"><b>@segment.DepartureTime.ToString("HH:mm")</b></p>
-                                                            <p style="font-size: 12px; text-align:left; padding:0px; margin:0px;"><b>@segment.DepartureCity (@segment.DepartureAirport)</b></p>
-                                                            <p style="text-align:left; padding:0px; margin:0px;">@segment.DepartureAirportName</p>
-                                                        </div>
-                                                        <div class="col-xs-4" style="align-content:center;">
-                                                            <p></p>
-                                                            <p style="border-bottom:3px solid #15b1e4;padding-bottom:5px; text-align:center;"><b>Durasi:</b> @segment.Duration</p>
-                                                            <p></p>
-                                                        </div>
-                                                        <div class="col-xs-4">
-                                                            <p style="text-align:left; padding:0px; margin:0px;">@segment.ArrivalTime.ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID"))</p>
-                                                            <p style="font-size: 12px; text-align:left; padding:0px; margin:0px;"><b>@segment.ArrivalTime.ToString("HH:mm")</b></p>
-                                                            <p style="font-size: 12px; text-align:left; padding:0px; margin:0px;"><b>@segment.ArrivalCity (@segment.ArrivalAirport)</b></p>
-                                                            <p style="text-align:left; padding:0px; margin:0px;">@segment.ArrivalAirportName</p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                prevSegment = segment;
-                                            }
-                                        </div>
-                                    </div>
-                                    @if (Model.Itinerary.Trips.Count > 1)
-                                    {
-                                        <div class="confirm-flight return" style="margin-top: 20px;">
-                                            <p>Kembali : </p>
+                                        <div class="confirm-flight departure">
+                                            <p>Berangkat : </p>
                                             <div class="row">
-                                                @foreach (var segment in Model.Itinerary.Trips[1].Segments)
+                                            
+                                                @foreach (var segment in reservation.Itinerary.Trips[0].Segments)
                                                 {
-                                                    if (segment != Model.Itinerary.Trips[1].Segments.First())
+                                                    if (segment != reservation.Itinerary.Trips[0].Segments.First())
                                                     {
                                                         var transitDuration = segment.DepartureTime - prevSegment.ArrivalTime;
-                                                        <div class="col-xs-12" style="padding-top:5px;">
-                                                            <p style="width:100%; text-align:center;border-bottom:1px dashed #15b1e4; line-height:0.3em;margin:10px 0 20px;">
-                                                                <span style="background:#f4f4f4;padding:0 10px;color:#15b1e4;">Transit di @segment.DepartureCity (@segment.DepartureAirport) selama @transitDuration.ToString()</span>
+                                                        <div class="col-xs-12" style="padding-top: 5px;">
+                                                            <p style="width: 100%; text-align: center; border-bottom: 1px dashed #15b1e4; line-height: 0.3em; margin: 10px 0 20px;">
+                                                                <span style="background: #f4f4f4; padding: 0 10px; color: #15b1e4;">Transit di @segment.DepartureCity (@segment.DepartureAirport) selama @transitDuration.ToString()</span>
                                                             </p>
                                                         </div>
-
                                                         <!-- .transit -->
                                                     }
                                                     <div class="col-xs-2">
@@ -285,30 +241,78 @@
                                                     <div class="col-xs-10">
                                                         <div class="col-xs-12">
                                                             <div class="col-xs-4">
-                                                                <p style="text-align:left; padding:0px; margin:0px;">@segment.DepartureTime.ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID"))</p>
-                                                                <p style="font-size: 13px; text-align:left; padding:0px; margin:0px;"><b>@segment.DepartureTime.ToString("HH:mm")</b></p>
-                                                                <p style="font-size: 13px; text-align:left; padding:0px; margin:0px;"><b>@segment.DepartureCity (@segment.DepartureAirport)</b></p>
-                                                                <p style="text-align:left; padding:0px; margin:0px;">@segment.DepartureAirportName</p>
+                                                                <p style="text-align: left; padding: 0px; margin: 0px;">@segment.DepartureTime.GetValueOrDefault().ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID"))</p>
+                                                                <p style="font-size: 12px; text-align: left; padding: 0px; margin: 0px;"><b>@segment.DepartureTime.GetValueOrDefault().ToString("HH:mm")</b></p>
+                                                                <p style="font-size: 12px; text-align: left; padding: 0px; margin: 0px;"><b>@segment.DepartureCity (@segment.DepartureAirport)</b></p>
+                                                                <p style="text-align: left; padding: 0px; margin: 0px;">@segment.DepartureAirportName</p>
                                                             </div>
-                                                            <div class="col-xs-4" style="align-content:center;">
+                                                            <div class="col-xs-4" style="align-content: center;">
                                                                 <p></p>
-                                                                <p style="border-bottom:3px solid #15b1e4;padding-bottom:5px; text-align:center;"><b>Durasi:</b> @segment.Duration</p>
+                                                                <p style="border-bottom: 3px solid #15b1e4; padding-bottom: 5px; text-align: center;"><b>Durasi:</b> @segment.Duration</p>
                                                                 <p></p>
                                                             </div>
                                                             <div class="col-xs-4">
-                                                                <p style="text-align:left; padding:0px; margin:0px;">@segment.ArrivalTime.ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID"))</p>
-                                                                <p style="font-size: 13px; text-align:left; padding:0px; margin:0px;"><b>@segment.ArrivalTime.ToString("HH:mm")</b></p>
-                                                                <p style="font-size: 13px; text-align:left; padding:0px; margin:0px;"><b>@segment.ArrivalCity (@segment.ArrivalAirport)</b></p>
-                                                                <p style="text-align:left; padding:0px; margin:0px;">@segment.ArrivalAirportName</p>
+                                                                <p style="text-align: left; padding: 0px; margin: 0px;">@segment.ArrivalTime.GetValueOrDefault().ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID"))</p>
+                                                                <p style="font-size: 12px; text-align: left; padding: 0px; margin: 0px;"><b>@segment.ArrivalTime.GetValueOrDefault().ToString("HH:mm")</b></p>
+                                                                <p style="font-size: 12px; text-align: left; padding: 0px; margin: 0px;"><b>@segment.ArrivalCity (@segment.ArrivalAirport)</b></p>
+                                                                <p style="text-align: left; padding: 0px; margin: 0px;">@segment.ArrivalAirportName</p>
                                                             </div>
                                                         </div>
-                                                </div>
-                                                prevSegment = segment;
+                                                    </div>
+                                                    prevSegment = segment;
                                                 }
                                             </div>
                                         </div>
-                                    }
-                                </div>
+                                        @if (reservation.Itinerary.Trips.Count > 1)
+                                        {
+                                            <div class="confirm-flight return" style="margin-top: 20px;">
+                                                <p>Kembali : </p>
+                                                <div class="row">
+                                                    @foreach (var segment in reservation.Itinerary.Trips[1].Segments)
+                                                    {
+                                                        if (segment != reservation.Itinerary.Trips[1].Segments.First())
+                                                        {
+                                                            var transitDuration = segment.DepartureTime - prevSegment.ArrivalTime;
+                                                            <div class="col-xs-12" style="padding-top: 5px;">
+                                                                <p style="width: 100%; text-align: center; border-bottom: 1px dashed #15b1e4; line-height: 0.3em; margin: 10px 0 20px;">
+                                                                    <span style="background: #f4f4f4; padding: 0 10px; color: #15b1e4;">Transit di @segment.DepartureCity (@segment.DepartureAirport) selama @transitDuration.ToString()</span>
+                                                                </p>
+                                                            </div>
+
+                                                            <!-- .transit -->
+                                                        }
+                                                        <div class="col-xs-2">
+                                                            <p><img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + segment.AirlineLogoUrl)" alt="@segment.AirlineName" class="flight-airline" /></p>
+                                                            <p><span>@segment.AirlineName</span></p>
+                                                        </div>
+                                                        <div class="col-xs-10">
+                                                            <div class="col-xs-12">
+                                                                <div class="col-xs-4">
+                                                                    <p style="text-align: left; padding: 0px; margin: 0px;">@segment.DepartureTime.GetValueOrDefault().ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID"))</p>
+                                                                    <p style="font-size: 13px; text-align: left; padding: 0px; margin: 0px;"><b>@segment.DepartureTime.GetValueOrDefault().ToString("HH:mm")</b></p>
+                                                                    <p style="font-size: 13px; text-align: left; padding: 0px; margin: 0px;"><b>@segment.DepartureCity (@segment.DepartureAirport)</b></p>
+                                                                    <p style="text-align: left; padding: 0px; margin: 0px;">@segment.DepartureAirportName</p>
+                                                                </div>
+                                                                <div class="col-xs-4" style="align-content: center;">
+                                                                    <p></p>
+                                                                    <p style="border-bottom: 3px solid #15b1e4; padding-bottom: 5px; text-align: center;"><b>Durasi:</b> @segment.Duration</p>
+                                                                    <p></p>
+                                                                </div>
+                                                                <div class="col-xs-4">
+                                                                    <p style="text-align: left; padding: 0px; margin: 0px;">@segment.ArrivalTime.GetValueOrDefault().ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID"))</p>
+                                                                    <p style="font-size: 13px; text-align: left; padding: 0px; margin: 0px;"><b>@segment.ArrivalTime.GetValueOrDefault().ToString("HH:mm")</b></p>
+                                                                    <p style="font-size: 13px; text-align: left; padding: 0px; margin: 0px;"><b>@segment.ArrivalCity (@segment.ArrivalAirport)</b></p>
+                                                                    <p style="text-align: left; padding: 0px; margin: 0px;">@segment.ArrivalAirportName</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        prevSegment = segment;
+                                                    }
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+                                }
                             </div>
                         </section><!-- .order-detail -->
                         <!--</section>-->

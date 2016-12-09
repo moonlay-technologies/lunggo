@@ -1,5 +1,6 @@
-﻿
-
+﻿using System.Collections.Generic;
+using Lunggo.ApCommon.Hotel.Model;
+using Lunggo.ApCommon.Hotel.Service;
 using Lunggo.ApCommon.Flight.Service;
 
 namespace Lunggo.ApCommon.Trie
@@ -11,7 +12,8 @@ namespace Lunggo.ApCommon.Trie
         internal TrieNode AirlineIndex = new TrieNode();
         internal TrieNode AirportIndex = new TrieNode();
         internal TrieNode HotelLocationIndex = new TrieNode();
-
+        internal TrieNode HotelAutocompleteIndex = new TrieNode();
+        public List<HotelAutoComplete> AutoCompletes = HotelService.GetInstance().GetAutocompleteFromBlob(); 
         private TrieIndexService()
         {
             
@@ -28,6 +30,7 @@ namespace Lunggo.ApCommon.Trie
             {
                 InitAirlineIndex();
                 InitAirportIndex();
+                InitHotelAutocompleteIndex();
                 InitHotelLocationIndex();
                 _isInitialized = true;
             }
@@ -60,6 +63,28 @@ namespace Lunggo.ApCommon.Trie
                 HotelLocationIndex.InsertWordsBySentence(hotelLocation.Value.CountryName, hotelLocation.Key);
                 HotelLocationIndex.InsertWordsBySentence(hotelLocation.Value.LocationName, hotelLocation.Key);
                 HotelLocationIndex.InsertWordsBySentence(hotelLocation.Value.RegionName, hotelLocation.Key);
+            }
+        }
+
+        private void InitHotelAutocompleteIndex()
+        {
+            var name = "";
+            foreach (var item in AutoCompletes)
+            {
+                switch (item.Type)
+                {
+                    case 1:
+                        name = item.Destination + ", " + item.Country;
+                        break;
+                    case 2:
+                        name = item.Zone + ", " + item.Destination + ", " + item.Country;
+                        break;
+                    case 4:
+                        name = item.HotelName + ", " + item.Destination + ", " + item.Country;
+                        break;
+                }
+
+                HotelAutocompleteIndex.InsertWordsBySentence(name, item.Id);
             }
         }
     }

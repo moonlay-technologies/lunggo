@@ -12,11 +12,14 @@ namespace Lunggo.WebJob.FlightCrawler
         public static void ProcessCrawlQueue2([QueueTrigger("flightcrawl2")] string searchId)
         {
             var flight = FlightService.GetInstance();
-            Console.WriteLine("Searching for "+searchId+" from supplier 2...");
+            var searchParam = searchId.Split('|')[0];
+            var searchTimeOut = DateTime.Parse(searchId.Split('|')[1]);
+            Console.WriteLine("Searching for " + searchParam + " from supplier 2...");
             var sw = Stopwatch.StartNew();
-            flight.CommenceSearchFlight(searchId, 2);
+            flight.CommenceSearchFlight(searchParam, 2, searchTimeOut);
             sw.Stop();
-            Console.WriteLine("Done searching " + searchId + " from supplier 2. (" + sw.ElapsedMilliseconds/1000 + " s)");
+            Console.WriteLine("Done searching " + searchParam + " from supplier 2. (" + sw.ElapsedMilliseconds / 1000 + " s)");
+
         }
     }
 }

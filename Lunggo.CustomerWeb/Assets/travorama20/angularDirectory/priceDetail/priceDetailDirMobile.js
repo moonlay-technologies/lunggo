@@ -1,4 +1,5 @@
-﻿angular.module('Travorama')
+﻿//angular.module($rootScope.travoramaModuleName)
+angular.module('travoramaMobile')
 .directive('priceDetailDirective', [
     function () {
         return {

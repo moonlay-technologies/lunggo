@@ -157,10 +157,10 @@
                             <td style="color: #15b1e4; border-bottom: 1px solid; "></td>
                             <td style="color: #15b1e4; border-bottom: 1px solid; "></td>
                         </tr>
-                        @{ var i = @Model.Passengers.Count; }
+                        @{ var i = @Model.Pax.Count; }
                         @{ var j = 1; }
                         <tr rowspan="@i">
-                            @foreach (var penumpang in @Model.Passengers)
+                            @foreach (var penumpang in @Model.Pax)
                             {
                                 <td width="25%">
                                     <p style="color: #15b1e4; text-align: left">Guest Name</p>
