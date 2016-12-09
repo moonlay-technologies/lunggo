@@ -108,12 +108,12 @@
                     <div class="slider-container clearfix">
                         <div class="slider clearfix">
                             @*<ul id="image-gallery" class="gallery list-unstyled cS-hidden">*@
-                                <ul id="image-gallery" class="gallery list-unstyled cS-hidden">
-                                    <li data-thumb="{{image}}" alt-image ng-repeat="image in hotel.images">
-                                        <div test="{{image}}" alt-image style="background-image: url({{image}}); width: 100%; height: 590px; background-size: cover; background-position: center center;"></div>
-                                    </li>
-                                </ul>
-</div>
+                            <ul id="image-gallery" class="gallery list-unstyled cS-hidden">
+                                <li data-thumb="{{image}}" alt-image ng-repeat="image in hotel.images track by $index">
+                                    <div test="{{image}}" alt-image style="background-image: url({{image}}); width: 100%; height: 590px; background-size: cover; background-position: center center;"></div>
+                                </li>
+                            </ul>
+                        </div>
                         <div class="col-right-slider">
                             <div class="rs-title md-txt">Review Hotel</div>
                             <div class="rs-list rs-rating clearfix">
@@ -187,6 +187,9 @@
                             </div>
                         </div>
                     </div>
+                    <span ng-show="!searchDone" class="text-center">
+                        <img src="/Assets/images/load.gif" class="img-loading">
+                    </span>
                 </div>
                 <div class="menu-hotel clearfix">
                     <div class="col-left-hotel mh-title md-txt">Informasi Hotel</div>
@@ -294,7 +297,7 @@
                                                 <div class="hd-title blue-txt">Ketentuan Kamar</div>
                                                 <div class="hd-txt">
                                                     <ul class="blue-list">
-                                                        <li ng-repeat="tnc in room.rate.tnc">{{tnc}}</li>
+                                                        <li ng-repeat="tnc in room.rate.tnc track by $index">{{tnc}}</li>
                                                     </ul>
                                                 </div>
                                             </li>
@@ -313,9 +316,9 @@
                             <text ng-show="roomCount == maxRoomCount">sebagian</text>
                         </a>
                     </div>
-                    <span ng-show="!searchDone" class="text-center">
+                    @*<span ng-show="!searchDone" class="text-center">
                         <img src="/Assets/images/load.gif" class="img-loading">
-                    </span>
+                    </span>*@
                 </div>
                 <div class="info-hotel">
                     <div class="top-title clearfix">
@@ -338,9 +341,9 @@
                                         </div>
                                     </div>
                                     <div class="col-8">
-                                        <div class="ih-right quarter clearfix" ng-repeat="facilityList in facilities.facilityList">
+                                        <div class="ih-right quarter clearfix" ng-repeat="facilityList in facilities.facilityList track by $index">
                                             <ul class="blue-list">
-                                                <li ng-repeat="facilityName in facilityList">{{facilityName}}</li>
+                                                <li ng-repeat="facilityName in facilityList track by $index">{{facilityName}}</li>
                                             </ul>
                                         </div>
                                     </div>

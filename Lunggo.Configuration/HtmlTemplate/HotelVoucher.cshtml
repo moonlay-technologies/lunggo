@@ -130,8 +130,8 @@
                             foreach (var rate in room.Rates)
                             {
                                 <hr/>
-                                <div class="row grey-txt">
-                                    <div class="col-xs-3">
+                        <div class="row grey-txt">
+                            <div class="col-xs-3">
                                         <p>Tipe Kamar</p>
                                     </div>
                                     <div class="col-xs-9">
@@ -140,46 +140,46 @@
                                 </div>
                                 <div class="row grey-txt">
                                     <div class="col-xs-3">
-                                        <p>Jumlah Tamu per Kamar</p>
-                                    </div>
-                                    <div class="col-xs-9">
-                                        <p>
+                                <p>Jumlah Tamu per Kamar</p>
+                            </div>
+                            <div class="col-xs-9">
+                                <p>
                                             : @rate.AdultCount Dewasa @if (rate.ChildCount > 0)
-                                            {
+                                    {
                                                 <span>, @rate.ChildCount Anak </span>
-                                                <span>
-                                                    (
+                                        <span>
+                                            (
                                                     @for (var a = 0; a < rate.ChildrenAges.Count; a++)
-                                                    {
+                                            {
                                                         if (a != rate.ChildrenAges.Count - 1)
-                                                        {
+                                                {
                                                             @rate.ChildrenAges[a]
-                                                            <span>Tahun, </span>
-                                                        }
-                                                        else
-                                                        {
+                                                    <span>Tahun, </span>
+                                                }
+                                                else
+                                                {
                                                             @rate.ChildrenAges[a] <span>Tahun</span>
-                                                        }
-                                                    }
-                                                    )
-                                                </span>
+                                                }
                                             }
-                                        </p>
-                                    </div>
-                                </div>
-                                <div class="row grey-txt">
-                                    <div class="col-xs-3">
+                                            )
+                                        </span>
+                                    }
+                                </p>
+                            </div>
+                        </div>
+                        <div class="row grey-txt">
+                            <div class="col-xs-3">
                                         <p>Jumlah Kamar</p>
-                                    </div>
-                                    <div class="col-xs-9">
+                            </div>
+                            <div class="col-xs-9">
                                         <p>: @rate.RoomCount</p>
-                                    </div>
-                                </div>
-                                <div class="row grey-txt">
-                                    <div class="col-xs-3">
+                            </div>
+                        </div>
+                        <div class="row grey-txt">
+                            <div class="col-xs-3">
                                         <p>Ketentuan Pembatalan</p>
-                                    </div>
-                                    <div class="col-xs-9">
+                            </div>
+                            <div class="col-xs-9">
                                         <p>
                                             @if (rate.Cancellation != null)
                                             {
@@ -191,19 +191,19 @@
                                                 }
                                             }
                                         </p>
-                                    </div>
-                                </div>
+                            </div>
+                        </div>
                                 if (rate.TermAndCondition.Count != 0 && !rate.TermAndCondition.Exists(r => r.Length < 3))
-                                {
-                                    <div class="row grey-txt">
-                                        <div class="col-xs-3">
-                                            <p>Ketentuan</p>
-                                        </div>
-                                        <div class="col-xs-9">
+                        {
+                            <div class="row grey-txt">
+                                <div class="col-xs-3">
+                                    <p>Ketentuan</p>
+                                </div>
+                                <div class="col-xs-9">
                                             <p>: @String.Join(". ", rate.TermAndCondition)</p>
-                                        </div>
-                                    </div>
-                                }
+                                </div>
+                            </div>
+                        }
                             }
                         }
 

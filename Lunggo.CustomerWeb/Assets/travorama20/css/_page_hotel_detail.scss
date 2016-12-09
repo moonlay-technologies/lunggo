@@ -1,6 +1,7 @@
 ﻿.detail-hotel {
     border-top: 1px solid #ccc;
     .big-slider {
+        position: relative;
         margin: 15px 0 10px;
         .top-desc {
             margin-bottom: 15px;
@@ -206,6 +207,13 @@
             }
         }
         .room-list-container {
+            &>li {
+                box-shadow: none;
+                &.active {
+                    box-shadow: 0 0 5px 3px #1d91e4;
+                    transition: .5s;
+                }
+            }
             padding: 0;
             list-style: none;
             .rl-accordion {
@@ -227,7 +235,7 @@
             border: 1px solid #ccc;
             &.active {
                 border: none;
-                box-shadow: 0 4px 12px #337ab7;
+                border-bottom: 1px solid #cccccc;
             }
             .room-pic {
                 width: 100%; 
@@ -315,8 +323,6 @@
             }
         }
         .hotel-detail {
-            box-shadow: 0 4px 12px #337ab7;
-            border-top: 1px solid #cccccc;
             background: #fff;
             display: none;
             .col-left-bottom {display:none;}
