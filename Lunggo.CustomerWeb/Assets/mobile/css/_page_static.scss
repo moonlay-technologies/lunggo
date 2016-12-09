@@ -126,14 +126,11 @@
             font-weight: 700;
             text-decoration: underline;
         }
-        img.img-promo {
-            display: block;
-            width: 100%;
-            background-position: center center;
+        .img-promo {
             background-repeat: no-repeat;
+            height: 110px;
             background-size: cover;
-            min-height: 110px;
-            text-align: center;
+            background-position: center;
         }
     }
 }

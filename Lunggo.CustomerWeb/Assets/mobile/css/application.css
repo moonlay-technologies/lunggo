@@ -3276,11 +3276,8 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
   .page.page-promo .promo-list a {
     font-weight: 700;
     text-decoration: underline; }
-  .page.page-promo .promo-list img.img-promo {
-    display: block;
-    width: 100%;
-    background-position: center center;
+  .page.page-promo .promo-list .img-promo {
     background-repeat: no-repeat;
+    height: 110px;
     background-size: cover;
-    min-height: 110px;
-    text-align: center; }
+    background-position: center; }
