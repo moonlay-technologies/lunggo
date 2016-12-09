@@ -29,6 +29,9 @@ namespace Lunggo.ApCommon.Hotel.Model
 
         public HotelDetail HotelDetails { get; set; }
 
-        
+        public override decimal GetTotalSupplierPrice()
+        {
+            return HotelDetails.Rooms.SelectMany(r => r.Rates).Sum(r => r.Price.Supplier);
+        }
     }
 }
