@@ -166,10 +166,11 @@
                                                 <button class="pull-right btn btn-yellow" ng-click="askRefund()">
                                                     Refund
                                                 </button>
+                                                <button class="pull-right btn btn-yellow" ng-click="askReschedule()">
+                                                    Reschedule
+                                                </button>
                                             }
-                                            <button class="pull-right btn btn-yellow" ng-click="askReschedule()">
-                                                Reschedule
-                                            </button>
+
                                         }
                                         @if (Model is HotelReservationForDisplay)
                                         {
@@ -468,8 +469,8 @@
                 <div><img src="/Assets/images/travorama-logo-color.png" height="22px" width="80px"></div>
                 <div style="padding-top:20px;"><span style="color: #15b1e4; font-size:20px"><b>Pengiriman Berhasil</b></span></div>
                 <div><img src="~/Assets/images/popup/paymentyellowstrip.png" /></div>
-                <div style="padding-top:5px;"><span style="font-size:14px"></span></div>
-                <div style="padding-top:5px;"><span style="font-size:14px">Permohonan Anda akan kami proses. Kami akan menghubungi Anda melalui e-mail.</span></div>
+                <div style="padding-top:5px; "><span style="font-size:14px"></span></div>
+                <div style="padding-top:5px; margin-right: 10px;"><span style="font-size:12px">Permohonan Anda akan kami proses. Kami akan menghubungi Anda melalui e-mail.</span></div>
             </section>
             <div align="right" style="padding-right:30px;padding-top:30px;">
                 <a class="btn popup-btn-yellow book-failed" ng-click="closeOverlay()"><b>Tutup</b></a>
@@ -489,13 +490,14 @@
         </div>
     </div>
 
-    <div class="bookfailed-popup" ng-show="failedsentReschedule && overlay" >
+    <div class="bookfailed-popup" ng-show="failedsentRefund && overlay" >
         <div class="overlay-content">
             <section style="padding-top:60px; padding-left:225px;">
                 <div><img src="/Assets/images/travorama-logo-color.png" height="22px" width="80px"></div>
+
                 <div style="padding-top:25px;"><span style="color: #15b1e4; font-size:26px"><b>Mohon maaf...</b></span></div>
-                <div style="padding-top:5px;"><span style="font-size:13px">Silakan ulangi permohonan reschedule atau hubungi kami <a href="/id/contact">di sini</a></span></div>
-                <div align="right" style="padding-right:50px"><img src="/Assets/images/popup/smallyellowstrip.png"></div>
+                <div style="padding-top:5px;"><span style="font-size:13px">Silakan ulangi permohonan refund atau hubungi kami <a href="/id/contact">di sini</a></span></div>
+                @*<div align="right" style="padding-right:50px"><img src="/Assets/images/popup/smallyellowstrip.png"></div>*@
             </section>
             <div align="right" style="padding-right:30px;padding-top:30px;">
                 <a class="btn popup-btn-yellow book-failed" ng-click="closeOverlay()"><b>Tutup</b></a>
@@ -509,8 +511,8 @@
                 <div><img src="/Assets/images/travorama-logo-color.png" height="22px" width="80px"></div>
                 <div style="padding-top:20px;"><span style="color: #15b1e4; font-size:20px"><b>Pengiriman Berhasil</b></span></div>
                 <div><img src="~/Assets/images/popup/paymentyellowstrip.png" /></div>
-                <div style="padding-top:5px;"><span style="font-size:14px"></span></div>
-                <div style="padding-top:5px;"><span style="font-size:14px">Permohonan Anda akan kami proses. Kami akan menghubungi Anda melalui e-mail.</span></div>
+                <div style="padding-top:5px; "><span style="font-size:14px"></span></div>
+                <div style="padding-top:5px; margin-right: 10px;"><span style="font-size:12px">Permohonan Anda akan kami proses. Kami akan segera menghubungi Anda melalui e-mail.</span></div>
             </section>
             <div align="right" style="padding-right:30px;padding-top:30px;">
                 <a class="btn popup-btn-yellow book-failed" ng-click="closeOverlay()"><b>Tutup</b></a>
@@ -535,8 +537,8 @@
             <section style="padding-top:60px; padding-left:225px;">
                 <div><img src="/Assets/images/travorama-logo-color.png" height="22px" width="80px"></div>
                 <div style="padding-top:25px;"><span style="color: #15b1e4; font-size:26px"><b>Mohon maaf...</b></span></div>
-                <div style="padding-top:5px;"><span style="font-size:13px">Silakan ulangi permohonan reschedule atau hubungi kami <a href="/id/contact">di sini</a></span></div>
-                <div align="right" style="padding-right:50px"><img src="/Assets/images/popup/smallyellowstrip.png"></div>
+                <div style="padding-top:5px; margin-right: 10px;" ><span style="font-size:13px">Silakan ulangi permohonan reschedule atau hubungi kami <a href="/id/contact">di sini</a></span></div>
+                @*<div align="right" style="padding-right:50px"><img src="/Assets/images/popup/smallyellowstrip.png"></div>*@
             </section>
             <div align="right" style="padding-right:30px;padding-top:30px;">
                 <a class="btn popup-btn-yellow book-failed" ng-click="closeOverlay()"><b>Tutup</b></a>

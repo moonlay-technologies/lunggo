@@ -544,6 +544,7 @@ app.controller('UserAccountController', ['$http', '$scope', '$rootScope', '$loca
                 $scope.sendingRefund = false;
                 if (returnData.data.status == "200") {
                     $scope.sentRefund = true;
+                    $scope.overlay = true;
                 }
                 else {
                     $scope.failedsentRefund = true;
@@ -567,6 +568,78 @@ app.controller('UserAccountController', ['$http', '$scope', '$rootScope', '$loca
         }
         else {
             console.log('Not Authorized to Ask Refund');
+        }
+
+        $scope.sentReschedule = false;
+        $scope.sendingReschedule = false;
+        $scope.failedsentReschedule = false;
+        $scope.isReschedule = false;
+        $scope.selectedFlight = '';
+        $scope.askReschedule = function (rsvno) {
+            if ($scope.selectedFlight == '') {
+                $scope.selectedFlight = rsvno;
+            } else {
+                $scope.selectedFlight = '';
+            }
+            
+            //if ($scope.isReschedule) {
+            //    $scope.isReschedule = false;
+            //} else {
+            //    $scope.isReschedule = true;
+            //}
+        }
+        $scope.message = "";
+        $scope.sendReschedule = function (rsvNo, name, email, message) {
+            if ($scope.trial > 3) {
+                $scope.trial = 0;
+            }
+            //Check Authorization
+            var authAccess = getAuthAccess();
+            $scope.sendingReschedule = true;
+            if (authAccess == 2 || authAccess == 1) {
+                $http({
+                    method: 'POST',
+                    data: {
+                        name: name,
+                        rsvNo: rsvNo,
+                        email: email,
+                        message: message
+                    },
+                    url: RescheduleConfig.Url,
+                    headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') }
+                }).then(function (returnData) {
+                    $scope.sendingReschedule = false;
+                    if (returnData.data.status == "200") {
+                        $scope.isReschedule = false;
+                        $scope.sentReschedule = true;
+                        $scope.overlay = true;
+                        $scope.message = "";
+                    }
+                    else {
+                        $scope.isReschedule = false;
+                        $scope.failedsentReschedule = true;
+                        console.log('There is an error');
+                        console.log('Error : ' + returnData.data.error);
+                        console.log(returnData);
+                    }
+                }).catch(function (returnData) {
+
+                    $scope.trial++;
+                    if (refreshAuthAccess() && $scope.trial < 4) //refresh cookie
+                    {
+                        $scope.sendReschedule(rsvNo, name, email, message);
+                    }
+                    else {
+                        $scope.isReschedule = false;
+                        $scope.sendingReschedule = false;
+                        $scope.failedsentReschedule = true;
+                        console.log('Failed to Ask Reschedule');
+                    }
+                });
+            }
+            else {
+                console.log('Not Authorized to Ask Reschedule');
+            }
         }
     }
 

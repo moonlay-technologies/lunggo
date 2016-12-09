@@ -205,17 +205,17 @@
                                                         <div class="action">
                                                             <button class="btn btn-yellow" ng-click="submitRsvNo(flight.rsvNo)">@Html.I18NString("CW00175")</button>
                                                         </div>
-                                                        <div class="action" ng-show="paymentstatus(flight.payment.status) == 'Lunas'">
+                                                        <div class="action" @*ng-show="paymentstatus(flight.payment.status) == 'Lunas'"*@>
                                                             <button class="btn btn-yellow" ng-click="askRefund(flight.rsvNo, flight.contact.name, flight.contact.email)">Refund</button>
                                                         </div>
-                                                        <button class="pull-right btn btn-yellow" ng-click="askReschedule()">
+                                                        <button class="pull-right btn btn-yellow" ng-click="selectRsvNo(flight.rsvNo)">
                                                             Reschedule
                                                         </button>
                                                     </div>
                                                 </div>
                                             </section>
                                             
-                                            <section ng-show="isReschedule">
+                                            <section ng-show="selectedFlight == flight.rsvNo">
                                                 <form>
                                                     <h4>Permohonan Reschedule</h4>
                                                     <textarea class="form-control ng-pristine ng-untouched ng-valid" name="rescheduleMessage" ng-model="message"

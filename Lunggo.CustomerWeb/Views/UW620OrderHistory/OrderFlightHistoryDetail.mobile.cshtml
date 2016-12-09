@@ -281,6 +281,21 @@
                             Refund
                         </button>
                     }
+                    <button class="pull-right btn btn-yellow" ng-click="askReschedule()">
+                        Reschedule
+                    </button>
+            
+                    <section ng-show="isReschedule">
+                        <form>
+                            <h4>Permohonan Reschedule</h4>
+                            <textarea class="form-control ng-pristine ng-untouched ng-valid" name="rescheduleMessage" ng-model="message"
+                                      placeholder="Silakan masukkan isi permohonan reschedule Anda di sini"></textarea>
+                            <button class="pull-right btn btn-yellow"
+                                    ng-click="sendReschedule(rsvNo, name, email, message)">
+                                Kirim
+                            </button>
+                        </form>
+                    </section>
                     <section>
                         @foreach (var trip in rsv.Itinerary.Trips)
                         {
@@ -401,6 +416,55 @@
             <div class="popup__body">
                 <div class="container_new">
                     <span>Silakan ulangi permohonan refund lagi atau hubungi kami <a href="/id/contact">di sini</a></span>
+                </div>
+            </div>
+            <div class="popup__footer">
+                <div class="container_new">
+                    <a class="btn btn-block btn-yellow" ng-click="closeOverlay()">Tutup</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="popup__wrapper" ng-class="{'active': sentReschedule && !sendingReschedule && overlay}">
+        <div class="popup">
+            <header class="popup__header">
+                <h4 class="popup__title">Pengiriman Berhasil</h4>
+            </header>
+            <div class="popup__body">
+                <div class="container_new">
+                    <span>Permohonan Anda akan kami proses. Kami akan segera menghubungi Anda melalui e-mail.</span>
+                </div>
+            </div>
+            <div class="popup__footer">
+                <div class="container_new">
+                    <a class="btn btn-block btn-yellow" ng-click="closeOverlay()">Tutup</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="popup__wrapper" ng-class="{'active': sendingReschedule}">
+        <div class="popup">
+            <header class="popup__header">
+                <h4 class="popup__title">Mohon Tunggu</h4>
+            </header>
+            <div class="popup__body">
+                <div class="container_new">
+                    <span>Sedang mengirimkan permohonan reschedule Anda.</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="popup__wrapper" ng-class="{'active': failedsentReschedule && overlay}">
+        <div class="popup">
+            <header class="popup__header">
+                <h4 class="popup__title">Mohon Maaf</h4>
+            </header>
+            <div class="popup__body">
+                <div class="container_new">
+                    <span>Silakan ulangi permohonan reschedule kembali atau hubungi kami <a href="/id/contact">di sini</a>.</span>
                 </div>
             </div>
             <div class="popup__footer">

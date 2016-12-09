@@ -164,6 +164,7 @@ app.controller('accountController', [
                     $scope.sendingRefund = false;
                     if (returnData.data.status == "200") {
                         $scope.sentRefund = true;
+                        $scope.overlay = true;
                     }
                     else {
                         $scope.failedsentRefund = true;
@@ -194,6 +195,14 @@ app.controller('accountController', [
         $scope.sendingReschedule = false;
         $scope.failedsentReschedule = false;
         $scope.isReschedule = false;
+        $scope.selectedFlight = '';
+        $scope.selectRsvNo = function(rsvNo) {
+            if ($scope.selectedFlight == '') {
+                $scope.selectedFlight = rsvno;
+            } else {
+                $scope.selectedFlight = '';
+            }
+        }
         $scope.askReschedule = function () {
             if ($scope.isReschedule) {
                 $scope.isReschedule = false;
@@ -225,6 +234,7 @@ app.controller('accountController', [
                     if (returnData.data.status == "200") {
                         $scope.isReschedule = false;
                         $scope.sentReschedule = true;
+                        $scope.message = true;
                     }
                     else {
                         $scope.isReschedule = false;
@@ -801,7 +811,8 @@ app.controller('orderDetailController', [
                 }).then(function (returnData) {
                     $scope.sendingRefund = false;
                     if (returnData.data.status == "200") {
-                        $scope.sentRefund = true;                      
+                        $scope.sentRefund = true;
+                        $scope.overlay = true;
                     }
                     else {
                         $scope.failedsentRefund = true;
@@ -863,6 +874,7 @@ app.controller('orderDetailController', [
                     if (returnData.data.status == "200"){
                         $scope.isReschedule = false;
                         $scope.sentReschedule = true;
+                        $scope.overlay = true;
                     }
                     else {
                         $scope.isReschedule = false;
