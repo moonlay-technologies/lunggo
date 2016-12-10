@@ -311,6 +311,14 @@
       <DependentUpon>eticket.css</DependentUpon>
     </Content>
     <Content Include="Assets\css\eticket.scss" />
+    <Content Include="Assets\images\campaign\MatahariMall2016\MatahariMall-page-mobile.jpg" />
+    <Content Include="Assets\images\campaign\MatahariMall2016\MatahariMall-page.jpg" />
+    <Content Include="Assets\images\campaign\MatahariMall2016\MatahariMall-slider-mobile.jpg" />
+    <Content Include="Assets\images\campaign\MatahariMall2016\MatahariMall-slider.jpg" />
+    <Content Include="Assets\images\campaign\OnlineRevolution2016\OnlineRevolution-page-mobile.jpg" />
+    <Content Include="Assets\images\campaign\OnlineRevolution2016\OnlineRevolution-page.jpg" />
+    <Content Include="Assets\images\campaign\OnlineRevolution2016\OnlineRevolution-slider-mobile.jpg" />
+    <Content Include="Assets\images\campaign\OnlineRevolution2016\OnlineRevolution-slider.jpg" />
     <Content Include="Assets\images\hotel-star-4.jpg" />
     <Content Include="Assets\images\hotel-star-4.png" />
     <Content Include="Assets\images\location.png" />
@@ -883,6 +891,9 @@
     <Content Include="Assets\vendor\slick\slick.min.js" />
     <Content Include="Campaign\Harbolnas2016\css\promo-harbolnas.css">
       <DependentUpon>promo-harbolnas.scss</DependentUpon>
+    </Content>
+    <Content Include="Campaign\Harbolnas2016\css\promo-harbolnas.min.css">
+      <DependentUpon>promo-harbolnas.css</DependentUpon>
     </Content>
     <Content Include="Campaign\MatahariMall\css\promo-mataharimall.css">
       <DependentUpon>promo-mataharimall.scss</DependentUpon>
@@ -3039,9 +3050,6 @@
     <Content Include="Views\HelpSection\FAQs.cshtml" />
     <Content Include="Views\HelpSection\How-To.cshtml" />
     <Content Include="Views\StaticPage\TravoramaMobileApp.cshtml" />
-    <Content Include="Views\Promo\Btn.cshtml" />
-    <Content Include="Views\Promo\Btn.mobile.cshtml" />
-    <Content Include="Views\Promo\BtnWebview.cshtml" />
     <Content Include="Views\Shared\GlobalError.cshtml" />
     <Content Include="Views\Shared\GlobalError.mobile.cshtml" />
     <Content Include="Views\Hotel\Search.cshtml" />
@@ -3083,6 +3091,10 @@
     <Content Include="Views\Promo\MatahariMall.cshtml" />
     <Content Include="Views\Promo\Harbolnas2016.cshtml" />
     <Content Include="Views\Promo\Harbolnas2016.mobile.cshtml" />
+    <Content Include="Views\Promo\OnlineRevolution.cshtml" />
+    <Content Include="Views\Promo\OnlineRevolution.mobile.cshtml" />
+    <Content Include="Views\Promo\OnlineRevolutionWebview.cshtml" />
+    <Content Include="Views\Promo\Harbolnas2016Webview.cshtml" />
     <None Include="Views\Template\eticket.cshtml" />
     <Content Include="Views\Template\OrderFlightHistory.cshtml" />
     <Content Include="Views\Template\PrivacyPolicy.cshtml" />
