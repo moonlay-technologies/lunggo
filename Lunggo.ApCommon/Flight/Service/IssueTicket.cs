@@ -56,8 +56,6 @@ namespace Lunggo.ApCommon.Flight.Service
             var supplier = new List<Supplier>();
             var balance = new List<decimal>();
             var localPrice = new List<decimal>();
-            using (var conn = DbService.GetInstance().GetOpenConnection())
-            {
                 var reservation = GetReservation(input.RsvNo);
                 var output = new IssueTicketOutput();
 
@@ -92,11 +90,14 @@ namespace Lunggo.ApCommon.Flight.Service
                             ? BookingStatus.Ticketed
                             : BookingStatus.Ticketing;
                         orderResult.IsInstantIssuance = response.IsInstantIssuance;
-                        UpdateBookingIdQuery.GetInstance().Execute(conn, new
+                        using (var conn = DbService.GetInstance().GetOpenConnection())
                         {
-                            BookingId = itin.BookingId,
-                            NewBookingId = orderResult.BookingId,
-                        });
+                            UpdateBookingIdQuery.GetInstance().Execute(conn, new
+                            {
+                                BookingId = itin.BookingId,
+                                NewBookingId = orderResult.BookingId,
+                            });
+                        }
                     }
                     else
                     {
@@ -161,7 +162,6 @@ namespace Lunggo.ApCommon.Flight.Service
                     output.IsSuccess = false;
                     output.Errors = new List<FlightError> { FlightError.NotEligibleToIssue };
                     return output;
-            }
             }
         }
 

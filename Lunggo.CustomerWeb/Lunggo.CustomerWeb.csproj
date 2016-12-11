@@ -1700,6 +1700,7 @@
     <None Include="Properties\PublishProfiles\travorama-qa-cw %284%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-qa-cw %285%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-qa-cw %286%29.pubxml" />
+    <None Include="Properties\PublishProfiles\travorama-qa-cw %287%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-qa-cw.pubxml" />
     <None Include="Scripts\jquery-2.1.0.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />

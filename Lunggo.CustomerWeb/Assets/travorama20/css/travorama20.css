@@ -998,9 +998,9 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
   position: absolute;
   transform: translate(-50%, -50%); }
   .modal-box > .custom-close {
-    width: 30px;
-    height: 30px;
-    margin: 17px 24px 0 0; }
+    width: 780px;
+    height: 520px;
+    margin: 0 0 0 0; }
 
 .widget-container .widget .widget-content {
   background: #ededed; }
