@@ -22,7 +22,7 @@ namespace Lunggo.ApCommon.Hotel.Service
             var redisValue =  currencies.Serialize() ;
             //var i = 1;
 
-            for (var i = 0; i < 3; i++)
+            for (var i = 0; i < ApConstant.RedisMaxRetry; i++)
             {
                 try
                 {
@@ -42,7 +42,7 @@ namespace Lunggo.ApCommon.Hotel.Service
             var redisKey = "searchId:" + searchId;
             var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
             var cacheObject = "";
-            for (var i = 0; i < 3; i++)
+            for (var i = 0; i < ApConstant.RedisMaxRetry; i++)
             {
                 try
                 {
@@ -69,7 +69,7 @@ namespace Lunggo.ApCommon.Hotel.Service
             var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
             var timeout = int.Parse(ConfigManager.GetInstance().GetConfigValue("hotel", "selectCacheTimeOut"));
             var redisValue = hotel.Serialize();
-            for (var i = 0; i < 3; i++)
+            for (var i = 0; i < ApConstant.RedisMaxRetry; i++)
             {
                 try
                 {
@@ -91,7 +91,7 @@ namespace Lunggo.ApCommon.Hotel.Service
             var timeout = int.Parse(ConfigManager.GetInstance().GetConfigValue("hotel", "hotelSearchResultCacheTimeout"));
             var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
             var redisValue = searchResult.ToCacheObject();
-            for (var i = 0; i < 3; i++)
+            for (var i = 0; i < ApConstant.RedisMaxRetry; i++)
             {
                 try
                 {
@@ -112,7 +112,7 @@ namespace Lunggo.ApCommon.Hotel.Service
             var redisKey = "HotelSearchResult:" + token;
             var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
             var cacheObject = new RedisValue();
-            for (var i = 0; i < 3; i++)
+            for (var i = 0; i < ApConstant.RedisMaxRetry; i++)
             {
                 try
                 {
@@ -131,7 +131,7 @@ namespace Lunggo.ApCommon.Hotel.Service
 
         public DateTime? GetSearchHotelResultExpiry(string token)
         {
-            for (var i = 0; i < 3; i++)
+            for (var i = 0; i < ApConstant.RedisMaxRetry; i++)
             {
                 try
                 {
@@ -155,7 +155,7 @@ namespace Lunggo.ApCommon.Hotel.Service
             var redisKey = "hotelToken:" + token;
             var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
             var cacheObject = "";
-            for (var i = 0; i < 3; i++)
+            for (var i = 0; i < ApConstant.RedisMaxRetry; i++)
             {
                 try
                 {
@@ -181,7 +181,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                 var redisKey = "hotelToken:" + token;
                 var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
             var cacheObject = "";
-            for (var i = 0; i < 3; i++)
+            for (var i = 0; i < ApConstant.RedisMaxRetry; i++)
             {
                 try
                 {
@@ -210,7 +210,7 @@ namespace Lunggo.ApCommon.Hotel.Service
 
         public DateTime? GetSearchedHotelDetailsExpiry(string searchId)
         {
-            for (var i = 0; i < 3; i++)
+            for (var i = 0; i < ApConstant.RedisMaxRetry; i++)
             {
             try
             {
@@ -237,7 +237,7 @@ namespace Lunggo.ApCommon.Hotel.Service
             var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
             var marginsCacheObject = marginRules.Select(mr => mr.Margin).ToCacheObject();
             var rulesCacheObject = marginRules.Select(mr => mr.Rule).ToCacheObject();
-            for (var i = 0; i < 3; i++)
+            for (var i = 0; i < ApConstant.RedisMaxRetry; i++)
             {
                 try
                 {
@@ -261,7 +261,7 @@ namespace Lunggo.ApCommon.Hotel.Service
             var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
             var marginsCacheObject = marginRules.Select(mr => mr.Margin).ToCacheObject();
             var rulesCacheObject = marginRules.Select(mr => mr.Rule).ToCacheObject();
-            for (var i = 0; i < 3; i++)
+            for (var i = 0; i < ApConstant.RedisMaxRetry; i++)
             {
                 try
                 {
@@ -284,7 +284,7 @@ namespace Lunggo.ApCommon.Hotel.Service
             var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
             var deletedMarginsCacheObject = deletedMarginRules.Select(mr => mr.Margin).ToCacheObject();
             var deletedRulesCacheObject = deletedMarginRules.Select(mr => mr.Rule).ToCacheObject();
-            for (var i = 0; i < 3; i++)
+            for (var i = 0; i < ApConstant.RedisMaxRetry; i++)
             {
                 try
                 {
@@ -301,7 +301,7 @@ namespace Lunggo.ApCommon.Hotel.Service
 
         private List<HotelMarginRule> GetAllActiveMarginRulesFromCache()
         {
-            for (var i = 0; i < 3; i++)
+            for (var i = 0; i < ApConstant.RedisMaxRetry; i++)
             {
             try
             {
@@ -326,7 +326,7 @@ namespace Lunggo.ApCommon.Hotel.Service
 
         private List<HotelMarginRule> GetActiveMarginRulesFromBufferCache()
         {
-            for (var i = 0; i < 3; i++)
+            for (var i = 0; i < ApConstant.RedisMaxRetry; i++)
             {
             try
             {
@@ -351,7 +351,7 @@ namespace Lunggo.ApCommon.Hotel.Service
 
         private List<HotelMarginRule> GetDeletedMarginRulesFromBufferCache()
         {
-            for (var i = 0; i < 3; i++)
+            for (var i = 0; i < ApConstant.RedisMaxRetry; i++)
             {
             try
             {
