@@ -134,7 +134,7 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
             evt.stopPropagation();
             $(this).parent().siblings().children('div').children('.option').hide();
             $(this).children('.option').toggle();
-            $('.search-calendar-hotel, .search-hotel, .child .option, .adult .option').hide();
+            $('.search-calendar-hotel, .search-hotel, .child .option, .form-hotel-visitor.adult .option').hide();
         });
 
         //$('body .form-hotel-night').on('click', function () {
@@ -147,14 +147,14 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
         //    $('.search-calendar-hotel, .search-hotel, .form-hotel-night .option').hide();
         //});
 
-        $('body .adult').on('click', function () {
+        $('body .form-hotel-visitor.adult').on('click', function () {
             $(this).children('.option').toggle();
-            $('.child .option, .select-age .option').hide();
+            $('.form-hotel-visitor.child .option, .select-age .option').hide();
         });
 
-        $('body .child').on('click', function () {
+        $('body .form-hotel-visitor.child').on('click', function () {
             $(this).children('.option').toggle();
-            $('.adult .option, .select-age .option').hide();
+            $('.form-hotel-visitor.adult .option, .select-age .option').hide();
         });
 
         $('body .form-child-age').hide();
@@ -230,7 +230,7 @@ jQuery(document).ready(function ($) {
         evt.stopPropagation();
         $(this).parent().siblings().children('div').children('.option').hide();
         $(this).children('.option').toggle();
-        $('.search-calendar-hotel, .search-hotel, .child .option, .adult .option').hide();
+        $('.search-calendar-hotel, .search-hotel, .form-hotel-visitor.child .option, .form-hotel-visitor.adult .option').hide();
     });
 
     $('body .form-hotel-night').on('click', function () {
@@ -243,14 +243,14 @@ jQuery(document).ready(function ($) {
         $('.search-calendar-hotel, .search-hotel, .form-hotel-night .option').hide();
     });
 
-    $('body .adult').on('click', function () {
+    $('body .form-hotel-visitor.adult').on('click', function () {
         $(this).children('.option').toggle();
-        $('.child .option, .select-age .option').hide();
+        $('.form-hotel-visitor.child .option, .select-age .option').hide();
     });
 
-    $('body .child').on('click', function () {
+    $('body .form-hotel-visitor.child').on('click', function () {
         $(this).children('.option').toggle();
-        $('.adult .option, .select-age .option').hide();
+        $('.form-hotel-visitor.adult .option, .select-age .option').hide();
     });
 
     $('body .form-child-age').hide();
