@@ -192,6 +192,7 @@
     <Compile Include="Controllers\ActivityController.cs" />
     <Compile Include="Controllers\FlightController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\HotelController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -491,6 +492,12 @@
     <Content Include="Views\Flight\PriceMarginConflict.cshtml" />
     <Content Include="Views\Flight\PriceMarginDelete.cshtml" />
     <Content Include="Views\Flight\SubscriberList.cshtml" />
+    <Content Include="Views\Hotel\List.cshtml" />
+    <Content Include="Views\Hotel\Search.cshtml" />
+    <Content Include="Views\Hotel\Detail.cshtml" />
+    <Content Include="Views\Hotel\RenderPax.cshtml" />
+    <Content Include="Views\Hotel\RenderReservation.cshtml" />
+    <Content Include="Views\Hotel\RenderHotel.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\CheckPaymentViewModel\" />

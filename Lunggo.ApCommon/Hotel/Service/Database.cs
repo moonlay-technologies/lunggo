@@ -205,6 +205,16 @@ namespace Lunggo.ApCommon.Hotel.Service
             }
         }
 
+        private IEnumerable<HotelReservation> GetSearchReservationsFromDb(HotelReservationSearch search)
+        {
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                var rsvNos = SearchReservationQuery.GetInstance().Execute(conn, search, search);
+                var reservations = rsvNos.Select(GetReservationFromDb);
+                return reservations;
+            }
+        }
+
         #endregion
 
         #region Insert

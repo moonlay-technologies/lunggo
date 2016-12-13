@@ -1,19 +1,18 @@
 ﻿@using System.Globalization
-@using Lunggo.ApCommon.Flight.Constant
-@using Lunggo.ApCommon.Flight.Model
+@using Lunggo.ApCommon.Hotel.Model
 @using Lunggo.ApCommon.Payment.Constant
-@model List<FlightReservationForDisplay>
+@model List<HotelReservationForDisplay>
 
 @{
-    ViewBag.Title = "Flight Reservation List";
+    ViewBag.Title = "Hotel Reservation List";
 }
 
-<h3><i class="fa fa-angle-right"></i> Flight Reservation</h3>
+<h3><i class="fa fa-angle-right"></i> Hotel Reservation</h3>
 <div class="row">
 
     <div class="col-md-12">
         <div class="content-panel">
-            <h4><i class="fa fa-angle-right"></i> Flight Reservation List</h4>
+            <h4><i class="fa fa-angle-right"></i> Hotel Reservation List</h4>
             @if (ViewBag.Month != null && ViewBag.Year != null)
             {
                 <h4>
@@ -33,11 +32,12 @@
                         <th>No. Reservasi</th>
                         <th>Nama Kontak</th>
                         <th>Waktu Reservasi</th>
-                        <th>Rute</th>
-                        <th>Tipe Penerbangan</th>
-                        <th>Tgl Pergi</th>
-                        <th>Tgl Pulang</th>
-                        <th>Jlh Penumpang</th>
+                        <th>Nama Hotel</th>
+                        <th>Destinasi</th>
+                        <th>Tgl Check In</th>
+                        <th>Tgl Check Out</th>
+                        <th>Jlh Kamar</th>
+                        <th>Jlh Pax</th>
                         <th>Harga</th>
                         <th>Status Pembayaran</th>
                         <th>Action</th>
@@ -46,10 +46,10 @@
                 <tbody>
                     @foreach (var rsv in Model)
                     {
-                        var trip = rsv.Itinerary.Trips.FirstOrDefault();
+                        var hotelDetails = rsv.HotelDetail;
                         <tr>
                             <td>
-                                <a href="@Url.Action("Detail", "Flight", new { RsvNo = rsv.RsvNo})">@rsv.RsvNo</a>
+                                <a href="@Url.Action("Detail", "Hotel", new { RsvNo = rsv.RsvNo})">@rsv.RsvNo</a>
                             </td>
                             <td>
                                 @rsv.Contact.Name
@@ -59,46 +59,22 @@
                                 @rsv.RsvTime.AddHours(7).ToString("HH:mm:ss")
                             </td>
                             <td>
-                                @trip.OriginAirport - @trip.DestinationAirport
+                                @hotelDetails.HotelName
                             </td>
                             <td>
-                                @if (@rsv.Itinerary.TripType == TripType.RoundTrip)
-                                {
-                                    @Html.Raw("RETURN");
-                                }
-                                else
-                                {
-                                    @Html.Raw("ONE-WAY");
-                                }
+                                @hotelDetails.ZoneName, @hotelDetails.DestinationName, @hotelDetails.CountryName
                             </td>
                             <td>
-                                @trip.DepartureDate.GetValueOrDefault().ToString("d MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID"))
+                                @hotelDetails.CheckInDate.ToString("d MMM yyyy")
                             </td>
                             <td>
-                                @if (rsv.Itinerary.TripType == TripType.RoundTrip)
-                                {
-                                    @rsv.Itinerary.Trips.Last().DepartureDate.GetValueOrDefault().ToString("d MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID"))
-                                }
-                                else
-                                {
-                                    <span style="align-content:center"> - </span><br />
-                                }
+                                @hotelDetails.CheckOutDate.ToString("d MMM yyyy")
                             </td>
                             <td>
-                                @if (ViewData["Name"] == null)
-                                {
-                                    @Html.Raw(String.Format("({0} people)", rsv.Pax.Count));
-                                }
-                                else
-                                {
-                                    var passenger = rsv.Pax.First(p => (p.Name).ToLower().Contains(ViewData["Name"].ToString().ToLower()));
-                                    @passenger.Name<wbr />
-
-                                    if (rsv.Pax.Count > 1)
-                                    {
-                                        @Html.Raw(String.Format("et. al. ({0} more)", rsv.Pax.Count - 1));
-                                    }
-                                }
+                                @hotelDetails.Rooms.SelectMany(r => r.Rates).Sum(r => r.RoomCount) Kamar
+                            </td>
+                            <td>
+                                @hotelDetails.Rooms.SelectMany(r => r.Rates).Sum(r => r.AdultCount + r.ChildCount) Orang
                             </td>
                             <td>
                                 @rsv.Payment.FinalPrice.ToString("Rp 0,0", CultureInfo.CreateSpecificCulture("id-ID"))
@@ -149,11 +125,12 @@
                                         <span>by @rsv.Payment.Method.ToString()</span>
                                             break;
                                     }
+
                                 }
                             </td>
 
                             <td>
-                                <a href="@Url.Action("Detail", "Flight", new {rsv.RsvNo})" class="btn btn-xs btn-info"><span class="fa fa-eye"> view</span></a><br />
+                                <a href="@Url.Action("Detail", "Hotel", new {rsv.RsvNo})" class="btn btn-xs btn-info"><span class="fa fa-eye"> view</span></a><br />
                             </td>
                         </tr>
                     }

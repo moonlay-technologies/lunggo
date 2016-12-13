@@ -1,0 +1,43 @@
+﻿@model Lunggo.ApCommon.Hotel.Model.HotelReservation
+
+@{
+    ViewBag.Title = "Hotel Reservation Detail";
+}
+
+@if (Model != null)
+{
+    <h3>
+        <i class="fa fa-angle-right"></i> Hotel Reservation <small> > @Model.RsvNo</small>
+    </h3>
+
+    <div class="row">
+        @{ Html.RenderPartial("RenderReservation", Model); }
+    </div>
+
+    <div class="row">
+            <div class="col-md-8">
+                <div class="showback">
+                    @if (count == 0)
+                    {
+                        <h4><b>Depart Flight</b></h4>
+                    }
+                    else
+                    {
+                        <h4><b>Return Flight</b></h4>
+                    }
+                    <hr />
+                    @{ Html.RenderPartial("RenderTrip", trip); }
+                </div>
+            </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            @{ Html.RenderPartial("RenderPax", Model.Pax); }
+        </div>
+    </div>
+}
+else
+{
+    <h3><i class="fa fa-angle-right"></i> Hotel Reservation <h1> > NOT FOUND</h1></h3>
+}
