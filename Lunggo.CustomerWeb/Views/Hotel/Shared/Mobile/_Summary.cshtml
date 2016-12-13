@@ -23,7 +23,7 @@
 <div class="hotel-summary">
     <div class="summary-left">
         <div style="text-transform:capitalize"><b>{{loc}}</b>, {{hotelSearch.roomCount}} Kamar</div>
-        <div class="semibold-txt">{{hotelSearch.nightCount}} Malam ({{hotelSearch.checkinDateDisplay}} - {{hotelSearch.checkoutDateDisplay}})</div>
+        <div class="semibold-txt">{{hotelSearch.destinationNightCount}} Malam ({{hotelSearch.destinationCheckinDate | date : 'EEEE, dd MMM yyyy'}} - {{hotelSearch.destinationCheckoutDate | date : 'EEEE, dd MMM yyyy'}})</div>
     </div>
     <a ng-click="PageConfig.SetOverlay('hotel-form')" class="summary-right"><span>GANTI</span></a>
 </div>

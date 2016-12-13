@@ -26,7 +26,7 @@
             searchtype = hotelSearch.searchHotelType.searchId;
         }
         return factory.resource.post({}, {
-            "searchHotelType": hotelSearch.searchHotelType.location,
+            "searchHotelType": searchtype,
             "searchId": hotelSearch.searchId,
 
             "location": hotelSearch.location,
