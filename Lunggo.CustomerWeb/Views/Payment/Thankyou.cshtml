@@ -19,7 +19,7 @@
 @{
     var payment = Model.Payment.Status;
     var timeout = ConfigManager.GetInstance().GetConfigValue("flight", "paymentTimeout");
-    Model.Payment.Status = PaymentStatus.Settled;
+    //
 
     var timelimit = Model.Payment.TimeLimit.GetValueOrDefault();
     var orderedRooms = new List<Tuple<string, int>>();

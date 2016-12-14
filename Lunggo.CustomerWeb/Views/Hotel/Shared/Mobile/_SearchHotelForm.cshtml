@@ -6,7 +6,8 @@
                     @*<p class="form-control form-hotel" ng-click="PageConfig.SetOverlay('hotel-select')">Tujuan <span class="hotel-placeholder">Kota, Wilayah atau Nama Hotel</span></p>*@
                     <p class="form-control form-hotel">
                         Tujuan
-                        <span class="hotel-placeholder" placeholder="Kota, Wilayah atau Nama Hotel">{{hotelSearch.locationDisplay}}</span>
+                        <span class="hotel-placeholder" placeholder="Kota, Wilayah atau Nama Hotel"
+                              ng-init="hotelSearch.locationDisplay = hotelSearch.locationDisplay || loc">{{hotelSearch.locationDisplay}}</span>
                     </p>
                     @*| filter:placeholderFilter(hotelSearch.locationDisplay)*@
                 </div>
