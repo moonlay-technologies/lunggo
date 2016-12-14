@@ -15,20 +15,7 @@
     </div>
 
     <div class="row">
-            <div class="col-md-8">
-                <div class="showback">
-                    @if (count == 0)
-                    {
-                        <h4><b>Depart Flight</b></h4>
-                    }
-                    else
-                    {
-                        <h4><b>Return Flight</b></h4>
-                    }
-                    <hr />
-                    @{ Html.RenderPartial("RenderTrip", trip); }
-                </div>
-            </div>
+        @{ Html.RenderPartial("RenderHotel", Model.HotelDetails); }
     </div>
 
     <div class="row">

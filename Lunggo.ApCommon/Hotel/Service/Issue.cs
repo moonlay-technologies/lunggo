@@ -63,6 +63,14 @@ namespace Lunggo.ApCommon.Hotel.Service
                     IsSuccess = false,
                 };
             }
+
+            if (!string.IsNullOrEmpty(rsvData.HotelDetails.BookingReference))
+            {
+                return new IssueHotelTicketOutput
+                {
+                    IsSuccess = false
+                };
+            }
             //var oldPrice = rsvData.HotelDetails.Rooms.Sum(room => room.Rates.Sum(rate => rate.Price.Supplier));
             var occupancies = new List<Occupancy>();
 
