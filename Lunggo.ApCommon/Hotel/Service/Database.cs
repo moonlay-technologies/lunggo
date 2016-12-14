@@ -110,7 +110,8 @@ namespace Lunggo.ApCommon.Hotel.Service
                                 RateCount = rateRecord.RoomCount.GetValueOrDefault(),
                                 Price = Price.GetFromDb(rateRecord.PriceId.GetValueOrDefault()),
                                 RateCommentsId = rateRecord.RateComment,
-                                ChildrenAges = rateRecord.ChildrenAges != null ? rateRecord.ChildrenAges.Deserialize<List<int>>() : null
+                                ChildrenAges = rateRecord.ChildrenAges != null ? rateRecord.ChildrenAges.Deserialize<List<int>>() : null,
+                                NightCount = Convert.ToInt32((hotelDetailRecord.CheckOutDate - hotelDetailRecord.CheckInDate).GetValueOrDefault().TotalDays)
                             };
                             hotelRoom.Rates.Add(rate);
                         }
