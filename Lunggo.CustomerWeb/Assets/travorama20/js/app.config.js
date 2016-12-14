@@ -156,6 +156,27 @@ app.directive('altImage', function($http, $log, $q) {
         }
     };
 });
+
+app.directive('searchScroll', function () {
+    return {
+        restrict: 'A',
+        link: function (scope, element, attrs) {
+            
+            $(window).scroll(function () {
+                var a = Math.round($(window).scrollTop());
+                var b = $(window).height();
+                var c = $(document).height();
+                if (Math.round($(window).scrollTop()) + $(window).height() == $(document).height()) {
+                    scope.page++;
+                    scope.bottomPage = true;
+                    window.scrollTo(0, document.body.scrollHeight);
+                    scope.searchHotel('', '', true);
+                }
+            });
+
+        }
+    };
+});
 //app.directive('altBackgroundImage', function (style) {
 //    return function (scope, element, attrs) {
 //        element.bind("keydown keypress", function (event) {

@@ -181,7 +181,7 @@
                             </div>
                             <div class="col-xs-9">
                                         <p>
-                                            @if (rate.Cancellation != null)
+                                            @if (rate.Cancellation != null && rate.Cancellation.Count > 0)
                                             {
                                                 foreach (var policy in rate.Cancellation)
                                                 {
@@ -193,7 +193,7 @@
                                         </p>
                             </div>
                         </div>
-                                if (rate.TermAndCondition.Count != 0 && !rate.TermAndCondition.Exists(r => r.Length < 3))
+                                if (rate.TermAndCondition != null && rate.TermAndCondition.Count > 0 && !rate.TermAndCondition.Exists(r => r.Length < 3))
                         {
                             <div class="row grey-txt">
                                 <div class="col-xs-3">

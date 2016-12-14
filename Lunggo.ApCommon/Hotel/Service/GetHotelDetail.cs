@@ -102,9 +102,12 @@ namespace Lunggo.ApCommon.Hotel.Service
 
         public void SetHotelFullFacilityCode(HotelDetailsBase hotel)
         {
-            foreach (var data in hotel.Facilities)
+            if (hotel.Facilities != null || hotel.Facilities.Count != 0)
             {
-                data.FullFacilityCode = data.FacilityGroupCode + "" + data.FacilityCode;
+                foreach (var data in hotel.Facilities)
+                {
+                    data.FullFacilityCode = data.FacilityGroupCode + "" + data.FacilityCode;
+                }    
             }
         }
         public List<HotelRoom> SetRoomPerRate(List<HotelRoom> hotelRoom)

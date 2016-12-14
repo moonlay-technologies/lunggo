@@ -97,7 +97,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                         RateKey = fixRateKey,
                         AdultCount = paxData.AdultCount,
                         Boards = newRate.Boards,
-                        Cancellation =  newRate.Cancellation.Select(x=> new Cancellation
+                        Cancellation = newRate.Cancellation == null ? null : newRate.Cancellation.Select(x=> new Cancellation
                         {
                             Fee = x.Fee,
                             SingleFee = x.SingleFee,
@@ -112,7 +112,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                         Price = new Price(),
                         Type = newRate.Type,
                         NightCount = newRate.NightCount,
-                        TermAndCondition =
+                        TermAndCondition = newRate.RateCommentsId == null ? null : 
                             GetRateCommentFromTableStorage(newRate.RateCommentsId, hotel.CheckInDate)
                                 .Select(x => x.Description)
                                 .ToList()
@@ -121,10 +121,14 @@ namespace Lunggo.ApCommon.Hotel.Service
                         newRate.Price.SupplierCurrency);
                     fixRate.Price.SetMargin(newRate.Price.Margin);
                     fixRate.Price.CalculateFinalAndLocal(newRate.Price.LocalCurrency);
-                    foreach (var item in fixRate.Cancellation)
+                    if (fixRate.Cancellation != null)
                     {
-                        item.Fee = item.Fee/newRate.RateCount*paxData.RoomCount;
+                        foreach (var item in fixRate.Cancellation)
+                        {
+                            item.Fee = item.Fee / newRate.RateCount * paxData.RoomCount;
+                        }    
                     }
+                    
                     rateList.Add(fixRate);
                 }
                 if (rateList.Count == 0)

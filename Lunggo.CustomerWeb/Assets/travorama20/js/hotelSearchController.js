@@ -137,7 +137,10 @@ app.controller('hotelSearchController', ['$scope', '$log', '$window', '$http', '
             $scope.returnedHotelCount = data.returnedHotelCount;
             $scope.filteredHotelCount = data.filteredHotelCount;
             
-            $scope.page = data.page;
+            if (data.page > $scope.page) {
+                $scope.page = data.page;
+            }
+            
             $scope.perPage = data.perPage;
             $scope.pageCount = data.pageCount;
             $scope.totalHotelCount = data.totalHotelCount;
@@ -269,14 +272,14 @@ app.controller('hotelSearchController', ['$scope', '$log', '$window', '$http', '
         });
     }
     
-    $(window).scroll(function () {
-        if (Math.round($(window).scrollTop()) + $(window).height() == $(document).height()) {
-            $scope.page++;
-            $scope.bottomPage = true;
-            window.scrollTo(0, document.body.scrollHeight);
-            $scope.searchHotel('', '', true);
-        }
-    });
+    //$(window).scroll(function () {
+    //    if (Math.round($(window).scrollTop()) + $(window).height() == $(document).height()) {
+    //        $scope.page++;
+    //        $scope.bottomPage = true;
+    //        window.scrollTo(0, document.body.scrollHeight);
+    //        $scope.searchHotel('', '', true);
+    //    }
+    //});
   
 
     $scope.prevPage = function () {
