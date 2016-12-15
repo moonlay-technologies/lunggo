@@ -145,8 +145,8 @@
                                 <div class="sm-txt grey-txt">
                                     <div ng-show="room.rate.isFreeCancel">Pembatalan Gratis </div>
                                     <div ng-show="!room.rate.isFreeCancel && room.rate.isRefundable">Kebijakan Pembatalan Berlaku </div>
-                                    <div ng-show="!room.rate.isFreeCancel && !room.rate.isRefundable">TIdak Dapat Dibatalkan </div>
-                                    <span class="max-visitor">Max {{room.paxCapacity}} orang</span>
+                                    <div ng-show="!room.rate.isFreeCancel && !room.rate.isRefundable">Tidak Dapat Dibatalkan </div>
+                                    <div class="max-visitor" ng-if="room.rate.boards != 'RO'">Termasuk Sarapan</div>
                                 </div>
                                 <div class="price orange-txt">
                                     <div class="underline-txt sm-txt">Rp {{room.rate.originalFare | number}}</div>
@@ -163,8 +163,8 @@
                                 <div class="sm-txt grey-txt">
                                     <div ng-show="room.rate.isFreeCancel">Pembatalan Gratis </div>
                                     <div ng-show="!room.rate.isFreeCancel && room.rate.isRefundable">Kebijakan Pembatalan Berlaku </div>
-                                    <div ng-show="!room.rate.isFreeCancel && !room.rate.isRefundable">TIdak Dapat Dibatalkan </div>
-                                    <span class="max-visitor">Max {{room.paxCapacity}} orang</span>
+                                    <div ng-show="!room.rate.isFreeCancel && !room.rate.isRefundable">Tidak Dapat Dibatalkan </div>
+                                    <div class="max-visitor" ng-if="room.rate.boards != 'RO'">Termasuk Sarapan</div>
                                 </div>
                                 <div class="price orange-txt">
                                     <div class="underline-txt sm-txt">Rp {{room.rate.originalFare | number}}</div>
@@ -315,8 +315,8 @@
                             <div class="sm-txt grey-txt">
                                 <div ng-show="selectedRoom.rate.isFreeCancel">Pembatalan Gratis </div>
                                 <div ng-show="!selectedRoom.rate.isFreeCancel && selectedRoom.rate.isRefundable">Kebijakan Pembatalan Berlaku </div>
-                                <div ng-show="!selectedRoom.rate.isFreeCancel && !selectedRoom.rate.isRefundable">TIdak Dapat Dibatalkan </div>
-                                <span class="max-visitor">Max {{selectedRoom.paxCapacity}} orang</span>
+                                <div ng-show="!selectedRoom.rate.isFreeCancel && !selectedRoom.rate.isRefundable">Tidak Dapat Dibatalkan </div>
+                                <div class="max-visitor" ng-show="selectedRoom.rate.boards != 'RO'">Termasuk Sarapan</div>
                             </div>
                             <div class="price orange-txt">
                                 <div class="underline-txt sm-txt">Rp {{selectedRoom.rate.originalFare}}</div>

@@ -30,11 +30,11 @@
 @section PageJS {
     <script>
         jQuery(document).ready(function ($) {
-            //Harbolnas modal box, expired only one day
-            if ($.cookie('pop') == null) {
-                $('#myModalMobile').modal('show');
-                $.cookie('pop', '1');
-            };
+        //    //Harbolnas modal box, expired only one day
+        //    if ($.cookie('pop') == null) {
+        //        $('#myModalMobile').modal('show');
+        //        $.cookie('pop', '1');
+        //    };
             //$(window).load(function () {
             //    $('#myModalMobile').modal('show');
             //});
@@ -56,23 +56,29 @@
 
 <div class="page-loading form-container" ng-class="{'page-loaded' : PageConfig.Loaded}">
     <!-- Modal Box Harbolnas -->
-    <div class="modal fade" id="myModalMobile">
+    @*<div class="modal fade" id="myModalMobile">
         <div class="modal-box">
             <img src="/Assets/images/campaign/Harbolnas2016/Harbolnas_popup_mobile.jpg" alt="Harbolnas 2016" />
             <a class="custom-close close" data-dismiss="modal"></a>
         </div>
-    </div>
+    </div>*@
 
     <div class="carousel-inner" role="listbox">
-        <div class="item active">
+        @*<div class="item active">
             <a href="/id/Promo/Harbolnas2016"><img src="/Assets/images/campaign/Harbolnas2016/Harbolnas_banner-mobile.jpg" alt="Harbolnas 2016" /></a>
-        </div>
-        <div class="item">
-            <a href="/id/Promo/MatahariMall"><img src="/Assets/images/campaign/MatahariMall2016/MatahariMall-slider-mobile.jpg" alt="Matahari Mall" /></a>
-        </div>
-        <div class="item">
-            <a href="/id/Promo/OnlineRevolution"><img src="/Assets/images/campaign/OnlineRevolution2016/OnlineRevolution-slider-mobile.jpg" alt="Online Revolution" /></a>
-        </div>
+        </div>*@
+        @if (DateTime.UtcNow.AddHours(7).Date <= new DateTime(2016, 12, 15))
+        {
+            <div class="item">
+                <a href="/id/Promo/MatahariMall"><img src="/Assets/images/campaign/MatahariMall2016/MatahariMall-slider-mobile.jpg" alt="Matahari Mall" /></a>
+            </div>
+        }
+        @if (DateTime.UtcNow.AddHours(7).Date <= new DateTime(2016, 12, 31))
+        {
+            <div class="item">
+                <a href="/id/Promo/OnlineRevolution"><img src="/Assets/images/campaign/OnlineRevolution2016/OnlineRevolution-slider-mobile.jpg" alt="Online Revolution" /></a>
+            </div>
+        }
         <div class="item">
             <a href="http://onelink.to/travoramaapp"><img src="/Assets/images/banner/download-app.jpg" alt="Download Applikasi Travorama!" /></a>
         </div>

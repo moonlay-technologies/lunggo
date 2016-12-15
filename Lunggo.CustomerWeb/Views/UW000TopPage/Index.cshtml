@@ -110,14 +110,14 @@
         var departureDate = '@(DateTime.Now.AddDays(1).ToString("ddMMyy"))';
 
         jQuery(document).ready(function($) {
-            //Harbolnas modal box, expired only one day
-            if ($.cookie('pop') == null) {
-                $('#myModal').modal('show');
-                $.cookie('pop', '1');
-            };
-            //$(window).load(function () {
-            //    $('#myModal').modal('show');
-            //});
+        //    //Harbolnas modal box, expired only one day
+        //    if ($.cookie('pop') == null) {
+        //        $('#myModal').modal('show');
+        //        $.cookie('pop', '1');
+        //    };
+        //    //$(window).load(function () {
+        //    //    $('#myModal').modal('show');
+        //    //});
 
         // slider
         $('.page-slider .slider a').each(function() {
@@ -150,11 +150,11 @@
 }
 
 <!-- Modal Box Harbolnas -->
-<div class="modal fade" id="myModal">
+@*<div class="modal fade" id="myModal">
     <div class="modal-box">
         <a class="custom-close close" data-dismiss="modal"></a>
     </div>
-</div>
+</div>*@
 
 <section class="section-search">
     <div class="container">
@@ -447,21 +447,27 @@
                     </a>
                     </div>
                     -->
-                <div class="slider">
+                @*<div class="slider">
                     <a href="@Url.Action("Harbolnas2016","Promo")">
                         <img src="/Assets/images/campaign/Harbolnas2016/Harbolnas_banner.jpg" alt="Harbolnas 2016" />
                     </a>
-                </div>
-                <div class="slider">
-                    <a href="@Url.Action("MatahariMall","Promo")">
-                        <img src="/Assets/images/campaign/MatahariMall2016/MatahariMall-slider.jpg" alt="Matahari Mall" />
-                    </a>
-                </div>
-                <div class="slider">
-                    <a href="@Url.Action("OnlineRevolution","Promo")">
-                        <img src="/Assets/images/campaign/OnlineRevolution2016/OnlineRevolution-slider.jpg" alt="Online Revolution" />
-                    </a>
-                </div>
+                </div>*@
+                @if (DateTime.UtcNow.AddHours(7).Date <= new DateTime(2016,12,15))
+                {
+                    <div class="slider">
+                        <a href="@Url.Action("MatahariMall", "Promo")">
+                            <img src="/Assets/images/campaign/MatahariMall2016/MatahariMall-slider.jpg" alt="Matahari Mall" />
+                        </a>
+                    </div>
+                }
+                @if (DateTime.UtcNow.AddHours(7).Date <= new DateTime(2016, 12, 31))
+                {
+                    <div class="slider">
+                        <a href="@Url.Action("OnlineRevolution", "Promo")">
+                            <img src="/Assets/images/campaign/OnlineRevolution2016/OnlineRevolution-slider.jpg" alt="Online Revolution" />
+                        </a>
+                    </div>
+                }
                 <div class="slider">
                     <a href="@Url.Action("TravoramaMobileApp","StaticPage")">
                         <img src="/Assets/images/campaign/MobileApp/mobile-app-banner.jpg" alt="Download Travorama Mobile App" />

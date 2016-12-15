@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using Lunggo.WebAPI.ApiSrc.Auxiliary.Model;
@@ -65,27 +66,33 @@ namespace Lunggo.WebAPI.ApiSrc.Auxiliary.Logic
 
         private static List<FeaturedPromo> GetFeaturePromos()
         {
-            return new List<FeaturedPromo>
-            {
+            var promos = new List<FeaturedPromo>();
+            promos.Add(
                 new FeaturedPromo
                 {
                     Id = "1",
                     BannerUrl = "http://www.travorama.com/Assets/images/banner/standard-web-banner.jpg",
                     DetailsUrl = ""
-                },
-                new FeaturedPromo
-                {
-                    Id = "2",
-                    BannerUrl = "http://www.travorama.com/Assets/images/campaign/OnlineRevolution2016/OnlineRevolution-slider-mobile.jpg",
-                    DetailsUrl = "http://www.travorama.com/id/promo/onlinerevolutionwebview"
-                },
-                new FeaturedPromo
-                {
-                    Id = "3",
-                    BannerUrl = "http://www.travorama.com/Assets/images/campaign/MatahariMall2016/MatahariMall-slider-mobile.jpg",
-                    DetailsUrl = "http://www.travorama.com/id/promo/MatahariMallWebView"
-                }
-            };
+                });
+            if (DateTime.UtcNow.AddHours(7).Date <= new DateTime(2016, 12, 31))
+                promos.Add(
+                    new FeaturedPromo
+                    {
+                        Id = "2",
+                        BannerUrl =
+                            "http://www.travorama.com/Assets/images/campaign/OnlineRevolution2016/OnlineRevolution-slider-mobile.jpg",
+                        DetailsUrl = "http://www.travorama.com/id/promo/onlinerevolutionwebview"
+                    });
+            if (DateTime.UtcNow.AddHours(7).Date <= new DateTime(2016, 12, 15))
+                promos.Add(
+                    new FeaturedPromo
+                    {
+                        Id = "3",
+                        BannerUrl =
+                            "http://www.travorama.com/Assets/images/campaign/MatahariMall2016/MatahariMall-slider-mobile.jpg",
+                        DetailsUrl = "http://www.travorama.com/id/promo/MatahariMallWebView"
+                    });
+            return promos;
         }
     }
 }
