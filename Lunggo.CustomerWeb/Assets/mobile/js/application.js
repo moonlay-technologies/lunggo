@@ -3,7 +3,7 @@ if (typeof (angular) == 'object') {
 
     var app = angular.module('travoramaMobile', ['ngRoute', 'ngResource']);
     // root scope
-    app.run(function ($rootScope, $log, hotelSearchSvc) {
+    app.run(function ($rootScope, $log, $resource, $timeout) {
         $rootScope.travoramaModuleName = 'travoramaMobile';
 
         $.datepicker.setDefaults(
@@ -12,8 +12,6 @@ if (typeof (angular) == 'object') {
             $.datepicker.regional['id']
             )
         );
-        //$.datepicker($.datepicker.regional["id-ID"]);
-        //('.ui-datepicker').addClass('notranslate');
 
         var trial = 0;
 
@@ -270,10 +268,7 @@ if (typeof (angular) == 'object') {
                     { Name: 'Queen Alia Intl', City: 'Amman', Country: 'Jordan', Code: 'AMM' },
                     { Name: 'Esenboga', City: 'Ankara', Country: 'Turkey', Code: 'ESB' },
                     { Name: 'Ataturk', City: 'Istanbul', Country: 'Turkey', Code: 'IST' }
-
                 ]
-
-
             },
 
             // **********
@@ -311,20 +306,6 @@ if (typeof (angular) == 'object') {
 
             }, // toggle burger menu end
 
-            // tab menu
-            TabShown: false,
-            TabMenu: function () {
-
-                if ($rootScope.PageConfig.TabShown == false) {
-                    $rootScope.PageConfig.TabShown = true;
-                    $rootScope.PageConfig.SetBodyNoScroll(true);
-                } else {
-                    $rootScope.PageConfig.TabShown = false;
-                    $rootScope.PageConfig.SetBodyNoScroll(false);
-                }
-
-            }, // tab menu end
-
             // page overlay
             ActiveOverlay: '',
             SetOverlay: function (overlay) {
@@ -341,27 +322,8 @@ if (typeof (angular) == 'object') {
                         $rootScope.PageConfig.SetBodyNoScroll(true);
                     }
                 }
-                //if (!overlay) {
-                //    $rootScope.PageConfig.ActiveOverlay = '';
-                //    $rootScope.PageConfig.BodyNoScroll = false;
-                //} else {
-                //    $rootScope.PageConfig.ActiveOverlay = overlay;
-                //    $rootScope.PageConfig.BodyNoScroll = true;
-                //}
             }, // page overlay end
-
-            // page popup
-            Popup: '',
-            SetPopup: function (popup) {
-                if (popup) {
-                    $rootScope.PageConfig.Popup = popup;
-                    $rootScope.PageConfig.SetBodyNoScroll(true);
-                } else {
-                    $rootScope.PageConfig.Popup = '';
-                    $rootScope.PageConfig.SetBodyNoScroll(false);
-                }
-            }, // page popup end
-
+            
         }; // $rootScope.PageConfig
 
         $rootScope.flip = function () {
@@ -383,6 +345,7 @@ if (typeof (angular) == 'object') {
                 }
             }
         };//$rootScope.Countries
+
         $rootScope.flightclass = [
             { name: 'Kelas Ekonomi', value: 'y' },
             { name: 'Kelas Bisnis', value: 'c' },
@@ -488,7 +451,6 @@ if (typeof (angular) == 'object') {
                         }
 
                         if (position == 'hotel') {
-                            //Jum, 16 Des 2016
                             var datex = new Date(trsdate);
                             var scope = angular.element($('.ui-datepicker')).scope();
                             scope.setCheckinDate(scope, datex);
@@ -544,24 +506,15 @@ if (typeof (angular) == 'object') {
                                     }
                                 }
                             }
-                        }
-                        //console.log("tes123: "+ trsdate);
-                        
 
-                        
+                            $rootScope.PageConfig.SetOverlay('');
+                        }                      
                     },
 
                 });
-                // set default value for datepicker
-                //if (options.MinDate) {
-                //    $rootScope.DatePicker.Settings.MinDate = options.MinDate;
-                //} else {
-                //    $rootScope.DatePicker.Settings.MinDate = new Date();
-                //}
-
+               
                 if (options.Target == 'departure') {
-                    //$(".ui-datepicker").datepicker("option", "showOn", "hide");
-
+                    
                     $rootScope.DatePicker.Settings.Target = '.flight-search-form-departure';
                     $('.ui-datepicker').datepicker('option', 'minDate', new Date());
                     if ($rootScope.FlightSearchForm.Trip == "true" && $rootScope.FlightSearchForm.ReturnDate) {
@@ -570,10 +523,7 @@ if (typeof (angular) == 'object') {
                         var mth = mydate.getMonth();
                         $('.ui-datepicker').datepicker('option', 'maxDate', $rootScope.FlightSearchForm.ReturnDate);
                     }
-
-
                     else {
-                        //console.log($rootScope.DatePicker.Settings.SelectedDate);
                         $('.ui-datepicker').datepicker('option', 'maxDate', null);
                     }
                     if ($rootScope.FlightSearchForm.Trip == "true" && $rootScope.FlightSearchForm.DepartureDate) {
@@ -592,6 +542,7 @@ if (typeof (angular) == 'object') {
                     }
 
                 }
+
                 $rootScope.DatePicker.Settings.DateFormat = 'D, dd M yy';
                 $rootScope.DatePicker.Settings.ChangeMonth = false;
                 $rootScope.DatePicker.Settings.ChangeYear = false;
@@ -608,26 +559,12 @@ if (typeof (angular) == 'object') {
             SetDefaultReturnDate: function (val) {
                 if (val == true) {
                     $rootScope.FlightSearchForm.Trip = "true";
-                    //if ($rootScope.FlightSearchForm.DepartureDate.getDate() > $rootScope.FlightSearchForm.ReturnDate.getDate()) {
-                    //    $rootScope.FlightSearchForm.ReturnDate.setDate($rootScope.FlightSearchForm.DepartureDate.getDate() + 1);
-                    //}
                 } else {
                     $rootScope.FlightSearchForm.Trip = "false";
                 }
-
             }
         };// datepicker
 
-        $rootScope.HotelSearchForm = {
-            AutoComplete: {
-                Keyword: '',
-                MinLength: 3,
-                GetLocation: function () {
-                    hotelSearchSvc.getLocation($rootScope.HotelSearchForm.AutoComplete.Keyword);
-                },
-                
-            },
-        }
         // flight search form
         $rootScope.FlightSearchForm = {
             Trip: 'false',
@@ -793,10 +730,7 @@ if (typeof (angular) == 'object') {
             },// passenger picker
             Url: '',
             Submit: function () {
-                //console.log($rootScope.FlightSearchForm);
-                //console.log('Generating search form');
-
-                if ($rootScope.FlightSearchForm.DepartureDate == '') {
+               if ($rootScope.FlightSearchForm.DepartureDate == '') {
                     var departure = new Date();
                     departure.setDate(departure.getDate() + 1);
                     $rootScope.FlightSearchForm.DepartureDate = departure;
@@ -871,6 +805,7 @@ if (typeof (angular) == 'object') {
             }
         }
 
+        //used in Search
         $rootScope.initAirport = function (target, airport, city) {
             if (target == 'departure') {
                 $rootScope.FlightSearchForm.AirportOrigin.Code = airport;
@@ -912,6 +847,7 @@ var getCountry = function (dialCode) {
 // --------------------
 // general functions
 
+//********************************************** LOGIN/AUTH FUNCTIONS*****************************************
 // get parameter
 function getParam(name) {
     name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
@@ -949,7 +885,6 @@ function getAnonymousFirstAccess() {
     });
     return status;
 }
-
 
 function getAnonymousAccessByRefreshToken(refreshToken) {
     var status = 0;
@@ -1092,7 +1027,7 @@ function refreshAuthAccess() {
     }
 }
 
-//********************
+//************************************************END*********************************************************
 // accordion functions
 function accordionFunctions() {
     //Accordion Help Section by W3School

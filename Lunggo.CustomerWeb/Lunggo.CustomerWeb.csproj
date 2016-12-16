@@ -3025,7 +3025,6 @@
     <Content Include="Views\StaticPage\Terms.mobile.cshtml" />
     <Content Include="Views\StaticPage\GetCalendar.mobile.cshtml" />
     <Content Include="Views\StaticPage\GetCalendarTerms.mobile.cshtml" />
-    <Content Include="Views\StaticPage\VisaWonderfulWednesday.cshtml" />
     <Content Include="Views\StaticPage\DanamonSweetValentine.cshtml" />
     <Content Include="Views\StaticPage\HowToOrder.mobile.cshtml" />
     <Content Include="Views\StaticPage\Promo.mobile.cshtml" />
@@ -3083,6 +3082,11 @@
     <Content Include="Views\Promo\MatahariMall.cshtml" />
     <Content Include="Views\Promo\Harbolnas2016.cshtml" />
     <Content Include="Views\Promo\Harbolnas2016.mobile.cshtml" />
+    <Content Include="Views\Promo\OnlineRevolution.cshtml" />
+    <Content Include="Views\Promo\OnlineRevolution.mobile.cshtml" />
+    <Content Include="Views\Promo\OnlineRevolutionWebview.cshtml" />
+    <Content Include="Views\Hotel\Shared\Mobile\_Autocomplete.cshtml" />
+    <Content Include="Views\Hotel\Shared\Mobile\_SelectCheckInDate.cshtml" />
     <None Include="Views\Template\eticket.cshtml" />
     <Content Include="Views\Template\OrderFlightHistory.cshtml" />
     <Content Include="Views\Template\PrivacyPolicy.cshtml" />

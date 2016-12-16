@@ -239,12 +239,6 @@
             scope.hotelSearch.locationType = location.type;
         }
 
-        factory.selectLocation = function (location) {
-            scope.hotelSearch.location = location.id;
-            scope.hotelSearch.locationDisplay = location.name;
-            scope.view.showHotelSearch = false;
-            scope.hotelSearch.locationType = location.type;
-        }
         scope.setChildAge = function (index, age) {
             scope.hotelSearch.childrenAges[index] = age;
         }
@@ -283,7 +277,7 @@
             };
         });
 
-        factory.getLocation = function (newValue) {
+        scope.getLocation = function (newValue) {
             if (newValue.length >= 3) {
                 scope.hotelSearch.autocompleteResource.get({ prefix: newValue }).$promise.then(function (data) {
                     $timeout(function () {
@@ -352,17 +346,6 @@
                 scopeElement.hotelSearch.checkoutDate = moment(date).add(scopeElement.hotelSearch.nightCount, 'days');
                 scopeElement.hotelSearch.checkinDateDisplay = scopeElement.hotelSearch.checkinDate.locale("id").format('LL');
                 scopeElement.hotelSearch.checkoutDateDisplay = scopeElement.hotelSearch.checkoutDate.locale("id").format('LL');
-            });
-        }
-
-        factory.setCheckinDate = function (scopeElement, date) {
-            scopeElement.$apply(function () {
-                $log.debug("scopeElement.hotelSearch.checkinDate = " + scopeElement.hotelSearch.checkinDate);
-                scopeElement.hotelSearch.checkinDate = moment(date).toISOString();
-                $log.debug("scopeElement.hotelSearch.checkinDate = " + scopeElement.hotelSearch.checkinDate);
-                scopeElement.hotelSearch.checkoutDate = moment(date).add(scopeElement.hotelSearch.nightCount, 'days').toISOString();
-                scope.hotelSearch.checkinDateDisplay = moment(scopeElement.hotelSearch.checkinDate).locale("id").format('LL');
-                scope.hotelSearch.checkoutDateDisplay = moment(scopeElement.hotelSearch.checkoutDate).locale("id").format('LL');
             });
         }
 

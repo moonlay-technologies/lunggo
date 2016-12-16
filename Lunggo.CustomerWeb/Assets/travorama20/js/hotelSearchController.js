@@ -103,9 +103,10 @@ app.controller('hotelSearchController', ['$scope', '$log', '$window', '$http', '
     $scope.maxPrice = '';
     hotelSearchSvc.initializeSearchForm($scope);
 
-    $scope.selectLocation = function (location) {
-        hotelSearchSvc.selectLocation(location);
-    }
+    //$scope.selectLocation = function (location) {
+    //    hotelSearchSvc.selectLocation(location);
+    //}
+
     $scope.searchHotel = function (filter, sort, isMobile) {
         $scope.searchDone = false;
         $scope.pageCount = 0;
@@ -353,6 +354,16 @@ app.controller('hotelSearchController', ['$scope', '$log', '$window', '$http', '
         return str.replace(/\w\S*/g, function (txt) { return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase(); });
     }
 
+    $scope.HotelSearchForm = {
+        AutoComplete: {
+            Keyword: '',
+            MinLength: 3,
+            GetLocation: function () {
+                $scope.getLocation($scope.HotelSearchForm.AutoComplete.Keyword);
+                // function in hotelSearchService.js
+            },
+        },
+    }
     //$('.overlay .filter-group--facility a').on('click', function () { //click or click touchstart
     //    $('.overlay .filter-group--facility a').toggleClass('active');
     //    $('.overlay .sh-list').toggleClass('opened');

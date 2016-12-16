@@ -168,12 +168,14 @@ app.controller('singleFlightController', [
             dateTime = dateTime.getDate();
             return dateTime;
         }
+
         $scope.getFullDate = function (dateTime) {
             if (dateTime) {
                 dateTime = parseInt(dateTime.substr(0, 4) + '' + dateTime.substr(5, 2) + '' + dateTime.substr(8, 2));
                 return dateTime;
             }
         }
+
         $scope.getOverdayDate = function (departureDate, arrivalDate) {
             if (departureDate && arrivalDate) {
                 departureDate = new Date(departureDate);
@@ -188,7 +190,7 @@ app.controller('singleFlightController', [
             }
         }
 
-
+        //****************************SHOW MEAL, BAGGAGE, TAX ICON ****************//
         $scope.checkMeal = function (trip) {
             var available = false;
             for (var x = 0; x < trip.segments.length; x++) {
@@ -228,6 +230,7 @@ app.controller('singleFlightController', [
             }
             return valid;
         }
+        //*******************************END*******************************
 
         // **********
         // flight detail function
@@ -304,13 +307,9 @@ app.controller('singleFlightController', [
 
         // available filter
         $scope.availableFilter = function (flight) {
-            //if (!$scope.loading && !$scope.loadingFlight) {
-                if (flight.Available) {
-                    return flight;
-                }
-            //} else {
-            //    return flight;
-            //}
+            if (flight.Available) {
+                return flight;
+            }           
         }
 
         // stop filter
@@ -319,6 +318,7 @@ app.controller('singleFlightController', [
             one: true,
             two: true
         };
+
         $scope.stopFilter = function (flight) {
             if ($scope.stopFilterParam.direct) {
                 if (flight.trips[0].transitCount == 0) {
@@ -344,13 +344,9 @@ app.controller('singleFlightController', [
             prices: []
         };
         $scope.priceFilter = function (flight) {
-            //if (!$scope.loading && !$scope.loadingFlight) {
-                if (flight.netAdultFare >= $scope.priceFilterParam.current[0] && flight.netAdultFare <= $scope.priceFilterParam.current[1]) {
-                    return flight;
-                }
-            //} else {
-            //    return flight;
-            //}
+            if (flight.netAdultFare >= $scope.priceFilterParam.current[0] && flight.netAdultFare <= $scope.priceFilterParam.current[1]) {
+                return flight;
+            }
         }
 
         // airline filter
@@ -381,19 +377,15 @@ app.controller('singleFlightController', [
         }
 
         $scope.airlineFilter = function (flight) {
-            //if (!$scope.loading && !$scope.loadingFlight) {
-                if ($scope.airlineFilterParam.pure == true) {
-                    return flight;
-                } else {
-                    for (var i = 0; i < flight.AirlinesTag.length; i++) {
-                        if ($scope.airlineFilterParam.selected.indexOf(flight.AirlinesTag[i]) != -1) {
-                            return flight;
-                        }
+            if ($scope.airlineFilterParam.pure == true) {
+                return flight;
+            } else {
+                for (var i = 0; i < flight.AirlinesTag.length; i++) {
+                    if ($scope.airlineFilterParam.selected.indexOf(flight.AirlinesTag[i]) != -1) {
+                        return flight;
                     }
                 }
-            //} else {
-            //    return flight;
-            //}
+            }
         }
 
         // time filter
@@ -529,7 +521,6 @@ app.controller('singleFlightController', [
                 //Check Authorization
                 var authAccess = getAuthAccess();
                 if (authAccess == 1 || authAccess == 2) {
-                    //console.log("Request : " + FlightSearchConfig.Url + $scope.flightFixRequest + '/' + $scope.Progress);
                     $http({
                         method: 'GET',
                         url: FlightSearchConfig.Url + $scope.flightFixRequest + '/' + $scope.Progress,
@@ -538,7 +529,6 @@ app.controller('singleFlightController', [
                         // set searchID
                         SelectConfig.SearchId = $scope.flightFixRequest;
                         $scope.flightRequest.SearchId = $scope.flightFixRequest;
-                        //console.log($scope.flightFixRequest);
 
                         $scope.Progress = returnData.data.progress;
                         if (returnData.data.flights.length != 0) {
@@ -550,8 +540,6 @@ app.controller('singleFlightController', [
                         if ($scope.Progress == 100) {
                             $scope.expiry.time = returnData.data.expTime;
                             $scope.flightRequest.FinalProgress = $scope.Progress;
-                            //Generate Filter Flight
-                            //$scope.generateFilterFlight();
                         } else {
                             $scope.flightRequest.FinalProgress = $scope.Progress;
                         }
@@ -574,7 +562,7 @@ app.controller('singleFlightController', [
                             $scope.getFlight();
                         }
                         else {
-                            //console.log(returnData);
+                            
                             for (var i = 0; i < $scope.flightRequest.Requests.length; i++) {
                                 // add to completed
                                 if ($scope.flightRequest.Completed.indexOf($scope.flightRequest.Requests[i] < 0)) {

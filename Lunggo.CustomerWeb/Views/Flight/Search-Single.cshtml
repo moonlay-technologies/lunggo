@@ -140,7 +140,7 @@
                 <div class="col-sm-9">
                     <div class="result-form-left">
                         <h3><b>@originCityNames[0]</b> (@data.Trips[0].OriginAirport) ke <b>@destinationCityNames[0]</b> (@data.Trips[0].DestinationAirport) </h3>
-                        <h4><b>@data.Trips[0].DepartureDate.ToString("ddd, dd MMM yyyy", new CultureInfo("id-ID"))</b> | <b>@(data.AdultCount + data.ChildCount + data.InfantCount) Orang</b> 
+                        <h4><b>@data.Trips[0].DepartureDate.ToString("dddd, dd MMMM yyyy", new CultureInfo("id-ID"))</b> | <b>@(data.AdultCount + data.ChildCount + data.InfantCount) Orang</b> 
                             @if (data.ChildCount != 0 && data.InfantCount != 0)
                             {
                                 <span>(@data.AdultCount Dewasa , @data.ChildCount Anak, @data.InfantCount Bayi)</span>
@@ -415,7 +415,8 @@
                                                 </h5>
                                             </div>
                                             <div class="flight-date-arrival">
-                                                <h4>{{flight.trips[0].segments[ flight.trips[0].segments.length - 1 ].arrival}} <span>{{flight.trips[0].segments[ flight.trips[0].segments.length - 1 ].arrivalTime | date : 'HH:mm' : 'UTC'}}</span><span class="overday" ng-if="getOverdayDate((flight.trips[0].segments[0].departureTime),(flight.trips[0].segments[ flight.trips[0].segments.length - 1 ].arrivalTime)) != 0">{{getOverdayDate((flight.trips[0].segments[0].departureTime),(flight.trips[0].segments[ flight.trips[0].segments.length - 1 ].arrivalTime))}}</span></h4>
+                                                <h4>{{flight.trips[0].segments[ flight.trips[0].segments.length - 1 ].arrival}} <span>{{flight.trips[0].segments[ flight.trips[0].segments.length - 1 ].arrivalTime | date : 'HH:mm' : 'UTC'}}</span>
+                                                <span class="overday" ng-if="getOverdayDate((flight.trips[0].segments[0].departureTime),(flight.trips[0].segments[ flight.trips[0].segments.length - 1 ].arrivalTime)) != 0">{{getOverdayDate((flight.trips[0].segments[0].departureTime),(flight.trips[0].segments[ flight.trips[0].segments.length - 1 ].arrivalTime))}}</span></h4>
                                                 <h5>{{flight.trips[0].segments[ flight.trips[0].segments.length - 1 ].arrivalTime | date : 'dd MMM yyyy' : 'UTC'}}</h5>
                                             </div>
                                         </div>
@@ -548,12 +549,8 @@
 
                             <h3><sup>Rp</sup> {{flightList[flightSelected].netTotalFare | number:0}}</h3>
                             <p>*Harga termasuk Pajak &amp; Service Charge</p>
-                            @*<input type="submit" class="btn btn-yellow" value="PESAN" ng-click="revalidateFlight(flightSelected)" ng-hide="revalidateFlightParam.validating || revalidateFlightParam.validated" />*@
                             <input type="submit" class="btn btn-yellow" value="LANJUTKAN" ng-click="selectSubmit()" ng-disabled="!selectFlightParam.validated" />
-                            @*<div ng-show="revalidateFlightParam.validated && !revalidateFlightParam.available">
-                                    <input type="submit" class="btn btn-yellow" value="LANJUTKAN" ng-show="revalidateFlightParam.newFare" ng-click="revalidateFlight(flightSelected)" ng-disabled="revalidateFlightParam.proceed" />
-                                    <input type="submit" class="btn btn-yellow" value="PILIH KEMBALI" ng-hide="revalidateFlightParam.newFare" ng-click="closeOverview()" />
-                                </div>*@
+                          
                         </div>
                     </section>
                     <footer class="flight-review-detail">

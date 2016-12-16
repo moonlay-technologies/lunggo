@@ -160,63 +160,8 @@
                             <label class="checkbox" ng-click="changeFilter('facility', facilityFilter)" ng-class="{ 'active': (filter.facilities.indexOf(facilityFilter.code) > -1) }">
                                 <div class="switch"></div>
                                 <span>{{facilityFilter.name}} ({{facilityFilter.count}})</span>
-                                @*<input type="checkbox" name="check" class="check" value="false" />*@
                             </label>
-                            @*<label class="checkbox">
-                                    <div class="switch"></div>
-                                    <span class="meal-white">Breakfast</span>
-                                    <input type="checkbox" name="check" class="check" value="false" />
-                                </label>
-                                <label class="checkbox">
-                                    <div class="switch"></div>
-                                    <span class="ac-white">AC</span>
-                                    <input type="checkbox" name="check" class="check" value="false" />
-                                </label>
-                                <label class="checkbox">
-                                    <div class="switch"></div>
-                                    <span class="pool-white">Pool</span>
-                                    <input type="checkbox" name="check" class="check" value="false" />
-                                </label>
-                                <label class="checkbox">
-                                    <div class="switch"></div>
-                                    <span class="car-white">Car</span>
-                                    <input type="checkbox" name="check" class="check" value="false" />
-                                </label>
-                                <label class="checkbox">
-                                    <div class="switch"></div>
-                                    <span class="bed-white">Bed</span>
-                                    <input type="checkbox" name="check" class="check" value="false" />
-                                </label>
-                                <label class="checkbox">
-                                    <div class="switch"></div>
-                                    <span class="meal-white">Breakfast</span>
-                                    <input type="checkbox" name="check" class="check" value="false" />
-                                </label>
-                                <label class="checkbox">
-                                    <div class="switch"></div>
-                                    <span class="ac-white">AC</span>
-                                    <input type="checkbox" name="check" class="check" value="false" />
-                                </label>
-                                <label class="checkbox">
-                                    <div class="switch"></div>
-                                    <span class="pool-white">Pool</span>
-                                    <input type="checkbox" name="check" class="check" value="false" />
-                                </label>
-                                <label class="checkbox">
-                                    <div class="switch"></div>
-                                    <span class="car-white">Car</span>
-                                    <input type="checkbox" name="check" class="check" value="false" />
-                                </label>*@
-                        </div>
-                        @*<div class="col-half" ng-repeat="facilityFilter in hotelFilterDisplayInfo.facilityFilter.slice(8, hotelFilterDisplayInfo.facilityFilter.length)">
-                                <label class="checkbox" ng-click="changeFilter('facility', facilityFilter)" ng-class="{ active: (filter.facilities.indexOf(facilityFilter.code) > -1) }">
-                                    <div class="switch"></div>
-                                    <span>{{facilityFilter.name}} ({{facilityFilter.count}})</span>
-                                    @*<input type="checkbox" name="check" class="check" value="false" />
-                                </label>
-
-                            </div>*@
-                    </div>
+                        </div></div>
                     <a class="open-txt"></a>
                 </div>
                 <div class="filter-group filter-group--area" ng-show="hotelFilterDisplayInfo.zoneFilter.length > 0">
@@ -228,7 +173,6 @@
                             <label class="checkbox" ng-click="changeFilter('zone', zoneFilter)" ng-class="{ 'active': (filter.zones.indexOf(zoneFilter.code) > -1) }">
                                 <div class="switch"></div>
                                 <span>{{zoneFilter.name}}</span>
-                                @*<input type="checkbox" name="check" class="check" value="false" />*@
                             </label>
                         </div>
                     </div>
@@ -252,12 +196,10 @@
         <section class="overlay__content">
             <label class="round" ng-class="{ active : sortBy == sortByType.ascendingPrice }" ng-click="changeSorting(sortByType.ascendingPrice)">
                 <span class="radio"></span>
-                @*<input type="radio" name="optradio" class="check-radio" value="false" />*@
                 <span class="name">Harga Terendah</span>
             </label>
             <label class="round" ng-class="{ active : sortBy == sortByType.descendingPrice }" ng-click="changeSorting(sortByType.descendingPrice)">
                 <span class="radio"></span>
-                @*<input type="radio" name="optradio" class="check-radio" value="false" />*@
                 <span class="name">Harga Tertinggi</span>
             </label>
             <label class="round" ng-class="{ active : sortBy == sortByType.ascendingStar }" ng-click="changeSorting(sortByType.ascendingStar)">
@@ -272,66 +214,12 @@
             </label>
         </section>
     </div>
+    
+    <!-- overlay hotel selector -->
+    @Html.Partial("/Views/Hotel/Shared/Mobile/_Autocomplete.cshtml")
 
-    <div class="overlay overlay--theme--blue overlay--hotel-select" ng-class="{'active' : (PageConfig.ActiveOverlay == 'hotel-select')}">
-        <header class="overlay__header">
-            <h3 class="overlay__title">
-                <small>PILIH HOTEL TUJUAN</small>
-                <span class="overlay__close" ng-click="PageConfig.SetOverlay();">X</span>
-            </h3>
-        </header><!-- .overlay__header -->
-        <section class="overlay__content">
-
-            <div class="autocomplete-input">
-                <input type="text" class="form-control" name="name" value="" placeholder="Masukkan Kota/Lokasi Hotel Tujuan" ng-model="HotelSearchForm.AutoComplete.Keyword" ng-change="HotelSearchForm.AutoComplete.GetLocation()" />
-            </div><!-- .autocomplete-input -->
-            @*ng-model="hotelSearch.locationDisplay" placeholder="Masukkan kota/ lokasi hotel tujuan"*@
-            <div class="autocomplete-preload">
-                <ul class="result">
-                    <li class="hotel" ng-repeat="location in hotelSearch.hotelAutocomplete track by $index" ng-click="PageConfig.SetOverlay('hotel-form'); selectLocation(location)">
-                        <a class="hotel__link clearfix">
-                            <div class="hotel__location bold-txt">{{location.name}}</div>
-                            <div class="col-half">
-                                <div class="hotel__detail">{{location.type}}</div>
-                            </div>
-                            <div class="col-half">
-                                <div class="result blue-txt semibold-txt pull-right">{{location.numOfHotels}} Hotel</div>
-                            </div>
-                        </a>
-                    </li>
-                </ul>
-            </div><!-- .autocomplete-preload -->
-            @*<div class="autocomplete-loading">
-                        <h4 class="text-center text-loading">Mencari Bandara</h4>
-                    </div>
-
-                <div class="autocomplete-no-result">
-                    <h4 class="text-center">Hasil tidak ditemukan</h4>
-                </div>
-
-                <div class="autocomplete-result">
-                    <ul class="result" ng-click="PageConfig.SetOverlay()"></ul>
-                </div>*@
-        </section><!-- .overlay__content -->
-    </div>
     <!-- overlay hotel date -->
-    <div class="overlay overlay--theme--blue overlay--datepicker overlay--datepicker-hoteldate" ng-class="{ 'active' : (PageConfig.ActiveOverlay == 'datepicker-hotel') }">
-        <header class="overlay__header">
-            <h3 class="overlay__title">
-                Pilih Tanggal Check in
-                <span class="overlay__close" ng-click="PageConfig.SetOverlay('hotel-form')">X</span>
-            </h3>
-        </header><!-- .overlay__header -->
-        <section class="overlay__content">
-            <div class="overlay-selector">
-                <div class="overlay-selector__body">
-                    <div class="calendar-container">
-                        <div class="ui-datepicker return-date" id="checkInDate"></div>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </div><!-- .overlay--datepicker-->
+    @Html.Partial("/Views/Hotel/Shared/Mobile/_SelectCheckInDate.cshtml")
 
     <div class="popup__wrapper" ng-class="{'active': expired}">
         <div class="popup">

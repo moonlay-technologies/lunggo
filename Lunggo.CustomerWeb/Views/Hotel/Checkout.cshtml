@@ -418,7 +418,7 @@
                                                         <div class="wb-mid">:</div>
                                                         <div class="wb-right bold-txt">@ToTitleCase(rate.BoardDescription)</div>
                                                     </div>
-                                                    if (!rate.TermAndCondition.Exists(r => r.Length < 3))
+                                                    if (rate.TermAndCondition != null && rate.TermAndCondition.Count!= 0 && !rate.TermAndCondition.Exists(r => r.Length < 3))
                                                     {
                                                     <div class="wb-container clearfix">
                                                             <div class="wb-left">Ketentuan</div>

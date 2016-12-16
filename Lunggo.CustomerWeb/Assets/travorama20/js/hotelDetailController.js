@@ -378,6 +378,17 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
         });
     }
 
+    $scope.HotelSearchForm = {
+        AutoComplete: {
+            Keyword: '',
+            MinLength: 3,
+            GetLocation: function () {
+                $scope.getLocation($scope.HotelSearchForm.AutoComplete.Keyword);
+                // function in hotelSearchService.js
+            },
+        },
+    }
+
     var accordionFunctions = function () {
         //Accordion Help Section by W3School
         $timeout(function () {

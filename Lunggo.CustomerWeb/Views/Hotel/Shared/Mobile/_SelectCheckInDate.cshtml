@@ -1,0 +1,17 @@
+﻿<div class="overlay overlay--theme--blue overlay--datepicker overlay--datepicker-hoteldate" ng-class="{ 'active' : (PageConfig.ActiveOverlay == 'datepicker-hotel') }">
+    <header class="overlay__header">
+        <h3 class="overlay__title">
+            Pilih Tanggal Check in
+            <span class="overlay__close" ng-click="PageConfig.SetOverlay('hotel-form')">X</span>
+        </h3>
+    </header><!-- .overlay__header -->
+    <section class="overlay__content">
+        <div class="overlay-selector">
+            <div class="overlay-selector__body">
+                <div class="calendar-container">
+                    <div class="ui-datepicker return-date" id="checkInDate"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

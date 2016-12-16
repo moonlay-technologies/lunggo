@@ -1,0 +1,38 @@
+﻿<div class="overlay overlay--theme--blue overlay--hotel-select" ng-class="{'active' : (PageConfig.ActiveOverlay == 'hotel-select')}">
+    <header class="overlay__header">
+        <h3 class="overlay__title">
+            <small>PILIH HOTEL TUJUAN</small>
+            <span class="overlay__close" ng-click="PageConfig.SetOverlay();">X</span>
+        </h3>
+    </header><!-- .overlay__header -->
+    <section class="overlay__content">
+
+        <div class="autocomplete-input">
+            <input type="text" class="form-control" name="name" value="" placeholder="Masukkan Kota/Lokasi Hotel Tujuan" ng-model="HotelSearchForm.AutoComplete.Keyword" ng-change="HotelSearchForm.AutoComplete.GetLocation()" />
+        </div><!-- .autocomplete-input -->
+        
+        <div class="autocomplete-preload">
+            <ul class="result">
+                <li class="hotel" ng-repeat="location in hotelSearch.hotelAutocomplete track by $index" ng-click="PageConfig.SetOverlay('hotel-form'); selectLocation(location)">
+                    <a class="hotel__link clearfix">
+                        <div class="hotel__location bold-txt">{{location.name}}</div>
+                        <div class="col-half">
+                            <div class="hotel__detail">{{location.type}}</div>
+                        </div>
+                        <div class="col-half">
+                            <div class="result blue-txt semibold-txt pull-right">{{location.numOfHotels}} Hotel</div>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+        </div><!-- .autocomplete-preload -->
+        <div class="autocomplete-loading">
+            <h4 class="text-center text-loading">Mencari Bandara</h4>
+        </div>
+
+        <div class="autocomplete-no-result">
+            <h4 class="text-center">Hasil tidak ditemukan</h4>
+        </div>
+
+    </section><!-- .overlay__content -->
+</div>
