@@ -1,6 +1,6 @@
 ﻿// travorama angular app - checkout controller
 app.controller('checkoutController', [
-    '$http', '$scope', '$interval', '$location', function ($http, $scope, $interval, $location) {
+    '$http', '$scope', '$interval', '$location', '$log', function ($http, $scope, $interval, $location, $log) {
 
         $scope.returnUrl = document.referrer == (window.location.origin + window.location.pathname + window.location.search) ? '/' : document.referrer;
 
@@ -34,19 +34,8 @@ app.controller('checkoutController', [
             { name: 'Ny.', value: 'Mistress' },
             { name: 'Nn.', value: 'Miss' }
         ];
-        $scope.correctName = true;
-        $scope.msToTime = function (duration) {
-        
-            var milliseconds = parseInt((duration % 1000) / 100),
-                 seconds = parseInt((duration / 1000) % 60),
-                 minutes = parseInt((duration / (1000 * 60)) % 60),
-                 hours = parseInt((duration / (1000 * 60 * 60)));
-            hours = hours;
-            minutes = minutes;
-            seconds = seconds;
-            return hours + "j " + minutes + "m";
-        }
 
+        $scope.correctName = true;
         $scope.adultCount = adultPassenger;
         $scope.adultFare = adultFare;
         $scope.adultNetFare = adultNetFare;
@@ -127,70 +116,19 @@ app.controller('checkoutController', [
             source: $scope.countries,
         });
 
-        //Function Login in Checkout Page
-        $scope.form.submit = function () {
-            if ($scope.trial > 3) {
-                $scope.trial = 0;
-            }
-            $scope.form.submitting = true;
-            var authAccess = getAuthAccess();
-            if (authAccess == 1 || authAccess == 2)
-            {
-                $http({
-                    method: 'POST',
-                    url: LoginConfig.Url,
-                    data: {
-                        userName: $scope.form.email,
-                        password: $scope.form.password,
-                        clientId: 'V2toa2VrOXFSWFZOUXpSM1QycEZlRTlIVlhwYWFrVjVUVVJrYlZsVVp6Vk5WRlp0VGtSR2FrOUhSWGhhYWsweFRucGpNRTE2U1RCT2VtTjNXbTFKZDFwcVFUMD0=',
-                        clientSecret: 'V2tkS2FFOUVhek5QUjFsNFRucFpNVmt5UlRST2JVWnNXVmRKTTA1dFVtaFBSMDVyV1dwQk5WcEhTWGxPZWtwcVRVUkpNVTFCUFQwPQ=='
-                    },
-                    headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') }
-                }).then(function (returnData) {
-                    $scope.form.submitting = false;
-                    $scope.form.submitted = true;
-                    if (returnData.data.status == '200') {
-                        setCookie("accesstoken", returnData.data.accessToken, returnData.data.expTime);
-                        setCookie("refreshtoken", returnData.data.refreshToken, returnData.data.expTime);
-                        setCookie("authkey", returnData.data.accessToken, returnData.data.expTime);
-                        $scope.TakeProfileConfig.TakeProfile();
-                        //$scope.loggedIn = getCookie('accesstoken');
-                    }
-                    else {
-                        window.location.href = $location.absUrl();
-                        $scope.form.submitting = false;
-                        $scope.form.submitted = false;
-                        $scope.form.isLogin = false;
-                        //Return langsung
-                    }
-                }).catch(function (returnData) {
-                    $scope.trial++;
-                    if (refreshAuthAccess() && $scope.trial < 4 ) //refresh cookie
-                    {
-                        $scope.form.submit();
-                    }
-                    else
-                    {
-                        console.log('Failed to Login');
-                        $scope.form.submitting = false;
-                        $scope.form.submitted = false;
-                        $scope.form.isLogin = false;
-                        window.location.href = $location.absUrl();
-                        //return langsung
-                    }
-
-                });
-            }
-            else
-            {
-                $scope.form.submitting = false;
-                $scope.form.submitted = false;
-                $scope.form.isLogin = false;
-            }
-            
-        }
-        
         //************Functions for Validations and Warning Message**********
+        $scope.msToTime = function (duration) {
+
+            var milliseconds = parseInt((duration % 1000) / 100),
+                 seconds = parseInt((duration / 1000) % 60),
+                 minutes = parseInt((duration / (1000 * 60)) % 60),
+                 hours = parseInt((duration / (1000 * 60 * 60)));
+            hours = hours;
+            minutes = minutes;
+            seconds = seconds;
+            return hours + "j " + minutes + "m";
+        }
+
         $scope.checkName = function (name) {
             var re = /^[a-zA-Z ]+$/;
             var x = $scope.buyerInfo.name;
@@ -402,7 +340,7 @@ app.controller('checkoutController', [
             incompletePassportData: false,
             checkNameIncomplete: false
         }
-        //*********************END*************************
+        //*****************************END*****************************
         
         //********************FUNCTIONS TO FILL FORM*******************
 
@@ -586,8 +524,9 @@ app.controller('checkoutController', [
             else if (title == 'Miss')
                 return 'Nn.';
         }
-        //**************************END************************************
+        //************************* END ******************************
 
+        //*********************** LOG IN *****************************
         //Get Profile
         $scope.TakeProfileConfig = {
             TakeProfile: function () {
@@ -611,9 +550,9 @@ app.controller('checkoutController', [
                         }
                         else {
                             $scope.buyerInfo = {};
-                            console.log('There is an error');
-                            console.log('Error : ' + returnData.data.error);
-                            console.log(returnData);
+                            $log.debug('There is an error');
+                            $log.debug('Error : ' + returnData.data.error);
+                            $log.debug(returnData);
                             window.location.href = $location.absUrl();
                         }
                     }).catch(function (returnData) {
@@ -625,20 +564,127 @@ app.controller('checkoutController', [
                         else
                         {
                             $scope.buyerInfo = {};
-                            console.log('Failed to Get Profile');
+                            $log.debug('Failed to Get Profile');
                             window.location.href = $location.absUrl();
                         }
                         
                     });
                 }
                 else {
-                    console.log('Not Authorized');
+                    $log.debug('Not Authorized');
                 }
                 
             }
         }
 
-        //***********************BOOKING************************
+        //Function Login in Checkout Page
+        $scope.form.submit = function () {
+            if ($scope.trial > 3) {
+                $scope.trial = 0;
+            }
+            $scope.form.submitting = true;
+            var authAccess = getAuthAccess();
+            if (authAccess == 1 || authAccess == 2) {
+                $http({
+                    method: 'POST',
+                    url: LoginConfig.Url,
+                    data: {
+                        userName: $scope.form.email,
+                        password: $scope.form.password,
+                        clientId: 'V2toa2VrOXFSWFZOUXpSM1QycEZlRTlIVlhwYWFrVjVUVVJrYlZsVVp6Vk5WRlp0VGtSR2FrOUhSWGhhYWsweFRucGpNRTE2U1RCT2VtTjNXbTFKZDFwcVFUMD0=',
+                        clientSecret: 'V2tkS2FFOUVhek5QUjFsNFRucFpNVmt5UlRST2JVWnNXVmRKTTA1dFVtaFBSMDVyV1dwQk5WcEhTWGxPZWtwcVRVUkpNVTFCUFQwPQ=='
+                    },
+                    headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') }
+                }).then(function (returnData) {
+                    $scope.form.submitting = false;
+                    $scope.form.submitted = true;
+                    if (returnData.data.status == '200') {
+                        setCookie("accesstoken", returnData.data.accessToken, returnData.data.expTime);
+                        setCookie("refreshtoken", returnData.data.refreshToken, returnData.data.expTime);
+                        setCookie("authkey", returnData.data.accessToken, returnData.data.expTime);
+                        $scope.TakeProfileConfig.TakeProfile();
+                        //$scope.loggedIn = getCookie('accesstoken');
+                    }
+                    else {
+                        window.location.href = $location.absUrl();
+                        $scope.form.submitting = false;
+                        $scope.form.submitted = false;
+                        $scope.form.isLogin = false;
+                        //Return langsung
+                    }
+                }).catch(function (returnData) {
+                    $scope.trial++;
+                    if (refreshAuthAccess() && $scope.trial < 4) //refresh cookie
+                    {
+                        $scope.form.submit();
+                    }
+                    else {
+                        $log.debug('Failed to Login');
+                        $scope.form.submitting = false;
+                        $scope.form.submitted = false;
+                        $scope.form.isLogin = false;
+                        window.location.href = $location.absUrl();
+                        //return langsung
+                    }
+
+                });
+            }
+            else {
+                $scope.form.submitting = false;
+                $scope.form.submitted = false;
+                $scope.form.isLogin = false;
+            }
+
+        }
+
+        $scope.loggedIn = getAuthAccess();
+
+        $scope.buyerInfo = {};
+        if ($scope.loggedIn == 2) {
+            // call API get Profile
+            var authAccess = getAuthAccess();
+            if (authAccess == 2) {
+                $http({
+                    method: 'GET',
+                    url: GetProfileConfig.Url,
+                    headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') }
+                }).then(function (returnData) {
+                    if (returnData.data.status == "200") {
+                        $log.debug('Success getting Profile');
+                        $scope.buyerInfo.name = returnData.data.name;
+                        $scope.buyerInfo.countryCode = parseInt(returnData.data.countryCallCd);
+                        $scope.buyerInfo.phone = parseInt(returnData.data.phone);
+                        $scope.buyerInfo.email = returnData.data.email;
+                    }
+                    else {
+                        $scope.buyerInfo = {};
+                    }
+                }).catch(function (returnData) {
+                    $scope.buyerInfo = {};
+                });
+            }
+            else {
+                $scope.buyerInfo = {};
+                $log.debug('Not Authorized');
+            }
+
+        } else {
+            $scope.buyerInfo = {};
+        }
+
+        // get number
+        $scope.getNumber = function (number) {
+            var numbers = [];
+            number = parseInt(number);
+            for (var i = 1; i <= number; i++) {
+                numbers.push(i);
+            }
+            return numbers;
+        }
+
+        //************************* END ******************************
+
+        //*********************** BOOKING ****************************
         $scope.book = {
             booking: false,
             url: FlightBookConfig.Url,
@@ -726,10 +772,10 @@ app.controller('checkoutController', [
                 
                 $scope.paxData = $scope.paxData + ']';
                 $scope.book.postData = '{' + $scope.book.postData + ',' + $scope.paxData + '}';
-                console.log($scope.book.postData);
+                $log.debug($scope.book.postData);
                 $scope.book.postData = JSON.parse($scope.book.postData);
 
-                console.log($scope.book.postData);
+                $log.debug($scope.book.postData);
 
                 //Check Authorization
                 var authAccess = getAuthAccess();
@@ -741,7 +787,7 @@ app.controller('checkoutController', [
                         data: $scope.book.postData,
                         headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') }
                     }).then(function (returnData) {
-                        //console.log(returnData);
+                        //$log.debug(returnData);
                         if (returnData.data.status == '200' && (returnData.data.rsvNo != null || returnData.data.rsvNo != '' )) {
                             if (returnData.data.itinChanged) {
                                 $scope.book.isSuccess = false;
@@ -784,7 +830,7 @@ app.controller('checkoutController', [
                                 $scope.book.isSuccess = false;
                                 $scope.book.checked = true;
                                 $scope.book.booking = false;
-                                console.log(returnData);
+                                $log.debug(returnData);
                                 $scope.errorMessage = returnData.data.error;
                             }
                         }
@@ -797,7 +843,7 @@ app.controller('checkoutController', [
                         }
                         else
                         {
-                            console.log(returnData);
+                            $log.debug(returnData);
                             $scope.book.checked = true;
                             $scope.book.isSuccess = false;
                         }
@@ -805,59 +851,14 @@ app.controller('checkoutController', [
                     });
                 }
                 else {
-                    console.log('Not Authorized');
+                    $log.debug('Not Authorized');
                     $scope.book.checked = true;
                     $scope.book.isSuccess = false;
                 }
 
             }
         };
-        //**********************END*******************************
-
-        $scope.loggedIn = getAuthAccess();
-
-        $scope.buyerInfo = {};
-        if ($scope.loggedIn == 2) {
-            // call API get Profile
-            var authAccess = getAuthAccess();
-            if (authAccess == 2) {
-                $http({
-                    method: 'GET',
-                    url: GetProfileConfig.Url,
-                    headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') }
-                }).then(function (returnData) {
-                    if (returnData.data.status == "200") {
-                        console.log('Success getting Profile');
-                        $scope.buyerInfo.name = returnData.data.name;
-                        $scope.buyerInfo.countryCode = parseInt(returnData.data.countryCallCd);
-                        $scope.buyerInfo.phone = parseInt(returnData.data.phone);
-                        $scope.buyerInfo.email = returnData.data.email;
-                    }
-                    else {
-                        $scope.buyerInfo = {};
-                    }
-                }).catch(function (returnData) {
-                    $scope.buyerInfo = {};
-                });
-            }
-            else {
-                $scope.buyerInfo = {};
-                console.log('Not Authorized');
-            }
-            
-        } else {
-            $scope.buyerInfo = {};
-        }
-
-        // get number
-        $scope.getNumber = function (number) {
-            var numbers = [];
-            number = parseInt(number);
-            for (var i = 1; i <= number; i++) {
-                numbers.push(i);
-            }
-            return numbers;
-        }
+        //************************* END ******************************
 
         // **********
         // generate passenger
@@ -920,7 +921,7 @@ app.controller('checkoutController', [
 
         // log $scope
         $scope.printScope = function () {
-            console.log($scope);
+            $log.debug($scope);
         }
 
         //********************
@@ -935,9 +936,9 @@ app.controller('checkoutController', [
         } else {
             $scope.transferWindowOpen = false;
         }
-        //console.log($scope.rightNow);
-        //console.log(parseInt($scope.transferWindow[0]));
-        //console.log(parseInt($scope.transferWindow[1]));
-        //console.log($scope.transferWindowOpen);
+        //$log.debug($scope.rightNow);
+        //$log.debug(parseInt($scope.transferWindow[0]));
+        //$log.debug(parseInt($scope.transferWindow[1]));
+        //$log.debug($scope.transferWindowOpen);
     }
 ]);// checkout controller

@@ -193,7 +193,8 @@ app.controller('hotelcheckoutController', [
 
         $scope.$watch('buyerInfo.name', function () {
             if ($scope.diffPerson == false) {
-                if ($scope.buyerInfo.name != null && $scope.buyerInfo.title != "") {
+                //&& $scope.buyerInfo.title != ""
+                if ($scope.buyerInfo.name != null || $scope.buyerInfo.name == '') {
                     $scope.guestInfo.name = $scope.buyerInfo.name;
                     $scope.guestInfo.title = $scope.buyerInfo.title;
                 }              
@@ -202,7 +203,8 @@ app.controller('hotelcheckoutController', [
 
         $scope.$watch('buyerInfo.title', function () {
             if ($scope.diffPerson == false) {
-                if ($scope.buyerInfo.name != null && $scope.buyerInfo.title != "") {
+                //$scope.buyerInfo.name != null && 
+                if ($scope.buyerInfo.title != "") {
                     $scope.guestInfo.name = $scope.buyerInfo.name;
                     $scope.guestInfo.title = $scope.buyerInfo.title;
                 }

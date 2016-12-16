@@ -221,7 +221,8 @@
 
         scope.hotelSearch.roomCountMin = 1;
         scope.hotelSearch.roomCountMax = 8;
-
+        scope.autocompleteLoading = false;
+        scope.autocompleteNoResult = false;
         scope.hotelSearch.totalAdult = 0;
         scope.hotelSearch.totalChildren = 0;
         scope.hotelSearch.getHotels = function (param) {
@@ -267,9 +268,10 @@
         }
 
         scope.$watch('hotelSearch.locationDisplay', function (newValue, oldValue) {
-            if (newValue.length >= 3) {
+            if (newValue != null && newValue.length >= 3) {
                 scope.hotelSearch.autocompleteResource.get({ prefix: newValue }).$promise.then(function (data) {
                     $timeout(function () {
+                        scope.autocompleteLoading = false;
                         scope.hotelSearch.hotelAutocomplete = data.hotelAutocomplete;
                         $log.debug(scope.hotelSearch.hotelAutocomplete);
                     }, 0);
@@ -278,9 +280,16 @@
         });
 
         scope.getLocation = function (newValue) {
-            if (newValue.length >= 3) {
+            if (newValue != null && newValue.length >= 3) {
+                scope.autocompleteLoading = true;
                 scope.hotelSearch.autocompleteResource.get({ prefix: newValue }).$promise.then(function (data) {
                     $timeout(function () {
+                        scope.autocompleteLoading = false;
+                        if (data.hotelAutocomplete == null || data.hotelAutocomplete.length == 0) {
+                            scope.autocompleteNoResult = true;
+                        } else {
+                            scope.autocompleteNoResult = false;
+                        }
                         scope.hotelSearch.hotelAutocomplete = data.hotelAutocomplete;
                         $log.debug(scope.hotelSearch.hotelAutocomplete);
                     }, 0);

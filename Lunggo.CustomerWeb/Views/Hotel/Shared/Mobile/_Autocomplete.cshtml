@@ -26,11 +26,11 @@
                 </li>
             </ul>
         </div><!-- .autocomplete-preload -->
-        <div class="autocomplete-loading">
-            <h4 class="text-center text-loading">Mencari Bandara</h4>
+        <div class="autocomplete-loading" ng-show="autocompleteLoading">
+            <h4 class="text-center text-loading">Mencari Kota, Lokasi, atau Hotel</h4>
         </div>
 
-        <div class="autocomplete-no-result">
+        <div class="autocomplete-no-result" ng-show="autocompleteNoResult">
             <h4 class="text-center">Hasil tidak ditemukan</h4>
         </div>
 

@@ -1,5 +1,6 @@
 ﻿// home controller
-app.controller('hotelSearchController', ['$scope', '$log', '$window', '$http', '$resource', '$timeout', 'hotelSearchSvc', function ($scope, $log, $window, $http, $resource, $timeout, hotelSearchSvc) {
+app.controller('hotelSearchController', ['$scope', '$log', '$window', '$http', '$resource', '$timeout', 'hotelSearchSvc',
+    function ($scope, $log, $window, $http, $resource, $timeout, hotelSearchSvc) {
 
     $scope.destinationName = "";
     $scope.model = {};

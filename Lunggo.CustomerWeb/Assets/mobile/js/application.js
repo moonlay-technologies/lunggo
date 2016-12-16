@@ -363,6 +363,7 @@ if (typeof (angular) == 'object') {
                 ChangeYear: false,
                 SelectedDate: ''
             },
+            Position: '',
             ChangeLanguage: function (date) {
                 var newdate = "";
                 var day = date.substring(0, 3);
@@ -438,19 +439,15 @@ if (typeof (angular) == 'object') {
                     $rootScope.FlightSearchForm.DepartureDate = new Date($rootScope.FlightSearchForm.DepartureDate);
                     $rootScope.FlightSearchForm.ReturnDate = new Date($rootScope.FlightSearchForm.ReturnDate);
                 }
+                $rootScope.DatePicker.Position = position;
 
                 $('.ui-datepicker').datepicker({
 
                     onSelect: function (date) {
 
                         var trsdate = $rootScope.DatePicker.ChangeLanguage(date);
-                        if (position == 'search-return' || position == 'search-single') {
-                            $rootScope.PageConfig.SetOverlay('flight-form');
-                        } else {
-                            $rootScope.PageConfig.SetOverlay(overlay);
-                        }
-
-                        if (position == 'hotel') {
+                        
+                        if ($rootScope.DatePicker.Position == 'hotel') {
                             var datex = new Date(trsdate);
                             var scope = angular.element($('.ui-datepicker')).scope();
                             scope.setCheckinDate(scope, datex);
@@ -458,6 +455,12 @@ if (typeof (angular) == 'object') {
                             $rootScope.PageConfig.SetOverlay('hotel-form');
 
                         } else {
+                            if (typeof ($rootScope.DatePicker.Position) == 'undefined') {
+                                $rootScope.PageConfig.SetOverlay();
+                            }
+                            else if ($rootScope.DatePicker.Position == 'search-return' || $rootScope.DatePicker.Position == 'search-single') {
+                                $rootScope.PageConfig.SetOverlay('flight-form');
+                            }
                             $rootScope.DatePicker.Settings.SelectedDate = new Date(trsdate);
                             $($rootScope.DatePicker.Settings.Target).val(trsdate);
                             $($rootScope.DatePicker.Settings.Target).trigger('input');
@@ -474,10 +477,10 @@ if (typeof (angular) == 'object') {
                             if (depdate > retdate) {
                                 $('.form__departure .field-container span').text(date);
                                 $('.form__return .field-container span').text(date);
-                                if (position == null) {
+                                if ($rootScope.DatePicker.Position == null) {
                                     $('.ui-datepicker.departure-date').datepicker("setDate", new Date(trsdate));
                                     $rootScope.FlightSearchForm.ReturnDate = new Date(trsdate);
-                                } else if (position == 'search-single' || position == 'search-return') {
+                                } else if ($rootScope.DatePicker.$rootScope.DatePicker.Position == 'search-single' || $rootScope.DatePicker.Position == 'search-return') {
                                     //$('.form-departure-date span').text(date);
                                     //$('.form-return-date span').text(date);
                                     $('.ui-datepicker.departure-date').datepicker("setDate", new Date(trsdate));
@@ -488,18 +491,18 @@ if (typeof (angular) == 'object') {
                             } else {
                                 if ($rootScope.DatePicker.Settings.Target == '.flight-search-form-departure') {
                                     $('.form__departure .field-container span').text(date);
-                                    if (position == null) {
+                                    if ($rootScope.DatePicker.Position == null) {
                                         //$('.form__departure .field-container span').text(date);
                                         $('.ui-datepicker.departure-date').datepicker("setDate", new Date(trsdate));
-                                    } else if (position == 'search-single' || position == 'search-return') {
+                                    } else if ($rootScope.DatePicker.Position == 'search-single' || $rootScope.DatePicker.Position == 'search-return') {
                                         //$('.form-departure-date span').text(date);
                                         $('.ui-datepicker.departure-date').datepicker("setDate", new Date(trsdate));
                                     }
                                 } else {
-                                    //if (position == null) {
+                                    //if ($rootScope.DatePicker.Position == null) {
                                     $('.form__return .field-container span').text(date);
                                     //}
-                                    if (position == 'search-single' || position == 'search-return') {
+                                    if ($rootScope.DatePicker.Position == 'search-single' || $rootScope.DatePicker.Position == 'search-return') {
                                         //$('.form-return-date span').text(date);
                                         $('.ui-datepicker.return-date').datepicker("setDate", new Date(trsdate));
 
@@ -507,7 +510,6 @@ if (typeof (angular) == 'object') {
                                 }
                             }
 
-                            $rootScope.PageConfig.SetOverlay('');
                         }                      
                     },
 
@@ -626,7 +628,7 @@ if (typeof (angular) == 'object') {
                                     $('.autocomplete-result').hide();
                                     $('.autocomplete-no-result').show();
                                 }
-                            }).error(function (returnData) {
+                            }).error(function () {
                                 trial++;
                                 //console.log(trial);
                                 if (refreshAuthAccess() && trial < 4) //refresh cookie

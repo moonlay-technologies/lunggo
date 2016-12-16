@@ -1,7 +1,7 @@
 ﻿// travorama angular app - Flight Controller
 
 app.controller('singleFlightController', [
-    '$http', '$scope', '$interval', '$timeout', function ($http, $scope, $interval, $timeout) {
+    '$http', '$scope', '$interval', '$timeout', '$log', function ($http, $scope, $interval, $timeout, $log) {
 
         // **********
         // on document ready
@@ -427,8 +427,8 @@ app.controller('singleFlightController', [
             }
             $('body').addClass('no-scroll');
 
-            console.log('---------------------');
-            console.log('Selecting Flight no : ' + indexNo);
+            $log.debug('---------------------');
+            $log.debug('Selecting Flight no : ' + indexNo);
             $scope.selectFlightParam.popup = true;
             if (!$scope.selectFlightParam.validated) {
 
@@ -449,12 +449,12 @@ app.controller('singleFlightController', [
                         headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') }
                     }).then(function (returnData) {
                         $scope.selectFlightParam.validated = true;
-                        console.log(indexNo);
-                        console.log("Response Select Flight : " + returnData);
+                        $log.debug(indexNo);
+                        $log.debug("Response Select Flight : " + returnData);
 
                         if (returnData.data.token != "" || returnData.data.token != null) {
 
-                            console.log('departure flight available');
+                            $log.debug('departure flight available');
                             $scope.selectFlightParam.available = true;
                             $scope.selectFlightParam.token = returnData.data.token;
 
@@ -471,8 +471,8 @@ app.controller('singleFlightController', [
                         }
                         else {
                             $scope.selectFlightParam.validatingFlight = false;
-                            console.log('ERROR Validating Flight');
-                            console.log('--------------------');
+                            $log.debug('ERROR Validating Flight');
+                            $log.debug('--------------------');
                             $scope.selectFlightParam.popup = false;
                             $scope.selectFlightParam.error = true;
                         }
@@ -480,7 +480,7 @@ app.controller('singleFlightController', [
                 }
                 else {
                     $scope.selectFlightParam.validatingFlight = false;
-                    console.log('Not Authorized');
+                    $log.debug('Not Authorized');
                     $scope.selectFlightParam.popup = false;
                     $scope.selectFlightParam.error = true;
                 }
@@ -533,7 +533,7 @@ app.controller('singleFlightController', [
                         $scope.Progress = returnData.data.progress;
                         if (returnData.data.flights.length != 0) {
                             $scope.generateFlightList(returnData.data.flights[0].options);
-                            console.log("Ada data");
+                            $log.debug("Ada data");
                             $scope.generateFilterFlight();
                         }
 
@@ -545,9 +545,9 @@ app.controller('singleFlightController', [
                         }
 
 
-                        console.log('Progress : ' + $scope.Progress + ' %');
+                        $log.debug('Progress : ' + $scope.Progress + ' %');
 
-                        console.log(returnData);
+                        $log.debug(returnData);
 
                         // loop the function
                         setTimeout(function () {
@@ -555,7 +555,7 @@ app.controller('singleFlightController', [
                         }, 1000);
 
                     }).catch(function (returnData) {
-                        console.log('Failed to get flight list');
+                        $log.debug('Failed to get flight list');
                         $scope.trial++;
                         if (refreshAuthAccess() && $scope.trial < 4) //refresh cookie
                         {
@@ -582,12 +582,12 @@ app.controller('singleFlightController', [
                     $scope.busy = false;
                     $scope.loading = false;
                     $scope.loadingFlight = false;
-                    console.log('Not Authorized');
+                    $log.debug('Not Authorized');
                 }
 
 
             } else {
-                console.log('Finished getting flight list !');
+                $log.debug('Finished getting flight list !');
                 $scope.busy = false;
                 $scope.loading = false;
                 $scope.loadingFlight = false;
@@ -608,7 +608,7 @@ app.controller('singleFlightController', [
         }
         $scope.dupes = {};
         $scope.generateFilterFlight = function () {
-            console.log('Generating Filter');
+            $log.debug('Generating Filter');
 
             // set expiry time
             $scope.expiry.start();
@@ -716,8 +716,8 @@ app.controller('singleFlightController', [
 
             $scope.flightRequest.FinalProgress = 100;
 
-            console.log('Completed setting flight and filter');
-            console.log($scope);
+            $log.debug('Completed setting flight and filter');
+            $log.debug($scope);
         }
 
     }
