@@ -377,20 +377,11 @@
         });
 
         scope.initChildrenAges = function (n) {
-            //if (scope.hotelSearch == null) {
-            //    scope.hotelSearch = {}
-            //    for (var h = 0; h < 8; h++) {
-            //        scope.hotelSearch.occupancies.push({
-            //            adultCount: 1,
-            //            childCount: 0,
-            //            childrenAges: [0,0,0,0]
-            //        });
-            //    }
-            //}
+
             if (n < scope.hotelSearch.roomCount) {
-                for (var c = 0; c < scope.hotelSearch.occupancies[n].childCount; c++) {
-                    scope.hotelSearch.occupancies[n].childrenAges[c] = hotelSearch.occupancies[n].childrenAges[c];
-                }
+                //for (var c = 0; c < scope.hotelSearch.occupancies[n].childCount; c++) {
+                //    scope.hotelSearch.occupancies[n].childrenAges[c] = hotelSearch.occupancies[n].childrenAges[c];
+                //}
                 for (var y = 0; y < 4 - scope.hotelSearch.occupancies[n].childCount; y++) {
                     scope.hotelSearch.occupancies[n].childrenAges.push(0);
                 }

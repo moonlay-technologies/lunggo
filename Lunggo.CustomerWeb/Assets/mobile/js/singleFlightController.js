@@ -35,8 +35,6 @@
         Starting: false
     };
 
-    //$scope.FlightSearchForm = $rootScope.FlightSearchForm;
-
     $scope.FlightFunctions = {};
 
     $scope.FlightConfig = [
@@ -132,12 +130,11 @@
             $scope.trial = 0;
         }
         $scope.PageConfig.Busy = true;
-        //console.log(a);
+
         if ($scope.Progress < 100) {
 
             console.log('request : ' + $scope.FlightConfig[0].FlightRequest.Requests);
             console.log("Request : " + FlightSearchConfig.Url + $scope.flightFixRequest() + '/' + $scope.Progress);
-            //   $http.get(FlightSearchConfig.Url + '/' + $scope.flightFixRequest + '/' + $scope.Progress, {
 
             // **********
             // ajax
@@ -151,8 +148,6 @@
                 }).then(function (returnData) {
 
                     SelectConfig.SearchId = $scope.flightFixRequest();
-                    //$scope.flightRequest.SearchId = $scope.flightFixRequest;
-
                     $scope.FlightConfig[0].FlightRequest.SearchId = $scope.flightFixRequest();
                     console.log($scope.flightFixRequest());
 
@@ -166,10 +161,8 @@
                     if (returnData.data.flights.length != 0) {
                         $scope.FlightFunctions.GenerateFlightList(returnData.data.flights[0].options);
                     }
-
-
+                    
                     console.log('Progress : ' + $scope.Progress + ' %');
-                    //console.log(returnData);
 
                     // loop the function
                     setTimeout(function () {
@@ -312,14 +305,11 @@
                     headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') }
                 }).then(function (returnData) {
                     RevalidateConfig.Validated = true;
-                    //$scope.selectFlightParam.validated = true;
+                    
                     console.log(indexNo);
                     console.log("Response Select Flight : " + returnData);
                     if (returnData.data.token != "" || returnData.data.token != null) {
                         console.log('departure flight available');
-                        //RevalidateConfig.Available = true;
-                        //RevalidateConfig.Token = returnData.Token;
-
                         $('.push-token input').val(returnData.data.token);
                         $('.push-token').submit();
                     }
@@ -666,5 +656,5 @@
         $('.price-slider').slider("values", 1, $scope.priceFilterParam.initial[1]);
     }
 
-    // ***************************************END**********************************************
+    // ************************************** END *********************************************
 }]);
