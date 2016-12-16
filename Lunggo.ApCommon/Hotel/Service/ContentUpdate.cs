@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Runtime.InteropServices;
@@ -8,14 +10,15 @@ using System.Threading.Tasks;
 using Lunggo.ApCommon.Hotel.Model;
 using Lunggo.ApCommon.Hotel.Model.Logic;
 using Lunggo.ApCommon.Hotel.Query;
+using Lunggo.ApCommon.Hotel.Wrapper.GoogleMaps.Geocoding;
 using Lunggo.Framework.BlobStorage;
 using Lunggo.Framework.Config;
 using Lunggo.Framework.Documents;
-using Lunggo.Framework.SharedModel;
 using Lunggo.Framework.TableStorage;
 using Microsoft.Azure.Documents;
 using Microsoft.WindowsAzure.Storage.Table;
 using RestSharp;
+using FileInfo = Lunggo.Framework.SharedModel.FileInfo;
 
 namespace Lunggo.ApCommon.Hotel.Service
 {
@@ -162,6 +165,199 @@ namespace Lunggo.ApCommon.Hotel.Service
                     Console.WriteLine("Hotel with code: " + i + " not found");
                 }
             }
+        }
+
+        public void UpdateLocation()
+        {
+            var destinationList = GetDestinationByCountryList("ID");
+            //var destination = destinationList.FirstOrDefault(x => x.Code == "JAV");
+            string[] apiKey = GeoCodeApiKeyList;
+            var keyIndex = 0;
+            var client = new GeocodingClient(apiKey[keyIndex]);
+            var HotelAreaDict = new Dictionary<string, string>();
+            var HotelZoneDict = new Dictionary<string, string>();
+            foreach (var destination in destinationList)
+            {
+                var hotelList = GetHotelListByLocationFromStorage(destination.Code);
+                var zoneDict = new Dictionary<string, string>();
+                var areaDict = new Dictionary<string, Areas>();
+                var zoneDict2 = new Dictionary<string, int>();
+                var areaDict2 = new Dictionary<string, int>();
+                var zoneCounter = 1;
+                var areaCounter = 1;
+                foreach (var hotelCd in hotelList)
+                {
+                    var hotelDetail = GetHotelDetailFromTableStorage(hotelCd);
+                    var location = new List<string>();
+                    Debug.Print("HotelCd : {0} || Lat : {1} || Long : {2}", hotelDetail.HotelCode, hotelDetail.Latitude, hotelDetail.Longitude);
+                    try
+                    {
+                        location = client.GetLocationByGeoCode(hotelDetail.Latitude, hotelDetail.Longitude);
+                    }
+                    catch
+                    {
+                        keyIndex++;
+                        client = new GeocodingClient(apiKey[keyIndex]);
+                        location = client.GetLocationByGeoCode(hotelDetail.Latitude, hotelDetail.Longitude);
+                    }
+
+                    if (location == null || string.IsNullOrEmpty(location[0]) || string.IsNullOrEmpty(location[1]))
+                    {
+                        hotelDetail.ZoneCode = null;
+                        hotelDetail.AreaCode = null;
+                    }
+                    else
+                    {
+                        //if(location[0].Equals("Kota Surabaya") || location[0].Equals("Kabupaten Sleman"))
+                        //    Debug.Print("################### SURABAYA DAN SLEMAN HERE");
+                        if (zoneDict.ContainsKey(location[0]))
+                        {
+                            hotelDetail.ZoneCode = zoneDict[location[0]];
+                            zoneDict2[location[0]] += 1;
+                        }
+                        else
+                        {
+                            var zoneCd = destination.Code + '-' + zoneCounter;
+                            hotelDetail.ZoneCode = zoneCd;
+                            zoneDict.Add(location[0], zoneCd);
+                            zoneDict2.Add(location[0], 1);
+                            HotelZoneDict.Add(zoneCd, location[0]);
+                            zoneCounter++;
+                        }
+
+                        if (areaDict.ContainsKey(location[1]))
+                        {
+                            hotelDetail.AreaCode = areaDict[location[1]].AreaCd;
+                            areaDict2[location[1]] += 1;
+                        }
+                        else
+                        {
+                            var areaCd = hotelDetail.ZoneCode + '-' + areaCounter;
+                            hotelDetail.AreaCode = areaCd;
+                            var areac = new Areas
+                            {
+                                AreaCd = areaCd,
+                                AreaName = location[1],
+                                ZoneCd = hotelDetail.ZoneCode
+                            };
+                            areaDict.Add(location[1], areac);
+                            areaDict2.Add(location[1], 1);
+                            HotelAreaDict.Add(areaCd, location[1]);
+                            areaCounter++;
+                        }
+                    }
+                    //SaveHotelDetailToTableStorage(hotelDetail, hotelCd); //Update HotelDetail
+                }
+                UpdateCountryDictionary(destination.CountryCode, destination.Code, zoneDict, areaDict); //Update Dict buat buat simpan CSV
+                //Save Hotel Location
+                //Update HotelDetail By Location
+            }
+            CreateCSV(HotelDestinationCountryDict);
+
+        }
+
+        public void UpdateCountryDictionary(string countryCd, string destinationCd, Dictionary<string, string> zoneDict, Dictionary<string, Areas> areaDict)
+        {
+            var zoneList = new List<Zone>();
+            foreach (var zone in zoneDict)
+            {
+                var areaList = new List<Area>();
+                var areaPerZone = areaDict.Where(x => x.Value.ZoneCd.Equals(zone.Value));
+                foreach (var area in areaPerZone)
+                {
+                    var singleArea = new Area
+                    {
+                        Code = area.Value.AreaCd,
+                        Name = area.Value.AreaName,
+                        ZoneCode = area.Value.ZoneCd,
+                        DestinationCode = destinationCd,
+                    };
+                    areaList.Add(singleArea);
+                }
+                var singleZone = new Zone
+                {
+                    Code = zone.Value,
+                    Name = zone.Key,
+                    DestinationCode = zone.Value.Split('-')[0],
+                    Areas = areaList
+                };
+                zoneList.Add(singleZone);
+            }
+            var country = HotelDestinationCountryDict[countryCd];
+            if (country != null)
+            {
+                var destination = country.Destinations.First(i => i.Code == destinationCd);
+                if (destination != null)
+                {
+                    var index = country.Destinations.IndexOf(destination);
+                    var singleDestination = new Destination
+                    {
+                        Code = destination.Code,
+                        Name = destination.Name,
+                        CountryCode = destination.CountryCode,
+                        Zones = zoneList
+                    };
+                    country.Destinations[index] = singleDestination;
+                    //country.Destinations.Add(singleDestination);
+                    //var dict = new Dictionary<string, Country>();
+                    //dict.Add(country.Code,country);
+                    //CreateCSV(dict);
+                }
+                Console.Write("Review");
+                HotelDestinationCountryDict[countryCd] = country; //TODO
+            }
+        }
+
+        public void CreateCSV(Dictionary<string, Country> dict)
+        {
+            var result = new StringBuilder();
+            foreach (var country in dict)
+            {
+                foreach (var destination in country.Value.Destinations)
+                {
+                    foreach (var zone in destination.Zones)
+                    {
+                        foreach (var area in zone.Areas)
+                        {
+                            string row = destination.Code + '|' + destination.Name + '|' + country.Value.Code + '|'
+                                         + country.Value.IsoCode + '|' + zone.Code + '|' + zone.Name + '|' + area.Code +
+                                         '|' + area.Name;
+                            result.Append(row);
+                            result.Append("\n");
+                        }
+                    }
+                }
+            }
+            byte[] csvFile = Encoding.ASCII.GetBytes(result.ToString());
+            MemoryStream stream = new MemoryStream(csvFile);
+
+            StreamReader reader = new StreamReader(stream);
+            Debug.Print(reader.ReadToEnd());
+            Console.WriteLine(reader.ReadToEnd());
+            var blobService = BlobStorageService.GetInstance();
+            blobService.WriteFileToBlob(new BlobWriteDto
+            {
+                FileBlobModel = new FileBlobModel
+                {
+                    FileInfo = new FileInfo
+                    {
+                        FileName = "Area",
+                        ContentType = "text/csv",
+                        FileData = csvFile
+                    },
+                    Container = "HotelDestination"
+                },
+                SaveMethod = SaveMethod.Force
+            });
+
+        }
+
+        public class Areas
+        {
+            public string ZoneCd { get; set; }
+            public string AreaCd { get; set; }
+            public string AreaName { get; set; }
+
         }
     }
 }

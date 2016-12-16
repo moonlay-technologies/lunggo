@@ -178,6 +178,7 @@
     <None Include="Config\Common\Airline.csv" />
     <None Include="Config\Common\Airport.csv" />
     <None Include="Config\Common\Country.csv" />
+    <Content Include="Config\Common\GeoCodingAPI.txt" />
     <Content Include="Config\Common\HotelAccomodation.csv">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

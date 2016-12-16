@@ -285,6 +285,8 @@
     <Compile Include="Hotel\Service\Dictionary.cs" />
     <Compile Include="Hotel\Service\SendToCustomer.cs" />
     <Compile Include="Hotel\Service\Settings.cs" />
+    <Compile Include="Hotel\Wrapper\GoogleMaps\Geocoding\GeocodingClient.cs" />
+    <Compile Include="Hotel\Wrapper\GoogleMaps\Geocoding\GeocodingResponse.cs" />
     <Compile Include="Hotel\Wrapper\HotelBeds\Content\GetAccomodation.cs" />
     <Compile Include="Hotel\Wrapper\HotelBeds\Content\GetBoard.cs" />
     <Compile Include="Hotel\Wrapper\HotelBeds\Content\GetCategory.cs" />

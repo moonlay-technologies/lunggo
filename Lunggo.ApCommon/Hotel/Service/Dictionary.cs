@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Web;
 using Lunggo.ApCommon.Hotel.Constant;
@@ -33,8 +34,19 @@ namespace Lunggo.ApCommon.Hotel.Service
             public string Code { get; set; }
             public string Name { get; set; }
             public Hotels Hotel { get; set; }
+            public List<Area> Areas { get; set; }
             public string DestinationCode { get; set; }
-        }	
+        }
+
+        public class Area
+        {
+            public string Code { get; set; }
+            public string Name { get; set; }
+            public Hotels Hotel { get; set; }
+            public string ZoneCode { get; set; }
+            public string DestinationCode { get; set; }
+            public string CountryCode { get; set; }
+        }
 
         public class Hotels
         {
@@ -163,6 +175,8 @@ namespace Lunggo.ApCommon.Hotel.Service
         public Dictionary<long, Autocomplete> _Autocompletes; 
         public List<HotelAutoComplete> AutoCompletes = new List<HotelAutoComplete>();
 
+        public static string[] GeoCodeApiKeyList;
+
         public static Dictionary<string, string> HotelSegmentDictId;
         public static Dictionary<string, string> HotelSegmentDictEng;
         
@@ -209,6 +223,9 @@ namespace Lunggo.ApCommon.Hotel.Service
         private const string HotelBoardFileName = @"HotelBoard.csv";
         private const string HotelAccomodationFileName = @"HotelAccomodation.csv";
         private const string HotelCategoryFileName = @"HotelCategory.csv";
+        
+        private const string HotelGeoCodeApiFileName = @"GeoCodingAPI.txt";
+        private static string _hotelGeoCodeApiKeyPath;
 
 
         private static string _hotelSegmentFilePath;
@@ -252,6 +269,9 @@ namespace Lunggo.ApCommon.Hotel.Service
             _hotelFacilitiesFilter = Path.Combine(_configPath, HotelFacilityFilterGroupFileName);	
             AutoCompletes = GetAutocompleteFromBlob();
             PopulateHotelSegmentDict(_hotelSegmentFilePath);
+            _hotelGeoCodeApiKeyPath = Path.Combine(_configPath, HotelGeoCodeApiFileName);
+
+            PopulateGeoCodeApiList(_hotelGeoCodeApiKeyPath);
 
             PopulateHotelAccomodationDict(_hotelAccomodationFilePath);
             PopulateHotelBoardDict(_hotelBoardFilePath);
@@ -319,6 +339,12 @@ namespace Lunggo.ApCommon.Hotel.Service
                     }
                 }
             }
+        }
+
+        private static void PopulateGeoCodeApiList(String _hotelGeoCodeApiKeyPath)
+        {
+            GeoCodeApiKeyList = File.ReadAllLines(_hotelGeoCodeApiKeyPath, Encoding.UTF8);
+            Console.WriteLine("Coba Cek Hasil aja");
         }
 
         private static void PopulateHotel()
@@ -1355,6 +1381,25 @@ namespace Lunggo.ApCommon.Hotel.Service
             HotelDestinationDict.TryGetValue(destinationCode, out value);
             return value;
         }
+
+        public List<Destination> GetDestinationByCountryList(string countryCd)
+        {
+            if (countryCd == null)
+            {
+                return new List<Destination>();
+            }
+            var result = (from destination in HotelDestinationDict
+                          where destination.Value.CountryCode.Equals(countryCd)
+                          select new Destination
+                          {
+                              Code = destination.Key,
+                              Name = destination.Value.Name,
+                              Zones = destination.Value.Zones,
+                              CountryCode = destination.Value.CountryCode
+                          }).ToList();
+
+            return result;
+        } 
 
         public Zone GetHotelZoneFromDict(string zoneCode)
         {
