@@ -170,9 +170,9 @@ namespace Lunggo.ApCommon.Hotel.Service
         public void UpdateLocation()
         {
             var destinationList = GetDestinationByCountryList("ID");
-            //var destination = destinationList.FirstOrDefault(x => x.Code == "JAV");
+            //var destination = destinationList.FirstOrDefault(x => x.Code == "AMI");
             string[] apiKey = GeoCodeApiKeyList;
-            var keyIndex = 0;
+            var keyIndex = 2;
             var client = new GeocodingClient(apiKey[keyIndex]);
             var HotelAreaDict = new Dictionary<string, string>();
             var HotelZoneDict = new Dictionary<string, string>();
@@ -181,8 +181,6 @@ namespace Lunggo.ApCommon.Hotel.Service
                 var hotelList = GetHotelListByLocationFromStorage(destination.Code);
                 var zoneDict = new Dictionary<string, string>();
                 var areaDict = new Dictionary<string, Areas>();
-                var zoneDict2 = new Dictionary<string, int>();
-                var areaDict2 = new Dictionary<string, int>();
                 var zoneCounter = 1;
                 var areaCounter = 1;
                 foreach (var hotelCd in hotelList)
@@ -193,34 +191,41 @@ namespace Lunggo.ApCommon.Hotel.Service
                     try
                     {
                         location = client.GetLocationByGeoCode(hotelDetail.Latitude, hotelDetail.Longitude);
+                        if (location[0] == "OVERLIMIT")
+                        {
+                            throw new Exception();
+                        }
                     }
-                    catch
+                    catch(Exception)
                     {
                         keyIndex++;
-                        client = new GeocodingClient(apiKey[keyIndex]);
-                        location = client.GetLocationByGeoCode(hotelDetail.Latitude, hotelDetail.Longitude);
+                        if (keyIndex <= apiKey.Length - 1)
+                        {
+                            client = new GeocodingClient(apiKey[keyIndex]);
+                            location = client.GetLocationByGeoCode(hotelDetail.Latitude, hotelDetail.Longitude);
+                        }
                     }
 
-                    if (location == null || string.IsNullOrEmpty(location[0]) || string.IsNullOrEmpty(location[1]))
+                    if (location == null || location[0] == "OVERLIMIT" || string.IsNullOrEmpty(location[0]) || string.IsNullOrEmpty(location[1]))
                     {
+                        if ( location != null && location[0] == "OVERLIMIT")
+                        {
+                            Console.WriteLine("Destination Code Error : " + destination.Code);
+                        }
                         hotelDetail.ZoneCode = null;
                         hotelDetail.AreaCode = null;
                     }
                     else
                     {
-                        //if(location[0].Equals("Kota Surabaya") || location[0].Equals("Kabupaten Sleman"))
-                        //    Debug.Print("################### SURABAYA DAN SLEMAN HERE");
                         if (zoneDict.ContainsKey(location[0]))
                         {
                             hotelDetail.ZoneCode = zoneDict[location[0]];
-                            zoneDict2[location[0]] += 1;
                         }
                         else
                         {
                             var zoneCd = destination.Code + '-' + zoneCounter;
                             hotelDetail.ZoneCode = zoneCd;
                             zoneDict.Add(location[0], zoneCd);
-                            zoneDict2.Add(location[0], 1);
                             HotelZoneDict.Add(zoneCd, location[0]);
                             zoneCounter++;
                         }
@@ -228,7 +233,6 @@ namespace Lunggo.ApCommon.Hotel.Service
                         if (areaDict.ContainsKey(location[1]))
                         {
                             hotelDetail.AreaCode = areaDict[location[1]].AreaCd;
-                            areaDict2[location[1]] += 1;
                         }
                         else
                         {
@@ -241,18 +245,15 @@ namespace Lunggo.ApCommon.Hotel.Service
                                 ZoneCd = hotelDetail.ZoneCode
                             };
                             areaDict.Add(location[1], areac);
-                            areaDict2.Add(location[1], 1);
                             HotelAreaDict.Add(areaCd, location[1]);
                             areaCounter++;
                         }
                     }
-                    //SaveHotelDetailToTableStorage(hotelDetail, hotelCd); //Update HotelDetail
+                    SaveHotelDetailToTableStorage(hotelDetail, hotelCd); //Update HotelDetail
                 }
-                UpdateCountryDictionary(destination.CountryCode, destination.Code, zoneDict, areaDict); //Update Dict buat buat simpan CSV
-                //Save Hotel Location
-                //Update HotelDetail By Location
+                UpdateCountryDictionary(destination.CountryCode, destination.Code, zoneDict, areaDict);
             }
-            CreateCSV(HotelDestinationCountryDict);
+            CreateCSV(HotelDestinationCountryDict); //save to blob all
 
         }
 
@@ -263,17 +264,22 @@ namespace Lunggo.ApCommon.Hotel.Service
             {
                 var areaList = new List<Area>();
                 var areaPerZone = areaDict.Where(x => x.Value.ZoneCd.Equals(zone.Value));
-                foreach (var area in areaPerZone)
+                if (areaPerZone.Count() != 0)
                 {
-                    var singleArea = new Area
+                    foreach (var area in areaPerZone)
                     {
-                        Code = area.Value.AreaCd,
-                        Name = area.Value.AreaName,
-                        ZoneCode = area.Value.ZoneCd,
-                        DestinationCode = destinationCd,
-                    };
-                    areaList.Add(singleArea);
+                        var singleArea = new Area
+                        {
+                            Code = area.Value.AreaCd,
+                            Name = area.Value.AreaName,
+                            ZoneCode = area.Value.ZoneCd,
+                            DestinationCode = destinationCd,
+                            CountryCode = countryCd
+                        };
+                        areaList.Add(singleArea);
+                    }
                 }
+                
                 var singleZone = new Zone
                 {
                     Code = zone.Value,
@@ -298,12 +304,12 @@ namespace Lunggo.ApCommon.Hotel.Service
                         Zones = zoneList
                     };
                     country.Destinations[index] = singleDestination;
+                    //country.Destinations = new List<Destination>();
                     //country.Destinations.Add(singleDestination);
                     //var dict = new Dictionary<string, Country>();
-                    //dict.Add(country.Code,country);
+                    //dict.Add(country.Code, country);
                     //CreateCSV(dict);
                 }
-                Console.Write("Review");
                 HotelDestinationCountryDict[countryCd] = country; //TODO
             }
         }

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Security.Policy;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Lunggo.Framework.Extension;
 using RestSharp;
@@ -36,29 +37,26 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.GoogleMaps.Geocoding
             if (latitude == null || longitude == null || latitude == 0 || longitude == 0)
                 return null;
             var client = new RestClient(basePath);
-            var geoLocationList = new List<string>();
+            var geoLocationList= new List<string>();
             RestRequest request = new RestRequest(GetEndpoint(latitude, longitude, apiKey), Method.GET);
             IRestResponse<GeocodeResponse> response = client.Execute<GeocodeResponse>(request);
             var content = response.Content;
-            try
+            var geoLocationResponse = content.Deserialize<GeocodeResponse>();
+            if (geoLocationResponse.status.Equals("OVER_QUERY_LIMIT"))
             {
-                var geoLocationResponse = content.Deserialize<GeocodeResponse>();
-                if (geoLocationResponse.status.Equals("OVER_QUERY_LIMIT"))
-                    throw new Exception();
-                //Debug.Print("You have exceeded your daily request quota for this API.");
-                if (geoLocationResponse.results.Count == 0)
-                    return null;
-                var zone = geoLocationResponse.results[0].address_components.Where(
-                        x => x.types.Contains("administrative_area_level_2")).Select(x => x.long_name).FirstOrDefault();
-                var area = geoLocationResponse.results[0].address_components.Where(
-                        x => x.types.Contains("administrative_area_level_3")).Select(x => x.long_name).FirstOrDefault();
-                geoLocationList.Add(zone);
-                geoLocationList.Add(area);
+                geoLocationList.Add("OVERLIMIT");
+                return geoLocationList;
             }
-            catch (Exception e)
-            {
-                throw;
-            }
+            
+            if (geoLocationResponse.results.Count == 0)
+                return null;
+            var zone = geoLocationResponse.results[0].address_components.Where(
+                x => x.types.Contains("administrative_area_level_2")).Select(x => x.long_name).FirstOrDefault();
+            var area = geoLocationResponse.results[0].address_components.Where(
+                x => x.types.Contains("administrative_area_level_3")).Select(x => x.long_name).FirstOrDefault();
+            geoLocationList.Add(zone);
+            geoLocationList.Add(area);
+            Thread.Sleep(1000);
             return geoLocationList;
         }
 

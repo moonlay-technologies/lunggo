@@ -37,8 +37,9 @@ namespace Lunggo.Webjob.HotelContentWrapper
             //blobService.GetFileNameList("hotelimage");
 
             var hotelService = HotelService.GetInstance();
-            hotelService.UpdateHotelListByLocationContent();
-            hotelService.SaveHotelDetailByLocation();
+            hotelService.UpdateLocation();
+            //hotelService.UpdateHotelListByLocationContent();
+            //hotelService.SaveHotelDetailByLocation();
 
             stopwatch.Stop();
             Debug.Print("Done in : {0}", stopwatch.Elapsed);
