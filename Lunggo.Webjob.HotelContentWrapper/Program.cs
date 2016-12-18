@@ -25,19 +25,23 @@ namespace Lunggo.Webjob.HotelContentWrapper
             stopwatch.Start();
 
             //var hotel = new HotelBedsService();
+            //Console.WriteLine("Update Hotel Detail");
+            //hotel.GetHotelData(148001, 149000);
             //var service = HotelService.GetInstance();
             //Console.WriteLine("start!");
             //service.SaveAutoCompleteToTableStorage();
 
-            //var hotelService = HotelService.GetInstance();
+            var hotelService = HotelService.GetInstance();
             //hotelService.UpdateHotelImage();
 
             ///*Try to get file name*/
             //var blobService = BlobStorageService.GetInstance();
             //blobService.GetFileNameList("hotelimage");
 
-            var hotelService = HotelService.GetInstance();
-            hotelService.UpdateLocation();
+            //hotelService.UpdateLocation();
+            var x = hotelService.HotelDestinationAreaDict;
+            var y = hotelService.HotelDestinationZoneDict;
+            var z = hotelService.HotelDestinationDict;
             //hotelService.UpdateHotelListByLocationContent();
             //hotelService.SaveHotelDetailByLocation();
 

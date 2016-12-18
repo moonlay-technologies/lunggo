@@ -169,10 +169,12 @@ namespace Lunggo.ApCommon.Hotel.Service
 
         public void UpdateLocation()
         {
+            Console.WriteLine("Update Hotel Zone dan Area");
             var destinationList = GetDestinationByCountryList("ID");
             //var destination = destinationList.FirstOrDefault(x => x.Code == "AMI");
             string[] apiKey = GeoCodeApiKeyList;
-            var keyIndex = 2;
+            var keyIndex = 0;
+            Console.WriteLine("Key {0} : {1}", keyIndex, apiKey[keyIndex]);
             var client = new GeocodingClient(apiKey[keyIndex]);
             var HotelAreaDict = new Dictionary<string, string>();
             var HotelZoneDict = new Dictionary<string, string>();
@@ -188,19 +190,29 @@ namespace Lunggo.ApCommon.Hotel.Service
                     var hotelDetail = GetHotelDetailFromTableStorage(hotelCd);
                     var location = new List<string>();
                     Debug.Print("HotelCd : {0} || Lat : {1} || Long : {2}", hotelDetail.HotelCode, hotelDetail.Latitude, hotelDetail.Longitude);
+                    Console.WriteLine("HotelCd : {0} || Lat : {1} || Long : {2}", hotelDetail.HotelCode, hotelDetail.Latitude, hotelDetail.Longitude);
                     try
                     {
-                        location = client.GetLocationByGeoCode(hotelDetail.Latitude, hotelDetail.Longitude);
-                        if (location[0] == "OVERLIMIT")
+                        if (hotelDetail.Latitude == 0 || hotelDetail.Longitude == 0)
                         {
-                            throw new Exception();
+                            location = null;
                         }
+                        else
+                        {
+                            location = client.GetLocationByGeoCode(hotelDetail.Latitude, hotelDetail.Longitude);
+                            if (location != null && location[0] == "OVERLIMIT")
+                            {
+                                throw new Exception();
+                            }    
+                        }
+                        
                     }
                     catch(Exception)
                     {
                         keyIndex++;
                         if (keyIndex <= apiKey.Length - 1)
                         {
+                            Console.WriteLine("Key {0} : {1}", keyIndex, apiKey[keyIndex]);
                             client = new GeocodingClient(apiKey[keyIndex]);
                             location = client.GetLocationByGeoCode(hotelDetail.Latitude, hotelDetail.Longitude);
                         }
@@ -249,6 +261,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                             areaCounter++;
                         }
                     }
+                    Console.Write("Update Hotel {0}",hotelDetail.HotelCode);
                     SaveHotelDetailToTableStorage(hotelDetail, hotelCd); //Update HotelDetail
                 }
                 UpdateCountryDictionary(destination.CountryCode, destination.Code, zoneDict, areaDict);
@@ -321,17 +334,41 @@ namespace Lunggo.ApCommon.Hotel.Service
             {
                 foreach (var destination in country.Value.Destinations)
                 {
-                    foreach (var zone in destination.Zones)
+                    if (destination.Zones == null || destination.Zones.Count == 0)
                     {
-                        foreach (var area in zone.Areas)
-                        {
-                            string row = destination.Code + '|' + destination.Name + '|' + country.Value.Code + '|'
-                                         + country.Value.IsoCode + '|' + zone.Code + '|' + zone.Name + '|' + area.Code +
-                                         '|' + area.Name;
-                            result.Append(row);
-                            result.Append("\n");
-                        }
+                        string row = destination.Code + '|' + destination.Name + '|' + country.Value.Code + '|'
+                                             + country.Value.IsoCode + '|'  + '|'  + '|' +
+                                             '|';
+                        result.Append(row);
+                        result.Append("\n");
                     }
+                    else
+                    {
+                        foreach (var zone in destination.Zones)
+                        {
+                            if (zone.Areas == null || zone.Areas.Count == 0)
+                            {
+                                string row = destination.Code + '|' + destination.Name + '|' + country.Value.Code + '|'
+                                             + country.Value.IsoCode + '|' + zone.Code + '|' + zone.Name + '|' +
+                                             '|';
+                                result.Append(row);
+                                result.Append("\n");
+                            }
+                            else
+                            {
+                                foreach (var area in zone.Areas)
+                                {
+                                    string row = destination.Code + '|' + destination.Name + '|' + country.Value.Code + '|'
+                                                 + country.Value.IsoCode + '|' + zone.Code + '|' + zone.Name + '|' + area.Code +
+                                                 '|' + area.Name;
+                                    result.Append(row);
+                                    result.Append("\n");
+                                }
+                            }
+
+                        }    
+                    }
+                    
                 }
             }
             byte[] csvFile = Encoding.ASCII.GetBytes(result.ToString());
@@ -339,7 +376,6 @@ namespace Lunggo.ApCommon.Hotel.Service
 
             StreamReader reader = new StreamReader(stream);
             Debug.Print(reader.ReadToEnd());
-            Console.WriteLine(reader.ReadToEnd());
             var blobService = BlobStorageService.GetInstance();
             blobService.WriteFileToBlob(new BlobWriteDto
             {
@@ -347,11 +383,11 @@ namespace Lunggo.ApCommon.Hotel.Service
                 {
                     FileInfo = new FileInfo
                     {
-                        FileName = "Area",
+                        FileName = "HotelDestination",
                         ContentType = "text/csv",
                         FileData = csvFile
                     },
-                    Container = "HotelDestination"
+                    Container = "HotelCSVContent"
                 },
                 SaveMethod = SaveMethod.Force
             });
