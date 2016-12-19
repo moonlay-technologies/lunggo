@@ -1653,6 +1653,8 @@
     <Content Include="Views\Promo\OnlineRevolution.cshtml" />
     <Content Include="Views\Promo\OnlineRevolution.mobile.cshtml" />
     <Content Include="Views\Promo\OnlineRevolutionWebview.cshtml" />
+    <Content Include="Views\Home\CekPemesanan.cshtml" />
+    <Content Include="Views\Home\CekPemesanan.mobile.cshtml" />
     <None Include="Views\Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
