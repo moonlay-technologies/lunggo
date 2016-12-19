@@ -39,16 +39,16 @@ namespace Lunggo.Webjob.HotelContentWrapper
             //blobService.GetFileNameList("hotelimage");
 
             //hotelService.UpdateLocation();
-            var x = hotelService.HotelDestinationAreaDict;
-            var y = hotelService.HotelDestinationZoneDict;
-            var z = hotelService.HotelDestinationDict;
-            //hotelService.UpdateHotelListByLocationContent();
-            //hotelService.SaveHotelDetailByLocation();
+            //var x = hotelService.HotelDestinationAreaDict;
+            //var y = hotelService.HotelDestinationZoneDict;
+            //var z = hotelService.HotelDestinationDict;
+            hotelService.UpdateHotelListByLocationContent();
+            hotelService.SaveHotelDetailByLocation();
 
             stopwatch.Stop();
             Debug.Print("Done in : {0}", stopwatch.Elapsed);
             Console.WriteLine("Done in : {0}", stopwatch.Elapsed);
-            Console.ReadKey();
+            //Console.ReadKey();
         }
     }
 }

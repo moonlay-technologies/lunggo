@@ -24,6 +24,8 @@ namespace Lunggo.ApCommon.Hotel.Model
         public string CountryName { get; set; }
         [JsonProperty("destinationName", NullValueHandling = NullValueHandling.Ignore)]
         public string DestinationName { get; set; }
+        [JsonProperty("area", NullValueHandling = NullValueHandling.Ignore)]
+        public string AreaName { get; set; }
         [JsonProperty("zone", NullValueHandling = NullValueHandling.Ignore)]
         public string ZoneName { get; set; }
         [JsonProperty("latitude", NullValueHandling = NullValueHandling.Ignore)]

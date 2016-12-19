@@ -358,6 +358,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                     hotel.AccomodationType = value.AccomodationType;
                     hotel.Address = value.Address;
                     hotel.Facilities = value.Facilities;
+                    hotel.ZoneCode = value.ZoneCode;
                     hotel.AreaCode = value.AreaCode;
                     hotel.PhonesNumbers = value.PhonesNumbers;
                     hotel.HotelName = value.HotelName;

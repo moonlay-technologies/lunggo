@@ -1448,6 +1448,17 @@ namespace Lunggo.ApCommon.Hotel.Service
                 {
                     locations.Add(dest.Code);
                     locations.AddRange(dest.Zones.Select(zone => zone.Code));
+                    if (dest.Zones != null)
+                    {
+                        foreach (var zone in dest.Zones)
+                        {
+                            if (zone.Areas != null)
+                            {
+                                locations.AddRange(zone.Areas.Where(x=>x.Code != "").Select(x=>x.Code));
+                            }
+                        }    
+                    }
+                    
                 }
             }
 

@@ -21,7 +21,7 @@ namespace Lunggo.ApCommon.Hotel.Service
         //HOTEL LIST PER LOCATION
         public void SaveHotelLocationInStorage(string destination, string zoneOrArea, int hotelCode)
         {
-            var table = TableStorageService.GetInstance().GetTableByReference("hotelLocations");
+            var table = TableStorageService.GetInstance().GetTableByReference("hotelLocations2");
             var retrieveOp = TableOperation.Retrieve<DynamicTableEntity>(destination, zoneOrArea);
             var retrievedRow = (DynamicTableEntity) table.Execute(retrieveOp).Result;
             var hotelCodes = retrievedRow == null ? null : retrievedRow.Properties["HotelCode"].StringValue;
@@ -30,12 +30,12 @@ namespace Lunggo.ApCommon.Hotel.Service
             {
                 {"HotelCode", new EntityProperty(updatedHotelCodes)}
             });
-            TableStorageService.GetInstance().InsertOrReplaceEntityToTableStorage(row, "hotelLocations");
+            TableStorageService.GetInstance().InsertOrReplaceEntityToTableStorage(row, "hotelLocations2");
         }
 
         public List<int> GetHotelListByLocationFromStorage(string location)
         {
-            var table = TableStorageService.GetInstance().GetTableByReference("hotelLocations");
+            var table = TableStorageService.GetInstance().GetTableByReference("hotelLocations2");
             var splitLocation = location.Split('-');
             if (splitLocation.Length > 1)
             {
@@ -65,13 +65,14 @@ namespace Lunggo.ApCommon.Hotel.Service
             {
                 Console.WriteLine("location: " + loc);
                 var hotelCds = GetHotelListByLocationFromStorage(loc);
+                hotelCds = hotelCds.Distinct().ToList();
                 var hotelDetailDict = hotelCds.ToDictionary(hotelCd => hotelCd, GetHotelDetailFromTableStorage);
 
                 BlobStorageService.GetInstance().WriteFileToBlob(new BlobWriteDto
                 {
                     FileBlobModel = new FileBlobModel
                     {
-                        Container = "HotelDetailByLocation",
+                        Container = "HotelDetailByLocation2",
                         FileInfo = new FileInfo
                         {
                             ContentType = "",
@@ -274,7 +275,7 @@ namespace Lunggo.ApCommon.Hotel.Service
         //HOTEL DETAILS
         public Dictionary<int, HotelDetailsBase> GetHotelDetailByLocation(string location)
         {
-            var blob = BlobStorageService.GetInstance().GetByteArrayByFileInContainer(location, "HotelDetailByLocation");
+            var blob = BlobStorageService.GetInstance().GetByteArrayByFileInContainer(location, "HotelDetailByLocation2");
             var value = (RedisValue) blob;
             return value.DeconvertTo<Dictionary<int, HotelDetailsBase>>();
         }

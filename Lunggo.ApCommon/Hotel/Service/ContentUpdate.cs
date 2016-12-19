@@ -93,7 +93,7 @@ namespace Lunggo.ApCommon.Hotel.Service
 
         public void UpdateHotelListByLocationContent()
         {
-            for (var i = 0; i <= 600000; i++)
+            for (var i = 0; i <= 650000; i++)
             {
                 try
                 {
