@@ -31,12 +31,8 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
         $scope.searchId = model.searchId;
         $scope.searchParam = model.searchParam;
         $scope.loading = true;
-
-        //$scope.hotelSearch.searchParamObject = model.searchParamObject;
-        //$scope.hotelSearch.searchParam = model.searchParam;
-
+        
         var mydata = $scope.searchParam.split('.');
-        var location = mydata[1];
         var cekin = mydata[2];
         var cekout = mydata[3];
         var nightcount = mydata[4];
@@ -215,12 +211,11 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
         $scope.hotelSearch.location = $scope.getLocationCode();
     }
 
-    $scope.getLocationCode = function () {
-        var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
-        var locationCode = hashes[2].split('.')[1];
-        return locationCode;
-    }
-
+    //$scope.getLocationCode = function () {
+    //    var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+    //    var locationCode = hashes[2].split('.')[1];
+    //    return locationCode;
+    //}
     
     var setDescriptionDisplay = function () {
         if ($scope.hotel.description != null && $scope.hotel.description.length > 0) {
