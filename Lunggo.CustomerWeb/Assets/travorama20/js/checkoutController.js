@@ -475,34 +475,6 @@ app.controller('checkoutController', [
                     }
                 }
             }
-            //if (passenger.type != 'adult') {
-            //    // set minimum date for passenger
-            //    var minYear = -1;
-            //    var currentDate = new Date();
-            //    if (passenger.type == 'child') {
-            //        minYear = $scope.flightDetail.departureFullDate.getFullYear() - 12;
-            //    } else if (passenger.type == 'infant') {
-            //        minYear = $scope.flightDetail.departureFullDate.getFullYear() - 2;
-            //    }
-
-            //    if (passenger.birth.year == minYear) {
-            //        if (passenger.birth.month - 1 <= $scope.flightDetail.departureFullDate.getMonth()) {
-            //            passenger.birth.month = $scope.flightDetail.departureFullDate.getMonth() + 1;
-            //            if (passenger.birth.date < $scope.flightDetail.departureFullDate.getDate()) {
-            //                passenger.birth.date = $scope.flightDetail.departureFullDate.getDate();
-            //            }
-            //        }
-            //    } else if (passenger.birth.year == $scope.bookingDate.getFullYear()) {
-            //        if (passenger.birth.month - 1 >= $scope.flightDetail.departureFullDate.getMonth()) {
-            //            passenger.birth.month = $scope.flightDetail.departureFullDate.getMonth() + 1;
-            //            if (passenger.birth.date > $scope.flightDetail.departureFullDate.getDate()) {
-            //                passenger.birth.date = $scope.flightDetail.departureFullDate.getDate();
-            //            }
-            //        }
-            //    }
-            //} else {
-
-            //}
         }
         // validate passport expiry date
         $scope.validatePassport = function (passenger) {
