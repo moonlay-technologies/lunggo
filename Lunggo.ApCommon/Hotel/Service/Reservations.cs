@@ -273,5 +273,11 @@ namespace Lunggo.ApCommon.Hotel.Service
                 return null;
             }
         }
+
+        public List<HotelReservationForDisplay> SearchReservations(HotelReservationSearch search)
+        {
+            var rsvs = GetSearchReservationsFromDb(search);
+            return rsvs.Select(ConvertToReservationForDisplay).ToList();
+        }
     }
 }

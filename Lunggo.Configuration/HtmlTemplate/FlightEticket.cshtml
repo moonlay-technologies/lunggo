@@ -129,9 +129,9 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @for (var j = 0; j < Model.Passengers.Count; j++)
+                        @for (var j = 0; j < Model.Pax.Count; j++)
                         {
-                            var passenger = Model.Passengers[j];
+                            var passenger = Model.Pax[j];
                             <tr>
                                 <td class="no">@(j + 1)</td>
                                 <td class="name">@EnumDisplay.Title(passenger.Title.GetValueOrDefault()) @passenger.Name</td>
@@ -267,9 +267,9 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @for (var j = 0; j < Model.Passengers.Count; j++)
+                        @for (var j = 0; j < Model.Pax.Count; j++)
                         {
-                            var passenger = Model.Passengers[j];
+                            var passenger = Model.Pax[j];
                             <tr>
                                 <td class="no">@(j + 1)</td>
                                 <td class="name">@EnumDisplay.Title(passenger.Title.GetValueOrDefault()) @passenger.Name</td>
@@ -408,9 +408,9 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @for (var j = 0; j < Model.Passengers.Count; j++)
+                        @for (var j = 0; j < Model.Pax.Count; j++)
                         {
-                            var passenger = Model.Passengers[j];
+                            var passenger = Model.Pax[j];
                             <tr>
                                 <td class="no">@(j + 1)</td>
                                 <td class="name">@EnumDisplay.Title(passenger.Title.GetValueOrDefault()) @passenger.Name</td>

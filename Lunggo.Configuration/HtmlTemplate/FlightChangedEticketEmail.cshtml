@@ -20,7 +20,7 @@ Ringkasan penerbangan Anda:
 =============================|===============================
 Penumpang yang terdaftar di tiket:
 <ol>
-    @foreach (var passenger in Model.Passengers)
+    @foreach (var passenger in Model.Pax)
     {
         <li>@passenger.Title.ToString() @passenger.FirstName @passenger.LastName (Jenis tiket: @passenger.Type.ToString())</li>
     }

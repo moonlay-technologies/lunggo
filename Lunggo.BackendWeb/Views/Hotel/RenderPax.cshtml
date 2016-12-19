@@ -1,0 +1,43 @@
+﻿@model IEnumerable<Lunggo.ApCommon.Product.Model.Pax>
+
+<div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-12">
+        <div class="showback">
+
+            <h4><b>Pax List</b></h4>
+            <hr />
+            <table class="table table-hover table-no-border">
+                <tbody>
+                    <tr>
+                        <th><b>NO</b></th>
+                        <th><b>GELAR</b></th>
+                        <th><b>NAMA</b></th>
+                        <th><b>TIPE</b></th>
+                    </tr>
+                    @{var count = 1;}
+                    @foreach (var passenger in Model)
+                    {
+                        <tr>
+                            <td>
+                                @count
+                            </td>
+                            <td>
+                                @passenger.Title
+                            </td>
+                            <td>
+                                @passenger.FirstName @passenger.LastName
+                            </td>
+                            <td>
+                                @passenger.Type.ToString()
+                            </td>
+                            @{
+                                count += 1;
+                            }
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

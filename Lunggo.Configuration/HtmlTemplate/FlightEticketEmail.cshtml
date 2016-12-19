@@ -145,7 +145,7 @@
                                 </th>
                             </tr>
                         </thead>
-                        @{ var i = Model.Passengers.Count; }
+                        @{ var i = Model.Pax.Count; }
                         @{ var j = 1; }
                         <tr>
                             <td width="18.2%" rowspan="@i">
@@ -155,14 +155,14 @@
                                 <p style="color: #15b1e4; text-align: center;">:</p>
                             </td>
                             <td>
-                                <p style="color: #15b1e4; text-align: left;">1. @Model.Passengers[0].Name</p>
+                                <p style="color: #15b1e4; text-align: left;">1. @Model.Pax[0].Name</p>
                             </td>
                             <td width="20%"></td>
                             <td width="5%" style="padding-right: 1%;">
                                 <hr style="border-color:#15b1e4;" />
                             </td>
                             <td width="7%">
-                                @EnumDisplay.PassengerType(Model.Passengers[0].Type.GetValueOrDefault())
+                                @EnumDisplay.PassengerType(Model.Pax[0].Type.GetValueOrDefault())
                             </td>
                         </tr>
                         @for (int k = 1; k < i; k++)
@@ -172,14 +172,14 @@
                                     <p style="color: #15b1e4; text-align: center;">:</p>
                                 </td>
                                 <td>
-                                    <p style="color: #15b1e4; text-align: left;">@(k + 1). @Model.Passengers[k].Name</p>
+                                    <p style="color: #15b1e4; text-align: left;">@(k + 1). @Model.Pax[k].Name</p>
                                 </td>
                                 <td width="20%"></td>
                                 <td width="5%" style="padding-right: 1%;">
                                     <hr style="border-color:#15b1e4;" />
                                 </td>
                                 <td width="7%">
-                                    @EnumDisplay.PassengerType(Model.Passengers[k].Type.GetValueOrDefault())
+                                    @EnumDisplay.PassengerType(Model.Pax[k].Type.GetValueOrDefault())
                                 </td>
                             </tr>
                         }

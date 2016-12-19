@@ -15,6 +15,9 @@
         },
         {
             "filePath": "../Lunggo.Webjob.CurrencyCrawler/Lunggo.WebJob.CurrencyCrawler.csproj"
+        },
+        {
+            "filePath": "../Lunggo.Webjob.HotelProcessor/Lunggo.WebJob.HotelProcessor.csproj"
         }
     ]
 }

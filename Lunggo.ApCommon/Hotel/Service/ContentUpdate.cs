@@ -97,9 +97,9 @@ namespace Lunggo.ApCommon.Hotel.Service
                     var hotel = GetHotelDetailFromTableStorage(i);
                     Console.WriteLine("hotelCd: " + i);
                     if (hotel.ZoneCode != null)
-                        SaveHotelLocationInStorage(hotel.DestinationCode, hotel.DestinationCode + '-' + hotel.ZoneCode, hotel.HotelCode);
+                        SaveHotelLocationInStorage(hotel.DestinationCode, hotel.ZoneCode, hotel.HotelCode);
                     if (hotel.AreaCode != null)
-                        SaveHotelLocationInStorage(hotel.DestinationCode, hotel.DestinationCode + '-' + hotel.ZoneCode + '-' + hotel.AreaCode, hotel.HotelCode);
+                        SaveHotelLocationInStorage(hotel.DestinationCode, hotel.AreaCode, hotel.HotelCode);
                     Console.WriteLine("Hotel Location saved for: " + i);
                 }
                 catch
