@@ -18,19 +18,5 @@ namespace Lunggo.CustomerWeb.Controllers
         {
             return View();
         }
-
-        public ActionResult MatahariMall()
-        {
-            return View();
-        }
-
-        public ActionResult MatahariMallWebView()
-        {
-            return View();
-        }
-        public ActionResult Harbolnas2016()
-        {
-            return View();
-        }
     }
 }

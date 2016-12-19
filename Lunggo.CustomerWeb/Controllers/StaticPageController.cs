@@ -110,33 +110,14 @@ namespace Lunggo.CustomerWeb.Controllers
             }
 
         }
-
-        public ActionResult GetCalendarTerms()
-        {
-            return View();
-        }
-
-        // visa wonderful wednesday promo
-        public ActionResult VisaWonderfulWednesday()
-        {
-            return View();
-        }
-
-        public ActionResult DanamonSweetValentine()
-        {
-            return View();
-        }
-
         public ActionResult Promo()
         {
             return View();
         }
-
         public ActionResult TravoramaMobileApp()
         {
             return View();
         }
-
         public ActionResult GlobalError()
         {
             return View();
