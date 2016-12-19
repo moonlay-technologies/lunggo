@@ -81,7 +81,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                     {
                         IsSuccess = false,
                         Errors = new List<FlightError> { FlightError.FailedOnSupplier },
-                        ErrorMessages = new List<string> {"Error while requesting at welcome.php"}
+                        ErrorMessages = new List<string> { "[Sriwijaya] Error while requesting at welcome.php" }
                     };
                 }
 
@@ -214,7 +214,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                                         {
                                             IsSuccess = false,
                                             Errors = new List<FlightError> { FlightError.TechnicalError },
-                                            ErrorMessages = new List<string> { "Web Layout Changed! Unexpected ParseID" }
+                                            ErrorMessages = new List<string> { "[Sriwijaya] Web Layout Changed! Unexpected ParseID" }
                                         };
                                     }
 
@@ -507,7 +507,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                                         {
                                             IsSuccess = false,
                                             Errors = new List<FlightError> { FlightError.TechnicalError },
-                                            ErrorMessages = new List<string> { "Web Layout Changed!" }
+                                            ErrorMessages = new List<string> { "[Sriwijaya] Web Layout Changed!" }
                                         };
                                     }
 
@@ -727,7 +727,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                     {
                         IsSuccess = false,
                         Errors = new List<FlightError> { FlightError.TechnicalError },
-                        ErrorMessages = new List<string> { "Web Layout Changed!" }
+                        ErrorMessages = new List<string> { "[Sriwijaya] Web Layout Changed!" }
                     };
                 }
             }

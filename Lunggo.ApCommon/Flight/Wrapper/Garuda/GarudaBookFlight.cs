@@ -38,7 +38,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                         {
                             BookingStatus = BookingStatus.Failed
                         },
-                        ErrorMessages = new List<string> { "FareId is null" }
+                        ErrorMessages = new List<string> { "[Garuda] FareId is null" }
                     };
                 }
 
@@ -76,7 +76,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                             BookingStatus = BookingStatus.Failed
                         },
                         IsSuccess = false,
-                        ErrorMessages = new List<string> { "FareId is no longer valid" }
+                        ErrorMessages = new List<string> { "[Garuda] FareId is no longer valid" }
                     };
                 }
 
@@ -157,7 +157,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                             return new BookFlightResult
                             {
                                 Errors = new List<FlightError> { FlightError.TechnicalError },
-                                ErrorMessages = new List<string> { "All usernames are used " + returnPath }
+                                ErrorMessages = new List<string> { "[Garuda] All usernames are used " + returnPath }
                             };
                         }
 
@@ -178,7 +178,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                                 BookingStatus = BookingStatus.Failed
                             },
                             IsSuccess = false,
-                            ErrorMessages = new List<string> { "Can't get id " + returnPath + userName }
+                            ErrorMessages = new List<string> { "[Garuda] Can't get id " + returnPath + userName }
                         };
                     }
 
@@ -218,7 +218,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                         {
                             IsSuccess = false,
                             Errors = new List<FlightError> { FlightError.InvalidInputData },
-                            ErrorMessages = new List<string> { "Airports are not available in agent site " + returnPath }
+                            ErrorMessages = new List<string> { "[Garuda] Airports are not available in agent site " + returnPath }
                         };
                     }
                     string cabinstring;
@@ -512,7 +512,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                             IsSuccess = false,
                             Errors = new List<FlightError> { FlightError.TechnicalError },
                             Status = null,
-                            ErrorMessages = new List<string> { "currency is not available" },
+                            ErrorMessages = new List<string> { "[Garuda] currency is not available" },
                             NewPrice = newprice,
                             IsValid = true,
                             IsPriceChanged = newprice != bookInfo.Itinerary.Price.Supplier,
@@ -543,7 +543,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                             IsSuccess = false,
                             Errors = new List<FlightError> { FlightError.TechnicalError },
                             Status = null,
-                            ErrorMessages = new List<string> { "Itinerary is Changed! " + returnPath },
+                            ErrorMessages = new List<string> { "[Garuda] Itinerary is Changed! " + returnPath },
                             NewPrice = newprice,
                             IsValid = true,
                             IsPriceChanged = newprice != bookInfo.Itinerary.Price.Supplier,
@@ -578,7 +578,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                             IsSuccess = false,
                             Errors = new List<FlightError> { FlightError.TechnicalError },
                             Status = null,
-                            ErrorMessages = new List<string> { "Price is Changed! " + returnPath },
+                            ErrorMessages = new List<string> { "[Garuda] Price is Changed! " + returnPath },
                             NewPrice = newprice,
                             IsValid = true,
                             IsPriceChanged = newprice != bookInfo.Itinerary.Price.Supplier,
@@ -716,7 +716,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                             {
                                 BookingStatus = BookingStatus.Failed
                             },
-                            ErrorMessages = new List<string> { "Total characters of infant+adult name may exceed 32 " + returnPath }
+                            ErrorMessages = new List<string> { "[Garuda] Total characters of infant+adult name may exceed 32 " + returnPath }
                         };
                     }
 
@@ -774,7 +774,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                         {
                             BookingStatus = BookingStatus.Failed
                         },
-                        ErrorMessages = new List<string> { "Web Layout Changed!" }
+                        ErrorMessages = new List<string> { "[Garuda] Web Layout Changed!" }
                     };
                 }
                 catch //(Exception e)
@@ -786,7 +786,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                     {
                         IsSuccess = false,
                         Errors = new List<FlightError> { FlightError.TechnicalError },
-                        ErrorMessages = new List<string> { "Web Layout Changed! " + returnPath + successLogin + searchResAgent0.Content },
+                        ErrorMessages = new List<string> { "[Garuda] Web Layout Changed! " + returnPath + successLogin + searchResAgent0.Content },
                         Status = new BookingStatusInfo
                         {
                             BookingStatus = BookingStatus.Failed

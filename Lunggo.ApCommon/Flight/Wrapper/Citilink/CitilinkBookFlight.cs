@@ -92,7 +92,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                             BookingStatus = BookingStatus.Failed
                         },
                         Errors = new List<FlightError> { FlightError.FareIdNoLongerValid },
-                        ErrorMessages = new List<string> { "Error while splitting the fareid" }
+                        ErrorMessages = new List<string> { "[Citilink] Error while splitting the fareid" }
                     };
                 }
                 
@@ -145,7 +145,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                             BookingStatus = BookingStatus.Failed
                         },
                         Errors = new List<FlightError> { FlightError.TechnicalError },
-                        ErrorMessages = new List<string> { "Error in requesting at BookingListTravelAgent.aspx.Unexpected absolute path response or status code" }
+                        ErrorMessages = new List<string> { "[Citilink] Error in requesting at BookingListTravelAgent.aspx.Unexpected absolute path response or status code" }
                     };
 
                 // SELECT
@@ -194,7 +194,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                             BookingStatus = BookingStatus.Failed
                         },
                         Errors = new List<FlightError> { FlightError.TechnicalError },
-                        ErrorMessages = new List<string> { "Error in requesting at ScheduleSelect.aspx.Unexpected absolute path response or status code" }
+                        ErrorMessages = new List<string> { "[Citilink] Error in requesting at ScheduleSelect.aspx.Unexpected absolute path response or status code" }
                     };
 
                 // INPUT DATA (TRAVELER)
@@ -301,7 +301,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                             BookingStatus = BookingStatus.Failed
                         },
                         Errors = new List<FlightError> { FlightError.InvalidInputData },
-                        ErrorMessages = new List<string> { "Error while posting passenger data at Passenger.aspx.Unexpected absolute path response or status code" }
+                        ErrorMessages = new List<string> { "[Citilink] Error while posting passenger data at Passenger.aspx.Unexpected absolute path response or status code" }
                     };
 
                 // SELECT SEAT (UNITMAP)
@@ -345,7 +345,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                             BookingStatus = BookingStatus.Failed
                         },
                         Errors = new List<FlightError> { FlightError.TechnicalError },
-                        ErrorMessages = new List<string> { "Error in SeatMap.aspx.Unexpected absolute path response or status code" }
+                        ErrorMessages = new List<string> { "[Citilink] Error in SeatMap.aspx.Unexpected absolute path response or status code" }
                     };
 
                 /*Buat dapat Info Itinerary dan Harga*/
@@ -373,7 +373,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                         IsPriceChanged = true,
                         IsSuccess = false,
                         //Errors = new List<FlightError> { FlightError.FareIdNoLongerValid },
-                        ErrorMessages = new List<string> { "Price is changed!" },
+                        ErrorMessages = new List<string> { "[Citilink] Price is changed!" },
                         NewItinerary = fixItin,
                         NewPrice = fixPrice,
                         Status = null
@@ -428,7 +428,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                             BookingStatus = BookingStatus.Failed
                         },
                         Errors = new List<FlightError> { FlightError.TechnicalError },
-                        ErrorMessages = new List<string> { "Error in SeatMap.aspx.Unexpected absolute path response or status code" }
+                        ErrorMessages = new List<string> { "[Citilink] Error in SeatMap.aspx.Unexpected absolute path response or status code" }
                     };
 
                 // WAIT
@@ -505,7 +505,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                             BookingStatus = BookingStatus.Failed
                         },
                         Errors = new List<FlightError> { FlightError.TechnicalError },
-                        ErrorMessages = new List<string> { "Failed to get Booking Id and timelimit booking" }
+                        ErrorMessages = new List<string> { "[Citilink] Failed to get Booking Id and timelimit booking" }
                     };
                 }
                 

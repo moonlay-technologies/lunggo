@@ -100,20 +100,20 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Mystifly
                     case "ERREV002":
                         if (result.ErrorMessages == null)
                             result.ErrorMessages = new List<string>();
-                        if (!result.ErrorMessages.Contains("Invalid account information!"))
-                            result.ErrorMessages.Add("Invalid account information!");
+                        if (!result.ErrorMessages.Contains("[Mystifly] Invalid account information!"))
+                            result.ErrorMessages.Add("[Mystifly] Invalid account information!");
                         goto case "TechnicalError";
                     case "ERGEN004":
                         if (result.ErrorMessages == null)
                             result.ErrorMessages = new List<string>();
-                        if (!result.ErrorMessages.Contains("Unexpected error on the other end!"))
-                            result.ErrorMessages.Add("Unexpected error on the other end!");
+                        if (!result.ErrorMessages.Contains("[Mystifly] Unexpected error on the other end!"))
+                            result.ErrorMessages.Add("[Mystifly] Unexpected error on the other end!");
                         goto case "TechnicalError";
                     case "ERMAI001":
                         if (result.ErrorMessages == null)
                             result.ErrorMessages = new List<string>();
-                        if (!result.ErrorMessages.Contains("Mystifly is under maintenance!"))
-                            result.ErrorMessages.Add("Mystifly is under maintenance!");
+                        if (!result.ErrorMessages.Contains("[Mystifly] Mystifly is under maintenance!"))
+                            result.ErrorMessages.Add("[Mystifly] Mystifly is under maintenance!");
                         goto case "TechnicalError";
 
                     case "InvalidInputData" :

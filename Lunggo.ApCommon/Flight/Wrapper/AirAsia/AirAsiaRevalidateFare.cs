@@ -286,7 +286,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                     {
                         IsSuccess = false,
                         Errors = new List<FlightError> {FlightError.TechnicalError},
-                        ErrorMessages = new List<string> {"Web Layout Changed!"}
+                        ErrorMessages = new List<string> { "[AirAsia] Web Layout Changed!" }
                     };
                 }
             }

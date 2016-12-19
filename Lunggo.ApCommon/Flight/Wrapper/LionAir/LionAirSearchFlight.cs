@@ -47,7 +47,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                     {
                         Errors = new List<FlightError> {FlightError.InvalidInputData},
                         ErrorMessages =
-                            new List<string> {"There must be at least one adult passenger"}
+                            new List<string> { "[Lion Air] There must be at least one adult passenger" }
                     };
                 }
                 if (conditions.AdultCount + conditions.ChildCount > 7)
@@ -56,7 +56,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                     {
                         Errors = new List<FlightError> {FlightError.InvalidInputData},
                         ErrorMessages =
-                            new List<string> {"Total adult and children passenger must be not more than seven"}
+                            new List<string> { "[Lion Air] Total adult and children passenger must be not more than seven" }
                     };
                 }
                 if (conditions.AdultCount < conditions.InfantCount)
@@ -65,7 +65,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                     {
                         Errors = new List<FlightError> {FlightError.InvalidInputData},
                         ErrorMessages =
-                            new List<string> {"Every infant must be accompanied by one adult"}
+                            new List<string> { "[Lion Air] Every infant must be accompanied by one adult" }
                     };
                 }
                 if (conditions.Trips[0].DepartureDate > DateTime.Now.AddDays(331).Date)
@@ -74,7 +74,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                     {
                         Errors = new List<FlightError> {FlightError.InvalidInputData},
                         ErrorMessages =
-                            new List<string> {"Booking is allowed to max 331 days before the departure date"}
+                            new List<string> { "[Lion Air] Booking is allowed to max 331 days before the departure date" }
                     };
                 }
 
@@ -189,7 +189,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                             return new SearchFlightResult
                             {
                                 Errors = new List<FlightError> {FlightError.InvalidInputData},
-                                ErrorMessages = new List<string> { "Error while requesting at lionairibe2/OnlineBooking.aspx. Unexpected Rensponse path or status code" }
+                                ErrorMessages = new List<string> { "[Lion Air] Error while requesting at lionairibe2/OnlineBooking.aspx. Unexpected Rensponse path or status code" }
                             };
 
                     var searchedHtml = (CQ) html2;
@@ -684,7 +684,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                     return new SearchFlightResult
                     {
                         Errors = new List<FlightError> {FlightError.TechnicalError},
-                        ErrorMessages = new List<string> {e.Message}
+                        ErrorMessages = new List<string> {"[Lion Air] " + e.Message}
                     };
                 }
             }

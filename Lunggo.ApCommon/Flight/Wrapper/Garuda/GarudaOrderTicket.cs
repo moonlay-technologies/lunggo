@@ -86,7 +86,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                         return new IssueTicketResult
                         {
                             Errors = new List<FlightError> { FlightError.TechnicalError },
-                            ErrorMessages = new List<string> { "All usernames are used" }
+                            ErrorMessages = new List<string> { "[Garuda] All usernames are used" }
                         };
                     }
 
@@ -103,7 +103,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                     {
 
                         Errors = new List<FlightError> { FlightError.InvalidInputData },
-                        ErrorMessages = new List<string> { "Can't get id" }
+                        ErrorMessages = new List<string> { "[Garuda] Can't get id" }
                     };
                 }
 
@@ -315,7 +315,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                                 CurrentBalance = GetCurrentBalance(),
                                 IsSuccess = false,
                                 Errors = new List<FlightError> { FlightError.TechnicalError },
-                                ErrorMessages = new List<string> { "Failed to check whether deposit cut or not! Manual checking advised!" }
+                                ErrorMessages = new List<string> { "[Garuda] Failed to check whether deposit cut or not! Manual checking advised!" }
                                 
                             };
                         default:
@@ -324,7 +324,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                                 CurrentBalance = GetCurrentBalance(),
                                 IsSuccess = false,
                                 Errors = new List<FlightError> { FlightError.TechnicalError },
-                                ErrorMessages = new List<string> { "Failed to check whether deposit cut or not! Manual checking advised!" }
+                                ErrorMessages = new List<string> { "[Garuda] Failed to check whether deposit cut or not! Manual checking advised!" }
                             };
                     }
                 }

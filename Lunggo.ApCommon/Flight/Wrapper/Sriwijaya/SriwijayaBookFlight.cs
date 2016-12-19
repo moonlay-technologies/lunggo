@@ -499,7 +499,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                             BookingStatus = BookingStatus.Failed
                         },
                         Errors = new List<FlightError> { FlightError.FareIdNoLongerValid },
-                        ErrorMessages = new List<string> { "Error while requesting at SJ-Eticket/application/menu_others.php. Unexpected absolute path response or status code" }
+                        ErrorMessages = new List<string> { "[Sriwijaya] Error while requesting at SJ-Eticket/application/menu_others.php. Unexpected absolute path response or status code" }
                     };
 
                 }

@@ -77,7 +77,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                         hasil.CurrentBalance = GetCurrentBalance();
                         hasil.IsSuccess = false;
                         hasil.Errors = new List<FlightError> { FlightError.FailedOnSupplier };
-                        hasil.ErrorMessages = new List<string> { "Error because status book is not Confirm or confirmed" };
+                        hasil.ErrorMessages = new List<string> { "[Sriwijaya] Error because status book is not Confirm or confirmed" };
                     }
                     
                     Logout(clientx);
@@ -109,7 +109,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                                 CurrentBalance = GetCurrentBalance(),
                                 IsSuccess = false,
                                 Errors = new List<FlightError> { FlightError.TechnicalError },
-                                ErrorMessages = new List<string> { "Failed to check whether deposit cut or not! Manual checking advised!" }
+                                ErrorMessages = new List<string> { "[Sriwijaya] Failed to check whether deposit cut or not! Manual checking advised!" }
                             };
                         default:
                             Logout(clientx);
@@ -118,7 +118,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                                 CurrentBalance = GetCurrentBalance(),
                                 IsSuccess = false,
                                 Errors = new List<FlightError> { FlightError.TechnicalError },
-                                ErrorMessages = new List<string> { "Failed to check whether deposit cut or not! Manual checking advised!" }
+                                ErrorMessages = new List<string> { "[Sriwijaya] Failed to check whether deposit cut or not! Manual checking advised!" }
                             };
                     }
                 }

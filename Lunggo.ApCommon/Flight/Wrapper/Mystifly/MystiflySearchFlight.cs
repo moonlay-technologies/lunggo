@@ -537,27 +537,27 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Mystifly
                     case "ERIFS002":
                         if (result.ErrorMessages == null)
                             result.ErrorMessages = new List<string>();
-                        if (!result.ErrorMessages.Contains("Invalid account information!"))
-                            result.ErrorMessages.Add("Invalid account information!");
+                        if (!result.ErrorMessages.Contains("[Mystifly] Invalid account information!"))
+                            result.ErrorMessages.Add("[Mystifly] Invalid account information!");
                         goto case "TechnicalError";
                     case "ERSER027":
                         if (result.ErrorMessages == null)
                             result.ErrorMessages = new List<string>();
-                        if (!result.ErrorMessages.Contains("Daily maximum search limit reached!"))
-                            result.ErrorMessages.Add("Daily maximum search limit reached!");
+                        if (!result.ErrorMessages.Contains("[Mystifly] Daily maximum search limit reached!"))
+                            result.ErrorMessages.Add("[Mystifly] Daily maximum search limit reached!");
                         goto case "TechnicalError";
                     case "ERGEN002":
                     case "ERGEN018":
                         if (result.ErrorMessages == null)
                             result.ErrorMessages = new List<string>();
-                        if (!result.ErrorMessages.Contains("Unexpected error on the other end!"))
-                            result.ErrorMessages.Add("Unexpected error on the other end!");
+                        if (!result.ErrorMessages.Contains("[Mystifly] Unexpected error on the other end!"))
+                            result.ErrorMessages.Add("[Mystifly] Unexpected error on the other end!");
                         goto case "TechnicalError";
                     case "ERMAI001":
                         if (result.ErrorMessages == null)
                             result.ErrorMessages = new List<string>();
-                        if (!result.ErrorMessages.Contains("Mystifly is under maintenance!"))
-                            result.ErrorMessages.Add("Mystifly is under maintenance!");
+                        if (!result.ErrorMessages.Contains("[Mystifly] Mystifly is under maintenance!"))
+                            result.ErrorMessages.Add("[Mystifly] Mystifly is under maintenance!");
                         goto case "TechnicalError";
 
                     case "InvalidInputData":

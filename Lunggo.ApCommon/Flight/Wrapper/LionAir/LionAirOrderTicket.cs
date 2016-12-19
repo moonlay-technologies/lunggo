@@ -61,7 +61,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                         return new IssueTicketResult
                         {
                             Errors = new List<FlightError> {FlightError.TechnicalError},
-                            ErrorMessages = new List<string> {"userName is full"}
+                            ErrorMessages = new List<string> { "[Lion Air] userName is full" }
                         };
 
                     bool successLogin;
@@ -82,7 +82,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                             return new IssueTicketResult
                             {
                                 Errors = new List<FlightError> {FlightError.InvalidInputData},
-                                ErrorMessages = new List<string> { "Error while requesting at /lionairagentsportal/default.aspx. Unexpected response path or response status code" }
+                                ErrorMessages = new List<string> { "[Lion Air] Error while requesting at /lionairagentsportal/default.aspx. Unexpected response path or response status code" }
                             };
                         const string url1 = @"/lionairagentsportal/CaptchaGenerator.aspx";
                         var searchRequest1 = new RestRequest(url1, Method.GET);
@@ -240,7 +240,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                                 CurrentBalance = GetCurrentBalance(),
                                 IsSuccess = false,
                                 Errors = new List<FlightError> { FlightError.TechnicalError },
-                                ErrorMessages = new List<string> { "Failed to check whether deposit cut or not! Manual checking advised!" }
+                                ErrorMessages = new List<string> { "[Lion Air] Failed to check whether deposit cut or not! Manual checking advised!" }
                                 
                             };
                         default:
@@ -249,7 +249,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                                 CurrentBalance = GetCurrentBalance(),
                                 IsSuccess = false,
                                 Errors = new List<FlightError> { FlightError.TechnicalError },
-                                ErrorMessages = new List<string> { "Failed to check whether deposit cut or not! Manual checking advised!" }
+                                ErrorMessages = new List<string> { "[Lion Air] Failed to check whether deposit cut or not! Manual checking advised!" }
                             };
                     }
                 }

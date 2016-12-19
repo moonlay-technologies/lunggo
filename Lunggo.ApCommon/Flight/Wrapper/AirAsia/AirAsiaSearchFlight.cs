@@ -168,7 +168,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                         //        ErrorMessages =
                         //            new List<string>
                         //            {
-                        //                "Error while requesting at Flight/Select. Unexpected response path or status code"
+                        //                "[AirAsia] Error while requesting at Flight/Select. Unexpected response path or status code"
                         //            }
                         //    };
                         searchedHtml = html;
@@ -494,7 +494,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                     return new SearchFlightResult
                     {
                         Errors = new List<FlightError> { FlightError.TechnicalError },
-                        ErrorMessages = new List<string> { e.Message }
+                        ErrorMessages = new List<string> { "[AirAsia] " + e.Message }
                     };
                 }
             }
