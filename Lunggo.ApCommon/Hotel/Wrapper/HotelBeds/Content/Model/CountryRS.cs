@@ -9,10 +9,10 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Content.Model
     public class CountryRS
     {
         public int total { get; set; }
-        public List<Country> countries { get; set; }
+        public List<CountryApi> countries { get; set; }
     }
 
-    public class Country
+    public class CountryApi
     {
         public string code { get; set; }
         public string isoCode { get; set; }

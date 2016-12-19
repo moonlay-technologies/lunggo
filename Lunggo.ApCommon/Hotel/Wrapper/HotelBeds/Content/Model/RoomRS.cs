@@ -9,10 +9,10 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Content.Model
     public class RoomRS
     {
         public int total { get; set; }
-        public List<RoomContent> rooms { get; set; }
+        public List<RoomApi> rooms { get; set; }
     }
 
-    public class RoomContent
+    public class RoomApi
     {
         public string code { get; set; }
         public string type { get; set; }
@@ -23,7 +23,13 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Content.Model
         public int maxChildren { get; set; }
         public int minAdults { get; set; }
         public string description { get; set; }
+        public string descriptionEng { get; set; }
+        public string descriptionInd { get; set; }
         public Description typeDescription { get; set; }
+        public string typeDescriptionEng { get; set; }
+        public string typeDescriptionInd { get; set; }
         public Description characteristicDescription { get; set; }
+        public string characteristicDescriptionEng { get; set; }
+        public string characteristicDescriptionInd { get; set; }
     }
 }

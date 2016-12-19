@@ -11,6 +11,8 @@ using Lunggo.ApCommon.Hotel.Model;
 using Lunggo.ApCommon.Hotel.Model.Logic;
 using Lunggo.ApCommon.Hotel.Query;
 using Lunggo.ApCommon.Hotel.Wrapper.GoogleMaps.Geocoding;
+using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Content;
+using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Content.Model;
 using Lunggo.Framework.BlobStorage;
 using Lunggo.Framework.Config;
 using Lunggo.Framework.Documents;
@@ -19,6 +21,7 @@ using Microsoft.Azure.Documents;
 using Microsoft.WindowsAzure.Storage.Table;
 using RestSharp;
 using FileInfo = Lunggo.Framework.SharedModel.FileInfo;
+using Image = Lunggo.ApCommon.Hotel.Model.Image;
 
 namespace Lunggo.ApCommon.Hotel.Service
 {
@@ -394,6 +397,207 @@ namespace Lunggo.ApCommon.Hotel.Service
 
         }
 
+        public void UpdateCountryStorage()
+        {
+            Console.WriteLine("Update Country");
+            var hotel = new HotelBedsService();
+            hotel.GetCountry(1,1000);
+            var countries = HotelBedsService.hotelCountryList;
+            List<CountryDict> hotelCountry = new List<CountryDict>();
+            foreach (var country in countries)
+            {
+                var singleCountry = new CountryDict
+                {
+                    CountryCode = country.code,
+                    IsoCode = country.isoCode,
+                    Name = country.description.content
+                };
+                hotelCountry.Add(singleCountry);
+            }
+            SaveHotelCountryToStorage(hotelCountry);
+
+        }
+
+        public void UpdateHotelBoardStorage()
+        {
+            Console.WriteLine("Update Board");
+            var hotel = new HotelBedsService();
+            hotel.GetBoard(1,1000);
+            var boards = HotelBedsService.hotelBoardList;
+            List<Board> hotelBoard = new List<Board>();
+            foreach (var board in boards)
+            {
+                var singleBoard = new Board
+                {
+                    Code = board.code,
+                    MultilingualCode = board.multiLingualCode,
+                    NameEn = board.DescriptionEng,
+                    NameId = board.DescriptionInd
+                };
+                hotelBoard.Add(singleBoard);
+            }
+            SaveHotelBoardToStorage(hotelBoard);
+        }
+
+        public void UpdateHotelChainStorage()
+        {
+            Console.WriteLine("Update Chain");
+            var hotel = new HotelBedsService();
+            hotel.GetChain(1, 1000);
+            var chains = HotelBedsService.hotelChainList;
+            List<Chain> hotelChain = new List<Chain>();
+            foreach (var chain in chains)
+            {
+                var singleChain = new Chain
+                {
+                    Code = chain.code,
+                    Description = chain.DescriptionEng
+                };
+                hotelChain.Add(singleChain);
+            }
+            SaveHotelChainToStorage(hotelChain);
+        }
+
+        public void UpdateHotelAccomodationStorage()
+        {
+            Console.WriteLine("Update Accomodation");
+            var hotel = new HotelBedsService();
+            hotel.GetAccomodation(1, 1000);
+            var accomodations = HotelBedsService.hotelAccomodationList;
+            List<Accommodation> hotelAccomodation = new List<Accommodation>();
+            foreach (var accomodation in accomodations)
+            {
+                var singleAccomodation = new Accommodation
+                {
+                    Code = accomodation.code,
+                    TypeNameEn = accomodation.DescriptionEng,
+                    TypeNameId =  accomodation.DescriptionInd,
+                    MultiDescription = accomodation.typeDescription
+                };
+                hotelAccomodation.Add(singleAccomodation);
+            }
+            SaveHotelAccomodationToStorage(hotelAccomodation);
+        }
+
+        public void UpdateHotelCategoryStorage()
+        {
+            Console.WriteLine("Update Category");
+            var hotel = new HotelBedsService();
+            hotel.GetCategory(1, 1000);
+            var categories = HotelBedsService.hotelCategoryList;
+            List<Category> hotelCategory = new List<Category>();
+            foreach (var category in categories)
+            {
+                var singleCategory = new Category
+                {
+                    Code = category.code,
+                    NameEn = category.DescriptionEng,
+                    NameId = category.DescriptionInd,
+                    SimpleCode = category.simpleCode,
+                    AccomodationType = category.accomodationType
+                };
+                hotelCategory.Add(singleCategory);
+            }
+            SaveHotelCategoryToStorage(hotelCategory);
+        }
+
+        public void UpdateHotelFacilityStorage()
+        {
+            Console.WriteLine("Update Facility");
+            var hotel = new HotelBedsService();
+            hotel.GetFacility(1, 1000);
+            var facilities = HotelBedsService.hotelFacilityList;
+            List<Facility> hotelFacility = new List<Facility>();
+            foreach (var facility in facilities)
+            {
+                var singleFacility = new Facility
+                {
+                    Code = facility.code,
+                    NameEn = facility.DescriptionEng,
+                    NameId = facility.DescriptionInd,
+                };
+                hotelFacility.Add(singleFacility);
+            }
+            SaveHotelFacilityToStorage(hotelFacility);
+        }
+
+        public void UpdateHotelFacilityGroupStorage()
+        {
+            Console.WriteLine("Update facility Group");
+            var hotel = new HotelBedsService();
+            hotel.GetFacilityGroup(1, 1000);
+            var groups = HotelBedsService.hotelFacilityGroupList;
+            List<FacilityGroup> hotelFacilityGroup = new List<FacilityGroup>();
+            foreach (var facilityGroup in groups)
+            {
+                var singleFacilityGroup = new FacilityGroup
+                {
+                    Code = facilityGroup.code,
+                    NameEn = facilityGroup.DescriptionEng,
+                    NameId = facilityGroup.DescriptionInd,
+                };
+                hotelFacilityGroup.Add(singleFacilityGroup);
+            }
+            SaveHotelFacilityGroupToStorage(hotelFacilityGroup);
+        }
+
+        public void UpdateHotelSegmentStorage()
+        {
+            Console.WriteLine("Update Segment");
+            var hotel = new HotelBedsService();
+            hotel.GetSegment(1, 1000);
+            var segments = HotelBedsService.hotelSegmentList;
+            List<SegmentDict> hotelSegment = new List<SegmentDict>();
+            foreach (var Segment in segments)
+            {
+                var singleSegment = new SegmentDict
+                {
+                    Code = Segment.code.ToString(),
+                    NameEn = Segment.DescriptionEng,
+                    NameId = Segment.DescriptionInd,
+                };
+                hotelSegment.Add(singleSegment);
+            }
+            SaveHotelSegmentToStorage(hotelSegment);
+        }
+
+        public void UpdateHotelRoomStorage()
+        {
+            Console.WriteLine("Update Room");
+            var hotel = new HotelBedsService();
+            hotel.GetRoom(1, 1000);
+            var rooms = HotelBedsService.hotelRoomList;
+            List<Room> hotelRoom = new List<Room>();
+            foreach (var room in rooms)
+            {
+                var singleRoom = new Room
+                {
+                    RoomCd = room.code,
+                    MaxAdult = room.maxAdults,
+                    MinAdult = room.minAdults,
+                    MaxChild = room.maxChildren,
+                    MaxPax = room.maxPax,
+                    MinPax = room.minPax,
+                    RoomDescEn = room.descriptionEng,
+                    RoomDescId = room.descriptionInd,
+                    RoomCharacteristic = new RoomCharacteristic
+                    {
+                        CharacteristicCd =  room.characteristic,
+                        CharacteristicDescEn = room.characteristicDescriptionEng,
+                        CharacteristicDescId = room.characteristicDescriptionInd
+                    },
+                    RoomType = new HotelRoomType
+                    {
+                        Type = room.type,
+                        DescEn = room.descriptionEng,
+                        DescId = room.descriptionInd
+                    }
+                };
+                hotelRoom.Add(singleRoom);
+            }
+            SaveHotelRoomToStorage(hotelRoom);
+        }
+ 
         public class Areas
         {
             public string ZoneCd { get; set; }

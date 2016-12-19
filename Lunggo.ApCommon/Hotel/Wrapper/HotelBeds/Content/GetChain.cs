@@ -6,12 +6,14 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Lunggo.ApCommon.Hotel.Constant;
+using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Content.Model;
 using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Sdk;
 
 namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Content
 {
     public partial class HotelBedsService
     {
+        public static List<ChainApi> hotelChainList = new List<ChainApi>();
         public void GetChain(int from, int to)
         {
             try
@@ -54,7 +56,8 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Content
         public void DoGetChain(HotelApiClient client, int from, int to)
         {
             var languageCd = new List<string> { "ENG", "IND" };
-
+            var chainTemp = new List<ChainApi>();
+            var counter = 0;
             foreach (var t in languageCd)
             {
                 List<Tuple<string, string>> param;
@@ -68,7 +71,30 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Content
                 new Tuple<string, string>("${useSecondaryLanguage}", "false"),
             };
                 var chainRs = client.GetChain(param);
+                if (chainRs != null && chainRs.chains != null && chainRs.chains.Count != 0)
+                {
+                    foreach (var chain in chainRs.chains)
+                    {
+                        if (t.Equals("ENG"))
+                        {
+                            var singlechain = new ChainApi
+                            {
+                                code = chain.code,
+                                DescriptionEng = chain.description == null ? null : chain.description.content
+                            };
+                            chainTemp.Add(singlechain);
+                        }
+                        else
+                        {
+                            chainTemp[counter].DescriptionInd = chain.description == null
+                                ? null
+                                : chain.description.content;
+                            counter++;
+                        }
+                    }
+                }
             }
+            hotelChainList.AddRange(chainTemp);
             
         }
 

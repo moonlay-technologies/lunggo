@@ -24,14 +24,34 @@ namespace Lunggo.Webjob.HotelContentWrapper
             // Begin timing.
             stopwatch.Start();
 
-            //var hotel = new HotelBedsService();
+            var hotel = new HotelBedsService();
+            var hotelService = HotelService.GetInstance();
+            
+            /** Update CSV Storage **/
+            //hotelService.UpdateCountryStorage();
+            //hotelService.UpdateHotelBoardStorage();
+            //hotelService.UpdateHotelChainStorage();
+            //hotelService.UpdateHotelCategoryStorage();
+            //hotelService.UpdateHotelFacilityGroupStorage();
+            //hotelService.UpdateHotelFacilityStorage();
+            //hotelService.UpdateHotelRoomStorage();
+            //hotelService.UpdateHotelSegmentStorage();
+            //hotelService.UpdateHotelAccomodationStorage();
+            //var x = HotelService.HotelBoards;
+
+            
+            //hotel.GetBoard(1, 1000);
+            //var y = HotelBedsService.hotelBoardList;
+            /**  END **/
+            
+            
+            
             //Console.WriteLine("Update Hotel Detail");
             //hotel.GetHotelData(148001, 149000);
             //var service = HotelService.GetInstance();
             //Console.WriteLine("start!");
             //service.SaveAutoCompleteToTableStorage();
 
-            var hotelService = HotelService.GetInstance();
             //hotelService.UpdateHotelImage();
 
             ///*Try to get file name*/
@@ -42,8 +62,8 @@ namespace Lunggo.Webjob.HotelContentWrapper
             //var x = hotelService.HotelDestinationAreaDict;
             //var y = hotelService.HotelDestinationZoneDict;
             //var z = hotelService.HotelDestinationDict;
-            hotelService.UpdateHotelListByLocationContent();
-            hotelService.SaveHotelDetailByLocation();
+            //hotelService.UpdateHotelListByLocationContent();
+            //hotelService.SaveHotelDetailByLocation();
 
             stopwatch.Stop();
             Debug.Print("Done in : {0}", stopwatch.Elapsed);

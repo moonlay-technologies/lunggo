@@ -102,6 +102,13 @@ namespace Lunggo.ApCommon.Hotel.Service
             public string MultilingualCode { get; set; }
         }
 
+        public class SegmentDict
+        {
+            public string Code { get; set; }
+            public string NameId { get; set; }
+            public string NameEn { get; set; }
+        }
+
         public class Category
         {
             public string Code { get; set; }
@@ -391,6 +398,13 @@ namespace Lunggo.ApCommon.Hotel.Service
             HotelSegmentDictEng = new Dictionary<string, string>();
             HotelSegmentDictId = new Dictionary<string, string>();
 
+            //var segments = GetInstance().GetHotelSegmentFromStorage();
+            //foreach (var segment in segments)
+            //{
+            //    HotelSegmentDictEng.Add(segment.Code, segment.NameEn);
+            //    HotelSegmentDictId.Add(segment.Code, segment.NameId);
+            //}
+
             using (var file = new StreamReader(hotelSegmentFilePath))
             {
                 var line = file.ReadLine();
@@ -467,7 +481,12 @@ namespace Lunggo.ApCommon.Hotel.Service
         {
             HotelFacilityGroupDictEng = new Dictionary<int, string>();
             HotelFacilityGroupDictId = new Dictionary<int, string>();
-
+            //var facilitiesGrp = GetInstance().GetHotelFacilityGroupFromStorage();
+            //foreach (var group in facilitiesGrp)
+            //{
+            //    HotelFacilityGroupDictEng.Add(group.Code,group.NameEn);
+            //    HotelFacilityGroupDictId.Add(group.Code, group.NameId);
+            //}
             using (var file = new StreamReader(hotelFacilityGroupFilePath))
             {
                 var line = file.ReadLine();
@@ -528,6 +547,7 @@ namespace Lunggo.ApCommon.Hotel.Service
         private static void PopulateHotelRoomList(string hotelRoomFilePath)
         {
             Rooms = new List<Room>();
+            //Rooms = GetInstance().GetHotelRoomFromStorage();
             using (var file = new StreamReader(hotelRoomFilePath))
             {
                 var line = file.ReadLine();
@@ -672,7 +692,11 @@ namespace Lunggo.ApCommon.Hotel.Service
         private static void PopulateHotelAccomodationDict(String hotelAccomodationFilePath)
         {
             HotelAccomodations = new Dictionary<string, Accommodation>();
-
+            //var accomodations = GetInstance().GetHotelAccomodationFromStorage();
+            //foreach (var acc in accomodations)
+            //{
+            //    HotelAccomodations.Add(acc.Code, acc);
+            //}
             using (var file = new StreamReader(hotelAccomodationFilePath))
             {
                 var line = file.ReadLine();
@@ -696,30 +720,39 @@ namespace Lunggo.ApCommon.Hotel.Service
         private static void PopulateHotelBoardDict(String hotelBoardFilePath)
         {
             HotelBoards = new Dictionary<string, Board>();
-
-            using (var file = new StreamReader(hotelBoardFilePath))
+            var boards = GetInstance().GetHotelBoardFromStorage();
+            foreach (var board in boards)
             {
-                var line = file.ReadLine();
-                while (!file.EndOfStream)
-                {
-                    line = file.ReadLine();
-                    var splittedLine = line.Split('|');
+                HotelBoards.Add(board.Code, board);
 
-                    HotelBoards.Add(splittedLine[0], new Board
-                    {
-                        Code = splittedLine[0],
-                        NameEn = splittedLine[1],
-                        NameId = splittedLine[2],
-                        MultilingualCode = splittedLine[3]
-                    });
-                }
             }
+            //using (var file = new StreamReader(hotelBoardFilePath))
+            //{
+            //    var line = file.ReadLine();
+            //    while (!file.EndOfStream)
+            //    {
+            //        line = file.ReadLine();
+            //        var splittedLine = line.Split('|');
+
+            //        HotelBoards.Add(splittedLine[0], new Board
+            //        {
+            //            Code = splittedLine[0],
+            //            NameEn = splittedLine[1],
+            //            NameId = splittedLine[2],
+            //            MultilingualCode = splittedLine[3]
+            //        });
+            //    }
+            //}
         }
 
         private static void PopulateHotelChainDict(String hotelChainFilePath)
         {
             HotelChains = new Dictionary<string, Chain>();
-
+            //var chains = GetInstance().GetHotelChainFromStorage();
+            //foreach (var chain in chains)
+            //{
+            //    HotelChains.Add(chain.Code, chain);
+            //}
             using (var file = new StreamReader(hotelChainFilePath))
             {
                 var line = file.ReadLine();
@@ -740,7 +773,11 @@ namespace Lunggo.ApCommon.Hotel.Service
         private static void PopulateHotelCategoryDict(String hotelCategoryFilePath)
         {
             HotelCategories = new Dictionary<string, Category>();
-
+            //var categories = GetInstance().GetHotelCategoryFromStorage();
+            //foreach (var category in categories)
+            //{
+            //    HotelCategories.Add(category.Code, category);
+            //}
             using (var file = new StreamReader(hotelCategoryFilePath))
             {
                 var line = file.ReadLine();
@@ -764,22 +801,27 @@ namespace Lunggo.ApCommon.Hotel.Service
         private static void PopulateHotelCountriesDict(String hotelCountriesFilePath)
         {
             GetInstance().HotelCountry = new Dictionary<string, CountryDict>();
-
-            using (var file = new StreamReader(hotelCountriesFilePath))
+            var countries = GetInstance().GetHotelCountryFromStorage();
+            foreach (var country in countries)
             {
-                var line = file.ReadLine();
-                while (!file.EndOfStream)
-                {
-                    line = file.ReadLine();
-                    var splittedLine = line.Split('|');
-                    GetInstance().HotelCountry.Add(splittedLine[0], new CountryDict
-                    {
-                        CountryCode = splittedLine[0],
-                        IsoCode = splittedLine[1],
-                        Name = splittedLine[2]
-                    });
-                }
+                GetInstance().HotelCountry.Add(country.CountryCode, country);
             }
+
+            //using (var file = new StreamReader(hotelCountriesFilePath))
+            //{
+            //    var line = file.ReadLine();
+            //    while (!file.EndOfStream)
+            //    {
+            //        line = file.ReadLine();
+            //        var splittedLine = line.Split('|');
+            //        GetInstance().HotelCountry.Add(splittedLine[0], new CountryDict
+            //        {
+            //            CountryCode = splittedLine[0],
+            //            IsoCode = splittedLine[1],
+            //            Name = splittedLine[2]
+            //        });
+            //    }
+            //}
         }
 
         //POPULATE METHODS REGARDING DESTINATION AND ZONE

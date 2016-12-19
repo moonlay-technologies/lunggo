@@ -6,12 +6,14 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Lunggo.ApCommon.Hotel.Constant;
+using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Content.Model;
 using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Sdk;
 
 namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Content
 {
     public partial class HotelBedsService
     {
+        public static List<FacilityGroupApi> hotelFacilityGroupList = new List<FacilityGroupApi>();
         public void GetFacilityGroup(int from, int to)
         {
             try
@@ -54,7 +56,8 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Content
         public void DoGetFacilityGroup(HotelApiClient client, int from, int to)
         {
             var languageCd = new List<string> { "ENG", "IND" };
-
+            var facilityGroupTemp = new List<FacilityGroupApi>();
+            var counter = 0;
             foreach (var t in languageCd)
             {
                 List<Tuple<string, string>> param;
@@ -67,9 +70,31 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Content
                 new Tuple<string, string>("${to}", to.ToString()),
                 new Tuple<string, string>("${useSecondaryLanguage}", "false"),
             };
-                var FacilityGroupRs = client.GetFacilityGroup(param);
+                var facilityGroupRs = client.GetFacilityGroup(param);
+                if (facilityGroupRs != null && facilityGroupRs.facilityGroups != null && facilityGroupRs.facilityGroups.Count != 0)
+                {
+                    foreach (var facilityGroup in facilityGroupRs.facilityGroups)
+                    {
+                        if (t.Equals("ENG"))
+                        {
+                            var singlefacilityGroup = new FacilityGroupApi
+                            {
+                                code = facilityGroup.code,
+                                DescriptionEng = facilityGroup.description == null ? null : facilityGroup.description.content
+                            };
+                            facilityGroupTemp.Add(singlefacilityGroup);
+                        }
+                        else
+                        {
+                            facilityGroupTemp[counter].DescriptionInd = facilityGroup.description == null
+                                ? null
+                                : facilityGroup.description.content;
+                            counter++;
+                        }
+                    }
+                }
             }
-
+            hotelFacilityGroupList.AddRange(facilityGroupTemp);
         }
 
         public int GetTotalFacilityGroup(HotelApiClient client)

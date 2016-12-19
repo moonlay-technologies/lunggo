@@ -541,5 +541,238 @@ namespace Lunggo.ApCommon.Hotel.Service
                 table.Execute(deleteOperation);
             }
         }
+
+        public void SaveHotelCountryToStorage(List<CountryDict> countryList)
+        {
+            BlobStorageService.GetInstance().WriteFileToBlob(new BlobWriteDto
+            {
+                FileBlobModel = new FileBlobModel
+                {
+                    Container = "hotelcsvcontent",
+                    FileInfo = new FileInfo
+                    {
+                        ContentType = "",
+                        FileData = countryList.ToCacheObject(),
+                        FileName = "HotelCountry"
+                    }
+                },
+                SaveMethod = SaveMethod.Force
+            });
+            Console.WriteLine("Done saving hotel Country");
+        }
+        public void SaveHotelBoardToStorage(List<Board> boardList)
+        {
+            BlobStorageService.GetInstance().WriteFileToBlob(new BlobWriteDto
+            {
+                FileBlobModel = new FileBlobModel
+                {
+                    Container = "hotelcsvcontent",
+                    FileInfo = new FileInfo
+                    {
+                        ContentType = "",
+                        FileData = boardList.ToCacheObject(),
+                        FileName = "HotelBoard"
+                    }
+                },
+                SaveMethod = SaveMethod.Force
+            });
+            Console.WriteLine("Done saving hotel Board");
+        }
+
+        public void SaveHotelChainToStorage(List<Chain> chainList)
+        {
+            BlobStorageService.GetInstance().WriteFileToBlob(new BlobWriteDto
+            {
+                FileBlobModel = new FileBlobModel
+                {
+                    Container = "hotelcsvcontent",
+                    FileInfo = new FileInfo
+                    {
+                        ContentType = "",
+                        FileData = chainList.ToCacheObject(),
+                        FileName = "HotelChain"
+                    }
+                },
+                SaveMethod = SaveMethod.Force
+            });
+            Console.WriteLine("Done saving hotel Chain");
+        }
+
+        public void SaveHotelAccomodationToStorage(List<Accommodation> accomodationList)
+        {
+            BlobStorageService.GetInstance().WriteFileToBlob(new BlobWriteDto
+            {
+                FileBlobModel = new FileBlobModel
+                {
+                    Container = "hotelcsvcontent",
+                    FileInfo = new FileInfo
+                    {
+                        ContentType = "",
+                        FileData = accomodationList.ToCacheObject(),
+                        FileName = "HotelAccomodation"
+                    }
+                },
+                SaveMethod = SaveMethod.Force
+            });
+            Console.WriteLine("Done saving hotel accomodation");
+        }
+
+        public void SaveHotelCategoryToStorage(List<Category> categoryList)
+        {
+            BlobStorageService.GetInstance().WriteFileToBlob(new BlobWriteDto
+            {
+                FileBlobModel = new FileBlobModel
+                {
+                    Container = "hotelcsvcontent",
+                    FileInfo = new FileInfo
+                    {
+                        ContentType = "",
+                        FileData = categoryList.ToCacheObject(),
+                        FileName = "HotelCategory"
+                    }
+                },
+                SaveMethod = SaveMethod.Force
+            });
+            Console.WriteLine("Done saving hotel category");
+        }
+
+        public void SaveHotelFacilityToStorage(List<Facility> facilityList)
+        {
+            BlobStorageService.GetInstance().WriteFileToBlob(new BlobWriteDto
+            {
+                FileBlobModel = new FileBlobModel
+                {
+                    Container = "hotelcsvcontent",
+                    FileInfo = new FileInfo
+                    {
+                        ContentType = "",
+                        FileData = facilityList.ToCacheObject(),
+                        FileName = "HotelFacility"
+                    }
+                },
+                SaveMethod = SaveMethod.Force
+            });
+            Console.WriteLine("Done saving hotel Facility");
+        }
+
+        public void SaveHotelFacilityGroupToStorage(List<FacilityGroup> FacilityGroupList)
+        {
+            BlobStorageService.GetInstance().WriteFileToBlob(new BlobWriteDto
+            {
+                FileBlobModel = new FileBlobModel
+                {
+                    Container = "hotelcsvcontent",
+                    FileInfo = new FileInfo
+                    {
+                        ContentType = "",
+                        FileData = FacilityGroupList.ToCacheObject(),
+                        FileName = "HotelFacilityGroup"
+                    }
+                },
+                SaveMethod = SaveMethod.Force
+            });
+            Console.WriteLine("Done saving hotel FacilityGroup");
+        }
+
+        public void SaveHotelSegmentToStorage(List<SegmentDict> SegmentList)
+        {
+            BlobStorageService.GetInstance().WriteFileToBlob(new BlobWriteDto
+            {
+                FileBlobModel = new FileBlobModel
+                {
+                    Container = "hotelcsvcontent",
+                    FileInfo = new FileInfo
+                    {
+                        ContentType = "",
+                        FileData = SegmentList.ToCacheObject(),
+                        FileName = "HotelSegment"
+                    }
+                },
+                SaveMethod = SaveMethod.Force
+            });
+            Console.WriteLine("Done saving hotel Segment");
+        }
+
+        public void SaveHotelRoomToStorage(List<Room> RoomList)
+        {
+            BlobStorageService.GetInstance().WriteFileToBlob(new BlobWriteDto
+            {
+                FileBlobModel = new FileBlobModel
+                {
+                    Container = "hotelcsvcontent",
+                    FileInfo = new FileInfo
+                    {
+                        ContentType = "",
+                        FileData = RoomList.ToCacheObject(),
+                        FileName = "HotelRoom"
+                    }
+                },
+                SaveMethod = SaveMethod.Force
+            });
+            Console.WriteLine("Done saving hotel Room");
+        }
+
+        public List<CountryDict> GetHotelCountryFromStorage()
+        {
+            var blob = BlobStorageService.GetInstance().GetByteArrayByFileInContainer("HotelCountry", "hotelcsvcontent");
+            var value = (RedisValue)blob;
+            return value.DeconvertTo<List<CountryDict>>();
+        }
+        public List<Board> GetHotelBoardFromStorage()
+        {
+            var blob = BlobStorageService.GetInstance().GetByteArrayByFileInContainer("HotelBoard", "hotelcsvcontent");
+            var value = (RedisValue)blob;
+            return value.DeconvertTo<List<Board>>();
+        }
+
+        public List<Chain> GetHotelChainFromStorage()
+        {
+            var blob = BlobStorageService.GetInstance().GetByteArrayByFileInContainer("HotelChain", "hotelcsvcontent");
+            var value = (RedisValue)blob;
+            return value.DeconvertTo<List<Chain>>();
+        }
+
+        public List<Accommodation> GetHotelAccomodationFromStorage()
+        {
+            var blob = BlobStorageService.GetInstance().GetByteArrayByFileInContainer("HotelAccomodation", "hotelcsvcontent");
+            var value = (RedisValue)blob;
+            return value.DeconvertTo<List<Accommodation>>();
+        }
+
+        public List<Category> GetHotelCategoryFromStorage()
+        {
+            var blob = BlobStorageService.GetInstance().GetByteArrayByFileInContainer("HotelCategory", "hotelcsvcontent");
+            var value = (RedisValue)blob;
+            return value.DeconvertTo<List<Category>>();
+        }
+
+        public List<Facility> GetHotelFacilityFromStorage()
+        {
+            var blob = BlobStorageService.GetInstance().GetByteArrayByFileInContainer("HotelFacility", "hotelcsvcontent");
+            var value = (RedisValue)blob;
+            return value.DeconvertTo<List<Facility>>();
+        }
+
+        public List<FacilityGroup> GetHotelFacilityGroupFromStorage()
+        {
+            var blob = BlobStorageService.GetInstance().GetByteArrayByFileInContainer("HotelFacilityGroup", "hotelcsvcontent");
+            var value = (RedisValue)blob;
+            return value.DeconvertTo<List<FacilityGroup>>();
+        }
+
+        public List<SegmentDict> GetHotelSegmentFromStorage()
+        {
+            var blob = BlobStorageService.GetInstance().GetByteArrayByFileInContainer("HotelSegmentDict", "hotelcsvcontent");
+            var value = (RedisValue)blob;
+            return value.DeconvertTo<List<SegmentDict>>();
+        }
+
+        public List<Room> GetHotelRoomFromStorage()
+        {
+            var blob = BlobStorageService.GetInstance().GetByteArrayByFileInContainer("HotelRoomDict", "hotelcsvcontent");
+            var value = (RedisValue)blob;
+            return value.DeconvertTo<List<Room>>();
+        }
+
     }
 }
