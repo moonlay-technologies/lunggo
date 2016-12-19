@@ -95,7 +95,7 @@
     <!-- jquery datepicker -->
     <script src="/Assets/js/jquery-ui.min.js"></script>
     <script type="text/javascript" src="/Assets/js/jquery.ui.datepicker-id.js"></script>
-    <script type="text/javascript" src="/Scripts/bootstrap.min.js"></script>
+    <script src="/Assets/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="/Assets/vendor/slick/slick.min.js"></script>
 }
 
@@ -119,21 +119,21 @@
             //    $('#myModal').modal('show');
             //});
 
-        // slider
-        $('.page-slider .slider a').each(function() {
-            var bgImage = $(this).children('img').attr('src');
-            $(this).css({
+            // slider
+            $('.page-slider .slider a').each(function() {
+                var bgImage = $(this).children('img').attr('src');
+                $(this).css({
                     'background-image': 'url(' + bgImage + ')'
+                });
+                $(this).children('img').remove();
             });
-            $(this).children('img').remove();
-        });
-        $('.slider-wrapper').slick({
-            autoplay: true,
+            $('.slider-wrapper').slick({
+                autoplay: true,
                 autoplaySpeed: 4000,
-            dots: true,
-            prevArrow: '<button type="button" class="slick-prev hidden">Back</button>',
-            nextArrow: '<button type="button" class="slick-next hidden">Next</button>'
-        });
+                dots: true,
+                prevArrow: '<button type="button" class="slick-prev hidden">Back</button>',
+                nextArrow: '<button type="button" class="slick-next hidden">Next</button>'
+            });
         });
     </script>
     <script src="/Assets/travorama20/angularDirectory/search/hotelSearch.service.js"></script>
@@ -155,11 +155,11 @@
         <div class="search-form">
             <header class="tab-header">
                 <nav>
-                                <ul>
+                    <ul>
                         <li class="flight"><a data-toggle="tab" href="#plane" ng-click="changeTab('flight')">Pesawat</a></li>
                         <li class="hotel active"><a data-toggle="tab" href="#hotel" ng-click="changeTab('hotel')">Hotel</a></li>
                         @*<li class="activity" data-toggle="tooltip" data-placement="bottom" title="Coming soon!"><a href="#">Activity</a></li>*@
-                                    </ul>
+                    </ul>
                 </nav>
             </header>
             <section class="tab-content">
@@ -351,10 +351,10 @@
                                     <div class="option" ng-model="hotelSearch.roomCount">
                                         <span data-value="" ng-repeat="roomCount in hotelSearch.roomrange track by $index"
                                               ng-click="hotelSearch.roomCount = roomCount">{{roomCount}}</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                                </div>
                         <div class="form-group hotel-detail clearfix">
                             <div class="col-xs-12 white-txt">Rincian Jumlah Tamu</div>
                             <div class="col-xs-6 white-txt total-adult clearfix">
@@ -364,8 +364,8 @@
                             <div class="col-xs-6 white-txt total-child clearfix">
                                 <div class="col-half title">Jumlah Anak</div>
                                 <span class="text-right semibold-txt col-half total">{{hotelSearch.totalChildren}}</span>
-                                </div>
                             </div>
+                        </div>
                         <div class="col-xs-12 white-txt" ng-show="hotelSearch.searchinghotel">
                             Sedang melakukan pencarian...
                         </div>

@@ -11,7 +11,7 @@
 
     var hotelCd = Model.HotelCode;
     var hotelDetail = HotelService.GetInstance().GetHotelDetailFromTableStorage(Convert.ToInt32(hotelCd));
-    
+
     var loc = ToTitleCase(hotelDetail.HotelName + ", " + hotelDetail.City);
 
 }
@@ -67,14 +67,14 @@
     <script>
         var loc = '@loc';
     </script>
-    <script type="text/javascript" src="/Scripts/bootstrap.min.js"></script>
+    <script src="/Assets/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="/Assets/vendor/slick/slick.min.js"></script>
     <script type="text/javascript" src="/Assets/vendor/dotdotdot/jquery.dotdotdot.min.js"></script>
     <script src="/Assets/vendor/lightslider/lightslider.js"></script>
 }
 
 @section PageJS{
-<script src="/Assets/travorama20/js/hotelDetailController.js"></script>
+    <script src="/Assets/travorama20/js/hotelDetailController.js"></script>
     <script src="/Assets/mobile/js/HotelController.js"></script>
     <script src="/Assets/travorama20/angularDirectory/search/hotelSearch.service.js"></script>
 }
@@ -122,9 +122,9 @@
                     <div class="col-half" ng-if="hotel.starRating == 4"><span class="star star-4"></span></div>
                     <div class="col-half" ng-if="hotel.starRating == 5"><span class="star star-5"></span></div>
                     @*<div class="col-half share-group">
-                        <a href="#" class="like"></a>
-                        <a href="#" class="share"></a>
-                    </div>*@
+                            <a href="#" class="like"></a>
+                            <a href="#" class="share"></a>
+                        </div>*@
                 </div>
                 <div class="dh-location sm-txt">
                     {{hotel.address}} {{hotel.city}} {{hotel.postalCd}}, {{hotel.country}}
@@ -132,8 +132,8 @@
                 <div class="dh-listing">
                     <div class="dh-list-title bold-txt lg-txt darkgrey-txt">Informasi Kamar & Harga </div>
                     @*<div ng-show="loading" class="text-center">
-                    <img src="/Assets/images/load.gif" style="width: 30px; height: 30px; margin-top: 5%;">
-                </div>*@
+                            <img src="/Assets/images/load.gif" style="width: 30px; height: 30px; margin-top: 5%;">
+                        </div>*@
                     <ul class="dh-list-container">
                         <li ng-show="$index+1 <= roomCount" ng-repeat="room in hotel.room track by $index">
                             <div class="dh-list clearfix">
@@ -174,10 +174,10 @@
                                     </div>
                                     <a href="#" class="blue-txt downline-txt sm-txt" ng-click="PageConfig.SetOverlay('detail-room'); seeRoomDetail(room)">Detail Info Kamar</a>
                                     @*<div class="facility">
-                                        <span class="wifi"></span>
-                                        <span class="meal"></span>
-                                        <span class="ac"></span>
-                                    </div>*@
+                                            <span class="wifi"></span>
+                                            <span class="meal"></span>
+                                            <span class="ac"></span>
+                                        </div>*@
                                     <a ng-click="bookRoom(room)" class="checkout-btn btn btn-yellow small">PESAN</a>
                                 </div>
                             </div>
@@ -207,8 +207,8 @@
                 <div class="sh-facility">
                     <div class="sh-title darkgrey-txt lg-txt bold-txt">Fasilitas Utama Hotel</div>
                     @*<div ng-show="loading" class="text-center">
-                    <img src="/Assets/images/load.gif" style="width: 30px; height: 30px; margin-top: 5%;">
-                    </div>*@
+                        <img src="/Assets/images/load.gif" style="width: 30px; height: 30px; margin-top: 5%;">
+                        </div>*@
                     <div class="sh-list-facility grey-txt clearfix">
                         <div class="sh-row clearfix" ng-repeat="facilities in hotel.facilities track by $index" ng-hide="facilities === undefined">
                             <div class="col-2" ng-class="{'fac-general':facilities.facilityGroup == 'general',
@@ -218,7 +218,7 @@
                                                                         'fac-meal':facilities.facilityGroup == 'meal',
                                                                         'fac-ent':facilities.facilityGroup == 'entertainment',
                                                                         'fac-other':facilities.facilityGroup == 'other'}">
-                         
+
                             </div>
                             <div class="col-8 clearfix">
                                 <ul class="col-half blue-list" ng-repeat="facilityList in facilities.facilityList.slice(0, facilities.facilityList.length)">
@@ -226,27 +226,27 @@
                                 </ul>
                             </div>
                         </div>
-                    
+
                         @*<ul class="col-half sh-list">
-                        <li class="bed-blue">Bed</li>
-                        <li class="meal-blue">Breakfast</li>
-                        <li class="bell-blue">Room Service</li>
-                        <li class="wifi-blue">Public WiFi</li>
-                        <li class="bed-blue">Bed</li>
-                        <li class="meal-grey">Breakfast</li>
-                        <li class="bell-grey">Room Service</li>
-                        <li class="wifi-grey">Public WiFi</li>
-                    </ul>
-                    <ul class="col-half sh-list">
-                        <li class="pool-blue">Swimming Pool</li>
-                        <li class="meal-blue">Breakfast</li>
-                        <li class="tv-blue">TV</li>
-                        <li class="car-blue">Hotel Car</li>
-                        <li class="ac-grey">AC</li>
-                        <li class="tv-blue">TV</li>
-                        <li class="car-blue">Hotel Car</li>
-                        <li class="ac-blue">AC</li>
-                    </ul>*@
+                                <li class="bed-blue">Bed</li>
+                                <li class="meal-blue">Breakfast</li>
+                                <li class="bell-blue">Room Service</li>
+                                <li class="wifi-blue">Public WiFi</li>
+                                <li class="bed-blue">Bed</li>
+                                <li class="meal-grey">Breakfast</li>
+                                <li class="bell-grey">Room Service</li>
+                                <li class="wifi-grey">Public WiFi</li>
+                            </ul>
+                            <ul class="col-half sh-list">
+                                <li class="pool-blue">Swimming Pool</li>
+                                <li class="meal-blue">Breakfast</li>
+                                <li class="tv-blue">TV</li>
+                                <li class="car-blue">Hotel Car</li>
+                                <li class="ac-grey">AC</li>
+                                <li class="tv-blue">TV</li>
+                                <li class="car-blue">Hotel Car</li>
+                                <li class="ac-blue">AC</li>
+                            </ul>*@
                     </div>
                     * Fasilitas Berbayar
                 </div>
@@ -283,17 +283,17 @@
                                     <div class="col-half" ng-if="hotel.starRating == 4"><span class="star star-4"></span></div>
                                     <div class="col-half" ng-if="hotel.starRating == 5"><span class="star star-5"></span></div>
                                     @*<div class="col-half share-group">
-                                    <a href="#" class="like"></a>
-                                    <a href="#" class="share"></a>
-                                    </div>*@
+                                        <a href="#" class="like"></a>
+                                        <a href="#" class="share"></a>
+                                        </div>*@
                                 </div>
                             </div>
                             <div class="dh-slider dr-slider">
                                 <div class="item" @*ng-if="selectedRoom.roomImages.length >= 1"*@>
                                     <div class="dh-img" style="background-image: url({{selectedRoom.roomImages[0]}});"></div>
                                 </div><div class="item" @*ng-if="selectedRoom.roomImages.length >= 1"*@>
-                                          <div class="dh-img" style="background-image: url({{selectedRoom.roomImages[1]}});"></div>
-                                      </div>
+                                    <div class="dh-img" style="background-image: url({{selectedRoom.roomImages[1]}});"></div>
+                                </div>
                                 <div class="item" @*ng-if="selectedRoom.roomImages.length >= 2"*@>
                                     <div class="dh-img" style="background-image: url({{selectedRoom.roomImages[1]}});"></div>
                                 </div>
@@ -345,8 +345,8 @@
                                 <ul class="blue-list dr-txt darkgrey-txt">
                                     <li ng-repeat="tnc in selectedRoom.rate.tnc">{{tnc}} <br /></li>
                                     @*<li class="check-in col-3 sm-txt"><span class="grey-txt">Check In</span> 14.00-24.00</li>
-                                <li class="check-out col-3 sm-txt"><span class="grey-txt">Check Out</span> 12.00</li>
-                                <li class="max-visitor col-3 sm-txt"><span class="grey-txt">Max Orang</span> 2 Orang</li>*@
+                                        <li class="check-out col-3 sm-txt"><span class="grey-txt">Check Out</span> 12.00</li>
+                                        <li class="max-visitor col-3 sm-txt"><span class="grey-txt">Max Orang</span> 2 Orang</li>*@
                                 </ul>
                             </div>
                         </div>

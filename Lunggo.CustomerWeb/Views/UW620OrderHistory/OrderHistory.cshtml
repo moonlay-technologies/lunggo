@@ -5,18 +5,18 @@
     ViewBag.BodyClass = "page-account page-account-profile";
     ViewBag.PageActiveSection = "profile";
     ViewBag.Title = "My Account";
-    
+
     //var rsvs = Model.OrderByDescending(rsv => rsv.RsvTime).ToList();
 }
 @{
-    
+
 }
 @section AdditionalJS{
     <!-- additional Angular JS-->
     <script src="/Assets/js/angular.min.js"></script>
     <script src="/Assets/js/angular-animate.min.js"></script>
     <script src="/Assets/js/angular-route.min.js"></script>
-    <script type="text/javascript" src="/Scripts/bootstrap.min.js"></script>
+    <script src="/Assets/js/bootstrap.min.js"></script>
 }
 
 @section PageJS{
@@ -82,7 +82,7 @@
                                             ng-show="userProfile.edit" ng-disabled="userProfile.updating">
                                         <option ng-repeat="country in countries" ng-selected="country.dial_code == 'xx'" value="{{country.dial_code}}">{{country.name}} ({{country.dial_code}})</option>
                                     </select>
-                                    
+
                                     @*<input type="number" name="countryCallCd" ng-model="editProfile.countryCallCd" value="editProfile.countryCallCd" class="form-control" placeholder="Kode Negara" ng-show="userProfile.edit" ng-disabled="userProfile.updating" />*@
                                     <!--<select class="form-control" ng-show="userProfile.edit" ng-model="editProfile.country" ng-disabled="userProfile.updating">
                                     <option ng-repeat="country in countries" value="{{country.dial_code}}" ng-selected="country.dial_code == userProfile.country">{{country.name}}</option>
@@ -180,7 +180,7 @@
                         </div>
                         <div class="tab-content">
                             <div class="tab-flight-history tab-pane cleafix active" id="flight-history">
-                                
+
                                 <h3 ng-if="flightlist.length == 0">Belum ada pemesanan.</h3>
                                 <div ng-if="flightlist.length > 0" ng-repeat="flight in flightlist track by $index">
                                     <div class="order-wrapper">
@@ -213,7 +213,7 @@
                                 </div>
                             </div>
                             <div class="tab-hotel-history tab-pane cleafix" id="hotel-history">
-                                
+
                                 <h3 ng-if="hotellist.length == 0">Belum ada pemesanan.</h3>
                                 <div ng-if="hotellist.length > 0" ng-repeat="hotel in hotellist track by $index">
                                     <div class="order-wrapper">
@@ -240,7 +240,8 @@
                                             <div class="order-bottom">
                                                 <div class="wb-container clearfix">
                                                     <div class="ot-left">Check in</div>
-                                                    <div class="ot-right bold-txt">{{hotel.hotelDetail.checkIn | date : 'EEEE, dd MMM yyyy'}}
+                                                    <div class="ot-right bold-txt">
+                                                        {{hotel.hotelDetail.checkIn | date : 'EEEE, dd MMM yyyy'}}
                                                     </div>
                                                     <div class="wb-container clearfix">
                                                         <div class="ot-left">Check out</div>
@@ -268,7 +269,7 @@
                                                     </div>
 
                                                 </div>
-                                                
+
                                             </div>
                                         </div>
                                     </div>

@@ -6,7 +6,7 @@
     ViewBag.BodyClass = "page-hotel page-search";
     ViewBag.Title = "Pencarian Hotel";
     ViewBag.AngularController = "hotelSearchController";
-    
+
 }
 
 @section AdditionalCSS{
@@ -16,14 +16,14 @@
     long location = 0;
     var x = long.TryParse(Model.SearchParamObject.Location, out location);
     var loc = "";
-    var foundLocation = HotelService.GetInstance().AutoCompletes.Where( c => c.Id == location).ToList()[0];
+    var foundLocation = HotelService.GetInstance().AutoCompletes.Where(c => c.Id == location).ToList()[0];
     if (foundLocation != null)
     {
         if (foundLocation.Type == 1)
         {
             loc = foundLocation.Destination + ", " + foundLocation.Country;
         }
-        else if(foundLocation.Type == 2)
+        else if (foundLocation.Type == 2)
         {
             loc = foundLocation.Zone + ", " + foundLocation.Destination + ", " + foundLocation.Country;
         }
@@ -37,7 +37,7 @@
 @section AdditionalJS {
     <script src="/Assets/js/jquery-ui.min.js"></script>
     <script type="text/javascript" src="/Assets/js/jquery.ui.datepicker-id.js"></script>
-    <script type="text/javascript" src="/Scripts/bootstrap.min.js"></script>
+    <script src="/Assets/js/bootstrap.min.js"></script>
 }
 
 @section PageJS{
@@ -57,9 +57,9 @@
         });
     </script>
     <script>
-        
+
         var loc = '@loc';
-        
+
     </script>
     <script type="text/javascript" src="/Assets/travorama20/js/HotelController.js"></script>
     <script src="/Assets/travorama20/angularDirectory/search/hotelSearch.service.js"></script>
@@ -85,7 +85,7 @@
                             <input type="text" ng-pattern="/^[a-zA-Z]*$/" ng-model="filter.nameFilter" ng-disabled="hotels.length < 1" class="form-hotel-name form-control" tra-on-enter="filterHotels()">
                         </div>
                         <div class="filter-group">
-                            <label class="filter-title">Harga Hotel</label> 
+                            <label class="filter-title">Harga Hotel</label>
                             <div class="slider-price slider-range" id="slider-range"></div>
                             <div class="slider-minmax">
                                 <span>Rp {{filter.minPrice | number}}</span>
@@ -208,7 +208,7 @@
                                     </div>
                                     <div class="location">
                                         <div>{{toTitleCase(hotel.address)}} {{toTitleCase(hotel.zone)}}</div>
-                                        {{toTitleCase(hotel.city)}}<span ng-show ="hotel.postalCd != null || hotel.postalCd.length > 0"> {{hotel.postalCd}}</span>
+                                        {{toTitleCase(hotel.city)}}<span ng-show="hotel.postalCd != null || hotel.postalCd.length > 0"> {{hotel.postalCd}}</span>
                                     </div>
                                     @*=================== ini review row ================*@
                                     <div class="review clearfix">

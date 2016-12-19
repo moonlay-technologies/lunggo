@@ -9,7 +9,7 @@
 @{
     var hotelCd = Model.HotelCode;
     var hotelDetail = HotelService.GetInstance().GetHotelDetailFromTableStorage(Convert.ToInt32(hotelCd));
-    var loc = ToTitleCase(hotelDetail.HotelName + ", " + hotelDetail.City) ;
+    var loc = ToTitleCase(hotelDetail.HotelName + ", " + hotelDetail.City);
 }
 
 @functions{
@@ -65,7 +65,7 @@
     <script src="/Assets/js/angular-route.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="/Assets/js/jquery-ui.min.js"></script>
-    <script type="text/javascript" src="/Scripts/bootstrap.min.js"></script>
+    <script src="/Assets/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="/Assets/vendor/slick/slick.min.js"></script>
     <script src="/Assets/vendor/lightslider/lightslider.js"></script>
 }
@@ -90,17 +90,17 @@
                     <div class="top-desc">
                         <span class="slider-title-lg blue-txt">{{hotel.hotelName}}</span>
                         @*<div class="star" ng-if="hotel.starRating == 1"></div>
-                        <div class="star star-2" ng-if="hotel.starRating == 2"></div>
-                        <div class="star star-3" ng-if="hotel.starRating == 3"></div>
-                        <div class="star star-4" ng-if="hotel.starRating == 4"></div>
-                        <div class="star star-5" ng-if="hotel.starRating == 5"></div>*@
+                            <div class="star star-2" ng-if="hotel.starRating == 2"></div>
+                            <div class="star star-3" ng-if="hotel.starRating == 3"></div>
+                            <div class="star star-4" ng-if="hotel.starRating == 4"></div>
+                            <div class="star star-5" ng-if="hotel.starRating == 5"></div>*@
                         <div class="" ng-class="{ 'star star-3': hotel.starRating == 3 }">
                         </div>
-                                                @*
-                                || 'star star-4':hotel.starRating == 4 ||
-                                         'star star-5':hotel.starRating == 5'':hotel.starRating == 0 ||
-        'star star-1':hotel.starRating == 1 ||
-        'star star-2':hotel.starRating == 2 ||*@
+                        @*
+                                                    || 'star star-4':hotel.starRating == 4 ||
+                                                             'star star-5':hotel.starRating == 5'':hotel.starRating == 0 ||
+                            'star star-1':hotel.starRating == 1 ||
+                            'star star-2':hotel.starRating == 2 ||*@
                         <br />
                         <span class="address" style="text-transform: capitalize">{{hotel.address}} {{hotel.city}} {{hotel.postalCd}}, {{hotel.country}}</span>
                         @*<a href="#" class="btn-blue small">Lihat Peta</a>*@
@@ -265,16 +265,16 @@
                                     <div class="col-left-top clearfix">
                                         <div class="sm-slider">
                                             @*<div class="item active">
-                                                <img src="/Assets/travorama20/images/Hotel/mini-slider.jpg" />
-                                            </div>*@
+                                                    <img src="/Assets/travorama20/images/Hotel/mini-slider.jpg" />
+                                                </div>*@
                                             <ul class="room-gallery gallery list-unstyled cS-hidden">
                                                 <li data-thumb="{{roomImage}}" ng-repeat="roomImage in room.roomImages track by $index">
                                                     <div style="background-image: url({{roomImage}}); width: 100%; height: 145px; background-size: cover; background-position: center center;"></div>
                                                     <div class="total-img"><b>{{$index+1}}</b> / {{room.roomImages.length}}</div>
                                                 </li>
                                                 @*<li data-thumb="/Assets/travorama20/images/Hotel/mini-slider.jpg">
-                                                    <div style="background-image: url(/Assets/travorama20/images/Hotel/mini-slider.jpg); width: 100%; height: 145px; background-size: cover; background-position: center center;"></div>
-                                                </li>*@
+                                                        <div style="background-image: url(/Assets/travorama20/images/Hotel/mini-slider.jpg); width: 100%; height: 145px; background-size: cover; background-position: center center;"></div>
+                                                    </li>*@
                                             </ul>
                                         </div>
                                     </div>
@@ -331,8 +331,8 @@
                         </a>
                     </div>
                     @*<span ng-show="!searchDone" class="text-center">
-                        <img src="/Assets/images/load.gif" class="img-loading">
-                    </span>*@
+                            <img src="/Assets/images/load.gif" class="img-loading">
+                        </span>*@
                 </div>
                 <div class="info-hotel">
                     <div class="top-title clearfix">
