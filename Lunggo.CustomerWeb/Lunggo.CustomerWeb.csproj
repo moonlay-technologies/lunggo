@@ -1578,8 +1578,6 @@
     </Content>
     <Content Include="Campaign\MatahariMall\css\promo-mataharimall.scss" />
     <Content Include="Campaign\Harbolnas2016\css\promo-harbolnas.scss" />
-    <Content Include="compilerconfig.json" />
-    <Content Include="compilerconfig.json.defaults" />
     <None Include="Properties\PublishProfiles\prod-cw %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\dv1-cw.pubxml" />
     <None Include="Properties\PublishProfiles\dv2-cw.pubxml" />
@@ -1612,7 +1610,7 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
-    <Content Include="showticket.png" />
+    <Content Include="Assets\images\showticket.png" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
