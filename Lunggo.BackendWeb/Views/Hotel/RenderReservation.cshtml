@@ -1,0 +1,139 @@
+﻿@using System.Globalization
+@using Lunggo.ApCommon.Payment.Constant
+@model Lunggo.ApCommon.Hotel.Model.HotelReservation
+
+<div class="col-md-6">
+    <div class="showback">
+        <h4><b>Reservation Detail</b></h4>
+        <hr />
+        <table class="table table-hover table-no-border">
+            <tbody>
+                <tr>
+                    <td>No. Reservasi </td>
+                    <td>:</td>
+                    <td>@Model.RsvNo</td>
+                </tr>
+                <tr>
+                    <td>Tanggal Reservasi</td>
+                    <td>:</td>
+                    <td>@Model.RsvTime.AddHours(7).ToString("d MMM yyyy HH:mm:ss")</td>
+                </tr>
+                <tr>
+                    <td>Nama</td>
+                    <td>:</td>
+                    <td>@Model.Contact.Name</td>
+                </tr>
+                <tr>
+                    <td>E-mail</td>
+                    <td>:</td>
+                    <td>@Model.Contact.Email</td>
+                </tr>
+                <tr>
+                    <td>Telepon</td>
+                    <td>:</td>
+                    <td>@Model.Contact.Phone</td>
+                </tr>
+                @if (Model.State != null)
+                {
+                    <tr>
+                        <td>Platform</td>
+                        <td>:</td>
+                        <td>@Model.State.Platform</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="col-md-6">
+    <div class="showback">
+        <h4><b>Detail Pembayaran</b></h4>
+        <hr />
+        <table class="table table-hover table-no-border">
+            <tbody>
+                <tr>
+                    <td>Harga Total</td>
+                    <td>:</td>
+                    <td>@Model.Payment.FinalPriceIdr.ToString("Rp 0,0", CultureInfo.CreateSpecificCulture("id-ID"))</td>
+                </tr>
+                @if (Model.Payment.DiscountNominal != 0)
+                {
+                    <tr>
+                        <td>Discount Name</td>
+                        <td>:</td>
+                        <td>@Model.Payment.Discount.Name @(Model.Payment.DiscountCode != null ? ("(" + Model.Payment.DiscountCode + ")") : "")</td>
+                    </tr>
+                    <tr>
+                        <td>Nominal Voucher</td>
+                        <td>:</td>
+                        <td>@Model.Payment.DiscountNominal.ToString("Rp 0,0", CultureInfo.CreateSpecificCulture("id-ID"))</td>
+                    </tr>
+                    <tr>
+                        <td>Harga Sebelum Discount</td>
+                        <td>:</td>
+                        <td>@Model.Payment.OriginalPriceIdr.ToString("Rp 0,0", CultureInfo.CreateSpecificCulture("id-ID"))</td>
+                    </tr>
+                }
+
+                <tr>
+                    <td>Metode Pembayaran</td>
+                    <td>:</td>
+                    <td>@Model.Payment.Method.ToString()</td>
+                </tr>
+                <tr>
+                    <td>Status Pembayaran</td>
+                    <td>:</td>
+                    <td>
+                        @switch (Model.Payment.Status)
+                        {
+                            case PaymentStatus.Pending:
+                                <span class="label label-default" style="font-size:larger;">Pending</span><br />
+                                break;
+                            case PaymentStatus.Settled:
+                            <span class="label label-success" style="font-size:larger;">Complete</span><br />
+                                break;
+                            case PaymentStatus.Verifying:
+                            <span class="label label-default" style="font-size:larger;">Verifying</span><br />
+                                break;
+                            case PaymentStatus.Challenged:
+                            <span class="label label-default" style="font-size:larger;">Challenged</span><br />
+                                break;
+                            case PaymentStatus.Undefined:
+                            <span class="label label-default" style="font-size:larger;">Undefined</span><br />
+                                break;
+                            case PaymentStatus.Cancelled:
+                            <span class="label label-danger" style="font-size:larger;">Cancelled</span><br />
+                                break;
+                            case PaymentStatus.Denied:
+                            <span class="label label-danger" style="font-size:larger;">Denied</span><br />
+                                break;
+                            case PaymentStatus.Expired:
+                            <span class="label label-danger" style="font-size:larger;">Expired</span><br />
+                                break;
+                        }
+                    </td>
+                </tr>
+                @*@if (Model.Payment.Refund != null)
+                    {
+                        <tr>
+                            <td>Refund Time</td>
+                            <td>@Model.Payment.Refund.Time.AddHours(7).ToString("d MMM yyyy HH:mm:ss")</td>
+                        </tr>
+                        <tr>
+                            <td>Refund Amount</td>
+                            <td>@Model.Payment.Refund.Amount.ToString("Rp 0,0", CultureInfo.CreateSpecificCulture("id-ID"))</td>
+                        </tr>
+                        <tr>
+                            <td>Refund Bank</td>
+                            <td>@Model.Payment.Refund.TargetBank</td>
+                        </tr>
+                        <tr>
+                            <td>Refund Account</td>
+                            <td>@Model.Payment.Refund.TargetAccount</td>
+                        </tr>
+                    }*@
+            </tbody>
+        </table>
+    </div>
+</div>

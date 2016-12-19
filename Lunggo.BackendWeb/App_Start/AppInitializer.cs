@@ -40,7 +40,6 @@ namespace Lunggo.BackendWeb
             InitMailService();
             InitHtmlTemplateService();
             InitTableStorageService();
-            InitDocumentsService();
             InitHotelService();
         }
 

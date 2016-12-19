@@ -434,7 +434,7 @@
                                                             <h5>@reservation.Itinerary.Trips[1].Segments[segment].DepartureAirportName</h5>
                                                         </div>
                                                         <div class="flight__separator">
-                                                            <h5><b>Durasi:</b><br />@reservation.Itinerary.Trips[1].Segments[segment].Duration</h5>
+                                                            <h5><b>Durasi:</b><br />@msToTime(reservation.Itinerary.Trips[1].Segments[segment].Duration.GetValueOrDefault())</h5>
                                                         </div>
                                                         <div class="flight__arrival">
                                                             <h5>@reservation.Itinerary.Trips[1].Segments[segment].ArrivalTime.GetValueOrDefault().ToString("d MMM yyyy", new CultureInfo("id-ID"))</h5>

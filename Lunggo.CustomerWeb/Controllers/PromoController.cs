@@ -28,9 +28,13 @@ namespace Lunggo.CustomerWeb.Controllers
         {
             return View();
         }
-        public ActionResult Harbolnas2016()
-        {
-            return View();
-        }
+        //public ActionResult Harbolnas2016()
+        //{
+        //    return View();
+        //}
+        //public ActionResult Harbolnas2016WebView()
+        //{
+        //    return View();
+        //}
     }
 }

@@ -155,11 +155,11 @@
                             }
 
                         </ul>
-                        @if (rate.TermAndCondition.Count > 0 || (Model.Policy != null && Model.Policy.Count > 0))
+                        @if ((rate.TermAndCondition != null && rate.TermAndCondition.Count > 0) || (Model.Policy != null && Model.Policy.Count > 0))
                         {
                             <div class="fb-note">
                                 <div>Catatan Khusus:</div>
-                                @if (rate.TermAndCondition.Count > 0)
+                                @if (rate.TermAndCondition != null && rate.TermAndCondition.Count > 0)
                                 {
                                     <ul class="sqr-blue-list">
                                         @foreach (var tnc in rate.TermAndCondition)

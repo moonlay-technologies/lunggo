@@ -67,20 +67,42 @@ namespace Lunggo.ApCommon.Payment.Model
 
         public decimal GetRoundingOrder()
         {
-            var redis = RedisService.GetInstance();
-            var redisDb = redis.GetDatabase(ApConstant.SearchResultCacheName);
-            var redisKey = "currencyRoundingOrder:" + Symbol + ":" + Supplier;
-            var roundingOrder = Convert.ToDecimal(redisDb.StringGet(redisKey));
-            return roundingOrder;
+            for (var i = 0; i < ApConstant.RedisMaxRetry; i++)
+            {
+                try
+                {
+                    var redis = RedisService.GetInstance();
+                    var redisDb = redis.GetDatabase(ApConstant.SearchResultCacheName);
+                    var redisKey = "currencyRoundingOrder:" + Symbol + ":" + Supplier;
+                    var roundingOrder = Convert.ToDecimal(redisDb.StringGet(redisKey));
+                    return roundingOrder;
+                }
+                catch
+                {
+                    
+                }
+            }
+            return 0;
         }
 
         public decimal GetLatestRate()
         {
-            var redis = RedisService.GetInstance();
-            var redisDb = redis.GetDatabase(ApConstant.SearchResultCacheName);
-            var redisKey = "currencyRate:" + Symbol + ":" + Supplier;
-            var rate = Convert.ToDecimal(redisDb.StringGet(redisKey));
-            return rate;
+            for (var i = 0; i < ApConstant.RedisMaxRetry; i++)
+            {
+                try
+                {
+                    var redis = RedisService.GetInstance();
+                    var redisDb = redis.GetDatabase(ApConstant.SearchResultCacheName);
+                    var redisKey = "currencyRate:" + Symbol + ":" + Supplier;
+                    var rate = Convert.ToDecimal(redisDb.StringGet(redisKey));
+                    return rate;
+                }
+                catch
+                {
+                    
+                }
+            }
+            return 100000;
         }
 
         public static Dictionary<string, Currency> GetAllCurrencies(Supplier supplier = Supplier.Travorama)
@@ -96,19 +118,33 @@ namespace Lunggo.ApCommon.Payment.Model
                 var records = GetCurrencyQuery.GetInstance().Execute(conn, null).ToList();
                 var redis = RedisService.GetInstance();
                 var redisDb = redis.GetDatabase(ApConstant.SearchResultCacheName);
-                foreach (var record in records)
+                for (var i = 0; i < ApConstant.RedisMaxRetry; i++)
                 {
-                    var rateKey = "currencyRate:" + record.Symbol + ":" + SupplierCd.Mnemonic(record.SupplierCd);
-                    var roundingOrderKey = "currencyRoundingOrder:" + record.Symbol + ":" + SupplierCd.Mnemonic(record.SupplierCd);
-                    redisDb.StringSet(rateKey, Convert.ToString(record.Rate.GetValueOrDefault()));
-                    redisDb.StringSet(roundingOrderKey, Convert.ToString(record.RoundingOrder.GetValueOrDefault()));
-                }
-                var suppliers = records.Select(r => SupplierCd.Mnemonic(r.SupplierCd)).Distinct().ToList();
-                foreach (var supp in suppliers)
-                {
-                    var currencyListKey = "currencies:" + supp;
-                    var currencyList = records.Where(r => SupplierCd.Mnemonic(r.SupplierCd) == supp).Select(r => r.Symbol);
-                    redisDb.StringSet(currencyListKey, currencyList.Serialize());
+                    try
+                    {
+                        foreach (var record in records)
+                        {
+                            var rateKey = "currencyRate:" + record.Symbol + ":" + SupplierCd.Mnemonic(record.SupplierCd);
+                            var roundingOrderKey = "currencyRoundingOrder:" + record.Symbol + ":" +
+                                                   SupplierCd.Mnemonic(record.SupplierCd);
+                            redisDb.StringSet(rateKey, Convert.ToString(record.Rate.GetValueOrDefault()));
+                            redisDb.StringSet(roundingOrderKey,
+                                Convert.ToString(record.RoundingOrder.GetValueOrDefault()));
+                        }
+                        var suppliers = records.Select(r => SupplierCd.Mnemonic(r.SupplierCd)).Distinct().ToList();
+                        foreach (var supp in suppliers)
+                        {
+                            var currencyListKey = "currencies:" + supp;
+                            var currencyList =
+                                records.Where(r => SupplierCd.Mnemonic(r.SupplierCd) == supp).Select(r => r.Symbol);
+                            redisDb.StringSet(currencyListKey, currencyList.Serialize());
+                        }
+                        return;
+                    }
+                    catch
+                    {
+                        
+                    }
                 }
             }
         }
@@ -120,10 +156,21 @@ namespace Lunggo.ApCommon.Payment.Model
             symbol = symbol.ToUpper();
             using (var conn = DbService.GetInstance().GetOpenConnection())
                 CurrencyTableRepo.GetInstance().Update(conn, new CurrencyTableRecord { Symbol = symbol, Rate = rate, SupplierCd = SupplierCd.Mnemonic(supplier), UpdateDate = DateTime.UtcNow});
-            var redis = RedisService.GetInstance();
-            var redisDb = redis.GetDatabase(ApConstant.SearchResultCacheName);
-            var rateKey = "currencyRate:" + symbol + ":" + supplier;
-            redisDb.StringSet(rateKey, Convert.ToString(rate));
+            for (var i = 0; i < ApConstant.RedisMaxRetry; i++)
+            {
+                try
+                {
+                    var redis = RedisService.GetInstance();
+                    var redisDb = redis.GetDatabase(ApConstant.SearchResultCacheName);
+                    var rateKey = "currencyRate:" + symbol + ":" + supplier;
+                    redisDb.StringSet(rateKey, Convert.ToString(rate));
+                    return;
+                }
+                catch
+                {
+                    
+                }
+            }
         }
 
         public static void SetRoundingOrder(string symbol, decimal roundingOrder, Supplier supplier = Supplier.Travorama)
@@ -133,19 +180,41 @@ namespace Lunggo.ApCommon.Payment.Model
             symbol = symbol.ToUpper();
             using (var conn = DbService.GetInstance().GetOpenConnection())
                 CurrencyTableRepo.GetInstance().Update(conn, new CurrencyTableRecord { Symbol = symbol, RoundingOrder = roundingOrder, SupplierCd = SupplierCd.Mnemonic(supplier) });
-            var redis = RedisService.GetInstance();
-            var redisDb = redis.GetDatabase(ApConstant.SearchResultCacheName);
-            var roundingOrderKey = "currencyRoundingOrder:" + symbol;
-            redisDb.StringSet(roundingOrderKey, Convert.ToString(roundingOrder));
+            for (var i = 0; i < ApConstant.RedisMaxRetry; i++)
+            {
+                try
+                {
+                    var redis = RedisService.GetInstance();
+                    var redisDb = redis.GetDatabase(ApConstant.SearchResultCacheName);
+                    var roundingOrderKey = "currencyRoundingOrder:" + symbol;
+                    redisDb.StringSet(roundingOrderKey, Convert.ToString(roundingOrder));
+                    return;
+                }
+                catch
+                {
+                    
+                }
+            }
         }
 
         private static IEnumerable<string> GetCurrencyList(Supplier supplier = Supplier.Travorama)
         {
-            var redis = RedisService.GetInstance();
-            var redisDb = redis.GetDatabase(ApConstant.SearchResultCacheName);
-            var currencyListKey = "currencies:" + supplier;
-            var currencyList = ((string)redisDb.StringGet(currencyListKey)).Deserialize<IEnumerable<string>>();
-            return currencyList;
+            for (var i = 0; i < ApConstant.RedisMaxRetry; i++)
+            {
+                try
+                {
+                    var redis = RedisService.GetInstance();
+                    var redisDb = redis.GetDatabase(ApConstant.SearchResultCacheName);
+                    var currencyListKey = "currencies:" + supplier;
+                    var currencyList = ((string) redisDb.StringGet(currencyListKey)).Deserialize<IEnumerable<string>>();
+                    return currencyList;
+                }
+                catch
+                {
+                    
+                }
+            }
+            return null;
         }
 
         public override string ToString()

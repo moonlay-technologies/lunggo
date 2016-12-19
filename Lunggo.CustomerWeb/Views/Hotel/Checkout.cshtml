@@ -399,7 +399,7 @@
                                                         <div class="wb-mid">:</div>
                                                         <div class="wb-right bold-txt">@ToTitleCase(rate.BoardDescription)</div>
                                                     </div>
-                                                    if (rate.TermAndCondition != null && rate.TermAndCondition.Count!= 0 && !rate.TermAndCondition.Exists(r => r.Length < 3))
+                                                    if (rate.TermAndCondition != null && rate.TermAndCondition.Count != 0 && !rate.TermAndCondition.Exists(r => r.Length < 3))
                                                     {
                                                     <div class="wb-container clearfix">
                                                             <div class="wb-left">Ketentuan</div>
@@ -407,14 +407,14 @@
                                                         <div class="wb-right bold-txt">@String.Join(". ", rate.TermAndCondition)</div>
                                                     </div>
                                                     }
-
+                                                    if (rate.Cancellation != null && rate.Cancellation.Count > 0)
+                                                     {
                                                     <div class="wb-container clearfix">
                                                         <div class="wb-left">Ketentuan Pembatalan</div>
                                                         <div class="wb-mid">:</div>
                                                         <div class="wb-right bold-txt">
-                                                            @if (rate.Cancellation != null)
-                                                            {
-                                                                foreach (var policy in rate.Cancellation)
+                                                            
+                                                                 @foreach (var policy in rate.Cancellation)
                                                             {
                                                                 <div>
                                                                     @pol. 
@@ -422,7 +422,7 @@
                                                                 </div>
                                                                 pol++;
                                                             }
-                                                            }
+                                                            
                                                         </div>
                                                     </div>
                                                 }
@@ -430,9 +430,9 @@
                                         }
                                     </div>
                                 </div>
+                                        </div>
                             </div>
                         </div>
-                    </div>
                     <div>
                         <h3><b>RINCIAN</b> PESANAN</h3>
                         <!--Info Pemesan-->
@@ -466,15 +466,15 @@
                     </div>
                 
                     <div class="rh-container notes-hotel" ng-show="hotelDetail.policy != null && hotelDetail.policy.length > 0">
-                        <div class="rh-main-title">Catatan Khusus</div>
-                        <div class="rh-content clearfix">
-                            <ul class="sqr-blue-list">
+                            <div class="rh-main-title">Catatan Khusus</div>
+                            <div class="rh-content clearfix">
+                                <ul class="sqr-blue-list">
                                 <li ng-repeat="pol in hotelDetail.policy">
                                     <div class="wc-title blue-txt bold-txt">Perlu Diingat</div>
                                     <div class="wc-txt"> {{pol}}</div>
-                                </li>
-                            </ul>
-                        </div>
+                                    </li>
+                                </ul>
+                            </div>
                     </div>
                     <form action="" method="post" name="submitForm" id="rsvno" class="hidden">
                         <input type="text" name="RsvNo" value="" id="rsvno-input" />
@@ -621,21 +621,21 @@
                             </div>
 
                             <div class="widget-wrapper notes" ng-show="hotelDetail.policy != null && hotelDetail.policy.length > 0">
-                                <div class="widget-subtitle">Catatan Khusus</div>
-                                <div class="widget-content clearfix">
-                                    <ul class="sqr-blue-list">
+                                    <div class="widget-subtitle">Catatan Khusus</div>
+                                    <div class="widget-content clearfix">
+                                        <ul class="sqr-blue-list">
 
                                         <li>
                                             <div class="wc-title blue-txt bold-txt">Perlu Diingat</div>
-                                        </li>
-                                    
+                                            </li>
+
                                         <li ng-repeat="pol in hotelDetail.policy">
-                                            <div class="wc-txt">
+                                                            <div class="wc-txt">
                                                 pol
-                                            </div>
-                                        </li>
-                                     </ul>
-                                </div>
+                                                            </div>
+                                                        </li>
+                                        </ul>
+                                    </div>
                             </div>
 
                         </div><!-- .widget.flight-detail -->

@@ -170,7 +170,7 @@
                                 <p>: @Model.HotelDetail.Rooms[0].Rates[0].RoomCount</p>
                             </div>
                         </div>
-                        @if (Model.HotelDetail.Rooms[0].Rates[0].TermAndCondition.Count != 0
+                        @if (Model.HotelDetail.Rooms[0].Rates[0].TermAndCondition != null && Model.HotelDetail.Rooms[0].Rates[0].TermAndCondition.Count != 0
                             && !Model.HotelDetail.Rooms[0].Rates[0].TermAndCondition.Exists(r => r.Length < 3))
                         {
                             <div class="row grey-txt">

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Lunggo.ApCommon.Flight.Constant;
@@ -13,18 +14,21 @@ namespace Lunggo.ApCommon.Flight.Service
     {
         public GetDetailsOutput GetAndUpdateNewDetails(GetDetailsInput input)
         {
+            List<TripDetailsConditions> conditions;
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
-                var conditions = GetBookingIdAndSupplierQuery.GetInstance().Execute(conn, new {input.RsvNo})
+                conditions = GetBookingIdAndSupplierQuery.GetInstance().Execute(conn, new { input.RsvNo })
                     .Select(r => new TripDetailsConditions
                     {
                         BookingId = r.BookingId,
                         Supplier = SupplierCd.Mnemonic(r.SupplierCd)
                     })
                     .ToList();
-
-                var output = new GetDetailsOutput();
-                Parallel.ForEach(conditions, condition =>
+            }
+            var output = new GetDetailsOutput();
+            Parallel.ForEach(conditions, condition =>
+            {
+                using (var conn = DbService.GetInstance().GetOpenConnection())
                 {
                     var tripInfoRecords = GetTripInfoQuery.GetInstance().Execute(conn, new { condition.BookingId });
                     condition.Trips = tripInfoRecords.Select(record => new FlightTrip
@@ -49,20 +53,20 @@ namespace Lunggo.ApCommon.Flight.Service
                         response.ErrorMessages.ForEach(output.AddError);
                     }
                     output.DetailsResults.Add(detailsResult);
-                });
-                if (output.DetailsResults.TrueForAll(result => result.IsSuccess))
-                {
-                    output.IsSuccess = true;
                 }
-                else
-                {
-                    output.IsSuccess = false;
-                    if (output.DetailsResults.Any(result => result.IsSuccess))
-                        output.PartiallySucceed();
-                    output.DistinguishErrors();
-                }
-                return output;
+            });
+            if (output.DetailsResults.TrueForAll(result => result.IsSuccess))
+            {
+                output.IsSuccess = true;
             }
+            else
+            {
+                output.IsSuccess = false;
+                if (output.DetailsResults.Any(result => result.IsSuccess))
+                    output.PartiallySucceed();
+                output.DistinguishErrors();
+            }
+            return output;
         }
 
         private GetTripDetailsResult GetTripDetailsInternal(TripDetailsConditions conditions)
