@@ -112,11 +112,23 @@ app.controller('checkoutController', [
             }
         };
 
+        $scope.form = {
+            incompleteContactTitle: false,
+            incompleteContactName: false,
+            incompleteContactPhone: false,
+            incompleteContactEmail: false,
+            hasDuplicatePaxName: false,
+            incompleteTitles: false,
+            incompleteBirthDates: false,
+            incompletePassportData: false,
+            checkNameIncomplete: false
+        }
+
         $(".phone").autocomplete({
             source: $scope.countries,
         });
 
-        //************Functions for Validations and Warning Message**********
+        //************ Functions for Validations and Warning Message **********
         $scope.msToTime = function (duration) {
 
             var milliseconds = parseInt((duration % 1000) / 100),
@@ -329,17 +341,6 @@ app.controller('checkoutController', [
             }
         }
 
-        $scope.form = {
-            incompleteContactTitle: false,
-            incompleteContactName: false,
-            incompleteContactPhone: false,
-            incompleteContactEmail: false,
-            hasDuplicatePaxName: false,
-            incompleteTitles: false,
-            incompleteBirthDates: false,
-            incompletePassportData: false,
-            checkNameIncomplete: false
-        }
         //*****************************END*****************************
         
         //********************FUNCTIONS TO FILL FORM*******************

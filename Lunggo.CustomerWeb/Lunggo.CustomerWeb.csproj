@@ -884,6 +884,9 @@
     <Content Include="Campaign\Harbolnas2016\css\promo-harbolnas.css">
       <DependentUpon>promo-harbolnas.scss</DependentUpon>
     </Content>
+    <Content Include="Campaign\Harbolnas2016\css\promo-harbolnas.min.css">
+      <DependentUpon>promo-harbolnas.css</DependentUpon>
+    </Content>
     <Content Include="Campaign\MatahariMall\css\promo-mataharimall.css">
       <DependentUpon>promo-mataharimall.scss</DependentUpon>
     </Content>

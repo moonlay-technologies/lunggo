@@ -103,9 +103,6 @@
 
 }
 @section AdditionalJS {
-    <script src="/Assets/js/angular.min.js"></script>
-    <script src="/Assets/js/angular-animate.min.js"></script>
-    <script src="/Assets/js/angular-route.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script type="text/javascript" src="/Scripts/bootstrap.min.js"></script>
 }
@@ -138,8 +135,8 @@
 <div class="checkout-hotel">
     <section class="checkout-step {{stepClass}}">
         <div class="container">
-            <div class="step step-1" ng-class="{'active' : currentPage == 1, 'inactive' : currentPage > 1}"><span>01. <b>Data Pemesan</b></span></div>
-            <div class="step step-2" ng-class="{'active' : currentPage == 2, 'inactive' : currentPage > 2}"><span>02. <b>Data Pesanan</b></span></div>
+            <div class="step step-1" ng-class="{'active' : currentPage == 1, 'inactive' : currentPage > 1}"><span>1. <b>Data Pemesan</b></span></div>
+            <div class="step step-2" ng-class="{'active' : currentPage == 2, 'inactive' : currentPage > 2}"><span>2. <b>Data Pesanan</b></span></div>
         </div>
     </section>
     <section class="checkout-content">
@@ -211,7 +208,6 @@
                                             <option ng-repeat="country in countries" ng-selected="country.dial_code == buyerInfo.countryCode" value="{{country.dial_code}}">{{country.name}} ({{country.dial_code}})</option>
                                         </select>
 
-                                        @*<input type="number" name="countryCode" value=buyerInfo.countryCode class="form-control" placeholder="ex : 62 for Indonesia" required ng-model="buyerInfo.countryCode" maxlength="5" />*@
                                     </div>
                                     <div class="col-xs-8" ng-hide="loggedIn">
                                         <p>Nomor Telepon (Tanpa Kode Negara)</p>
@@ -267,18 +263,6 @@
                                 </div>
                             </div>
                             </div>
-
-
-                            
-
-                            @*<div class="form-group">
-                                    <label class="control-label">Country of Residence</label>
-                                    <div>
-                                        <select class="form-control" id="buyer-title" name="Country of Residence">
-                                            <option></option>
-                                        </select>
-                                    </div>
-                                </div>*@
                             <div class="form-group">
                                 <label class="control-label">Catatan Khusus</label>
                                 <div>
@@ -311,7 +295,7 @@
 
                 </div><!-- .content-step#step-1 -->
                 <!-- ******************** -->
-                <div class="content-step" id="step-2" ng-show="currentPage == 2" @*style=" display: block !important;"*@>
+                <div class="content-step" id="step-2" ng-show="currentPage == 2">
                     <h3><b>RINCIAN</b> PEMESANAN</h3>
                     <div class="rh-container review-hotel">
                         <div class="rh-main-title">Detail Hotel</div>
@@ -320,9 +304,7 @@
                             <div class="rh-row clearfix">
                                 <div class="col-left-hotel"
                                      style="background: url(@Model.HotelDetail.MainImage); margin-right: 10px; width: 120px; height: 120px; background-size: cover; background-position: center; background-repeat: no-repeat; ">
-                                    @*<img src="@Model.HotelDetail.MainImage" alt="Hotel Image" id="hotelimg"
-                                         max-width="100%"
-                                         max-height="100%" style="padding-right :10px;" />*@
+            
                                 </div>
                                 <div class="col-right-hotel">
                                     <div class="blue-txt bold-txt hotel-title-lg md-txt">{{capitalizeFirstLetter(hotelDetail.hotelName)}}</div>
@@ -363,15 +345,14 @@
                                 <div class="rh-top clearfix">
                                     <div class="col-left-hotel"
                                          style="background: url(@roomImage); margin-right: 10px; width: 120px; height: 120px; background-size: cover; background-position: center; background-repeat: no-repeat; ">
-                                        @*<img src="@roomImage" alt="Room Image" id="roomimg" max-width="100%" max-height="100%"
-                                             style="padding-right :10px;" />*@
+                                 
                                     </div>
                                     <div class="col-right-hotel clearfix">
                                         <span class="hotel-facility facility"></span>
 
                                         @foreach (var room in rooms)
                                         {
-                                            //var index = 1;
+                                          
                                             <div class="rh-detail">
                                                 <div class="wb-container clearfix">
                                                     <div class="wb-left">Jenis Kamar</div>
@@ -381,7 +362,7 @@
 
                                                 @foreach (var rate in room.Rates)
                                                 {
-                                                    @*@index*@
+                                                  
                                                     <hr/>
                                                     var pol = 1;
                                                     <div class="wb-container clearfix">
@@ -444,24 +425,11 @@
                                                             }
                                                         </div>
                                                     </div>
-
-                                                    //index++;
                                                 }
-
                                             </div>
-                                            <ul class="blue-txt semibold-txt blue-list rh-tnc">
-                                                @*<li>Extra bed belum termasuk</li>*@
-                                                @*<li>Free cancelation sebelum H-5 tanggal booking</li>*@
-                                            </ul>
                                         }
-
                                     </div>
                                 </div>
-                                @*<div class="rh-bottom">
-                                        <div class="rhb-content">
-                                            Dolor sit amet, consectetuer adipiscing elit, sed diam nonummy. ectetuer adipiscing elit, sed diam nonummy. Lorem ipsum dolor sit amet, consectuer ectetuer. Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
-                                        </div>
-                                    </div>*@
                             </div>
                         </div>
                     </div>
@@ -496,25 +464,18 @@
                         </div><!--Info Pemesan-->
 
                     </div>
-                    @*<div class="rh-container notes-hotel">
-                            <div class="rh-main-title">Catatan Khusus</div>
-                            <div class="rh-content clearfix">
-                                <ul class="sqr-blue-list">
-                                    <li>
-                                        <div class="wc-title blue-txt bold-txt">Room Policy</div>
-                                        <div class="wc-txt">
-                                            Dolor sit amet, consectetuer adipiscing elit, sed diam nonummy. ectetuer adipiscing elit, sed diam nonummy. Lorem ipsum dolor sit amet, consect etuer ectetuer. Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="wc-title blue-txt bold-txt">Room Policy</div>
-                                        <div class="wc-txt">
-                                            Dolor sit amet, consectetuer adipiscing elit, sed diam nonummy. ectetuer adipiscing elit, sed diam nonummy. Lorem ipsum dolor sit amet, consect etuer ectetuer. Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>*@
+                
+                    <div class="rh-container notes-hotel" ng-show="hotelDetail.policy != null && hotelDetail.policy.length > 0">
+                        <div class="rh-main-title">Catatan Khusus</div>
+                        <div class="rh-content clearfix">
+                            <ul class="sqr-blue-list">
+                                <li ng-repeat="pol in hotelDetail.policy">
+                                    <div class="wc-title blue-txt bold-txt">Perlu Diingat</div>
+                                    <div class="wc-txt"> {{pol}}</div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
                     <form action="" method="post" name="submitForm" id="rsvno" class="hidden">
                         <input type="text" name="RsvNo" value="" id="rsvno-input" />
                     </form>
@@ -575,11 +536,11 @@
                                             <div class="col-right-hotel">
                                                 <span class="blue-txt bold-txt">{{capitalizeFirstLetter(hotelDetail.hotelName)}}</span>
                                                 <br />
-                                                <span class="star" ng-show="hotelstar() == 'star'"></span>
-                                                <span class="star star-2" ng-show="hotelstar() == 'star star-2'"></span>
-                                                <span class="star star-3" ng-show="hotelstar() == 'star star-3'"></span>
-                                                <span class="star star-4" ng-show="hotelstar() == 'star star-4'"></span>
-                                                <span class="star star-5" ng-show="hotelstar() == 'star star-5'"></span>
+                                                <span class="star" ng-show="hotelDetail.starRating == 1"></span>
+                                                <span class="star star-2" ng-show="hotelDetail.starRating == 2"></span>
+                                                <span class="star star-3" ng-show="hotelDetail.starRating == 3"></span>
+                                                <span class="star star-4" ng-show="hotelDetail.starRating == 4"></span>
+                                                <span class="star star-5" ng-show="hotelDetail.starRating == 5"></span>
                                             </div>
                                         </div>
                                         <div class="wt-bottom">
@@ -659,36 +620,24 @@
                                 </div>
                             </div>
 
-                            @*<div class="widget-wrapper notes">
-                                    <div class="widget-subtitle">Catatan Khusus</div>
-                                    <div class="widget-content clearfix">
-                                        <ul class="sqr-blue-list">
+                            <div class="widget-wrapper notes" ng-show="hotelDetail.policy != null && hotelDetail.policy.length > 0">
+                                <div class="widget-subtitle">Catatan Khusus</div>
+                                <div class="widget-content clearfix">
+                                    <ul class="sqr-blue-list">
 
-                                            <li><div class="wc-title blue-txt bold-txt">Aturan Pembatalan</div>
-                                            </li>
-                                            @foreach (var room in rooms)
-                                            {
+                                        <li>
+                                            <div class="wc-title blue-txt bold-txt">Perlu Diingat</div>
+                                        </li>
+                                    
+                                        <li ng-repeat="pol in hotelDetail.policy">
+                                            <div class="wc-txt">
+                                                pol
+                                            </div>
+                                        </li>
+                                     </ul>
+                                </div>
+                            </div>
 
-                                                foreach (var rate in room.Rates)
-
-                                                {
-                                                    var index = 1;
-                                                    foreach (var policy in rate.Cancellation)
-                                                    {
-                                                        <li>
-                                                            <div class="wc-txt">
-                                                                @index. Biaya pembatalan: Rp @(policy.Fee.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID")))<br/>
-                                                                Mulai berlaku: @policy.StartTime.ToString("D", CultureInfo.CreateSpecificCulture("id-ID")) <br/>
-                                                            </div>
-                                                        </li>
-                                                        index++;
-                                                    }
-                                                }
-                                            }
-
-                                        </ul>
-                                    </div>
-                                </div>*@
                         </div><!-- .widget.flight-detail -->
                     </div>
                 </div><!-- .widget-container -->

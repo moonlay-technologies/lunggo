@@ -39,14 +39,6 @@ app.controller('hotelcheckoutController', [
                 //return { width:srcWidth * 0.9, height:srcHeight * 0.9 };
             };
 
-
-            //$scope.hotelimg = document.getElementById("hotelimg");
-            //$scope.roomimg = document.getElementById("roomimg");
-            //$scope.hotelimgheight = $scope.calculateAspectRatioFit($scope.hotelimg.width, $scope.hotelimg.height).height;
-            //$scope.hotelimgwidth = $scope.calculateAspectRatioFit($scope.hotelimg.width, $scope.hotelimg.height).width;
-            //$scope.roomimgheight = $scope.calculateAspectRatioFit($scope.roomimg.width, $scope.roomimg.height).height;
-            //$scope.roomimgwidth = $scope.calculateAspectRatioFit($scope.roomimg.width, $scope.roomimg.height).width;
-            //Change Page
         });
 
         $(window).on('hashchange', function () {
@@ -90,13 +82,22 @@ app.controller('hotelcheckoutController', [
         ];
         $scope.hotelimg = hotelImg;
         $scope.language = langCode;
+        $scope.form = {
+            incompleteContactTitle: false,
+            incompleteContactName: false,
+            incompleteContactPhone: false,
+            incompleteContactEmail: false,
+            incompleteGuestTitle: false,
+            incompleteGuestName: false,
+        }
+
         $interval(function () {
             var nowTime = new Date();
             if (nowTime > $scope.expiryDate) {
                 $scope.expired = true;
             }
         }, 1000);
-        //Serving easier Data
+
         $scope.capitalizeFirstLetter = function (sentence) {
             var words = sentence.split(" ");
             var text = "";
@@ -106,34 +107,7 @@ app.controller('hotelcheckoutController', [
             return text;
         }
 
-        $scope.totalpax = function () {
-            var sum = 0;
-            for (var i = 0; i < $scope.hotelDetail.room.length; i++) {
-                for (var j = 0; j < $scope.hotelDetail.room[i].rates.length; j++) {
-                    sum += ($scope.hotelDetail.room[i].rates[j].adultCount + $scope.hotelDetail.room[i].rates[j].childCount) *
-                        $scope.hotelDetail.room[i].rates[j].roomCount;
-                }
-            }
-            return sum;
-        }
-
-        $scope.hotelstar = function (star) {
-            if (star == 1) {
-                return 'star';
-            }
-            if (star == 2) {
-                return 'star star-2';
-            }
-            if (star == 3) {
-                return 'star star-3';
-            }
-            if (star == 4) {
-                return 'star star-4';
-            }
-            if (star == 5) {
-                return 'star star-5';
-            }
-        }
+        //************ Functions for Validations and Warning Message **********
 
         //Check data 
         $scope.CheckTitle = function (passenger) {
@@ -219,16 +193,7 @@ app.controller('hotelcheckoutController', [
                 $scope.guestInfo.title = $scope.buyerInfo.title;
             }
         }
-
-        $scope.form = {
-            incompleteContactTitle: false,
-            incompleteContactName: false,
-            incompleteContactPhone: false,
-            incompleteContactEmail: false,
-            incompleteGuestTitle: false,
-            incompleteGuestName: false,
-        }
-
+        
         $scope.validateForm = function (page) {
             if (page == 1) {
                 if (!$scope.CheckTitle($scope.buyerInfo)) {
@@ -286,7 +251,9 @@ app.controller('hotelcheckoutController', [
 
         }
 
-        
+        // ***************************** END ***********************************
+
+        // **************************** LOGIN **********************************
         
         // change page after login
         $scope.form.submit = function () {
@@ -404,6 +371,10 @@ app.controller('hotelcheckoutController', [
                 $scope.loginShown = false;
             }
         }
+
+        // ***************************** END ***********************************
+
+        // **************************** BOOK ***********************************
 
         $scope.book = {
             booking: false,
@@ -523,83 +494,83 @@ app.controller('hotelcheckoutController', [
 ]);// checkout controller
 
 // travorama angular app - confirmation controller
-app.controller('confirmationController', [
-    '$http', '$scope', function ($http, $scope) {
+//app.controller('confirmationController', [
+//    '$http', '$scope', function ($http, $scope) {
 
-        $scope.pageLoaded = true;
-        $scope.msToTime = function (duration) {
+//        $scope.pageLoaded = true;
+//        $scope.msToTime = function (duration) {
 
-            var milliseconds = parseInt((duration % 1000) / 100),
-                 seconds = parseInt((duration / 1000) % 60),
-                 minutes = parseInt((duration / (1000 * 60)) % 60),
-                 hours = parseInt((duration / (1000 * 60 * 60)));
-            hours = hours;
-            minutes = minutes;
-            seconds = seconds;
-            return hours + "j " + minutes + "m";
-        }
+//            var milliseconds = parseInt((duration % 1000) / 100),
+//                 seconds = parseInt((duration / 1000) % 60),
+//                 minutes = parseInt((duration / (1000 * 60)) % 60),
+//                 hours = parseInt((duration / (1000 * 60 * 60)));
+//            hours = hours;
+//            minutes = minutes;
+//            seconds = seconds;
+//            return hours + "j " + minutes + "m";
+//        }
 
-    }
-]);// confirmation controller
+//    }
+//]);// confirmation controller
 
 
 // travorama angular app - confirmation controller
-app.controller('thankyouController', [
-    '$http', '$scope', function ($http, $scope) {
+//app.controller('thankyouController', [
+//    '$http', '$scope', function ($http, $scope) {
 
-        angular.element(document).ready(function () {
-            $scope.rsvNo = window.location.search.toString().split('=')[1];
-        });
-        $scope.returnUrl = window.location.origin;
-        $scope.pageLoaded = true;
-        $scope.msToTime = function (duration) {
+//        angular.element(document).ready(function () {
+//            $scope.rsvNo = window.location.search.toString().split('=')[1];
+//        });
+//        $scope.returnUrl = window.location.origin;
+//        $scope.pageLoaded = true;
+//        $scope.msToTime = function (duration) {
 
-            var milliseconds = parseInt((duration % 1000) / 100),
-                 seconds = parseInt((duration / 1000) % 60),
-                 minutes = parseInt((duration / (1000 * 60)) % 60),
-                 hours = parseInt((duration / (1000 * 60 * 60)));
-            hours = hours;
-            minutes = minutes;
-            seconds = seconds;
-            return hours + "j " + minutes + "m";
-        }
+//            var milliseconds = parseInt((duration % 1000) / 100),
+//                 seconds = parseInt((duration / 1000) % 60),
+//                 minutes = parseInt((duration / (1000 * 60)) % 60),
+//                 hours = parseInt((duration / (1000 * 60 * 60)));
+//            hours = hours;
+//            minutes = minutes;
+//            seconds = seconds;
+//            return hours + "j " + minutes + "m";
+//        }
        
-        $scope.refresh = function () {
-            setTimeout(function () {
-                //
-                //Check Authorization
-                var authAccess = getAuthAccess();
-                if (authAccess == 1 || authAccess == 2) {
-                    // send form
-                    $http({
-                        method: 'GET',
-                        url: GetReservationConfig.Url + $scope.rsvNo,
-                        headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') }
-                    }).
-                        then(function (returnData) {
-                            //console.log(returnData);
-                            if (returnData.data.status != "500") {
-                                if (returnData.data.flight.payment.status != '2') {
-                                    window.location.reload(1);
-                                    //window.location.replace("https://local.travorama.com/id/Flight/Thankyou?rsvNo=160226537584#/%23page-3");
-                                    console.log(returnData.data.flight.payment.status);
-                                }
-                                else {
-                                    $scope.refresh();
-                                }
-                            }
-                            else {
-                                $scope.refresh();
-                            }
+//        $scope.refresh = function () {
+//            setTimeout(function () {
+//                //
+//                //Check Authorization
+//                var authAccess = getAuthAccess();
+//                if (authAccess == 1 || authAccess == 2) {
+//                    // send form
+//                    $http({
+//                        method: 'GET',
+//                        url: GetReservationConfig.Url + $scope.rsvNo,
+//                        headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') }
+//                    }).
+//                        then(function (returnData) {
+//                            //console.log(returnData);
+//                            if (returnData.data.status != "500") {
+//                                if (returnData.data.flight.payment.status != '2') {
+//                                    window.location.reload(1);
+//                                    //window.location.replace("https://local.travorama.com/id/Flight/Thankyou?rsvNo=160226537584#/%23page-3");
+//                                    console.log(returnData.data.flight.payment.status);
+//                                }
+//                                else {
+//                                    $scope.refresh();
+//                                }
+//                            }
+//                            else {
+//                                $scope.refresh();
+//                            }
 
-                        }).catch(function () {
-                            $scope.refresh();
-                        });
-                }
-                else {
-                    console.log('Not Authorized');
-                }
-            }, 15000);
-        }
-    }
-]);// confirmation controller
+//                        }).catch(function () {
+//                            $scope.refresh();
+//                        });
+//                }
+//                else {
+//                    console.log('Not Authorized');
+//                }
+//            }, 15000);
+//        }
+//    }
+//]);// confirmation controller
