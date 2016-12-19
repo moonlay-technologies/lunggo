@@ -164,8 +164,8 @@
             scope.hotelSearch.checkinDateDisplay = moment(searchParamObject.checkinDate).locale("id").format('LL');
             scope.hotelSearch.checkoutDateDisplay = moment(searchParamObject.checkoutDate).locale("id").format('LL');
 
-            scope.hotelSearch.destinationCheckinDate = moment(searchParamObject.checkinDate).locale("id").format('LL');
-            scope.hotelSearch.destinationCheckoutDate = moment(searchParamObject.checkoutDate).locale("id").format('LL');
+            scope.hotelSearch.destinationCheckinDate = moment(searchParamObject.checkinDate).locale("id").format('dddd, DD MMMM YYYY');
+            scope.hotelSearch.destinationCheckoutDate = moment(searchParamObject.checkoutDate).locale("id").format('dddd, DD MMMM YYYY');
 
             scope.hotelSearch.nightCount = searchParamObject.nightCount != null ? searchParamObject.nightCount : 2;
             scope.hotelSearch.destinationNightCount = searchParamObject.nightCount != null ? searchParamObject.nightCount : 2;

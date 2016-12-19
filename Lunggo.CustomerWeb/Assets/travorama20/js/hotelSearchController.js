@@ -62,8 +62,8 @@ function ($scope, $log, $window, $http, $resource, $timeout, hotelSearchSvc) {
         $scope.hotelSearch.checkoutDate = $scope.model.searchParamObject.checkoutDate;
         $scope.hotelSearch.checkoutDateDisplay = moment($scope.hotelSearch.checkoutDate).locale("id").format('LL');
 
-        $scope.hotelSearch.destinationCheckinDate = $scope.model.searchParamObject.checkinDate;
-        $scope.hotelSearch.destinationCheckoutDate = $scope.model.searchParamObject.checkoutDate;
+        $scope.hotelSearch.destinationCheckinDate = moment($scope.hotelSearch.checkinDate).locale("id").format('dddd, DD MMMM YYYY');
+        $scope.hotelSearch.destinationCheckoutDate = moment($scope.hotelSearch.checkoutDate).locale("id").format('dddd, DD MMMM YYYY');
         $scope.hotelSearch.nightCount = $scope.model.searchParamObject.nightCount;
         $scope.hotelSearch.destinationNightCount = $scope.model.searchParamObject.nightCount;
         $scope.hotelSearch.roomCount = $scope.model.searchParamObject.roomCount;

@@ -83,25 +83,21 @@
 @Html.Partial("/Views/Hotel/Shared/Desktop/_PageSlider.cshtml")
 <div class="travorama-hotel" ng-init="init(@Newtonsoft.Json.JsonConvert.SerializeObject(Model))" ng-class="{'page-loaded' : pageLoaded}">
     <div class="container">
-        <div class="detail-hotel-content">
+        
+        <div class="detail-hotel-content" >
             @Html.Partial("/Views/Hotel/Shared/Desktop/_BreadCrumb.cshtml")
-
-            <div class="detail-hotel">
+            <div ng-show="!searchDone" class="text-center">
+                <img src="/Assets/images/load.gif" style="width:5%; margin-left: 10%">
+            </div>
+            <div class="detail-hotel" ng-show="searchDone" >
                 <div class="big-slider">
                     <div class="top-desc">
                         <span class="slider-title-lg blue-txt">{{hotel.hotelName}}</span>
-                        @*<div class="star" ng-if="hotel.starRating == 1"></div>
+                        <div class="star" ng-if="hotel.starRating == 1"></div>
                         <div class="star star-2" ng-if="hotel.starRating == 2"></div>
                         <div class="star star-3" ng-if="hotel.starRating == 3"></div>
                         <div class="star star-4" ng-if="hotel.starRating == 4"></div>
-                        <div class="star star-5" ng-if="hotel.starRating == 5"></div>*@
-                        <div class="" ng-class="{ 'star star-3': hotel.starRating == 3 }">
-                        </div>
-                                                @*
-                                || 'star star-4':hotel.starRating == 4 ||
-                                         'star star-5':hotel.starRating == 5'':hotel.starRating == 0 ||
-        'star star-1':hotel.starRating == 1 ||
-        'star star-2':hotel.starRating == 2 ||*@
+                        <div class="star star-5" ng-if="hotel.starRating == 5"></div>
                         <br />
                         <span class="address" style="text-transform: capitalize">{{hotel.address}} {{hotel.city}} {{hotel.postalCd}}, {{hotel.country}}</span>
                         @*<a href="#" class="btn-blue small">Lihat Peta</a>*@
@@ -202,16 +198,16 @@
                             </div>
                         </div>
                     </div>
-                    <span ng-show="!searchDone" class="text-center">
-                        <img src="/Assets/images/load.gif" class="img-loading">
-                    </span>
+                    @*<span ng-show="!searchDone" class="text-center">
+                    <img src="/Assets/images/load.gif" class="img-loading">
+                </span>*@
                 </div>
                 <div class="menu-hotel clearfix">
                     <div class="col-left-hotel mh-title md-txt">Informasi Hotel</div>
                     <ul class=" col-right-hotel mh-container">
                         <li class="mh-list"><a href="#menu-facility">Fasilitas Hotel</a></li>
                         <li class="mh-list"><a href="#menu-desc">Deskripsi Hotel</a></li>
-                        <li class="mh-list"><a href="#menu-tnc">Syarat & Ketentuan Hotel</a></li>
+                        <li class="mh-list" ng-show="hotel.policy != null && hotel.policy.length > 0"><a href="#menu-tnc">Syarat & Ketentuan Hotel</a></li>
                     </ul>
                 </div>
                 <div class="room clearfix">
@@ -265,17 +261,14 @@
                                 <div class=" col-left-result">
                                     <div class="col-left-top clearfix">
                                         <div class="sm-slider">
-                                            @*<div class="item active">
-                                                <img src="/Assets/travorama20/images/Hotel/mini-slider.jpg" />
-                                            </div>*@
                                             <ul class="room-gallery gallery list-unstyled cS-hidden">
                                                 <li data-thumb="{{roomImage}}" ng-repeat="roomImage in room.roomImages track by $index">
                                                     <div style="background-image: url({{roomImage}}); width: 100%; height: 145px; background-size: cover; background-position: center center;"></div>
                                                     <div class="total-img"><b>{{$index+1}}</b> / {{room.roomImages.length}}</div>
                                                 </li>
                                                 @*<li data-thumb="/Assets/travorama20/images/Hotel/mini-slider.jpg">
-                                                    <div style="background-image: url(/Assets/travorama20/images/Hotel/mini-slider.jpg); width: 100%; height: 145px; background-size: cover; background-position: center center;"></div>
-                                                </li>*@
+                                                <div style="background-image: url(/Assets/travorama20/images/Hotel/mini-slider.jpg); width: 100%; height: 145px; background-size: cover; background-position: center center;"></div>
+                                            </li>*@
                                             </ul>
                                         </div>
                                     </div>
@@ -290,7 +283,7 @@
                                 <div class="col-right-result">
                                     <div class="hd-right-container">
                                         <ul class="hd-description">
-                                            <li class="hd-point">
+                                            <li class="hd-point" ng-show="room.rate.cancellation != null && room.rate.cancellation.length > 0">
                                                 <div class="hd-title blue-txt">Kebijakan Pembatalan</div>
                                                 <div class="hd-txt">
                                                     <ul class="blue-list" style="margin-bottom: 0;">
@@ -300,7 +293,6 @@
                                                     </ul>
                                                     <ul class="blue-list">
                                                         <li ng-repeat="cancellation in room.rate.cancellation track by $index">
-                                                            @*Gratis pembatalan sebelum 17-Nov-2016 17:00.*@
                                                             - Pembatalan setelah <span style="color:#1daee4">{{cancellation.startTime | date:'dd MMM yyyy '}}</span>
                                                             akan dikenakan biaya pembatalan sebesar <span style="color:#ff7200">Rp {{cancellation.singleFee | number}}</span>.
                                                         </li>
@@ -308,7 +300,7 @@
                                                 </div>
                                             </li>
 
-                                            <li class="hd-point">
+                                            <li class="hd-point" ng-show="room.rate.tnc != null && room.rate.tnc.length > 0">
                                                 <div class="hd-title blue-txt">Ketentuan Kamar</div>
                                                 <div class="hd-txt">
                                                     <ul class="blue-list">
@@ -331,9 +323,6 @@
                             <text ng-show="roomCount == maxRoomCount">sebagian</text>
                         </a>
                     </div>
-                    @*<span ng-show="!searchDone" class="text-center">
-                        <img src="/Assets/images/load.gif" class="img-loading">
-                    </span>*@
                 </div>
                 <div class="info-hotel">
                     <div class="top-title clearfix">
@@ -365,17 +354,15 @@
                                 </div>
                                 <div class="tnc-hotel italic-txt">* Fasilitas berbayar</div>
                             </div>
-                            <div ng-show="hotel.description.length > 0" class="accordion-title accordion md-txt" id="menu-desc">Deskripsi Hotel</div>
-                            <div ng-show="hotel.description.length > 0" class="accordion-content show">
-                                @*<div class="ih-title md-txt">“Clean rooms, Great location, Spotless beds”</div>*@
+                            <div ng-show="hotel.description != null && hotel.description.length > 0" class="accordion-title accordion md-txt" id="menu-desc">Deskripsi Hotel</div>
+                            <div ng-show="hotel.description != null && hotel.description.length > 0" class="accordion-content show">
                                 <div class="ih-desc clearfix" ng-repeat="description in hotel.description track by $index">
                                     {{description}}
                                 </div>
                             </div>
-                            <div ng-show="hotel.policy.length > 0" class="accordion-title accordion md-txt" id="menu-tnc">Perlu Diingat</div>
-                            <div ng-show="hotel.policy.length > 0" class="accordion-content show">
+                            <div ng-show="hotel.policy != null && hotel.policy.length > 0" class="accordion-title accordion md-txt" id="menu-tnc">Perlu Diingat</div>
+                            <div ng-show="hotel.policy != null && hotel.policy.length > 0" class="accordion-content show">
                                 <div class="snk-container clearfix">
-                                    @*Syarat dan Kettentuan Hotel Swiss Bell Hotel - Singapore:*@
                                     <ul class="blue-list">
                                         <li ng-repeat="policy in hotel.policy track by $index">{{policy}}</li>
                                     </ul>
