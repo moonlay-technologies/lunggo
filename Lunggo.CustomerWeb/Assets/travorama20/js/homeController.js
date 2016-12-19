@@ -38,8 +38,9 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
     //    };
     //}
 
-    $scope.hotelCalendar = {};
-    $scope.hotelCalendar.show = true;
+    //TBD
+    //$scope.hotelCalendar = {};
+    //$scope.hotelCalendar.show = true;
     $scope.changeTab = function (tab) {
         if (tab == 'hotel') {
             $('.search-location').hide();
@@ -51,29 +52,33 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
         }
     }
 
-    $scope.placeholderFilter = function (qqq) {
-        if ($scope.hotelSearch.locationDisplay == "") {
-            $scope.hotelSearch.locationDisplay = "Kota, Wilayah atau Nama Hotel";
-        }
-    }
+    //TBD
+    //$scope.placeholderFilter = function (qqq) {
+    //    if ($scope.hotelSearch.locationDisplay == "") {
+    //        $scope.hotelSearch.locationDisplay = "Kota, Wilayah atau Nama Hotel";
+    //    }
+    //}
 
     //=============== hotel start ======================
     hotelSearchSvc.initializeSearchForm($scope);
 
     $scope.hotel = {};
-    $scope.myarray = [];
-    $scope.getNumber = function (num) {
-        $scope.myarrays = [];
+    //$scope.myarray = []; //TBD
+    ////TBD
+    //$scope.getNumber = function (num) {
+    //    $scope.myarrays = [];
 
-        for (var i = 0; i <= num - 1; i++) {
-            $scope.myarrays.push(i);
-        }
-        return $scope.myarrays;
+    //    for (var i = 0; i <= num - 1; i++) {
+    //        $scope.myarrays.push(i);
+    //    }
+    //    return $scope.myarrays;
+    //}
+    $scope.view = {
+        showHotelSearch : false
     }
-    $scope.view = {}
-    $scope.view.showHotelSearch = false;
-    $scope.searchlocation = false;
-    $scope.wrongParam = false;
+
+    //$scope.searchlocation = false; //tbd
+    //$scope.wrongParam = false; //TBD
 
     $scope.init = function (model) {
         $log.debug(model);
@@ -89,7 +94,6 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
             MinLength: 3,
             GetLocation: function () {
                 $scope.getLocation($scope.HotelSearchForm.AutoComplete.Keyword);
-                // function in hotelSearchService.js
             },
         },
     }
@@ -133,11 +137,9 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
 }]);
 
 // Calendar 2016 Controller
-app.controller('campaignController', [
-    '$scope', function ($scope) {
-
-    }
-]);
+//app.controller('campaignController', [
+//    '$scope', function ($scope) {}
+//]);
 
 //********************
 // hotel form search function
