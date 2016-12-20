@@ -1,30 +1,26 @@
-﻿@model System.Web.Mvc.HandleErrorInfo
-
+﻿﻿@model System.Web.Mvc.HandleErrorInfo
 @{
-    Layout = "/Views/Shared/Travorama20/_Layout20150929.cshtml";
+    Layout = "/Views/Shared/mobile/_Layout.cshtml";
     ViewBag.Title = "Promo";
     ViewBag.SiteHeader = "header-global-error";
-    ViewBag.BodyClass = "page-error global-error-page";
+    ViewBag.BodyClass = "page-error global-error-page-mobile";
     ViewBag.Title = "Halaman Error Global";
 }
-
 @section AdditionalCSS{
     <!-- additional CSS-->
     <link rel="stylesheet" href="/Assets/travorama20/css/global-error.css">
 }
-
 @section AdditionalJS{
     <!-- additional JS-->
     <script src="/Assets/js/angular.min.js"></script>
     <script src="/Assets/js/angular-animate.min.js"></script>
     <script src="/Assets/js/angular-route.min.js"></script>
 }
-
-<div class="error-page">
+<div class="error-page mobile">
     <div class="site-content">
         <div class="container">
-            <div class="page-content">
-                <div class="logo"><img src="/Assets/images/travorama-logo-color.png" alt="Travorama" class="logo-img" /></div>
+            <div class="logo"><img src="/Assets/images/travorama-logo-color.png" alt="Travorama" class="logo-img" /></div>
+            <div class="page-content ">
                 <div class="bg-txt">
                     The page you are looking for can't be found
                 </div>
@@ -40,8 +36,8 @@
             </div>
         </div>
     </div><!-- .site-content -->
-    
-    <div class="error-detail container" style="display:none">
+
+    <div style="display:none">
         <h1>Halaman Error Global</h1>
         <h2>Action Name : @Model.ActionName</h2>
         <h2>Controller Name : @Model.ControllerName</h2>

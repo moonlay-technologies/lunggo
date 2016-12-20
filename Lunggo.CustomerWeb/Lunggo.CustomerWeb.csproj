@@ -1613,8 +1613,8 @@
     <Content Include="Views\HelpSection\How-To.cshtml" />
     <Content Include="Views\StaticPage\TravoramaMobileApp.cshtml" />
     <Content Include="Views\Hotel\Search.cshtml" />
-    <Content Include="Views\StaticPage\GlobalError.cshtml" />
-    <Content Include="Views\StaticPage\GlobalError.mobile.cshtml" />
+    <Content Include="Views\Shared\GlobalError.cshtml" />
+    <Content Include="Views\Shared\GlobalError.mobile.cshtml" />
     <Content Include="Views\Hotel\DetailHotel.cshtml" />
     <Content Include="Views\Hotel\Shared\Desktop\_PageSlider.cshtml" />
     <Content Include="Views\Hotel\Shared\Desktop\_BreadCrumb.cshtml" />
@@ -1655,6 +1655,7 @@
     <Content Include="Views\Promo\OnlineRevolutionWebview.cshtml" />
     <Content Include="Views\Home\CekPemesanan.cshtml" />
     <Content Include="Views\Home\CekPemesanan.mobile.cshtml" />
+    <Content Include="Views\Flight\FlightSearchForm.cshtml" />
     <None Include="Views\Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

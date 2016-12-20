@@ -1,0 +1,94 @@
+﻿﻿<form method="GET" class="change-flight form-flight form" action="/id/Flight/Search">
+
+    <div class="form-group">
+        <label class="form-flight-type" data-value="return"><input type="radio" name="flightType" value="return" checked /> Pulang Pergi</label>
+        <label class="form-flight-type" data-value="oneway"><input type="radio" name="flightType" value="oneWay" /> Sekali Jalan</label>
+    </div>
+    <div class="change-flight-left">
+        <div>
+            <input type="text" class="form-flight-origin form-flight-location change-flight-origin form-control" value="" placeholder="Bandara Asal" />
+        </div>
+        <div>
+            <div class="change-flight-date form-flight-departure change-flight-departure">
+                <small>Tanggal<br />Berangkat</small>
+                <span class="date">01</span>
+                <span class="month">Jul</span>
+                <span class="year">2015</span>
+            </div>
+            <div class="change-flight-date form-flight-return change-flight-return">
+                <small>Tanggal<br />Pulang</small>
+                <span class="date">01</span>
+                <span class="month">Jul</span>
+                <span class="year">2015</span>
+            </div>
+            <div class="form-flight-oneway change-flight-oneway">
+                <small>Tanggal Pulang</small>
+                <h5>SEKALI JALAN</h5>
+            </div>
+        </div>
+    </div>
+    <div class="switch-flight">
+        <span class="change-flight-switch switch-destination form-flight-switch"></span>
+    </div>
+    <div class="change-flight-right">
+        <div>
+            <input type="text" value="" class="form-flight-destination form-flight-location change-flight-destination form-control" placeholder="Bandara Tujuan" />
+            <div class="change-flight-class form-control form-flight-class">
+                <span>Kelas Penerbangan</span>
+                <div class="option">
+                    <span data-value="y">Kelas Ekonomi</span>
+                    <span data-value="c">Kelas Bisnis</span>
+                    <span data-value="f">Kelas Utama</span>
+                </div>
+            </div>
+        </div>
+        <div>
+            <div class="change-flight-passenger form-flight-passenger adult change-flight-adult">
+                <small>Dewasa<br />(&gt; 12th)</small>
+                <h5 class="passenger-input adult">1</h5>
+                <div class="option">
+                    <span>1</span>
+                    <span>2</span>
+                    <span>3</span>
+                    <span>4</span>
+                    <span>5</span>
+                    <span>6</span>
+                    <span>7</span>
+                    <span>8</span>
+                    <span>9</span>
+                </div>
+            </div>
+            <div class="change-flight-passenger form-flight-passenger child change-flight-child">
+                <small>Anak<br />(2 - 12th)</small>
+                <h5 class="passenger-input child">0</h5>
+                <div class="option">
+                    <span>0</span>
+                    <span>1</span>
+                    <span>2</span>
+                    <span>3</span>
+                    <span>4</span>
+                    <span>5</span>
+                    <span>6</span>
+                    <span>7</span>
+                    <span>8</span>
+                    <span>9</span>
+                </div>
+            </div>
+            <div class="change-flight-passenger form-flight-passenger infant change-flight-infant" data-toggle="tooltip" data-placement="right" title="Tidak boleh lebih dari jumlah penumpang dewasa">
+                <small>Bayi<br />(&lt; 2th)</small>
+                <h5 class="passenger-input infant">0</h5>
+                <div class="option">
+                    <span>0</span>
+                    <span>1</span>
+                    <span>2</span>
+                    <span>3</span>
+                    <span>4</span>
+                </div>
+            </div>
+            <div>
+                <input type="text" name="info" value="" class="hidden" />
+                <input type="submit" value="CARI" class="btn btn-yellow block flight-submit-button" />
+            </div>
+        </div>
+    </div>
+</form>
