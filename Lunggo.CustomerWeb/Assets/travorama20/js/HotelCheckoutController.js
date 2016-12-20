@@ -290,7 +290,7 @@ app.controller('hotelcheckoutController', [
                         $scope.form.isLogin = false;
                         //Return langsung
                     }
-                }).catch(function (returnData) {
+                }).catch(function () {
                     $scope.trial++;
                     if (refreshAuthAccess() && $scope.trial < 4) //refresh cookie
                     {

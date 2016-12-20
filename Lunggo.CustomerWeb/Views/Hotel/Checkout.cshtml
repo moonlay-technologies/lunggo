@@ -405,7 +405,7 @@
                                                         <div class="wb-container clearfix">
                                                             <div class="wb-left">Ketentuan</div>
                                                             <div class="wb-mid">:</div>
-                                                            <div class="wb-right bold-txt">@String.Join(". ", rate.TermAndCondition)</div>
+                                                            <div class="wb-right bold-txt" style="text-transform: capitalize">@String.Join(". ", rate.TermAndCondition)</div>
                                                         </div>
                                                     }
                                                     if (rate.Cancellation != null && rate.Cancellation.Count > 0)
@@ -643,9 +643,8 @@
                     </div>
                 </div><!-- .widget-container -->
             </div>
-
-    </div>
-</section>
+        </div>
+    </section>
 
     <div class="bookfailed-popup" ng-show="expired">
         <div class="overlay-content">

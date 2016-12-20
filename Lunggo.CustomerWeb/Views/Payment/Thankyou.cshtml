@@ -19,8 +19,6 @@
 @{
     var payment = Model.Payment.Status;
     var timeout = ConfigManager.GetInstance().GetConfigValue("flight", "paymentTimeout");
-    //
-
     var timelimit = Model.Payment.TimeLimit.GetValueOrDefault();
     var orderedRooms = new List<Tuple<string, int>>();
     var rooms = new List<HotelRoomForDisplay>();
@@ -517,7 +515,7 @@
                                                                             <div class="wb-container clearfix">
                                                                                     <div class="wb-left">Ketentuan</div>
                                                                                 <div class="wb-mid">:</div>
-                                                                                <div class="wb-right bold-txt">@ToTitleCase(String.Join(". ", rate.TermAndCondition))</div>
+                                                                                <div class="wb-right bold-txt" style="text-transform: capitalize">@String.Join(". ", rate.TermAndCondition)</div>
                                                                             </div>
                                                                         }
                                                                         if (rate.Cancellation != null && rate.Cancellation.Count > 0)

@@ -75,11 +75,12 @@
 }
 
 @section PageJS{
-<script src="/Assets/travorama20/js/hotelDetailController.js"></script>
+    <script src="/Assets/travorama20/js/hotelDetailController.js"></script>
     <script src="/Assets/mobile/js/HotelController.js"></script>
     <script src="/Assets/travorama20/angularDirectory/search/hotelSearch.service.js"></script>
     <script type="text/javascript" src="/Assets/js/jquery.ui.datepicker-id.js"></script>
 }
+
 <div class="travorama-hotel-mobile" ng-init="init(@Newtonsoft.Json.JsonConvert.SerializeObject(Model))">
     <div class="top-content">
         @Html.Partial("/Views/Hotel/Shared/Mobile/_Summary.cshtml")

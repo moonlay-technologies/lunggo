@@ -12,7 +12,7 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
     $scope.buyerInfo = {};
     $scope.token = CheckoutDetail.Token;
     $scope.currency = 'IDR';
-    $scope.initialPrice = CheckoutDetail.Price;
+        $scope.initialPrice = CheckoutDetail.Price;
     $scope.passengers = [];
     $scope.bookingDate = new Date();
     $scope.Countries = Countries;
@@ -69,6 +69,7 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
         BuyerInfo: CheckoutDetail.BuyerInfo
     };
 
+    $scope.CheckoutConfig.GeneratePassenger();
     $scope.PageConfig = $rootScope.PageConfig;
     $scope.PageConfig.ExpiryDate = {
         Expired: false,
