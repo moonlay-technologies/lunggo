@@ -331,11 +331,11 @@
                             <div class="dr-policy" ng-show="selectedRoom.rate.cancellation != null && selectedRoom.rate.cancellation.length > 0">
                             <div class="bold-txt lg-txt darkgrey-txt">Kebijakan Pembatalan</div>
                             <ul class="blue-list dr-txt darkgrey-txt">
-                                <li ng-show="room.rate.isFreeCancel">
+                                <li ng-show="selectedRoom.rate.isFreeCancel">
                                     Gratis pembatalan sebelum <span style="color:#1daee4">{{selectedRoom.rate.freeUntil | date:'dd MMM yyyy HH:mm'}}</span> WIB.
                                 </li>
                                 <li ng-repeat="cancellation in selectedRoom.rate.cancellation track by $index">
-                                    Pembatalan setelah <span style="color:#1daee4">{{cancellation.startTime | date:'dd MMM yyyy '}}</span>
+                                    Pembatalan setelah <span style="color:#1daee4">{{cancellation.startTime | date:'dd MMM yyyy HH:mm'}} WIB</span>
                                     akan dikenakan biaya pembatalan sebesar <span style="color:#ff7200">Rp {{cancellation.singleFee | number}}</span>.
                                     <br />
                                 </li>

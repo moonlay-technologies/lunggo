@@ -263,9 +263,6 @@
                                                     <div style="background-image: url({{roomImage}}); width: 100%; height: 145px; background-size: cover; background-position: center center;"></div>
                                                     <div class="total-img"><b>{{$index+1}}</b> / {{room.roomImages.length}}</div>
                                                 </li>
-                                                @*<li data-thumb="/Assets/travorama20/images/Hotel/mini-slider.jpg">
-                                                <div style="background-image: url(/Assets/travorama20/images/Hotel/mini-slider.jpg); width: 100%; height: 145px; background-size: cover; background-position: center center;"></div>
-                                            </li>*@
                                             </ul>
                                         </div>
                                     </div>
@@ -290,7 +287,7 @@
                                                     </ul>
                                                     <ul class="blue-list">
                                                         <li ng-repeat="cancellation in room.rate.cancellation track by $index">
-                                                            - Pembatalan setelah <span style="color:#1daee4">{{cancellation.startTime | date:'dd MMM yyyy '}}</span>
+                                                            - Pembatalan setelah <span style="color:#1daee4">{{cancellation.startTime | date:'dd MMM yyyy HH:mm'}} WIB</span>
                                                             akan dikenakan biaya pembatalan sebesar <span style="color:#ff7200">Rp {{cancellation.singleFee | number}}</span>.
                                                         </li>
                                                     </ul>

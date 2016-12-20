@@ -139,12 +139,16 @@
 
                         </div>
                         <ul class="blue-list blue-txt">
-                            <li ng-show="room.rate.isFreeCancel">
-                                Gratis pembatalan sebelum
-                                <span style="color:#1daee4">
-                                    @rate.FreeUntil.GetValueOrDefault().ToString("D", CultureInfo.CreateSpecificCulture("id-ID"))
-                                </span> WIB.
-                            </li>
+                            @if (rate.IsFreeCancel)
+                            {
+                                <li>
+                                    Gratis pembatalan sebelum
+                                    <span style="color:#1daee4">
+                                        @rate.FreeUntil.GetValueOrDefault().ToString("D", CultureInfo.CreateSpecificCulture("id-ID"))
+                                    </span> WIB.
+                                </li>
+                            }
+                            
                             @foreach (var cancellation in rate.Cancellation)
                             {
                                 <li>
