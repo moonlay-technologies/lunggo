@@ -214,7 +214,7 @@ namespace Lunggo.ApCommon.Hotel.Service
         {
             Console.WriteLine("Start saving autocomplete to blob");
             //var autocomplete = AutoCompletes;
-            var autocomplete = AutocompleteDummyList;
+            var autocomplete = AutocompleteList;
             BlobStorageService.GetInstance().WriteFileToBlob(new BlobWriteDto
             {
                 FileBlobModel = new FileBlobModel
