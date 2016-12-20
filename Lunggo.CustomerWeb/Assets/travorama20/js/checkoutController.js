@@ -143,7 +143,6 @@ app.controller('checkoutController', [
 
         $scope.checkName = function (name) {
             var re = /^[a-zA-Z ]+$/;
-            var x = $scope.buyerInfo.name;
             if (name == null || name.match(re)) {
                 return true;
             } else {
@@ -171,12 +170,14 @@ app.controller('checkoutController', [
                     valid = false;
                 }
                 else if (passengers[x].type != 'adult') {
-                    if (passengers[x].birth.date == null || passengers[x].birth.month == null || passengers[x].birth.year == null) {
+                    if ((passengers[x].birth.date == null || passengers[x].birth.month == null || passengers[x].birth.year == null)
+                        || $scope.invalidDate(passengers[x].birth.date, passengers[x].birth.month, passengers[x].birth.year)) {
                         valid = false;
                     }
                 }
                 else if (passengers[x].type == 'adult') {
-                    if ($scope.birthDateRequired && (passengers[x].birth.date == null || passengers[x].birth.month == null || passengers[x].birth.year == null)) {
+                    if (($scope.birthDateRequired && (passengers[x].birth.date == null || passengers[x].birth.month == null || passengers[x].birth.year == null))
+                        || $scope.invalidDate(passengers[x].birth.date, passengers[x].birth.month, passengers[x].birth.year)) {
                         valid = false;
                     }
                 }
@@ -198,12 +199,15 @@ app.controller('checkoutController', [
             var valid = true;
             for (var x = 0; x < passengers.length; x++) {
                 if (passengers[x].passport.expire.date === $scope.dates($scope.flightDetail.departureFullDate.getMonth(), $scope.flightDetail.departureFullDate.getYear)[0]
-                   || passengers[x].passport.expire.month === $scope.months[0].value.toString() || passengers[x].passport.expire.year == $scope.generateYear(passengers[x].type)[0]) {
+                   || passengers[x].passport.expire.month === $scope.months[0].value.toString() ||
+                    passengers[x].passport.expire.year == $scope.generateYear(passengers[x].type)[0] ||
+                    $scope.invalidDate(passengers[x].passport.expire.date, passengers[x].passport.expire.month, passengers[x].passport.expire.year)) {
                     valid = false;
                 }
-                else if (passengers[x].passport.expire.date == null || passengers[x].passport.expire.month == null || passengers[x].passport.expire.year == null) {
+                else if (passengers[x].passport.expire.date == null || passengers[x].passport.expire.month == null
+                    || passengers[x].passport.expire.year == null || $scope.invalidDate(passengers[x].passport.expire.date, passengers[x].passport.expire.month, passengers[x].passport.expire.year)) {
                     valid = false;
-                }
+                } 
             }
             return valid;
         }
@@ -267,6 +271,28 @@ app.controller('checkoutController', [
                 return false;
             } else {
                 return true;
+            }
+        }
+
+        $scope.invalidDate = function (day, month, year) {
+            if (year % 4 == 0 && month == 2) {
+                if (day > 29) {
+                    return true;
+                } else {
+                    return false;
+                }
+            } else {
+                if (month == 2 && (day == null || day > 28)) {
+                    return true;
+                } else if (month == 4 || month == 6 || month == 9 || month == 11) {
+                    if (day > 30) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                } else {
+                    return false;
+                }
             }
         }
 
@@ -528,7 +554,7 @@ app.controller('checkoutController', [
                             $log.debug(returnData);
                             window.location.href = $location.absUrl();
                         }
-                    }).catch(function (returnData) {
+                    }).catch(function () {
                         $scope.trial++;
                         if (refreshAuthAccess() && $scope.trial < 4) //refresh cookie
                         {
@@ -576,7 +602,6 @@ app.controller('checkoutController', [
                         setCookie("refreshtoken", returnData.data.refreshToken, returnData.data.expTime);
                         setCookie("authkey", returnData.data.accessToken, returnData.data.expTime);
                         $scope.TakeProfileConfig.TakeProfile();
-                        //$scope.loggedIn = getCookie('accesstoken');
                     }
                     else {
                         window.location.href = $location.absUrl();
@@ -585,7 +610,7 @@ app.controller('checkoutController', [
                         $scope.form.isLogin = false;
                         //Return langsung
                     }
-                }).catch(function (returnData) {
+                }).catch(function () {
                     $scope.trial++;
                     if (refreshAuthAccess() && $scope.trial < 4) //refresh cookie
                     {
@@ -632,7 +657,7 @@ app.controller('checkoutController', [
                     else {
                         $scope.buyerInfo = {};
                     }
-                }).catch(function (returnData) {
+                }).catch(function () {
                     $scope.buyerInfo = {};
                 });
             }
@@ -722,25 +747,7 @@ app.controller('checkoutController', [
                         $scope.paxData = $scope.paxData + '}' + ',';
                     } else {
                         $scope.paxData = $scope.paxData + '}';
-                    }
-
-                    //if (!$scope.passportRequired) {
-                    //    if (i != $scope.passengers.length - 1) {
-                    //        $scope.paxData = $scope.paxData + '{ "type":"' + $scope.passengers[i].type + '", "title":"' + $scope.passengers[i].title + '" , "name":"' + $scope.passengers[i].name + '" , "dob":"' + $scope.passengers[i].birth.full + '" , "nationality":"' + $scope.passengers[i].nationality+ '" },';
-                    //    }
-                    //    else {
-                    //        $scope.paxData = $scope.paxData + '{ "type":"' + $scope.passengers[i].type + '", "title":"' + $scope.passengers[i].title + '" , "name":"' + $scope.passengers[i].name + '" , "dob":"' + $scope.passengers[i].birth.full + '"  , "nationality":"' + $scope.passengers[i].nationality + '" }';
-                    //    }
-                    //}
-                    //else
-                    //{
-                    //    if (i != $scope.passengers.length - 1) {
-                    //        $scope.paxData = $scope.paxData + '{ "type":"' + $scope.passengers[i].type + '", "title":"' + $scope.passengers[i].title + '" , "name":"' + $scope.passengers[i].name + '" , "dob":"' + $scope.passengers[i].birth.full + '", "passportNo":"' + $scope.passengers[i].passport.number + '" , "passportExp":"' + $scope.passengers[i].passport.expire.full + '" , "passportCountry":"' + $scope.passengers[i].passport.country + '" , "nationality":"' + $scope.passengers[i].passport.country + '" },';
-                    //    }
-                    //    else {
-                    //        $scope.paxData = $scope.paxData + '{ "type":"' + $scope.passengers[i].type + '", "title":"' + $scope.passengers[i].title + '" , "name":"' + $scope.passengers[i].name + '" , "dob":"' + $scope.passengers[i].birth.full + '" , "passportNo":"' + $scope.passengers[i].passport.number + '" , "passportExp":"' + $scope.passengers[i].passport.expire.full + '" , "passportCountry":"' + $scope.passengers[i].passport.country + '" , "nationality":"' + $scope.passengers[i].passport.country + '" }';
-                    //    }
-                    //}                 
+                    }        
                 }
                 
                 $scope.paxData = $scope.paxData + ']';
@@ -760,7 +767,6 @@ app.controller('checkoutController', [
                         data: $scope.book.postData,
                         headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') }
                     }).then(function (returnData) {
-                        //$log.debug(returnData);
                         if (returnData.data.status == '200' && (returnData.data.rsvNo != null || returnData.data.rsvNo != '' )) {
                             if (returnData.data.itinChanged) {
                                 $scope.book.isSuccess = false;
@@ -833,7 +839,8 @@ app.controller('checkoutController', [
         };
         //************************* END ******************************
 
-        // **********
+        //*********************** OTHERS *****************************
+        
         // generate passenger
         $scope.generatePassenger = function () {
             if (adultPassenger > 0) {
@@ -887,12 +894,12 @@ app.controller('checkoutController', [
             }
         }
 
-        // submit checkout form
-        $scope.submitCheckoutForm = function () {
-            $scope.checkoutForm.loading = true;
-        }
+        // submit checkout form TBD
+        //$scope.submitCheckoutForm = function () {
+        //    $scope.checkoutForm.loading = true;
+        //}
 
-        // log $scope
+        // log $scope TBD
         $scope.printScope = function () {
             $log.debug($scope);
         }
@@ -909,10 +916,8 @@ app.controller('checkoutController', [
         } else {
             $scope.transferWindowOpen = false;
         }
-        //$log.debug($scope.rightNow);
-        //$log.debug(parseInt($scope.transferWindow[0]));
-        //$log.debug(parseInt($scope.transferWindow[1]));
-        //$log.debug($scope.transferWindowOpen);
+
+        //************************* END ******************************
     }
 ]);// checkout controller
 

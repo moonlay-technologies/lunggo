@@ -497,10 +497,20 @@
                                                         <div class="wb-mid">:</div>
                                                         <div class="wb-right bold-txt">@sum Kamar</div>
                                                     </div>
+                                                    @if (reservation.HotelDetail.Policy != null && reservation.HotelDetail.Policy.Count > 0)
+                                                    {
+                                                        <div class="wb-container clearfix">
+                                                            <div class="wb-left">Catatan Khusus</div>
+                                                            <div class="wb-mid">:</div>
+                                                            <div class="wb-right bold-txt">@String.Join(". ", reservation.HotelDetail.Policy)</div>
+                                                        </div>
+                                                    }
+                                                    
                                                 </div>
                                             </div>
                                             <div><br /></div>
                                         </div>
+                                        <hr/>
                                         <div class="rh-row">
                                             <div class="rh-top clearfix">
                                                 <div class="col-left-hotel"></div>
@@ -532,25 +542,25 @@
                                                                     <div class="wb-left">Tamu per Kamar</div>
                                                                     <div class="wb-mid">:</div>
                                                                     <div class="wb-right bold-txt">@(rate.AdultCount ) Dewasa @if (rate.ChildCount > 0)
-                                                                        {
-                                                                            <span>, @rate.ChildCount Anak </span>
-                                                                            <span>
-                                                                                (
-                                                                                @for (var a = 0; a < rate.ChildrenAges.Count; a++)
-                                                                                {
-                                                                                    if (a != rate.ChildrenAges.Count - 1)
+                                                                            {
+                                                                                <span>, @rate.ChildCount Anak </span>
+                                                                                <span>
+                                                                                    (
+                                                                                    @for (var a = 0; a < rate.ChildrenAges.Count; a++)
                                                                                     {
-                                                                                        @rate.ChildrenAges[a]
-                                                                                        <span>Tahun, </span>
+                                                                                        if (a != rate.ChildrenAges.Count - 1)
+                                                                                        {
+                                                                                            @rate.ChildrenAges[a]
+                                                                                            <span>Tahun, </span>
+                                                                                        }
+                                                                                        else
+                                                                                        {
+                                                                                            @rate.ChildrenAges[a] <span>Tahun</span>
+                                                                                        }
                                                                                     }
-                                                                                    else
-                                                                                    {
-                                                                                        @rate.ChildrenAges[a] <span>Tahun</span>
-                                                                                    }
-                                                                                }
-                                                                                )
-                                                                            </span>
-                                                                        }
+                                                                                    )
+                                                                                </span>
+                                                                            }
                                                                     </div>
                                                                 </div>
                                                                 <div class="wb-container clearfix">
@@ -562,7 +572,7 @@
                                                                 if (rate.TermAndCondition != null && rate.TermAndCondition.Count != 0 && !rate.TermAndCondition.Exists(r => r.Length < 3))
                                                                 {
                                                                     <div class="wb-container clearfix">
-                                                                            <div class="wb-left">Ketentuan</div>
+                                                                        <div class="wb-left">Ketentuan</div>
                                                                         <div class="wb-mid">:</div>
                                                                         <div class="wb-right bold-txt" style="text-transform: capitalize">@String.Join(". ", rate.TermAndCondition)</div>
                                                                     </div>
@@ -588,26 +598,21 @@
                                                             }
 
                                                         </div>
-                                                        <ul class="blue-txt semibold-txt blue-list rh-tnc">
-                                                            @*<li>Extra bed belum termasuk</li>*@
-                                                            @*<li>Free cancelation sebelum H-5 tanggal booking</li>*@
-                                                        </ul>
+                                                        <hr />
+                                                       
                                                         indexroom ++;
                                                     }
 
                                                 </div>
                                             </div>
-                                            @*<div class="rh-bottom">
-                                                    <div class="rhb-content">
-                                                        Dolor sit amet, consectetuer adipiscing elit, sed diam nonummy. ectetuer adipiscing elit, sed diam nonummy. Lorem ipsum dolor sit amet, consectuer ectetuer. Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
-                                                    </div>
-                                                </div>*@
                                         </div>
                                     </div>
                                 </div>
-                            }
+                             }
                         </div>
                     </section><!-- .order-detail -->
+                    
+                    
                     <!--</section>-->
                     <div class="btn-detail-penerbangan">
                         <a href="@Url.Action("Thankyou", "Payment", new { Model.RsvNo })" class="btn btn-yellow"> SAYA SUDAH BAYAR</a>

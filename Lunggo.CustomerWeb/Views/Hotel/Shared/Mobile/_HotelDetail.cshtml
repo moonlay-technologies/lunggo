@@ -132,6 +132,13 @@
             <div class="col-4">Kamar</div>
             <div class="col-6 bold-txt">@Model.Rooms.Sum(r => r.Rates.Sum(c => c.RoomCount)) Kamar</div>
         </div>
+        @if (Model.Policy != null && Model.Policy.Count > 0)
+        {
+            <div class="fb-row clearfix">
+                <div class="col-4">Catatan Khusus</div>
+                <div class="col-6 bold-txt">@String.Join(". ", Model.Policy)</div>
+            </div>
+        }
     </div>
     <div class="fb-req" ng-show="buyerInfo.message != null && buyerInfo.message.length == 0">
         <p class="bold-txt">Permintaan Khusus</p>

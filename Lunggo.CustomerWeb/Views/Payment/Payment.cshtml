@@ -766,15 +766,29 @@
                                                 <div class="wt-top clearfix">
                                                     <div class="col-left-hotel">
                                                         <div class="img-sm" style="background-image: url(@hotelImg);"></div>
-                                                        @*<img src="@hotelImg" alt="{{capitalizeFirstLetter(hotelDetails.hotelName)}}" />*@
                                                     </div>
                                                     <div class="col-right-hotel">
-                                                        <span class="blue-txt bold-txt">{{capitalizeFirstLetter(hotelDetails.hotelName)}}</span>
-                                                        <div class="star" ng-show="hotelstar() == 'star'"></div>
-                                                        <div class="star star-2" ng-show="hotelstar() == 'star star-2'"></div>
-                                                        <div class="star star-3" ng-show="hotelstar() == 'star star-3'"></div>
-                                                        <div class="star star-4" ng-show="hotelstar() == 'star star-4'"></div>
-                                                        <div class="star star-5" ng-show="hotelstar() == 'star star-5'"></div>
+                                                        <span class="blue-txt bold-txt">@reservation.HotelDetail.HotelName</span>
+                                                       @if (reservation.HotelDetail.StarRating == 1)
+                                                       {
+                                                        <div class="star"></div>
+                                                       }
+                                                       else if (reservation.HotelDetail.StarRating == 2)
+                                                       {
+                                                        <div class="star star-2"></div>
+                                                       }
+                                                       else if (reservation.HotelDetail.StarRating == 3)
+                                                       {
+                                                        <div class="star star-3"></div>
+                                                       }
+                                                       else if (reservation.HotelDetail.StarRating == 4)
+                                                       {
+                                                        <div class="star star-4"></div>
+                                                       }
+                                                       else if (reservation.HotelDetail.StarRating == 5)
+                                                       {
+                                                        <div class="star star-5"></div>
+                                                       }
                                                     </div>
                                                 </div>
                                                 <div class="wt-bottom">
