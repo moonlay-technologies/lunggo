@@ -1,4 +1,5 @@
-﻿﻿@model System.Web.Mvc.HandleErrorInfo
+﻿@model System.Web.Mvc.HandleErrorInfo
+
 @{
     Layout = "/Views/Shared/mobile/_Layout.cshtml";
     ViewBag.Title = "Promo";
@@ -6,16 +7,19 @@
     ViewBag.BodyClass = "page-error global-error-page-mobile";
     ViewBag.Title = "Halaman Error Global";
 }
+
 @section AdditionalCSS{
     <!-- additional CSS-->
     <link rel="stylesheet" href="/Assets/travorama20/css/global-error.css">
 }
+
 @section AdditionalJS{
     <!-- additional JS-->
     <script src="/Assets/js/angular.min.js"></script>
     <script src="/Assets/js/angular-animate.min.js"></script>
     <script src="/Assets/js/angular-route.min.js"></script>
 }
+
 <div class="error-page mobile">
     <div class="site-content">
         <div class="container">
@@ -37,7 +41,7 @@
         </div>
     </div><!-- .site-content -->
 
-    <div style="display:none">
+    <div class="error-detail container" style="display:none">
         <h1>Halaman Error Global</h1>
         <h2>Action Name : @Model.ActionName</h2>
         <h2>Controller Name : @Model.ControllerName</h2>
