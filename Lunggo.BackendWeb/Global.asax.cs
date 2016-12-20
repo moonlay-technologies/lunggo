@@ -11,7 +11,6 @@ using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Hotel.Constant;
 using Lunggo.ApCommon.Hotel.Model;
 using Lunggo.ApCommon.Hotel.Model.Logic;
-using Lunggo.ApCommon.Hotel.Wrapper.Content;
 using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds;
 using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Content;
 using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Sdk.auto.model;

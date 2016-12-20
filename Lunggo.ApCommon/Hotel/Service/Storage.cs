@@ -65,24 +65,32 @@ namespace Lunggo.ApCommon.Hotel.Service
             {
                 Console.WriteLine("location: " + loc);
                 var hotelCds = GetHotelListByLocationFromStorage(loc);
-                hotelCds = hotelCds.Distinct().ToList();
-                var hotelDetailDict = hotelCds.ToDictionary(hotelCd => hotelCd, GetHotelDetailFromTableStorage);
-
-                BlobStorageService.GetInstance().WriteFileToBlob(new BlobWriteDto
+                if (hotelCds != null && hotelCds.Count != 0)
                 {
-                    FileBlobModel = new FileBlobModel
+                    hotelCds = hotelCds.Distinct().ToList();
+                    var hotelDetailDict = hotelCds.ToDictionary(hotelCd => hotelCd, GetHotelDetailFromTableStorage);
+
+
+                    BlobStorageService.GetInstance().WriteFileToBlob(new BlobWriteDto
                     {
-                        Container = "HotelDetailByLocation2",
-                        FileInfo = new FileInfo
+                        FileBlobModel = new FileBlobModel
                         {
-                            ContentType = "",
-                            FileData = hotelDetailDict.ToCacheObject(),
-                            FileName = loc
-                        }
-                    },
-                    SaveMethod = SaveMethod.Force
-                });
-                Console.WriteLine("Done saving hotel details for location: " + loc);
+                            Container = "HotelDetailByLocation2",
+                            FileInfo = new FileInfo
+                            {
+                                ContentType = "",
+                                FileData = hotelDetailDict.ToCacheObject(),
+                                FileName = loc
+                            }
+                        },
+                        SaveMethod = SaveMethod.Force
+                    });
+                    Console.WriteLine("Done saving hotel details for location: " + loc);
+                }
+                else
+                {
+                    Console.WriteLine("There is no Hotel Code for this: " + loc);
+                }
             }
         }
         //AUTOCOMPLETE AND ALL HOTEL CODES        
@@ -205,7 +213,8 @@ namespace Lunggo.ApCommon.Hotel.Service
         public void SaveHotelAutocompleteToBlob()
         {
             Console.WriteLine("Start saving autocomplete to blob");
-            var autocomplete = AutoCompletes;
+            //var autocomplete = AutoCompletes;
+            var autocomplete = AutocompleteDummyList;
             BlobStorageService.GetInstance().WriteFileToBlob(new BlobWriteDto
             {
                 FileBlobModel = new FileBlobModel
@@ -215,7 +224,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                     {
                         ContentType = "",
                         FileData = autocomplete.ToCacheObject(),
-                        FileName = "autocomplete"
+                        FileName = "autocomplete2"
                     }
                 },
                 SaveMethod = SaveMethod.Force
@@ -227,7 +236,7 @@ namespace Lunggo.ApCommon.Hotel.Service
 
         public List<HotelAutoComplete> GetAutocompleteFromBlob()
         {
-            var blob = BlobStorageService.GetInstance().GetByteArrayByFileInContainer("autocomplete", "HotelAutocomplete");
+            var blob = BlobStorageService.GetInstance().GetByteArrayByFileInContainer("autocomplete2", "HotelAutocomplete");
             var value = (RedisValue)blob;
             return value.DeconvertTo<List<HotelAutoComplete>>().Where(c => !(c.Type == 4 && c.Country != "Indonesia")).ToList();
         }
@@ -762,14 +771,14 @@ namespace Lunggo.ApCommon.Hotel.Service
 
         public List<SegmentDict> GetHotelSegmentFromStorage()
         {
-            var blob = BlobStorageService.GetInstance().GetByteArrayByFileInContainer("HotelSegmentDict", "hotelcsvcontent");
+            var blob = BlobStorageService.GetInstance().GetByteArrayByFileInContainer("HotelSegment", "hotelcsvcontent");
             var value = (RedisValue)blob;
             return value.DeconvertTo<List<SegmentDict>>();
         }
 
         public List<Room> GetHotelRoomFromStorage()
         {
-            var blob = BlobStorageService.GetInstance().GetByteArrayByFileInContainer("HotelRoomDict", "hotelcsvcontent");
+            var blob = BlobStorageService.GetInstance().GetByteArrayByFileInContainer("HotelRoom", "hotelcsvcontent");
             var value = (RedisValue)blob;
             return value.DeconvertTo<List<Room>>();
         }

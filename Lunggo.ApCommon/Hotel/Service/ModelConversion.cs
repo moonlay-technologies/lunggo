@@ -236,6 +236,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                 Description = hotelDetail.Description == null ? null : hotelDetail.Description.Where(x => x.languageCode.Equals("IND"))
                                 .Select(x => x.Description).SingleOrDefault(),
                 PhonesNumbers = hotelDetail.PhonesNumbers,
+                AreaName = GetAreaNameFromDict(hotelDetail.AreaCode),
                 ZoneName = hotelDetail.ZoneCode.Split('-').Length == 2 ?
                     GetZoneNameFromDict(hotelDetail.ZoneCode) : GetZoneNameFromDict(hotelDetail.DestinationCode + "-" + hotelDetail.ZoneCode),
                 StarRating = GetSimpleCodeByCategoryCode(hotelDetail.StarRating),

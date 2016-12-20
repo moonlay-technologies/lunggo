@@ -79,6 +79,9 @@ namespace Lunggo.ApCommon.Trie
                     case 2:
                         name = item.Zone + ", " + item.Destination + ", " + item.Country;
                         break;
+                    case 3: 
+                        name = item.Area + ", " + item.Destination + ", " + item.Country;
+                        break;
                     case 4:
                         name = item.HotelName + ", " + item.Destination + ", " + item.Country;
                         break;

@@ -382,21 +382,20 @@ namespace Lunggo.ApCommon.Hotel.Service
         {
             foreach (var hotel in hotels)
             {
-                
-                    hotel.AccomodationType = detail.AccomodationType;
-                    hotel.Address = detail.Address;
-                    hotel.Facilities = detail.Facilities;
-                    hotel.AreaCode = detail.AreaCode;
-                    hotel.PhonesNumbers = detail.PhonesNumbers;
-                    hotel.HotelName = detail.HotelName;
-                    hotel.City = detail.City;
-                    hotel.Chain = detail.Chain;
-                    hotel.Email = detail.Email;
-                    hotel.ImageUrl = detail.ImageUrl;
-                    hotel.Pois = detail.Pois;
-                    hotel.Segment = detail.Segment;
-                    hotel.PostalCode = detail.PostalCode;
-                
+                hotel.AccomodationType = detail.AccomodationType;
+                hotel.Address = detail.Address;
+                hotel.Facilities = detail.Facilities;
+                hotel.AreaCode = detail.AreaCode;
+                hotel.ZoneCode = detail.ZoneCode;
+                hotel.PhonesNumbers = detail.PhonesNumbers;
+                hotel.HotelName = detail.HotelName;
+                hotel.City = detail.City;
+                hotel.Chain = detail.Chain;
+                hotel.Email = detail.Email;
+                hotel.ImageUrl = detail.ImageUrl;
+                hotel.Pois = detail.Pois;
+                hotel.Segment = detail.Segment;
+                hotel.PostalCode = detail.PostalCode;
             }
             return hotels;
         }

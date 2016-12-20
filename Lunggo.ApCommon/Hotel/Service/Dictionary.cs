@@ -186,6 +186,7 @@ namespace Lunggo.ApCommon.Hotel.Service
         //FOR AUTOCOMPLETE
         public Dictionary<long, Autocomplete> _Autocompletes;
         public List<HotelAutoComplete> AutoCompletes = new List<HotelAutoComplete>();
+        public List<HotelAutoComplete> AutocompleteDummyList = new List<HotelAutoComplete>();
 
         public static string[] GeoCodeApiKeyList;
 
@@ -314,7 +315,7 @@ namespace Lunggo.ApCommon.Hotel.Service
             PopulateHotelAreaDict(Countries);
 
             //PopulateHotelCodeAndZoneDict(Countries);
-            //PopulateAutocomplete();
+            PopulateAutocomplete();
             //PopulateHotel();
         }
 
@@ -326,7 +327,7 @@ namespace Lunggo.ApCommon.Hotel.Service
             {
                 foreach (var destination in country.Destinations)
                 {
-
+                    Console.WriteLine("Destination : {0}", destination.Code);
                     var newValue = new Autocomplete
                     {
                         Id = index,
@@ -334,24 +335,86 @@ namespace Lunggo.ApCommon.Hotel.Service
                         Name = destination.Name + ", " + country.Name,
                         Type = AutocompleteType.Destination
                     };
-
-                    GetInstance()._Autocompletes.Add(index, newValue);
-                    index++;
-
-                    foreach (var zone in destination.Zones)
+                    var newDummyList = new HotelAutoComplete
                     {
-
-                        newValue = new Autocomplete
+                        Id = index,
+                        Code = destination.Code,
+                        Destination = destination.Name,
+                        Country = country.Name,
+                        Type = 1,
+                        HotelCount = GetInstance().GetHotelListByLocationFromStorage(destination.Code).Count,
+                    };
+                    GetInstance()._Autocompletes.Add(index, newValue);
+                    GetInstance().AutocompleteDummyList.Add(newDummyList);
+                    index++;
+                    if (destination.Zones != null)
+                    {
+                        foreach (var zone in destination.Zones)
                         {
-                            Id = index,
-                            Code = zone.Code,
-                            Name = zone.Name + ", " + destination.Name + ", " + country.Name,
-                            Type = AutocompleteType.Zone
-                        };
 
-                        GetInstance()._Autocompletes.Add(index, newValue);
-                        index++;
+                            if (!string.IsNullOrEmpty(zone.Code))
+                            {
+                                Console.WriteLine("Zone : {0}", zone.Code);
+                                newValue = new Autocomplete
+                                {
+                                    Id = index,
+                                    Code = zone.Code,
+                                    Name = zone.Name + ", " + destination.Name + ", " + country.Name,
+                                    Type = AutocompleteType.Zone
+                                };
+
+                                newDummyList = new HotelAutoComplete
+                                {
+                                    Id = index,
+                                    Code = zone.Code,
+                                    Zone = zone.Name,
+                                    Destination = destination.Name,
+                                    Country = country.Name,
+                                    Type = 2,
+                                    HotelCount = GetInstance().GetHotelListByLocationFromStorage(zone.Code).Count,
+                                };
+
+                                GetInstance()._Autocompletes.Add(index, newValue);
+                                GetInstance().AutocompleteDummyList.Add(newDummyList);
+                                index++;
+
+                                if (zone.Areas != null)
+                                {
+                                    foreach (var area in zone.Areas)
+                                    {
+                                        if (!string.IsNullOrEmpty(area.Code))
+                                        {
+                                            Console.WriteLine("Area : {0}", area.Code);
+                                            newValue = new Autocomplete
+                                            {
+                                                Id = index,
+                                                Code = area.Code,
+                                                Name =
+                                                    area.Name + ", " + zone.Name + ", " + destination.Name + ", " +
+                                                    country.Name,
+                                                Type = AutocompleteType.Area
+                                            };
+                                            newDummyList = new HotelAutoComplete
+                                            {
+                                                Id = index,
+                                                Code = area.Code,
+                                                Area = area.Name,
+                                                Zone = zone.Name,
+                                                Destination = destination.Name,
+                                                Country = country.Name,
+                                                Type = 3,
+                                                HotelCount = GetInstance().GetHotelListByLocationFromStorage(area.Code).Count,
+                                            };
+                                            GetInstance()._Autocompletes.Add(index, newValue);
+                                            GetInstance().AutocompleteDummyList.Add(newDummyList);
+                                            index++;
+                                        }
+                                    }
+                                }
+                            }
+                        }    
                     }
+                    
                 }
             }
         }
@@ -398,24 +461,24 @@ namespace Lunggo.ApCommon.Hotel.Service
             HotelSegmentDictEng = new Dictionary<string, string>();
             HotelSegmentDictId = new Dictionary<string, string>();
 
-            //var segments = GetInstance().GetHotelSegmentFromStorage();
-            //foreach (var segment in segments)
-            //{
-            //    HotelSegmentDictEng.Add(segment.Code, segment.NameEn);
-            //    HotelSegmentDictId.Add(segment.Code, segment.NameId);
-            //}
-
-            using (var file = new StreamReader(hotelSegmentFilePath))
+            var segments = GetInstance().GetHotelSegmentFromStorage();
+            foreach (var segment in segments)
             {
-                var line = file.ReadLine();
-                while (!file.EndOfStream)
-                {
-                    line = file.ReadLine();
-                    var splittedLine = line.Split('|');
-                    HotelSegmentDictEng.Add(splittedLine[0], splittedLine[1]);
-                    HotelSegmentDictId.Add(splittedLine[0], splittedLine[2]);
-                }
+                HotelSegmentDictEng.Add(segment.Code, segment.NameEn);
+                HotelSegmentDictId.Add(segment.Code, segment.NameId);
             }
+
+            //using (var file = new StreamReader(hotelSegmentFilePath))
+            //{
+            //    var line = file.ReadLine();
+            //    while (!file.EndOfStream)
+            //    {
+            //        line = file.ReadLine();
+            //        var splittedLine = line.Split('|');
+            //        HotelSegmentDictEng.Add(splittedLine[0], splittedLine[1]);
+            //        HotelSegmentDictId.Add(splittedLine[0], splittedLine[2]);
+            //    }
+            //}
 
         }
 
@@ -481,23 +544,23 @@ namespace Lunggo.ApCommon.Hotel.Service
         {
             HotelFacilityGroupDictEng = new Dictionary<int, string>();
             HotelFacilityGroupDictId = new Dictionary<int, string>();
-            //var facilitiesGrp = GetInstance().GetHotelFacilityGroupFromStorage();
-            //foreach (var group in facilitiesGrp)
-            //{
-            //    HotelFacilityGroupDictEng.Add(group.Code,group.NameEn);
-            //    HotelFacilityGroupDictId.Add(group.Code, group.NameId);
-            //}
-            using (var file = new StreamReader(hotelFacilityGroupFilePath))
+            var facilitiesGrp = GetInstance().GetHotelFacilityGroupFromStorage();
+            foreach (var group in facilitiesGrp)
             {
-                var line = file.ReadLine();
-                while (!file.EndOfStream)
-                {
-                    line = file.ReadLine();
-                    var splittedLine = line.Split('|');
-                    HotelFacilityGroupDictEng.Add(Convert.ToInt32(splittedLine[0]), splittedLine[1]);
-                    HotelFacilityGroupDictId.Add(Convert.ToInt32(splittedLine[0]), splittedLine[2]);
-                }
+                HotelFacilityGroupDictEng.Add(group.Code, group.NameEn);
+                HotelFacilityGroupDictId.Add(group.Code, group.NameId);
             }
+            //using (var file = new StreamReader(hotelFacilityGroupFilePath))
+            //{
+            //    var line = file.ReadLine();
+            //    while (!file.EndOfStream)
+            //    {
+            //        line = file.ReadLine();
+            //        var splittedLine = line.Split('|');
+            //        HotelFacilityGroupDictEng.Add(Convert.ToInt32(splittedLine[0]), splittedLine[1]);
+            //        HotelFacilityGroupDictId.Add(Convert.ToInt32(splittedLine[0]), splittedLine[2]);
+            //    }
+            //}
         }
 
         private static void PopulateHotelFacilityFilter(String hotelFacilityFilter)
@@ -547,40 +610,40 @@ namespace Lunggo.ApCommon.Hotel.Service
         private static void PopulateHotelRoomList(string hotelRoomFilePath)
         {
             Rooms = new List<Room>();
-            //Rooms = GetInstance().GetHotelRoomFromStorage();
-            using (var file = new StreamReader(hotelRoomFilePath))
-            {
-                var line = file.ReadLine();
-                while (!file.EndOfStream)
-                {
-                    line = file.ReadLine();
-                    var splittedLine = line.Split('|');
-                    var newHotelRoom = new Room
-                    {
-                        RoomCharacteristic = new RoomCharacteristic
-                        {
-                            CharacteristicCd = splittedLine[2],
-                            CharacteristicDescEn = splittedLine[10],
-                            CharacteristicDescId = splittedLine[13]
-                        },
-                        RoomType = new HotelRoomType
-                        {
-                            Type = splittedLine[1],
-                            DescEn = splittedLine[9],
-                            DescId = splittedLine[12]
-                        },
-                        MinPax = Convert.ToInt32(splittedLine[3]),
-                        MaxPax = Convert.ToInt32(splittedLine[4]),
-                        MaxAdult = Convert.ToInt32(splittedLine[5]),
-                        MaxChild = Convert.ToInt32(splittedLine[6]),
-                        MinAdult = Convert.ToInt32(splittedLine[7]),
-                        RoomCd = splittedLine[0],
-                        RoomDescEn = splittedLine[8],
-                        RoomDescId = splittedLine[11]
-                    };
-                    Rooms.Add(newHotelRoom);
-                }
-            }
+            Rooms = GetInstance().GetHotelRoomFromStorage();
+            //using (var file = new StreamReader(hotelRoomFilePath))
+            //{
+            //    var line = file.ReadLine();
+            //    while (!file.EndOfStream)
+            //    {
+            //        line = file.ReadLine();
+            //        var splittedLine = line.Split('|');
+            //        var newHotelRoom = new Room
+            //        {
+            //            RoomCharacteristic = new RoomCharacteristic
+            //            {
+            //                CharacteristicCd = splittedLine[2],
+            //                CharacteristicDescEn = splittedLine[10],
+            //                CharacteristicDescId = splittedLine[13]
+            //            },
+            //            RoomType = new HotelRoomType
+            //            {
+            //                Type = splittedLine[1],
+            //                DescEn = splittedLine[9],
+            //                DescId = splittedLine[12]
+            //            },
+            //            MinPax = Convert.ToInt32(splittedLine[3]),
+            //            MaxPax = Convert.ToInt32(splittedLine[4]),
+            //            MaxAdult = Convert.ToInt32(splittedLine[5]),
+            //            MaxChild = Convert.ToInt32(splittedLine[6]),
+            //            MinAdult = Convert.ToInt32(splittedLine[7]),
+            //            RoomCd = splittedLine[0],
+            //            RoomDescEn = splittedLine[8],
+            //            RoomDescId = splittedLine[11]
+            //        };
+            //        Rooms.Add(newHotelRoom);
+            //    }
+            //}
         }
 
         private static void PopulateHotelRoomDict(IEnumerable<Room> rooms)
@@ -692,28 +755,28 @@ namespace Lunggo.ApCommon.Hotel.Service
         private static void PopulateHotelAccomodationDict(String hotelAccomodationFilePath)
         {
             HotelAccomodations = new Dictionary<string, Accommodation>();
-            //var accomodations = GetInstance().GetHotelAccomodationFromStorage();
-            //foreach (var acc in accomodations)
-            //{
-            //    HotelAccomodations.Add(acc.Code, acc);
-            //}
-            using (var file = new StreamReader(hotelAccomodationFilePath))
+            var accomodations = GetInstance().GetHotelAccomodationFromStorage();
+            foreach (var acc in accomodations)
             {
-                var line = file.ReadLine();
-                while (!file.EndOfStream)
-                {
-                    line = file.ReadLine();
-                    var splittedLine = line.Split('|');
-
-                    HotelAccomodations.Add(splittedLine[0], new Accommodation
-                    {
-                        Code = splittedLine[0],
-                        MultiDescription = splittedLine[1],
-                        TypeNameEn = splittedLine[2],
-                        TypeNameId = splittedLine[3]
-                    });
-                }
+                HotelAccomodations.Add(acc.Code, acc);
             }
+            //using (var file = new StreamReader(hotelAccomodationFilePath))
+            //{
+            //    var line = file.ReadLine();
+            //    while (!file.EndOfStream)
+            //    {
+            //        line = file.ReadLine();
+            //        var splittedLine = line.Split('|');
+
+            //        HotelAccomodations.Add(splittedLine[0], new Accommodation
+            //        {
+            //            Code = splittedLine[0],
+            //            MultiDescription = splittedLine[1],
+            //            TypeNameEn = splittedLine[2],
+            //            TypeNameId = splittedLine[3]
+            //        });
+            //    }
+            //}
         }
 
 
@@ -748,54 +811,54 @@ namespace Lunggo.ApCommon.Hotel.Service
         private static void PopulateHotelChainDict(String hotelChainFilePath)
         {
             HotelChains = new Dictionary<string, Chain>();
-            //var chains = GetInstance().GetHotelChainFromStorage();
-            //foreach (var chain in chains)
-            //{
-            //    HotelChains.Add(chain.Code, chain);
-            //}
-            using (var file = new StreamReader(hotelChainFilePath))
+            var chains = GetInstance().GetHotelChainFromStorage();
+            foreach (var chain in chains)
             {
-                var line = file.ReadLine();
-                while (!file.EndOfStream)
-                {
-                    line = file.ReadLine();
-                    var splittedLine = line.Split('|');
-
-                    HotelChains.Add(splittedLine[0], new Chain
-                    {
-                        Code = splittedLine[0],
-                        Description = splittedLine[1],
-                    });
-                }
+                HotelChains.Add(chain.Code, chain);
             }
+            //using (var file = new StreamReader(hotelChainFilePath))
+            //{
+            //    var line = file.ReadLine();
+            //    while (!file.EndOfStream)
+            //    {
+            //        line = file.ReadLine();
+            //        var splittedLine = line.Split('|');
+
+            //        HotelChains.Add(splittedLine[0], new Chain
+            //        {
+            //            Code = splittedLine[0],
+            //            Description = splittedLine[1],
+            //        });
+            //    }
+            //}
         }
 
         private static void PopulateHotelCategoryDict(String hotelCategoryFilePath)
         {
             HotelCategories = new Dictionary<string, Category>();
-            //var categories = GetInstance().GetHotelCategoryFromStorage();
-            //foreach (var category in categories)
-            //{
-            //    HotelCategories.Add(category.Code, category);
-            //}
-            using (var file = new StreamReader(hotelCategoryFilePath))
+            var categories = GetInstance().GetHotelCategoryFromStorage();
+            foreach (var category in categories)
             {
-                var line = file.ReadLine();
-                while (!file.EndOfStream)
-                {
-                    line = file.ReadLine();
-                    var splittedLine = line.Split('|');
-
-                    HotelCategories.Add(splittedLine[0], new Category
-                    {
-                        Code = splittedLine[0],
-                        SimpleCode = int.Parse(splittedLine[1]),
-                        AccomodationType = splittedLine[2],
-                        NameEn = splittedLine[4],
-                        NameId = splittedLine[5]
-                    });
-                }
+                HotelCategories.Add(category.Code, category);
             }
+            //using (var file = new StreamReader(hotelCategoryFilePath))
+            //{
+            //    var line = file.ReadLine();
+            //    while (!file.EndOfStream)
+            //    {
+            //        line = file.ReadLine();
+            //        var splittedLine = line.Split('|');
+
+            //        HotelCategories.Add(splittedLine[0], new Category
+            //        {
+            //            Code = splittedLine[0],
+            //            SimpleCode = int.Parse(splittedLine[1]),
+            //            AccomodationType = splittedLine[2],
+            //            NameEn = splittedLine[4],
+            //            NameId = splittedLine[5]
+            //        });
+            //    }
+            //}
         }
 
         private static void PopulateHotelCountriesDict(String hotelCountriesFilePath)

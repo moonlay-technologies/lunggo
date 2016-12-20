@@ -26,7 +26,9 @@ namespace Lunggo.Webjob.HotelContentWrapper
 
             var hotel = new HotelBedsService();
             var hotelService = HotelService.GetInstance();
-            
+            hotelService.SaveHotelAutocompleteToBlob();
+            //var y = hotelService._Autocompletes;
+            //var z = hotelService.AutocompleteDummyList;
             /** Update CSV Storage **/
             //hotelService.UpdateCountryStorage();
             //hotelService.UpdateHotelBoardStorage();

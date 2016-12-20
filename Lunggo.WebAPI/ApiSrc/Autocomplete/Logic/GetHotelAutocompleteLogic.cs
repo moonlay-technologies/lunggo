@@ -11,7 +11,7 @@ namespace Lunggo.WebAPI.ApiSrc.Autocomplete.Logic
 {
     public partial class AutocompleteLogic
     {
-        public static HotelAutocompleteApiResponse GetHotelAutocomplete(string prefix, int dest, int zone, int hotelNum)
+        public static HotelAutocompleteApiResponse GetHotelAutocomplete(string prefix, int dest, int zone, int area, int hotelNum)
         {
             var hotel = HotelService.GetInstance();
             var autocomplete = AutocompleteManager.GetInstance();
@@ -40,6 +40,10 @@ namespace Lunggo.WebAPI.ApiSrc.Autocomplete.Logic
                         input.Name = hotelDict.Zone + ", " + hotelDict.Destination + ", " + hotelDict.Country;
                         input.NumOfHotels = hotelDict.HotelCount;
                         break;
+                    case 3:
+                        input.Name = hotelDict.Area + ", " + hotelDict.Destination + ", " + hotelDict.Country;
+                        input.NumOfHotels = hotelDict.HotelCount;
+                        break;
                     case 4:
                         input.Name = hotelDict.HotelName + ", " + hotelDict.Destination + ", " + hotelDict.Country;
                         input.NumOfHotels = 0;
@@ -53,6 +57,8 @@ namespace Lunggo.WebAPI.ApiSrc.Autocomplete.Logic
 
             var zones =
                 hotelLocations.Where(c => c.Type == "Zone").Take(zone).ToList().OrderByDescending(c => c.NumOfHotels).ToList();
+            var areas =
+                hotelLocations.Where(c => c.Type == "Area").Take(area).ToList().OrderByDescending(c => c.NumOfHotels).ToList();
 
             var dests = hotelLocations.Where(c => c.Type == "Destination").Take(dest).ToList().OrderByDescending( c => c.NumOfHotels).ToList();
 
@@ -62,6 +68,7 @@ namespace Lunggo.WebAPI.ApiSrc.Autocomplete.Logic
             
             hotelAutocompleteApis.AddRange(dests);
             hotelAutocompleteApis.AddRange(zones);
+            hotelAutocompleteApis.AddRange(areas);
             //hotelAutocompleteApis.AddRange(hotels);
 
             return new HotelAutocompleteApiResponse

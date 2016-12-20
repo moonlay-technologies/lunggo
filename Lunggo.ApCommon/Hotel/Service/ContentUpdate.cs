@@ -397,6 +397,17 @@ namespace Lunggo.ApCommon.Hotel.Service
 
         }
 
+        public void UpdateHotelDetailStorage()
+        {
+            var hotel = new HotelBedsService();
+            hotel.GetHotelData(1,1000);
+        }
+
+        public void UpdateHotelRateCommentStorage()
+        {
+            var hotel = new HotelBedsService();
+            hotel.GetRateCommentData(1,1000);
+        }
         public void UpdateCountryStorage()
         {
             Console.WriteLine("Update Country");
