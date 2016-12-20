@@ -60,7 +60,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                 if (searchResponse.ResponseUri.AbsolutePath != "/ScheduleSelect.aspx")
                     return new SearchFlightResult { 
                         Errors = new List<FlightError> { FlightError.FareIdNoLongerValid },
-                        ErrorMessages = new List<string> { "[Citilink] Error while requesting at Search.aspx. Unexpected RensponseUri absolute path" }
+                        ErrorMessages = new List<string> { "[Citilink] Error while requesting at Search.aspx. Unexpected RensponseUri absolute path || " + searchResponse.Content }
                     };
 
                 try

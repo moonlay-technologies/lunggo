@@ -77,7 +77,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                     {
                         IsSuccess = false,
                         Errors = new List<FlightError> { FlightError.FailedOnSupplier },
-                        ErrorMessages = new List<string> { "[Citilink] Error while requesting at BookingListTravelAgent.aspx. Unexpected response path or response status code" }
+                        ErrorMessages = new List<string> { "[Citilink] Error while requesting at BookingListTravelAgent.aspx. Unexpected response path or response status code || " + listResponse.Content }
                     };
 
                 url = "BookingListTravelAgent.aspx";
@@ -117,7 +117,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                         CurrentBalance = GetCurrentBalance(),
                         IsSuccess = false,
                         Errors = new List<FlightError> { FlightError.FailedOnSupplier },
-                        ErrorMessages = new List<string> { "[Citilink] Error while requesting at BookingListTravelAgent.aspx. Unexpected response path or response status code" }
+                        ErrorMessages = new List<string> { "[Citilink] Error while requesting at BookingListTravelAgent.aspx. Unexpected response path or response status code || " + selectResponse.Content }
                     };
 
                 try
@@ -189,7 +189,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                             CurrentBalance = GetCurrentBalance(),
                             IsSuccess = false,
                             Errors = new List<FlightError> { FlightError.FailedOnSupplier },
-                            ErrorMessages = new List<string> { "[Citilink] Error while requesting at BookingListTravelAgent.aspx. Unexpected response path or response status code" }
+                            ErrorMessages = new List<string> { "[Citilink] Error while requesting at BookingListTravelAgent.aspx. Unexpected response path or response status code || " + listResponse2.Content }
                         };
 
                     url = "BookingListTravelAgent.aspx";

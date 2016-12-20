@@ -164,7 +164,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                             return new RevalidateFareResult
                             {
                                 Errors = new List<FlightError> {FlightError.InvalidInputData},
-                                ErrorMessages = new List<string> { "[Lion Air] can't enter page default" }
+                                ErrorMessages = new List<string> { "[Lion Air] can't enter page default || " + searchResponse0.Content }
                             };
                         }
                         Thread.Sleep(1000);

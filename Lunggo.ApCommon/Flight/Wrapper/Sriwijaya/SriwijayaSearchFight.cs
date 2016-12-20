@@ -81,7 +81,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                     {
                         IsSuccess = false,
                         Errors = new List<FlightError> { FlightError.FailedOnSupplier },
-                        ErrorMessages = new List<string> { "[Sriwijaya] Error while requesting at welcome.php" }
+                        ErrorMessages = new List<string> { "[Sriwijaya] Error while requesting at welcome.php || " + langResponse.Content }
                     };
                 }
 

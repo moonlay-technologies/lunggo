@@ -158,7 +158,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                                 {
                                     BookingStatus = BookingStatus.Failed
                                 },
-                                ErrorMessages = new List<string> { "[Lion Air] error entering default page" },
+                                ErrorMessages = new List<string> { "[Lion Air] error entering default page || " + searchResponse0.Content },
                                 IsSuccess = false
                             };
                         }

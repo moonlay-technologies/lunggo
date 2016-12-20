@@ -121,7 +121,11 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                     if (searchResponse0.ResponseUri.AbsolutePath != "/Default.aspx" &&
                         (searchResponse0.StatusCode == HttpStatusCode.OK ||
                          searchResponse0.StatusCode == HttpStatusCode.Redirect))
-                        return new SearchFlightResult {Errors = new List<FlightError> {FlightError.InvalidInputData}};
+                        return new SearchFlightResult
+                        {
+                            Errors = new List<FlightError> {FlightError.InvalidInputData},
+                            ErrorMessages = new List<string> { "[Lion Air] || " + searchResponse0 .Content}
+                        };
 
                     //if (originCountry == "ID")
                     //{
@@ -157,7 +161,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                          searchResponse.StatusCode == HttpStatusCode.Redirect))
                             return new SearchFlightResult
                             {
-                                Errors = new List<FlightError> {FlightError.InvalidInputData}
+                                Errors = new List<FlightError> {FlightError.InvalidInputData},
+                                ErrorMessages = new List<string> { "[Lion Air] || " + searchResponse.Content}
                             };
                     //}
                     //else
@@ -189,7 +194,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                             return new SearchFlightResult
                             {
                                 Errors = new List<FlightError> {FlightError.InvalidInputData},
-                                ErrorMessages = new List<string> { "[Lion Air] Error while requesting at lionairibe2/OnlineBooking.aspx. Unexpected Rensponse path or status code" }
+                                ErrorMessages = new List<string> { "[Lion Air] Error while requesting at lionairibe2/OnlineBooking.aspx. Unexpected Rensponse path or status code || " + searchResponse2.Content }
                             };
 
                     var searchedHtml = (CQ) html2;

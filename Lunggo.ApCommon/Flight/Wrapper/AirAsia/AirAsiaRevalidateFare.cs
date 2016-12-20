@@ -84,7 +84,11 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                     var html = searchResponse.Content;
 
                     if (searchResponse.ResponseUri.AbsolutePath != "/Flight/Select" && (searchResponse.StatusCode == HttpStatusCode.OK || searchResponse.StatusCode == HttpStatusCode.Redirect))
-                        return new RevalidateFareResult { Errors = new List<FlightError> { FlightError.InvalidInputData } };
+                        return new RevalidateFareResult
+                        {
+                            Errors = new List<FlightError> { FlightError.InvalidInputData },
+                            ErrorMessages = new List<string> { "[AirAsia] || " + searchResponse.Content}
+                        };
 
                     searchedHtml = (CQ)html;
                 }
