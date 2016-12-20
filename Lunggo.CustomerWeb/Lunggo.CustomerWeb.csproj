@@ -882,6 +882,8 @@
     <Content Include="Assets\travorama20\images\Hotel\wifi.png" />
     <Content Include="Assets\travorama20\images\mobile-app.png" />
     <Content Include="Assets\travorama20\images\play-store-bg.png" />
+    <Content Include="Assets\travorama20\js\ConfirmationController.js" />
+    <Content Include="Assets\travorama20\js\ThankyouController.js" />
     <Content Include="Assets\vendor\dotdotdot\jquery.dotdotdot.js" />
     <Content Include="Assets\vendor\dotdotdot\jquery.dotdotdot.min.js" />
     <Content Include="Assets\vendor\dotdotdot\jquery.dotdotdot.min.umd.js" />
