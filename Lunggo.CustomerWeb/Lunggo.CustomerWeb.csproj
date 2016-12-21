@@ -296,20 +296,8 @@
     <Content Include="Assets\bootstrap\bootstrap.min.css">
       <DependentUpon>bootstrap.css</DependentUpon>
     </Content>
-    <Content Include="Assets\css\application.css">
-      <DependentUpon>application.scss</DependentUpon>
-    </Content>
-    <Content Include="Assets\css\application.min.css">
-      <DependentUpon>application.css</DependentUpon>
-    </Content>
     <Content Include="Assets\css\application.scss" />
     <Content Include="Assets\css\bootstrap.min.css" />
-    <Content Include="Assets\css\eticket.css">
-      <DependentUpon>eticket.scss</DependentUpon>
-    </Content>
-    <Content Include="Assets\css\eticket.min.css">
-      <DependentUpon>eticket.css</DependentUpon>
-    </Content>
     <Content Include="Assets\css\eticket.scss" />
     <Content Include="Assets\images\campaign\MatahariMall2016\MatahariMall-page-mobile.jpg" />
     <Content Include="Assets\images\campaign\MatahariMall2016\MatahariMall-page.jpg" />
@@ -438,29 +426,11 @@
     <Content Include="Assets\css\images\ui-icons_454545_256x240.png" />
     <Content Include="Assets\css\images\ui-icons_888888_256x240.png" />
     <Content Include="Assets\css\images\ui-icons_cd0a0a_256x240.png" />
-    <Content Include="Assets\css\invoice.css">
-      <DependentUpon>invoice.scss</DependentUpon>
-    </Content>
-    <Content Include="Assets\css\invoice.min.css">
-      <DependentUpon>invoice.css</DependentUpon>
-    </Content>
     <Content Include="Assets\css\invoice.scss" />
     <Content Include="Areas\Api\Views\web.config" />
     <Content Include="Assets\css\jquery-ui.min.css" />
     <Content Include="Assets\css\jquery.range.css" />
-    <Content Include="Assets\css\landingPage.css">
-      <DependentUpon>landingPage.scss</DependentUpon>
-    </Content>
-    <Content Include="Assets\css\landingPage.min.css">
-      <DependentUpon>landingPage.css</DependentUpon>
-    </Content>
     <Content Include="Assets\css\landingPage.scss" />
-    <Content Include="Assets\css\mobile-app.css">
-      <DependentUpon>mobile-app.scss</DependentUpon>
-    </Content>
-    <Content Include="Assets\css\mobile-app.min.css">
-      <DependentUpon>mobile-app.css</DependentUpon>
-    </Content>
     <Content Include="Assets\css\mobile-app.scss" />
     <Content Include="Assets\css\neweticket.css">
       <DependentUpon>neweticket.scss</DependentUpon>
@@ -902,10 +872,6 @@
     </Content>
     <Content Include="Campaign\MatahariMall\css\promo-mataharimall.min.css">
       <DependentUpon>promo-mataharimall.css</DependentUpon>
-    </Content>
-    <Content Include="Campaign\MobileAppCampaign\css\travorama-mobileApp.css" />
-    <Content Include="Campaign\MobileAppCampaign\css\travorama-mobileApp.min.css">
-      <DependentUpon>travorama-mobileApp.css</DependentUpon>
     </Content>
     <Content Include="Campaign\MobileAppCampaign\images\app-store-cs.png" />
     <Content Include="Campaign\MobileAppCampaign\images\app-store.png" />
