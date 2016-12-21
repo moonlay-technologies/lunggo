@@ -1,7 +1,7 @@
 ﻿// travorama angular app - Flight Controller
 
 app.controller('returnFlightController', [
-    '$http', '$scope', '$interval', '$timeout', function($http, $scope, $interval, $timeout) {
+    '$http', '$scope', '$interval', '$timeout', '$log', function($http, $scope, $interval, $timeout, $log) {
 
         // ******************************
         // on document ready
@@ -463,19 +463,19 @@ app.controller('returnFlightController', [
             $scope.closeOverview();
             if ($scope.pageConfig.flightsValidated) {
 
-                console.log('flight available. Will be redirected within');
+                $log.debug('flight available. Will be redirected within');
                 $scope.pageConfig.redirectingPage = true;
                 var fareToken = $scope.departureFlightConfig.validateToken + '.' + $scope.returnFlightConfig.validateToken;
                 $scope.pageConfig.fareToken = fareToken;
-                console.log($scope.pageConfig.fareToken);
+                $log.debug($scope.pageConfig.fareToken);
                 $('.pushToken .fareToken').val(fareToken);
                 $('.pushToken').submit();
 
             } else {
 
                 // select flight
-                console.log('validating departure flight no : ' + departureFlightIndexNo + ',return flight no : ' + returnFlightIndexNo + 'SearchId : ' + $scope.returnFlightConfig.searchId);
-                //console.log('Dep Req : ' + $scope.departureFlightConfig.flightList[departureFlightIndexNo].reg + ':::: Ret Req :' + $scope.returnFlightConfig.flightList[returnFlightIndexNo].reg);
+                $log.debug('validating departure flight no : ' + departureFlightIndexNo + ',return flight no : ' + returnFlightIndexNo + 'SearchId : ' + $scope.returnFlightConfig.searchId);
+                //$log.debug('Dep Req : ' + $scope.departureFlightConfig.flightList[departureFlightIndexNo].reg + ':::: Ret Req :' + $scope.returnFlightConfig.flightList[returnFlightIndexNo].reg);
                 $scope.departureFlightConfig.validating = true;
                 $scope.returnFlightConfig.validating = true;
 
@@ -494,7 +494,7 @@ app.controller('returnFlightController', [
                         $scope.departureFlightConfig.validating = false;
                         $scope.returnFlightConfig.validating = false;
                         if ((returnData.data.token != "" || returnData.data.token != null) && returnData.data.status == "200") {
-                            console.log('flight available');
+                            $log.debug('flight available');
                             $scope.departureFlightConfig.validateToken = returnData.data.token;
                             $scope.departureFlightConfig.validateAvailable = true;
                             $scope.returnFlightConfig.validateToken = returnData.data.token;
@@ -504,7 +504,7 @@ app.controller('returnFlightController', [
                             }
                         }
                         else {
-                            console.log('flight unavailable');
+                            $log.debug('flight unavailable');
                             $scope.departureFlightConfig.validateAvailable = false;
                             $scope.returnFlightConfig.validateAvailable = false;
                             $scope.popup = false;
@@ -520,8 +520,8 @@ app.controller('returnFlightController', [
                         {
                             $scope.departureFlightConfig.validating = false;
                             $scope.returnFlightConfig.validating = false;
-                            console.log('ERROR Validating Flight :');
-                            console.log('--------------------');
+                            $log.debug('ERROR Validating Flight :');
+                            $log.debug('--------------------');
                             $scope.popup = false;
                             $scope.selectError = true;
                         }
@@ -530,7 +530,7 @@ app.controller('returnFlightController', [
                 else {
                     $scope.departureFlightConfig.validating = false;
                     $scope.returnFlightConfig.validating = false;
-                    console.log('Not Authorized');
+                    $log.debug('Not Authorized');
                     $scope.popup = false;
                     $scope.selectError = true;
                 }
@@ -539,13 +539,13 @@ app.controller('returnFlightController', [
                 // run after both flight validated
                 var flightsValidated = function () {
                     $scope.pageConfig.flightsValidated = true;
-                    console.log('flights validated');
+                    $log.debug('flights validated');
                     // if flight is valid
                     if ($scope.departureFlightConfig.validateAvailable == true && $scope.returnFlightConfig.validateAvailable == true) {
-                        console.log('flight available. Will be redirected.');
+                        $log.debug('flight available. Will be redirected.');
                         $scope.pageConfig.redirectingPage = true;
                         var fareToken = $scope.departureFlightConfig.validateToken;;
-                        console.log('Token : '+fareToken);
+                        $log.debug('Token : '+fareToken);
                         $('.pushToken .fareToken').val(fareToken);
                         $('.pushToken').submit();
                     }
@@ -755,8 +755,8 @@ app.controller('returnFlightController', [
 
             targetScope.progress = 100;
 
-            console.log('Completed setting flight filtering for : ' + targetScope.name);
-            console.log(targetScope);
+            $log.debug('Completed setting flight filtering for : ' + targetScope.name);
+            $log.debug(targetScope);
         }
 
         $scope.staticFilter = function (targetFlight) {
@@ -922,13 +922,13 @@ app.controller('returnFlightController', [
                                 $scope.arrangeFlightData('departure', returnData.data.flights[0].options); // For Departure Flight
                                 $scope.populateAirlines('departure');
                                 $scope.populatePrice('departure');
-                                console.log("Ada data");
+                                $log.debug("Ada data");
                             }
                             if (returnData.data.flights[1].options.length) {
                                 $scope.arrangeFlightData('return', returnData.data.flights[1].options); // For Return Flight
                                 $scope.populateAirlines('return');
                                 $scope.populatePrice('return');
-                                console.log("Ada data");
+                                $log.debug("Ada data");
                             }
                         }
                         
@@ -938,7 +938,7 @@ app.controller('returnFlightController', [
                             $scope.generateFlightList('return');
                         }
 
-                        console.log(returnData);
+                        $log.debug(returnData);
 
                         // loop the function
                         setTimeout(function () {
@@ -954,8 +954,8 @@ app.controller('returnFlightController', [
                         }
                         else
                         {
-                            console.log('Failed to get ' + targetScope.name + ' flight list');
-                            console.log('ERROR :');
+                            $log.debug('Failed to get ' + targetScope.name + ' flight list');
+                            $log.debug('ERROR :');
                             targetScope.progress = 100;
                             targetScope.finalProgress = 100;
                         }
@@ -964,12 +964,12 @@ app.controller('returnFlightController', [
                 else {
                     targetScope.progress = 100;
                     targetScope.finalProgress = 100;
-                    console.log('Not Authorized');
+                    $log.debug('Not Authorized');
                 }
 
                 
             } else {
-                console.log('complete getting flight for '+targetScope.name);
+                $log.debug('complete getting flight for '+targetScope.name);
                 targetScope.loading = false;
                 targetScope.loadingFlight = false;
                 $scope.departureFlightConfig.loading = false;

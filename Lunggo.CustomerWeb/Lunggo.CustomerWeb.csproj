@@ -797,6 +797,8 @@
     <Content Include="Assets\travorama20\images\Hotel\wifi.png" />
     <Content Include="Assets\travorama20\images\mobile-app.png" />
     <Content Include="Assets\travorama20\images\play-store-bg.png" />
+    <Content Include="Assets\travorama20\js\ConfirmationController.js" />
+    <Content Include="Assets\travorama20\js\ThankyouController.js" />
     <Content Include="Assets\vendor\dotdotdot\jquery.dotdotdot.js" />
     <Content Include="Assets\vendor\dotdotdot\jquery.dotdotdot.min.js" />
     <Content Include="Assets\vendor\dotdotdot\jquery.dotdotdot.min.umd.js" />
@@ -1502,12 +1504,14 @@
     <None Include="Properties\PublishProfiles\travorama-prod-cw.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-prod-cw__staging.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-prod-cw__staging2 %282%29.pubxml" />
+    <None Include="Properties\PublishProfiles\travorama-prod-cw__staging2 %285%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-prod-cw__staging2.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-qa-cw %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-qa-cw %283%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-qa-cw %284%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-qa-cw %285%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-qa-cw %286%29.pubxml" />
+    <None Include="Properties\PublishProfiles\travorama-qa-cw %287%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-qa-cw.pubxml" />
     <Content Include="Assets\js\bootstrap.js" />
     <Content Include="Assets\js\bootstrap.min.js" />

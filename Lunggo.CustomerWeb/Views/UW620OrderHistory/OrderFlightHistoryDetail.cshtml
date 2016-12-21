@@ -107,9 +107,6 @@
 }
 @section AdditionalJS{
     <!-- additional Angular JS-->
-    <script src="/Assets/js/angular.min.js"></script>
-    <script src="/Assets/js/angular-animate.min.js"></script>
-    <script src="/Assets/js/angular-route.min.js"></script>
 }
 
 @section PageJS{
@@ -338,6 +335,7 @@
                                 </div>
                             </div>
                         </div>
+                        <hr/>
                         <div class="rh-row">
                             <div class="rh-top clearfix">
                                 <div class="col-left-hotel">@*<img src="/Assets/travorama20/images/Hotel/hotel-md.jpg" alt="Alternate Text" />*@</div>
@@ -397,34 +395,36 @@
                                                     <div class="wb-container clearfix">
                                                         <div class="wb-left">Ketentuan</div>
                                                         <div class="wb-mid">:</div>
-                                                        <div class="wb-right bold-txt">@ToTitleCase(String.Join(". ", rate.TermAndCondition))</div>
+                                                        <div class="wb-right bold-txt" style="text-transform: capitalize">@String.Join(". ", rate.TermAndCondition)</div>
                                                     </div>
                                                 }
 
                                                 if (rate.Cancellation != null && rate.Cancellation.Count != 0)
                                                 {
-                                                    <div class="wb-container clearfix">
-                                                        <div class="wb-left">Ketentuan Pembatalan</div>
-                                                        <div class="wb-mid">:</div>
-                                                        <div class="wb-right bold-txt">
-                                                            @foreach (var policy in rate.Cancellation)
+                                                <div class="wb-container clearfix">
+                                                    <div class="wb-left">Ketentuan Pembatalan</div>
+                                                    <div class="wb-mid">:</div>
+                                                    <div class="wb-right bold-txt">
+                                                            @if (rate.IsFreeCancel)
                                                             {
                                                                 <div>
-                                                                    @pol. Pembatalan setelah tanggal @policy.StartTime.ToString("D", CultureInfo.CreateSpecificCulture("id-ID")) akan dikenakan biaya sebesar Rp @(policy.SingleFee.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))) per kamar <br />
+                                                                    - Gratis pembatalan sebelum tanggal @rate.FreeUntil.GetValueOrDefault().ToString("f", CultureInfo.CreateSpecificCulture("id-ID")) WIB.
                                                                 </div>
-                                                                pol++;
                                                             }
-                                                        </div>
+                                                        @foreach (var policy in rate.Cancellation)
+                                                        {
+                                                            <div>
+                                                                    - Pembatalan setelah tanggal @policy.StartTime.ToString("f", CultureInfo.CreateSpecificCulture("id-ID")) akan dikenakan biaya sebesar Rp @(policy.SingleFee.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))) per kamar <br />
+                                                            </div>
+                                                        }
                                                     </div>
+                                                </div>
                                                 }
-                                                index++;
+                                                        index++;
                                             }
 
                                         </div>
-                                        <ul class="blue-txt semibold-txt blue-list rh-tnc">
-                                            @*<li>Extra bed belum termasuk</li>*@
-                                            @*<li>Free cancelation sebelum H-5 tanggal booking</li>*@
-                                        </ul>
+                                       <hr/>
                                             indexroom++;
                                     }
 

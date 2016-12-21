@@ -111,13 +111,7 @@
 
 @section AdditionalJS {
     <!-- additional Angular JS-->
-    <script src="/Assets/js/angular.min.js"></script>
-    <script src="/Assets/js/angular-animate.min.js"></script>
-    <script src="/Assets/js/angular-route.min.js"></script>
     <script src="/Assets/js/jquery.countdown.min.js"></script>
-    <script src="/Assets/js/CryptoJS/components/core-min.js"></script>
-    <script src="/Assets/js/CryptoJS/rollups/sha512.js"></script>
-    <script src="/Assets/js/CryptoJS/components/enc-base64-min.js"></script>
     <!-- veritrans JS -->
     <script src="https://api.sandbox.veritrans.co.id/v2/assets/js/veritrans.min.js"></script>
     <!-- fancybox -->
@@ -147,14 +141,12 @@
     var hotelImg = '@hotelMainImage';
     </script>
     <script src="/Assets/travorama20/js/HotelCheckoutController.js"></script>
-    <script src="/Assets/travorama20/angularDirectory/search/hotelSearch.service.js"></script>
-    @*<script src="/Assets/mobile/js/HotelController.js"></script>*@
 }
 
 <header class="page__header">
     <div class="step__wrapper">
-        <div class="step step-1" style = "width: 50%" ng-class="{'active' : currentPage == 1, 'inactive' : currentPage > 1}"><span class=" xlg-txt">01</span></div>
-        <div class="step step-2" style="width: 50%" ng-class="{'active' : currentPage == 2, 'inactive' : currentPage > 2}"><span class="xlg-txt">02</span></div>
+        <div class="step step-1" style = "width: 50%" ng-class="{'active' : currentPage == 1, 'inactive' : currentPage > 1}"><span class=" xlg-txt">1. Data Pemesan</span></div>
+        <div class="step step-2" style="width: 50%" ng-class="{'active' : currentPage == 2, 'inactive' : currentPage > 2}"><span class="xlg-txt">2. Review Pesanan</span></div>
         
     </div>
 </header>
@@ -171,7 +163,7 @@
                 </div>
                 <div class="form-group important">
                     <label class="control-label">Nama Lengkap<span class="imp"></span> : </label>
-                    <input type="text" value="" @*pattern="[a-zA-Z\s]+"*@ ng-model="buyerInfo.name" name="name" class="form-control nama" placeholder="Nama Lengkap" required />
+                    <input type="text" value="" ng-model="buyerInfo.name" name="name" class="form-control nama" placeholder="Nama Lengkap" required />
                     <div ng-show="!checkName(buyerInfo.name)" style="color:red">
                         Nama tidak boleh mengandung karakter selain alfabet dan spasi
                     </div>
@@ -185,8 +177,7 @@
                             <select class="form-control" name="PhoneCode" ng-model="buyerInfo.countryCode" ng-init="buyerInfo.countryCode = '62'">
                                 <option ng-repeat="country in countries" ng-selected="country.dial_code == buyerInfo.countryCode" value="{{country.dial_code}}">{{country.name}} ({{country.dial_code}})</option>
                             </select>
-                            @*<input type="number" value="" ng-model="buyerInfo.countryCode" name="PhoneCode" class="form-control" placeholder="Ex : 62 for Indonesia" required />*@
-                        </div>
+                       </div>
                         <div class="col-xs-12">
                             <p><small>Nomor Telepon (Tanpa Kode Negara)</small></p>
                             <input type="number" value="" ng-model="buyerInfo.phone" name="Phone" class="form-control" placeholder="Ex : 821 2345 6789" required />
@@ -197,39 +188,7 @@
                     <label class=" control-label">Masukkan alamat e-mail Anda<span class="imp"></span> : </label>
                     <input type="email" value="" ng-model="buyerInfo.email" name="Email" class="form-control" placeholder="Ex: name@domain.com" required />
                 </div>
-                @*<div class="form-group">
-                    <div class="form-box">
-                        <div class="fb-header"><b>Kamar</b> : Deluxe 2 Kings Bed Rooms</div>
-                        <div class="fb-body">
-                            <div class="fb-top">Tamu per Kamar : <b>4 Orang</b></div>
-                            <div class="fb-bottom">
-                    <div class="form-group">
-                        <label class="control-label">Titel : </label>
-                                    <select class="form-control" name="title" ng-model="buyerInfo.title" ng-init="buyerInfo.title = titles[0].value">
-                            <option ng-repeat="title in titles" value="{{title.value}}">{{title.name}}</option>
-                        </select>
-                    </div>
-                    <div class="form-group important">
-                                    <label class="control-label">Nama Lengkap Tamu : </label>
-                                    <input type="text" value="" pattern="[a-zA-Z\s]+" ng-model="buyerInfo.name" name="name" class="form-control nama" placeholder="Nama Lengkap" required />
-                        </div>
-                                <div class="fb-note">
-                                    <div>Catatan Khusus:</div>
-                                    <ul class="sqr-blue-list md-txt">
-                                        <li>
-                                            <div class="blue-txt semibold-txt">Room Policy</div>
-                                            <div class="grey-txt">Lorem ipsum dolor sit amet.</div>
-                                        </li>
-                                        <li>
-                                            <div class="blue-txt semibold-txt">Room Policy</div>
-                                            <div class="grey-txt">Lorem ipsum dolor sit amet.</div>
-                                        </li>
-                                    </ul>
-                    </div>
-                </div>
-                </div>
-                    </div>
-                </div>*@
+ 
                 <input type="checkbox" name="diffPerson" ng-model="diffPerson" value="false" ng-change="cleanGuestInfo()"> <span class="italic-txt bold-txt">Saya membuat reservasi untuk orang lain.</span><br>
                 <div ng-show ="diffPerson">
                     <h3><b>DATA</b> TAMU</h3>
@@ -241,20 +200,13 @@
                     </div>
                     <div class="form-group important">
                         <label class="control-label">Nama Lengkap<span class="imp"></span> : </label>
-                        <input type="text" value="" @*pattern="[a-zA-Z\s]+"*@ ng-model="guestInfo.name" name="name" class="form-control nama" placeholder="Nama Lengkap" required />
+                        <input type="text" value="" ng-model="guestInfo.name" name="name" class="form-control nama" placeholder="Nama Lengkap" required />
                         <div ng-show="!checkName(guestInfo.name)" style="color:red">
                             Nama tidak boleh mengandung karakter selain alfabet dan spasi
                         </div>
                     </div>
                 </div>
-                @*<div class="form-group">
-                    <div class="form-box">
-                        <div class="fb-header"><b>Permintaan Khusus</b> (opsional)</div>
-                        <div class="fb-body">
-                            <textarea name="fb-request" placeholder="Silakan tulis permintaan khusus Anda di sini" ng-model="buyerInfo.message"></textarea>
-                        </div>
-                    </div>
-                </div>*@
+ 
                 <div class="form-group">
                     <div class="form-request">
                         <div class="">Permintaan Khusus (opsional)</div>
@@ -285,7 +237,7 @@
             </form>
         </div>
     </div>
-    <div class=" page-step-2" ng-show="currentPage == 2" @*style="display: none;"*@>
+    <div class=" page-step-2" ng-show="currentPage == 2">
         <div class="review-hotel">
             <h3 class="summary__title"><b>REVIEW</b> PESANAN</h3>
             <div class="form-group">
@@ -299,31 +251,7 @@
                 </div>
             </div>
             @Html.Partial("/Views/Hotel/Shared/Mobile/_RoomDetail.cshtml", Model.HotelDetail)
-            @*<div class="form-group">
-                <div class="form-box">
-                    <div class="fb-header"><b>Detail Pemesan</b></div>
-                    <div class="fb-body">
-                        <div class="clearfix">
-                            <div class="fb-row clearfix">
-                                <div>Pemesan</div>
-                                <div class="bold-txt" style="padding-bottom: 5px">{{changeTitle(buyerInfo.title)}} {{buyerInfo.name}}</div>
-                            </div>
-                            <div class="fb-row clearfix">
-                                <div>E-Mail</div>
-                                <div class="bold-txt" style="padding-bottom: 5px">{{buyerInfo.email}}</div>
-                            </div>
-                            <div class="fb-row clearfix">
-                                <div>No. Telepon</div>
-                                <div class="bold-txt" style="padding-bottom: 5px">+{{buyerInfo.countryCode}}{{buyerInfo.phone}}</div>
-                            </div>
-                            <div class="fb-row clearfix">
-                                <div>Tamu</div>
-                                <div class="bold-txt" style="padding-bottom: 5px">{{changeTitle(guestInfo.title)}} {{guestInfo.name}}</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>*@
+             
             <div class="guest-detail clearfix">
                 <h3 class="summary__title"><b>DETAIL </b>PEMESAN</h3>
                 <div class="clearfix">

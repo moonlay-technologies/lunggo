@@ -124,12 +124,18 @@
                                 <p style="">: <b>@Model.HotelDetail.CheckOutDate.ToString("D", CultureInfo.CreateSpecificCulture("id-ID"))</b></p>
                             </div>
                         </div>
+
+                        @foreach (var room in Model.HotelDetail.Rooms)
+                        {
+                            foreach (var rate in room.Rates)
+                            {
+                                <hr />
                         <div class="row grey-txt">
                             <div class="col-xs-3">
                                 <p>Tipe Kamar</p>
                             </div>
                             <div class="col-xs-9">
-                                <p>: @HotelService.GetInstance().GetHotelRoom(Model.HotelDetail.Rooms[0].RoomCode).RoomDescId @HotelService.GetInstance().GetHotelBoardDescId(Model.HotelDetail.Rooms[0].Rates[0].Boards)</p>
+                                        <p>: @HotelService.GetInstance().GetHotelRoom(room.RoomCode).RoomDescId @HotelService.GetInstance().GetHotelBoardDescId(rate.Boards)</p>
                             </div>
                         </div>
                         <div class="row grey-txt">
@@ -138,21 +144,21 @@
                             </div>
                             <div class="col-xs-9">
                                 <p>
-                                    : @Model.HotelDetail.Rooms[0].Rates[0].AdultCount Dewasa @if (Model.HotelDetail.Rooms[0].Rates[0].ChildCount > 0)
+                                            : @rate.AdultCount Dewasa @if (rate.ChildCount > 0)
                                     {
-                                        <span>, @Model.HotelDetail.Rooms[0].Rates[0].ChildCount Anak </span>
+                                                <span>, @rate.ChildCount Anak </span>
                                         <span>
                                             (
-                                            @for (var a = 0; a < Model.HotelDetail.Rooms[0].Rates[0].ChildrenAges.Count; a++)
+                                                    @for (var a = 0; a < rate.ChildrenAges.Count; a++)
                                             {
-                                                if (a != Model.HotelDetail.Rooms[0].Rates[0].ChildrenAges.Count - 1)
+                                                        if (a != rate.ChildrenAges.Count - 1)
                                                 {
-                                                    @Model.HotelDetail.Rooms[0].Rates[0].ChildrenAges[a]
+                                                            @rate.ChildrenAges[a]
                                                     <span>Tahun, </span>
                                                 }
                                                 else
                                                 {
-                                                    @Model.HotelDetail.Rooms[0].Rates[0].ChildrenAges[a] <span>Tahun</span>
+                                                            @rate.ChildrenAges[a] <span>Tahun</span>
                                                 }
                                             }
                                             )
@@ -161,27 +167,52 @@
                                 </p>
                             </div>
                         </div>
-                        
                         <div class="row grey-txt">
                             <div class="col-xs-3">
                                 <p>Jumlah Kamar</p>
                             </div>
                             <div class="col-xs-9">
-                                <p>: @Model.HotelDetail.Rooms[0].Rates[0].RoomCount</p>
+                                        <p>: @rate.RoomCount</p>
+                                    </div>
+                                </div>
+                                <div class="row grey-txt">
+                                    <div class="col-xs-3">
+                                        <p>Ketentuan Pembatalan</p>
+                                    </div>
+                                    <div class="col-xs-9">
+                                        @if (rate.IsFreeCancel)
+                                        {
+                                            <p>
+                                                - Gratis pembatalan sebelum tanggal @rate.FreeUntil.GetValueOrDefault().ToString("f", CultureInfo.CreateSpecificCulture("id-ID")) WIB.
+                                            </p>
+                                        }
+                                        <p>
+                                            @if (rate.Cancellation != null && rate.Cancellation.Count > 0)
+                                            {
+                                                foreach (var policy in rate.Cancellation)
+                                                {
+                                                    <div>
+                                                        - Pembatalan setelah tanggal @policy.StartTime.ToString("f", CultureInfo.CreateSpecificCulture("id-ID")) akan dikenakan biaya sebesar Rp @(policy.Fee.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))) per kamar<br />
+                                                    </div>
+                                                }
+                                            }
+                                        </p>
                             </div>
                         </div>
-                        @if (Model.HotelDetail.Rooms[0].Rates[0].TermAndCondition != null && Model.HotelDetail.Rooms[0].Rates[0].TermAndCondition.Count != 0
-                            && !Model.HotelDetail.Rooms[0].Rates[0].TermAndCondition.Exists(r => r.Length < 3))
+                                if (rate.TermAndCondition != null && rate.TermAndCondition.Count > 0 && !rate.TermAndCondition.Exists(r => r.Length < 3))
                         {
                             <div class="row grey-txt">
                                 <div class="col-xs-3">
                                     <p>Ketentuan</p>
                                 </div>
                                 <div class="col-xs-9">
-                                    <p>: @String.Join(". ", Model.HotelDetail.Rooms[0].Rates[0].TermAndCondition)</p>
+                                            <p>: @String.Join(". ", rate.TermAndCondition)</p>
                                 </div>
                             </div>
                         }
+                            }
+                        }
+
 
                         @if (Model.HotelDetail.SpecialRequest != null && Model.HotelDetail.SpecialRequest.Length != 0)
                         {

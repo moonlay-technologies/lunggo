@@ -6,7 +6,7 @@
     ViewBag.Title = "Profil";
     ViewBag.BodyClass = "page page-useraccount";
     ViewBag.AngularController = "UserAccountController";
-
+    
     //var rsvs = Model.OrderByDescending(rsv => rsv.RsvTime).ToList();
 }
 
@@ -20,42 +20,41 @@
 
 @section PageJS{
     <script>
-        var langCode = 'en';
-        var userProfile = {
-            address: '@User.Identity.GetAddress()',
-            firstname: '@User.Identity.GetFirstName()',
-            lastname: '@User.Identity.GetLastName()',
-            phone: parseInt('@User.Identity.GetPhoneNumber()'),
-            country: '@User.Identity.GetCountryCd()'
+    var langCode = 'en';
+    var userProfile = {
+        address: '@User.Identity.GetAddress()',
+        firstname: '@User.Identity.GetFirstName()',
+        lastname: '@User.Identity.GetLastName()',
+        phone: parseInt('@User.Identity.GetPhoneNumber()'),
+        country: '@User.Identity.GetCountryCd()'
         };
-        var editProfile = {
-            address: '@User.Identity.GetAddress()',
-            firstname: '@User.Identity.GetFirstName()',
-            lastname: '@User.Identity.GetLastName()',
-            phone: parseInt('@User.Identity.GetPhoneNumber()'),
-            country: '@User.Identity.GetCountryCd()'
-        }
+    var editProfile = {
+        address: '@User.Identity.GetAddress()',
+        firstname: '@User.Identity.GetFirstName()',
+        lastname: '@User.Identity.GetLastName()',
+        phone: parseInt('@User.Identity.GetPhoneNumber()'),
+        country: '@User.Identity.GetCountryCd()'
+    }
         if (userProfile.phone === NaN) {
             userProfile.phone = 0;
         }
-        @*//var order = '@Html.Raw(rsvs.Serialize())';*@
+    @*//var order = '@Html.Raw(rsvs.Serialize())';*@
     </script>
     <!-- angular controller -->
 
-    <script src="/Assets/travorama20/angularDirectory/search/hotelSearch.service.js"></script>
     <script src="/Assets/mobile/js/AccountController.js"></script>
 }
 <div class="page-loading" ng-class="{'page-loaded' : pageLoaded}">
     <header class="notifbox" ng-hide="!NotifBox">
         <h3>{{formMessage}}</h3>
     </header>
-
+    
     <section class="user-menu" ng-show="PageConfig.ActivePage == 'menu'">
         <div class="menu-user">
             <span ng-if="UserProfile.name.length != 0">{{UserProfile.name}}</span>
             <span ng-if="UserProfile.name.length == 0">{{UserProfile.email}}</span>
         </div>
-
+       
         <div class="menu-wrapper">
             <ul>
                 <li class="menu-profile">
@@ -135,9 +134,9 @@
                                 <input type="password" value="" class="form-control" ng-model="UserPassword.NewPassword" required />
                             </div>
                             @*<div class="form-group">
-                                    <label class="control-label">Konfirmasi Password Baru:</label>
-                                    <input type="password" value="" class="form-control" ng-model="UserPassword.ConfirmPassword" required />
-                                </div>*@
+                                <label class="control-label">Konfirmasi Password Baru:</label>
+                                <input type="password" value="" class="form-control" ng-model="UserPassword.ConfirmPassword" required />
+                            </div>*@
                         </div>
                         <div class="form-group" ng-show="UserPassword.Editing">
                             <div class="row">
@@ -326,7 +325,7 @@
                             </li>
                         </ul>
                     </div>
-
+                    
                 </div>
             </div>
         </div>

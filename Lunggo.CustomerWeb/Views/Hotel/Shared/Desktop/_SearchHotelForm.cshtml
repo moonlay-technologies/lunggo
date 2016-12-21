@@ -43,7 +43,7 @@
             </div>
         </div>
         <div class="clearfix">
-            <div class="room-row clearfix" ng-repeat="n in [0,1,2,3,4,5,6,7] track by $index" ng-show="hotelSearch.roomCount > $index">
+            <div class="room-row clearfix" ng-repeat="n in [0,1,2,3,4,5,6,7] track by $index" ng-init="initChildrenAges(n)" ng-show="hotelSearch.roomCount > $index">
                 <div class="white-txt bold-txt md-txt">Kamar {{$index+1}}</div>
                 <div class="col-4">
                     <div class="form-group form__adult col-half">
@@ -74,9 +74,9 @@
                         <div class="form-control select-age">
                             <div class="col-6"><span class="sm-txt grey-txt">Usia Anak {{$index}} (th)</span></div>
                             <div class="col-4 input-hotel xlg-txt right-txt semibold-txt darkgrey-txt">{{hotelSearch.occupancies[n].childrenAges[child]}}</div>
-                            <div class="option" ng-model="hotelSearch.occupancies[n].childrenAges[child]" >
+                            <div class="option" ng-model="hotelSearch.occupancies[n].childrenAges[child]">
                                 <span data-value="" ng-repeat="childAge in hotelSearch.childagerange" @*hotelSearch.occupancies[n].childrenAges = [0,0,0,0]; *@
-                                      ng-click="(hotelSearch.occupancies[n].childrenAges[child] = childAge)" ng-init="initChildrenAges(n)">{{childAge}}</span>
+                                      ng-click="(hotelSearch.occupancies[n].childrenAges[child] = childAge)">{{childAge}}</span>
                             </div>
                         </div>
                     </div>

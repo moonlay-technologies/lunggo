@@ -25,8 +25,7 @@
     var images = new List<Image>();
     var hotelImg = "";
     var roomImg = "";
-    var index = 1;
-    //Model.Payment.Status = PaymentStatus.Settled;
+    
     try
     {
         if (Model is HotelReservationForDisplay)
@@ -121,12 +120,6 @@
 
     <link rel="stylesheet" href="/Assets/mobile/css/application.css">
 }
-@section AdditionalJS {
-    <!-- additional Angular JS-->
-    <script src="/Assets/js/angular.min.js"></script>
-    <script src="/Assets/js/angular-animate.min.js"></script>
-    <script src="/Assets/js/angular-route.min.js"></script>
-}
 
 @section PageJS{
     <script>
@@ -150,9 +143,7 @@
             @:var nights = '@((hotel.HotelDetail.CheckOutDate - hotel.HotelDetail.CheckInDate).Days)';
         }
     </script>
-
-    <script src="/Assets/travorama20/angularDirectory/search/hotelSearch.service.js"></script>
-    <script src="/Assets/mobile/js/ThankyouController.js"></script>
+    <script src="/Assets/travorama20/js/ThankyouController.js"></script>
 }
 
 <div ng-app="travorama" ng-controller="ThankyouController">
@@ -255,29 +246,7 @@
                     </div>
                 }
             </div>
-            @*<div ng-init="refresh()" ng-hide = "hide">
-                <div class="popup__wrapper active">
-                    <div class="popup">
-                        <header class="popup__header">
-                            <h4 class="popup__title">Sedang Memverifikasi</h4>
-                        </header>
-                        <div class="popup__body">
-                            <div class="container_new">
-                                <span>
-                                    Mohon menunggu. Pembayaran Anda sedang diverifikasi oleh sistem kami.
-                                </span>
-                                <div class="text-center"><img src="/Assets/images/loading-image-dark.gif" width="50%" alt="loading" /></div>
-                            </div>
-                        </div>
-                        <div class="popup__footer">
-                            <div class="container_new">
-                                <a class="btn btn-block btn-yellow" ng-click ="seeDetail()">LIHAT DETAIL PEMESANAN</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>*@
+           
 
                 break;
             case PaymentStatus.Settled:

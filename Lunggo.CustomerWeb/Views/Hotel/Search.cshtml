@@ -32,7 +32,7 @@
             loc = foundLocation.HotelName + ", " + foundLocation.Destination + ", " + foundLocation.Country;
         }
     }
-    //var found = HotelService.GetInstance()._Autocompletes.TryGetValue(Convert.ToInt64(Model.Location), out loc);
+    
 }
 @section AdditionalJS {
     <script src="/Assets/js/jquery-ui.min.js"></script>
@@ -134,7 +134,7 @@
                         </div>
                         <div class="filter-group" ng-show="hotelFilterDisplayInfo.facilityFilter.length > 0">
                             <label class="filter-title">Fasilitas:</label><span class="city-name blue-txt"><a href="" ng-click="filter.facilities = null">(Reset)</a></span>
-                            <div class="area" ng-repeat="facilityFilter in hotelFilterDisplayInfo.facilityFilter">
+                            <div class="area" ng-repeat="facilityFilter in hotelFilterDisplayInfo.facilityFilter" ng-hide="facilityFilter.count == 0">
                                 <label class="sqr city-point pointer" ng-click="changeFilter('facility', facilityFilter)" ng-class="{ active: (filter.facilities.indexOf(facilityFilter.code) > -1) }">
                                     <span class="checkbox"></span>
                                     @*<input type="checkbox" name="check" class="check" value="false" ng-disabled="true" />*@

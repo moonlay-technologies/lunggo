@@ -94,7 +94,6 @@
             {
                 foreach (var rate in room.Rates)
                 {
-                    <hr/>
                     <div class="fb-room">
                         <div class="clearfix">
                             <div class="col-8"><div class="blue-txt bold-txt lg-txt" style="text-transform: capitalize">@ToTitleCase(room.RoomName) @ToTitleCase(rate.BoardDescription)</div></div>
@@ -110,9 +109,9 @@
                                 <div class="col-6">Tamu per Kamar</div>
                                 <div class="col-4 bold-txt">
                                     @rate.AdultCount Dewasa @if (rate.ChildCount > 0)
-                                    {
-                                        <span>, @rate.ChildCount Anak</span>
-                                    }
+                                                            {
+                                                                <span>, @rate.ChildCount Anak</span>
+                                                            }
                                 </div>
                             </div>
                             @if (rate.ChildCount > 0)
@@ -140,16 +139,20 @@
 
                         </div>
                         <ul class="blue-list blue-txt">
-                            <li ng-show="room.rate.isFreeCancel">
-                                Gratis pembatalan sebelum
-                                <span style="color:#1daee4">
-                                    @rate.FreeUntil.GetValueOrDefault().ToString("D", CultureInfo.CreateSpecificCulture("id-ID"))'
-                                </span> WIB.
-                            </li>
+                            @if (rate.IsFreeCancel)
+                            {
+                                <li>
+                                    Gratis pembatalan sebelum
+                                    <span style="color:#1daee4">
+                                        @rate.FreeUntil.GetValueOrDefault().ToString("D", CultureInfo.CreateSpecificCulture("id-ID"))
+                                    </span> WIB.
+                                </li>
+                            }
+                            
                             @foreach (var cancellation in rate.Cancellation)
                             {
                                 <li>
-                                    Pembatalan setelah <span style="color:#1daee4">@cancellation.StartTime.ToString("D", CultureInfo.CreateSpecificCulture("id-ID"))</span>
+                                    Pembatalan setelah <span style="color:#1daee4">@cancellation.StartTime.ToString("f", CultureInfo.CreateSpecificCulture("id-ID"))</span>
                                     akan dikenakan biaya pembatalan sebesar <span style="color:#ff7200">Rp @cancellation.SingleFee.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</span> per kamar.
                                 </li>
                             }
@@ -169,7 +172,6 @@
                                                 <div class="grey-txt">@tnc</div>
                                             </li>
                                         }
-
                                     </ul>
                                 }
                                 @if (Model.Policy != null && Model.Policy.Count > 0)
@@ -186,10 +188,13 @@
                                     </ul>
                                 }
                                 
-                        </div>
+                            </div>
                         }
                         
                     </div>
+                
+                    <hr/>
+                
                 }
 
             }

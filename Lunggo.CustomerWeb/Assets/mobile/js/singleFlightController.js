@@ -1,4 +1,5 @@
-﻿app.controller('SingleFlightController', ['$http', '$scope', '$rootScope', '$interval', function($http, $scope, $rootScope, $interval) {
+﻿app.controller('SingleFlightController', ['$http', '$scope', '$rootScope', '$interval', '$log',
+    function ($http, $scope, $rootScope, $interval, $log) {
 
     // **********
     // on document ready
@@ -133,8 +134,8 @@
 
         if ($scope.Progress < 100) {
 
-            console.log('request : ' + $scope.FlightConfig[0].FlightRequest.Requests);
-            console.log("Request : " + FlightSearchConfig.Url + $scope.flightFixRequest() + '/' + $scope.Progress);
+            $log.debug('request : ' + $scope.FlightConfig[0].FlightRequest.Requests);
+            $log.debug("Request : " + FlightSearchConfig.Url + $scope.flightFixRequest() + '/' + $scope.Progress);
 
             // **********
             // ajax
@@ -149,7 +150,7 @@
 
                     SelectConfig.SearchId = $scope.flightFixRequest();
                     $scope.FlightConfig[0].FlightRequest.SearchId = $scope.flightFixRequest();
-                    console.log($scope.flightFixRequest());
+                    $log.debug($scope.flightFixRequest());
 
                     $scope.Progress = returnData.data.progress;
                     if ($scope.Progress == 100) {
@@ -162,7 +163,7 @@
                         $scope.FlightFunctions.GenerateFlightList(returnData.data.flights[0].options);
                     }
                     
-                    console.log('Progress : ' + $scope.Progress + ' %');
+                    $log.debug('Progress : ' + $scope.Progress + ' %');
 
                     // loop the function
                     setTimeout(function () {
@@ -176,8 +177,8 @@
                         $scope.GetFlight('1');
                     }
                     else {
-                        console.log('Failed to get flight list');
-                        console.log(returnData);
+                        $log.debug('Failed to get flight list');
+                        $log.debug(returnData);
                         for (var i = 0; i < $scope.FlightConfig[0].FlightRequest.Requests.length; i++) {
                             // add to completed
                             if ($scope.FlightConfig[0].FlightRequest.Completed.indexOf($scope.FlightConfig[0].FlightRequest.Requests[i] < 0)) {
@@ -198,12 +199,12 @@
             {
                 $scope.FlightConfig[0].FlightRequest.Progress = 100;
                 $scope.FlightConfig[0].FlightRequest.FinalProgress = 100;
-                console.log('Not Authorized');
+                $log.debug('Not Authorized');
             }
             
 
         } else {
-            console.log('Finished getting flight list !');
+            $log.debug('Finished getting flight list !');
             $scope.PageConfig.Busy = false;
         }
 
@@ -211,8 +212,8 @@
 
     // generate flight list
     $scope.FlightFunctions.GenerateFlightList = function (data) {
-        console.log('Generating Flight List');
-        console.log(data);
+        $log.debug('Generating Flight List');
+        $log.debug(data);
         var targetScope = $scope.FlightConfig[0];
         var startNo = $scope.FlightConfig[0].FlightList.length;
         for (var i = 0; i < data.length; i++) {
@@ -287,7 +288,7 @@
             $scope.trial = 0;
         }
         $scope.PageConfig.Validating = true;
-        console.log('Validating flight no : ' + indexNo);
+        $log.debug('Validating flight no : ' + indexNo);
 
         // AJAX revalidate
         if (!RevalidateConfig.Validated) {
@@ -306,10 +307,10 @@
                 }).then(function (returnData) {
                     RevalidateConfig.Validated = true;
                     
-                    console.log(indexNo);
-                    console.log("Response Select Flight : " + returnData);
+                    $log.debug(indexNo);
+                    $log.debug("Response Select Flight : " + returnData);
                     if (returnData.data.token != "" || returnData.data.token != null) {
-                        console.log('departure flight available');
+                        $log.debug('departure flight available');
                         $('.push-token input').val(returnData.data.token);
                         $('.push-token').submit();
                     }
@@ -321,9 +322,9 @@
                     }
                     else {
                         $scope.PageConfig.Validating = false;
-                        console.log('ERROR Validating Flight');
-                        console.log(returnData);
-                        console.log('--------------------');
+                        $log.debug('ERROR Validating Flight');
+                        $log.debug(returnData);
+                        $log.debug('--------------------');
                         $scope.selectError = true;
 
                     }
@@ -412,7 +413,7 @@
     }
     // set overlay
     $scope.SetOverlay = function (overlay) {
-        console.log('changing overlay to : ' + overlay);
+        $log.debug('changing overlay to : ' + overlay);
         if (!overlay) {
             $scope.PageConfig.ActiveOverlay = '';
             $scope.PageConfig.BodyNoScroll = false;

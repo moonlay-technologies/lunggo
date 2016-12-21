@@ -12,7 +12,7 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
     $scope.buyerInfo = {};
     $scope.token = CheckoutDetail.Token;
     $scope.currency = 'IDR';
-    $scope.initialPrice = CheckoutDetail.Price;
+        $scope.initialPrice = CheckoutDetail.Price;
     $scope.passengers = [];
     $scope.bookingDate = new Date();
     $scope.Countries = Countries;
@@ -69,6 +69,7 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
         BuyerInfo: CheckoutDetail.BuyerInfo
     };
 
+    $scope.CheckoutConfig.GeneratePassenger();
     $scope.PageConfig = $rootScope.PageConfig;
     $scope.PageConfig.ExpiryDate = {
         Expired: false,
@@ -223,16 +224,20 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
         var valid = true;
         for (var x = 0; x < passengers.length; x++) {
             if (passengers[x].birth.date === $scope.dates($scope.flightDetail.departureFullDate.getMonth(), $scope.flightDetail.departureFullDate.getYear)[0]
-               || passengers[x].birth.month === $scope.months[0].value.toString() || passengers[x].birth.year == $scope.generateYear(passengers[x].type)[0]) {
+               || passengers[x].birth.month === $scope.months[0].value.toString() ||
+                passengers[x].birth.year == $scope.generateYear(passengers[x].type)[0] ||
+                $scope.invalidDate(passengers[x].birth.date, passengers[x].birth.month, passengers[x].birth.year)) {
                 valid = false;
             }
             else if (passengers[x].type != 'adult') {
-                if (passengers[x].birth.date == null || passengers[x].birth.month == null || passengers[x].birth.year == null) {
+                if (passengers[x].birth.date == null || passengers[x].birth.month == null || passengers[x].birth.year == null
+                    || $scope.invalidDate(passengers[x].birth.date, passengers[x].birth.month, passengers[x].birth.year)) {
                     valid = false;
                 }
             }
             else if (passengers[x].type == 'adult') {
-                if ($scope.CheckoutConfig.BirthDateRequired && (passengers[x].birth.date == null || passengers[x].birth.month == null || passengers[x].birth.year == null)) {
+                if ($scope.CheckoutConfig.BirthDateRequired && (passengers[x].birth.date == null || passengers[x].birth.month == null ||
+                    passengers[x].birth.year == null) || $scope.invalidDate(passengers[x].birth.date, passengers[x].birth.month, passengers[x].birth.year)) {
                     valid = false;
                 }
             }
@@ -244,10 +249,14 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
         var valid = true;
         for (var x = 0; x < passengers.length; x++) {
             if (passengers[x].passport.expire.date === $scope.dates($scope.flightDetail.departureFullDate.getMonth(), $scope.flightDetail.departureFullDate.getYear)[0]
-               || passengers[x].passport.expire.month === $scope.months[0].value.toString() || passengers[x].passport.expire.year == $scope.generateYear(passengers[x].type)[0]) {
+               || passengers[x].passport.expire.month === $scope.months[0].value.toString() ||
+                passengers[x].passport.expire.year == $scope.generateYear(passengers[x].type)[0]
+                || $scope.invalidDate(passengers[x].passport.expire.date, passengers[x].passport.expire.month, passengers[x].passport.expire.year)) {
                 valid = false;
             }
-            else if (passengers[x].passport.expire.date == null || passengers[x].passport.expire.month == null || passengers[x].passport.expire.year == null) {
+            else if (passengers[x].passport.expire.date == null || passengers[x].passport.expire.month == null ||
+                passengers[x].passport.expire.year == null ||
+                $scope.invalidDate(passengers[x].passport.expire.date, passengers[x].passport.expire.month, passengers[x].passport.expire.year)) {
                 valid = false;
             }
         }
@@ -305,6 +314,28 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
             }
         }
         return valid;
+    }
+
+    $scope.invalidDate = function (day, month, year) {
+        if (year % 4 == 0 && month == 2) {
+            if (day > 29) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            if (month == 2 && (day == null || day > 28)) {
+                return true;
+            } else if (month == 4 || month == 6 || month == 9 || month == 11) {
+                if (day > 30) {
+                    return true;
+                } else {
+                    return false;
+                }
+            } else {
+                return false;
+            }
+        }
     }
 
     //*****************************END*****************************

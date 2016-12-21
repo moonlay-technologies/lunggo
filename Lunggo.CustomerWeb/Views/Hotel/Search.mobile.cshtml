@@ -43,7 +43,6 @@
 @section PageJS{
     <script>var loc = '@loc';</script>
     <script src="/Assets/mobile/js/HotelController.js"></script>
-    <script type="text/javascript" src="/Assets/travorama20/js/HotelController.js"></script>
     <script src="/Assets/travorama20/angularDirectory/search/hotelSearch.service.js"></script>
     <script src="/Assets/travorama20/angularDirectory/common/hotelAutocomplete.service.js"></script>
     <script src="/Assets/travorama20/js/hotelSearchController.js"></script>
@@ -63,7 +62,7 @@
         <div ng-show="!searchDone" class="text-center" style="height: 320px;">
             <img class="img-loading" src="/Assets/images/load.gif">
         </div>
-        <div class="text-center" ng-show="searchDone && returnedHotelCount == 0"><h3> Hotel tidak ditemukan, silakan ganti filter atau destinasi anda.</h3></div>
+        <div class="text-center" ng-show="searchDone && page == 1 && returnedHotelCount == 0"><h3> Hotel tidak ditemukan, silakan ganti filter atau destinasi anda.</h3></div>
         <ul class="hotel-list-container">
             <li ng-repeat="hotel in hotels" ng-click="GotoDetailHotel(hotel.hotelCd)">
                 <div class="hotel-list clearfix">
@@ -153,7 +152,7 @@
                         <h4 class="filter-group__title">Fasilitas</h4>
                     </div>
                     <div class="filter-group__content short-txt clearfix">
-                        <div class="col-half" ng-repeat="facilityFilter in hotelFilterDisplayInfo.facilityFilter">
+                        <div class="col-half" ng-repeat="facilityFilter in hotelFilterDisplayInfo.facilityFilter" ng-hide="facilityFilter.count == 0">
                             <label class="checkbox" ng-click="changeFilter('facility', facilityFilter)" ng-class="{ 'active': (filter.facilities.indexOf(facilityFilter.code) > -1) }">
                                 <div class="switch"></div>
                                 <span>{{facilityFilter.name}} ({{facilityFilter.count}})</span>

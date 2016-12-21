@@ -1,12 +1,10 @@
 ﻿// home controller
 app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource', '$timeout', 'hotelSearchSvc', 'imageSvc', function ($scope, $log, $http, $resource, $timeout, hotelSearchSvc, imageSvc) {
 
-    $scope.destinationName = "";
+    $scope.destinationName = ""; //tbd
     $scope.hotel = {};
     $scope.searchId = '';
     $scope.searchParam = '';
-    
-
     $scope.hotel.location = '';
     $scope.hotel.checkinDate = "";
     $scope.hotel.checkoutDate = "";
@@ -23,20 +21,21 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
     $scope.loc = loc;
     $scope.selectedRoom = '';
     $scope.loading = false;
-
-    
+    $scope.selectFailed = false;
+    $scope.booking = false;
+    $scope.model = {}; //tbd
+    $scope.hotels = []; //tbd
+    $scope.totalActualHotel = ''; //tbd
+    $scope.hotelFilterDisplayInfo = undefined; //tbd
+    $scope.filterDisabled = true; //tbd
 
     $scope.init = function (model) {
         $log.debug(model);
         $scope.searchId = model.searchId;
         $scope.searchParam = model.searchParam;
         $scope.loading = true;
-
-        //$scope.hotelSearch.searchParamObject = model.searchParamObject;
-        //$scope.hotelSearch.searchParam = model.searchParam;
-
+        
         var mydata = $scope.searchParam.split('.');
-        var location = mydata[1];
         var cekin = mydata[2];
         var cekout = mydata[3];
         var nightcount = mydata[4];
@@ -88,10 +87,9 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
         //$scope.hotelSearch.checkinDateDisplay = moment(cekin,"YYYY-MM-DD").locale("id").format('LL');
         //$scope.hotelSearch.checkoutDateDisplay = moment(cekout, "YYYY-MM-DD").locale("id").format('LL');
 
-        //$scope.hotelSearch.destinationCheckinDate = moment(cekin, "YYYY-MM-DD").locale("id").format('LL');
-        //$scope.hotelSearch.destinationCheckoutDate = moment(cekout, "YYYY-MM-DD").locale("id").format('LL');
-
-
+        $scope.hotelSearch.destinationCheckinDate = moment(cekin, "YYYY-MM-DD").locale("id").format('dddd, DD MMMM YYYY');
+        $scope.hotelSearch.destinationCheckoutDate = moment(cekout, "YYYY-MM-DD").locale("id").format('dddd, DD MMMM YYYY');
+        
         var resource = $resource(HotelDetailsConfig.Url + '/:searchId/:hotelCd',
             {},
             {
@@ -103,14 +101,11 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
             }
         );
 
-
-
         resource.query({}, {}).$promise.then(function (data) {
             $scope.loading = false;
             validateResponse(data);
             $scope.searchDone = true;
             $scope.hotel = data.hotelDetails;
-            //$scope.destinationName = data.destinationName;
             $scope.hotelSearch.locationDisplay = $scope.hotel.destinationName;
             $scope.hotelSearch.destinationName = $scope.hotel.destinationName;
 
@@ -215,12 +210,13 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
         $scope.hotelSearch.location = $scope.getLocationCode();
     }
 
-    $scope.getLocationCode = function () {
-        var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
-        var locationCode = hashes[2].split('.')[1];
-        return locationCode;
-    }
+    // ********************** DISPLAY HOTEL DETAILS *********************************
 
+    //$scope.getLocationCode = function () {
+    //    var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+    //    var locationCode = hashes[2].split('.')[1];
+    //    return locationCode;
+    //}
     
     var setDescriptionDisplay = function () {
         if ($scope.hotel.description != null && $scope.hotel.description.length > 0) {
@@ -248,7 +244,7 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
             //location.href = location.href = '/id/Hotel/Search/?' + $scope.searchParam;
         }
     }
-
+    
     //var setTncDisplay = function () {
     //    $.each($scope.hotel.room, function (key, room) {
     //        var tncArray = room.rate.tnc.split('↵');
@@ -294,117 +290,11 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
         $scope.hotel.facilities = hotelFacilityReplacement;
     };
 
-    $scope.model = {};
-    $scope.hotels = [];
-    $scope.totalActualHotel = '';
-    $scope.hotelFilterDisplayInfo = undefined;
-    $scope.filterDisabled = true;
-
-    //=============== hotel start ======================
-
-    $scope.hotel.searchHotel = function () {
-        $log.debug('searching hotel');
-        //$http({
-        //   url: "/id/Hotel/Search", 
-        //   method: "GET",
-        //   params: {aaa : "kode123", bbb : "silubab" }
-        //   })
-    };
-
-    $scope.hotel.searchParam = function () {
-        return ("?info=" +
-            [$scope.hotel.location,
-             $scope.hotel.checkinDate,
-             $scope.hotel.checkoutDate,
-             $scope.hotel.adultCount,
-             $scope.hotel.childCount,
-             $scope.hotel.nightCount,
-             $scope.hotel.roomCount].join('.')
-        )
-    }
-
-    var selectService = $resource(HotelSelectConfig.Url,
-          {},
-          {
-              query: {
-                  method: 'POST',
-                  params: {},
-                  isArray: false
-              }
-          }
-      );
-
     $scope.seeRoomDetail = function (room) {
         $scope.selectedRoom = room;
     }
-    $scope.selectFailed = false;
-    $scope.booking = false;
-    $scope.bookRoom = function (room) {
-        var childrenages = room.rate.regsId.split(',')[2].split('|')[10];
-        var ages = [];
-        if (childrenages != null && childrenages.length != 0) {
-            var age = childrenages.split('~');
-            for (var i = 0; i < age.length; i++) {
-                ages.push(parseInt(age[i]));
-            }
-        }
-        $scope.booking = true;
-        
-        selectService.query({}, {
-            "searchId": $scope.searchId,
-            "regs": [
-                  {
-                      "regsId": room.rate.regsId,
-                      "rateCount": room.rate.roomCount,
-                      "adultCount": room.rate.adultCount,
-                      "childCount": room.rate.childCount,
-                      "childrenAges": ages
-                  }
-            ]
-        }).$promise.then(function (data) {
-            $scope.booking = false;
-            if (data.status != 200 || data.token == null) {
-                $scope.selectFailed = true;
-            } else {
-                $scope.token = data.token;
-                $scope.tokenLimit = data.timeLimit;
-                $log.debug('selected, token = ' + $scope.selectToken);
 
-                $log.debug('going to checkout');
-
-                location.href = '/id/Hotel/Checkout/?token=' + $scope.token;
-            }
-            
-        });
-    }
-
-    $scope.HotelSearchForm = {
-        AutoComplete: {
-            Keyword: '',
-            MinLength: 3,
-            GetLocation: function () {
-                $scope.getLocation($scope.HotelSearchForm.AutoComplete.Keyword);
-                // function in hotelSearchService.js
-            },
-        },
-    }
-
-    var accordionFunctions = function () {
-        //Accordion Help Section by W3School
-        $timeout(function () {
-            var acc = document.getElementsByClassName("accordion");
-            var i;
-
-            for (i = 0; i < acc.length; i++) {
-                acc[i].onclick = function () {
-                    this.classList.toggle("active");
-                    this.nextElementSibling.classList.toggle("show");
-                }
-            }
-        }, 0);
-    }
-
-    var hotelDetailFunctions = function (parameters) {
+    var hotelDetailFunctions = function () {
         // Open Room Detail
         $('body .room-rl').on('click', function () {
             var parent1 = $(this).closest('.room-list').find('.room-left');
@@ -450,8 +340,7 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
             $scope.roomCount = $scope.maxRoomCount;
         }
     }
-    //=============== hotel end ======================
-
+   
     var initiateSlider = function () {
         $('#image-gallery').lightSlider({
             gallery: true,
@@ -491,7 +380,7 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
                 return cancelTRUE;
             }
             else {
-                console.log('room ' + index + ' is refundable but no cancellation rate');
+                $log.debug('room ' + index + ' is refundable but no cancellation rate');
                 return false;
             }
         }
@@ -503,8 +392,124 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
     $scope.toTitleCase = function (str) {
         return str.replace(/\w\S*/g, function (txt) { return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase(); });
     }
+    
+
+    // ********************************* END ****************************************
+
+    // ******************************* SELECT ROOM **********************************
+
+    var selectService = $resource(HotelSelectConfig.Url,
+          {},
+          {
+              query: {
+                  method: 'POST',
+                  params: {},
+                  isArray: false
+              }
+          }
+      );
+
+
+    $scope.bookRoom = function (room) {
+        var childrenages = room.rate.regsId.split(',')[2].split('|')[10];
+        var ages = [];
+        if (childrenages != null && childrenages.length != 0) {
+            var age = childrenages.split('~');
+            for (var i = 0; i < age.length; i++) {
+                ages.push(parseInt(age[i]));
+            }
+        }
+        $scope.booking = true;
+
+        selectService.query({}, {
+            "searchId": $scope.searchId,
+            "regs": [
+                  {
+                      "regsId": room.rate.regsId,
+                      "rateCount": room.rate.roomCount,
+                      "adultCount": room.rate.adultCount,
+                      "childCount": room.rate.childCount,
+                      "childrenAges": ages
+                  }
+            ]
+        }).$promise.then(function (data) {
+            $scope.booking = false;
+            if (data.status != 200 || data.token == null) {
+                $scope.selectFailed = true;
+            } else {
+                $scope.token = data.token;
+                $scope.tokenLimit = data.timeLimit;
+                $log.debug('selected, token = ' + $scope.selectToken);
+
+                $log.debug('going to checkout');
+
+                location.href = '/id/Hotel/Checkout/?token=' + $scope.token;
+            }
+
+        });
+    }
+
+    // ********************************* END ****************************************
+    
+    // ********************************** OTHERS ************************************
+
+    $scope.HotelSearchForm = {
+        AutoComplete: {
+            Keyword: '',
+            MinLength: 3,
+            GetLocation: function () {
+                $scope.getLocation($scope.HotelSearchForm.AutoComplete.Keyword);
+                // function in hotelSearchService.js
+            },
+        },
+    }
+
+    var accordionFunctions = function () {
+        //Accordion Help Section by W3School
+        $timeout(function () {
+            var acc = document.getElementsByClassName("accordion");
+            var i;
+
+            for (i = 0; i < acc.length; i++) {
+                acc[i].onclick = function () {
+                    this.classList.toggle("active");
+                    this.nextElementSibling.classList.toggle("show");
+                }
+            }
+        }, 0);
+    }
 
     $('.change-hotel.form-control').click(function () {
         $(this).select();
     });
+
+    // ********************************* END ****************************************
+    //=============== hotel start ======================
+
+    //$scope.hotel.searchHotel = function () {
+    //    $log.debug('searching hotel');
+    //    //$http({
+    //    //   url: "/id/Hotel/Search", 
+    //    //   method: "GET",
+    //    //   params: {aaa : "kode123", bbb : "silubab" }
+    //    //   })
+    //};
+
+    //$scope.hotel.searchParam = function () {
+    //    return ("?info=" +
+    //        [
+    //            $scope.hotel.location,
+    //            $scope.hotel.checkinDate,
+    //            $scope.hotel.checkoutDate,
+    //            $scope.hotel.adultCount,
+    //            $scope.hotel.childCount,
+    //            $scope.hotel.nightCount,
+    //            $scope.hotel.roomCount
+    //        ].join('.')
+    //    );
+    //}
+
+    
+
+    
 }]);

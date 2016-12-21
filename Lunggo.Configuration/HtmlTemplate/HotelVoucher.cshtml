@@ -180,17 +180,23 @@
                                         <p>Ketentuan Pembatalan</p>
                             </div>
                             <div class="col-xs-9">
-                                        <p>
-                                            @if (rate.Cancellation != null && rate.Cancellation.Count > 0)
-                                            {
-                                                foreach (var policy in rate.Cancellation)
-                                                {
-                                                    <div>
-                                                        - Pembatalan setelah tanggal @policy.StartTime.ToString("D", CultureInfo.CreateSpecificCulture("id-ID")) akan dikenakan biaya sebesar Rp @(policy.Fee.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))) per kamar<br />
-                                                    </div>
-                                                }
-                                            }
-                                        </p>
+                                @if (rate.IsFreeCancel)
+                                {
+                                    <p>
+                                        - Gratis pembatalan sebelum tanggal @rate.FreeUntil.GetValueOrDefault().ToString("f", CultureInfo.CreateSpecificCulture("id-ID")) WIB.
+                                    </p>
+                                }
+                                <p>
+                                    @if (rate.Cancellation != null && rate.Cancellation.Count > 0)
+                                    {
+                                        foreach (var policy in rate.Cancellation)
+                                        {
+                                            <div>
+                                                - Pembatalan setelah tanggal @policy.StartTime.ToString("f", CultureInfo.CreateSpecificCulture("id-ID")) akan dikenakan biaya sebesar Rp @(policy.Fee.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))) per kamar<br />
+                                            </div>
+                                        }
+                                    }
+                                </p>
                             </div>
                         </div>
                                 if (rate.TermAndCondition != null && rate.TermAndCondition.Count > 0 && !rate.TermAndCondition.Exists(r => r.Length < 3))

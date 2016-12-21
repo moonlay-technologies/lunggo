@@ -52,9 +52,6 @@
 }
 @section AdditionalJS {
     <!-- additional Angular JS-->
-    <script src="/Assets/js/angular.min.js"></script>
-    <script src="/Assets/js/angular-animate.min.js"></script>
-    <script src="/Assets/js/angular-route.min.js"></script>
     <!-- veritrans JS -->
     <script src="https://api.sandbox.veritrans.co.id/v2/assets/js/veritrans.min.js"></script>
     <!-- fancybox -->
@@ -98,7 +95,6 @@
     </script>
     <!-- angular controller -->
     <script src="/Assets/mobile/js/CheckoutController.js"></script>
-    <script src="/Assets/travorama20/angularDirectory/search/hotelSearch.service.js"></script>
 }
 
 @functions{
@@ -120,9 +116,9 @@
 
             <header class="page__header">
                 <div class="step__wrapper">
-                    <div class="step step-1" ng-class="{'active' : PageConfig.ActivePage == 1, 'inactive' : PageConfig.ActivePage > 1}"><span>01. Data <br />Kontak</span></div>
-                    <div class="step step-2" ng-class="{'active' : PageConfig.ActivePage == 2, 'inactive' : PageConfig.ActivePage > 2}"><span>02. Data <br />Penumpang</span></div>
-                    <div class="step step-3" ng-class="{'active' : PageConfig.ActivePage == 3, 'inactive' : PageConfig.ActivePage > 3}"><span>03. Review <br />Pesanan</span></div>
+                    <div class="step step-1" ng-class="{'active' : PageConfig.ActivePage == 1, 'inactive' : PageConfig.ActivePage > 1}"><span>1. Data <br />Kontak</span></div>
+                    <div class="step step-2" ng-class="{'active' : PageConfig.ActivePage == 2, 'inactive' : PageConfig.ActivePage > 2}"><span>2. Data <br />Penumpang</span></div>
+                    <div class="step step-3" ng-class="{'active' : PageConfig.ActivePage == 3, 'inactive' : PageConfig.ActivePage > 3}"><span>3. Review <br />Pesanan</span></div>
                 </div>
             </header><!-- .page-header -->
 
@@ -249,6 +245,10 @@
                                                 <option value="{{year}}" ng-repeat="year in generateYear(Passenger.type)" ng-selected="year == 'Tahun'">{{year}}</option>
                                             </select>
                                         </div>
+                                        <div ng-show="invalidDate(Passenger.birth.date, Passenger.birth.month, Passenger.birth.year)" style="color: red">
+                                            Tanggal lahir tidak valid.
+                                        </div>
+                                       
                                     </div>
                                 </div>
                                 <!-- passenger birth date end-->
@@ -279,6 +279,10 @@
                                                 <option value="{{year}}" ng-repeat="year in generateYear('passport')" ng-selected="year == 'Tahun'">{{year}}</option>
                                             </select>
                                         </div>
+                                        <div ng-show="invalidDate(Passenger.passport.expire.date, Passenger.passport.expire.month, Passenger.passport.expire.year)" style="color: red">
+                                            Tanggal kadaluarsa paspor tidak valid.
+                                        </div>
+                                       
                                     </div>
                                 </div>
 
@@ -314,10 +318,10 @@
                             </div>
 
                             <div ng-show="form.incompleteBirthDates" style=" color:red">
-                                Tanggal Lahir Penumpang Belum Ditambahkan <br /> <br />
+                                Tanggal Lahir Penumpang Belum Ditambahkan atau Tidak Valid<br /> <br />
                             </div>
                             <div ng-show="form.incompletePassportData" style="color:red">
-                                Data Paspor Belum Lengkap
+                                Data Paspor Belum Lengkap atau Tanggal Tidak Valid
                             </div>
                             <button class="btn btn-yellow form-control" @*ng-disabled="PassengerForm.$invalid || !CheckTitle(passengers) || (CheckoutConfig.BirthDateRequired && !CheckDate(passengers))
                                     || (CheckoutConfig.PassportRequired && !CheckPassportDate(passengers)) || hasDuplicatePaxName()"*@ ng-click="validateForm(2)">
@@ -400,7 +404,7 @@
                                     </dl>
                                     <dl ng-if="CheckoutConfig.BirthDateRequired || Passenger.type != 'adult'">
                                         <dt>Tanggal Lahir</dt>
-                                        <dd>{{Passenger.birth.date}} {{getMonth(parseInt(Passenger.birth.month))}} {{Passenger.birth.year}}</dd>
+                                        <dd>{{Passenger.birth.date}} {{getMonth(Passenger.birth.month)}} {{Passenger.birth.year}}</dd>
                                     </dl>
                                     <dl ng-if="CheckoutConfig.PassportRequired">
                                         <dt>No. Paspor</dt>
@@ -408,7 +412,7 @@
                                     </dl>
                                     <dl ng-if="CheckoutConfig.PassportRequired">
                                         <dt>Tgl. Kadaluarsa Paspor</dt>
-                                        <dd>{{Passenger.passport.expire.date}} {{getMonth(parseInt(Passenger.passport.expire.month))}} {{Passenger.passport.expire.year}}</dd>
+                                        <dd>{{Passenger.passport.expire.date}} {{getMonth(Passenger.passport.expire.month)}} {{Passenger.passport.expire.year}}</dd>
                                     </dl>
 
                                 </li>

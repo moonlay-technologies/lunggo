@@ -35,9 +35,6 @@
     {
         ViewBag.Message = "BookExpired";
     }
-
-    
-
 }
 
 @{
@@ -54,9 +51,6 @@
 }
 @section AdditionalJS {
     <!-- additional Angular JS-->
-    <script src="/Assets/js/angular.min.js"></script>
-    <script src="/Assets/js/angular-animate.min.js"></script>
-    <script src="/Assets/js/angular-route.min.js"></script>
     <!-- veritrans JS -->
     <script src="https://api.sandbox.veritrans.co.id/v2/assets/js/veritrans.min.js"></script>
     <!-- fancybox -->
@@ -248,7 +242,7 @@
                                     <div style="color:red" ng-show="form.incompleteContactEmail">
                                         Alamat E-Mail pada Data Kontak Belum Ditambahkan<br /> <br />
                                     </div>
-                                    <button class="btn btn-yellow go-top" ng-click="validateForm(1)" @*ng-disabled="buyerForm.$invalid"*@ @*|| buyerInfo.title == titles[0].value || buyerInfo.countryCode == 'xx'*@>LANJUTKAN</button>
+                                    <button class="btn btn-yellow go-top" ng-click="validateForm(1)">LANJUTKAN</button>
                                 </div>
 
                             </div><!-- .content-step#step-1 -->
@@ -306,6 +300,9 @@
                                                                 <option value="{{year}}" ng-repeat="year in generateYear(passenger.type)" ng-selected="year == 'Tahun'">{{year}}</option>
                                                             </select>
                                                         </div>
+                                                        <div ng-show="invalidDate(passenger.birth.date, passenger.birth.month, passenger.birth.year)" style="color: red">
+                                                            Tanggal lahir tidak valid.
+                                                        </div>
                                                     </div>
                                                 </div>
                                                 <!-- passport detail for international flight -->
@@ -343,6 +340,9 @@
                                                                         <option value="{{year}}" ng-repeat="year in generateYear('passport')" ng-selected="year == 'Tahun'">{{year}}</option>
                                                                     </select>
                                                                 </div>
+                                                                <div ng-show="invalidDate(passenger.passport.expire.date, passenger.passport.expire.month, passenger.passport.expire.year)" style="color: red">
+                                                                    Tanggal kadaluarsa paspor tidak valid.
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -377,14 +377,13 @@
                                     </div>
                                     
                                     <div ng-show="form.incompleteBirthDates" style=" color:red">
-                                        Tanggal Lahir Penumpang Belum Ditambahkan <br /> <br />
+                                        Tanggal Lahir Penumpang Belum Ditambahkan atau Tidak Valid<br /> <br />
                                     </div>
                                     <div ng-show="form.incompletePassportData" style="color:red">
-                                        Data Paspor Belum Lengkap
+                                        Data Paspor Belum Lengkap atau Tanggal Kadaluarsa Tidak Valid
                                     </div>
                                     <button class="btn btn-grey" ng-click="changePage(1)">KEMBALI</button>
-                                    <button class="btn btn-yellow go-top" ng-click="validateForm(2)" @*ng-disabled="passengersForm.$invalid || !CheckTitle(passengers) || (birthDateRequired && !CheckDate(passengers)) || hasDuplicatePaxName()
-                                             || (passportRequired &&  (!CheckPassportDate(passengers) || !passportNumberFilled(passengers)))"*@>
+                                    <button class="btn btn-yellow go-top" ng-click="validateForm(2)" >
                                         LANJUTKAN
                                     </button>
                                 </div>

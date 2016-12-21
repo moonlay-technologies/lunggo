@@ -16,7 +16,6 @@
         var LoginMessage = '@ViewBag.Message';
     </script>
     <!-- angular controller -->
-    <script src="/Assets/travorama20/angularDirectory/search/hotelSearch.service.js"></script>
     <script src="/Assets/mobile/js/AccountController.js"></script>
 }
 <div class="container-page page-cekpesanan">
@@ -26,9 +25,9 @@
     <div class="page__body">
         <div class="desc">@Html.I18NString("CW00187")</div>
         @*<ul class="cek-pesan-list">
-                <li>@Html.I18NString("CW00188")</li>
-                <li>@Html.I18NString("CW00189")</li>
-            </ul>*@
+            <li>@Html.I18NString("CW00188")</li>
+            <li>@Html.I18NString("CW00189")</li>
+        </ul>*@
         @using (Html.BeginForm("CekPemesanan", "Home", FormMethod.Post, new { @class = "form-divider", role = "form", name = "CheckForm", novalidate = "novalidate" }))
         {
             @Html.AntiForgeryToken()

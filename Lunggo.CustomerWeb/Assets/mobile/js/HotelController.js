@@ -1,6 +1,5 @@
 ﻿app.controller('HotelController', ['$http', '$scope', '$rootScope', function ($http, $scope, $rootScope) {
 
-
     // **********
     // variables
     $scope.PageConfig = $rootScope.PageConfig;
@@ -80,43 +79,43 @@
 
         // **********
         // Counter Detail Room
-        $('body .btn-min').on('click', function () {
-            var value = $(this).parent().find('.result-room').val();
-            value = calculate(value, 'min');
+        //$('body .btn-min').on('click', function () {
+        //    var value = $(this).parent().find('.result-room').val();
+        //    value = calculate(value, 'min');
 
-            $(this).parent().find('.result-room').val(value);
-        });
+        //    $(this).parent().find('.result-room').val(value);
+        //});
 
-        $('body .btn-plus').on('click', function () {
-            var value = $(this).parent().find('.result-room').val();
-            var limit = $(this).attr('attr-limit');
-            value = calculate(value, 'plus', limit);
+        //$('body .btn-plus').on('click', function () {
+        //    var value = $(this).parent().find('.result-room').val();
+        //    var limit = $(this).attr('attr-limit');
+        //    value = calculate(value, 'plus', limit);
 
-            $(this).parent().find('.result-room').val(value);
-        });
+        //    $(this).parent().find('.result-room').val(value);
+        //});
 
-        function calculate(value, type, limit) {
-            value = parseInt(value);
-            limit = parseInt(limit);
+        //function calculate(value, type, limit) {
+        //    value = parseInt(value);
+        //    limit = parseInt(limit);
 
-            if (value < 0) {
-                value = 0;
-            }
+        //    if (value < 0) {
+        //        value = 0;
+        //    }
 
-            if (type == 'min') {
-                if (value > 0) {
-                    value = value - 1;
-                }
-            } else if (type == 'plus') {
-                value = value + 1;
+        //    if (type == 'min') {
+        //        if (value > 0) {
+        //            value = value - 1;
+        //        }
+        //    } else if (type == 'plus') {
+        //        value = value + 1;
 
-                if (value > limit) {
-                    value = limit;
-                }
-            }
+        //        if (value > limit) {
+        //            value = limit;
+        //        }
+        //    }
 
-            return value;
-        }
+        //    return value;
+        //}
 
         //// **********
         //// Slick Slider Detail Hotel
@@ -126,18 +125,5 @@
             dots: false
         });
 
-        // **********
-        // Slider
-        $("#slider-range").slider({
-            range: true,
-            min: 0,
-            max: 500,
-            values: [75, 300],
-            slide: function (event, ui) {
-                $("#amount").val("$" + ui.values[0] + " - $" + ui.values[1]);
-            }
-        });
-        $("#amount").val("$" + $("#slider-range").slider("values", 0) +
-            " - $" + $("#slider-range").slider("values", 1));
     });
 }]);
