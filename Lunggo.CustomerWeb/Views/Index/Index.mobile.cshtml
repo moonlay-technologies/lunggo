@@ -26,45 +26,12 @@
 }
 
 @section PageJS {
-    <script>
-        jQuery(document).ready(function ($) {
-        //    //Harbolnas modal box, expired only one day
-        //    if ($.cookie('pop') == null) {
-        //        $('#myModalMobile').modal('show');
-        //        $.cookie('pop', '1');
-        //    };
-            //$(window).load(function () {
-            //    $('#myModalMobile').modal('show');
-            //});
-
-            // slider
-            $('.carousel-inner').slick({
-                autoplay: true,
-                autoplaySpeed: 2800,
-                dots: true,
-                prevArrow: '<button type="button" class="slick-prev hidden">Back</button>',
-                nextArrow: '<button type="button" class="slick-next hidden">Next</button>'
-            });
-        });
-    </script>
-
     <script src="/Assets/travorama20/angularDirectory/search/hotelSearch.service.js"></script>
     <script src="/Assets/Travorama20/js/homeController.js"></script>
 }
 
 <div class="page-loading form-container" ng-class="{'page-loaded' : PageConfig.Loaded}">
-    <!-- Modal Box Harbolnas -->
-    @*<div class="modal fade" id="myModalMobile">
-        <div class="modal-box">
-            <img src="/Assets/images/campaign/Harbolnas2016/Harbolnas_popup_mobile.jpg" alt="Harbolnas 2016" />
-            <a class="custom-close close" data-dismiss="modal"></a>
-        </div>
-    </div>*@
-
     <div class="carousel-inner" role="listbox">
-        @*<div class="item active">
-            <a href="/id/Promo/Harbolnas2016"><img src="/Assets/images/campaign/Harbolnas2016/Harbolnas_banner-mobile.jpg" alt="Harbolnas 2016" /></a>
-        </div>*@
         @if (DateTime.UtcNow.AddHours(7).Date <= new DateTime(2016, 12, 15))
         {
         <div class="item">

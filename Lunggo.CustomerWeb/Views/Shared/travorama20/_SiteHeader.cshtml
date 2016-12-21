@@ -67,7 +67,7 @@
                                             <a href="#" data-trigger="dropdown" ng-show="!isLogin">Member<span class="caret"></span></a>
                                             <div class="dropdown-content my-account">
                                                 <ul ng-if="isLogin">
-                                                    <li><a href="@Url.Action("OrderHistory", "UW620OrderHistory")">Akun Saya</a></li>
+                                                    <li><a href="@Url.Action("OrderHistory", "Account")">Akun Saya</a></li>
                                                     <li><a href="" ng-click="logout.getLogout()">Keluar</a></li>
                                                 </ul>
                                                 <ul ng-if="!isLogin">
@@ -86,8 +86,8 @@
                             <div class="menu-main pull-left">
                                 <nav>
                                     <ul>
-                                        <li ng-class="{'active' : whatpage() == 1}" id="header-flight"><a href="@Url.Action("Index", "UW000TopPage")">PENERBANGAN</a></li>
-                                        <li ng-class="{'active' : whatpage() == 2}" id="header-hotel"><a href="@Url.Action("Index", "UW000TopPage")">HOTEL</a></li>
+                                        <li ng-class="{'active' : whatpage() == 1}" id="header-flight"><a href="@Url.Action("Index", "Index")">PENERBANGAN</a></li>
+                                        <li ng-class="{'active' : whatpage() == 2}" id="header-hotel"><a href="@Url.Action("Index", "Index")">HOTEL</a></li>
                                         @*<li class="hidden"><a href="#" data-toggle="tooltip" data-placement="bottom" title="Coming soon!">HOTEL</a></li>
                         <li class="hidden"><a href="#" data-toggle="tooltip" data-placement="bottom" title="Coming soon!">TOUR &amp; ACTIVITY</a></li>
                         <li class="hidden"><a href="#" data-toggle="tooltip" data-placement="bottom" title="Coming soon!">PROMOTION</a></li>*@

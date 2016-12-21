@@ -108,47 +108,10 @@
         var indexPageDestinationsCode = '@ViewBag.DestinationCode' || '';
         var topDestinations = @Html.Raw(ViewBag.LocationList);
         var departureDate = '@(DateTime.Now.AddDays(1).ToString("ddMMyy"))';
-
-        jQuery(document).ready(function($) {
-        //    //Harbolnas modal box, expired only one day
-        //    if ($.cookie('pop') == null) {
-        //        $('#myModal').modal('show');
-        //        $.cookie('pop', '1');
-        //    };
-        //    //$(window).load(function () {
-        //    //    $('#myModal').modal('show');
-        //    //});
-
-            // slider
-            $('.page-slider .slider a').each(function() {
-                var bgImage = $(this).children('img').attr('src');
-                $(this).css({
-                    'background-image': 'url(' + bgImage + ')'
-                });
-                $(this).children('img').remove();
-            });
-            $('.slider-wrapper').slick({
-                autoplay: true,
-                autoplaySpeed: 4000,
-                dots: true,
-                prevArrow: '<button type="button" class="slick-prev hidden">Back</button>',
-                nextArrow: '<button type="button" class="slick-next hidden">Next</button>'
-            });
-        });
     </script>
     <script src="/Assets/travorama20/angularDirectory/search/hotelSearch.service.js"></script>
     <script src="/Assets/Travorama20/js/homeController.js"></script>
-    <script>
-
-    </script>
 }
-
-<!-- Modal Box Harbolnas -->
-@*<div class="modal fade" id="myModal">
-    <div class="modal-box">
-        <a class="custom-close close" data-dismiss="modal"></a>
-    </div>
-</div>*@
 
 <section class="section-search">
     <div class="container">
@@ -406,61 +369,21 @@
     {
         <div class="page-slider">
             <div class="slider-wrapper" id="index-wrapper">
-                <!--
-                    <div class="slider">
-                    <a href="@Url.Action("danamonsweetvalentine","StaticPage")">
-                        <img src="/Assets/images/campaign/DanamonSweetValentine/danamonsweetvalentine-slider.jpg" alt="Danamon Sweet Valentine" />
-                    </a>
-                </div>
-                    -->
-                <!--
-                <div class="slider">
-                    <a href="@Url.Action("VisaWonderfulWednesday","StaticPage")">
-                        <img src="/Assets/images/campaign/VisaWonderfulWednesday/visa-wonderful-wednesday-front.jpg" alt="Wonderful Wednesday with VISA" />
-                    </a>
-                </div>
-                    -->
-                <!--
-                <div class="slider">
-                    <a href="@Url.Action("GetCalendarTerms","StaticPage")">
-                        <img src="/Assets/images/campaign/free2016calendar/campaign-2016_calendar.jpg" alt="Free 2016 Calendar" />
-                    </a>
-                </div>
-                    -->
-                <!--
-                <div class="slider">
-                    <a href="#">
-                        <img src="/Assets/images/slider/slider-happy_hew_year.jpg" alt="Merry Christmas and Happy New Year" />
-                    </a>
-                </div>
-                    -->
-                <!--
-                <div class="slider">
-                    <a href="#">
-                        <img src="/Assets/images/slider/slider-winner-20151002.jpg" alt="Pemenang Beta Test" />
-                    </a>
-                    </div>
-                    -->
-                @*<div class="slider">
-                    <a href="@Url.Action("Harbolnas2016","Promo")">
-                        <img src="/Assets/images/campaign/Harbolnas2016/Harbolnas_banner.jpg" alt="Harbolnas 2016" />
-                    </a>
-                </div>*@
-                @if (DateTime.UtcNow.AddHours(7).Date <= new DateTime(2016,12,15))
+                @if (DateTime.UtcNow.AddHours(7).Date <= new DateTime(2016, 12, 15))
                 {
-                <div class="slider">
+                    <div class="slider">
                         <a href="@Url.Action("MatahariMall", "Promo")">
-                        <img src="/Assets/images/campaign/MatahariMall2016/MatahariMall-slider.jpg" alt="Matahari Mall" />
-                    </a>
-                </div>
+                            <img src="/Assets/images/campaign/MatahariMall2016/MatahariMall-slider.jpg" alt="Matahari Mall" />
+                        </a>
+                    </div>
                 }
                 @if (DateTime.UtcNow.AddHours(7).Date <= new DateTime(2016, 12, 31))
                 {
-                <div class="slider">
+                    <div class="slider">
                         <a href="@Url.Action("OnlineRevolution", "Promo")">
-                        <img src="/Assets/images/campaign/OnlineRevolution2016/OnlineRevolution-slider.jpg" alt="Online Revolution" />
-                    </a>
-                </div>
+                            <img src="/Assets/images/campaign/OnlineRevolution2016/OnlineRevolution-slider.jpg" alt="Online Revolution" />
+                        </a>
+                    </div>
                 }
                 <div class="slider">
                     <a href="@Url.Action("TravoramaMobileApp","StaticPage")">
