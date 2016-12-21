@@ -151,7 +151,7 @@
                         <h4 class="filter-group__title">Fasilitas</h4>
                     </div>
                     <div class="filter-group__content short-txt clearfix">
-                        <div class="col-half" ng-repeat="facilityFilter in hotelFilterDisplayInfo.facilityFilter">
+                        <div class="col-half" ng-repeat="facilityFilter in hotelFilterDisplayInfo.facilityFilter" ng-hide="facilityFilter.count == 0">
                             <label class="checkbox" ng-click="changeFilter('facility', facilityFilter)" ng-class="{ 'active': (filter.facilities.indexOf(facilityFilter.code) > -1) }">
                                 <div class="switch"></div>
                                 <span>{{facilityFilter.name}} ({{facilityFilter.count}})</span>
