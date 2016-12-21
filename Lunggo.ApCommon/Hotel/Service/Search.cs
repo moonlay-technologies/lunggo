@@ -51,7 +51,6 @@ namespace Lunggo.ApCommon.Hotel.Service
 
         public SearchHotelOutput DoSearchByLocation(SearchHotelInput input)
         {
-            var isByDestination = false;
             Guid generatedSearchId = Guid.NewGuid();
             var hotelBedsClient = new HotelBedsSearchHotel();
             var allCurrency = Currency.GetAllCurrencies();
@@ -156,7 +155,7 @@ namespace Lunggo.ApCommon.Hotel.Service
             };
             
             result.HotelDetails = AddDetailInfoForSearchResult(result.HotelDetails);
-            result.HotelFilterDisplayInfo = SetHotelFilterDisplayInfo(result.HotelDetails, isByDestination);
+            result.HotelFilterDisplayInfo = SetHotelFilterDisplayInfo(result.HotelDetails, AutocompleteTypeCd.Mnemonic(detailDestination.Type));
             var sortedHotel = result.HotelDetails.OrderByDescending(x => x.NetFare);
             result.MaxPrice = sortedHotel.Select(x => x.NetFare).FirstOrDefault();
             result.MinPrice = sortedHotel.Select(x => x.NetFare).LastOrDefault();

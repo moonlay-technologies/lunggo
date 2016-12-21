@@ -78,9 +78,9 @@
                         <div class="star star-3 " ng-if="hotel.starRating == 3"></div>
                         <div class="star star-4 " ng-if="hotel.starRating == 4"></div>
                         <div class="star star-5 " ng-if="hotel.starRating == 5"></div>
-                        <div class="location grey-txt">
-                            {{toTitleCase(hotel.address)}} {{toTitleCase(hotel.zone)}} <span ng-show="hotel.postalCd != null || hotel.postalCd.length > 0"> {{hotel.postalCd}}</span>
-                        </div>
+                        <div class="location grey-txt">{{toTitleCase(hotel.area)}}
+                            <span ng-show="hotel.area == null || hotel.area.length < 1">{{toTitleCase(hotel.address)}} {{toTitleCase(hotel.zone)}} <span ng-show="hotel.postalCd != null || hotel.postalCd.length > 0"> {{hotel.postalCd}}</span></span>
+</div>
                         <div class="price orange-txt">
                             <div class="txt-md semibold-txt">Harga per malam mulai dari:</div>
                             <div class="underline-txt sm-txt">Rp {{hotel.originalFare | currency:'':0}}</div>

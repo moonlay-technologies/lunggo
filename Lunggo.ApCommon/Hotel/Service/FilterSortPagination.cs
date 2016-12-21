@@ -32,6 +32,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                 hotels = hotels.Where(p =>
                     (p.Facilities != null) &&
                     (string.IsNullOrEmpty(filterParam.NameFilter) || p.HotelName.IndexOf(filterParam.NameFilter, StringComparison.CurrentCultureIgnoreCase)> -1) &&
+                (filterParam.AreaFilter == null || filterParam.AreaFilter.Contains(p.AreaCode)) &&
                 (filterParam.ZoneFilter == null || filterParam.ZoneFilter.Contains(p.ZoneCode)) &&
                 (filterParam.AccommodationTypeFilter == null || filterParam.AccommodationTypeFilter.Contains(p.AccomodationType)) &&
                 (facilityData.Count == 0 ||  facilityData.Any(e => p.Facilities.Select(x => x.FacilityGroupCode + "" + x.FacilityCode ).ToList().Contains(e))) &&
@@ -86,10 +87,11 @@ namespace Lunggo.ApCommon.Hotel.Service
         }
 
         //Set Filter Info
-        public HotelFilterDisplayInfo SetHotelFilterDisplayInfo(List<HotelDetail> hotels, bool isByDestination)
+        public HotelFilterDisplayInfo SetHotelFilterDisplayInfo(List<HotelDetail> hotels, AutocompleteType searchLocationType)
         {
             var filter = new HotelFilterDisplayInfo();
             var zoneDict = new Dictionary<string, ZoneFilterInfo>();
+            var areaDict = new Dictionary<string, AreaFilterInfo>();
             var starDict = new Dictionary<int, StarFilterInfo>();
             var accDict = new Dictionary<string, AccomodationFilterInfo>();
             var facilityDict = HotelFacilityFilters.Keys.ToDictionary(key => key, key => new FacilitiesFilterInfo
@@ -102,7 +104,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                 foreach (var hotelDetail in hotels)
                 {
                     //Zone
-                    if (isByDestination)
+                    if (searchLocationType == AutocompleteType.Destination)
                     {
                         if (!(zoneDict.ContainsKey(hotelDetail.ZoneCode)))
                         {
@@ -116,6 +118,24 @@ namespace Lunggo.ApCommon.Hotel.Service
                         else
                         {
                             zoneDict[hotelDetail.ZoneCode].Count += 1;
+                        }
+                    }
+
+                    //Area
+                    if (searchLocationType == AutocompleteType.Zone)
+                    {
+                        if (!(areaDict.ContainsKey(hotelDetail.AreaCode)))
+                        {
+                            areaDict.Add(hotelDetail.AreaCode, new AreaFilterInfo
+                            {
+                                Code = hotelDetail.AreaCode,
+                                Count = 1,
+                                Name = GetAreaNameFromDict(hotelDetail.AreaCode)
+                            });
+                        }
+                        else
+                        {
+                            areaDict[hotelDetail.AreaCode].Count += 1;
                         }
                     }
 
@@ -178,11 +198,12 @@ namespace Lunggo.ApCommon.Hotel.Service
                     }
 
                     filter.ZoneFilter = new List<ZoneFilterInfo>();
+                    filter.AreaFilter = new List<AreaFilterInfo>();
                     filter.AccomodationFilter = new List<AccomodationFilterInfo>();
                     filter.FacilityFilter = new List<FacilitiesFilterInfo>();
                     filter.StarFilter = new List<StarFilterInfo>();
 
-                    if (isByDestination)
+                    if (searchLocationType == AutocompleteType.Destination)
                     {
                         foreach (var zone in zoneDict.Keys)
                         {
@@ -191,6 +212,19 @@ namespace Lunggo.ApCommon.Hotel.Service
                                 Code = zoneDict[zone].Code,
                                 Count = zoneDict[zone].Count,
                                 Name = zoneDict[zone].Name,
+                            });
+                        }
+                    }
+
+                    if (searchLocationType == AutocompleteType.Zone)
+                    {
+                        foreach (var area in areaDict.Keys)
+                        {
+                            filter.AreaFilter.Add(new AreaFilterInfo
+                            {
+                                Code = areaDict[area].Code,
+                                Count = areaDict[area].Count,
+                                Name = areaDict[area].Name,
                             });
                         }
                     }
