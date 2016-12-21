@@ -1502,7 +1502,6 @@
     <Content Include="Assets\js\moment-with-locales.min.js" />
     <Content Include="Assets\js\moment.js" />
     <Content Include="Assets\js\moment.min.js" />
-    <Content Include="Scripts\typings\cryptojs\cryptojs.d.ts" />
     <None Include="Service References\Mystifly.OnePointService.Flight\OnePoint.disco" />
     <None Include="Service References\Mystifly.OnePointService.Flight\configuration91.svcinfo" />
     <None Include="Service References\Mystifly.OnePointService.Flight\configuration.svcinfo" />
