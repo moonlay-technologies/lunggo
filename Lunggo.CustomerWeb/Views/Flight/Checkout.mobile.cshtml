@@ -48,7 +48,7 @@
     <link href="/Assets/css/jquery-ui.min.css" rel="stylesheet" />
     <!-- fancybox CSS-->
     <link href="/Assets/vendor/fancybox/jquery.fancybox.css" rel="stylesheet" />
-    <link rel="stylesheet" href="/Assets/mobile/css/application.css">
+    <link rel="stylesheet" href="/Assets/mobile/css/style_mobile.css">
 }
 @section AdditionalJS {
     <!-- additional Angular JS-->
@@ -248,7 +248,7 @@
                                         <div ng-show="invalidDate(Passenger.birth.date, Passenger.birth.month, Passenger.birth.year)" style="color: red">
                                             Tanggal lahir tidak valid.
                                         </div>
-                                       
+
                                     </div>
                                 </div>
                                 <!-- passenger birth date end-->
@@ -282,7 +282,7 @@
                                         <div ng-show="invalidDate(Passenger.passport.expire.date, Passenger.passport.expire.month, Passenger.passport.expire.year)" style="color: red">
                                             Tanggal kadaluarsa paspor tidak valid.
                                         </div>
-                                       
+
                                     </div>
                                 </div>
 
@@ -540,7 +540,7 @@
                         </div><!-- .overlay--flight-detail -->
                     }
 
-                    <form name="finalForm" >
+                    <form name="finalForm">
 
                         <div class="hidden">
                             <input type="text" name="Token" value="" ng-model="token" />
@@ -581,7 +581,7 @@
 
 
                         <button class="btn btn-grey form-control" ng-disabled="PassengerForm.$invalid" ng-click="PageConfig.ChangePage(2)">KEMBALI</button>
-                        <button type="submit" class="btn btn-yellow form-control" ng-disabled="book.booking" ng-click ="book.send()">PESAN</button>
+                        <button type="submit" class="btn btn-yellow form-control" ng-disabled="book.booking" ng-click="book.send()">PESAN</button>
                     </form><!-- finalForm -->
 
                     <form action="" method="post" name="submitForm" id="rsvno" class="hidden">

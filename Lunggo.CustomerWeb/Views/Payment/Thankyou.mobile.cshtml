@@ -13,7 +13,7 @@
     ViewBag.BodyClass = "page page-thankyou page-confirmation page-hotel page-checkout";
     ViewBag.SiteHeader = "thankyou";
     ViewBag.AngularController = "ThankyouController";
-    
+
 }
 
 @{
@@ -25,7 +25,7 @@
     var images = new List<Image>();
     var hotelImg = "";
     var roomImg = "";
-    
+
     try
     {
         if (Model is HotelReservationForDisplay)
@@ -117,8 +117,7 @@
     }
 }
 @section AdditionalCSS {
-
-    <link rel="stylesheet" href="/Assets/mobile/css/application.css">
+    <link rel="stylesheet" href="/Assets/mobile/css/style_mobile.css">
 }
 
 @section PageJS{
@@ -134,14 +133,14 @@
             var rsvType = "hotel";
             var hotel = Model as HotelReservationForDisplay;
             @:var hotelDetails = '@hotel.HotelDetail';
-            @:var rating = '@hotel.HotelDetail.StarRating'
-            @:var originalFare = '@hotel.HotelDetail.OriginalFare';
-            @:var netFare = '@hotel.HotelDetail.NetFare';
-            @:var totalRoom = '@hotel.HotelDetail.Rooms.SelectMany(r => r.Rates).Sum(p => p.RoomCount)';
-            @:var checkin = '@hotel.HotelDetail.CheckInDate.ToString("D",CultureInfo.CreateSpecificCulture("id-ID"))';
-            @:var checkout = '@hotel.HotelDetail.CheckOutDate.ToString("D", CultureInfo.CreateSpecificCulture("id-ID"))';
-            @:var nights = '@((hotel.HotelDetail.CheckOutDate - hotel.HotelDetail.CheckInDate).Days)';
-        }
+                    @:var rating = '@hotel.HotelDetail.StarRating'
+                    @:var originalFare = '@hotel.HotelDetail.OriginalFare';
+                    @:var netFare = '@hotel.HotelDetail.NetFare';
+                    @:var totalRoom = '@hotel.HotelDetail.Rooms.SelectMany(r => r.Rates).Sum(p => p.RoomCount)';
+                    @:var checkin = '@hotel.HotelDetail.CheckInDate.ToString("D",CultureInfo.CreateSpecificCulture("id-ID"))';
+                    @:var checkout = '@hotel.HotelDetail.CheckOutDate.ToString("D", CultureInfo.CreateSpecificCulture("id-ID"))';
+                    @:var nights = '@((hotel.HotelDetail.CheckOutDate - hotel.HotelDetail.CheckInDate).Days)';
+                }
     </script>
     <script src="/Assets/travorama20/js/ThankyouController.js"></script>
 }
@@ -234,10 +233,10 @@
                 {
                     <div class="thankyou-words">
                         <div>Terima kasih telah memesan penerbangan di Travorama. Pembayaran Anda sedang diverifikasi oleh sistem kami.</div>
-                        
+
                     </div>
                 }
-                
+
                 @if (Model is HotelReservationForDisplay)
                 {
                     <div class="thankyou-words">
@@ -246,14 +245,14 @@
                     </div>
                 }
             </div>
-           
+
 
                 break;
             case PaymentStatus.Settled:
-            
-                <header class="page__header">
-                    <h1 class="text-center section-title stripe">Terima <span>Kasih</span></h1>
-                </header>
+
+            <header class="page__header">
+                <h1 class="text-center section-title stripe">Terima <span>Kasih</span></h1>
+            </header>
                 if (Model is FlightReservationForDisplay)
                 {
                     <div class="thankyou-words">
@@ -460,7 +459,7 @@
                         </div><!-- .widget.price-detail -->
                     </div><!-- .widget-container -->
                 }
-                
+
                 @if (Model is HotelReservationForDisplay)
                 {
                     var reservation = Model as HotelReservationForDisplay;
@@ -476,9 +475,9 @@
                         @Html.Partial("/Views/Shared/Mobile/_RoomDetail.cshtml", reservation.HotelDetail)
                         @Html.Partial("/Views/Shared/Mobile/_PriceDetail.cshtml", reservation)
                     </div>
-                    
+
                 }
-               
+
                 <div class="summary summary--price">
                     <h3 class="summary__title"><b>METODE </b>PEMBAYARAN</h3>
                     @switch (Model.Payment.Method)
