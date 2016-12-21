@@ -152,7 +152,7 @@
                             @foreach (var cancellation in rate.Cancellation)
                             {
                                 <li>
-                                    Pembatalan setelah <span style="color:#1daee4">@cancellation.StartTime.ToString("D", CultureInfo.CreateSpecificCulture("id-ID"))</span>
+                                    Pembatalan setelah <span style="color:#1daee4">@cancellation.StartTime.ToString("f", CultureInfo.CreateSpecificCulture("id-ID"))</span>
                                     akan dikenakan biaya pembatalan sebesar <span style="color:#ff7200">Rp @cancellation.SingleFee.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</span> per kamar.
                                 </li>
                             }
