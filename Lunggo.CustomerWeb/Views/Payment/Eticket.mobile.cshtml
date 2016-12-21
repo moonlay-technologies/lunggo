@@ -1,17 +1,16 @@
-﻿
-@using Lunggo.ApCommon.Flight.Model
+﻿@using Lunggo.ApCommon.Flight.Model
 @using Lunggo.ApCommon.Hotel.Model
 @using Lunggo.ApCommon.Product.Constant
 @model Lunggo.ApCommon.Product.Model.ReservationForDisplayBase
 
 @{
     ViewBag.Title = "Cetak E-tiket";
-    Layout = "~/Views/Shared/travorama20/_Layout20150929.cshtml";
+    Layout = "/Views/Shared/Desktop/_LayoutDesktop.cshtml";
     ViewBag.Angular = "EticketController";
 }
 
 @{
-    Layout = "/Views/Shared/mobile/_Layout.cshtml";
+    Layout = "/Views/Shared/mobile/_LayoutMobile.cshtml";
     ViewBag.BodyClass = "page page-checkout";
     ViewBag.AngularController = "EticketController";
     ViewBag.SiteHeader = "E-Tiket";

@@ -8,7 +8,7 @@
 @model Lunggo.ApCommon.Product.Model.ReservationForDisplayBase
 
 @{
-    Layout = "/Views/Shared/mobile/_Layout.cshtml";
+    Layout = "/Views/Shared/mobile/_LayoutMobile.cshtml";
     ViewBag.Title = "Terima Kasih";
     ViewBag.BodyClass = "page page-thankyou page-confirmation page-hotel page-checkout";
     ViewBag.SiteHeader = "thankyou";
@@ -467,14 +467,14 @@
 
                     <div class=" page-hotel review-hotel" style="background:#f9f9f9">
                         <div class="review-room clearfix">
-                            @Html.Partial("/Views/Hotel/Shared/Mobile/_GuestDetail.cshtml")
+                            @Html.Partial("/Views/Shared/Mobile/_GuestDetail.cshtml")
                             <h3 class="summary__title"><b>REVIEW</b> PESANAN</h3>
                             <div class="form-group">
-                                @Html.Partial("/Views/Hotel/Shared/Mobile/_HotelDetail.cshtml", reservation.HotelDetail)
+                                @Html.Partial("/Views/Shared/Mobile/_HotelDetail.cshtml", reservation.HotelDetail)
                             </div>
                         </div>
-                        @Html.Partial("/Views/Hotel/Shared/Mobile/_RoomDetail.cshtml", reservation.HotelDetail)
-                        @Html.Partial("/Views/Hotel/Shared/Mobile/_PriceDetail.cshtml", reservation)
+                        @Html.Partial("/Views/Shared/Mobile/_RoomDetail.cshtml", reservation.HotelDetail)
+                        @Html.Partial("/Views/Shared/Mobile/_PriceDetail.cshtml", reservation)
                     </div>
                     
                 }

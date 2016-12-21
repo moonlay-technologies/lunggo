@@ -6,7 +6,7 @@
 @using Lunggo.Framework.Extension
 @model Lunggo.ApCommon.Product.Model.ReservationForDisplayBase
 @{
-    Layout = "/Views/Shared/mobile/_Layout.cshtml";
+    Layout = "/Views/Shared/mobile/_LayoutMobile.cshtml";
     ViewBag.Title = "Detail Reservasi";
     ViewBag.BodyClass = "page page-orderdetail page-checkout";
     ViewBag.AngularController = "orderDetailController";
@@ -303,9 +303,9 @@
                         <h3 class="summary__title"><b>REVIEW</b> PESANAN</h3>
 
                         <div class="form-group">
-                            @Html.Partial("/Views/Hotel/Shared/Mobile/_HotelDetail.cshtml", reservation.HotelDetail)
+                            @Html.Partial("/Views/Shared/Mobile/_HotelDetail.cshtml", reservation.HotelDetail)
                         </div>
-                        @Html.Partial("/Views/Hotel/Shared/Mobile/_RoomDetail.cshtml", reservation.HotelDetail)
+                        @Html.Partial("/Views/Shared/Mobile/_RoomDetail.cshtml", reservation.HotelDetail)
                     </div>
                 </div>
             }

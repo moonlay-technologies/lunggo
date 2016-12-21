@@ -1,5 +1,5 @@
 ﻿@{
-    Layout = "/Views/Shared/mobile/_Layout.cshtml";
+    Layout = "/Views/Shared/mobile/_LayoutMobile.cshtml";
     ViewBag.Title = "Enjoy Your Every Moment";
     ViewBag.BodyClass = "page page-home";
     ViewBag.AngularController = "homeController";
@@ -20,9 +20,9 @@
     <script type="text/javascript" src="/Assets/js/jquery.ui.datepicker-id.js"></script>
     <script src="/Assets/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="/Assets/vendor/slick/slick.min.js"></script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery.ui.touch-punch/0.2.3/jquery.ui.touch-punch.min.js"></script>
-    <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.slick/1.5.9/slick.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/jquery.cookie/1.4.1/jquery.cookie.min.js"></script>
+    <script src="/Assets/js/jquery.ui.touch-punch.min.js"></script>
+    <script src="/Assets/vendor/slick/slick.min.js"></script>
+    <script src="/Assets/js/jquery.cookie.min.js"></script>
 }
 
 @section PageJS {
@@ -34,15 +34,15 @@
     <div class="carousel-inner" role="listbox">
         @if (DateTime.UtcNow.AddHours(7).Date <= new DateTime(2016, 12, 15))
         {
-        <div class="item">
-            <a href="/id/Promo/MatahariMall"><img src="/Assets/images/campaign/MatahariMall2016/MatahariMall-slider-mobile.jpg" alt="Matahari Mall" /></a>
-        </div>
+            <div class="item">
+                <a href="/id/Promo/MatahariMall"><img src="/Assets/images/campaign/MatahariMall2016/MatahariMall-slider-mobile.jpg" alt="Matahari Mall" /></a>
+            </div>
         }
         @if (DateTime.UtcNow.AddHours(7).Date <= new DateTime(2016, 12, 31))
         {
-        <div class="item">
-            <a href="/id/Promo/OnlineRevolution"><img src="/Assets/images/campaign/OnlineRevolution2016/OnlineRevolution-slider-mobile.jpg" alt="Online Revolution" /></a>
-        </div>
+            <div class="item">
+                <a href="/id/Promo/OnlineRevolution"><img src="/Assets/images/campaign/OnlineRevolution2016/OnlineRevolution-slider-mobile.jpg" alt="Online Revolution" /></a>
+            </div>
         }
         <div class="item">
             <a href="http://onelink.to/travoramaapp"><img src="/Assets/images/banner/download-app.jpg" alt="Download Applikasi Travorama!" /></a>
@@ -151,7 +151,7 @@
             </div>
             <div id="tab-hotel" class="tab-pane tp-hotel page-hotel-mobile active">
                 <div class="form-wrapper">
-                    @Html.Partial("/Views/Hotel/Shared/Mobile/_SearchHotelForm.cshtml")
+                    @Html.Partial("/Views/Shared/Mobile/_SearchHotelForm.cshtml")
                 </div>
             </div>
         </div>
@@ -379,10 +379,10 @@
         </section>
     </div><!-- .overlay--passenger-selector -->
     <!-- overlay hotel selector -->
-    @Html.Partial("/Views/Hotel/Shared/Mobile/_Autocomplete.cshtml")
+    @Html.Partial("/Views/Shared/Mobile/_Autocomplete.cshtml")
 
     <!-- overlay hotel date -->
-    @Html.Partial("/Views/Hotel/Shared/Mobile/_SelectCheckInDate.cshtml")
+    @Html.Partial("/Views/Shared/Mobile/_SelectCheckInDate.cshtml")
 
     @Html.Partial("/Views/Shared/mobile/_SiteFooter.cshtml")
 </div><!-- .page-loading -->

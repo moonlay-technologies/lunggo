@@ -7,7 +7,7 @@
 @model Lunggo.ApCommon.Product.Model.ReservationForDisplayBase
 
 @{
-    Layout = "/Views/Shared/Travorama20/_Layout20150929.cshtml";
+    Layout = "/Views/Shared/Desktop/_LayoutDesktop.cshtml";
     ViewBag.BodyClass = "page-checkout page-confirmation";
     ViewBag.Title = "Konfirmasi Pembayaran";
     ViewBag.AngularController = "confirmationController";
@@ -20,7 +20,7 @@
     };
 }
 @{
-    
+
     var timelimit = Model.Payment.TimeLimit.GetValueOrDefault();
     var orderedRooms = new List<Tuple<string, int>>();
     var rooms = new List<HotelRoomForDisplay>();
@@ -36,7 +36,7 @@
         {
             var rsv = Model as HotelReservationForDisplay;
             rooms = rsv.HotelDetail.Rooms;
-        var rsvNo = Model.RsvNo;
+            var rsvNo = Model.RsvNo;
             images = HotelService.GetInstance().GetHotelDetailFromDb(rsv.HotelDetail.HotelCode).ImageUrl;
             var orDefault = images.Where(i => i.Type == "GEN").ToList().FirstOrDefault();
             if (orDefault != null)
@@ -52,27 +52,27 @@
                     ? null
                     : "http://photos.hotelbeds.com/giata/" + firstOrDefault.Path;
             }
-        foreach (var room in rooms)
-        {
-            var roomName = HotelService.GetInstance().GetHotelRoom(room.RoomCode).RoomDescId;
-                
-            foreach (var rate in room.Rates)
+            foreach (var room in rooms)
             {
-                sum += rate.RoomCount;
+                var roomName = HotelService.GetInstance().GetHotelRoom(room.RoomCode).RoomDescId;
+
+                foreach (var rate in room.Rates)
+                {
+                    sum += rate.RoomCount;
                     totalAdult += rate.AdultCount;
                     totalChild += rate.ChildCount;
-            }
+                }
                 orderedRooms.Add(new Tuple<string, int>(roomName, sum));
+            }
         }
     }
-    }
-    catch{}
-    }
+    catch { }
+}
 @functions{
 
     public string ToTitleCase(string input)
     {
-        
+
         var text = "";
         try
         {
@@ -87,18 +87,18 @@
                     {
                         w += ApplyTitleCase(part) + "-";
                     }
-                    text += w.Substring(0, w.Length-1) + " ";
+                    text += w.Substring(0, w.Length - 1) + " ";
                 }
                 else
                 {
                     text += word[0] + word.Substring(1, word.Length - 1).ToLower() + " ";
-                }               
+                }
             }
-            
+
         }
         catch
         {
-            
+
         }
         return text.Length == 0 ? "" : text.Substring(0, text.Length - 1);
     }
@@ -115,50 +115,50 @@
 }
 @section PageJS{
     <script>
-    var langCode = 'en';
-    var paymentTimeout = '';
+        var langCode = 'en';
+        var paymentTimeout = '';
 
-    // development only start
-    paymentTimeout = new Date('@timelimit.ToString("yyyy-MM-dd'T'HH:mm:ss")');
+        // development only start
+        paymentTimeout = new Date('@timelimit.ToString("yyyy-MM-dd'T'HH:mm:ss")');
 
-    // countdown timer
-    $('.timer').countdown(paymentTimeout, function (event) {
-        $('.timer .hour').text(event.strftime('%H'));
-        $('.timer .minute').text(event.strftime('%M'));
-        $('.timer .second').text(event.strftime('%S'));
-    });
+        // countdown timer
+        $('.timer').countdown(paymentTimeout, function (event) {
+            $('.timer .hour').text(event.strftime('%H'));
+            $('.timer .minute').text(event.strftime('%M'));
+            $('.timer .second').text(event.strftime('%S'));
+        });
 
-    // date selector
-    $('.date-picker').datepicker({
-        minDate: new Date()
-    });
-    var rsvType = '';
-    var totalRoom = 0;
-    var rating = "";
-    var nights = 0;
-    var checkin = "";
-    var checkout = "";
-    var netFare = 0;
-    var hotelDetails = '';
-    var rating = '';
-    var originalFare = '';
-    var netFare = '';
-    var totalRoom = '';
-    var checkin = '';
-    var checkout = '';
-    var nights = '';
-    @if (Model is HotelReservationForDisplay)
+        // date selector
+        $('.date-picker').datepicker({
+            minDate: new Date()
+        });
+        var rsvType = '';
+        var totalRoom = 0;
+        var rating = "";
+        var nights = 0;
+        var checkin = "";
+        var checkout = "";
+        var netFare = 0;
+        var hotelDetails = '';
+        var rating = '';
+        var originalFare = '';
+        var netFare = '';
+        var totalRoom = '';
+        var checkin = '';
+        var checkout = '';
+        var nights = '';
+        @if (Model is HotelReservationForDisplay)
         {
             var hotel = Model as HotelReservationForDisplay;
         @:hotelDetails = '@hotel.HotelDetail';
-        @:rating = '@hotel.HotelDetail.StarRating'
-        @:originalFare = '@hotel.HotelDetail.OriginalFare';
-        @:netFare = '@hotel.HotelDetail.NetFare';
-        @:totalRoom = '@hotel.HotelDetail.Rooms.SelectMany(r => r.Rates).Sum(p => p.RoomCount)';
-        @:checkin = '@hotel.HotelDetail.CheckInDate.ToString("D", CultureInfo.CreateSpecificCulture("id-ID"))';
-        @:checkout = '@hotel.HotelDetail.CheckOutDate.ToString("D", CultureInfo.CreateSpecificCulture("id-ID"))';
-        @:nights = '@((hotel.HotelDetail.CheckOutDate - hotel.HotelDetail.CheckInDate).Days)';
-            }
+                @:rating = '@hotel.HotelDetail.StarRating'
+                @:originalFare = '@hotel.HotelDetail.OriginalFare';
+                @:netFare = '@hotel.HotelDetail.NetFare';
+                @:totalRoom = '@hotel.HotelDetail.Rooms.SelectMany(r => r.Rates).Sum(p => p.RoomCount)';
+                @:checkin = '@hotel.HotelDetail.CheckInDate.ToString("D", CultureInfo.CreateSpecificCulture("id-ID"))';
+                @:checkout = '@hotel.HotelDetail.CheckOutDate.ToString("D", CultureInfo.CreateSpecificCulture("id-ID"))';
+                @:nights = '@((hotel.HotelDetail.CheckOutDate - hotel.HotelDetail.CheckInDate).Days)';
+                    }
     </script>
     <!-- angular controller -->
     <script src="/Assets/travorama20/js/ConfirmationController.js"></script>
@@ -317,7 +317,7 @@
                             <div class="confirm-passenger">
                                 @if (Model is FlightReservationForDisplay)
                                 {
-                                <h4><b>INFO PENUMPANG</b></h4>
+                                    <h4><b>INFO PENUMPANG</b></h4>
                                 }
                                 @if (Model is HotelReservationForDisplay)
                                 {
@@ -332,12 +332,12 @@
                                 </ol>
 
                             </div>
-                            
+
                             @if (Model is FlightReservationForDisplay)
                             {
                                 var reservation = Model as FlightReservationForDisplay;
                                 FlightSegmentForDisplay prevSegment = null;
-                                
+
                                 <div class="confirm-order">
                                     <h4><b>DETAIL PENERBANGAN</b></h4>
 
@@ -442,7 +442,7 @@
                                 var indexroom = 1;
                                 <div class="rh-container review-hotel page-hotel">
                                     <h4><b>DETAIL HOTEL</b></h4>
-                               
+
                                     <div class="rh-content">
                                         <div class="rh-row clearfix">
                                             <div class="col-left-hotel">
@@ -470,12 +470,12 @@
                                                 {
                                                     <div class="star star-5"></div>
                                                 }
-                                               
+
                                                 <div class="rh-location">
                                                     @ToTitleCase(reservation.HotelDetail.Address) @ToTitleCase(reservation.HotelDetail.ZoneName),
-                                                    @ToTitleCase(reservation.HotelDetail.DestinationName) @reservation.HotelDetail.PostalCode, @ToTitleCase(reservation.HotelDetail.CountryName)<br/>
+                                                    @ToTitleCase(reservation.HotelDetail.DestinationName) @reservation.HotelDetail.PostalCode, @ToTitleCase(reservation.HotelDetail.CountryName)<br />
                                                 </div>
-                                                <div><br/></div>
+                                                <div><br /></div>
                                                 <div class="rh-detail">
                                                     <div class="wb-container clearfix">
                                                         <div class="wb-left">Check in</div>
@@ -503,15 +503,15 @@
                                                             <div class="wb-left">Catatan Khusus</div>
                                                             <div class="wb-mid">:</div>
                                                             <div class="wb-right bold-txt">@String.Join(". ", reservation.HotelDetail.Policy)</div>
-                                                    </div>
+                                                        </div>
                                                     }
-                                                    
+
                                                 </div>
                                                 <hr />
                                             </div>
                                             <div><br /></div>
                                         </div>
-                                    
+
                                         <div class="rh-row">
                                             <div class="rh-top clearfix">
                                                 <div class="col-left-hotel"></div>
@@ -522,7 +522,7 @@
                                                     @foreach (var room in rooms)
                                                     {
                                                         var index = 1;
-                                                        
+
                                                         <div class="rh-detail">
                                                             <div class="wb-container clearfix">
                                                                 <div class="wb-left">Jenis Kamar</div>
@@ -532,7 +532,7 @@
 
                                                             @foreach (var rate in room.Rates)
                                                             {
-                                                                
+
                                                                 var pol = 1;
                                                                 <div class="wb-container clearfix">
                                                                     <div class="wb-left">Jumlah Kamar</div>
@@ -542,7 +542,8 @@
                                                                 <div class="wb-container clearfix">
                                                                     <div class="wb-left">Tamu per Kamar</div>
                                                                     <div class="wb-mid">:</div>
-                                                                    <div class="wb-right bold-txt">@(rate.AdultCount ) Dewasa @if (rate.ChildCount > 0)
+                                                                    <div class="wb-right bold-txt">
+                                                                        @(rate.AdultCount) Dewasa @if (rate.ChildCount > 0)
                                                                         {
                                                                             <span>, @rate.ChildCount Anak </span>
                                                                             <span>
@@ -569,56 +570,54 @@
                                                                     <div class="wb-mid">:</div>
                                                                     <div class="wb-right bold-txt">@ToTitleCase(rate.BoardDescription)</div>
                                                                 </div>
-                                                                                                                             
+
                                                                 if (rate.TermAndCondition != null && rate.TermAndCondition.Count != 0 && !rate.TermAndCondition.Exists(r => r.Length < 3))
                                                                 {
-                                                                <div class="wb-container clearfix">
+                                                                    <div class="wb-container clearfix">
                                                                         <div class="wb-left">Ketentuan</div>
-                                                                    <div class="wb-mid">:</div>
+                                                                        <div class="wb-mid">:</div>
                                                                         <div class="wb-right bold-txt" style="text-transform: capitalize">@String.Join(". ", rate.TermAndCondition)</div>
-                                                                </div>
+                                                                    </div>
                                                                 }
 
                                                                 if (rate.Cancellation != null && rate.Cancellation.Count > 0)
                                                                 {
-                                                                <div class="wb-container clearfix">
-                                                                    <div class="wb-left">Ketentuan Pembatalan</div>
-                                                                    <div class="wb-mid">:</div>
-                                                                    <div class="wb-right bold-txt">
+                                                                    <div class="wb-container clearfix">
+                                                                        <div class="wb-left">Ketentuan Pembatalan</div>
+                                                                        <div class="wb-mid">:</div>
+                                                                        <div class="wb-right bold-txt">
                                                                             @if (rate.IsFreeCancel)
                                                                             {
                                                                                 <div>
                                                                                     - Gratis pembatalan sebelum tanggal @rate.FreeUntil.GetValueOrDefault().ToString("f", CultureInfo.CreateSpecificCulture("id-ID")) WIB.
                                                                                 </div>
                                                                             }
-                                                                        @foreach (var policy in rate.Cancellation)
-                                                                        {
-                                                                            <div>
+                                                                            @foreach (var policy in rate.Cancellation)
+                                                                            {
+                                                                                <div>
                                                                                     - Pembatalan setelah tanggal @policy.StartTime.ToString("f", CultureInfo.CreateSpecificCulture("id-ID")) akan dikenakan biaya sebesar Rp @(policy.SingleFee.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))) per kamar <br />
-                                                                            </div>
-                                                                        }
+                                                                                </div>
+                                                                            }
+                                                                        </div>
                                                                     </div>
-                                                                </div>
                                                                 }
                                                                 index++;
                                                             }
 
                                                         </div>
                                                         <hr />
-                                                       
-                                                        indexroom ++;
+
+                                                            indexroom++;
                                                     }
 
                                                 </div>
-                                                    </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             }
                         </div>
                     </section><!-- .order-detail -->
-                    
-                    
                     <!--</section>-->
                     <div class="btn-detail-penerbangan">
                         <a href="@Url.Action("Thankyou", "Payment", new { Model.RsvNo })" class="btn btn-yellow"> SAYA SUDAH BAYAR</a>

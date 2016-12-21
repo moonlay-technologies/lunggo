@@ -221,10 +221,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\AppInitializer.cs" />
-    <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
-    <Compile Include="App_Start\LunggoConfig\LunggoBundleConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
@@ -299,6 +297,7 @@
     <Content Include="Assets\images\voucher-hotel-bg.jpg" />
     <Content Include="Assets\images\voucher-hotel.jpg" />
     <Content Include="Assets\images\wifi.png" />
+    <Content Include="Assets\js\jquery.cookie.min.js" />
     <Content Include="Assets\js\xml2json.min.js" />
     <Content Include="Assets\images\phone.png" />
     <Content Include="Assets\mobile\images\adult.png" />
@@ -1290,9 +1289,6 @@
     <Content Include="Assets\travorama20\js\singleFlightController.js" />
     <Content Include="Assets\travorama20\js\EticketController.js" />
     <Content Include="Assets\travorama20\js\travorama20.js" />
-    <Content Include="Assets\vendor\countrySelect\css\countrySelect.min.css" />
-    <Content Include="Assets\vendor\countrySelect\img\flags.png" />
-    <Content Include="Assets\vendor\countrySelect\js\countrySelect.min.js" />
     <Content Include="Assets\vendor\datepicker\jquery.datepick.css" />
     <Content Include="Assets\vendor\datepicker\jquery.datepick.min.js" />
     <Content Include="Assets\vendor\datepicker\jquery.plugin.min.js" />
@@ -1311,13 +1307,6 @@
     <Content Include="Assets\vendor\fancybox\jquery.fancybox.css" />
     <Content Include="Assets\vendor\fancybox\jquery.fancybox.js" />
     <Content Include="Assets\vendor\fancybox\jquery.fancybox.pack.js" />
-    <Content Include="Assets\vendor\intltelinput\css\intlTelInput.css" />
-    <Content Include="Assets\vendor\intltelinput\img\flags%402x.png" />
-    <Content Include="Assets\vendor\intltelinput\img\flags.png" />
-    <Content Include="Assets\vendor\intltelinput\js\intlTelInput.min.js" />
-    <Content Include="Assets\vendor\swiper\swiper.jquery.min.js" />
-    <Content Include="Assets\vendor\swiper\swiper.min.css" />
-    <Content Include="Assets\vendor\transitJS\jquery.transit.min.js" />
     <Content Include="Config\Airline.csv" />
     <Content Include="Config\i18n_message.xml">
       <SubType>Designer</SubType>
@@ -1534,22 +1523,22 @@
     <Content Include="Views\Account\ConfirmEmail.cshtml" />
     <Content Include="Views\Account\ForgotPassword.cshtml" />
     <Content Include="Views\Account\ResetPassword.cshtml" />
-    <Content Include="Views\Shared\travorama20\_Layout20150929.cshtml" />
-    <Content Include="Views\Shared\travorama20\_SiteFooter.cshtml" />
-    <Content Include="Views\Shared\travorama20\_SiteFooterMenu.cshtml" />
-    <Content Include="Views\Shared\travorama20\_SiteHeader.cshtml" />
-    <Content Include="Views\Shared\travorama20\_SearchLocation.cshtml" />
-    <Content Include="Views\Shared\travorama20\_SearchCalendar.cshtml" />
+    <Content Include="Views\Shared\Desktop\_LayoutDesktop.cshtml" />
+    <Content Include="Views\Shared\Desktop\_SiteFooter.cshtml" />
+    <Content Include="Views\Shared\Desktop\_SiteFooterMenu.cshtml" />
+    <Content Include="Views\Shared\Desktop\_SiteHeader.cshtml" />
+    <Content Include="Views\Shared\Desktop\_SearchLocation.cshtml" />
+    <Content Include="Views\Shared\Desktop\_SearchCalendar.cshtml" />
     <Content Include="Views\Shared\_SiteHeader.cshtml" />
-    <Content Include="Views\Shared\travorama20\_SectionUserMenu.cshtml" />
+    <Content Include="Views\Shared\Desktop\_SectionUserMenu.cshtml" />
     <Content Include="Views\StaticPage\Question.cshtml" />
     <Content Include="Views\StaticPage\Terms.cshtml" />
     <Content Include="Views\StaticPage\HowToOrder.cshtml" />
     <Content Include="Views\StaticPage\HowToPay.cshtml" />
     <Content Include="Views\StaticPage\Privacy.cshtml" />
     <Content Include="Views\StaticPage\_SectionStaticHeader.cshtml" />
-    <Content Include="Views\Shared\mobile\_Layout.cshtml" />
-    <Content Include="Views\Shared\mobile\_SiteHeader.cshtml" />
+    <Content Include="Views\Shared\Mobile\_LayoutMobile.cshtml" />
+    <Content Include="Views\Shared\Mobile\_SiteHeader.cshtml" />
     <None Include="Service References\Mystifly.OnePointService.Flight\OnePoint.wsdl" />
     <None Include="Service References\Mystifly.OnePointService.Flight\OnePoint.xsd">
       <SubType>Designer</SubType>
@@ -1586,7 +1575,7 @@
     <Content Include="Views\Flight\Search-Return.mobile.cshtml" />
     <Content Include="Views\Account\ResetPassword.mobile.cshtml" />
     <Content Include="Views\Account\ForgotPassword.mobile.cshtml" />
-    <Content Include="Views\Shared\mobile\_SiteFooter.cshtml" />
+    <Content Include="Views\Shared\Mobile\_SiteFooter.cshtml" />
     <Content Include="Views\StaticPage\Contact.cshtml" />
     <Content Include="Views\StaticPage\_SectionHowTo.cshtml" />
     <Content Include="Views\Flight\Search-Single.mobile.cshtml" />
@@ -1611,33 +1600,21 @@
     <Content Include="Views\Shared\GlobalError.cshtml" />
     <Content Include="Views\Shared\GlobalError.mobile.cshtml" />
     <Content Include="Views\Hotel\DetailHotel.cshtml" />
-    <Content Include="Views\Hotel\Shared\Desktop\_PageSlider.cshtml" />
-    <Content Include="Views\Hotel\Shared\Desktop\_BreadCrumb.cshtml" />
     <Content Include="Views\Hotel\Checkout.cshtml" />
-    <Content Include="Views\Shared\travorama20\_SearchHotel.cshtml" />
+    <Content Include="Views\Shared\Desktop\_SearchHotel.cshtml" />
     <Content Include="Views\Hotel\Search.mobile.cshtml" />
-    <Content Include="Views\Hotel\Shared\Mobile\_Summary.cshtml" />
     <Content Include="Views\Hotel\DetailHotel.mobile.cshtml" />
     <Content Include="Views\Hotel\Checkout.mobile.cshtml" />
-    <Content Include="Views\Shared\travorama20\_SearchCalendarHotel.cshtml" />
+    <Content Include="Views\Shared\Desktop\_SearchCalendarHotel.cshtml" />
     <Content Include="Views\Hotel\BankTransferHotel.cshtml" />
     <Content Include="Views\Hotel\VirtualAccountHotel.cshtml" />
     <Content Include="Views\Hotel\SorryEmailHotel.cshtml" />
     <Content Include="Views\Hotel\EmailVoucher.cshtml" />
-    <Content Include="Views\Hotel\Shared\Desktop\_SearchHotelForm.cshtml" />
     <Content Include="Views\Hotel\HotelSearchForm.cshtml" />
     <Content Include="Views\Hotel\VoucherHotel.cshtml" />
-    <Content Include="Views\Hotel\Shared\Mobile\_SearchHotelForm.cshtml" />
     <Content Include="Views\Payment\Payment.cshtml" />
     <Content Include="Views\Payment\Payment.mobile.cshtml" />
     <Content Include="Views\Hotel\HotelInvoice.cshtml" />
-    <Content Include="Views\Hotel\Shared\Mobile\_PriceDetail.cshtml" />
-    <Content Include="Views\Hotel\Shared\Mobile\_HotelDetail.cshtml" />
-    <Content Include="Views\Hotel\Shared\Mobile\_GuestDetail.cshtml" />
-    <Content Include="Views\Hotel\Shared\Desktop\_ChildrenAgeForm.cshtml" />
-    <Content Include="Views\Hotel\Shared\Mobile\_RoomDetail.cshtml" />
-    <Content Include="Views\Hotel\Shared\Mobile\_Autocomplete.cshtml" />
-    <Content Include="Views\Hotel\Shared\Mobile\_SelectCheckInDate.cshtml" />
     <Content Include="Views\Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -1653,6 +1630,18 @@
     <Content Include="Views\Account\OrderHistory.cshtml" />
     <Content Include="Views\Account\OrderFlightHistoryDetail.cshtml" />
     <Content Include="Views\Shared\_SectionBenefit.cshtml" />
+    <Content Include="Views\Shared\Desktop\_BreadCrumb.cshtml" />
+    <Content Include="Views\Shared\Desktop\_ChildrenAgeForm.cshtml" />
+    <Content Include="Views\Shared\Desktop\_PageSlider.cshtml" />
+    <Content Include="Views\Shared\Desktop\_SearchHotelForm.cshtml" />
+    <Content Include="Views\Shared\Mobile\_Autocomplete.cshtml" />
+    <Content Include="Views\Shared\Mobile\_GuestDetail.cshtml" />
+    <Content Include="Views\Shared\Mobile\_HotelDetail.cshtml" />
+    <Content Include="Views\Shared\Mobile\_PriceDetail.cshtml" />
+    <Content Include="Views\Shared\Mobile\_RoomDetail.cshtml" />
+    <Content Include="Views\Shared\Mobile\_SearchHotelForm.cshtml" />
+    <Content Include="Views\Shared\Mobile\_SelectCheckInDate.cshtml" />
+    <Content Include="Views\Shared\Mobile\_Summary.cshtml" />
     <None Include="Views\Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

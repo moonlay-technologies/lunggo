@@ -1,5 +1,5 @@
 ﻿@{
-    Layout = "/Views/Shared/Travorama20/_Layout20150929.cshtml";
+    Layout = "/Views/Shared/Desktop/_LayoutDesktop.cshtml";
     ViewBag.Title = "Masuk";
     ViewBag.BodyClass = "page-account page-account-login";
     var loginProviders = Context.GetOwinContext().Authentication.GetAuthenticationTypes();
@@ -101,40 +101,39 @@
             </footer>
         </div>
     </div><!-- .page-overlay -->
-    
     @*<div class="page-overlay" ng-show="form.success">
-        <div class="overlay-content">
-            <header>
-                <h4>PROSES MASUK BERHASIL</h4>
-            </header>
-            <section>
-                <div>
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-sm-4 text-align">
-                                <img src="/Assets/images/smile-image.png" alt="Smile" />
-                            </div>
-                            <div class="col-sm-8">
-                                <div >
-                                    <h3>Anda akan dialihkan ke halaman utama.</h3>
+            <div class="overlay-content">
+                <header>
+                    <h4>PROSES MASUK BERHASIL</h4>
+                </header>
+                <section>
+                    <div>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-sm-4 text-align">
+                                    <img src="/Assets/images/smile-image.png" alt="Smile" />
+                                </div>
+                                <div class="col-sm-8">
+                                    <div >
+                                        <h3>Anda akan dialihkan ke halaman utama.</h3>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </section>
-            <footer>
-                <div class="container">
-                    <div class="row">
-                        <div class="col-sm-6 col-sm-offset-6">
-                            <a class="btn btn-yellow btn-block" ng-click="closeOverlay()">TUTUP</a>
+                </section>
+                <footer>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-6 col-sm-offset-6">
+                                <a class="btn btn-yellow btn-block" ng-click="closeOverlay()">TUTUP</a>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </footer>
-        </div>
-    </div><!-- .page-overlay --> *@
-    
+                </footer>
+            </div>
+        </div><!-- .page-overlay --> *@
+
     <div class="login-succeed" ng-show="form.success">
         <div class=" overlay-content">
             <section style="padding-top:60px; padding-left:225px;">

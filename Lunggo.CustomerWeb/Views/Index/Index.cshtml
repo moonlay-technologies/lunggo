@@ -1,6 +1,6 @@
 ﻿@using Lunggo.Framework.Config
 @{
-    Layout = "/Views/Shared/Travorama20/_Layout20150929.cshtml";
+    Layout = "/Views/Shared/Desktop/_LayoutDesktop.cshtml";
     ViewBag.BodyClass = "page-index";
     ViewBag.FooterSubscribe = true;
     ViewBag.FooterPayment = true;
@@ -90,8 +90,7 @@
 @section AdditionalJS{
     <!-- additional Angular JS-->
     <script src="/Assets/js/js.cookie.js"></script>
-    <script src="https://cdn.jsdelivr.net/jquery.cookie/1.4.1/jquery.cookie.min.js"></script>
-    <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>-->
+    <script src="/Assets/js/jquery.cookie.min.js"></script>
     <!-- jquery datepicker -->
     <script src="/Assets/js/jquery-ui.min.js"></script>
     <script type="text/javascript" src="/Assets/js/jquery.ui.datepicker-id.js"></script>
@@ -359,11 +358,11 @@
             </section>
 
         </div><!-- .search-form -->
-        @Html.Partial("/Views/Shared/Travorama20/_SearchCalendarHotel.cshtml")
-        @Html.Partial("/Views/Shared/Travorama20/_SearchCalendar.cshtml")
-        @Html.Partial("/Views/Shared/Travorama20/_SearchLocation.cshtml")
-        @Html.Partial("/Views/Shared/Travorama20/_SearchHotel.cshtml")
-        @Html.Partial("/Views/Hotel/Shared/Desktop/_ChildrenAgeForm.cshtml")
+        @Html.Partial("/Views/Shared/Desktop/_SearchCalendarHotel.cshtml")
+        @Html.Partial("/Views/Shared/Desktop/_SearchCalendar.cshtml")
+        @Html.Partial("/Views/Shared/Desktop/_SearchLocation.cshtml")
+        @Html.Partial("/Views/Shared/Desktop/_SearchHotel.cshtml")
+        @Html.Partial("/Views/Shared/Desktop/_ChildrenAgeForm.cshtml")
     </div><!-- .container -->
     @if (ViewBag.DestinationName == null || ViewBag.DestinationName == "")
     {
