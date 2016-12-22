@@ -381,10 +381,7 @@
     <Content Include="Assets\travorama20\images\Hotel\entertainment-lg.png" />
     <Content Include="Assets\travorama20\images\Hotel\general-lg.png" />
     <Content Include="Assets\travorama20\images\Hotel\health-lg.png" />
-    <Content Include="Assets\travorama20\images\Hotel\hotel-md.jpg" />
-    <Content Include="Assets\travorama20\images\Hotel\hotel-sm.jpg" />
     <Content Include="Assets\travorama20\images\Hotel\meal-lg.png" />
-    <Content Include="Assets\travorama20\images\Hotel\mini-slider.jpg" />
     <Content Include="Assets\travorama20\images\Hotel\next-white.png" />
     <Content Include="Assets\travorama20\images\Hotel\no-hotel-lg.png" />
     <Content Include="Assets\travorama20\images\Hotel\no-hotel.png" />
@@ -769,11 +766,9 @@
     </Content>
     <Content Include="Assets\travorama20\images\app-store-bg.png" />
     <Content Include="Assets\travorama20\images\app-store-cs.png" />
-    <Content Include="Assets\travorama20\images\Hotel\big-slider-img.jpg" />
     <Content Include="Assets\travorama20\images\Hotel\disc-bg.png" />
     <Content Include="Assets\travorama20\images\Hotel\disc2-bg.png" />
     <Content Include="Assets\travorama20\images\Hotel\header-bg.jpg" />
-    <Content Include="Assets\travorama20\images\Hotel\hotel.jpg" />
     <Content Include="Assets\travorama20\images\Hotel\hotel.png" />
     <Content Include="Assets\travorama20\images\Hotel\location.png" />
     <Content Include="Assets\travorama20\images\Hotel\map.png" />
@@ -1637,7 +1632,6 @@
   <ItemGroup>
     <Folder Include="Areas\Api\Views\Account\" />
     <Folder Include="Areas\Api\Views\Shared\" />
-    <Folder Include="Assets\travorama20\fonts\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
