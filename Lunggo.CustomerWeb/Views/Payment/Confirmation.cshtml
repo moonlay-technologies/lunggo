@@ -20,8 +20,8 @@
     };
 }
 @{
-    
-    var timelimit = Model.Payment.TimeLimit.GetValueOrDefault();
+
+    var timelimit = Model.Payment.TimeLimit.GetValueOrDefault(); 
     var orderedRooms = new List<Tuple<string, int>>();
     var rooms = new List<HotelRoomForDisplay>();
     var totalAdult = 0;
@@ -715,5 +715,27 @@
 
 
     </div><!-- .confirmation-content -->
+    
+    <div class="bookfailed-popup" ng-show="expired">
+        <div class=" overlay-content">
+            <section style="padding-top:60px; padding-left:225px;">
+                <div><img src="/Assets/images/travorama-logo-color.png" height="30px" width="88px"></div>
+                <div style="padding-top:25px;"><span style="color: #15b1e4; font-size:23px"><b>Waktu Habis</b></span></div>
+                <div><img src="~/Assets/images/popup/paymentyellowstrip.png" /></div>
+                <div style="padding-top:10px;">
+                    <span style="font-size:12px; padding-right:10px;">
+                        Maaf, waktu pembayaran Anda habis. <br />
+                        Silakan klik tombol di bawah untuk kembali ke halaman utama.
+                    </span>
+                </div>
+            </section>
+            <div class="row" style="padding-top:5px;">
+                <div class=" col-xs-6"></div>
+                <div class="col-xs-3">
+                    <a class="btn btn-grey btn-block" href="/" style="width:100%">KEMBALI</a>
+                </div>
+            </div>
+        </div>
+    </div>
 
 </div>

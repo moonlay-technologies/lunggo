@@ -1,7 +1,15 @@
 ﻿app.controller('confirmationController', [
-    '$http', '$scope', function ($http, $scope) {
+    '$http', '$scope', '$interval', function ($http, $scope, $interval) {
 
         $scope.pageLoaded = true;
+        $scope.paymentTimeout = paymentTimeout;
+        $scope.expired = false;
+        $interval(function () {
+            var nowTime = new Date();
+            if (nowTime > $scope.paymentTimeout) {
+                $scope.expired = true;
+            }
+        }, 1000);
         $scope.msToTime = function (duration) {
 
             var milliseconds = parseInt((duration % 1000) / 100),

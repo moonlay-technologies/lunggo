@@ -796,41 +796,41 @@
                 <div style="padding-top:25px;"><span style="color: #15b1e4; font-size:23px"><b>Waktu Habis</b></span></div>
                 <div><img src="~/Assets/images/popup/paymentyellowstrip.png" /></div>
                 <div style="padding-top:10px;"><span style="font-size:12px; padding-right:10px;">Maaf, waktu pembayaran Anda habis. <br />
-                    Silakan klik tombol di bawah untuk kembali ke halaman utama.</span></div>
+                      Silakan klik tombol di bawah untuk kembali ke halaman utama.</span>
+                </div>
             </section>
             <div class="row" style="padding-top:5px;">
                 <div class =" col-xs-6"></div>
                 <div class="col-xs-3">
                     <a class="btn btn-grey btn-block" href="/" style="width:100%">KEMBALI</a>
-                </div>
-                
+                </div>              
             </div>
         </div>
     </div>
        
-        <div class="tnc-popup" ng-show="pay.transfer">
-            <div class="popup">
-                <div class="popup-container">
-                    <div class="popup-header"><span class="popup-title stripe">Syarat dan Ketentuan Bank Transfer</span></div>
-                    <div class="popup-list">
-                        <ol>
-                            <li>Transfer keseluruhan jumlah harga hingga <b>3 angka terakhir</b> untuk menjaga keamanan transaksi dan dilakukan sebelum batas akhir waktu pembayaran.</li>
-                            <li>Transfer antarbank (dari bank yang berbeda) wajib menggunakan metode pembayaran ATM.</li>
-                            <li><b>Tidak disarankan</b> melakukan transfer dengan <b>LLG/Kliring/SKNBI</b> karena membutuhkan waktu verifikasi yang lebih lama sehingga memungkinkan pemesanan gagal.</li>
-                            <li>Anda tidak dapat mengganti ke metode pembayaran lain jika telah memilih metode pembayaran ini.</li>
-                        </ol>
+    <div class="tnc-popup" ng-show="pay.transfer">
+        <div class="popup">
+            <div class="popup-container">
+                <div class="popup-header"><span class="popup-title stripe">Syarat dan Ketentuan Bank Transfer</span></div>
+                <div class="popup-list">
+                    <ol>
+                        <li>Transfer keseluruhan jumlah harga hingga <b>3 angka terakhir</b> untuk menjaga keamanan transaksi dan dilakukan sebelum batas akhir waktu pembayaran.</li>
+                        <li>Transfer antarbank (dari bank yang berbeda) wajib menggunakan metode pembayaran ATM.</li>
+                        <li><b>Tidak disarankan</b> melakukan transfer dengan <b>LLG/Kliring/SKNBI</b> karena membutuhkan waktu verifikasi yang lebih lama sehingga memungkinkan pemesanan gagal.</li>
+                        <li>Anda tidak dapat mengganti ke metode pembayaran lain jika telah memilih metode pembayaran ini.</li>
+                    </ol>
+                </div>
+                <div class="row">
+                    <div class="col-xs-6">
+                        <a class="btn btn-grey btn-block" ng-click="pay.transfer = false;" style="width:100%">KEMBALI</a>
                     </div>
-                    <div class="row">
-                        <div class="col-xs-6">
-                            <a class="btn btn-grey btn-block" ng-click="pay.transfer = false;" style="width:100%">KEMBALI</a>
-                        </div>
-                        <div class="col-xs-6">
-                            <input type="submit" class="btn btn-yellow" ng-click="pay.middle('transfer')" value="SETUJU">
-                        </div>
+                    <div class="col-xs-6">
+                        <input type="submit" class="btn btn-yellow" ng-click="pay.middle('transfer')" value="SETUJU">
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 
         <div class="tnc-popup" ng-show="pay.virtualAccount">
             <div class="popup">

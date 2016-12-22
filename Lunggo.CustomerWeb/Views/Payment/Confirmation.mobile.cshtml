@@ -24,7 +24,6 @@
 }
 @{
     var timelimit = Model.Payment.TimeLimit.GetValueOrDefault();
-    FlightSegment prevSegment = null;
     var orderedRooms = new List<Tuple<string, int>>();
     var rooms = new List<HotelRoomForDisplay>();
     var totalAdult = 0;
@@ -33,6 +32,7 @@
     var hotelImg = "";
     var roomImg = "";
     var index = 1;
+    
     try
     {
         if (Model is HotelReservationForDisplay)
@@ -554,7 +554,29 @@
             <a href="@Url.Action("Thankyou", "Payment", new { Model.RsvNo })" class="btn btn-yellow form-control" style="width: 100%; height: 40px; font-size: 15px; line-height: 24px;"> SAYA SUDAH BAYAR</a>
         </div>
     </div>
+    
+    <div class="popup__wrapper" ng-class="{'active' : expired}">
 
+        <div class="popup">
+            <header class="popup__header">
+                <h4 class="popup__title">Waktu Habis</h4>
+            </header>
+
+            <div class="popup__body tnc-body">
+                <h3>Maaf, waktu pembayaran Anda <b>sudah habis</b></h3>
+                <p>Silakan klik tombol di bawah untuk kembali ke halaman utama.</p>
+            </div>
+
+            <div class="container_new popup__footer">
+                <div class="container_new tnc">
+                    <div class="row">
+                        <a class="btn btn-yellow btn-block" href="/">KEMBALI</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div><!-- .page-overlay -->
 </div><!-- .confirmation-content -->
 
 @*<div class="overlay datepicker" ng-class="{'active' : PageConfig.Overlay == 'datepicker'}">
