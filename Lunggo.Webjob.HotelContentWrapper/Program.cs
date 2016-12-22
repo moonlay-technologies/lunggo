@@ -26,7 +26,8 @@ namespace Lunggo.Webjob.HotelContentWrapper
 
             var hotel = new HotelBedsService();
             var hotelService = HotelService.GetInstance();
-            hotelService.SaveHotelAutocompleteToBlob();
+            //hotelService.UpdateDestinationStorage();
+            //hotelService.SaveHotelAutocompleteToBlob();
             //var y = hotelService._Autocompletes;
             //var z = hotelService.AutocompleteDummyList;
             /** Update CSV Storage **/
@@ -39,7 +40,7 @@ namespace Lunggo.Webjob.HotelContentWrapper
             //hotelService.UpdateHotelRoomStorage();
             //hotelService.UpdateHotelSegmentStorage();
             //hotelService.UpdateHotelAccomodationStorage();
-            //var x = HotelService.HotelBoards;
+            var x = HotelService.HotelBoards;
 
             
             //hotel.GetBoard(1, 1000);

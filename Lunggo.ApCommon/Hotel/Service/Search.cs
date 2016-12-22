@@ -82,7 +82,6 @@ namespace Lunggo.ApCommon.Hotel.Service
                         break;
                     case AutocompleteType.Destination:
                         request.Destination = detailDestination.Code;
-                        isByDestination = true;
                         break;
                     case AutocompleteType.Area:
                         request.Area = detailDestination.Code;

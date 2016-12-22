@@ -74,9 +74,9 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Content
                 new Tuple<string, string>("${useSecondaryLanguage}", "false"),
             };
                 var accomodationRs = client.GetAccomodation(param);
-                if (accomodationRs != null && accomodationRs.accomodations != null && accomodationRs.accomodations.Count != 0)
+                if (accomodationRs != null && accomodationRs.accommodations != null && accomodationRs.accommodations.Count != 0)
                 {
-                    foreach (var accomodation in accomodationRs.accomodations)
+                    foreach (var accomodation in accomodationRs.accommodations)
                     {
                         if (t.Equals("ENG"))
                         {

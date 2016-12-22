@@ -26,7 +26,7 @@ using Image = Lunggo.ApCommon.Hotel.Model.Image;
 namespace Lunggo.ApCommon.Hotel.Service
 {
     public partial class HotelService
-    {
+    {    
         public void UpdateTruncatedHotelDetailContent()
         {
             for (var i = 1; i <= 150000; i++)
@@ -174,7 +174,7 @@ namespace Lunggo.ApCommon.Hotel.Service
         {
             Console.WriteLine("Update Hotel Zone dan Area");
             var destinationList = GetDestinationByCountryList("ID");
-            //var destination = destinationList.FirstOrDefault(x => x.Code == "AMI");
+            var existedDestination = GetInstance().GetHotelDestinationFromStorage();
             string[] apiKey = GeoCodeApiKeyList;
             var keyIndex = 0;
             Console.WriteLine("Key {0} : {1}", keyIndex, apiKey[keyIndex]);
@@ -206,11 +206,11 @@ namespace Lunggo.ApCommon.Hotel.Service
                             if (location != null && location[0] == "OVERLIMIT")
                             {
                                 throw new Exception();
-                            }    
+                            }
                         }
-                        
+
                     }
-                    catch(Exception)
+                    catch (Exception)
                     {
                         keyIndex++;
                         if (keyIndex <= apiKey.Length - 1)
@@ -223,7 +223,7 @@ namespace Lunggo.ApCommon.Hotel.Service
 
                     if (location == null || location[0] == "OVERLIMIT" || string.IsNullOrEmpty(location[0]) || string.IsNullOrEmpty(location[1]))
                     {
-                        if ( location != null && location[0] == "OVERLIMIT")
+                        if (location != null && location[0] == "OVERLIMIT")
                         {
                             Console.WriteLine("Destination Code Error : " + destination.Code);
                         }
@@ -264,16 +264,21 @@ namespace Lunggo.ApCommon.Hotel.Service
                             areaCounter++;
                         }
                     }
-                    Console.Write("Update Hotel {0}",hotelDetail.HotelCode);
+                    Console.Write("Update Hotel {0}", hotelDetail.HotelCode);
                     SaveHotelDetailToTableStorage(hotelDetail, hotelCd); //Update HotelDetail
                 }
-                UpdateCountryDictionary(destination.CountryCode, destination.Code, zoneDict, areaDict);
+                var foundDestination = existedDestination.First(x => x.Code == destination.Code);
+                var index = existedDestination.IndexOf(foundDestination);
+                var zoneResultList =  PopulateZoneList(destination.CountryCode, destination.Code, zoneDict, areaDict);
+                foundDestination.Zones = zoneResultList;
+                if (index != -1)
+                    existedDestination[index] = foundDestination;
             }
-            CreateCSV(HotelDestinationCountryDict); //save to blob all
-
+            UpdateZoneAreaInDestination(existedDestination);
+            //CreateCSV(HotelDestinationCountryDict); //save to blob all
         }
 
-        public void UpdateCountryDictionary(string countryCd, string destinationCd, Dictionary<string, string> zoneDict, Dictionary<string, Areas> areaDict)
+        public List<Zone> PopulateZoneList(string countryCd, string destinationCd, Dictionary<string, string> zoneDict, Dictionary<string, Areas> areaDict)
         {
             var zoneList = new List<Zone>();
             foreach (var zone in zoneDict)
@@ -305,29 +310,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                 };
                 zoneList.Add(singleZone);
             }
-            var country = HotelDestinationCountryDict[countryCd];
-            if (country != null)
-            {
-                var destination = country.Destinations.First(i => i.Code == destinationCd);
-                if (destination != null)
-                {
-                    var index = country.Destinations.IndexOf(destination);
-                    var singleDestination = new Destination
-                    {
-                        Code = destination.Code,
-                        Name = destination.Name,
-                        CountryCode = destination.CountryCode,
-                        Zones = zoneList
-                    };
-                    country.Destinations[index] = singleDestination;
-                    //country.Destinations = new List<Destination>();
-                    //country.Destinations.Add(singleDestination);
-                    //var dict = new Dictionary<string, Country>();
-                    //dict.Add(country.Code, country);
-                    //CreateCSV(dict);
-                }
-                HotelDestinationCountryDict[countryCd] = country; //TODO
-            }
+            return zoneList;
         }
 
         public void CreateCSV(Dictionary<string, Country> dict)
@@ -427,6 +410,50 @@ namespace Lunggo.ApCommon.Hotel.Service
             }
             SaveHotelCountryToStorage(hotelCountry);
 
+        }
+
+        public void UpdateDestinationStorage()
+        {
+            Console.WriteLine("Update Destination Type");
+            List<Destination> hotelDestination = new List<Destination>();
+            var hotel = new HotelBedsService();
+            hotel.GetDestination(1, 1000);
+            var destinations = HotelBedsService.hotelDestinationList;
+            foreach (var destination in destinations)
+            {
+                var singleDestination = new Destination
+                {
+                    Code = destination.code,
+                    CountryCode = destination.countryCode,
+                    Name = destination.name == null ? null : destination.name.content,
+                    Zones = destination.zones.Count == 0 ? new List<Zone>() : destination.zones.Select(zone => new Zone
+                    {
+                        Code = zone.zoneCode.ToString(),
+                        Name = zone.name,
+                        DestinationCode = destination.code,
+                        Areas = new List<Area>()
+                    }).ToList()
+                };
+                hotelDestination.Add(singleDestination);
+            }
+            SaveHotelDestinationToStorage(hotelDestination);
+        }
+
+        //TODO Remember to delete this
+        //public void ConvertDestinationIntoJson()
+        //{
+        //    var countries = HotelService.Countries;
+        //    var destinationList = new List<Destination>();
+        //    foreach (var destination in countries.SelectMany(country => country.Destinations))
+        //    {
+        //        destinationList.Add(destination);
+        //    }
+        //    UpdateZoneAreaInDestination(destinationList);
+        //}
+
+        public void UpdateZoneAreaInDestination(List<Destination> destinationList)
+        {
+            SaveHotelDestinationToStorage(destinationList);
         }
 
         public void UpdateHotelBoardStorage()

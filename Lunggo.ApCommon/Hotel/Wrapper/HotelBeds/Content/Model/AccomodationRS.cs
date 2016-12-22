@@ -9,7 +9,7 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Content.Model
 {
     public class AccomodationRS
     {
-        public List<AccomodationApi> accomodations { get; set; }
+        public List<AccomodationApi> accommodations { get; set; }
         public int total { get; set; }
     }
 

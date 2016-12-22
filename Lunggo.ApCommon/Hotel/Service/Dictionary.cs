@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -8,6 +7,7 @@ using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Web;
+using CsQuery.ExtensionMethods.Internal;
 using Lunggo.ApCommon.Hotel.Constant;
 using Lunggo.ApCommon.Hotel.Model;
 using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Sdk.auto.model;
@@ -308,7 +308,8 @@ namespace Lunggo.ApCommon.Hotel.Service
 
             PopulateHotelCountriesDict(_hotelCountriesFilePath);
 
-            PopulateHotelDestinationList(_hotelDestinationsFilePath);
+            //PopulateHotelDestinationList(_hotelDestinationsFilePath);
+            PopulateHotelCountryFromBlob();
             PopulateHotelDestinationCountryDict(Countries);
             PopulateHotelDestinationDict(Countries);
             PopulateHotelZoneDict(Countries);
@@ -865,6 +866,8 @@ namespace Lunggo.ApCommon.Hotel.Service
         }
 
         //POPULATE METHODS REGARDING DESTINATION AND ZONE
+
+        /*Type 1 : Populate from Blob with data as csv format*/
         private static void PopulateHotelDestinationList(String hotelDestinationsFilePath)
         {
             Countries = new List<Country>();
@@ -1023,6 +1026,33 @@ namespace Lunggo.ApCommon.Hotel.Service
 
         }
 
+        /*Type 2 : Populate from Blob with data as Destination Object*/
+
+        private static void PopulateHotelCountryFromBlob()
+        {
+            Countries = new List<Country>();
+            var destinations = GetInstance().GetHotelDestinationFromStorage();
+            foreach (var destination in destinations)
+            {
+                var foundCountry = Countries.Where(c => c.Code == destination.CountryCode).ToList();
+                if (foundCountry.Count == 0)
+                {
+                    var country = new Country
+                    {
+                        Code = destination.CountryCode,
+                        Name = GetInstance().GetHotelCountryName(destination.CountryCode),
+                        IsoCode = GetInstance().GetHotelCountryIsoCode(destination.CountryCode),
+                        Destinations = new List<Destination> { destination }
+                    };
+                    Countries.Add(country);
+                }
+                else
+                {
+                    Countries.First(x => x.Code == destination.CountryCode).Destinations.Add(destination);
+                }
+            }
+        }
+
         private static void PopulateHotelDestinationCountryDict(IEnumerable<Country> countries)
         {
             GetInstance().HotelDestinationCountryDict = new Dictionary<string, Country>();
@@ -1044,8 +1074,12 @@ namespace Lunggo.ApCommon.Hotel.Service
         private static void PopulateHotelZoneDict(IEnumerable<Country> countries)
         {
             GetInstance().HotelDestinationZoneDict = new Dictionary<string, Zone>();
-            foreach (var zone in countries.SelectMany(country => country.Destinations).SelectMany(destination => destination.Zones))
+            var zones =
+                countries.SelectMany(country => country.Destinations).SelectMany(destination => destination.Zones).Where(z => z != null).ToList();
+            zones = zones.Distinct().ToList();
+            foreach (var zone in zones)
             {
+                if(!GetInstance().HotelDestinationZoneDict.ContainsKey(zone.Code))
                 GetInstance().HotelDestinationZoneDict.Add(zone.Code, zone);
             }
         }
@@ -1053,13 +1087,17 @@ namespace Lunggo.ApCommon.Hotel.Service
         private static void PopulateHotelAreaDict(IEnumerable<Country> countries)
         {
             GetInstance().HotelDestinationAreaDict = new Dictionary<string, Area>();
-            foreach (var area in countries.SelectMany(country => country.Destinations).SelectMany(destination => destination.Zones).SelectMany(zone => zone.Areas))
+            var areas =
+                countries.SelectMany(country => country.Destinations)
+                    .SelectMany(destination => destination.Zones)
+                    .SelectMany(zone => zone.Areas).Where(z => z != null).ToList();
+            areas = areas.Distinct().ToList();
+            foreach (var area in areas)
             {
-                if (!string.IsNullOrEmpty(area.Code))
+                if (!string.IsNullOrEmpty(area.Code) && !GetInstance().HotelDestinationAreaDict.ContainsKey(area.Code))
                 {
-                    GetInstance().HotelDestinationAreaDict.Add(area.Code, area);    
+                    GetInstance().HotelDestinationAreaDict.Add(area.Code, area);
                 }
-                
             }
         }
 
@@ -1536,11 +1574,11 @@ namespace Lunggo.ApCommon.Hotel.Service
                         {
                             if (zone.Areas != null)
                             {
-                                locations.AddRange(zone.Areas.Where(x=>x.Code != "").Select(x=>x.Code));
+                                locations.AddRange(zone.Areas.Where(x => x.Code != "").Select(x => x.Code));
                             }
-                        }    
+                        }
                     }
-                    
+
                 }
             }
 
@@ -1640,8 +1678,6 @@ namespace Lunggo.ApCommon.Hotel.Service
             var found = HotelDestinationAreaDict.TryGetValue(areaCode, out value);
             return found ? value.Name : "";
         }
-
-
 
         public Destination GetDestinationFromZone(string zoneCd)
         {

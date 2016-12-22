@@ -3,8 +3,11 @@ using System.Collections.Generic;
 using System.Data.Services.Client;
 using System.Globalization;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.Helpers;
+using CsQuery.ExtensionMethods;
 using Lunggo.ApCommon.Hotel.Model;
 using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Sdk.auto.model;
 using Lunggo.Framework.BlobStorage;
@@ -12,6 +15,7 @@ using Lunggo.Framework.Extension;
 using Lunggo.Framework.SharedModel;
 using Lunggo.Framework.TableStorage;
 using Microsoft.WindowsAzure.Storage.Table;
+using Newtonsoft.Json;
 using StackExchange.Redis;
 
 namespace Lunggo.ApCommon.Hotel.Service
@@ -553,6 +557,8 @@ namespace Lunggo.ApCommon.Hotel.Service
 
         public void SaveHotelCountryToStorage(List<CountryDict> countryList)
         {
+            var jsonFile = countryList.Serialize();
+            byte[] blobFile = Encoding.ASCII.GetBytes(jsonFile);
             BlobStorageService.GetInstance().WriteFileToBlob(new BlobWriteDto
             {
                 FileBlobModel = new FileBlobModel
@@ -560,8 +566,8 @@ namespace Lunggo.ApCommon.Hotel.Service
                     Container = "hotelcsvcontent",
                     FileInfo = new FileInfo
                     {
-                        ContentType = "",
-                        FileData = countryList.ToCacheObject(),
+                        ContentType = "application/json",
+                        FileData = blobFile,
                         FileName = "HotelCountry"
                     }
                 },
@@ -569,8 +575,11 @@ namespace Lunggo.ApCommon.Hotel.Service
             });
             Console.WriteLine("Done saving hotel Country");
         }
-        public void SaveHotelBoardToStorage(List<Board> boardList)
+
+        public void SaveHotelDestinationToStorage(List<Destination> destinationList)
         {
+            var jsonFile= destinationList.Serialize();
+            byte[] blobFile = Encoding.ASCII.GetBytes(jsonFile);
             BlobStorageService.GetInstance().WriteFileToBlob(new BlobWriteDto
             {
                 FileBlobModel = new FileBlobModel
@@ -578,8 +587,29 @@ namespace Lunggo.ApCommon.Hotel.Service
                     Container = "hotelcsvcontent",
                     FileInfo = new FileInfo
                     {
-                        ContentType = "",
-                        FileData = boardList.ToCacheObject(),
+                        ContentType = "application/json",
+                        FileData = blobFile,
+                        FileName = "HotelDestination"
+                    }
+                },
+                SaveMethod = SaveMethod.Force
+            });
+            Console.WriteLine("Done saving hotel Destination");
+        }
+
+        public void SaveHotelBoardToStorage(List<Board> boardList)
+        {
+            var jsonFile = boardList.Serialize();
+            byte[] blobFile = Encoding.ASCII.GetBytes(jsonFile);
+            BlobStorageService.GetInstance().WriteFileToBlob(new BlobWriteDto
+            {
+                FileBlobModel = new FileBlobModel
+                {
+                    Container = "hotelcsvcontent",
+                    FileInfo = new FileInfo
+                    {
+                        ContentType = "application/json",
+                        FileData = blobFile,
                         FileName = "HotelBoard"
                     }
                 },
@@ -590,6 +620,8 @@ namespace Lunggo.ApCommon.Hotel.Service
 
         public void SaveHotelChainToStorage(List<Chain> chainList)
         {
+            var jsonFile = chainList.Serialize();
+            byte[] blobFile = Encoding.ASCII.GetBytes(jsonFile);
             BlobStorageService.GetInstance().WriteFileToBlob(new BlobWriteDto
             {
                 FileBlobModel = new FileBlobModel
@@ -597,8 +629,8 @@ namespace Lunggo.ApCommon.Hotel.Service
                     Container = "hotelcsvcontent",
                     FileInfo = new FileInfo
                     {
-                        ContentType = "",
-                        FileData = chainList.ToCacheObject(),
+                        ContentType = "application/json",
+                        FileData = blobFile,
                         FileName = "HotelChain"
                     }
                 },
@@ -609,6 +641,8 @@ namespace Lunggo.ApCommon.Hotel.Service
 
         public void SaveHotelAccomodationToStorage(List<Accommodation> accomodationList)
         {
+            var jsonFile = accomodationList.Serialize();
+            byte[] blobFile = Encoding.ASCII.GetBytes(jsonFile);
             BlobStorageService.GetInstance().WriteFileToBlob(new BlobWriteDto
             {
                 FileBlobModel = new FileBlobModel
@@ -616,8 +650,8 @@ namespace Lunggo.ApCommon.Hotel.Service
                     Container = "hotelcsvcontent",
                     FileInfo = new FileInfo
                     {
-                        ContentType = "",
-                        FileData = accomodationList.ToCacheObject(),
+                        ContentType = "application/json",
+                        FileData = blobFile,
                         FileName = "HotelAccomodation"
                     }
                 },
@@ -628,6 +662,8 @@ namespace Lunggo.ApCommon.Hotel.Service
 
         public void SaveHotelCategoryToStorage(List<Category> categoryList)
         {
+            var jsonFile = categoryList.Serialize();
+            byte[] blobFile = Encoding.ASCII.GetBytes(jsonFile);
             BlobStorageService.GetInstance().WriteFileToBlob(new BlobWriteDto
             {
                 FileBlobModel = new FileBlobModel
@@ -635,8 +671,8 @@ namespace Lunggo.ApCommon.Hotel.Service
                     Container = "hotelcsvcontent",
                     FileInfo = new FileInfo
                     {
-                        ContentType = "",
-                        FileData = categoryList.ToCacheObject(),
+                        ContentType = "application/json",
+                        FileData = blobFile,
                         FileName = "HotelCategory"
                     }
                 },
@@ -647,6 +683,8 @@ namespace Lunggo.ApCommon.Hotel.Service
 
         public void SaveHotelFacilityToStorage(List<Facility> facilityList)
         {
+            var jsonFile = facilityList.Serialize();
+            byte[] blobFile = Encoding.ASCII.GetBytes(jsonFile);
             BlobStorageService.GetInstance().WriteFileToBlob(new BlobWriteDto
             {
                 FileBlobModel = new FileBlobModel
@@ -654,8 +692,8 @@ namespace Lunggo.ApCommon.Hotel.Service
                     Container = "hotelcsvcontent",
                     FileInfo = new FileInfo
                     {
-                        ContentType = "",
-                        FileData = facilityList.ToCacheObject(),
+                        ContentType = "application/json",
+                        FileData = blobFile,
                         FileName = "HotelFacility"
                     }
                 },
@@ -666,6 +704,8 @@ namespace Lunggo.ApCommon.Hotel.Service
 
         public void SaveHotelFacilityGroupToStorage(List<FacilityGroup> FacilityGroupList)
         {
+            var jsonFile = FacilityGroupList.Serialize();
+            byte[] blobFile = Encoding.ASCII.GetBytes(jsonFile);
             BlobStorageService.GetInstance().WriteFileToBlob(new BlobWriteDto
             {
                 FileBlobModel = new FileBlobModel
@@ -673,8 +713,8 @@ namespace Lunggo.ApCommon.Hotel.Service
                     Container = "hotelcsvcontent",
                     FileInfo = new FileInfo
                     {
-                        ContentType = "",
-                        FileData = FacilityGroupList.ToCacheObject(),
+                        ContentType = "application/json",
+                        FileData = blobFile,
                         FileName = "HotelFacilityGroup"
                     }
                 },
@@ -685,6 +725,8 @@ namespace Lunggo.ApCommon.Hotel.Service
 
         public void SaveHotelSegmentToStorage(List<SegmentDict> SegmentList)
         {
+            var jsonFile = SegmentList.Serialize();
+            byte[] blobFile = Encoding.ASCII.GetBytes(jsonFile);
             BlobStorageService.GetInstance().WriteFileToBlob(new BlobWriteDto
             {
                 FileBlobModel = new FileBlobModel
@@ -692,8 +734,8 @@ namespace Lunggo.ApCommon.Hotel.Service
                     Container = "hotelcsvcontent",
                     FileInfo = new FileInfo
                     {
-                        ContentType = "",
-                        FileData = SegmentList.ToCacheObject(),
+                        ContentType = "application/json",
+                        FileData = blobFile,
                         FileName = "HotelSegment"
                     }
                 },
@@ -704,6 +746,8 @@ namespace Lunggo.ApCommon.Hotel.Service
 
         public void SaveHotelRoomToStorage(List<Room> RoomList)
         {
+            var jsonFile = RoomList.Serialize();
+            byte[] blobFile = Encoding.ASCII.GetBytes(jsonFile);
             BlobStorageService.GetInstance().WriteFileToBlob(new BlobWriteDto
             {
                 FileBlobModel = new FileBlobModel
@@ -711,8 +755,8 @@ namespace Lunggo.ApCommon.Hotel.Service
                     Container = "hotelcsvcontent",
                     FileInfo = new FileInfo
                     {
-                        ContentType = "",
-                        FileData = RoomList.ToCacheObject(),
+                        ContentType = "application/json",
+                        FileData = blobFile,
                         FileName = "HotelRoom"
                     }
                 },
@@ -724,63 +768,70 @@ namespace Lunggo.ApCommon.Hotel.Service
         public List<CountryDict> GetHotelCountryFromStorage()
         {
             var blob = BlobStorageService.GetInstance().GetByteArrayByFileInContainer("HotelCountry", "hotelcsvcontent");
-            var value = (RedisValue)blob;
-            return value.DeconvertTo<List<CountryDict>>();
+            string jsonStr = Encoding.UTF8.GetString(blob);
+            return JsonConvert.DeserializeObject<List<CountryDict>>(jsonStr);
+        }
+
+        public List<Destination> GetHotelDestinationFromStorage()
+        {
+            var blob = BlobStorageService.GetInstance().GetByteArrayByFileInContainer("HotelDestination", "hotelcsvcontent");
+            string jsonStr = Encoding.UTF8.GetString(blob);
+            return JsonConvert.DeserializeObject<List<Destination>>(jsonStr);
         }
         public List<Board> GetHotelBoardFromStorage()
         {
             var blob = BlobStorageService.GetInstance().GetByteArrayByFileInContainer("HotelBoard", "hotelcsvcontent");
-            var value = (RedisValue)blob;
-            return value.DeconvertTo<List<Board>>();
+            string jsonStr = Encoding.UTF8.GetString(blob);
+            return JsonConvert.DeserializeObject<List<Board>>(jsonStr);
         }
 
         public List<Chain> GetHotelChainFromStorage()
         {
             var blob = BlobStorageService.GetInstance().GetByteArrayByFileInContainer("HotelChain", "hotelcsvcontent");
-            var value = (RedisValue)blob;
-            return value.DeconvertTo<List<Chain>>();
+            string jsonStr = Encoding.UTF8.GetString(blob);
+            return JsonConvert.DeserializeObject<List<Chain>>(jsonStr);
         }
 
         public List<Accommodation> GetHotelAccomodationFromStorage()
         {
             var blob = BlobStorageService.GetInstance().GetByteArrayByFileInContainer("HotelAccomodation", "hotelcsvcontent");
-            var value = (RedisValue)blob;
-            return value.DeconvertTo<List<Accommodation>>();
+            string jsonStr = Encoding.UTF8.GetString(blob);
+            return JsonConvert.DeserializeObject<List<Accommodation>>(jsonStr);
         }
 
         public List<Category> GetHotelCategoryFromStorage()
         {
             var blob = BlobStorageService.GetInstance().GetByteArrayByFileInContainer("HotelCategory", "hotelcsvcontent");
-            var value = (RedisValue)blob;
-            return value.DeconvertTo<List<Category>>();
+            string jsonStr = Encoding.UTF8.GetString(blob);
+            return JsonConvert.DeserializeObject<List<Category>>(jsonStr);
         }
 
         public List<Facility> GetHotelFacilityFromStorage()
         {
             var blob = BlobStorageService.GetInstance().GetByteArrayByFileInContainer("HotelFacility", "hotelcsvcontent");
-            var value = (RedisValue)blob;
-            return value.DeconvertTo<List<Facility>>();
+            string jsonStr = Encoding.UTF8.GetString(blob);
+            return JsonConvert.DeserializeObject<List<Facility>>(jsonStr);
         }
 
         public List<FacilityGroup> GetHotelFacilityGroupFromStorage()
         {
             var blob = BlobStorageService.GetInstance().GetByteArrayByFileInContainer("HotelFacilityGroup", "hotelcsvcontent");
-            var value = (RedisValue)blob;
-            return value.DeconvertTo<List<FacilityGroup>>();
+            string jsonStr = Encoding.UTF8.GetString(blob);
+            return JsonConvert.DeserializeObject<List<FacilityGroup>>(jsonStr);
         }
 
         public List<SegmentDict> GetHotelSegmentFromStorage()
         {
             var blob = BlobStorageService.GetInstance().GetByteArrayByFileInContainer("HotelSegment", "hotelcsvcontent");
-            var value = (RedisValue)blob;
-            return value.DeconvertTo<List<SegmentDict>>();
+            string jsonStr = Encoding.UTF8.GetString(blob);
+            return JsonConvert.DeserializeObject<List<SegmentDict>>(jsonStr);
         }
 
         public List<Room> GetHotelRoomFromStorage()
         {
             var blob = BlobStorageService.GetInstance().GetByteArrayByFileInContainer("HotelRoom", "hotelcsvcontent");
-            var value = (RedisValue)blob;
-            return value.DeconvertTo<List<Room>>();
+            string jsonStr = Encoding.UTF8.GetString(blob);
+            return JsonConvert.DeserializeObject<List<Room>>(jsonStr);
         }
 
     }

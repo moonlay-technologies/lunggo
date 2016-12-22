@@ -53,7 +53,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                 filter.StarFilter = null;
             if (filter.AreaFilter == null || filter.AreaFilter.Count == 0)
                 filter.AreaFilter = null;
-            if (filter.AreaFilter == null || filter.BoardFilter.Count == 0)
+            if (filter.BoardFilter == null || filter.BoardFilter.Count == 0)
                 filter.BoardFilter = null;
             if (filter.PriceFilter == null || (filter.PriceFilter.MaxPrice <= 0))
                 filter.PriceFilter = null;

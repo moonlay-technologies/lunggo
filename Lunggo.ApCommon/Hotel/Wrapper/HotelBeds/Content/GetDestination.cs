@@ -6,12 +6,14 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Lunggo.ApCommon.Hotel.Constant;
+using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Content.Model;
 using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Sdk;
 
 namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Content
 {
     public partial class HotelBedsService
     {
+        public static List<DestinationApi> hotelDestinationList = new List<DestinationApi>();
         public void GetDestination(int from, int to)
         {
             try
@@ -36,8 +38,8 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Content
                     Debug.Print("To : " + to);
                     DoGetDestination(client, from, to);
 
-                    from = from + 500;
-                    to = to + 500;
+                    from = from + 1000;
+                    to = to + 1000;
                     Thread.Sleep(1000);
 
                 } while (isValid);
@@ -63,8 +65,18 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Content
                 new Tuple<string, string>("${to}", to.ToString()),
                 new Tuple<string, string>("${useSecondaryLanguage}", "false"),
             };
-            var DestinationRs = client.GetDestination(param);
-            
+            var destinationRs = client.GetDestination(param);
+            if (destinationRs != null && destinationRs.destinations.Count != 0)
+            {
+                if (hotelDestinationList == null && hotelDestinationList.Count == 0)
+                {
+                    hotelDestinationList = destinationRs.destinations;
+                }
+                else
+                {
+                    hotelDestinationList.AddRange(destinationRs.destinations);
+                }
+            }
         }
 
         public int GetTotalDestination(HotelApiClient client)
