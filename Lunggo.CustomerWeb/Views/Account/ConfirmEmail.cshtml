@@ -1,5 +1,5 @@
 ﻿@{
-    Layout = "/Views/Shared/Travorama20/_Layout20150929.cshtml";
+    Layout = "/Views/Shared/Desktop/_LayoutDesktop.cshtml";
     ViewBag.Title = "Ganti Password";
     ViewBag.BodyClass = "page-password page-password-reset";
     var buttonText = "SET PASSWORD";
@@ -13,11 +13,11 @@
 }
 
 @section PageJS{
-<script>
-    var langCode = 'en';
-    var userEmail = '@ViewBag.Email';
-    var code = '';
-</script>
+    <script>
+        var langCode = 'en';
+        var userEmail = '@ViewBag.Email';
+        var code = '';
+    </script>
 
     <!-- angular controller -->
     <script src="/Assets/travorama20/js/accountController.js"></script>
@@ -107,7 +107,7 @@
     }
     else if (ViewBag.FailedConfirmation != null)
     {
-        <div class="page-overlay" >
+        <div class="page-overlay">
             <div class="overlay-content">
                 <header>
                     <h4>Gagal Konfirmasi</h4>
@@ -131,7 +131,7 @@
                     <div class="container">
                         <div class="row">
                             <div class="col-sm-6 col-sm-offset-6">
-                                <a class="btn btn-yellow btn-block" href="@Url.Action("Register")" >DAFTAR</a>
+                                <a class="btn btn-yellow btn-block" href="@Url.Action("Register")">DAFTAR</a>
                             </div>
                         </div>
                     </div>
@@ -244,7 +244,7 @@
             </div>
         </div><!-- .page-overlay -->
     }
-    
+
     <div class="page-overlay" style="display:block" ng-show="form.resubmitted">
         <div class="overlay-content">
             <header>
@@ -269,14 +269,14 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-sm-6 col-sm-offset-6">
-                            <a class="btn btn-yellow btn-block" href="/" >KEMBALI</a>
+                            <a class="btn btn-yellow btn-block" href="/">KEMBALI</a>
                         </div>
                     </div>
                 </div>
             </footer>
         </div>
     </div><!-- .page-overlay -->
-    
+
     <div class="page-overlay" style="display:block" ng-show="form.reconfirm">
         <div class="overlay-content">
             <header>

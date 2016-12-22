@@ -2,7 +2,7 @@
 @using Lunggo.Framework.Extension
 @model Lunggo.CustomerWeb.Models.HotelSearchApiRequest
 @{
-    Layout = "/Views/Shared/Travorama20/_Layout20150929.cshtml";
+    Layout = "/Views/Shared/Desktop/_LayoutDesktop.cshtml";
     ViewBag.BodyClass = "page-hotel page-search";
     ViewBag.Title = "Pencarian Hotel";
     ViewBag.AngularController = "hotelSearchController";
@@ -32,7 +32,7 @@
             loc = foundLocation.HotelName + ", " + foundLocation.Destination + ", " + foundLocation.Country;
         }
     }
-    
+
 }
 @section AdditionalJS {
     <script src="/Assets/js/jquery-ui.min.js"></script>
@@ -67,11 +67,11 @@
     <script src="/Assets/travorama20/js/hotelSearchController.js"></script>
 }
 
-@Html.Partial("/Views/Hotel/Shared/Desktop/_PageSlider.cshtml")
+@Html.Partial("/Views/Shared/Desktop/_PageSlider.cshtml")
 <div class="travorama-hotel" ng-init="init(@Model.Serialize())">
     <div class="container">
         <div class="search-list">
-            @Html.Partial("/Views/Hotel/Shared/Desktop/_BreadCrumb.cshtml")
+            @Html.Partial("/Views/Shared/Desktop/_BreadCrumb.cshtml")
             <div class="top-title clearfix">
                 <div class="col-left bg-title"><b>Hasil</b> Pencarian </div>
                 <div class="col-right total-result">Jumlah Hotel Ditemukan: <b>{{filteredHotelCount}}</b></div>

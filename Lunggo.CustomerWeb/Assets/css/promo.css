@@ -47,7 +47,7 @@ body.page-promo.promo-btn-mobile-app {
       .promo-btn .content-banner .card .debit {
         width: 60%; }
         .promo-btn .content-banner .card .debit:after {
-          background: url("/Campaign/PromoBTN/images/debit.png") center no-repeat;
+          background: url("/Assets/images/campaign/OnlineRevolution2016/debit.png") center no-repeat;
           content: '';
           width: 100%;
           height: 71px;
@@ -55,7 +55,7 @@ body.page-promo.promo-btn-mobile-app {
       .promo-btn .content-banner .card .credit {
         width: 40%; }
         .promo-btn .content-banner .card .credit:after {
-          background: url("/Campaign/PromoBTN/images/credit-card.png") center no-repeat;
+          background: url("/Assets/images/campaign/OnlineRevolution2016/credit-card.png") center no-repeat;
           content: '';
           width: 100%;
           height: 71px;

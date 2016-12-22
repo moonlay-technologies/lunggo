@@ -101,7 +101,7 @@ namespace Lunggo.CustomerWeb.Controllers
         public ActionResult ThankyouPost(string rsvNo)
         {
             TempData["AllowThisReservationCheck"] = rsvNo;
-            return RedirectToAction("OrderFlightHistoryDetail", "Uw620OrderHistory", new { rsvNo });
+            return RedirectToAction("OrderFlightHistoryDetail", "Account", new { rsvNo });
         }
 
         public ActionResult Eticket(string rsvNo)

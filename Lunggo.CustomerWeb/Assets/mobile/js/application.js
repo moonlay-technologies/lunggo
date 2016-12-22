@@ -1043,3 +1043,7 @@ function accordionFunctions() {
         }
     }
 }
+
+jQuery(document).ready(function($) {
+    $('.ui-slider-handle').draggable();
+})

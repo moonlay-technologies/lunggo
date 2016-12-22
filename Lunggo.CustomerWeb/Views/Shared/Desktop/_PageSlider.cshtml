@@ -1,0 +1,34 @@
+﻿@{
+    ViewBag.BodyClass = "page-hotel page-slider";
+}
+
+<div class="page-slider">
+    <div class="container">
+        <div class="main-title header-title">Feel The <br /> <b>Excitement!</b><br></div>
+    </div>
+</div>
+<div class="search-result-form">
+    <div class="container clearfix">
+        <div class="col-8">
+            <div class="result-form-left">
+                <span class="md-txt">Hasil Pencarian Hotel di: <b>{{loc}}</b ></span><br /> {{tes}}
+                <span class="">{{hotelSearch.destinationNightCount}} Malam <b>( {{hotelSearch.destinationCheckinDate | date : 'EEEE, dd MMM yyyy'}} - {{hotelSearch.destinationCheckoutDate | date : 'EEEE, dd MMM yyyy'}} )</b></span>
+            </div>
+            @*<div>cekindate {{hotelSearch.checkinDate}} | {{hotelSearch.checkinDate | date : 'EEE, dd MMM yyyy'}}</div>
+            <div>out {{hotelSearch.checkoutDate}}</div>
+            <div>checkinDateDisplay {{hotelSearch.checkinDateDisplay}}</div>*@
+        </div>
+        <div class="col-2">
+            <div class="result-form-right">
+                <a class="btn btn-yellow block search-result-form-trigger">UBAH PENCARIAN</a>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="search-result-form-content">
+            @Html.Partial("/Views/Shared/Desktop/_SearchHotelForm.cshtml")
+        </div><!-- .search-result-form-content -->  
+        @Html.Partial("/Views/Shared/Desktop/_SearchHotel.cshtml")
+        @Html.Partial("/Views/Shared/Desktop/_SearchCalendarHotel.cshtml")
+    </div>
+</div>

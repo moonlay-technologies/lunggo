@@ -484,7 +484,9 @@
         padding: 20px 0 15px;
         .ih-accordion {margin-bottom: 15px;
             .accordion-wrapper {
-                .accordion-title {padding: 12px 25px;
+                .accordion-title {
+                    padding: 12px 25px;
+                    &.up-height {margin-top:70px;}
                     &:after {
                         font-size: 0;
                         float: right;

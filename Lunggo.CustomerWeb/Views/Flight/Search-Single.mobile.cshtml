@@ -69,7 +69,7 @@
 }
 
 @{
-    Layout = "/Views/Shared/mobile/_Layout.cshtml";
+    Layout = "/Views/Shared/mobile/_LayoutMobile.cshtml";
     ViewBag.Title = "Pencarian Penerbangan Sejalan";
     ViewBag.BodyClass = "page page-flight single-flight";
     ViewBag.AngularController = "SingleFlightController";
@@ -104,11 +104,7 @@
             Requests:[],
             SecureCode: '@ViewBag.RequestId'
         };
-        $(document).ready(function(){
-            $('.ui-slider-handle').draggable();
-        });
     </script>
-
     <script src="/Assets/mobile/js/singleFlightController.js"></script>
     <script src="/Assets/travorama20/angularDirectory/priceDetail/priceDetailDirMobile.js"></script>
 }

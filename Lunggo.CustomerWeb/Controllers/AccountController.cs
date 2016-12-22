@@ -28,6 +28,13 @@ using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Serialization;
 using RestSharp;
 using RestSharp.Authenticators;
+using Lunggo.ApCommon.Flight.Service;
+using Lunggo.ApCommon.Hotel.Service;
+using Lunggo.ApCommon.Product.Model;
+using Lunggo.Framework.Config;
+using Lunggo.Framework.HtmlTemplate;
+using Lunggo.ApCommon.Payment.Constant;
+using Lunggo.ApCommon.Product.Constant;
 
 namespace Lunggo.CustomerWeb.Controllers
 {
@@ -236,7 +243,7 @@ namespace Lunggo.CustomerWeb.Controllers
         {
             if (userId == null || code == null)
             {
-                return RedirectToAction("Index", "UW000TopPage");
+                return RedirectToAction("Index", "Index");
             }
 
             var apiUrl = ConfigManager.GetInstance().GetConfigValue("api", "apiUrl");
@@ -361,7 +368,7 @@ namespace Lunggo.CustomerWeb.Controllers
                 return RedirectToAction("Login");
 
             return View(model);
-            
+
         }
 
         //
@@ -398,7 +405,7 @@ namespace Lunggo.CustomerWeb.Controllers
 
             if (isSuccess)
             {
-                var returnUrl = Url.Action("Index", "UW000TopPage");
+                var returnUrl = Url.Action("Index", "Index");
                 var loginResult =
                     await
                         SignInManager.PasswordSignInAsync(model.Email, model.Password, false,
@@ -448,7 +455,7 @@ namespace Lunggo.CustomerWeb.Controllers
                 ViewBag.Message = "ChangePasswordSucceed";
             else
                 ViewBag.Message = "ChangePasswordFailed";
-            return RedirectToAction("OrderHistory", "UW620OrderHistory");
+            return RedirectToAction("OrderHistory", "Account");
         }
 
         [System.Web.Mvc.HttpPost]
@@ -457,7 +464,7 @@ namespace Lunggo.CustomerWeb.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return RedirectToAction("OrderHistory", "UW620OrderHistory");
+                return RedirectToAction("OrderHistory", "Account");
             }
             var updatedUser = User.Identity.GetUser();
             updatedUser.FirstName = model.FirstName;
@@ -468,10 +475,10 @@ namespace Lunggo.CustomerWeb.Controllers
             var result = await UserManager.UpdateAsync(updatedUser);
             if (result.Succeeded)
             {
-                return RedirectToAction("OrderHistory", "UW620OrderHistory");
+                return RedirectToAction("OrderHistory", "Account");
             }
             AddErrors(result);
-            return RedirectToAction("OrderHistory", "UW620OrderHistory");
+            return RedirectToAction("OrderHistory", "Account");
         }
 
         //
@@ -680,6 +687,143 @@ namespace Lunggo.CustomerWeb.Controllers
         }
         #endregion
 
+        // GET: OrderHistory
+        [System.Web.Mvc.HttpGet]
+        [System.Web.Mvc.AllowAnonymous]
+        public ActionResult OrderHistory()
+        {
+            //var flight = FlightService.GetInstance();
+            //var email = User.Identity.GetEmail();
+            //var reservations = flight.GetOverviewReservationsByContactEmail(email);
+            //return View(reservations ?? new List<FlightReservationForDisplay>());
+            if (Request.Cookies["authkey"] != null)
+            {
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("Index", "Index");
+            }
 
+        }
+
+        [System.Web.Mvc.HttpPost]
+        public ActionResult OrderHistory(string rsvNo)
+        {
+            var RsvNo = rsvNo;
+            return RedirectToAction("OrderFlightHistoryDetail", "Account", new { rsvNo = RsvNo });
+        }
+
+        public ActionResult OrderFlightHistoryDetail(string rsvNo)
+        {
+            var flightService = FlightService.GetInstance();
+            var hotelService = HotelService.GetInstance();
+            ReservationForDisplayBase displayReservation;
+            if (rsvNo.Substring(0, 1) == "1")
+            {
+                displayReservation = flightService.GetReservationForDisplay(rsvNo);
+            }
+            else
+            {
+                displayReservation = hotelService.GetReservationForDisplay(rsvNo);
+            }
+            return View(displayReservation);
+        }
+
+        [System.Web.Mvc.HttpPost]
+        public ActionResult OrderFlightHistoryDetail(string rsvNo, string status)
+        {
+            ReservationForDisplayBase rsv;
+            var flightService = FlightService.GetInstance();
+            var hotelService = HotelService.GetInstance();
+            ReservationForDisplayBase displayReservation;
+            if (rsvNo.Substring(0, 1) == "1")
+            {
+                displayReservation = flightService.GetReservationForDisplay(rsvNo);
+            }
+            else
+            {
+                displayReservation = hotelService.GetReservationForDisplay(rsvNo);
+            }
+
+            //return View(rsv);
+            //var flightService = ApCommon.Flight.Service.FlightService.GetInstance();
+
+            if (displayReservation != null)
+            {
+                switch (displayReservation.RsvDisplayStatus)
+                {
+                    case RsvDisplayStatus.Cancelled:
+                        return RedirectToAction("Index", "Index"); // buat cari baru, blom fix
+
+                    case RsvDisplayStatus.Expired:
+                        return RedirectToAction("Index", "Index"); // buat cari baru, blom fix
+
+                    case RsvDisplayStatus.FailedPaid:
+                        return RedirectToAction("Thankyou", "Payment", new { rsvNo = rsvNo });
+
+                    case RsvDisplayStatus.FailedUnpaid:
+                        return RedirectToAction("Thankyou", "Payment", new { rsvNo = rsvNo });
+
+                    case RsvDisplayStatus.Issued:
+                        return RedirectToAction("Eticket", "Payment", new { rsvNo = rsvNo });
+
+                    case RsvDisplayStatus.Paid:
+                        return RedirectToAction("Thankyou", "Payment", new { rsvNo = rsvNo });
+
+                    case RsvDisplayStatus.PaymentDenied:
+                        return RedirectToAction("Thankyou", "Payment", new { rsvNo = rsvNo });
+
+                    case RsvDisplayStatus.PendingPayment:
+
+                        if (displayReservation.Payment.Method == PaymentMethod.BankTransfer ||
+                            displayReservation.Payment.Method == PaymentMethod.VirtualAccount)
+                        {
+                            return RedirectToAction("Confirmation", "Payment", new { rsvNo = rsvNo });
+                            // jika bank transfer & VA
+                        }
+                        else if (displayReservation.Payment.Method == PaymentMethod.CimbClicks)
+                        {
+                            return Redirect(displayReservation.Payment.RedirectionUrl);
+                        }
+                        else
+                        {
+                            return RedirectToAction("Thankyou", "Payment", new { rsvNo = rsvNo });
+                        }
+
+                    case RsvDisplayStatus.Reserved:
+                        return RedirectToAction("Payment", "Payment", new { rsvNo = rsvNo });
+
+                    case RsvDisplayStatus.VerifyingPayment:
+                        if (displayReservation.Payment.Method == PaymentMethod.BankTransfer ||
+                            displayReservation.Payment.Method == PaymentMethod.VirtualAccount)
+                        {
+                            return RedirectToAction("Confirmation", "Payment", new { rsvNo = rsvNo });
+                            // jika bank transfer & VA
+                        }
+                        else if (displayReservation.Payment.Method == PaymentMethod.CimbClicks)
+                        {
+                            return Redirect(displayReservation.Payment.RedirectionUrl);
+                        }
+                        else
+                        {
+                            return RedirectToAction("Thankyou", "Payment", new { rsvNo = rsvNo });
+                        }
+
+                    default:
+                        return RedirectToAction("OrderFlightHistoryDetail", "Account", new { rsvNo = rsvNo });
+
+                }
+
+            }
+
+            return View();
+        }
+
+        [System.Web.Mvc.AllowAnonymous]
+        public ActionResult OrderFlightHistoryDetailPrint(string rsvNo)
+        {
+            return Redirect("https://lunggostorageqa.blob.core.windows.net/eticket/" + rsvNo + ".pdf");
+        }
     }
 }
