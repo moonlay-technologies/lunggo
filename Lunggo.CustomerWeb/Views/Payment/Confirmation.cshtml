@@ -540,14 +540,16 @@
                                                     }
                                                     
                                                 </div>
-                                                <hr />
+                                                
                                             </div>
                                             <div><br /></div>
                                         </div>
-                                    
+                                        <hr />
                                         <div class="rh-row">
                                             <div class="rh-top clearfix">
-                                                <div class="col-left-hotel"></div>
+                                                <div class="col-left-hotel">
+                                                    <img src="@roomImg" alt="Hotel Image" style="max-width: 120px; max-height:120px; padding-right: 10px" />
+                                                </div>
                                                 <div class="col-right-hotel clearfix">
                                                     <span class="hotel-facility facility"></span>
 
@@ -562,7 +564,7 @@
                                                                 <div class="wb-mid">:</div>
                                                                 <div class="wb-right bold-txt">@ToTitleCase(HotelService.GetInstance().GetHotelRoom(room.RoomCode).RoomDescId)</div>
                                                             </div>
-
+                                                            <hr/>
                                                             @foreach (var rate in room.Rates)
                                                             {
                                                                 

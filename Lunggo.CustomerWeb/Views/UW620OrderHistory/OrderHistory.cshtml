@@ -220,7 +220,7 @@
                                         <div class="order hotel page-hotel">
                                             <div class="order-top ">
                                                 <div class="ot clearfix">
-                                                    <div class="ot-left"><img src="{{getPhotoUrl(hotel.hotelDetail.mainImage)}}" alt="Hotel Image" /></div>
+                                                    <div class="ot-left"><img src="{{hotel.hotelDetail.mainImage}}" alt="Hotel Image" style="max-width: 120px; max-height:120px; padding-right: 10px"/></div>
                                                     <div class="ot-right" style="width:60%">
                                                         <span class="blue-txt bold-txt">{{hotel.hotelDetail.hotelName}}</span><br />
                                                         <span class="star" ng-if="hotel.hotelDetail.starRating == 1"></span>
@@ -229,7 +229,7 @@
                                                         <span class="star star-4" ng-if="hotel.hotelDetail.starRating == 4"></span>
                                                         <span class="star star-5" ng-if="hotel.hotelDetail.starRating == 5"></span>
                                                         <div class="wt-location">
-                                                            {{hotel.hotelDetail.address}}{{hotel.hotelDetail.zone}}, {{hotel.hotelDetail.destination}}, {{hotel.hotelDetail.country}}
+                                                            {{hotel.hotelDetail.address}}{{hotel.hotelDetail.zone}}, {{hotel.hotelDetail.destinationName}}, {{hotel.hotelDetail.country}}
                                                         </div>
                                                     </div>
                                                 </div>

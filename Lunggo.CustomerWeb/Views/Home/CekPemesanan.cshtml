@@ -5,10 +5,8 @@
 }
 @section AdditionalJS{
     <!-- additional Angular JS-->
-    <script src="/Assets/js/angular.min.js"></script>
-    <script src="/Assets/js/angular-animate.min.js"></script>
-    <script src="/Assets/js/angular-route.min.js"></script>
 }
+
 @section PageJS{
     <script>
         var langCode = 'en';
@@ -16,34 +14,14 @@
     <!-- angular controller -->
     <script src="/Assets/travorama20/js/accountController.js"></script>
 }
-@*<script type="text/javascript">
-        //var isRsvNull = false;
-        //if (ViewBag.ErrorInfo != null) {
-        //    isRsvNull = true;
-        //}
-        @{
-            var isRsvNull = false;
-            if (ViewBag.ErrorInfo != null)
-            {
-                isRsvNull = true;
-                @:alert('@ViewBag.ErrorInfo.Message');
-            }
-            else
-            {
-                isRsvNull = false;
-            }
-        }
-    </script>*@
+
 @if (ViewBag.ErrorInfo != null)
 {
     <section class="form-section page-loading" ng-app="travorama" ng-controller="checkController" ng-class="{'page-loaded': pageLoaded}">
         <h1 class="text-center section-title stripe">CEK <span>PEMESANAN</span></h1>
         <div class="container form-container">
             <h3>@Html.I18NString("CW00187")</h3>
-            @*<ul>
-                    <li>@Html.I18NString("CW00188")</li>
-                    <li>@Html.I18NString("CW00189")</li>
-                </ul>*@
+
             <div class="form-wrapper">
                 <section class="form-content">
                     @using (Html.BeginForm("CekPemesanan", "Home", FormMethod.Post, new { @class = "form form-horizontal", role = "form", name = "checkForm" }))

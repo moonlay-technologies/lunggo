@@ -116,14 +116,10 @@
     var rsvStatus = '@Convert.ToInt32(Model.RsvDisplayStatus)';
     var paymentMethod = '@Convert.ToInt32(Model.Payment.Method)';
 
-    @*var orderDate = '@Model.RsvTime.ToString("u")';
-    //var refundDate = '@(Model.Payment.Refund != null ? Model.Payment.Refund.Time.ToString("u") : "")';*@
     </script>
     <!-- angular controller -->
     <script src="/Assets/travorama20/js/accountController.js"></script>
-
 }
-
 
 <div class="container page-loading" ng-app="travorama" ng-class="{'page-loaded' : pageLoaded}" ng-controller="orderDetailController">
     <div class="row">
@@ -298,7 +294,7 @@
                     <div class="rh-content">
                         <div class="rh-row clearfix">
                             <div class="col-left-hotel">
-                                <img src="@hotelImg" alt="Hotel Image" max-width="100%" max-height="100%" style="padding-right :10px;" />
+                                <img src="@hotelImg" alt="Hotel Image" style="max-width: 120px; max-height:120px; padding-right: 10px" />
                             </div>
                             <div class="col-right-hotel">
                                 <div class="blue-txt bold-txt hotel-title-lg md-txt">@ToTitleCase(rsv.HotelDetail.HotelName)</div>
@@ -338,7 +334,9 @@
                         <hr/>
                         <div class="rh-row">
                             <div class="rh-top clearfix">
-                                <div class="col-left-hotel">@*<img src="/Assets/travorama20/images/Hotel/hotel-md.jpg" alt="Alternate Text" />*@</div>
+                                <div class="col-left-hotel">
+                                    <img src="@roomImg" alt="Hotel Image" style="max-width: 120px; max-height:120px; padding-right: 10px" />
+                                </div>
                                 <div class="col-right-hotel clearfix">
                                     <span class="hotel-facility facility"></span>
                                     @foreach (var room in rooms)
@@ -351,7 +349,7 @@
                                                 <div class="wb-mid">:</div>
                                                 <div class="wb-right bold-txt">@ToTitleCase(HotelService.GetInstance().GetHotelRoom(room.RoomCode).RoomDescId)</div>
                                             </div>
-
+                                            <hr/>
                                             @foreach (var rate in room.Rates)
                                             {
                                                 
@@ -421,10 +419,9 @@
                                                 </div>
                                                 }
                                                         index++;
+                                                 <hr/>
                                             }
-
                                         </div>
-                                       <hr/>
                                             indexroom++;
                                     }
 

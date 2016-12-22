@@ -7,9 +7,6 @@
 }
 @section AdditionalJS{
     <!-- additional Angular JS-->
-    <script src="/Assets/js/angular.min.js"></script>
-    <script src="/Assets/js/angular-animate.min.js"></script>
-    <script src="/Assets/js/angular-route.min.js"></script>
 }
 @section PageJS{
     <script>
@@ -26,8 +23,8 @@
             <form class="form register-form form-horizontal" name="loginForm" novalidate ng-submit="form.submit()">
                 @Html.AntiForgeryToken()
                 <hgroup>
-                    <h1>@*@Html.I18NString("CW00129")*@Masuk</h1>
-                    <h4>@*@Html.I18NString("CW00122")*@Dengan Akun <b>Travorama</b></h4>
+                    <h1>Masuk</h1>
+                    <h4>Dengan Akun <b>Travorama</b></h4>
                 </hgroup>
                 <div class="form-group">
                     <input type="email" name="Email" value="" placeholder="@Html.I18NString("CW00123")" ng-model="form.email" class="form-control" required />
@@ -101,39 +98,6 @@
             </footer>
         </div>
     </div><!-- .page-overlay -->
-    
-    @*<div class="page-overlay" ng-show="form.success">
-        <div class="overlay-content">
-            <header>
-                <h4>PROSES MASUK BERHASIL</h4>
-            </header>
-            <section>
-                <div>
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-sm-4 text-align">
-                                <img src="/Assets/images/smile-image.png" alt="Smile" />
-                            </div>
-                            <div class="col-sm-8">
-                                <div >
-                                    <h3>Anda akan dialihkan ke halaman utama.</h3>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-            <footer>
-                <div class="container">
-                    <div class="row">
-                        <div class="col-sm-6 col-sm-offset-6">
-                            <a class="btn btn-yellow btn-block" ng-click="closeOverlay()">TUTUP</a>
-                        </div>
-                    </div>
-                </div>
-            </footer>
-        </div>
-    </div><!-- .page-overlay --> *@
     
     <div class="login-succeed" ng-show="form.success">
         <div class=" overlay-content">

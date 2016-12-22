@@ -19,7 +19,7 @@
 @{
     var payment = Model.Payment.Status;
     var timeout = ConfigManager.GetInstance().GetConfigValue("flight", "paymentTimeout");
-    //Model.Payment.Status = PaymentStatus.Settled;
+    Model.Payment.Status = PaymentStatus.Settled;
 
     var timelimit = Model.Payment.TimeLimit.GetValueOrDefault();
     var orderedRooms = new List<Tuple<string, int>>();
@@ -473,9 +473,12 @@
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <hr/>
                                                 <div class="rh-row">
                                                     <div class="rh-top clearfix">
-                                                        <div class="col-left-hotel"></div>
+                                                        <div class="col-left-hotel">
+                                                            <img src="@roomImg" alt="Hotel Image" style="max-width: 120px; max-height:120px; padding-right: 10px" />
+                                                        </div>
                                                         <div class="col-right-hotel clearfix">
                                                             <span class="hotel-facility facility"></span>
 
