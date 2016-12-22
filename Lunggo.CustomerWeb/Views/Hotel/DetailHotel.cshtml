@@ -102,23 +102,23 @@
                     <div class="slider-container clearfix">
                         <div class="slider clearfix">
                             <ul id="image-gallery" class="gallery list-unstyled cS-hidden">
-                                <li data-thumb="{{hotel.images[0]}}" alt-image @*ng-if="hotel.images.length >= 1"*@ @*ng-repeat="image in hotel.images track by $index"*@>
-                                    <div @*test="{{hotel.images[0]}}"*@ alt-image style="background-image: url({{hotel.images[0]}}); width: 100%; height: 590px; background-size: cover; background-position: center center;"></div>
+                                <li data-thumb="{{hotel.images[0]}}"  >
+                                    <div  style="background-image: url({{hotel.images[0]}}); width: 100%; height: 590px; background-size: cover; background-position: center center;"></div>
                                 </li>
-                                <li data-thumb="{{hotel.images[1]}}" alt-image @*ng-if="hotel.images.length >= 2"*@ @*ng-repeat="image in hotel.images track by $index"*@>
-                                    <div @*test="{{hotel.images[1]}}"*@ alt-image style="background-image: url({{hotel.images[1]}}); width: 100%; height: 590px; background-size: cover; background-position: center center;"></div>
+                                <li data-thumb="{{hotel.images[1]}}"  >
+                                    <div  style="background-image: url({{hotel.images[1]}}); width: 100%; height: 590px; background-size: cover; background-position: center center;"></div>
                                 </li>
-                                <li data-thumb="{{hotel.images[2]}}" alt-image @*ng-if="hotel.images.length >= 3"*@ @*ng-repeat="image in hotel.images track by $index"*@>
-                                    <div @*test="{{hotel.images[2]}}"*@ alt-image style="background-image: url({{hotel.images[2]}}); width: 100%; height: 590px; background-size: cover; background-position: center center;"></div>
+                                <li data-thumb="{{hotel.images[2]}}"  >
+                                    <div  style="background-image: url({{hotel.images[2]}}); width: 100%; height: 590px; background-size: cover; background-position: center center;"></div>
                                 </li>
-                                <li data-thumb="{{hotel.images[3]}}" alt-image @*ng-if="hotel.images.length >= 4"*@ @*ng-repeat="image in hotel.images track by $index"*@>
-                                    <div @*test="{{hotel.images[3]}}"*@ alt-image style="background-image: url({{hotel.images[3]}}); width: 100%; height: 590px; background-size: cover; background-position: center center;"></div>
+                                <li data-thumb="{{hotel.images[3]}}"  >
+                                    <div  style="background-image: url({{hotel.images[3]}}); width: 100%; height: 590px; background-size: cover; background-position: center center;"></div>
                                 </li>
-                                <li data-thumb="{{hotel.images[4]}}" alt-image @*ng-if="hotel.images.length >= 5"*@ @*ng-repeat="image in hotel.images track by $index"*@>
-                                    <div @*test="{{hotel.images[4]}}"*@ alt-image style="background-image: url({{hotel.images[4]}}); width: 100%; height: 590px; background-size: cover; background-position: center center;"></div>
+                                <li data-thumb="{{hotel.images[4]}}"  >
+                                    <div  style="background-image: url({{hotel.images[4]}}); width: 100%; height: 590px; background-size: cover; background-position: center center;"></div>
                                 </li>
-                                <li data-thumb="{{hotel.images[5]}}" alt-image @*ng-if="hotel.images.length >= 6"*@ @*ng-repeat="image in hotel.images track by $index"*@>
-                                    <div @*test="{{hotel.images[5]}}"*@ alt-image style="background-image: url({{hotel.images[5]}}); width: 100%; height: 590px; background-size: cover; background-position: center center;"></div>
+                                <li data-thumb="{{hotel.images[5]}}"  >
+                                    <div  style="background-image: url({{hotel.images[5]}}); width: 100%; height: 590px; background-size: cover; background-position: center center;"></div>
                                 </li>
                             </ul>
                         </div>
@@ -223,7 +223,7 @@
                                 <div class="room-left" ng-show="room.roomImages !== undefined && room.roomImages.length > 0"><div class="room-pic" alt-image style="background-image: url({{room.roomImages[0]}});"></div></div>
                                 <div class="room-right clearfix">
                                     <div class="room-rl">
-                                        <div class="blue-txt md-txt"><b>{{room.roomName}}</b></div>
+                                        <div class="blue-txt md-txt" style="text-transform: capitalize"><b>{{room.roomName}}</b></div>
                                         <div class="facility"></div>
                                         <div class="max-people" ng-if="room.rate.boards != 'RO'">Termasuk Sarapan</div>
                                         <div ng-show="room.rate.isFreeCancel">Pembatalan Gratis </div>
@@ -282,12 +282,12 @@
                                                 <div class="hd-txt">
                                                     <ul class="blue-list" style="margin-bottom: 0;">
                                                         <li ng-show="room.rate.isFreeCancel">
-                                                            Gratis pembatalan sebelum <span style="color:#1daee4">{{room.rate.freeUntil | date:'dd MMM yyyy HH:mm'}}</span> WIB.
+                                                            Gratis pembatalan sebelum tanggal <span style="color:#1daee4">{{setHoursToWIB(room.rate.freeUntil) | date:'dd MMMM yyyy HH:mm'}}</span> WIB.
                                                         </li>
                                                     </ul>
                                                     <ul class="blue-list">
                                                         <li ng-repeat="cancellation in room.rate.cancellation track by $index">
-                                                            - Pembatalan setelah <span style="color:#1daee4">{{cancellation.startTime | date:'dd MMM yyyy HH:mm'}} WIB</span>
+                                                            - Pembatalan setelah tanggal <span style="color:#1daee4">{{setHoursToWIB(cancellation.startTime) | date:'dd MMMM yyyy HH:mm'}} WIB</span>
                                                             akan dikenakan biaya pembatalan sebesar <span style="color:#ff7200">Rp {{cancellation.singleFee | number}}</span>.
                                                         </li>
                                                     </ul>
@@ -389,6 +389,17 @@
             <div align="right" style="padding-right:30px;padding-top:30px;">
                 <a class="btn popup-btn-yellow book-failed" href="{{returnUrl}}"><b>CARI ULANG</b></a>
             </div>
+        </div>
+    </div>
+    
+    <div class="bookfailed-popup" ng-show="expired">
+        <div class="overlay-content">
+            <section style="padding-top:60px; padding-left:225px;">
+                <div><img src="/Assets/images/travorama-logo-color.png" height="22px" width="80px"></div>
+                <div style="padding-top:20px;"><span style="color: #15b1e4; font-size:22px"><b>Pencarian Kadaluarsa</b></span></div>
+                <div style="padding-top:5px;"><span style="font-size:13px">Hasil pencarian Anda <span style="color: #15b1e4;font-size:13px"><b> sudah kadaluarsa</b></span>.</span></div>
+                <div><span style="font-size:13px">Anda akan dialihkan ke halaman pencarian.</span></div>
+            </section>
         </div>
     </div>
 </div>

@@ -120,8 +120,9 @@ function ($scope, $log, $window, $http, $resource, $timeout, hotelSearchSvc) {
             if (data.error == "ERHSEA02") {
                 $log.debug('search id expired. researching...');
                 $scope.expired = true;
-                $scope.hotelSearch.searchId = null;
+                $scope.changeSearch.searchId = null;
                 $scope.researching = true;
+                
                 $scope.searchHotel();
                 return false;
             }
@@ -136,11 +137,11 @@ function ($scope, $log, $window, $http, $resource, $timeout, hotelSearchSvc) {
         $timeout(function () { }, 1);
 
         searchPromise().then(function (data) {
-
+            $scope.expired = false;
             if (validateResponse(data) == false) {
                 return false;
             } else $scope.researching = false;
-
+            
             if (data.searchId !== undefined) {
 
                 $scope.hotelSearch.searchId = data.searchId;

@@ -376,6 +376,9 @@
     <None Include="Config\WebJob.EmailQueueHandler\general.properties">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Config\WebJob.EmailQueueHandler\hotel.properties">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Config\WebJob.EmailQueueHandler\lionAir.properties">
       <SubType>Designer</SubType>
     </None>

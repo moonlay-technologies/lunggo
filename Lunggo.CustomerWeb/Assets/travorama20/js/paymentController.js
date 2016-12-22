@@ -39,6 +39,21 @@ app.controller('paymentController', [
         $scope.originalPrice = originalPrice;
         $scope.buyerInfo = {};
 
+        $scope.months = [
+            { value: 0, name: 'Bulan' },
+            { value: 01, name: 'Januari' },
+            { value: 02, name: 'Februari' },
+            { value: 03, name: 'Maret' },
+            { value: 04, name: 'April' },
+            { value: 05, name: 'Mei' },
+            { value: 06, name: 'Juni' },
+            { value: 07, name: 'Juli' },
+            { value: 08, name: 'Agustus' },
+            { value: 09, name: 'September' },
+            { value: 10, name: 'Oktober' },
+            { value: 11, name: 'November' },
+            { value: 12, name: 'Desember' }
+        ];
         $interval(function () {
             var nowTime = new Date();
             if (nowTime > $scope.paymentTimeout) {
@@ -740,7 +755,7 @@ app.controller('paymentController', [
 
         // ********************************** END *********************************************
 
-        // ****************************** SUBMIT PAYMENT **************************************
+        // ********************************* LOG IN *******************************************
         if ($scope.loggedIn) {
             $scope.buyerInfo.fullname = buyerInfo.fullname;
             $scope.buyerInfo.countryCode = buyerInfo.countryCode;
@@ -749,28 +764,6 @@ app.controller('paymentController', [
         } else {
             $scope.buyerInfo = {};
         }
-
-        // change page
-        //$scope.changePage = function (page) {
-        //    $location.hash("page-" + page);
-        //    // change current page variable
-        //    $scope.currentPage = page;
-        //    // change step class
-        //    $scope.stepClass = 'active-' + page;
-
-        //}
-        //// change page after login
-        //$scope.changePage(currentPage);
-
-        //$scope.$watch(function () {
-        //    return location.hash;
-        //}, function (value) {
-        //    value = value.split('-');
-        //    value = value[1];
-        //    if (value > 0) {
-        //        $scope.changePage(value);
-        //    }
-        //});
         
         // ********************************** END *********************************************
 
@@ -824,6 +817,78 @@ app.controller('paymentController', [
             seconds = seconds;
             return hours + "j " + minutes + "m";
         }
+
+        $scope.checkName = function (name) {
+            var re = /^[a-zA-Z ]+$/;
+            if (name == null || name.match(re)) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        $scope.checkNumber = function (number) {
+            var re = /^[0-9]+$/;
+            if (number == "") {
+                return true;
+            }
+
+            if (number == null || number.match(re)) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        $scope.validation = function() {
+            if ($scope.paymentMethod == 'CreditCard') {
+                if (!$scope.checkNumber($scope.CreditCard.Number) && !$scope.checkName($scope.CreditCard.Name)
+                    && !$scope.checkDate($scope.CreditCard.Month, $scope.CreditCard.Year)) {
+                    return false;
+                } else {
+                    return true;
+                }
+            }
+        }
+
+        $scope.checkDate = function (month, year) {
+            if (month == '0' || year == 'Tahun') {
+                return false;
+            }
+            
+            var now = new Date();
+            var monthNow = now.getMonth();
+            var yearNow = now.getFullYear();
+
+            if (year > yearNow) {
+                return true;
+            }
+            else if (year == yearNow) {
+                if (month < monthNow + 1) {
+                    return false;
+                } else {
+                    return true;
+                }
+            } else {
+                return false;
+            }
+        }
+
+        $scope.generateYear = function () {
+            var now = new Date();
+            var yearNow = now.getFullYear();
+            var years = [];
+
+            function listYear(min, max) {
+                for (var i = min; i <= max; i++) {
+                    years.push(i);
+                }
+            }
+            listYear(yearNow, (yearNow + 10));
+            //years = years.reverse();
+            return ['Tahun'].concat(years);
+        }
+
         // ********************************** END *********************************************
     }
 ]);

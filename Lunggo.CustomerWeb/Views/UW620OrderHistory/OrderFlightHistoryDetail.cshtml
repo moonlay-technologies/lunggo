@@ -405,16 +405,16 @@
                                                     <div class="wb-left">Ketentuan Pembatalan</div>
                                                     <div class="wb-mid">:</div>
                                                     <div class="wb-right bold-txt">
-                                                            @if (rate.IsFreeCancel)
-                                                            {
-                                                                <div>
-                                                                    - Gratis pembatalan sebelum tanggal @rate.FreeUntil.GetValueOrDefault().ToString("f", CultureInfo.CreateSpecificCulture("id-ID")) WIB.
-                                                                </div>
-                                                            }
+                                                        @if (rate.IsFreeCancel)
+                                                        {
+                                                            <div>
+                                                                - Gratis pembatalan sebelum tanggal @rate.FreeUntil.GetValueOrDefault().AddHours(7).ToString("dd MMMM yyyy HH:mm", CultureInfo.CreateSpecificCulture("id-ID")) WIB.
+                                                            </div>
+                                                        }
                                                         @foreach (var policy in rate.Cancellation)
                                                         {
                                                             <div>
-                                                                    - Pembatalan setelah tanggal @policy.StartTime.ToString("f", CultureInfo.CreateSpecificCulture("id-ID")) akan dikenakan biaya sebesar Rp @(policy.SingleFee.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))) per kamar <br />
+                                                                - Pembatalan setelah tanggal @policy.StartTime.AddHours(7).ToString("dd MMMM yyyy HH:mm", CultureInfo.CreateSpecificCulture("id-ID")) WIB akan dikenakan biaya sebesar Rp @(policy.SingleFee.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))) per kamar <br />
                                                             </div>
                                                         }
                                                     </div>

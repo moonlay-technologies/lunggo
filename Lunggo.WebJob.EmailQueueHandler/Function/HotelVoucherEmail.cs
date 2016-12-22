@@ -47,7 +47,7 @@ namespace Lunggo.WebJob.EmailQueueHandler.Function
             var mailModel = new MailModel
             {
                 RecipientList = new[] {summary.Contact.Email},
-                Subject = envPrefix + "[Travorama] E-tiket Anda - No. Pemesanan " + summary.RsvNo,
+                Subject = envPrefix + "[Travorama] Voucher Anda - No. Pemesanan " + summary.RsvNo,
                 FromMail = "booking@travorama.com",
                 FromName = "Travorama",
                 ListFileInfo = new List<FileInfo>
@@ -55,7 +55,7 @@ namespace Lunggo.WebJob.EmailQueueHandler.Function
                     new FileInfo
                     {
                         ContentType = "PDF",
-                        FileName = "E-ticket Anda - No. Pemesanan " + summary.RsvNo + ".pdf",
+                        FileName = "Voucher Anda - No. Pemesanan " + summary.RsvNo + ".pdf",
                         FileData = eticketFile
                     },
                     new FileInfo

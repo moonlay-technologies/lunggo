@@ -543,12 +543,12 @@
                                                                             <div class="wb-left">Ketentuan Pembatalan</div>
                                                                             <div class="wb-mid">:</div>
                                                                             <div class="wb-right bold-txt">
-                                                                                    @if (rate.IsFreeCancel)
-                                                                                    {
-                                                                                        <div>
-                                                                                            - Gratis pembatalan sebelum tanggal @rate.FreeUntil.GetValueOrDefault().AddHours(7).ToString("dd MMMM yyyy HH:mm", CultureInfo.CreateSpecificCulture("id-ID")) WIB.
-                                                                                        </div>
-                                                                                    }
+                                                                                @if (rate.IsFreeCancel)
+                                                                                {
+                                                                                    <div>
+                                                                                        - Gratis pembatalan sebelum tanggal @rate.FreeUntil.GetValueOrDefault().AddHours(7).ToString("dd MMMM yyyy HH:mm", CultureInfo.CreateSpecificCulture("id-ID")) WIB.
+                                                                                    </div>
+                                                                                }
                                                                                 @foreach (var policy in rate.Cancellation)
                                                                                 {
                                                                                     <div>

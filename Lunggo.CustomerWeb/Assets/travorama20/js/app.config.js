@@ -139,25 +139,11 @@ app.directive('altImage', function($http, $log, $q) {
                     return true;
                 });
             });
-
-
-//attrs.$observe('altImage', function (altImage) {
-            //    isImage(altImage).then(function () {
-            //        $log.debug('image exist');
-            //    }, function () {
-            //        var altImagePath = document.location.origin + '/Assets/travorama20/images/Hotel/no-hotel.png';
-            //        $log.debug('image not exist');
-
-            //        element.removeAttr('src');
-            //        //element.attr('src', "background-image: url(" + altImagePath + "); width: 100%; height: 450px; background-size: cover; background-position: center center;"); // set default image
-            //    });
-            //});
-
         }
-    };
+    }
 });
 
-app.directive('searchScroll', function () {
+    app.directive('searchScroll', function () {
     return {
         restrict: 'A',
         link: function (scope, element, attrs) {
@@ -166,7 +152,7 @@ app.directive('searchScroll', function () {
                 var a = Math.round($(window).scrollTop());
                 var b = $(window).height();
                 var c = $(document).height();
-                if (Math.round($(window).scrollTop()) + $(window).height() == $(document).height()) {
+                if (Math.round($(window).scrollTop()) + $(window).height() == $(document).height() && scope.page < scope.pageCount) {
                     scope.page++;
                     scope.bottomPage = true;
                     window.scrollTo(0, document.body.scrollHeight);
@@ -174,9 +160,9 @@ app.directive('searchScroll', function () {
                 }
             });
 
-        }
-    };
-});
+            }
+        };
+    });
 //app.directive('altBackgroundImage', function (style) {
 //    return function (scope, element, attrs) {
 //        element.bind("keydown keypress", function (event) {
@@ -218,5 +204,3 @@ app.factory('imageSvc', ['$log', '$resource', '$q', function ($log, $resource, $
 
     return factory;
 }]);
-
-

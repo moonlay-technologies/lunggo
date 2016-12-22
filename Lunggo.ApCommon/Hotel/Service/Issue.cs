@@ -58,6 +58,7 @@ namespace Lunggo.ApCommon.Hotel.Service
             var rsvData = GetReservationFromDb(input.RsvNo);
             if (rsvData == null)
             {
+                Console.WriteLine("Reservation not found");
                 return new IssueHotelTicketOutput
                 {
                     IsSuccess = false,
@@ -66,12 +67,14 @@ namespace Lunggo.ApCommon.Hotel.Service
 
             if (!string.IsNullOrEmpty(rsvData.HotelDetails.BookingReference))
             {
+                Console.WriteLine("Reservation has been issued");
                 return new IssueHotelTicketOutput
                 {
                     IsSuccess = false
                 };
             }
-            //var oldPrice = rsvData.HotelDetails.Rooms.Sum(room => room.Rates.Sum(rate => rate.Price.Supplier));
+            
+            var oldPrice = rsvData.HotelDetails.Rooms.Sum(room => room.Rates.Sum(rate => rate.Price.Supplier));
             var occupancies = new List<Occupancy>();
 
             foreach (var room in rsvData.HotelDetails.Rooms)
@@ -106,6 +109,7 @@ namespace Lunggo.ApCommon.Hotel.Service
 
             if (searchResult.HotelDetails == null || searchResult.HotelDetails.Count == 0)
             {
+                Console.WriteLine("When refresh ratekeys, no hotel result");
                 return new IssueHotelTicketOutput
                 {
                     ErrorMessages = new List<string> {"When refresh ratekeys, no hotel result"},
@@ -115,6 +119,7 @@ namespace Lunggo.ApCommon.Hotel.Service
 
             if (searchResult.HotelDetails.Any(hotel => hotel.Rooms == null || hotel.Rooms.Count == 0))
             {
+                Console.WriteLine("When refresh ratekeys, there is at least a hotel without Rooms");
                 return new IssueHotelTicketOutput
                 {
                     ErrorMessages = new List<string> {"When refresh ratekeys, there is at least a hotel without Rooms"},
@@ -122,13 +127,12 @@ namespace Lunggo.ApCommon.Hotel.Service
                 };
             }
 
-            if (
-                searchResult.HotelDetails.Any(
-                    hotel => hotel.Rooms.Any(room => room.Rates == null || room.Rates.Count == 0)))
+            if (searchResult.HotelDetails.Any(hotel => hotel.Rooms.Any(room => room.Rates == null || room.Rates.Count == 0)))
             {
+                Console.WriteLine("When refresh ratekeys, there is at least a room without Rates");
                 return new IssueHotelTicketOutput
                 {
-                    ErrorMessages = new List<string> {"When refresh ratekeys, there is at least a room withour Rates"},
+                    ErrorMessages = new List<string> {"When refresh ratekeys, there is at least a room without Rates"},
                     IsSuccess = false
                 };
             }
@@ -188,13 +192,26 @@ namespace Lunggo.ApCommon.Hotel.Service
 
             if (rateFound.Any(r => r == false))
             {
+                Console.WriteLine("At least one rate can not be found in refresh ratekey");
                 return new IssueHotelTicketOutput
                 {
                     IsSuccess = false,
                     ErrorMessages = new List<string> {"At least one rate can not be found in refresh ratekey"}
                 };
             }
-            //var newPrice = rsvData.HotelDetails.Rooms.Sum(room => room.Rates.Sum(rate => rate.Price.Supplier));
+            
+            var newPrice = rsvData.HotelDetails.Rooms.Sum(room => room.Rates.Sum(rate => rate.Price.Supplier));
+            if (newPrice != oldPrice)
+            {
+                UpdateRsvDetail(rsvData.RsvNo, "FAIL", rsvData.HotelDetails);
+                SendSaySorryFailedIssueNotifToCustomer(rsvData.RsvNo);
+                Console.WriteLine("Price is changed");
+                return new IssueHotelTicketOutput
+                {
+                    IsSuccess = false,
+                    ErrorMessages = new List<string> { "Price is changed" }
+                };
+            }
             var newRooms = rsvData.HotelDetails.Rooms;
             var issueInfo = new HotelIssueInfo
             {
@@ -206,18 +223,36 @@ namespace Lunggo.ApCommon.Hotel.Service
             };
 
             var issue = new HotelBedsIssue();
-            var issueResult = issue.IssueHotel(issueInfo);
+            var issueResult = new HotelIssueTicketResult();
+            try
+            {
+                issueResult = issue.IssueHotel(issueInfo);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                UpdateRsvDetail(rsvData.RsvNo, "FAIL", rsvData.HotelDetails);
+                SendSaySorryFailedIssueNotifToCustomer(rsvData.RsvNo);
+                Console.WriteLine("Something wrong when issuing");
+                return new IssueHotelTicketOutput
+                {
+                    IsSuccess = false,
+                    ErrorMessages = new List<string> { issueResult.Status }
+                };
+            }
            
             if (issueResult.IsSuccess == false)
             {
                 UpdateRsvDetail(rsvData.RsvNo, "FAIL", rsvData.HotelDetails);
                 SendSaySorryFailedIssueNotifToCustomer(rsvData.RsvNo);
+                Console.WriteLine("Issuing is failed");
                 return new IssueHotelTicketOutput
                 {
                     IsSuccess = false,
                     ErrorMessages = new List<string> {issueResult.Status}
                 };
             }
+
             UpdateRsvStatusDb(rsvData.RsvNo, issueResult.IsSuccess ? RsvStatus.Completed : RsvStatus.Failed);
             UpdateRsvDetail(rsvData.RsvNo, "TKTD", rsvData.HotelDetails);
             UpdateReservationDetailsToDb(issueResult);
@@ -229,15 +264,12 @@ namespace Lunggo.ApCommon.Hotel.Service
                 IsSuccess = true
             }).ToList();
 
+            Console.WriteLine("Success issuing");
             return new IssueHotelTicketOutput
             {
                 IsSuccess = true,
                 OrderResults = order
             };
-
         }
-
-        
-
     }
 }
