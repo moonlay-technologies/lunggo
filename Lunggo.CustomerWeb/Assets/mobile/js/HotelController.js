@@ -1,4 +1,4 @@
-﻿app.controller('HotelController', ['$http', '$scope', '$rootScope', function ($http, $scope, $rootScope) {
+﻿app.controller('HotelController', ['$http', '$scope', '$rootScope', '$log', function ($http, $scope, $rootScope, $log) {
 
     // **********
     // variables
@@ -7,7 +7,7 @@
 
     // set overlay
     $scope.SetOverlay = function (overlay) {
-        console.log('changing overlay to : ' + overlay);
+        $log.debug('changing overlay to : ' + overlay);
         if (!overlay) {
             $scope.PageConfig.ActiveOverlay = '';
             $scope.PageConfig.BodyNoScroll = false;
@@ -76,47 +76,7 @@
             id.toggleClass('active');
             $(this).toggleClass('active');
         });
-
-        // **********
-        // Counter Detail Room
-        //$('body .btn-min').on('click', function () {
-        //    var value = $(this).parent().find('.result-room').val();
-        //    value = calculate(value, 'min');
-
-        //    $(this).parent().find('.result-room').val(value);
-        //});
-
-        //$('body .btn-plus').on('click', function () {
-        //    var value = $(this).parent().find('.result-room').val();
-        //    var limit = $(this).attr('attr-limit');
-        //    value = calculate(value, 'plus', limit);
-
-        //    $(this).parent().find('.result-room').val(value);
-        //});
-
-        //function calculate(value, type, limit) {
-        //    value = parseInt(value);
-        //    limit = parseInt(limit);
-
-        //    if (value < 0) {
-        //        value = 0;
-        //    }
-
-        //    if (type == 'min') {
-        //        if (value > 0) {
-        //            value = value - 1;
-        //        }
-        //    } else if (type == 'plus') {
-        //        value = value + 1;
-
-        //        if (value > limit) {
-        //            value = limit;
-        //        }
-        //    }
-
-        //    return value;
-        //}
-
+        
         //// **********
         //// Slick Slider Detail Hotel
         $('.dh-slider').slick({
