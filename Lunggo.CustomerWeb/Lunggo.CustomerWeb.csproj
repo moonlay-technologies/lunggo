@@ -283,12 +283,6 @@
     <Compile Include="WebSrc\UW600\UW620\UW620OrderHistoryController.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Assets\bootstrap\bootstrap.css">
-      <DependentUpon>bootstrap.scss</DependentUpon>
-    </Content>
-    <Content Include="Assets\bootstrap\bootstrap.min.css">
-      <DependentUpon>bootstrap.css</DependentUpon>
-    </Content>
     <Content Include="Assets\css\promo.css">
       <DependentUpon>promo.scss</DependentUpon>
     </Content>
@@ -404,12 +398,6 @@
     <Content Include="Assets\css\font-awesome.min.css" />
     <Content Include="Areas\Api\Views\web.config" />
     <Content Include="Assets\css\jquery-ui.min.css" />
-    <Content Include="Assets\css\neweticket.css">
-      <DependentUpon>neweticket.scss</DependentUpon>
-    </Content>
-    <Content Include="Assets\css\neweticket.min.css">
-      <DependentUpon>neweticket.css</DependentUpon>
-    </Content>
     <Content Include="Assets\fonts\bootstrap\glyphicons-halflings-regular.svg" />
     <Content Include="Assets\fonts\DINB-webfont.eot" />
     <Content Include="Assets\fonts\DINB-webfont.svg" />
@@ -766,12 +754,6 @@
     <Content Include="Assets\mobile\images\prev.png" />
     <Content Include="Assets\mobile\images\promo-logo-notif.png" />
     <Content Include="Assets\mobile\js\PromoController.js" />
-    <Content Include="Assets\travorama20\css\global-error.css">
-      <DependentUpon>global-error.scss</DependentUpon>
-    </Content>
-    <Content Include="Assets\travorama20\css\global-error.min.css">
-      <DependentUpon>global-error.css</DependentUpon>
-    </Content>
     <Content Include="Assets\travorama20\css\travorama20.css" />
     <Content Include="Assets\travorama20\css\travorama20.min.css" />
     <Content Include="Assets\travorama20\images\app-store-bg.png" />
@@ -1284,7 +1266,6 @@
     <Content Include="Assets\travorama20\angularDirectory\priceDetail\priceDetailDir.js" />
     <Content Include="Assets\travorama20\angularDirectory\priceDetail\priceDetailDirMobile.js" />
     <Content Include="Assets\travorama20\angularDirectory\priceDetail\priceDetailTemplate.html" />
-    <Content Include="Assets\travorama20\css\help_section.css" />
     <Content Include="Assets\travorama20\css\help_section.min.css" />
     <Content Include="Assets\travorama20\js\accountController.js" />
     <Content Include="Assets\travorama20\js\countries.js" />
