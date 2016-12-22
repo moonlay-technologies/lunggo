@@ -358,26 +358,6 @@
                                 <form name="creditCardForm" novalidate>
                                     <h3 class="no-spacing">Detail <b>Kartu Kredit/Debit</b></h3>
 
-                                    @*<!-- credit card selector start -->
-                                        <div class="form-group">
-                                            <div class="row">
-                                                <div class="col-sm-8">
-                                                    <label>Pilih kartu kredit :</label>
-                                                    <select class="form-control" ng-model="CreditCard.TwoClickToken" ng-required="paymentMethod == '@PaymentMethod.CreditCard'">
-                                                        <option value="false" selected="selected">Tambah Baru</option>
-                                                        @foreach (var savedCreditCard in savedCreditCards)
-                                                        {
-                                                            <option value="@savedCreditCard.Token">@savedCreditCard.CardHolderName - @savedCreditCard.MaskedCardNumber</option>
-                                                        }
-                                                    </select>
-                                                </div>
-                                                <div class="col-sm-4" ng-if="CreditCard.TwoClickToken != 'false'">
-                                                    <label class="control-label">CVV Kartu</label>
-                                                    <input type="password" value="" class="form-control" placeholder="XXX" maxlength="3" ng-model="CreditCard.Cvv" ng-required="paymentMethod == '@PaymentMethod.CreditCard'" />
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- credit card selector end -->*@
                                     <!-- new credit card start -->
                                     <div ng-if="CreditCard.TwoClickToken == 'false'">
                                         <div class="form-group" ng-class="{'has-error' : !checkNumber(CreditCard.Number)}">
@@ -475,10 +455,13 @@
                                             </ul>
                                         </div>
                                     </div>
-                                    <div class="form-group">
+                                    <div class="form-group" ng-class="{'has-error' : !checkNumber(MandiriClickPay.Token)}">
                                         <label class="control-label">Respon Token Mandiri</label>
-                                        <input name="mandiriToken" type="number" value="" class="form-control cc-number" maxlength="6" max="999999" placeholder="XXXXXX"
-                                               ng-model="MandiriClickPay.Token" ng-required="paymentMethod == '@PaymentMethod.MandiriClickPay'"/>
+                                        <input name="mandiriToken" type="text" value="" class="form-control cc-number" placeholder="XXXXXX"
+                                               maxlength="6" ng-model="MandiriClickPay.Token" ng-required="paymentMethod == '@PaymentMethod.MandiriClickPay'" />
+                                    </div>
+                                    <div ng-show="!checkNumber(MandiriClickPay.Token)" style="color:red">
+                                        Respon token tidak boleh mengandung karakter selain angka
                                     </div>
                                 </div>
                                 
@@ -579,7 +562,7 @@
                                 <p class="bg-success" ng-show="voucher.checked && voucher.status == 'Success'">Voucher valid</p>
                                 <form class="form" name="voucherForm" novalidate>
                                     <div class="form-group">
-                                        <input type="text" name="code" value="" class="form-control" ng-model="voucher.code" ng-disabled="voucher.checking || voucher.confirmedCode" />
+                                        <input type="text" name="code" value="" class="form-control" ng-model="voucher.code" ng-disabled="voucher.checking || voucher.confirmedCode || (voucher.checked && !voucher.received)" />
                                         <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'ERPVCH02'">Kode voucher salah</p>
                                         <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'ERPVCH01'">Voucher tidak dapat digunakan</p>
                                         <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'ERPVCH03'">Voucher sudah habis</p>
@@ -873,22 +856,37 @@
             </div>
         </div>
 
-            <div class="payment-popup" ng-show="pay.checked && !pay.isSuccess">
-            <div class=" overlay-content">
-                <section style="padding-top:40px; padding-left:225px;">
-                    <!-- Ini untuk yg gagal -->
-                    <div><img src="/Assets/images/travorama-logo-color.png" height="22px" width="80px"></div>
-                    <div style="padding-top:20px;"><span style="color: #15b1e4; font-size:20px"><b>Mohon Maaf...</b></span></div>
-                    <div><img src="~/Assets/images/popup/paymentyellowstrip.png" /></div>
-                    <div style="padding-top:5px; padding-right:30px;"><span style="font-size:12px">{{errorMessage}}</span></div>
-                </section>
-                <div align="right" style="padding-right:30px;padding-top:10px;">
-                    <a class="btn popup-btn-yellow book-failed" ng-click="pay.close()"><b>Tutup</b></a>
-                </div>
+    <div class="payment-popup" ng-show="pay.checked && !pay.isSuccess">
+        <div class=" overlay-content">
+            <section style="padding-top:40px; padding-left:225px;">
+                <!-- Ini untuk yg gagal -->
+                <div><img src="/Assets/images/travorama-logo-color.png" height="22px" width="80px"></div>
+                <div style="padding-top:20px;"><span style="color: #15b1e4; font-size:20px"><b>Mohon Maaf...</b></span></div>
+                <div><img src="~/Assets/images/popup/paymentyellowstrip.png" /></div>
+                <div style="padding-top:5px; padding-right:30px;"><span style="font-size:12px">{{errorMessage}}</span></div>
+            </section>
+            <div align="right" style="padding-right:30px;padding-top:10px;">
+                <a class="btn popup-btn-yellow book-failed" ng-click="pay.close()"><b>Tutup</b></a>
             </div>
         </div>
+    </div>
+    
+    <div class="payment-popup" ng-show="!pay.inputValid">
+        <div class=" overlay-content">
+            <section style="padding-top:40px; padding-left:225px;">
+                <!-- Ini untuk yg gagal -->
+                <div><img src="/Assets/images/travorama-logo-color.png" height="22px" width="80px"></div>
+                <div style="padding-top:20px;"><span style="color: #15b1e4; font-size:20px"><b>Mohon Maaf...</b></span></div>
+                <div><img src="~/Assets/images/popup/paymentyellowstrip.png" /></div>
+                <div style="padding-top:5px; padding-right:30px;"><span style="font-size:12px">Input yang Anda masukkan tidak valid. Silakan cek kembali.</span></div>
+            </section>
+            <div align="right" style="padding-right:30px;padding-top:10px;">
+                <a class="btn popup-btn-yellow book-failed" ng-click="pay.inputValid = true"><b>Tutup</b></a>
+            </div>
+        </div>
+    </div>
             
-        <div class="payment-popup" ng-show="pay.continueVoucher">
+    <div class="payment-popup" ng-show="pay.continueVoucher">
             <div class=" overlay-content">
                 <section style="padding-top:60px; padding-left:225px;">
                     <!-- Ini untuk yg gagal -->

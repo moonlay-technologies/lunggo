@@ -296,7 +296,7 @@
 
                             <form class="form form-horizontal">
                                 <div class="form-group">
-                                    <input type="text" name="code" value="" class="form-control" ng-model="voucher.code" ng-disabled="voucher.checking || voucher.confirmedCode" />
+                                    <input type="text" name="code" value="" class="form-control" ng-model="voucher.code" ng-disabled="voucher.checking || voucher.confirmedCode || (voucher.checked && !voucher.received)" />
                                     <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'ERPVCH02'">Kode voucher salah</p>
                                     <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'ERPVCH01'">Voucher sudah digunakan</p>
                                     <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'ERPVCH04'">Di bawah pembelian minimum</p>
@@ -382,17 +382,6 @@
                                         <img src="/Assets/images/cimb-clicks.jpg" alt="CIMB Niaga" />
                                     </section>
                                 </label>
-                                @*<label>
-                                        <header>
-                                            <div class="input-wrapper">
-                                                <input type="radio" name="paymentMethod" value="@PaymentMethod.MandiriBillPayment" ng-model="paymentMethod" />
-                                            </div>
-                                            <h5>Mandiri Bill Payment</h5>
-                                        </header>
-                                        <section>
-                                            <img src="/Assets/images/Bank-Mandiri.jpg" alt="Mandiri Bill Payment" />
-                                        </section>
-                                    </label>*@
 
                             </form>
 
@@ -406,81 +395,57 @@
                         <form name="creditCardForm" novalidate>
                             <h3 class="no-spacing"><b>DETAIL </b>KARTU KREDIT/DEBIT</h3>
 
-                            <!-- credit card selector start -->
-                            @*<div class="form-group">
-                                    <div class="row">
-                                        <div class="col-sm-8">
-                                            <label>Pilih kartu kredit :</label>
-                                            <select class="form-control" ng-model="CreditCard.TwoClickToken" ng-required="paymentMethod == '@PaymentMethod.CreditCard'">
-                                                <option value="false" selected="selected">Tambah Baru</option>
-                                                @foreach (var savedCreditCard in savedCreditCards)
-                                                {
-                                                    <option value="@savedCreditCard.Token">@savedCreditCard.CardHolderName - @savedCreditCard.MaskedCardNumber</option>
-                                                }
-                                            </select>
-                                        </div>
-                                        <div class="col-sm-4" ng-if="CreditCard.TwoClickToken != 'false'">
-                                            <label class="control-label">CVV Kartu</label>
-                                            <input type="password" value="" class="form-control" placeholder="XXX" maxlength="3" ng-model="CreditCard.Cvv" ng-required="paymentMethod == '@PaymentMethod.CreditCard'" />
-                                        </div>
-                                    </div>
-                                </div>*@
                             <!-- credit card selector end -->
                             <!-- new credit card start -->
                             <div ng-if="CreditCard.TwoClickToken == 'false'">
-                                <div class="form-group">
+                                <div class="form-group" ng-class="{'has-error' : !checkNumber(CreditCard.Number)}">
                                     <label class="control-label">Nomor Kartu</label>
-                                    <input type="text" value="" class="form-control cc-number" maxlength="16" ng-model="CreditCard.Number" ng-blur = "binDiscount.check()" ng-change="CreditCardPromo.Check(CreditCard.Number)" ng-class="{'visa' : (CreditCardPromo.Type == 'visa') , 'mastercard' : (CreditCardPromo.Type == 'mastercard') }" ng-required="(paymentMethod == '@PaymentMethod.CreditCard') && (CreditCard.TwoClick == 'false')" />
+                                    <input type="text" value="" class="form-control cc-number" maxlength="16" ng-model="CreditCard.Number" ng-blur="binDiscount.check()" ng-change="CreditCardPromo.Check(CreditCard.Number)" ng-class="{'visa' : (CreditCardPromo.Type == 'visa') , 'mastercard' : (CreditCardPromo.Type == 'mastercard') }" ng-required="(paymentMethod == '@PaymentMethod.CreditCard') && (CreditCard.TwoClick == 'false')" />
                                     <div style="color: green">{{binDiscount.text}}</div>
+                                    <div ng-show="!checkNumber(CreditCard.Number)" style="color:red">
+                                        Nomor kartu tidak boleh mengandung karakter selain angka
+                                    </div>
                                 </div>
                                 
                                 <div class="form-group">
                                     <div class="row">
-                                        <div class="col-xs-4">
+                                        <div class="col-xs-4" ng-class="{'has-error' : !checkDate(CreditCard.Month, CreditCard.Year)}">
                                             <label class="control-label">Kadaluarsa</label>
-                                            <!-- <input type="number" value="" class="form-control" placeholder="MM" maxlength="2" ng-model="CreditCard.Month" ng-required="paymentMethod == '@PaymentMethod.CreditCard'" /> -->
-                                            <select class="form-control" ng-model="CreditCard.Month">
-                                                <option value="01" selected="selected">Januari</option>
-                                                <option value="02">Februari</option>
-                                                <option value="03">Maret</option>
-                                                <option value="04">April</option>
-                                                <option value="05">Mei</option>
-                                                <option value="06">Juni</option>
-                                                <option value="07">Juli</option>
-                                                <option value="08">Agustus</option>
-                                                <option value="09">September</option>
-                                                <option value="10">Oktober</option>
-                                                <option value="11">November</option>
-                                                <option value="12">Desember</option>
-                                            </select>
-                                        </div>
-                                        <div class="col-xs-4">
-                                            <label class="control-label">&nbsp;</label>
-                                            <select class="form-control" ng-model="CreditCard.Year">
-                                                <option value="2016" selected="selected">
-                                                    2016
+                                            <select class="form-control" ng-model="CreditCard.Month" ng-init="month = 'Bulan'">
+                                                <option value="{{month.value}}" ng-repeat="month in months" ng-selected="month.value == 0"
+                                                        ng-click="CreditCard.Month = month.value">
+                                                    {{month.name}}
                                                 </option>
-                                                <option value="2017">2017</option>
-                                                <option value="2018">2018</option>
-                                                <option value="2019">2019</option>
-                                                <option value="2020">2020</option>
-                                                <option value="2021">2021</option>
-                                                <option value="2022">2022</option>
-                                                <option value="2023">2023</option>
-                                                <option value="2024">2024</option>
-                                                <option value="2025">2025</option>
-                                                <option value="2026">2026</option>
                                             </select>
                                         </div>
-                                        <div class="col-xs-4">
+                                        <div class="col-xs-4" ng-class="{'has-error' : !checkDate(CreditCard.Month, CreditCard.Year)}">
+                                            <label class="control-label">&nbsp;</label>
+                                            <select class="form-control" ng-model="CreditCard.Year" ng-init="year = 'Tahun'">
+                                                <option value="{{year}}" ng-repeat="year in generateYear()" ng-selected="year  == 'Tahun'"
+                                                        ng-click="CreditCard.Year = year">
+                                                    {{year}}
+                                                </option>
+                                            </select>
+                                        </div>
+                                        <div class="col-xs-4" ng-class="{'has-error' : !checkNumber(CreditCard.Cvv)}">
                                             <label class="control-label">CVV Kartu</label>
                                             <input type="password" value="" class="form-control" placeholder="XXX" maxlength="3" ng-model="CreditCard.Cvv" ng-required="paymentMethod == '@PaymentMethod.CreditCard'" />
                                         </div>
                                     </div>
+                                    
+                                    <div ng-show="!checkDate(CreditCard.Month, CreditCard.Year)" style="color:red">
+                                        Tanggal Kadaluarsa harus lebih dari tanggal saat ini.
+                                    </div>
+                                    <div ng-show="!checkNumber(CreditCard.Cvv)" style="color:red">
+                                        CVV tidak boleh mengandung karakter selain angka
+                                    </div>
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group" ng-class="{'has-error' : !checkName(CreditCard.Name)}">
                                     <label class="control-label">Nama Pemegang Kartu</label>
                                     <input type="text" value="" class="form-control" size="16" ng-model="CreditCard.Name" ng-required="paymentMethod == '@PaymentMethod.CreditCard'" />
+                                    <div ng-show="!checkName(CreditCard.Name)" style="color:red">
+                                        Nama tidak boleh mengandung karakter selain alfabet dan spasi
+                                    </div>
                                 </div>
                             </div>
                             <!-- new credit card end -->
@@ -491,9 +456,12 @@
                     <div class="credit-card-form" ng-show="paymentMethod == '@PaymentMethod.MandiriClickPay'">
                         <div class="form-group">
                             <h3><b>DETAIL</b> PEMBAYARAN - <b>MANDIRI CLICKPAY</b></h3>
-                            <div class="form-group">
+                            <div class="form-group" ng-class="{'has-error' : !checkNumber(MandiriClickPay.CardNo)}">
                                 <label class="control-label">Nomor Kartu</label>
                                 <input type="text" value="" class="form-control cc-number" maxlength="16" ng-model="MandiriClickPay.CardNo" />
+                            </div>
+                            <div ng-show="!checkNumber(MandiriClickPay.CardNo)" style="color:red">
+                                Nomor kartu tidak boleh mengandung karakter selain angka
                             </div>
                             <div class="form-group">
                                 <label class="control-label">Input Token Mandiri &nbsp;<small>(diisi secara berurutan)</small></label>
@@ -520,9 +488,12 @@
                                     </ul>
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group" ng-class="{'has-error' : !checkNumber(MandiriClickPay.Token)}">
                                 <label class="control-label">Respon Token Mandiri</label>
                                 <input type="text" value="" class="form-control cc-number" maxlength="6" placeholder="XXXXXX" ng-model="MandiriClickPay.Token" ng-required="paymentMethod == '@PaymentMethod.MandiriClickPay'" />
+                            </div>
+                            <div ng-show="!checkNumber(MandiriClickPay.Token)" style="color:red">
+                                Respon token tidak boleh mengandung karakter selain angka
                             </div>
                         </div>
                     </div>
@@ -700,6 +671,28 @@
                             <div class="row">
                                 <div class="col-xs-6">
                                     <a class="btn btn-grey btn-block" ng-click="pay.close()">TUTUP</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="popup__wrapper" ng-class="{'active' : !pay.inputValid}">
+                <div class="popup">
+                    <header class="popup__header">
+                        <h4 class="popup__title">Mohon Maaf...</h4>
+                    </header>
+                    <div class="popup__body tnc-body">
+                        <div class="container_new">
+                            Input yang Anda masukkan tidak valid. Silakan cek kembali.
+                        </div>
+                    </div>
+                    <div class="popup__footer">
+                        <div class="container_new tnc">
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <a class="btn btn-grey btn-block" ng-click="pay.inputValid = true">TUTUP</a>
                                 </div>
                             </div>
                         </div>

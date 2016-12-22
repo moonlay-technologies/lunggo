@@ -405,6 +405,7 @@ app.controller('paymentController', [
             continueVoucher: false,
             continueBIN: false,
             rsvNo: '',
+            inputValid: true,
             paying: false,
             transfer: false,
             virtualAccount: false,
@@ -419,97 +420,102 @@ app.controller('paymentController', [
             setPaymentMethod: function () { //payment
                 $scope.pay.continueBIN = false;
                 $scope.pay.continueVoucher = false;
-                if ($scope.paymentMethod == 'CreditCard') {
-
-                    Veritrans.url = VeritransTokenConfig.Url;
-                    Veritrans.client_key = VeritransTokenConfig.ClientKey;
-                    var card = function () {
-                        var gross_amount = 0;
-                        if ($scope.binDiscount.replaceDiscount && !$scope.voucher.confirmedCode) {
-                            gross_amount = $scope.originalPrice - $scope.CreditCardPromo.Amount + $scope.UniqueCodePaymentConfig.UniqueCode - $scope.binDiscount.amount;
-                        } else {
-                            gross_amount = $scope.totalPrice - $scope.CreditCardPromo.Amount - $scope.voucher.amount + $scope.UniqueCodePaymentConfig.UniqueCode;
-                        }
-                        $log.debug("gross_amount = " + gross_amount);
-                        if ($scope.CreditCard.TwoClickToken == 'false') {
-                            $scope.pay.ccdata = true;
-
-                            return {
-                                'card_number': $scope.CreditCard.Number,
-                                'card_exp_month': $scope.CreditCard.Month,
-                                'card_exp_year': $scope.CreditCard.Year,
-                                'card_cvv': $scope.CreditCard.Cvv,
-
-                                // Set 'secure', 'bank', and 'gross_amount', if the merchant wants transaction to be processed with 3D Secure
-                                'secure': true,
-                                'bank': 'mandiri',
-                                'gross_amount': gross_amount
-                            }
-                        } else {
-                            return {
-                                'card_cvv': $scope.CreditCard.Cvv,
-                                'token_id': $scope.CreditCard.TwoClickToken,
-
-                                'two_click': true,
-                                'secure': true,
-                                'bank': 'mandiri',
-                                'gross_amount': gross_amount
-                            }
-                        }
-                    };
-
-                    // run the veritrans function to check credit card
-                    Veritrans.token(card, callback);
-
-                    function callback(response) {
-                        if (response.redirect_url) {
-                            // 3Dsecure transaction. Open 3Dsecure dialog
-                            $log.debug('Open Dialog 3Dsecure');
-                            openDialog(response.redirect_url);
-
-                        } else if (response.status_code == '200') {
-                            // success 3d secure or success normal
-                            //close 3d secure dialog if any
-                            closeDialog();
-
-                            // store token data in input #token_id and then submit form to merchant server
-                            $("#vt-token").val(response.token_id);
-                            $scope.CreditCard.Token = response.token_id;
-
-                            $scope.pay.send();
-
-                        } else {
-                            // failed request token
-                            //close 3d secure dialog if any
-                            closeDialog();
-                            $('#submit-button').removeAttr('disabled');
-                            // Show status message.
-                            $('#message').text(response.status_message);
-                            $log.debug(JSON.stringify(response));
-                        }
-                    }
-
-                    // Open 3DSecure dialog box
-                    function openDialog(url) {
-                        $.fancybox.open({
-                            href: url,
-                            type: 'iframe',
-                            autoSize: false,
-                            width: 400,
-                            height: 420,
-                            closeBtn: false,
-                            modal: true
-                        });
-                    }
-
-                    // Close 3DSecure dialog box
-                    function closeDialog() {
-                        $.fancybox.close();
-                    }
-
+                if (!$scope.validation()) {
+                    $scope.pay.inputValid = false;
                 } else {
-                    $scope.pay.send();
+                    if ($scope.paymentMethod == 'CreditCard') {
+
+                        Veritrans.url = VeritransTokenConfig.Url;
+                        Veritrans.client_key = VeritransTokenConfig.ClientKey;
+                        var card = function () {
+                            var gross_amount = 0;
+                            if ($scope.binDiscount.replaceDiscount && !$scope.voucher.confirmedCode) {
+                                gross_amount = $scope.originalPrice - $scope.CreditCardPromo.Amount + $scope.UniqueCodePaymentConfig.UniqueCode - $scope.binDiscount.amount;
+                            } else {
+                                gross_amount = $scope.totalPrice - $scope.CreditCardPromo.Amount - $scope.voucher.amount + $scope.UniqueCodePaymentConfig.UniqueCode;
+                            }
+                            $log.debug("gross_amount = " + gross_amount);
+                            if ($scope.CreditCard.TwoClickToken == 'false') {
+                                $scope.pay.ccdata = true;
+
+                                return {
+                                    'card_number': $scope.CreditCard.Number,
+                                    'card_exp_month': $scope.CreditCard.Month,
+                                    'card_exp_year': $scope.CreditCard.Year,
+                                    'card_cvv': $scope.CreditCard.Cvv,
+
+                                    // Set 'secure', 'bank', and 'gross_amount', if the merchant wants transaction to be processed with 3D Secure
+                                    'secure': true,
+                                    'bank': 'mandiri',
+                                    'gross_amount': gross_amount
+                                }
+                            } else {
+                                return {
+                                    'card_cvv': $scope.CreditCard.Cvv,
+                                    'token_id': $scope.CreditCard.TwoClickToken,
+
+                                    'two_click': true,
+                                    'secure': true,
+                                    'bank': 'mandiri',
+                                    'gross_amount': gross_amount
+                                }
+                            }
+                        };
+
+                        // run the veritrans function to check credit card
+                        Veritrans.token(card, callback);
+
+                        function callback(response) {
+                            if (response.redirect_url) {
+                                // 3Dsecure transaction. Open 3Dsecure dialog
+                                $log.debug('Open Dialog 3Dsecure');
+                                openDialog(response.redirect_url);
+
+                            } else if (response.status_code == '200') {
+                                // success 3d secure or success normal
+                                //close 3d secure dialog if any
+                                closeDialog();
+
+                                // store token data in input #token_id and then submit form to merchant server
+                                $("#vt-token").val(response.token_id);
+                                $scope.CreditCard.Token = response.token_id;
+
+                                $scope.pay.send();
+
+                            } else {
+                                // failed request token
+                                //close 3d secure dialog if any
+                                closeDialog();
+                                $('#submit-button').removeAttr('disabled');
+                                // Show status message.
+                                $('#message').text(response.status_message);
+                                $log.debug(JSON.stringify(response));
+                            }
+                        }
+
+                        // Open 3DSecure dialog box
+                        function openDialog(url) {
+                            $.fancybox.open({
+                                href: url,
+                                type: 'iframe',
+                                autoSize: false,
+                                width: 400,
+                                height: 420,
+                                closeBtn: false,
+                                modal: true
+                            });
+                        }
+
+                        // Close 3DSecure dialog box
+                        function closeDialog() {
+                            $.fancybox.close();
+                        }
+
+                    } else {
+                        $scope.pay.send();
+                    }
                 }
+                
             },
             send: function () {
                 if ($scope.trial > 3) {
@@ -842,12 +848,20 @@ app.controller('paymentController', [
 
         $scope.validation = function() {
             if ($scope.paymentMethod == 'CreditCard') {
-                if (!$scope.checkNumber($scope.CreditCard.Number) && !$scope.checkName($scope.CreditCard.Name)
-                    && !$scope.checkDate($scope.CreditCard.Month, $scope.CreditCard.Year)) {
+                if (!$scope.checkNumber($scope.CreditCard.Number) || !$scope.checkName($scope.CreditCard.Name)
+                    || !$scope.checkDate($scope.CreditCard.Month, $scope.CreditCard.Year)) {
                     return false;
                 } else {
                     return true;
                 }
+            } else if ($scope.paymentMethod == 'MandiriClickPay') {
+                if (!$scope.checkNumber($scope.MandiriClickPay.CardNo) || !$scope.checkNumber($scope.MandiriClickPay.Token)) {
+                    return false;
+                } else {
+                    return true;
+                }
+            } else {
+                return true;
             }
         }
 
