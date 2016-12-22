@@ -6,7 +6,9 @@ app.controller('siteHeaderController', [
         $scope.email = '';
         $scope.name = '';
         $scope.trial = 0;
+        $scope.returnUrl = document.referrer;
         $scope.authProfile = {}
+
         $scope.ProfileConfig = {
             getProfile: function () {
                 if ($scope.trial > 3) {
@@ -61,7 +63,7 @@ app.controller('siteHeaderController', [
             $scope.isLogin = false;
             $scope.pageLoaded = true;
         }
-        $scope.returnUrl = document.referrer;
+        
         $scope.logout = {
             isLogout: false,
             getLogout: function () {
@@ -81,14 +83,10 @@ app.controller('UserAccountController', ['$http', '$scope', '$rootScope', '$loca
 
     $scope.PageConfig = $rootScope.PageConfig;
     $scope.Countries = $rootScope.Countries;
-    //$scope.Order;
     $scope.trial = 0;
     $scope.pageLoaded = true;
     $scope.formMessage = '';
     $scope.NotifBox = false;
-    //if (order.length) {
-    //    $scope.Order = JSON.parse(order);
-    //}
     $scope.getdata = function () {
         if ($scope.trial > 3) {
             $scope.trial = 0;
@@ -145,6 +143,7 @@ app.controller('UserAccountController', ['$http', '$scope', '$rootScope', '$loca
         
     }
     $scope.getdata();
+
     // order status
     $scope.OrderStatus = function(num) {
         var text = '';
@@ -173,6 +172,7 @@ app.controller('UserAccountController', ['$http', '$scope', '$rootScope', '$loca
         }
         return text;
     }
+
     // flight type
     $scope.FlightType = function(num) {
         var text = '';
@@ -597,12 +597,10 @@ app.controller('ContactController', ['$http', '$scope', '$rootScope', function (
 app.controller('OrderDetailController', ['$http', '$scope', '$rootScope', function ($http, $scope, $rootScope) {
 
     $scope.pageLoaded = true;
-    $scope.trial = 0;
+    //$scope.trial = 0;
     $scope.isExist = false;
     $scope.PageConfig = $rootScope.PageConfig;
-    $scope.orderDate = new Date(orderDate);
     $scope.rsvNo = rsvNo;
-    $scope.var = 3;
     $scope.flight = [];
     $scope.hotel = [];
     $scope.title = function(title) {
@@ -631,60 +629,6 @@ app.controller('OrderDetailController', ['$http', '$scope', '$rootScope', functi
 
     $scope.rsvStatus = rsvStatus;
     $scope.paymentMethod = paymentMethod;
-    $scope.methodpayment = function(types) {
-        if (types == 1)
-            return 'Kartu Kredit';
-        else if (types == 2)
-            return 'Transfer Antar Bank';
-        else if (types == 3)
-            return 'Mandiri Clickpay';
-        else if (types == 4)
-            return 'Cimb Clicks';
-        else if (types == 5)
-            return 'Virtual Account';
-        else if (types == 6)
-            return 'BCA Klikpay';
-        else if (types == 7)
-            return 'Epay BRI ';
-        else if (types == 8)
-            return 'Telkomsel T-Cash';
-        else if (types == 9)
-            return 'XL Tunai';
-        else if (types == 10)
-            return 'BBM Money';
-        else if (types == 11)
-            return 'Indosat Dompetku';
-        else if (types == 12)
-            return 'Mandiri E-Cash';
-        else if (types == 13)
-            return 'Mandiri Bill Payment';
-        else if (types == 14)
-            return 'Indomaret';
-        else if (types == 15)
-            return 'Credit';
-        else if (types == 16)
-            return 'Deposit';
-    }
-
-    $scope.paymentstatus = function(types) {
-        if (types == 3)
-            return 'Lunas';
-        else if (types == 1)
-            return 'Dibatalkan';
-        else if (types == 2)
-            return 'Menunggu Pembayaran';
-        else if (types == 4)
-            return 'Ditolak';
-        else if (types == 5)
-            return 'Kadaluarsa';
-        else if (types == 6)
-            return 'Memverifikasi Pembayaran';
-        else if (types == 7)
-            return 'Butuh Verifikasi Ulang';
-        else if (types == 8)
-            return 'Gagal';
-    }
-
     $scope.ButtonText = function (status, method, type) {
         if (status == 1) { return 'Halaman Pembayaran'; }
 
@@ -719,7 +663,6 @@ app.controller('OrderDetailController', ['$http', '$scope', '$rootScope', functi
     $scope.closeOverlay = function() {
         window.location.href = "/";
     }
-    $scope.datafailed = false;
 
     $scope.TakeProfileConfig = {
         TakeProfile: function () {
@@ -768,63 +711,63 @@ app.controller('OrderDetailController', ['$http', '$scope', '$rootScope', functi
 
         }
     }
-
     
-    $scope.getRsv = function () {
-        if ($scope.trial > 3) {
-            $scope.trial = 0;
-        }
-        $scope.errormsg = '';
-        var authAccess = getAuthAccess();
-        if (authAccess == 2 || authAccess == 1)
-        {
-            $http.get(GetReservationConfig.Url + $scope.rsvNo, {
-                headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') },
-                rsvNo: $scope.rsvNo
-            }).then(function (returnData) {
-                if (returnData.data.status == "200") {
-                    $scope.flight = returnData.data.flight;
-                    $scope.hotel = returnData.data.hotels;
-                    $scope.datafailed = false;
-                    $scope.isExist = true;
-                }
-                else {
-                    console.log('There is an error');
-                    console.log('Error : ' + returnData.data.error);
-                    if (returnData.data.error == "ERARSV01") {
-                        $scope.errormsg = 'No Reservation Matched';
-                    }
-                    else if (returnData.data.error == "ERARSV02") {
-                        $scope.errormsg = 'Not Authorised';
-                    }
-                    else if (returnData.data.error == "ERRGEN99") {
-                        $scope.errormsg = 'Problem on Server';
-                    }
-
-                    $scope.datafailed = true;
-                    console.log(returnData);
-                   // window.location.href = "/";
-                }
-            }).catch(function (returnData) {
-                $scope.trial++;
-                if (refreshAuthAccess() && $scope.trial < 4) //refresh cookie
-                {
-                    $scope.getRsv();
-                }
-                else {
-                    console.log('Failed to Get Detail');
-                    $scope.datafailed = true;
-                }
-                
-            });
-        }
-        else {
-            console.log('Not authorized to get reservation');
-            $scope.datafailed = true;
-        }
-        
-    }
     $scope.TakeProfileConfig.TakeProfile();
+    //$scope.getRsv = function () {
+    //    if ($scope.trial > 3) {
+    //        $scope.trial = 0;
+    //    }
+    //    $scope.errormsg = '';
+    //    var authAccess = getAuthAccess();
+    //    if (authAccess == 2 || authAccess == 1)
+    //    {
+    //        $http.get(GetReservationConfig.Url + $scope.rsvNo, {
+    //            headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') },
+    //            rsvNo: $scope.rsvNo
+    //        }).then(function (returnData) {
+    //            if (returnData.data.status == "200") {
+    //                $scope.flight = returnData.data.flight;
+    //                $scope.hotel = returnData.data.hotels;
+    //                $scope.datafailed = false;
+    //                $scope.isExist = true;
+    //            }
+    //            else {
+    //                console.log('There is an error');
+    //                console.log('Error : ' + returnData.data.error);
+    //                if (returnData.data.error == "ERARSV01") {
+    //                    $scope.errormsg = 'No Reservation Matched';
+    //                }
+    //                else if (returnData.data.error == "ERARSV02") {
+    //                    $scope.errormsg = 'Not Authorised';
+    //                }
+    //                else if (returnData.data.error == "ERRGEN99") {
+    //                    $scope.errormsg = 'Problem on Server';
+    //                }
+
+    //                $scope.datafailed = true;
+    //                console.log(returnData);
+    //               // window.location.href = "/";
+    //            }
+    //        }).catch(function (returnData) {
+    //            $scope.trial++;
+    //            if (refreshAuthAccess() && $scope.trial < 4) //refresh cookie
+    //            {
+    //                $scope.getRsv();
+    //            }
+    //            else {
+    //                console.log('Failed to Get Detail');
+    //                $scope.datafailed = true;
+    //            }
+                
+    //        });
+    //    }
+    //    else {
+    //        console.log('Not authorized to get reservation');
+    //        $scope.datafailed = true;
+    //    }
+        
+    //}
+    
     //$scope.getRsv();
 
 }]);// Order Detail Controller

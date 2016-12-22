@@ -714,6 +714,7 @@ namespace Lunggo.CustomerWeb.Controllers
             return RedirectToAction("OrderFlightHistoryDetail", "Account", new { rsvNo = RsvNo });
         }
 
+        [System.Web.Mvc.AllowAnonymous]
         public ActionResult OrderFlightHistoryDetail(string rsvNo)
         {
             var flightService = FlightService.GetInstance();

@@ -2,19 +2,15 @@
 @using Lunggo.ApCommon.Constant
 @using Lunggo.ApCommon.Flight.Model
 @using Lunggo.ApCommon.Hotel.Model
-@using Lunggo.ApCommon.Payment.Constant
-@using Lunggo.Framework.Extension
 @model Lunggo.ApCommon.Product.Model.ReservationForDisplayBase
 @{
     Layout = "/Views/Shared/mobile/_LayoutMobile.cshtml";
     ViewBag.Title = "Detail Reservasi";
     ViewBag.BodyClass = "page page-orderdetail page-checkout";
-    ViewBag.AngularController = "orderDetailController";
+    ViewBag.AngularController = "OrderDetailController";
 }
 
-@{
-    var index = 1;
-}
+
 @functions{
     public string ToTitleCase(string input)
     {
@@ -68,14 +64,12 @@
 @section PageJS{
     <script>
         var langCode = 'en';
-        var orderDate = '@Model.RsvTime.ToString("u")';
-        @*var refundDate = '@(Model.Payment.Refund != null ? Model.Payment.Refund.Time.ToString("u") : "")';*@
         var rsvNo = @Model.RsvNo;
         var rsvStatus = '@Convert.ToInt32(Model.RsvDisplayStatus)';
         var paymentMethod = '@Convert.ToInt32(Model.Payment.Method)';
     </script>
     <!-- angular controller -->
-    <script src="/Assets/travorama20/js/AccountController.js"></script>
+    <script src="/Assets/mobile/js/AccountController.js"></script>
 }
 
 <section class="account-content page-loading" ng-class="{'page-loaded' : pageLoaded}">

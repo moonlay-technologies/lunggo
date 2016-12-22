@@ -97,7 +97,7 @@ namespace Lunggo.CustomerWeb.Controllers
                         RsvNo = displayReservation.RsvNo
                     };
 
-                    return RedirectToAction("OrderFlightHistoryDetail", "OrderHistory", rsvNoSet);
+                    return RedirectToAction("OrderFlightHistoryDetail", "Account", rsvNoSet);
                 }
             }
 
