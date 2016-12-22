@@ -66,7 +66,7 @@
 }
 
 @{
-    Layout = "/Views/Shared/mobile/_Layout.cshtml";
+    Layout = "/Views/Shared/mobile/_LayoutMobile.cshtml";
     ViewBag.BodyClass = "page page-checkout";
     ViewBag.AngularController = "paymentController";
     ViewBag.SiteHeader = "Payment";
@@ -119,7 +119,7 @@
     <link href="/Assets/css/jquery-ui.min.css" rel="stylesheet" />
     <!-- fancybox CSS-->
     <link href="/Assets/vendor/fancybox/jquery.fancybox.css" rel="stylesheet" />
-    <link rel="stylesheet" href="/Assets/mobile/css/application.css">
+    <link rel="stylesheet" href="/Assets/mobile/css/style_mobile.css">
 }
 @section AdditionalJS {
     <!-- additional Angular JS-->
@@ -400,11 +400,11 @@
                             <div ng-if="CreditCard.TwoClickToken == 'false'">
                                 <div class="form-group" ng-class="{'has-error' : !checkNumber(CreditCard.Number)}">
                                     <label class="control-label">Nomor Kartu</label>
-                                    <input type="text" value="" class="form-control cc-number" maxlength="16" ng-model="CreditCard.Number" ng-blur="binDiscount.check()" ng-change="CreditCardPromo.Check(CreditCard.Number)" ng-class="{'visa' : (CreditCardPromo.Type == 'visa') , 'mastercard' : (CreditCardPromo.Type == 'mastercard') }" ng-required="(paymentMethod == '@PaymentMethod.CreditCard') && (CreditCard.TwoClick == 'false')" />
+                                        <input type="text" value="" class="form-control cc-number" maxlength="16" ng-model="CreditCard.Number" ng-blur="binDiscount.check()" ng-change="CreditCardPromo.Check(CreditCard.Number)" ng-class="{'visa' : (CreditCardPromo.Type == 'visa') , 'mastercard' : (CreditCardPromo.Type == 'mastercard') }" ng-required="(paymentMethod == '@PaymentMethod.CreditCard') && (CreditCard.TwoClick == 'false')" />
                                     <div style="color: green">{{binDiscount.text}}</div>
                                     <div ng-show="!checkNumber(CreditCard.Number)" style="color:red">
                                         Nomor kartu tidak boleh mengandung karakter selain angka
-                                    </div>
+                                </div>
                                 </div>
                                 
                                 <div class="form-group">
@@ -677,7 +677,7 @@
                     </div>
                 </div>
             </div>
-    
+
             <div class="popup__wrapper" ng-class="{'active' : !pay.inputValid}">
                 <div class="popup">
                     <header class="popup__header">

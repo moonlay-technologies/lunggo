@@ -5,13 +5,13 @@
 
 @{
     ViewBag.Title = "Cetak E-tiket";
-    Layout = "~/Views/Shared/travorama20/_Layout20150929.cshtml";
+    Layout = "/Views/Shared/Desktop/_LayoutDesktop.cshtml";
     ViewBag.Angular = "EticketController";
 }
 
 @section AdditionalCSS {
 
-    <link rel="stylesheet" href="/Assets/travorama20/css/travorama20.css">
+    <link rel="stylesheet" href="/Assets/travorama20/css/style_desktop.css">
 }
 
 @section AdditionalJS {
@@ -31,8 +31,8 @@
                 <h1 class="text-center section-title stripe">CETAK <span>E-TIKET</span></h1>
                 <div class="container text-center">
                     <p>
-                            Mohon menunggu. E-tiket Anda sedang dalam proses dan akan kami kirimkan secara otomatis ke e-mail Anda.<br />
-                            Terima kasih untuk pembelian Anda.
+                        Mohon menunggu. E-tiket Anda sedang dalam proses dan akan kami kirimkan secara otomatis ke e-mail Anda.<br />
+                        Terima kasih untuk pembelian Anda.
                     </p>
                     <p>Jika terjadi masalah, silakan kirim e-mail Anda ke <a href="mailto:cs@travorama.com">cs@travorama.com</a> dan kami akan berusaha untuk membantu Anda.</p>
                 </div>
@@ -44,8 +44,8 @@
                 <h1 class="text-center section-title stripe">CETAK <span>VOUCHER</span></h1>
                 <div class="container text-center">
                     <p>
-                            Mohon menunggu. voucher Anda sedang dalam proses dan akan kami kirimkan secara otomatis ke e-mail Anda.<br />
-                            Terima kasih untuk pembelian Anda.
+                        Mohon menunggu. voucher Anda sedang dalam proses dan akan kami kirimkan secara otomatis ke e-mail Anda.<br />
+                        Terima kasih untuk pembelian Anda.
                     </p>
                     <p>Jika terjadi masalah, silakan kirim e-mail Anda ke <a href="mailto:cs@travorama.com">cs@travorama.com</a> dan kami akan berusaha untuk membantu Anda.</p>
                 </div>
@@ -60,7 +60,7 @@
         {
             <section class="section-eticket" ng-init="refresh()">
                 <h1 class="text-center section-title stripe">CETAK <span>E-TIKET</span></h1>
-                
+
                 <div class="container text-center">
                     <p>
                         Mohon menunggu. Pembayaran Anda sedang kami verifikasi.<br />
@@ -163,7 +163,7 @@
         }
 
     }
-    
+
 
 </div>
 

@@ -1,6 +1,6 @@
 ﻿@using System.Web.UI.WebControls
 @{
-    Layout = "/Views/Shared/Travorama20/_Layout20150929.cshtml";
+    Layout = "/Views/Shared/Desktop/_LayoutDesktop.cshtml";
     ViewBag.BodyClass = "page-static page-contact";
     ViewBag.Title = "Hubungi Travorama";
     ViewBag.Angular = "ContactController";
@@ -90,9 +90,9 @@
                         <p>@ViewBag.Message</p>
                     </div>
                 }
-                
+
                 @using (Html.BeginForm("Contact", "StaticPage", FormMethod.Post, new { @class = "form form-horizontal", role = "form", name = "checkForm" }))
-                { @Html.AntiForgeryToken() 
+                { @Html.AntiForgeryToken()
                     <p>Kami menerima pertanyaan Anda dengan senang hati. Silakan kirimkan pesan melalui form di bawah ini.</p>
 
                     <div class="form-group">

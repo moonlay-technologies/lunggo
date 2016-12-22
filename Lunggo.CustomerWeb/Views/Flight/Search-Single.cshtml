@@ -59,7 +59,7 @@
 
         tripType = data.TripType == TripType.OneWay ? "single" : "return";
     }
-    catch (Exception ex) 
+    catch (Exception ex)
     {
         isValid = false;
     }
@@ -67,7 +67,7 @@
 }
 
 @{
-    Layout = "/Views/Shared/Travorama20/_Layout20150929.cshtml";
+    Layout = "/Views/Shared/Desktop/_LayoutDesktop.cshtml";
     ViewBag.BodyClass = "page-flight page-flight-oneway";
     ViewBag.Title = "Pencarian Penerbangan Sejalan";
 }
@@ -137,7 +137,8 @@
                 <div class="col-sm-9">
                     <div class="result-form-left">
                         <h3><b>@originCityNames[0]</b> (@data.Trips[0].OriginAirport) ke <b>@destinationCityNames[0]</b> (@data.Trips[0].DestinationAirport) </h3>
-                        <h4><b>@data.Trips[0].DepartureDate.ToString("dddd, dd MMMM yyyy", new CultureInfo("id-ID"))</b> | <b>@(data.AdultCount + data.ChildCount + data.InfantCount) Orang</b> 
+                        <h4>
+                            <b>@data.Trips[0].DepartureDate.ToString("dddd, dd MMMM yyyy", new CultureInfo("id-ID"))</b> | <b>@(data.AdultCount + data.ChildCount + data.InfantCount) Orang</b>
                             @if (data.ChildCount != 0 && data.InfantCount != 0)
                             {
                                 <span>(@data.AdultCount Dewasa , @data.ChildCount Anak, @data.InfantCount Bayi)</span>
@@ -169,8 +170,8 @@
             <div class="search-result-form-content">
                 @Html.Partial("/Views/Flight/FlightSearchForm.cshtml")
             </div><!-- .search-result-form-content -->
-            @Html.Partial("/Views/Shared/Travorama20/_SearchLocation.cshtml")
-            @Html.Partial("/Views/Shared/Travorama20/_SearchCalendar.cshtml")
+            @Html.Partial("/Views/Shared/Desktop/_SearchLocation.cshtml")
+            @Html.Partial("/Views/Shared/Desktop/_SearchCalendar.cshtml")
         </div>
     </section><!-- .search-result-form -->
     <section class="search-result one-way page-loading" ng-controller="singleFlightController" ng-class="{'page-loaded': pageLoaded}">
@@ -220,7 +221,7 @@
 
             <div class="container" ng-hide="!flightList.length && loading && loadingFlight">
                 <h3><b>HASIL</b> PENCARIAN</h3>
-               
+
             </div>
             <div class="search-result-filter" @*ng-show="Progress == 100"*@>
                 <div class="container">
@@ -304,9 +305,9 @@
                                         </div>
                                     </div>
                                 </div>
-                              
-                                    {{$scope.airlineFilterParam.selected}}
-                                
+
+                                {{$scope.airlineFilterParam.selected}}
+
                             </div>
                             <div id="filter-time" class="filter-time">
                                 <div class="close-filter">X</div>
@@ -376,7 +377,7 @@
                 </div>
             </div><!-- .flight-result-sort -->
             @*  filter:priceFilter | filter:airlineFilter | filter:timeFilter*@
-            
+
             <div class="search-result-list">
                 <div class="container">
                     <div class="flight flight-{{flight.IndexNo}}" ng-class="{'active': (flightActive == flight.IndexNo || priceActiveIndex == flight.IndexNo) }" id="flight-{{flight.IndexNo}}"
@@ -412,8 +413,10 @@
                                                 </h5>
                                             </div>
                                             <div class="flight-date-arrival">
-                                                <h4>{{flight.trips[0].segments[ flight.trips[0].segments.length - 1 ].arrival}} <span>{{flight.trips[0].segments[ flight.trips[0].segments.length - 1 ].arrivalTime | date : 'HH:mm' : 'UTC'}}</span>
-                                                <span class="overday" ng-if="getOverdayDate((flight.trips[0].segments[0].departureTime),(flight.trips[0].segments[ flight.trips[0].segments.length - 1 ].arrivalTime)) != 0">{{getOverdayDate((flight.trips[0].segments[0].departureTime),(flight.trips[0].segments[ flight.trips[0].segments.length - 1 ].arrivalTime))}}</span></h4>
+                                                <h4>
+                                                    {{flight.trips[0].segments[ flight.trips[0].segments.length - 1 ].arrival}} <span>{{flight.trips[0].segments[ flight.trips[0].segments.length - 1 ].arrivalTime | date : 'HH:mm' : 'UTC'}}</span>
+                                                    <span class="overday" ng-if="getOverdayDate((flight.trips[0].segments[0].departureTime),(flight.trips[0].segments[ flight.trips[0].segments.length - 1 ].arrivalTime)) != 0">{{getOverdayDate((flight.trips[0].segments[0].departureTime),(flight.trips[0].segments[ flight.trips[0].segments.length - 1 ].arrivalTime))}}</span>
+                                                </h4>
                                                 <h5>{{flight.trips[0].segments[ flight.trips[0].segments.length - 1 ].arrivalTime | date : 'dd MMM yyyy' : 'UTC'}}</h5>
                                             </div>
                                         </div>
@@ -547,7 +550,7 @@
                             <h3><sup>Rp</sup> {{flightList[flightSelected].netTotalFare | number:0}}</h3>
                             <p>*Harga termasuk Pajak &amp; Service Charge</p>
                             <input type="submit" class="btn btn-yellow" value="LANJUTKAN" ng-click="selectSubmit()" ng-disabled="!selectFlightParam.validated" />
-                          
+
                         </div>
                     </section>
                     <footer class="flight-review-detail">
@@ -615,7 +618,7 @@
                 </section>
             </div>
         </div>
-    
+
         <div class="bookfailed-popup" ng-show="selectFlightParam.error">
             <div class="overlay-content">
                 <section style="padding-top:60px; padding-left:225px;">

@@ -9,7 +9,7 @@
 @model Lunggo.ApCommon.Product.Model.ReservationForDisplayBase
 
 @{
-    Layout = "/Views/Shared/Travorama20/_Layout20150929.cshtml";
+    Layout = "/Views/Shared/Desktop/_LayoutDesktop.cshtml";
     ViewBag.BodyClass = "page-thankyou";
     ViewBag.Title = "Terima Kasih";
     //ViewBag.AngularController = "ThankyouController";
@@ -164,7 +164,7 @@
     <script src="/Assets/travorama20/js/ThankYouController.js"></script>
 }
 
-<div ng-app ="travorama" ng-controller="ThankyouController" class="page-loading" ng-class="{'page-loaded' : pageLoaded}">
+<div ng-app="travorama" ng-controller="ThankyouController" class="page-loading" ng-class="{'page-loaded' : pageLoaded}">
     @if (Model.Payment.Status == PaymentStatus.Expired)
     {
         <div class="bookfailed-popup">
@@ -496,7 +496,7 @@
 
                                                                     @foreach (var rate in room.Rates)
                                                                     {
-                                                                        <hr/>
+                                                                        <hr />
                                                                         var pol = 1;
                                                                         <div class="wb-container clearfix">
                                                                             <div class="wb-left">Jumlah Kamar</div>
@@ -506,7 +506,8 @@
                                                                         <div class="wb-container clearfix">
                                                                             <div class="wb-left">Tamu per Kamar</div>
                                                                             <div class="wb-mid">:</div>
-                                                                            <div class="wb-right bold-txt">@rate.AdultCount Dewasa @if (rate.ChildCount > 0)
+                                                                            <div class="wb-right bold-txt">
+                                                                                @rate.AdultCount Dewasa @if (rate.ChildCount > 0)
                                                                             {
                                                                                 <span>, @rate.ChildCount Anak </span>
                                                                                 <span>
@@ -525,7 +526,8 @@
                                                                                     }
                                                                                     )
                                                                                 </span>
-                                                                            }</div>
+                                                                                }
+                                                                            </div>
                                                                         </div>
                                                                         <div class="wb-container clearfix">
                                                                             <div class="wb-left">Tipe Board</div>
@@ -546,12 +548,12 @@
                                                                             <div class="wb-left">Ketentuan Pembatalan</div>
                                                                             <div class="wb-mid">:</div>
                                                                             <div class="wb-right bold-txt">
-                                                                                @if (rate.IsFreeCancel)
-                                                                                {
-                                                                                    <div>
-                                                                                        - Gratis pembatalan sebelum tanggal @rate.FreeUntil.GetValueOrDefault().AddHours(7).ToString("dd MMMM yyyy HH:mm", CultureInfo.CreateSpecificCulture("id-ID")) WIB.
-                                                                                    </div>
-                                                                                }
+                                                                                    @if (rate.IsFreeCancel)
+                                                                                    {
+                                                                                        <div>
+                                                                                            - Gratis pembatalan sebelum tanggal @rate.FreeUntil.GetValueOrDefault().AddHours(7).ToString("dd MMMM yyyy HH:mm", CultureInfo.CreateSpecificCulture("id-ID")) WIB.
+                                                                                        </div>
+                                                                                    }
                                                                                 @foreach (var policy in rate.Cancellation)
                                                                                 {
                                                                                     <div>
@@ -565,7 +567,7 @@
                                                                     }
 
                                                                 </div>
-                                                                <hr/>
+                                                                <hr />
                                                                     indexroom++;
                                                             }
 

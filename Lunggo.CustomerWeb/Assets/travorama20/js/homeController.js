@@ -175,4 +175,29 @@ jQuery(document).ready(function ($) {
             $(this).closest('.site-content').parent().find('.menu-main').find('#header-hotel').siblings().removeClass('active');
         }
     });
+
+    // Slider Home Page Desktop
+    $('.page-slider .slider a').each(function () {
+        var bgImage = $(this).children('img').attr('src');
+        $(this).css({
+            'background-image': 'url(' + bgImage + ')'
+        });
+        $(this).children('img').remove();
+    });
+    $('.slider-wrapper').slick({
+        autoplay: true,
+        autoplaySpeed: 4000,
+        dots: true,
+        prevArrow: '<button type="button" class="slick-prev hidden">Back</button>',
+        nextArrow: '<button type="button" class="slick-next hidden">Next</button>'
+    });
+
+    // Slider Home Page Mobile
+    $('.carousel-inner').slick({
+        autoplay: true,
+        autoplaySpeed: 2800,
+        dots: true,
+        prevArrow: '<button type="button" class="slick-prev hidden">Back</button>',
+        nextArrow: '<button type="button" class="slick-next hidden">Next</button>'
+    });
 });

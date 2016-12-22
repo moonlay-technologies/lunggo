@@ -20,7 +20,7 @@
         @*<a href="#" @*class="user-menu hidden"></a>*@
         @if (ViewBag.CurrentPage == "home")
         {
-            <a class="promo" href="@Url.Action("Promo","StaticPage")"><span class="number-promo">3</span></a>
+            <a class="promo" href="@Url.Action("Promo","StaticPage")"><span class="number-promo">1</span></a>
         }
         @if (ViewBag.FlightSwap == "true")
         {
@@ -60,19 +60,19 @@
                     
                     @*<div ng-if ="name != null">
                         <li class="account" >
-                            <a ng-click="PageConfig.ToggleBurger()" href="@Url.Action("OrderHistory", "UW620OrderHistory")">{{name}}</a>
+                            <a ng-click="PageConfig.ToggleBurger()" href="@Url.Action("OrderHistory", "Account")">{{name}}</a>
                         </li>
                     </div>*@
                     
                     <div>
                         <li class="account" ng-if="name.length != 0">
-                            <a href="@Url.Action("OrderHistory", "UW620OrderHistory")">{{name}}</a>
+                            <a href="@Url.Action("OrderHistory", "Account")">{{name}}</a>
                         </li>
                         <li class="account" ng-if="name.length == 0">
-                            <a href="@Url.Action("OrderHistory", "UW620OrderHistory")">{{email}}</a>
+                            <a href="@Url.Action("OrderHistory", "Account")">{{email}}</a>
                         </li>
                         @*<li class="account" ng-if="name.length == 0">
-                            <a ng-click="PageConfig.ToggleBurger()" href="@Url.Action("OrderHistory", "UW620OrderHistory")">{{email}}</a>
+                            <a ng-click="PageConfig.ToggleBurger()" href="@Url.Action("OrderHistory", "Account")">{{email}}</a>
                         </li>*@
                     </div>
 

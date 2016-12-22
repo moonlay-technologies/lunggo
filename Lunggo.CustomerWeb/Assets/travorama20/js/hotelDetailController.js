@@ -197,6 +197,23 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
                     autoplaySpeed: 2500,
                     dots: false
                 });
+
+                // Hotel Detail
+                $('.mh-list a').click(function () {
+                    var link = $(this).attr('href');
+                    if (link == '#menu-facility') {
+                        var header = $("#menu-facility");
+                        $(window).scroll(function () {
+                            var scroll = $(window).scrollTop();
+
+                            if (scroll >= 1200) {
+                                header.addClass("up-height");
+                            } else {
+                                header.removeClass("up-height");
+                            }
+                        });
+                    }
+                });
             }, 0);
 
         }, function (error) {

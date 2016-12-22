@@ -75,7 +75,7 @@
 
 
 @{
-    Layout = "/Views/Shared/mobile/_Layout.cshtml";
+    Layout = "/Views/Shared/mobile/_LayoutMobile.cshtml";
     ViewBag.Title = "Pencarian Penerbangan Pergi Pulang";
     ViewBag.BodyClass = "page page-flight single-flight";
     ViewBag.AngularController = "ReturnFlightController";
@@ -83,9 +83,6 @@
 }
 
 @section AdditionalJS {
-    @*<script src="/Assets/js/angular.min.js"></script>
-    <script src="/Assets/js/angular-animate.min.js"></script>
-    <script src="/Assets/js/angular-route.min.js"></script>*@
     <script src="/Assets/js/jquery-ui.min.js"></script>
     <script type="text/javascript" src="/Assets/js/jquery.ui.datepicker-id.js"></script>
     <script src="/Assets/js/bootstrap.min.js"></script>
@@ -112,20 +109,12 @@
             Requests:[],
             SecureCode: '@ViewBag.RequestId'
         };
-        
-        $(document).ready(function(){
-            $('.ui-slider-handle').draggable();
-        });
     </script>
-    @*<script type="text/javascript" src="/Assets/js/jquery.ui.datepicker-id.js"></script>*@
     <script src="/Assets/mobile/js/returnFlightController.js"></script>
     <script src="/Assets/travorama20/angularDirectory/priceDetail/priceDetailDirMobile.js"></script>
 }
 
-
 <div class="page-loading" ng-class="{'page-loaded':PageConfig.Loaded}">
-    
-    
         <form class="hidden push-token pushToken" id="pushToken" action="/id/Flight/Select" method="post">
             <input type="text" name="Token" id="fareToken" class="fareToken" value="" />
         </form>
@@ -133,7 +122,6 @@
     <div class="flight-loading" ng-hide="FlightConfig[0].FlightRequest.Progress == 100 && FlightConfig[1].FlightRequest.Progress == 100">
         <div class="flight-progress" style="width:{{FlightConfig[0].FlightRequest.Progress}}%;"></div>
     </div><!-- .flight-loading -->
-
         <section class="flight-summary">
             <div class="summary-left">
                 <p ng-show="PageConfig.ActiveSection == 'departure'">

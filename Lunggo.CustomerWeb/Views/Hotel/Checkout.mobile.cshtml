@@ -7,7 +7,7 @@
 @model Lunggo.CustomerWeb.Models.HotelCheckoutData
  
 @{
-    Layout = "/Views/Shared/mobile/_Layout.cshtml";
+    Layout = "/Views/Shared/mobile/_LayoutMobile.cshtml";
     ViewBag.BodyClass = "page-hotel page page-checkout";
     ViewBag.AngularController = "hotelcheckoutController";
     ViewBag.SiteHeader = "checkout";
@@ -245,12 +245,12 @@
                     <div class="fb-hotel">
                         <div class="fb-header"><b>Detail Hotel</b></div>
                         <div class="fb-body">
-                            @Html.Partial("/Views/Hotel/Shared/Mobile/_HotelDetail.cshtml", Model.HotelDetail)
+                            @Html.Partial("/Views/Shared/Mobile/_HotelDetail.cshtml", Model.HotelDetail)
                         </div>
                     </div>
                 </div>
             </div>
-            @Html.Partial("/Views/Hotel/Shared/Mobile/_RoomDetail.cshtml", Model.HotelDetail)
+            @Html.Partial("/Views/Shared/Mobile/_RoomDetail.cshtml", Model.HotelDetail)
              
             <div class="guest-detail clearfix">
                 <h3 class="summary__title"><b>DETAIL </b>PEMESAN</h3>
@@ -273,7 +273,7 @@
                     </div>
                 </div>
             </div>
-            @Html.Partial("/Views/Hotel/Shared/Mobile/_PriceDetail.cshtml", new HotelReservationForDisplay
+            @Html.Partial("/Views/Shared/Mobile/_PriceDetail.cshtml", new HotelReservationForDisplay
             {
                 HotelDetail = Model.HotelDetail
             })

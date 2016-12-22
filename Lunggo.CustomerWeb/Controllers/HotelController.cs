@@ -118,7 +118,7 @@ namespace Lunggo.CustomerWeb.Controllers
             }
             else
             {
-                return RedirectToAction("Index", "UW000TopPage");
+                return RedirectToAction("Index", "Index");
             }
 
         }

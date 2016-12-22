@@ -2,7 +2,7 @@
 @using Lunggo.Framework.Extension
 @model Lunggo.CustomerWeb.Models.HotelSearchApiRequest
 @{
-    Layout = "/Views/Shared/mobile/_Layout.cshtml";
+    Layout = "/Views/Shared/mobile/_LayoutMobile.cshtml";
     ViewBag.BodyClass = "page-hotel page-search";
     ViewBag.Title = "Pencarian Hotel";
     ViewBag.CurrentPage = "search-hotel";
@@ -50,7 +50,7 @@
 
 <div class="travorama-hotel-mobile" ng-init="init(@Newtonsoft.Json.JsonConvert.SerializeObject(Model))">
     <div class="top-content">
-        @Html.Partial("/Views/Hotel/Shared/Mobile/_Summary.cshtml")
+        @Html.Partial("/Views/Shared/Mobile/_Summary.cshtml")
         <div class="hotel-sort-filter clearfix">
             <div class="hotel-sort-filter-action">
                 <a ng-click="PageConfig.SetOverlay('hotel-filter')">FILTER</a>
@@ -213,10 +213,10 @@
     </div>
 
     <!-- overlay hotel selector -->
-    @Html.Partial("/Views/Hotel/Shared/Mobile/_Autocomplete.cshtml")
+    @Html.Partial("/Views/Shared/Mobile/_Autocomplete.cshtml")
 
     <!-- overlay hotel date -->
-    @Html.Partial("/Views/Hotel/Shared/Mobile/_SelectCheckInDate.cshtml")
+    @Html.Partial("/Views/Shared/Mobile/_SelectCheckInDate.cshtml")
 
     <div class="popup__wrapper" ng-class="{'active': expired}">
         <div class="popup">

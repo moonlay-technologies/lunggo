@@ -1,5 +1,5 @@
 ﻿@{
-    Layout = "/Views/Shared/Travorama20/_Layout20150929.cshtml";
+    Layout = "/Views/Shared/Desktop/_LayoutDesktop.cshtml";
     ViewBag.BodyClass = "page-account page-account-register";
     ViewBag.Title = "Registrasi Akun Travorama";
     var loginProviders = Context.GetOwinContext().Authentication.GetAuthenticationTypes();
@@ -35,7 +35,7 @@
                 <div class="form-group">
                     <input type="submit" value="@Html.I18NString("CW00127")" class="btn btn-yellow form-control" ng-disabled="registerForm.$invalid || form.submitting" />
                 </div>
-                    
+
                 <div class="link-container">
                     <p><a href="#" ng-show="form.isSucceeded" ng-click="form.resubmit()">Kirim Ulang E-mail Aktivasi</a></p>
                     <p><b>Sudah Memiliki Akun?</b> <a href="@Url.Action("Login", "Account")">Masuk Sekarang</a></p>
@@ -43,7 +43,7 @@
             </form>
         </div>
     </div>
-    
+
     <div class="page-overlay" ng-show="overlay && !form.registered">
         <div class="overlay-content">
             <header>
@@ -75,7 +75,7 @@
             </footer>
         </div>
     </div><!-- .page-overlay -->
-    
+
     <div class="page-overlay" ng-show="overlay && form.registered && form.emailSent && !form.emailConfirmed">
         <div class="overlay-content">
             <header>
@@ -143,7 +143,7 @@
             </footer>
         </div>
     </div><!-- .page-overlay -->
-    
+
     <div class="page-overlay" ng-show="overlay && form.formatError">
         <div class="overlay-content">
             <header>
@@ -175,7 +175,7 @@
             </footer>
         </div>
     </div><!-- .page-overlay -->
-    
+
     <div class="page-overlay" ng-show="overlay && form.registered && form.emailSent && form.emailConfirmed">
         <div class="overlay-content">
             <header>
