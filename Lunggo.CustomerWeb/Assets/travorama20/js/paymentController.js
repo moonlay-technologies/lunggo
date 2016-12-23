@@ -1,12 +1,18 @@
 ﻿// travorama angular app - payment controller
 app.controller('paymentController', [
-    '$http', '$scope', '$interval', '$location', '$log',function ($http, $scope, $interval, $location, $log) {
+    '$http', '$scope', '$location', '$log',function ($http, $scope, $location, $log) {
 
         //********************
         // variables
 
         angular.element(document).ready(function () {
             $scope.UniqueCodePaymentConfig.GetUniqueCode($scope.rsvNo);
+            window.setInterval(function () {
+                var nowTime = new Date();
+                if (nowTime > $scope.paymentTimeout) {
+                    $scope.expired = true;
+                }
+            }, 1000);
         });
         
         $scope.currentPage = 4;
@@ -54,12 +60,6 @@ app.controller('paymentController', [
             { value: 11, name: 'November' },
             { value: 12, name: 'Desember' }
         ];
-        $interval(function () {
-            var nowTime = new Date();
-            if (nowTime > $scope.paymentTimeout) {
-                $scope.expired = true;
-            }
-        }, 1000);
 
         $scope.MandiriClickPay = {
             Token: '',

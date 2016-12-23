@@ -732,6 +732,7 @@ namespace Lunggo.CustomerWeb.Controllers
         }
 
         [System.Web.Mvc.HttpPost]
+        [System.Web.Mvc.AllowAnonymous]
         public ActionResult OrderFlightHistoryDetail(string rsvNo, string status)
         {
             ReservationForDisplayBase rsv;

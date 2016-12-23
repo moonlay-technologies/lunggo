@@ -576,13 +576,8 @@ app.controller('orderDetailController', [
 
         //General Variables
         $scope.pageLoaded = true;
-        //$scope.trial = 0;
-        $scope.isExist = true;
-        $scope.rsvNo = rsvNo;
         $scope.rsvStatus = rsvStatus;
         $scope.paymentMethod = paymentMethod;
-        $scope.flight = [];
-        $scope.hotel = [];
         $scope.isLogin = false;
 
         $scope.userProfile = {
@@ -680,59 +675,6 @@ app.controller('orderDetailController', [
             else if (status == 6 || status == 8) { return 'Cari Penerbangan'; }
 
         }
-
-        //$scope.GetReservation = function () {
-        //    if ($scope.trial > 3) {
-        //        $scope.trial = 0;
-        //    }
-        //    $scope.errormsg = '';
-        //    var authAccess = getAuthAccess();
-        //    if (authAccess == 2 || authAccess == 1) {
-        //        $http({
-        //            method: 'GET',
-        //            data: { rsvNo: $scope.rsvNo },
-        //            url: GetReservationConfig.Url + $scope.rsvNo,
-        //            headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') }
-        //        }).then(function (returnData) {
-        //            if (returnData.data.status == "200") {
-        //                $scope.flight = returnData.data.flight;
-        //                $scope.datafailed = false;
-        //                $scope.isExist = true;
-        //            }
-        //            else {
-        //                $log.debug('There is an error');
-        //                $log.debug('Error : ' + returnData.error);
-        //                if (returnData.error == "ERARSV01") {
-        //                    $scope.errormsg = 'No Reservation Matched';
-        //                }
-        //                else if (returnData.error == "ERARSV02") {
-        //                    $scope.errormsg = 'Not Authorised';
-        //                }
-        //                else if (returnData.error == "ERRGEN99") {
-        //                    $scope.errormsg = 'Problem on Server';
-        //                }
-
-        //                $scope.datafailed = true;
-        //                $log.debug(returnData);
-        //            }
-        //        }).catch(function (returnData) {
-        //            $scope.trial++;
-        //            if (refreshAuthAccess() && $scope.trial < 4) //refresh cookie
-        //            {
-        //                $scope.GetReservation();
-        //            }
-        //            else {
-        //                $log.debug('Failed to Get Detail');
-        //                $scope.datafailed = true;
-        //            }
-        //        });
-        //    }
-        //    else {
-        //        $log.debug('Not authorized to get reservation');
-        //        $scope.datafailed = true;
-        //    }
-
-        //}
 
     }
 ]);// order Detail Controller end

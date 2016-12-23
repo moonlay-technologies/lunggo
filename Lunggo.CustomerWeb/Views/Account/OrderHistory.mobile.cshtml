@@ -83,7 +83,7 @@
                         <div class="form-group">
                             <label class="control-label">No Telepon:</label>
                             <p class="form-control-static" ng-hide="UserProfile.Editing">{{UserProfile.phone}}</p>
-                            <input type="number" value="" class="form-control" ng-model="EditProfile.phone" ng-show="UserProfile.Editing" required />
+                            <input type="text" value="" class="form-control" ng-model="EditProfile.phone" ng-show="UserProfile.Editing" required />
                         </div>
                         <div class="form-group">
                             <label class="control-label">Kode Negara:</label>
@@ -98,7 +98,7 @@
                                     <button class="btn btn-gray btn-block" ng-click="UserProfile.Edit()">BATAL</button>
                                 </div>
                                 <div class="col-xs-6">
-                                    <button class="btn btn-yellow btn-block" @*ng-disabled="profileForm.$invalid"*@ ng-click="EditProfile.Submit('profileSave'); UserProfile.Edit(); NotifBox = True">SIMPAN</button>
+                                    <button class="btn btn-yellow btn-block" ng-click="EditProfile.Submit('profileSave'); UserProfile.Edit(); NotifBox = True">SIMPAN</button>
                                 </div>
                             </div>
                         </div>
@@ -129,10 +129,6 @@
                                 <label class="control-label">Password Baru:</label>
                                 <input type="password" value="" class="form-control" ng-model="UserPassword.NewPassword" required />
                             </div>
-                            @*<div class="form-group">
-                                <label class="control-label">Konfirmasi Password Baru:</label>
-                                <input type="password" value="" class="form-control" ng-model="UserPassword.ConfirmPassword" required />
-                            </div>*@
                         </div>
                         <div class="form-group" ng-show="UserPassword.Editing">
                             <div class="row">
@@ -140,7 +136,7 @@
                                     <button class="btn btn-gray btn-block" ng-click="UserPassword.Edit()">BATAL</button>
                                 </div>
                                 <div class="col-xs-6">
-                                    <button class="btn btn-yellow btn-block" ng-disabled="passwordForm.$invalid" ng-click="UserPassword.Submit()">SIMPAN</button>
+                                    <button class="btn btn-yellow btn-block" ng-disabled="passwordForm.$invalid || password.updating" ng-click="UserPassword.Submit()">SIMPAN</button>
                                 </div>
                             </div>
                         </div>
@@ -223,7 +219,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-xs-12">
-                                    <a ng-href="@Url.Action("OrderFlightHistoryDetail", "OrderHistory")?rsvNo={{flight.rsvNo}}" class="btn btn-yellow">Detail</a>
+                                    <a ng-href="@Url.Action("OrderFlightHistoryDetail", "Account")?rsvNo={{flight.rsvNo}}" class="btn btn-yellow">Detail</a>
                                 </div>
                             </div>
                         </li>
@@ -239,7 +235,7 @@
                                     <div class="order hotel page-hotel">
                                         <div class="order-top">
                                             <div class="ot clearfix">
-                                                <div class="col-2"><img src="{{getPhotoUrl(hotel.hotelDetail.mainImage)}}" alt="Hotel Image" /></div>
+                                                <div class="col-2"><img src="{{hotel.hotelDetail.mainImage}}" alt="Hotel Image" /></div>
                                                 <div class="col-8">
                                                     <span class="blue-txt bold-txt">{{hotel.hotelDetail.hotelName}}</span><br />
                                                     <span class="star" ng-if="hotel.hotelDetail.starRating == 1"></span>
@@ -248,7 +244,7 @@
                                                     <span class="star star-4" ng-if="hotel.hotelDetail.starRating == 4"></span>
                                                     <span class="star star-5" ng-if="hotel.hotelDetail.starRating == 5"></span>
                                                     <div class="wt-location">
-                                                        {{hotel.hotelDetail.address}}{{hotel.hotelDetail.zone}}, {{hotel.hotelDetail.destination}}, {{hotel.hotelDetail.country}}
+                                                        {{hotel.hotelDetail.address}}{{hotel.hotelDetail.zone}}, {{hotel.hotelDetail.destinationName}}, {{hotel.hotelDetail.country}}
                                                     </div>
                                                 </div>
                                             </div>
@@ -312,7 +308,7 @@
                                             </div>
                                             <div class="row">
                                                 <div class="col-xs-12">
-                                                    <a ng-href="@Url.Action("OrderFlightHistoryDetail", "OrderHistory")?rsvNo={{hotel.rsvNo}}" class="btn btn-yellow">Detail</a>
+                                                    <a ng-href="@Url.Action("OrderFlightHistoryDetail", "Account")?rsvNo={{hotel.rsvNo}}" class="btn btn-yellow">Detail</a>
                                                 </div>
                                             </div>
                                         </div>

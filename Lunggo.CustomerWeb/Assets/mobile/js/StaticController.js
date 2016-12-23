@@ -34,7 +34,7 @@ app.controller('PromoController', ['$http', '$scope', '$rootScope', function ($h
 
 }]);// promo controller
 
-app.controller('NewsletterController', ['$http', '$scope', '$rootScope', function ($http, $scope, $rootScope) {
+app.controller('NewsletterController', ['$http', '$scope', '$rootScope', '$log', function ($http, $scope, $rootScope, $log) {
 
     
     $scope.PageConfig = $rootScope.PageConfig;
@@ -87,7 +87,7 @@ app.controller('NewsletterController', ['$http', '$scope', '$rootScope', functio
                 }
             }).success(function (returnData) {
                 $scope.User.showBox = true;
-                console.log('Succeed');
+                $log.debug('Succeed');
                 $scope.User.Sending = false;
                 if (returnData == true) {
                     $scope.User.Registered = true;
@@ -97,8 +97,8 @@ app.controller('NewsletterController', ['$http', '$scope', '$rootScope', functio
                     $scope.User.Sent = true;
                 })
                 .error(function (returnData) {
-                    console.log('Failed requesting reset password');
-                    console.log(returnData);
+                    $log.debug('Failed requesting reset password');
+                    $log.debug(returnData);
                     $scope.User.showBox = true;
                     $scope.User.Sending = false;
                     $scope.User.Sent = false;
