@@ -77,7 +77,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                     {
                         IsSuccess = false,
                         Errors = new List<FlightError> { FlightError.FailedOnSupplier },
-                        ErrorMessages = new List<string> { "Error while requesting at BookingListTravelAgent.aspx. Unexpected response path or response status code" }
+                        ErrorMessages = new List<string> { "[Citilink] Error while requesting at BookingListTravelAgent.aspx. Unexpected response path or response status code || " + listResponse.Content }
                     };
 
                 url = "BookingListTravelAgent.aspx";
@@ -117,7 +117,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                         CurrentBalance = GetCurrentBalance(),
                         IsSuccess = false,
                         Errors = new List<FlightError> { FlightError.FailedOnSupplier },
-                        ErrorMessages = new List<string> { "Error while requesting at BookingListTravelAgent.aspx. Unexpected response path or response status code" }
+                        ErrorMessages = new List<string> { "[Citilink] Error while requesting at BookingListTravelAgent.aspx. Unexpected response path or response status code || " + selectResponse.Content }
                     };
 
                 try
@@ -189,7 +189,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                             CurrentBalance = GetCurrentBalance(),
                             IsSuccess = false,
                             Errors = new List<FlightError> { FlightError.FailedOnSupplier },
-                            ErrorMessages = new List<string> { "Error while requesting at BookingListTravelAgent.aspx. Unexpected response path or response status code" }
+                            ErrorMessages = new List<string> { "[Citilink] Error while requesting at BookingListTravelAgent.aspx. Unexpected response path or response status code || " + listResponse2.Content }
                         };
 
                     url = "BookingListTravelAgent.aspx";
@@ -244,7 +244,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                             hasil.CurrentBalance = GetCurrentBalance();
                             hasil.IsSuccess = false;
                             hasil.Errors = new List<FlightError> { FlightError.FailedOnSupplier };
-                            hasil.ErrorMessages = new List<string> { "Status pembayaran is not Konfim or Confirmed" };
+                            hasil.ErrorMessages = new List<string> { "[Citilink] Status pembayaran is not Konfim or Confirmed" };
                         }
 
                     return hasil;
@@ -273,7 +273,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                                 CurrentBalance = GetCurrentBalance(),
                                 IsSuccess = false,
                                 Errors = new List<FlightError> { FlightError.TechnicalError },
-                                ErrorMessages = new List<string> { "Failed to check whether deposit cut or not! Manual checking advised!" }
+                                ErrorMessages = new List<string> { "[Citilink] Failed to check whether deposit cut or not! Manual checking advised!" }
                             };
                         default:
                             return new IssueTicketResult
@@ -281,7 +281,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                                 CurrentBalance = GetCurrentBalance(),
                                 IsSuccess = false,
                                 Errors = new List<FlightError> { FlightError.TechnicalError },
-                                ErrorMessages = new List<string> { "Failed to check whether deposit cut or not! Manual checking advised!" }
+                                ErrorMessages = new List<string> { "[Citilink] Failed to check whether deposit cut or not! Manual checking advised!" }
                             };
                     }
                 }

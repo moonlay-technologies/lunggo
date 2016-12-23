@@ -87,18 +87,15 @@
                     <table width="100%" style="border-top: 2px #15b1e4 solid; border-bottom: 2px #15b1e4 solid; margin-bottom: 25px ">
                         <tr>
                             <td>
-                                <p style="color: #15b1e4; text-align: center; margin: 7px 0;"><b>Metode Pembayaran : Transfer (SMS/Internet Banking/Teller Bank)</b> </p>
+                                <p style="color: #15b1e4; text-align: center; margin: 7px 0;"><b>Metode Pembayaran : Transfer (ATM/SMS/Internet Banking/Teller Bank)</b> </p>
                             </td>
                         </tr>
                     </table>
 
-                    <p>Untuk mendapatkan voucher, lakukan pembayaran lalu konfirmasikan pembayaran sesuai dua langkah berikut:</p>
+                    <p>Untuk mendapatkan voucher, lakukan pembayaran sesuai langkah berikut:</p>
 
                     <table width="100%" style="margin-bottom: 10px;">
                         <tr>
-                            <td width="5%">
-                                <span style="background: #ffd632; color: #000; padding: 6.5px 10px; line-height: 0; border-radius: 27px; font-weight: 700; vertical-align: middle;">1</span>
-                            </td>
                             <td>
                                 <p style="margin: 0;"><b>Transfer pembayaran Anda tepat dengan total tagihan Rp @Model.Payment.FinalPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID")) ke rekening di bawah ini</b></p>
                             </td>
@@ -149,30 +146,9 @@
                     <p style="font-style: italic; font-size: 11px; margin-left: 6%; margin-bottom: 0px;">Batas waktu pembayaran Anda adalah sebelum <span style="color: #15b1e4">Pk. @Model.Payment.TimeLimit.GetValueOrDefault().ToString("t", CultureInfo.CreateSpecificCulture("id-ID")) WIB - (@Model.Payment.TimeLimit.GetValueOrDefault().ToString("D", CultureInfo.CreateSpecificCulture("id-ID"))).</span></p>
                     <p style="font-size: 10px; opacity: 0.5; font-style: italic; margin-left: 6%; margin-top: 1px; margin-bottom: 50px;">Jika lewat, booking Anda akan dibatalkan otomatis oleh sistem kami. Untuk booking yang sama, Anda harus melakukan pemesanan ulang dan harga kemungkinan besar akan berubah</p>
 
-                    <table width="100%" style="margin-bottom: 30px">
-                        <tr>
-                            <td width="5%" rowspan="3" style="vertical-align: top;">
-                                <span style="background: #ffd632; color: #000; padding: 6.5px 10px; line-height: 0; border-radius: 27px; font-weight: 700; vertical-align: middle;">2</span>
-                            </td>
-                            <td>
-                                <p style="padding-left: 0.3%;"><b>Konfirmasikan pembayaran Anda dengan cukup meng-klik link ini :</b></p>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <a style="color: #15b1e4; text-decoration: underline;" href="#">https://www.traveloka.com/partner/null/confirmPayment?auth=3114b2f168&iid=1515545647553445913</a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <p style="margin:7px 0">Setelah itu, mohon tunggu hingga e-ticket/voucher diterbitkan dan dikirim ke email Anda maks. 60 menit</p>
-                            </td>
-                        </tr>
-                    </table>
-
                     <p style="margin-left: 5%; opacity: 0.8; font-size: 10px; font-style: italic; margin-bottom: 40px;">Jika ada pertanyaan dapat mengirimkan email ke <span style="color: #15b1e4"> cs@travorama.com </span> dengan mencantumkan <span style="color: #15b1e4">No. Pesanan Travorama @Model.RsvNo</span></p>
                     <hr style="border-color: #15b1e4; border-style: dotted; margin-bottom: 20px;" width="100%" />
-                    <p>Email tagihan ini bukan merupakan bukti pembayaran yang sah dan tidak dapat ditukar menjadi tiket apapun.</p>
+                    <p>E-mail tagihan ini bukan merupakan bukti pembayaran yang sah dan tidak dapat ditukar menjadi tiket apapun.</p>
                     <p style="font-size: 11px; font-style: italic; margin-bottom: 50px;">Email ini ditujukan hanya untuk, karena Anda telah melakukan pemesanan melalui Travorama</p>
 
                 </td>

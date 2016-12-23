@@ -35,7 +35,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                     return new RevalidateFareResult
                     {
                         Errors = new List<FlightError> {FlightError.InvalidInputData},
-                        ErrorMessages = new List<string> { "Input data is invalid" }
+                        ErrorMessages = new List<string> { "[Lion Air] Input data is invalid" }
                     };
                 }
 
@@ -70,7 +70,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                     return new RevalidateFareResult
                     {
                         Errors = new List<FlightError> {FlightError.FareIdNoLongerValid},
-                        ErrorMessages = new List<string> { "FareId is no longer valid" }
+                        ErrorMessages = new List<string> { "[Lion Air] FareId is no longer valid" }
                     };
                 }
 
@@ -81,7 +81,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                     return new RevalidateFareResult
                     {
                         Errors = new List<FlightError> {FlightError.InvalidInputData},
-                        ErrorMessages = new List<string> {"There Must be one adult"}
+                        ErrorMessages = new List<string> { "[Lion Air] There Must be one adult" }
                     };
                 }
                 if (adultCount + childCount > 7)
@@ -91,7 +91,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                     {
                         Errors = new List<FlightError> {FlightError.InvalidInputData},
                         ErrorMessages =
-                            new List<string> {"Total adult and children passenger must be not more than seven"}
+                            new List<string> { "[Lion Air] Total adult and children passenger must be not more than seven" }
                     };
                 }
                 if (adultCount < infantCount)
@@ -101,7 +101,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                     {
                         Errors = new List<FlightError> {FlightError.InvalidInputData},
                         ErrorMessages =
-                            new List<string> {"Every infant must be accompanied by one adult"}
+                            new List<string> { "[Lion Air] Every infant must be accompanied by one adult" }
                     };
                 }
                 if (depdate > DateTime.Now.AddDays(331).Date)
@@ -110,7 +110,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                     return new RevalidateFareResult
                     {
                         Errors = new List<FlightError> {FlightError.InvalidInputData},
-                        ErrorMessages = new List<string> {"Time of departure exceeds"}
+                        ErrorMessages = new List<string> { "[Lion Air] Time of departure exceeds" }
                     };
                 }
 
@@ -140,7 +140,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                         return new RevalidateFareResult
                         {
                             Errors = new List<FlightError> {FlightError.TechnicalError},
-                            ErrorMessages = new List<string> {"userName is full"}
+                            ErrorMessages = new List<string> { "[Lion Air] userName is full" }
                         };
                     }
                     bool successLogin;
@@ -164,7 +164,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                             return new RevalidateFareResult
                             {
                                 Errors = new List<FlightError> {FlightError.InvalidInputData},
-                                ErrorMessages = new List<string> { "can't enter page default" }
+                                ErrorMessages = new List<string> { "[Lion Air] can't enter page default || " + searchResponse0.Content }
                             };
                         }
                         Thread.Sleep(1000);
@@ -190,7 +190,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                     return new RevalidateFareResult
                     {
                         Errors = new List<FlightError> { FlightError.InvalidInputData },
-                        ErrorMessages = new List<string> { "Captcha is invalid" }
+                        ErrorMessages = new List<string> { "[Lion Air] Captcha is invalid" }
                     };
                 }
                 
@@ -753,7 +753,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                     {
                         IsSuccess = false,
                         Errors = new List<FlightError> {FlightError.TechnicalError},
-                        ErrorMessages = new List<string> {"Web Layout Changed!"}
+                        ErrorMessages = new List<string> { "[Lion Air] Web Layout Changed!" }
                     };
                 }
             }

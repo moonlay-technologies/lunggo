@@ -61,7 +61,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                         return new IssueTicketResult
                         {
                             Errors = new List<FlightError> {FlightError.TechnicalError},
-                            ErrorMessages = new List<string> {"userName is full"}
+                            ErrorMessages = new List<string> { "[Lion Air] userName is full" }
                         };
 
                     bool successLogin;
@@ -82,7 +82,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                             return new IssueTicketResult
                             {
                                 Errors = new List<FlightError> {FlightError.InvalidInputData},
-                                ErrorMessages = new List<string> { "Error while requesting at /lionairagentsportal/default.aspx. Unexpected response path or response status code" }
+                                ErrorMessages = new List<string> { "[Lion Air] Error while requesting at /lionairagentsportal/default.aspx. Unexpected response path or response status code || " + searchResponse0.Content }
                             };
                         const string url1 = @"/lionairagentsportal/CaptchaGenerator.aspx";
                         var searchRequest1 = new RestRequest(url1, Method.GET);
@@ -157,7 +157,11 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                     Thread.Sleep(3000);
                     if (searchResponse9.ResponseUri.AbsolutePath != "/LionAgentsOPS/TicketBooking.aspx"
                         && (searchResponse9.StatusCode == HttpStatusCode.OK || searchResponse9.StatusCode == HttpStatusCode.Redirect))
-                        throw new Exception();
+                        return new IssueTicketResult
+                        {
+                            Errors = new List<FlightError> { FlightError.InvalidInputData },
+                            ErrorMessages = new List<string> { "[Lion Air]  || " + searchResponse9.Content }
+                        };
 
                     //CashPayment
 
@@ -172,7 +176,11 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                     Thread.Sleep(3000);
                     if (searchResponse10.ResponseUri.AbsolutePath != "/LionAgentsOPS/CashPayment.aspx"
                         && (searchResponse10.StatusCode == HttpStatusCode.OK || searchResponse10.StatusCode == HttpStatusCode.Redirect))
-                        throw new Exception();
+                        return new IssueTicketResult
+                        {
+                            Errors = new List<FlightError> { FlightError.InvalidInputData },
+                            ErrorMessages = new List<string> { "[Lion Air]  || " + searchResponse10.Content }
+                        };
 
                     //Confirmation
 
@@ -186,7 +194,11 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                     var searchResponse11 = clientx.Execute(searchRequest11);
                     if (searchResponse11.ResponseUri.AbsolutePath != "/LionAgentsOPS/Confirmation.aspx"
                         && (searchResponse11.StatusCode == HttpStatusCode.OK || searchResponse11.StatusCode == HttpStatusCode.Redirect))
-                        throw new Exception();
+                        return new IssueTicketResult
+                        {
+                            Errors = new List<FlightError> { FlightError.InvalidInputData },
+                            ErrorMessages = new List<string> { "[Lion Air]  || " + searchResponse11.Content }
+                        };
                     Thread.Sleep(3000);
                     var confirmationContent = searchResponse11.Content;
                     var html11 = (CQ)confirmationContent;
@@ -240,7 +252,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                                 CurrentBalance = GetCurrentBalance(),
                                 IsSuccess = false,
                                 Errors = new List<FlightError> { FlightError.TechnicalError },
-                                ErrorMessages = new List<string> { "Failed to check whether deposit cut or not! Manual checking advised!" }
+                                ErrorMessages = new List<string> { "[Lion Air] Failed to check whether deposit cut or not! Manual checking advised!" }
                                 
                             };
                         default:
@@ -249,7 +261,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                                 CurrentBalance = GetCurrentBalance(),
                                 IsSuccess = false,
                                 Errors = new List<FlightError> { FlightError.TechnicalError },
-                                ErrorMessages = new List<string> { "Failed to check whether deposit cut or not! Manual checking advised!" }
+                                ErrorMessages = new List<string> { "[Lion Air] Failed to check whether deposit cut or not! Manual checking advised!" }
                             };
                     }
                 }

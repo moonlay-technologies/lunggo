@@ -18,7 +18,7 @@ AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName|Time
 16|AAP|Andrau Airpark|HOU|Houston|US|United States|-6
 17|AAQ|Anapa|AAQ|Anapa|RU|Russian Federation|4
 18|AAR|Aarhus Arpt.|AAR|Aarhus|DK|Denmark|1
-19|AAS|Apalapsili|AAS|Jayawijaya|ID|Indonesia|99
+19|AAS|Apalapsili|AAS|Jayawijaya|ID|Indonesia|9
 20|AAT|Altay|AAT|Altay|CN|China|8
 21|AAU|Asau|AAU|Asau|WS|Samoa|13
 22|AAV|Allah Valley|AAV|Surallah|PH|Philippines|99
@@ -46,7 +46,7 @@ AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName|Time
 44|ABR|Municipal|ABR|Aberdeen|US|United States|-6
 45|ABS|Abu Simbel|ABS|Abu Simbel|EG|Egypt|2
 46|ABT|Al-Aqiq|ABT|Al-Baha|SA|Saudi Arabia|3
-47|ABU|Haliwen|ABU|Atambua|ID|Indonesia|99
+47|ABU|Haliwen|ABU|Atambua|ID|Indonesia|8
 48|ABV|Nnamdi Azikiwe Intl. Arpt.|ABV|Abuja|NG|Nigeria|1
 49|ABW|Abau|ABW|Abau|PG|Papua New Guinea|99
 50|ABX|Albury|ABX|Albury|AU|Australia|10
@@ -101,7 +101,7 @@ AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName|Time
 99|ADZ|San Andres Island|ADZ|San Andres Island|CO|Colombia|-5
 100|AEA|Abemama Atoll|AEA|Abemama Atoll|KI|Kiribati|12
 101|AED|Aleneva|AED|Aleneva|US|United States|99
-102|AEG|Aek Godang|AEG|Padang Sidempuan|ID|Indonesia|99
+102|AEG|Aek Godang|AEG|Padang Sidempuan|ID|Indonesia|7
 103|AEH|Abecher|AEH|Abecher|TD|Chad|1
 104|AEK|Aseki|AEK|Aseki|PG|Papua New Guinea|99
 105|AEL|Albert Lea|AEL|Albert Lea|US|United States|99
@@ -130,7 +130,7 @@ AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName|Time
 128|AGA|Agadir Almassira|AGA|Agadir|MA|Morocco|0
 129|AGB|Augsburg - Muehlhausen|AGB|Munich|DE|Germany|1
 130|AGC|Allegheny County|AGC|Pittsburgh|US|United States|-5
-131|AGD|Anggi|AGD|Anggi|ID|Indonesia|99
+131|AGD|Anggi|AGD|Anggi|ID|Indonesia|9
 132|AGE|Flugplatz|AGE|Wangerooge|DE|Germany|1
 133|AGF|La Garenne|AGF|Agen|FR|France|1
 134|AGG|Angoram|AGG|Angoram|PG|Papua New Guinea|99
@@ -1888,7 +1888,7 @@ AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName|Time
 1887|DPK|Deer Park|DPK|Deer Park|US|United States|99
 1888|DPL|Dipolog|DPL|Dipolog|PH|Philippines|8
 1889|DPO|Devonport|DPO|Devonport|AU|Australia|10
-1890|DPS|Ngurah Rai Intl.|DPS|Denpasar|ID|Indonesia|8
+1890|DPS|Ngurah Rai Intl.|DPS|Bali / Denpasar|ID|Indonesia|8
 1891|DPU|Dumpu|DPU|Dumpu|PG|Papua New Guinea|99
 1892|DQA|Daqing Saertu|DQA|Daqing|CN|China|99
 1893|DRA|Desert Rock|DRA|Mercury|US|United States|99
@@ -9238,3 +9238,4 @@ AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName|Time
 9242|ZZV|Zanesville|ZZV|Zanesville|US|United States|99
 9243|DTB|Silangit|DTB|Siborong-Borong|ID|Indonesia|7
 9244|BWX|Blimbingsari|BWX|Banyuwangi|ID|Indonesia|7
+9245|WUB|Buli|WUB|Buli, Maba|ID|Indonesia|9

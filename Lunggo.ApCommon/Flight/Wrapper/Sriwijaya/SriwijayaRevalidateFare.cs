@@ -161,7 +161,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                                 {
                                     IsValid = false,
                                     Errors = new List<FlightError> { FlightError.TechnicalError },
-                                    ErrorMessages = new List<string> { "Web Layout Changed!" }
+                                    ErrorMessages = new List<string> { "[Sriwijaya] Web Layout Changed!" }
                                 };
                             }
 

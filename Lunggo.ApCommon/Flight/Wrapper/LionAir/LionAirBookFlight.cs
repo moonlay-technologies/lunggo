@@ -40,7 +40,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                         {
                             BookingStatus = BookingStatus.Failed
                         },
-                        ErrorMessages = new List<string> { "FareId is null" }
+                        ErrorMessages = new List<string> { "[Lion Air] FareId is null" }
                     };
                 }
 
@@ -79,7 +79,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                             BookingStatus = BookingStatus.Failed
                         },
                         IsSuccess = false,
-                        ErrorMessages = new List<string> { "FareId is no longer valid" }
+                        ErrorMessages = new List<string> { "[Lion Air] FareId is no longer valid" }
                     };
                 }
 
@@ -129,7 +129,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                         return new BookFlightResult
                         {
                             Errors = new List<FlightError> { FlightError.TechnicalError },
-                            ErrorMessages = new List<string> { "userName is full" }
+                            ErrorMessages = new List<string> { "[Lion Air] userName is full" }
                         };
                     }
                     bool successLogin;
@@ -158,7 +158,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                                 {
                                     BookingStatus = BookingStatus.Failed
                                 },
-                                ErrorMessages = new List<string> { "error entering default page" },
+                                ErrorMessages = new List<string> { "[Lion Air] error entering default page || " + searchResponse0.Content },
                                 IsSuccess = false
                             };
                         }
@@ -189,7 +189,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                             BookingStatus = BookingStatus.Failed
                         },
                         IsSuccess = false,
-                        ErrorMessages = new List<string> { "Error captcha" }
+                        ErrorMessages = new List<string> { "[Lion Air] Error captcha" }
                     };
                 }
 
@@ -413,7 +413,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                             IsSuccess = false,
                             Errors = new List<FlightError> { FlightError.TechnicalError },
                             Status = null,
-                            ErrorMessages = new List<string> { "Flight is not available anymore" },
+                            ErrorMessages = new List<string> { "[Lion Air] Flight is not available anymore" },
                             IsValid = true
                         };
                     }
@@ -690,7 +690,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                                 IsSuccess = false,
                                 Errors = new List<FlightError> { FlightError.TechnicalError },
                                 Status = null,
-                                ErrorMessages = new List<string> { "Currency is not available" },
+                                ErrorMessages = new List<string> { "[Lion Air] Currency is not available" },
                                 IsValid = true,
                                 NewItinerary = itin,
 
@@ -711,7 +711,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                                 IsSuccess = false,
                                 //Errors = new List<FlightError> { FlightError.TechnicalError },
                                 Status = null,
-                                ErrorMessages = new List<string> { "Itinerary is Changed!" },
+                                ErrorMessages = new List<string> { "[Lion Air] Itinerary is Changed!" },
                                 NewPrice = agentprice,
                                 IsValid = true,
                                 IsPriceChanged = agentprice != bookInfo.Itinerary.Price.Supplier,
@@ -1009,7 +1009,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                                         IsSuccess = false,
                                         //Errors = new List<FlightError> { FlightError.TechnicalError },
                                         Status = null,
-                                        ErrorMessages = new List<string> { "Price is changed!" },
+                                        ErrorMessages = new List<string> { "[Lion Air] Price is changed!" },
                                         NewPrice = decimal.Parse(newPrice),
                                         IsValid = true,
                                         IsPriceChanged = true,
@@ -1060,7 +1060,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                                     IsSuccess = false,
                                     //Errors = new List<FlightError> { FlightError.TechnicalError },
                                     Status = null,
-                                    ErrorMessages = new List<string> { "Price is changed!2" },
+                                    ErrorMessages = new List<string> { "[Lion Air] Price is changed!2" },
                                     NewPrice = harga2,
                                     IsValid = true,
                                     IsPriceChanged = true,
@@ -1079,7 +1079,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                             {
                                 IsSuccess = false,
                                 Errors = new List<FlightError> { FlightError.TechnicalError },
-                                ErrorMessages = new List<string> { "Error di bagian validasi harga di halaman akhir booking" },
+                                ErrorMessages = new List<string> { "[Lion Air] Error di bagian validasi harga di halaman akhir booking" },
                                 Status = new BookingStatusInfo
                                 {
                                     BookingStatus = BookingStatus.Failed
@@ -1200,7 +1200,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                         {
                             BookingStatus = BookingStatus.Failed
                         },
-                        ErrorMessages = new List<string> { "Web Layout Changed! Failed to get Booking Reference" }
+                        ErrorMessages = new List<string> { "[Lion Air] Web Layout Changed! Failed to get Booking Reference" }
                     };
                 }
                 catch (Exception e)
@@ -1212,7 +1212,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                     {
                         IsSuccess = false,
                         Errors = new List<FlightError> { FlightError.TechnicalError },
-                        ErrorMessages = new List<string> { e.Message + "|||" + e.StackTrace },
+                        ErrorMessages = new List<string> { "[Lion Air] " + e.Message + "|||" + e.StackTrace },
                         Status = new BookingStatusInfo
                         {
                             BookingStatus = BookingStatus.Failed

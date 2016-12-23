@@ -34,14 +34,14 @@ namespace Lunggo.ApCommon.Flight.Service
             var redisDb = redis.GetDatabase(ApConstant.SearchResultCacheName);
             for (var i = 0; i < ApConstant.RedisMaxRetry; i++)
             {
-                try 
-                { 
+                try
+                {
                     redisDb.HashSet(keyRoute, keyDate, Convert.ToString(lowestvalue));
                     break;
                 }
                 catch { }
             }
-            
+
         }
 
         private void SetLowestPriceToCache(List<FlightItineraryForDisplay> itins, string origin, string destination,
@@ -61,11 +61,11 @@ namespace Lunggo.ApCommon.Flight.Service
                 }
                 catch
                 {
-                }       
+                }
             }
-            
+
         }
-    
+
 
         //public decimal GetLowestPriceFromCache(List<FlightItinerary> itins)
         //{
@@ -116,7 +116,7 @@ namespace Lunggo.ApCommon.Flight.Service
                 catch { }
             }
             return new List<decimal>();
-            
+
         }
 
         public LowestPrice GetLowestPriceInRangeOfDate(string origin, string destination, DateTime startDate,
@@ -181,7 +181,7 @@ namespace Lunggo.ApCommon.Flight.Service
                 }
                 catch { }
             }
-            
+
         }
 
         public List<KeyValuePair<string, string>> GetTransacInquiryFromCache(string mandiriCacheId)
@@ -201,10 +201,10 @@ namespace Lunggo.ApCommon.Flight.Service
                 }
                 catch
                 {
-                   
+
                 }
             }
-           
+
             return new List<KeyValuePair<string, string>>();
         }
 
@@ -223,7 +223,7 @@ namespace Lunggo.ApCommon.Flight.Service
                 }
                 catch
                 {
-                   
+
                 }
             }
             return TimeSpan.Zero;
@@ -247,7 +247,7 @@ namespace Lunggo.ApCommon.Flight.Service
                 }
                 catch
                 {
-                    
+
                 }
             }
             return false;
@@ -272,7 +272,7 @@ namespace Lunggo.ApCommon.Flight.Service
                 }
                 catch
                 {
-                   
+
                 }
             }
             return true;
@@ -286,12 +286,14 @@ namespace Lunggo.ApCommon.Flight.Service
             var expiry = GetSearchedItinerariesExpiry(searchId, supplierIndex);
             for (var i = 0; i < ApConstant.RedisMaxRetry; i++)
             {
-                try { redisDb.StringSet(redisKey, false, expiry - DateTime.UtcNow); return;
-                    
+                try
+                {
+                    redisDb.StringSet(redisKey, false, expiry - DateTime.UtcNow); return;
+
                 }
                 catch { }
             }
-            
+
         }
 
         public void InvalidateSearchingStatusInCache(string searchId)
@@ -302,8 +304,10 @@ namespace Lunggo.ApCommon.Flight.Service
             var expiry = GetSearchedItinerariesExpiry(searchId, 0);
             for (var i = 0; i < ApConstant.RedisMaxRetry; i++)
             {
-                try { redisDb.StringSet(redisKey, false, expiry - DateTime.UtcNow);
-                return;
+                try
+                {
+                    redisDb.StringSet(redisKey, false, expiry - DateTime.UtcNow);
+                    return;
 
                 }
                 catch { }
@@ -337,7 +341,7 @@ namespace Lunggo.ApCommon.Flight.Service
                 }
                 catch { }
             }
-            
+
         }
 
         private static void SaveSearchedPartialItinerariesToBufferCache(List<FlightItinerary> itineraryList, string searchId, int supplierIndex, int partNumber)
@@ -390,7 +394,7 @@ namespace Lunggo.ApCommon.Flight.Service
             {
                 try
                 {
-                    redisDb.StringSet(redisKey, currencies.Serialize(), TimeSpan.FromMinutes(timeout)); 
+                    redisDb.StringSet(redisKey, currencies.Serialize(), TimeSpan.FromMinutes(timeout));
                     return;
                 }
                 catch { }
@@ -402,7 +406,7 @@ namespace Lunggo.ApCommon.Flight.Service
             var redisService = RedisService.GetInstance();
             var redisKey = "currencies:" + searchId;
             var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
-            
+
             for (var x = 0; x < ApConstant.RedisMaxRetry; x++)
             {
                 try
@@ -421,7 +425,7 @@ namespace Lunggo.ApCommon.Flight.Service
             var redisKey = "searchedSupplierIndices:" + searchId;
             var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
             var length = redisDb.ListLength(redisKey);
-             for (var x = 0; x < ApConstant.RedisMaxRetry; x++)
+            for (var x = 0; x < ApConstant.RedisMaxRetry; x++)
             {
                 try
                 {
@@ -451,7 +455,7 @@ namespace Lunggo.ApCommon.Flight.Service
                     }
                     catch
                     {
-                        
+
                     }
                 }
                 if (cacheObject.IsNullOrEmpty)
@@ -483,7 +487,7 @@ namespace Lunggo.ApCommon.Flight.Service
                 }
                 catch
                 {
-                    
+
                 }
             }
             if (cacheObject.IsNullOrEmpty)
@@ -512,7 +516,7 @@ namespace Lunggo.ApCommon.Flight.Service
                 }
                 catch
                 {
-                    
+
                 }
             }
             return null;
@@ -526,7 +530,6 @@ namespace Lunggo.ApCommon.Flight.Service
             var searchedSupplierItins = new Dictionary<int, List<List<FlightItinerary>>>();
             foreach (var supplierId in requestedSupplierIds)
             {
-                var isSearched = true;
                 var cacheObjects = new List<RedisValue>();
                 for (var i = 0; i <= conditions.Trips.Count; i++)
                 {
@@ -544,21 +547,14 @@ namespace Lunggo.ApCommon.Flight.Service
 
                         }
                     }
-                    if (cacheObject.IsNullOrEmpty)
-                    {
-                        isSearched = false;
-                        cacheObjects.Add(new List<FlightItinerary>().ToCacheObject());
-                        break;
-                    }
-                    cacheObjects.Add(cacheObject);
+                    cacheObjects.Add(!cacheObject.IsNullOrEmpty
+                        ? cacheObject
+                        : new List<FlightItinerary>().ToCacheObject());
                     if (conditions.Trips.Count == 1)
                         break;
                 }
-                if (isSearched)
-                {
-                    var itinsList = cacheObjects.Select(obj => obj.DeconvertTo<List<FlightItinerary>>()).ToList();
-                    searchedSupplierItins.Add(supplierId, itinsList);
-                }
+                var itinsList = cacheObjects.Select(obj => obj.DeconvertTo<List<FlightItinerary>>()).ToList();
+                searchedSupplierItins.Add(supplierId, itinsList);
             }
             return searchedSupplierItins;
         }
@@ -579,10 +575,10 @@ namespace Lunggo.ApCommon.Flight.Service
                 }
                 catch
                 {
-                    
+
                 }
             }
-            
+
         }
 
         private void SaveCombosToCache(List<Combo> combos, string searchId, int supplierIndex)
@@ -648,7 +644,7 @@ namespace Lunggo.ApCommon.Flight.Service
                 }
                 catch
                 {
-                    
+
                 }
             }
             return null;
@@ -678,7 +674,7 @@ namespace Lunggo.ApCommon.Flight.Service
                 }
                 catch
                 {
-                    
+
                 }
             }
             return DateTime.UtcNow;
@@ -707,7 +703,7 @@ namespace Lunggo.ApCommon.Flight.Service
                 }
                 catch { }
             }
-           
+
         }
 
         private List<FlightItinerary> GetItinerariesFromCache(string itinCacheId)
@@ -730,7 +726,7 @@ namespace Lunggo.ApCommon.Flight.Service
                 }
                 catch
                 {
-                    
+
                 }
             }
             return null;
@@ -761,7 +757,7 @@ namespace Lunggo.ApCommon.Flight.Service
             {
                 try
                 {
-                    redisDb.StringSet(redisKey, paymentUrl, timeLimit - DateTime.UtcNow); 
+                    redisDb.StringSet(redisKey, paymentUrl, timeLimit - DateTime.UtcNow);
                     return;
                 }
                 catch { }
@@ -782,7 +778,7 @@ namespace Lunggo.ApCommon.Flight.Service
                 }
                 catch
                 {
-                    
+
                 }
             }
             return null;
@@ -817,7 +813,7 @@ namespace Lunggo.ApCommon.Flight.Service
             var redisMarginKey = "activeFlightMargins";
             var redisRuleKey = "activeFlightMarginRules";
             var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
-                    
+
             for (var i = 0; i < ApConstant.RedisMaxRetry; i++)
             {
                 try
@@ -831,7 +827,7 @@ namespace Lunggo.ApCommon.Flight.Service
                 }
                 catch
                 {
-                    
+
                 }
             }
             return new List<FlightMarginRule>();
@@ -889,7 +885,7 @@ namespace Lunggo.ApCommon.Flight.Service
             var redisMarginsKey = "activeFlightMarginsBuffer";
             var redisRulesKey = "activeFlightMarginRulesBuffer";
             var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
-                    
+
             for (var i = 0; i < ApConstant.RedisMaxRetry; i++)
             {
                 try
@@ -903,7 +899,7 @@ namespace Lunggo.ApCommon.Flight.Service
                 }
                 catch
                 {
-                   
+
                 }
             }
             return new List<FlightMarginRule>();
@@ -929,7 +925,7 @@ namespace Lunggo.ApCommon.Flight.Service
                 }
                 catch
                 {
-                    
+
                 }
             }
             return new List<FlightMarginRule>();

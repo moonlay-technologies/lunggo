@@ -36,7 +36,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                     {
                         Errors = new List<FlightError> { FlightError.InvalidInputData },
                         ErrorMessages =
-                            new List<string> { "There must be at least one adult passenger" }
+                            new List<string> { "[Garuda] There must be at least one adult passenger" }
                     };
                 }
                 if (conditions.AdultCount + conditions.ChildCount > 9)
@@ -45,7 +45,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                     {
                         Errors = new List<FlightError> { FlightError.InvalidInputData },
                         ErrorMessages =
-                            new List<string> { "Total adult and children passenger must be not more than nine" }
+                            new List<string> { "[Garuda] Total adult and children passenger must be not more than nine" }
                     };
                 }
                 if (conditions.AdultCount < conditions.InfantCount)
@@ -54,7 +54,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                     {
                         Errors = new List<FlightError> { FlightError.InvalidInputData },
                         ErrorMessages =
-                            new List<string> { "Every infant must be accompanied by one adult" }
+                            new List<string> { "[Garuda] Every infant must be accompanied by one adult" }
                     };
                 }
 
@@ -268,7 +268,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                         {
                             Errors = new List<FlightError> { FlightError.InvalidInputData },
                             ErrorMessages =
-                                new List<string> { "Price does not exist" }
+                                new List<string> { "[Garuda] Price does not exist" }
                         };
                     }
                     var dataItins = GetItins(itinScript);
@@ -465,7 +465,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                     return new SearchFlightResult
                     {
                         Errors = new List<FlightError> { FlightError.TechnicalError },
-                        ErrorMessages = new List<string> { "Web Layout Changed!" }
+                        ErrorMessages = new List<string> { "[Garuda] Web Layout Changed!" }
                     };
                 }
 
