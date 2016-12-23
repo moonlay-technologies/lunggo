@@ -80,7 +80,7 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Content
                         {
                             var singlefacility = new FacilityApi
                             {
-                                code = (facility.code*1000) + facility.facilityGroupCode,
+                                code = (facility.facilityGroupCode*1000) + facility.code,
                                 DescriptionEng = facility.description == null ? null : facility.description.content
                             };
                             facilityTemp.Add(singlefacility);

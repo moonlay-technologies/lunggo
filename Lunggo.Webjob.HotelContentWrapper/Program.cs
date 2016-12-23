@@ -25,7 +25,10 @@ namespace Lunggo.Webjob.HotelContentWrapper
             stopwatch.Start();
 
             var hotelService = HotelService.GetInstance();
-            hotelService.UpdateHotelContentAll();
+            //hotelService.UpdateHotelContentAll();
+            Console.WriteLine("On Running");
+            var x = HotelService.FacilityGroups;
+            Console.ReadKey();
             stopwatch.Stop();
             Debug.Print("Done in : {0}", stopwatch.Elapsed);
             Console.WriteLine("Done in : {0}", stopwatch.Elapsed);
