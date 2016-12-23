@@ -25,7 +25,7 @@ namespace Lunggo.ApCommon.Hotel.Service
         //HOTEL LIST PER LOCATION
         public void SaveHotelLocationInStorage(string destination, string zoneOrArea, int hotelCode)
         {
-            var table = TableStorageService.GetInstance().GetTableByReference("hotelLocations2");
+            var table = TableStorageService.GetInstance().GetTableByReference("hotelLocations");
             var retrieveOp = TableOperation.Retrieve<DynamicTableEntity>(destination, zoneOrArea);
             var retrievedRow = (DynamicTableEntity) table.Execute(retrieveOp).Result;
             var hotelCodes = retrievedRow == null ? null : retrievedRow.Properties["HotelCode"].StringValue;
@@ -34,12 +34,12 @@ namespace Lunggo.ApCommon.Hotel.Service
             {
                 {"HotelCode", new EntityProperty(updatedHotelCodes)}
             });
-            TableStorageService.GetInstance().InsertOrReplaceEntityToTableStorage(row, "hotelLocations2");
+            TableStorageService.GetInstance().InsertOrReplaceEntityToTableStorage(row, "hotelLocations");
         }
 
         public List<int> GetHotelListByLocationFromStorage(string location)
         {
-            var table = TableStorageService.GetInstance().GetTableByReference("hotelLocations2");
+            var table = TableStorageService.GetInstance().GetTableByReference("hotelLocations");
             var splitLocation = location.Split('-');
             if (splitLocation.Length > 1)
             {
@@ -79,7 +79,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                     {
                         FileBlobModel = new FileBlobModel
                         {
-                            Container = "HotelDetailByLocation2",
+                            Container = "HotelDetailByLocation",
                             FileInfo = new FileInfo
                             {
                                 ContentType = "",
@@ -228,7 +228,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                     {
                         ContentType = "",
                         FileData = autocomplete.ToCacheObject(),
-                        FileName = "autocomplete2"
+                        FileName = "autocomplete"
                     }
                 },
                 SaveMethod = SaveMethod.Force
@@ -240,7 +240,7 @@ namespace Lunggo.ApCommon.Hotel.Service
 
         public List<HotelAutoComplete> GetAutocompleteFromBlob()
         {
-            var blob = BlobStorageService.GetInstance().GetByteArrayByFileInContainer("autocomplete2", "HotelAutocomplete");
+            var blob = BlobStorageService.GetInstance().GetByteArrayByFileInContainer("autocomplete", "HotelAutocomplete");
             var value = (RedisValue)blob;
             return value.DeconvertTo<List<HotelAutoComplete>>().Where(c => !(c.Type == 4 && c.Country != "Indonesia")).ToList();
         }
@@ -288,7 +288,7 @@ namespace Lunggo.ApCommon.Hotel.Service
         //HOTEL DETAILS
         public Dictionary<int, HotelDetailsBase> GetHotelDetailByLocation(string location)
         {
-            var blob = BlobStorageService.GetInstance().GetByteArrayByFileInContainer(location, "HotelDetailByLocation2");
+            var blob = BlobStorageService.GetInstance().GetByteArrayByFileInContainer(location, "HotelDetailByLocation");
             var value = (RedisValue) blob;
             return value.DeconvertTo<Dictionary<int, HotelDetailsBase>>();
         }
