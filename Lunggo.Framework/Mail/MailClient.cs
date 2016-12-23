@@ -4,6 +4,6 @@
     {
         internal abstract void Init(string apiKey);
         internal abstract void SendEmail<T>(T objectParam, MailModel mailModel, string type);
-        internal abstract void SendPlainEmail(MailModel mailModel, string content);
+        //internal abstract void SendPlainEmail(MailModel mailModel, string content);
     }
 }

@@ -9,14 +9,16 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Content.Model
     public class FacilityRS
     {
         public int total { get; set; }
-        public List<FacilityContent> facilities { get; set; }
+        public List<FacilityApi> facilities { get; set; }
     }
 
-    public class FacilityContent
+    public class FacilityApi
     {
         public int code { get; set; }
         public int facilityGroupCode { get; set; }
         public int facilityTypologyCode { get; set; }
         public Description description { get; set; }
+        public string DescriptionEng { get; set; }
+        public string DescriptionInd { get; set; }
     }
 }

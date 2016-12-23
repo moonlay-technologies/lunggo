@@ -299,6 +299,7 @@
     <Compile Include="ApiSrc\Auxiliary\Logic\NewsletterSubscribeLogic.cs" />
     <Compile Include="ApiSrc\Auxiliary\Model\NewsletterSubscribeApiRequest.cs" />
     <Compile Include="ApiSrc\Hotel\Logic\BookLogic.cs" />
+    <Compile Include="ApiSrc\Hotel\Logic\CancelBookingLogic.cs" />
     <Compile Include="ApiSrc\Hotel\Logic\GetSelectedHotelDetailLogic.cs" />
     <Compile Include="ApiSrc\Hotel\Logic\GetRateLogic.cs" />
     <Compile Include="ApiSrc\Hotel\Logic\GetRoomDetailLogic.cs" />
@@ -306,6 +307,8 @@
     <Compile Include="ApiSrc\Hotel\Logic\SearchHotelLogic.cs" />
     <Compile Include="ApiSrc\Hotel\Model\HotelBookApiRequest.cs" />
     <Compile Include="ApiSrc\Hotel\Model\HotelBookApiResponse.cs" />
+    <Compile Include="ApiSrc\Hotel\Model\HotelCancelBookingApiRequest.cs" />
+    <Compile Include="ApiSrc\Hotel\Model\HotelCancelBookingApiResponse.cs" />
     <Compile Include="ApiSrc\Hotel\Model\HotelDetailApiRequest.cs" />
     <Compile Include="ApiSrc\Hotel\Model\HotelDetailApiResponse.cs" />
     <Compile Include="ApiSrc\Hotel\Model\HotelSelectRoomApiRequest.cs" />

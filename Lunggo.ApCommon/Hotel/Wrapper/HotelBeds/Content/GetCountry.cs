@@ -6,12 +6,15 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Lunggo.ApCommon.Hotel.Constant;
+using Lunggo.ApCommon.Hotel.Service;
+using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Content.Model;
 using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Sdk;
 
 namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Content
 {
     public partial class HotelBedsService
     {
+        public static List<CountryApi> hotelCountryList = new List<CountryApi>();
         public void GetCountry(int from, int to)
         {
             try
@@ -68,6 +71,17 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Content
                 new Tuple<string, string>("${useSecondaryLanguage}", "false"),
             };
                 var countryRs = client.GetCountry(param);
+                if (countryRs != null && countryRs.countries.Count != 0)
+                {
+                    if (hotelCountryList == null || hotelCountryList.Count != 0)
+                    {
+                        hotelCountryList = countryRs.countries;
+                    }
+                    else
+                    {
+                        hotelCountryList.AddRange(countryRs.countries);
+                    }
+                }
             }
             
         }

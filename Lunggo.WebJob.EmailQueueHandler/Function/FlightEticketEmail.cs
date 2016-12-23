@@ -26,11 +26,13 @@ namespace Lunggo.WebJob.EmailQueueHandler.Function
             Console.WriteLine("Getting Required Files and Data from Storage...");
             sw.Start();
             var blobService = BlobStorageService.GetInstance();
-            var eticketFile = blobService.GetByteArrayByFileInContainer(rsvNo + ".pdf", "Eticket");
-            var invoiceFile = blobService.GetByteArrayByFileInContainer(rsvNo + ".pdf", "Invoice");
-            var summaryBytes = blobService.GetByteArrayByFileInContainer(rsvNo, "Reservation");
-            var summaryJson = Encoding.UTF8.GetString(summaryBytes);
-            var summary = JsonConvert.DeserializeObject<FlightReservationForDisplay>(summaryJson);
+            var eticketFile = blobService.GetMemoryStreamByFileInContainer(rsvNo + ".pdf", "Eticket");
+            var flight = FlightService.GetInstance();
+            var summary = flight.GetReservationForDisplay(rsvNo);
+            var invoiceFile = blobService.GetMemoryStreamByFileInContainer(rsvNo + ".pdf", "Invoice");
+            //var summaryBytes = blobService.GetByteArrayByFileInContainer(rsvNo, "Reservation");
+            //var summaryJson = Encoding.UTF8.GetString(summaryBytes);
+            //var summary = JsonConvert.DeserializeObject<FlightReservationForDisplay>(summaryJson);
             sw.Stop();
             Console.WriteLine("Done Getting Required Files and Data from Storage. (" + sw.Elapsed.TotalSeconds + "s)");
             sw.Reset();
@@ -48,13 +50,13 @@ namespace Lunggo.WebJob.EmailQueueHandler.Function
                     {
                         ContentType = "PDF",
                         FileName = "E-ticket Anda - No. Pemesanan " + summary.RsvNo + ".pdf",
-                        FileData = eticketFile
+                        Data = eticketFile
                     },
                     new FileInfo
                     {
                         ContentType = "PDF",
                         FileName = "Invoice Anda - No. Pemesanan " + summary.RsvNo + ".pdf",
-                        FileData = invoiceFile
+                        Data = invoiceFile
                     }
                 }
             };

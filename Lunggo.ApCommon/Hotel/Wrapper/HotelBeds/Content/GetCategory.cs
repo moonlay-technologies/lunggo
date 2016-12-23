@@ -6,12 +6,14 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Lunggo.ApCommon.Hotel.Constant;
+using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Content.Model;
 using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Sdk;
 
 namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Content
 {
     public partial class HotelBedsService
     {
+        public static List<CategoryApi> hotelCategoryList = new List<CategoryApi>();
         public void GetCategory(int from, int to)
         {
             try
@@ -54,7 +56,8 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Content
         public void DoGetCategory(HotelApiClient client, int from, int to)
         {
             var languageCd = new List<string> { "ENG", "IND" };
-
+            var categoryTemp = new List<CategoryApi>();
+            var counter = 0;
             foreach (var t in languageCd)
             {
                 List<Tuple<string, string>> param;
@@ -67,8 +70,33 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Content
                 new Tuple<string, string>("${to}", to.ToString()),
                 new Tuple<string, string>("${useSecondaryLanguage}", "false"),
             };
-                var accomodationRs = client.GetCategory(param);
+                var categoryRs = client.GetCategory(param);
+                if (categoryRs != null && categoryRs.categories != null && categoryRs.categories.Count != 0)
+                {
+                    foreach (var category in categoryRs.categories)
+                    {
+                        if (t.Equals("ENG"))
+                        {
+                            var singlecategory = new CategoryApi
+                            {
+                                code = category.code,
+                                simpleCode = category.simpleCode,
+                                accomodationType = category.accomodationType,
+                                DescriptionEng = category.description == null ? null : category.description.content
+                            };
+                            categoryTemp.Add(singlecategory);
+                        }
+                        else
+                        {
+                            categoryTemp[counter].DescriptionInd = category.description == null
+                                ? null
+                                : category.description.content;
+                            counter++;
+                        }
+                    }
+                }
             }
+            hotelCategoryList.AddRange(categoryTemp);
             
         }
 

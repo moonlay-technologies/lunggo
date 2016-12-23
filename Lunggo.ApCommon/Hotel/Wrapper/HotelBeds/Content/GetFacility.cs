@@ -6,12 +6,14 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Lunggo.ApCommon.Hotel.Constant;
+using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Content.Model;
 using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Sdk;
 
 namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Content
 {
     public partial class HotelBedsService
     {
+        public static List<FacilityApi> hotelFacilityList = new List<FacilityApi>();
         public void GetFacility(int from, int to)
         {
             try
@@ -54,6 +56,8 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Content
         public void DoGetFacility(HotelApiClient client, int from, int to)
         {
             var languageCd = new List<string> { "ENG", "IND" };
+            var facilityTemp = new List<FacilityApi>();
+            var counter = 0;
 
             foreach (var t in languageCd)
             {
@@ -67,8 +71,31 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Content
                 new Tuple<string, string>("${to}", to.ToString()),
                 new Tuple<string, string>("${useSecondaryLanguage}", "false"),
             };
-                var FacilityRs = client.GetFacility(param);
+                var facilityRs = client.GetFacility(param);
+                if (facilityRs != null && facilityRs.facilities != null && facilityRs.facilities.Count != 0)
+                {
+                    foreach (var facility in facilityRs.facilities)
+                    {
+                        if (t.Equals("ENG"))
+                        {
+                            var singlefacility = new FacilityApi
+                            {
+                                code = (facility.facilityGroupCode*1000) + facility.code,
+                                DescriptionEng = facility.description == null ? null : facility.description.content
+                            };
+                            facilityTemp.Add(singlefacility);
+                        }
+                        else
+                        {
+                            facilityTemp[counter].DescriptionInd = facility.description == null
+                                ? null
+                                : facility.description.content;
+                            counter++;
+                        }
+                    }
+                }
             }
+            hotelFacilityList.AddRange(facilityTemp);
         }
 
         public int GetTotalFacility(HotelApiClient client)

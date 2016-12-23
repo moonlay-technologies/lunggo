@@ -442,6 +442,19 @@ namespace Lunggo.ApCommon.Hotel.Service
 
         }
 
+        private void UpdateCancellationStatusDb(string rsvNo, RsvStatus status, DateTime cancellationTime, string cancellationReference)
+        {
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                ReservationTableRepo.GetInstance().Update(conn, new ReservationTableRecord
+                {
+                    RsvNo = rsvNo,
+                    RsvStatusCd = RsvStatusCd.Mnemonic(status),
+                    CancellationTime = cancellationTime,
+                    CancellationReference = cancellationReference
+                });
+            }
+        }
         private void UpdateRsvDetail(string rsvNo, string status, HotelDetail hotelDetail)
         {
             var roomIds = GetRoomIdFromDb(rsvNo);

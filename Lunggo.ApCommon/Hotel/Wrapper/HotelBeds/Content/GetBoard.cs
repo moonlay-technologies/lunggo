@@ -5,13 +5,18 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Lunggo.ApCommon.Flight.Wrapper.AirAsia;
 using Lunggo.ApCommon.Hotel.Constant;
+using Lunggo.ApCommon.Hotel.Service;
+using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Content.Model;
 using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Sdk;
+using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Sdk.auto.model;
 
 namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Content
 {
     public partial class HotelBedsService
     {
+        public static List<BoardApi> hotelBoardList = new List<BoardApi>();
         public void GetBoard(int from, int to)
         {
             try
@@ -54,7 +59,8 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Content
         public void DoGetBoard(HotelApiClient client, int from, int to)
         {
             var languageCd = new List<string> { "ENG", "IND" };
-
+            var boardTemp = new List<BoardApi>();
+            var counter = 0;
             foreach (var t in languageCd)
             {
                 List<Tuple<string, string>> param;
@@ -67,9 +73,32 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Content
                 new Tuple<string, string>("${to}", to.ToString()),
                 new Tuple<string, string>("${useSecondaryLanguage}", "false"),
             };
-                var accomodationRs = client.GetBoard(param);
+                var boardRs = client.GetBoard(param);
+                if (boardRs != null && boardRs.boards != null && boardRs.boards.Count != 0)
+                {
+                    foreach (var board in boardRs.boards)
+                    {
+                        if (t.Equals("ENG"))
+                        {
+                            var singleBoard = new BoardApi
+                            {
+                                code = board.code,
+                                multiLingualCode = board.multiLingualCode,
+                                DescriptionEng = board.description == null ? null : board.description.content
+                            };
+                            boardTemp.Add(singleBoard);
+                        }
+                        else
+                        {
+                            boardTemp[counter].DescriptionInd = board.description == null
+                                ? null
+                                : board.description.content;
+                            counter++;
+                        }
+                    }
+                }
             }
-            
+            hotelBoardList.AddRange(boardTemp);
         }
 
         public int GetTotalBoard(HotelApiClient client)

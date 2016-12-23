@@ -7,12 +7,15 @@ using System.Threading;
 using System.Threading.Tasks;
 using Lunggo.ApCommon.Hotel.Constant;
 using Lunggo.ApCommon.Hotel.Model;
+using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Content.Model;
 using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Sdk;
 
 namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Content
 {
     public partial class HotelBedsService
     {
+
+        public static List<AccomodationApi> hotelAccomodationList = new List<AccomodationApi>();
         public void GetAccomodation(int from, int to)
         {
             try
@@ -55,7 +58,8 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Content
         public void DoGetAccomodation(HotelApiClient client, int from, int to)
         {
             var languageCd = new List<string> { "ENG", "IND" };
-
+            var accomodationTemp = new List<AccomodationApi>();
+            var counter = 0;
             foreach (var t in languageCd)
             {
                 List<Tuple<string, string>> param;
@@ -70,8 +74,31 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Content
                 new Tuple<string, string>("${useSecondaryLanguage}", "false"),
             };
                 var accomodationRs = client.GetAccomodation(param);
+                if (accomodationRs != null && accomodationRs.accommodations != null && accomodationRs.accommodations.Count != 0)
+                {
+                    foreach (var accomodation in accomodationRs.accommodations)
+                    {
+                        if (t.Equals("ENG"))
+                        {
+                            var singleAccomodation = new AccomodationApi
+                            {
+                                code = accomodation.code,
+                                typeDescription= accomodation.typeDescription,
+                                DescriptionEng = accomodation.typeMultiDescription == null ? null : accomodation.typeMultiDescription.content
+                            };
+                            accomodationTemp.Add(singleAccomodation);
+                        }
+                        else
+                        {
+                            accomodationTemp[counter].DescriptionInd = accomodation.typeMultiDescription == null
+                                ? null
+                                : accomodation.typeMultiDescription.content;
+                            counter++;
+                        }
+                    }
+                }
             }
-            
+            hotelAccomodationList.AddRange(accomodationTemp);
             Debug.Print("Get data Accomodation");
         }
 

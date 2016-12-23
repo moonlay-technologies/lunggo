@@ -51,7 +51,6 @@ namespace Lunggo.ApCommon.Hotel.Service
 
         public SearchHotelOutput DoSearchByLocation(SearchHotelInput input)
         {
-            var isByDestination = false;
             Guid generatedSearchId = Guid.NewGuid();
             var hotelBedsClient = new HotelBedsSearchHotel();
             var allCurrency = Currency.GetAllCurrencies();
@@ -83,7 +82,6 @@ namespace Lunggo.ApCommon.Hotel.Service
                         break;
                     case AutocompleteType.Destination:
                         request.Destination = detailDestination.Code;
-                        isByDestination = true;
                         break;
                     case AutocompleteType.Area:
                         request.Area = detailDestination.Code;
@@ -156,7 +154,7 @@ namespace Lunggo.ApCommon.Hotel.Service
             };
             
             result.HotelDetails = AddDetailInfoForSearchResult(result.HotelDetails);
-            result.HotelFilterDisplayInfo = SetHotelFilterDisplayInfo(result.HotelDetails, isByDestination);
+            result.HotelFilterDisplayInfo = SetHotelFilterDisplayInfo(result.HotelDetails, AutocompleteTypeCd.Mnemonic(detailDestination.Type));
             var sortedHotel = result.HotelDetails.OrderByDescending(x => x.NetFare);
             result.MaxPrice = sortedHotel.Select(x => x.NetFare).FirstOrDefault();
             result.MinPrice = sortedHotel.Select(x => x.NetFare).LastOrDefault();
@@ -358,6 +356,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                     hotel.AccomodationType = value.AccomodationType;
                     hotel.Address = value.Address;
                     hotel.Facilities = value.Facilities;
+                    hotel.ZoneCode = value.ZoneCode;
                     hotel.AreaCode = value.AreaCode;
                     hotel.PhonesNumbers = value.PhonesNumbers;
                     hotel.HotelName = value.HotelName;
@@ -381,21 +380,20 @@ namespace Lunggo.ApCommon.Hotel.Service
         {
             foreach (var hotel in hotels)
             {
-                
-                    hotel.AccomodationType = detail.AccomodationType;
-                    hotel.Address = detail.Address;
-                    hotel.Facilities = detail.Facilities;
-                    hotel.AreaCode = detail.AreaCode;
-                    hotel.PhonesNumbers = detail.PhonesNumbers;
-                    hotel.HotelName = detail.HotelName;
-                    hotel.City = detail.City;
-                    hotel.Chain = detail.Chain;
-                    hotel.Email = detail.Email;
-                    hotel.ImageUrl = detail.ImageUrl;
-                    hotel.Pois = detail.Pois;
-                    hotel.Segment = detail.Segment;
-                    hotel.PostalCode = detail.PostalCode;
-                
+                hotel.AccomodationType = detail.AccomodationType;
+                hotel.Address = detail.Address;
+                hotel.Facilities = detail.Facilities;
+                hotel.AreaCode = detail.AreaCode;
+                hotel.ZoneCode = detail.ZoneCode;
+                hotel.PhonesNumbers = detail.PhonesNumbers;
+                hotel.HotelName = detail.HotelName;
+                hotel.City = detail.City;
+                hotel.Chain = detail.Chain;
+                hotel.Email = detail.Email;
+                hotel.ImageUrl = detail.ImageUrl;
+                hotel.Pois = detail.Pois;
+                hotel.Segment = detail.Segment;
+                hotel.PostalCode = detail.PostalCode;
             }
             return hotels;
         }

@@ -1,25 +1,17 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
+using System.Linq;
+using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 using Lunggo.ApCommon.Hotel.Constant;
 using Lunggo.ApCommon.Hotel.Model;
 using Lunggo.ApCommon.Hotel.Service;
-using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Content.Model;
 using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Sdk;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Sdk.auto.messages;
-using Lunggo.Framework.Extension;
-using Lunggo.Framework.TicketSupport.ZendeskClass;
-using Microsoft.Data.Edm.Csdl;
-using Lunggo.Framework.Documents;
-using Image = Lunggo.ApCommon.Hotel.Model.Image;
-using Terminal = Lunggo.ApCommon.Hotel.Model.Terminal;
 
-namespace Lunggo.ApCommon.Hotel.Wrapper.Content
+namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Content
 {
     public partial class HotelBedsService
     {
@@ -59,7 +51,7 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.Content
                         isValid = false;
                     }
 
-                    DoGetHotelDetail(client, from,to);
+                    DoGetHotelDetail(client, from, to);
 
                     from = from + 1000;
                     to = to + 1000;
@@ -225,8 +217,7 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.Content
 
         public void InsertHotelDetailToTableStorage(HotelDetailsBase hotel)
         {
-            HotelService.GetInstance().SaveHotelDetailToTableStorage(hotel,hotel.HotelCode);
-        }
-
+            HotelService.GetInstance().SaveHotelDetailToTableStorage(hotel, hotel.HotelCode);
+        }   
     }
 }

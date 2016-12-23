@@ -6,12 +6,14 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Lunggo.ApCommon.Hotel.Constant;
+using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Content.Model;
 using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Sdk;
 
 namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Content
 {
     public partial class HotelBedsService
     {
+        public static List<RoomApi> hotelRoomList = new List<RoomApi>();
         public void GetRoom(int from, int to)
         {
             try
@@ -54,7 +56,8 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Content
         public void DoGetRoom(HotelApiClient client, int from, int to)
         {
             var languageCd = new List<string> { "ENG", "IND" };
-
+            var roomTemp = new List<RoomApi>();
+            var counter = 0;
             foreach (var t in languageCd)
             {
                 List<Tuple<string, string>> param;
@@ -67,9 +70,42 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Content
                 new Tuple<string, string>("${to}", to.ToString()),
                 new Tuple<string, string>("${useSecondaryLanguage}", "false"),
             };
-                var RoomRs = client.GetRoom(param);
+                var roomRs = client.GetRoom(param);
+                if (roomRs != null && roomRs.rooms != null && roomRs.rooms.Count != 0)
+                {
+                    foreach (var room in roomRs.rooms)
+                    {
+                        if (t.Equals("ENG"))
+                        {
+                            var singleroom = new RoomApi
+                            {
+                                code = room.code,
+                                characteristic = room.characteristic,
+                                maxAdults = room.maxAdults,
+                                minAdults = room.minAdults,
+                                maxChildren = room.maxChildren,
+                                maxPax = room.maxPax,
+                                minPax = room.minPax,
+                                type = room.type,
+                                descriptionEng = room.description,
+                                characteristicDescriptionEng = room.characteristicDescription == null ? null : room.characteristicDescription.content,
+                                typeDescriptionInd = room.typeDescription == null ? null : room.typeDescription.content
+                            };
+                            roomTemp.Add(singleroom);
+                        }
+                        else
+                        {
+                            roomTemp[counter].characteristicDescriptionInd = room.characteristicDescription == null
+                                ? null
+                                : room.characteristicDescription.content;
+                            roomTemp[counter].typeDescriptionInd = room.typeDescription == null ? null : room.typeDescription.content;
+                            roomTemp[counter].descriptionInd = room.description;
+                            counter++;
+                        }
+                    }
+                }
             }
-            
+            hotelRoomList.AddRange(roomTemp);
         }
 
         public int GetTotalRoom(HotelApiClient client)

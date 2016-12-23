@@ -1,12 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Net;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Web;
+using CsQuery.ExtensionMethods.Internal;
 using Lunggo.ApCommon.Hotel.Constant;
 using Lunggo.ApCommon.Hotel.Model;
 using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Sdk.auto.model;
+using Lunggo.Framework.BlobStorage;
 
 namespace Lunggo.ApCommon.Hotel.Service
 {
@@ -33,8 +38,19 @@ namespace Lunggo.ApCommon.Hotel.Service
             public string Code { get; set; }
             public string Name { get; set; }
             public Hotels Hotel { get; set; }
+            public List<Area> Areas { get; set; }
             public string DestinationCode { get; set; }
-        }	
+        }
+
+        public class Area
+        {
+            public string Code { get; set; }
+            public string Name { get; set; }
+            public Hotels Hotel { get; set; }
+            public string ZoneCode { get; set; }
+            public string DestinationCode { get; set; }
+            public string CountryCode { get; set; }
+        }
 
         public class Hotels
         {
@@ -52,7 +68,7 @@ namespace Lunggo.ApCommon.Hotel.Service
             public int Code { get; set; }
             public string NameId { get; set; }
             public string NameEn { get; set; }
-            public List<Facility> Facilities { get; set; } 
+            public List<Facility> Facilities { get; set; }
 
         }
 
@@ -86,7 +102,15 @@ namespace Lunggo.ApCommon.Hotel.Service
             public string MultilingualCode { get; set; }
         }
 
-        public class Category {
+        public class SegmentDict
+        {
+            public string Code { get; set; }
+            public string NameId { get; set; }
+            public string NameEn { get; set; }
+        }
+
+        public class Category
+        {
             public string Code { get; set; }
             public int SimpleCode { get; set; }
             public string AccomodationType { get; set; }
@@ -160,12 +184,15 @@ namespace Lunggo.ApCommon.Hotel.Service
         }
 
         //FOR AUTOCOMPLETE
-        public Dictionary<long, Autocomplete> _Autocompletes; 
+        public Dictionary<long, Autocomplete> _Autocompletes;
         public List<HotelAutoComplete> AutoCompletes = new List<HotelAutoComplete>();
+        public List<HotelAutoComplete> AutocompleteList = new List<HotelAutoComplete>();
+
+        public static string[] GeoCodeApiKeyList;
 
         public static Dictionary<string, string> HotelSegmentDictId;
         public static Dictionary<string, string> HotelSegmentDictEng;
-        
+
         public static Dictionary<int, string> HotelFacilityGroupDictId;
         public static Dictionary<int, string> HotelFacilityGroupDictEng;
         public static Dictionary<int, Facility> HotelRoomFacility;
@@ -173,12 +200,12 @@ namespace Lunggo.ApCommon.Hotel.Service
         public static Dictionary<string, Chain> HotelChains;
         public static Dictionary<string, Accommodation> HotelAccomodations;
         public static Dictionary<string, Board> HotelBoards;
-        public static Dictionary<string, Category> HotelCategories; 
+        public static Dictionary<string, Category> HotelCategories;
 
         public static Dictionary<string, Room> HotelRoomDict;
         public static Dictionary<string, HotelRoomType> HotelRoomTypeDict;
         public static Dictionary<string, RoomCharacteristic> HotelRoomCharacteristicDict;
-        
+
         public Dictionary<string, RateClass> HotelRoomRateClassDict;
         public Dictionary<string, RateType> HotelRoomRateTypeDict;
         public Dictionary<string, PaymentType> HotelRoomPaymentTypeDict;
@@ -186,44 +213,27 @@ namespace Lunggo.ApCommon.Hotel.Service
         public Dictionary<string, Destination> HotelDestinationDict;
         public Dictionary<string, Country> HotelDestinationCountryDict;
         public Dictionary<string, Zone> HotelDestinationZoneDict;
+        public Dictionary<string, Area> HotelDestinationAreaDict;
         public Dictionary<int, string> HotelCodeAndZoneDict;
         public static Dictionary<string, FacilityFilter> HotelFacilityFilters;
 
         public static List<Country> Countries;
         public static List<FacilityGroup> FacilityGroups;
         public static List<Room> Rooms;
-        public static List<FacilityFilter> FacilityFilters; 
+        public static List<FacilityFilter> FacilityFilters;
 
-        private const string HotelSegmentFileName = @"HotelSegment.csv";
-        private const string HotelFacilityFileName = @"HotelFacilities.csv";
-        private const string HotelFacilityGroupFileName = @"HotelFacilityGroup.csv";
-        private const string HotelRoomFileName = @"HotelRoom.csv";
+        
         private const string HotelRoomRateClassFileName = @"HotelRoomRateClass.csv";
         private const string HotelRoomRateTypeFileName = @"HotelRoomRateType.csv";
         private const string HotelRoomPaymentTypeFileName = @"HotelRoomPaymentType.csv";
-        private const string HotelCountryFileName = @"HotelCountries.csv";
-        private const string HotelDestinationFileName = @"HotelDestinations.csv";
         private const string HotelFacilityFilterGroupFileName = @"HotelFacilitiesFilterGroup.csv";
-
-        private const string HotelchainFileName = @"HotelChain.csv";
-        private const string HotelBoardFileName = @"HotelBoard.csv";
-        private const string HotelAccomodationFileName = @"HotelAccomodation.csv";
-        private const string HotelCategoryFileName = @"HotelCategory.csv";
+        private const string HotelGeoCodeApiFileName = @"GeoCodingAPI.txt";
+        private static string _hotelGeoCodeApiKeyPath;
 
 
-        private static string _hotelSegmentFilePath;
-        private static string _hotelFacilitiesFilePath;
-        private static string _hotelFacilityGroupFilePath;
-        private static string _hotelRoomFilePath;
         private static string _hotelRoomRateClassFilePath;
         private static string _hotelRoomRateTypeFilePath;
         private static string _hotelRoomPaymentTypeFilePath;
-        private static string _hotelCountriesFilePath;
-        private static string _hotelDestinationsFilePath;
-        private static string _hotelAccomodationFilePath;
-        private static string _hotelBoardFilePath;
-        private static string _hotelChainFilePath;
-        private static string _hotelCategoryFilePath;
         private static string _hotelFacilitiesFilter;
 
         private static string _configPath;
@@ -236,34 +246,28 @@ namespace Lunggo.ApCommon.Hotel.Service
                     ? ""
                     : folderName + @"\";
 
-            _hotelSegmentFilePath = Path.Combine(_configPath, HotelSegmentFileName);
-            _hotelFacilitiesFilePath = Path.Combine(_configPath, HotelFacilityFileName);
-            _hotelFacilityGroupFilePath = Path.Combine(_configPath, HotelFacilityGroupFileName);
-            _hotelRoomFilePath = Path.Combine(_configPath, HotelRoomFileName);
             _hotelRoomRateClassFilePath = Path.Combine(_configPath, HotelRoomRateClassFileName);
             _hotelRoomRateTypeFilePath = Path.Combine(_configPath, HotelRoomRateTypeFileName);
             _hotelRoomPaymentTypeFilePath = Path.Combine(_configPath, HotelRoomPaymentTypeFileName);
-            _hotelCountriesFilePath = Path.Combine(_configPath, HotelCountryFileName);
-            _hotelDestinationsFilePath = Path.Combine(_configPath, HotelDestinationFileName);
-            _hotelAccomodationFilePath = Path.Combine(_configPath, HotelAccomodationFileName);
-            _hotelBoardFilePath = Path.Combine(_configPath, HotelBoardFileName);
-            _hotelChainFilePath = Path.Combine(_configPath, HotelchainFileName);
-            _hotelCategoryFilePath = Path.Combine(_configPath, HotelCategoryFileName);
-            _hotelFacilitiesFilter = Path.Combine(_configPath, HotelFacilityFilterGroupFileName);	
+
+            _hotelFacilitiesFilter = Path.Combine(_configPath, HotelFacilityFilterGroupFileName);
             AutoCompletes = GetAutocompleteFromBlob();
-            PopulateHotelSegmentDict(_hotelSegmentFilePath);
+            PopulateHotelSegmentDict();
+            _hotelGeoCodeApiKeyPath = Path.Combine(_configPath, HotelGeoCodeApiFileName);
 
-            PopulateHotelAccomodationDict(_hotelAccomodationFilePath);
-            PopulateHotelBoardDict(_hotelBoardFilePath);
-            PopulateHotelChainDict(_hotelChainFilePath);
-            PopulateHotelCategoryDict(_hotelCategoryFilePath);
+            PopulateGeoCodeApiList(_hotelGeoCodeApiKeyPath);
 
-            PopulateHotelFacilityGroupDict(_hotelFacilityGroupFilePath);
-            PopulateHotelFacilityGroupList(_hotelFacilitiesFilePath);
+            PopulateHotelAccomodationDict();
+            PopulateHotelBoardDict();
+            PopulateHotelChainDict();
+            PopulateHotelCategoryDict();
+
+            PopulateHotelFacilityGroupDict();
+            PopulateHotelFacilityGroupList();
             PopulateHotelRoomFacilityDict(FacilityGroups);
             PopulateHotelFacilityFilter(_hotelFacilitiesFilter);
 
-            PopulateHotelRoomList(_hotelRoomFilePath);
+            PopulateHotelRoomList();
             PopulateHotelRoomDict(Rooms);
             PopulateHotelRoomTypeDict(Rooms);
             PopulateHotelRoomCharacteristicDict(Rooms);
@@ -271,54 +275,24 @@ namespace Lunggo.ApCommon.Hotel.Service
             PopulateHotelRoomRateClassDict(_hotelRoomRateClassFilePath);
             PopulateHotelRoomRateTypeDict(_hotelRoomRateTypeFilePath);
             PopulateHotelRoomPaymentTypeDict(_hotelRoomPaymentTypeFilePath);
-            
-            PopulateHotelCountriesDict(_hotelCountriesFilePath);
 
-            PopulateHotelDestinationList(_hotelDestinationsFilePath);
+            PopulateHotelCountriesDict();
+
+            PopulateHotelCountryFromBlob();
             PopulateHotelDestinationCountryDict(Countries);
             PopulateHotelDestinationDict(Countries);
             PopulateHotelZoneDict(Countries);
+            PopulateHotelAreaDict(Countries);
+
             //PopulateHotelCodeAndZoneDict(Countries);
             //PopulateAutocomplete();
             //PopulateHotel();
         }
 
-        public static void PopulateAutocomplete()
+        private static void PopulateGeoCodeApiList(String _hotelGeoCodeApiKeyPath)
         {
-            GetInstance()._Autocompletes = new Dictionary<long, Autocomplete>();
-            long index = 1;
-            foreach (var country in Countries)
-            {
-                foreach (var destination in country.Destinations)
-                {
-
-                    var newValue = new Autocomplete
-                    {
-                        Id = index,
-                        Code = destination.Code,
-                        Name = destination.Name + ", " + country.Name,
-                        Type = AutocompleteType.Destination
-                    };
-
-                    GetInstance()._Autocompletes.Add(index, newValue);
-                    index++;
-
-                    foreach (var zone in destination.Zones)
-                    {
-
-                        newValue = new Autocomplete
-                        {
-                            Id = index,
-                            Code = zone.Code,
-                            Name = zone.Name + ", " + destination.Name + ", " + country.Name,
-                            Type = AutocompleteType.Zone
-                        };
-
-                        GetInstance()._Autocompletes.Add(index, newValue);
-                        index++;
-                    }
-                }
-            }
+            GeoCodeApiKeyList = File.ReadAllLines(_hotelGeoCodeApiKeyPath, Encoding.UTF8);
+            Console.WriteLine("Coba Cek Hasil aja");
         }
 
         private static void PopulateHotel()
@@ -352,98 +326,82 @@ namespace Lunggo.ApCommon.Hotel.Service
         }
 
         //POPULATE METHODS REGARDING HOTEL SEGMENT
-        private static void PopulateHotelSegmentDict(String hotelSegmentFilePath)
+        private static void PopulateHotelSegmentDict()
         {
             HotelSegmentDictEng = new Dictionary<string, string>();
             HotelSegmentDictId = new Dictionary<string, string>();
 
-            using (var file = new StreamReader(hotelSegmentFilePath))
+            var segments = GetInstance().GetHotelSegmentFromStorage();
+            foreach (var segment in segments)
             {
-                var line = file.ReadLine();
-                while (!file.EndOfStream)
-                {
-                    line = file.ReadLine();
-                    var splittedLine = line.Split('|');
-                    HotelSegmentDictEng.Add(splittedLine[0],splittedLine[1]);
-                    HotelSegmentDictId.Add(splittedLine[0], splittedLine[2]);
-                }
+                HotelSegmentDictEng.Add(segment.Code, segment.NameEn);
+                HotelSegmentDictId.Add(segment.Code, segment.NameId);
             }
-            
+
         }
 
         //POPULATE METHODS REGARDING FACILITY
-        private static void PopulateHotelFacilityGroupList(string hotelFacilitiesFilePath)
+        private static void PopulateHotelFacilityGroupList()
         {
             FacilityGroups = new List<FacilityGroup>();
-
-            using (var file = new StreamReader(hotelFacilitiesFilePath))
+            var facilities = GetInstance().GetHotelFacilityFromStorage();
+            foreach (var facility in facilities)
             {
-                var line = file.ReadLine();
-                while (!file.EndOfStream)
+                var foundFacilityGroup = FacilityGroups.Where(g => g.Code == Convert.ToInt32(facility.Code) / 1000).ToList();
+                if (foundFacilityGroup.Count == 0)
                 {
-                    line = file.ReadLine();
-                    var splittedLine = line.Split('|');
-                    var foundFacilityGroup = FacilityGroups.Where(g => g.Code == Convert.ToInt32(splittedLine[0])/1000).ToList();
-                    if (foundFacilityGroup.Count == 0)
+                    var newFacilityGroup = new FacilityGroup
                     {
-                        var newFacilityGroup = new FacilityGroup
-                        {
-                            Code = Convert.ToInt32(splittedLine[0]) / 1000,
-                            NameEn =
-                                GetInstance()
-                                    .GetHotelFacilityGroupEng(Convert.ToInt32(splittedLine[0]) / 1000),
-                            NameId =
-                                GetInstance()
-                                    .GetHotelFacilityGroupId(Convert.ToInt32(splittedLine[0]) / 1000),
-                            Facilities = new List<Facility>
+                        Code = Convert.ToInt32(facility.Code) / 1000,
+                        NameEn =
+                            GetInstance()
+                                .GetHotelFacilityGroupEng(Convert.ToInt32(facility.Code) / 1000),
+                        NameId =
+                            GetInstance()
+                                .GetHotelFacilityGroupId(Convert.ToInt32(facility.Code) / 1000),
+                        Facilities = new List<Facility>
                             {
                                 new Facility
                                 {
-                                    Code = Convert.ToInt32(splittedLine[0]) % 1000,
-                                    NameEn = splittedLine[1],
-                                    NameId = splittedLine[2],
+                                    Code = Convert.ToInt32(facility.Code) % 1000,
+                                    NameEn = facility.NameEn,
+                                    NameId = facility.NameId,
                                 }
                             }
-                        };
+                    };
 
-                        FacilityGroups.Add(newFacilityGroup);
-                    }
-                    else
+                    FacilityGroups.Add(newFacilityGroup);
+                }
+                else
+                {
+                    var foundFacility =
+                        foundFacilityGroup[0].Facilities.Where(f => f.Code == Convert.ToInt32(facility.Code) / 1000)
+                            .ToList();
+                    if (foundFacility.Count == 0)
                     {
-                        var foundFacility =
-                            foundFacilityGroup[0].Facilities.Where(f => f.Code == Convert.ToInt32(splittedLine[0])/1000)
-                                .ToList();
-                        if (foundFacility.Count == 0)
+                        var newFacility = new Facility
                         {
-                            var newFacility = new Facility
-                            {
-                                Code = Convert.ToInt32(splittedLine[0]) % 1000,
-                                NameEn = splittedLine[1],
-                                NameId = splittedLine[2],
-                            };
-                            FacilityGroups.Where(g => g.Code == Convert.ToInt32(splittedLine[0])/1000).
-                                ToList()[0].Facilities.Add(newFacility);
-                        }
+                            Code = Convert.ToInt32(facility.Code) % 1000,
+                            NameEn = facility.NameEn,
+                            NameId = facility.NameId,
+                        };
+                        FacilityGroups.Where(g => g.Code == Convert.ToInt32(facility.Code) / 1000).
+                            ToList()[0].Facilities.Add(newFacility);
                     }
                 }
             }
+
         }
 
-        private static void PopulateHotelFacilityGroupDict(String hotelFacilityGroupFilePath)
+        private static void PopulateHotelFacilityGroupDict()
         {
             HotelFacilityGroupDictEng = new Dictionary<int, string>();
             HotelFacilityGroupDictId = new Dictionary<int, string>();
-
-            using (var file = new StreamReader(hotelFacilityGroupFilePath))
+            var facilitiesGrp = GetInstance().GetHotelFacilityGroupFromStorage();
+            foreach (var group in facilitiesGrp)
             {
-                var line = file.ReadLine();
-                while (!file.EndOfStream)
-                {
-                    line = file.ReadLine();
-                    var splittedLine = line.Split('|');
-                    HotelFacilityGroupDictEng.Add(Convert.ToInt32(splittedLine[0]), splittedLine[1]);
-                    HotelFacilityGroupDictId.Add(Convert.ToInt32(splittedLine[0]), splittedLine[2]);
-                }
+                HotelFacilityGroupDictEng.Add(group.Code, group.NameEn);
+                HotelFacilityGroupDictId.Add(group.Code, group.NameId);
             }
         }
 
@@ -491,45 +449,13 @@ namespace Lunggo.ApCommon.Hotel.Service
 
         //POPULATE METHODS REGARDING HOTEL ROOM
 
-        private static void PopulateHotelRoomList(string hotelRoomFilePath)
+        private static void PopulateHotelRoomList()
         {
             Rooms = new List<Room>();
-            using (var file = new StreamReader(hotelRoomFilePath))
-            {
-                var line = file.ReadLine();
-                while (!file.EndOfStream)
-                {
-                    line = file.ReadLine();
-                    var splittedLine = line.Split('|');
-                    var newHotelRoom = new Room
-                    {
-                        RoomCharacteristic = new RoomCharacteristic
-                        {
-                            CharacteristicCd = splittedLine[2],
-                            CharacteristicDescEn = splittedLine[10],
-                            CharacteristicDescId = splittedLine[13]
-                        },
-                        RoomType = new HotelRoomType
-                        {
-                            Type = splittedLine[1],
-                            DescEn = splittedLine[9],
-                            DescId = splittedLine[12]
-                        },
-                        MinPax = Convert.ToInt32(splittedLine[3]),
-                        MaxPax = Convert.ToInt32(splittedLine[4]),
-                        MaxAdult = Convert.ToInt32(splittedLine[5]),
-                        MaxChild = Convert.ToInt32(splittedLine[6]),
-                        MinAdult = Convert.ToInt32(splittedLine[7]),
-                        RoomCd = splittedLine[0],
-                        RoomDescEn = splittedLine[8],
-                        RoomDescId = splittedLine[11]
-                    };
-                    Rooms.Add(newHotelRoom);
-                }
-            }
+            Rooms = GetInstance().GetHotelRoomFromStorage();
         }
 
-        private static void PopulateHotelRoomDict(IEnumerable<Room> rooms )
+        private static void PopulateHotelRoomDict(IEnumerable<Room> rooms)
         {
             HotelRoomDict = new Dictionary<string, Room>();
 
@@ -537,10 +463,10 @@ namespace Lunggo.ApCommon.Hotel.Service
             {
                 HotelRoomDict.Add(room.RoomCd, room);
             }
-            
+
         }
 
-        private static void PopulateHotelRoomTypeDict(IEnumerable<Room> rooms )
+        private static void PopulateHotelRoomTypeDict(IEnumerable<Room> rooms)
         {
             HotelRoomTypeDict = new Dictionary<string, HotelRoomType>();
 
@@ -556,7 +482,7 @@ namespace Lunggo.ApCommon.Hotel.Service
 
         private static void PopulateHotelRoomCharacteristicDict(IEnumerable<Room> rooms)
         {
-            HotelRoomCharacteristicDict= new Dictionary<string, RoomCharacteristic>();
+            HotelRoomCharacteristicDict = new Dictionary<string, RoomCharacteristic>();
             foreach (var room in rooms)
             {
                 RoomCharacteristic x;
@@ -565,7 +491,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                     HotelRoomCharacteristicDict.Add(room.RoomCharacteristic.CharacteristicCd, room.RoomCharacteristic);
                 }
             }
-            
+
         }
 
         private static void PopulateHotelRoomRateClassDict(String hotelRoomRateClassFilePath)
@@ -635,212 +561,243 @@ namespace Lunggo.ApCommon.Hotel.Service
         }
 
 
-        private static void PopulateHotelAccomodationDict(String hotelAccomodationFilePath)
+        private static void PopulateHotelAccomodationDict()
         {
             HotelAccomodations = new Dictionary<string, Accommodation>();
-
-            using (var file = new StreamReader(hotelAccomodationFilePath))
+            var accomodations = GetInstance().GetHotelAccomodationFromStorage();
+            foreach (var acc in accomodations)
             {
-                var line = file.ReadLine();
-                while (!file.EndOfStream)
-                {
-                    line = file.ReadLine();
-                    var splittedLine = line.Split('|');
-
-                    HotelAccomodations.Add(splittedLine[0], new Accommodation
-                    {
-                        Code = splittedLine[0],
-                        MultiDescription = splittedLine[1],
-                        TypeNameEn = splittedLine[2],
-                        TypeNameId = splittedLine[3]
-                    });
-                }
+                HotelAccomodations.Add(acc.Code, acc);
             }
         }
 
 
-        private static void PopulateHotelBoardDict(String hotelBoardFilePath)
+        private static void PopulateHotelBoardDict()
         {
             HotelBoards = new Dictionary<string, Board>();
-
-            using (var file = new StreamReader(hotelBoardFilePath))
+            var boards = GetInstance().GetHotelBoardFromStorage();
+            foreach (var board in boards)
             {
-                var line = file.ReadLine();
-                while (!file.EndOfStream)
-                {
-                    line = file.ReadLine();
-                    var splittedLine = line.Split('|');
+                HotelBoards.Add(board.Code, board);
 
-                    HotelBoards.Add(splittedLine[0], new Board
-                    {
-                        Code = splittedLine[0],
-                        NameEn = splittedLine[1],
-                        NameId = splittedLine[2],
-                        MultilingualCode = splittedLine[3]
-                    });
-                }
             }
+            
         }
 
-        private static void PopulateHotelChainDict(String hotelChainFilePath)
+        private static void PopulateHotelChainDict()
         {
             HotelChains = new Dictionary<string, Chain>();
-
-            using (var file = new StreamReader(hotelChainFilePath))
+            var chains = GetInstance().GetHotelChainFromStorage();
+            foreach (var chain in chains)
             {
-                var line = file.ReadLine();
-                while (!file.EndOfStream)
-                {
-                    line = file.ReadLine();
-                    var splittedLine = line.Split('|');
-
-                    HotelChains.Add(splittedLine[0], new Chain
-                    {
-                        Code = splittedLine[0],
-                        Description = splittedLine[1],
-                    });
-                }
+                HotelChains.Add(chain.Code, chain);
             }
         }
 
-        private static void PopulateHotelCategoryDict(String hotelCategoryFilePath)
+        private static void PopulateHotelCategoryDict()
         {
             HotelCategories = new Dictionary<string, Category>();
-
-            using (var file = new StreamReader(hotelCategoryFilePath))
+            var categories = GetInstance().GetHotelCategoryFromStorage();
+            foreach (var category in categories)
             {
-                var line = file.ReadLine();
-                while (!file.EndOfStream)
-                {
-                    line = file.ReadLine();
-                    var splittedLine = line.Split('|');
-
-                    HotelCategories.Add(splittedLine[0], new Category
-                    {
-                        Code = splittedLine[0],
-                        SimpleCode = int.Parse(splittedLine[1]),
-                        AccomodationType = splittedLine[2],
-                        NameEn = splittedLine[4],
-                        NameId = splittedLine[5]
-                    });
-                }
+                HotelCategories.Add(category.Code, category);
             }
         }
 
-        private static void PopulateHotelCountriesDict(String hotelCountriesFilePath)
+        private static void PopulateHotelCountriesDict()
         {
             GetInstance().HotelCountry = new Dictionary<string, CountryDict>();
-
-            using (var file = new StreamReader(hotelCountriesFilePath))
+            var countries = GetInstance().GetHotelCountryFromStorage();
+            foreach (var country in countries)
             {
-                var line = file.ReadLine();
-                while (!file.EndOfStream)
-                {
-                    line = file.ReadLine();
-                    var splittedLine = line.Split('|');
-                    GetInstance().HotelCountry.Add(splittedLine[0], new CountryDict
-                    {
-                        CountryCode = splittedLine[0],
-                        IsoCode = splittedLine[1],
-                        Name = splittedLine[2]
-                    });
-                }
+                GetInstance().HotelCountry.Add(country.CountryCode, country);
             }
         }
 
         //POPULATE METHODS REGARDING DESTINATION AND ZONE
-        private static void PopulateHotelDestinationList(String hotelDestinationsFilePath)
+
+        /*Type 1 : Populate from Blob with data as csv format*/
+        //private static void PopulateHotelDestinationList()
+        //{
+        //    Countries = new List<Country>();
+        //    var blobService = BlobStorageService.GetInstance();
+        //    var byteFile = blobService.GetByteArrayByFileInContainer("HotelDestination", "hotelcsvcontent");
+        //    MemoryStream fileStream = new MemoryStream(byteFile);
+        //    string[] result;
+        //    using (StreamReader reader = new StreamReader(fileStream))
+        //    {
+        //        result = reader.ReadToEnd().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+        //    }
+
+        //    foreach (var line in result)
+        //    {
+        //        var splittedLine = line.Split('|');
+        //        var foundCountry = Countries.Where(c => c.Code == splittedLine[2]).ToList();
+        //        if (foundCountry.Count == 0)
+        //        {
+        //            var newCountry = new Country
+        //            {
+        //                Code = splittedLine[2],
+        //                Name = GetInstance().GetHotelCountryName(splittedLine[2]),
+        //                IsoCode = GetInstance().GetHotelCountryIsoCode(splittedLine[2]),
+        //                Destinations = new List<Destination>
+        //                    {
+        //                        new Destination
+        //                        {
+        //                            Code = splittedLine[0],
+        //                            Name = splittedLine[1],
+        //                            Zones = new List<Zone>
+        //                            {
+        //                                new Zone
+        //                                {
+        //                                    Code = splittedLine[4],
+        //                                    Name = splittedLine[5],
+        //                                    DestinationCode = splittedLine[0],
+        //                                    Areas = new List<Area>
+        //                                    {
+        //                                        new Area
+        //                                        {
+        //                                            Code = splittedLine[6],
+        //                                            Name = splittedLine[7],
+        //                                            ZoneCode = splittedLine[4],
+        //                                            DestinationCode = splittedLine[0],
+        //                                            CountryCode = splittedLine[2]
+        //                                        }
+        //                                    }
+        //                                    //Hotel = new Hotels
+        //                                    //    {
+        //                                    //        HotelCodes = GetInstance().GetHotelListByLocationFromStorage(splittedLine[0] + "-" + splittedLine[4]),
+        //                                    //        ZoneCode = splittedLine[0] + "-" + splittedLine[4],
+        //                                    //    }
+        //                                }
+        //                            },
+        //                            CountryCode = splittedLine[2]
+        //                            }
+        //                        }
+        //            };
+        //            Countries.Add(newCountry);
+
+        //        }
+        //        else
+        //        {
+        //            var foundDestination = foundCountry[0].Destinations.Where(d => d.Code == splittedLine[0]).ToList();
+        //            if (foundDestination.Count == 0)
+        //            {
+        //                var newDestination = new Destination
+        //                {
+        //                    Code = splittedLine[0],
+        //                    Name = splittedLine[1],
+        //                    Zones = new List<Zone>
+        //                        {
+        //                            new Zone
+        //                            {
+        //                                Code = splittedLine[4],
+        //                                Name = splittedLine[5],
+        //                                DestinationCode = splittedLine[0],
+        //                                Areas = new List<Area>
+        //                                    {
+        //                                        new Area
+        //                                        {
+        //                                            Code = splittedLine[6],
+        //                                            Name = splittedLine[7],
+        //                                            ZoneCode = splittedLine[4],
+        //                                            DestinationCode = splittedLine[0],
+        //                                            CountryCode = splittedLine[2]
+        //                                        }
+        //                                    }
+        //                                //Hotel = new Hotels
+        //                                //    {
+        //                                //        HotelCodes = GetInstance().GetHotelListByLocationFromStorage(splittedLine[0] + "-" + splittedLine[4]),
+        //                                //        ZoneCode = splittedLine[0] + "-" + splittedLine[4],
+        //                                //    }
+        //                            }
+        //                        },
+        //                    CountryCode = splittedLine[2]
+        //                };
+        //                Countries.Where(c => c.Code == splittedLine[2]).ToList()[0].Destinations.Add(newDestination);
+        //            }
+        //            else
+        //            {
+        //                var foundZone = foundDestination.Where(d => d.Code == splittedLine[0]).ToList()[0].Zones.Where(e => e.Code == splittedLine[4]).ToList();
+        //                if (foundZone.Count == 0)
+        //                {
+        //                    var newZone = new Zone
+        //                    {
+        //                        Code = splittedLine[4],
+        //                        Name = splittedLine[5],
+        //                        DestinationCode = splittedLine[0],
+        //                        Areas = new List<Area>
+        //                        {
+        //                            new Area
+        //                            {
+        //                                Code = splittedLine[6],
+        //                                Name = splittedLine[7],
+        //                                ZoneCode = splittedLine[4],
+        //                                DestinationCode = splittedLine[0],
+        //                                CountryCode = splittedLine[2]
+        //                            }
+        //                        }
+        //                        //Hotel = new Hotels
+        //                        //{
+        //                        //    HotelCodes = GetInstance().GetHotelListByLocationFromStorage(splittedLine[0] + "-" + splittedLine[4]),
+        //                        //    ZoneCode = splittedLine[0] + "-" + splittedLine[4],
+        //                        //}
+        //                    };
+        //                    Countries.Where(c => c.Code == splittedLine[2]).ToList()[0].Destinations.Where(
+        //                        d => d.Code == splittedLine[0]).ToList()[0].Zones.Add(newZone);
+        //                }
+        //                else
+        //                {
+        //                    var foundArea = foundZone.Where(d => d.Code == splittedLine[6]).ToList();
+        //                    if (foundArea.Count == 0)
+        //                    {
+        //                        var newArea = new Area
+        //                        {
+        //                            Code = splittedLine[6],
+        //                            Name = splittedLine[7],
+        //                            DestinationCode = splittedLine[0],
+        //                            CountryCode = splittedLine[2],
+        //                            ZoneCode = splittedLine[4]
+        //                            //Hotel = new Hotels
+        //                            //{
+        //                            //    HotelCodes = GetInstance().GetHotelListByLocationFromStorage(splittedLine[0] + "-" + splittedLine[4]),
+        //                            //    ZoneCode = splittedLine[0] + "-" + splittedLine[4],
+        //                            //}
+        //                        };
+        //                        Countries.Where(c => c.Code == splittedLine[2]).ToList()[0].Destinations.Where(
+        //                            d => d.Code == splittedLine[0]).ToList()[0].Zones.Where(
+        //                                e => e.Code == splittedLine[4]).ToList()[0].Areas.Add(newArea);
+        //                    }
+        //                }
+        //            }
+        //        }
+        //    }
+
+        //}
+
+        /*Type 2 : Populate from Blob with data as Destination Object*/
+
+        private static void PopulateHotelCountryFromBlob()
         {
             Countries = new List<Country>();
-            using (var file = new StreamReader(hotelDestinationsFilePath))
+            var destinations = GetInstance().GetHotelDestinationFromStorage();
+            foreach (var destination in destinations)
             {
-                var line = file.ReadLine();
-                while (!file.EndOfStream)
+                var foundCountry = Countries.Where(c => c.Code == destination.CountryCode).ToList();
+                if (foundCountry.Count == 0)
                 {
-                    line = file.ReadLine();
-                    var splittedLine = line.Split('|');
-                    var foundCountry = Countries.Where(c => c.Code == splittedLine[2]).ToList();
-                    if (foundCountry.Count == 0)
+                    var country = new Country
                     {
-                        var newCountry = new Country
-                        {
-                            Code = splittedLine[2],
-                            Name = GetInstance().GetHotelCountryName(splittedLine[2]),
-                            IsoCode = GetInstance().GetHotelCountryIsoCode(splittedLine[2]),
-                            Destinations = new List<Destination>
-                            {
-                                new Destination
-                                {
-                                    Code = splittedLine[0],
-                                    Name = splittedLine[1],
-                                    Zones = new List<Zone>
-                                    {
-                                        new Zone
-                                        {
-                                            Code = splittedLine[0] + "-" + splittedLine[4],
-                                            Name = splittedLine[5],
-                                            DestinationCode = splittedLine[0],
-                                            //Hotel = new Hotels
-                                            //    {
-                                            //        HotelCodes = GetInstance().GetHotelListByLocationFromStorage(splittedLine[0] + "-" + splittedLine[4]),
-                                            //        ZoneCode = splittedLine[0] + "-" + splittedLine[4],
-                                            //    }
-                                        }
-                                    },
-                                    CountryCode = splittedLine[2]
-                                    }
-                                }
-                        };
-                        Countries.Add(newCountry);
-                        
-                    }
-                    else
-                    {
-                        var foundDestination = foundCountry[0].Destinations.Where(d => d.Code == splittedLine[0]).ToList();
-                        if (foundDestination.Count == 0)
-                        {
-                            var newDestination = new Destination
-                            {
-                                Code = splittedLine[0],
-                                Name = splittedLine[1],
-                                Zones = new List<Zone>
-                                {
-                                    new Zone
-                                    {
-                                        Code = splittedLine[0] + "-" + splittedLine[4],
-                                        Name = splittedLine[5],
-                                        DestinationCode = splittedLine[0],
-                                        //Hotel = new Hotels
-                                        //    {
-                                        //        HotelCodes = GetInstance().GetHotelListByLocationFromStorage(splittedLine[0] + "-" + splittedLine[4]),
-                                        //        ZoneCode = splittedLine[0] + "-" + splittedLine[4],
-                                        //    }
-                                    }
-                                },
-                                CountryCode = splittedLine[2]
-                            };
-                            Countries.Where(c => c.Code == splittedLine[2]).ToList()[0].Destinations.Add(newDestination);
-                        }
-                        else
-                        {
-                            var foundZone = foundDestination.Where(d => d.Code == splittedLine[0] + "-" + splittedLine[4]).ToList();
-                            if (foundZone.Count == 0)
-                            {
-                                var newZone = new Zone
-                                {
-                                    Code = splittedLine[0] + "-" + splittedLine[4],
-                                    Name = splittedLine[5],
-                                    DestinationCode = splittedLine[0],
-                                    //Hotel = new Hotels
-                                    //{
-                                    //    HotelCodes = GetInstance().GetHotelListByLocationFromStorage(splittedLine[0] + "-" + splittedLine[4]),
-                                    //    ZoneCode = splittedLine[0] + "-" + splittedLine[4],
-                                    //}
-                                };
-                                Countries.Where(c => c.Code == splittedLine[2]).ToList()[0].Destinations.Where(d => d.Code == splittedLine[0]).ToList()[0].Zones.Add(newZone);
-                            }
-                        }
-                    }               
+                        Code = destination.CountryCode,
+                        Name = GetInstance().GetHotelCountryName(destination.CountryCode),
+                        IsoCode = GetInstance().GetHotelCountryIsoCode(destination.CountryCode),
+                        Destinations = new List<Destination> { destination }
+                    };
+                    Countries.Add(country);
+                }
+                else
+                {
+                    Countries.First(x => x.Code == destination.CountryCode).Destinations.Add(destination);
                 }
             }
         }
@@ -866,9 +823,30 @@ namespace Lunggo.ApCommon.Hotel.Service
         private static void PopulateHotelZoneDict(IEnumerable<Country> countries)
         {
             GetInstance().HotelDestinationZoneDict = new Dictionary<string, Zone>();
-            foreach (var zone in countries.SelectMany(country => country.Destinations).SelectMany(destination => destination.Zones))
+            var zones =
+                countries.SelectMany(country => country.Destinations).SelectMany(destination => destination.Zones).Where(z => z != null).ToList();
+            zones = zones.Distinct().ToList();
+            foreach (var zone in zones)
             {
+                if(!GetInstance().HotelDestinationZoneDict.ContainsKey(zone.Code))
                 GetInstance().HotelDestinationZoneDict.Add(zone.Code, zone);
+            }
+        }
+
+        private static void PopulateHotelAreaDict(IEnumerable<Country> countries)
+        {
+            GetInstance().HotelDestinationAreaDict = new Dictionary<string, Area>();
+            var areas =
+                countries.SelectMany(country => country.Destinations)
+                    .SelectMany(destination => destination.Zones)
+                    .SelectMany(zone => zone.Areas).Where(z => z != null).ToList();
+            areas = areas.Distinct().ToList();
+            foreach (var area in areas)
+            {
+                if (!string.IsNullOrEmpty(area.Code) && !GetInstance().HotelDestinationAreaDict.ContainsKey(area.Code))
+                {
+                    GetInstance().HotelDestinationAreaDict.Add(area.Code, area);
+                }
             }
         }
 
@@ -920,59 +898,59 @@ namespace Lunggo.ApCommon.Hotel.Service
             }
             var value = "";
             HotelSegmentDictEng.TryGetValue(code, out value);
-            return value; 
+            return value;
         }
 
         //GET METHODS REGARDING FACILITY
         public Facility GetHotelFacility(int code)
         {
             //var found = false;
-            foreach (var facility in FacilityGroups.Where(@group => @group.Code == code/1000).SelectMany(@group => @group.Facilities.Where(facility => facility.Code == code%1000)))
+            foreach (var facility in FacilityGroups.Where(@group => @group.Code == code / 1000).SelectMany(@group => @group.Facilities.Where(facility => facility.Code == code % 1000)))
             {
                 return facility;
             }
 
-                return new Facility();
-            }
+            return new Facility();
+        }
 
         public string GetHotelFacilityDescId(int code)
         {
-            foreach (var facility in FacilityGroups.Where(@group => @group.Code == code/1000).SelectMany(@group => @group.Facilities.Where(facility => facility.Code == code % 1000)))
+            foreach (var facility in FacilityGroups.Where(@group => @group.Code == code / 1000).SelectMany(@group => @group.Facilities.Where(facility => facility.Code == code % 1000)))
             {
                 return facility.NameId;
             }
 
-                return "";
-            }
+            return "";
+        }
 
         public string GetHotelFacilityDescEn(int code)
         {
-            foreach (var facility in FacilityGroups.Where(@group => @group.Code == code/1000).SelectMany(@group => @group.Facilities.Where(facility => facility.Code == code % 1000)))
+            foreach (var facility in FacilityGroups.Where(@group => @group.Code == code / 1000).SelectMany(@group => @group.Facilities.Where(facility => facility.Code == code % 1000)))
             {
                 return facility.NameEn;
             }
 
-                return "";
-            }
+            return "";
+        }
 
         public string GetHotelFacilityGroupId(int code)
         {
             var value = "";
             HotelFacilityGroupDictId.TryGetValue(code, out value);
             return value;
-            }
+        }
         public string GetHotelFacilityGroupEng(int code)
         {
             var value = "";
             HotelFacilityGroupDictEng.TryGetValue(code, out value);
             return value;
-            }
+        }
         public Facility GetHotelRoomFacility(int code)
         {
             var value = new Facility();
             HotelRoomFacility.TryGetValue(code, out value);
             return value;
-            
+
         }
         public string GetHotelRoomFacilityDescId(int roomFacilityCd)
         {
@@ -981,8 +959,8 @@ namespace Lunggo.ApCommon.Hotel.Service
                 return facility.NameId;
             }
 
-                return "";
-            }
+            return "";
+        }
 
         public string GetHotelRoomFacilityDescEn(int roomFacilityCd)
         {
@@ -991,8 +969,8 @@ namespace Lunggo.ApCommon.Hotel.Service
                 return facility.NameEn;
             }
 
-                return "";
-            }
+            return "";
+        }
 
         public List<Facility> GetAllFacilitiesInAGroup(int cd)
         {
@@ -1001,28 +979,28 @@ namespace Lunggo.ApCommon.Hotel.Service
                 return @group.Facilities;
             }
 
-                return new List<Facility>();
-            }
+            return new List<Facility>();
+        }
 
         public string GetNameOfFacilityGroup(int facilityCd, string lang)
         {
             if (lang == "EN")
             {
-                foreach (var @group in FacilityGroups.Where(@group => @group.Code == facilityCd/1000))
-            {
+                foreach (var @group in FacilityGroups.Where(@group => @group.Code == facilityCd / 1000))
+                {
                     return @group.NameEn;
                 }
             }
             else
             {
                 foreach (var @group in FacilityGroups.Where(@group => @group.Code == facilityCd / 1000))
-            {
+                {
                     return @group.NameId;
                 }
             }
-            
-                return "";
-            
+
+            return "";
+
         }
 
         //GET METHODS REGARDING HOTEL ROOM
@@ -1038,8 +1016,8 @@ namespace Lunggo.ApCommon.Hotel.Service
                 return room;
             }
 
-                return new Room();
-            }
+            return new Room();
+        }
 
         public string GetHotelRoomDescEn(String cd)
         {
@@ -1052,8 +1030,8 @@ namespace Lunggo.ApCommon.Hotel.Service
                 return room.RoomDescEn;
             }
 
-                return "";
-            }
+            return "";
+        }
 
         public string GetHotelRoomDescId(String cd)
         {
@@ -1066,8 +1044,8 @@ namespace Lunggo.ApCommon.Hotel.Service
                 return room.RoomDescId;
             }
 
-                return "";
-            }
+            return "";
+        }
 
         public int GetMaxAdult(string code)
         {
@@ -1176,7 +1154,7 @@ namespace Lunggo.ApCommon.Hotel.Service
             }
             var value = new RateClass();
             var found = HotelRoomRateClassDict.TryGetValue(code, out value);
-            return found ? value.DescId : "";          
+            return found ? value.DescId : "";
         }
 
         public string GetHotelRoomRateClassEng(string code)
@@ -1187,7 +1165,7 @@ namespace Lunggo.ApCommon.Hotel.Service
             }
             var value = new RateClass();
             var found = HotelRoomRateClassDict.TryGetValue(code, out value);
-            return found ? value.DescEn : ""; 
+            return found ? value.DescEn : "";
         }
 
         public RateType GetHotelRoomRateType(string code)
@@ -1209,7 +1187,7 @@ namespace Lunggo.ApCommon.Hotel.Service
             }
             var value = new RateType();
             var found = HotelRoomRateTypeDict.TryGetValue(code, out value);
-            return found ? value.DescId : "";          
+            return found ? value.DescId : "";
         }
 
         public string GetHotelRoomRateTypeEng(string code)
@@ -1220,7 +1198,7 @@ namespace Lunggo.ApCommon.Hotel.Service
             }
             var value = new RateType();
             var found = HotelRoomRateTypeDict.TryGetValue(code, out value);
-            return found ? value.DescEn : "";  
+            return found ? value.DescEn : "";
         }
 
         public PaymentType GetHotelRoomPaymentType(string code)
@@ -1242,7 +1220,7 @@ namespace Lunggo.ApCommon.Hotel.Service
             }
             var value = new PaymentType();
             var found = HotelRoomPaymentTypeDict.TryGetValue(code, out value);
-            return found ? value.DescId : ""; 
+            return found ? value.DescId : "";
         }
 
         public string GetHotelRoomPaymentTypeEng(string code)
@@ -1253,7 +1231,7 @@ namespace Lunggo.ApCommon.Hotel.Service
             }
             var value = new PaymentType();
             var found = HotelRoomPaymentTypeDict.TryGetValue(code, out value);
-            return found ? value.DescEn : ""; 
+            return found ? value.DescEn : "";
         }
 
         //
@@ -1265,7 +1243,7 @@ namespace Lunggo.ApCommon.Hotel.Service
             }
             var value = new CountryDict();
             var found = HotelCountry.TryGetValue(code, out value);
-            return found ? value.Name : ""; 
+            return found ? value.Name : "";
         }
 
         public string GetHotelCountryIsoCode(string code)
@@ -1276,7 +1254,7 @@ namespace Lunggo.ApCommon.Hotel.Service
             }
             var value = new CountryDict();
             var found = HotelCountry.TryGetValue(code, out value);
-            return found ? value.IsoCode : ""; 
+            return found ? value.IsoCode : "";
         }
 
         public CountryDict GetHotelCountry(string code)
@@ -1301,8 +1279,8 @@ namespace Lunggo.ApCommon.Hotel.Service
                 return country.Code;
             }
 
-                return "";
-            }
+            return "";
+        }
 
         //GET METHODS REGARDING DESTINATION AND ZONE
         public Country GetHotelCountryFromMasterList(string countryCode)
@@ -1315,8 +1293,8 @@ namespace Lunggo.ApCommon.Hotel.Service
             {
                 return country;
             }
-                return new Country();
-            }
+            return new Country();
+        }
 
         public Country GetCountryNameFromDict(string countryCode)
         {
@@ -1339,6 +1317,17 @@ namespace Lunggo.ApCommon.Hotel.Service
                 {
                     locations.Add(dest.Code);
                     locations.AddRange(dest.Zones.Select(zone => zone.Code));
+                    if (dest.Zones != null)
+                    {
+                        foreach (var zone in dest.Zones)
+                        {
+                            if (zone.Areas != null)
+                            {
+                                locations.AddRange(zone.Areas.Where(x => x.Code != "").Select(x => x.Code));
+                            }
+                        }
+                    }
+
                 }
             }
 
@@ -1354,6 +1343,25 @@ namespace Lunggo.ApCommon.Hotel.Service
             var value = new Destination();
             HotelDestinationDict.TryGetValue(destinationCode, out value);
             return value;
+        }
+
+        public List<Destination> GetDestinationByCountryList(string countryCd)
+        {
+            if (countryCd == null)
+            {
+                return new List<Destination>();
+            }
+            var result = (from destination in HotelDestinationDict
+                          where destination.Value.CountryCode.Equals(countryCd)
+                          select new Destination
+                          {
+                              Code = destination.Key,
+                              Name = destination.Value.Name,
+                              Zones = destination.Value.Zones,
+                              CountryCode = destination.Value.CountryCode
+                          }).ToList();
+
+            return result;
         }
 
         public Zone GetHotelZoneFromDict(string zoneCode)
@@ -1386,7 +1394,39 @@ namespace Lunggo.ApCommon.Hotel.Service
             var zone = new Zone();
             var foundZone = HotelDestinationZoneDict.TryGetValue(value, out zone);
             return foundZone ? zone : new Zone();
+        }
+
+        public Area GetHotelAreaFromDict(string areaCode)
+        {
+            if (areaCode == null)
+            {
+                return new Area();
             }
+            var value = new Area();
+            HotelDestinationAreaDict.TryGetValue(areaCode, out value);
+            return value;
+        }
+
+        public Area GetAreaFromHotel(int hotelCd)
+        {
+            var value = "";
+            var found = HotelCodeAndZoneDict.TryGetValue(hotelCd, out value);
+            if (!found) return new Area();
+            var area = new Area();
+            var foundZone = HotelDestinationAreaDict.TryGetValue(value, out area);
+            return foundZone ? area : new Area();
+        }
+
+        public string GetAreaNameFromDict(string areaCode)
+        {
+            if (areaCode == null)
+            {
+                return "";
+            }
+            var value = new Area();
+            var found = HotelDestinationAreaDict.TryGetValue(areaCode, out value);
+            return found ? value.Name : "";
+        }
 
         public Destination GetDestinationFromZone(string zoneCd)
         {
@@ -1436,7 +1476,7 @@ namespace Lunggo.ApCommon.Hotel.Service
             var value = new Accommodation();
             HotelAccomodations.TryGetValue(code, out value);
             return value;
-            }
+        }
 
         public string GetHotelAccomodationMultiDesc(string code)
         {

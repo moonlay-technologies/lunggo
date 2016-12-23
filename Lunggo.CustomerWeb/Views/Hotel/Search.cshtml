@@ -6,7 +6,7 @@
     ViewBag.BodyClass = "page-hotel page-search";
     ViewBag.Title = "Pencarian Hotel";
     ViewBag.AngularController = "hotelSearchController";
-
+    
 }
 
 @section AdditionalCSS{
@@ -57,9 +57,9 @@
         });
     </script>
     <script>
-
+        
         var loc = '@loc';
-
+        
     </script>
     <script type="text/javascript" src="/Assets/travorama20/js/HotelController.js"></script>
     <script src="/Assets/travorama20/angularDirectory/search/hotelSearch.service.js"></script>
@@ -85,7 +85,7 @@
                             <input type="text" ng-pattern="/^[a-zA-Z]*$/" ng-model="filter.nameFilter" ng-disabled="hotels.length < 1" class="form-hotel-name form-control" tra-on-enter="filterHotels()">
                         </div>
                         <div class="filter-group">
-                            <label class="filter-title">Harga Hotel</label>
+                            <label class="filter-title">Harga Hotel</label> 
                             <div class="slider-price slider-range" id="slider-range"></div>
                             <div class="slider-minmax">
                                 <span>Rp {{filter.minPrice | number}}</span>
@@ -204,8 +204,8 @@
                                      'star star-5': hotel.starRating == 5}">
                                     </div>
                                     <div class="location">
-                                        <div>{{toTitleCase(hotel.address)}} {{toTitleCase(hotel.zone)}}</div>
-                                        {{toTitleCase(hotel.city)}}<span ng-show="hotel.postalCd != null || hotel.postalCd.length > 0"> {{hotel.postalCd}}</span>
+                                        <div><span ng-show="hotel.area == null || hotel.area.length < 1">{{toTitleCase(hotel.address)}}</span> {{toTitleCase(hotel.area)}}</div>
+                                        <span ng-show ="hotel.area == null || hotel.area.length < 1">{{toTitleCase(hotel.city)}}<span ng-show="hotel.postalCd != null || hotel.postalCd.length > 0"> {{hotel.postalCd}}</span></span>
                                     </div>
                                     @*=================== ini review row ================*@
                                     <div class="review clearfix">

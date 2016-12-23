@@ -6,12 +6,14 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Lunggo.ApCommon.Hotel.Constant;
+using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Content.Model;
 using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Sdk;
 
 namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Content
 {
     public partial class HotelBedsService
     {
+        public static List<SegmentApi> hotelSegmentList = new List<SegmentApi>();
         public void GetSegment(int from, int to)
         {
             try
@@ -54,7 +56,8 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Content
         public void DoGetSegment(HotelApiClient client, int from, int to)
         {
             var languageCd = new List<string> { "ENG", "IND" };
-
+            var segmentTemp = new List<SegmentApi>();
+            var counter = 0;
             foreach (var t in languageCd)
             {
                 List<Tuple<string, string>> param;
@@ -67,8 +70,31 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Content
                 new Tuple<string, string>("${to}", to.ToString()),
                 new Tuple<string, string>("${useSecondaryLanguage}", "false"),
             };
-                var SegmentRs = client.GetSegment(param);
+                var segmentRs = client.GetSegment(param);
+                if (segmentRs != null && segmentRs.segments != null && segmentRs.segments.Count != 0)
+                {
+                    foreach (var segment in segmentRs.segments)
+                    {
+                        if (t.Equals("ENG"))
+                        {
+                            var singlesegment = new SegmentApi
+                            {
+                                code = segment.code,
+                                DescriptionEng = segment.description == null ? null : segment.description.content
+                            };
+                            segmentTemp.Add(singlesegment);
+                        }
+                        else
+                        {
+                            segmentTemp[counter].DescriptionInd = segment.description == null
+                                ? null
+                                : segment.description.content;
+                            counter++;
+                        }
+                    }
+                }
             }
+            hotelSegmentList.AddRange(segmentTemp);
             
         }
 

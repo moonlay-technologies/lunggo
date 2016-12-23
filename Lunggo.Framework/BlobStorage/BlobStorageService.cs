@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 
 namespace Lunggo.Framework.BlobStorage
 {
@@ -44,6 +45,12 @@ namespace Lunggo.Framework.BlobStorage
         {
             return Client.GetByteArrayByFileInContainer(fileName, container);
         }
+
+        public MemoryStream GetMemoryStreamByFileInContainer(string fileName, string container)
+        {
+            return Client.GetMemoryStreamByFileInContainer(fileName, container);
+        }
+
         public List<string> GetDirectoryList(string directoryName)
         {
             return Client.GetDirectoryList(directoryName);

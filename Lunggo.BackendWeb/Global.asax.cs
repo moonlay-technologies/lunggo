@@ -11,7 +11,6 @@ using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Hotel.Constant;
 using Lunggo.ApCommon.Hotel.Model;
 using Lunggo.ApCommon.Hotel.Model.Logic;
-using Lunggo.ApCommon.Hotel.Wrapper.Content;
 using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds;
 using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Content;
 using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Sdk.auto.model;
@@ -38,7 +37,21 @@ namespace Lunggo.BackendWeb
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
             AppInitializer.Init();
-            HotelService.GetInstance().GetReservationForDisplay("296136547679");
+            //HotelService.GetInstance().CommenceIssueHotel(new IssueHotelTicketInput
+            //{
+            //    RsvNo = "296406547890"
+            //});
+            //HotelService.GetInstance().CommenceIssueHotel(new IssueHotelTicketInput
+            //{
+            //    RsvNo = "296406547891"
+            //});
+
+            //HotelService.GetInstance().CancelHotelBooking(new HotelCancelBookingInput
+            //{
+            //    BookingId = "296406547891"
+            //});
+
+            //Console.WriteLine("Done");
             //var hotelDetail = HotelService.GetInstance().GetHotelDetailFromTableStorage(24408);
             //var image1 = hotelDetail.ImageUrl.Where(u => u.Type == "GEN").Take(1).FirstOrDefault();
             //var image2 = hotelDetail.ImageUrl.Where(u => u.Order == 1).Take(1).FirstOrDefault();
