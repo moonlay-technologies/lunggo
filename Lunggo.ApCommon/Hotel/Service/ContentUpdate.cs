@@ -26,7 +26,105 @@ using Image = Lunggo.ApCommon.Hotel.Model.Image;
 namespace Lunggo.ApCommon.Hotel.Service
 {
     public partial class HotelService
-    {    
+    {
+        public void UpdateHotelContentAll()
+        {
+            /*Update Content From HotelBeds*/
+            UpdateHotelDetailStorage();
+            UpdateHotelRateCommentStorage();
+            UpdateCountryStorage();
+            UpdateDestinationStorage();
+            UpdateHotelBoardStorage();
+            UpdateHotelChainStorage();
+            UpdateHotelAccomodationStorage();
+            UpdateHotelCategoryStorage();
+            UpdateHotelFacilityStorage();
+            UpdateHotelFacilityGroupStorage();
+            UpdateHotelSegmentStorage();
+            UpdateHotelRoomStorage();
+
+            /*Another Update*/
+            UpdateLocation();
+            UpdateHotelListByLocationContent();
+            SaveHotelDetailByLocation();
+            UpdateAutocomplete();
+        }
+        public void UpdateAutocomplete()
+        {
+            Console.WriteLine("Update AutoComplete");
+            GetInstance()._Autocompletes = new Dictionary<long, Autocomplete>();
+            long index = 1;
+            foreach (var country in Countries)
+            {
+                foreach (var destination in country.Destinations)
+                {
+                    var hotelDestCount = 0;
+                    Console.WriteLine("Destination : {0}", destination.Code);
+                    if (destination.Zones != null)
+                    {
+                        foreach (var zone in destination.Zones)
+                        {
+
+                            if (!string.IsNullOrEmpty(zone.Code))
+                            {
+                                Console.WriteLine("Zone : {0}", zone.Code);
+                                var hotelZoneTotal = GetInstance().GetHotelListByLocationFromStorage(zone.Code).Count;
+                                hotelDestCount += hotelZoneTotal;
+                                var singleAutoComplete = new HotelAutoComplete
+                                {
+                                    Id = index,
+                                    Code = zone.Code,
+                                    Zone = zone.Name,
+                                    Destination = destination.Name,
+                                    Country = country.Name,
+                                    Type = 2,
+                                    HotelCount = hotelZoneTotal,
+                                };
+
+                                GetInstance().AutocompleteList.Add(singleAutoComplete);
+                                index++;
+
+                                if (zone.Areas != null)
+                                {
+                                    foreach (var area in zone.Areas)
+                                    {
+                                        if (!string.IsNullOrEmpty(area.Code))
+                                        {
+                                            Console.WriteLine("Area : {0}", area.Code);
+                                            singleAutoComplete = new HotelAutoComplete
+                                            {
+                                                Id = index,
+                                                Code = area.Code,
+                                                Area = area.Name,
+                                                Zone = zone.Name,
+                                                Destination = destination.Name,
+                                                Country = country.Name,
+                                                Type = 3,
+                                                HotelCount = GetInstance().GetHotelListByLocationFromStorage(area.Code).Count,
+                                            };
+                                            GetInstance().AutocompleteList.Add(singleAutoComplete);
+                                            index++;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    var singleDest = new HotelAutoComplete
+                    {
+                        Id = index,
+                        Code = destination.Code,
+                        Destination = destination.Name,
+                        Country = country.Name,
+                        Type = 1,
+                        HotelCount = hotelDestCount,
+                    };
+                    GetInstance().AutocompleteList.Add(singleDest);
+                    index++;
+                }
+            }
+            SaveHotelAutocompleteToBlob();
+        }
         public void UpdateTruncatedHotelDetailContent()
         {
             for (var i = 1; i <= 150000; i++)
@@ -96,6 +194,7 @@ namespace Lunggo.ApCommon.Hotel.Service
 
         public void UpdateHotelListByLocationContent()
         {
+            Console.WriteLine("Update Hotel List By Location");
             for (var i = 0; i <= 650000; i++)
             {
                 try
@@ -382,12 +481,14 @@ namespace Lunggo.ApCommon.Hotel.Service
 
         public void UpdateHotelDetailStorage()
         {
+            Console.WriteLine("Update HotelDetail");
             var hotel = new HotelBedsService();
             hotel.GetHotelData(1,1000);
         }
 
         public void UpdateHotelRateCommentStorage()
         {
+            Console.WriteLine("Update RateComment");
             var hotel = new HotelBedsService();
             hotel.GetRateCommentData(1,1000);
         }
@@ -414,7 +515,7 @@ namespace Lunggo.ApCommon.Hotel.Service
 
         public void UpdateDestinationStorage()
         {
-            Console.WriteLine("Update Destination Type");
+            Console.WriteLine("Update Destination");
             List<Destination> hotelDestination = new List<Destination>();
             var hotel = new HotelBedsService();
             hotel.GetDestination(1, 1000);
@@ -438,18 +539,6 @@ namespace Lunggo.ApCommon.Hotel.Service
             }
             SaveHotelDestinationToStorage(hotelDestination);
         }
-
-        //TODO Remember to delete this
-        //public void ConvertDestinationIntoJson()
-        //{
-        //    var countries = HotelService.Countries;
-        //    var destinationList = new List<Destination>();
-        //    foreach (var destination in countries.SelectMany(country => country.Destinations))
-        //    {
-        //        destinationList.Add(destination);
-        //    }
-        //    UpdateZoneAreaInDestination(destinationList);
-        //}
 
         public void UpdateZoneAreaInDestination(List<Destination> destinationList)
         {
