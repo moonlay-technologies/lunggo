@@ -56,6 +56,16 @@ namespace Lunggo.Repository.TableRecord
 		        IncrementLog("CancellationTime");
 		    }
 		}
+
+        public string CancellationReference
+        {
+            get { return _CancellationReference; }
+            set
+            {
+                _CancellationReference = value;
+                IncrementLog("CancellationReference");
+            }
+        }
 		public String UserId
 		{
 		    get { return _UserId; }
@@ -126,6 +136,7 @@ namespace Lunggo.Repository.TableRecord
 		private String _RsvStatusCd;
 		private String _CancellationTypeCd;
 		private DateTime? _CancellationTime;
+        private String _CancellationReference;
 		private String _UserId;
 		private String _InsertBy;
 		private DateTime? _InsertDate;
@@ -169,6 +180,7 @@ namespace Lunggo.Repository.TableRecord
 				new ColumnMetadata("RsvStatusCd", false),
 				new ColumnMetadata("CancellationTypeCd", false),
 				new ColumnMetadata("CancellationTime", false),
+                new ColumnMetadata("CancellationReference", false),
 				new ColumnMetadata("UserId", false),
 				new ColumnMetadata("InsertBy", false),
 				new ColumnMetadata("InsertDate", false),

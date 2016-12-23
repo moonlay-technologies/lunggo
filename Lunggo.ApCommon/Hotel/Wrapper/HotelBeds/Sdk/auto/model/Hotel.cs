@@ -28,5 +28,6 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Sdk.auto.model
         public Supplier supplier { get; set; }
         public string clientComments { get; set; }
         public Upselling upselling { get; set; }
+        public decimal cancellationAmount { get; set; }
     }
 }

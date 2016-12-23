@@ -238,6 +238,7 @@
     <Compile Include="Hotel\Constant\SearchHotelType.cs" />
     <Compile Include="Hotel\Constant\AutocompleteType.cs" />
     <Compile Include="Hotel\Constant\SortingType.cs" />
+    <Compile Include="Hotel\Model\HotelCancelBookingResult.cs" />
     <Compile Include="Hotel\Model\HotelRateComment.cs" />
     <Compile Include="Hotel\Model\HotelFilter.cs" />
     <Compile Include="Hotel\Model\HotelRateRule.cs" />
@@ -252,6 +253,8 @@
     <Compile Include="Hotel\Model\HotelSorting.cs" />
     <Compile Include="Hotel\Model\Logic\GetHotelDetailInput.cs" />
     <Compile Include="Hotel\Model\Logic\GetHotelDetailOutput.cs" />
+    <Compile Include="Hotel\Model\Logic\HotelCancelBookingInput.cs" />
+    <Compile Include="Hotel\Model\Logic\HotelCancelBookingOutput.cs" />
     <Compile Include="Hotel\Model\ResultBase.cs" />
     <Compile Include="Hotel\Query\GetActiveHotelPriceMarginRuleQuery.cs" />
     <Compile Include="Hotel\Query\GetHotelRateRuleQuery.cs" />
@@ -261,6 +264,7 @@
     <Compile Include="Hotel\Query\GetRsvNosByUserIdQuery.cs" />
     <Compile Include="Hotel\Query\SearchReservationQuery.cs" />
     <Compile Include="Hotel\Query\UpdateReservationDetailQuery.cs" />
+    <Compile Include="Hotel\Service\CancelBooking.cs" />
     <Compile Include="Hotel\Service\ContentUpdate.cs" />
     <Compile Include="Flight\Query\UpdateBookingIdQuery.cs" />
     <Compile Include="Hotel\Service\FilterSortPagination.cs" />
@@ -313,6 +317,7 @@
     <Compile Include="Hotel\Wrapper\HotelBeds\Content\Model\RateCommentRS.cs" />
     <Compile Include="Hotel\Wrapper\HotelBeds\Content\Model\RoomRS.cs" />
     <Compile Include="Hotel\Wrapper\HotelBeds\Content\Model\SegmentRS.cs" />
+    <Compile Include="Hotel\Wrapper\HotelBeds\HotelBedsCancelBooking.cs" />
     <Compile Include="Hotel\Wrapper\HotelBeds\HotelBedsIssue.cs" />
     <Compile Include="Hotel\Wrapper\HotelBeds\Sdk\auto\common\SimpleTypes.cs" />
     <Compile Include="Hotel\Wrapper\HotelBeds\Sdk\auto\messages\AbstractGenericRequest.cs" />

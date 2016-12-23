@@ -53,4 +53,9 @@ namespace Lunggo.ApCommon.Hotel.Model
         public Contact Contact { get; set; }
         public string SpecialRequest { get; set; }
     }
+
+    public class HotelCancelBookingInfo
+    {
+        public string BookingReference { get; set; }
+    }
 }

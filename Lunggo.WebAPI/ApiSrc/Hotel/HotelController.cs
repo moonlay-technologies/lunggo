@@ -176,6 +176,33 @@ namespace Lunggo.WebAPI.ApiSrc.Hotel
                 return ApiResponseBase.ExceptionHandling(e);
             }
         }
+
+        [HttpGet]
+        [LunggoCorsPolicy]
+        [Route("v1/hotel/CancelHotelBooking/{bookingId}")]
+        public ApiResponseBase CancelHotelBooking(string bookingId)
+        {
+            var lang = ApiRequestBase.GetHeaderValue("Language");
+            OnlineContext.SetActiveLanguageCode(lang);
+            var currency = ApiRequestBase.GetHeaderValue("Currency");
+            OnlineContext.SetActiveCurrencyCode(currency);
+            try
+            {
+                var request = new HotelCancelBookingApiRequest
+                {
+                    BookingId = bookingId
+                };
+                var apiResponse = HotelLogic.CancelBookingLogic(request);
+                return apiResponse;
+                //var apiResponse = HotelService.GetInstance().GetHotelDetailFromDb(444942);
+                //return new ApiResponseBase();
+
+            }
+            catch (Exception e)
+            {
+                return ApiResponseBase.ExceptionHandling(e);
+            }
+        }
     }
     
 

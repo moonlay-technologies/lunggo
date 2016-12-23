@@ -39,8 +39,19 @@ namespace Lunggo.BackendWeb
             AppInitializer.Init();
             //HotelService.GetInstance().CommenceIssueHotel(new IssueHotelTicketInput
             //{
-            //    RsvNo = "286146542579"
+            //    RsvNo = "296406547890"
             //});
+            //HotelService.GetInstance().CommenceIssueHotel(new IssueHotelTicketInput
+            //{
+            //    RsvNo = "296406547891"
+            //});
+
+            //HotelService.GetInstance().CancelHotelBooking(new HotelCancelBookingInput
+            //{
+            //    BookingId = "296406547891"
+            //});
+
+            //Console.WriteLine("Done");
             //var hotelDetail = HotelService.GetInstance().GetHotelDetailFromTableStorage(24408);
             //var image1 = hotelDetail.ImageUrl.Where(u => u.Type == "GEN").Take(1).FirstOrDefault();
             //var image2 = hotelDetail.ImageUrl.Where(u => u.Order == 1).Take(1).FirstOrDefault();
