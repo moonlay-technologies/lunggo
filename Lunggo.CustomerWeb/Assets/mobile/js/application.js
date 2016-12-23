@@ -480,7 +480,7 @@ if (typeof (angular) == 'object') {
                                 if ($rootScope.DatePicker.Position == null) {
                                     $('.ui-datepicker.departure-date').datepicker("setDate", new Date(trsdate));
                                     $rootScope.FlightSearchForm.ReturnDate = new Date(trsdate);
-                                } else if ($rootScope.DatePicker.$rootScope.DatePicker.Position == 'search-single' || $rootScope.DatePicker.Position == 'search-return') {
+                                } else if ($rootScope.DatePicker.Position == 'search-single' || $rootScope.DatePicker.Position == 'search-return') {
                                     //$('.form-departure-date span').text(date);
                                     //$('.form-return-date span').text(date);
                                     $('.ui-datepicker.departure-date').datepicker("setDate", new Date(trsdate));
