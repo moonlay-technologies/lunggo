@@ -516,13 +516,9 @@ if (typeof (angular) == 'object') {
                 });
                
                 if (options.Target == 'departure') {
-                    
                     $rootScope.DatePicker.Settings.Target = '.flight-search-form-departure';
                     $('.ui-datepicker').datepicker('option', 'minDate', new Date());
                     if ($rootScope.FlightSearchForm.Trip == "true" && $rootScope.FlightSearchForm.ReturnDate) {
-                        var mydate = $rootScope.FlightSearchForm.ReturnDate;
-                        var day = mydate.getDay();
-                        var mth = mydate.getMonth();
                         $('.ui-datepicker').datepicker('option', 'maxDate', $rootScope.FlightSearchForm.ReturnDate);
                     }
                     else {
@@ -531,7 +527,7 @@ if (typeof (angular) == 'object') {
                     if ($rootScope.FlightSearchForm.Trip == "true" && $rootScope.FlightSearchForm.DepartureDate) {
                         $('.ui-datepicker').datepicker('option', 'maxDate', null);
                     }
-                } else {
+                } else if (options.Target == 'return') {
                     $rootScope.DatePicker.Settings.Target = '.flight-search-form-return';
                     if ($rootScope.FlightSearchForm.DepartureDate) {
                         $('.ui-datepicker').datepicker('option', 'minDate', $rootScope.FlightSearchForm.DepartureDate);
@@ -543,6 +539,9 @@ if (typeof (angular) == 'object') {
                         }
                     }
 
+                } else {
+                    $('.ui-datepicker.checkindate').datepicker('option', 'minDate', new Date());
+                    $('.ui-datepicker.checkindate').datepicker('option', 'maxDate', null);
                 }
 
                 $rootScope.DatePicker.Settings.DateFormat = 'D, dd M yy';
@@ -554,7 +553,7 @@ if (typeof (angular) == 'object') {
                 $('.ui-datepicker').datepicker('option', 'nextText', '');
                 $('.ui-datepicker.departure-date').datepicker('option', 'dateFormat', $rootScope.DatePicker.Settings.DateFormat);
                 $('.ui-datepicker.return-date').datepicker('option', 'dateFormat', $rootScope.DatePicker.Settings.DateFormat);
-
+                $('.ui-datepicker.checkindate').datepicker('option', 'dateFormat', $rootScope.DatePicker.Settings.DateFormat);
                 // set on choose date function
 
             },
