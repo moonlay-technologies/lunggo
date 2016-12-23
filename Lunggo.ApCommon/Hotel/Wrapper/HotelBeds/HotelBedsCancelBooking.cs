@@ -60,7 +60,8 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds
                 Reference = bookingCancellationRs.booking.reference,
                 ClientReference = bookingCancellationRs.booking.clientReference,
                 CancellationReference = bookingCancellationRs.booking.cancellationReference,
-                CancellationAmount = bookingCancellationRs.booking.hotel == null ? 0 : bookingCancellationRs.booking.hotel.cancellationAmount
+                CancellationAmount = bookingCancellationRs.booking.hotel == null ? 0 : bookingCancellationRs.booking.hotel.cancellationAmount,
+                //CancellationDate = DateTime.UtcNow
             };
         }
     }

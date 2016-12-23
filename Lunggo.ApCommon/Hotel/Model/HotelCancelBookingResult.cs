@@ -13,7 +13,7 @@ namespace Lunggo.ApCommon.Hotel.Model
         public string ClientReference { get; set; }
         public string CancellationReference { get; set; }
         public decimal CancellationAmount { get; set; }
-        public DateTime CancellationDate { get; set; }
+        //public DateTime CancellationDate { get; set; }
     }
 
 }
