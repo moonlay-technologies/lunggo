@@ -6,7 +6,7 @@
     ViewBag.FooterPayment = true;
     ViewBag.FooterFeedback = false;
     ViewBag.Title = "Enjoy Your Every Moment";
-
+    ViewBag.AngularController = "homeController";
     //ViewBag.Campaign = true;
 
     // location
@@ -84,28 +84,19 @@
 }
 
 @section AdditionalCSS{
-    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/jquery.slick/1.5.9/slick.css" />
-
-    @*@if (ViewBag.Campaign)
-        {
-            <!-- imlek start -->
-            <link href="/Campaign/Imlek2016/css/imlek2016.min.css" rel="stylesheet" />
-            <!-- imlek end -->
-        }*@
-
+    <link rel="stylesheet" type="text/css" href="/Assets/vendor/slick/slick.css" />
 }
 
 @section AdditionalJS{
     <!-- additional Angular JS-->
-    <script src="/Assets/js/angular.min.js"></script>
-    <script src="/Assets/js/angular-animate.min.js"></script>
-    <script src="/Assets/js/angular-route.min.js"></script>
-    <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.slick/1.5.9/slick.min.js"></script>
     <script src="/Assets/js/js.cookie.js"></script>
+    <script src="https://cdn.jsdelivr.net/jquery.cookie/1.4.1/jquery.cookie.min.js"></script>
     <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>-->
     <!-- jquery datepicker -->
     <script src="/Assets/js/jquery-ui.min.js"></script>
     <script type="text/javascript" src="/Assets/js/jquery.ui.datepicker-id.js"></script>
+    <script type="text/javascript" src="/Scripts/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/Assets/vendor/slick/slick.min.js"></script>
 }
 
 @section PageJS{
@@ -118,27 +109,38 @@
         var topDestinations = @Html.Raw(ViewBag.LocationList);
         var departureDate = '@(DateTime.Now.AddDays(1).ToString("ddMMyy"))';
 
+        jQuery(document).ready(function($) {
+        //    //Harbolnas modal box, expired only one day
+        //    if ($.cookie('pop') == null) {
+        //        $('#myModal').modal('show');
+        //        $.cookie('pop', '1');
+        //    };
+        //    //$(window).load(function () {
+        //    //    $('#myModal').modal('show');
+        //    //});
+
         // slider
         $('.page-slider .slider a').each(function() {
             var bgImage = $(this).children('img').attr('src');
             $(this).css({
-                'background-image' : 'url('+bgImage+')'
+                    'background-image': 'url(' + bgImage + ')'
             });
             $(this).children('img').remove();
         });
-
         $('.slider-wrapper').slick({
             autoplay: true,
-            autoplaySpeed: 3000,
+                autoplaySpeed: 4000,
             dots: true,
             prevArrow: '<button type="button" class="slick-prev hidden">Back</button>',
             nextArrow: '<button type="button" class="slick-next hidden">Next</button>'
         });
-
+        });
+    </script>
+    <script src="/Assets/travorama20/angularDirectory/search/hotelSearch.service.js"></script>
+    <script src="/Assets/Travorama20/js/homeController.js"></script>
+    <script>
 
     </script>
-    <script src="/Assets/Travorama20/js/homeController.js"></script>
-
     @*@if (ViewBag.Campaign)
         {
             <script src="/Assets/vendor/transitJS/jquery.transit.min.js"></script>
@@ -147,24 +149,28 @@
 
 }
 
+<!-- Modal Box Harbolnas -->
+@*<div class="modal fade" id="myModal">
+    <div class="modal-box">
+        <a class="custom-close close" data-dismiss="modal"></a>
+    </div>
+</div>*@
 
 <section class="section-search">
     <div class="container">
         <div class="search-form">
-
             <header class="tab-header">
-                @*<nav>
+                <nav>
                                 <ul>
-                                    <li class="flight active"><a href="#">Pesawat</a></li>
-                                    <li class="hotel" data-toggle="tooltip" data-placement="bottom" title="Coming soon!"><a href="#">Hotel</a></li>
-                    <li class="activity" data-toggle="tooltip" data-placement="bottom" title="Coming soon!"><a href="#">Activity</a></li>
+                        <li class="flight"><a data-toggle="tab" href="#plane" ng-click="changeTab('flight')">Pesawat</a></li>
+                        <li class="hotel active"><a data-toggle="tab" href="#hotel" ng-click="changeTab('hotel')">Hotel</a></li>
+                        @*<li class="activity" data-toggle="tooltip" data-placement="bottom" title="Coming soon!"><a href="#">Activity</a></li>*@
                                     </ul>
-                                </nav>*@
+                </nav>
             </header>
-
             <section class="tab-content">
-                <div class="tab-flight active">
-                    <form class="form form-horizontal form-flight" action="/id/Flight/Search" method="GET">
+                <div class="tab-flight tab-pane cleafix" id="plane" ng-click="changeTab()">
+                    <form class="form form-horizontal form-flight" action="/id/Flight/Search" method="GET" autocomplete="off">
                         <h3 class="text-center">Cari <b>Tiket Pesawat</b></h3>
 
                         <div class="form-group flight-type">
@@ -296,53 +302,85 @@
 
                     </form>
                 </div><!-- .tab-flight -->
-                <div class="tab-hotel">
-                    <h3 class="text-center">Cari <b>Kamar Hotel</b><br />(Domestik &amp; Internasional)</h3>
-                    <form class="form form-horizontal form-hotel">
+                <div class="tab-hotel tab-pane clearfix active" id="hotel">
 
-                        <div class="form-group hotel-location">
+                    <h3 class="text-center">Cari <b>Kamar Hotel</b><br /><span class="sub-title">(Domestik &amp; Internasional)</span></h3>
+                    @*<h3 class="text-center">{{hotelSearch.checkinDate | date:'dd-MM-yyy'}} - {{"2016-12-05T08:57:32.520Z" | date:'dd'}}</h3>*@
+                    <form class="form form-horizontal form-hotel page-hotel" ng-submit="hotel.searchHotel()" autocomplete="off">
+                        <div class="form-group hotel-location ">
                             <div class="col-xs-12">
-                                <input type="text" name="hotelLocation" value="" class="form-hotel-location form-control" placeholder="Kota, Wilayah atau Nama Hotel" />
+                                <input type="text" name="hotelLocation" value="" class="form-hotel-location form-control" placeholder="Kota, Wilayah atau Nama Hotel" ng-model="hotelSearch.locationDisplay" ng-click="view.showHotelSearch = true" />
                             </div>
                         </div>
+
                         <div class="form-group hotel-date">
+                            <div class="col-xs-12">
+                                <div class="form-hotel-checkin text-center">
+                                    <span class="grey-txt">Tanggal Check in</span>
+                                    <div class="date-hotel">{{hotelSearch.checkinDateDisplay}}</div>
+                                </div>
+                            </div>
+                        </div>
+                        @*<div class="form-group hotel-date">
                             <div class="col-xs-6">
                                 <div class="form-hotel-checkin">
-                                    <small>Tanggal Keberangkatan</small>
-                                    <span class="date">28</span>
-                                    <span class="month">Jul</span>
-                                    <span class="year">2015</span>
+                                        <span class="grey-txt">Tanggal Check in </span>
+                                        <span class="date">{{hotelSearch.checkinDate.format() | date : 'dd'}}</span>
+                                        <span class="month">{{hotelSearch.checkinDate.format() | date : 'MMM'}}</span>
+                                        <span class="year">{{hotelSearch.checkinDate.format() | date : 'yyyy'}}</span>
                                 </div>
                             </div>
                             <div class="col-xs-6">
-                                <div class="form-hotel-checkout">
-                                    <small>Tanggal Keberangkatan</small>
-                                    <span class="date">28</span>
-                                    <span class="month">Jul</span>
-                                    <span class="year">2015</span>
+                                    <div class="form-hotel-checkout disabled">
+                                        <span class="grey-txt">Tanggal Check out</span>
+                                        <span class="date">{{hotelSearch.checkoutDate.format() | date : 'dd'}}</span>
+                                        <span class="month">{{hotelSearch.checkoutDate.format() | date : 'MMM'}}</span>
+                                        <span class="year">{{hotelSearch.checkoutDate.format() | date : 'yyyy'}}</span>
+                                    </div>
+                                </div>
+                            </div>*@
+                        <div class="form-group hotel-room-night">
+                            <div class="col-xs-6 dropdown-container">
+                                <div class="form-control form-hotel-night clearfix">
+                                    <div class="col-4"><span class="grey-txt">Malam</span></div>
+                                    <div class="col-6 input-hotel">{{hotelSearch.nightCount}}</div>
+                                    <div class="option" ng-model="hotelSearch.nightCount">
+                                        <span data-value="" ng-repeat="nightCount in hotelSearch.nightrange track by $index"
+                                              ng-click="hotelSearch.nightCount = nightCount">{{nightCount}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-6 dropdown-container">
+                                <div class="form-control form-hotel-room clearfix">
+                                    <div class="col-4"><span class="grey-txt">Jumlah Kamar</span></div>
+                                    <div class="col-6 input-hotel">{{hotelSearch.roomCount}}</div>
+                                    <div class="option" ng-model="hotelSearch.roomCount">
+                                        <span data-value="" ng-repeat="roomCount in hotelSearch.roomrange track by $index"
+                                              ng-click="hotelSearch.roomCount = roomCount">{{roomCount}}</span>
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group hotel-room">
-                            <div class="col-xs-6">
-                                <div class="form-hotel-night">
-                                    <small>Malam</small>
-                                    <input type="text" name="hotelNight" value="1" />
+                                </div>
+                        <div class="form-group hotel-detail clearfix">
+                            <div class="col-xs-12 white-txt">Rincian Jumlah Tamu</div>
+                            <div class="col-xs-6 white-txt total-adult clearfix">
+                                <div class="col-half title">Jumlah Dewasa</div>
+                                <span class="text-right semibold-txt col-half total">{{hotelSearch.totalAdult}}</span>
+                            </div>
+                            <div class="col-xs-6 white-txt total-child clearfix">
+                                <div class="col-half title">Jumlah Anak</div>
+                                <span class="text-right semibold-txt col-half total">{{hotelSearch.totalChildren}}</span>
                                 </div>
                             </div>
-                            <div class="col-xs-6">
-                                <div class="form-hotel-room">
-                                    <small>Kamar</small>
-                                    <input type="text" name="hotelNight" value="1" />
-                                </div>
-                            </div>
+                        <div class="col-xs-12 white-txt" ng-show="hotelSearch.searchinghotel">
+                            Sedang melakukan pencarian...
                         </div>
+
                         <div class="form-group hotel-submit">
                             <div class="col-xs-12">
                                 <input type="submit" name="hotelSubmit" value="CARI" class="btn btn-yellow block form-control" />
                             </div>
                         </div>
-
                     </form>
                 </div><!-- .tab-hotel -->
                 <div class="tab-activity">
@@ -364,51 +402,75 @@
             </section>
 
         </div><!-- .search-form -->
+        @Html.Partial("/Views/Shared/Travorama20/_SearchCalendarHotel.cshtml")
         @Html.Partial("/Views/Shared/Travorama20/_SearchCalendar.cshtml")
         @Html.Partial("/Views/Shared/Travorama20/_SearchLocation.cshtml")
+        @Html.Partial("/Views/Shared/Travorama20/_SearchHotel.cshtml")
+        @Html.Partial("/Views/Hotel/Shared/Desktop/_ChildrenAgeForm.cshtml")
     </div><!-- .container -->
     @if (ViewBag.DestinationName == null || ViewBag.DestinationName == "")
     {
         <div class="page-slider">
             <div class="slider-wrapper" id="index-wrapper">
-                @*<div class="slider">
+                <!--
+                    <div class="slider">
                     <a href="@Url.Action("danamonsweetvalentine","StaticPage")">
                         <img src="/Assets/images/campaign/DanamonSweetValentine/danamonsweetvalentine-slider.jpg" alt="Danamon Sweet Valentine" />
                     </a>
                 </div>
+                    -->
+                <!--
                 <div class="slider">
                     <a href="@Url.Action("VisaWonderfulWednesday","StaticPage")">
                         <img src="/Assets/images/campaign/VisaWonderfulWednesday/visa-wonderful-wednesday-front.jpg" alt="Wonderful Wednesday with VISA" />
                     </a>
                 </div>
+                    -->
+                <!--
                 <div class="slider">
                     <a href="@Url.Action("GetCalendarTerms","StaticPage")">
                         <img src="/Assets/images/campaign/free2016calendar/campaign-2016_calendar.jpg" alt="Free 2016 Calendar" />
                     </a>
                 </div>
+                    -->
+                <!--
                 <div class="slider">
                     <a href="#">
                         <img src="/Assets/images/slider/slider-happy_hew_year.jpg" alt="Merry Christmas and Happy New Year" />
                     </a>
                 </div>
+                    -->
+                <!--
                 <div class="slider">
                     <a href="#">
                         <img src="/Assets/images/slider/slider-winner-20151002.jpg" alt="Pemenang Beta Test" />
                     </a>
-                </div>*@
-                <div class="slider">
-                    <a href="@Url.Action("OnlineRevolution","Promo")">
-                        <img src="/Assets/images/campaign/OnlineRevolution2016/OnlineRevolution-slider.jpg" alt="Online Revolution" />
+                    </div>
+                    -->
+                @*<div class="slider">
+                    <a href="@Url.Action("Harbolnas2016","Promo")">
+                        <img src="/Assets/images/campaign/Harbolnas2016/Harbolnas_banner.jpg" alt="Harbolnas 2016" />
                     </a>
-                </div>
+                </div>*@
+                @if (DateTime.UtcNow.AddHours(7).Date <= new DateTime(2016,12,15))
+                {
+                    <div class="slider">
+                        <a href="@Url.Action("MatahariMall", "Promo")">
+                            <img src="/Assets/images/campaign/MatahariMall2016/MatahariMall-slider.jpg" alt="Matahari Mall" />
+                        </a>
+                    </div>
+                }
+                @if (DateTime.UtcNow.AddHours(7).Date <= new DateTime(2016, 12, 31))
+                {
+                    <div class="slider">
+                        <a href="@Url.Action("OnlineRevolution", "Promo")">
+                            <img src="/Assets/images/campaign/OnlineRevolution2016/OnlineRevolution-slider.jpg" alt="Online Revolution" />
+                        </a>
+                    </div>
+                }
                 <div class="slider">
                     <a href="@Url.Action("TravoramaMobileApp","StaticPage")">
                         <img src="/Assets/images/campaign/MobileApp/mobile-app-banner.jpg" alt="Download Travorama Mobile App" />
-                    </a>
-                </div>
-                <div class="slider">
-                    <a href="@Url.Action("MatahariMall","Promo")">
-                        <img src="/Assets/images/campaign/MatahariMall2016/MatahariMall-slider.jpg" alt="Matahari Mall" />
                     </a>
                 </div>
                 <div class="slider">
@@ -430,7 +492,6 @@
     }
 
 </section><!-- .section-search -->
-
 <section class="section-reason">
     <div class="container">
         <img src="/Assets/images/choose-travorama.png" alt="Why choose Travorama" />
@@ -620,151 +681,3 @@ else
 
     </div>
 </section><!-- .section-feedback -->
-<!--<div class="page-newsletter" id="newsletter">
-    <div class=" overlay-content">
-        <section>
-            <div class="normal-flow" id="normalflow">
-
-                <p class="header"><img src="~/Assets/images/popup/header1.png" /></p>
-                <p class="popup-text"><span style="color:#ffffff">Dapatkan informasi harga tiket murah dengan</span><span style="color:#ffd632"> <b>mendaftarkan e-mail Anda</b></span></p>
-                <form class="form-newsletter">
-                    <div class="form-group">
-                        <span><input type="email" name="email" value="" style="text-align:center;" class="input-type" placeholder="Masukkan E-mail Anda"></span>
-                        <input type="submit" class="btn btn-yellow" value="DAFTAR" onclick="newsletterFormFunctions()" />
-                    </div>
-                </form>
-            </div>
-            <div class="member-exist" id="memberexist">
-                <p align="right" style="padding-bottom:5px;padding-right:10px;margin-right:0px;margin-bottom:0px;"><a class="close-member" href="#"><img src="/Assets/images/popup/popup-close.png" width="20px" height="20px"></a></p>
-                <p>
-                    <span style="color:#ffffff;font-size:13px;text-align: justify;text-justify: inter-word;">Email yang Anda gunakan telah terdaftar. Terima kasih telah bergabung dengan Travorama</span>
-                </p>
-            </div>
-
-        </section>
-    </div>
-</div>
-
-<div class="thankyou-popup" id="thankyou">
-    <div class="overlay-content">
-        <section style="padding-top:65px; padding-left:300px;">
-            <p align="right" style="padding-right:15px; margin-bottom:0px;"><a class="close-popup" href="#thankyou"><img src="~/Assets/images/popup/close.png" /></a></p>
-            <p style="padding-bottom:5px;"><img src="~/Assets/images/popup/text_thnks.png" /></p>
-            <p><span style="color:#ffffff;font-size:12px;"><b>Anda telah terdaftar di mailing list kami</b></span></p>
-            <p><span style="color:#ffffff;font-size:12px;padding-left:15px;">dan Anda akan jadi yang pertama tahu</span></p>
-            <p><span style="color:#ffffff;font-size:12px;padding-left:35px;">apabila ada penawaran khusus</span></p>
-            <p style="padding-left:90px;padding-top:7px;"><img src="~/Assets/images/popup/stars.png" /></p>
-        </section>
-    </div>
-</div> -->
-@*@if (ViewBag.Campaign)
-    {
-        <!-- TRAVORAMA IMLEK CAMPAIGN -->
-        <div class="imlek-wrapper">
-
-            <a href="#" class="imlek-wrapper__close">
-                <img src="/Campaign/Imlek2016/images/imlek-close.png" alt="X" />
-            </a>
-
-            <div class="draw__wrapper">
-
-                <header class="draw__header">
-                    <img src="/Campaign/Imlek2016/images/imlek-header.png" alt="TRAVORAMA - Chinese New Year Celebration" />
-                </header><!-- .draw__header -->
-
-                <section class="draw__body">
-
-                    <div class="tree">
-                        <img src="/Campaign/Imlek2016/images/imlek-tree.png" alt="Tree" class="main" />
-                        <img src="/Campaign/Imlek2016/images/imlek-monkey.png" alt="Monkey" class="monkey" />
-
-                        <div class="card card-1">
-                            <div class="prize__wrapper">
-                                <a href="#" class="prize__close">
-                                    <img src="/Campaign/Imlek2016/images/close-btn.png" alt="Close" />
-                                </a>
-
-                                <div class="prize__body">
-                                    <p class="loading"><b>Loading</b></p>
-                                </div>
-
-                            </div>
-                            <img src="/Campaign/Imlek2016/images/card-1.png" alt="Card 1" class="envelope" />
-                        </div>
-                        <div class="card card-2">
-                            <div class="prize__wrapper">
-                                <a href="#" class="prize__close">
-                                    <img src="/Campaign/Imlek2016/images/close-btn.png" alt="Close" />
-                                </a>
-
-                                <div class="prize__body">
-                                    <p class="loading"><b>Loading</b></p>
-                                </div>
-
-                            </div>
-                            <img src="/Campaign/Imlek2016/images/card-2.png" alt="Card 2" class="envelope" />
-                        </div>
-                        <div class="card card-3">
-                            <div class="prize__wrapper">
-                                <a href="#" class="prize__close">
-                                    <img src="/Campaign/Imlek2016/images/close-btn.png" alt="Close" />
-                                </a>
-
-                                <div class="prize__body">
-                                    <p class="loading"><b>Loading</b></p>
-                                </div>
-
-                            </div>
-                            <img src="/Campaign/Imlek2016/images/card-3.png" alt="Card 3" class="envelope" />
-                        </div>
-                        <div class="card card-4">
-                            <div class="prize__wrapper">
-                                <a href="#" class="prize__close">
-                                    <img src="/Campaign/Imlek2016/images/close-btn.png" alt="Close" />
-                                </a>
-
-                                <div class="prize__body">
-                                    <p class="loading"><b>Loading</b></p>
-                                </div>
-
-                            </div>
-                            <img src="/Campaign/Imlek2016/images/card-4.png" alt="Card 4" class="envelope" />
-                        </div>
-                        <div class="card card-5">
-                            <div class="prize__wrapper">
-                                <a href="#" class="prize__close">
-                                    <img src="/Campaign/Imlek2016/images/close-btn.png" alt="Close" />
-                                </a>
-
-                                <div class="prize__body">
-                                    <p class="loading"><b>Loading</b></p>
-                                </div>
-
-                            </div>
-                            <img src="/Campaign/Imlek2016/images/card-5.png" alt="Card 5" class="envelope" />
-                        </div>
-
-                        <img src="/Campaign/Imlek2016/images/imlek-title.png" alt="Pilih Keberuntunganmu Sekarang !" class="note" />
-
-                    </div><!-- .tree -->
-
-                    <div class="cloud">
-                    </div><!-- .cloud -->
-
-                    <div class="email">
-                        <div class="form-group">
-                            <p>Masukkan email Anda sebelum memilih angpao</p>
-                            <input type="email" value="" class="form-control" id="imlek__email__address" placeholder="alamat@email.com" />
-                            <p class="help-block text-left">Masukkan alamat email yang valid</p>
-                            <button class="btn btn-yellow" id="imlek__email__submit" data-url="@ConfigManager.GetInstance().GetConfigValue("api","apiUrl")">PILIH ANGPAO</button>
-                            <p>Baca <a href="@Url.Action("Imlek2016","StaticPage")">syarat dan ketentuan disini</a></p>
-                        </div>
-                    </div><!-- .email -->
-
-                </section><!-- .draw__bdoy -->
-
-
-            </div><!-- .draw__wrapper -->
-
-        </div><!-- .imlek-wrapper -->
-    }*@

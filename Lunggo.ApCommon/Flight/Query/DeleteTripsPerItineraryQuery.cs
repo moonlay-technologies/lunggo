@@ -3,7 +3,7 @@ using Lunggo.Framework.Database;
 
 namespace Lunggo.ApCommon.Flight.Query
 {
-    internal class DeleteTripsPerItineraryQuery : NoReturnQueryBase<DeleteTripsPerItineraryQuery>
+    internal class DeleteTripsPerItineraryQuery : NoReturnDbQueryBase<DeleteTripsPerItineraryQuery>
     {
         protected override string GetQuery(dynamic condition = null)
         {

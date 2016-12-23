@@ -24,6 +24,7 @@
     <WebGreaseLibPath>..\packages\WebGrease.1.5.2\lib</WebGreaseLibPath>
     <NuGetPackageImportStamp>644122b3</NuGetPackageImportStamp>
     <TypeScriptToolsVersion>1.0</TypeScriptToolsVersion>
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -62,6 +63,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.AspNet.Identity.Owin.2.2.1\lib\net45\Microsoft.AspNet.Identity.Owin.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Azure.KeyVault.Core">
+      <HintPath>..\packages\Microsoft.Azure.KeyVault.Core.1.0.0\lib\net40\Microsoft.Azure.KeyVault.Core.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Data.Edm">
       <HintPath>..\packages\Microsoft.Data.Edm.5.6.4\lib\net40\Microsoft.Data.Edm.dll</HintPath>
@@ -97,16 +101,12 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.Owin.Security.OAuth.3.0.1\lib\net45\Microsoft.Owin.Security.OAuth.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.WindowsAzure.Configuration, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Microsoft.WindowsAzure.ConfigurationManager.3.1.0\lib\net40\Microsoft.WindowsAzure.Configuration.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.WindowsAzure.ServiceRuntime, Version=2.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
       <Private>False</Private>
     </Reference>
-    <Reference Include="Microsoft.WindowsAzure.Storage, Version=4.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+    <Reference Include="Microsoft.WindowsAzure.Storage, Version=7.2.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\WindowsAzure.Storage.4.3.0\lib\net40\Microsoft.WindowsAzure.Storage.dll</HintPath>
+      <HintPath>..\packages\WindowsAzure.Storage.7.2.1\lib\net40\Microsoft.WindowsAzure.Storage.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -131,8 +131,8 @@
     <Reference Include="System.Data.Services.Client" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
-      <Private>True</Private>
     </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
@@ -240,6 +240,7 @@
     <Compile Include="Controllers\HotelController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MobileTemplateController.cs" />
+    <Compile Include="Controllers\PaymentController.cs" />
     <Compile Include="Controllers\PromoController.cs" />
     <Compile Include="Controllers\RolesAdminController.cs" />
     <Compile Include="Controllers\StaticPageController.cs" />
@@ -254,14 +255,17 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AdminViewModel.cs" />
     <Compile Include="Models\CalendarRecipientData.cs" />
+    <Compile Include="Models\HotelCheckoutData.cs" />
     <Compile Include="Models\FlightCheckoutData.cs" />
     <Compile Include="Models\FlightPaymentConfirmationData.cs" />
-    <Compile Include="Models\FlightPaymentData.cs" />
     <Compile Include="Models\FlightSearchData.cs" />
     <Compile Include="Models\FlightSelectData.cs" />
     <Compile Include="Models\FlightThankyouData.cs" />
+    <Compile Include="Models\HotelDetailModel.cs" />
+    <Compile Include="Models\HotelSearchModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\PaymentData.cs" />
     <Compile Include="Models\StringSearchParam.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
@@ -283,7 +287,6 @@
     <Compile Include="WebSrc\UW600\UW620\Object\UW620OrderHistoryRespone.cs" />
     <Compile Include="WebSrc\UW600\UW620\Query\GetFlightHistoryRecord.cs" />
     <Compile Include="WebSrc\UW600\UW620\Query\GetFlightHistory.cs" />
-    <Compile Include="WebSrc\UW600\UW620\Query\GetHotelHistory.cs" />
     <Compile Include="WebSrc\UW600\UW620\UW620OrderHistoryController.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -292,6 +295,12 @@
     </Content>
     <Content Include="Assets\bootstrap\bootstrap.min.css">
       <DependentUpon>bootstrap.css</DependentUpon>
+    </Content>
+    <Content Include="Assets\css\application.css">
+      <DependentUpon>application.scss</DependentUpon>
+    </Content>
+    <Content Include="Assets\css\application.min.css">
+      <DependentUpon>application.css</DependentUpon>
     </Content>
     <Content Include="Assets\css\application.scss" />
     <Content Include="Assets\css\bootstrap.min.css" />
@@ -302,6 +311,119 @@
       <DependentUpon>eticket.css</DependentUpon>
     </Content>
     <Content Include="Assets\css\eticket.scss" />
+    <Content Include="Assets\images\campaign\MatahariMall2016\MatahariMall-page-mobile.jpg" />
+    <Content Include="Assets\images\campaign\MatahariMall2016\MatahariMall-page.jpg" />
+    <Content Include="Assets\images\campaign\MatahariMall2016\MatahariMall-slider-mobile.jpg" />
+    <Content Include="Assets\images\campaign\MatahariMall2016\MatahariMall-slider.jpg" />
+    <Content Include="Assets\images\campaign\OnlineRevolution2016\OnlineRevolution-page-mobile.jpg" />
+    <Content Include="Assets\images\campaign\OnlineRevolution2016\OnlineRevolution-page.jpg" />
+    <Content Include="Assets\images\campaign\OnlineRevolution2016\OnlineRevolution-slider-mobile.jpg" />
+    <Content Include="Assets\images\campaign\OnlineRevolution2016\OnlineRevolution-slider.jpg" />
+    <Content Include="Assets\images\hotel-star-4.jpg" />
+    <Content Include="Assets\images\hotel-star-4.png" />
+    <Content Include="Assets\images\location.png" />
+    <Content Include="Assets\images\order-hotel-list-bg.png" />
+    <Content Include="Assets\images\select-arrow-up.png" />
+    <Content Include="Assets\images\swim.png" />
+    <Content Include="Assets\images\voucher-hotel-bg.jpg" />
+    <Content Include="Assets\images\voucher-hotel.jpg" />
+    <Content Include="Assets\images\wifi.png" />
+    <Content Include="Assets\js\xml2json.min.js" />
+    <Content Include="Assets\images\phone.png" />
+    <Content Include="Assets\mobile\images\adult.png" />
+    <Content Include="Assets\mobile\images\Hotel\ac-grey.png" />
+    <Content Include="Assets\mobile\images\Hotel\ac-white.png" />
+    <Content Include="Assets\mobile\images\Hotel\ac.png" />
+    <Content Include="Assets\mobile\images\Hotel\arrow-down-grey.png" />
+    <Content Include="Assets\mobile\images\Hotel\arrow-down-orange.png" />
+    <Content Include="Assets\mobile\images\Hotel\arrow-down-yellow.png" />
+    <Content Include="Assets\mobile\images\Hotel\arrow-next.png" />
+    <Content Include="Assets\mobile\images\Hotel\arrow-orange.png" />
+    <Content Include="Assets\mobile\images\child.png" />
+    <Content Include="Assets\mobile\images\date.png" />
+    <Content Include="Assets\mobile\images\find.png" />
+    <Content Include="Assets\mobile\images\flight-blue.png" />
+    <Content Include="Assets\mobile\images\flight-grey.png" />
+    <Content Include="Assets\mobile\images\hotel-blue.png" />
+    <Content Include="Assets\mobile\images\hotel-grey.png" />
+    <Content Include="Assets\mobile\images\Hotel\arrow-prev.png" />
+    <Content Include="Assets\mobile\images\Hotel\arrow-up-grey.png" />
+    <Content Include="Assets\mobile\images\Hotel\arrow-up-orange.png" />
+    <Content Include="Assets\mobile\images\Hotel\arrow-up-yellow.png" />
+    <Content Include="Assets\mobile\images\Hotel\bar.png" />
+    <Content Include="Assets\mobile\images\Hotel\bed-white.png" />
+    <Content Include="Assets\mobile\images\Hotel\bed.png" />
+    <Content Include="Assets\mobile\images\Hotel\bel-grey.png" />
+    <Content Include="Assets\mobile\images\Hotel\bel-white.png" />
+    <Content Include="Assets\mobile\images\Hotel\bel.png" />
+    <Content Include="Assets\mobile\images\Hotel\business.png" />
+    <Content Include="Assets\mobile\images\Hotel\car-white.png" />
+    <Content Include="Assets\mobile\images\Hotel\car.png" />
+    <Content Include="Assets\mobile\images\Hotel\checkin.png" />
+    <Content Include="Assets\mobile\images\Hotel\checkout.png" />
+    <Content Include="Assets\mobile\images\Hotel\double-bed.png" />
+    <Content Include="Assets\mobile\images\Hotel\ent.png" />
+    <Content Include="Assets\mobile\images\Hotel\food.png" />
+    <Content Include="Assets\mobile\images\Hotel\health.png" />
+    <Content Include="Assets\mobile\images\Hotel\hotel-detail-lg.jpg" />
+    <Content Include="Assets\mobile\images\Hotel\hotel-detail-sm.jpg" />
+    <Content Include="Assets\mobile\images\Hotel\hotel-detail-xlg.jpg" />
+    <Content Include="Assets\mobile\images\Hotel\hotel-list-lg.jpg" />
+    <Content Include="Assets\mobile\images\Hotel\like.png" />
+    <Content Include="Assets\mobile\images\Hotel\location-grey.png" />
+    <Content Include="Assets\mobile\images\Hotel\location.png" />
+    <Content Include="Assets\mobile\images\Hotel\login.png" />
+    <Content Include="Assets\mobile\images\Hotel\meal-grey.png" />
+    <Content Include="Assets\mobile\images\Hotel\meal-white.png" />
+    <Content Include="Assets\mobile\images\Hotel\meal.png" />
+    <Content Include="Assets\mobile\images\Hotel\other.png" />
+    <Content Include="Assets\mobile\images\Hotel\people.png" />
+    <Content Include="Assets\mobile\images\Hotel\pool-grey.png" />
+    <Content Include="Assets\mobile\images\Hotel\pool-white.png" />
+    <Content Include="Assets\mobile\images\Hotel\pool.png" />
+    <Content Include="Assets\mobile\images\Hotel\room.png" />
+    <Content Include="Assets\mobile\images\Hotel\share.png" />
+    <Content Include="Assets\mobile\images\Hotel\single-bed.png" />
+    <Content Include="Assets\mobile\images\Hotel\sport.png" />
+    <Content Include="Assets\mobile\images\Hotel\tv-white.png" />
+    <Content Include="Assets\mobile\images\Hotel\tv.png" />
+    <Content Include="Assets\mobile\images\Hotel\wifi-grey.png" />
+    <Content Include="Assets\mobile\images\Hotel\wifi-white.png" />
+    <Content Include="Assets\mobile\images\Hotel\wifi.png" />
+    <Content Include="Assets\mobile\images\sand-clock.png" />
+    <Content Include="Assets\mobile\images\time.png" />
+    <Content Include="Assets\mobile\js\HotelController.js" />
+    <Content Include="Assets\travorama20\angularDirectory\common\hotelAutocomplete.service.js" />
+    <Content Include="Assets\travorama20\angularDirectory\search\hotelSearch.service.js" />
+    <Content Include="Assets\travorama20\images\Hotel\bed.png" />
+    <Content Include="Assets\travorama20\images\Hotel\blue-sprite.png" />
+    <Content Include="Assets\travorama20\images\Hotel\business-lg.png" />
+    <Content Include="Assets\travorama20\images\Hotel\down.png" />
+    <Content Include="Assets\travorama20\images\Hotel\entertainment-lg.png" />
+    <Content Include="Assets\travorama20\images\Hotel\general-lg.png" />
+    <Content Include="Assets\travorama20\images\Hotel\health-lg.png" />
+    <Content Include="Assets\travorama20\images\Hotel\hotel-md.jpg" />
+    <Content Include="Assets\travorama20\images\Hotel\hotel-sm.jpg" />
+    <Content Include="Assets\travorama20\images\Hotel\meal-lg.png" />
+    <Content Include="Assets\travorama20\images\Hotel\mini-slider.jpg" />
+    <Content Include="Assets\travorama20\images\Hotel\next-white.png" />
+    <Content Include="Assets\travorama20\images\Hotel\no-hotel-lg.png" />
+    <Content Include="Assets\travorama20\images\Hotel\no-hotel.png" />
+    <Content Include="Assets\travorama20\images\Hotel\other-lg.png" />
+    <Content Include="Assets\travorama20\images\Hotel\prev-white.png" />
+    <Content Include="Assets\travorama20\images\Hotel\print.png" />
+    <Content Include="Assets\travorama20\images\Hotel\room.jpg" />
+    <Content Include="Assets\travorama20\images\Hotel\size.png" />
+    <Content Include="Assets\travorama20\images\Hotel\sort.png" />
+    <Content Include="Assets\travorama20\images\Hotel\sport-lg.png" />
+    <Content Include="Assets\travorama20\images\Hotel\triangle-grey.png" />
+    <Content Include="Assets\travorama20\images\Hotel\up.png" />
+    <Content Include="Assets\travorama20\images\Hotel\view.png" />
+    <Content Include="Assets\travorama20\js\app.config.js" />
+    <Content Include="Assets\travorama20\js\HotelCheckoutController.js" />
+    <Content Include="Assets\travorama20\js\hotelDetailController.js" />
+    <Content Include="Assets\travorama20\js\hotelSearchController.js" />
+    <Content Include="Assets\travorama20\js\HotelController.js" />
     <Content Include="Assets\css\font-awesome.min.css" />
     <Content Include="Assets\css\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Assets\css\images\ui-bg_flat_75_ffffff_40x100.png" />
@@ -324,7 +446,6 @@
     </Content>
     <Content Include="Assets\css\invoice.scss" />
     <Content Include="Areas\Api\Views\web.config" />
-    <None Include="Assets\css\jquery-ui.min.css.bak" />
     <Content Include="Assets\css\jquery-ui.min.css" />
     <Content Include="Assets\css\jquery.range.css" />
     <Content Include="Assets\css\landingPage.css">
@@ -695,6 +816,12 @@
     <Content Include="Assets\images\campaign\free2016calendar\RegisterStep\5.jpg" />
     <Content Include="Assets\images\campaign\free2016calendar\RegisterStep\6.jpg" />
     <Content Include="Assets\images\campaign\free2016calendar\RegisterStep\7.jpg" />
+    <Content Include="Assets\images\campaign\Harbolnas2016\Harbolnas_banner-mobile.jpg" />
+    <Content Include="Assets\images\campaign\Harbolnas2016\Harbolnas_banner.jpg" />
+    <Content Include="Assets\images\campaign\Harbolnas2016\Harbolnas_landingpage.jpg" />
+    <Content Include="Assets\images\campaign\Harbolnas2016\Harbolnas_landingpage_mobile.jpg" />
+    <Content Include="Assets\images\campaign\Harbolnas2016\Harbolnas_popup.jpg" />
+    <Content Include="Assets\images\campaign\Harbolnas2016\Harbolnas_popup_mobile.jpg" />
     <Content Include="Assets\images\campaign\hongkong-text.png" />
     <Content Include="Assets\images\campaign\hongkong-thumb.jpg" />
     <Content Include="Assets\images\campaign\hongkong.jpg" />
@@ -705,15 +832,7 @@
     <Content Include="Assets\images\campaign\malaysia-text.png" />
     <Content Include="Assets\images\campaign\malaysia-thumb.jpg" />
     <Content Include="Assets\images\campaign\malaysia.jpg" />
-    <Content Include="Assets\images\campaign\MatahariMall2016\MatahariMall-page-mobile.jpg" />
-    <Content Include="Assets\images\campaign\MatahariMall2016\MatahariMall-page.jpg" />
-    <Content Include="Assets\images\campaign\MatahariMall2016\MatahariMall-slider-mobile.jpg" />
-    <Content Include="Assets\images\campaign\MatahariMall2016\MatahariMall-slider.jpg" />
     <Content Include="Assets\images\campaign\MobileApp\mobile-app-banner.jpg" />
-    <Content Include="Assets\images\campaign\OnlineRevolution2016\OnlineRevolution-page-mobile.jpg" />
-    <Content Include="Assets\images\campaign\OnlineRevolution2016\OnlineRevolution-page.jpg" />
-    <Content Include="Assets\images\campaign\OnlineRevolution2016\OnlineRevolution-slider-mobile.jpg" />
-    <Content Include="Assets\images\campaign\OnlineRevolution2016\OnlineRevolution-slider.jpg" />
     <Content Include="Assets\images\campaign\PromoBTN\PromoBTN-slider-mobile.jpg" />
     <Content Include="Assets\images\campaign\PromoBTN\PromoBTN-slider-app.jpg" />
     <Content Include="Assets\images\campaign\PromoBTN\PromoBTN-slider-bg.jpg" />
@@ -742,11 +861,40 @@
     <Content Include="Assets\travorama20\css\travorama20.min.css" />
     <Content Include="Assets\travorama20\images\app-store-bg.png" />
     <Content Include="Assets\travorama20\images\app-store-cs.png" />
+    <Content Include="Assets\travorama20\images\Hotel\big-slider-img.jpg" />
+    <Content Include="Assets\travorama20\images\Hotel\disc-bg.png" />
+    <Content Include="Assets\travorama20\images\Hotel\disc2-bg.png" />
+    <Content Include="Assets\travorama20\images\Hotel\header-bg.jpg" />
+    <Content Include="Assets\travorama20\images\Hotel\hotel.jpg" />
+    <Content Include="Assets\travorama20\images\Hotel\hotel.png" />
+    <Content Include="Assets\travorama20\images\Hotel\location.png" />
+    <Content Include="Assets\travorama20\images\Hotel\map.png" />
+    <Content Include="Assets\travorama20\images\Hotel\meal.png" />
+    <Content Include="Assets\travorama20\images\Hotel\next.png" />
+    <Content Include="Assets\travorama20\images\Hotel\plane-sm.png" />
+    <Content Include="Assets\travorama20\images\Hotel\prev.png" />
+    <Content Include="Assets\travorama20\images\Hotel\star-outline.png" />
+    <Content Include="Assets\travorama20\images\Hotel\star.png" />
+    <Content Include="Assets\travorama20\images\Hotel\ta-logo.png" />
+    <Content Include="Assets\travorama20\images\Hotel\ta-rating.png" />
+    <Content Include="Assets\travorama20\images\Hotel\trip-advisor-rating.png" />
+    <Content Include="Assets\travorama20\images\Hotel\trip-advisor.png" />
+    <Content Include="Assets\travorama20\images\Hotel\wifi.png" />
     <Content Include="Assets\travorama20\images\mobile-app.png" />
     <Content Include="Assets\travorama20\images\play-store-bg.png" />
     <Content Include="Assets\vendor\dotdotdot\jquery.dotdotdot.js" />
     <Content Include="Assets\vendor\dotdotdot\jquery.dotdotdot.min.js" />
     <Content Include="Assets\vendor\dotdotdot\jquery.dotdotdot.min.umd.js" />
+    <Content Include="Assets\vendor\lightslider\lightslider.css" />
+    <Content Include="Assets\vendor\lightslider\lightslider.js" />
+    <Content Include="Assets\vendor\slick\slick.css" />
+    <Content Include="Assets\vendor\slick\slick.min.js" />
+    <Content Include="Campaign\Harbolnas2016\css\promo-harbolnas.css">
+      <DependentUpon>promo-harbolnas.scss</DependentUpon>
+    </Content>
+    <Content Include="Campaign\Harbolnas2016\css\promo-harbolnas.min.css">
+      <DependentUpon>promo-harbolnas.css</DependentUpon>
+    </Content>
     <Content Include="Campaign\MatahariMall\css\promo-mataharimall.css">
       <DependentUpon>promo-mataharimall.scss</DependentUpon>
     </Content>
@@ -860,7 +1008,6 @@
     <Content Include="Assets\images\flight-toggle-up.png" />
     <Content Include="Assets\images\flight-weight.png" />
     <Content Include="Assets\images\form-selection-sprite.png" />
-    <Content Include="Assets\images\form-selection-sprite.png.bak" />
     <Content Include="Assets\images\googlePlay.png" />
     <Content Include="Assets\images\gray-bg.png" />
     <Content Include="Assets\images\grey-bg.png" />
@@ -1271,11 +1418,6 @@
     <Content Include="Assets\travorama20\angularDirectory\priceDetail\priceDetailTemplate.html" />
     <Content Include="Assets\travorama20\css\help_section.css" />
     <Content Include="Assets\travorama20\css\help_section.min.css" />
-    <Content Include="Assets\travorama20\css\_footer.scss" />
-    <Content Include="Assets\travorama20\css\_header.scss" />
-    <Content Include="Assets\travorama20\css\_page_index.scss" />
-    <Content Include="Assets\travorama20\css\_screenLarge.scss" />
-    <Content Include="Assets\travorama20\css\_screenSmall.scss" />
     <Content Include="Assets\travorama20\js\accountController.js" />
     <Content Include="Assets\travorama20\js\countries.js" />
     <Content Include="Assets\travorama20\js\checkoutController.js" />
@@ -1343,12 +1485,6 @@
     <Content Include="Campaign\Imlek2016\images\wrapper-bg.png" />
     <Content Include="Assets\vendor\transitJS\jquery.transit.min.js" />
     <Content Include="Campaign\Imlek2016\js\imlek2016.js" />
-    <Content Include="Campaign\MatahariMall\css\promo-btn.css">
-      <DependentUpon>promo-mataharimall.scss</DependentUpon>
-    </Content>
-    <Content Include="Campaign\MatahariMall\css\promo-btn.min.css">
-      <DependentUpon>promo-btn.css</DependentUpon>
-    </Content>
     <Content Include="Campaign\PromoBTN\css\promo-btn.css">
       <DependentUpon>promo-btn.scss</DependentUpon>
     </Content>
@@ -1358,7 +1494,7 @@
     <Content Include="Campaign\PromoBTN\images\credit-card.png" />
     <Content Include="Campaign\PromoBTN\images\debit.png" />
     <Content Include="Campaign\PromoBTN\images\top-banner.jpg" />
-    <Content Include="checkin.png" />
+    <Content Include="Views\Term\checkin.png" />
     <Content Include="Config\Airline.csv" />
     <Content Include="Config\i18n_message.xml">
       <SubType>Designer</SubType>
@@ -1377,7 +1513,9 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\bootstrap.css.map" />
-    <Content Include="Config\application.properties" />
+    <Content Include="Config\application.properties">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Config\Airport.csv" />
     <Content Include="Config\HotelLocation.csv" />
     <Content Include="Config\Country.csv" />
@@ -1386,11 +1524,6 @@
     <Content Include="Assets\script\b3r4rs2h.rlx" />
     <Content Include="Assets\script\jx0xoqwq.o1w" />
     <Content Include="Assets\script\zlgay2xd.w25" />
-    <Content Include="Assets\travorama20\css\_footer.scss" />
-    <Content Include="Assets\travorama20\css\_header.scss" />
-    <Content Include="Assets\travorama20\css\_page_index.scss" />
-    <Content Include="Assets\travorama20\css\_screenLarge.scss" />
-    <Content Include="Assets\travorama20\css\_screenSmall.scss" />
     <Content Include="Assets\travorama20\css\_page_flight.scss" />
     <Content Include="Assets\travorama20\css\_page_checkout.scss" />
     <Content Include="Assets\bootstrap\bootstrap\mixins\_alerts.scss" />
@@ -1473,7 +1606,6 @@
     <Content Include="Assets\mobile\css\application.scss" />
     <Content Include="Assets\mobile\css\_page_flight.scss" />
     <Content Include="Assets\mobile\css\_page_checkout.scss" />
-    <Content Include="Assets\images\subscribe-bg.jpg.bak" />
     <Content Include="Assets\mobile\css\_page_account.scss" />
     <Content Include="Assets\mobile\css\_page_static.scss" />
     <Content Include="Assets\mobile\css\_page_home.scss" />
@@ -1493,7 +1625,64 @@
     <Content Include="Assets\fonts\bootstrap\glyphicons-halflings-regular.ttf" />
     <Content Include="Assets\fonts\bootstrap\glyphicons-halflings-regular.woff" />
     <Content Include="Assets\fonts\bootstrap\glyphicons-halflings-regular.woff2" />
+    <Content Include="Assets\travorama20\css\_page_hotel.scss" />
+    <Content Include="Assets\travorama20\css\_page_hotel_detail.scss" />
+    <Content Include="Assets\travorama20\css\_page_hotel_search.scss" />
+    <Content Include="Assets\travorama20\css\_footer.scss" />
+    <Content Include="Assets\travorama20\css\_header.scss" />
+    <Content Include="Assets\travorama20\css\_page_index.scss" />
+    <Content Include="Assets\travorama20\css\_screenLarge.scss" />
+    <Content Include="Assets\travorama20\css\_screenSmall.scss" />
+    <Content Include="Assets\mobile\css\_page_hotel.scss" />
+    <Content Include="Assets\mobile\css\_page_hotel_search.scss" />
+    <Content Include="Assets\mobile\css\_page_hotel_detail.scss" />
+    <Content Include="Config\HotelAccomodation.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Config\HotelBoard.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Config\HotelCategory.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Config\HotelChain.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Config\HotelCountries.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Config\HotelDestinations.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Config\HotelFacilities.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Config\HotelFacilitiesFilterGroup.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Config\HotelFacilityGroup.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Config\HotelRoom.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Config\HotelRoomOriginal.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Config\HotelRoomPaymentType.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Config\HotelRoomRateClass.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Config\HotelRoomRateType.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Config\HotelSegment.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Campaign\MatahariMall\css\promo-mataharimall.scss" />
+    <Content Include="Campaign\Harbolnas2016\css\promo-harbolnas.scss" />
     <None Include="Properties\PublishProfiles\prod-cw %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\dv1-cw.pubxml" />
     <None Include="Properties\PublishProfiles\dv2-cw.pubxml" />
@@ -1502,12 +1691,17 @@
     <None Include="Properties\PublishProfiles\travorama-dv2-cw %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-dv2-cw.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-prod-cw %282%29.pubxml" />
-    <None Include="Properties\PublishProfiles\travorama-prod-cw %283%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-prod-cw.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-prod-cw__staging.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-prod-cw__staging2 %282%29.pubxml" />
-    <None Include="Properties\PublishProfiles\travorama-prod-cw__staging2 %283%29.pubxml" />
+    <None Include="Properties\PublishProfiles\travorama-prod-cw__staging2 %285%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-prod-cw__staging2.pubxml" />
+    <None Include="Properties\PublishProfiles\travorama-qa-cw %282%29.pubxml" />
+    <None Include="Properties\PublishProfiles\travorama-qa-cw %283%29.pubxml" />
+    <None Include="Properties\PublishProfiles\travorama-qa-cw %284%29.pubxml" />
+    <None Include="Properties\PublishProfiles\travorama-qa-cw %285%29.pubxml" />
+    <None Include="Properties\PublishProfiles\travorama-qa-cw %286%29.pubxml" />
+    <None Include="Properties\PublishProfiles\travorama-qa-cw %287%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-qa-cw.pubxml" />
     <None Include="Scripts\jquery-2.1.0.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -1522,6 +1716,10 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\json2.js" />
     <Content Include="Scripts\modernizr-2.7.2.js" />
+    <Content Include="Scripts\moment-with-locales.js" />
+    <Content Include="Scripts\moment-with-locales.min.js" />
+    <Content Include="Scripts\moment.js" />
+    <Content Include="Scripts\moment.min.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
@@ -2774,8 +2972,8 @@
     <Content Include="Views\Flight\Checkout.cshtml" />
     <Content Include="Views\Template\FlightSearchListNew.cshtml" />
     <Content Include="Views\Shared\_layout_20150506.cshtml" />
-    <Content Include="Views\Flight\Thankyou.cshtml" />
-    <Content Include="Views\Flight\Confirmation.cshtml" />
+    <Content Include="Views\Payment\Thankyou.cshtml" />
+    <Content Include="Views\Payment\Confirmation.cshtml" />
     <Content Include="Views\Shared\_layout_mobile.cshtml" />
     <Content Include="Views\MobileTemplate\HomePage.cshtml" />
     <Content Include="Views\MobileTemplate\HotelSearchPage.cshtml" />
@@ -2797,7 +2995,7 @@
     <Content Include="Views\MobileTemplate\FlightCheckout4.cshtml" />
     <Content Include="Views\MobileTemplate\FlightCheckout5.cshtml" />
     <Content Include="Views\MobileTemplate\FlightCheckout.cshtml" />
-    <Content Include="Views\Flight\Thankyou.mobile.cshtml" />
+    <Content Include="Views\Payment\Thankyou.mobile.cshtml" />
     <Content Include="Views\Flight\Checkout.mobile.cshtml" />
     <Content Include="Views\Template\LandingPage.cshtml" />
     <Content Include="Views\Template\Activity.cshtml" />
@@ -2824,12 +3022,11 @@
     <Content Include="Views\StaticPage\_SectionHowTo.cshtml" />
     <Content Include="Views\Flight\Search-Single.mobile.cshtml" />
     <Content Include="Views\Account\ConfirmEmail.mobile.cshtml" />
-    <None Include="Views\Flight\Checkout.mobile.cshtml.bak" />
-    <Content Include="Views\Flight\Eticket.cshtml" />
-    <Content Include="Views\Flight\Confirmation.mobile.cshtml" />
+    <Content Include="Views\Payment\Eticket.cshtml" />
+    <Content Include="Views\Payment\Confirmation.mobile.cshtml" />
     <Content Include="Views\Flight\Payment.cshtml" />
     <Content Include="Views\Flight\Payment.mobile.cshtml" />
-    <Content Include="Views\Flight\Eticket.mobile.cshtml" />
+    <Content Include="Views\Payment\Eticket.mobile.cshtml" />
     <Content Include="Views\Template\eticket3.cshtml" />
     <Content Include="Views\StaticPage\GetCalendar.cshtml" />
     <Content Include="Views\Template\DisableBack.cshtml" />
@@ -2855,17 +3052,51 @@
     <Content Include="Views\HelpSection\FAQs.cshtml" />
     <Content Include="Views\HelpSection\How-To.cshtml" />
     <Content Include="Views\StaticPage\TravoramaMobileApp.cshtml" />
-    <Content Include="Views\Promo\OnlineRevolution.cshtml" />
-    <Content Include="Views\Promo\OnlineRevolution.mobile.cshtml" />
-    <Content Include="Views\Promo\OnlineRevolutionWebview.cshtml" />
     <Content Include="Views\Shared\GlobalError.cshtml" />
     <Content Include="Views\Shared\GlobalError.mobile.cshtml" />
     <Content Include="Views\Hotel\Search.cshtml" />
     <Content Include="Views\StaticPage\GlobalError.cshtml" />
     <Content Include="Views\StaticPage\GlobalError.mobile.cshtml" />
+    <Content Include="Views\Hotel\DetailHotel.cshtml" />
+    <Content Include="Views\Hotel\Shared\Desktop\_PageSlider.cshtml" />
+    <Content Include="Views\Hotel\Shared\Desktop\_BreadCrumb.cshtml" />
+    <Content Include="Views\Hotel\Checkout.cshtml" />
+    <Content Include="Views\Shared\travorama20\_SearchHotel.cshtml" />
+    <Content Include="Views\Hotel\Search.mobile.cshtml" />
+    <Content Include="Views\Hotel\Shared\Mobile\_Summary.cshtml" />
+    <Content Include="Views\Hotel\DetailHotel.mobile.cshtml" />
+    <Content Include="Views\Hotel\Checkout.mobile.cshtml" />
+    <Content Include="Views\Hotel\Thankyou.cshtml" />
+    <Content Include="Views\Hotel\Thankyou.mobile.cshtml" />
+    <Content Include="Views\Shared\travorama20\_SearchCalendarHotel.cshtml" />
+    <Content Include="Views\Hotel\BankTransferHotel.cshtml" />
+    <Content Include="Views\Hotel\VirtualAccountHotel.cshtml" />
+    <Content Include="Views\Hotel\SorryEmailHotel.cshtml" />
+    <Content Include="Views\Hotel\EmailVoucher.cshtml" />
+    <Content Include="Views\Hotel\OrderHotelHistoryDetail.cshtml" />
+    <Content Include="Views\Hotel\OrderHotelHistoryDetail.mobile.cshtml" />
+    <Content Include="Views\Hotel\Shared\Desktop\_SearchHotelForm.cshtml" />
+    <Content Include="Views\Hotel\HotelSearchForm.cshtml" />
+    <Content Include="Views\Hotel\VoucherHotel.cshtml" />
+    <Content Include="Views\Hotel\Shared\Mobile\_SearchHotelForm.cshtml" />
+    <Content Include="Views\Payment\Payment.cshtml" />
+    <Content Include="Views\Payment\Payment.mobile.cshtml" />
+    <Content Include="Views\Hotel\HotelInvoice.cshtml" />
+    <Content Include="Views\Hotel\Shared\Mobile\_PriceDetail.cshtml" />
+    <Content Include="Views\Hotel\Confirmation.mobile.cshtml" />
+    <Content Include="Views\Hotel\Shared\Mobile\_HotelDetail.cshtml" />
+    <Content Include="Views\Hotel\Shared\Mobile\_GuestDetail.cshtml" />
+    <Content Include="Views\Hotel\Shared\Desktop\_ChildrenAgeForm.cshtml" />
+    <Content Include="Views\Hotel\Shared\Mobile\_RoomDetail.cshtml" />
     <Content Include="Views\Promo\MatahariMallWebview.cshtml" />
     <Content Include="Views\Promo\MatahariMall.mobile.cshtml" />
     <Content Include="Views\Promo\MatahariMall.cshtml" />
+    <Content Include="Views\Promo\Harbolnas2016.cshtml" />
+    <Content Include="Views\Promo\Harbolnas2016.mobile.cshtml" />
+    <Content Include="Views\Promo\OnlineRevolution.cshtml" />
+    <Content Include="Views\Promo\OnlineRevolution.mobile.cshtml" />
+    <Content Include="Views\Promo\OnlineRevolutionWebview.cshtml" />
+    <Content Include="Views\Promo\Harbolnas2016Webview.cshtml" />
     <None Include="Views\Template\eticket.cshtml" />
     <Content Include="Views\Template\OrderFlightHistory.cshtml" />
     <Content Include="Views\Template\PrivacyPolicy.cshtml" />
@@ -2904,7 +3135,6 @@
     <Content Include="Views\UW620OrderHistory\OrderHistory.mobile.cshtml" />
     <Content Include="Views\Template\PendingConfirmed.cshtml" />
     <Content Include="Views\Template\SlightDelayEmail.cshtml" />
-    <None Include="Views\UW000TopPage\Index.mobile.cshtml.bak" />
     <None Include="Views\Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -2931,10 +3161,6 @@
       <Project>{e0624ffe-a4c2-44f5-9f9f-8c71f3b32aed}</Project>
       <Name>Lunggo.Framework</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Lunggo.Hotel\Lunggo.Hotel.csproj">
-      <Project>{9f226318-0164-4d44-8b2d-4139caca98d2}</Project>
-      <Name>Lunggo.Hotel</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Lunggo.Repo\Lunggo.Repository.csproj">
       <Project>{50b8c0c0-6b28-46fd-ba90-771d8c9f12a1}</Project>
       <Name>Lunggo.Repository</Name>
@@ -2953,7 +3179,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <TypeScriptCompile Include="Scripts\typings\cryptojs\cryptojs.d.ts" />
+    <None Include="Scripts\typings\cryptojs\cryptojs.d.ts" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

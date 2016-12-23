@@ -3,7 +3,7 @@ using Lunggo.Framework.Database;
 
 namespace Lunggo.ApCommon.Payment.Query
 {
-    internal class GetPaymentStatusQuery : QueryBase<GetPaymentStatusQuery, string>
+    internal class GetPaymentStatusQuery : DbQueryBase<GetPaymentStatusQuery, string>
     {
         protected override string GetQuery(dynamic condition = null)
         {

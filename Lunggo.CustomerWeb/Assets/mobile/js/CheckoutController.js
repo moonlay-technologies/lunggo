@@ -500,19 +500,34 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
                     $scope.book.booking = false;
 
                     if (returnData.data.status == '200') {
-                        if (returnData.data.rsvNo != '' || returnData.data.rsvNo != null) {
-                            if (returnData.data.price != null) {
+                        if ( returnData.data.rsvNo != null || returnData.data.rsvNo != '') {
+                            if (returnData.data.itinChanged) {
+                                $scope.book.isSuccess = false;
+                                $scope.book.checked = true;
+                                $scope.book.booking = false;
+                            }
+
+                            else if (returnData.data.priceChanged) {
                                 $scope.book.isPriceChanged = true;
                                 $scope.book.isSuccess = true;
                                 $scope.book.newPrice = returnData.data.price;
                                 $scope.book.checked = false;
-                            } else {
+                                $scope.book.booking = false;
+                            }
+
+                            else if (returnData.data.rsvNo != null && returnData.data.rsvNo.length != 0) {
                                 $scope.book.isSuccess = true;
                                 $scope.book.rsvNo = returnData.data.rsvNo;
-
                                 $('form#rsvno input#rsvno-input').val(returnData.data.rsvNo);
                                 $('form#rsvno').submit();
                                 $scope.book.checked = true;
+                                $scope.book.booking = false;
+                            }
+
+                            else {
+                                $scope.book.isSuccess = false;
+                                $scope.book.checked = true;
+                                $scope.book.booking = false;
                             }
                         } else {
                             if (returnData.data.price != null) {
@@ -520,7 +535,12 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
                                 $scope.book.isSuccess = false;
                                 $scope.book.newPrice = returnData.data.price;
                                 $scope.book.checked = true;
-                            } else {
+                            } else if (returnData.data.itinChanged) {
+                                $scope.book.isSuccess = false;
+                                $scope.book.checked = true;
+                                $scope.book.booking = false;
+                            }
+                            else {
                                 $scope.book.isSuccess = false;
                                 $scope.book.checked = true;
                                 //console.log(returnData);
@@ -1272,5 +1292,7 @@ app.controller('ConfirmationController', ['$http', '$scope', '$rootScope', '$int
             Amount: 0
         }
     };
+
+
 
 }]);

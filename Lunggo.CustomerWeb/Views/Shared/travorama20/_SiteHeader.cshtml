@@ -1,7 +1,5 @@
 ﻿@using Lunggo.ApCommon.Identity.Users
 
-@*<script src="/Assets/travorama20/js/singleFlightController.js"></script>*@
-
 <section ng-controller="siteHeaderController">
     @if (ViewBag.SiteHeader == "checkout")
     {
@@ -64,7 +62,8 @@
                                     <ul>
                                         <li class="hidden"><a href="#">Scratchpad <span class="caret"></span></a></li>
                                         <li class="dropdown-wrapper">
-                                            <a href="#" data-trigger="dropdown" ng-show="isLogin"> {{email}} <span class="caret"></span></a>
+                                            <a href="#" data-trigger="dropdown" ng-show="isLogin && name.length > 0"> {{name}} <span class="caret"></span></a>
+                                            <a href="#" data-trigger="dropdown" ng-show="isLogin && name.length == 0"> {{email}} <span class="caret"></span></a>
                                             <a href="#" data-trigger="dropdown" ng-show="!isLogin">Member<span class="caret"></span></a>
                                             <div class="dropdown-content my-account">
                                                 <ul ng-if="isLogin">
@@ -87,7 +86,8 @@
                             <div class="menu-main pull-left">
                                 <nav>
                                     <ul>
-                                        <li class="active"><a href="@Url.Action("Index", "UW000TopPage")">PENERBANGAN</a></li>
+                                        <li ng-class="{'active' : whatpage() == 1}" id="header-flight"><a href="@Url.Action("Index", "UW000TopPage")">PENERBANGAN</a></li>
+                                        <li ng-class="{'active' : whatpage() == 2}" id="header-hotel"><a href="@Url.Action("Index", "UW000TopPage")">HOTEL</a></li>
                                         @*<li class="hidden"><a href="#" data-toggle="tooltip" data-placement="bottom" title="Coming soon!">HOTEL</a></li>
                         <li class="hidden"><a href="#" data-toggle="tooltip" data-placement="bottom" title="Coming soon!">TOUR &amp; ACTIVITY</a></li>
                         <li class="hidden"><a href="#" data-toggle="tooltip" data-placement="bottom" title="Coming soon!">PROMOTION</a></li>*@

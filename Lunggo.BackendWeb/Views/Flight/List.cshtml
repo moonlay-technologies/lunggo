@@ -14,6 +14,18 @@
     <div class="col-md-12">
         <div class="content-panel">
             <h4><i class="fa fa-angle-right"></i> Flight Reservation List</h4>
+            @if (ViewBag.Month != null && ViewBag.Year != null)
+            {
+                <h4>
+                    <a>Total @ViewBag.Month/@ViewBag.Year : @ViewBag.MonthTotal.ToString("Rp 0,0", new CultureInfo("id-ID")) </a>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <a href="@Url.Action("List", new {month = ViewBag.Month, year = ViewBag.Year, hideExpired = true})">Hide Expired</a>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <a href="@Url.Action("List", new {month = ViewBag.Month, year = ViewBag.Year, completedOnly = true})">Show Only Completed</a>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <a href="@Url.Action("List", new {month = ViewBag.Month, year = ViewBag.Year})">Show All</a>
+                </h4>
+            }
             <hr>
             <table class="table table-hover table-flight-booking">
                 <thead>
@@ -75,57 +87,68 @@
                             <td>
                                 @if (ViewData["Name"] == null)
                                 {
-                                    @Html.Raw(String.Format("({0} people)", rsv.Passengers.Count));
+                                    @Html.Raw(String.Format("({0} people)", rsv.Pax.Count));
                                 }
                                 else
                                 {
-                                    var passenger = rsv.Passengers.First(p => (p.Name).ToLower().Contains(ViewData["Name"].ToString().ToLower()));
-                                    @passenger.Name<wbr/>
-                                    
-                                    if (rsv.Passengers.Count > 1)
+                                    var passenger = rsv.Pax.First(p => (p.Name).ToLower().Contains(ViewData["Name"].ToString().ToLower()));
+                                    @passenger.Name<wbr />
+
+                                    if (rsv.Pax.Count > 1)
                                     {
-                                        @Html.Raw(String.Format("et. al. ({0} more)", rsv.Passengers.Count - 1));
+                                        @Html.Raw(String.Format("et. al. ({0} more)", rsv.Pax.Count - 1));
                                     }
                                 }
                             </td>
                             <td>
-                                @rsv.Payment.FinalPrice.ToString("Rp 0,0", CultureInfo.CreateSpecificCulture("id-ID"))
+                                @(rsv.Payment.FinalPrice == 0 ? rsv.Payment.OriginalPrice.ToString("Rp 0,0", CultureInfo.CreateSpecificCulture("id-ID")) : rsv.Payment.FinalPrice.ToString("Rp 0,0", CultureInfo.CreateSpecificCulture("id-ID")))
                             </td>
                             <td>
-                                @switch (rsv.Payment.Status)
+                                @if (rsv.Payment.Method != PaymentMethod.Undefined)
                                 {
-                                    case PaymentStatus.Pending:
-                                        <span class="label label-default" style="font-size:14px">Pending</span><br />
-                                        <span>by @rsv.Payment.Method.ToString()</span>
-                                        break;
-                                    case PaymentStatus.Settled:
-                                    <span class="label label-success" style="font-size:14px">Complete</span><br />
-                                        <span>by @rsv.Payment.Method.ToString()</span>
-                                        break;
-                                    case PaymentStatus.Cancelled:
-                                    <span class="label label-danger" style="font-size:14px">Cancelled</span><br />
-                                        <span>by @rsv.Payment.Method.ToString()</span>
-                                        break;
-                                    case PaymentStatus.Denied:
-                                    <span class="label label-danger" style="font-size:14px">Denied</span><br />
-                                        <span>by @rsv.Payment.Method.ToString()</span>
-                                        break;
-                                    case PaymentStatus.Verifying:
-                                    <span class="label label-default" style="font-size:14px">Verifying</span><br />
-                                        <span>by @rsv.Payment.Method.ToString()</span>
-                                        break;
-                                    case PaymentStatus.Undefined:
-                                    <span class="label label-default" style="font-size:14px">Undefined</span><br />
-                                        <span>by @rsv.Payment.Method.ToString()</span>
-                                        break;
-                                    case PaymentStatus.Challenged:
-                                    <span class="label label-default" style="font-size:14px">Challenged</span><br />
-                                        <span>by @rsv.Payment.Method.ToString()</span>
-                                        break;
-                                    case PaymentStatus.Expired:
-                                    <span class="label label-danger" style="font-size:14px">Expired</span><br />
-                                        <span>by @rsv.Payment.Method.ToString()</span>
-                                        break;
+                                    switch (rsv.Payment.Status)
+                                    {
+                                        case PaymentStatus.Pending:
+                                            <span class="label label-default" style="font-size: 14px">Pending</span>
+                                            <br />
+                                            <span>@rsv.Payment.Method.ToString()</span>
+                                            break;
+                                        case PaymentStatus.Settled:
+                                        <span class="label label-success" style="font-size: 14px">Complete</span>
+                                        <br />
+                                        <span>@rsv.Payment.Method.ToString()</span>
+                                            break;
+                                        case PaymentStatus.Cancelled:
+                                        <span class="label label-danger" style="font-size: 14px">Cancelled</span>
+                                        <br />
+                                        <span>@rsv.Payment.Method.ToString()</span>
+                                            break;
+                                        case PaymentStatus.Denied:
+                                        <span class="label label-danger" style="font-size: 14px">Denied</span>
+                                        <br />
+                                        <span>@rsv.Payment.Method.ToString()</span>
+                                            break;
+                                        case PaymentStatus.Verifying:
+                                        <span class="label label-default" style="font-size: 14px">Verifying</span>
+                                        <br />
+                                        <span>@rsv.Payment.Method.ToString()</span>
+                                            break;
+                                        case PaymentStatus.Undefined:
+                                        <span class="label label-default" style="font-size: 14px">Undefined</span>
+                                        <br />
+                                        <span>@rsv.Payment.Method.ToString()</span>
+                                            break;
+                                        case PaymentStatus.Challenged:
+                                        <span class="label label-default" style="font-size: 14px">Challenged</span>
+                                        <br />
+                                        <span>@rsv.Payment.Method.ToString()</span>
+                                            break;
+                                        case PaymentStatus.Expired:
+                                        <span class="label label-danger" style="font-size: 14px">Expired</span>
+                                        <br />
+                                        <span>@rsv.Payment.Method.ToString()</span>
+                                            break;
+                                    }
                                 }
                             </td>
 

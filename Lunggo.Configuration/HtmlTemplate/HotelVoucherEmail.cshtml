@@ -1,0 +1,174 @@
+﻿@using System.Globalization
+@using Lunggo.ApCommon.Constant
+@using Lunggo.ApCommon.Hotel.Service
+@using Lunggo.Framework.Config
+@model Lunggo.ApCommon.Hotel.Model.HotelReservationForDisplay
+@{
+    ViewBag.SiteHeader = "header-email";
+}
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width" />
+</head>
+<body style="background-color:#F4F4F4; color:#535353; font-family:arial, helvetica, sans-serif; font-size:12px;">
+
+
+    <table style="margin-left:auto; margin-right:auto; width:100%; max-width:700px; display:block; background:#ffffff;">
+        <thead width="100%">
+            <tr width="100%">
+                <th width="5%"></th>
+                <th colspan="2" width="90%" style="padding-top:30px;">
+                    <p style="text-align:right;">
+                        <a href="http://travorama.com" style="text-decoration:none;">
+                            <img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/travorama-logo-color.png")" alt="Travorama" />
+                        </a>
+                        <br />
+                        <a href="https://www.facebook.com/travorama" style="text-decoration:none;">
+                            <img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/email-facebook.jpg")" alt="Travorama on Facebook" />
+                        </a>
+                        <a href="https://twitter.com/travoramaid" style="text-decoration:none;">
+                            <img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/email-twitter.jpg")" alt="Travorama on Twitter" />
+                        </a>
+                        <a href="https://instagram.com/travorama" style="text-decoration:none;">
+                            <img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/email-instagram.jpg")" alt="Travorama on Instagram" />
+                        </a>
+                    </p>
+                </th>
+                <th width="5%"></th>
+            </tr>
+        </thead>
+        <tbody width="100%">
+            <tr width="100%">
+                <td width="5%"></td>
+                <td colspan="2" width="90%">
+                    <p style="color:#1daee5; text-align: center;">Terima kasih, <b>@EnumDisplay.Title(Model.Contact.Title) @Model.Contact.Name</b>! Pesanan Anda telah dikonfirmasi.</p>
+                    <p style="text-align: center;">Nomor Reservasi : @Model.RsvNo</p>
+                </td>
+                <td width="5%"></td>
+            </tr>
+            <tr width="100%" height="50px">
+                <td width="5%"></td>
+                <td colspan="2" width="90%" style="text-align: center;">
+                    <a style="background: #ffd632; padding: 8px 25px; color: #4f3500; font-weight: 700; border-radius: 3px; border: 2px solid #ebb600; text-decoration: none;" href="#">KELOLA PEMESANAN SAYA</a>
+                </td>
+                <td width="5%"></td>
+            </tr>
+            <tr width="100%" height="50px">
+                <td width="5%"></td>
+                <td colspan="2" width="90%">
+                    <table width="100%" style="margin: 30px 0 20px; border-top: 2px #15b1e4 solid; border-bottom: 2px #15b1e4 solid; margin-bottom: 25px ">
+                        <tr>
+                            <td width="30%" height="10px"></td>
+                            <td width="70%" height="10px"></td>
+                        </tr>
+                        <tr>
+                            <td width="30%"><img style="width: 100%;" src="@Model.HotelDetail.MainImage" max-width="716" max-height="162" /></td>
+                            <td width="70%" style="padding-left: 10px;">
+                                <p style="font-size: 15px; text-transform: uppercase; font-weight: 700; color: #15b1e4;">@Model.HotelDetail.HotelName</p>
+                                @if (Model.HotelDetail.StarRating == 0 || Model.HotelDetail.StarRating == 1)
+                                {
+                                    <p class="star"></p>
+                                }
+                                @if (Model.HotelDetail.StarRating == 2)
+                                {
+                                    <p class="star star-2"></p>
+                                }
+                                @if (Model.HotelDetail.StarRating == 3)
+                                {
+                                    <p class="star star-3"></p>
+                                }
+                                @if (Model.HotelDetail.StarRating == 4)
+                                {
+                                    <p class="star star-4"></p>
+                                }
+                                @if (Model.HotelDetail.StarRating == 5)
+                                {
+                                    <p class="star star-5"></p>
+                                }
+                                <p>
+                                    <img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/location.png")" />@Model.HotelDetail.Address
+                                    @Model.HotelDetail.DestinationName, @Model.HotelDetail.PostalCode, @Model.HotelDetail.CountryName
+                                </p>
+                                <p><img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/phone.png")" /> @Model.HotelDetail.PhonesNumbers[0] </p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="30%" height="10px"></td>
+                            <td width="70%" height="10px"></td>
+                        </tr>
+                    </table>
+                </td>
+                <td width="5%"></td>
+            </tr>
+            <tr width="100%" height="50px">
+                <td width="5%"></td>
+                <td colspan="2" width="90%">
+                    <table width="100%" style="margin-bottom: 10px;">
+                        <tr style="border-bottom: 1px dashed #ccc; height: 30px;">
+                            <td width="30%" style="color:#999;">Pemesanan Anda</td>
+                            <td width="70%" style="font-weight: 700; text-align: right;">@((Model.HotelDetail.CheckOutDate - Model.HotelDetail.CheckInDate).Days) Malam, @Model.HotelDetail.Rooms.SelectMany(r => r.Rates).Sum(p => p.RoomCount) Kamar</td>
+                        </tr>
+                        <tr style="border-bottom: 1px dashed #ccc; height: 30px;">
+                            <td width="30%" style="color:#999;">Check in</td>
+                            <td width="70%" style="font-weight: 700; text-align: right;">@Model.HotelDetail.CheckInDate.ToString("D", CultureInfo.CreateSpecificCulture("id-ID"))</td>
+                        </tr>
+                        <tr style="border-bottom: 1px dashed #ccc; height: 30px;">
+                            <td width="30%" style="color:#999;">Check out</td>
+                            <td width="70%" style="font-weight: 700; text-align: right;">@Model.HotelDetail.CheckOutDate.ToString("D", CultureInfo.CreateSpecificCulture("id-ID"))</td>
+                        </tr>
+                        <tr style="border-bottom: 1px dashed #ccc; height: 30px;">
+                            <td width="30%" style="color:#999;">Client Reference</td>
+                            <td width="70%" style="font-weight: 700; text-align: right;">@Model.HotelDetail.ClientReference</td>
+                        </tr>
+                        <tr style="border-bottom: 1px dashed #ccc; height: 30px;">
+                            <td width="30%" style="color:#999;">Booking Reference</td>
+                            <td width="70%" style="font-weight: 700; text-align: right;">@Model.HotelDetail.BookingReference</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #000; height: 50px; vertical-align: text-top;">
+                            <td width="30%" style="color:#999; padding-top: 5px;">Dipesan oleh</td>
+                            <td width="70%" style="padding-top: 5px; font-weight: 700; text-align: right;">@EnumDisplay.Title(Model.Contact.Title) @Model.Contact.Name</td>
+                        </tr>
+                    </table>
+                </td>
+                <td width="5%"></td>
+            </tr>
+            <tr>
+                <td width="5%"></td>
+                <td colspan="2" width="90%" style="padding-bottom: 30px;">
+                    <p style="font-weight: 700; color: #15b1e4;">@Model.HotelDetail.Rooms[0].Rates[0].RoomCount Kamar @HotelService.GetInstance().GetHotelRoom(Model.HotelDetail.Rooms[0].RoomCode).RoomDescId @HotelService.GetInstance().GetHotelBoardDescId(Model.HotelDetail.Rooms[0].Rates[0].Boards)</p>
+                    <p style="color: #15b1e4;">sudah termasuk 10% Pajak.</p>
+                    <p style="color: #15b1e4;">sudah termasuk 10% Biaya layanan.</p>
+                    <p style="font-style: italic; font-size: 10px">
+                        &quot;Payable through @Model.HotelDetail.SupplierName, acting as agent for the service operating
+
+                        company, details of which can be provided upon request&quot;. VAT: @Model.HotelDetail.SupplierVat
+
+                        Reference: @Model.HotelDetail.BookingReference
+                    </p>
+                    <span style="color: #ff7200; font-size: 15px; font-weight: 700;">Harga Total</span>
+                    <span style="color: #ff7200; font-size: 15px; font-weight: 700; float: right;">Rp @Model.Payment.FinalPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</span>
+
+                </td>
+                <td width="5%"></td>
+            </tr>
+            <tr>
+                <td width="5%"></td>
+                <td colspan="2" width="90%">
+                    <p style="font-size: 10px; opacity: 0.5; font-style: italic;margin-top: 1px; margin-bottom: 0;">Jika pembayaran dilakukan lewat dari tanggal yang telah ditentukan, booking Anda akan dibatalkan otomatis oleh sistem kami. Untuk booking yang sama, Anda harus melakukan pemesanan ulang dan kemungkinan besar harga akan naik.</p>
+                </td>
+                <td width="5%"></td>
+            </tr>
+        </tbody>
+        <tfoot width="100%">
+            <tr>
+                <td></td>
+                <td style="padding-bottom:30px;"></td>
+                <td></td>
+            </tr>
+        </tfoot>
+    </table>
+</body>
+</html>

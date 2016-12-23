@@ -1,0 +1,65 @@
+﻿.search-list {
+    position: relative;
+    font-size: 11px;
+    .hotel-list-container {
+        .hotel-list {
+            padding: 15px 10px;
+            .img-list {
+                width: 100%;
+                height: 134px;
+                background-size: cover;
+                background-position: center center;
+                background-repeat: no-repeat;
+            }
+            .col-right-hotel {
+                &:after {@extend .arrow-detail;}
+                .star {margin-top: 3px;}
+                .location {
+                    margin: 5px 0 5px 15px;
+                    &:before {
+                        content: '';
+                        background: url(/Assets/mobile/images/Hotel/location-grey.png) no-repeat;
+                        display: inline-block;
+                        width: 11px;
+                        height: 16px;
+                        vertical-align: middle;
+                        background-size: 100%;
+                        position: absolute;
+                        margin-left: -15px;
+                    }
+                }
+            }
+        }
+        @media only screen and (min-width: 414px) and (max-height: 736px) {
+            .hotel-list .img-list {height: 154px;}
+        } @media only screen and (min-width: 375px) and (max-height: 667px) {
+            .hotel-list .img-list {height: 144px;}
+        } @media only screen and (min-width: 320px) and (max-height: 640px) {
+            .hotel-list .img-list {height: 144px;}
+        } @media only screen and (max-width: 320px) and (height: 568px) {
+            .hotel-list .img-list {height: 134px;}
+        } @media only screen and (max-width: 320px) and (height: 480px) {
+            .hotel-list .img-list {height: 134px;}
+        }
+    }
+}
+
+ /*Shorten Text*/
+.filter-group--facility, .filter-group--area {
+    .sh-list {
+	    height: 170px;
+        overflow: hidden;
+        &.opened {height: auto;}
+    }
+    .toggle {
+        .sh-open {display: block;}
+        .sh-close {display: none;}
+        &.active {
+            .sh-open {display: none;}
+            .sh-close {display: block;}
+        }
+    }
+    .sh-open {@extend .arrow-down-yellow;}
+    .sh-close {@extend .arrow-up-yellow;}
+}
+

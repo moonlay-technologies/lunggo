@@ -13,6 +13,15 @@ app.controller('paymentController', [
         angular.element(document).ready(function () {
             $scope.UniqueCodePaymentConfig.GetUniqueCode($scope.rsvNo);
         });
+
+        $scope.capitalizeFirstLetter = function (sentence) {
+            var words = sentence.split(" ");
+            var text = "";
+            for (var i = 0; i < words.length; i++) {
+                text += words[i].substring(0, 1) + words[i].substring(1, words[i].length).toLowerCase() + " ";
+            }
+            return text;
+        }
         $scope.currentPage = 4;
         $scope.trial = 0;
         $scope.pageLoaded = true;
@@ -23,6 +32,12 @@ app.controller('paymentController', [
         $scope.paymentTimeout = paymentTimeout;
         $scope.paymentMethod = ''; //Payment
         $scope.trips = trips;
+        $scope.hotelDetails = hotelDetails;
+        $scope.totalRoom = totalRoom;
+        $scope.checkin = checkin;
+        $scope.checkout = checkout;
+        $scope.nights = nights;
+        $scope.totalpax = totalpax;
         $scope.stepClass = '';
         $scope.redirectionUrl = redirectionUrl;
         //CreditCard
@@ -34,7 +49,23 @@ app.controller('paymentController', [
             Cvv: '',
             Number: ''
         };
-
+        $scope.hotelstar = function () {
+            if ($scope.hotelDetails.starRating == 1) {
+                return 'star';
+            }
+            if ($scope.hotelDetails.starRating == 2) {
+                return 'star star-2';
+            }
+            if ($scope.hotelDetails.starRating == 3) {
+                return 'star star-3';
+            }
+            if ($scope.hotelDetails.starRating == 4) {
+                return 'star star-4';
+            }
+            if ($scope.hotelDetails.starRating == 5) {
+                return 'star star-5';
+            }
+        }
         //Mandiri CLick Pay
         $scope.MandiriClickPay = {
             Token: '',

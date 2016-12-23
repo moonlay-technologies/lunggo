@@ -29,6 +29,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -42,7 +43,8 @@
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.8.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
@@ -70,9 +72,12 @@
     <None Include="Properties\PublishProfiles\travorama-local-webjob.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-prod-webjob %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-prod-webjob %283%29.pubxml" />
+    <None Include="Properties\PublishProfiles\travorama-prod-webjob %284%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-prod-webjob.pubxml" />
+    <None Include="Properties\PublishProfiles\travorama-prod-webjobflightsearch.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-qa-webjob %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-qa-webjob %283%29.pubxml" />
+    <None Include="Properties\PublishProfiles\travorama-qa-webjob %284%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-qa-webjob.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

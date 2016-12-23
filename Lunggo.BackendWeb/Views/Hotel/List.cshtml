@@ -1,0 +1,143 @@
+﻿@using System.Globalization
+@using Lunggo.ApCommon.Hotel.Model
+@using Lunggo.ApCommon.Payment.Constant
+@model List<HotelReservationForDisplay>
+
+@{
+    ViewBag.Title = "Hotel Reservation List";
+}
+
+<h3><i class="fa fa-angle-right"></i> Hotel Reservation</h3>
+<div class="row">
+
+    <div class="col-md-12">
+        <div class="content-panel">
+            <h4><i class="fa fa-angle-right"></i> Hotel Reservation List</h4>
+            @if (ViewBag.Month != null && ViewBag.Year != null)
+            {
+                <h4>
+                    <a>Total @ViewBag.Month/@ViewBag.Year : @ViewBag.MonthTotal.ToString("Rp 0,0", new CultureInfo("id-ID")) </a>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <a href="@Url.Action("List", new {month = ViewBag.Month, year = ViewBag.Year, hideExpired = true})">Hide Expired</a>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <a href="@Url.Action("List", new {month = ViewBag.Month, year = ViewBag.Year, completedOnly = true})">Show Only Completed</a>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <a href="@Url.Action("List", new {month = ViewBag.Month, year = ViewBag.Year})">Show All</a>
+                </h4>
+            }
+            <hr>
+            <table class="table table-hover table-flight-booking">
+                <thead>
+                    <tr>
+                        <th>No. Reservasi</th>
+                        <th>Nama Kontak</th>
+                        <th>Waktu Reservasi</th>
+                        <th>Nama Hotel</th>
+                        <th>Destinasi</th>
+                        <th>Tgl Check In</th>
+                        <th>Tgl Check Out</th>
+                        <th>Jlh Kamar</th>
+                        <th>Jlh Pax</th>
+                        <th>Harga</th>
+                        <th>Status Pembayaran</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var rsv in Model)
+                    {
+                        var hotelDetails = rsv.HotelDetail;
+                        <tr>
+                            <td>
+                                <a href="@Url.Action("Detail", "Hotel", new { RsvNo = rsv.RsvNo})">@rsv.RsvNo</a>
+                            </td>
+                            <td>
+                                @rsv.Contact.Name
+                            </td>
+                            <td>
+                                @rsv.RsvTime.AddHours(7).ToString("d MMM yyyy")<br />
+                                @rsv.RsvTime.AddHours(7).ToString("HH:mm:ss")
+                            </td>
+                            <td>
+                                @hotelDetails.HotelName
+                            </td>
+                            <td>
+                                @hotelDetails.ZoneName, @hotelDetails.DestinationName, @hotelDetails.CountryName
+                            </td>
+                            <td>
+                                @hotelDetails.CheckInDate.ToString("d MMM yyyy")
+                            </td>
+                            <td>
+                                @hotelDetails.CheckOutDate.ToString("d MMM yyyy")
+                            </td>
+                            <td>
+                                @hotelDetails.Rooms.SelectMany(r => r.Rates).Sum(r => r.RoomCount) Kamar
+                            </td>
+                            <td>
+                                @hotelDetails.Rooms.SelectMany(r => r.Rates).Sum(r => r.AdultCount + r.ChildCount) Orang
+                            </td>
+                            <td>
+                                @(rsv.Payment.FinalPrice == 0 ? rsv.Payment.OriginalPrice.ToString("Rp 0,0", CultureInfo.CreateSpecificCulture("id-ID")) : rsv.Payment.FinalPrice.ToString("Rp 0,0", CultureInfo.CreateSpecificCulture("id-ID")))
+                            </td>
+                            <td>
+                                @if (rsv.Payment.Method != PaymentMethod.Undefined)
+                                {
+                                    switch (rsv.Payment.Status)
+                                    {
+                                        case PaymentStatus.Pending:
+                                            <span class="label label-default" style="font-size: 14px">Pending</span>
+                                            <br />
+                                            <span>@rsv.Payment.Method.ToString()</span>
+                                            break;
+                                        case PaymentStatus.Settled:
+                                        <span class="label label-success" style="font-size: 14px">Complete</span>
+                                        <br />
+                                        <span>@rsv.Payment.Method.ToString()</span>
+                                            break;
+                                        case PaymentStatus.Cancelled:
+                                        <span class="label label-danger" style="font-size: 14px">Cancelled</span>
+                                        <br />
+                                        <span>@rsv.Payment.Method.ToString()</span>
+                                            break;
+                                        case PaymentStatus.Denied:
+                                        <span class="label label-danger" style="font-size: 14px">Denied</span>
+                                        <br />
+                                        <span>@rsv.Payment.Method.ToString()</span>
+                                            break;
+                                        case PaymentStatus.Verifying:
+                                        <span class="label label-default" style="font-size: 14px">Verifying</span>
+                                        <br />
+                                        <span>@rsv.Payment.Method.ToString()</span>
+                                            break;
+                                        case PaymentStatus.Undefined:
+                                        <span class="label label-default" style="font-size: 14px">Undefined</span>
+                                        <br />
+                                        <span>@rsv.Payment.Method.ToString()</span>
+                                            break;
+                                        case PaymentStatus.Challenged:
+                                        <span class="label label-default" style="font-size: 14px">Challenged</span>
+                                        <br />
+                                        <span>@rsv.Payment.Method.ToString()</span>
+                                            break;
+                                        case PaymentStatus.Expired:
+                                        <span class="label label-danger" style="font-size: 14px">Expired</span>
+                                        <br />
+                                        <span>@rsv.Payment.Method.ToString()</span>
+                                            break;
+                                    }
+
+                                }
+                            </td>
+
+                            <td>
+                                <a href="@Url.Action("Detail", "Hotel", new {rsv.RsvNo})" class="btn btn-xs btn-info"><span class="fa fa-eye"> view</span></a><br />
+                            </td>
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+        </div><!--/content-panel -->
+    </div><!-- /col-md-12 -->
+
+</div><!-- row -->

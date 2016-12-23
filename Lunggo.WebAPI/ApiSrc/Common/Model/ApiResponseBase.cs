@@ -45,17 +45,18 @@ namespace Lunggo.WebAPI.ApiSrc.Common.Model
             }
             var log = LogService.GetInstance();
             var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
-            log.Post(
-                "```Error 500 API Log```"
-                + "\n*Environment :* " + env.ToUpper()
-                + "\n*Exception :* "
-                + e.Message
-                + "\n*Stack Trace :* \n"
-                + e.StackTrace
-                + "\n*Request :* \n"
-                + requestString
-                + "\n*Platform :* "
-                + Client.GetPlatformType(HttpContext.Current.User.Identity.GetClientId()));
+                log.Post(
+                    "```Error 500 API Log```"
+                    + "\n*Environment :* " + env.ToUpper()
+                    + "\n*Exception :* "
+                    + e.Message
+                    + "\n*Stack Trace :* \n"
+                    + e.StackTrace
+                    + "\n*Request :* \n"
+                    + requestString
+                    + "\n*Platform :* "
+                    + Client.GetPlatformType(HttpContext.Current.User.Identity.GetClientId()),
+                    env == "production" ? "#logging-prod" : "#logging-dev");
             return e.GetType() == typeof(JsonReaderException)
                 ? ErrorInvalidJson()
                 : Error500();

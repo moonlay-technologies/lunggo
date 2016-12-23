@@ -3,7 +3,7 @@ using Lunggo.Repository.TableRecord;
 
 namespace Lunggo.ApCommon.Product.Query
 {
-    internal class GetAllOrderMarginsQuery : QueryBase<GetAllOrderMarginsQuery, MarginTableRecord>
+    internal class GetAllOrderMarginsQuery : DbQueryBase<GetAllOrderMarginsQuery, MarginTableRecord>
     {
         protected override string GetQuery(dynamic condition = null)
         {

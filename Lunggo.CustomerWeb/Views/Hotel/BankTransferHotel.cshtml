@@ -1,0 +1,201 @@
+﻿@using System.Globalization
+@using Lunggo.ApCommon.Constant
+@using Lunggo.Framework.Config
+@model Lunggo.ApCommon.Hotel.Model.HotelReservationForDisplay
+
+@{
+    ViewBag.SiteHeader = "header-email";
+}
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width" />
+</head>
+<body style="background-color:#F4F4F4; color:#535353; font-family:arial, helvetica, sans-serif; font-size:12px;">
+
+
+    <table style="margin-left:auto; margin-right:auto; width:100%; max-width:700px; display:block; background:#ffffff;">
+        <thead width="100%">
+            <tr width="100%">
+                <th width="5%"></th>
+                <th colspan="2" width="90%" style="padding-top:30px;">
+                    <p style="text-align:right;">
+                        <a href="http://travorama.com" style="text-decoration:none;">
+                            <img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/travorama-logo-color.png")" alt="Travorama" />
+                        </a>
+                        <br />
+                        <a href="https://www.facebook.com/travorama" style="text-decoration:none;">
+                            <img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/email-facebook.jpg")" alt="Travorama on Facebook" />
+                        </a>
+                        <a href="https://twitter.com/travoramaid" style="text-decoration:none;">
+                            <img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/email-twitter.jpg")" alt="Travorama on Twitter" />
+                        </a>
+                        <a href="https://instagram.com/travorama" style="text-decoration:none;">
+                            <img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/email-instagram.jpg")" alt="Travorama on Instagram" />
+                        </a>
+                    </p>
+                </th>
+                <th width="5%"></th>
+            </tr>
+        </thead>
+        <tbody width="100%">
+            <tr width="100%">
+                <td width="5%"></td>
+                <td colspan="2" width="90%">
+
+                    <!-- CONTENT  -->
+                    <p>
+                        Terima kasih, Anda baru saja memesan hotel dari Travorama dengan rincian:
+                    </p>
+                    <table width="100%" style="margin-bottom: 20px">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <hr style="border-color: #ddd;">
+                                </td>
+                                <td width="4%"></td>
+                                <td>
+                                    <hr style="border-color: #ddd;">
+                                </td>
+                                <td width="4%"></td>
+                                <td>
+                                    <hr style="border-color: #ddd;">
+                                </td>
+                                <td width="4%"></td>
+                            </tr>
+                            <tr>
+                                <td width="14.5%">
+                                    <p style="color: #999;">Nomor Pemesanan.</p>
+                                    <p style=""><b>@Model.RsvNo</b></p>
+                                </td>
+                                <td width="4%"></td>
+                                <td width="14.5%">
+                                    <p style="color: #999;">Waktu.</p>
+                                    <p style=""><b>@Model.RsvTime.ToString("D", CultureInfo.CreateSpecificCulture("id-ID"))  &nbsp;-&nbsp; @Model.RsvTime.ToString("t", CultureInfo.CreateSpecificCulture("id-ID"))</b></p>
+                                </td>
+                                <td width="4%"></td>
+                                <td width="14.5%">
+                                    <p style="color: #999;">Detail Hotel.</p>
+                                    <p style=""><b>@Model.HotelDetail.HotelName</b></p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <table width="100%" style="border-top: 2px #15b1e4 solid; border-bottom: 2px #15b1e4 solid; margin-bottom: 25px ">
+                        <tr>
+                            <td>
+                                <p style="color: #15b1e4; text-align: center; margin: 7px 0;"><b>Metode Pembayaran : Transfer (SMS/Internet Banking/Teller Bank)</b> </p>
+                            </td>
+                        </tr>
+                    </table>
+
+                    <p>Untuk mendapatkan e-tiket, lakukan pembayaran lalu konfirmasikan pembayaran sesuai dua langkah berikut:</p>
+
+                    <table width="100%" style="margin-bottom: 10px;">
+                        <tr>
+                            <td width="5%">
+                                <span style="background: #ffd632; color: #000; padding: 6.5px 10px; line-height: 0; border-radius: 27px; font-weight: 700; vertical-align: middle;">1</span>
+                            </td>
+                            <td>
+                                <p style="margin: 0;"><b>Transfer pembayaran Anda tepat dengan total tagihan Rp @Model.Payment.FinalPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID")) ke rekening di bawah ini</b></p>
+                            </td>
+                        </tr>
+                    </table>
+
+                    <table width="94%" style="margin-left: 6%" cellpadding="0" cellspacing="0">
+                        <tr>
+                            <td>
+                                <hr style="border-color: #ddd; " />
+                            </td>
+                            <td width="4%"></td>
+                            <td>
+                                <hr style="border-color: #ddd; " />
+                            </td>
+                            <td width="4%"></td>
+                            <td>
+                                <hr style="border-color: #ddd; " />
+                            </td>
+                            <td width="4%"></td>
+                            <td>
+                                <hr style="border-color: #ddd; " />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="14.5%">
+                                <p style="color: #999;">Bank</p>
+                                <p style=""><b>Mandiri</b></p>
+                            </td>
+                            <td width="4%"></td>
+                            <td width="14.5%">
+                                <p style="color: #999;">No. Rekening</p>
+                                <p style=""><b>1020006675802</b></p>
+                            </td>
+                            <td width="4%"></td>
+                            <td width="14.5%">
+                                <p style="color: #999;">Cabang</p>
+                                <p style=""><b>KC Jakarta Sudirman</b></p>
+                            </td>
+                            <td width="4%"></td>
+                            <td width="14.5%">
+                                <p style="color: #999;">Atas Nama</p>
+                                <p style=""><b>TRAVEL MADEZY INTERNASIONAL</b></p>
+                            </td>
+                        </tr>
+                    </table>
+
+                    <p style="font-style: italic; font-size: 11px; margin-left: 6%; margin-bottom: 0px;">Batas waktu pembayaran Anda adalah sebelum <span style="color: #15b1e4">Pk. @Model.Payment.TimeLimit.GetValueOrDefault().ToString("t", CultureInfo.CreateSpecificCulture("id-ID")) WIB - (@Model.Payment.TimeLimit.GetValueOrDefault().ToString("D", CultureInfo.CreateSpecificCulture("id-ID"))).</span></p>
+                    <p style="font-size: 10px; opacity: 0.5; font-style: italic; margin-left: 6%; margin-top: 1px; margin-bottom: 50px;">Jika lewat, booking Anda akan dibatalkan otomatis oleh sistem kami. Untuk booking yang sama, Anda harus melakukan pemesanan ulang dan harga kemungkinan besar akan berubah</p>
+                    
+                    <table width="100%" style="margin-bottom: 30px">
+                        <tr>
+                            <td width="5%" rowspan="3" style="vertical-align: top;">
+                                <span style="background: #ffd632; color: #000; padding: 6.5px 10px; line-height: 0; border-radius: 27px; font-weight: 700; vertical-align: middle;">2</span>
+                            </td>
+                            <td>
+                                <p style="padding-left: 0.3%;"><b>Konfirmasikan pembayaran Anda dengan cukup meng-klik link ini :</b></p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <a style="color: #15b1e4; text-decoration: underline;" href="#">https://www.traveloka.com/partner/null/confirmPayment?auth=3114b2f168&iid=1515545647553445913</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p style="margin:7px 0">Setelah itu, mohon tunggu hingga e-ticket/voucher diterbitkan dan dikirim ke email Anda maks. 60 menit</p>
+                            </td>
+                        </tr>
+                    </table>
+
+                    <p style="margin-left: 5%; opacity: 0.8; font-size: 10px; font-style: italic; margin-bottom: 40px;">Jika ada pertanyaan dapat mengirimkan email ke <span style="color: #15b1e4"> cs@travorama.com </span> dengan mencantumkan <span style="color: #15b1e4">No. Pesanan Travorama @Model.RsvNo</span></p>
+                    <hr style="border-color: #15b1e4; border-style: dotted; margin-bottom: 20px;" width="100%" />
+                    <p>Email tagihan ini bukan merupakan bukti pembayaran yang sah dan tidak dapat ditukar menjadi tiket apapun.</p>
+                    <p style="font-size: 11px; font-style: italic; margin-bottom: 50px;">Email ini ditujukan hanya untuk, karena Anda telah melakukan pemesanan melalui Travorama</p>
+
+                </td>
+                <td width="5%"></td>
+            </tr>
+        </tbody>
+        <tfoot width="100%">
+            <tr>
+                <td></td>
+                <td style="width: 60%;"><img style="width: 100%;" src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/email/plane-email-bg.jpg")" /></td>
+                <td style="padding-bottom:40px;">
+                    <address style="font-style:normal; float:right; width:240px; margin-right:0; margin-left:auto; font-size:12px;">
+                        <h4 style="color:#1daee5; margin-bottom:5px;">PT. Travel Madezy Internasional</h4>
+                        <p style="margin-top:0; margin-bottom:5px;">
+                            <span style="color:#1daee5;">A.</span> Equity Tower 25th Floor, SCBD lot 9<br />Jl. Jenderal Sudirman Kav.52-53<br />Jakarta 12190
+                        </p>
+                        <p style="margin-top:0;"></p>
+                    </address>
+                </td>
+                <td></td>
+                <td></td>
+            </tr>
+        </tfoot>
+    </table>
+</body>
+</html>

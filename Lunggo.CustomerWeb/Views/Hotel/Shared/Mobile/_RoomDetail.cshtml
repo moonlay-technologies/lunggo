@@ -1,0 +1,199 @@
+﻿@using System.Globalization
+@using Lunggo.ApCommon.Hotel.Service
+@model Lunggo.ApCommon.Hotel.Model.HotelDetailForDisplay
+@{
+   
+    var night = (Model.CheckOutDate - Model.CheckInDate).Days;
+    var hotelImg = "";
+    var roomImg = "";
+    var images = HotelService.GetInstance().GetHotelDetailFromDb(Model.HotelCode).ImageUrl;
+   
+    var firstOrDefault = images.Where(i => i.Type == "HAB").ToList().FirstOrDefault();
+    if (firstOrDefault != null)
+    {
+        roomImg = images == null
+            ? null
+            : "http://photos.hotelbeds.com/giata/" + firstOrDefault.Path;
+    }
+
+    var listAges = new List<int>();
+    var sumAdult = 0;
+    var sumChild = 0;
+    var orderedRooms = new List<Tuple<string, int>>();
+    try
+    {
+       
+        foreach (var room in Model.Rooms)
+        {
+            var roomName = room.RoomName;
+            var sum = 0;
+            foreach (var rate in room.Rates)
+            {
+                sum += rate.RoomCount;
+                sumAdult += rate.AdultCount;
+                sumChild += rate.ChildCount;
+                if (rate.ChildCount <= 0)
+                {
+                    continue;
+                }
+                listAges.AddRange(rate.ChildrenAges);
+            }
+            orderedRooms.Add(new Tuple<string, int>(roomName, sum)); ;
+        }
+    }
+    catch (Exception)
+    {
+  
+        throw;
+    }
+}
+
+@functions{
+
+    public string ToTitleCase(string input)
+    {
+
+        var text = "";
+        try
+        {
+            var splittedText = input.Split(' ');
+            foreach (var word in splittedText)
+            {
+                var splittedByStrips = word.Split('-');
+                var w = "";
+                if (splittedByStrips.Count() != 1)
+                {
+                    foreach (var part in splittedByStrips)
+                    {
+                        w += ApplyTitleCase(part) + "-";
+                    }
+                    text += w.Substring(0, w.Length - 1) + " ";
+                }
+                else
+                {
+                    text += word[0] + word.Substring(1, word.Length - 1).ToLower() + " ";
+                }
+            }
+        }
+        catch{}
+        return text.Length == 0 ? "" : text.Substring(0, text.Length - 1);
+    }
+    
+    public string ApplyTitleCase(string input)
+    {
+        return input[0] + input.Substring(1, input.Length - 1).ToLower();
+    }
+
+}
+
+<div class="form-group">
+    <div class="form-box">
+        <div class="fb-header"><b>Detail Kamar</b></div>
+        <div class="fb-body">
+            @foreach (var room in Model.Rooms)
+            {
+                foreach (var rate in room.Rates)
+                {
+                    <hr/>
+                    <div class="fb-room">
+                        <div class="clearfix">
+                            <div class="col-8"><div class="blue-txt bold-txt lg-txt" style="text-transform: capitalize">@ToTitleCase(room.RoomName) @ToTitleCase(rate.BoardDescription)</div></div>
+                            @*<div class="col-2"><span class="meal-icon pull-right"></span><span class="wifi-icon pull-right"></span></div>*@
+                        </div>
+                        <div class="fb-img" style="background-image: url(@roomImg)"></div>
+                        <div class="clearfix">
+                            <div class="fb-row clearfix">
+                                <div class="col-6">Jumlah Kamar</div>
+                                <div class="col-4 bold-txt">@rate.RoomCount Kamar</div>
+                            </div>
+                            <div class="fb-row clearfix">
+                                <div class="col-6">Tamu per Kamar</div>
+                                <div class="col-4 bold-txt">
+                                    @rate.AdultCount Dewasa @if (rate.ChildCount > 0)
+                                    {
+                                        <span>, @rate.ChildCount Anak</span>
+                                    }
+                                </div>
+                            </div>
+                            @if (rate.ChildCount > 0)
+                            {
+                                <div class="fb-row clearfix">
+                                    <div class="col-6">Umur Anak</div>
+                                    <div class="col-4 bold-txt">
+                                        <span>
+                                            @for (var a = 0; a < listAges.Count; a++)
+                                            {
+                                                if (a != listAges.Count - 1)
+                                                {
+                                                    @listAges[a]
+                                                    <span>Tahun, </span>
+                                                }
+                                                else
+                                                {
+                                                    @listAges[a] <span>Tahun</span>
+                                                }
+                                            }
+                                        </span>
+                                    </div>
+                                </div>
+                            }
+
+                        </div>
+                        <ul class="blue-list blue-txt">
+                            <li ng-show="room.rate.isFreeCancel">
+                                Gratis pembatalan sebelum
+                                <span style="color:#1daee4">
+                                    @rate.FreeUntil.GetValueOrDefault().ToString("D", CultureInfo.CreateSpecificCulture("id-ID"))'
+                                </span> WIB.
+                            </li>
+                            @foreach (var cancellation in rate.Cancellation)
+                            {
+                                <li>
+                                    Pembatalan setelah <span style="color:#1daee4">@cancellation.StartTime.ToString("D", CultureInfo.CreateSpecificCulture("id-ID"))</span>
+                                    akan dikenakan biaya pembatalan sebesar <span style="color:#ff7200">Rp @cancellation.SingleFee.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</span> per kamar.
+                                </li>
+                            }
+
+                        </ul>
+                        @if ((rate.TermAndCondition != null && rate.TermAndCondition.Count > 0) || (Model.Policy != null && Model.Policy.Count > 0))
+                        {
+                            <div class="fb-note">
+                                <div>Catatan Khusus:</div>
+                                @if (rate.TermAndCondition != null && rate.TermAndCondition.Count > 0)
+                                {
+                                    <ul class="sqr-blue-list">
+                                        @foreach (var tnc in rate.TermAndCondition)
+                                        {
+                                            <li>
+                                                <div class="blue-txt semibold-txt">Ketentuan Kamar</div>
+                                                <div class="grey-txt">@tnc</div>
+                                            </li>
+                                        }
+
+                                    </ul>
+                                }
+                                @if (Model.Policy != null && Model.Policy.Count > 0)
+                                {
+                                    <ul class="sqr-blue-list">
+                                        @foreach (var policy in Model.Policy)
+                                        {
+                                            <li>
+                                                <div class="blue-txt semibold-txt">Perlu Diingat</div>
+                                                <div class="grey-txt">@policy</div>
+                                            </li>
+                                        }
+
+                                    </ul>
+                                }
+                                
+                        </div>
+                        }
+                        
+                    </div>
+                }
+
+            }
+
+        </div>
+    </div>
+</div>

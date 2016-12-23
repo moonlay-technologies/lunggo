@@ -55,38 +55,37 @@
     <Reference Include="Antlr3.StringTemplate">
       <HintPath>..\packages\Antlr3.StringTemplate.3.4.1.9005\lib\net35\Antlr3.StringTemplate.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Data.Edm, Version=5.6.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Microsoft.Data.Edm.5.6.2\lib\net40\Microsoft.Data.Edm.dll</HintPath>
+    <Reference Include="Microsoft.Azure.KeyVault.Core">
+      <HintPath>..\packages\Microsoft.Azure.KeyVault.Core.1.0.0\lib\net40\Microsoft.Azure.KeyVault.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Data.OData, Version=5.6.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+    <Reference Include="Microsoft.Data.Edm, Version=5.6.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Microsoft.Data.OData.5.6.2\lib\net40\Microsoft.Data.OData.dll</HintPath>
+      <HintPath>..\packages\Microsoft.Data.Edm.5.6.4\lib\net40\Microsoft.Data.Edm.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Data.Services.Client, Version=5.6.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+    <Reference Include="Microsoft.Data.OData, Version=5.6.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Microsoft.Data.Services.Client.5.6.2\lib\net40\Microsoft.Data.Services.Client.dll</HintPath>
+      <HintPath>..\packages\Microsoft.Data.OData.5.6.4\lib\net40\Microsoft.Data.OData.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Data.Services.Client, Version=5.6.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.Data.Services.Client.5.6.4\lib\net40\Microsoft.Data.Services.Client.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Office.Interop.Excel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
-    <Reference Include="Microsoft.WindowsAzure.Configuration, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+    <Reference Include="Microsoft.WindowsAzure.Storage, Version=7.2.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Microsoft.WindowsAzure.ConfigurationManager.3.1.0\lib\net40\Microsoft.WindowsAzure.Configuration.dll</HintPath>
+      <HintPath>..\packages\WindowsAzure.Storage.7.2.1\lib\net40\Microsoft.WindowsAzure.Storage.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.WindowsAzure.Storage, Version=4.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\WindowsAzure.Storage.4.3.0\lib\net40\Microsoft.WindowsAzure.Storage.dll</HintPath>
-    </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.8.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Spatial, Version=5.6.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+    <Reference Include="System.Spatial, Version=5.6.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\System.Spatial.5.6.2\lib\net40\System.Spatial.dll</HintPath>
+      <HintPath>..\packages\System.Spatial.5.6.4\lib\net40\System.Spatial.dll</HintPath>
     </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -103,6 +102,9 @@
     <None Include="App.config" />
     <None Include="Config\BackendWeb\api.properties" />
     <None Include="Config\BackendWeb\cw.properties" />
+    <None Include="Config\BackendWeb\documentDb.properties">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Config\BackendWeb\facebook.properties" />
     <None Include="Config\BackendWeb\flight.properties">
       <SubType>Designer</SubType>
@@ -172,12 +174,58 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Config\CloudApp.EticketHandler\Garuda.properties" />
+    <None Include="Config\CloudApp.EticketHandler\hotel.properties">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Config\CloudApp.EticketHandler\sendGrid.properties" />
     <None Include="Config\Common\Airline.csv" />
     <None Include="Config\Common\Airport.csv" />
     <None Include="Config\Common\Country.csv" />
-    <None Include="Config\Common\HotelLocation.csv" />
+    <Content Include="Config\Common\GeoCodingAPI.txt" />
+    <Content Include="Config\Common\HotelAccomodation.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Config\Common\HotelBoard.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Config\Common\HotelCategory.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Config\Common\HotelChain.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Config\Common\HotelCountries.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Config\Common\HotelDestinations.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Config\Common\HotelFacilities.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Config\Common\HotelFacilityGroup.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Config\Common\HotelRoom.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Config\Common\HotelRoomPaymentType.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Config\Common\HotelRoomRateType.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Config\Common\HotelRoomRateClass.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Config\Common\HotelSegment.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Config\Common\HotelLocation.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="Config\CloudApp.EticketHandler\Garuda.properties" />
+    <None Include="Config\Common\HotelFacilitiesFilterGroup.csv" />
     <None Include="Config\CustomerWeb\airAsia.properties" />
     <None Include="Config\CustomerWeb\api.properties" />
     <None Include="Config\CustomerWeb\azureStorage.properties" />
@@ -204,6 +252,9 @@
     <None Include="Config\CustomerWeb\veritrans.properties" />
     <None Include="Config\CustomerWeb\zendesk.properties" />
     <None Include="Config\Driver\azureStorage.properties" />
+    <None Include="Config\WebAPI\documentDb.properties">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Config\WebAPI\log.properties">
       <SubType>Designer</SubType>
     </None>
@@ -507,6 +558,72 @@
     </None>
     <None Include="Config\WebJob.CurrencyCrawler\veritrans.properties" />
     <None Include="Config\WebJob.CurrencyCrawler\zendesk.properties" />
+    <None Include="Config\WebJob.HotelContentWrapper\airAsia.properties" />
+    <None Include="Config\WebJob.HotelContentWrapper\api.properties" />
+    <None Include="Config\WebJob.HotelContentWrapper\azureStorage.properties" />
+    <None Include="Config\WebJob.HotelContentWrapper\citilink.properties" />
+    <None Include="Config\WebJob.HotelContentWrapper\cw.properties" />
+    <None Include="Config\WebJob.HotelContentWrapper\db.properties" />
+    <None Include="Config\WebJob.HotelContentWrapper\domain.properties" />
+    <None Include="Config\WebJob.HotelContentWrapper\facebook.properties" />
+    <None Include="Config\WebJob.HotelContentWrapper\flight.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\WebJob.HotelContentWrapper\freshdesk.properties" />
+    <None Include="Config\WebJob.HotelContentWrapper\Garuda.properties" />
+    <None Include="Config\WebJob.HotelContentWrapper\general.properties" />
+    <None Include="Config\WebJob.HotelContentWrapper\hotel.properties" />
+    <None Include="Config\WebJob.HotelContentWrapper\lionAir.properties" />
+    <None Include="Config\WebJob.HotelContentWrapper\mandrill.properties" />
+    <None Include="Config\WebJob.HotelContentWrapper\mystifly.properties" />
+    <None Include="Config\WebJob.HotelContentWrapper\redis.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\WebJob.HotelContentWrapper\sriwijaya.properties" />
+    <None Include="Config\WebJob.HotelContentWrapper\veritrans.properties" />
+    <None Include="Config\WebJob.HotelContentWrapper\zendesk.properties" />
+    <None Include="Config\WebJob.HotelProcessor\airAsia.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\WebJob.HotelProcessor\api.properties" />
+    <None Include="Config\WebJob.HotelProcessor\azureStorage.properties" />
+    <None Include="Config\WebJob.HotelProcessor\citilink.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\WebJob.HotelProcessor\cw.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\WebJob.HotelProcessor\db.properties" />
+    <None Include="Config\WebJob.HotelProcessor\domain.properties" />
+    <None Include="Config\WebJob.HotelProcessor\facebook.properties" />
+    <None Include="Config\WebJob.HotelProcessor\flight.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\WebJob.HotelProcessor\freshdesk.properties" />
+    <None Include="Config\WebJob.HotelProcessor\Garuda.properties" />
+    <None Include="Config\WebJob.HotelProcessor\general.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\WebJob.HotelProcessor\hotel.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\WebJob.HotelProcessor\lionAir.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\WebJob.HotelProcessor\mandrill.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\WebJob.HotelProcessor\mystifly.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\WebJob.HotelProcessor\redis.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\WebJob.HotelProcessor\sriwijaya.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\WebJob.HotelProcessor\veritrans.properties" />
+    <None Include="Config\WebJob.HotelProcessor\zendesk.properties" />
     <None Include="Config\WebJob.FlightProcessor\airAsia.properties">
       <SubType>Designer</SubType>
     </None>
@@ -706,6 +823,11 @@
     <None Include="Config\CloudApp.EticketHandler\sriwijaya.properties">
       <SubType>Designer</SubType>
     </None>
+    <None Include="HtmlTemplate\BankTransferInstructionEmailHotel.cshtml" />
+    <None Include="HtmlTemplate\HotelSaySorryFailedIssueNotifEmail.cshtml" />
+    <None Include="HtmlTemplate\HotelVoucherEmail.cshtml" />
+    <None Include="HtmlTemplate\HotelInvoice.cshtml" />
+    <None Include="HtmlTemplate\HotelVoucher.cshtml" />
     <None Include="HtmlTemplate\FlightEticketSlightDelayNotifEmail.cshtml" />
     <None Include="HtmlTemplate\ContactUsEmail.cshtml" />
     <None Include="HtmlTemplate\FlightIssueFailedNotifEmail.cshtml" />
@@ -718,6 +840,7 @@
     <None Include="HtmlTemplate\TransferConfirmationEmail.cshtml" />
     <None Include="HtmlTemplate\FlightChangedEticketEmail.cshtml" />
     <None Include="HtmlTemplate\FlightEticketEmail.cshtml" />
+    <None Include="HtmlTemplate\VirtualAccountInstructionEmailHotel.cshtml" />
     <None Include="HtmlTemplate\VirtualAccountInstructionEmail.cshtml" />
     <None Include="HtmlTemplate\BankTransferInstructionEmail.cshtml" />
     <None Include="HtmlTemplate\ForgotPasswordEmail.cshtml" />

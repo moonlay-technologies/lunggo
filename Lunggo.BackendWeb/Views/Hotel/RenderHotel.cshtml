@@ -1,0 +1,90 @@
+﻿@model Lunggo.ApCommon.Hotel.Model.HotelDetail
+@using System.Globalization
+@using Lunggo.ApCommon.Hotel.Service
+
+<div class="showback">
+    <h4><b>Reservation Detail</b></h4>
+    <hr />
+    <table class="table table-hover table-no-border">
+        <tbody>
+            <tr>
+                <td>Booking Reference</td>
+                <td>:</td>
+                <td>
+                    <b>@Model.BookingReference</b>
+                </td>
+            </tr>
+            <tr>
+                <td>Nama Hotel</td>
+                <td>:</td>
+                <td>
+                    @Model.HotelName
+                </td>
+            </tr>
+            <tr>
+                <td>Alamat</td>
+                <td>:</td>
+                <td>
+                    @Model.Address
+                </td>
+            </tr>
+            <tr>
+                @{
+                    var hotel = HotelService.GetInstance();
+                }
+                <td>Lokasi</td>
+                <td>:</td>
+                <td>
+                    @hotel.GetZoneNameFromDict(Model.ZoneCode), @hotel.GetDestinationNameFromDict(Model.DestinationCode), @hotel.GetCountryNameFromDict(Model.CountryCode)
+                </td>
+            </tr>
+            <tr>
+                <td>Tanggal Check In</td>
+                <td>:</td>
+                <td>
+                    @Model.CheckInDate.ToString("d MM yyyy")
+                </td>
+            </tr>
+            <tr>
+                <td>Tanggal Check Out</td>
+                <td>:</td>
+                <td>
+                    @Model.CheckOutDate.ToString("d MM yyyy")
+                </td>
+            </tr>
+            <tr>
+                <td>Jumlah Kamar</td>
+                <td>:</td>
+                <td>
+                    @Model.Rooms.SelectMany(r => r.Rates).Sum(r => r.RateCount);
+                </td>
+            </tr>
+            <tr>
+                <td>Jumlah Pax</td>
+                <td>:</td>
+                <td>
+                    @Model.Rooms.SelectMany(r => r.Rates).Sum(r => r.AdultCount + r.ChildCount);
+                </td>
+            </tr>
+            <tr>
+                <td>Rincian Pax</td>
+                <td>:</td>
+                <td>
+                    @foreach (var rate in Model.Rooms.SelectMany(r => r.Rates))
+                    {
+                        @:@rate.AdultCount Dewasa,
+                        if (rate.ChildCount > 0)
+                        {
+                            @: @rate.ChildCount Anak (
+                            for (var i = 0; i < rate.ChildCount; i++)
+                            {
+                                @: @rate.ChildrenAges[i] th
+                            }
+                            @: )
+                        }
+                    }
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

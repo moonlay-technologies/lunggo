@@ -55,22 +55,27 @@
                 <tr>
                     <td>Harga Total</td>
                     <td>:</td>
-                    <td>@Model.Payment.LocalFinalPrice.ToString("Rp 0,0", CultureInfo.CreateSpecificCulture("id-ID"))</td>
+                    <td>@Model.Payment.FinalPriceIdr.ToString("Rp 0,0", CultureInfo.CreateSpecificCulture("id-ID"))</td>
                 </tr>
-                @if (Model.Payment.DiscountCode != null)
+                @if (Model.Payment.DiscountNominal != 0)
                 {
                     <tr>
-                        <td>Kode Voucher</td>
+                        <td>Discount Name</td>
                         <td>:</td>
-                        <td>@Model.Payment.Discount.Name (@Model.Payment.DiscountCode)</td>
+                        <td>@Model.Payment.Discount.Name @(Model.Payment.DiscountCode != null ? ("(" + Model.Payment.DiscountCode + ")") : "")</td>
                     </tr>
                     <tr>
                         <td>Nominal Voucher</td>
                         <td>:</td>
-                        <td>@Model.Payment.DiscountNominal</td>
+                        <td>@Model.Payment.DiscountNominal.ToString("Rp 0,0", CultureInfo.CreateSpecificCulture("id-ID"))</td>
+                    </tr>
+                    <tr>
+                        <td>Harga Sebelum Discount</td>
+                        <td>:</td>
+                        <td>@Model.Payment.OriginalPriceIdr.ToString("Rp 0,0", CultureInfo.CreateSpecificCulture("id-ID"))</td>
                     </tr>
                 }
-                
+
                 <tr>
                     <td>Metode Pembayaran</td>
                     <td>:</td>
@@ -110,24 +115,24 @@
                     </td>
                 </tr>
                 @*@if (Model.Payment.Refund != null)
-                {
-                    <tr>
-                        <td>Refund Time</td>
-                        <td>@Model.Payment.Refund.Time.AddHours(7).ToString("d MMM yyyy HH:mm:ss")</td>
-                    </tr>
-                    <tr>
-                        <td>Refund Amount</td>
-                        <td>@Model.Payment.Refund.Amount.ToString("Rp 0,0", CultureInfo.CreateSpecificCulture("id-ID"))</td>
-                    </tr>
-                    <tr>
-                        <td>Refund Bank</td>
-                        <td>@Model.Payment.Refund.TargetBank</td>
-                    </tr>
-                    <tr>
-                        <td>Refund Account</td>
-                        <td>@Model.Payment.Refund.TargetAccount</td>
-                    </tr>
-                }*@
+                    {
+                        <tr>
+                            <td>Refund Time</td>
+                            <td>@Model.Payment.Refund.Time.AddHours(7).ToString("d MMM yyyy HH:mm:ss")</td>
+                        </tr>
+                        <tr>
+                            <td>Refund Amount</td>
+                            <td>@Model.Payment.Refund.Amount.ToString("Rp 0,0", CultureInfo.CreateSpecificCulture("id-ID"))</td>
+                        </tr>
+                        <tr>
+                            <td>Refund Bank</td>
+                            <td>@Model.Payment.Refund.TargetBank</td>
+                        </tr>
+                        <tr>
+                            <td>Refund Account</td>
+                            <td>@Model.Payment.Refund.TargetAccount</td>
+                        </tr>
+                    }*@
             </tbody>
         </table>
     </div>

@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using log4net;
 using Lunggo.ApCommon.Constant;
 using Lunggo.ApCommon.Flight.Service;
+using Lunggo.ApCommon.Hotel.Service;
 using Lunggo.Framework.BlobStorage;
 using Lunggo.Framework.Config;
 using Lunggo.Framework.Core;
@@ -35,6 +36,7 @@ namespace Lunggo.WebJob.EmailQueueHandler
             InitMailService();
             InitBlobStorageService();
             InitFlightService();
+            InitHotelService();
             //InitTraceListener();
         }
 
@@ -55,6 +57,12 @@ namespace Lunggo.WebJob.EmailQueueHandler
         {
             var flight = FlightService.GetInstance();
             flight.Init("");
+        }
+
+        private static void InitHotelService()
+        {
+            var hotel = HotelService.GetInstance();
+            hotel.Init("");
         }
 
         private static void InitI18NMessageManager()

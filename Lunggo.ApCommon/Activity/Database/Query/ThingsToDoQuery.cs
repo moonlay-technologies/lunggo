@@ -4,7 +4,7 @@ using Lunggo.Framework.Database;
 
 namespace Lunggo.ApCommon.Activity.Database.Query
 {
-    internal class ThingsToDoQuery : QueryBase<ThingsToDoQuery, ActivityForDisplayModel>
+    internal class ThingsToDoQuery : DbQueryBase<ThingsToDoQuery, ActivityForDisplayModel>
     {
         protected override string GetQuery(dynamic condition = null)
         {

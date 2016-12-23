@@ -1,15 +1,110 @@
 ﻿@using System.Globalization
 @using Lunggo.ApCommon.Constant
+@using Lunggo.ApCommon.Flight.Model
+@using Lunggo.ApCommon.Hotel.Model
+@using Lunggo.ApCommon.Hotel.Service
+@using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Sdk.auto.model
 @using Lunggo.ApCommon.Payment.Constant
+@using Lunggo.ApCommon.Product.Constant
 @using Lunggo.Framework.Extension
-@model Lunggo.ApCommon.Flight.Model.FlightReservationForDisplay
+@model Lunggo.ApCommon.Product.Model.ReservationForDisplayBase
 @{
     Layout = "/Views/Shared/Travorama20/_Layout20150929.cshtml";
     ViewBag.BodyClass = "page-account page-account-profile";
     ViewBag.Title = "Detail Pemesanan";
     ViewBag.PageActiveSection = "order";
 }
+@{
+    var orderedRooms = new List<Tuple<string, int>>();
+    var rooms = new List<HotelRoomForDisplay>();
+    var sum = 0;
+    var totalAdult = 0;
+    var totalChild = 0;
+    var images = new List<Image>();
+    var hotelImg = "";
+    var roomImg = "";
+    try
+    {
+        var rsv = Model as HotelReservationForDisplay;
+        rooms = rsv.HotelDetail.Rooms;
+        images = HotelService.GetInstance().GetHotelDetailFromDb(rsv.HotelDetail.HotelCode).ImageUrl;
+        var orDefault = images.Where(i => i.Type == "GEN").ToList().FirstOrDefault();
+        if (orDefault != null)
+        {
+            hotelImg = images == null
+                ? null
+                : "http://photos.hotelbeds.com/giata/" + orDefault.Path;
+        }
+        var firstOrDefault = images.Where(i => i.Type == "HAB").ToList().FirstOrDefault();
+        if (firstOrDefault != null)
+        {
+            roomImg = images == null
+                ? null
+                : "http://photos.hotelbeds.com/giata/" + firstOrDefault.Path;
+        }
+        var rsvNo = Model.RsvNo;
+        foreach (var room in rooms)
+        {
+            var roomName = HotelService.GetInstance().GetHotelRoom(room.RoomCode).RoomDescId;
+            
+            foreach (var rate in room.Rates)
+            {
+                sum += rate.RoomCount;
 
+                totalAdult += rate.AdultCount;
+                totalChild += rate.ChildCount;
+            }
+            orderedRooms.Add(new Tuple<string, int>(roomName, sum)); ;
+        }
+
+    }
+    catch
+    {
+
+    }
+}
+
+@functions{
+
+    public string ToTitleCase(string input)
+    {
+
+        var text = "";
+        try
+        {
+            var splittedText = input.Split(' ');
+            foreach (var word in splittedText)
+            {
+                var splittedByStrips = word.Split('-');
+                var w = "";
+                if (splittedByStrips.Count() != 1)
+                {
+                    foreach (var part in splittedByStrips)
+                    {
+                        w += ApplyTitleCase(part) + "-";
+                    }
+                    text += w.Substring(0, w.Length - 1) + " ";
+                }
+                else
+                {
+                    text += word[0] + word.Substring(1, word.Length - 1).ToLower() + " ";
+                }
+            }
+
+        }
+        catch
+        {
+
+        }
+        return text.Length == 0 ? "" : text.Substring(0, text.Length - 1);
+    }
+
+    public string ApplyTitleCase(string input)
+    {
+        return input[0] + input.Substring(1, input.Length - 1).ToLower();
+    }
+
+}
 @section AdditionalJS{
     <!-- additional Angular JS-->
     <script src="/Assets/js/angular.min.js"></script>
@@ -21,11 +116,15 @@
     <script>
     var langCode = 'en';
     var rsvNo = @Model.RsvNo;
+    var rsvStatus = '@Convert.ToInt32(Model.RsvDisplayStatus)';
+    var paymentMethod = '@Convert.ToInt32(Model.Payment.Method)';
+
     @*var orderDate = '@Model.RsvTime.ToString("u")';
     //var refundDate = '@(Model.Payment.Refund != null ? Model.Payment.Refund.Time.ToString("u") : "")';*@
     </script>
     <!-- angular controller -->
     <script src="/Assets/travorama20/js/accountController.js"></script>
+
 }
 
 
@@ -36,164 +135,313 @@
             @Html.Partial("/Views/Shared/travorama20/_SectionUserMenu.cshtml")
         </div>
         <!-- ******************** -->
+       
+          
+            <div class="col-xs-9">
+                <section class="account-content">
 
-        <div class="col-xs-9">
-            <section class="account-content">
+                    <div class="order-detail">
+                        <header class="content-header">
+                            <h2>NOMOR PESANAN : <b>@Model.RsvNo</b></h2>
+                        </header>
+                        <section class="content-body">
 
-                <div class="order-detail">
-                    <header class="content-header">
-                        <h2>NOMOR PESANAN : <b>{{flight.rsvNo}}</b></h2>
-                    </header>
-                    <section class="content-body">
+                            <div class="info-buyer">
+                                <header>
+                                    <form action="" method="post" name="submitForm" id="rsvno" class="hidden">
+                                        <input type="text" name="RsvNo" value="" id="rsvno-input" />
+                                        <input type="text" name="Status" value="" id="message-input" />
+                                    </form>
+                                    <h4>
+                                        <b>INFO PEMESANAN</b>
+                                        @*{{ButtonText(flight.rsvStatus,flight.payment.method)}}*@
+                                        @if (Model is FlightReservationForDisplay)
+                                        {
+                                            <button class="pull-right btn btn-yellow" ng-click="submitRsvNo(@Model.RsvNo, @Model.RsvDisplayStatus)">
+                                                {{ButtonText(rsvStatus, paymentMethod, 'flight')}}
+                                            </button>
+                                        }
+                                       @if (Model is HotelReservationForDisplay)
+                                       {
+                                        <button class="pull-right btn btn-yellow" ng-click="submitRsvNo(@Model.RsvNo, @Model.RsvDisplayStatus)">
+                                            {{ButtonText(rsvStatus, paymentMethod, 'hotel')}}
+                                        </button>
+                                       }
+                                    </h4>
+                                </header>
+                                <section>
+                                    <div class="form form-horizontal">
 
-                        <div class="info-buyer">
-                            <header>
-                                <form action="" method="post" name="submitForm" id="rsvno" class="hidden">
-                                    <input type="text" name="RsvNo" value="" id="rsvno-input" />
-                                    <input type="text" name="Status" value="" id="message-input" />
-                                </form>
-                                <h4>
-                                    <b>INFO PEMESANAN</b>
-                                    <button class="pull-right btn btn-yellow" ng-if="isExist" ng-click="submitRsvNo(flight.rsvNo, flight.rsvStatus)">{{ButtonText(flight.rsvStatus,flight.payment.method)}}</button>
-                                </h4>
-                            </header>
-                            <section>
-                                <div class="form form-horizontal">
-                                    
-                                    <div class="form-group">
-                                        <label class="control-label col-xs-3">Nama Pemesan</label>
-                                        <div class="col-xs-9">
-                                            <p class="form-control-static">{{flight.contact.name}}</p>
+                                        <div class="form-group">
+                                            <div class="control-label col-xs-3">Nama Pemesan</div>
+                                            <div class="col-xs-9">
+                                                <p>@Model.Contact.Name</p>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="control-label col-xs-3">Tanggal Pemesanan</div>
+                                            <div class="col-xs-9">
+                                                <p>@Model.RsvTime.AddHours(7).ToString("f", CultureInfo.CreateSpecificCulture("id-ID")) WIB</p>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="control-label col-xs-3">Tipe</div>
+                                            @if (Model is FlightReservationForDisplay)
+                                            {
+                                                <div class="col-xs-9">
+                                                    <p>Penerbangan</p>
+                                                </div>
+                                            }
+                                            @if (Model is HotelReservationForDisplay)
+                                            {
+                                                <div class="col-xs-9">
+                                                    <p>Hotel</p>
+                                                </div>
+                                            }
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="control-label col-xs-3">Harga Tiket</div>
+                                            <div class="col-xs-9">
+                                                <p>Rp @Model.Payment.FinalPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</p>
+                                            </div>
+                                        </div>
+                                        
+                                        @if (Model.Payment.Method != PaymentMethod.Undefined)
+                                        {
+                                            <div class="form-group">
+                                                <div class="control-label col-xs-3">Metode Pembayaran</div>
+                                                <div class="col-xs-9">
+                                                    <p>@Model.Payment.Method</p>
+                                                </div>
+                                            </div>
+                                        }
+                                        
+                                        <div class="form-group">
+                                            <div class="control-label col-xs-3">Status Pembayaran</div>
+                                            <div class="col-xs-9">
+                                                <p>@EnumDisplay.PaymentStatus(Model.Payment.Status)</p>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            @if (Model is FlightReservationForDisplay)
+                                            {
+                                                <div class="control-label col-xs-3">Penumpang</div>
+                                            }
+                                            @if (Model is HotelReservationForDisplay)
+                                            {
+                                                <div class="control-label col-xs-3">Tamu</div>
+                                            }
+                                            <div class="col-xs-9">
+                                                <ol class="passenger-list">
+                                                    @foreach (var pax in Model.Pax)
+                                                    {
+                                                        <li>
+                                                            <div class="row">
+                                                                <div class="col-xs-9">
+                                                                    <p>@EnumDisplay.Title(pax.Title) @pax.Name</p>
+                                                                </div>
+                                                                <div class="col-xs-3">
+                                                                    <span>@EnumDisplay.PassengerType(pax.Type)</span>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                    }
+                                                    
+                                                </ol>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="form-group">
-                                        <label class="control-label col-xs-3">Tanggal Pemesanan</label>
+                                </section>
+                            </div><!-- .info-buyer -->
+                           
+        @if (Model is FlightReservationForDisplay)
+        {
+            var rsv = Model as FlightReservationForDisplay;
+            <div class="info-flight">
+                <header>
+                    <h4><b>@Html.I18NString("CW00199")</b></h4>
+                </header>
+                <section>
+                    @foreach (var trip in rsv.Itinerary.Trips)
+                    {
+                        <div>
+                            <div class="flight departure">
+                                <div class="row">
+                                    <div class="col-xs-2">
+                                        <p><img src="@trip.Segments[0].AirlineLogoUrl" alt="@trip.Segments[0].AirlineName" /> </p>
+                                    </div>
+                                    <div class="col-xs-9">
+                                        <span>@trip.Segments[0].AirlineName</span>
+                                    </div>
+                                </div>
+                                    <div class="row">
+                                        <div class="col-xs-2">
+                                            <p>Berangkat :</p>
+                                        </div>
                                         <div class="col-xs-9">
-                                            <p class="form-control-static">{{flight.rsvTime | date : 'dd MMMM yyyy , HH:mm' }}</p>
+                                            <p>@trip.OriginCity - @trip.DestinationCity</p>
+                                            <p>@trip.DepartureDate.GetValueOrDefault().ToString("D", CultureInfo.CreateSpecificCulture("id-ID"))</p>
                                         </div>
                                     </div>
-                                    <div class="form-group">
-                                        <label class="control-label col-xs-3">Tipe</label>
-                                        <div class="col-xs-9">
-                                            <p class="form-control-static">Penerbangan</p>
-                                        </div>
+                                </div>   
+                        </div>
+                    }
+                </section>
+
+            </div><!-- .info-flight -->
+        }
+                            
+             @if (Model is HotelReservationForDisplay)
+             {
+                 var rsv = Model as HotelReservationForDisplay;
+                 var indexroom = 1;
+                <div class="rh-container review-hotel page-hotel">
+                    <h4><b>DETAIL HOTEL</b></h4>
+                    @* <div class="rh-main-title">Detail Hotel</div>*@
+                    <div class="rh-content">
+                        <div class="rh-row clearfix">
+                            <div class="col-left-hotel">
+                                <img src="@hotelImg" alt="Hotel Image" max-width="100%" max-height="100%" style="padding-right :10px;" />
+                            </div>
+                            <div class="col-right-hotel">
+                                <div class="blue-txt bold-txt hotel-title-lg md-txt">@ToTitleCase(rsv.HotelDetail.HotelName)</div>
+                                <div class="star" ng-show="hotelstar() == 'star'"></div>
+                                <div class="star star-2" ng-show="hotelstar() == 'star star-2'"></div>
+                                <div class="star star-3" ng-show="hotelstar() == 'star star-3'"></div>
+                                <div class="star star-4" ng-show="hotelstar() == 'star star-4'"></div>
+                                <div class="star star-5" ng-show="hotelstar() == 'star star-5'"></div>
+                                <div class="rh-location">
+                                    @ToTitleCase(rsv.HotelDetail.Address) @ToTitleCase(rsv.HotelDetail.ZoneName),
+                                    @ToTitleCase(rsv.HotelDetail.DestinationName) @rsv.HotelDetail.PostalCode, @ToTitleCase(rsv.HotelDetail.CountryName)
+                                </div>
+                                <div class="rh-detail">
+                                    <div class="wb-container clearfix">
+                                        <div class="wb-left">Check in</div>
+                                        <div class="wb-mid">:</div>
+                                        <div class="wb-right bold-txt">@rsv.HotelDetail.CheckInDate.ToString("D", CultureInfo.CreateSpecificCulture("id-ID"))</div>
                                     </div>
-                                    <div class="form-group">
-                                        <label class="control-label col-xs-3">Harga Pesanan</label>
-                                        <div class="col-xs-9">
-                                            <p class="form-control-static">Rp {{flight.payment.originalPrice | number}}</p>
-                                        </div>
+                                    <div class="wb-container clearfix">
+                                        <div class="wb-left">Check out</div>
+                                        <div class="wb-mid">:</div>
+                                        <div class="wb-right bold-txt">@rsv.HotelDetail.CheckOutDate.ToString("D", CultureInfo.CreateSpecificCulture("id-ID"))</div>
                                     </div>
-                                    
-                                    <div class="form-group" ng-show="flight.payment.method">
-                                        <label class="control-label col-xs-3">Metode Pembayaran</label>
-                                        <div class="col-xs-9">
-                                            <p class="form-control-static">{{methodpayment(flight.payment.method)}}</p>
-                                        </div>
+                                    <div class="wb-container clearfix">
+                                        <div class="wb-left">Malam</div>
+                                        <div class="wb-mid">:</div>
+                                        <div class="wb-right bold-txt">@((rsv.HotelDetail.CheckOutDate - rsv.HotelDetail.CheckInDate).Days) Malam</div>
                                     </div>
-                                    <div class="form-group">
-                                        <label class="control-label col-xs-3">Status Pembayaran</label>
-                                        <div class="col-xs-9">
-                                            <p class="form-control-static">{{paymentstatus(flight.payment.status)}}</p>
-                                        </div>
+                                    <div class="wb-container clearfix">
+                                        <div class="wb-left">Jumlah Kamar</div>
+                                        <div class="wb-mid">:</div>
+                                        <div class="wb-right bold-txt">@sum Kamar</div>
                                     </div>
-                                    <div class="form-group">
-                                        <label class="control-label col-xs-3">Penumpang</label>
-                                        <div class="col-xs-9">
-                                            <ol class="passenger-list">
-                                                <li ng-repeat="passenger in flight.pax track by $index">
-                                                    <div class="row">
-                                                        <div class="col-xs-9">
-                                                            <p>{{title(passenger.title)}} {{passenger.name}}</p>
-                                                        </div>
-                                                        <div class="col-xs-3">
-                                                            <span>{{paxtype(passenger.type)}}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="rh-row">
+                            <div class="rh-top clearfix">
+                                <div class="col-left-hotel">@*<img src="/Assets/travorama20/images/Hotel/hotel-md.jpg" alt="Alternate Text" />*@</div>
+                                <div class="col-right-hotel clearfix">
+                                    <span class="hotel-facility facility"></span>
+                                    @foreach (var room in rooms)
+                                    {
+                                        var index = 1;
+
+                                        <div class="rh-detail">
+                                            <div class="wb-container clearfix">
+                                                <div class="wb-left">Jenis Kamar</div>
+                                                <div class="wb-mid">:</div>
+                                                <div class="wb-right bold-txt">@ToTitleCase(HotelService.GetInstance().GetHotelRoom(room.RoomCode).RoomDescId)</div>
+                                            </div>
+
+                                            @foreach (var rate in room.Rates)
+                                            {
+                                                
+                                                var pol = 1;
+                                                <div class="wb-container clearfix">
+                                                    <div class="wb-left">Jumlah Kamar</div>
+                                                    <div class="wb-mid">:</div>
+                                                    <div class="wb-right bold-txt">@rate.RoomCount Kamar</div>
+                                                </div>
+                                                <div class="wb-container clearfix">
+                                                    <div class="wb-left">Tamu per Kamar</div>
+                                                    <div class="wb-mid">:</div>
+                                                    <div class="wb-right bold-txt">@rate.AdultCount Dewasa @if (rate.ChildCount > 0)
+                                                    {
+                                                        <span>, @rate.ChildCount Anak </span>
+                                                        <span>
+                                                            (
+                                                            @for (var a = 0; a < rate.ChildrenAges.Count; a++)
+                                                            {
+                                                                if (a != rate.ChildrenAges.Count - 1)
+                                                                {
+                                                                    @rate.ChildrenAges[a]
+                                                                    <span>Tahun, </span>
+                                                                }
+                                                                else
+                                                                {
+                                                                    @rate.ChildrenAges[a] <span>Tahun</span>
+                                                                }
+                                                            }
+                                                            )
+                                                        </span>
+                                                    }</div>
+                                                </div>
+                                                <div class="wb-container clearfix">
+                                                    <div class="wb-left">Tipe Board</div>
+                                                    <div class="wb-mid">:</div>
+                                                    <div class="wb-right bold-txt">@ToTitleCase(rate.BoardDescription)</div>
+                                                </div>
+                                                if (rate.TermAndCondition != null && rate.TermAndCondition.Count != 0 && !rate.TermAndCondition.Exists(r => r.Length < 3))
+                                                {
+                                                    <div class="wb-container clearfix">
+                                                        <div class="wb-left">Ketentuan</div>
+                                                        <div class="wb-mid">:</div>
+                                                        <div class="wb-right bold-txt">@ToTitleCase(String.Join(". ", rate.TermAndCondition))</div>
+                                                    </div>
+                                                }
+
+                                                if (rate.Cancellation != null && rate.Cancellation.Count != 0)
+                                                {
+                                                    <div class="wb-container clearfix">
+                                                        <div class="wb-left">Ketentuan Pembatalan</div>
+                                                        <div class="wb-mid">:</div>
+                                                        <div class="wb-right bold-txt">
+                                                            @foreach (var policy in rate.Cancellation)
+                                                            {
+                                                                <div>
+                                                                    @pol. Pembatalan setelah tanggal @policy.StartTime.ToString("D", CultureInfo.CreateSpecificCulture("id-ID")) akan dikenakan biaya sebesar Rp @(policy.SingleFee.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))) per kamar <br />
+                                                                </div>
+                                                                pol++;
+                                                            }
                                                         </div>
                                                     </div>
-                                                </li>
-                                            </ol>
+                                                }
+                                                index++;
+                                            }
+
                                         </div>
-                                    </div>
+                                        <ul class="blue-txt semibold-txt blue-list rh-tnc">
+                                            @*<li>Extra bed belum termasuk</li>*@
+                                            @*<li>Free cancelation sebelum H-5 tanggal booking</li>*@
+                                        </ul>
+                                            indexroom++;
+                                    }
+
                                 </div>
-                            </section>
-                        </div><!-- .info-buyer -->
+                            </div>
 
-                        <div class="info-flight">
-                            <header>
-                                <h4><b>@Html.I18NString("CW00199")</b></h4>
-                            </header>
-                            <section>
-                                <div ng-repeat="trip in flight.itin.trips">
-                                    <div class="flight departure" ng-if="$index = 0">
-                                        <p><!--<img src="{{trip.segments[0].airlineLogoUrl}}" alt="trip.segments[0].airlineName" /> <span>{{trip.segments[0].airlineName}}</span>--> </p>
-                                        <div class="row">
-                                            <div class="col-xs-2">
-                                                <p>Berangkat :</p>
-                                            </div>
-                                            <div class="col-xs-9">
-                                                <p>{{trip.originCity}} - {{trip.destinationCity}}</p>
-                                                <p>{{trip.date | date : 'dd MMMM yyyy'}}</p>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="flight departure" ng-if="$index = 1">
-                                        <p><!--<img src="{{trip.segments[0].airlineLogoUrl}}" alt="trip.segments[0].airlineNamme" />--> <span>{{trip.segments[0].airlineName}}</span> </p>
-                                        <div class="row">
-                                            <div class="col-xs-2">
-                                                <p>Berangkat :</p>
-                                            </div>
-                                            <div class="col-xs-9">
-                                                <p>{{trip.originCity}} - {{trip.destinationCity}}</p>
-                                                <p>{{trip.date | date : 'dd MMMM yyyy'}}</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                    
-
-                            </section>
-
-                        </div><!-- .info-flight -->
-                        @*
-    <div class="refund-detail">
-        <header>
-            <h4><b>@Html.I18NString("CW00199")</b></h4>
-        </header>
-        <section>
-            <div class="form form-horizontal">
-                <div class="form-group">
-                    <label class="control-label col-xs-3">No Refund</label>
-                    <div class="col-xs-9">
-                        <p class="form-control-static">
-                            <span ng-show="flight.payment.refund != null">{{flight.payment.refund.amount}}</span>
-                            <span ng-show="flight.payment.refund != null">-</span>
-                        </p>
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label class="control-label col-xs-3">Tgl Pengajuan</label>
-                    <div class="col-xs-9">
-                        <p class="form-control-static">
-                            <span>{{flight.payment.refund.Time | date : 'dd - MMMM - yyyy , HH:mm' : 'UTC'}}</span>
-                        </p>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="control-label col-xs-3">Status Refund</label>
-                    <div class="col-xs-9">
-                        <p class="form-control-static">-</p>
-                    </div>
-                </div>
+                </div><!-- .info-hotel -->
+             }               
+                        </section>
+                    </div><!-- .history-content -->
+
+                </section><!-- .account-content -->
             </div>
-        </section>
-    </div><!-- .refund-detail -->
-                        *@
-                    </section>
-                </div><!-- .history-content -->
-
-            </section><!-- .account-content -->
-        </div>
+        
+        
 
     </div>
 </div>

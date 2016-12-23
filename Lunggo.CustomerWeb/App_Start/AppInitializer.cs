@@ -3,8 +3,10 @@ using System.Web.WebPages;
 using log4net;
 using Lunggo.ApCommon.Constant;
 using Lunggo.ApCommon.Flight.Service;
+using Lunggo.ApCommon.Hotel.Service;
 using Lunggo.ApCommon.Payment;
 using Lunggo.ApCommon.Payment.Service;
+using Lunggo.Framework.BlobStorage;
 using Lunggo.Framework.BrowserDetection;
 using Lunggo.Framework.Config;
 using Lunggo.Framework.Core;
@@ -39,8 +41,15 @@ namespace Lunggo.CustomerWeb
             InitMailService();
             InitHtmlTemplateService();
             InitTableStorageService();
+            InitBlobStorageService();
+            InitHotelService();
         }
-
+        private static void InitBlobStorageService()
+        {
+            var connString = ConfigManager.GetInstance().GetConfigValue("azureStorage", "connectionString");
+            var blobStorageService = BlobStorageService.GetInstance();
+            blobStorageService.Init(connString);
+        }
         private static void InitMailService()
         {
             var apiKey = ConfigManager.GetInstance().GetConfigValue("mandrill", "apiKey");
@@ -117,6 +126,12 @@ namespace Lunggo.CustomerWeb
         {
             var flight = FlightService.GetInstance();
             flight.Init("Config");
+        }
+
+        private static void InitHotelService()
+        {
+            var hotel = HotelService.GetInstance();
+            hotel.Init("Config");
         }
 
         private static void InitPaymentService()

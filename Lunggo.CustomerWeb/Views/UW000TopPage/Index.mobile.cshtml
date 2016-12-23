@@ -2,52 +2,98 @@
     Layout = "/Views/Shared/mobile/_Layout.cshtml";
     ViewBag.Title = "Enjoy Your Every Moment";
     ViewBag.BodyClass = "page page-home";
-    ViewBag.AngularController = "HomePageController";
+    ViewBag.AngularController = "homeController";
     ViewBag.CurrentPage = "home";
     ViewBag.SiteHeader = "mobile-home-page";
 }
 
 @section AdditionalCSS{
-    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/jquery.slick/1.5.9/slick.css" />
+    <link rel="stylesheet" type="text/css" href="/Assets/vendor/slick/slick.css" />
+    <link href="/Assets/css/jquery-ui.min.css" rel="stylesheet" />
 }
 
 @section AdditionalJS {
-    <script src="/Assets/js/angular.min.js"></script>
+    @*<script src="/Assets/js/angular.min.js"></script>
     <script src="/Assets/js/angular-animate.min.js"></script>
-    <script src="/Assets/js/angular-route.min.js"></script>
+            <script src="/Assets/js/angular-route.min.js"></script>*@
     <script src="/Config/JsConfig.js"></script>
     <!-- jquery datepicker -->
     <script src="/Assets/js/jquery-ui.min.js"></script>
     <script type="text/javascript" src="/Assets/js/jquery.ui.datepicker-id.js"></script>
     <script src="/Scripts/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/Assets/vendor/slick/slick.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery.ui.touch-punch/0.2.3/jquery.ui.touch-punch.min.js"></script>
     <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.slick/1.5.9/slick.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/jquery.cookie/1.4.1/jquery.cookie.min.js"></script>
 }
 
 @section PageJS {
     <script>
+        jQuery(document).ready(function ($) {
+        //    //Harbolnas modal box, expired only one day
+        //    if ($.cookie('pop') == null) {
+        //        $('#myModalMobile').modal('show');
+        //        $.cookie('pop', '1');
+        //    };
+            //$(window).load(function () {
+            //    $('#myModalMobile').modal('show');
+            //});
+
+            // slider
         $('.carousel-inner').slick({
             autoplay: true,
-            autoplaySpeed: 2500,
+                autoplaySpeed: 2800,
             dots: true,
             prevArrow: '<button type="button" class="slick-prev hidden">Back</button>',
             nextArrow: '<button type="button" class="slick-next hidden">Next</button>'
         });
+        });
     </script>
-    <script src="/Assets/mobile/js/HomeController.js"></script>
+    @*<script src="/Assets/mobile/js/HomeController.js"></script>*@
+    <script src="/Assets/travorama20/angularDirectory/search/hotelSearch.service.js"></script>
+    <script src="/Assets/Travorama20/js/homeController.js"></script>
 }
 
 <div class="page-loading form-container" ng-class="{'page-loaded' : PageConfig.Loaded}">
+    <!-- Modal Box Harbolnas -->
+    @*<div class="modal fade" id="myModalMobile">
+        <div class="modal-box">
+            <img src="/Assets/images/campaign/Harbolnas2016/Harbolnas_popup_mobile.jpg" alt="Harbolnas 2016" />
+            <a class="custom-close close" data-dismiss="modal"></a>
+        </div>
+    </div>*@
+
     <div class="carousel-inner" role="listbox">
-        <div class="item active">
+        @*<div class="item active">
+            <a href="/id/Promo/Harbolnas2016"><img src="/Assets/images/campaign/Harbolnas2016/Harbolnas_banner-mobile.jpg" alt="Harbolnas 2016" /></a>
+        </div>*@
+        @if (DateTime.UtcNow.AddHours(7).Date <= new DateTime(2016, 12, 15))
+        {
+            <div class="item">
+                <a href="/id/Promo/MatahariMall"><img src="/Assets/images/campaign/MatahariMall2016/MatahariMall-slider-mobile.jpg" alt="Matahari Mall" /></a>
+            </div>
+        }
+        @if (DateTime.UtcNow.AddHours(7).Date <= new DateTime(2016, 12, 31))
+        {
+            <div class="item">
+                <a href="/id/Promo/OnlineRevolution"><img src="/Assets/images/campaign/OnlineRevolution2016/OnlineRevolution-slider-mobile.jpg" alt="Online Revolution" /></a>
+            </div>
+        }
+        <div class="item">
             <a href="http://onelink.to/travoramaapp"><img src="/Assets/images/banner/download-app.jpg" alt="Download Applikasi Travorama!" /></a>
         </div>
-        <div class="item">
-            <a href="/id/Promo/OnlineRevolution"><img src="/Assets/images/campaign/OnlineRevolution2016/OnlineRevolution-slider-mobile.jpg" alt="Online Revolution" /></a>
-        </div>
-        <div class="item">
-            <a href="/id/Promo/MatahariMall"><img src="/Assets/images/campaign/MatahariMall2016/MatahariMall-slider-mobile.jpg" alt="Matahari Mall" /></a>
-        </div>
     </div>
+    <div class="main-tab">
+        <ul class="nav nav-tabs tab-detail">
+            <li class="col-xs-6">
+                <a class="tab-flight" data-toggle="tab" href="#tab-flight">Penerbangan</a>
+            </li>
+            <li class="col-xs-6 active">
+                <a class="tab-hotel" data-toggle="tab" href="#tab-hotel">Hotel</a>
+            </li>
+        </ul>
+        <div class="tab-content">
+            <div id="tab-flight" class="tab-pane tp-flight">
     <div class="form-wrapper">
         <form class="flight-form" name="flight-form" ng-submit="FlightSearchForm.Submit()" novalidate>
             <div class="top-form row">
@@ -55,15 +101,13 @@
                     <div class="form-group form__origin">
                         <div class="title-destination">Asal</div>
                         <p class="form-control" ng-click="FlightSearchForm.AutoComplete.Reset('departure'); PageConfig.SetOverlay('airport-select')">
-                            <span class="code-airport">{{FlightSearchForm.AirportOrigin.Code}}</span><br/><span class="city">{{FlightSearchForm.AirportOrigin.City}}</span>
+                            <span class="code-airport">{{FlightSearchForm.AirportOrigin.Code}}</span><br /><span class="city">{{FlightSearchForm.AirportOrigin.City}}</span>
                         </p>
                     </div>
                 </div>
                 <div class="col-xs-2">
-
                     <div class="flip-container" ng-click="flip()">
-                        <a class="flip" href="#"><span class="icon-flip"></span></a>
-                    
+                        <a class="flip"><span class="icon-flip"></span></a>
                     </div>
                 </div>
                 <div class="col-xs-5">
@@ -141,6 +185,14 @@
             </div>
         </form><!-- .flight-form -->
     </div><!-- .form-wrapper -->
+            </div>
+            <div id="tab-hotel" class="tab-pane tp-hotel page-hotel-mobile active">
+                <div class="form-wrapper">
+                    @Html.Partial("/Views/Hotel/Shared/Mobile/_SearchHotelForm.cshtml")
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- overlays -->
     <!-- overlay date picker -->
     <div class="overlay overlay--theme--blue overlay--datepicker overlay--datepicker--departure" ng-class="{ 'active' : (PageConfig.ActiveOverlay == 'datepicker-departure') }">
@@ -363,5 +415,87 @@
             </div>
         </section>
     </div><!-- .overlay--passenger-selector -->
+    <!-- overlay hotel selector -->
+    <div class="overlay overlay--theme--blue overlay--hotel-select" ng-class="{'active' : (PageConfig.ActiveOverlay == 'hotel-select')}">
+        <header class="overlay__header">
+            <h3 class="overlay__title">
+                <small>PILIH HOTEL TUJUAN</small>
+                <span class="overlay__close" ng-click="PageConfig.SetOverlay();">X</span>
+            </h3>
+        </header><!-- .overlay__header -->
+        <section class="overlay__content">
+
+            <div class="autocomplete-input">
+                <input type="text" class="form-control" name="name" value="" placeholder="Masukkan Kota/Lokasi Hotel Tujuan" ng-model="HotelSearchForm.AutoComplete.Keyword" ng-change="HotelSearchForm.AutoComplete.GetLocation()" />
+            </div><!-- .autocomplete-input -->
+            @*ng-model="hotelSearch.locationDisplay" placeholder="Masukkan kota/ lokasi hotel tujuan"*@
+            <div class="autocomplete-preload">
+                <ul class="result">
+                    <li class="hotel" ng-repeat="location in hotelSearch.hotelAutocomplete track by $index" ng-click="selectLocation(location); PageConfig.SetOverlay();">
+                        <a class="hotel__link clearfix">
+                            <div class="hotel__location bold-txt">{{location.name}}</div>
+                            <div class="col-half">
+                                <div class="hotel__detail">{{location.type}}</div>
+                            </div>
+                            <div class="col-half" ng-show="location.type !=  'Hotel'">
+                                <div class="result blue-txt semibold-txt pull-right">{{location.numOfHotels}} Hotel</div>
+                            </div>
+                        </a>
+                    </li>
+                    @*<li class="hotel">
+                                <a class="hotel__link clearfix">
+                                    <div class="hotel__location bold-txt">Jakarta, Indonesia</div>
+                                    <div class="col-half">
+                                        <div class="hotel__detail">Kota</div>
+                        </div>
+                                    <div class="col-half">
+                                        <div class="result blue-txt semibold-txt pull-right">999 Hotel</div>
+                                </div>
+                                </a>
+                            </li>
+                            <li class="hotel">
+                                <a class="hotel__link clearfix">
+                                    <div class="hotel__location bold-txt">Jakarta, Indonesia</div>
+                                    <div class="col-half">
+                                        <div class="hotel__detail">Kota</div>
+                                    </div>
+                                    <div class="col-half">
+                                        <div class="result blue-txt semibold-txt pull-right">999 Hotel</div>
+                                    </div>
+                                </a>
+                            </li>*@
+                </ul>
+            </div><!-- .autocomplete-preload -->
+            @*<div class="autocomplete-loading">
+                    <h4 class="text-center text-loading">Mencari Bandara</h4>
+                </div>
+
+                <div class="autocomplete-no-result">
+                    <h4 class="text-center">Hasil tidak ditemukan</h4>
+                </div>
+
+                <div class="autocomplete-result">
+                    <ul class="result" ng-click="PageConfig.SetOverlay()"></ul>
+                </div>*@
+        </section><!-- .overlay__content -->
+    </div>
+    <!-- overlay hotel date -->
+    <div class="overlay overlay--theme--blue overlay--datepicker overlay--datepicker-hoteldate" ng-class="{ 'active' : (PageConfig.ActiveOverlay == 'datepicker-hotel') }">
+        <header class="overlay__header">
+            <h3 class="overlay__title">
+                Pilih Tanggal Check in
+                <span class="overlay__close" ng-click="PageConfig.SetOverlay()">X</span>
+            </h3>
+        </header><!-- .overlay__header -->
+        <section class="overlay__content">
+            <div class="overlay-selector">
+                <div class="overlay-selector__body">
+                    <div class="calendar-container">
+                        <div class="ui-datepicker return-date" id="checkInDate"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div><!-- .overlay--datepicker-->
     @Html.Partial("/Views/Shared/mobile/_SiteFooter.cshtml")
 </div><!-- .page-loading -->

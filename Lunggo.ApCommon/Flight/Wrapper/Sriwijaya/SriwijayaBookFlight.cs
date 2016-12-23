@@ -103,7 +103,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                     bookingParams =
                         "radioFrom0_0=" + FIDsegment1 + "%3A" + Rbd[0] + "%3A" + unknownCode + "%3A" + ognAirport + "%3A" + arrAirport +
                         "%3AU2s5VlVrNUZXUT09" +
-                        "&radioFrom0_1=" + FIDsegment2 + "%3A" + Rbd[1] + "%3A" + unknownCode + "%3A" + ognAirport + "%3A" + arrAirport +
+                        "&radioFrom0_1=" + FIDsegment2 + "%3A" + (Rbd.Count > 1 ? Rbd[1] : Rbd[0]) + "%3A" + unknownCode + "%3A" + ognAirport + "%3A" + arrAirport +
                         "%3AU2s5VlVrNUZXUT09";
 
                 }
@@ -141,8 +141,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
 
                     bookingParams =
                     "radioFrom0_0=" + FIDsegment1 + "%3A" + Rbd[0] + "%3A" + unknownCode + "%3A" + ognAirport + "%3A" + arrAirport + "%3AU2s5VlVrNUZXUT09" +
-                    "&radioFrom0_1=" + FIDsegment2 + "%3A" + Rbd[1] + "%3A" + unknownCode + "%3A" + ognAirport + "%3A" + arrAirport + "%3AU2s5VlVrNUZXUT09" +
-                    "&radioFrom0_2=" + FIDsegment3 + "%3A" + Rbd[2] + "%3A" + unknownCode + "%3A" + ognAirport + "%3A" + arrAirport + "%3AU2s5VlVrNUZXUT09";
+                    "&radioFrom0_1=" + FIDsegment2 + "%3A" + (Rbd.Count > 1 ? Rbd[1] : Rbd[0]) + "%3A" + unknownCode + "%3A" + ognAirport + "%3A" + arrAirport + "%3AU2s5VlVrNUZXUT09" +
+                    "&radioFrom0_2=" + FIDsegment3 + "%3A" + (Rbd.Count > 2 ? Rbd[2] : Rbd[0]) + "%3A" + unknownCode + "%3A" + ognAirport + "%3A" + arrAirport + "%3AU2s5VlVrNUZXUT09";
                 }
                 //Untuk 1 Segment
                 else if (ParseFID1.Count == 1)
@@ -278,14 +278,14 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                             var arrivalDate = (DateTime.Parse(date + " " + arrival, CultureInfo.CreateSpecificCulture("id-ID"))).AddDays(plusHari);
                             var deptime = departureDate.AddHours(-(flight.GetAirportTimeZone(ognAirport)));
                             var arrtime = arrivalDate.AddHours(-(flight.GetAirportTimeZone(arrAirport)));
-                            tampungFare.Add("" + FIDsegments[y] + ":" + Rbd[y] + ":S:" + bandara[0] + ":" + bandara[1] + ":U2s5VlVrNUZXUT09;");
+                            tampungFare.Add("" + FIDsegments[y] + ":" + (Rbd.Count > y ? Rbd[y] : Rbd[0]) + ":S:" + bandara[0] + ":" + bandara[1] + ":U2s5VlVrNUZXUT09;");
                             tampungFareString = string.Join(";", tampungFare.ToArray());
                             segments.Add(new FlightSegment
                             {
                                 AirlineCode = ParseFare[y],
                                 FlightNumber = ParseFare[y + 1],
                                 CabinClass = (CabinClass)int.Parse(ParseFare[fareCabin]),
-                                Rbd = Rbd[y],
+                                Rbd = Rbd.Count > y ? Rbd[y] : Rbd[0],
                                 DepartureAirport = bandara[0],
                                 DepartureTime = DateTime.SpecifyKind(departureDate, DateTimeKind.Utc),
                                 ArrivalAirport = bandara[1],

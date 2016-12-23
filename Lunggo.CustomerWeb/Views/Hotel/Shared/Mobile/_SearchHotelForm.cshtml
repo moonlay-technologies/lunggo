@@ -1,0 +1,107 @@
+﻿<form class="hotel-form" name="hotel-form" novalidate ng-class="{'active' : (PageConfig.ActiveOverlay == 'hotel-form')}">
+    <div class="th-form">
+        <div class="top-wrap">
+            <div class="form-group form__hotel">
+                <div class="field-container" ng-click="PageConfig.SetOverlay('hotel-select')">
+                    @*<p class="form-control form-hotel" ng-click="PageConfig.SetOverlay('hotel-select')">Tujuan <span class="hotel-placeholder">Kota, Wilayah atau Nama Hotel</span></p>*@
+                    <p class="form-control form-hotel">
+                        Tujuan
+                        <span class="hotel-placeholder" placeholder="Kota, Wilayah atau Nama Hotel"
+                              ng-init="hotelSearch.locationDisplay = hotelSearch.locationDisplay || loc">{{hotelSearch.locationDisplay}}</span>
+                    </p>
+                    @*| filter:placeholderFilter(hotelSearch.locationDisplay)*@
+                </div>
+            </div>
+            <div class="form-group form__date">
+                <div class="field-container">
+                    <p class="form-control form-date" ng-click="DatePicker.SetOption({Target : 'checkin'}, ' ', 'hotel'); PageConfig.SetOverlay('datepicker-hotel')">
+                        Tanggal Check in <span class="date-placeholder placeholder">{{hotelSearch.checkinDateDisplay}}</span>
+                    </p>
+                </div>
+            </div>
+            <div class="form-group form__time clearfix">
+                <div class="field-container clearfix">
+                    <div class="col-half">
+                        <p class="form-control form-time">Durasi</p>
+                    </div>
+                    <div class="col-half">
+                        <select class="form-control" name="nightclass" ng-model="hotelSearch.nightCount">
+                            <option ng-repeat="number in hotelSearch.nightrange" value="{{number}}"
+                                    ng-init="hotelSearch.nightCount = hotelSearch.nightCount || 1" ng-selected="number == hotelSearch.nightCount || number == 1">
+                                {{number}} Malam
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="checkout-date placeholder">Tanggal Keluar: {{hotelSearch.checkoutDateDisplay}}</div>
+            </div>
+            <div class="form-group form__room">
+                <div class="field-container clearfix">
+                    <div class="col-half">
+                        <p class="form-control form-room">Jumlah Kamar</p>
+                    </div>
+                    <div class="col-half">
+                        <select class="form-control" name="roomclass" ng-model="hotelSearch.roomCount">
+                            <option ng-repeat="number in hotelSearch.roomrange" value="{{number}}"
+                                    ng-init="hotelSearch.roomCount = hotelSearch.roomCount || 1" ng-selected="number == hotelSearch.roomCount || number == 1">
+                                {{number}} Kamar
+                            </option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group form__visitor clearfix">
+            <div class="age-child clearfix">
+                <div class="ag-list clearfix">
+                    <div class="ag-wrap" ng-repeat="n in [0,1,2,3,4,5,6,7] track by $index" ng-show="hotelSearch.roomCount > $index">
+                        <div class="mid-wrap clearfix">
+                            <div class="mid-title col-2">
+                                Kamar {{$index+1}}:
+                            </div>
+                            <div class="field-container form-v-adult col-4">
+                                <div class="field-wrapper form-adult">
+                                    <select class="form-control" name="adultclass" ng-model="hotelSearch.occupancies[n].adultCount">
+                                        <option ng-repeat="number in hotelSearch.adultrange" value="{{number}}" ng-init="hotelSearch.occupancies[n].adultCount = hotelSearch.occupancies[n].adultCount || 1" ng-selected="number == hotelSearch.occupancies[n].adultCount || number == 1"
+                                                ng-click="hotelSearch.occupancies[n].adultCount = number">
+                                            {{number}} Dewasa
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="field-container form-v-child col-4">
+                                <div class="field-wrapper form-child">
+                                    <select class="form-control" name="childclass" ng-model="hotelSearch.occupancies[n].childCount">
+                                        <option ng-repeat="number in hotelSearch.childrange" value="{{number}}" ng-init="hotelSearch.occupancies[n].childCount = hotelSearch.occupancies[n].childCount || 0" ng-selected=" number == hotelSearch.occupancies[n].childCount || number == 0"
+                                                ng-click="hotelSearch.occupancies[n].childCount = number">
+                                            {{number}} Anak
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div ng-show="hotelSearch.occupancies[n].childCount > 0">
+                            <div id="ac-1" class="ac-list clearfix" ng-repeat="child in [0,1,2,3] track by $index"
+                                 ng-show="hotelSearch.occupancies[n].childCount > $index">
+                                <div class="col-6 blue-txt semibold-txt right-txt">Usia Anak ({{$index+1}}) :</div>
+                                <div class="col-4">
+                                    <select class="form-control" name="agelist" ng-model="hotelSearch.occupancies[n].childrenAges[child]">
+                                        <option ng-repeat="age in hotelSearch.childagerange" value="{{age}}" ng-init="initChildrenAges(n)" ng-selected="age == hotelSearch.occupancies[n].childrenAges[child] || age == 0"
+                                                ng-click="hotelSearch.occupancies[n].childrenAges[child] = age">
+                                            {{age}} Tahun
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="ag-list-2"></div>
+            </div>
+        </div>
+    </div>
+    <div class="bottom-wrap form-group form__submit">
+        <button class="btn btn-yellow btn-block btn-lg btnSubmit" ng-click="hotelSearch.getHotels(hotelSearch)">CARI HOTEL</button>
+    </div>
+</form>
+

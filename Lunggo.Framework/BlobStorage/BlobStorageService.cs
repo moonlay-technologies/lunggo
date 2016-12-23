@@ -55,7 +55,10 @@ namespace Lunggo.Framework.BlobStorage
         {
             return Client.GetDirectoryList(directoryName);
         }
-        
-        
+
+        public List<string> GetFileNameList(string containerName)
+        {
+            return Client.GetListFileName(containerName);
+        } 
     }
 }

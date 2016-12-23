@@ -128,7 +128,7 @@
                                     <td class="no">@(k + 1).</td>
                                     <td class="item">Tiket Pesawat</td>
                                     <td class="description">@Model.Itinerary.Trips[k].Segments[0].AirlineName @Model.Itinerary.Trips[k].OriginAirport-@Model.Itinerary.Trips[k].DestinationAirport @Model.Itinerary.Trips[k].DepartureDate.GetValueOrDefault().ToString("dd MMMM yyyy", CultureInfo.CreateSpecificCulture("id-ID"))</td>
-                                    <td class="qty">@Model.Passengers.Count</td>
+                                    <td class="qty">@Model.Pax.Count</td>
                                     <td class="price"></td>
                                     <td class="total">@(Model.Itinerary.Trips[k].NetTotalFare.GetValueOrDefault().ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID")))</td>
                                 </tr>

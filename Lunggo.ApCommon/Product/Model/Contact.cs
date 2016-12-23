@@ -60,7 +60,7 @@ namespace Lunggo.ApCommon.Product.Model
             }
         }
 
-        private class GetContactQuery : QueryBase<GetContactQuery, ContactTableRecord>
+        private class GetContactQuery : DbQueryBase<GetContactQuery, ContactTableRecord>
         {
             protected override string GetQuery(dynamic condition = null)
             {

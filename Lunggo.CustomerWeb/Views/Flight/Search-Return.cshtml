@@ -155,7 +155,24 @@
             <div class="col-sm-9">
                 <div class="result-form-left">
                     <h3><b>@originCityNames[0]</b> (@data.Trips[0].OriginAirport) ke <b>@originCityNames[1]</b> (@data.Trips[0].DestinationAirport) </h3>
-                    <h4><b>@data.Trips[0].DepartureDate.ToString("ddd, dd MMM yyyy", new CultureInfo("id-ID")) - @data.Trips[1].DepartureDate.ToString("ddd, dd MMM yyyy", new CultureInfo("id-ID"))</b> | <b>@(data.AdultCount + data.ChildCount + data.InfantCount) Orang</b> (@data.AdultCount Dewasa, @data.ChildCount Anak, @data.InfantCount Bayi)</h4>
+                    <h4><b>@data.Trips[0].DepartureDate.ToString("ddd, dd MMM yyyy", new CultureInfo("id-ID")) - @data.Trips[1].DepartureDate.ToString("ddd, dd MMM yyyy", new CultureInfo("id-ID"))</b> | <b>@(data.AdultCount + data.ChildCount + data.InfantCount) Orang</b> 
+                        @if (data.ChildCount != 0 && data.InfantCount != 0)
+                        {
+                            <span>(@data.AdultCount Dewasa , @data.ChildCount Anak, @data.InfantCount Bayi)</span>
+                        }
+                        else if (data.ChildCount != 0 && data.InfantCount == 0)
+                        {
+                            <span>(@data.AdultCount Dewasa , @data.ChildCount Anak)</span>
+                        }
+                        else if (data.ChildCount == 0 && data.InfantCount != 0)
+                        {
+                            <span>(@data.AdultCount Dewasa , @data.InfantCount Bayi)</span>
+                        }
+                        else if (data.ChildCount == 0 && data.InfantCount == 0)
+                        {
+                            <span>(@data.AdultCount Dewasa)</span>
+                        }
+                    </h4>
                     @*<h4><b>@data.Trips[0].DepartureDate.ToString("dd-MMM-yyyy") - @data.Trips[1].DepartureDate.ToString("dd MMM yyyy")</b> | <b>@(data.AdultCount + data.ChildCount + data.InfantCount) Orang</b> (@data.AdultCount Dewasa, @data.ChildCount Anak, @data.InfantCount Bayi)</h4>*@
                 </div>
             </div>
@@ -464,7 +481,7 @@
                     </div>
                 </div>
             </div><!-- .search-result-filter -->
-            <div class="search-result-warning" ng-show="departureFlightConfig.flightList.length && departureFlightConfig.notice">
+            <div class="search-result-warning" ng-show="departureFlightConfig.flightList.length && departureFlightConfig.notice" hidden>
                 <div class="notice">
                     <p>Tampilan harga untuk <b>{{departureFlightConfig.adultCount + departureFlightConfig.childCount + departureFlightConfig.infantCount}} orang</b> ( <span ng-show="departureFlightConfig.adultCount > 0">{{departureFlightConfig.adultCount}} dewasa</span> <span ng-show="departureFlightConfig.childCount">, {{departureFlightConfig.childCount}} anak</span> <span ng-show="departureFlightConfig.infantCount"> , {{departureFlightConfig.infantCount}} bayi</span> ) <span class="close-notice pull-right" ng-click="closeNotice('departure')">X</span> </p>
                 </div>
@@ -822,7 +839,7 @@
                     </div>
                 </div>
             </div><!-- .search-result-filter -->
-            <div class="search-result-warning" ng-show="returnFlightConfig.flightList.length && returnFlightConfig.notice">
+            <div class="search-result-warning" ng-show="returnFlightConfig.flightList.length && returnFlightConfig.notice" hidden>
                 <div class="notice">
                     <p>Tampilan harga untuk <b>{{returnFlightConfig.adultCount + returnFlightConfig.childCount + returnFlightConfig.infantCount}} orang</b> ( <span ng-show="returnFlightConfig.adultCount > 0">{{returnFlightConfig.adultCount}} dewasa</span> <span ng-show="returnFlightConfig.childCount">, {{returnFlightConfig.childCount}} anak</span> <span ng-show="returnFlightConfig.infantCount"> , {{returnFlightConfig.infantCount}} bayi</span> ) <span class="close-notice pull-right" ng-click="closeNotice('return')">X</span> </p>
                 </div>

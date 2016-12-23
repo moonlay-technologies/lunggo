@@ -6,5 +6,7 @@ namespace Lunggo.ApCommon.Constant
     {
         public static readonly String SearchResultCacheName = "search_result_cache";
         public static readonly String MasterDataCacheName = "master_data_cache";
+
+        public const int RedisMaxRetry = 3;
     }
 }

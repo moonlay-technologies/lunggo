@@ -31,6 +31,14 @@ namespace Lunggo.ApCommon.Campaign.Service
                     ReplaceMargin = true
                 };
 
+            if (!rsvNo.StartsWith("1"))
+                return new BinDiscount
+                {
+                    Amount = 0,
+                    IsAvailable = false,
+                    DisplayName = "BTN"
+                };
+
             var rsv = FlightService.GetInstance().GetReservation(rsvNo);
             var isAvailable = IsPanAndEmailEligibleInCache("btn", hashedPan, rsv.Contact.Email);
             var isValid = IsPromoValid(rsv, bin, hashedPan, voucherCode);
@@ -83,7 +91,7 @@ namespace Lunggo.ApCommon.Campaign.Service
             var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
             var dateNow = DateTime.UtcNow.AddHours(7).Date;
             return env != "production" || (dateNow >= new DateTime(2016, 9, 20) &&
-                                           dateNow <= new DateTime(2016, 11, 20));
+                                           dateNow <= new DateTime(2016, 12, 31));
         }
 
         private bool IsBinGranted(string bin6)

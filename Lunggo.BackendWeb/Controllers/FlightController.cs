@@ -28,9 +28,33 @@ namespace Lunggo.BackendWeb.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult List(FlightReservationSearch search)
         {
+            if (search.RsvDateSelection == FlightReservationSearch.DateSelectionType.MonthYear)
+                return RedirectToAction("List", new {month = search.RsvDateMonth, year = search.RsvDateYear});
             var flight = FlightService.GetInstance();
             var reservations = flight.SearchReservations(search);
             return View(reservations);
+        }
+
+        public ActionResult List(int month, int year, bool? hideExpired, bool? completedOnly)
+        {
+            var rsv = FlightService.GetInstance().SearchReservations(new FlightReservationSearch
+            {
+                RsvDateSelection = FlightReservationSearch.DateSelectionType.MonthYear,
+                RsvDateMonth = month,
+                RsvDateYear = year
+            });
+
+            ViewBag.MonthTotal = rsv.Sum(r => r.Payment.Status == PaymentStatus.Settled ? r.Payment.FinalPrice : 0);
+
+            if (hideExpired.GetValueOrDefault())
+                rsv = rsv.Where(r => r.Payment.Status != PaymentStatus.Expired).ToList();
+            if (completedOnly.GetValueOrDefault())
+                rsv = rsv.Where(r => r.Payment.Status == PaymentStatus.Settled).ToList();
+            rsv = rsv.OrderBy(r => r.RsvTime).ToList();
+            
+            ViewBag.Month = month;
+            ViewBag.Year = year;
+            return View(rsv);
         }
 
         public ActionResult Detail(string rsvNo)
@@ -39,156 +63,5 @@ namespace Lunggo.BackendWeb.Controllers
             var reservation = flight.GetReservation(rsvNo);
             return View(reservation);
         }
-
-        //public ActionResult CheckPayment()
-        //{
-        //    var reports = PaymentService.GetInstance().GetUncheckedTransferConfirmationReports();
-        //    var reservations = FlightService.GetInstance().GetUnpaidReservations();
-        //    var reportedReservations = reservations.Where(rsv => reports.Exists(rep => rep.RsvNo == rsv.RsvNo)).ToList();
-        //    var unreportedReservations = reservations.Except(reportedReservations);
-        //    var temporary = new CheckPaymentViewModel
-        //    {
-        //        Reports = reports,
-        //        ReportedReservations = reportedReservations,
-        //        UnreportedReservations = unreportedReservations.ToList()
-        //    };
-        //    return View(temporary);
-        //}
-
-        //[HttpPost]
-        //public ActionResult CheckPayment(List<CheckPaymentControllerModel> payments)
-        //{
-        //    var payment = PaymentService.GetInstance();
-        //    var flight = FlightService.GetInstance();
-        //    foreach (var listPayment in payments)
-        //    {
-        //        if (listPayment.Status != TransferConfirmationReportStatus.Unchecked)
-        //        {
-        //            payment.UpdateTransferConfirmationReportStatus(listPayment.RsvNo, listPayment.Status);
-        //            if (listPayment.Status == TransferConfirmationReportStatus.Confirmed)
-        //            {
-        //                var updatedInfo = new PaymentDetails
-        //                {
-        //                    PaidAmountIdr = listPayment.Amount,
-        //                    Time = DateTime.UtcNow
-        //                };
-        //                var reservation = flight.GetReservationForDisplay(listPayment.RsvNo);
-        //                if (listPayment.Amount >= reservation.Payment.FinalPriceIdr)
-        //                    updatedInfo.Status = PaymentStatus.Settled;
-        //                FlightService.GetInstance().UpdateFlightPayment(listPayment.RsvNo, updatedInfo);
-        //                FlightService.GetInstance().SendPendingPaymentConfirmedNotifToCustomer(listPayment.RsvNo);
-        //            }   
-        //        }
-        //    }
-        //    return RedirectToAction("CheckPayment", "Flight");
-        //}
-
-        public ActionResult ExchangeRate()
-        {
-            return View();
-        }
-
-        //[HttpPost]
-        //public ActionResult ExchangeRate(string currencyCode)
-        //{
-        //    var currencyService = CurrencyService.GetInstance();
-        //    var modelRate = currencyService.GetCurrencyExchangeRate(currencyCode);
-        //    if (modelRate == 0)
-        //    {
-        //        var temporary = new ExchangeRateViewModel
-        //        {
-        //            CurrencyCode = currencyCode,
-        //            Rate = modelRate,
-        //            Hidden = 0
-        //        };
-        //        return RedirectToAction("InsertExchangeRate", "Flight", temporary);
-
-        //    }
-        //    else
-        //    {
-        //        var temporary = new ExchangeRateViewModel
-        //        {
-        //            CurrencyCode = currencyCode,
-        //            Rate = modelRate,
-        //            Hidden = 1
-        //        };
-        //        return View(temporary);
-        //    }  
-        //}
-
-        public ActionResult InsertExchangeRate(ExchangeRateViewModel checkRate)
-        {
-            return View(checkRate);
-        }
-
-        //[HttpPost]
-        //[ActionName("InsertExchangeRate")]
-        //public ActionResult InsertExchangeRatePost(ExchangeRateViewModel checkRate)
-        //{
-        //    var currencyService = CurrencyService.GetInstance();
-        //    currencyService.SetCurrencyExchangeRate(checkRate.CurrencyCode, checkRate.Rate);
-        //    return RedirectToAction("ExchangeRate", "Flight");
-        //}
-
-        //public ActionResult PriceMarginList()
-        //{
-        //    var flight = FlightService.GetInstance();
-        //    var rules = flight.GetAllPriceMarginRules();
-        //    return View(rules);
-        //}
-
-        //public ActionResult PriceMarginUpdate(long id)
-        //{
-        //    var flight = FlightService.GetInstance();
-        //    var rule = flight.GetPriceMarginRule(id);
-        //    return View("PriceMarginAdd", rule);
-        //}
-
-        //public ActionResult PriceMarginAdd()
-        //{
-        //    var rule = new MarginRule();
-        //    return View(rule);
-        //}
-
-        //[HttpPost]
-        //public ActionResult PriceMarginAdd(MarginRule rule)
-        //{
-        //    var flight = FlightService.GetInstance();
-        //    var conflicts = flight.InsertPriceMarginRuleAndRetrieveConflict(rule);
-        //    Session["FlightPriceMarginConflicts"] = conflicts;
-        //    return View("PriceMarginConflict", conflicts);
-        //}
-
-        //[HttpPost]
-        //public ActionResult PriceMarginConflict(List<int> ruleId, List<int> priority)
-        //{
-        //    var conflicts = (List<MarginRule>) (Session["FlightPriceMarginConflicts"]);
-        //    for (var i = 0; i < ruleId.Count; i++)
-        //    {
-        //        var id = ruleId[i];
-        //        var prio = priority[i];
-        //        var specifiedRule = conflicts.Single(rule => rule.RuleId == id);
-        //        specifiedRule.Priority = prio;
-        //    }
-        //    var flight = FlightService.GetInstance();
-        //    flight.UpdateResolvedPriceMarginRulesConflict(conflicts);
-        //    return RedirectToAction("PriceMarginList");
-        //}
-
-        //public ActionResult PriceMarginDelete(long id)
-        //{
-        //    var rule = new MarginRule();
-        //    return View(rule);
-        //}
-
-        //[HttpPost]
-        //[ActionName("PriceMarginDelete")]
-        //public ActionResult PriceMarginDeletePost(long id)
-        //{
-        //    var flight = FlightService.GetInstance();
-        //    flight.DeletePriceMarginRule(id);
-        //    return RedirectToAction("PriceMarginList");
-        //}
-        
     }
 }

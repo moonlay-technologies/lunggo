@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Lunggo.ApCommon.Campaign.Database.Query
 {
-    internal class GetCampaignVoucherRecordQuery : QueryBase<GetCampaignVoucherRecordQuery, CampaignVoucher>
+    internal class GetCampaignVoucherRecordQuery : DbQueryBase<GetCampaignVoucherRecordQuery, CampaignVoucher>
     {
         protected override string GetQuery(dynamic condition = null)
         {
@@ -22,7 +22,8 @@ namespace Lunggo.ApCommon.Campaign.Database.Query
             clauseBuilder.Append("B.[StartDate], B.[EndDate], ");
             clauseBuilder.Append("B.[ValuePercentage], B.[ValueConstant], ");
             clauseBuilder.Append("B.[MaxDiscountValue], B.[MinSpendValue], ");
-            clauseBuilder.Append("B.[CampaignTypeCd], B.[Status] AS CampaignStatus ");
+            clauseBuilder.Append("B.[CampaignTypeCd], B.[Status] AS CampaignStatus, ");
+            clauseBuilder.Append("B.[ProductType], B.[MaxBudget], B.[UsedBudget] ");
             clauseBuilder.Append("FROM [CampaignVoucher] A ");
             clauseBuilder.Append("LEFT JOIN [Campaign] B ");
             clauseBuilder.Append("ON A.CampaignId = B.CampaignId ");

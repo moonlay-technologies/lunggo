@@ -20,6 +20,7 @@
     <IISExpressWindowsAuthentication>disabled</IISExpressWindowsAuthentication>
     <IISExpressUseClassicPipelineMode>false</IISExpressUseClassicPipelineMode>
     <UseGlobalApplicationHostFile />
+    <NuGetPackageImportStamp>cb2daaaf</NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -51,21 +52,28 @@
     <Reference Include="Microsoft.AspNet.Identity.Owin">
       <HintPath>..\packages\Microsoft.AspNet.Identity.Owin.2.2.1\lib\net45\Microsoft.AspNet.Identity.Owin.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Azure.Documents.Client, Version=1.10.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Azure.DocumentDB.1.10.0\lib\net45\Microsoft.Azure.Documents.Client.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Azure.KeyVault.Core">
+      <HintPath>..\packages\Microsoft.Azure.KeyVault.Core.1.0.0\lib\net40\Microsoft.Azure.KeyVault.Core.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Azure.NotificationHubs">
       <HintPath>..\packages\Microsoft.Azure.NotificationHubs.1.0.6\lib\net45-full\Microsoft.Azure.NotificationHubs.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Microsoft.Data.Edm">
-      <HintPath>..\packages\Microsoft.Data.Edm.5.6.2\lib\net40\Microsoft.Data.Edm.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Microsoft.Data.Edm, Version=5.6.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.Data.Edm.5.6.4\lib\net40\Microsoft.Data.Edm.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Data.OData">
-      <HintPath>..\packages\Microsoft.Data.OData.5.6.2\lib\net40\Microsoft.Data.OData.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Microsoft.Data.OData, Version=5.6.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.Data.OData.5.6.4\lib\net40\Microsoft.Data.OData.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Data.Services.Client">
-      <HintPath>..\packages\Microsoft.Data.Services.Client.5.6.2\lib\net40\Microsoft.Data.Services.Client.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Microsoft.Data.Services.Client, Version=5.6.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.Data.Services.Client.5.6.4\lib\net40\Microsoft.Data.Services.Client.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Owin">
       <HintPath>..\packages\Microsoft.Owin.3.0.1\lib\net45\Microsoft.Owin.dll</HintPath>
@@ -89,8 +97,7 @@
     </Reference>
     <Reference Include="Microsoft.WindowsAzure.Configuration, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Microsoft.WindowsAzure.ConfigurationManager.3.1.0\lib\net40\Microsoft.WindowsAzure.Configuration.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.WindowsAzure.ConfigurationManager.3.2.3\lib\net40\Microsoft.WindowsAzure.Configuration.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.WindowsAzure.Diagnostics, Version=2.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
       <Private>True</Private>
@@ -99,12 +106,11 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="Microsoft.WindowsAzure.Storage">
-      <HintPath>..\packages\WindowsAzure.Storage.4.3.0\lib\net40\Microsoft.WindowsAzure.Storage.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>..\packages\WindowsAzure.Storage.7.2.1\lib\net40\Microsoft.WindowsAzure.Storage.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
-      <Private>True</Private>
     </Reference>
     <Reference Include="Owin">
       <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
@@ -134,9 +140,9 @@
     </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
-    <Reference Include="System.Spatial, Version=5.6.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+    <Reference Include="System.Spatial, Version=5.6.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\System.Spatial.5.6.2\lib\net40\System.Spatial.dll</HintPath>
+      <HintPath>..\packages\System.Spatial.5.6.4\lib\net40\System.Spatial.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Web.Cors">
@@ -236,10 +242,12 @@
     <Compile Include="ApiSrc\Account\Model\TokenRequest.cs" />
     <Compile Include="ApiSrc\Account\Model\TransactionHistoryApiResponse.cs" />
     <Compile Include="ApiSrc\Autocomplete\AutocompleteController.cs" />
-    <Compile Include="ApiSrc\Autocomplete\Logic\GetHotelLocationAutocompleteLogic.cs" />
+    <Compile Include="ApiSrc\Autocomplete\Logic\GetHotelAutocompleteLogic.cs" />
     <Compile Include="ApiSrc\Autocomplete\Logic\GetAirlineAutocompleteLogic.cs" />
     <Compile Include="ApiSrc\Autocomplete\Logic\GetAirportAutocompleteLogic.cs" />
     <Compile Include="ApiSrc\Autocomplete\Model\AirlineApi.cs" />
+    <Compile Include="ApiSrc\Autocomplete\Model\HotelAutocompleteApi.cs" />
+    <Compile Include="ApiSrc\Autocomplete\Model\HotelAutocompleteApiResponse.cs" />
     <Compile Include="ApiSrc\Autocomplete\Model\AutocompleteHotelLocationsApiResponse.cs" />
     <Compile Include="ApiSrc\Autocomplete\Model\AutocompleteAirportsApiResponse.cs" />
     <Compile Include="ApiSrc\Autocomplete\Model\AutocompleteAirlinesApiResponse.cs" />
@@ -290,6 +298,26 @@
     <Compile Include="ApiSrc\Flight\Model\TopDestinationsApiResponse.cs" />
     <Compile Include="ApiSrc\Auxiliary\Logic\NewsletterSubscribeLogic.cs" />
     <Compile Include="ApiSrc\Auxiliary\Model\NewsletterSubscribeApiRequest.cs" />
+    <Compile Include="ApiSrc\Hotel\Logic\BookLogic.cs" />
+    <Compile Include="ApiSrc\Hotel\Logic\GetSelectedHotelDetailLogic.cs" />
+    <Compile Include="ApiSrc\Hotel\Logic\GetRateLogic.cs" />
+    <Compile Include="ApiSrc\Hotel\Logic\GetRoomDetailLogic.cs" />
+    <Compile Include="ApiSrc\Hotel\Logic\GetHotelDetailLogic.cs" />
+    <Compile Include="ApiSrc\Hotel\Logic\SearchHotelLogic.cs" />
+    <Compile Include="ApiSrc\Hotel\Model\HotelBookApiRequest.cs" />
+    <Compile Include="ApiSrc\Hotel\Model\HotelBookApiResponse.cs" />
+    <Compile Include="ApiSrc\Hotel\Model\HotelDetailApiRequest.cs" />
+    <Compile Include="ApiSrc\Hotel\Model\HotelDetailApiResponse.cs" />
+    <Compile Include="ApiSrc\Hotel\Model\HotelSelectRoomApiRequest.cs" />
+    <Compile Include="ApiSrc\Hotel\Model\HotelSelectedRoomApiRequest.cs" />
+    <Compile Include="ApiSrc\Hotel\Model\HotelRoomDetailApiRequest.cs" />
+    <Compile Include="ApiSrc\Hotel\Model\HotelRateApiRequest.cs" />
+    <Compile Include="ApiSrc\Hotel\Model\HotelSearchApiRequest.cs" />
+    <Compile Include="ApiSrc\Hotel\Model\HotelSelectedRoomApiResponse.cs" />
+    <Compile Include="ApiSrc\Hotel\Model\HotelSelectRoomApiResponse.cs" />
+    <Compile Include="ApiSrc\Hotel\Model\HotelRoomDetailApiResponse.cs" />
+    <Compile Include="ApiSrc\Hotel\Model\HotelRateApiResponse.cs" />
+    <Compile Include="ApiSrc\Hotel\Model\HotelSearchApiResponse.cs" />
     <Compile Include="ApiSrc\Notification\Logic\DeleteRegistrationLogic.cs" />
     <Compile Include="ApiSrc\Notification\Logic\PlatformMapper.cs" />
     <Compile Include="ApiSrc\Notification\Logic\UpdateRegistrationLogic.cs" />
@@ -312,10 +340,6 @@
     <Compile Include="ApiSrc\Payment\Model\UniqueCodeApiRequest.cs" />
     <Compile Include="ApiSrc\Payment\Model\UniqueCodeApiResponse.cs" />
     <Compile Include="ApiSrc\Payment\PaymentController.cs" />
-    <Compile Include="ApiSrc\Rooms\Logic\GetRoomsLogic.cs" />
-    <Compile Include="ApiSrc\Rooms\Object\RoomSearchApiRequest.cs" />
-    <Compile Include="ApiSrc\Rooms\Object\RoomSearchApiResponse.cs" />
-    <Compile Include="ApiSrc\Rooms\RoomsController.cs" />
     <Compile Include="ApiSrc\Payment\Logic\CheckVoucherLogic.cs" />
     <Compile Include="ApiSrc\Payment\Model\CheckVoucherApiRequest.cs" />
     <Compile Include="ApiSrc\Payment\Model\CheckVoucherApiResponse.cs" />
@@ -323,10 +347,8 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="ApiSrc\Hotel\Object\HotelSearchApiRequest.cs" />
-    <Compile Include="ApiSrc\Hotel\Object\HotelSearchApiResponse.cs" />
     <Compile Include="ApiSrc\Hotel\HotelController.cs" />
-    <Compile Include="ApiSrc\Hotel\Logic\GetHotelLogic.cs" />
+    <Compile Include="ApiSrc\Hotel\Logic\SelectLogic.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -340,11 +362,53 @@
     <Content Include="Config\Airport.csv" />
     <Content Include="Config\Airline.csv" />
     <Content Include="Config\Country.csv" />
+    <Content Include="Config\HotelAccomodation.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Config\HotelBoard.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Config\HotelCategory.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Config\HotelChain.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Config\HotelCountries.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Config\HotelDestinations.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Config\HotelFacilities.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Config\HotelFacilitiesFilterGroup.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Config\HotelFacilityGroup.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Config\HotelRoom.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Config\HotelRoomOriginal.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Config\HotelRoomPaymentType.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Config\HotelRoomRateClass.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Config\HotelRoomRateType.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Config\HotelSegment.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="Properties\PublishProfiles\prod-api %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\prod-api.pubxml" />
-    <None Include="Properties\PublishProfiles\travorama-dv2-api %282%29.pubxml" />
-    <None Include="Properties\PublishProfiles\travorama-dv2-api %283%29.pubxml" />
-    <None Include="Properties\PublishProfiles\travorama-dv2-api %284%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-dv2-api.pubxml" />
     <None Include="Properties\PublishProfiles\prod-api__staging.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-apidev.pubxml" />
@@ -362,12 +426,11 @@
     <None Include="Properties\PublishProfiles\travorama-dvapp-api__staging.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-prod-api__staging.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-prod-api__staging2 %282%29.pubxml" />
-    <None Include="Properties\PublishProfiles\travorama-prod-api__staging2 %283%29.pubxml" />
-    <None Include="Properties\PublishProfiles\travorama-prod-api__staging2 %284%29.pubxml" />
-    <None Include="Properties\PublishProfiles\travorama-prod-api__staging2 %285%29.pubxml" />
-    <None Include="Properties\PublishProfiles\travorama-prod-api__staging2 %286%29.pubxml" />
-    <None Include="Properties\PublishProfiles\travorama-prod-api__staging2 %287%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-prod-api__staging2.pubxml" />
+    <None Include="Properties\PublishProfiles\travorama-qa-api %282%29.pubxml" />
+    <None Include="Properties\PublishProfiles\travorama-qa-api %283%29.pubxml" />
+    <None Include="Properties\PublishProfiles\travorama-qa-api %284%29.pubxml" />
+    <None Include="Properties\PublishProfiles\travorama-qa-api %285%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-qa-api.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -377,8 +440,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="ApiSrc\Hotel\Model\" />
-    <Folder Include="ApiSrc\Rooms\Model\" />
+    <Folder Include="ApiSrc\Hotel\Model\Object\" />
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
@@ -420,6 +482,13 @@
       </FlavorProperties>
     </VisualStudio>
   </ProjectExtensions>
+  <Import Project="..\packages\Microsoft.Azure.DocumentDB.1.10.0\build\Microsoft.Azure.DocumentDB.targets" Condition="Exists('..\packages\Microsoft.Azure.DocumentDB.1.10.0\build\Microsoft.Azure.DocumentDB.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.Azure.DocumentDB.1.10.0\build\Microsoft.Azure.DocumentDB.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Azure.DocumentDB.1.10.0\build\Microsoft.Azure.DocumentDB.targets'))" />
+  </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

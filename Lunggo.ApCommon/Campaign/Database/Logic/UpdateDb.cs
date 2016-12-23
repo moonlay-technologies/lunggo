@@ -23,6 +23,15 @@ namespace Lunggo.ApCommon.Campaign.Service
                     return rowAffected > 0;
                 }
             }
+
+            internal static bool UseHotelBudget(string voucherCode, string rsvNo)
+            {
+                using (var conn = DbService.GetInstance().GetOpenConnection())
+                {
+                    int rowAffected = UseHotelBudgetQuery.GetInstance().Execute(conn, new { VoucherCode = voucherCode, RsvNo = rsvNo });
+                    return rowAffected > 0;
+                }
+            }
         }
     }
 }

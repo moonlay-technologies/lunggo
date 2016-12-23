@@ -3,7 +3,7 @@ using Lunggo.Framework.Database;
 
 namespace Lunggo.ApCommon.Query
 {
-    public class GetCountryCodeByAreaQuery : QueryBase<GetCountryCodeByAreaQuery, GetCountryCodeQueryRecord>
+    public class GetCountryCodeByAreaQuery : DbQueryBase<GetCountryCodeByAreaQuery, GetCountryCodeQueryRecord>
     {
         private GetCountryCodeByAreaQuery()
         {

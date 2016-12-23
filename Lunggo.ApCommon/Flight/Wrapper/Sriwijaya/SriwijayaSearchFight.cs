@@ -341,8 +341,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                                         var jadwalRaw = ambilJadwal.Select(x => x.Cq().Text()).FirstOrDefault();
                                         var jadwalParse1 = jadwalRaw.Split(' ').ToList();
                                         CultureInfo provider = CultureInfo.InvariantCulture;
-                                        var depTimeAja = DateTime.ParseExact(jadwalParse1[0].Trim('\t'), "HH:mm", provider).TimeOfDay;
-                                        var arrTimeAja = DateTime.ParseExact(jadwalParse1[3].Trim('\t'), "HH:mm", provider).TimeOfDay;
+                                        var depTimeAja = DateTime.ParseExact(jadwalParse1[0].Trim('\t').Substring(0,5), "HH:mm", provider).TimeOfDay;
+                                        var arrTimeAja = DateTime.ParseExact(jadwalParse1[3].Trim('\t').Substring(0,5), "HH:mm", provider).TimeOfDay;
                                         DateTime departureDate = trip0.DepartureDate;
                                         var depTime = departureDate.Add(depTimeAja);
                                         var arrTime = arrTimeAja <= depTimeAja
@@ -367,7 +367,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                                             FlightNumber = codeParse1[1],
                                             CabinClass = CabinClass.Economy,
                                             AirlineType = AirlineType.Lcc,
-                                            Rbd = rbdEko[code],
+                                            Rbd = rbdEko.Count == jumlahSegment ? rbdEko[code] : rbdEko[0],
                                             DepartureAirport = bandara1,
                                             DepartureTime = DateTime.SpecifyKind(depTime,DateTimeKind.Utc),
                                             ArrivalAirport = bandara2,
@@ -629,8 +629,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                                         var jadwalRaw = ambilJadwal.Select(x => x.Cq().Text()).FirstOrDefault();
                                         var jadwalParse1 = jadwalRaw.Split(' ').ToList();
                                         CultureInfo provider = CultureInfo.InvariantCulture;
-                                        var depTimeAja = DateTime.ParseExact(jadwalParse1[0].Trim('\t'), "HH:mm", provider).TimeOfDay;
-                                        var arrTimeAja = DateTime.ParseExact(jadwalParse1[3].Trim('\t'), "HH:mm", provider).TimeOfDay;
+                                        var depTimeAja = DateTime.ParseExact(jadwalParse1[0].Trim('\t').Substring(0,5), "HH:mm", provider).TimeOfDay;
+                                        var arrTimeAja = DateTime.ParseExact(jadwalParse1[3].Trim('\t').Substring(0,5), "HH:mm", provider).TimeOfDay;
                                         DateTime departureDate = trip0.DepartureDate;
                                         var depTime = departureDate.Add(depTimeAja);
                                         var arrTime = arrTimeAja <= depTimeAja
@@ -645,7 +645,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                                             AirlineCode = codeParse1[0],
                                             FlightNumber = codeParse1[1],
                                             CabinClass = CabinClass.Business,
-                                            Rbd = rbdBis[code],
+                                            Rbd = rbdBis.Count == jumlahSegment ? rbdBis[code] : rbdBis[0],
                                             DepartureAirport = bandara1,
                                             DepartureTime = DateTime.SpecifyKind(depTime,DateTimeKind.Utc),
                                             ArrivalAirport = bandara2,

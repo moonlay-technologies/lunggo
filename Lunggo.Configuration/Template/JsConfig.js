@@ -4,15 +4,6 @@ var SystemConfig = {
     SystemBusy: false
 };
 
-var SearchHotelConfig = {
-    Url: '$apiUrl$$hotelPath$',
-    ResultCount: 24
-};
-
-var SearchRoomConfig = {
-    Url: '$apiUrl$$roomPath$'
-};
-
 var FlightSearchConfig = {
     Url: '$apiUrl$$flightPath$',
     // generate search URL
@@ -193,6 +184,22 @@ var ResendConfirmationEmailMobileConfig = {
     Url: '$mobileUrl$$resendConfirmationEmailPath$'
 };
 
+var HotelSearchConfig = {
+    Url: '$apiUrl$$hotelSearchPath$'
+};
+
+var HotelDetailsConfig = {
+    Url: '$apiUrl$$hotelDetailsPath$'
+};
+
+var HotelSelectConfig = {
+    Url: '$apiUrl$$hotelSelectPath$'
+};
+
+var HotelBookConfig = {
+    Url: '$apiUrl$$hotelBookPath$',
+    working: false
+};
 function setCookie(cname, cvalue, expTime) {
 
     if (cname != "accesstoken") {

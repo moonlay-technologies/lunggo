@@ -4,7 +4,7 @@ using Lunggo.Repository.TableRecord;
 
 namespace Lunggo.ApCommon.Voucher.Query
 {
-    internal class GetVoucherRecordQuery : QueryBase<GetVoucherRecordQuery, VoucherTableRecord>
+    internal class GetVoucherRecordQuery : DbQueryBase<GetVoucherRecordQuery, VoucherTableRecord>
     {
         protected override string GetQuery(dynamic condition = null)
         {

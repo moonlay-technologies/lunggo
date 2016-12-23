@@ -74,14 +74,14 @@ namespace Lunggo.ApCommon.Flight.Service
         {
             var filters = filter != null ? filter.Split(',') : null;
             var rsvs = GetOverviewReservationsByUserIdOrEmailFromDb(userId, email, filters, sort, page, itemsPerPage) ?? new List<FlightReservation>();
-            return rsvs.Select(ConvertToReservationForDisplay).ToList();
+            return rsvs.Select(ConvertToReservationForDisplay).Where(r => r.RsvDisplayStatus != RsvDisplayStatus.Expired).ToList();
         }
 
         public List<FlightReservationForDisplay> GetOverviewReservationsByDeviceId(string deviceId, string filter, string sort, int? page, int? itemsPerPage)
         {
             var filters = filter != null ? filter.Split(',') : null;
             var rsvs = GetOverviewReservationsByDeviceIdFromDb(deviceId, filters, sort, page, itemsPerPage) ?? new List<FlightReservation>();
-            return rsvs.Select(ConvertToReservationForDisplay).ToList();
+            return rsvs.Select(ConvertToReservationForDisplay).Where(r => r.RsvDisplayStatus != RsvDisplayStatus.Expired).ToList();
         }
 
         public List<FlightReservationForDisplay> SearchReservations(FlightReservationSearch search)

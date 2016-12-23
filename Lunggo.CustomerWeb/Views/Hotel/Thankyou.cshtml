@@ -1,0 +1,150 @@
+﻿@{
+    Layout = "/Views/Shared/Travorama20/_Layout20150929.cshtml";
+    ViewBag.BodyClass = "page-hotel page-thankyou";
+    ViewBag.Title = "Terima Kasih";
+
+    ViewBag.BookingFailed = false;
+}
+
+@section AdditionalJS {
+    <!-- additional Angular JS-->
+    <script src="/Assets/js/angular.min.js"></script>
+    <script src="/Assets/js/angular-animate.min.js"></script>
+    <script src="/Assets/js/angular-route.min.js"></script>
+    <script src="/Assets/js/jquery.countdown.min.js"></script>
+}
+
+@section PageJS{
+    <script>
+        var langCode = 'en';
+        var printTimeout = '';
+
+        // development only start
+        printTimeout = new Date(); // please change this print time out to actual time
+        printTimeout.setSeconds(printTimeout.getSeconds() + 7200);
+        // development only end
+
+        // countdown timer
+        $('.timer').countdown(printTimeout, function (event) {
+            $('.timer .hour h5').text(event.strftime('%H'));
+            $('.timer .minute h5').text(event.strftime('%M'));
+            $('.timer .second h5').text(event.strftime('%S'));
+        }).on('finish.countdown', function () {
+            $('.print .btn').removeClass('disabled');
+        });
+
+    </script>
+    <!-- angular controller -->
+    <script src="/Assets/travorama20/js/checkoutController.js"></script>
+}
+
+<div class="thankyou">
+    <div class="container">
+        <h2 class="section-title stripe text-center">TERIMA <span>KASIH</span></h2>
+        <div class="tp-desc">Telah memesan penerbangan di Travorama. Anda dapat mencetak e-tiket Anda melalui tombol berikut atau mengunduhnya di email, setelah:</div>
+        <div class="tp-counter blue-txt">
+            <div class="timer-container clearfix">
+                <div class="col-half left-side">
+                    <div class="timer clearfix">
+                        <div class="col-3">
+                            <ul class="tp-list hour clearfix">
+                                <li class="h bold-txt xlg-txt">00</li>
+                                <li class="">Jam</li>
+                            </ul>
+                        </div>
+                        <div class="col-3">
+                            <ul class="tp-list minute clearfix">
+                                <li class="m bold-txt xlg-txt">59</li>
+                                <li class="">Menit</li>
+                            </ul>
+                        </div>
+                        <div class="col-3">
+                            <ul class="tp-list sec clearfix">
+                                <li class="s bold-txt xlg-txt">45</li>
+                                <li class="">Detik</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-half right-side"><a href="#" class="btn btn-yellow">CETAK PESANAN</a></div>
+            </div>
+            <div class="grey-txt">Anda dapat meuntup halaman ini dan mengecek status penerbitan e-tiket di menu cek pemesanan setiap saat.</div>
+        </div>
+        <div class="tp-detail rh-container clearfix">
+            <div class="rh-main-title">Tanda Bukti Pembayaran</div>
+            <div class="tp-container tp-left col-6">
+                <div class="tp-detail clearfix">
+                    <div class="tp-title bold-txt">DETAIL HOTEL</div>
+                    <div class="tp-top clearfix">
+                        <div class="room-left"><img src="/Assets/travorama20/images/Hotel/hotel-sm.jpg" alt="Alternate Text" /></div>
+                        <div class="room-right">
+                            <span class="blue-txt bold-txt">Bliss Hotel Singapore</span>
+                            <br /><span class="star star-4"></span>
+                            <div class="wt-bottom">Kios Tower AB No. 26, Jl. Karet Pasar Gang Tiong No: 62 ; Jakarta Barat</div>
+                        </div>
+                    </div>
+                    <div class="tp-bottom">
+                        <div class="tpb-container clearfix">
+                            <div class="col-2 bold-txt">Check in</div>
+                            <div class="col-8">5 November 2016</div>
+                        </div>
+                        <div class="tpb-container clearfix">
+                            <div class="col-2 bold-txt">Check out</div>
+                            <div class="col-8">9 November 2016</div>
+                        </div>
+                        <div class="tpb-container clearfix">
+                            <div class="col-2 bold-txt">Malam</div>
+                            <div class="col-8">3 Malam</div>
+                        </div>
+                        <div class="tpb-container clearfix">
+                            <div class="col-2 bold-txt">Kamar</div>
+                            <div class="col-8">2 Kamar</div>
+                        </div>
+                        <div class="tpb-container clearfix">
+                            <div class="col-2 bold-txt">Jenis Kamar</div>
+                            <div class="col-8">Superior Room</div>
+                        </div>
+                        <div class="tpb-container clearfix">
+                            <div class="col-2 bold-txt">Tamu per Kamar</div>
+                            <div class="col-8">2 orang</div>
+                        </div>
+                        <div class="tpb-container clearfix">
+                            <div class="col-2 bold-txt">Nama Pemesan</div>
+                            <div class="col-8">Mrs. Anonymous</div>
+                        </div>
+                        <div class="tpb-container clearfix">
+                            <div class="bold-txt">Catatan Khusus</div>
+                            <div class="">-</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tp-container tp-right col-4">
+                <div class="tp-price widget-container">
+                    <div class="widget price-detail">
+                        <div class="bold-txt">RINCIAN HARGA</div>
+                        <div class="widget-content">
+                            <dl class="total-room">
+                                <dt class="dt-title">1 Superior Room x 1 night :</dt>
+                                <dd class="dd-price">Rp 999.999.999</dd>
+                            </dl>
+                            <dl class="service-room">
+                                <dt class="dt-title">Pelayanan Kamar :</dt>
+                                <dd class="dd-price">Rp 999.999.999</dd>
+                            </dl>
+                            <dl class="total-price">
+                                <dt class="dt-title">Total</dt>
+                                <dd class="dd-price">Rp 999.999.999</dd>
+                            </dl>
+                        </div>
+                    </div>
+                </div>
+                <div class="tp-payment">
+                    <div class="tp-title bold-txt">METODE PEMBAYARAN</div>
+                    <div class="blue-txt semibold-txt">(Credit Card)</div>
+                    <div class="tp-img"><img src="/Assets/images/payment-cc.jpg" alt="Payment" /></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
