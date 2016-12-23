@@ -273,163 +273,20 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Assets\bootstrap\bootstrap.css">
-      <DependentUpon>bootstrap.scss</DependentUpon>
-    </Content>
-    <Content Include="Assets\css\neweticket.css">
-      <DependentUpon>neweticket.scss</DependentUpon>
-    </Content>
-    <Content Include="Assets\css\promo.css">
-      <DependentUpon>promo.scss</DependentUpon>
-    </Content>
-    <Content Include="Assets\images\campaign\OnlineRevolution2016\credit-card.png" />
-    <Content Include="Assets\images\campaign\OnlineRevolution2016\debit.png" />
-    <Content Include="Assets\images\campaign\OnlineRevolution2016\OnlineRevolution-page-mobile.jpg" />
-    <Content Include="Assets\images\campaign\OnlineRevolution2016\OnlineRevolution-page.jpg" />
-    <Content Include="Assets\images\campaign\OnlineRevolution2016\OnlineRevolution-slider-mobile.jpg" />
-    <Content Include="Assets\images\campaign\OnlineRevolution2016\OnlineRevolution-slider.jpg" />
-    <Content Include="Assets\images\hotel-star-4.jpg" />
-    <Content Include="Assets\images\hotel-star-4.png" />
-    <Content Include="Assets\images\location.png" />
-    <Content Include="Assets\images\order-hotel-list-bg.png" />
-    <Content Include="Assets\images\select-arrow-up.png" />
-    <Content Include="Assets\images\swim.png" />
-    <Content Include="Assets\images\voucher-hotel-bg.jpg" />
-    <Content Include="Assets\images\voucher-hotel.jpg" />
-    <Content Include="Assets\images\wifi.png" />
-    <Content Include="Assets\js\jquery.cookie.min.js" />
-    <Content Include="Assets\js\xml2json.min.js" />
-    <Content Include="Assets\images\phone.png" />
-    <Content Include="Assets\mobile\css\help_section.css">
-      <DependentUpon>help_section.scss</DependentUpon>
-    </Content>
-    <Content Include="Assets\mobile\css\style_mobile.css">
-      <DependentUpon>style_mobile.scss</DependentUpon>
-    </Content>
-    <Content Include="Assets\mobile\images\adult.png" />
-    <Content Include="Assets\mobile\images\Hotel\ac-grey.png" />
-    <Content Include="Assets\mobile\images\Hotel\ac-white.png" />
-    <Content Include="Assets\mobile\images\Hotel\ac.png" />
-    <Content Include="Assets\mobile\images\Hotel\arrow-down-grey.png" />
-    <Content Include="Assets\mobile\images\Hotel\arrow-down-orange.png" />
-    <Content Include="Assets\mobile\images\Hotel\arrow-down-yellow.png" />
-    <Content Include="Assets\mobile\images\Hotel\arrow-next.png" />
-    <Content Include="Assets\mobile\images\Hotel\arrow-orange.png" />
-    <Content Include="Assets\mobile\images\child.png" />
-    <Content Include="Assets\mobile\images\date.png" />
-    <Content Include="Assets\mobile\images\find.png" />
-    <Content Include="Assets\mobile\images\flight-blue.png" />
-    <Content Include="Assets\mobile\images\flight-grey.png" />
-    <Content Include="Assets\mobile\images\hotel-blue.png" />
-    <Content Include="Assets\mobile\images\hotel-grey.png" />
-    <Content Include="Assets\mobile\images\Hotel\arrow-prev.png" />
-    <Content Include="Assets\mobile\images\Hotel\arrow-up-grey.png" />
-    <Content Include="Assets\mobile\images\Hotel\arrow-up-orange.png" />
-    <Content Include="Assets\mobile\images\Hotel\arrow-up-yellow.png" />
-    <Content Include="Assets\mobile\images\Hotel\bar.png" />
-    <Content Include="Assets\mobile\images\Hotel\bed-white.png" />
-    <Content Include="Assets\mobile\images\Hotel\bed.png" />
-    <Content Include="Assets\mobile\images\Hotel\bel-grey.png" />
-    <Content Include="Assets\mobile\images\Hotel\bel-white.png" />
-    <Content Include="Assets\mobile\images\Hotel\bel.png" />
-    <Content Include="Assets\mobile\images\Hotel\business.png" />
-    <Content Include="Assets\mobile\images\Hotel\car-white.png" />
-    <Content Include="Assets\mobile\images\Hotel\car.png" />
-    <Content Include="Assets\mobile\images\Hotel\checkin.png" />
-    <Content Include="Assets\mobile\images\Hotel\checkout.png" />
-    <Content Include="Assets\mobile\images\Hotel\double-bed.png" />
-    <Content Include="Assets\mobile\images\Hotel\ent.png" />
-    <Content Include="Assets\mobile\images\Hotel\food.png" />
-    <Content Include="Assets\mobile\images\Hotel\health.png" />
-    <Content Include="Assets\mobile\images\Hotel\hotel-detail-lg.jpg" />
-    <Content Include="Assets\mobile\images\Hotel\hotel-detail-sm.jpg" />
-    <Content Include="Assets\mobile\images\Hotel\hotel-detail-xlg.jpg" />
-    <Content Include="Assets\mobile\images\Hotel\hotel-list-lg.jpg" />
-    <Content Include="Assets\mobile\images\Hotel\like.png" />
-    <Content Include="Assets\mobile\images\Hotel\location-grey.png" />
-    <Content Include="Assets\mobile\images\Hotel\location.png" />
-    <Content Include="Assets\mobile\images\Hotel\login.png" />
-    <Content Include="Assets\mobile\images\Hotel\meal-grey.png" />
-    <Content Include="Assets\mobile\images\Hotel\meal-white.png" />
-    <Content Include="Assets\mobile\images\Hotel\meal.png" />
-    <Content Include="Assets\mobile\images\Hotel\other.png" />
-    <Content Include="Assets\mobile\images\Hotel\people.png" />
-    <Content Include="Assets\mobile\images\Hotel\pool-grey.png" />
-    <Content Include="Assets\mobile\images\Hotel\pool-white.png" />
-    <Content Include="Assets\mobile\images\Hotel\pool.png" />
-    <Content Include="Assets\mobile\images\Hotel\room.png" />
-    <Content Include="Assets\mobile\images\Hotel\share.png" />
-    <Content Include="Assets\mobile\images\Hotel\single-bed.png" />
-    <Content Include="Assets\mobile\images\Hotel\sport.png" />
-    <Content Include="Assets\mobile\images\Hotel\tv-white.png" />
-    <Content Include="Assets\mobile\images\Hotel\tv.png" />
-    <Content Include="Assets\mobile\images\Hotel\wifi-grey.png" />
-    <Content Include="Assets\mobile\images\Hotel\wifi-white.png" />
-    <Content Include="Assets\mobile\images\Hotel\wifi.png" />
-    <Content Include="Assets\mobile\images\sand-clock.png" />
-    <Content Include="Assets\mobile\images\time.png" />
-    <Content Include="Assets\mobile\js\HotelController.js" />
-    <Content Include="Assets\travorama20\angularDirectory\common\hotelAutocomplete.service.js" />
-    <Content Include="Assets\travorama20\angularDirectory\search\hotelSearch.service.js" />
-    <Content Include="Assets\travorama20\css\style_desktop.css">
-      <DependentUpon>style_desktop.scss</DependentUpon>
-    </Content>
-    <Content Include="Assets\travorama20\images\Hotel\bed.png" />
-    <Content Include="Assets\travorama20\images\Hotel\blue-sprite.png" />
-    <Content Include="Assets\travorama20\images\Hotel\business-lg.png" />
-    <Content Include="Assets\travorama20\images\Hotel\down.png" />
-    <Content Include="Assets\travorama20\images\Hotel\entertainment-lg.png" />
-    <Content Include="Assets\travorama20\images\Hotel\general-lg.png" />
-    <Content Include="Assets\travorama20\images\Hotel\health-lg.png" />
-    <Content Include="Assets\travorama20\images\Hotel\meal-lg.png" />
-    <Content Include="Assets\travorama20\images\Hotel\next-white.png" />
-    <Content Include="Assets\travorama20\images\Hotel\no-hotel-lg.png" />
-    <Content Include="Assets\travorama20\images\Hotel\no-hotel.png" />
-    <Content Include="Assets\travorama20\images\Hotel\other-lg.png" />
-    <Content Include="Assets\travorama20\images\Hotel\prev-white.png" />
-    <Content Include="Assets\travorama20\images\Hotel\print.png" />
-    <Content Include="Assets\travorama20\images\Hotel\room.jpg" />
-    <Content Include="Assets\travorama20\images\Hotel\size.png" />
-    <Content Include="Assets\travorama20\images\Hotel\sort.png" />
-    <Content Include="Assets\travorama20\images\Hotel\sport-lg.png" />
-    <Content Include="Assets\travorama20\images\Hotel\triangle-grey.png" />
-    <Content Include="Assets\travorama20\images\Hotel\up.png" />
-    <Content Include="Assets\travorama20\images\Hotel\view.png" />
-    <Content Include="Assets\travorama20\js\app.config.js" />
-    <Content Include="Assets\travorama20\js\HotelCheckoutController.js" />
-    <Content Include="Assets\travorama20\js\hotelDetailController.js" />
-    <Content Include="Assets\travorama20\js\hotelSearchController.js" />
-    <Content Include="Assets\travorama20\js\HotelController.js" />
-    <Content Include="Assets\css\font-awesome.min.css" />
     <Content Include="Areas\Api\Views\web.config" />
+    <Content Include="Assets\bootstrap\bootstrap.css" />
+    <Content Include="Assets\bootstrap\bootstrap.min.css" />
+    <Content Include="Assets\css\font-awesome.min.css" />
     <Content Include="Assets\css\jquery-ui.min.css" />
+    <Content Include="Assets\css\neweticket.css" />
+    <Content Include="Assets\css\neweticket.min.css" />
+    <Content Include="Assets\css\promo.css" />
     <Content Include="Assets\fonts\bootstrap\glyphicons-halflings-regular.svg" />
-    <Content Include="Assets\fonts\DINB-webfont.eot" />
     <Content Include="Assets\fonts\DINB-webfont.svg" />
-    <Content Include="Assets\fonts\DINB-webfont.ttf" />
-    <Content Include="Assets\fonts\DINB-webfont.woff" />
-    <Content Include="Assets\fonts\DINB-webfont.woff2" />
-    <Content Include="Assets\fonts\DINR-webfont.eot" />
     <Content Include="Assets\fonts\DINR-webfont.svg" />
-    <Content Include="Assets\fonts\DINR-webfont.ttf" />
-    <Content Include="Assets\fonts\DINR-webfont.woff" />
-    <Content Include="Assets\fonts\DINR-webfont.woff2" />
-    <Content Include="Assets\fonts\fontawesome-webfont.eot" />
     <Content Include="Assets\fonts\fontawesome-webfont.svg" />
-    <Content Include="Assets\fonts\fontawesome-webfont.ttf" />
-    <Content Include="Assets\fonts\fontawesome-webfont.woff" />
-    <Content Include="Assets\fonts\fontawesome-webfont.woff2" />
-    <Content Include="Assets\fonts\FontAwesome.otf" />
-    <Content Include="Assets\fonts\Gotham-Bold.eot" />
-    <Content Include="Assets\fonts\Gotham-Bold.otf" />
     <Content Include="Assets\fonts\Gotham-Bold.svg" />
-    <Content Include="Assets\fonts\Gotham-Bold.ttf" />
-    <Content Include="Assets\fonts\Gotham-Bold.woff" />
-    <Content Include="Assets\fonts\Gotham-Medium.eot" />
-    <Content Include="Assets\fonts\Gotham-Medium.otf" />
     <Content Include="Assets\fonts\Gotham-Medium.svg" />
-    <Content Include="Assets\fonts\Gotham-Medium.ttf" />
-    <Content Include="Assets\fonts\Gotham-Medium.woff" />
     <Content Include="Assets\images\adult-icon.png" />
     <Content Include="Assets\images\airlines\0V.png" />
     <Content Include="Assets\images\airlines\2J.png" />
@@ -744,56 +601,12 @@
     <Content Include="Assets\images\campaign\malaysia-thumb.jpg" />
     <Content Include="Assets\images\campaign\malaysia.jpg" />
     <Content Include="Assets\images\campaign\MobileApp\mobile-app-banner.jpg" />
-    <Content Include="Assets\images\global-error.jpg" />
-    <Content Include="Assets\images\load2.gif" />
-    <Content Include="Assets\images\logo-travorama-sm.png" />
-    <Content Include="Assets\images\logo-travorama.png" />
-    <Content Include="Assets\mobile\images\app-store.png" />
-    <Content Include="Assets\mobile\images\arrow-detail.png" />
-    <Content Include="Assets\mobile\images\burger-button.png" />
-    <Content Include="Assets\mobile\images\flight-separators.png" />
-    <Content Include="Assets\mobile\images\mobile-app.png" />
-    <Content Include="Assets\mobile\images\next.png" />
-    <Content Include="Assets\mobile\images\play-store.png" />
-    <Content Include="Assets\mobile\images\prev.png" />
-    <Content Include="Assets\mobile\images\promo-logo-notif.png" />
-    <Content Include="Assets\mobile\css\global-error.css">
-      <DependentUpon>global-error.scss</DependentUpon>
-    </Content>
-    <Content Include="Assets\mobile\css\global-error.min.css">
-      <DependentUpon>global-error.css</DependentUpon>
-    </Content>
-    <Content Include="Assets\travorama20\images\app-store-bg.png" />
-    <Content Include="Assets\travorama20\images\app-store-cs.png" />
-    <Content Include="Assets\travorama20\images\Hotel\disc-bg.png" />
-    <Content Include="Assets\travorama20\images\Hotel\disc2-bg.png" />
-    <Content Include="Assets\travorama20\images\Hotel\header-bg.jpg" />
-    <Content Include="Assets\travorama20\images\Hotel\hotel.png" />
-    <Content Include="Assets\travorama20\images\Hotel\location.png" />
-    <Content Include="Assets\travorama20\images\Hotel\map.png" />
-    <Content Include="Assets\travorama20\images\Hotel\meal.png" />
-    <Content Include="Assets\travorama20\images\Hotel\next.png" />
-    <Content Include="Assets\travorama20\images\Hotel\plane-sm.png" />
-    <Content Include="Assets\travorama20\images\Hotel\prev.png" />
-    <Content Include="Assets\travorama20\images\Hotel\star-outline.png" />
-    <Content Include="Assets\travorama20\images\Hotel\star.png" />
-    <Content Include="Assets\travorama20\images\Hotel\ta-logo.png" />
-    <Content Include="Assets\travorama20\images\Hotel\ta-rating.png" />
-    <Content Include="Assets\travorama20\images\Hotel\trip-advisor-rating.png" />
-    <Content Include="Assets\travorama20\images\Hotel\trip-advisor.png" />
-    <Content Include="Assets\travorama20\images\Hotel\wifi.png" />
-    <Content Include="Assets\travorama20\images\mobile-app.png" />
-    <Content Include="Assets\travorama20\images\play-store-bg.png" />
-    <Content Include="Assets\travorama20\js\ConfirmationController.js" />
-    <Content Include="Assets\travorama20\js\PromoController.js" />
-    <Content Include="Assets\travorama20\js\ThankyouController.js" />
-    <Content Include="Assets\vendor\dotdotdot\jquery.dotdotdot.js" />
-    <Content Include="Assets\vendor\dotdotdot\jquery.dotdotdot.min.js" />
-    <Content Include="Assets\vendor\dotdotdot\jquery.dotdotdot.min.umd.js" />
-    <Content Include="Assets\vendor\lightslider\lightslider.css" />
-    <Content Include="Assets\vendor\lightslider\lightslider.js" />
-    <Content Include="Assets\vendor\slick\slick.css" />
-    <Content Include="Assets\vendor\slick\slick.min.js" />
+    <Content Include="Assets\images\campaign\OnlineRevolution2016\credit-card.png" />
+    <Content Include="Assets\images\campaign\OnlineRevolution2016\debit.png" />
+    <Content Include="Assets\images\campaign\OnlineRevolution2016\OnlineRevolution-page-mobile.jpg" />
+    <Content Include="Assets\images\campaign\OnlineRevolution2016\OnlineRevolution-page.jpg" />
+    <Content Include="Assets\images\campaign\OnlineRevolution2016\OnlineRevolution-slider-mobile.jpg" />
+    <Content Include="Assets\images\campaign\OnlineRevolution2016\OnlineRevolution-slider.jpg" />
     <Content Include="Assets\images\campaign\singapore-text.png" />
     <Content Include="Assets\images\campaign\singapore-thumb.jpg" />
     <Content Include="Assets\images\campaign\singapore.jpg" />
@@ -824,6 +637,7 @@
     <Content Include="Assets\images\email\e1_03.png" />
     <Content Include="Assets\images\email\email-footer.png" />
     <Content Include="Assets\images\email\emailvoucher700px.png" />
+    <Content Include="Assets\images\email\emailvoucher700x1100.png" />
     <Content Include="Assets\images\email\facebook-icon.png" />
     <Content Include="Assets\images\email\flight-departure-icon.png" />
     <Content Include="Assets\images\email\flight-return-icon.png" />
@@ -890,6 +704,7 @@
     <Content Include="Assets\images\flight-toggle-up.png" />
     <Content Include="Assets\images\flight-weight.png" />
     <Content Include="Assets\images\form-selection-sprite.png" />
+    <Content Include="Assets\images\global-error.jpg" />
     <Content Include="Assets\images\googlePlay.png" />
     <Content Include="Assets\images\gray-bg.png" />
     <Content Include="Assets\images\grey-bg.png" />
@@ -913,12 +728,9 @@
     <Content Include="Assets\images\home-info-3.png" />
     <Content Include="Assets\images\home-page-bg.jpg" />
     <Content Include="Assets\images\home-section-title-bg.png" />
-    <Content Include="Assets\images\hotel-1.jpg" />
-    <Content Include="Assets\images\hotel-2.jpg" />
-    <Content Include="Assets\images\hotel-3.jpg" />
-    <Content Include="Assets\images\hotel-4.jpg" />
-    <Content Include="Assets\images\hotel-preview.jpg" />
     <Content Include="Assets\images\hotel-review-header.png" />
+    <Content Include="Assets\images\hotel-star-4.jpg" />
+    <Content Include="Assets\images\hotel-star-4.png" />
     <Content Include="Assets\images\hourglass.png" />
     <Content Include="Assets\images\hover-menu-arrow.png" />
     <Content Include="Assets\images\howto-bg.jpg" />
@@ -936,16 +748,20 @@
     <Content Include="Assets\images\list-bg.png" />
     <Content Include="Assets\images\list-detail-close.png" />
     <Content Include="Assets\images\load.gif" />
+    <Content Include="Assets\images\load2.gif" />
     <Content Include="Assets\images\loading-icon.png" />
     <Content Include="Assets\images\loading-image-dark.gif" />
     <Content Include="Assets\images\loading-image.gif" />
     <Content Include="Assets\images\loading-new.gif" />
     <Content Include="Assets\images\loading-plane.png" />
     <Content Include="Assets\images\loading-sample.png" />
+    <Content Include="Assets\images\location.png" />
     <Content Include="Assets\images\lock-image.png" />
     <Content Include="Assets\images\login-bg.jpg" />
     <Content Include="Assets\images\logo-color.png" />
     <Content Include="Assets\images\logo-promo.jpg" />
+    <Content Include="Assets\images\logo-travorama-sm.png" />
+    <Content Include="Assets\images\logo-travorama.png" />
     <Content Include="Assets\images\logo.png" />
     <Content Include="Assets\images\main-menu-arrow.png" />
     <Content Include="Assets\images\mandiri-logo.jpg" />
@@ -958,6 +774,7 @@
     <Content Include="Assets\images\no-image.png" />
     <Content Include="Assets\images\notif-promo.jpg" />
     <Content Include="Assets\images\order-flight-list-bg.png" />
+    <Content Include="Assets\images\order-hotel-list-bg.png" />
     <Content Include="Assets\images\paperplane-icon.png" />
     <Content Include="Assets\images\payment-atm.jpg" />
     <Content Include="Assets\images\payment-cc.jpg" />
@@ -968,14 +785,12 @@
     <Content Include="Assets\images\payment-token.png" />
     <Content Include="Assets\images\payment-transfer.png" />
     <Content Include="Assets\images\payment-veritrans.png" />
-    <Content Include="Assets\images\payment-veritrans.png" />
     <Content Include="Assets\images\penerbangan-pergi.jpg" />
     <Content Include="Assets\images\penerbangan-pulang.jpg" />
     <Content Include="Assets\images\peringatan.png" />
     <Content Include="Assets\images\permatabank.jpg" />
-    <Content Include="Assets\images\permatabank.jpg" />
     <Content Include="Assets\images\phone-icon.png" />
-    <Content Include="Assets\images\phone-icon.png" />
+    <Content Include="Assets\images\phone.png" />
     <Content Include="Assets\images\pinpoint.png" />
     <Content Include="Assets\images\pinterest-icon.png" />
     <Content Include="Assets\images\plane-down.png" />
@@ -1037,12 +852,12 @@
     <Content Include="Assets\images\search.png" />
     <Content Include="Assets\images\section-arrow-left.png" />
     <Content Include="Assets\images\section-arrow-right.png" />
+    <Content Include="Assets\images\select-arrow-up.png" />
     <Content Include="Assets\images\select-arrow.png" />
     <Content Include="Assets\images\show.png" />
+    <Content Include="Assets\images\showticket.png" />
     <Content Include="Assets\images\slider-arrow-left.png" />
     <Content Include="Assets\images\slider-arrow-right.png" />
-    <Content Include="Assets\images\slider\slider-happy_hew_year.jpg" />
-    <Content Include="Assets\images\slider\slider-winner-20151002.jpg" />
     <Content Include="Assets\images\smile-image.png" />
     <Content Include="Assets\images\social-facebook.png" />
     <Content Include="Assets\images\social-googlePlus.png" />
@@ -1052,6 +867,7 @@
     <Content Include="Assets\images\static-header-sprite.png" />
     <Content Include="Assets\images\stop.png" />
     <Content Include="Assets\images\subscribe-bg.jpg" />
+    <Content Include="Assets\images\swim.png" />
     <Content Include="Assets\images\switch-destination.png" />
     <Content Include="Assets\images\tag-green.png" />
     <Content Include="Assets\images\tag-orange.png" />
@@ -1088,33 +904,15 @@
     <Content Include="Assets\images\visa-logo.jpg" />
     <Content Include="Assets\images\warning-image.png" />
     <Content Include="Assets\images\white-bg.png" />
+    <Content Include="Assets\images\wifi.png" />
     <Content Include="Assets\images\yellow-stripe-small.png" />
     <Content Include="Assets\images\yellow-stripe.png" />
     <Content Include="Assets\images\youtube-icon.png" />
-    <Content Include="Assets\images\_sample\bar-1.png" />
-    <Content Include="Assets\images\_sample\bar-2.png" />
-    <Content Include="Assets\images\_sample\bar-3.png" />
-    <Content Include="Assets\images\_sample\bar-4.png" />
-    <Content Include="Assets\images\_sample\bar-5.png" />
-    <Content Include="Assets\images\_sample\bg-1.jpg" />
-    <Content Include="Assets\images\_sample\bg-1.png" />
-    <Content Include="Assets\images\_sample\bg-2.png" />
-    <Content Include="Assets\images\_sample\gadogado.jpg" />
-    <Content Include="Assets\images\_sample\hot-deal.png" />
-    <Content Include="Assets\images\_sample\hotel-image.jpg" />
-    <Content Include="Assets\images\_sample\hotel-thumb.jpg" />
-    <Content Include="Assets\images\_sample\main-slider.jpg" />
-    <Content Include="Assets\images\_sample\people-1.png" />
-    <Content Include="Assets\images\_sample\people-2.png" />
-    <Content Include="Assets\images\_sample\room-thumb.jpg" />
-    <Content Include="Assets\images\_sample\sample-tab.jpg" />
-    <Content Include="Assets\images\_sample\save.png" />
-    <Content Include="Assets\images\_sample\sky.jpg" />
-    <Content Include="Assets\images\_sample\slide_1.jpg" />
-    <Content Include="Assets\images\_sample\travorama-display-large.png" />
     <Content Include="Assets\js\angular-animate.min.js" />
     <Content Include="Assets\js\angular-route.min.js" />
     <Content Include="Assets\js\angular.min.js" />
+    <Content Include="Assets\js\bootstrap.js" />
+    <Content Include="Assets\js\bootstrap.min.js" />
     <Content Include="Assets\js\CryptoJS\components\aes-min.js" />
     <Content Include="Assets\js\CryptoJS\components\aes.js" />
     <Content Include="Assets\js\CryptoJS\components\cipher-core-min.js" />
@@ -1204,33 +1002,102 @@
     <Content Include="Assets\js\CryptoJS\rollups\sha512.js" />
     <Content Include="Assets\js\CryptoJS\rollups\tripledes.js" />
     <Content Include="Assets\js\jquery-ui.min.js" />
+    <Content Include="Assets\js\jquery.cookie.min.js" />
     <Content Include="Assets\js\jquery.countdown.min.js" />
     <Content Include="Assets\js\jquery.min.js" />
     <Content Include="Assets\js\jquery.ui.datepicker-id.js" />
     <Content Include="Assets\js\jquery.ui.touch-punch.min.js" />
     <Content Include="Assets\js\js.cookie.js" />
+    <Content Include="Assets\js\moment-with-locales.js" />
+    <Content Include="Assets\js\moment-with-locales.min.js" />
+    <Content Include="Assets\js\moment.js" />
+    <Content Include="Assets\js\moment.min.js" />
     <Content Include="Assets\js\sampleData\CGKHND201015-100y.js" />
     <Content Include="Assets\js\sampleData\HNDCGK231015-100y.js" />
+    <Content Include="Assets\js\xml2json.min.js" />
+    <Content Include="Assets\mobile\css\global-error.css" />
+    <Content Include="Assets\mobile\css\help_section.css" />
+    <Content Include="Assets\mobile\css\style_mobile.css" />
+    <Content Include="Assets\mobile\images\adult.png" />
     <Content Include="Assets\mobile\images\anak-bw.png" />
     <Content Include="Assets\mobile\images\anak.png" />
+    <Content Include="Assets\mobile\images\app-store.png" />
+    <Content Include="Assets\mobile\images\arrow-detail.png" />
     <Content Include="Assets\mobile\images\arrow-down-bw.png" />
     <Content Include="Assets\mobile\images\arrow-down.png" />
     <Content Include="Assets\mobile\images\arrow-up.png" />
     <Content Include="Assets\mobile\images\bayi-bw.png" />
     <Content Include="Assets\mobile\images\bayi.png" />
+    <Content Include="Assets\mobile\images\burger-button.png" />
     <Content Include="Assets\mobile\images\burger-menu-active.png" />
     <Content Include="Assets\mobile\images\burger-sprite.png" />
     <Content Include="Assets\mobile\images\calendar.png" />
+    <Content Include="Assets\mobile\images\child.png" />
     <Content Include="Assets\mobile\images\contact-list-bg.png" />
     <Content Include="Assets\mobile\images\contact-map.jpg" />
     <Content Include="Assets\mobile\images\contact-plane.png" />
     <Content Include="Assets\mobile\images\contact-social-bg.png" />
+    <Content Include="Assets\mobile\images\date.png" />
     <Content Include="Assets\mobile\images\dewasa-bw.png" />
     <Content Include="Assets\mobile\images\dewasa.png" />
+    <Content Include="Assets\mobile\images\find.png" />
+    <Content Include="Assets\mobile\images\flight-blue.png" />
+    <Content Include="Assets\mobile\images\flight-grey.png" />
     <Content Include="Assets\mobile\images\flight-history-status.png" />
+    <Content Include="Assets\mobile\images\flight-separators.png" />
     <Content Include="Assets\mobile\images\flight-swap.png" />
     <Content Include="Assets\mobile\images\flip.png" />
     <Content Include="Assets\mobile\images\form-sprite.png" />
+    <Content Include="Assets\mobile\images\hotel-blue.png" />
+    <Content Include="Assets\mobile\images\hotel-grey.png" />
+    <Content Include="Assets\mobile\images\Hotel\ac-grey.png" />
+    <Content Include="Assets\mobile\images\Hotel\ac-white.png" />
+    <Content Include="Assets\mobile\images\Hotel\ac.png" />
+    <Content Include="Assets\mobile\images\Hotel\arrow-down-grey.png" />
+    <Content Include="Assets\mobile\images\Hotel\arrow-down-orange.png" />
+    <Content Include="Assets\mobile\images\Hotel\arrow-down-yellow.png" />
+    <Content Include="Assets\mobile\images\Hotel\arrow-next.png" />
+    <Content Include="Assets\mobile\images\Hotel\arrow-orange.png" />
+    <Content Include="Assets\mobile\images\Hotel\arrow-prev.png" />
+    <Content Include="Assets\mobile\images\Hotel\arrow-up-grey.png" />
+    <Content Include="Assets\mobile\images\Hotel\arrow-up-orange.png" />
+    <Content Include="Assets\mobile\images\Hotel\arrow-up-yellow.png" />
+    <Content Include="Assets\mobile\images\Hotel\bar.png" />
+    <Content Include="Assets\mobile\images\Hotel\bed-white.png" />
+    <Content Include="Assets\mobile\images\Hotel\bed.png" />
+    <Content Include="Assets\mobile\images\Hotel\bel-grey.png" />
+    <Content Include="Assets\mobile\images\Hotel\bel-white.png" />
+    <Content Include="Assets\mobile\images\Hotel\bel.png" />
+    <Content Include="Assets\mobile\images\Hotel\business.png" />
+    <Content Include="Assets\mobile\images\Hotel\car-white.png" />
+    <Content Include="Assets\mobile\images\Hotel\car.png" />
+    <Content Include="Assets\mobile\images\Hotel\checkin.png" />
+    <Content Include="Assets\mobile\images\Hotel\checkout.png" />
+    <Content Include="Assets\mobile\images\Hotel\double-bed.png" />
+    <Content Include="Assets\mobile\images\Hotel\ent.png" />
+    <Content Include="Assets\mobile\images\Hotel\food.png" />
+    <Content Include="Assets\mobile\images\Hotel\health.png" />
+    <Content Include="Assets\mobile\images\Hotel\like.png" />
+    <Content Include="Assets\mobile\images\Hotel\location-grey.png" />
+    <Content Include="Assets\mobile\images\Hotel\location.png" />
+    <Content Include="Assets\mobile\images\Hotel\login.png" />
+    <Content Include="Assets\mobile\images\Hotel\meal-grey.png" />
+    <Content Include="Assets\mobile\images\Hotel\meal-white.png" />
+    <Content Include="Assets\mobile\images\Hotel\meal.png" />
+    <Content Include="Assets\mobile\images\Hotel\other.png" />
+    <Content Include="Assets\mobile\images\Hotel\people.png" />
+    <Content Include="Assets\mobile\images\Hotel\pool-grey.png" />
+    <Content Include="Assets\mobile\images\Hotel\pool-white.png" />
+    <Content Include="Assets\mobile\images\Hotel\pool.png" />
+    <Content Include="Assets\mobile\images\Hotel\room.png" />
+    <Content Include="Assets\mobile\images\Hotel\share.png" />
+    <Content Include="Assets\mobile\images\Hotel\single-bed.png" />
+    <Content Include="Assets\mobile\images\Hotel\sport.png" />
+    <Content Include="Assets\mobile\images\Hotel\tv-white.png" />
+    <Content Include="Assets\mobile\images\Hotel\tv.png" />
+    <Content Include="Assets\mobile\images\Hotel\wifi-grey.png" />
+    <Content Include="Assets\mobile\images\Hotel\wifi-white.png" />
+    <Content Include="Assets\mobile\images\Hotel\wifi.png" />
     <Content Include="Assets\mobile\images\howtoorder-image-1.jpg" />
     <Content Include="Assets\mobile\images\howtoorder-image-2.jpg" />
     <Content Include="Assets\mobile\images\howtoorder-image-3.jpg" />
@@ -1243,41 +1110,107 @@
     <Content Include="Assets\mobile\images\logo-promo.jpg" />
     <Content Include="Assets\mobile\images\loop.png" />
     <Content Include="Assets\mobile\images\medals.png" />
+    <Content Include="Assets\mobile\images\mobile-app.png" />
     <Content Include="Assets\mobile\images\mobile-header-sprite.png" />
+    <Content Include="Assets\mobile\images\next.png" />
     <Content Include="Assets\mobile\images\passenger-sprite-white.png" />
     <Content Include="Assets\mobile\images\passenger-sprite-yellow.png" />
     <Content Include="Assets\mobile\images\passenger-sprite.png" />
     <Content Include="Assets\mobile\images\people.png" />
+    <Content Include="Assets\mobile\images\play-store.png" />
+    <Content Include="Assets\mobile\images\prev.png" />
+    <Content Include="Assets\mobile\images\promo-logo-notif.png" />
     <Content Include="Assets\mobile\images\promo-logo.png" />
     <Content Include="Assets\mobile\images\register-header-left.png" />
     <Content Include="Assets\mobile\images\revalidate-plane.png" />
+    <Content Include="Assets\mobile\images\sand-clock.png" />
+    <Content Include="Assets\mobile\images\time.png" />
     <Content Include="Assets\mobile\images\ui-calendar-nav.png" />
     <Content Include="Assets\mobile\images\ui-calendar-nav2.png" />
     <Content Include="Assets\mobile\images\user-account-bg.png" />
     <Content Include="Assets\mobile\images\yellow-stripe.png" />
-    <Content Include="Assets\mobile\js\HomeController.js" />
-    <Content Include="Assets\mobile\js\StaticController.js" />
     <Content Include="Assets\mobile\js\AccountController.js" />
     <Content Include="Assets\mobile\js\application.js" />
     <Content Include="Assets\mobile\js\CheckoutController.js" />
+    <Content Include="Assets\mobile\js\HomeController.js" />
+    <Content Include="Assets\mobile\js\HotelController.js" />
+    <Content Include="Assets\mobile\js\PromoController.js" />
     <Content Include="Assets\mobile\js\returnFlightController.js" />
     <Content Include="Assets\mobile\js\singleFlightController.js" />
+    <Content Include="Assets\mobile\js\StaticController.js" />
+    <Content Include="Assets\mobile\js\ThankyouController.js" />
+    <Content Include="Assets\travorama20\angularDirectory\common\hotelAutocomplete.service.js" />
     <Content Include="Assets\travorama20\angularDirectory\priceDetail\priceDetailDir.js" />
     <Content Include="Assets\travorama20\angularDirectory\priceDetail\priceDetailDirMobile.js" />
     <Content Include="Assets\travorama20\angularDirectory\priceDetail\priceDetailTemplate.html" />
+    <Content Include="Assets\travorama20\angularDirectory\search\hotelSearch.service.js" />
+    <Content Include="Assets\travorama20\css\help_section.min.css" />
+    <Content Include="Assets\travorama20\css\style_desktop.css" />
+    <Content Include="Assets\travorama20\images\app-store-bg.png" />
+    <Content Include="Assets\travorama20\images\app-store-cs.png" />
+    <Content Include="Assets\travorama20\images\Hotel\bed.png" />
+    <Content Include="Assets\travorama20\images\Hotel\blue-sprite.png" />
+    <Content Include="Assets\travorama20\images\Hotel\business-lg.png" />
+    <Content Include="Assets\travorama20\images\Hotel\disc-bg.png" />
+    <Content Include="Assets\travorama20\images\Hotel\disc2-bg.png" />
+    <Content Include="Assets\travorama20\images\Hotel\down.png" />
+    <Content Include="Assets\travorama20\images\Hotel\entertainment-lg.png" />
+    <Content Include="Assets\travorama20\images\Hotel\general-lg.png" />
+    <Content Include="Assets\travorama20\images\Hotel\header-bg.jpg" />
+    <Content Include="Assets\travorama20\images\Hotel\health-lg.png" />
+    <Content Include="Assets\travorama20\images\Hotel\hotel.png" />
+    <Content Include="Assets\travorama20\images\Hotel\location.png" />
+    <Content Include="Assets\travorama20\images\Hotel\map.png" />
+    <Content Include="Assets\travorama20\images\Hotel\meal-lg.png" />
+    <Content Include="Assets\travorama20\images\Hotel\meal.png" />
+    <Content Include="Assets\travorama20\images\Hotel\next-white.png" />
+    <Content Include="Assets\travorama20\images\Hotel\next.png" />
+    <Content Include="Assets\travorama20\images\Hotel\no-hotel-lg.png" />
+    <Content Include="Assets\travorama20\images\Hotel\no-hotel.png" />
+    <Content Include="Assets\travorama20\images\Hotel\other-lg.png" />
+    <Content Include="Assets\travorama20\images\Hotel\plane-sm.png" />
+    <Content Include="Assets\travorama20\images\Hotel\prev-white.png" />
+    <Content Include="Assets\travorama20\images\Hotel\prev.png" />
+    <Content Include="Assets\travorama20\images\Hotel\print.png" />
+    <Content Include="Assets\travorama20\images\Hotel\room.jpg" />
+    <Content Include="Assets\travorama20\images\Hotel\size.png" />
+    <Content Include="Assets\travorama20\images\Hotel\sort.png" />
+    <Content Include="Assets\travorama20\images\Hotel\sport-lg.png" />
+    <Content Include="Assets\travorama20\images\Hotel\star-outline.png" />
+    <Content Include="Assets\travorama20\images\Hotel\star.png" />
+    <Content Include="Assets\travorama20\images\Hotel\ta-logo.png" />
+    <Content Include="Assets\travorama20\images\Hotel\ta-rating.png" />
+    <Content Include="Assets\travorama20\images\Hotel\triangle-grey.png" />
+    <Content Include="Assets\travorama20\images\Hotel\trip-advisor-rating.png" />
+    <Content Include="Assets\travorama20\images\Hotel\trip-advisor.png" />
+    <Content Include="Assets\travorama20\images\Hotel\up.png" />
+    <Content Include="Assets\travorama20\images\Hotel\view.png" />
+    <Content Include="Assets\travorama20\images\Hotel\wifi.png" />
+    <Content Include="Assets\travorama20\images\mobile-app.png" />
+    <Content Include="Assets\travorama20\images\play-store-bg.png" />
     <Content Include="Assets\travorama20\js\accountController.js" />
-    <Content Include="Assets\travorama20\js\countries.js" />
+    <Content Include="Assets\travorama20\js\app.config.js" />
     <Content Include="Assets\travorama20\js\checkoutController.js" />
+    <Content Include="Assets\travorama20\js\ConfirmationController.js" />
     <Content Include="Assets\travorama20\js\ContactController.js" />
+    <Content Include="Assets\travorama20\js\countries.js" />
+    <Content Include="Assets\travorama20\js\EticketController.js" />
     <Content Include="Assets\travorama20\js\homeController.js" />
+    <Content Include="Assets\travorama20\js\HotelCheckoutController.js" />
+    <Content Include="Assets\travorama20\js\HotelController.js" />
+    <Content Include="Assets\travorama20\js\hotelDetailController.js" />
+    <Content Include="Assets\travorama20\js\hotelSearchController.js" />
     <Content Include="Assets\travorama20\js\paymentController.js" />
     <Content Include="Assets\travorama20\js\returnFlightController.js" />
     <Content Include="Assets\travorama20\js\singleFlightController.js" />
-    <Content Include="Assets\travorama20\js\EticketController.js" />
+    <Content Include="Assets\travorama20\js\ThankyouController.js" />
     <Content Include="Assets\travorama20\js\travorama20.js" />
     <Content Include="Assets\vendor\datepicker\jquery.datepick.css" />
     <Content Include="Assets\vendor\datepicker\jquery.datepick.min.js" />
     <Content Include="Assets\vendor\datepicker\jquery.plugin.min.js" />
+    <Content Include="Assets\vendor\dotdotdot\jquery.dotdotdot.js" />
+    <Content Include="Assets\vendor\dotdotdot\jquery.dotdotdot.min.js" />
+    <Content Include="Assets\vendor\dotdotdot\jquery.dotdotdot.min.umd.js" />
     <Content Include="Assets\vendor\fancybox\blank.gif" />
     <Content Include="Assets\vendor\fancybox\fancybox_loading%402x.gif" />
     <Content Include="Assets\vendor\fancybox\fancybox_loading.gif" />
@@ -1293,6 +1226,10 @@
     <Content Include="Assets\vendor\fancybox\jquery.fancybox.css" />
     <Content Include="Assets\vendor\fancybox\jquery.fancybox.js" />
     <Content Include="Assets\vendor\fancybox\jquery.fancybox.pack.js" />
+    <Content Include="Assets\vendor\lightslider\lightslider.css" />
+    <Content Include="Assets\vendor\lightslider\lightslider.js" />
+    <Content Include="Assets\vendor\slick\slick.css" />
+    <Content Include="Assets\vendor\slick\slick.min.js" />
     <Content Include="Config\Airline.csv" />
     <Content Include="Config\i18n_message.xml">
       <SubType>Designer</SubType>
@@ -1307,8 +1244,53 @@
     <Content Include="Config\HotelLocation.csv" />
     <Content Include="Config\Country.csv" />
     <Content Include="App_Data\wurfl-latest.zip" />
-    <Content Include="Assets\travorama20\css\_page_flight.scss" />
-    <Content Include="Assets\travorama20\css\_page_checkout.scss" />
+    <Content Include="Config\HotelAccomodation.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Config\HotelBoard.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Config\HotelCategory.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Config\HotelChain.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Config\HotelCountries.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Config\HotelDestinations.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Config\HotelFacilities.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Config\HotelFacilitiesFilterGroup.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Config\HotelFacilityGroup.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Config\HotelRoom.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Config\HotelRoomOriginal.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Config\HotelRoomPaymentType.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Config\HotelRoomRateClass.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Config\HotelRoomRateType.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Config\HotelSegment.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\bootstrap\bootstrap.css.map" />
+    <Content Include="Assets\bootstrap\bootstrap.scss" />
     <Content Include="Assets\bootstrap\bootstrap\mixins\_alerts.scss" />
     <Content Include="Assets\bootstrap\bootstrap\mixins\_background-variant.scss" />
     <Content Include="Assets\bootstrap\bootstrap\mixins\_border-radius.scss" />
@@ -1382,80 +1364,61 @@
     <Content Include="Assets\bootstrap\_bootstrap-compass.scss" />
     <Content Include="Assets\bootstrap\_bootstrap-mincer.scss" />
     <Content Include="Assets\bootstrap\_bootstrap-sprockets.scss" />
-    <Content Include="Assets\travorama20\css\_page_password.scss" />
-    <Content Include="Assets\travorama20\css\_page_account.scss" />
-    <Content Include="Assets\travorama20\css\_page_static.scss" />
-    <Content Include="Assets\mobile\css\_page_flight.scss" />
-    <Content Include="Assets\mobile\css\_page_checkout.scss" />
-    <Content Include="Assets\mobile\css\_page_account.scss" />
-    <Content Include="Assets\mobile\css\_page_static.scss" />
-    <Content Include="Assets\mobile\css\_page_home.scss" />
-    <Content Include="Assets\mobile\css\_home_page_layout.scss" />
-    <Content Include="Assets\mobile\css\global-error.scss" />
+    <Content Include="Assets\css\neweticket.scss" />
+    <Content Include="Assets\css\promo.scss" />
     <Content Include="Assets\fonts\bootstrap\glyphicons-halflings-regular.eot" />
     <Content Include="Assets\fonts\bootstrap\glyphicons-halflings-regular.ttf" />
     <Content Include="Assets\fonts\bootstrap\glyphicons-halflings-regular.woff" />
     <Content Include="Assets\fonts\bootstrap\glyphicons-halflings-regular.woff2" />
+    <Content Include="Assets\fonts\DINB-webfont.eot" />
+    <Content Include="Assets\fonts\DINB-webfont.ttf" />
+    <Content Include="Assets\fonts\DINB-webfont.woff" />
+    <Content Include="Assets\fonts\DINB-webfont.woff2" />
+    <Content Include="Assets\fonts\DINR-webfont.eot" />
+    <Content Include="Assets\fonts\DINR-webfont.ttf" />
+    <Content Include="Assets\fonts\DINR-webfont.woff" />
+    <Content Include="Assets\fonts\DINR-webfont.woff2" />
+    <Content Include="Assets\fonts\fontawesome-webfont.eot" />
+    <Content Include="Assets\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Assets\fonts\fontawesome-webfont.woff" />
+    <Content Include="Assets\fonts\fontawesome-webfont.woff2" />
+    <Content Include="Assets\fonts\FontAwesome.otf" />
+    <Content Include="Assets\fonts\Gotham-Bold.eot" />
+    <Content Include="Assets\fonts\Gotham-Bold.otf" />
+    <Content Include="Assets\fonts\Gotham-Bold.ttf" />
+    <Content Include="Assets\fonts\Gotham-Bold.woff" />
+    <Content Include="Assets\fonts\Gotham-Medium.eot" />
+    <Content Include="Assets\fonts\Gotham-Medium.otf" />
+    <Content Include="Assets\fonts\Gotham-Medium.ttf" />
+    <Content Include="Assets\fonts\Gotham-Medium.woff" />
+    <Content Include="Assets\mobile\css\global-error.scss" />
+    <Content Include="Assets\mobile\css\help_section.scss" />
+    <Content Include="Assets\mobile\css\style_mobile.scss" />
+    <Content Include="Assets\mobile\css\_home_page_layout.scss" />
+    <Content Include="Assets\mobile\css\_page_account.scss" />
+    <Content Include="Assets\mobile\css\_page_checkout.scss" />
+    <Content Include="Assets\mobile\css\_page_flight.scss" />
+    <Content Include="Assets\mobile\css\_page_home.scss" />
+    <Content Include="Assets\mobile\css\_page_hotel.scss" />
+    <Content Include="Assets\mobile\css\_page_hotel_detail.scss" />
+    <Content Include="Assets\mobile\css\_page_hotel_search.scss" />
+    <Content Include="Assets\mobile\css\_page_static.scss" />
+    <Content Include="Assets\travorama20\css\global-error.css.map" />
+    <Content Include="Assets\travorama20\css\help_section.css.map" />
+    <Content Include="Assets\travorama20\css\style_desktop.scss" />
+    <Content Include="Assets\travorama20\css\_footer.scss" />
+    <Content Include="Assets\travorama20\css\_header.scss" />
+    <Content Include="Assets\travorama20\css\_page_account.scss" />
+    <Content Include="Assets\travorama20\css\_page_checkout.scss" />
+    <Content Include="Assets\travorama20\css\_page_flight.scss" />
     <Content Include="Assets\travorama20\css\_page_hotel.scss" />
     <Content Include="Assets\travorama20\css\_page_hotel_detail.scss" />
     <Content Include="Assets\travorama20\css\_page_hotel_search.scss" />
-    <Content Include="Assets\travorama20\css\_footer.scss" />
-    <Content Include="Assets\travorama20\css\_header.scss" />
     <Content Include="Assets\travorama20\css\_page_index.scss" />
-    <Content Include="Assets\mobile\css\_page_hotel.scss" />
-    <Content Include="Assets\mobile\css\_page_hotel_search.scss" />
-    <Content Include="Assets\mobile\css\_page_hotel_detail.scss" />
-    <Content Include="Config\HotelAccomodation.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Config\HotelBoard.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Config\HotelCategory.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Config\HotelChain.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Config\HotelCountries.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Config\HotelDestinations.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Config\HotelFacilities.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Config\HotelFacilitiesFilterGroup.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Config\HotelFacilityGroup.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Config\HotelRoom.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Config\HotelRoomOriginal.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Config\HotelRoomPaymentType.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Config\HotelRoomRateClass.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Config\HotelRoomRateType.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Config\HotelSegment.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\mobile\css\help_section.scss" />
-    <Content Include="Assets\travorama20\css\style_desktop.scss" />
-    <Content Include="Assets\mobile\css\style_mobile.scss" />
-    <Content Include="Assets\bootstrap\bootstrap.scss" />
-    <Content Include="Assets\css\promo.scss" />
-    <Content Include="Assets\css\neweticket.scss" />
+    <Content Include="Assets\travorama20\css\_page_password.scss" />
+    <Content Include="Assets\travorama20\css\_page_static.scss" />
+    <Content Include="Assets\travorama20\css\_screenLarge.scss" />
+    <Content Include="Assets\travorama20\css\_screenSmall.scss" />
     <None Include="Properties\PublishProfiles\prod-cw %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\dv1-cw.pubxml" />
     <None Include="Properties\PublishProfiles\dv2-cw.pubxml" />
@@ -1476,12 +1439,6 @@
     <None Include="Properties\PublishProfiles\travorama-qa-cw %286%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-qa-cw %287%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-qa-cw.pubxml" />
-    <Content Include="Assets\js\bootstrap.js" />
-    <Content Include="Assets\js\bootstrap.min.js" />
-    <Content Include="Assets\js\moment-with-locales.js" />
-    <Content Include="Assets\js\moment-with-locales.min.js" />
-    <Content Include="Assets\js\moment.js" />
-    <Content Include="Assets\js\moment.min.js" />
     <None Include="Service References\Mystifly.OnePointService.Flight\OnePoint.disco" />
     <None Include="Service References\Mystifly.OnePointService.Flight\configuration91.svcinfo" />
     <None Include="Service References\Mystifly.OnePointService.Flight\configuration.svcinfo" />
@@ -1489,7 +1446,6 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
-    <Content Include="Assets\images\showticket.png" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -1631,6 +1587,9 @@
   <ItemGroup>
     <Folder Include="Areas\Api\Views\Account\" />
     <Folder Include="Areas\Api\Views\Shared\" />
+    <Folder Include="Assets\images\slider\" />
+    <Folder Include="Assets\images\_sample\" />
+    <Folder Include="Assets\travorama20\fonts\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
