@@ -13,7 +13,7 @@
     <link href="/Assets/css/jquery-ui.min.css" rel="stylesheet" />
 }
 @{
-    long location = 0;
+    long location ;
     var x = long.TryParse(Model.SearchParamObject.Location, out location);
     var loc = "";
     var foundLocation = HotelService.GetInstance().AutoCompletes.Where(c => c.Id == location).ToList()[0];

@@ -27,7 +27,7 @@
 
 @section PageJS {
     <script src="/Assets/travorama20/angularDirectory/search/hotelSearch.service.js"></script>
-    <script src="/Assets/Travorama20/js/homeController.js"></script>
+    <script src="/Assets/travorama20/js/homeController.js"></script>
 }
 
 <div class="page-loading form-container" ng-class="{'page-loaded' : PageConfig.Loaded}">
@@ -88,7 +88,7 @@
                             <div class="form-group form__departure">
                                 <span class="icon-pp"></span>
                                 <div class="field-container">
-                                    <p class="form-control" ng-click="DatePicker.SetOption({Target : 'departure'}, ' '); PageConfig.SetOverlay('datepicker-departure')">
+                                    <p class="form-control" ng-click="DatePicker.SetOption({Target : 'departure'}, ' ', 'form-index'); PageConfig.SetOverlay('datepicker-departure')">
                                         Berangkat <span>{{FlightSearchForm.DepartureDate | date : 'EEE, dd MMM yyyy'}}</span>
                                     </p>
                                 </div>
@@ -107,7 +107,7 @@
                             <div class="form-group form__return" ng-show="val">
                                 <span class="icon-pp"></span>
                                 <div class="field-container">
-                                    <p class="form-control" ng-click="DatePicker.SetOption({Target : 'return'}, ' '); PageConfig.SetOverlay('datepicker-return')">
+                                    <p class="form-control" ng-click="DatePicker.SetOption({Target : 'return'}, ' ', 'form-index'); PageConfig.SetOverlay('datepicker-return')">
                                         Kembali <span>{{FlightSearchForm.ReturnDate | date : 'EEE, dd MMM yyyy'}}</span>
                                         <input type="text" value="" ng-model="FlightSearchForm.ReturnDate" class="flight-search-form-return hidden" />
                                     </p>
