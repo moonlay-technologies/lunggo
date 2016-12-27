@@ -102,7 +102,7 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
             $scope.hotel = data.hotelDetails;
             $scope.hotelSearch.locationDisplay = $scope.hotel.destinationName;
             $scope.hotelSearch.destinationName = $scope.hotel.destinationName;
-            $log.debug($scope.hotel.images);
+            //$log.debug($scope.hotel.images);
             var loadedImages = 0;
             var maxImages = 6;
             var tempHotelImages = [];
