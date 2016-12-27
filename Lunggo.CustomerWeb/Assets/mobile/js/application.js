@@ -51,7 +51,9 @@ if (typeof (angular) == 'object') {
 
                     { Name: 'Abu Dhabi Intl. Arpt', City: 'Abu Dhabi', Country: 'United Arab Emirates', Code: 'AUH' },
                     { Name: 'Hamad Intl. Arpt', City: 'Doha', Country: 'Qatar', Code: 'DOH' },
-                    { Name: 'Ibrahim Nasir Intl. Arpt.', City: 'Male', Country: 'Maldives', Code: 'MLE' },
+                    { Name: 'Dubai', City: 'Dubai', Country: 'United Arab Emirates', Code: 'DXB' },
+                    { Name: 'Chhatrapati Shivaji Intl. Arpt.', City: 'Mumbai', Country: 'India', Code: 'BOM' },
+                    { Name: 'Indira Gandhi Intl. Arpt.', City: 'New Delhi', Country: 'India', Code: 'DEL' },
 
                     { Name: 'Tullamarine', City: 'Melbourne', Country: 'Australia', Code: 'MEL' },
                     { Name: 'Perth Intl.', City: 'Perth', Country: 'Australia', Code: 'PER' },
