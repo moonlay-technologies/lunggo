@@ -57,8 +57,8 @@ namespace Lunggo.ApCommon.Hotel.Service
                         .Where(TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal, location))
                         .Select(new[] { "HotelCode" });
                 var hotelCodes =
-                    table.ExecuteQuery(query).Select(r => r["HotelCode"].StringValue.Split(',')).ToList();
-                return hotelCodes.SelectMany(s => s).Select(int.Parse).ToList();
+                    table.ExecuteQuery(query).Select(r => r["HotelCode"].StringValue.Split(','));
+                return hotelCodes.SelectMany(s => s).Select(int.Parse).Distinct().ToList();
             }
         }
 
