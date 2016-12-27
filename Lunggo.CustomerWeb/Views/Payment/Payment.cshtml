@@ -439,19 +439,20 @@
                                                 <li class="col-sm-right">3</li>
                                             </ul>
                                             <ul class="form-row clearfix">
-                                                <li class="col-sm-left">10 Digit Terakhir Nomor Kartu</li>
+                                                <li class="col-sm-left">Input 1</li>
                                                 <li class="col-sm-middle">:</li>
-                                                <li class="col-sm-right">{{MandiriClickPay.CardNo | limitTo:-10}} (Input 1)</li>
+                                                <li class="col-sm-right" ng-if="MandiriClickPay.CardNo != null && MandiriClickPay.CardNo.length == 0">{{MandiriClickPay.CardNo | limitTo:-10}}</li>
+                                                <li class="col-sm-right" ng-if="MandiriClickPay.CardNo == null || MandiriClickPay.CardNo.length == 0">Masukkan Nomor Kartu Terlebih Dahulu</li>
                                             </ul>
                                             <ul class="form-row clearfix">
-                                                <li class="col-sm-left">Jumlah Transaksi</li>
+                                                <li class="col-sm-left">Input 2</li>
                                                 <li class="col-sm-middle">:</li>
-                                                <li class="col-sm-right">{{totalPrice - voucher.amount - CreditCardPromo.Amount + UniqueCodePaymentConfig.UniqueCode}} (Input 2)</li>
+                                                <li class="col-sm-right">{{totalPrice - voucher.amount - CreditCardPromo.Amount + UniqueCodePaymentConfig.UniqueCode}}</li>
                                             </ul>
                                             <ul class="form-row clearfix">
-                                                <li class="col-sm-left">5 Digit Terakhir Nomor Reservasi</li>
+                                                <li class="col-sm-left">Input 3</li>
                                                 <li class="col-sm-middle">:</li>
-                                                <li class="col-sm-right">@Model.RsvNo.Substring(Model.RsvNo.Length - 5, 5) (Input 3)</li>
+                                                <li class="col-sm-right">@Model.RsvNo.Substring(Model.RsvNo.Length - 5, 5)</li>
                                             </ul>
                                         </div>
                                     </div>

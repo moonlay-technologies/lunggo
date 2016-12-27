@@ -474,7 +474,8 @@
                                     <ul class="form-row clearfix">
                                         <li class="col-left">Input 1</li>
                                         <li class="col-middle">:</li>
-                                        <li class="col-right">{{MandiriClickPay.CardNo | limitTo:-10}}</li>
+                                        <li class="col-right" ng-if="MandiriClickPay.CardNo != null && MandiriClickPay.CardNo.length == 0">{{MandiriClickPay.CardNo | limitTo:-10}}</li>
+                                        <li class="col-right" ng-if="MandiriClickPay.CardNo == null || MandiriClickPay.CardNo.length == 0">Masukkan Nomor Kartu Terlebih Dahulu</li>
                                     </ul>
                                     <ul class="form-row clearfix">
                                         <li class="col-left">Input 2</li>
