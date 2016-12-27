@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Lunggo.ApCommon.Hotel.Constant;
@@ -76,7 +77,8 @@ namespace Lunggo.ApCommon.Hotel.Service
                         ErrorMessages = new List<string> { "Search Id No Longer Valid" }
                     };
                 }
-                foreach (var paxData in searchResultData.Occupancies)
+                var occupancies = BundleRate(searchResultData.Occupancies);
+                foreach (var paxData in occupancies)
                 {
                     var splittedRateKey = newRate.RateKey.Split('|');
                     var occ = paxData.RoomCount + "~" + paxData.AdultCount + "~" + paxData.ChildCount;
@@ -151,29 +153,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                         Type = output.Type,
                         TypeName = output.TypeName,
                     };
-                hotel.Rooms.Add(newRoom);
-                //if (hotel.Rooms.Any(r => r.RoomCode == output.RoomCode))
-                //{
-                //    hotel.Rooms.Where(r => r.RoomCode == output.RoomCode).ToList()[0].Rates.Add(newRate);
-                //}
-                //else
-                //{
-                //    var newRoom = new HotelRoom
-                //    {
-                //        RoomCode = output.RoomCode,
-                //        characteristicCd = output.characteristicCd,
-                //        Facilities = output.Facilities,
-                //        Images = output.Images,
-                //        Rates = new List<HotelRate>
-                //        {
-                //           newRate 
-                //        },
-                //        RoomName = output.RoomName,
-                //        Type = output.Type,
-                //        TypeName = output.TypeName,
-                //    };
-                //    hotel.Rooms.Add(newRoom);
-                //}               
+                hotel.Rooms.Add(newRoom);        
             }
 
             hotel.SearchId = input.SearchId;
@@ -195,6 +175,42 @@ namespace Lunggo.ApCommon.Hotel.Service
             public string RoomCode { get; set; }
             public string RateKey { get; set; }
             
+        }
+
+        public List<Occupancy> BundleRate(List<Occupancy> occupancies )
+        {
+            var result = new List<Occupancy>();
+            var nonDuplicateDict = new Dictionary<string, Occupancy>();
+            foreach (var data in occupancies)
+            {
+                var duplicatedData =
+                    occupancies.Where(
+                        x =>
+                            x.AdultCount == data.AdultCount && x.ChildCount == data.ChildCount &&
+                            x.ChildrenAges.SequenceEqual(data.ChildrenAges)).ToList();
+                if (duplicatedData.Count > 0)
+                {
+                    var key = duplicatedData.Count + "+" + data.AdultCount + "+" + data.ChildCount + "+"+ string.Join("+", data.ChildrenAges);
+                    if (!nonDuplicateDict.ContainsKey(key));
+                    {
+                        nonDuplicateDict.Add(key,data);
+                    }
+                }
+            }
+
+            foreach (var occ in nonDuplicateDict)
+            {
+                var roomCount = occ.Key.Split('+')[0];
+                var fixOccupancies = new Occupancy
+                {
+                    RoomCount = Convert.ToInt32(roomCount),
+                    AdultCount = occ.Value.AdultCount,
+                    ChildCount = occ.Value.ChildCount,
+                    ChildrenAges = occ.Value.ChildrenAges
+                };
+                result.Add(fixOccupancies);
+            }
+            return result;
         }
 
         private static RegsIdDecrypted DecryptRegsId(string regsId)
