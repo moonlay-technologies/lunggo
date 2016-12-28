@@ -1,9 +1,9 @@
 ﻿{
   "$schema": "http://schemastore.org/schemas/json/webjob-publish-settings.json",
-  "webJobName": "HotelContentWrapper",
-  "startTime": null,
+  "webJobName": "HotelContentUpdater",
+  "startTime": "2016-12-27T20:30:00+07:00",
   "endTime": null,
-  "jobRecurrenceFrequency": null,
-  "interval": null,
-  "runMode": "OnDemand"
+  "jobRecurrenceFrequency": "Week",
+  "interval": 1,
+  "runMode": "Scheduled"
 }

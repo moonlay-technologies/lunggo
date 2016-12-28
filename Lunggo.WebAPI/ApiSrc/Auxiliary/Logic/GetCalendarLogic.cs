@@ -56,7 +56,7 @@ namespace Lunggo.WebAPI.ApiSrc.Auxiliary.Logic
                 },
                 new CalendarEvent
                 {
-                    Date = new DateTime(2017,2,28),
+                    Date = new DateTime(2017,1,28),
                     Event = Event.Holiday,
                     Name = "Tahun Baru Imlek 2568"
                 },

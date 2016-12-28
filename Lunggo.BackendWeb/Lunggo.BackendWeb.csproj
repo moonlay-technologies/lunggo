@@ -313,6 +313,9 @@
     <Content Include="assets\lineicons\index.html" />
     <Content Include="assets\lineicons\lte-ie7.js" />
     <Content Include="assets\lineicons\style.css" />
+    <Content Include="Config\GeoCodingAPI.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Config\i18n_message.xml">
       <SubType>Designer</SubType>
     </Content>
@@ -342,8 +345,12 @@
     <Content Include="assets\lineicons\fonts\linecons.eot" />
     <Content Include="assets\lineicons\fonts\linecons.ttf" />
     <Content Include="assets\lineicons\fonts\linecons.woff" />
-    <Content Include="Config\application.properties" />
-    <Content Include="Config\HotelLocation.csv" />
+    <Content Include="Config\application.properties">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Config\HotelLocation.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Properties\DataSources\MystiflyOnePointAPI.OnePointService.AirBookingDataRS.datasource" />
     <Content Include="Properties\DataSources\MystiflyOnePointAPI.OnePointService.AirBookingNotesRS.datasource" />
     <Content Include="Properties\DataSources\MystiflyOnePointAPI.OnePointService.AirBookRS.datasource" />
@@ -362,8 +369,12 @@
     <Content Include="Properties\DataSources\MystiflyOnePointAPI.OnePointService.MultiAirBookRS.datasource" />
     <Content Include="Properties\DataSources\MystiflyOnePointAPI.OnePointService.MultiAirRevalidateRS.datasource" />
     <Content Include="Properties\DataSources\MystiflyOnePointAPI.OnePointService.SessionCreateRS.datasource" />
-    <Content Include="Config\Airline.csv" />
-    <Content Include="Config\Airport.csv" />
+    <Content Include="Config\Airline.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Config\Airport.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
@@ -377,7 +388,9 @@
     <Content Include="App_Readme\WURFL-v1.6.0.1.chm" />
     <Content Include="App_Readme\WURFL Quick Guide_v1_5.pdf" />
     <Content Include="App_Data\wurfl-latest.zip" />
-    <Content Include="Config\Country.csv" />
+    <Content Include="Config\Country.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Config\HotelRoom.csv">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

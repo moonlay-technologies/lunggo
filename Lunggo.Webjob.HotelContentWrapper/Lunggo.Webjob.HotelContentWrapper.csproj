@@ -90,11 +90,16 @@
     <Content Include="Airport.csv">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <None Include="App.config" />
-    <None Include="App.Debug.config" />
-    <None Include="App.Release.config">
+    <Content Include="App.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="App.Debug.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="App.Release.config">
       <SubType>Designer</SubType>
-    </None>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="application.properties">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -161,6 +166,7 @@
     <None Include="Properties\PublishProfiles\travorama-local-webjob - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-prod-webjob - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-prod-webjob - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\travorama-prod-webjob.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-qa-webjob - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-qa-webjob - Web Deploy.pubxml" />
     <None Include="Properties\webjob-publish-settings.json" />
