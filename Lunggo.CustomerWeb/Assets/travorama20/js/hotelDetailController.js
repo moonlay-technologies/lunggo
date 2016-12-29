@@ -24,12 +24,11 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
     $scope.selectFailed = false;
     $scope.booking = false;
     $scope.expired = false;
-    //$scope.model = {}; //tbd
-    //$scope.hotels = []; //tbd
-    //$scope.totalActualHotel = ''; //tbd
-    //$scope.hotelFilterDisplayInfo = undefined; //tbd
-    //$scope.filterDisabled = true; //tbd
+    $scope.showPopularDestinations = false;
  
+    $('#inputLocationHotel').on('click', function () {
+        $scope.showPopularDestinations = true;
+    });
     $scope.init = function (model) {
         $log.debug(model);
         $scope.searchId = model.searchId;
@@ -80,6 +79,8 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
             });
         }
         hotelSearchSvc.initializeSearchForm($scope, searchParamObject);
+        hotelSearchSvc.getHolidays();
+        $('.hotel-date-picker').datepicker('option', 'beforeShowDay', hotelSearchSvc.highlightDays);
         
         $scope.hotelSearch.destinationCheckinDate = moment(cekin, "YYYY-MM-DD").locale("id").format('dddd, DD MMMM YYYY');
         $scope.hotelSearch.destinationCheckoutDate = moment(cekout, "YYYY-MM-DD").locale("id").format('dddd, DD MMMM YYYY');
@@ -247,7 +248,6 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
         if (data.error == "ERHGHD02") {
             $log.debug('searchId is expired. (' + $scope.searchId + ') \n redirecting to search with ' + $scope.searchParam);
             $scope.expired = true;
-            //alert('searchId is expired. Redirecting to search.');
             hotelSearchSvc.gotoHotelSearch($scope.hotelSearch);
         }
     }

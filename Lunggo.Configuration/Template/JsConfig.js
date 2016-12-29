@@ -200,6 +200,11 @@ var HotelBookConfig = {
     Url: '$apiUrl$$hotelBookPath$',
     working: false
 };
+
+var GetHolidayConfig = {
+    Url: '$apiUrl$$holidayListPath$',
+    working: false
+};
 function setCookie(cname, cvalue, expTime) {
 
     if (cname != "accesstoken") {

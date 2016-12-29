@@ -24,6 +24,10 @@
         {
             loc = foundLocation.Zone + ", " + foundLocation.Destination + ", " + foundLocation.Country;
         }
+        else if (foundLocation.Type == 3)
+        {
+            loc = foundLocation.Area + ", " + foundLocation.Destination + ", " + foundLocation.Country;
+        }
         else if (foundLocation.Type == 4)
         {
             loc = foundLocation.HotelName + ", " + foundLocation.Destination + ", " + foundLocation.Country;

@@ -709,6 +709,9 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
             .ui-datepicker-week-end {
                 a, span {color:$color-orange;}
             }
+            .ui-state-holiday, .ui-datepicker-week-end.ui-state-holiday {
+                    span, a {color:red;}
+                }
             .ui-datepicker-current-day {background: $color-yellow;}
             thead {
                 tr {

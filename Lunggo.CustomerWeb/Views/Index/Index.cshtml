@@ -261,11 +261,12 @@
                 <div class="tab-hotel tab-pane clearfix active" id="hotel">
 
                     <h3 class="text-center">Cari <b>Kamar Hotel</b><br /><span class="sub-title">(Domestik &amp; Internasional)</span></h3>
-                    @*<h3 class="text-center">{{hotelSearch.checkinDate | date:'dd-MM-yyy'}} - {{"2016-12-05T08:57:32.520Z" | date:'dd'}}</h3>*@
                     <form class="form form-horizontal form-hotel page-hotel" ng-submit="hotel.searchHotel()" autocomplete="off">
                         <div class="form-group hotel-location ">
                             <div class="col-xs-12">
-                                <input type="text" name="hotelLocation" value="" class="form-hotel-location form-control" placeholder="Kota, Wilayah atau Nama Hotel" ng-model="hotelSearch.locationDisplay" ng-click="view.showHotelSearch = true" />
+                                <input type="text" name="hotelLocation" value="" id ="inputLocationHotel"
+                                       class="form-hotel-location form-control" placeholder="Kota, Wilayah atau Nama Hotel" ng-model="hotelSearch.locationDisplay" ng-click="view.showHotelSearch = true" 
+                                       />
                             </div>
                         </div>
 
@@ -277,24 +278,6 @@
                                 </div>
                             </div>
                         </div>
-                        @*<div class="form-group hotel-date">
-                            <div class="col-xs-6">
-                                <div class="form-hotel-checkin">
-                                        <span class="grey-txt">Tanggal Check in </span>
-                                        <span class="date">{{hotelSearch.checkinDate.format() | date : 'dd'}}</span>
-                                        <span class="month">{{hotelSearch.checkinDate.format() | date : 'MMM'}}</span>
-                                        <span class="year">{{hotelSearch.checkinDate.format() | date : 'yyyy'}}</span>
-                                </div>
-                            </div>
-                            <div class="col-xs-6">
-                                    <div class="form-hotel-checkout disabled">
-                                        <span class="grey-txt">Tanggal Check out</span>
-                                        <span class="date">{{hotelSearch.checkoutDate.format() | date : 'dd'}}</span>
-                                        <span class="month">{{hotelSearch.checkoutDate.format() | date : 'MMM'}}</span>
-                                        <span class="year">{{hotelSearch.checkoutDate.format() | date : 'yyyy'}}</span>
-                                    </div>
-                                </div>
-                            </div>*@
                         <div class="form-group hotel-room-night">
                             <div class="col-xs-6 dropdown-container">
                                 <div class="form-control form-hotel-night clearfix">

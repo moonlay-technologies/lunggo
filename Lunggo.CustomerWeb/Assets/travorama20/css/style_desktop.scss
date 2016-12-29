@@ -209,6 +209,10 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
                 .ui-state-disabled, .ui-datepicker-unselectable {cursor:not-allowed;
                     span {color:#666;}
                 }
+
+                .ui-state-holiday, .ui-datepicker-week-end.ui-state-holiday {
+                    span, a {color:red;}
+                }
                 .ui-datepicker-week-end {
                     span, a {color:#fed83e;}
                     a:hover {background:#fed83e;}
@@ -285,10 +289,10 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         }
     .hotel-location-search {height:475px; overflow:auto;
         .hotel-autocomplete-pre {
-            .text-pre {display:none;}
-            .text-loading {display:none;}
+            .text-pre {display:block;}
+            .text-loading {display:block;}
         }
-        .hotel-autocomplete-no-result {display:none;}
+        .hotel-autocomplete-no-result {}
         .hotel-autocomplete-result {
             ul {margin:0; padding:0;
                 li {padding:10px; list-style:none; cursor:pointer;

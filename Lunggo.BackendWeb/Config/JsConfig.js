@@ -200,6 +200,11 @@ var HotelBookConfig = {
     Url: 'https://api.local.travorama.com/v1/hotel/book',
     working: false
 };
+
+var GetHolidayConfig = {
+    Url: 'https://api.local.travorama.com/v1/calendar/id',
+    working: false
+};
 function setCookie(cname, cvalue, expTime) {
 
     if (cname != "accesstoken") {

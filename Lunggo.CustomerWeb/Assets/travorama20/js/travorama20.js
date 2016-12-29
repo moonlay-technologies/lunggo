@@ -545,14 +545,6 @@ function indexPageFunctions() {
     $(document).ready(function() {
         changeTheme(indexPageDestination);
     });
-    /*
-    $('.section-popular .destination a').click(function(evt) {
-        evt.preventDefault();
-        var target = $(this).attr('data-target');
-        changeTheme(target);
-    });
-    */
-
     // change header background
     function changeTheme(location) {
         location = location.toLowerCase();
@@ -658,9 +650,6 @@ function staticPageFunctions() {
 // used in Index Page 
 function flightFormSearchFunctions() {
 
-    //$(document).ready(function () {
-    //    $('.flight-submit-button').removeProp('disabled');
-    //});
     $(window).bind("pageshow", function (event) {
         if (event.originalEvent.persisted) {
             $('.flight-submit-button').removeProp('disabled');
@@ -703,12 +692,8 @@ function flightFormSearchFunctions() {
         $('.change-flight-class .option, .form-flight-passenger .option , .search-location, .search-calendar').hide();
 
         if (FlightSearchConfig.flightForm.type == 'return') {
-            //$('.form-flight-oneway').hide();
-            //$('.form-flight-return').show();
             $('.form-flight-return').removeClass('disabled');
         } else {
-            //$('.form-flight-oneway').show();
-            //$('.form-flight-return').hide();
             $('.form-flight-return').addClass('disabled');
         }
 
@@ -941,7 +926,47 @@ function flightFormSearchFunctions() {
             showCalendar('return');
         }
     });
-  
+    var holidays = [];
+    var holidayNames = [];
+
+
+    $.ajax({
+        url: GetHolidayConfig.Url,
+        method: 'GET',
+        headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') }
+    }).done(function (returnData) {
+        if (returnData.status == 200) {
+            if (returnData.events != null) {
+                for (var i = 0; i < returnData.events.length; i++) {
+                    var holidayDate = new Date(returnData.events[i].date);
+                    var holidayName = returnData.events[i].name;
+                    holidays.push(holidayDate);
+                    holidayNames.push(holidayName);
+                }
+            }
+        }
+        
+    }).error(function (returnData) {
+       
+    });
+    function highlightDays(date) {
+        for (var i = 0; i < holidays.length; i++) {
+            var x = new Date(date);
+            var xmonth = x.getMonth();
+            var xday = x.getDate();
+            var xyear = x.getFullYear();
+
+            var y = new Date(holidays[i]);
+            var ymonth = y.getMonth();
+            var yday = y.getDate();
+            var yyear = y.getFullYear();
+
+            if (xmonth == ymonth && xday == yday && xyear == yyear) {
+                return [true, 'ui-state-holiday', holidayNames[i]];
+            }
+        }
+        return [true, ''];
+    }
     // embed date picker into page
     $('.date-picker').datepicker({
         numberOfMonths: 2,
@@ -968,9 +993,10 @@ function flightFormSearchFunctions() {
             $(target + ' .month').html( translateMonth(chosenDate.getMonth()) );
             $(target + ' .year').html(chosenDate.getFullYear());
             $('.search-calendar').hide();
-        }
+        },
+        beforeShowDay: highlightDays
     });
-
+    
     // set current date as default
     $(document).ready(function () {
         // set default date for departure flight

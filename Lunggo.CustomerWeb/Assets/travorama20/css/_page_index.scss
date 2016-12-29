@@ -11,6 +11,7 @@ file : /Assets/travorama20/css/_page_index.scss
         &>.container {position:relative;}
         &:before, &:after {@include clearfix();}
 
+        
         // search form
         .search-form {width:320px; height:520px; background:rgba(37,37,37,0.8); position:relative; z-index:3;
             .tab-header {height:0;
@@ -311,6 +312,10 @@ file : /Assets/travorama20/css/_page_index.scss
 
     }
 
+    .holiday {
+            color: red !important;
+
+        }
     //*****
     // section reason
     .section-reason {position:relative; overflow:hidden;

@@ -49,7 +49,7 @@ function ($scope, $log, $window, $http, $resource, $timeout, hotelSearchSvc) {
     $scope.researching = false;
     $scope.returnUrl = "/";
     $scope.expired = false;
-   
+    $scope.showPopularDestinations = false;
     // ***************************************END*******************************
 
     // ****************************** INITS ************************************
@@ -103,8 +103,16 @@ function ($scope, $log, $window, $http, $resource, $timeout, hotelSearchSvc) {
         $scope.searchParam = model.searchParam;
         $scope.searchHotel();
     }
-    hotelSearchSvc.initializeSearchForm($scope);
 
+    $('#inputLocationHotel').on('click', function () {
+        $scope.showPopularDestinations = true;
+    });
+    hotelSearchSvc.initializeSearchForm($scope);
+    // ******************************* END *************************************
+
+    // ************************* HIGHLIGHT HOLIDAYS ****************************
+    hotelSearchSvc.getHolidays();
+    $('.hotel-date-picker').datepicker('option', 'beforeShowDay', hotelSearchSvc.highlightDays);
     // ******************************* END *************************************
 
     // ************************** SEARCH FUNCTIONS *****************************

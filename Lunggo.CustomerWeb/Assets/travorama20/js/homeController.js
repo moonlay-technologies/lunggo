@@ -4,7 +4,6 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
    // ================= FLIGHT ========================
 
     $scope.departureDate = moment().add(1, 'day').format('DDMMYY');
-
     $scope.changeTab = function (tab) {
         if (tab == 'hotel') {
             $('.search-location').hide();
@@ -15,10 +14,40 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
             $('.form-child-age').hide();
         }
     }
-
+    
     //=============== hotel start ======================
+    $scope.showPopularDestinations = false;
     hotelSearchSvc.initializeSearchForm($scope);
+    hotelSearchSvc.getHolidays();
+    var holidays = hotelSearchSvc.holidays;
+    var holidayNames = hotelSearchSvc.holidayNames;
+    function highlight(date) {
+        for (var i = 0; i < holidays.length; i++) {
+            var x = new Date(date);
+            var xmonth = x.getMonth();
+            var xday = x.getDate();
+            var xyear = x.getFullYear();
 
+            var y = new Date(holidays[i]);
+            var ymonth = y.getMonth();
+            var yday = y.getDate();
+            var yyear = y.getFullYear();
+
+            if (xmonth == ymonth && xday == yday && xyear == yyear) {
+                return [true, 'ui-state-holiday', holidayNames[i]];
+            }
+        }
+        return [true, ''];
+        
+    }
+    $(function () {
+        $(".ui-datepicker").datepicker({
+            beforeShowDay: highlight,
+        });
+    });
+
+   
+    $('.hotel-date-picker').datepicker('option', 'beforeShowDay', hotelSearchSvc.highlightDays);
     $scope.hotel = {};
     $scope.view = {
         showHotelSearch : false
@@ -30,6 +59,7 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
 
     $scope.hotel.searchHotel = function () {
         hotelSearchSvc.gotoHotelSearch($scope.hotelSearch);
+        
     };
 
     $scope.HotelSearchForm = {
@@ -39,6 +69,7 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
             GetLocation: function () {
                 $scope.getLocation($scope.HotelSearchForm.AutoComplete.Keyword);
             },
+            PopularDestinations: hotelSearchSvc.PopularDestinations
         },
     }
 
@@ -46,7 +77,9 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
         $(this).select();
     });
 
-
+    $('#inputLocationHotel').on('click', function () {
+        $scope.showPopularDestinations = true;
+    });
     //=============== hotel end ======================
 }]);
 
