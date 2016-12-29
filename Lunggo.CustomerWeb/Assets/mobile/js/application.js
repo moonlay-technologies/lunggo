@@ -875,18 +875,19 @@ if (typeof (angular) == 'object') {
                 var e = $('<div class="holiday">' +
                          '</div>');
 
-                $('.calendar-container').append(e);
                 $('.overlay__content .ui-datepicker').append(e);
                 for (var i = 0; i < tes.Days.length; i++) {
-                    $('.calendar-container ui-datepicker .holiday').append(
-                        '<div class="holiday-list">' + tes.Days[i].Date + ': ' + tes.Days[i].Name + '</div>' 
-                    );
                     $('.overlay__content .ui-datepicker .holiday').append(
-                        '<div class="holiday-list">' + tes.Days[i].Date + ': ' + tes.Days[i].Name + '</div>'
+                        '<div class="col-xs-12">' +
+                            '<div class ="col-xs-3">' +
+                                tes.Days[i].Date +
+                            '</div>' +
+                            '<div class ="col-xs-9">' +
+                                ': ' + tes.Days[i].Name +
+                            '</div>' +
+                        '</div>'
                     );
                 }
-
-                //$('.calendar-container ul').append(e);
             }
         }
         
