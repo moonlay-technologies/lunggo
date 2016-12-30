@@ -949,8 +949,7 @@ jQuery(document).ready(function ($) {
             $(mobTrf).find('input[value="BankMandiri"]').prop('checked', true);
             $(mobAtm).find('input[value="BankPermata"]').prop('checked', false);
 
-            $(this).onclick(location.href = '#payment-trf');
-           
+            $(this).find('.input-trf').click(location.href = '#payment-trf');
         } else if ($(this).hasClass('input-atm')) {
             mobAtm.show();
             mobTrf.hide();
@@ -958,15 +957,17 @@ jQuery(document).ready(function ($) {
             $(mobTrf).find('input[value="BankMandiri"]').prop('checked', false);
             $(mobAtm).find('input[value="BankPermata"]').prop('checked', true);
               
-            $(this).onclick(location.href = '#payment-atm');
+            $(this).find('.input-atm').click(location.href = '#payment-atm');
         } else if ($(this).hasClass('input-cc')) {
             mobTrf.hide();
             mobAtm.hide();
-            $(this).onclick(location.href = '#payment-cc');
+
+            $(this).find('.input-cc').click(location.href = '#payment-cc');
         } else if ($(this).hasClass('input-cp')) {
             mobTrf.hide();
             mobAtm.hide();
-            $(this).onclick(location.href = '#payment-cp');
+
+            $(this).find('.input-cp').click(location.href = '#payment-cp');
         } else {
             mobTrf.hide();
             mobAtm.hide();
