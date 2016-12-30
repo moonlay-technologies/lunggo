@@ -27,7 +27,7 @@
     var hotelMainImage = Model.HotelDetail.MainImage;
     try
     {
-        
+
         if (Model.HotelDetail.ImageUrl != null && Model.HotelDetail.ImageUrl.Count != 0)
         {
             roomImage = "http://photos.hotelbeds.com/giata/" + Model.HotelDetail.ImageUrl.FirstOrDefault();
@@ -46,7 +46,7 @@
                 if (rate.ChildCount <= 0)
                 {
                     continue;
-            }
+                }
                 listAges.AddRange(rate.ChildrenAges);
             }
             orderedRooms.Add(new Tuple<string, int>(roomName, sum)); ;
@@ -57,7 +57,7 @@
     {
         ViewBag.Message = "BookExpired";
     }
-    
+
 }
 
 @functions{
@@ -95,7 +95,7 @@
         return text.Length == 0 ? "" : text.Substring(0, text.Length - 1);
     }
 
-   
+
     public string ApplyTitleCase(string input)
     {
         return input[0] + input.Substring(1, input.Length - 1).ToLower();
@@ -118,9 +118,9 @@
         var totalRoom = '@Model.HotelDetail.Rooms.SelectMany(r => r.Rates).Sum(p => p.RoomCount)';
         var checkin = '@Model.HotelDetail.CheckInDate.ToString("D",CultureInfo.CreateSpecificCulture("id-ID"))';
         var checkout = '@Model.HotelDetail.CheckOutDate.ToString("D", CultureInfo.CreateSpecificCulture("id-ID"))';
-            var nights = '@((Model.HotelDetail.CheckOutDate - Model.HotelDetail.CheckInDate).Days)';
-            var country = '@Model.HotelDetail.CountryName';
-        
+        var nights = '@((Model.HotelDetail.CheckOutDate - Model.HotelDetail.CheckInDate).Days)';
+        var country = '@Model.HotelDetail.CountryName';
+
         if (getParam('page') == 2) {
             currentPage = getParam('page');
         } else {
@@ -239,31 +239,31 @@
                             </div>
 
                             <div ng-show="diffPerson">
-                            <h3><b>DETAIL</b> TAMU</h3>
-                            <div class="form-group" ng-class="{'has-error' : buyerForm.guestTitle.$touched && buyerForm.guestTitle.$invalid}">
-                                <label class="control-label important">Titel :</label>
-                                <div>
-                                    <select class="form-control" id="buyer-title" name="guestTitle" ng-model="guestInfo.title" ng-init="guestInfo.title = titles[0].value">
-                                        <option ng-repeat="title in titles" value="{{title.value}}">{{title.name}}</option>
-                                    </select>
+                                <h3><b>DETAIL</b> TAMU</h3>
+                                <div class="form-group" ng-class="{'has-error' : buyerForm.guestTitle.$touched && buyerForm.guestTitle.$invalid}">
+                                    <label class="control-label important">Titel :</label>
+                                    <div>
+                                        <select class="form-control" id="buyer-title" name="guestTitle" ng-model="guestInfo.title" ng-init="guestInfo.title = titles[0].value">
+                                            <option ng-repeat="title in titles" value="{{title.value}}">{{title.name}}</option>
+                                        </select>
+                                    </div>
+
+
                                 </div>
-                                    
-                                    
-                            </div>
-                            <div class="form-group" ng-class="{'has-error' : buyerForm.guestName.$touched && buyerForm.guestName.$invalid}">
-                                <label class="control-label important">Nama Lengkap :</label>
-                                <div ng-hide="loggedIn">
-                                    <input type="text" pattern="[a-zA-Z\s]+" class="form-control nama" value="" id="buyer-name" placeholder="Nama Lengkap"
-                                           name="guestName" ng-model="guestInfo.name" required />
-                                    <div ng-show="!checkName(guestInfo.name)" style="color:red">
-                                        Nama tidak boleh mengandung karakter selain alfabet dan spasi
+                                <div class="form-group" ng-class="{'has-error' : buyerForm.guestName.$touched && buyerForm.guestName.$invalid}">
+                                    <label class="control-label important">Nama Lengkap :</label>
+                                    <div ng-hide="loggedIn">
+                                        <input type="text" pattern="[a-zA-Z\s]+" class="form-control nama" value="" id="buyer-name" placeholder="Nama Lengkap"
+                                               name="guestName" ng-model="guestInfo.name" required />
+                                        <div ng-show="!checkName(guestInfo.name)" style="color:red">
+                                            Nama tidak boleh mengandung karakter selain alfabet dan spasi
+                                        </div>
+                                    </div>
+                                    <div ng-hide="!loggedIn">
+                                        <!--Jika udah Login-->
+                                        <input type="text" class="form-control nama" value=guestInfo.name id="buyer-name" placeholder="Nama Lengkap" name="name" ng-model="guestInfo.name" required />
                                     </div>
                                 </div>
-                                <div ng-hide="!loggedIn">
-                                    <!--Jika udah Login-->
-                                    <input type="text" class="form-control nama" value=guestInfo.name id="buyer-name" placeholder="Nama Lengkap" name="name" ng-model="guestInfo.name" required />
-                                </div>
-                            </div>
                             </div>
                             <div class="form-group">
                                 <label class="control-label">Catatan Khusus</label>
@@ -302,11 +302,8 @@
                     <div class="rh-container review-hotel">
                         <div class="rh-main-title">Detail Hotel</div>
                         <div class="rh-content">
-                            
                             <div class="rh-row clearfix">
-                                <div class="col-left-hotel"
-                                     style="background: url(@Model.HotelDetail.MainImage); margin-right: 10px; width: 120px; height: 120px; background-size: cover; background-position: center; background-repeat: no-repeat; ">
-            
+                                <div class="col-left-hotel" style="background: url(@Model.HotelDetail.MainImage); margin-right: 10px; width: 90px; height: 90px; background-size: cover; background-position: center; background-repeat: no-repeat; ">
                                 </div>
                                 <div class="col-right-hotel">
                                     <div class="blue-txt bold-txt hotel-title-lg md-txt">{{capitalizeFirstLetter(hotelDetail.hotelName)}}</div>
@@ -316,55 +313,51 @@
                                     <div class="star star-4" ng-show="hotelstar() == 'star star-4'"></div>
                                     <div class="star star-5" ng-show="hotelstar() == 'star star-5'"></div>
                                     <div class="rh-location">
-                                        @ToTitleCase(Model.HotelDetail.Address) @ToTitleCase(Model.HotelDetail.ZoneName), 
+                                        @ToTitleCase(Model.HotelDetail.Address) @ToTitleCase(Model.HotelDetail.ZoneName),
                                         @ToTitleCase(Model.HotelDetail.DestinationName), @Model.HotelDetail.PostalCode, @Model.HotelDetail.CountryName
                                     </div>
-                                    <div class="rh-detail">
-                                        <div class="wb-container clearfix">
-                                            <div class="wb-left">Check in</div>
-                                            <div class="wb-mid">:</div>
-                                            <div class="wb-right bold-txt">{{checkin | date : "d MMMM yyyy"}}</div>
-                                        </div>
-                                        <div class="wb-container clearfix">
-                                            <div class="wb-left">Check out</div>
-                                            <div class="wb-mid">:</div>
-                                            <div class="wb-right bold-txt">{{checkout | date : "d MMMM yyyy"}}</div>
-                                        </div>
-                                        <div class="wb-container clearfix">
-                                            <div class="wb-left">Malam</div>
-                                            <div class="wb-mid">:</div>
-                                            <div class="wb-right bold-txt">{{nights}} Malam</div>
-                                        </div>
-                                        <div class="wb-container clearfix">
-                                            <div class="wb-left">Kamar</div>
-                                            <div class="wb-mid">:</div>
-                                            <div class="wb-right bold-txt">{{totalRoom}} Kamar</div>
-                                        </div>
+                                </div>
+                            </div>
+                            <div class="rh-row">
+                                <div class="rh-detail">
+                                    <div class="wb-container clearfix">
+                                        <div class="wb-left">Check in</div>
+                                        <div class="wb-mid">:</div>
+                                        <div class="wb-right bold-txt">{{checkin | date : "d MMMM yyyy"}}</div>
+                                    </div>
+                                    <div class="wb-container clearfix">
+                                        <div class="wb-left">Check out</div>
+                                        <div class="wb-mid">:</div>
+                                        <div class="wb-right bold-txt">{{checkout | date : "d MMMM yyyy"}}</div>
+                                    </div>
+                                    <div class="wb-container clearfix">
+                                        <div class="wb-left">Malam</div>
+                                        <div class="wb-mid">:</div>
+                                        <div class="wb-right bold-txt">{{nights}} Malam</div>
+                                    </div>
+                                    <div class="wb-container clearfix">
+                                        <div class="wb-left">Kamar</div>
+                                        <div class="wb-mid">:</div>
+                                        <div class="wb-right bold-txt">{{totalRoom}} Kamar</div>
                                     </div>
                                 </div>
                             </div>
                             <div class="rh-row">
                                 <div class="rh-top clearfix">
-                                    <div class="col-left-hotel"
-                                         style="background: url(@roomImage); margin-right: 10px; width: 120px; height: 120px; background-size: cover; background-position: center; background-repeat: no-repeat; ">
-                                 
+                                    <div style="background: url(@roomImage); margin-right: 10px; margin-bottom: 15px; width: 100%; height: 180px; background-size: cover; background-position: center; background-repeat: no-repeat; ">
                                     </div>
-                                    <div class="col-right-hotel clearfix">
+                                    <div class="clearfix">
                                         <span class="hotel-facility facility"></span>
-
                                         @foreach (var room in rooms)
                                         {
-
-                                            <div class="rh-detail">
+                                            <div class="rh-detail clearfix">
                                                 <div class="wb-container clearfix">
                                                     <div class="wb-left">Jenis Kamar</div>
                                                     <div class="wb-mid">:</div>
                                                     <div class="wb-right bold-txt">@ToTitleCase(room.RoomName)</div>
                                                 </div>
-
                                                 @foreach (var rate in room.Rates)
                                                 {
-
                                                     <hr />
                                                     <div class="wb-container clearfix">
                                                         <div class="wb-left">Jumlah Kamar</div>
@@ -378,9 +371,9 @@
                                                             @rate.AdultCount Dewasa
                                                             @if (@rate.ChildCount > 0)
                                                             {
-                                                                <span>, @rate.ChildCount Anak </span> 
-                                                            <span>
-                                                                (
+                                                                <span>, @rate.ChildCount Anak </span>
+                                                                <span>
+                                                                    (
                                                                     @for (var a = 0; a < rate.ChildrenAges.Count; a++)
                                                                     {
                                                                         if (a != rate.ChildrenAges.Count - 1)
@@ -396,8 +389,8 @@
                                                                     }
                                                                     )
                                                                 </span>
-                                                        }
-                                                    </div>
+                                                            }
+                                                        </div>
                                                     </div>
                                                     <div class="wb-container clearfix">
                                                         <div class="wb-left">Tipe Board</div>
@@ -406,76 +399,74 @@
                                                     </div>
                                                     if (rate.TermAndCondition != null && rate.TermAndCondition.Count != 0 && !rate.TermAndCondition.Exists(r => r.Length < 3))
                                                     {
-                                                    <div class="wb-container clearfix">
+                                                        <div class="wb-container clearfix">
                                                             <div class="wb-left">Ketentuan</div>
-                                                        <div class="wb-mid">:</div>
+                                                            <div class="wb-mid">:</div>
                                                             <div class="wb-right bold-txt" style="text-transform: capitalize">@String.Join(". ", rate.TermAndCondition)</div>
-                                                    </div>
+                                                        </div>
                                                     }
                                                     if (rate.Cancellation != null && rate.Cancellation.Count > 0)
                                                     {
-                                                    <div class="wb-container clearfix">
-                                                        <div class="wb-left">Ketentuan Pembatalan</div>
-                                                        <div class="wb-mid">:</div>
-                                                        <div class="wb-right bold-txt">
+                                                        <div class="wb-container clearfix">
+                                                            <div class="wb-left">Ketentuan Pembatalan</div>
+                                                            <div class="wb-mid">:</div>
+                                                            <div class="wb-right bold-txt">
                                                                 @if (rate.IsFreeCancel)
                                                                 {
                                                                     <div>
-                                                                    - Gratis pembatalan sebelum tanggal @rate.FreeUntil.GetValueOrDefault().AddHours(7).ToString("dd MMMM yyyy HH:mm", CultureInfo.CreateSpecificCulture("id-ID")) WIB.
+                                                                        - Gratis pembatalan sebelum tanggal @rate.FreeUntil.GetValueOrDefault().AddHours(7).ToString("dd MMMM yyyy HH:mm", CultureInfo.CreateSpecificCulture("id-ID")) WIB.
                                                                     </div>
                                                                 }
                                                                 @foreach (var policy in rate.Cancellation)
-                                                            {
-                                                                <div>
-                                                                    - Pembatalan setelah tanggal @policy.StartTime.AddHours(7).ToString("dd MMMM yyyy HH:mm", CultureInfo.CreateSpecificCulture("id-ID")) WIB akan dikenakan biaya sebesar Rp @(policy.SingleFee.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))) per kamar <br />
-                                                                </div>
-                                                            }
-                                                            
+                                                                {
+                                                                    <div>
+                                                                        - Pembatalan setelah tanggal @policy.StartTime.AddHours(7).ToString("dd MMMM yyyy HH:mm", CultureInfo.CreateSpecificCulture("id-ID")) WIB akan dikenakan biaya sebesar Rp @(policy.SingleFee.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))) per kamar <br />
+                                                                    </div>
+                                                                }
+
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                }
+                                                    }
 
                                                 }
                                             </div>
-                                            
-                                            <hr />
                                         }
-                                        </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div>
-                        <h3><b>RINCIAN</b> PESANAN</h3>
-                        <!--Info Pemesan-->
-                        <div class="buyer-review">
-                            <header>
-                                <span>Data Pemesan dan Tamu</span>
-                            </header>
-                            <section class="buyer-content">
-                                <div class="buyer-list-item">
-                                    <h3 class="buyer-list-heading"><b> Pemesan: {{changeTitle(buyerInfo.title)}} {{buyerInfo.name}}</b></h3>
-                                    <div class="buyer-list-content">
-                                        <p>
-                                            <span class="buyer-label">No. Telepon</span>
-                                            <span class="buyer-data">+{{buyerInfo.countryCode}}{{buyerInfo.phone}}</span>
-                                        </p>
-                                        <p>
-                                            <span class="buyer-label">E-mail</span>
-                                            <span class="buyer-data">{{buyerInfo.email}}</span>
-                                        </p>
-                                    </div>
-                                    <h3 class="buyer-list-heading"><b> Tamu: {{changeTitle(guestInfo.title)}} {{guestInfo.name}}</b></h3>
-                                    <h3 class="buyer-list-heading" ng-show="buyerInfo.message != null && buyerInfo.message != ''"><b>Catatan: </b></h3>
-                                    <div class="buyer-list-content">
-                                        {{buyerInfo.message}}
                                     </div>
                                 </div>
-                            </section>
+                            </div>
+                        </div>
+                        <div>
+                            <h3><b>RINCIAN</b> PESANAN</h3>
+                            <!--Info Pemesan-->
+                            <div class="buyer-review">
+                                <header>
+                                    <span>Data Pemesan dan Tamu</span>
+                                </header>
+                                <section class="buyer-content">
+                                    <div class="buyer-list-item">
+                                        <h3 class="buyer-list-heading"><b> Pemesan: {{changeTitle(buyerInfo.title)}} {{buyerInfo.name}}</b></h3>
+                                        <div class="buyer-list-content">
+                                            <p>
+                                                <span class="buyer-label">No. Telepon</span>
+                                                <span class="buyer-data">+{{buyerInfo.countryCode}}{{buyerInfo.phone}}</span>
+                                            </p>
+                                            <p>
+                                                <span class="buyer-label">E-mail</span>
+                                                <span class="buyer-data">{{buyerInfo.email}}</span>
+                                            </p>
+                                        </div>
+                                        <h3 class="buyer-list-heading"><b> Tamu: {{changeTitle(guestInfo.title)}} {{guestInfo.name}}</b></h3>
+                                        <h3 class="buyer-list-heading" ng-show="buyerInfo.message != null && buyerInfo.message != ''"><b>Catatan: </b></h3>
+                                        <div class="buyer-list-content">
+                                            {{buyerInfo.message}}
+                                        </div>
+                                    </div>
+                                </section>
 
-                        </div><!--Info Pemesan-->
+                            </div><!--Info Pemesan-->
 
-                    </div>
-                
+                        </div>
+
                         <div class="rh-container notes-hotel" ng-show="hotelDetail.policy != null && hotelDetail.policy.length > 0">
                             <div class="rh-main-title">Catatan Khusus</div>
                             <div class="rh-content clearfix">
@@ -487,19 +478,19 @@
                                 </ul>
                             </div>
                         </div>
-                    <form action="" method="post" name="submitForm" id="rsvno" class="hidden">
-                        <input type="text" name="RsvNo" value="" id="rsvno-input" />
-                    </form>
-                    <div class="step-button">
-                        <button class="btn btn-grey" ng-click="changePage(1)">KEMBALI</button>
-                        <button class="btn btn-yellow go-top" ng-disabled="book.booking" ng-click="book.send()">PESAN</button>
-                    </div>
-                </div><!-- .content-step#step-2 -->
-                <!-- ******************** -->
-            </div>
+                        <form action="" method="post" name="submitForm" id="rsvno" class="hidden">
+                            <input type="text" name="RsvNo" value="" id="rsvno-input" />
+                        </form>
+                        <div class="step-button">
+                            <button class="btn btn-grey" ng-click="changePage(1)">KEMBALI</button>
+                            <button class="btn btn-yellow go-top" ng-disabled="book.booking" ng-click="book.send()">PESAN</button>
+                        </div>
+                    </div><!-- .content-step#step-2 -->
+                    <!-- ******************** -->
+                </div>
 
 
-           
+
             </div>
             <div class="col-right">
                 <div class="widget-container">
@@ -510,15 +501,15 @@
                             {
                                 foreach (var rate in room.Rates)
                                 {
-                            <dl class="total-room">
-                                <dt class="dt-title">
-                                    @rate.RoomCount @ToTitleCase(room.RoomName)
-                                    @ToTitleCase(HotelService.GetInstance().GetHotelBoardDescId(rate.Boards)) x {{nights}} Malam
-                                </dt>
-                                <dd class="dd-price">
-                                    Rp @((rate.NetFare * night).ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID")))
-                                </dd>
-                            </dl>
+                                    <dl class="total-room">
+                                        <dt class="dt-title">
+                                            @rate.RoomCount @ToTitleCase(room.RoomName)
+                                            @ToTitleCase(HotelService.GetInstance().GetHotelBoardDescId(rate.Boards)) x {{nights}} Malam
+                                        </dt>
+                                        <dd class="dd-price">
+                                            Rp @((rate.NetFare * night).ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID")))
+                                        </dd>
+                                    </dl>
                                 }
                             }
 
@@ -590,13 +581,13 @@
                                                 {
                                                     if (i != orderedRooms.Count - 1)
                                                     {
-                                                @orderedRooms[i].Item2<span> </span>
-                                                @ToTitleCase(orderedRooms[i].Item1)<span>, </span>
+                                                        @orderedRooms[i].Item2<span> </span>
+                                                        @ToTitleCase(orderedRooms[i].Item1)<span>, </span>
                                                     }
                                                     else
                                                     {
-                                                @orderedRooms[i].Item2<span> </span>
-                                                @ToTitleCase(orderedRooms[i].Item1)
+                                                        @orderedRooms[i].Item2<span> </span>
+                                                        @ToTitleCase(orderedRooms[i].Item1)
                                                     }
 
                                                 }
@@ -626,26 +617,26 @@
                                                 }
                                             </div>
 
-                                            
+
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="widget-wrapper notes" ng-show="hotelDetail.policy != null && hotelDetail.policy.length > 0">
-                                    <div class="widget-subtitle">Catatan Khusus</div>
-                                    <div class="widget-content clearfix">
-                                        <ul class="sqr-blue-list">
+                                <div class="widget-subtitle">Catatan Khusus</div>
+                                <div class="widget-content clearfix">
+                                    <ul class="sqr-blue-list">
 
-                                                        <li>
+                                        <li>
                                             <div class="wc-title blue-txt bold-txt">Perlu Diingat</div>
-                                                        </li>
+                                        </li>
 
                                         <li ng-repeat="pol in hotelDetail.policy">
                                             <div class="wc-txt">{{pol}}</div>
                                         </li>
-                                        </ul>
-                                    </div>
+                                    </ul>
+                                </div>
                             </div>
 
                         </div><!-- .widget.flight-detail -->

@@ -906,3 +906,70 @@ app.controller('paymentController', [
         // ********************************** END *********************************************
     }
 ]);
+
+jQuery(document).ready(function ($) {
+    // Payment Desktop
+    var trf = $('.selected-bank.payment-wrapper .row.payment-transfer');
+    var atm = $('.selected-bank.payment-wrapper .row.payment-atm');
+
+    trf.hide();
+    atm.hide();
+
+    $('input[name="paymentMethod"]').click(function () {
+        if ($(this).hasClass('input-trf')) {
+            trf.show();
+            atm.hide();
+
+            $(trf).find('input[value="BankMandiri"]').prop('checked', true);
+            $(atm).find('input[value="BankPermata"]').prop('checked', false);
+        } else if ($(this).hasClass('input-atm')) {
+            atm.show();
+            trf.hide();
+
+            $(trf).find('input[value="BankMandiri"]').prop('checked', false);
+            $(atm).find('input[value="BankPermata"]').prop('checked', true);
+        } else {
+            trf.hide();
+            atm.hide();
+        }
+    });
+
+    // Payment Mobile
+    var mobTrf = $('.summary.summary--payment #payment-trf');
+    var mobAtm = $('.summary.summary--payment #payment-atm');
+
+    mobTrf.hide();
+    mobAtm.hide();
+
+    $('input[name="paymentMethod"]').click(function () {
+        if ($(this).hasClass('input-trf')) {
+            mobTrf.show();
+            mobAtm.hide();
+
+            $(mobTrf).find('input[value="BankMandiri"]').prop('checked', true);
+            $(mobAtm).find('input[value="BankPermata"]').prop('checked', false);
+
+            $(this).onclick(location.href = '#payment-trf');
+           
+        } else if ($(this).hasClass('input-atm')) {
+            mobAtm.show();
+            mobTrf.hide();
+
+            $(mobTrf).find('input[value="BankMandiri"]').prop('checked', false);
+            $(mobAtm).find('input[value="BankPermata"]').prop('checked', true);
+              
+            $(this).onclick(location.href = '#payment-atm');
+        } else if ($(this).hasClass('input-cc')) {
+            mobTrf.hide();
+            mobAtm.hide();
+            $(this).onclick(location.href = '#payment-cc');
+        } else if ($(this).hasClass('input-cp')) {
+            mobTrf.hide();
+            mobAtm.hide();
+            $(this).onclick(location.href = '#payment-cp');
+        } else {
+            mobTrf.hide();
+            mobAtm.hide();
+        }
+    });
+})

@@ -768,6 +768,7 @@
     <Content Include="Assets\images\logo.png" />
     <Content Include="Assets\images\main-menu-arrow.png" />
     <Content Include="Assets\images\mandiri-logo.jpg" />
+    <Content Include="Assets\images\mandiri.png" />
     <Content Include="Assets\images\map.jpg" />
     <Content Include="Assets\images\mastercard-logo.jpg" />
     <Content Include="Assets\images\menu-icon-white.png" />
@@ -791,6 +792,7 @@
     <Content Include="Assets\images\penerbangan-pergi.jpg" />
     <Content Include="Assets\images\penerbangan-pulang.jpg" />
     <Content Include="Assets\images\peringatan.png" />
+    <Content Include="Assets\images\permata.png" />
     <Content Include="Assets\images\permatabank.jpg" />
     <Content Include="Assets\images\phone-icon.png" />
     <Content Include="Assets\images\phone.png" />
@@ -1576,7 +1578,6 @@
     <Content Include="Views\Shared\Mobile\_SearchHotelForm.cshtml" />
     <Content Include="Views\Shared\Mobile\_SelectCheckInDate.cshtml" />
     <Content Include="Views\Shared\Mobile\_Summary.cshtml" />
-    <Content Include="Views\Hotel\VoucherHotelExt.cshtml" />
     <None Include="Views\Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

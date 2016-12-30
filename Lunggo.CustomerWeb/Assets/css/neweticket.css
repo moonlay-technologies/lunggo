@@ -40,7 +40,6 @@ p {
 .page {
   width: 21cm;
   height: 29.6cm;
-  position: absolute;
   -webkit-print-color-adjust: exact; }
   .page:before, .page:after {
     content: "";
@@ -509,3 +508,7 @@ Site Footer
       width: 68px; }
     .page-hotel-voucher .star.e-star.star-5 {
       width: 85px; }
+
+@media print {
+  .page {
+    page-break-before: always; } }
