@@ -19,7 +19,8 @@ namespace Lunggo.ApCommon.Payment.Service
 {
     public partial class PaymentService
     {
-        public PaymentDetails SubmitPayment(string rsvNo, PaymentMethod method, PaymentData paymentData, string discountCode, out bool isUpdated)
+        public PaymentDetails SubmitPayment(string rsvNo, PaymentMethod method, PaymentSubMethod submethod,
+            PaymentData paymentData, string discountCode, out bool isUpdated)
         {
             isUpdated = false;
             ReservationBase reservation;
@@ -32,7 +33,7 @@ namespace Lunggo.ApCommon.Payment.Service
             if (paymentDetails == null)
                 return null;
 
-            if (paymentDetails.Method != PaymentMethod.Undefined)
+            if (paymentDetails.Method != PaymentMethod.Undefined && paymentDetails.Method != PaymentMethod.BankTransfer)
             {
                 paymentDetails.Status = PaymentStatus.Failed;
                 paymentDetails.FailureReason = FailureReason.MethodNotAvailable;
@@ -43,6 +44,7 @@ namespace Lunggo.ApCommon.Payment.Service
             paymentDetails.Method = method;
             paymentDetails.Medium = GetPaymentMedium(method);
             paymentDetails.FinalPriceIdr = paymentDetails.OriginalPriceIdr;
+            paymentDetails.SubMethod = submethod;
 
             if (!string.IsNullOrEmpty(discountCode))
             {

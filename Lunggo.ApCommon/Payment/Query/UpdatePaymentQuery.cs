@@ -32,6 +32,8 @@ namespace Lunggo.ApCommon.Payment.Query
                 clauseBuilder.Append(@"MediumCd = @MediumCd, ");
             if (condition.MethodCd != null && condition.MethodCd != "")
                 clauseBuilder.Append(@"MethodCd = @MethodCd, ");
+            if (condition.SubMethod != null && condition.SubMethod != "")
+                clauseBuilder.Append(@"SubMethod = @SubMethod, ");
             if (condition.Time != null)
                 clauseBuilder.Append(@"Time = @Time, ");
             if (condition.TransferAccount != null)

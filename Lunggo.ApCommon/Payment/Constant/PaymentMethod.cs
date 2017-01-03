@@ -21,6 +21,14 @@
         Deposit = 16
     }
 
+    public enum PaymentSubMethod
+    {
+        Undefined = 0,
+        Mandiri = 1,
+        BCA = 2,
+        Permata = 3
+    }
+
     internal class PaymentMethodCd
     {
         internal static string Mnemonic(PaymentMethod paymentMedium)
@@ -101,6 +109,39 @@
                     return PaymentMethod.Deposit;
                 default:
                     return PaymentMethod.Undefined;
+            }
+        }
+    }
+
+    internal class PaymentSubMethodCd
+    {
+        internal static string Mnemonic(PaymentSubMethod paymentMedium)
+        {
+            switch (paymentMedium)
+            {
+                case PaymentSubMethod.BCA:
+                    return "BCA";
+                case PaymentSubMethod.Mandiri:
+                    return "Mandiri";
+                case PaymentSubMethod.Permata:
+                    return "Permata";
+                default:
+                    return null;
+            }
+        }
+
+        internal static PaymentSubMethod Mnemonic(string paymentMedium)
+        {
+            switch (paymentMedium)
+            {
+                case "BCA":
+                    return PaymentSubMethod.BCA;
+                case "Mandiri":
+                    return PaymentSubMethod.Mandiri;
+                case "Permata":
+                    return PaymentSubMethod.Permata;
+                default:
+                    return PaymentSubMethod.Undefined;
             }
         }
     }

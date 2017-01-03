@@ -527,7 +527,7 @@ app.controller('paymentController', [
                 //generate payment data
                 if ($scope.paymentMethod == 'BankTransfer') {
                     if ($scope.redirectionUrl == null || $scope.redirectionUrl.length == 0) {
-                        $scope.pay.postData = '"rsvNo" : "' + $scope.rsvNo + '", "discCd":"' + $scope.voucher.confirmedCode + '" , "method":"2"';
+                        $scope.pay.postData = '"rsvNo" : "' + $scope.rsvNo + '", "discCd":"' + $scope.voucher.confirmedCode + '" , "method":"2", "submethod" : "1"';
                         $scope.pay.transfer = true;
                     }
                 }
@@ -551,7 +551,7 @@ app.controller('paymentController', [
                             $scope.PaymentData = '"method":"4","cimbClicks":' + '{' + ' "description":"Pembayaran melalui CimbClicks"' + '}';
                             break;
                         case "VirtualAccount":
-                            $scope.PaymentData = '"method":"5","virtualAccount":' + '{' + ' "bank":"permata"' + '}';
+                            $scope.PaymentData = '"method":"5","virtualAccount":' + '{' + ' "bank":"permata"' + '},' + '"submethod" : "3"';
                             $scope.pay.virtualAccount = true;
                             break;
                         case "MandiriBillPayment":
@@ -638,7 +638,7 @@ app.controller('paymentController', [
                                 case 'ERPPAY01':
                                     $scope.errorLog = 'Missing reservation number or method';
                                     $scope.errorMessage = 'Nomor reservasi Anda tidak ditemukan';
-                                    $scope.PageConfig.ReturnUrl = "/";
+                                    $scope.ReturnUrl = "/";
                                     $scope.pay.checked = true;
                                     $scope.pay.isSuccess = false;
                                     $scope.pay.isPaying = false;
@@ -668,7 +668,7 @@ app.controller('paymentController', [
                                 case 'ERPPAY04':
                                     $scope.errorLog = 'Reservation not found';
                                     $scope.errorMessage = 'Reservasi Anda tidak ditemukan';
-                                    $scope.PageConfig.ReturnUrl = "/";
+                                    $scope.ReturnUrl = "/";
                                     $scope.pay.checked = true;
                                     $scope.pay.isSuccess = false;
                                     $scope.pay.isPaying = false;
@@ -706,7 +706,7 @@ app.controller('paymentController', [
                                 case 'ERRGEN98':
                                     $scope.errorLog = 'Invalid JSON Format';
                                     $scope.errorMessage = 'Terjadi kesalahan pada sistem';
-                                    $scope.PageConfig.ReturnUrl = "/";
+                                    $scope.ReturnUrl = "/";
                                     $scope.pay.checked = true;
                                     $scope.pay.isSuccess = false;
                                     $scope.pay.isPaying = false;
@@ -715,7 +715,7 @@ app.controller('paymentController', [
                                 case 'ERRGEN99':
                                     $scope.errorLog = 'There is a problem on the server';
                                     $scope.errorMessage = 'Terjadi kesalahan pada sistem';
-                                    $scope.PageConfig.ReturnUrl = "/";
+                                    $scope.ReturnUrl = "/";
                                     $scope.pay.checked = true;
                                     $scope.pay.isSuccess = false;
                                     $scope.pay.isPaying = false;
