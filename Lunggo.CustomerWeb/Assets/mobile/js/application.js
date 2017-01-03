@@ -12,7 +12,9 @@ if (typeof (angular) == 'object') {
             $.datepicker.regional['id']
             )
         );
-
+        $(document).ready(function () {
+            $(".ui-datepicker").datepicker();
+        });
         var trial = 0;
         // general page config and function
         $rootScope.PageConfig = {
@@ -370,7 +372,6 @@ if (typeof (angular) == 'object') {
                 SelectedDate: ''
             },
             SelectedMonth: {},
-            test : 1,
             Position: {},
             Holidays: [],
             HolidayNames: [],
@@ -445,8 +446,6 @@ if (typeof (angular) == 'object') {
                 return newdate;
             },
             SetOption: function (options, overlay, position) {
-                //$('.ui-datepicker').datepicker("refresh");
-                //$('.ui-datepicker').datepicker('option', 'beforeShowDay', $rootScope.DatePicker.HighlightDays);
                 overlay = overlay || 'flight-form';
                 $rootScope.DatePicker.overlay = overlay;
                 if (position == 'search-single' || position == 'search-return') {
@@ -455,10 +454,6 @@ if (typeof (angular) == 'object') {
                 }
                 $rootScope.DatePicker.Position = position;
 
-                //$('.ui-datepicker').datepicker({
-                    
-                //});
-               
                 if (options.Target == 'departure') {
                     $rootScope.DatePicker.Settings.Target = '.flight-search-form-departure';
                     $('.ui-datepicker').datepicker('option', 'minDate', new Date());
@@ -498,7 +493,6 @@ if (typeof (angular) == 'object') {
                 $('.ui-datepicker.departure-date').datepicker('option', 'dateFormat', $rootScope.DatePicker.Settings.DateFormat);
                 $('.ui-datepicker.return-date').datepicker('option', 'dateFormat', $rootScope.DatePicker.Settings.DateFormat);
                 $('.ui-datepicker.checkindate').datepicker('option', 'dateFormat', $rootScope.DatePicker.Settings.DateFormat);
-                $('.ui-datepicker').datepicker('option', 'beforeShowDays', $rootScope.DatePicker.HighlightDays);
                 // set on choose date function
 
             },
@@ -574,7 +568,6 @@ if (typeof (angular) == 'object') {
                                 }
                             }).error(function () {
                                 trial++;
-                                //console.log(trial);
                                 if (refreshAuthAccess() && trial < 4) //refresh cookie
                                 {
                                     $rootScope.FlightSearchForm.AutoComplete.GetAirport(keyword);
@@ -750,65 +743,23 @@ if (typeof (angular) == 'object') {
                 );
             }
         }
-
-        $.ajax({
-            url: GetHolidayConfig.Url,
-            method: 'GET',
-            headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') }
-        }).done(function (returnData) {
-            if (returnData.status == 200) {
-                if (returnData.events != null) {
-                    for (var i = 0; i < returnData.events.length; i++) {
-                        var holidayDate = new Date(returnData.events[i].date);
-                        var holidayName = returnData.events[i].name;
-                        var year = holidayDate.getFullYear();
-                        var date = holidayDate.getDate();
-                        var month = holidayDate.getMonth() + 1;
-                        $rootScope.DatePicker.Holidays.push(holidayDate);
-                        if ($rootScope.DatePicker.HolidayNames.length == 0) {
-                            $rootScope.DatePicker.HolidayNames.push(
-                            {
-                                Year: year,
-                                Months: [{
-                                    MonthName: month,
-                                    Days:[
-                                    {
-                                        Date: date,
-                                        Name: holidayName 
-                                    }]
-                                }]
-                                    
-                            });
-                        } else {
-                            var foundYear = false;
-                            var foundMonth = false;
-                            for (var x = 0; x < $rootScope.DatePicker.HolidayNames.length; x++) {
-                                if ($rootScope.DatePicker.HolidayNames[x].Year == year) {
-                                    foundYear = true;
-                                    for (var y = 0; y < $rootScope.DatePicker.HolidayNames[x].Months.length; y++) {
-                                        if ($rootScope.DatePicker.HolidayNames[x].Months[y].MonthName == month) {
-                                            foundMonth = true;
-                                            $rootScope.DatePicker.HolidayNames[x].Months[y].Days.push({
-                                                Date: date,
-                                                Name: holidayName
-                                            });
-                                            break;
-                                        }
-                                    }
-                                    if (!foundMonth) {
-                                        $rootScope.DatePicker.HolidayNames[x].Months.push({
-                                            MonthName: month,
-                                            Days: [
-                                            {
-                                                Date: date,
-                                                Name: holidayName
-                                            }]
-                                        });
-                                    }
-                                    break;
-                                }
-                            }
-                            if (!foundYear) {
+        var authAccess = getAuthAccess();
+        if (authAccess == 1 || authAccess == 2) {
+            $.ajax({
+                url: GetHolidayConfig.Url,
+                method: 'GET',
+                headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') }
+            }).done(function (returnData) {
+                if (returnData.status == 200) {
+                    if (returnData.events != null) {
+                        for (var i = 0; i < returnData.events.length; i++) {
+                            var holidayDate = new Date(returnData.events[i].date);
+                            var holidayName = returnData.events[i].name;
+                            var year = holidayDate.getFullYear();
+                            var date = holidayDate.getDate();
+                            var month = holidayDate.getMonth() + 1;
+                            $rootScope.DatePicker.Holidays.push(holidayDate);
+                            if ($rootScope.DatePicker.HolidayNames.length == 0) {
                                 $rootScope.DatePicker.HolidayNames.push(
                                 {
                                     Year: year,
@@ -822,21 +773,71 @@ if (typeof (angular) == 'object') {
                                     }]
 
                                 });
+                            } else {
+                                var foundYear = false;
+                                var foundMonth = false;
+                                for (var x = 0; x < $rootScope.DatePicker.HolidayNames.length; x++) {
+                                    if ($rootScope.DatePicker.HolidayNames[x].Year == year) {
+                                        foundYear = true;
+                                        for (var y = 0; y < $rootScope.DatePicker.HolidayNames[x].Months.length; y++) {
+                                            if ($rootScope.DatePicker.HolidayNames[x].Months[y].MonthName == month) {
+                                                foundMonth = true;
+                                                $rootScope.DatePicker.HolidayNames[x].Months[y].Days.push({
+                                                    Date: date,
+                                                    Name: holidayName
+                                                });
+                                                break;
+                                            }
+                                        }
+                                        if (!foundMonth) {
+                                            $rootScope.DatePicker.HolidayNames[x].Months.push({
+                                                MonthName: month,
+                                                Days: [
+                                                {
+                                                    Date: date,
+                                                    Name: holidayName
+                                                }]
+                                            });
+                                        }
+                                        break;
+                                    }
+                                }
+                                if (!foundYear) {
+                                    $rootScope.DatePicker.HolidayNames.push(
+                                    {
+                                        Year: year,
+                                        Months: [{
+                                            MonthName: month,
+                                            Days: [
+                                            {
+                                                Date: date,
+                                                Name: holidayName
+                                            }]
+                                        }]
+
+                                    });
+                                }
                             }
                         }
                     }
                 }
-            }
 
-        }).error(function (returnData) {
+            }).error(function (returnData) {
 
-        });
+            });
+        }
+        
 
-        function highlight(date) {
+        function  highlight(date) {
             var x = new Date(date);
             var xmonth = x.getMonth();
             var xday = x.getDate();
             var xyear = x.getFullYear();
+            if (xday == 15)
+                getSelectedMonth(xyear, xmonth + 1);
+            $('ui-datepicker').datepicker('option','gotoCurrent',true);
+
+      
             for (var i = 0; i < $rootScope.DatePicker.Holidays.length; i++) {
                 var y = new Date($rootScope.DatePicker.Holidays[i]);
                 var ymonth = y.getMonth();
@@ -853,7 +854,6 @@ if (typeof (angular) == 'object') {
         function getSelectedMonth(year, month) {
             var found = false;
             var tes = {};
-            $rootScope.DatePicker.test++;
             for (var y = 0; y < $rootScope.DatePicker.HolidayNames.length; y++) {
                 if ($rootScope.DatePicker.HolidayNames[y].Year == year) {
                     for (var m = 0; m < $rootScope.DatePicker.HolidayNames[y].Months.length; m++) {
@@ -869,33 +869,33 @@ if (typeof (angular) == 'object') {
                     break;
                 }
             }
-
-            $('.holiday').remove();
-            if (found) {
-                var e = $('<div class="holiday">' +
+            
+            if (found && tes.Days != null && tes.Days.length != 0) {
+                $('.holiday-list').remove();
+                var e = $('<div class="holiday-list">' +
                          '</div>');
 
-                $('.overlay__content .ui-datepicker').append(e);
+                $('.ui-datepicker.departure-date, .ui-datepicker.return-date, .ui-datepicker.checkindate').append(e);
                 for (var i = 0; i < tes.Days.length; i++) {
-                    $('.overlay__content .ui-datepicker .holiday').append(
+                    $('.overlay__content .ui-datepicker .holiday-list').append(
                         '<div class="col-xs-12">' +
-                            '<div class ="col-xs-3">' +
+                            '<div class ="col-xs-1">' +
                                 tes.Days[i].Date +
                             '</div>' +
-                            '<div class ="col-xs-9">' +
+                            '<div class ="col-xs-11">' +
                                 ': ' + tes.Days[i].Name +
                             '</div>' +
                         '</div>'
                     );
                 }
+            } else if (!found) {
+                $('.holiday-list').remove();
+                tes = {};
             }
         }
         
        // $(function () {
             $(".ui-datepicker").datepicker({
-                onChangeMonthYear: function (year, month) {
-                    getSelectedMonth(year, month);
-                },
                 beforeShowDay: highlight,
                 onSelect: function (date) {
 
@@ -913,12 +913,6 @@ if (typeof (angular) == 'object') {
 
 
                     } else {
-                        //if ($rootScope.DatePicker.Position == 'form-index') {
-                        //    $rootScope.PageConfig.SetOverlay();
-                        //}
-                        //else if ($rootScope.DatePicker.Position == 'search-return' || $rootScope.DatePicker.Position == 'search-single') {
-                        //    $rootScope.PageConfig.SetOverlay('flight-form');
-                        //}
                         $rootScope.DatePicker.Settings.SelectedDate = new Date(trsdate);
                         $($rootScope.DatePicker.Settings.Target).val(trsdate);
                         $($rootScope.DatePicker.Settings.Target).trigger('input');
@@ -964,7 +958,7 @@ if (typeof (angular) == 'object') {
 
 
                     }
-                },
+                }
             });
         //});
         //used in Search
