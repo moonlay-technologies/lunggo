@@ -49,8 +49,8 @@
                 var sum = 0;
                 foreach (var rate in room.Rates)
                 {
-                    sum += rate.RoomCount;
-                    totalpax += (rate.AdultCount + rate.ChildCount) * rate.RoomCount;
+                    sum += rate.RateCount;
+                    totalpax += (rate.AdultCount + rate.ChildCount) * rate.RateCount;
                     totalAdult += rate.AdultCount;
                     totalChild += rate.ChildCount;
                 }
@@ -180,8 +180,8 @@
         {
             var reservation = Model.Reservation as HotelReservationForDisplay;
             @:hotelDetails = @Html.Raw(reservation.HotelDetail.Serialize());
-                            @:price = @reservation.HotelDetail.NetFare;
-                            @:originalPrice = '@reservation.HotelDetail.OriginalFare';
+                            @:price = @reservation.HotelDetail.NetTotalFare;
+                            @:originalPrice = '@reservation.HotelDetail.OriginalTotalFare';
                         }
     var redirectionUrl;
     @if (Model.Reservation.Payment.RedirectionUrl != null) {
@@ -206,9 +206,9 @@
     @if (Model.Reservation is HotelReservationForDisplay)
     {
         var hotel = Model.Reservation as HotelReservationForDisplay;
-        @:originalPrice = '@hotel.HotelDetail.OriginalFare';
-            @:price = '@hotel.HotelDetail.NetFare';
-            @:totalRoom = '@hotel.HotelDetail.Rooms.SelectMany(r => r.Rates).Sum(p => p.RoomCount)';
+        @:originalPrice = '@hotel.HotelDetail.OriginalTotalFare';
+            @:price = '@hotel.HotelDetail.NetTotalFare';
+            @:totalRoom = '@hotel.HotelDetail.Rooms.SelectMany(r => r.Rates).Sum(p => p.RateCount)';
             @:checkin = '@hotel.HotelDetail.CheckInDate.ToString("D",CultureInfo.CreateSpecificCulture("id-ID"))';
             @:checkout = '@hotel.HotelDetail.CheckOutDate.ToString("D", CultureInfo.CreateSpecificCulture("id-ID"))';
             @:nights = '@((hotel.HotelDetail.CheckOutDate - hotel.HotelDetail.CheckInDate).Days)';

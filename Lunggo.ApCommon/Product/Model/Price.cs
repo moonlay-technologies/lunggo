@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
 using Lunggo.ApCommon.Payment.Model;
 using Lunggo.ApCommon.Sequence;
@@ -21,6 +22,36 @@ namespace Lunggo.ApCommon.Product.Model
         public decimal FinalIdr { get; set; }
         public decimal Local { get; set; }
         public Currency LocalCurrency { get; set; }
+
+        public static Price operator +(Price price1, Price price2)
+        {
+            if (price1 == null || price2 == null)
+                throw new ArgumentNullException();
+
+            if (price1.SupplierCurrency.Symbol != price2.SupplierCurrency.Symbol ||
+                price1.SupplierCurrency.Supplier != price2.SupplierCurrency.Supplier ||
+                price1.SupplierCurrency.Rate != price2.SupplierCurrency.Rate ||
+                price1.SupplierCurrency.RoundingOrder != price2.SupplierCurrency.RoundingOrder ||
+                price1.LocalCurrency.Symbol != price2.LocalCurrency.Symbol ||
+                price1.LocalCurrency.Supplier != price2.LocalCurrency.Supplier ||
+                price1.LocalCurrency.Rate != price2.LocalCurrency.Rate ||
+                price1.LocalCurrency.RoundingOrder != price2.LocalCurrency.RoundingOrder)
+                throw new InvalidDataException(
+                    "Supplier currency or local currency from both Price objects do not match.");
+
+            return new Price
+            {
+                Supplier = price1.Supplier + price2.Supplier,
+                SupplierCurrency = price1.SupplierCurrency,
+                OriginalIdr = price1.OriginalIdr + price2.OriginalIdr,
+                Margin = price1.Margin,
+                MarginNominal = price1.MarginNominal + price2.MarginNominal,
+                Rounding = price1.Rounding + price2.Rounding,
+                FinalIdr = price1.FinalIdr + price2.FinalIdr,
+                Local = price1.Local + price2.Local,
+                LocalCurrency = price1.LocalCurrency
+            };
+        }
 
         internal long InsertToDb()
         {

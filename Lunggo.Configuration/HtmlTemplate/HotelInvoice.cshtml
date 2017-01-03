@@ -158,7 +158,7 @@
                                             @HotelService.GetInstance().GetHotelRoom(Model.HotelDetail.Rooms[j].RoomCode).RoomDescId
                                             @HotelService.GetInstance().GetHotelBoardDescId(Model.HotelDetail.Rooms[j].Rates[k].Boards)
                                         </td> @*tipe kamar*@ @*board*@
-                                        <td class="qty">@Model.HotelDetail.Rooms[j].Rates[k].RoomCount </td>@*jumlah kamar*@
+                                        <td class="qty">@Model.HotelDetail.Rooms[j].Rates[k].RateCount </td>@*jumlah kamar*@
                                         <td class="price"></td>
                                         <td class="total">@Model.HotelDetail.Rooms[j].Rates[k].NetFare.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</td>
                                     </tr>

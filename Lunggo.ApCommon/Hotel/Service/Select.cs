@@ -5,6 +5,7 @@ using System.Linq;
 using Lunggo.ApCommon.Hotel.Constant;
 using Lunggo.ApCommon.Hotel.Model;
 using Lunggo.ApCommon.Hotel.Model.Logic;
+using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Sdk.auto.model;
 using Lunggo.ApCommon.Product.Model;
 using Lunggo.ApCommon.Sequence;
 using Lunggo.Framework.Config;
@@ -59,13 +60,13 @@ namespace Lunggo.ApCommon.Hotel.Service
                     select new HotelRate
                     {
                         RateCount = id.RateCount, RateKey = rate.RateKey, AdultCount = id.AdultCount, 
-                        Boards = rate.Boards, Cancellation = rate.Cancellation, ChildrenAges = id.ChildrenAges,
+                        Board = rate.Board, Cancellation = rate.Cancellation, ChildrenAges = id.ChildrenAges,
                         ChildCount = id.ChildCount, Class = rate.Class, Offers = rate.Offers, 
                         PaymentType = rate.PaymentType, RegsId = rate.RegsId, Price = rate.Price,
                         Type = rate.Type,NightCount = rate.NightCount,
                         TermAndCondition = GetRateCommentFromTableStorage(rate.RateCommentsId, hotel.CheckInDate).Select(x => x.Description).ToList(),
                         RateCommentsId = rate.RateCommentsId
-                    }).ToList().FirstOrDefault();
+                    }).ToList().First();
 
                 var searchResultData = GetSearchHotelResultFromCache(input.SearchId);
                 if (searchResultData == null)
@@ -77,8 +78,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                         ErrorMessages = new List<string> { "Search Id No Longer Valid" }
                     };
                 }
-                var occupancies = BundleRate(searchResultData.Occupancies);
-                foreach (var paxData in occupancies)
+                foreach (var paxData in searchResultData.Occupancies)
                 {
                     var splittedRateKey = newRate.RateKey.Split('|');
                     var occ = paxData.RoomCount + "~" + paxData.AdultCount + "~" + paxData.ChildCount;
@@ -98,7 +98,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                         RateCount = paxData.RoomCount,
                         RateKey = fixRateKey,
                         AdultCount = paxData.AdultCount,
-                        Boards = newRate.Boards,
+                        Board = newRate.Board,
                         Cancellation = newRate.Cancellation == null ? null : newRate.Cancellation.Select(x=> new Cancellation
                         {
                             Fee = x.Fee,
@@ -133,6 +133,9 @@ namespace Lunggo.ApCommon.Hotel.Service
                     
                     rateList.Add(fixRate);
                 }
+
+                rateList = BundleRates(rateList);
+
                 if (rateList.Count == 0)
                 {
                     return new SelectHotelRoomOutput
@@ -169,48 +172,74 @@ namespace Lunggo.ApCommon.Hotel.Service
             };
         }
 
+        private List<HotelRate> BundleRates(List<HotelRate> rates)
+        {
+            var bundledRates = new List<HotelRate>();
+
+            foreach (var rate in rates)
+            {
+                var foundRate = bundledRates.FirstOrDefault(x => IsSimilarRate(rate, x));
+                if (foundRate == null)
+                    bundledRates.Add(rate);
+                else
+                {
+                    foundRate.RateCount += rate.RateCount;
+                    foundRate.Price += rate.Price;
+                    foundRate.HotelSellingRate += rate.HotelSellingRate;
+                    foundRate.Allotment = Math.Min(foundRate.Allotment, rate.Allotment);
+                }
+            }
+
+            return bundledRates;
+        }
+
+        private bool IsSimilarRate(HotelRate rate1, HotelRate rate2)
+        {
+            if (rate1 == null || rate2 == null)
+                return false;
+
+            return
+                rate1.Type == rate2.Type &&
+                rate1.Class == rate2.Class &&
+                rate1.Board == rate2.Board &&
+                rate1.RateCommentsId == rate2.RateCommentsId &&
+                rate1.PaymentType == rate2.PaymentType &&
+                IsSimilarCancellation(rate1.Cancellation, rate2.Cancellation) &&
+                rate1.AdultCount == rate2.AdultCount &&
+                rate1.ChildCount == rate2.ChildCount &&
+                IsSimilarChildrenAges(rate1.ChildrenAges, rate2.ChildrenAges);
+        }
+
+        private bool IsSimilarCancellation(List<Cancellation> can1, List<Cancellation> can2)
+        {
+            if (can1 == null || can2 == null || can1.Count != can2.Count)
+                return false;
+
+            if (can1.Count == 0 && can2.Count == 0)
+                return true;
+
+            return can1.Zip(can2, (a, b) => a.Fee == b.Fee && a.StartTime == b.StartTime).All(x => x);
+        }
+
+        private bool IsSimilarChildrenAges(List<int> ages1, List<int> ages2)
+        {
+            if (ages1 == null || ages2 == null || ages1.Count != ages2.Count)
+                return false;
+
+            if (ages1.Count == 0 && ages2.Count == 0)
+                return true;
+
+            ages1.Sort();
+            ages2.Sort();
+            return ages1.Zip(ages2, (a, b) => a == b).All(x => x);
+        }
+
         public class RegsIdDecrypted
         {
             public int HotelCode { get; set; }
             public string RoomCode { get; set; }
             public string RateKey { get; set; }
             
-        }
-
-        public List<Occupancy> BundleRate(List<Occupancy> occupancies )
-        {
-            var result = new List<Occupancy>();
-            var nonDuplicateDict = new Dictionary<string, Occupancy>();
-            foreach (var data in occupancies)
-            {
-                var duplicatedData =
-                    occupancies.Where(
-                        x =>
-                            x.AdultCount == data.AdultCount && x.ChildCount == data.ChildCount &&
-                            x.ChildrenAges.SequenceEqual(data.ChildrenAges)).ToList();
-                if (duplicatedData.Count > 0)
-                {
-                    var key = duplicatedData.Count + "+" + data.AdultCount + "+" + data.ChildCount + "+"+ string.Join("+", data.ChildrenAges);
-                    if (!nonDuplicateDict.ContainsKey(key));
-                    {
-                        nonDuplicateDict.Add(key,data);
-                    }
-                }
-            }
-
-            foreach (var occ in nonDuplicateDict)
-            {
-                var roomCount = occ.Key.Split('+')[0];
-                var fixOccupancies = new Occupancy
-                {
-                    RoomCount = Convert.ToInt32(roomCount),
-                    AdultCount = occ.Value.AdultCount,
-                    ChildCount = occ.Value.ChildCount,
-                    ChildrenAges = occ.Value.ChildrenAges
-                };
-                result.Add(fixOccupancies);
-            }
-            return result;
         }
 
         private static RegsIdDecrypted DecryptRegsId(string regsId)

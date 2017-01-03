@@ -214,7 +214,7 @@ namespace Lunggo.ApCommon.Hotel.Service
 
         private static bool BoardMatches(HotelRateRule rule, HotelRate rate)
         {
-            var board = rate.Boards;
+            var board = rate.Board;
             var boardOk = !rule.Boards.Any() || rule.Boards.Contains(board);
             return boardOk;
         }

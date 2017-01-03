@@ -29,7 +29,7 @@
             var sum = 0;
             foreach (var rate in room.Rates)
             {
-                sum += rate.RoomCount;
+                sum += rate.RateCount;
                 sumAdult += rate.AdultCount;
                 sumChild += rate.ChildCount;
                 if (rate.ChildCount <= 0)
@@ -130,7 +130,7 @@
         </div>
         <div class="fb-row clearfix">
             <div class="col-4">Kamar</div>
-            <div class="col-6 bold-txt">@Model.Rooms.Sum(r => r.Rates.Sum(c => c.RoomCount)) Kamar</div>
+            <div class="col-6 bold-txt">@Model.Rooms.Sum(r => r.Rates.Sum(c => c.RateCount)) Kamar</div>
         </div>
         @if (Model.Policy != null && Model.Policy.Count > 0)
         {

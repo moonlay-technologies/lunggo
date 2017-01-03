@@ -1,10 +1,10 @@
 ﻿using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using Lunggo.ApCommon.Hotel.Model;
+using Lunggo.ApCommon.Mystifly.OnePointService.Flight;
 using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.ApCommon.Payment.Service;
 using Lunggo.ApCommon.Product.Constant;
@@ -40,8 +40,6 @@ namespace Lunggo.ApCommon.Hotel.Service
         {
             if (hotelDetail == null)
                 return null;
-            var baseUrl = ConfigManager.GetInstance().GetConfigValue("hotel", "standardSizeImage");
-            var price = hotelDetail.Rooms.SelectMany(r => r.Rates).Sum(p => p.Price.Local);
             var convertedHotel = new HotelDetailForDisplay
             {
                 HotelCode = hotelDetail.HotelCode,
@@ -55,11 +53,9 @@ namespace Lunggo.ApCommon.Hotel.Service
                 AccomodationName = GetHotelAccomodationDescId(hotelDetail.AccomodationType),
                 ImageUrl = hotelDetail.ImageUrl.Where(x => x.Type == "HAB").ToList().Select(y => y.Path).ToList(),
                 MainImage = hotelDetail.ImageUrl != null ? hotelDetail.ImageUrl.Where(x=>x.Type=="GEN").Select(x=>x.Path).FirstOrDefault(): null,
-                OriginalFare = price * 1.01M,
-                NetFare = price,
                 IsRestaurantAvailable = hotelDetail.IsRestaurantAvailable,
                 IsWifiAccessAvailable = hotelDetail.WifiAccess,
-                Rooms = ConvertToHotelRoomForDisplay(hotelDetail.Rooms),
+                Rooms = ConvertToHotelRoomsForDisplay(hotelDetail.Rooms),
                 CheckInDate = hotelDetail.CheckInDate,
                 CheckOutDate = hotelDetail.CheckOutDate,
                 NightCount = hotelDetail.NightCount,
@@ -73,6 +69,10 @@ namespace Lunggo.ApCommon.Hotel.Service
                 DestinationName = GetDestinationNameFromDict(hotelDetail.DestinationCode).Name,
                 PostalCode = hotelDetail.PostalCode
             };
+            convertedHotel.OriginalTotalFare = convertedHotel.Rooms.SelectMany(r => r.Rates).Sum(r => r.Breakdowns[0].OriginalTotalFare);
+            convertedHotel.NetTotalFare = convertedHotel.Rooms.SelectMany(r => r.Rates).Sum(r => r.Breakdowns[0].NetTotalFare);
+            convertedHotel.OriginalCheapestFare = convertedHotel.Rooms.SelectMany(r => r.Rates).Min(r => r.Breakdowns[0].OriginalFare);
+            convertedHotel.NetCheapestFare = convertedHotel.Rooms.SelectMany(r => r.Rates).Min(r => r.Breakdowns[0].NetFare);
             return convertedHotel;
         }
 
@@ -102,9 +102,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                         hotelDetail.ImageUrl == null
                             ? null
                         : hotelDetail.ImageUrl == null ? null : string.Concat(baseUrl, hotelDetail.ImageUrl.Where(x => x.Type == "GEN").Select(x => x.Path).FirstOrDefault()),
-                    OriginalFare = hotelDetail.OriginalFare,
                 OriginalTotalFare = hotelDetail.OriginalTotalFare,
-                    NetFare = hotelDetail.NetFare,
                 NetTotalFare = hotelDetail.NetTotalFare,
                 IsWifiAccessAvailable = hotelDetail.Facilities != null &&
                         ((hotelDetail.Facilities != null || hotelDetail.Facilities.Count != 0) &&
@@ -114,7 +112,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                     hotelDetail.Facilities.Any(f => (f.FacilityGroupCode == 71 && f.FacilityCode == 200)
                     || (f.FacilityGroupCode == 75 && f.FacilityCode == 840)
                     || (f.FacilityGroupCode == 75 && f.FacilityCode == 845))),
-                    Rooms = ConvertToHotelRoomForDisplay(hotelDetail.Rooms),
+                    Rooms = ConvertToHotelRoomsForDisplay(hotelDetail.Rooms),
                     CheckInDate = hotelDetail.CheckInDate,
                     CheckOutDate = hotelDetail.CheckOutDate,
                     NightCount = hotelDetail.NightCount,
@@ -159,10 +157,10 @@ namespace Lunggo.ApCommon.Hotel.Service
                         hotelDetail.ImageUrl == null
                             ? null
                             : hotelDetail.ImageUrl == null ? null : string.Concat(baseUrl, hotelDetail.ImageUrl.Where(x => x.Type == "GEN").Select(x => x.Path).FirstOrDefault()),
-                    OriginalFare = hotelDetail.OriginalFare,
                     OriginalTotalFare = hotelDetail.OriginalTotalFare,
-                    NetFare = hotelDetail.NetFare,
+                    OriginalCheapestFare = hotelDetail.OriginalCheapestFare,
                     NetTotalFare = hotelDetail.NetTotalFare,
+                    NetCheapestFare = hotelDetail.NetCheapestFare,
                     IsWifiAccessAvailable = hotelDetail.Facilities != null &&
                             ((hotelDetail.Facilities != null || hotelDetail.Facilities.Count != 0) &&
                             hotelDetail.Facilities.Any(f => (f.FacilityGroupCode == 60 && f.FacilityCode == 261)
@@ -185,37 +183,6 @@ namespace Lunggo.ApCommon.Hotel.Service
                 convertedHotels.Add(hotel);
             };
             return convertedHotels.ToList();
-        }
-
-
-        public void CalculatePriceHotel(HotelDetail hotel)
-        {
-            decimal price = 0;
-            int night = 0;
-            int roomCount = 0;
-            foreach (var room in hotel.Rooms)
-            {
-                foreach (var rate in room.Rates)
-                {
-                    if (price == 0)
-                    {
-                        price = rate.Price.Local;
-                        night = rate.NightCount;
-                        roomCount = rate.RateCount;
-                    }
-                    else
-                    {
-                        price = rate.Price.Local < price ? rate.Price.Local:price;
-                        night = rate.NightCount;
-                        roomCount = rate.RateCount;
-                    }
-                }
-            }
-            hotel.NetTotalFare = price;
-            hotel.OriginalTotalFare = Math.Round(price * 1.01M);
-            hotel.NetFare = Math.Round((hotel.NetTotalFare / roomCount) / night);
-            hotel.OriginalFare = Math.Round(hotel.NetFare*1.01M);
-            
         }
 
         internal HotelDetailForDisplay ConvertToHotelDetailsBaseForDisplay(HotelDetailsBase hotelDetail, decimal originalPrice, decimal netPrice)
@@ -242,13 +209,13 @@ namespace Lunggo.ApCommon.Hotel.Service
                 StarRating = GetSimpleCodeByCategoryCode(hotelDetail.StarRating),
                 ChainName = GetHotelChainDesc(hotelDetail.Chain),
                 DestinationName = hotelDetail.DestinationName,
-                OriginalFare = originalPrice,
-                NetFare = netPrice,
+                OriginalTotalFare = originalPrice,
+                NetTotalFare = netPrice,
                 Pois = hotelDetail.Pois,
                 Terminals =  hotelDetail.Terminals,
                 Facilities = ConvertFacilityForDisplay(hotelDetail.Facilities),
                 Review = hotelDetail.Review,
-                Rooms = ConvertToHotelRoomForDisplay(hotelDetail.Rooms),
+                Rooms = ConvertToHotelRoomsForDisplay(hotelDetail.Rooms),
                 AccomodationName = GetHotelAccomodationMultiDesc(hotelDetail.AccomodationType),
                 ImageUrl = ConcateHotelImageUrl(hotelDetail.ImageUrl),
                 IsWifiAccessAvailable = hotelDetail.Facilities != null &&
@@ -344,35 +311,27 @@ namespace Lunggo.ApCommon.Hotel.Service
             return displayFacilities;
         }
 
-        internal List<HotelRoomForDisplay> ConvertToHotelRoomForDisplay(List<HotelRoom> rooms)
+        public List<HotelRoomForDisplay> ConvertToHotelRoomsForDisplay(List<HotelRoom> rooms)
         {
             if (rooms == null)
                 return null;
-            var dictionary = GetInstance();
-            var convertedRoom = new ConcurrentBag<HotelRoomForDisplay>();
-            Parallel.ForEach(rooms, roomDetail =>
-            {
-                var room = new HotelRoomForDisplay
+            return rooms.Select(room =>
+                new HotelRoomForDisplay
                 {
-                    RoomCode = roomDetail.RoomCode,
-                    RoomName = roomDetail.RoomName ?? GetHotelRoomDescId(roomDetail.RoomCode),
-                    Type = roomDetail.Type,
-                    PaxCapacity = GetPaxCapacity(roomDetail.RoomCode),
-                    //TypeName = dictionary.GetHotelRoomRateTypeId(roomDetail.Type),
-                    CharacteristicCode = roomDetail.characteristicCd,
-                    //CharacteristicName = dictionary.GetHotelRoomRateTypeId(roomDetail.characteristicCd),
-                    Images = roomDetail.Images != null ? ConcateRoomImageUrl(roomDetail.Images) : null,
-                    Facilities = roomDetail.Facilities != null ? roomDetail.Facilities : null,
-                    SingleRate = ConvertToSingleRateForDisplays(roomDetail.SingleRate),
-                    Rates = ConvertToRateForDisplays(roomDetail.Rates)
-                };
-                convertedRoom.Add(room);
-            });
-            return convertedRoom.ToList();
+                    RoomCode = room.RoomCode,
+                    RoomName = room.RoomName ?? GetHotelRoomDescId(room.RoomCode),
+                    Type = room.Type,
+                    PaxCapacity = GetPaxCapacity(room.RoomCode),
+                    CharacteristicCode = room.characteristicCd,
+                    Images = room.Images != null ? ConcateRoomImageUrl(room.Images) : null,
+                    Facilities = room.Facilities,
+                    SingleRate = ConvertToSingleRateForDisplay(room.SingleRate),
+                    Rates = ConvertToRatesForDisplay(room.Rates)
+                }).ToList();
         }
 
 
-        internal HotelRoomForDisplay ConvertToSingleHotelRoomForDisplay(HotelRoom roomDetail)
+        public HotelRoomForDisplay ConvertToSingleHotelRoomForDisplay(HotelRoom roomDetail)
         {
             if (roomDetail == null)
                 return null;
@@ -387,8 +346,8 @@ namespace Lunggo.ApCommon.Hotel.Service
                     CharacteristicName = dictionary.GetHotelRoomRateTypeId(roomDetail.characteristicCd),
                     Images = roomDetail.Images != null ? ConcateRoomImageUrl(roomDetail.Images) : null,
                     Facilities = roomDetail.Facilities != null ? roomDetail.Facilities : null,
-                    Rates = ConvertToRateForDisplays(roomDetail.Rates),
-                    SingleRate = ConvertToSingleRateForDisplays(roomDetail.SingleRate)
+                    Rates = ConvertToRatesForDisplay(roomDetail.Rates),
+                    SingleRate = ConvertToSingleRateForDisplay(roomDetail.SingleRate)
                 };
         }
 
@@ -400,85 +359,147 @@ namespace Lunggo.ApCommon.Hotel.Service
             return imagesPath.Select(image => string.Concat(baseUrl, image)).ToList();
         }
 
-        internal List<HotelRateForDisplay> ConvertToRateForDisplays(List<HotelRate> rates)
+        internal List<HotelRateForDisplay> ConvertToRatesForDisplay(List<HotelRate> rates)
         {
             if(rates == null)
                 return new List<HotelRateForDisplay>();
-            var convertedRate = new ConcurrentBag<HotelRateForDisplay>();
-            var dictionary = GetInstance();
-            Parallel.ForEach(rates,rateDetail =>
+            var convertedRates = new List<HotelRateForDisplay>();
+            foreach (var rateDetail in rates)
             {
                 var rate = new HotelRateForDisplay
                 {
-                    RateKey = rateDetail.RateKey,
                     Type = rateDetail.Type,
-                    TypeDescription = dictionary.GetHotelRoomRateTypeId(rateDetail.Type),
+                    TypeDescription = GetHotelRoomRateTypeId(rateDetail.Type),
                     Class = rateDetail.Class,
-                    ClassDescription = dictionary.GetHotelRoomRateClassId(rateDetail.Class),
+                    ClassDescription = GetHotelRoomRateClassId(rateDetail.Class),
                     RegsId = rateDetail.RateKey,
-                    AdultCount = rateDetail.AdultCount,
-                    ChildCount = rateDetail.ChildCount,
-                    ChildrenAges = rateDetail.ChildrenAges,
+                    Breakdowns = new List<RateBreakdown>
+                    {
+                        new RateBreakdown
+                        {
+                            RateCount = rateDetail.RateCount,
+                            AdultCount = rateDetail.AdultCount,
+                            ChildCount = rateDetail.ChildCount,
+                            ChildrenAges = rateDetail.ChildrenAges,
+                            Board = rateDetail.Board,
+                            BoardDescription = GetHotelBoardDescId(rateDetail.Board),
+                        }
+                    },
                     Allotment = rateDetail.Allotment,
-                    Boards = rateDetail.Boards,
-                    BoardDescription = GetHotelBoardDescId(rateDetail.Boards),
-                    RoomCount = rateDetail.RateCount,
                     TimeLimit = rateDetail.TimeLimit,
-                    //Cancellation = (rateDetail.Class != "NRF" && rateDetail.Cancellation != null) ? rateDetail.Cancellation : null,
-                    //IsRefundable = (rateDetail.Class != "NRF" && rateDetail.Cancellation != null),
                     Offers = rateDetail.Offers,
                     TermAndCondition = rateDetail.TermAndCondition
                 };
                 if (rateDetail.Price != null)
                 {
-                SetTimeCancellation(rate, rateDetail);
-                SetDisplayPriceHotelRate(rate, rateDetail);
+                    SetCancellationTime(rate, rateDetail);
+                    SetDisplayPriceHotelRate(rate, rateDetail);
                 }
-                
-                convertedRate.Add(rate);
-            });
-            return convertedRate.ToList();
+                convertedRates.Add(rate);
+            }
+
+            var bundledRates = BundleRatesForDisplay(convertedRates);
+
+            return bundledRates;
         }
 
+        private List<HotelRateForDisplay> BundleRatesForDisplay(List<HotelRateForDisplay> rates)
+        {
+            var bundledRates = new List<HotelRateForDisplay>();
 
-        internal HotelRateForDisplay ConvertToSingleRateForDisplays(HotelRate rate)
+            foreach (var rate in rates)
+            {
+                var foundRate = bundledRates.FirstOrDefault(x => IsSimilarRate(rate, x));
+                if (foundRate == null)
+                    bundledRates.Add(rate);
+                else
+                {
+                    foundRate.Allotment = Math.Min(foundRate.Allotment, rate.Allotment);
+                    var foundBreakdown = foundRate.Breakdowns.FirstOrDefault(x => IsSimilarBreakdown(rate.Breakdowns[0], x));
+                    if (foundBreakdown == null)
+                        foundRate.Breakdowns.AddRange(rate.Breakdowns);
+                    else
+                    {
+                        foundBreakdown.RateCount += rate.Breakdowns[0].RateCount;
+                        foundBreakdown.OriginalTotalFare += rate.Breakdowns[0].OriginalTotalFare;
+                        foundBreakdown.OriginalFare += rate.Breakdowns[0].OriginalFare;
+                        foundBreakdown.NetTotalFare += rate.Breakdowns[0].NetTotalFare;
+                        foundBreakdown.NetFare += rate.Breakdowns[0].NetFare;
+                    }
+                }
+            }
+
+            return bundledRates;
+        }
+
+        private bool IsSimilarBreakdown(RateBreakdown breakdown1, RateBreakdown breakdown2)
+        {
+            if (breakdown1 == null || breakdown2 == null)
+                return false;
+
+            return
+                breakdown1.AdultCount == breakdown2.AdultCount &&
+                breakdown1.ChildCount == breakdown2.ChildCount &&
+                breakdown1.ChildrenAges.Count == breakdown2.ChildrenAges.Count &&
+                breakdown1.ChildrenAges.Zip(breakdown2.ChildrenAges, (a, b) => a == b).All(x => x) &&
+                breakdown1.Board == breakdown2.Board;
+        }
+
+        private bool IsSimilarRate(HotelRateForDisplay rate1, HotelRateForDisplay rate2)
+        {
+            if (rate1 == null || rate2 == null)
+                return false;
+
+            return
+                rate1.Type == rate2.Type &&
+                rate1.Class == rate2.Class &&
+                rate1.TermAndCondition.Zip(rate2.TermAndCondition, (a,b) => a == b).All(x => x) &&
+                rate1.PaymentType == rate2.PaymentType &&
+                IsSimilarCancellation(rate1.Cancellation, rate2.Cancellation);
+        }
+
+        internal HotelRateForDisplay ConvertToSingleRateForDisplay(HotelRate rate)
         {
             if (rate == null)
                 return new HotelRateForDisplay();
-            var dictionary = GetInstance();
             var cid = rate.RateKey != null ? rate.RateKey.Split('|')[0] : rate.RegsId.Split('|')[0];
             var checkInDate = new DateTime(Convert.ToInt32(cid.Substring(0, 4)),
                 Convert.ToInt32(cid.Substring(4, 2)), Convert.ToInt32(cid.Substring(6, 2)));
             var result = new HotelRateForDisplay
             {
-                //RateKey = rateDetail.RateKey,
                 Type = rate.Type,
-                TypeDescription = dictionary.GetHotelRoomRateTypeId(rate.Type),
+                TypeDescription = GetHotelRoomRateTypeId(rate.Type),
                 Class = rate.Class,
-                ClassDescription = dictionary.GetHotelRoomRateClassId(rate.Class),
+                ClassDescription = GetHotelRoomRateClassId(rate.Class),
                 RegsId = rate.RegsId,
-                AdultCount = rate.AdultCount,
-                ChildCount = rate.ChildCount,
+                Breakdowns = new List<RateBreakdown>
+                {
+                    new RateBreakdown
+                    {
+                        RateCount = rate.RateCount,
+                        AdultCount = rate.AdultCount,
+                        ChildCount = rate.ChildCount,
+                        ChildrenAges = rate.ChildrenAges,
+                        Board = rate.Board,
+                        BoardDescription = GetHotelBoardDescId(rate.Board),
+                    }
+                },
                 Allotment = rate.Allotment,
-                Boards = rate.Boards,
-                BoardDescription = GetHotelBoardDescId(rate.Boards),
-                RoomCount = rate.RateCount,
                 TimeLimit = rate.TimeLimit,
                 Offers = rate.Offers,
                 TermAndCondition = GetRateCommentFromTableStorage(rate.RateCommentsId,
                     checkInDate).Select(x => x.Description).ToList()
             };
-            SetTimeCancellation(result, rate);
+            SetCancellationTime(result, rate);
             SetDisplayPriceHotelRate(result, rate);
             return result;
         }
 
 
-        public void SetTimeCancellation(HotelRateForDisplay rateDisplay, HotelRate rate)
+        public void SetCancellationTime(HotelRateForDisplay rateDisplay, HotelRate rate)
         {
             var idTimezone = TimeZoneInfo.CreateCustomTimeZone("id", new TimeSpan(0, 7, 0, 0), "Indonesia WIB", "Standar Indonesia");
             rateDisplay.IsRefundable = (rate.Cancellation != null);
-            //rateDisplay.Cancellation = (rate.Class != "NRF" && rate.Cancellation != null) ? rate.Cancellation : null;
             if (rateDisplay.IsRefundable)
             {
                 rateDisplay.Cancellation = new List<Cancellation>();
@@ -504,11 +525,10 @@ namespace Lunggo.ApCommon.Hotel.Service
 
         public void SetDisplayPriceHotelRate(HotelRateForDisplay rateDisplay,HotelRate rate)
         {
-            rateDisplay.NetTotalFare = rate.Price.Local;
-            rateDisplay.OriginalTotalFare = Math.Round(rateDisplay.NetTotalFare*1.01M);
-
-            rateDisplay.NetFare = Math.Round((rateDisplay.NetTotalFare / rate.RateCount) / rate.NightCount);
-            rateDisplay.OriginalFare = Math.Round(rateDisplay.NetFare * 1.01M);
+            rateDisplay.Breakdowns[0].NetTotalFare = rate.Price.Local;
+            rateDisplay.Breakdowns[0].OriginalTotalFare = Math.Round(rateDisplay.Breakdowns[0].NetTotalFare*1.01M);
+            rateDisplay.Breakdowns[0].NetFare = Math.Round((rateDisplay.Breakdowns[0].NetTotalFare / rate.RateCount) / rate.NightCount);
+            rateDisplay.Breakdowns[0].OriginalFare = Math.Round(rateDisplay.Breakdowns[0].NetFare * 1.01M);
 
             if (rateDisplay.Cancellation != null)
             {

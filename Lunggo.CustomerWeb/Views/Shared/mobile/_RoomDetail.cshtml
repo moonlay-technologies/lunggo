@@ -29,7 +29,7 @@
             var sum = 0;
             foreach (var rate in room.Rates)
             {
-                sum += rate.RoomCount;
+                sum += rate.RateCount;
                 sumAdult += rate.AdultCount;
                 sumChild += rate.ChildCount;
                 if (rate.ChildCount <= 0)
@@ -103,7 +103,7 @@
                         <div class="clearfix">
                             <div class="fb-row clearfix">
                                 <div class="col-6">Jumlah Kamar</div>
-                                <div class="col-4 bold-txt">@rate.RoomCount Kamar</div>
+                                <div class="col-4 bold-txt">@rate.RateCount Kamar</div>
                             </div>
                             <div class="fb-row clearfix">
                                 <div class="col-6">Tamu per Kamar</div>

@@ -362,7 +362,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                             {
                                 BookingStatus = BookingStatus.Failed
                             },
-                            Errors = new List<FlightError> { FlightError.FareIdNoLongerValid }
+                            Errors = new List<FlightError> { FlightError.FareIdNoLongerValid },
+                            ErrorMessages = new List<string> { "[Sriwijaya] Failed to get FareId || " + htmlRespon}
                         };
                     }
                     #endregion

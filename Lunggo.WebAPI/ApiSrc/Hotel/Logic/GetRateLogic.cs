@@ -95,15 +95,7 @@ namespace Lunggo.WebAPI.ApiSrc.Hotel.Logic
                 return new HotelRateApiResponse();
             }
 
-            var rooms = (from room in getHotelRateServiceResponse.Rooms
-                let rates = room.Rates.Select(rate => new HotelRateForDisplay
-                {
-                    AdultCount = rate.AdultCount, Boards = rate.Boards, Cancellation = rate.Cancellation, ChildCount = rate.ChildCount, Class = rate.Class, Price = rate.Price, PaymentType = rate.PaymentType, RateKey = rate.RateKey, RoomCount = rate.RateCount, RegsId = rate.RegsId, Offers = rate.Offers, Type = rate.Type,
-                }).ToList()
-                select new HotelRoomForDisplay
-                {
-                    RoomCode = room.RoomCode, RoomName = room.RoomName, Type = room.Type, TypeName = room.TypeName, Facilities = room.Facilities, Images = room.Images, CharacteristicCode = room.characteristicCd, Rates = rates
-                }).ToList();
+            var rooms = HotelService.GetInstance().ConvertToHotelRoomsForDisplay(getHotelRateServiceResponse.Rooms);
 
             return new HotelRateApiResponse
             {

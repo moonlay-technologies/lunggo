@@ -58,7 +58,7 @@
                 
             foreach (var rate in room.Rates)
             {
-                sum += rate.RoomCount;
+                sum += rate.RateCount;
                     totalAdult += rate.AdultCount;
                     totalChild += rate.ChildCount;
             }
@@ -152,9 +152,9 @@
             var hotel = Model as HotelReservationForDisplay;
         @:hotelDetails = '@hotel.HotelDetail';
         @:rating = '@hotel.HotelDetail.StarRating'
-        @:originalFare = '@hotel.HotelDetail.OriginalFare';
-        @:netFare = '@hotel.HotelDetail.NetFare';
-        @:totalRoom = '@hotel.HotelDetail.Rooms.SelectMany(r => r.Rates).Sum(p => p.RoomCount)';
+        @:originalFare = '@hotel.HotelDetail.OriginalTotalFare';
+        @:netFare = '@hotel.HotelDetail.NetTotalFare';
+        @:totalRoom = '@hotel.HotelDetail.Rooms.SelectMany(r => r.Rates).Sum(p => p.RateCount)';
         @:checkin = '@hotel.HotelDetail.CheckInDate.ToString("D", CultureInfo.CreateSpecificCulture("id-ID"))';
         @:checkout = '@hotel.HotelDetail.CheckOutDate.ToString("D", CultureInfo.CreateSpecificCulture("id-ID"))';
         @:nights = '@((hotel.HotelDetail.CheckOutDate - hotel.HotelDetail.CheckInDate).Days)';
@@ -572,7 +572,7 @@
                                                                 <div class="wb-container clearfix">
                                                                     <div class="wb-left">Jumlah Kamar</div>
                                                                     <div class="wb-mid">:</div>
-                                                                    <div class="wb-right bold-txt">@rate.RoomCount Kamar</div>
+                                                                    <div class="wb-right bold-txt">@rate.RateCount Kamar</div>
                                                                 </div>
                                                                 <div class="wb-container clearfix">
                                                                     <div class="wb-left">Tamu per Kamar</div>

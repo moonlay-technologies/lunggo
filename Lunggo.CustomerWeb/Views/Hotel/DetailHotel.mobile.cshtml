@@ -150,9 +150,9 @@
                                     <div class="max-visitor" ng-if="room.rate.boards != 'RO'">Termasuk Sarapan</div>
                                 </div>
                                 <div class="price orange-txt">
-                                    <div class="underline-txt sm-txt">Rp {{room.rate.originalFare | number}}</div>
+                                    <div class="underline-txt sm-txt">Rp {{room.rate.breakdowns[0].originalFare | number}}</div>
                                     <a href="#" class="detail"></a>
-                                    <div class="lg-txt"><b><sup>Rp</sup> {{room.rate.netFare | number}}</b></div>
+                                    <div class="lg-txt"><b><sup>Rp</sup> {{room.rate.breakdowns[0].netFare | number}}</b></div>
                                     <span class="xs-txt">(*Termasuk Pajak)</span>
                                 </div>
                             </div>
@@ -168,9 +168,9 @@
                                     <div class="max-visitor" ng-if="room.rate.boards != 'RO'">Termasuk Sarapan</div>
                                 </div>
                                 <div class="price orange-txt">
-                                    <div class="underline-txt sm-txt">Rp {{room.rate.originalFare | number}}</div>
+                                    <div class="underline-txt sm-txt">Rp {{room.rate.breakdowns[0].originalFare | number}}</div>
                                     <a href="#" class="detail"></a>
-                                    <div class="lg-txt"><b><sup>Rp</sup> {{room.rate.netFare | number}}</b></div>
+                                    <div class="lg-txt"><b><sup>Rp</sup> {{room.rate.breakdowns[0].netFare | number}}</b></div>
                                     <span class="xs-txt">(*Termasuk Pajak)</span>
                                 </div>
                                 <a href="#" class="blue-txt downline-txt sm-txt" ng-click="PageConfig.SetOverlay('detail-room'); seeRoomDetail(room)">Detail Info Kamar</a>
@@ -321,9 +321,9 @@
                                 <div class="max-visitor" ng-show="selectedRoom.rate.boards != 'RO'">Termasuk Sarapan</div>
                             </div>
                             <div class="price orange-txt">
-                                    <div class="underline-txt sm-txt">Rp {{selectedRoom.rate.originalFare | number}}</div>
+                                    <div class="underline-txt sm-txt">Rp {{selectedRoom.rate.breakdowns[0].originalFare | number}}</div>
                                 <a href="#" class="detail"></a>
-                                    <div class="lg-txt"><b><sup>Rp</sup> {{selectedRoom.rate.netFare | number}}</b></div>
+                                    <div class="lg-txt"><b><sup>Rp</sup> {{selectedRoom.rate.breakdowns[0].netFare | number}}</b></div>
                                 <span class="xs-txt">(*Termasuk Pajak)</span>
                             </div>
                             <a ng-click="bookRoom(selectedRoom)" class="btn btn-yellow small">PESAN</a>

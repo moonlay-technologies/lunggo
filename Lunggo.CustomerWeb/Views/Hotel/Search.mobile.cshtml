@@ -79,9 +79,9 @@
 </div>
                         <div class="price orange-txt">
                             <div class="txt-md semibold-txt">Harga per malam mulai dari:</div>
-                            <div class="underline-txt sm-txt">Rp {{hotel.originalFare | currency:'':0}}</div>
+                            <div class="underline-txt sm-txt">Rp {{hotel.originalCheapestFare | currency:'':0}}</div>
                             <a ng-click="GotoDetailHotel(hotel.hotelCd)" class="detail"></a>
-                            <div class="lg-txt"><b><sup>Rp</sup> {{hotel.netFare | currency:'':0}}</b></div>
+                            <div class="lg-txt"><b><sup>Rp</sup> {{hotel.netCheapestFare | currency:'':0}}</b></div>
                             <span class="xs-txt">(*Termasuk Pajak & Service Charge)</span>
                         </div>
                     </div>

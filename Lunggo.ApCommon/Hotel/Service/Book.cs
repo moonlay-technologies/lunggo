@@ -223,6 +223,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                 Convert.ToInt32(coDate.Substring(4, 2)), Convert.ToInt32(coDate.Substring(6, 2)));
 
             var price = bookInfo.Rooms.SelectMany(r => r.Rates).Sum(r => r.Price.Local);
+            var cheapestPrice = bookInfo.Rooms.SelectMany(r => r.Rates).Min(r => r.Price.Local);
 
             var hotelInfo = new HotelDetail
             {
@@ -232,8 +233,10 @@ namespace Lunggo.ApCommon.Hotel.Service
                 City = bookInfo.City,
                 CountryCode = bookInfo.CountryCode,
                 DestinationCode = bookInfo.DestinationCode,
-                NetFare = price,
-                OriginalFare = price * 1.01M,
+                NetTotalFare = price,
+                OriginalTotalFare = price * 1.01M,
+                NetCheapestFare = cheapestPrice,
+                OriginalCheapestFare = cheapestPrice * 1.01M,
                 TotalAdult = input.Passengers.Count(p => p.Type == PaxType.Adult),
                 TotalChildren = input.Passengers.Count(p => p.Type == PaxType.Child),
                 SpecialRequest = input.SpecialRequest,

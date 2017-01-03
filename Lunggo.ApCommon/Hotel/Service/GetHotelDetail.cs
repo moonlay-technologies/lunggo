@@ -94,8 +94,8 @@ namespace Lunggo.ApCommon.Hotel.Service
             }
            
             SetRegIdsAndTnc(hotel.Rooms, searchResultData.CheckIn, hotel.HotelCode);
-            originalPrice = searchResulthotel.OriginalFare;
-            netFare = searchResulthotel.NetFare;
+            originalPrice = searchResulthotel.OriginalTotalFare;
+            netFare = searchResulthotel.NetTotalFare;
 
             return true;
         }

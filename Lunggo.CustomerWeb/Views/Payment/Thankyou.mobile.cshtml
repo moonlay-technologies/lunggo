@@ -54,7 +54,7 @@
                 var sum = 0;
                 foreach (var rate in room.Rates)
                 {
-                    sum += rate.RoomCount;
+                    sum += rate.RateCount;
                     totalAdult += rate.AdultCount;
                     totalChild += rate.ChildCount;
                 }
@@ -134,9 +134,9 @@
             var hotel = Model as HotelReservationForDisplay;
             @:var hotelDetails = '@hotel.HotelDetail';
                     @:var rating = '@hotel.HotelDetail.StarRating'
-                    @:var originalFare = '@hotel.HotelDetail.OriginalFare';
-                    @:var netFare = '@hotel.HotelDetail.NetFare';
-                    @:var totalRoom = '@hotel.HotelDetail.Rooms.SelectMany(r => r.Rates).Sum(p => p.RoomCount)';
+                    @:var originalFare = '@hotel.HotelDetail.OriginalTotalFare';
+                    @:var netFare = '@hotel.HotelDetail.NetTotalFare';
+                    @:var totalRoom = '@hotel.HotelDetail.Rooms.SelectMany(r => r.Rates).Sum(p => p.RateCount)';
                     @:var checkin = '@hotel.HotelDetail.CheckInDate.ToString("D",CultureInfo.CreateSpecificCulture("id-ID"))';
                     @:var checkout = '@hotel.HotelDetail.CheckOutDate.ToString("D", CultureInfo.CreateSpecificCulture("id-ID"))';
                     @:var nights = '@((hotel.HotelDetail.CheckOutDate - hotel.HotelDetail.CheckInDate).Days)';

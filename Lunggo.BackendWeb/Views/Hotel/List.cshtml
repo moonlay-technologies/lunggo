@@ -71,7 +71,7 @@
                                 @hotelDetails.CheckOutDate.ToString("d MMM yyyy")
                             </td>
                             <td>
-                                @hotelDetails.Rooms.SelectMany(r => r.Rates).Sum(r => r.RoomCount) Kamar
+                                @hotelDetails.Rooms.SelectMany(r => r.Rates).Sum(r => r.RateCount) Kamar
                             </td>
                             <td>
                                 @hotelDetails.Rooms.SelectMany(r => r.Rates).Sum(r => r.AdultCount + r.ChildCount) Orang
