@@ -408,8 +408,6 @@ Site Footer
           margin: 5mm 0; }
       .page-hotel-voucher .hotel-wrapper.room .room-bottom {
         margin: 5mm 0; }
-      .page-hotel-voucher .hotel-wrapper.room .tnc {
-        padding: 5mm 0; }
     .page-hotel-voucher .hotel-wrapper .hotel-bottom {
       padding: 0.6cm 1cm; }
       .page-hotel-voucher .hotel-wrapper .hotel-bottom h3 {
@@ -456,6 +454,10 @@ Site Footer
         left: 0; }
   .page-hotel-voucher .room-title {
     margin-bottom: 2mm; }
+  .page-hotel-voucher .tnc {
+    padding: 5mm 0; }
+  .page-hotel-voucher .space {
+    margin-right: 2mm; }
   .page-hotel-voucher .img-wifi, .page-hotel-voucher .img-phone, .page-hotel-voucher .img-email, .page-hotel-voucher .img-locatio, .page-hotel-voucher .img-swim {
     margin-right: 3mm; }
   .page-hotel-voucher .img-logo {
