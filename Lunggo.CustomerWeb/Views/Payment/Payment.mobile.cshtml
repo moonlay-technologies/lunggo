@@ -134,102 +134,102 @@
 }
 @section PageJS{
     <script>
-    var langCode = 'en';
-    var paymentTimeout = '';
-    // development only start
-    paymentTimeout = new Date('@Model.TimeLimit.ToString("yyyy-MM-dd'T'HH:mm:ss")');
-    console.log("TIME OUT: "+ paymentTimeout);
-    // countdown timer
-    $('.timer').countdown(paymentTimeout, function(event) {
-        $('.timer .hour').text(event.strftime('%H'));
-        $('.timer .minute').text(event.strftime('%M'));
-        $('.timer .second').text(event.strftime('%S'));
-    });
+        var langCode = 'en';
+        var paymentTimeout = '';
+        // development only start
+        paymentTimeout = new Date('@Model.TimeLimit.ToString("yyyy-MM-dd'T'HH:mm:ss")');
+        console.log("TIME OUT: "+ paymentTimeout);
+        // countdown timer
+        $('.timer').countdown(paymentTimeout, function(event) {
+            $('.timer .hour').text(event.strftime('%H'));
+            $('.timer .minute').text(event.strftime('%M'));
+            $('.timer .second').text(event.strftime('%S'));
+        });
 
-    // date selector
-    $('.date-picker').datepicker({
-        minDate: new Date()
-    });
-    var langCode = '@OnlineContext.GetActiveLanguageCode()';
-    var currentPage = 1;
-    var transferWindow = ['@ConfigManager.GetInstance().GetConfigValue("general","bankTransferStartTime")', '@ConfigManager.GetInstance().GetConfigValue("general","bankTransferEndTime")'];
-    //var transferWindow = [ '1100', '1124' ];
-    // messages
-    var message = '@ViewBag.Message';
-    // flight detail
-    var rsvNo = @Model.RsvNo;
-    var paymentDetail = '';
-    var flightDetail = '';
-    var trips = '';
-    var hotelDetails = '';
-    var price = '';
-    var originalPrice = '';
-    var totalRoom = '';
-    var checkin = '';
-    var checkout = '';
-    var totalpax = '';
-    var nights = '';
-    @if (Model.Reservation is FlightReservationForDisplay)
+        // date selector
+        $('.date-picker').datepicker({
+            minDate: new Date()
+        });
+        var langCode = '@OnlineContext.GetActiveLanguageCode()';
+        var currentPage = 1;
+        var transferWindow = ['@ConfigManager.GetInstance().GetConfigValue("general","bankTransferStartTime")', '@ConfigManager.GetInstance().GetConfigValue("general","bankTransferEndTime")'];
+        //var transferWindow = [ '1100', '1124' ];
+        // messages
+        var message = '@ViewBag.Message';
+        // flight detail
+        var rsvNo = @Model.RsvNo;
+        var paymentDetail = '';
+        var flightDetail = '';
+        var trips = '';
+        var hotelDetails = '';
+        var price = '';
+        var originalPrice = '';
+        var totalRoom = '';
+        var checkin = '';
+        var checkout = '';
+        var totalpax = '';
+        var nights = '';
+        @if (Model.Reservation is FlightReservationForDisplay)
         {
             var reservation = Model.Reservation as FlightReservationForDisplay;
             @:trips = @Html.Raw(reservation.Itinerary.Trips.Serialize());
-                            @:price = @reservation.Itinerary.NetTotalFare;
-                            @:originalPrice = '@reservation.Itinerary.OriginalTotalFare';
-                        }
+                                                                    @:price = @reservation.Itinerary.NetTotalFare;
+                                                                    @:originalPrice = '@reservation.Itinerary.OriginalTotalFare';
+                                                                }
         else
         {
             var reservation = Model.Reservation as HotelReservationForDisplay;
             @:hotelDetails = @Html.Raw(reservation.HotelDetail.Serialize());
-                            @:price = @reservation.HotelDetail.NetFare;
-                            @:originalPrice = '@reservation.HotelDetail.OriginalFare';
-                        }
-    var redirectionUrl;
-    @if (Model.Reservation.Payment.RedirectionUrl != null) {
+                                                                    @:price = @reservation.HotelDetail.NetFare;
+                                                                    @:originalPrice = '@reservation.HotelDetail.OriginalFare';
+                                                                }
+        var redirectionUrl;
+        @if (Model.Reservation.Payment.RedirectionUrl != null) {
         @:redirectionUrl = '@Model.Reservation.Payment.RedirectionUrl';
-                    }
-    @if (Model.Reservation is FlightReservationForDisplay)
+                                                            }
+        @if (Model.Reservation is FlightReservationForDisplay)
     {
         @:var departureDate;
-                    var reservation = Model.Reservation as FlightReservationForDisplay;
+                                                            var reservation = Model.Reservation as FlightReservationForDisplay;
         if (reservation.Itinerary.Trips != null)
          {
              if (reservation.Itinerary.Trips.Count == 2)
              {
                  @:departureDate = '@reservation.Itinerary.Trips[1].DepartureDate';
-                         }
+                                                                 }
              else
              {
                  @:departureDate = '@reservation.Itinerary.Trips[0].DepartureDate';
-                         }
+                                                                 }
          }
     }
-    @if (Model.Reservation is HotelReservationForDisplay)
+        @if (Model.Reservation is HotelReservationForDisplay)
     {
         var hotel = Model.Reservation as HotelReservationForDisplay;
         @:originalPrice = '@hotel.HotelDetail.OriginalFare';
-            @:price = '@hotel.HotelDetail.NetFare';
-            @:totalRoom = '@hotel.HotelDetail.Rooms.SelectMany(r => r.Rates).Sum(p => p.RoomCount)';
-            @:checkin = '@hotel.HotelDetail.CheckInDate.ToString("D",CultureInfo.CreateSpecificCulture("id-ID"))';
-            @:checkout = '@hotel.HotelDetail.CheckOutDate.ToString("D", CultureInfo.CreateSpecificCulture("id-ID"))';
-            @:nights = '@((hotel.HotelDetail.CheckOutDate - hotel.HotelDetail.CheckInDate).Days)';
-            @:totalpax = '@totalpax';
+                                                    @:price = '@hotel.HotelDetail.NetFare';
+                                                    @:totalRoom = '@hotel.HotelDetail.Rooms.SelectMany(r => r.Rates).Sum(p => p.RoomCount)';
+                                                    @:checkin = '@hotel.HotelDetail.CheckInDate.ToString("D",CultureInfo.CreateSpecificCulture("id-ID"))';
+                                                    @:checkout = '@hotel.HotelDetail.CheckOutDate.ToString("D", CultureInfo.CreateSpecificCulture("id-ID"))';
+                                                    @:nights = '@((hotel.HotelDetail.CheckOutDate - hotel.HotelDetail.CheckInDate).Days)';
+                                                    @:totalpax = '@totalpax';
+                                                }
+        // change current page
+        if (getParam('page') == 4) {
+            currentPage = getParam('page');
+        } else {
+            currentPage = 1;
         }
-    // change current page
-    if (getParam('page') == 4) {
-        currentPage = getParam('page');
-    } else {
-        currentPage = 1;
-    }
-    var loggedIn = @User.Identity.IsAuthenticated.ToString().ToLower();
-    var buyerInfo = {
-        fullname : '@(User.Identity.GetFirstName() + " " + User.Identity.GetLastName())',
-        countryCode : '@User.Identity.GetCountryCd()',
-        phone: '@User.Identity.GetPhoneNumber()',
-        email: '@User.Identity.GetEmail()'
-    };
-    var langCode = '@OnlineContext.GetActiveLanguageCode()';
+        var loggedIn = @User.Identity.IsAuthenticated.ToString().ToLower();
+        var buyerInfo = {
+            fullname : '@(User.Identity.GetFirstName() + " " + User.Identity.GetLastName())',
+            countryCode : '@User.Identity.GetCountryCd()',
+            phone: '@User.Identity.GetPhoneNumber()',
+            email: '@User.Identity.GetEmail()'
+        };
+        var langCode = '@OnlineContext.GetActiveLanguageCode()';
 
-    var expirytime = '@Model.TimeLimit';
+        var expirytime = '@Model.TimeLimit';
     </script>
     <!-- angular controller -->
     <script src="/Assets/travorama20/js/paymentController.js"></script>
@@ -244,22 +244,22 @@
             <section class="checkout-content">
                 <div class="page__header">
                     <h1 class="text-center section-title stripe">Metode <span>Pembayaran</span></h1>
-                    
+
                 </div>
                 <div class="page__body" id="step-4">
                     <div class="summary summary--price">
                         <h3 class="summary__title"><b>RINCIAN</b> HARGA</h3>
                         <div class="summary__body">
-                            
+
                             <dl>
                                 @if (Model.Reservation is FlightReservationForDisplay)
-                                    {
-                                        <dt>Harga Tiket</dt>
-                                    }
-                                    @if (Model.Reservation is HotelReservationForDisplay)
-                                    {
-                                        <dt>Harga Kamar</dt>
-                                    }
+                                {
+                                    <dt>Harga Tiket</dt>
+                                }
+                                @if (Model.Reservation is HotelReservationForDisplay)
+                                {
+                                    <dt>Harga Kamar</dt>
+                                }
                                 <dd><sup>Rp</sup> {{originalPrice | number}}</dd>
                             </dl>
                             <dl>
@@ -275,7 +275,7 @@
                                 <dt>{{binDiscount.displayName}}</dt>
                                 <dd><sup>Rp</sup>- {{binDiscount.amount | number}}</dd>
                             </dl>
-                            
+
                             <dl>
                                 <dt>Kode Unik Pembayaran</dt>
                                 <dd><sup>Rp</sup> {{UniqueCodePaymentConfig.UniqueCode | number}}</dd>
@@ -324,13 +324,11 @@
                     <div class="summary summary--payment">
                         <h3 class="summary__title"><b>METODE</b> PEMBAYARAN</h3>
                         <div class="summary__body">
-
                             <form name="paymentMethodForm">
-
                                 <label ng-click="binDiscount.reset('ncc')">
                                     <header>
                                         <div class="input-wrapper">
-                                            <input class="input-trf" type="radio" name="paymentMethod" value="@PaymentMethod.BankTransfer; BankTransfer" ng-model="paymentMethod" />
+                                            <input type="radio" name="paymentMethod" value="@PaymentMethod.BankTransfer" ng-model="paymentMethod" />
                                         </div>
                                         <h5>Transfer Bank</h5>
                                     </header>
@@ -341,7 +339,7 @@
                                 <label ng-click="binDiscount.reset('cc')">
                                     <header>
                                         <div class="input-wrapper">
-                                            <input class="input-cc" type="radio" name="paymentMethod" value="@PaymentMethod.CreditCard" ng-model="paymentMethod" ng-change="CreditCardPromo.Check(CreditCard.Number)" />
+                                            <input type="radio" name="paymentMethod" value="@PaymentMethod.CreditCard" ng-model="paymentMethod" ng-change="CreditCardPromo.Check(CreditCard.Number)" />
                                         </div>
                                         <h5>Kartu Kredit / Debit</h5>
                                     </header>
@@ -352,7 +350,7 @@
                                 <label ng-click="binDiscount.reset('ncc')">
                                     <header>
                                         <div class="input-wrapper">
-                                            <input class="input-atm" type="radio" name="paymentMethod" value="@PaymentMethod.VirtualAccount; VirtualAccount" ng-model="paymentMethod" />
+                                            <input type="radio" name="paymentMethod" value="@PaymentMethod.VirtualAccount" ng-model="paymentMethod" />
                                         </div>
                                         <h5>ATM</h5>
                                     </header>
@@ -363,7 +361,7 @@
                                 <label ng-click="binDiscount.reset('ncc')">
                                     <header>
                                         <div class="input-wrapper">
-                                            <input class="input-cp" type="radio" name="paymentMethod" value="@PaymentMethod.MandiriClickPay" ng-model="paymentMethod" />
+                                            <input type="radio" name="paymentMethod" value="@PaymentMethod.MandiriClickPay" ng-model="paymentMethod" />
                                         </div>
                                         <h5>Mandiri ClickPay</h5>
                                     </header>
@@ -382,157 +380,160 @@
                                         <img src="/Assets/images/cimb-clicks.jpg" alt="CIMB Niaga" />
                                     </section>
                                 </label>
-
+                                <div class="selected-bank" id="BankTransfer">
+                                    <h3 class="widget-title">PILIHAN <b>BANK</b></h3>
+                                    <label>
+                                        <header>
+                                            <div class="input-wrapper">
+                                                <input type="radio" name="SelectedBank" value="BankTransfer" checked />
+                                            </div>
+                                            <h5>Bank Mandiri</h5>
+                                        </header>
+                                        <section>
+                                            <img src="/Assets/images/mandiri.png" alt="Bank Mandiri" />
+                                        </section>
+                                    </label>
+                                </div>
+                                <div class="selected-bank" id="VirtualAccount">
+                                    <h3 class="widget-title">PILIHAN <b>BANK</b></h3>
+                                    <label>
+                                        <header>
+                                            <div class="input-wrapper">
+                                                <input type="radio" name="SelectedBank" value="VirtualAccount" />
+                                            </div>
+                                            <h5>Bank Permata</h5>
+                                        </header>
+                                        <section>
+                                            <img src="/Assets/images/permata.png" alt="Bank Permata" />
+                                        </section>
+                                    </label>
+                                    <label>
+                                        <header>
+                                            <div class="input-wrapper">
+                                                <input type="radio" name="SelectedBank" value="VirtualAccount" />
+                                            </div>
+                                            <h5>Bank BCA</h5>
+                                        </header>
+                                        <section>
+                                            <img src="/Assets/images/bank-bca.png" alt="Bank Mandiri" />
+                                        </section>
+                                    </label>
+                                </div>
                             </form>
-
                         </div><!-- .summary__body -->
                     </div><!-- .summary--payment -->
                     @if (!User.Identity.IsAuthenticated || (User.Identity.IsAuthenticated && true /*tambah kredit kart baru*/ ))
                     {
+                        <div id="CreditCard" class="credit-card-form" ng-show="paymentMethod == '@PaymentMethod.CreditCard'">
 
-                        <div id="payment-cc" class="credit-card-form" ng-show="paymentMethod == '@PaymentMethod.CreditCard'">
+                            <form name="creditCardForm" novalidate>
+                                <h3 class="no-spacing"><b>DETAIL </b>KARTU KREDIT/DEBIT</h3>
 
-                        <form name="creditCardForm" novalidate>
-                            <h3 class="no-spacing"><b>DETAIL </b>KARTU KREDIT/DEBIT</h3>
-
-                            <!-- credit card selector end -->
-                            <!-- new credit card start -->
-                            <div ng-if="CreditCard.TwoClickToken == 'false'">
-                                <div class="form-group" ng-class="{'has-error' : !checkNumber(CreditCard.Number)}">
-                                    <label class="control-label">Nomor Kartu</label>
+                                <!-- credit card selector end -->
+                                <!-- new credit card start -->
+                                <div ng-if="CreditCard.TwoClickToken == 'false'">
+                                    <div class="form-group" ng-class="{'has-error' : !checkNumber(CreditCard.Number)}">
+                                        <label class="control-label">Nomor Kartu</label>
                                         <input type="text" value="" class="form-control cc-number" maxlength="16" ng-model="CreditCard.Number" ng-blur="binDiscount.check()" ng-change="CreditCardPromo.Check(CreditCard.Number)" ng-class="{'visa' : (CreditCardPromo.Type == 'visa') , 'mastercard' : (CreditCardPromo.Type == 'mastercard') }" ng-required="(paymentMethod == '@PaymentMethod.CreditCard') && (CreditCard.TwoClick == 'false')" />
-                                    <div style="color: green">{{binDiscount.text}}</div>
-                                    <div ng-show="!checkNumber(CreditCard.Number)" style="color:red">
-                                        Nomor kartu tidak boleh mengandung karakter selain angka
-                                </div>
-                                </div>
-                                
-                                <div class="form-group">
-                                    <div class="row">
-                                        <div class="col-xs-4" ng-class="{'has-error' : !checkDate(CreditCard.Month, CreditCard.Year)}">
-                                            <label class="control-label">Kadaluarsa</label>
-                                            <select class="form-control" ng-model="CreditCard.Month" ng-init="month = 'Bulan'">
-                                                <option value="{{month.value}}" ng-repeat="month in months" ng-selected="month.value == 0"
-                                                        ng-click="CreditCard.Month = month.value">
-                                                    {{month.name}}
-                                                </option>
-                                            </select>
-                                        </div>
-                                        <div class="col-xs-4" ng-class="{'has-error' : !checkDate(CreditCard.Month, CreditCard.Year)}">
-                                            <label class="control-label">&nbsp;</label>
-                                            <select class="form-control" ng-model="CreditCard.Year" ng-init="year = 'Tahun'">
-                                                <option value="{{year}}" ng-repeat="year in generateYear()" ng-selected="year  == 'Tahun'"
-                                                        ng-click="CreditCard.Year = year">
-                                                    {{year}}
-                                                </option>
-                                            </select>
-                                        </div>
-                                        <div class="col-xs-4" ng-class="{'has-error' : !checkNumber(CreditCard.Cvv)}">
-                                            <label class="control-label">CVV Kartu</label>
-                                            <input type="password" value="" class="form-control" placeholder="XXX" maxlength="3" ng-model="CreditCard.Cvv" ng-required="paymentMethod == '@PaymentMethod.CreditCard'" />
+                                        <div style="color: green">{{binDiscount.text}}</div>
+                                        <div ng-show="!checkNumber(CreditCard.Number)" style="color:red">
+                                            Nomor kartu tidak boleh mengandung karakter selain angka
                                         </div>
                                     </div>
-                                    
-                                    <div ng-show="!checkDate(CreditCard.Month, CreditCard.Year)" style="color:red">
-                                        Tanggal Kadaluarsa harus lebih dari tanggal saat ini.
-                                    </div>
-                                    <div ng-show="!checkNumber(CreditCard.Cvv)" style="color:red">
-                                        CVV tidak boleh mengandung karakter selain angka
-                                    </div>
-                                </div>
-                                <div class="form-group" ng-class="{'has-error' : !checkName(CreditCard.Name)}">
-                                    <label class="control-label">Nama Pemegang Kartu</label>
-                                    <input type="text" value="" class="form-control" size="16" ng-model="CreditCard.Name" ng-required="paymentMethod == '@PaymentMethod.CreditCard'" />
-                                    <div ng-show="!checkName(CreditCard.Name)" style="color:red">
-                                        Nama tidak boleh mengandung karakter selain alfabet dan spasi
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- new credit card end -->
 
-                        </form>
-                    </div>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-xs-4" ng-class="{'has-error' : !checkDate(CreditCard.Month, CreditCard.Year)}">
+                                                <label class="control-label">Kadaluarsa</label>
+                                                <select class="form-control" ng-model="CreditCard.Month" ng-init="month = 'Bulan'">
+                                                    <option value="{{month.value}}" ng-repeat="month in months" ng-selected="month.value == 0"
+                                                            ng-click="CreditCard.Month = month.value">
+                                                        {{month.name}}
+                                                    </option>
+                                                </select>
+                                            </div>
+                                            <div class="col-xs-4" ng-class="{'has-error' : !checkDate(CreditCard.Month, CreditCard.Year)}">
+                                                <label class="control-label">&nbsp;</label>
+                                                <select class="form-control" ng-model="CreditCard.Year" ng-init="year = 'Tahun'">
+                                                    <option value="{{year}}" ng-repeat="year in generateYear()" ng-selected="year  == 'Tahun'"
+                                                            ng-click="CreditCard.Year = year">
+                                                        {{year}}
+                                                    </option>
+                                                </select>
+                                            </div>
+                                            <div class="col-xs-4" ng-class="{'has-error' : !checkNumber(CreditCard.Cvv)}">
+                                                <label class="control-label">CVV Kartu</label>
+                                                <input type="password" value="" class="form-control" placeholder="XXX" maxlength="3" ng-model="CreditCard.Cvv" ng-required="paymentMethod == '@PaymentMethod.CreditCard'" />
+                                            </div>
+                                        </div>
+
+                                        <div ng-show="!checkDate(CreditCard.Month, CreditCard.Year)" style="color:red">
+                                            Tanggal Kadaluarsa harus lebih dari tanggal saat ini.
+                                        </div>
+                                        <div ng-show="!checkNumber(CreditCard.Cvv)" style="color:red">
+                                            CVV tidak boleh mengandung karakter selain angka
+                                        </div>
+                                    </div>
+                                    <div class="form-group" ng-class="{'has-error' : !checkName(CreditCard.Name)}">
+                                        <label class="control-label">Nama Pemegang Kartu</label>
+                                        <input type="text" value="" class="form-control" size="16" ng-model="CreditCard.Name" ng-required="paymentMethod == '@PaymentMethod.CreditCard'" />
+                                        <div ng-show="!checkName(CreditCard.Name)" style="color:red">
+                                            Nama tidak boleh mengandung karakter selain alfabet dan spasi
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- new credit card end -->
+
+                            </form>
+                        </div>
                 <!-- .credit-card-form -->
-                        <div id="payment-cp" class="credit-card-form" ng-show="paymentMethod == '@PaymentMethod.MandiriClickPay'">
-                        <div class="form-group">
-                            <h3><b>DETAIL</b> PEMBAYARAN - <b>MANDIRI CLICKPAY</b></h3>
-                            <div class="form-group" ng-class="{'has-error' : !checkNumber(MandiriClickPay.CardNo)}">
-                                <label class="control-label">Nomor Kartu</label>
-                                <input type="text" value="" class="form-control cc-number" maxlength="16" ng-model="MandiriClickPay.CardNo" />
-                            </div>
-                            <div ng-show="!checkNumber(MandiriClickPay.CardNo)" style="color:red">
-                                Nomor kartu tidak boleh mengandung karakter selain angka
-                            </div>
+                        <div id="MandiriClickPay" class="credit-card-form" ng-show="paymentMethod == '@PaymentMethod.MandiriClickPay'">
                             <div class="form-group">
-                                <label class="control-label">Input Token Mandiri &nbsp;<small>(diisi secara berurutan)</small></label>
-                                <div class="form-mandiri-payment">
-                                    <ul class="form-row clearfix">
-                                        <li class="col-left">APPLI</li>
-                                        <li class="col-middle">:</li>
-                                        <li class="col-right">3</li>
-                                    </ul>
-                                    <ul class="form-row clearfix">
-                                        <li class="col-left">Input 1</li>
-                                        <li class="col-middle">:</li>
+                                <h3><b>DETAIL</b> PEMBAYARAN - <b>MANDIRI CLICKPAY</b></h3>
+                                <div class="form-group" ng-class="{'has-error' : !checkNumber(MandiriClickPay.CardNo)}">
+                                    <label class="control-label">Nomor Kartu</label>
+                                    <input type="text" value="" class="form-control cc-number" maxlength="16" ng-model="MandiriClickPay.CardNo" />
+                                </div>
+                                <div ng-show="!checkNumber(MandiriClickPay.CardNo)" style="color:red">
+                                    Nomor kartu tidak boleh mengandung karakter selain angka
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">Input Token Mandiri &nbsp;<small>(diisi secara berurutan)</small></label>
+                                    <div class="form-mandiri-payment">
+                                        <ul class="form-row clearfix">
+                                            <li class="col-left">APPLI</li>
+                                            <li class="col-middle">:</li>
+                                            <li class="col-right">3</li>
+                                        </ul>
+                                        <ul class="form-row clearfix">
+                                            <li class="col-left">Input 1</li>
+                                            <li class="col-middle">:</li>
                                             <li class="col-right" ng-if="MandiriClickPay.CardNo != null && MandiriClickPay.CardNo.length == 0">{{MandiriClickPay.CardNo | limitTo:-10}}</li>
                                             <li class="col-right" ng-if="MandiriClickPay.CardNo == null || MandiriClickPay.CardNo.length == 0">Masukkan Nomor Kartu Terlebih Dahulu</li>
-                                    </ul>
-                                    <ul class="form-row clearfix">
-                                        <li class="col-left">Input 2</li>
-                                        <li class="col-middle">:</li>
-                                        <li class="col-right">{{totalPrice - voucher.amount - CreditCardPromo.Amount + UniqueCodePaymentConfig.UniqueCode}}</li>
-                                    </ul>
-                                    <ul class="form-row clearfix">
-                                        <li class="col-left">Input 3</li>
-                                        <li class="col-middle">:</li>
-                                        <li class="col-right">@Model.RsvNo.Substring(Model.RsvNo.Length - 5, 5)</li>
-                                    </ul>
+                                        </ul>
+                                        <ul class="form-row clearfix">
+                                            <li class="col-left">Input 2</li>
+                                            <li class="col-middle">:</li>
+                                            <li class="col-right">{{totalPrice - voucher.amount - CreditCardPromo.Amount + UniqueCodePaymentConfig.UniqueCode}}</li>
+                                        </ul>
+                                        <ul class="form-row clearfix">
+                                            <li class="col-left">Input 3</li>
+                                            <li class="col-middle">:</li>
+                                            <li class="col-right">@Model.RsvNo.Substring(Model.RsvNo.Length - 5, 5)</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="form-group" ng-class="{'has-error' : !checkNumber(MandiriClickPay.Token)}">
+                                    <label class="control-label">Respon Token Mandiri</label>
+                                    <input type="text" value="" class="form-control cc-number" maxlength="6" placeholder="XXXXXX" ng-model="MandiriClickPay.Token" ng-required="paymentMethod == '@PaymentMethod.MandiriClickPay'" />
+                                </div>
+                                <div ng-show="!checkNumber(MandiriClickPay.Token)" style="color:red">
+                                    Respon token tidak boleh mengandung karakter selain angka
                                 </div>
                             </div>
-                            <div class="form-group" ng-class="{'has-error' : !checkNumber(MandiriClickPay.Token)}">
-                                <label class="control-label">Respon Token Mandiri</label>
-                                <input type="text" value="" class="form-control cc-number" maxlength="6" placeholder="XXXXXX" ng-model="MandiriClickPay.Token" ng-required="paymentMethod == '@PaymentMethod.MandiriClickPay'" />
-                            </div>
-                            <div ng-show="!checkNumber(MandiriClickPay.Token)" style="color:red">
-                                Respon token tidak boleh mengandung karakter selain angka
-                            </div>
                         </div>
-                    </div>
 
                     }
-                    <div class="selected-bank">
-                        <div class="summary summary--payment">
-                            <div id="payment-trf">
-                                <h3 class="widget-title">PILIHAN <b>BANK</b></h3>
-                                <label>
-                                    <header>
-                                        <div class="input-wrapper">
-                                            <input type="radio" name="paymentMethod" value="BankMandiri" />
-                                        </div>
-                                        <h5>Bank Mandiri</h5>
-                                    </header>
-                                    <section>
-                                        <img src="/Assets/images/mandiri.png" alt="Bank Mandiri" />
-                                    </section>
-                                </label>
-                            </div>
-                            <div id="payment-atm">
-                                <h3 class="widget-title">PILIHAN <b>BANK</b></h3>
-                                <label>
-                                    <header>
-                                        <div class="input-wrapper">
-                                            <input type="radio" name="paymentMethod" value="BankPermata" />
-                                        </div>
-                                        <h5>Bank Permata</h5>
-                                    </header>
-                                    <section>
-                                        <img src="/Assets/images/permata.png" alt="Bank Permata" />
-                                    </section>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-
                     <div class="widget countdown">
                         <h3 class="widget-title"><b>SISA</b> WAKTU</h3>
                         <div class="widget-content">
@@ -610,7 +611,7 @@
                                 <li>Transfer antarbank (dari bank yang berbeda) wajib menggunakan metode pembayaran ATM.</li>
                                 <li><b>Tidak disarankan</b> melakukan transfer dengan <b>LLG/Kliring/SKNBI</b> karena membutuhkan waktu verifikasi yang lebih lama sehingga memungkinkan pemesanan gagal.</li>
                                 <li>Anda tidak dapat mengganti ke metode pembayaran lain jika telah memilih metode pembayaran ini.</li>
-                             </ol>
+                            </ol>
                         </div>
                     </div>
                     <div class="popup__footer">
@@ -664,12 +665,12 @@
                     <header class="popup__header">
                         <h4 class="popup__title">Waktu Habis</h4>
                     </header>
-                    
+
                     <div class="popup__body tnc-body">
                         <h3>Maaf, waktu pembayaran Anda <b>sudah habis</b></h3>
                         <p>Silakan klik tombol di bawah untuk kembali ke halaman utama.</p>
                     </div>
-                    
+
                     <div class="container_new popup__footer">
                         <div class="container_new tnc">
                             <div class="row">
@@ -680,7 +681,7 @@
 
                 </div>
             </div><!-- .page-overlay -->
-            
+
 
             <div class="popup__wrapper" ng-class="{'active' : pay.ispaying || pay.go }">
                 <div class="popup">
@@ -765,7 +766,7 @@
                     </div>
                 </div>
             </div>
-    
+
             <div class="popup__wrapper" ng-class="{'active' : pay.continueBIN}">
                 <div class="popup">
                     <header class="popup__header">
@@ -781,7 +782,7 @@
                             <div class="row">
                                 <div class="col-xs-6">
                                     <a class="btn btn-yellow btn-block" ng-click="pay.continuePay('bin')"><b>YA</b></a>
-                                    
+
                                 </div>
                                 <div class="col-xs-6">
                                     <a class="btn btn-grey btn-block" ng-click="pay.continueBIN = false;"><b>TIDAK</b></a>
@@ -793,7 +794,7 @@
             </div>
 
         </div><!-- checkout end here -->
-    break;
+                    break;
     case "BookExpired":
     @:[Ini ceritanya page booking expired]
         break;

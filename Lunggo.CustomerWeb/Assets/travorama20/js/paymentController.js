@@ -909,68 +909,28 @@ app.controller('paymentController', [
 
 jQuery(document).ready(function ($) {
     // Payment Desktop
-    var trf = $('.selected-bank.payment-wrapper .row.payment-transfer');
-    var atm = $('.selected-bank.payment-wrapper .row.payment-atm');
+    $('input[name="PMInput"]').click(function () {
+        var val = $(this).val();
+        $('.selected-bank').hide();
 
-    trf.hide();
-    atm.hide();
+        var id = $('input[value="' + val + '"]').closest('.selected-bank');
+        $(id).show();
 
-    $('input[name="paymentMethod"]').click(function () {
-        if ($(this).hasClass('input-trf')) {
-            trf.show();
-            atm.hide();
-
-            $(trf).find('input[value="BankMandiri"]').prop('checked', true);
-            $(atm).find('input[value="BankPermata"]').prop('checked', false);
-        } else if ($(this).hasClass('input-atm')) {
-            atm.show();
-            trf.hide();
-
-            $(trf).find('input[value="BankMandiri"]').prop('checked', false);
-            $(atm).find('input[value="BankPermata"]').prop('checked', true);
-        } else {
-            trf.hide();
-            atm.hide();
-        }
+        //$('input[value="' + val + '"]').attr('checked', true);
     });
 
     // Payment Mobile
-    var mobTrf = $('.summary.summary--payment #payment-trf');
-    var mobAtm = $('.summary.summary--payment #payment-atm');
-
-    mobTrf.hide();
-    mobAtm.hide();
-
     $('input[name="paymentMethod"]').click(function () {
-        if ($(this).hasClass('input-trf')) {
-            mobTrf.show();
-            mobAtm.hide();
+        var val = $(this).val();
+        $('.selected-bank').hide();
 
-            $(mobTrf).find('input[value="BankMandiri"]').prop('checked', true);
-            $(mobAtm).find('input[value="BankPermata"]').prop('checked', false);
+        var id = $('input[value="' + val + '"]').closest('.selected-bank');
+        $(id).show();
 
-            $(this).find('.input-trf').click(location.href = '#payment-trf');
-        } else if ($(this).hasClass('input-atm')) {
-            mobAtm.show();
-            mobTrf.hide();
+        $('html, body').animate({
+            scrollTop: $("#" + val).offset().top
+        }, 1000);
 
-            $(mobTrf).find('input[value="BankMandiri"]').prop('checked', false);
-            $(mobAtm).find('input[value="BankPermata"]').prop('checked', true);
-              
-            $(this).find('.input-atm').click(location.href = '#payment-atm');
-        } else if ($(this).hasClass('input-cc')) {
-            mobTrf.hide();
-            mobAtm.hide();
-
-            $(this).find('.input-cc').click(location.href = '#payment-cc');
-        } else if ($(this).hasClass('input-cp')) {
-            mobTrf.hide();
-            mobAtm.hide();
-
-            $(this).find('.input-cp').click(location.href = '#payment-cp');
-        } else {
-            mobTrf.hide();
-            mobAtm.hide();
-        }
+        //$('input[value="' + val + '"]').attr('chekcked', true);
     });
 })

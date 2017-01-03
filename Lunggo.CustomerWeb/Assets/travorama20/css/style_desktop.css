@@ -6289,6 +6289,8 @@ label.control-label {
     padding-left: 25px; }
   .checkout-content > .container, .confirmation-content > .container {
     max-width: none; }
+  .checkout-content .selected-bank, .confirmation-content .selected-bank {
+    display: none; }
 
 .passenger-detail .passenger-form, .content-step .flight-detail, .buyer-review, .passenger-review {
   margin-bottom: 25px; }
