@@ -929,26 +929,29 @@ function flightFormSearchFunctions() {
     var holidays = [];
     var holidayNames = [];
 
-
-    $.ajax({
-        url: GetHolidayConfig.Url,
-        method: 'GET',
-        headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') }
-    }).done(function (returnData) {
-        if (returnData.status == 200) {
-            if (returnData.events != null) {
-                for (var i = 0; i < returnData.events.length; i++) {
-                    var holidayDate = new Date(returnData.events[i].date);
-                    var holidayName = returnData.events[i].name;
-                    holidays.push(holidayDate);
-                    holidayNames.push(holidayName);
+    var authAccess = getAuthAccess();
+    if (authAccess == 1 || authAccess == 2) {
+        $.ajax({
+            url: GetHolidayConfig.Url,
+            method: 'GET',
+            headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') }
+        }).done(function(returnData) {
+            if (returnData.status == 200) {
+                if (returnData.events != null) {
+                    for (var i = 0; i < returnData.events.length; i++) {
+                        var holidayDate = new Date(returnData.events[i].date);
+                        var holidayName = returnData.events[i].name;
+                        holidays.push(holidayDate);
+                        holidayNames.push(holidayName);
+                    }
                 }
             }
-        }
-        
-    }).error(function (returnData) {
-       
-    });
+
+        }).error(function(returnData) {
+
+        });
+    }
+
     function highlightDays(date) {
         for (var i = 0; i < holidays.length; i++) {
             var x = new Date(date);

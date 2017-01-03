@@ -38,6 +38,15 @@ namespace Lunggo.Repository.TableRecord
 		        IncrementLog("MethodCd");
 		    }
 		}
+		public String SubMethod
+		{
+		    get { return _SubMethod; }
+		    set
+		    {
+		        _SubMethod = value;
+		        IncrementLog("SubMethod");
+		    }
+		}
 		public String StatusCd
 		{
 		    get { return _StatusCd; }
@@ -250,6 +259,7 @@ namespace Lunggo.Repository.TableRecord
 		private String _RsvNo;
 		private String _MediumCd;
 		private String _MethodCd;
+		private String _SubMethod;
 		private String _StatusCd;
 		private DateTime? _Time;
 		private DateTime? _TimeLimit;
@@ -307,6 +317,7 @@ namespace Lunggo.Repository.TableRecord
 				new ColumnMetadata("RsvNo", true),
 				new ColumnMetadata("MediumCd", false),
 				new ColumnMetadata("MethodCd", false),
+				new ColumnMetadata("SubMethod", false),
 				new ColumnMetadata("StatusCd", false),
 				new ColumnMetadata("Time", false),
 				new ColumnMetadata("TimeLimit", false),
