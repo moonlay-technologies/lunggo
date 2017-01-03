@@ -173,47 +173,47 @@
         {
             var reservation = Model.Reservation as FlightReservationForDisplay;
             @:trips = @Html.Raw(reservation.Itinerary.Trips.Serialize());
-                                                                                                                            @:price = @reservation.Itinerary.NetTotalFare;
-                                                                                                                            @:originalPrice = '@reservation.Itinerary.OriginalTotalFare';
-                                                                                                                        }
+            @:price = @reservation.Itinerary.NetTotalFare;
+            @:originalPrice = '@reservation.Itinerary.OriginalTotalFare';
+        }
         else
         {
             var reservation = Model.Reservation as HotelReservationForDisplay;
             @:hotelDetails = @Html.Raw(reservation.HotelDetail.Serialize());
-                                                                                                                            @:price = @reservation.HotelDetail.NetFare;
-                                                                                                                            @:originalPrice = '@reservation.HotelDetail.OriginalFare';
-                                                                                                                        }
+            @:price = @reservation.HotelDetail.NetFare;
+            @:originalPrice = '@reservation.HotelDetail.OriginalFare';
+        }
         var redirectionUrl;
         @if (Model.Reservation.Payment.RedirectionUrl != null) {
-        @:redirectionUrl = '@Model.Reservation.Payment.RedirectionUrl';
-                                                                                                                    }
+            @:redirectionUrl = '@Model.Reservation.Payment.RedirectionUrl';
+        }
         @if (Model.Reservation is FlightReservationForDisplay)
-    {
-        @:var departureDate;
-                                                                                                                    var reservation = Model.Reservation as FlightReservationForDisplay;
-        if (reservation.Itinerary.Trips != null)
-         {
-             if (reservation.Itinerary.Trips.Count == 2)
+        {
+            @:var departureDate;
+            var reservation = Model.Reservation as FlightReservationForDisplay;
+            if (reservation.Itinerary.Trips != null)
              {
-                 @:departureDate = '@reservation.Itinerary.Trips[1].DepartureDate';
-                                                                                                                         }
-             else
-             {
-                 @:departureDate = '@reservation.Itinerary.Trips[0].DepartureDate';
-                                                                                                                         }
-         }
-    }
+                 if (reservation.Itinerary.Trips.Count == 2)
+                 {
+                     @:departureDate = '@reservation.Itinerary.Trips[1].DepartureDate';
+                }
+                 else
+                 {
+                     @:departureDate = '@reservation.Itinerary.Trips[0].DepartureDate';
+                }
+             }
+        }
         @if (Model.Reservation is HotelReservationForDisplay)
-    {
-        var hotel = Model.Reservation as HotelReservationForDisplay;
-        @:originalPrice = '@hotel.HotelDetail.OriginalFare';
-                                                                                                            @:price = '@hotel.HotelDetail.NetFare';
-                                                                                                            @:totalRoom = '@hotel.HotelDetail.Rooms.SelectMany(r => r.Rates).Sum(p => p.RoomCount)';
-                                                                                                            @:checkin = '@hotel.HotelDetail.CheckInDate.ToString("D",CultureInfo.CreateSpecificCulture("id-ID"))';
-                                                                                                            @:checkout = '@hotel.HotelDetail.CheckOutDate.ToString("D", CultureInfo.CreateSpecificCulture("id-ID"))';
-                                                                                                            @:nights = '@((hotel.HotelDetail.CheckOutDate - hotel.HotelDetail.CheckInDate).Days)';
-                                                                                                            @:totalpax = '@totalpax';
-                                                                                                        }
+        {
+            var hotel = Model.Reservation as HotelReservationForDisplay;
+            @:originalPrice = '@hotel.HotelDetail.OriginalFare';
+            @:price = '@hotel.HotelDetail.NetFare';
+            @:totalRoom = '@hotel.HotelDetail.Rooms.SelectMany(r => r.Rates).Sum(p => p.RoomCount)';
+            @:checkin = '@hotel.HotelDetail.CheckInDate.ToString("D",CultureInfo.CreateSpecificCulture("id-ID"))';
+            @:checkout = '@hotel.HotelDetail.CheckOutDate.ToString("D", CultureInfo.CreateSpecificCulture("id-ID"))';
+            @:nights = '@((hotel.HotelDetail.CheckOutDate - hotel.HotelDetail.CheckInDate).Days)';
+            @:totalpax = '@totalpax';
+        }
         // change current page
         if (getParam('page') == 4) {
             currentPage = getParam('page');
@@ -385,7 +385,7 @@
                                     <label>
                                         <header>
                                             <div class="input-wrapper">
-                                                <input type="radio" name="BankMandiri" value="BankTransfer" />
+                                                <input type="radio" name="SelectedBank" value="BankTransfer" checked />
                                             </div>
                                             <h5>Bank Mandiri</h5>
                                         </header>
@@ -399,12 +399,23 @@
                                     <label>
                                         <header>
                                             <div class="input-wrapper">
-                                                <input type="radio" name="BankPermata" value="VirtualAccount" />
+                                                <input type="radio" name="SelectedBank" value="VirtualAccount" />
                                             </div>
                                             <h5>Bank Permata</h5>
                                         </header>
                                         <section>
                                             <img src="/Assets/images/permata.png" alt="Bank Permata" />
+                                        </section>
+                                    </label>
+                                    <label>
+                                        <header>
+                                            <div class="input-wrapper">
+                                                <input type="radio" name="SelectedBank" value="VirtualAccount" />
+                                            </div>
+                                            <h5>Bank BCA</h5>
+                                        </header>
+                                        <section>
+                                            <img src="/Assets/images/bank-bca.png" alt="Bank Mandiri" />
                                         </section>
                                     </label>
                                 </div>

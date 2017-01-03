@@ -916,7 +916,7 @@ jQuery(document).ready(function ($) {
         var id = $('input[value="' + val + '"]').closest('.selected-bank');
         $(id).show();
 
-        $('input[value="' + val + '"]').attr('checked', true);
+        //$('input[value="' + val + '"]').attr('checked', true);
     });
 
     // Payment Mobile
@@ -931,6 +931,6 @@ jQuery(document).ready(function ($) {
             scrollTop: $("#" + val).offset().top
         }, 1000);
 
-        $('input[value="' + val + '"]').attr('checked', true);
+        //$('input[value="' + val + '"]').attr('chekcked', true);
     });
 })
