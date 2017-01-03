@@ -385,7 +385,7 @@
                                     <label>
                                         <header>
                                             <div class="input-wrapper">
-                                                <input type="radio" name="SelectedBank" value="BankTransfer" checked />
+                                                <input type="radio" name="SelectedBankBT" value="BankTransfer"/>
                                             </div>
                                             <h5>Bank Mandiri</h5>
                                         </header>
@@ -399,7 +399,7 @@
                                     <label>
                                         <header>
                                             <div class="input-wrapper">
-                                                <input type="radio" name="SelectedBank" value="VirtualAccount" />
+                                                <input type="radio" name="SelectedBankVA" value="VirtualAccount" />
                                             </div>
                                             <h5>Bank Permata</h5>
                                         </header>
@@ -407,7 +407,7 @@
                                             <img src="/Assets/images/permata.png" alt="Bank Permata" />
                                         </section>
                                     </label>
-                                    <label>
+                                    @*<label>
                                         <header>
                                             <div class="input-wrapper">
                                                 <input type="radio" name="SelectedBank" value="VirtualAccount" />
@@ -415,9 +415,9 @@
                                             <h5>Bank BCA</h5>
                                         </header>
                                         <section>
-                                            <img src="/Assets/images/bank-bca.png" alt="Bank Mandiri" />
+                                            <img src="/Assets/images/bank-bca.png" alt="Bank BCA" />
                                         </section>
-                                    </label>
+                                    </label>*@
                                 </div>
                             </form>
                         </div><!-- .summary__body -->
@@ -610,7 +610,7 @@
                                 <li>Transfer keseluruhan jumlah harga hingga <b>3 angka terakhir</b> untuk menjaga keamanan transaksi dan dilakukan sebelum batas akhir waktu pembayaran.</li>
                                 <li>Transfer antarbank (dari bank yang berbeda) wajib menggunakan metode pembayaran ATM.</li>
                                 <li><b>Tidak disarankan</b> melakukan transfer dengan <b>LLG/Kliring/SKNBI</b> karena membutuhkan waktu verifikasi yang lebih lama sehingga memungkinkan pemesanan gagal.</li>
-                                <li>Anda tidak dapat mengganti ke metode pembayaran lain jika telah memilih metode pembayaran ini.</li>
+                                
                             </ol>
                         </div>
                     </div>
@@ -637,8 +637,6 @@
                     <div class="popup__body tnc-body">
                         <div class="container_new">
                             <ol>
-                                <li>Hanya untuk transfer via mesin ATM yang tergabung dalam jaringan ATM Bersama, Prima, dan Alto.</li>
-                                <li>Bukan untuk Internet Banking/Mobile Banking/Transfer melalui Non-ATM.</li>
                                 <li>Ada biaya Rp 6.500/transaksi (tidak termasuk di total transaksi) untuk pembayaran melalui jaringan ATM Bersama, Prima, dan Alto. Ini sesuai ketetapan ATM Bersama, Prima, dan Alto, dan dapat berubah sewaktu-waktu.</li>
                                 <li>Lakukan pembayaran sebelum batas akhir waktu pembayaran.</li>
                             </ol>
@@ -739,7 +737,28 @@
                     </div>
                 </div>
             </div>
-
+    
+            <div class="popup__wrapper" ng-class="{'active' : mustSelectBank}">
+                <div class="popup">
+                    <header class="popup__header">
+                        <h4 class="popup__title">Anda Belum Memilih Bank</h4>
+                    </header>
+                    <div class="popup__body tnc-body">
+                        <div class="container_new">
+                            Silakan pilih salah satu bank yang tersedia sebelum mengklik tombol Bayar.
+                        </div>
+                    </div>
+                    <div class="popup__footer">
+                        <div class="container_new tnc">
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <a class="btn btn-grey btn-block" ng-click="mustSelectBank = false">TUTUP</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="popup__wrapper" ng-class="{'active' : pay.continueVoucher}">
                 <div class="popup">
                     <header class="popup__header">

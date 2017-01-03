@@ -330,11 +330,11 @@
                                     </div>
                                     <div class="row selected-bank" id="BankTransfer">
                                         <div class="col-xs-12"><h3>PILIHAN <b>BANK</b></h3></div>
-                                        <div class="payment mandiri col-xs-4">
+                                        <div class="payment mandiri col-xs-4" ng-click ="selectBank(1)">
                                             <label>
                                                 <header>
                                                     <div class="input-wrapper">
-                                                        <input type="radio" name="SelectedBank" value="BankTransfer" checked>
+                                                        <input type="radio" name="SelectedBankBT" value="BankTransfer">
                                                     </div>
                                                     <h5>Bank Mandiri</h5>
                                                 </header>
@@ -346,11 +346,11 @@
                                     </div>
                                     <div class="row selected-bank" id="VirtualAccount">
                                         <div class="col-xs-12"><h3>PILIHAN <b>BANK</b></h3></div>
-                                        <div class="payment permata col-xs-4">
+                                        <div class="payment permata col-xs-4" ng-click ="selectBank(3)">
                                             <label>
                                                 <header>
                                                     <div class="input-wrapper">
-                                                        <input type="radio" name="SelectedBank" value="VirtualAccount">
+                                                        <input type="radio" name="SelectedBankVA" value="VirtualAccount">
                                                     </div>
                                                     <h5>Bank Permata</h5>
                                                 </header>
@@ -359,7 +359,7 @@
                                                 </section>
                                             </label>
                                         </div>
-                                        <div class="payment bca col-xs-4">
+                                        @*<div class="payment bca col-xs-4">
                                                 <label>
                                                     <header>
                                                         <div class="input-wrapper">
@@ -371,7 +371,7 @@
                                                     <img src="/Assets/images/bank-bca.png" alt="Bank BCA">
                                                     </section>
                                                 </label>
-                                        </div>
+                                        </div>*@
                                     </div>
                                 </div><!-- .payment-wrapper -->
                                 @if (!User.Identity.IsAuthenticated || (User.Identity.IsAuthenticated && true /*tambah kredit kart baru*/ ))
@@ -838,7 +838,7 @@
                                 <li>Transfer keseluruhan jumlah harga hingga <b>3 angka terakhir</b> untuk menjaga keamanan transaksi dan dilakukan sebelum batas akhir waktu pembayaran.</li>
                                 <li>Transfer antarbank (dari bank yang berbeda) wajib menggunakan metode pembayaran ATM.</li>
                                 <li><b>Tidak disarankan</b> melakukan transfer dengan <b>LLG/Kliring/SKNBI</b> karena membutuhkan waktu verifikasi yang lebih lama sehingga memungkinkan pemesanan gagal.</li>
-                                <li>Anda tidak dapat mengganti ke metode pembayaran lain jika telah memilih metode pembayaran ini.</li>
+                                
                             </ol>
                         </div>
                         <div class="row">
@@ -859,8 +859,6 @@
                         <div class="popup-header"><span class="popup-title stripe">Syarat dan Ketentuan ATM</span></div>
                         <div class="popup-list">
                             <ol>
-                                <li>Hanya untuk transfer via mesin ATM yang tergabung dalam jaringan ATM Bersama, Prima, dan Alto.</li>
-                                <li>Bukan untuk Internet Banking/Mobile Banking/Transfer melalui Non-ATM.</li>
                                 <li>Ada biaya Rp 6.500/transaksi (tidak termasuk di total transaksi) untuk pembayaran melalui jaringan ATM Bersama, Prima, dan Alto. Ini sesuai ketetapan ATM Bersama, Prima, dan Alto, dan dapat berubah sewaktu-waktu.</li>
                                 <li>Lakukan pembayaran sebelum batas akhir waktu pembayaran.</li>
                             </ol>
@@ -891,7 +889,21 @@
                     </div>
                 </div>
             </div>
-
+            
+            <div class="payment-popup" ng-show="mustSelectBank">
+                <div class=" overlay-content">
+                    <section style="padding-top:40px; padding-left:225px;">
+                        <!-- Ini untuk yg gagal -->
+                        <div><img src="/Assets/images/travorama-logo-color.png" height="22px" width="80px"></div>
+                        <div style="padding-top:20px;"><span style="color: #15b1e4; font-size:20px"><b>Anda Belum Memilih Bank</b></span></div>
+                        <div><img src="~/Assets/images/popup/paymentyellowstrip.png" /></div>
+                        <div style="padding-top:5px; padding-right:30px;"><span style="font-size:12px">Silakan pilih salah satu bank yang tersedia sebelum mengklik tombol Bayar</span></div>
+                    </section>
+                    <div align="right" style="padding-right:30px;padding-top:10px;">
+                        <a class="btn popup-btn-yellow book-failed" ng-click="mustSelectBank = false;"><b>Tutup</b></a>
+                    </div>
+                </div>
+            </div>
             <div class="payment-popup" ng-show="!pay.inputValid">
                 <div class=" overlay-content">
                     <section style="padding-top:40px; padding-left:225px;">

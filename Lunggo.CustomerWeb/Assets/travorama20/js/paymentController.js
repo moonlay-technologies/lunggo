@@ -19,12 +19,14 @@ app.controller('paymentController', [
         $scope.trial = 0;
         $scope.pageLoaded = true;
         $scope.loginShown = false;
+        $scope.mustSelectBank = false;
         $scope.checkoutForm = {
             loading: false
         };
         $scope.paymentTimeout = paymentTimeout;
         $scope.paymentMethod = ''; 
         $scope.trips = trips;
+        $scope.submethod = '';
         $scope.hotelDetails = hotelDetails;
         $scope.totalRoom = totalRoom;
         $scope.checkin = checkin;
@@ -397,6 +399,13 @@ app.controller('paymentController', [
         
         // ********************************** END *********************************************
 
+        // ****************************** SELECT BANK *****************************************
+        $scope.selectBank = function(bank) {
+            $scope.submethod = bank;
+        }
+
+        // ********************************** END *********************************************
+        
         // ****************************** SUBMIT PAYMENT **************************************
 
         $scope.pay = {
@@ -527,7 +536,7 @@ app.controller('paymentController', [
                 //generate payment data
                 if ($scope.paymentMethod == 'BankTransfer') {
                     if ($scope.redirectionUrl == null || $scope.redirectionUrl.length == 0) {
-                        $scope.pay.postData = '"rsvNo" : "' + $scope.rsvNo + '", "discCd":"' + $scope.voucher.confirmedCode + '" , "method":"2", "submethod" : "1"';
+                        $scope.pay.postData = '"rsvNo" : "' + $scope.rsvNo + '", "discCd":"' + $scope.voucher.confirmedCode + '" , "method":"2", "submethod" : "1"' ;
                         $scope.pay.transfer = true;
                     }
                 }
@@ -916,7 +925,7 @@ jQuery(document).ready(function ($) {
         var id = $('input[value="' + val + '"]').closest('.selected-bank');
         $(id).show();
 
-        //$('input[value="' + val + '"]').attr('checked', true);
+        $('input[value="' + val + '"]').attr('checked', true);
     });
 
     // Payment Mobile
@@ -931,6 +940,6 @@ jQuery(document).ready(function ($) {
             scrollTop: $("#" + val).offset().top
         }, 1000);
 
-        //$('input[value="' + val + '"]').attr('chekcked', true);
+        $('input[value="' + val + '"]').attr('chekcked', true);
     });
 })
