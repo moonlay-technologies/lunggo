@@ -330,7 +330,7 @@
                                 <label ng-click="binDiscount.reset('ncc')">
                                     <header>
                                         <div class="input-wrapper">
-                                            <input type="radio" name="paymentMethod" value="@PaymentMethod.BankTransfer" ng-model="paymentMethod" />
+                                            <input class="input-trf" type="radio" name="paymentMethod" value="@PaymentMethod.BankTransfer; BankTransfer" ng-model="paymentMethod" />
                                         </div>
                                         <h5>Transfer Bank</h5>
                                     </header>
@@ -341,7 +341,7 @@
                                 <label ng-click="binDiscount.reset('cc')">
                                     <header>
                                         <div class="input-wrapper">
-                                            <input type="radio" name="paymentMethod" value="@PaymentMethod.CreditCard" ng-model="paymentMethod" ng-change="CreditCardPromo.Check(CreditCard.Number)" />
+                                            <input class="input-cc" type="radio" name="paymentMethod" value="@PaymentMethod.CreditCard" ng-model="paymentMethod" ng-change="CreditCardPromo.Check(CreditCard.Number)" />
                                         </div>
                                         <h5>Kartu Kredit / Debit</h5>
                                     </header>
@@ -352,7 +352,7 @@
                                 <label ng-click="binDiscount.reset('ncc')">
                                     <header>
                                         <div class="input-wrapper">
-                                            <input type="radio" name="paymentMethod" value="@PaymentMethod.VirtualAccount" ng-model="paymentMethod" />
+                                            <input class="input-atm" type="radio" name="paymentMethod" value="@PaymentMethod.VirtualAccount; VirtualAccount" ng-model="paymentMethod" />
                                         </div>
                                         <h5>ATM</h5>
                                     </header>
@@ -363,7 +363,7 @@
                                 <label ng-click="binDiscount.reset('ncc')">
                                     <header>
                                         <div class="input-wrapper">
-                                            <input type="radio" name="paymentMethod" value="@PaymentMethod.MandiriClickPay" ng-model="paymentMethod" />
+                                            <input class="input-cp" type="radio" name="paymentMethod" value="@PaymentMethod.MandiriClickPay" ng-model="paymentMethod" />
                                         </div>
                                         <h5>Mandiri ClickPay</h5>
                                     </header>
@@ -390,7 +390,7 @@
                     @if (!User.Identity.IsAuthenticated || (User.Identity.IsAuthenticated && true /*tambah kredit kart baru*/ ))
                     {
 
-                    <div class="credit-card-form" ng-show="paymentMethod == '@PaymentMethod.CreditCard'">
+                        <div id="payment-cc" class="credit-card-form" ng-show="paymentMethod == '@PaymentMethod.CreditCard'">
 
                         <form name="creditCardForm" novalidate>
                             <h3 class="no-spacing"><b>DETAIL </b>KARTU KREDIT/DEBIT</h3>
@@ -453,53 +453,85 @@
                         </form>
                     </div>
                 <!-- .credit-card-form -->
-                        <div class="credit-card-form" ng-show="paymentMethod == '@PaymentMethod.MandiriClickPay'">
+                        <div id="payment-cp" class="credit-card-form" ng-show="paymentMethod == '@PaymentMethod.MandiriClickPay'">
+                        <div class="form-group">
+                            <h3><b>DETAIL</b> PEMBAYARAN - <b>MANDIRI CLICKPAY</b></h3>
+                            <div class="form-group" ng-class="{'has-error' : !checkNumber(MandiriClickPay.CardNo)}">
+                                <label class="control-label">Nomor Kartu</label>
+                                <input type="text" value="" class="form-control cc-number" maxlength="16" ng-model="MandiriClickPay.CardNo" />
+                            </div>
+                            <div ng-show="!checkNumber(MandiriClickPay.CardNo)" style="color:red">
+                                Nomor kartu tidak boleh mengandung karakter selain angka
+                            </div>
                             <div class="form-group">
-                                <h3><b>DETAIL</b> PEMBAYARAN - <b>MANDIRI CLICKPAY</b></h3>
-                                <div class="form-group" ng-class="{'has-error' : !checkNumber(MandiriClickPay.CardNo)}">
-                                    <label class="control-label">Nomor Kartu</label>
-                                    <input type="text" value="" class="form-control cc-number" maxlength="16" ng-model="MandiriClickPay.CardNo" />
-                                </div>
-                                <div ng-show="!checkNumber(MandiriClickPay.CardNo)" style="color:red">
-                                    Nomor kartu tidak boleh mengandung karakter selain angka
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label">Input Token Mandiri &nbsp;<small>(diisi secara berurutan)</small></label>
-                                    <div class="form-mandiri-payment">
-                                        <ul class="form-row clearfix">
-                                            <li class="col-left">APPLI</li>
-                                            <li class="col-middle">:</li>
-                                            <li class="col-right">3</li>
-                                        </ul>
-                                        <ul class="form-row clearfix">
-                                            <li class="col-left">Input 1</li>
-                                            <li class="col-middle">:</li>
+                                <label class="control-label">Input Token Mandiri &nbsp;<small>(diisi secara berurutan)</small></label>
+                                <div class="form-mandiri-payment">
+                                    <ul class="form-row clearfix">
+                                        <li class="col-left">APPLI</li>
+                                        <li class="col-middle">:</li>
+                                        <li class="col-right">3</li>
+                                    </ul>
+                                    <ul class="form-row clearfix">
+                                        <li class="col-left">Input 1</li>
+                                        <li class="col-middle">:</li>
                                             <li class="col-right" ng-if="MandiriClickPay.CardNo != null && MandiriClickPay.CardNo.length == 0">{{MandiriClickPay.CardNo | limitTo:-10}}</li>
                                             <li class="col-right" ng-if="MandiriClickPay.CardNo == null || MandiriClickPay.CardNo.length == 0">Masukkan Nomor Kartu Terlebih Dahulu</li>
-                                        </ul>
-                                        <ul class="form-row clearfix">
-                                            <li class="col-left">Input 2</li>
-                                            <li class="col-middle">:</li>
-                                            <li class="col-right">{{totalPrice - voucher.amount - CreditCardPromo.Amount + UniqueCodePaymentConfig.UniqueCode}}</li>
-                                        </ul>
-                                        <ul class="form-row clearfix">
-                                            <li class="col-left">Input 3</li>
-                                            <li class="col-middle">:</li>
-                                            <li class="col-right">@Model.RsvNo.Substring(Model.RsvNo.Length - 5, 5)</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="form-group" ng-class="{'has-error' : !checkNumber(MandiriClickPay.Token)}">
-                                    <label class="control-label">Respon Token Mandiri</label>
-                                    <input type="text" value="" class="form-control cc-number" maxlength="6" placeholder="XXXXXX" ng-model="MandiriClickPay.Token" ng-required="paymentMethod == '@PaymentMethod.MandiriClickPay'" />
-                                </div>
-                                <div ng-show="!checkNumber(MandiriClickPay.Token)" style="color:red">
-                                    Respon token tidak boleh mengandung karakter selain angka
+                                    </ul>
+                                    <ul class="form-row clearfix">
+                                        <li class="col-left">Input 2</li>
+                                        <li class="col-middle">:</li>
+                                        <li class="col-right">{{totalPrice - voucher.amount - CreditCardPromo.Amount + UniqueCodePaymentConfig.UniqueCode}}</li>
+                                    </ul>
+                                    <ul class="form-row clearfix">
+                                        <li class="col-left">Input 3</li>
+                                        <li class="col-middle">:</li>
+                                        <li class="col-right">@Model.RsvNo.Substring(Model.RsvNo.Length - 5, 5)</li>
+                                    </ul>
                                 </div>
                             </div>
+                            <div class="form-group" ng-class="{'has-error' : !checkNumber(MandiriClickPay.Token)}">
+                                <label class="control-label">Respon Token Mandiri</label>
+                                <input type="text" value="" class="form-control cc-number" maxlength="6" placeholder="XXXXXX" ng-model="MandiriClickPay.Token" ng-required="paymentMethod == '@PaymentMethod.MandiriClickPay'" />
+                            </div>
+                            <div ng-show="!checkNumber(MandiriClickPay.Token)" style="color:red">
+                                Respon token tidak boleh mengandung karakter selain angka
+                            </div>
                         </div>
+                    </div>
 
                     }
+                    <div class="selected-bank">
+                        <div class="summary summary--payment">
+                            <div id="payment-trf">
+                                <h3 class="widget-title">PILIHAN <b>BANK</b></h3>
+                                <label>
+                                    <header>
+                                        <div class="input-wrapper">
+                                            <input type="radio" name="paymentMethod" value="BankMandiri" />
+                                        </div>
+                                        <h5>Bank Mandiri</h5>
+                                    </header>
+                                    <section>
+                                        <img src="/Assets/images/mandiri.png" alt="Bank Mandiri" />
+                                    </section>
+                                </label>
+                            </div>
+                            <div id="payment-atm">
+                                <h3 class="widget-title">PILIHAN <b>BANK</b></h3>
+                                <label>
+                                    <header>
+                                        <div class="input-wrapper">
+                                            <input type="radio" name="paymentMethod" value="BankPermata" />
+                                        </div>
+                                        <h5>Bank Permata</h5>
+                                    </header>
+                                    <section>
+                                        <img src="/Assets/images/permata.png" alt="Bank Permata" />
+                                    </section>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
 
                     <div class="widget countdown">
                         <h3 class="widget-title"><b>SISA</b> WAKTU</h3>
@@ -524,7 +556,7 @@
                         </div>
                     </div><!-- .widget.countdown -->
                     <br />
-                    
+
 
                     <div ng-show="paymentMethod == '@PaymentMethod.CimbClicks'">
                         <p>
@@ -554,7 +586,7 @@
                             <div class="form-group">
                                 <button type="submit" class="btn btn-yellow form-control" ng-disabled="(checkoutForm.loading || !paymentMethod) || !creditCardForm.$valid">BAYAR</button>
                             </div>
-                            
+
                         </form>
 
                         <form action="" method="post" name="submitForm" id="rsvno" class="hidden">

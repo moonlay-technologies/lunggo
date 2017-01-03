@@ -80,7 +80,7 @@
 
     .room-rl {width: 53%;} .room-rm {width: 19%;} .room-rr {width: 28%;}
 
-    .wb-left {width: 40%;} .wb-mid {width: 3%;} .wb-right {width: 57%;}
+    .wb-left {width: 30%;} .wb-mid {width: 3%;} .wb-right {width: 67%;}
 
     .ot-left {width: 22%;}  .ot-right {width: 78%;} 
 
@@ -707,5 +707,8 @@
                 @include border-radius(2px);
             }
         } 
+        .review-hotel {
+            .col-right-hotel {margin: 20px 0;}
+        }
     }
 }

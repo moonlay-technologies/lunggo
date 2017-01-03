@@ -138,7 +138,7 @@
     var paymentTimeout = '';
     // development only start
     paymentTimeout = new Date('@Model.TimeLimit.ToString("yyyy-MM-dd'T'HH:mm:ss")');
-    console.log("TIME OUT"+paymentTimeout);
+        console.log("TIME OUT" + paymentTimeout);
     // countdown timer
     $('.timer').countdown(paymentTimeout, function(event) {
         $('.timer .hour').text(event.strftime('%H'));
@@ -152,7 +152,7 @@
     });
     var langCode = '@OnlineContext.GetActiveLanguageCode()';
     var currentPage = 1;
-    var transferWindow = ['@ConfigManager.GetInstance().GetConfigValue("general","bankTransferStartTime")', '@ConfigManager.GetInstance().GetConfigValue("general","bankTransferEndTime")'];
+        var transferWindow = ['@ConfigManager.GetInstance().GetConfigValue("general", "bankTransferStartTime")', '@ConfigManager.GetInstance().GetConfigValue("general", "bankTransferEndTime")'];
     //var transferWindow = [ '1100', '1124' ];
     // messages
     var message = '@ViewBag.Message';
@@ -184,7 +184,8 @@
                         @:originalPrice = '@reservation.HotelDetail.OriginalFare';
                     }
     var redirectionUrl;
-    @if (Model.Reservation.Payment.RedirectionUrl != null) {
+        @if (Model.Reservation.Payment.RedirectionUrl != null)
+        {
         @:redirectionUrl = '@Model.Reservation.Payment.RedirectionUrl';
                 }
     @if (Model.Reservation is FlightReservationForDisplay)
@@ -209,7 +210,7 @@
         @:originalPrice = '@hotel.HotelDetail.OriginalFare';
         @:price = '@hotel.HotelDetail.NetFare';
         @:totalRoom = '@hotel.HotelDetail.Rooms.SelectMany(r => r.Rates).Sum(p => p.RoomCount)';
-        @:checkin = '@hotel.HotelDetail.CheckInDate.ToString("D",CultureInfo.CreateSpecificCulture("id-ID"))';
+                    @:checkin = '@hotel.HotelDetail.CheckInDate.ToString("D", CultureInfo.CreateSpecificCulture("id-ID"))';
         @:checkout = '@hotel.HotelDetail.CheckOutDate.ToString("D", CultureInfo.CreateSpecificCulture("id-ID"))';
         @:nights = '@((hotel.HotelDetail.CheckOutDate - hotel.HotelDetail.CheckInDate).Days)';
         @:totalpax = '@totalpax';
@@ -222,8 +223,8 @@
     }
     var loggedIn = @User.Identity.IsAuthenticated.ToString().ToLower();
     var buyerInfo = {
-        fullname : '@(User.Identity.GetFirstName() + " " + User.Identity.GetLastName())',
-        countryCode : '@User.Identity.GetCountryCd()',
+            fullname: '@(User.Identity.GetFirstName() + " " + User.Identity.GetLastName())',
+            countryCode: '@User.Identity.GetCountryCd()',
         phone: '@User.Identity.GetPhoneNumber()',
         email: '@User.Identity.GetEmail()'
     };
@@ -263,7 +264,7 @@
                                     <label ng-class="{ 'disabled' : !transferWindowOpen }">
                                         <header>
                                             <div class="input-wrapper">
-                                                <input ng-disabled="!transferWindowOpen" type="radio" name="paymentMethod" value="@PaymentMethod.BankTransfer"
+                                                        <input class="input-trf" ng-disabled="!transferWindowOpen" type="radio" name="paymentMethod" value="@PaymentMethod.BankTransfer"
                                                        ng-model="paymentMethod" checked ng-change="CreditCardPromo.Check(CreditCard.Number)" />
                                             </div>
                                             <h5>Bank Transfer</h5>
@@ -293,7 +294,7 @@
                                     <label>
                                         <header>
                                             <div class="input-wrapper">
-                                                <input type="radio" name="paymentMethod" value="@PaymentMethod.VirtualAccount" ng-model="paymentMethod" ng-change="CreditCardPromo.Check(CreditCard.Number)" />
+                                                        <input class="input-atm" type="radio" name="paymentMethod" value="@PaymentMethod.VirtualAccount" ng-model="paymentMethod" ng-change="CreditCardPromo.Check(CreditCard.Number)" />
                                             </div>
                                             <h5>ATM</h5>
                                         </header>
@@ -353,10 +354,9 @@
                         @if (!User.Identity.IsAuthenticated || (User.Identity.IsAuthenticated && true /*tambah kredit kart baru*/ ))
                         {
 
-                            <div class="credit-card-form" ng-show="paymentMethod == '@PaymentMethod.CreditCard'">
-
+                                    <div class="credit-card-form clearfix" ng-show="paymentMethod == '@PaymentMethod.CreditCard'">
                                 <form name="creditCardForm" novalidate>
-                                    <h3 class="no-spacing">Detail <b>Kartu Kredit/Debit</b></h3>
+                                            <h3 class="no-spacing">DETAIL <b>KARTU KREDIT/DEBIT</b></h3>
 
                                     <!-- new credit card start -->
                                     <div ng-if="CreditCard.TwoClickToken == 'false'">
@@ -422,7 +422,7 @@
                         
                         <form name="mandiriClickPayForm" novalidate>
                             <div class="mandiri-clikpay-form" ng-show="paymentMethod == '@PaymentMethod.MandiriClickPay'">
-                                <div class="form-group">
+                                        <div class="form-group clearfix">
                                     <h3><b>DETAIL</b> PEMBAYARAN - <b>MANDIRI CLICKPAY</b></h3>
                                     <div class="form-group" ng-class="{'has-error' : !checkNumber(MandiriClickPay.CardNo)}">
                                         <label class="control-label">Nomor Kartu</label>
@@ -464,16 +464,44 @@
                                     </div>
                                     <div ng-show="!checkNumber(MandiriClickPay.Token)" style="color:red">
                                         Respon token tidak boleh mengandung karakter selain angka
+                                </div>
+                                    </div>
+                                        </div>
+                        </form>
+                                <div class="selected-bank payment-wrapper">
+                                    <div class="row payment-transfer">
+                                        <div class="col-xs-12"><h3>PILIHAN <b>BANK</b></h3></div>
+                                        <div class="payment mandiri col-xs-4">
+                                            <label>
+                                                <header>
+                                                    <div class="input-wrapper">
+                                                        <input type="radio" name="SelectedBank" value="BankMandiri">
+                                                    </div>
+                                                    <h5>Bank Mandiri</h5>
+                                                </header>
+                                                <section>
+                                                    <img src="/Assets/images/mandiri.png" alt="Bank Mandiri">
+                                                </section>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="row payment-atm">
+                                        <div class="col-xs-12"><h3>PILIHAN <b>BANK</b></h3></div>
+                                        <div class="payment permata col-xs-4">
+                                            <label>
+                                                <header>
+                                                    <div class="input-wrapper">
+                                                        <input type="radio" name="SelectedBank" value="BankPermata">
+                                                    </div>
+                                                    <h5>Bank Permata</h5>
+                                                </header>
+                                                <section>
+                                                    <img src="/Assets/images/permata.png" alt="Bank Permata">
+                                                </section>
+                                            </label>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </form>
-                        
-                        <div ng-show="paymentMethod == '@PaymentMethod.CimbClicks'">
-                            <p>
-                                Setelah mengklik tombol di bawah ini, Anda akan dialihkan ke halaman pembayaran dan tidak dapat memilih metode pembayaran yang lainnya.
-                            </p>
-                        </div>
                         <div class="step-button">
 
                             <form name="finalForm" id="finalForm" ng-submit="pay.setPaymentMethod()">

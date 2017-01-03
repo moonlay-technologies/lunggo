@@ -562,20 +562,21 @@ border:1px solid #CE9A01;-webkit-box-shadow: #FFF563 0px 1px 0px inset;-moz-box-
 /*ACCORDION*/
 .accordion-wrapper { 
     .accordion-title {
-        background-color: #35b6e7;
+        background-color: #35b6e7; 
         color: #fff;
         cursor: pointer;
         padding: 7px 15px;
         width: 100%;
         font-size: 13px;
         font-weight: 600;
-        &.active:after {content: "\2796"}
+        &.active:after {content: '-'}
         &:after {
-            content: '\02795';
-            font-size: 13px;
+            content: '+';
+            font-size: 20px;
             color: #fff;
             float: right;
             margin-left: 5px;
+            line-height: 20px;
         }
     }
     .accordion-content {

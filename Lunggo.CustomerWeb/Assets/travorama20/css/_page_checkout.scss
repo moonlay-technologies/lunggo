@@ -76,6 +76,7 @@ file : /Assets/travorama20/css/_page_checkout.scss
             &.btn-grey {margin-right: 10px;}
         }
     }
+    form[name="finalForm"] {margin-top: 25px;}
 }
 
 //General
@@ -240,14 +241,19 @@ label.control-label {
 }
 
 // payment method
-.payment-wrapper {margin-bottom:24px;
+.payment-wrapper {
     .payment {margin-bottom:6px;
         label {display:block; cursor:pointer;}
         header {background:$color-main-blue; position:relative;
             .input-wrapper {height:100%; position:absolute; background:#028ec3; width:30px; text-align:center; padding-top:6px;}
             h5 {color:#fff; color:#fff; margin:0; padding:10px; padding-left:40px; font-size:12px; font-weight:600;}
         }
-        section {padding:12px; border:$border-default; text-align:center; background:#fff;}
+        section {padding:12px; border:$border-default; text-align:center; background:#fff;
+            img {
+                width: auto;
+                height: 45px;
+            }
+        }
         // if disabled
         &.disabled {opacity:0.5;}
     }
