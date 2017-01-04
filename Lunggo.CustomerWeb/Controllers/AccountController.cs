@@ -781,7 +781,7 @@ namespace Lunggo.CustomerWeb.Controllers
                         if (displayReservation.Payment.Method == PaymentMethod.BankTransfer ||
                             displayReservation.Payment.Method == PaymentMethod.VirtualAccount)
                         {
-                            return RedirectToAction("Confirmation", "Payment", new { rsvNo = rsvNo });
+                            return RedirectToAction("Instruction", "Payment", new { rsvNo = rsvNo });
                             // jika bank transfer & VA
                         }
                         else if (displayReservation.Payment.Method == PaymentMethod.CimbClicks)
@@ -800,7 +800,7 @@ namespace Lunggo.CustomerWeb.Controllers
                         if (displayReservation.Payment.Method == PaymentMethod.BankTransfer ||
                             displayReservation.Payment.Method == PaymentMethod.VirtualAccount)
                         {
-                            return RedirectToAction("Confirmation", "Payment", new { rsvNo = rsvNo });
+                            return RedirectToAction("Instruction", "Payment", new { rsvNo = rsvNo });
                             // jika bank transfer & VA
                         }
                         else if (displayReservation.Payment.Method == PaymentMethod.CimbClicks)
