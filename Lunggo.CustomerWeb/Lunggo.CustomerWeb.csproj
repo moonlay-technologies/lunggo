@@ -1143,7 +1143,6 @@
     <Content Include="Assets\mobile\js\CheckoutController.js" />
     <Content Include="Assets\mobile\js\HomeController.js" />
     <Content Include="Assets\mobile\js\HotelController.js" />
-    <Content Include="Assets\mobile\js\PromoController.js" />
     <Content Include="Assets\mobile\js\returnFlightController.js" />
     <Content Include="Assets\mobile\js\singleFlightController.js" />
     <Content Include="Assets\mobile\js\StaticController.js" />
@@ -1239,6 +1238,9 @@
     <Content Include="Assets\vendor\slick\slick.css" />
     <Content Include="Assets\vendor\slick\slick.min.js" />
     <Content Include="Config\Airline.csv" />
+    <Content Include="Config\GeoCodingAPI.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Config\i18n_message.xml">
       <SubType>Designer</SubType>
     </Content>
@@ -1409,7 +1411,6 @@
     <Content Include="Assets\mobile\css\_page_hotel_detail.scss" />
     <Content Include="Assets\mobile\css\_page_hotel_search.scss" />
     <Content Include="Assets\mobile\css\_page_static.scss" />
-    <Content Include="Assets\travorama20\css\global-error.css.map" />
     <Content Include="Assets\travorama20\css\help_section.css.map" />
     <Content Include="Assets\travorama20\css\style_desktop.scss" />
     <Content Include="Assets\travorama20\css\_footer.scss" />
@@ -1436,6 +1437,7 @@
     <None Include="Properties\PublishProfiles\travorama-dv2-cw.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-prod-cw %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-prod-cw.pubxml" />
+    <None Include="Properties\PublishProfiles\travorama-prod-cw__staging %286%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-prod-cw__staging.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-prod-cw__staging2 %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-prod-cw__staging2 %285%29.pubxml" />
