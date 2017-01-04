@@ -427,7 +427,7 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
                       "rateCount": room.rate.breakdowns[0].rateCount,
                       "adultCount": room.rate.breakdowns[0].adultCount,
                       "childCount": room.rate.breakdowns[0].childCount,
-                      "childrenAges": room.rate.breakdowns[0].childCount > 1 ? room.rate.breakdowns[0].childrenAges[0] : null
+                      "childrenAges": room.rate.breakdowns[0].childrenAges
                   }
             ]
         }).$promise.then(function (data) {

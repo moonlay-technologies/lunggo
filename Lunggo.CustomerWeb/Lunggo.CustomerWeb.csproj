@@ -277,6 +277,7 @@
     <Content Include="Assets\bootstrap\bootstrap.css" />
     <Content Include="Assets\bootstrap\bootstrap.min.css" />
     <Content Include="Assets\css\font-awesome.min.css" />
+    <Content Include="Assets\css\invoice.css" />
     <Content Include="Assets\css\jquery-ui.min.css" />
     <Content Include="Assets\css\neweticket.css">
       <DependentUpon>neweticket.scss</DependentUpon>

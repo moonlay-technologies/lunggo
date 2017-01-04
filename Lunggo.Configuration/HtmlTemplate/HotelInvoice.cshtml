@@ -13,12 +13,12 @@
 
     <link rel="shortcut icon" type="image/ico" href="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/favico.ico")" />
 
-    <title>Travorama - Voucher Hotel</title>
+    <title>Travorama - Invoice</title>
 
     <!-- stylesheets -->
     <link rel="stylesheet" href="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/css/bootstrap.min.css")">
     <link rel="stylesheet" href="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/css/font-awesome.min.css")">
-    <link rel="stylesheet" href="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/css/invoice.min.css")">
+    <link rel="stylesheet" href="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/css/invoice.css")">
 
 </head>
 <body class="eticket">
@@ -119,7 +119,7 @@
                                 </tr>
                                 <tr>
                                     <td>Alamat Hotel</td>
-                                    <td>@Model.HotelDetail.Address @Model.HotelDetail.DestinationName, @Model.HotelDetail.PostalCode, @Model.HotelDetail.CountryName</td>
+                                    <td>@Model.HotelDetail.Address</td>
                                 </tr>
                                 <tr>
                                     <td>No. Telepon</td>
@@ -151,17 +151,21 @@
                             {
                                 for (var k = 0; k < Model.HotelDetail.Rooms[j].Rates.Count; k++)
                                 {
-                                    <tr>
-                                        <td class="no">@(i).</td>
-                                        <td class="item">Kamar</td>
-                                        <td class="description">
-                                            @HotelService.GetInstance().GetHotelRoom(Model.HotelDetail.Rooms[j].RoomCode).RoomDescId
-                                            @HotelService.GetInstance().GetHotelBoardDescId(Model.HotelDetail.Rooms[j].Rates[k].Boards)
-                                        </td> @*tipe kamar*@ @*board*@
-                                        <td class="qty">@Model.HotelDetail.Rooms[j].Rates[k].RateCount </td>@*jumlah kamar*@
-                                        <td class="price"></td>
-                                        <td class="total">@Model.HotelDetail.Rooms[j].Rates[k].NetFare.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</td>
-                                    </tr>
+                                    for (var m = 0; m < Model.HotelDetail.Rooms[j].Rates[k].Breakdowns.Count; m++)
+                                    {
+                                        <tr>
+                                            <td class="no">@(i).</td>
+                                            <td class="item">Kamar</td>
+                                            <td class="description">
+                                                @HotelService.GetInstance().GetHotelRoom(Model.HotelDetail.Rooms[j].RoomCode).RoomDescId
+                                                @HotelService.GetInstance().GetHotelBoardDescId(Model.HotelDetail.Rooms[j].Rates[k].Breakdowns[m].BoardDescription)
+                                            </td> @*tipe kamar*@ @*board*@
+                                            <td class="qty">@Model.HotelDetail.Rooms[j].Rates[k].Breakdowns[m].RateCount</td>@*jumlah kamar*@
+                                            <td class="price"></td>
+                                            <td class="total">@Model.HotelDetail.Rooms[j].Rates[k].Breakdowns[m].NetTotalFare.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</td>
+                                        </tr>
+                                    }
+
                                     i++;
                                 }
                             }

@@ -161,9 +161,10 @@ namespace Lunggo.CustomerWeb.Controllers
         {
             return View();
         }
-        public ActionResult VoucherHotel()
+        public ActionResult VoucherHotel(string rsvNo)
         {
-            return View();
+            var rsv = HotelService.GetInstance().GetReservationForDisplay(rsvNo);
+            return View(rsv);
         }
         public ActionResult SorryEmailHotel()
         {
