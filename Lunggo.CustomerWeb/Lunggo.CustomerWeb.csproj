@@ -1571,6 +1571,7 @@
     <Content Include="Views\Shared\Mobile\_SearchHotelForm.cshtml" />
     <Content Include="Views\Shared\Mobile\_SelectCheckInDate.cshtml" />
     <Content Include="Views\Shared\Mobile\_Summary.cshtml" />
+    <Content Include="Views\Shared\Desktop\_HotelDetail.cshtml" />
     <None Include="Views\Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
