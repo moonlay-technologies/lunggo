@@ -281,7 +281,9 @@
     <Content Include="Assets\css\neweticket.css">
       <DependentUpon>neweticket.scss</DependentUpon>
     </Content>
-    <Content Include="Assets\css\promo.css" />
+    <Content Include="Assets\css\promo.css">
+      <DependentUpon>promo.scss</DependentUpon>
+    </Content>
     <Content Include="Assets\fonts\bootstrap\glyphicons-halflings-regular.svg" />
     <Content Include="Assets\fonts\DINB-webfont.svg" />
     <Content Include="Assets\fonts\DINR-webfont.svg" />
@@ -766,6 +768,7 @@
     <Content Include="Assets\images\logo.png" />
     <Content Include="Assets\images\main-menu-arrow.png" />
     <Content Include="Assets\images\mandiri-logo.jpg" />
+    <Content Include="Assets\images\mandiri.png" />
     <Content Include="Assets\images\map.jpg" />
     <Content Include="Assets\images\mastercard-logo.jpg" />
     <Content Include="Assets\images\menu-icon-white.png" />
@@ -789,6 +792,7 @@
     <Content Include="Assets\images\penerbangan-pergi.jpg" />
     <Content Include="Assets\images\penerbangan-pulang.jpg" />
     <Content Include="Assets\images\peringatan.png" />
+    <Content Include="Assets\images\permata.png" />
     <Content Include="Assets\images\permatabank.jpg" />
     <Content Include="Assets\images\phone-icon.png" />
     <Content Include="Assets\images\phone.png" />
@@ -903,6 +907,10 @@
     <Content Include="Assets\images\user-register-bg.jpg" />
     <Content Include="Assets\images\verisign.png" />
     <Content Include="Assets\images\visa-logo.jpg" />
+    <Content Include="Assets\images\voucher\email-white.png" />
+    <Content Include="Assets\images\voucher\hotel.jpg" />
+    <Content Include="Assets\images\voucher\phone-white.png" />
+    <Content Include="Assets\images\voucher\travorama-white.png" />
     <Content Include="Assets\images\warning-image.png" />
     <Content Include="Assets\images\white-bg.png" />
     <Content Include="Assets\images\wifi.png" />
@@ -1364,7 +1372,6 @@
     <Content Include="Assets\bootstrap\_bootstrap-compass.scss" />
     <Content Include="Assets\bootstrap\_bootstrap-mincer.scss" />
     <Content Include="Assets\bootstrap\_bootstrap-sprockets.scss" />
-    <Content Include="Assets\css\promo.scss" />
     <Content Include="Assets\fonts\bootstrap\glyphicons-halflings-regular.eot" />
     <Content Include="Assets\fonts\bootstrap\glyphicons-halflings-regular.ttf" />
     <Content Include="Assets\fonts\bootstrap\glyphicons-halflings-regular.woff" />
@@ -1419,6 +1426,7 @@
     <Content Include="Assets\travorama20\css\_screenLarge.scss" />
     <Content Include="Assets\travorama20\css\_screenSmall.scss" />
     <Content Include="Assets\css\neweticket.scss" />
+    <Content Include="Assets\css\promo.scss" />
     <None Include="Properties\PublishProfiles\prod-cw %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\dv1-cw.pubxml" />
     <None Include="Properties\PublishProfiles\dv2-cw.pubxml" />
