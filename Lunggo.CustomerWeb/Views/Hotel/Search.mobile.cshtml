@@ -24,6 +24,10 @@
         {
             loc = foundLocation.Zone + ", " + foundLocation.Destination + ", " + foundLocation.Country;
         }
+        else if (foundLocation.Type == 3)
+        {
+            loc = foundLocation.Area + ", " + foundLocation.Destination + ", " + foundLocation.Country;
+        }
         else if (foundLocation.Type == 4)
         {
             loc = foundLocation.HotelName + ", " + foundLocation.Destination + ", " + foundLocation.Country;
@@ -118,6 +122,14 @@
                             <input type="text" name="priceSliderValueMax" value="" class="price-slider-max" ng-model="filter.maxPrice" />
                         </div>
 
+                    </div>
+                </div>
+                <div class ="filter-group">
+                    <div class="filter-group__header">
+                        <h4 class="filter-group__title">Nama Hotel</h4>
+                    </div>
+                    <div class="filter-group__content">
+                        <input type="text" ng-pattern="/^[a-zA-Z]*$/" ng-model="filter.nameFilter" ng-disabled="hotels.length < 1" class="form-hotel-name form-control" tra-on-enter="filterHotels()">
                     </div>
                 </div>
                 <div class="filter-group filter-group--rating">

@@ -7,14 +7,27 @@
             <section class="tab-content">
                 <section class="hotel-location-search custom-scroll">
                     <div class="hotel-autocomplete-pre">
-                        <h3 class="text-center text-pre">Masukkan Kata Kunci Anda (Minimal 3 huruf)</h3>
-                        <h3 class="text-center text-loading">Mencari lokasi</h3>
+                        <h3 class="text-center text-pre" ng-show="autocompletePre">Masukkan Kata Kunci Anda (Minimal 3 huruf)</h3>
+                        <h3 class="text-center text-loading" ng-show="autocompleteLoading">Mencari lokasi</h3>
                     </div>
-                    <div class="hotel-autocomplete-no-result">
+                    <div class="hotel-autocomplete-result" ng-show="showPopularDestinations && !autocompletePre">
+                        <ul>
+                            <li class="list-hotel" ng-repeat="destination in PopularDestinations" ng-click="getLocationId(destination)">
+                                <div class="list-row">
+                                    <div class="lr-wrapper clearfix">
+                                        <div class="col-6">
+                                            <div class="location bold-txt">{{destination}}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="hotel-autocomplete-no-result" ng-show="autocompleteNoResult && !showPopularDestinations && !autocompleteLoading">
                         <h2 class="text-center">Hasil Tidak Ditemukan</h2>
                     </div>
                     <div class="hotel-autocomplete-result">
-                      <ul>
+                      <ul ng-show="hotelSearch.locationDisplay.length >= 3">
                             <li class="list-hotel" ng-repeat="location in hotelSearch.hotelAutocomplete track by $index" ng-click="selectLocation(location)">
                                 <div class="list-row">
                                     <div class="lr-wrapper clearfix">
@@ -33,7 +46,7 @@
                 </section><!-- .location-search -->               
             </section>
         </section>
-        <section class="location-search">
+        @*<section class="location-search">
             <div class="autocomplete-pre">
                 <h3 class="text-center text-pre">Masukkan Kata Kunci Anda (Minimal 3 huruf)</h3>
                 <h3 class="text-center text-loading">Mencari lokasi</h3>
@@ -41,6 +54,6 @@
             <div class="autocomplete-no-result">
                 <h2 class="text-center">Hasil Tidak Ditemukan</h2>
             </div>
-        </section>
+        </section>*@
     </section>
 </div>

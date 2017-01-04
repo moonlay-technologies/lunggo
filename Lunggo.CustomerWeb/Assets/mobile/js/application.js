@@ -3,7 +3,7 @@ if (typeof (angular) == 'object') {
 
     var app = angular.module('travoramaMobile', ['ngRoute', 'ngResource']);
     // root scope
-    app.run(function ($rootScope, $log, $resource, $timeout) {
+    app.run(function ($rootScope, $log) {
         $rootScope.travoramaModuleName = 'travoramaMobile';
 
         $.datepicker.setDefaults(
@@ -12,9 +12,10 @@ if (typeof (angular) == 'object') {
             $.datepicker.regional['id']
             )
         );
-
+        $(document).ready(function () {
+            $(".ui-datepicker").datepicker();
+        });
         var trial = 0;
-
         // general page config and function
         $rootScope.PageConfig = {
 
@@ -22,12 +23,12 @@ if (typeof (angular) == 'object') {
             // Popular Destination
             PopularDestination: {
                 Popular: [
-                    { Name: 'Soekarno Hatta Intl.', City: 'Jakarta', Country: 'Indonesia', Code: 'CGK' },
+                    { Name: 'Semua Bandara', City: 'Jakarta', Country: 'Indonesia', Code: 'JKT' },
                     { Name: 'Ngurah Rai Intl.', City: 'Denpasar', Country: 'Indonesia', Code: 'DPS' },
                     { Name: 'Juanda', City: 'Surabaya', Country: 'Indonesia', Code: 'SUB' },
                     { Name: 'Kuala Namu Intl.', City: 'Medan', Country: 'Indonesia', Code: 'KNO' },
                     { Name: 'Sultan Hasanudin', City: 'Makassar', Country: 'Indonesia', Code: 'UPG' },
-                    { Name: 'Adisucipto', City: 'Yogyakarta', Country: 'Indonesia', Code: 'JOG' },
+                    { Name: 'Sultan Aji Muhammad Sulaiman', City: 'Balikpapan', Country: 'Indonesia', Code: 'BPN' },
                     { Name: 'Changi', City: 'Singapore', Country: 'Singapore', Code: 'SIN' },
                     { Name: 'Donmueang', City: 'Bangkok', Country: 'Thailand', Code: 'DMK' },
                     { Name: 'Hat Yai', City: 'Hat Yai', Country: 'Thailand', Code: 'HDY' },
@@ -51,7 +52,9 @@ if (typeof (angular) == 'object') {
 
                     { Name: 'Abu Dhabi Intl. Arpt', City: 'Abu Dhabi', Country: 'United Arab Emirates', Code: 'AUH' },
                     { Name: 'Hamad Intl. Arpt', City: 'Doha', Country: 'Qatar', Code: 'DOH' },
-                    { Name: 'Ibrahim Nasir Intl. Arpt.', City: 'Male', Country: 'Maldives', Code: 'MLE' },
+                    { Name: 'Dubai', City: 'Dubai', Country: 'United Arab Emirates', Code: 'DXB' },
+                    { Name: 'Chhatrapati Shivaji Intl. Arpt.', City: 'Mumbai', Country: 'India', Code: 'BOM' },
+                    { Name: 'Indira Gandhi Intl. Arpt.', City: 'New Delhi', Country: 'India', Code: 'DEL' },
 
                     { Name: 'Tullamarine', City: 'Melbourne', Country: 'Australia', Code: 'MEL' },
                     { Name: 'Perth Intl.', City: 'Perth', Country: 'Australia', Code: 'PER' },
@@ -71,37 +74,41 @@ if (typeof (angular) == 'object') {
                     { Name: 'Rome All Arpt.', City: 'Rome', Country: 'Italy', Code: 'ROM' }
                 ],
                 Indonesia: [
-                    { Name: 'Soekarno Hatta Intl.', City: 'Jakarta', Country: 'Indonesia', Code: 'CGK' },
-                    { Name: 'Husein Sastranegara', City: 'Bandung', Country: 'Indonesia', Code: 'BDO' },
-                    { Name: 'Adi Sumarmo', City: 'Solo', Country: 'Indonesia', Code: 'SOC' },
-                    { Name: 'Achmad Yani', City: 'Semarang', Country: 'Indonesia', Code: 'SRG' },
+                    { Name: 'Semua Bandara', City: 'Jakarta', Country: 'Indonesia', Code: 'JKT' },
                     { Name: 'Juanda', City: 'Surabaya', Country: 'Indonesia', Code: 'SUB' },
+                    { Name: 'Achmad Yani', City: 'Semarang', Country: 'Indonesia', Code: 'SRG' },
                     { Name: 'Adisucipto', City: 'Yogyakarta', Country: 'Indonesia', Code: 'JOG' },
+                    { Name: 'Adi Sumarmo', City: 'Solo', Country: 'Indonesia', Code: 'SOC' },
+                    { Name: 'Husein Sastranegara', City: 'Bandung', Country: 'Indonesia', Code: 'BDO' },                 
+                    
                     { Name: 'Kuala Namu Intl.', City: 'Medan', Country: 'Indonesia', Code: 'KNO' },
-                    { Name: 'Minangkabau Intl. Arpt.', City: 'Padang', Country: 'Indonesia', Code: 'PDG' },
-                    { Name: 'Radin Inten II', City: 'Bandar Lampung', Country: 'Indonesia', Code: 'TKG' },
-                    { Name: 'Sultan Iskandar Muda Arpt.', City: 'Banda Aceh', Country: 'Indonesia', Code: 'BTJ' },
-                    { Name: 'Fatmawati Soekarno', City: 'Bengkulu', Country: 'Indonesia', Code: 'BKS' },
                     { Name: 'Hang Nadim', City: 'Batam', Country: 'Indonesia', Code: 'BTH' },
-                    { Name: 'Sultan Thaha Syaifuddin', City: 'Jambi', Country: 'Indonesia', Code: 'DJB' },
-                    { Name: 'Depati Amir', City: 'Pangkalpinang', Country: 'Indonesia', Code: 'PGK' },
+                    { Name: 'Minangkabau Intl. Arpt.', City: 'Padang', Country: 'Indonesia', Code: 'PDG' },
+                    { Name: 'Sultan Mahmud Badaruddin II', City: 'Palembang', Country: 'Indonesia', Code: 'PLM' },
                     { Name: 'Sultan Syarif Kasim II', City: 'Pekanbaru', Country: 'Indonesia', Code: 'PKU' },
-                    { Name: 'Pinang Kampai', City: 'Dumai', Country: 'Indonesia', Code: 'DUM' },
-                    { Name: 'Binaka', City: 'Gunung Sitoli', Country: 'Indonesia', Code: 'GNS' },
-                    { Name: 'Maimun Saleh', City: 'Sabang', Country: 'Indonesia', Code: 'SBG' },
+                    { Name: 'Radin Inten II', City: 'Bandar Lampung', Country: 'Indonesia', Code: 'TKG' },
+                    { Name: 'Sultan Thaha Syaifuddin', City: 'Jambi', Country: 'Indonesia', Code: 'DJB' },
+                    { Name: 'Sultan Iskandar Muda Arpt.', City: 'Banda Aceh', Country: 'Indonesia', Code: 'BTJ' },
+                    { Name: 'Raja Haji Fisabilillah', City: 'Tanjung Pinang', Country: 'Indonesia', Code: 'TNJ' },
+                    { Name: 'Fatmawati Soekarno', City: 'Bengkulu', Country: 'Indonesia', Code: 'BKS' },
+                    { Name: 'Depati Amir', City: 'Pangkalpinang', Country: 'Indonesia', Code: 'PGK' },
+                    
                     { Name: 'Ngurah Rai Intl.', City: 'Denpasar, Bali', Country: 'Indonesia', Code: 'DPS' },
-                    { Name: 'Komodo', City: 'Labuan Bajo', Country: 'Indonesia', Code: 'LBJ' },
                     { Name: 'Lombok International Airport', City: 'Lombok', Country: 'Indonesia', Code: 'LOP' },
                     { Name: 'El Tari', City: 'Kupang', Country: 'Indonesia', Code: 'KOE' },
+                    { Name: 'Komodo', City: 'Labuan Bajo', Country: 'Indonesia', Code: 'LBJ' },
                     { Name: 'Haliwen', City: 'Atambua', Country: 'Indonesia', Code: 'ABU' },
                     { Name: 'Muhammad Salahuddin', City: 'Bima', Country: 'Indonesia', Code: 'BMU' },
+
                     { Name: 'Sultan Aji Muhammad Sulaiman', City: 'Balikpapan', Country: 'Indonesia', Code: 'BPN' },
                     { Name: 'Sjamsudin Noor', City: 'Banjarmasin', Country: 'Indonesia', Code: 'BDJ' },
                     { Name: 'Supadio', City: 'Pontianak', Country: 'Indonesia', Code: 'PNK' },
+                    { Name: 'Juwata', City: 'Tarakan', Country: 'Indonesia', Code: 'TRK' },
+                    { Name: 'Rahadi Oesman', City: 'Ketapang', Country: 'Indonesia', Code: 'KTG' },
                     { Name: 'Tjilik Riwut', City: 'Palangkaraya', Country: 'Indonesia', Code: 'PKY' },
                     { Name: 'Temindung', City: 'Samarinda', Country: 'Indonesia', Code: 'SRI' },
                     { Name: 'H. Asan Kampai', City: 'Sampit', Country: 'Indonesia', Code: 'SMQ' },
-                    { Name: 'Rahadi Oesman', City: 'Ketapang', Country: 'Indonesia', Code: 'KTG' },
+                    
                     { Name: 'Sultan Hasanuddin', City: 'Makassar', Country: 'Indonesia', Code: 'UPG' },
                     { Name: 'Sam Ratulangi', City: 'Manado', Country: 'Indonesia', Code: 'MDC' },
                     { Name: 'Jalaluddin', City: 'Gorontalo', Country: 'Indonesia', Code: 'GTO' },
@@ -111,26 +118,27 @@ if (typeof (angular) == 'object') {
                     { Name: 'Kasiguncu', City: 'Poso', Country: 'Indonesia', Code: 'PSJ' },
                     { Name: 'Pongtiku', City: 'Tana Toraja', Country: 'Indonesia', Code: 'TTR' },
                     { Name: 'Lalos', City: 'Tolitoli', Country: 'Indonesia', Code: 'TLI' },
+
                     { Name: 'Pattimura', City: 'Ambon', Country: 'Indonesia', Code: 'AMQ' },
                     { Name: 'Sentani', City: 'Jayapura', Country: 'Indonesia', Code: 'DJJ' },
+                    { Name: 'Frans Kaisepo', City: 'Biak', Country: 'Indonesia', Code: 'BIK' },
                     { Name: 'Sultan Babullah', City: 'Ternate', Country: 'Indonesia', Code: 'TTE' },
                     { Name: 'Jeffman', City: 'Sorong', Country: 'Indonesia', Code: 'SOQ' },
                     { Name: 'Torea', City: 'Fak Fak', Country: 'Indonesia', Code: 'FKQ' },
                     { Name: 'Kebar', City: 'Manokwari', Country: 'Indonesia', Code: 'KEQ' },
                     { Name: 'Kimaan', City: 'Merauke', Country: 'Indonesia', Code: 'KMM' },
                     { Name: 'Morotai Island', City: 'Pitu', Country: 'Indonesia', Code: 'OTI' },
-                    { Name: 'Frans Kaisepo', City: 'Biak', Country: 'Indonesia', Code: 'BIK' },
                     { Name: 'Timika', City: 'Tembagapura', Country: 'Indonesia', Code: 'TIM' },
                     { Name: 'Wamena', City: 'Wamena', Country: 'Indonesia', Code: 'WMX' }
                 ],
                 SouthEastAsia: [
                     { Name: 'Changi', City: 'Singapore', Country: 'Singapore', Code: 'SIN' },
+                    { Name: 'Kuala Lumpur Intl. Arpt.', City: 'Kuala Lumpur', Country: 'Malaysia', Code: 'KUL' },
                     { Name: 'Suvarnabhumi Intl.', City: 'Bangkok', Country: 'Thailand', Code: 'BKK' },
                     { Name: 'Hat Yai', City: 'Hat Yai', Country: 'Thailand', Code: 'HDY' },
                     { Name: 'Phuket Intl.', City: 'Phuket', Country: 'Thailand', Code: 'HKT' },
                     { Name: 'Sultan Ismail Intl', City: 'Johor Bahru', Country: 'Malaysia', Code: 'JHB' },
                     { Name: 'Kota-Kinabalu Intl. Arpt.', City: 'Kota Kinabalu', Country: 'Malaysia', Code: 'BKI' },
-                    { Name: 'Kuala Lumpur Intl. Arpt.', City: 'Kuala Lumpur', Country: 'Malaysia', Code: 'KUL' },
                     { Name: 'Kuching', City: 'Kuching', Country: 'Malaysia', Code: 'KCH' },
                     { Name: 'Penang Intl.', City: 'Penang', Country: 'Malaysia', Code: 'PEN' },
                     { Name: 'Ninoy Aquino Intl.', City: 'Manila', Country: 'Philippines', Code: 'MNL' },
@@ -363,7 +371,11 @@ if (typeof (angular) == 'object') {
                 ChangeYear: false,
                 SelectedDate: ''
             },
-            Position: '',
+            SelectedMonth: {},
+            Position: {},
+            Holidays: [],
+            HolidayNames: [],
+            overlay: '',
             ChangeLanguage: function (date) {
                 var newdate = "";
                 var day = date.substring(0, 3);
@@ -435,88 +447,13 @@ if (typeof (angular) == 'object') {
             },
             SetOption: function (options, overlay, position) {
                 overlay = overlay || 'flight-form';
+                $rootScope.DatePicker.overlay = overlay;
                 if (position == 'search-single' || position == 'search-return') {
                     $rootScope.FlightSearchForm.DepartureDate = new Date($rootScope.FlightSearchForm.DepartureDate);
                     $rootScope.FlightSearchForm.ReturnDate = new Date($rootScope.FlightSearchForm.ReturnDate);
                 }
                 $rootScope.DatePicker.Position = position;
 
-                $('.ui-datepicker').datepicker({
-
-                    onSelect: function (date) {
-
-                        var trsdate = $rootScope.DatePicker.ChangeLanguage(date);
-                        
-                        if ($rootScope.DatePicker.Position == 'hotel') {
-                            if (overlay == null || overlay == '') {
-                                $rootScope.PageConfig.SetOverlay('');
-                            } else {
-                                $rootScope.PageConfig.SetOverlay('hotel-form');
-                            }
-                            var datex = new Date(trsdate);
-                            var scope = angular.element($('.ui-datepicker')).scope();
-                            scope.setCheckinDate(scope, datex);
-                            $log.debug("checkinDate = " + datex);
-                           
-
-                        } else {
-                            //if ($rootScope.DatePicker.Position == 'form-index') {
-                            //    $rootScope.PageConfig.SetOverlay();
-                            //}
-                            //else if ($rootScope.DatePicker.Position == 'search-return' || $rootScope.DatePicker.Position == 'search-single') {
-                            //    $rootScope.PageConfig.SetOverlay('flight-form');
-                            //}
-                            $rootScope.DatePicker.Settings.SelectedDate = new Date(trsdate);
-                            $($rootScope.DatePicker.Settings.Target).val(trsdate);
-                            $($rootScope.DatePicker.Settings.Target).trigger('input');
-
-                            var depdate = new Date($rootScope.FlightSearchForm.DepartureDate);
-                            var retdate = new Date($rootScope.FlightSearchForm.ReturnDate);
-                            if ($rootScope.DatePicker.Settings.Target == '.flight-search-form-departure') {
-                                depdate = new Date(trsdate);
-                                $rootScope.FlightSearchForm.DepartureDate = depdate;
-                            } else {
-                                retdate = new Date(trsdate);
-                                $rootScope.FlightSearchForm.ReturnDate = retdate;
-                            }
-                            if (depdate > retdate) {
-                                $('.form__departure .field-container span').text(date);
-                                $('.form__return .field-container span').text(date);
-                                if ($rootScope.DatePicker.Position == 'form-index') {
-                                    $('.ui-datepicker.departure-date').datepicker("setDate", new Date(trsdate));
-                                    $rootScope.FlightSearchForm.ReturnDate = new Date(trsdate);
-                                    $rootScope.PageConfig.SetOverlay();
-                                } else if ($rootScope.DatePicker.Position == 'search-single' || $rootScope.DatePicker.Position == 'search-return') {
-                                    $('.ui-datepicker.departure-date').datepicker("setDate", new Date(trsdate));
-                                    $('.ui-datepicker.return-date').datepicker("setDate", new Date(trsdate));
-                                    $rootScope.PageConfig.SetOverlay('flight-form');
-                                }
-
-                            } else {
-                                if ($rootScope.DatePicker.Settings.Target == '.flight-search-form-departure') {
-                                    $('.form__departure .field-container span').text(date);
-                                    $('.ui-datepicker.departure-date').datepicker("setDate", new Date(trsdate));
-                                  
-                                } else {
-                                    $('.form__return .field-container span').text(date);
-                                    $('.ui-datepicker.return-date').datepicker("setDate", new Date(trsdate));
-                                }
-
-                                if ($rootScope.DatePicker.Position == 'form-index') {
-                                    $rootScope.PageConfig.SetOverlay();
-                                }
-                                else if ($rootScope.DatePicker.Position == 'search-return' || $rootScope.DatePicker.Position == 'search-single') {
-                                    $rootScope.PageConfig.SetOverlay('flight-form');
-                                }
-                            }
-
-                            
-
-                        }                      
-                    },
-
-                });
-               
                 if (options.Target == 'departure') {
                     $rootScope.DatePicker.Settings.Target = '.flight-search-form-departure';
                     $('.ui-datepicker').datepicker('option', 'minDate', new Date());
@@ -567,7 +504,7 @@ if (typeof (angular) == 'object') {
                 }
             }
         };// datepicker
-
+        
         // flight search form
         $rootScope.FlightSearchForm = {
             Trip: 'false',
@@ -631,7 +568,6 @@ if (typeof (angular) == 'object') {
                                 }
                             }).error(function () {
                                 trial++;
-                                //console.log(trial);
                                 if (refreshAuthAccess() && trial < 4) //refresh cookie
                                 {
                                     $rootScope.FlightSearchForm.AutoComplete.GetAirport(keyword);
@@ -789,7 +725,7 @@ if (typeof (angular) == 'object') {
             }
             //$rootScope.PageConfig.SetOverlay();
         });
-
+        
         function generateSearchResult(list) {
             $('.autocomplete-result ul').empty();
             for (var i = 0 ; i < list.length; i++) {
@@ -807,7 +743,224 @@ if (typeof (angular) == 'object') {
                 );
             }
         }
+        var authAccess = getAuthAccess();
+        if (authAccess == 1 || authAccess == 2) {
+            $.ajax({
+                url: GetHolidayConfig.Url,
+                method: 'GET',
+                headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') }
+            }).done(function (returnData) {
+                if (returnData.status == 200) {
+                    if (returnData.events != null) {
+                        for (var i = 0; i < returnData.events.length; i++) {
+                            var holidayDate = new Date(returnData.events[i].date);
+                            var holidayName = returnData.events[i].name;
+                            var year = holidayDate.getFullYear();
+                            var date = holidayDate.getDate();
+                            var month = holidayDate.getMonth() + 1;
+                            $rootScope.DatePicker.Holidays.push(holidayDate);
+                            if ($rootScope.DatePicker.HolidayNames.length == 0) {
+                                $rootScope.DatePicker.HolidayNames.push(
+                                {
+                                    Year: year,
+                                    Months: [{
+                                        MonthName: month,
+                                        Days: [
+                                        {
+                                            Date: date,
+                                            Name: holidayName
+                                        }]
+                                    }]
 
+                                });
+                            } else {
+                                var foundYear = false;
+                                var foundMonth = false;
+                                for (var x = 0; x < $rootScope.DatePicker.HolidayNames.length; x++) {
+                                    if ($rootScope.DatePicker.HolidayNames[x].Year == year) {
+                                        foundYear = true;
+                                        for (var y = 0; y < $rootScope.DatePicker.HolidayNames[x].Months.length; y++) {
+                                            if ($rootScope.DatePicker.HolidayNames[x].Months[y].MonthName == month) {
+                                                foundMonth = true;
+                                                $rootScope.DatePicker.HolidayNames[x].Months[y].Days.push({
+                                                    Date: date,
+                                                    Name: holidayName
+                                                });
+                                                break;
+                                            }
+                                        }
+                                        if (!foundMonth) {
+                                            $rootScope.DatePicker.HolidayNames[x].Months.push({
+                                                MonthName: month,
+                                                Days: [
+                                                {
+                                                    Date: date,
+                                                    Name: holidayName
+                                                }]
+                                            });
+                                        }
+                                        break;
+                                    }
+                                }
+                                if (!foundYear) {
+                                    $rootScope.DatePicker.HolidayNames.push(
+                                    {
+                                        Year: year,
+                                        Months: [{
+                                            MonthName: month,
+                                            Days: [
+                                            {
+                                                Date: date,
+                                                Name: holidayName
+                                            }]
+                                        }]
+
+                                    });
+                                }
+                            }
+                        }
+                    }
+                }
+
+            }).error(function (returnData) {
+
+            });
+        }
+        
+
+        function  highlight(date) {
+            var x = new Date(date);
+            var xmonth = x.getMonth();
+            var xday = x.getDate();
+            var xyear = x.getFullYear();
+            if (xday == 15)
+                getSelectedMonth(xyear, xmonth + 1);
+            $('ui-datepicker').datepicker('option','gotoCurrent',true);
+
+      
+            for (var i = 0; i < $rootScope.DatePicker.Holidays.length; i++) {
+                var y = new Date($rootScope.DatePicker.Holidays[i]);
+                var ymonth = y.getMonth();
+                var yday = y.getDate();
+                var yyear = y.getFullYear();
+
+                if (xmonth == ymonth && xday == yday && xyear == yyear) {
+                    return [true, 'ui-state-holiday'];
+                }
+            }
+            return [true, ''];
+        }
+
+        function getSelectedMonth(year, month) {
+            var found = false;
+            var tes = {};
+            for (var y = 0; y < $rootScope.DatePicker.HolidayNames.length; y++) {
+                if ($rootScope.DatePicker.HolidayNames[y].Year == year) {
+                    for (var m = 0; m < $rootScope.DatePicker.HolidayNames[y].Months.length; m++) {
+                        if ($rootScope.DatePicker.HolidayNames[y].Months[m].MonthName == month) {
+                            tes = $rootScope.DatePicker.HolidayNames[y].Months[m];
+                            found = true;
+                            break;
+                        }
+                    }
+                    
+                }
+                if (found) {
+                    break;
+                }
+            }
+            
+            if (found && tes.Days != null && tes.Days.length != 0) {
+                $('.holiday-list').remove();
+                var e = $('<div class="holiday-list">' +
+                         '</div>');
+
+                $('.ui-datepicker.departure-date, .ui-datepicker.return-date, .ui-datepicker.checkindate').append(e);
+                for (var i = 0; i < tes.Days.length; i++) {
+                    $('.overlay__content .ui-datepicker .holiday-list').append(
+                        '<div class="col-xs-12">' +
+                            '<div class ="col-xs-1">' +
+                                tes.Days[i].Date +
+                            '</div>' +
+                            '<div class ="col-xs-11">' +
+                                ': ' + tes.Days[i].Name +
+                            '</div>' +
+                        '</div>'
+                    );
+                }
+            } else if (!found) {
+                $('.holiday-list').remove();
+                tes = {};
+            }
+        }
+        
+       // $(function () {
+            $(".ui-datepicker").datepicker({
+                beforeShowDay: highlight,
+                onSelect: function (date) {
+
+                    var trsdate = $rootScope.DatePicker.ChangeLanguage(date);
+                    if ($rootScope.DatePicker.Position == 'hotel') {
+                        if ($rootScope.DatePicker.overlay == null || $rootScope.DatePicker.overlay == '') {
+                            $rootScope.PageConfig.SetOverlay('');
+                        } else {
+                            $rootScope.PageConfig.SetOverlay('hotel-form');
+                        }
+                        var datex = new Date(trsdate);
+                        var scope = angular.element($('.ui-datepicker')).scope();
+                        scope.setCheckinDate(scope, datex);
+                        $log.debug("checkinDate = " + datex);
+
+
+                    } else {
+                        $rootScope.DatePicker.Settings.SelectedDate = new Date(trsdate);
+                        $($rootScope.DatePicker.Settings.Target).val(trsdate);
+                        $($rootScope.DatePicker.Settings.Target).trigger('input');
+
+                        var depdate = new Date($rootScope.FlightSearchForm.DepartureDate);
+                        var retdate = new Date($rootScope.FlightSearchForm.ReturnDate);
+                        if ($rootScope.DatePicker.Settings.Target == '.flight-search-form-departure') {
+                            depdate = new Date(trsdate);
+                            $rootScope.FlightSearchForm.DepartureDate = depdate;
+                        } else {
+                            retdate = new Date(trsdate);
+                            $rootScope.FlightSearchForm.ReturnDate = retdate;
+                        }
+                        if (depdate > retdate) {
+                            $('.form__departure .field-container span').text(date);
+                            $('.form__return .field-container span').text(date);
+                            if ($rootScope.DatePicker.Position == 'form-index') {
+                                $('.ui-datepicker.departure-date').datepicker("setDate", new Date(trsdate));
+                                $rootScope.FlightSearchForm.ReturnDate = new Date(trsdate);
+                                $rootScope.PageConfig.SetOverlay();
+                            } else if ($rootScope.DatePicker.Position == 'search-single' || $rootScope.DatePicker.Position == 'search-return') {
+                                $('.ui-datepicker.departure-date').datepicker("setDate", new Date(trsdate));
+                                $('.ui-datepicker.return-date').datepicker("setDate", new Date(trsdate));
+                                $rootScope.PageConfig.SetOverlay('flight-form');
+                            }
+
+                        } else {
+                            if ($rootScope.DatePicker.Settings.Target == '.flight-search-form-departure') {
+                                $('.form__departure .field-container span').text(date);
+                                $('.ui-datepicker.departure-date').datepicker("setDate", new Date(trsdate));
+
+                            } else {
+                                $('.form__return .field-container span').text(date);
+                                $('.ui-datepicker.return-date').datepicker("setDate", new Date(trsdate));
+                            }
+
+                            if ($rootScope.DatePicker.Position == 'form-index') {
+                                $rootScope.PageConfig.SetOverlay();
+                            } else if ($rootScope.DatePicker.Position == 'search-return' || $rootScope.DatePicker.Position == 'search-single') {
+                                $rootScope.PageConfig.SetOverlay('flight-form');
+                            }
+                        }
+
+
+                    }
+                }
+            });
+        //});
         //used in Search
         $rootScope.initAirport = function (target, airport, city) {
             if (target == 'departure') {

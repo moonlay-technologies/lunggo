@@ -8,29 +8,49 @@
     <section class="overlay__content">
 
         <div class="autocomplete-input">
-            <input type="text" class="form-control" name="name" value="" placeholder="Masukkan Kota/Lokasi Hotel Tujuan" ng-model="HotelSearchForm.AutoComplete.Keyword" ng-change="HotelSearchForm.AutoComplete.GetLocation()" />
+            <input type="text" class="form-control" name="name" value="" autocomplete="off"
+                   placeholder="Masukkan Kota/Lokasi Hotel Tujuan" ng-model="HotelSearchForm.AutoComplete.Keyword" ng-change="HotelSearchForm.AutoComplete.GetLocation()" />
         </div><!-- .autocomplete-input -->
         
         <div class="autocomplete-preload">
-            <ul class="result">
-                <li class="hotel" ng-repeat="location in hotelSearch.hotelAutocomplete track by $index" ng-click="PageConfig.SetOverlay('hotel-form'); selectLocation(location)">
-                    <a class="hotel__link clearfix">
-                        <div class="hotel__location bold-txt">{{location.name}}</div>
-                        <div class="col-half">
-                            <div class="hotel__detail">{{location.type}}</div>
-                        </div>
-                        <div class="col-half">
-                            <div class="result blue-txt semibold-txt pull-right">{{location.numOfHotels}} Hotel di Daerah Ini</div>
-                        </div>
-                    </a>
-                </li>
-            </ul>
+            <div ng-show="!autocompleteLoading && !autocompleteNoResult && !autocompletePre && !showPopularDestinations">
+                <ul class="result">
+                    <li class="hotel" ng-repeat="location in hotelSearch.hotelAutocomplete track by $index" ng-click="PageConfig.SetOverlay('hotel-form'); selectLocation(location)">
+                        <a class="hotel__link clearfix">
+                            <div class="hotel__location bold-txt">{{location.name}}</div>
+                            <div class="col-half">
+                                <div class="hotel__detail">{{location.type}}</div>
+                            </div>
+                            <div class="col-half">
+                                <div class="result blue-txt semibold-txt pull-right">{{location.numOfHotels}} Hotel di Daerah Ini</div>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div ng-show="showPopularDestinations && !autocompletePre">
+                <div class="list__header">
+                    <h4>TUJUAN TERPOPULER</h4>
+                </div>
+                <ul class="result">
+                    <li class="hotel" ng-repeat="destination in PopularDestinations" ng-click="PageConfig.SetOverlay('hotel-form'); getLocationId(destination)">
+                        <a class="hotel__link clearfix">
+                            <div class="hotel__location bold-txt">{{destination}}</div>
+
+                        </a>
+                    </li>
+                </ul>
+            </div>
         </div><!-- .autocomplete-preload -->
         <div class="autocomplete-loading" ng-show="autocompleteLoading">
             <h4 class="text-center text-loading">Mencari Kota, Lokasi, atau Hotel</h4>
         </div>
+    
+        <div class="autocomplete-loading" ng-show="autocompletePre">
+            <h4 class="text-center text-loading">Masukkan Kata Kunci Anda (Minimal 3 huruf)</h4>
+        </div>
 
-        <div class="autocomplete-no-result" ng-show="autocompleteNoResult">
+        <div class="autocomplete-no-result" ng-show="autocompleteNoResult && !showPopularDestinations && !autocompleteLoading">
             <h4 class="text-center">Hasil tidak ditemukan</h4>
         </div>
 

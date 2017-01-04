@@ -96,12 +96,12 @@ namespace Lunggo.WebAPI.ApiSrc.Auxiliary.Logic
                     Event = Event.Holiday,
                     Name = "Kenaikan Isa Almasih"
                 },
-                //new CalendarEvent
-                //{
-                //    Date = new DateTime(2017,6,1),
-                //    Event = Event.Holiday,
-                //    Name = "Hari Lahir Pancasila"
-                //},
+                new CalendarEvent
+                {
+                    Date = new DateTime(2017,6,1),
+                    Event = Event.Holiday,
+                    Name = "Hari Lahir Pancasila"
+                },
                 new CalendarEvent
                 {
                     Date = new DateTime(2017,6,25),

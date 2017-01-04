@@ -453,50 +453,52 @@
                         </form>
                     </div>
                 <!-- .credit-card-form -->
-                    <div class="credit-card-form" ng-show="paymentMethod == '@PaymentMethod.MandiriClickPay'">
-                        <div class="form-group">
-                            <h3><b>DETAIL</b> PEMBAYARAN - <b>MANDIRI CLICKPAY</b></h3>
-                            <div class="form-group" ng-class="{'has-error' : !checkNumber(MandiriClickPay.CardNo)}">
-                                <label class="control-label">Nomor Kartu</label>
-                                <input type="text" value="" class="form-control cc-number" maxlength="16" ng-model="MandiriClickPay.CardNo" />
-                            </div>
-                            <div ng-show="!checkNumber(MandiriClickPay.CardNo)" style="color:red">
-                                Nomor kartu tidak boleh mengandung karakter selain angka
-                            </div>
+                        <div class="credit-card-form" ng-show="paymentMethod == '@PaymentMethod.MandiriClickPay'">
                             <div class="form-group">
-                                <label class="control-label">Input Token Mandiri &nbsp;<small>(diisi secara berurutan)</small></label>
-                                <div class="form-mandiri-payment">
-                                    <ul class="form-row clearfix">
-                                        <li class="col-left">APPLI</li>
-                                        <li class="col-middle">:</li>
-                                        <li class="col-right">3</li>
-                                    </ul>
-                                    <ul class="form-row clearfix">
-                                        <li class="col-left">Input 1</li>
-                                        <li class="col-middle">:</li>
-                                        <li class="col-right">{{MandiriClickPay.CardNo | limitTo:-10}}</li>
-                                    </ul>
-                                    <ul class="form-row clearfix">
-                                        <li class="col-left">Input 2</li>
-                                        <li class="col-middle">:</li>
-                                        <li class="col-right">{{totalPrice - voucher.amount - CreditCardPromo.Amount + UniqueCodePaymentConfig.UniqueCode}}</li>
-                                    </ul>
-                                    <ul class="form-row clearfix">
-                                        <li class="col-left">Input 3</li>
-                                        <li class="col-middle">:</li>
-                                        <li class="col-right">@Model.RsvNo.Substring(Model.RsvNo.Length - 5, 5)</li>
-                                    </ul>
+                                <h3><b>DETAIL</b> PEMBAYARAN - <b>MANDIRI CLICKPAY</b></h3>
+                                <div class="form-group" ng-class="{'has-error' : !checkNumber(MandiriClickPay.CardNo)}">
+                                    <label class="control-label">Nomor Kartu</label>
+                                    <input type="text" value="" class="form-control cc-number" maxlength="16" ng-model="MandiriClickPay.CardNo" />
+                                </div>
+                                <div ng-show="!checkNumber(MandiriClickPay.CardNo)" style="color:red">
+                                    Nomor kartu tidak boleh mengandung karakter selain angka
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">Input Token Mandiri &nbsp;<small>(diisi secara berurutan)</small></label>
+                                    <div class="form-mandiri-payment">
+                                        <ul class="form-row clearfix">
+                                            <li class="col-left">APPLI</li>
+                                            <li class="col-middle">:</li>
+                                            <li class="col-right">3</li>
+                                        </ul>
+                                        <ul class="form-row clearfix">
+                                            <li class="col-left">Input 1</li>
+                                            <li class="col-middle">:</li>
+                                            <li class="col-right" ng-if="MandiriClickPay.CardNo != null && MandiriClickPay.CardNo.length == 0">{{MandiriClickPay.CardNo | limitTo:-10}}</li>
+                                            <li class="col-right" ng-if="MandiriClickPay.CardNo == null || MandiriClickPay.CardNo.length == 0">Masukkan Nomor Kartu Terlebih Dahulu</li>
+                                        </ul>
+                                        <ul class="form-row clearfix">
+                                            <li class="col-left">Input 2</li>
+                                            <li class="col-middle">:</li>
+                                            <li class="col-right">{{totalPrice - voucher.amount - CreditCardPromo.Amount + UniqueCodePaymentConfig.UniqueCode}}</li>
+                                        </ul>
+                                        <ul class="form-row clearfix">
+                                            <li class="col-left">Input 3</li>
+                                            <li class="col-middle">:</li>
+                                            <li class="col-right">@Model.RsvNo.Substring(Model.RsvNo.Length - 5, 5)</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="form-group" ng-class="{'has-error' : !checkNumber(MandiriClickPay.Token)}">
+                                    <label class="control-label">Respon Token Mandiri</label>
+                                    <input type="text" value="" class="form-control cc-number" maxlength="6" placeholder="XXXXXX" ng-model="MandiriClickPay.Token" ng-required="paymentMethod == '@PaymentMethod.MandiriClickPay'" />
+                                </div>
+                                <div ng-show="!checkNumber(MandiriClickPay.Token)" style="color:red">
+                                    Respon token tidak boleh mengandung karakter selain angka
                                 </div>
                             </div>
-                            <div class="form-group" ng-class="{'has-error' : !checkNumber(MandiriClickPay.Token)}">
-                                <label class="control-label">Respon Token Mandiri</label>
-                                <input type="text" value="" class="form-control cc-number" maxlength="6" placeholder="XXXXXX" ng-model="MandiriClickPay.Token" ng-required="paymentMethod == '@PaymentMethod.MandiriClickPay'" />
-                            </div>
-                            <div ng-show="!checkNumber(MandiriClickPay.Token)" style="color:red">
-                                Respon token tidak boleh mengandung karakter selain angka
-                            </div>
                         </div>
-                    </div>
+
                     }
 
                     <div class="widget countdown">
@@ -522,6 +524,13 @@
                         </div>
                     </div><!-- .widget.countdown -->
                     <br />
+                    
+
+                    <div ng-show="paymentMethod == '@PaymentMethod.CimbClicks'">
+                        <p>
+                            Setelah mengklik tombol di bawah ini, Anda akan dialihkan ke halaman pembayaran dan tidak dapat memilih metode pembayaran yang lainnya.
+                        </p>
+                    </div>
 
                     <div class="step-button">
 
@@ -542,12 +551,10 @@
                             </div>
 
                             <p>*Dengan klik tombol ‘Bayar’, Anda telah setuju dengan <a href="@Url.Action("Terms","staticpage")" target="_blank">syarat &amp; ketentuan</a> dan <a href="@Url.Action("Privacy","staticpage")" target="_blank">kebijakan privasi</a></p>
-                            @*<a class="btn btn-grey" ng-click="changePage(3)" ng-disabled="checkoutForm.loading">KEMBALI</a>*@
                             <div class="form-group">
                                 <button type="submit" class="btn btn-yellow form-control" ng-disabled="(checkoutForm.loading || !paymentMethod) || !creditCardForm.$valid">BAYAR</button>
                             </div>
-                            @*<input type="submit" class="btn btn-yellow" value="{{ !checkoutForm.loading? 'BAYAR' : 'MEMPROSES' }}" ng-disabled="(checkoutForm.loading || !paymentMethod) || !creditCardForm.$valid">*@
-
+                            
                         </form>
 
                         <form action="" method="post" name="submitForm" id="rsvno" class="hidden">

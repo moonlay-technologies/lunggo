@@ -224,7 +224,7 @@
                          
                         </div>
                         <div class="col-8 clearfix">
-                            <ul class="col-half blue-list" ng-repeat="facilityList in facilities.facilityList.slice(0, facilities.facilityList.length)">
+                            <ul class="col-half blue-list" ng-repeat="facilityList in facilities.facilityList.slice(0, facilities.facilityList.length) track by $index">
                                 <li ng-repeat="facilityName in facilityList"> {{facilityName}}</li>
                             </ul>
                         </div>

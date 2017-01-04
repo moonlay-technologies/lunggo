@@ -102,8 +102,11 @@
                     <div class="slider-container clearfix">
                         <div class="slider clearfix">
                             <ul id="image-gallery" class="gallery list-unstyled cS-hidden">
-                                <li data-thumb="{{hotel.images[0]}}"  >
-                                    <div  style="background-image: url({{hotel.images[0]}}); width: 100%; height: 590px; background-size: cover; background-position: center center;"></div>
+                                @*<li data-thumb="{{image}}" alt-image ng-repeat="image in hotel.images track by $index">
+                                    <div test="{{image}}" alt-image style="background-image: url({{image}}); width: 100%; height: 590px; background-size: cover; background-position: center center;"></div>
+                                </li>*@
+                                <li data-thumb="{{hotel.images[0]}}" >
+                                    <div style="background-image: url({{hotel.images[0]}}); width: 100%; height: 590px; background-size: cover; background-position: center center;"></div>
                                 </li>
                                 <li data-thumb="{{hotel.images[1]}}"  >
                                     <div  style="background-image: url({{hotel.images[1]}}); width: 100%; height: 590px; background-size: cover; background-position: center center;"></div>

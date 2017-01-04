@@ -34,6 +34,7 @@ app.run(function ($rootScope) {
     };
 });
 
+//This is for images in Search Hotel Desktop
 app.directive('hotelListImage', function ($http, $log, $q) {
     return {
         restrict: 'A',
@@ -75,6 +76,7 @@ app.directive('hotelListImage', function ($http, $log, $q) {
         }
     };
 });
+//Alternative image
 app.directive('altImage', function($http, $log, $q) {
     return {
         restrict: 'A',
@@ -143,7 +145,8 @@ app.directive('altImage', function($http, $log, $q) {
     }
 });
 
-    app.directive('searchScroll', function () {
+//This is for load page in mobile
+app.directive('searchScroll', function () {
     return {
         restrict: 'A',
         link: function (scope, element, attrs) {
@@ -175,6 +178,8 @@ app.directive('altImage', function($http, $log, $q) {
 //        });
 //    };
 //});
+
+//This is for entering input and filter
 app.directive('traOnEnter', function () {
     return function (scope, element, attrs) {
         element.bind("keydown keypress", function (event) {

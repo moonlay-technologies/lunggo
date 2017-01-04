@@ -419,6 +419,7 @@
                             </div>
                                     <!-- .credit-card-form -->
                         }
+                        
                         <form name="mandiriClickPayForm" novalidate>
                             <div class="mandiri-clikpay-form" ng-show="paymentMethod == '@PaymentMethod.MandiriClickPay'">
                                 <div class="form-group">
@@ -439,19 +440,20 @@
                                                 <li class="col-sm-right">3</li>
                                             </ul>
                                             <ul class="form-row clearfix">
-                                                <li class="col-sm-left">10 Digit Terakhir Nomor Kartu</li>
+                                                <li class="col-sm-left">Input 1</li>
                                                 <li class="col-sm-middle">:</li>
-                                                <li class="col-sm-right">{{MandiriClickPay.CardNo | limitTo:-10}} (Input 1)</li>
+                                                <li class="col-sm-right" ng-if="MandiriClickPay.CardNo != null && MandiriClickPay.CardNo.length > 0">{{MandiriClickPay.CardNo | limitTo:-10}}</li>
+                                                <li class="col-sm-right" ng-if="MandiriClickPay.CardNo == null || MandiriClickPay.CardNo.length == 0">Masukkan Nomor Kartu Terlebih Dahulu</li>
                                             </ul>
                                             <ul class="form-row clearfix">
-                                                <li class="col-sm-left">Jumlah Transaksi</li>
+                                                <li class="col-sm-left">Input 2</li>
                                                 <li class="col-sm-middle">:</li>
-                                                <li class="col-sm-right">{{totalPrice - voucher.amount - CreditCardPromo.Amount + UniqueCodePaymentConfig.UniqueCode}} (Input 2)</li>
+                                                <li class="col-sm-right">{{totalPrice - voucher.amount - CreditCardPromo.Amount + UniqueCodePaymentConfig.UniqueCode}}</li>
                                             </ul>
                                             <ul class="form-row clearfix">
-                                                <li class="col-sm-left">5 Digit Terakhir Nomor Reservasi</li>
+                                                <li class="col-sm-left">Input 3</li>
                                                 <li class="col-sm-middle">:</li>
-                                                <li class="col-sm-right">@Model.RsvNo.Substring(Model.RsvNo.Length - 5, 5) (Input 3)</li>
+                                                <li class="col-sm-right">@Model.RsvNo.Substring(Model.RsvNo.Length - 5, 5)</li>
                                             </ul>
                                         </div>
                                     </div>
@@ -462,14 +464,16 @@
                                     </div>
                                     <div ng-show="!checkNumber(MandiriClickPay.Token)" style="color:red">
                                         Respon token tidak boleh mengandung karakter selain angka
-                                </div>
                                     </div>
-                                
-                                        </div>
+                                </div>
+                            </div>
                         </form>
                         
-
-
+                        <div ng-show="paymentMethod == '@PaymentMethod.CimbClicks'">
+                            <p>
+                                Setelah mengklik tombol di bawah ini, Anda akan dialihkan ke halaman pembayaran dan tidak dapat memilih metode pembayaran yang lainnya.
+                            </p>
+                        </div>
                         <div class="step-button">
 
                             <form name="finalForm" id="finalForm" ng-submit="pay.setPaymentMethod()">
@@ -550,9 +554,6 @@
                                     <dd ng-if="!(binDiscount.replaceDiscount && !voucher.confirmedCode)">Rp {{totalPrice - voucher.amount - CreditCardPromo.Amount + UniqueCodePaymentConfig.UniqueCode| number}}</dd>
                                 </dl>
                             </div>
-                            <!--<footer>
-                                    <small>* Harga ini masih bisa berubah, harga final maskapai akan dikonfirmasi kembali pada proses pembayaran</small>
-                                </footer> -->
                         </div><!-- .widget.price-detail -->
                         <div class="widget voucher" ng-class="{'hide' : CreditCardPromo.Valid}">
                             <h3 class="widget-title"><b>KODE</b> VOUCHER</h3>
