@@ -29,14 +29,14 @@
             var sum = 0;
             foreach (var rate in room.Rates)
             {
-                sum += rate.RateCount;
-                sumAdult += rate.AdultCount;
-                sumChild += rate.ChildCount;
-                if (rate.ChildCount <= 0)
-                {
-                    continue;
-                }
-                listAges.AddRange(rate.ChildrenAges);
+                //sum += rate.RateCount;
+                //sumAdult += rate.AdultCount;
+                //sumChild += rate.ChildCount;
+                //if (rate.ChildCount <= 0)
+                //{
+                //    continue;
+                //}
+                //listAges.AddRange(rate.ChildrenAges);
             }
             orderedRooms.Add(new Tuple<string, int>(roomName, sum)); ;
         }
@@ -96,46 +96,35 @@
                 {
                     <div class="fb-room">
                         <div class="clearfix">
-                            <div class="col-8"><div class="blue-txt bold-txt lg-txt" style="text-transform: capitalize">@ToTitleCase(room.RoomName) @ToTitleCase(rate.BoardDescription)</div></div>
+                            <div class="col-8"><div class="blue-txt bold-txt lg-txt" style="text-transform: capitalize">@ToTitleCase(room.RoomName) Kamar Saja</div></div>
                             @*<div class="col-2"><span class="meal-icon pull-right"></span><span class="wifi-icon pull-right"></span></div>*@
                         </div>
                         <div class="fb-img" style="background-image: url(@roomImg)"></div>
                         <div class="clearfix">
                             <div class="fb-row clearfix">
                                 <div class="col-6">Jumlah Kamar</div>
-                                <div class="col-4 bold-txt">@rate.RateCount Kamar</div>
+                                <div class="col-4 bold-txt">2 Kamar</div>
                             </div>
                             <div class="fb-row clearfix">
                                 <div class="col-6">Tamu per Kamar</div>
                                 <div class="col-4 bold-txt">
-                                    @rate.AdultCount Dewasa @if (rate.ChildCount > 0)
+                                    2 Dewasa
+                                    @*@if (rate.ChildCount > 0)
                                                             {
                                                                 <span>, @rate.ChildCount Anak</span>
-                                                            }
+                                                            }*@
                                 </div>
                             </div>
-                            @if (rate.ChildCount > 0)
-                            {
+                            @*@if (rate.ChildCount > 0)
+                            {*@
                                 <div class="fb-row clearfix">
                                     <div class="col-6">Umur Anak</div>
                                     <div class="col-4 bold-txt">
                                         <span>
-                                            @for (var a = 0; a < listAges.Count; a++)
-                                            {
-                                                if (a != listAges.Count - 1)
-                                                {
-                                                    @listAges[a]
-                                                    <span>Tahun, </span>
-                                                }
-                                                else
-                                                {
-                                                    @listAges[a] <span>Tahun</span>
-                                                }
-                                            }
+                                           3 Tahun, 4 Tahun
                                         </span>
                                     </div>
                                 </div>
-                            }
 
                         </div>
                         <ul class="blue-list blue-txt">
@@ -153,7 +142,7 @@
                             {
                                 <li>
                                     Pembatalan setelah tanggal <span style="color:#1daee4">@cancellation.StartTime.AddHours(7).ToString("dd MMMM yyyy HH:mm", CultureInfo.CreateSpecificCulture("id-ID")) WIB</span>
-                                    akan dikenakan biaya pembatalan sebesar <span style="color:#ff7200">Rp @cancellation.SingleFee.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</span> per kamar.
+                                    akan dikenakan biaya pembatalan sebesar <span style="color:#ff7200">@(cancellation.FeePercentage * 100)%</span> per kamar.
                                 </li>
                             }
 

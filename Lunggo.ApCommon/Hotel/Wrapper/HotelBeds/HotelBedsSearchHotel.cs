@@ -160,7 +160,8 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds
                                     Cancellation = x.cancellationPolicies == null ? null : x.cancellationPolicies.Select(y => new Cancellation
                                     {
                                         Fee = y.amount*condition.Nights,
-                                        StartTime = y.from.ToUniversalTime()
+                                        StartTime = y.from.ToUniversalTime(),
+                                        FeePercentage = Math.Ceiling((y.amount / x.net) * 10)/10
                                     }).ToList(),
                                     Class = x.rateClass,
                                     Type = x.rateType.ToString(),

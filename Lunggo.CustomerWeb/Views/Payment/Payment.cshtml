@@ -49,15 +49,15 @@
             var sum = 0;
             foreach (var rate in room.Rates)
             {
-                sum += rate.RateCount;
-                    totalpax += (rate.AdultCount + rate.ChildCount) * rate.RateCount;
-                    totalAdult += rate.AdultCount;
-                    totalChild += rate.ChildCount;
-                    if (rate.ChildCount <= 0)
-                    {
-                        continue;
-            }
-                    listAges.AddRange(rate.ChildrenAges);
+            //    sum += rate.RateCount;
+            //        totalpax += (rate.AdultCount + rate.ChildCount) * rate.RateCount;
+            //        totalAdult += rate.AdultCount;
+            //        totalChild += rate.ChildCount;
+            //        if (rate.ChildCount <= 0)
+            //        {
+            //            continue;
+            //}
+            //        listAges.AddRange(rate.ChildrenAges);
                 }
             orderedRooms.Add(new Tuple<string, int>(roomName, sum)); ;
         }
@@ -173,47 +173,48 @@
         {
             var reservation = Model.Reservation as FlightReservationForDisplay;
             @:trips = @Html.Raw(reservation.Itinerary.Trips.Serialize());
-                        @:price = @reservation.Itinerary.NetTotalFare;
-                        @:originalPrice = '@reservation.Itinerary.OriginalTotalFare';
-                    }
+                            @:price = @reservation.Itinerary.NetTotalFare;
+                            @:originalPrice = '@reservation.Itinerary.OriginalTotalFare';
+                        }
         else
         {
             var reservation = Model.Reservation as HotelReservationForDisplay;
             @:hotelDetails = @Html.Raw(reservation.HotelDetail.Serialize());
-                        @:price = @reservation.HotelDetail.NetTotalFare;
-                        @:originalPrice = '@reservation.HotelDetail.OriginalTotalFare';
-                    }
+                            @:price = @reservation.HotelDetail.NetTotalFare;
+                            @:originalPrice = '@reservation.HotelDetail.OriginalTotalFare';
+                        }
     var redirectionUrl;
     @if (Model.Reservation.Payment.RedirectionUrl != null) {
         @:redirectionUrl = '@Model.Reservation.Payment.RedirectionUrl';
-                }
+                    }
     @if (Model.Reservation is FlightReservationForDisplay)
     {
         @:var departureDate;
-                var reservation = Model.Reservation as FlightReservationForDisplay;
+                    var reservation = Model.Reservation as FlightReservationForDisplay;
         if (reservation.Itinerary.Trips != null)
          {
              if (reservation.Itinerary.Trips.Count == 2)
              {
                  @:departureDate = '@reservation.Itinerary.Trips[1].DepartureDate';
-                     }
+                         }
              else
              {
                  @:departureDate = '@reservation.Itinerary.Trips[0].DepartureDate';
-                     }
+                         }
          }
     }
     @if (Model.Reservation is HotelReservationForDisplay)
     {
         var hotel = Model.Reservation as HotelReservationForDisplay;
         @:originalPrice = '@hotel.HotelDetail.OriginalTotalFare';
-        @:price = '@hotel.HotelDetail.NetTotalFare';
-        @:totalRoom = '@hotel.HotelDetail.Rooms.SelectMany(r => r.Rates).Sum(p => p.RateCount)';
+            @:price = '@hotel.HotelDetail.NetTotalFare';
+        @:totalRoom = 3;
+        //@:totalRoom = '@hotel.HotelDetail.Rooms.SelectMany(r => r.Rates).Sum(p => p.RateCount)';
         @:checkin = '@hotel.HotelDetail.CheckInDate.ToString("D",CultureInfo.CreateSpecificCulture("id-ID"))';
-        @:checkout = '@hotel.HotelDetail.CheckOutDate.ToString("D", CultureInfo.CreateSpecificCulture("id-ID"))';
-        @:nights = '@((hotel.HotelDetail.CheckOutDate - hotel.HotelDetail.CheckInDate).Days)';
-        @:totalpax = '@totalpax';
-    }
+            @:checkout = '@hotel.HotelDetail.CheckOutDate.ToString("D", CultureInfo.CreateSpecificCulture("id-ID"))';
+            @:nights = '@((hotel.HotelDetail.CheckOutDate - hotel.HotelDetail.CheckInDate).Days)';
+            @:totalpax = '@totalpax';
+        }
     // change current page
     if (getParam('page') == 4) {
         currentPage = getParam('page');
@@ -231,7 +232,7 @@
     var langCode = '@OnlineContext.GetActiveLanguageCode()';
 
     var expirytime = '@Model.TimeLimit';
-    
+
     </script>
    
     <!-- angular controller -->

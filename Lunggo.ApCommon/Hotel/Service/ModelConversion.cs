@@ -48,7 +48,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                 City = hotelDetail.City,
                 ZoneName = hotelDetail.ZoneCode.Split('-').Length == 2 ?
                     GetZoneNameFromDict(hotelDetail.ZoneCode) : GetZoneNameFromDict(hotelDetail.DestinationCode + "-" + hotelDetail.ZoneCode),
-                StarRating = Convert.ToInt32(GetSimpleCodeByCategoryCode(hotelDetail.StarRating)),
+                StarRating = Convert.ToInt32((hotelDetail.StarCode)),
                 //ChainName = GetHotelChainDesc(hotelDetail.Chain),
                 AccomodationName = GetHotelAccomodationDescId(hotelDetail.AccomodationType),
                 ImageUrl = hotelDetail.ImageUrl.Where(x => x.Type == "HAB").ToList().Select(y => y.Path).ToList(),
@@ -509,7 +509,8 @@ namespace Lunggo.ApCommon.Hotel.Service
                     var obj = new Cancellation
                     {
                         Fee = data.Fee,
-                        StartTime = TimeZoneInfo.ConvertTimeFromUtc(data.StartTime.AddDays(-1),idTimezone)
+                        StartTime = TimeZoneInfo.ConvertTimeFromUtc(data.StartTime.AddDays(-1),idTimezone),
+                        FeePercentage = data.FeePercentage
                     };
                     rateDisplay.Cancellation.Add(obj);
                 }

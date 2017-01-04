@@ -40,14 +40,14 @@
             var sum = 0;
             foreach (var rate in room.Rates)
             {
-                sum += rate.RoomCount;
-                sumAdult += rate.AdultCount;
-                sumChild += rate.ChildCount;
-                if (rate.ChildCount <= 0)
+                sum += rate.Breakdowns.Sum(r => r.RateCount);
+                sumAdult += rate.Breakdowns.Sum(r => r.AdultCount);
+                sumChild += rate.Breakdowns.Sum(r => r.ChildCount);
+                if (sumChild <= 0)
                 {
                     continue;
             }
-                listAges.AddRange(rate.ChildrenAges);
+                listAges.AddRange(rate.Breakdowns.SelectMany(r => r.ChildrenAges));
             }
             orderedRooms.Add(new Tuple<string, int>(roomName, sum)); ;
         }
@@ -113,9 +113,10 @@
         var langCode = '@OnlineContext.GetActiveLanguageCode()';
         var hotelDetail = @Html.Raw(Model.HotelDetail.Serialize());
         var expirytime = '@Model.ExpiryTime.ToString("o")';
-        var originalFare = '@Model.HotelDetail.OriginalFare';
-        var netFare = '@Model.HotelDetail.NetFare';
-        var totalRoom = '@Model.HotelDetail.Rooms.SelectMany(r => r.Rates).Sum(p => p.RoomCount)';
+        var originalFare = '@Model.HotelDetail.OriginalTotalFare';
+        var netFare = '@Model.HotelDetail.NetTotalFare';
+        var totalRoom = 3;
+        @*var totalRoom = '@Model.HotelDetail.Rooms.SelectMany(r => r.Rates).Sum(p => p.RoomCount)';*@
         var checkin = '@Model.HotelDetail.CheckInDate.ToString("D",CultureInfo.CreateSpecificCulture("id-ID"))';
         var checkout = '@Model.HotelDetail.CheckOutDate.ToString("D", CultureInfo.CreateSpecificCulture("id-ID"))';
             var nights = '@((Model.HotelDetail.CheckOutDate - Model.HotelDetail.CheckInDate).Days)';
@@ -369,40 +370,19 @@
                                                     <div class="wb-container clearfix">
                                                         <div class="wb-left">Jumlah Kamar</div>
                                                         <div class="wb-mid">:</div>
-                                                        <div class="wb-right bold-txt">@rate.RoomCount Kamar</div>
+                                                        <div class="wb-right bold-txt">3 Kamar</div>
                                                     </div>
                                                     <div class="wb-container clearfix">
                                                         <div class="wb-left">Tamu per Kamar</div>
                                                         <div class="wb-mid">:</div>
                                                         <div class="wb-right bold-txt">
-                                                            @rate.AdultCount Dewasa
-                                                            @if (@rate.ChildCount > 0)
-                                                            {
-                                                                <span>, @rate.ChildCount Anak </span> 
-                                                            <span>
-                                                                (
-                                                                    @for (var a = 0; a < rate.ChildrenAges.Count; a++)
-                                                                    {
-                                                                        if (a != rate.ChildrenAges.Count - 1)
-                                                                        {
-                                                                            @rate.ChildrenAges[a]
-                                                                            <span>Tahun, </span>
-                                                                        }
-                                                                        else
-                                                                        {
-                                                                            @rate.ChildrenAges[a]
-                                                                            <span>Tahun</span>
-                                                                        }
-                                                                    }
-                                                                    )
-                                                                </span>
-                                                        }
-                                                    </div>
+                                                            2 Dewasa, 3 Anak (1 tahun, 2 tahun, 3 tahun)
+                                                        </div>
                                                     </div>
                                                     <div class="wb-container clearfix">
                                                         <div class="wb-left">Tipe Board</div>
                                                         <div class="wb-mid">:</div>
-                                                        <div class="wb-right bold-txt">@ToTitleCase(rate.BoardDescription)</div>
+                                                        <div class="wb-right bold-txt">Kamar Saja</div>
                                                     </div>
                                                     if (rate.TermAndCondition != null && rate.TermAndCondition.Count != 0 && !rate.TermAndCondition.Exists(r => r.Length < 3))
                                                     {
@@ -427,7 +407,7 @@
                                                                 @foreach (var policy in rate.Cancellation)
                                                             {
                                                                 <div>
-                                                                    - Pembatalan setelah tanggal @policy.StartTime.AddHours(7).ToString("dd MMMM yyyy HH:mm", CultureInfo.CreateSpecificCulture("id-ID")) WIB akan dikenakan biaya sebesar Rp @(policy.SingleFee.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))) per kamar <br />
+                                                                    - Pembatalan setelah tanggal @policy.StartTime.AddHours(7).ToString("dd MMMM yyyy HH:mm", CultureInfo.CreateSpecificCulture("id-ID")) WIB akan dikenakan biaya sebesar @(policy.FeePercentage * 100)%.<br />
                                                                 </div>
                                                             }
                                                             
@@ -512,11 +492,11 @@
                                 {
                             <dl class="total-room">
                                 <dt class="dt-title">
-                                    @rate.RoomCount @ToTitleCase(room.RoomName)
-                                    @ToTitleCase(HotelService.GetInstance().GetHotelBoardDescId(rate.Boards)) x {{nights}} Malam
+                                    2 Kamar Deluks
+                                    Kamar saja x {{nights}} Malam
                                 </dt>
                                 <dd class="dd-price">
-                                    Rp @((rate.NetFare * night).ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID")))
+                                    Rp 1.000.000
                                 </dd>
                             </dl>
                                 }

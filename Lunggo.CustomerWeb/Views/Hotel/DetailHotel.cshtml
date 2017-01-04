@@ -287,8 +287,8 @@
                                                     </ul>
                                                     <ul class="blue-list">
                                                         <li ng-repeat="cancellation in room.rate.cancellation track by $index">
-                                                            - Pembatalan setelah tanggal <span style="color:#1daee4">{{setHoursToWIB(cancellation.startTime) | date:'dd MMMM yyyy HH:mm'}} WIB</span>
-                                                            akan dikenakan biaya pembatalan sebesar <span style="color:#ff7200">Rp {{cancellation.singleFee | number}}</span>.
+                                                            Pembatalan setelah tanggal <span style="color:#1daee4">{{setHoursToWIB(cancellation.startTime) | date:'dd MMMM yyyy HH:mm'}} WIB</span>
+                                                            akan dikenakan biaya pembatalan sebesar <span style="color:#ff7200">{{(cancellation.feePercentage *100).toFixed(0)}}%</span>.
                                                         </li>
                                                     </ul>
                                                 </div>

@@ -21,6 +21,7 @@ namespace Lunggo.ApCommon.Hotel.Service
             var rateList = new List<HotelRate>();
             var someData = DecryptRegsId(input.RegsIds[0].RegId);
             var hotel = GetHotelDetailFromDb(someData.HotelCode);
+            hotel.StarCode = GetSimpleCodeByCategoryCode(hotel.StarRating);
             hotel.Rooms = new List<HotelRoom>();
             var cekin = input.RegsIds[0].RegId.Split(',')[2].Split('|')[0];
             var cekout = input.RegsIds[0].RegId.Split(',')[2].Split('|')[1];
@@ -103,7 +104,8 @@ namespace Lunggo.ApCommon.Hotel.Service
                         {
                             Fee = x.Fee,
                             SingleFee = x.SingleFee,
-                            StartTime = x.StartTime
+                            StartTime = x.StartTime,
+                            FeePercentage = x.FeePercentage,
                         }).ToList(),
                         ChildrenAges = paxData.ChildrenAges,
                         ChildCount = paxData.ChildCount,
