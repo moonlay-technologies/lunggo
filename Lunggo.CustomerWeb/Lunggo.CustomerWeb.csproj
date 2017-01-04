@@ -278,8 +278,9 @@
     <Content Include="Assets\bootstrap\bootstrap.min.css" />
     <Content Include="Assets\css\font-awesome.min.css" />
     <Content Include="Assets\css\jquery-ui.min.css" />
-    <Content Include="Assets\css\neweticket.css" />
-    <Content Include="Assets\css\neweticket.min.css" />
+    <Content Include="Assets\css\neweticket.css">
+      <DependentUpon>neweticket.scss</DependentUpon>
+    </Content>
     <Content Include="Assets\css\promo.css" />
     <Content Include="Assets\fonts\bootstrap\glyphicons-halflings-regular.svg" />
     <Content Include="Assets\fonts\DINB-webfont.svg" />
@@ -1363,7 +1364,6 @@
     <Content Include="Assets\bootstrap\_bootstrap-compass.scss" />
     <Content Include="Assets\bootstrap\_bootstrap-mincer.scss" />
     <Content Include="Assets\bootstrap\_bootstrap-sprockets.scss" />
-    <Content Include="Assets\css\neweticket.scss" />
     <Content Include="Assets\css\promo.scss" />
     <Content Include="Assets\fonts\bootstrap\glyphicons-halflings-regular.eot" />
     <Content Include="Assets\fonts\bootstrap\glyphicons-halflings-regular.ttf" />
@@ -1418,6 +1418,7 @@
     <Content Include="Assets\travorama20\css\_page_static.scss" />
     <Content Include="Assets\travorama20\css\_screenLarge.scss" />
     <Content Include="Assets\travorama20\css\_screenSmall.scss" />
+    <Content Include="Assets\css\neweticket.scss" />
     <None Include="Properties\PublishProfiles\prod-cw %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\dv1-cw.pubxml" />
     <None Include="Properties\PublishProfiles\dv2-cw.pubxml" />
