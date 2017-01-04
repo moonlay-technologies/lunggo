@@ -407,7 +407,7 @@
                                                                 @foreach (var policy in rate.Cancellation)
                                                             {
                                                                 <div>
-                                                                    - Pembatalan setelah tanggal @policy.StartTime.AddHours(7).ToString("dd MMMM yyyy HH:mm", CultureInfo.CreateSpecificCulture("id-ID")) WIB akan dikenakan biaya sebesar @(policy.FeePercentage * 100)%.<br />
+                                                                    - Pembatalan setelah tanggal @policy.StartTime.AddHours(7).ToString("dd MMMM yyyy HH:mm", CultureInfo.CreateSpecificCulture("id-ID")) WIB akan dikenakan biaya sebesar @((policy.FeePercentage * 100).ToString("####"))%.<br />
                                                                 </div>
                                                             }
                                                             

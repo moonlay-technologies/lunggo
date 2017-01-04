@@ -142,7 +142,7 @@
                             {
                                 <li>
                                     Pembatalan setelah tanggal <span style="color:#1daee4">@cancellation.StartTime.AddHours(7).ToString("dd MMMM yyyy HH:mm", CultureInfo.CreateSpecificCulture("id-ID")) WIB</span>
-                                    akan dikenakan biaya pembatalan sebesar <span style="color:#ff7200">@(cancellation.FeePercentage * 100)%</span> per kamar.
+                                    akan dikenakan biaya pembatalan sebesar <span style="color:#ff7200">@((cancellation.FeePercentage * 100).ToString("####"))%</span>
                                 </li>
                             }
 
