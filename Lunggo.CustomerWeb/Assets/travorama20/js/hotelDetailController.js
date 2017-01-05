@@ -1,7 +1,6 @@
 ﻿// home controller
 app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource', '$timeout', 'hotelSearchSvc', 'imageSvc', function ($scope, $log, $http, $resource, $timeout, hotelSearchSvc, imageSvc) {
 
-    $scope.destinationName = ""; //tbd
     $scope.hotel = {};
     $scope.searchId = '';
     $scope.searchParam = '';

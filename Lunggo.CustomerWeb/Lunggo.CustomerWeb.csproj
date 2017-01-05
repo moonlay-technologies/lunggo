@@ -281,8 +281,14 @@
     <Content Include="Assets\css\neweticket.css">
       <DependentUpon>neweticket.scss</DependentUpon>
     </Content>
+    <Content Include="Assets\css\neweticket.min.css">
+      <DependentUpon>neweticket.css</DependentUpon>
+    </Content>
     <Content Include="Assets\css\promo.css">
       <DependentUpon>promo.scss</DependentUpon>
+    </Content>
+    <Content Include="Assets\css\promo.min.css">
+      <DependentUpon>promo.css</DependentUpon>
     </Content>
     <Content Include="Assets\fonts\bootstrap\glyphicons-halflings-regular.svg" />
     <Content Include="Assets\fonts\DINB-webfont.svg" />

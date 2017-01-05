@@ -6249,14 +6249,14 @@ file : /Assets/travorama20/css/_page_checkout.scss
   min-height: 1px; }
 
 .page-checkout .form-mandiri-payment .col-sm-left {
-  width: 50%;
+  width: 15%;
   font-weight: 700; }
 
 .page-checkout .form-mandiri-payment .col-sm-middle {
   width: 2%; }
 
 .page-checkout .form-mandiri-payment .col-sm-right {
-  width: 48%; }
+  width: 83%; }
 
 .page-checkout .step-button .btn {
   margin-top: 15px;
@@ -6626,39 +6626,39 @@ label.control-label {
 .passenger-detail .passenger-form.inactive .passenger-content {
   display: none; }
 
-  .payment-wrapper .payment {
-    margin-bottom: 6px; }
-    .payment-wrapper .payment label {
-      display: block;
-      cursor: pointer; }
-    .payment-wrapper .payment header {
-      background: #1daee4;
-      position: relative; }
-      .payment-wrapper .payment header .input-wrapper {
-        height: 100%;
-        position: absolute;
-        background: #028ec3;
-        width: 30px;
-        text-align: center;
-        padding-top: 6px; }
-      .payment-wrapper .payment header h5 {
-        color: #fff;
-        color: #fff;
-        margin: 0;
-        padding: 10px;
-        padding-left: 40px;
-        font-size: 12px;
-        font-weight: 600; }
-    .payment-wrapper .payment section {
-      padding: 12px;
-      border: 1px solid #ccc;
+.payment-wrapper .payment {
+  margin-bottom: 6px; }
+  .payment-wrapper .payment label {
+    display: block;
+    cursor: pointer; }
+  .payment-wrapper .payment header {
+    background: #1daee4;
+    position: relative; }
+    .payment-wrapper .payment header .input-wrapper {
+      height: 100%;
+      position: absolute;
+      background: #028ec3;
+      width: 30px;
       text-align: center;
-      background: #fff; }
+      padding-top: 6px; }
+    .payment-wrapper .payment header h5 {
+      color: #fff;
+      color: #fff;
+      margin: 0;
+      padding: 10px;
+      padding-left: 40px;
+      font-size: 12px;
+      font-weight: 600; }
+  .payment-wrapper .payment section {
+    padding: 12px;
+    border: 1px solid #ccc;
+    text-align: center;
+    background: #fff; }
     .payment-wrapper .payment section img {
       width: auto;
       height: 45px; }
-    .payment-wrapper .payment.disabled {
-      opacity: 0.5; }
+  .payment-wrapper .payment.disabled {
+    opacity: 0.5; }
 
 .credit-card-form .cc-number.visa {
   background-image: url(/Assets/images/visa-logo.jpg);

@@ -352,7 +352,7 @@
                                         <div class="input-wrapper">
                                             <input type="radio" name="paymentMethod" value="@PaymentMethod.VirtualAccount" ng-model="paymentMethod" />
                                         </div>
-                                        <h5>ATM</h5>
+                                        <h5>Virtual Account</h5>
                                     </header>
                                     <section>
                                         <img src="/Assets/images/payment-atm.jpg" alt="Virtual Account" />
@@ -380,6 +380,11 @@
                                         <img src="/Assets/images/cimb-clicks.jpg" alt="CIMB Niaga" />
                                     </section>
                                 </label>
+                                <div class="notifcimb" ng-show="paymentMethod == '@PaymentMethod.CimbClicks'" style="color:red">
+                                    <p>
+                                        Setelah mengklik tombol di bawah ini, Anda akan dialihkan ke halaman pembayaran dan tidak dapat memilih metode pembayaran yang lainnya.
+                                    </p>
+                                </div>
                                 <div class="selected-bank" id="BankTransfer">
                                     <h3 class="widget-title">PILIHAN <b>BANK</b></h3>
                                     <label>
@@ -434,8 +439,7 @@
                                 <div ng-if="CreditCard.TwoClickToken == 'false'">
                                     <div class="form-group" ng-class="{'has-error' : !checkNumber(CreditCard.Number)}">
                                         <label class="control-label">Nomor Kartu</label>
-                                        <input type="text" value="" class="form-control cc-number" maxlength="16" ng-model="CreditCard.Number" ng-blur="binDiscount.check()" ng-change="CreditCardPromo.Check(CreditCard.Number)" ng-class="{'visa' : (CreditCardPromo.Type == 'visa') , 'mastercard' : (CreditCardPromo.Type == 'mastercard') }" ng-required="(paymentMethod == '@PaymentMethod.CreditCard') && (CreditCard.TwoClick == 'false')" />
-                                        <div style="color: green">{{binDiscount.text}}</div>
+                                        <input type="text" value="" class="form-control cc-number" maxlength="19" ng-model="CreditCard.Number" ng-blur="binDiscount.check()" ng-change="CreditCardPromo.Check(CreditCard.Number)" ng-class="{'visa' : (CreditCardPromo.Type == 'visa') , 'mastercard' : (CreditCardPromo.Type == 'mastercard') }" ng-required="(paymentMethod == '@PaymentMethod.CreditCard') && (CreditCard.TwoClick == 'false')" />
                                         <div ng-show="!checkNumber(CreditCard.Number)" style="color:red">
                                             Nomor kartu tidak boleh mengandung karakter selain angka
                                         </div>
@@ -443,16 +447,16 @@
 
                                     <div class="form-group">
                                         <div class="row">
-                                            <div class="col-xs-4" ng-class="{'has-error' : !checkDate(CreditCard.Month, CreditCard.Year)}">
+                                            <div class="col-xs-4" ng-class="{'has-error' : dateOver}">
                                                 <label class="control-label">Kadaluarsa</label>
-                                                <select class="form-control" ng-model="CreditCard.Month" ng-init="month = 'Bulan'">
+                                                <select class="form-control" ng-model="CreditCard.Month" ng-init=" month = 'Bulan'">
                                                     <option value="{{month.value}}" ng-repeat="month in months" ng-selected="month.value == 0"
                                                             ng-click="CreditCard.Month = month.value">
                                                         {{month.name}}
                                                     </option>
                                                 </select>
                                             </div>
-                                            <div class="col-xs-4" ng-class="{'has-error' : !checkDate(CreditCard.Month, CreditCard.Year)}">
+                                            <div class="col-xs-4" ng-class="{'has-error' : dateOver}">
                                                 <label class="control-label">&nbsp;</label>
                                                 <select class="form-control" ng-model="CreditCard.Year" ng-init="year = 'Tahun'">
                                                     <option value="{{year}}" ng-repeat="year in generateYear()" ng-selected="year  == 'Tahun'"
@@ -467,7 +471,7 @@
                                             </div>
                                         </div>
 
-                                        <div ng-show="!checkDate(CreditCard.Month, CreditCard.Year)" style="color:red">
+                                        <div ng-show="dateOver" style="color:red">
                                             Tanggal Kadaluarsa harus lebih dari tanggal saat ini.
                                         </div>
                                         <div ng-show="!checkNumber(CreditCard.Cvv)" style="color:red">
@@ -492,7 +496,7 @@
                                 <h3><b>DETAIL</b> PEMBAYARAN - <b>MANDIRI CLICKPAY</b></h3>
                                 <div class="form-group" ng-class="{'has-error' : !checkNumber(MandiriClickPay.CardNo)}">
                                     <label class="control-label">Nomor Kartu</label>
-                                    <input type="text" value="" class="form-control cc-number" maxlength="16" ng-model="MandiriClickPay.CardNo" />
+                                    <input type="text" value="" class="form-control cc-number" maxlength="19" ng-model="MandiriClickPay.CardNo" />
                                 </div>
                                 <div ng-show="!checkNumber(MandiriClickPay.CardNo)" style="color:red">
                                     Nomor kartu tidak boleh mengandung karakter selain angka
@@ -508,8 +512,8 @@
                                         <ul class="form-row clearfix">
                                             <li class="col-left">Input 1</li>
                                             <li class="col-middle">:</li>
-                                            <li class="col-right" ng-if="MandiriClickPay.CardNo != null && MandiriClickPay.CardNo.length == 0">{{MandiriClickPay.CardNo | limitTo:-10}}</li>
-                                            <li class="col-right" ng-if="MandiriClickPay.CardNo == null || MandiriClickPay.CardNo.length == 0">Masukkan Nomor Kartu Terlebih Dahulu</li>
+                                            <li class="col-right" ng-if="MandiriClickPay.CardNo != null && MandiriClickPay.CardNo.length >= 12">{{MandiriClickPay.CardNo | limitTo:-10}}</li>
+                                            <li class="col-right" ng-if="MandiriClickPay.CardNo == null || MandiriClickPay.CardNo.length < 12">Masukkan Nomor Kartu Terlebih Dahulu</li>
                                         </ul>
                                         <ul class="form-row clearfix">
                                             <li class="col-left">Input 2</li>
@@ -558,12 +562,10 @@
                     </div><!-- .widget.countdown -->
                     <br />
 
-
-                    <div ng-show="paymentMethod == '@PaymentMethod.CimbClicks'">
-                        <p>
-                            Setelah mengklik tombol di bawah ini, Anda akan dialihkan ke halaman pembayaran dan tidak dapat memilih metode pembayaran yang lainnya.
-                        </p>
+                    <div ng-show="notifCardLength" style="color:red">
+                        Panjang digit kartu harus di antara 12-19 digit.
                     </div>
+                    
 
                     <div class="step-button">
 
@@ -608,7 +610,7 @@
                         <div class="container_new">
                             <ol>
                                 <li>Transfer keseluruhan jumlah harga hingga <b>3 angka terakhir</b> untuk menjaga keamanan transaksi dan dilakukan sebelum batas akhir waktu pembayaran.</li>
-                                <li>Transfer antarbank (dari bank yang berbeda) wajib menggunakan metode pembayaran ATM.</li>
+                                <li>Transfer antarbank (dari bank yang berbeda) wajib menggunakan metode pembayaran Virtual Account.</li>
                                 <li><b>Tidak disarankan</b> melakukan transfer dengan <b>LLG/Kliring/SKNBI</b> karena membutuhkan waktu verifikasi yang lebih lama sehingga memungkinkan pemesanan gagal.</li>
                                 
                             </ol>
@@ -632,7 +634,7 @@
             <div class="popup__wrapper" ng-class="{'active' : pay.virtualAccount }">
                 <div class="popup">
                     <header class="popup__header">
-                        <h4 class="popup__title">Syarat dan Ketentuan ATM</h4>
+                        <h4 class="popup__title">Syarat dan Ketentuan Virtual Account</h4>
                     </header>
                     <div class="popup__body tnc-body">
                         <div class="container_new">
