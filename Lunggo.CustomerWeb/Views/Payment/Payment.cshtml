@@ -17,6 +17,8 @@
     var totalpax = 0;
     var totalAdult = 0;
     var totalChild = 0;
+    var totalRoom = 0;
+    var night  = 0;
     var images = new List<Image>();
     var hotelImg = "";
     var listAges = new List<int>();
@@ -26,6 +28,7 @@
         if (Model.Reservation is HotelReservationForDisplay)
         {
             var rsv = (Model.Reservation as HotelReservationForDisplay);
+            night = (rsv.HotelDetail.CheckOutDate - rsv.HotelDetail.CheckInDate).Days;
             images = HotelService.GetInstance().GetHotelDetailFromDb(rsv.HotelDetail.HotelCode).ImageUrl;
             var orDefault = images.Where(i => i.Type == "GEN").ToList().FirstOrDefault();
             if (orDefault != null)
@@ -42,26 +45,32 @@
                     : "http://photos.hotelbeds.com/giata/" + firstOrDefault.Path;
             }
             var rooms = rsv.HotelDetail.Rooms;
-        rsvNo = Model.RsvNo;
-        foreach (var room in rooms)
-        {
-            var roomName = HotelService.GetInstance().GetHotelRoom(room.RoomCode).RoomDescId;
-            var sum = 0;
-            foreach (var rate in room.Rates)
+            rsvNo = Model.RsvNo;
+            foreach (var room in rsv.HotelDetail.Rooms)
             {
-            //    sum += rate.RateCount;
-            //        totalpax += (rate.AdultCount + rate.ChildCount) * rate.RateCount;
-            //        totalAdult += rate.AdultCount;
-            //        totalChild += rate.ChildCount;
-            //        if (rate.ChildCount <= 0)
-            //        {
-            //            continue;
-            //}
-            //        listAges.AddRange(rate.ChildrenAges);
+                var roomName = room.RoomName;
+                var sum = 0;
+
+                foreach (var rate in room.Rates)
+                {
+
+                    foreach (var config in rate.Breakdowns)
+                    {
+                        sum += config.RateCount;
+                        totalRoom += config.RateCount;
+                        totalAdult += config.AdultCount;
+                        totalChild += config.ChildCount;
+                        if (config.ChildCount <= 0)
+                        {
+                            continue;
+                        }
+                        listAges.AddRange(config.ChildrenAges);
+                    }
+
                 }
-            orderedRooms.Add(new Tuple<string, int>(roomName, sum)); ;
+                orderedRooms.Add(new Tuple<string, int>(roomName, sum)); ;
+            }
         }
-    }
     }
     catch
     {
@@ -161,12 +170,12 @@
     var paymentDetail = '';
     var flightDetail = '';
     var trips = '';
-    var hotelDetails = '';
+    var hotelDetails = ''; //TBD
     var price = '';
     var originalPrice = '';
     var totalRoom = '';
-    var checkin = '';
-    var checkout = '';
+    var checkin = ''; //tbd
+    var checkout = ''; //tbd
     var totalpax = '';
     var nights = '';
     @if (Model.Reservation is FlightReservationForDisplay)
@@ -208,7 +217,7 @@
         var hotel = Model.Reservation as HotelReservationForDisplay;
         @:originalPrice = '@hotel.HotelDetail.OriginalTotalFare';
             @:price = '@hotel.HotelDetail.NetTotalFare';
-        @:totalRoom = 3;
+        @:totalRoom = 3; //tbd
         //@:totalRoom = '@hotel.HotelDetail.Rooms.SelectMany(r => r.Rates).Sum(p => p.RateCount)';
         @:checkin = '@hotel.HotelDetail.CheckInDate.ToString("D",CultureInfo.CreateSpecificCulture("id-ID"))';
             @:checkout = '@hotel.HotelDetail.CheckOutDate.ToString("D", CultureInfo.CreateSpecificCulture("id-ID"))';
@@ -551,9 +560,6 @@
                                     <dd ng-if="!(binDiscount.replaceDiscount && !voucher.confirmedCode)">Rp {{totalPrice - voucher.amount - CreditCardPromo.Amount + UniqueCodePaymentConfig.UniqueCode| number}}</dd>
                                 </dl>
                             </div>
-                            <!--<footer>
-                                    <small>* Harga ini masih bisa berubah, harga final maskapai akan dikonfirmasi kembali pada proses pembayaran</small>
-                                </footer> -->
                         </div><!-- .widget.price-detail -->
                         <div class="widget voucher" ng-class="{'hide' : CreditCardPromo.Valid}">
                             <h3 class="widget-title"><b>KODE</b> VOUCHER</h3>
@@ -716,22 +722,22 @@
                                                 <div class="wb-container clearfix">
                                                     <div class="wb-left">Check in</div>
                                                     <div class="wb-mid">:</div>
-                                                    <div class="wb-right bold-txt">{{checkin | date : "d MMMM yyyy"}}</div>
+                                                    <div class="wb-right bold-txt">@reservation.HotelDetail.CheckInDate.ToString("D", CultureInfo.CreateSpecificCulture("id-ID"))</div>
                                                 </div>
                                                 <div class="wb-container clearfix">
                                                     <div class="wb-left">Check out</div>
                                                     <div class="wb-mid">:</div>
-                                                    <div class="wb-right bold-txt">{{checkout | date : "d MMMM yyyy"}}</div>
+                                                    <div class="wb-right bold-txt">@reservation.HotelDetail.CheckOutDate.ToString("D", CultureInfo.CreateSpecificCulture("id-ID"))</div>
                                                 </div>
                                                 <div class="wb-container clearfix">
                                                     <div class="wb-left">Malam</div>
                                                     <div class="wb-mid">:</div>
-                                                    <div class="wb-right bold-txt">{{nights}} Malam</div>
+                                                    <div class="wb-right bold-txt">@night Malam</div>
                                                 </div>
                                                 <div class="wb-container clearfix">
                                                     <div class="wb-left">Kamar</div>
                                                     <div class="wb-mid">:</div>
-                                                    <div class="wb-right bold-txt">{{totalRoom}} Kamar</div>
+                                                    <div class="wb-right bold-txt">@totalRoom Kamar</div>
                                                 </div>
                                                 <div class="wb-container clearfix">
                                                     <div class="wb-left">Jenis Kamar</div>
@@ -770,9 +776,9 @@
                                                                 }
                                                                 else
                                                                 {
-                                                                    @listAges[a] <span>Tahun</span>
+                                                                    @listAges[a] <span>Tahun)</span>
                                                                 }
-                                                            })
+                                                            }
                                                         </span>
                                                                 }
                                                             </div>

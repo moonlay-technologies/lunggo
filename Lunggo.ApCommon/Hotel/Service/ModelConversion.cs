@@ -69,8 +69,8 @@ namespace Lunggo.ApCommon.Hotel.Service
                 DestinationName = GetDestinationNameFromDict(hotelDetail.DestinationCode).Name,
                 PostalCode = hotelDetail.PostalCode
             };
-            convertedHotel.OriginalTotalFare = convertedHotel.Rooms.SelectMany(r => r.Rates).Sum(r => r.Breakdowns[0].OriginalTotalFare);
-            convertedHotel.NetTotalFare = convertedHotel.Rooms.SelectMany(r => r.Rates).Sum(r => r.Breakdowns[0].NetTotalFare);
+            convertedHotel.OriginalTotalFare = convertedHotel.Rooms.SelectMany(r => r.Rates).SelectMany(r => r.Breakdowns).Sum(b => b.OriginalTotalFare);
+            convertedHotel.NetTotalFare = convertedHotel.Rooms.SelectMany(r => r.Rates).SelectMany(r => r.Breakdowns).Sum(b => b.NetTotalFare);
             convertedHotel.OriginalCheapestFare = convertedHotel.Rooms.SelectMany(r => r.Rates).Min(r => r.Breakdowns[0].OriginalFare);
             convertedHotel.NetCheapestFare = convertedHotel.Rooms.SelectMany(r => r.Rates).Min(r => r.Breakdowns[0].NetFare);
             return convertedHotel;

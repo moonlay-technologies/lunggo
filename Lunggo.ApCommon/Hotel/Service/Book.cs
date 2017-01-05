@@ -181,6 +181,8 @@ namespace Lunggo.ApCommon.Hotel.Service
                 };
             }
 
+            bookInfo.Rooms.ForEach(ro => ro.Rates = BundleRates(ro.Rates));
+
             SaveSelectedHotelDetailsToCache(input.Token, bookInfo);
             if (oldPrice != newPrice)
                 return new BookHotelOutput

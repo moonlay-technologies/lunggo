@@ -6,10 +6,10 @@
     });
     $scope.hide = false;
     $scope.returnUrl = window.location.origin;
-    $scope.totalRoom = totalRoom;
-    $scope.checkin = checkin;
-    $scope.checkout = checkout;
-    $scope.nights = nights;
+    $scope.totalRoom = totalRoom;//tbd
+    $scope.checkin = checkin; //tbd
+    $scope.checkout = checkout; //tbd
+    $scope.nights = nights;//tbd
     $scope.roomService = 0;
     $scope.netFare = netFare;
     $scope.returnUrl = window.location.origin;

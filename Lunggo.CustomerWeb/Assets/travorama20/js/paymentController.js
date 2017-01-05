@@ -25,12 +25,12 @@ app.controller('paymentController', [
         $scope.paymentTimeout = paymentTimeout;
         $scope.paymentMethod = ''; 
         $scope.trips = trips;
-        $scope.hotelDetails = hotelDetails;
-        $scope.totalRoom = totalRoom;
-        $scope.checkin = checkin;
-        $scope.checkout = checkout;
-        $scope.nights = nights;
-        $scope.totalpax = totalpax;
+        $scope.hotelDetails = hotelDetails; //TBD
+        $scope.totalRoom = totalRoom; //tbd
+        $scope.checkin = checkin; //tbd
+        $scope.checkout = checkout; //tbd
+        $scope.nights = nights; //tbd
+        $scope.totalpax = totalpax; //tbd
         $scope.stepClass = '';
         $scope.redirectionUrl = redirectionUrl;
         $scope.expired = false;
@@ -794,6 +794,7 @@ app.controller('paymentController', [
 
         // ********************************** OTHERS ******************************************
 
+        //TBD
         $scope.hotelstar = function () {
             if ($scope.hotelDetails.starRating == 1) {
                 return 'star';

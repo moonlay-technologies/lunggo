@@ -132,33 +132,33 @@
     $('.date-picker').datepicker({
         minDate: new Date()
     });
-    var rsvType = '';
-    var totalRoom = 0;
-    var rating = "";
-    var nights = 0;
-    var checkin = "";
-    var checkout = "";
-    var netFare = 0;
-    var hotelDetails = '';
-    var rating = '';
-    var originalFare = '';
-    var netFare = '';
-    var totalRoom = '';
-    var checkin = '';
-    var checkout = '';
-    var nights = '';
+    var rsvType = ''; //tbd
+    var totalRoom = 0;//tbd
+    var rating = ""; //tbd
+    var nights = 0; //tbd
+    var checkin = ""; //tbd
+    var checkout = "";//tbd
+    var netFare = 0;//tbd
+    var hotelDetails = ''; //tbd
+    var rating = ''; //tbd
+    var originalFare = '';//tbd
+    var netFare = ''; //tbd 
+    var totalRoom = '';//tbd
+    var checkin = ''; //tbd
+    var checkout = ''; //tbd
+    var nights = ''; //tbd
     @if (Model is HotelReservationForDisplay)
         {
             var hotel = Model as HotelReservationForDisplay;
-        @:hotelDetails = '@hotel.HotelDetail';
-        @:rating = '@hotel.HotelDetail.StarRating'
-            @:originalFare = '@hotel.HotelDetail.OriginalTotalFare';
-            @:netFare = '@hotel.HotelDetail.NetTotalFare';
-            @:totalRoom =3;
+        @:hotelDetails = '@hotel.HotelDetail'; //tbd
+        @:rating = '@hotel.HotelDetail.StarRating' //tbd
+            @:originalFare = '@hotel.HotelDetail.OriginalTotalFare'; ///tbd
+            @:netFare = '@hotel.HotelDetail.NetTotalFare'; //tbd
+            @:totalRoom =3; //tbd
             @*@:totalRoom = '@hotel.HotelDetail.Rooms.SelectMany(r => r.Rates).Sum(p => p.RateCount)';*@
-        @:checkin = '@hotel.HotelDetail.CheckInDate.ToString("D", CultureInfo.CreateSpecificCulture("id-ID"))';
-        @:checkout = '@hotel.HotelDetail.CheckOutDate.ToString("D", CultureInfo.CreateSpecificCulture("id-ID"))';
-        @:nights = '@((hotel.HotelDetail.CheckOutDate - hotel.HotelDetail.CheckInDate).Days)';
+        @:checkin = '@hotel.HotelDetail.CheckInDate.ToString("D", CultureInfo.CreateSpecificCulture("id-ID"))'; //tbd
+        @:checkout = '@hotel.HotelDetail.CheckOutDate.ToString("D", CultureInfo.CreateSpecificCulture("id-ID"))';//tbd
+        @:nights = '@((hotel.HotelDetail.CheckOutDate - hotel.HotelDetail.CheckInDate).Days)';//tbd
             }
     </script>
     <!-- angular controller -->
@@ -481,153 +481,6 @@
                                     </div>
                                 </div>
                                
-                                @*<div class="review-hotel page-hotel">
-                                    <h4><b>DETAIL HOTEL</b></h4>
-                                    <div class="rh-container">
-                                        <div class="rh-row clearfix">
-                                            <div class="col-sp-3">
-                                                <div class="rh-img" style="background-image: url(@hotelImg);"></div>
-                                            </div>
-                                            <div class="col-7">
-                                                <div class="blue-txt bold-txt hotel-title-lg md-txt">@ToTitleCase(reservation.HotelDetail.HotelName)</div>
-                                                @if (reservation.HotelDetail.StarRating == 1)
-                                                {
-                                                    <div class="star"></div>
-                                                }
-                                                else if (reservation.HotelDetail.StarRating == 2)
-                                                {
-                                                    <div class="star star-2"></div>
-                                                }
-                                                else if (reservation.HotelDetail.StarRating == 3)
-                                                {
-                                                    <div class="star star-3"></div>
-                                                }
-                                                else if (reservation.HotelDetail.StarRating == 4)
-                                                {
-                                                    <div class="star star-4"></div>
-                                                }
-                                                else if (reservation.HotelDetail.StarRating == 5)
-                                                {
-                                                    <div class="star star-5"></div>
-                                                }
-                                                <div class="rh-location">
-                                                    @ToTitleCase(reservation.HotelDetail.Address) @ToTitleCase(reservation.HotelDetail.ZoneName),
-                                                    @ToTitleCase(reservation.HotelDetail.DestinationName) @reservation.HotelDetail.PostalCode, @ToTitleCase(reservation.HotelDetail.CountryName)
-                                                </div>
-                                                <div class="rh-row">
-                                                    <div class="wb-container clearfix">
-                                                        <div class="wb-left">Check in</div>
-                                                        <div class="wb-mid">:</div>
-                                                        <div class="wb-right bold-txt">{{checkin | date : "d MMMM yyyy"}}</div>
-                                                    </div>
-                                                    <div class="wb-container clearfix">
-                                                        <div class="wb-left">Check out</div>
-                                                        <div class="wb-mid">:</div>
-                                                        <div class="wb-right bold-txt">{{checkout | date : "d MMMM yyyy"}}</div>
-                                                    </div>
-                                                    <div class="wb-container clearfix">
-                                                        <div class="wb-left">Malam</div>
-                                                        <div class="wb-mid">:</div>
-                                                        <div class="wb-right bold-txt">{{nights}} Malam</div>
-                                                    </div>
-                                                    <div class="wb-container clearfix">
-                                                        <div class="wb-left">Kamar</div>
-                                                        <div class="wb-mid">:</div>
-                                                        <div class="wb-right bold-txt">{{totalRoom}} Kamar</div>
-                                                    </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                                    @foreach (var room in rooms)
-                                                    {
-                                                        var index = 1;
-                                                        
-                                            <div class="rh-row clearfix">
-                                                            @foreach (var rate in room.Rates)
-                                                            {
-                                                    <div class="br"></div>
-                                                    <div class="clearfix">
-                                                        <div class="col-sp-3">
-                                                            <div class="rh-img" style="background-image: url(@roomImg);"></div>
-                                                        </div>
-                                                        <div class="col-7 clearfix">
-                                                            <div class="blue-txt bold-txt rh-title">Tipe Kamar : @ToTitleCase(room.RoomName)</div>
-                                                            <div class="rh-table clearfix">
-                                                                <div class="cols-1 room-sort-mid clearfix">
-                                                                    <div class="cols-title">Kamar</div>
-                                                                    <div class="cols-value">@rate.RoomCount</div>
-                                                                </div>
-                                                                <div class="cols-2 room-sort-mid clearfix">
-                                                                    <div class="cols-title">Dewasa</div>
-                                                                    <div class="cols-value">@rate.AdultCount</div>
-                                                                </div>
-                                                                <div class="cols-3 clearfix">
-                                                                    <div class="cols-title">Anak</div>
-                                                                    <div class="cols-value">
-                                                                        @if (@rate.ChildCount > 0)
-                                                                        {
-                                                                            <span>@rate.ChildCount </span>
-                                                                            <span>
-                                                                                (
-                                                                                @for (var a = 0; a < rate.ChildrenAges.Count; a++)
-                                                                                {
-                                                                                    if (a != rate.ChildrenAges.Count - 1)
-                                                                                    {
-                                                                                        @rate.ChildrenAges[a]
-                                                                                        <span>th, </span>
-                                                                                    }
-                                                                                    else
-                                                                                    {
-                                                                                        @rate.ChildrenAges[a]
-                                                                                        <span>th</span>
-                                                                                    }
-                                                                                }
-                                                                                )
-                                                                            </span>
-                                                                        }
-                                                                    </div>
-                                                                </div>
-                                                                <div class="cols-4 quarter clearfix">
-                                                                    <div class="cols-title">Board</div>
-                                                                    <div class="cols-value">@ToTitleCase(rate.BoardDescription)</div>
-                                                                </div>
-                                                            </div>
-                                                                </div>
-                                                                                                                             
-                                                    </div>
-                                                                if (rate.TermAndCondition != null && rate.TermAndCondition.Count != 0 && !rate.TermAndCondition.Exists(r => r.Length < 3))
-                                                                {
-                                                        <div class="rh-policy clearfix">
-                                                            <div class="rh-title blue-txt bold-txt">Ketentuan</div>
-                                                            <div class="" style="text-transform: capitalize">@String.Join(". ", rate.TermAndCondition)</div>
-                                                                </div>
-                                                                }
-                                                                if (rate.Cancellation != null && rate.Cancellation.Count > 0)
-                                                                {
-                                                        <div class="rh-cancel clearfix">
-                                                            <div class="rh-title blue-txt bold-txt">Ketentuan Pembatalan</div>
-                                                            <ul class="blue-list">
-                                                                            @if (rate.IsFreeCancel)
-                                                                            {
-                                                                    <li>
-                                                                        Gratis pembatalan sebelum tanggal @rate.FreeUntil.GetValueOrDefault().AddHours(7).ToString("dd MMMM yyyy HH:mm", CultureInfo.CreateSpecificCulture("id-ID")) WIB.
-                                                                    </li>
-                                                                            }
-                                                                        @foreach (var policy in rate.Cancellation)
-                                                                        {
-                                                                            <div>
-                                                                                - Pembatalan setelah tanggal @policy.StartTime.AddHours(7).ToString("dd MMMM yyyy HH:mm", CultureInfo.CreateSpecificCulture("id-ID")) WIB akan dikenakan biaya sebesar @((policy.FeePercentage * 100).ToString("####"))%.<br />
-                                                                            </div>
-                                                                        }
-                                                            </ul>
-                                                                </div>
-                                                                }
-                                                            }
-                                                        </div>
-                                                            indexroom++;
-                                                    }
-                                </div>
-                                </div>*@
                             }
                         </div>
                     </section><!-- .order-detail -->
@@ -716,5 +569,4 @@
             </div>
         </div>
     </div>
-
 </div>

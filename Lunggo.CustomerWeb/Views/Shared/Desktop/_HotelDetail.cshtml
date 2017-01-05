@@ -24,36 +24,14 @@
             : "http://photos.hotelbeds.com/giata/" + firstOrDefault.Path;
     }
 
-    var listAges = new List<int>();
-    var sumAdult = 0;
-    var sumChild = 0;
-    var orderedRooms = new List<Tuple<string, int>>();
+    var totalRoom = 0;
+    
     try
     {
-
-        foreach (var room in Model.Rooms)
-        {
-            var roomName = room.RoomName;
-            var sum = 0;
-            foreach (var rate in room.Rates)
-            {
-                sum += rate.RoomCount;
-                sumAdult += rate.AdultCount;
-                sumChild += rate.ChildCount;
-                if (rate.ChildCount <= 0)
-                {
-                    continue;
-                }
-                listAges.AddRange(rate.ChildrenAges);
-            }
-            orderedRooms.Add(new Tuple<string, int>(roomName, sum)); ;
-        }
+        totalRoom += Model.Rooms.Sum(room => room.Rates.Sum(rate => rate.Breakdowns.Sum(config => config.RateCount)));
     }
     catch (Exception)
-    {
-
-        throw;
-    }
+    {}
 }
 
 @functions{
@@ -103,23 +81,23 @@
             <div class="blue-txt bold-txt hotel-title-lg md-txt">@ToTitleCase(Model.HotelName)</div>
             @if (Model.StarRating == 1)
             {
-            <div class="star"></div>
+                <div class="star"></div>
             }
             else if (Model.StarRating == 2)
             {
-            <div class="star star-2"></div>
+                <div class="star star-2"></div>
             }
             else if (Model.StarRating == 3)
             {
-            <div class="star star-3"></div>
+                <div class="star star-3"></div>
             }
             else if (Model.StarRating == 4)
             {
-            <div class="star star-4"></div>
+                <div class="star star-4"></div>
             }
             else if (Model.StarRating == 5)
             {
-            <div class="star star-5"></div>
+                <div class="star star-5"></div>
             }
             <div class="rh-location">
                 @ToTitleCase(Model.Address) @ToTitleCase(Model.ZoneName),
@@ -144,10 +122,23 @@
                 <div class="wb-container clearfix">
                     <div class="wb-left">Kamar</div>
                     <div class="wb-mid">:</div>
-                    <div class="wb-right bold-txt">@Model.Rooms.Sum(r => r.Rates.Sum(c => c.RoomCount)) Kamar</div>
+                    <div class="wb-right bold-txt">@totalRoom Kamar</div>
                 </div>
             </div>
         </div>
+    </div>
+    <div>
+        @if (Model.Policy != null && Model.Policy.Count != 0)
+        {
+            <div class="rh-cancel clearfix">
+                <div class="rh-title blue-txt bold-txt">Perlu Diingat</div>
+                @foreach (var pol in Model.Policy)
+                {
+                    <div class="blue-list" style="text-transform: capitalize">@pol</div>
+                }
+
+            </div>
+        }
     </div>
     @foreach (var room in Model.Rooms)
     {
@@ -162,44 +153,62 @@
                     <div class="col-7 clearfix">
                         <div class="blue-txt bold-txt rh-title">Tipe Kamar : @ToTitleCase(room.RoomName)</div>
                         <div class="rh-table clearfix">
-                            <div class="cols-1 room-sort-mid clearfix">
-                                <div class="cols-title">Kamar</div>
-                                <div class="cols-value">@rate.RoomCount</div>
-                            </div>
-                            <div class="cols-2 room-sort-mid clearfix">
-                                <div class="cols-title">Dewasa</div>
-                                <div class="cols-value">@rate.AdultCount</div>
-                            </div>
-                            <div class="cols-3 clearfix">
-                                <div class="cols-title">Anak</div>
-                                <div class="cols-value">
-                                    @if (@rate.ChildCount > 0)
+                            
+                                <div class="cols-1 room-sort-mid clearfix">
+                                    <div class="cols-title">Kamar</div>
+                                    @foreach (var config in rate.Breakdowns)
                                     {
-                                        <span>@rate.ChildCount </span>
-                                        <span>
-                                            (
-                                            @for (var a = 0; a < rate.ChildrenAges.Count; a++)
-                                            {
-                                                if (a != rate.ChildrenAges.Count - 1)
-                                                {
-                                                    @rate.ChildrenAges[a]
-                                                    <span>th, </span>
-                                                }
-                                                else
-                                                {
-                                                    @rate.ChildrenAges[a]
-                                                    <span>th</span>
-                                                }
-                                            }
-                                            )
-                                        </span>
+                                        <div class="cols-value">@config.RateCount</div>
                                     }
+                                    
                                 </div>
-                            </div>
-                            <div class="cols-4 quarter clearfix">
-                                <div class="cols-title">Board</div>
-                                <div class="cols-value">@ToTitleCase(rate.BoardDescription)</div>
-                            </div>
+                                <div class="cols-2 room-sort-mid clearfix">
+                                    <div class="cols-title">Dewasa</div>
+                                    @foreach (var config in rate.Breakdowns)
+                                    {
+                                        <div class="cols-value">@config.AdultCount</div>
+                                    }
+                                    
+                                </div>
+                                <div class="cols-3 clearfix">
+                                    <div class="cols-title">Anak</div>
+                                    @foreach (var config in rate.Breakdowns)
+                                    {
+                                        <div class="cols-value">
+                                            @if (@config.ChildCount > 0)
+                                            {
+                                                <span>@config.ChildCount </span>
+                                                <span>
+                                                    (@for (var a = 0; a < config.ChildrenAges.Count; a++)
+                                                    {
+                                                        if (a != config.ChildrenAges.Count - 1)
+                                                        {
+                                                            @config.ChildrenAges[a]
+                                                            <span>th, </span>
+                                                        }
+                                                        else
+                                                        {
+                                                            @config.ChildrenAges[a]
+                                                            <span>th)</span>
+                                                        }
+                                                    }
+
+                                                </span>
+                                            }
+                                        </div>
+                                    }
+                                   
+                                </div>
+                                <div class="cols-4 quarter clearfix">
+                                    <div class="cols-title">Board</div>
+                                    @foreach (var config in rate.Breakdowns)
+                                    {
+                                        <div class="cols-value">@ToTitleCase(config.BoardDescription)</div>
+                                    }
+                                    
+                                </div>
+                            
+                            
                         </div>
                     </div>
 
@@ -225,7 +234,7 @@
                             @foreach (var policy in rate.Cancellation)
                             {
                                 <li>
-                                    Pembatalan setelah tanggal @policy.StartTime.AddHours(7).ToString("dd MMMM yyyy HH:mm", CultureInfo.CreateSpecificCulture("id-ID")) WIB akan dikenakan biaya sebesar Rp @(policy.SingleFee.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))) per kamar <br />
+                                    Pembatalan setelah tanggal @policy.StartTime.AddHours(7).ToString("dd MMMM yyyy HH:mm", CultureInfo.CreateSpecificCulture("id-ID")) WIB akan dikenakan biaya sebesar @((policy.FeePercentage * 100).ToString("####"))%.<br />
                                 </li>
                             }
                         </ul>
@@ -234,4 +243,5 @@
             }
         </div>
     }
+   
 </div>
