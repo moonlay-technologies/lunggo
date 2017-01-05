@@ -2,12 +2,12 @@
 @using Lunggo.ApCommon.Hotel.Service
 @model Lunggo.ApCommon.Hotel.Model.HotelDetailForDisplay
 @{
-   
+
     var night = (Model.CheckOutDate - Model.CheckInDate).Days;
     var hotelImg = "";
     var roomImg = "";
     var images = HotelService.GetInstance().GetHotelDetailFromDb(Model.HotelCode).ImageUrl;
-   
+
     var firstOrDefault = images.Where(i => i.Type == "HAB").ToList().FirstOrDefault();
     if (firstOrDefault != null)
     {
@@ -22,7 +22,7 @@
     var orderedRooms = new List<Tuple<string, int>>();
     try
     {
-       
+
         foreach (var room in Model.Rooms)
         {
             var roomName = room.RoomName;
@@ -43,7 +43,7 @@
     }
     catch (Exception)
     {
-  
+
         throw;
     }
 }
@@ -75,10 +75,10 @@
                 }
             }
         }
-        catch{}
+        catch { }
         return text.Length == 0 ? "" : text.Substring(0, text.Length - 1);
     }
-    
+
     public string ApplyTitleCase(string input)
     {
         return input[0] + input.Substring(1, input.Length - 1).ToLower();
@@ -100,55 +100,57 @@
                             @*<div class="col-2"><span class="meal-icon pull-right"></span><span class="wifi-icon pull-right"></span></div>*@
                         </div>
                         <div class="fb-img" style="background-image: url(@roomImg)"></div>
-                        <div class="clearfix">
-                            <div class="fb-row clearfix">
-                                <div class="col-6">Jumlah Kamar</div>
-                                <div class="col-4 bold-txt">@rate.RoomCount Kamar</div>
+                        <div class="rh-table clearfix">
+                            <div class="cols-1 col-2 clearfix">
+                                <div class="cols-title bold-txt white-txt">Kamar</div>
+                                <div class="cols-value semibold-txt">@rate.RoomCount</div>
                             </div>
-                            <div class="fb-row clearfix">
-                                <div class="col-6">Tamu per Kamar</div>
-                                <div class="col-4 bold-txt">
-                                    @rate.AdultCount Dewasa @if (rate.ChildCount > 0)
-                                                            {
-                                                                <span>, @rate.ChildCount Anak</span>
-                                                            }
-                                </div>
+                            <div class="cols-2 col-2 clearfix">
+                                <div class="cols-title bold-txt white-txt">Dewasa</div>
+                                <div class="cols-value semibold-txt">@rate.AdultCount</div>
                             </div>
-                            @if (rate.ChildCount > 0)
-                            {
-                                <div class="fb-row clearfix">
-                                    <div class="col-6">Umur Anak</div>
-                                    <div class="col-4 bold-txt">
+                            <div class="cols-3 col-4 clearfix">
+                                <div class="cols-title bold-txt white-txt">Anak</div>
+                                <div class="cols-value semibold-txt">
+                                    @if (@rate.ChildCount > 0)
+                                    {
+                                        <span>@rate.ChildCount </span>
                                         <span>
-                                            @for (var a = 0; a < listAges.Count; a++)
+                                            (
+                                            @for (var a = 0; a < rate.ChildrenAges.Count; a++)
                                             {
-                                                if (a != listAges.Count - 1)
+                                                if (a != rate.ChildrenAges.Count - 1)
                                                 {
-                                                    @listAges[a]
-                                                    <span>Tahun, </span>
+                                                    @rate.ChildrenAges[a]
+                                                    <span>th, </span>
                                                 }
                                                 else
                                                 {
-                                                    @listAges[a] <span>Tahun</span>
+                                                    @rate.ChildrenAges[a]
+                                                    <span>th</span>
                                                 }
                                             }
+                                            )
                                         </span>
-                                    </div>
+                                    }
                                 </div>
-                            }
-
+                            </div>
+                            <div class="cols-4 col-2 clearfix">
+                                <div class="cols-title bold-txt white-txt">Board</div>
+                                <div class="cols-value semibold-txt">@ToTitleCase(rate.BoardDescription)</div>
+                            </div>
                         </div>
                         <ul class="blue-list blue-txt">
                             @if (rate.IsFreeCancel)
                             {
                                 <li>
-                                    Gratis pembatalan sebelum tanggal 
+                                    Gratis pembatalan sebelum tanggal
                                     <span style="color:#1daee4">
                                         @rate.FreeUntil.GetValueOrDefault().AddHours(7).ToString("dd MMMM yyyy HH:mm", CultureInfo.CreateSpecificCulture("id-ID"))
                                     </span> WIB.
                                 </li>
                             }
-                            
+
                             @foreach (var cancellation in rate.Cancellation)
                             {
                                 <li>
@@ -184,21 +186,13 @@
                                                 <div class="grey-txt">@policy</div>
                                             </li>
                                         }
-
                                     </ul>
                                 }
-                                
                             </div>
                         }
-                        
                     </div>
-                
-                    <hr/>
-                
                 }
-
             }
-
         </div>
     </div>
 </div>
