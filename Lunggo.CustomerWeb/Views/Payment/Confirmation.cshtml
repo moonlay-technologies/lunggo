@@ -150,16 +150,16 @@
     @if (Model is HotelReservationForDisplay)
         {
             var hotel = Model as HotelReservationForDisplay;
-            @:hotelDetails = '@hotel.HotelDetail';
-            @:rating = '@hotel.HotelDetail.StarRating'
+        @:hotelDetails = '@hotel.HotelDetail';
+        @:rating = '@hotel.HotelDetail.StarRating'
             @:originalFare = '@hotel.HotelDetail.OriginalTotalFare';
             @:netFare = '@hotel.HotelDetail.NetTotalFare';
             @:totalRoom =3;
             @*@:totalRoom = '@hotel.HotelDetail.Rooms.SelectMany(r => r.Rates).Sum(p => p.RateCount)';*@
-            @:checkin = '@hotel.HotelDetail.CheckInDate.ToString("D", CultureInfo.CreateSpecificCulture("id-ID"))';
-            @:checkout = '@hotel.HotelDetail.CheckOutDate.ToString("D", CultureInfo.CreateSpecificCulture("id-ID"))';
-            @:nights = '@((hotel.HotelDetail.CheckOutDate - hotel.HotelDetail.CheckInDate).Days)';
-        }
+        @:checkin = '@hotel.HotelDetail.CheckInDate.ToString("D", CultureInfo.CreateSpecificCulture("id-ID"))';
+        @:checkout = '@hotel.HotelDetail.CheckOutDate.ToString("D", CultureInfo.CreateSpecificCulture("id-ID"))';
+        @:nights = '@((hotel.HotelDetail.CheckOutDate - hotel.HotelDetail.CheckInDate).Days)';
+            }
     </script>
     <!-- angular controller -->
     <script src="/Assets/travorama20/js/ConfirmationController.js"></script>
@@ -473,16 +473,22 @@
                             @if (Model is HotelReservationForDisplay)
                             {
                                 var reservation = Model as HotelReservationForDisplay;
-                                var indexroom = 1;
-                                <div class="rh-container review-hotel page-hotel">
+                                
+                                <div class="review-hotel page-hotel">
                                     <h4><b>DETAIL HOTEL</b></h4>
+                                    <div class="rh-container">
+                                        @Html.Partial("/Views/Shared/Desktop/_HotelDetail.cshtml", reservation.HotelDetail)
+                                    </div>
+                                </div>
                                
-                                    <div class="rh-content">
+                                @*<div class="review-hotel page-hotel">
+                                    <h4><b>DETAIL HOTEL</b></h4>
+                                    <div class="rh-container">
                                         <div class="rh-row clearfix">
-                                            <div class="col-left-hotel">
-                                                <div class="img-md" id="hotelimg" style="background-image: url(@hotelImg);"></div>
+                                            <div class="col-sp-3">
+                                                <div class="rh-img" style="background-image: url(@hotelImg);"></div>
                                             </div>
-                                            <div class="col-right-hotel">
+                                            <div class="col-7">
                                                 <div class="blue-txt bold-txt hotel-title-lg md-txt">@ToTitleCase(reservation.HotelDetail.HotelName)</div>
                                                 @if (reservation.HotelDetail.StarRating == 1)
                                                 {
@@ -504,110 +510,108 @@
                                                 {
                                                     <div class="star star-5"></div>
                                                 }
-                                               
                                                 <div class="rh-location">
                                                     @ToTitleCase(reservation.HotelDetail.Address) @ToTitleCase(reservation.HotelDetail.ZoneName),
-                                                    @ToTitleCase(reservation.HotelDetail.DestinationName) @reservation.HotelDetail.PostalCode, @ToTitleCase(reservation.HotelDetail.CountryName)<br />
+                                                    @ToTitleCase(reservation.HotelDetail.DestinationName) @reservation.HotelDetail.PostalCode, @ToTitleCase(reservation.HotelDetail.CountryName)
                                                 </div>
-                                                <div><br /></div>
-                                                <div class="rh-detail">
+                                                <div class="rh-row">
                                                     <div class="wb-container clearfix">
                                                         <div class="wb-left">Check in</div>
                                                         <div class="wb-mid">:</div>
-                                                        <div class="wb-right bold-txt">@reservation.HotelDetail.CheckInDate.ToString("D", CultureInfo.CreateSpecificCulture("id-ID"))</div>
+                                                        <div class="wb-right bold-txt">{{checkin | date : "d MMMM yyyy"}}</div>
                                                     </div>
                                                     <div class="wb-container clearfix">
                                                         <div class="wb-left">Check out</div>
                                                         <div class="wb-mid">:</div>
-                                                        <div class="wb-right bold-txt">@reservation.HotelDetail.CheckOutDate.ToString("D", CultureInfo.CreateSpecificCulture("id-ID"))</div>
+                                                        <div class="wb-right bold-txt">{{checkout | date : "d MMMM yyyy"}}</div>
                                                     </div>
                                                     <div class="wb-container clearfix">
                                                         <div class="wb-left">Malam</div>
                                                         <div class="wb-mid">:</div>
-                                                        <div class="wb-right bold-txt">@((reservation.HotelDetail.CheckOutDate - reservation.HotelDetail.CheckInDate).Days) Malam</div>
+                                                        <div class="wb-right bold-txt">{{nights}} Malam</div>
                                                     </div>
                                                     <div class="wb-container clearfix">
-                                                        <div class="wb-left">Jumlah Kamar</div>
+                                                        <div class="wb-left">Kamar</div>
                                                         <div class="wb-mid">:</div>
-                                                        <div class="wb-right bold-txt">@sum Kamar</div>
+                                                        <div class="wb-right bold-txt">{{totalRoom}} Kamar</div>
                                                     </div>
-                                                    @if (reservation.HotelDetail.Policy != null && reservation.HotelDetail.Policy.Count > 0)
-                                                    {
-                                                        <div class="wb-container clearfix">
-                                                            <div class="wb-left">Catatan Khusus</div>
-                                                            <div class="wb-mid">:</div>
-                                                            <div class="wb-right bold-txt">@String.Join(". ", reservation.HotelDetail.Policy)</div>
                                                     </div>
-                                                    }
-                                                    
                                                 </div>
-                                                
                                             </div>
-                                            <div><br /></div>
-                                        </div>
-                                        <hr />
-                                        <div class="rh-row">
-                                            <div class="rh-top clearfix">
-                                                <div class="col-left-hotel">
-                                                    <img src="@roomImg" alt="Hotel Image" style="max-width: 120px; max-height:120px; padding-right: 10px" />
-                                                </div>
-                                                <div class="col-right-hotel clearfix">
-                                                    <span class="hotel-facility facility"></span>
-
-
                                                     @foreach (var room in rooms)
                                                     {
                                                         var index = 1;
                                                         
-                                                        <div class="rh-detail">
-                                                            <div class="wb-container clearfix">
-                                                                <div class="wb-left">Jenis Kamar</div>
-                                                                <div class="wb-mid">:</div>
-                                                                <div class="wb-right bold-txt">@ToTitleCase(HotelService.GetInstance().GetHotelRoom(room.RoomCode).RoomDescId)</div>
-                                                            </div>
-                                                            <hr/>
+                                            <div class="rh-row clearfix">
                                                             @foreach (var rate in room.Rates)
                                                             {
-                                                                
-                                                                var pol = 1;
-                                                                <div class="wb-container clearfix">
-                                                                    <div class="wb-left">Jumlah Kamar</div>
-                                                                    <div class="wb-mid">:</div>
-                                                                    <div class="wb-right bold-txt">2 Kamar</div>
+                                                    <div class="br"></div>
+                                                    <div class="clearfix">
+                                                        <div class="col-sp-3">
+                                                            <div class="rh-img" style="background-image: url(@roomImg);"></div>
+                                                        </div>
+                                                        <div class="col-7 clearfix">
+                                                            <div class="blue-txt bold-txt rh-title">Tipe Kamar : @ToTitleCase(room.RoomName)</div>
+                                                            <div class="rh-table clearfix">
+                                                                <div class="cols-1 room-sort-mid clearfix">
+                                                                    <div class="cols-title">Kamar</div>
+                                                                    <div class="cols-value">@rate.RoomCount</div>
                                                                 </div>
-                                                                <div class="wb-container clearfix">
-                                                                    <div class="wb-left">Tamu per Kamar</div>
-                                                                    <div class="wb-mid">:</div>
-                                                                    <div class="wb-right bold-txt">
-                                                                        2 Dewasa 3 Anak
+                                                                <div class="cols-2 room-sort-mid clearfix">
+                                                                    <div class="cols-title">Dewasa</div>
+                                                                    <div class="cols-value">@rate.AdultCount</div>
+                                                                </div>
+                                                                <div class="cols-3 clearfix">
+                                                                    <div class="cols-title">Anak</div>
+                                                                    <div class="cols-value">
+                                                                        @if (@rate.ChildCount > 0)
+                                                                        {
+                                                                            <span>@rate.ChildCount </span>
+                                                                            <span>
+                                                                                (
+                                                                                @for (var a = 0; a < rate.ChildrenAges.Count; a++)
+                                                                                {
+                                                                                    if (a != rate.ChildrenAges.Count - 1)
+                                                                                    {
+                                                                                        @rate.ChildrenAges[a]
+                                                                                        <span>th, </span>
+                                                                                    }
+                                                                                    else
+                                                                                    {
+                                                                                        @rate.ChildrenAges[a]
+                                                                                        <span>th</span>
+                                                                                    }
+                                                                                }
+                                                                                )
+                                                                            </span>
+                                                                        }
                                                                     </div>
                                                                 </div>
-                                                                <div class="wb-container clearfix">
-                                                                    <div class="wb-left">Tipe Board</div>
-                                                                    <div class="wb-mid">:</div>
-                                                                    <div class="wb-right bold-txt">Kamar Saja</div>
+                                                                <div class="cols-4 quarter clearfix">
+                                                                    <div class="cols-title">Board</div>
+                                                                    <div class="cols-value">@ToTitleCase(rate.BoardDescription)</div>
+                                                                </div>
+                                                            </div>
                                                                 </div>
                                                                                                                              
+                                                    </div>
                                                                 if (rate.TermAndCondition != null && rate.TermAndCondition.Count != 0 && !rate.TermAndCondition.Exists(r => r.Length < 3))
                                                                 {
-                                                                <div class="wb-container clearfix">
-                                                                        <div class="wb-left">Ketentuan</div>
-                                                                    <div class="wb-mid">:</div>
-                                                                        <div class="wb-right bold-txt" style="text-transform: capitalize">@String.Join(". ", rate.TermAndCondition)</div>
+                                                        <div class="rh-policy clearfix">
+                                                            <div class="rh-title blue-txt bold-txt">Ketentuan</div>
+                                                            <div class="" style="text-transform: capitalize">@String.Join(". ", rate.TermAndCondition)</div>
                                                                 </div>
                                                                 }
-
                                                                 if (rate.Cancellation != null && rate.Cancellation.Count > 0)
                                                                 {
-                                                                <div class="wb-container clearfix">
-                                                                    <div class="wb-left">Ketentuan Pembatalan</div>
-                                                                    <div class="wb-mid">:</div>
-                                                                    <div class="wb-right bold-txt">
+                                                        <div class="rh-cancel clearfix">
+                                                            <div class="rh-title blue-txt bold-txt">Ketentuan Pembatalan</div>
+                                                            <ul class="blue-list">
                                                                             @if (rate.IsFreeCancel)
                                                                             {
-                                                                                <div>
-                                                                                    - Gratis pembatalan sebelum tanggal @rate.FreeUntil.GetValueOrDefault().AddHours(7).ToString("dd MMMM yyyy HH:mm", CultureInfo.CreateSpecificCulture("id-ID")) WIB.
-                                                                                </div>
+                                                                    <li>
+                                                                        Gratis pembatalan sebelum tanggal @rate.FreeUntil.GetValueOrDefault().AddHours(7).ToString("dd MMMM yyyy HH:mm", CultureInfo.CreateSpecificCulture("id-ID")) WIB.
+                                                                    </li>
                                                                             }
                                                                         @foreach (var policy in rate.Cancellation)
                                                                         {
@@ -615,23 +619,15 @@
                                                                                 - Pembatalan setelah tanggal @policy.StartTime.AddHours(7).ToString("dd MMMM yyyy HH:mm", CultureInfo.CreateSpecificCulture("id-ID")) WIB akan dikenakan biaya sebesar @((policy.FeePercentage * 100).ToString("####"))%.<br />
                                                                             </div>
                                                                         }
-                                                                    </div>
+                                                            </ul>
                                                                 </div>
                                                                 }
-                                                                index++;
                                                             }
-
                                                         </div>
-                                                        <hr />
-                                                       
                                                             indexroom++;
                                                     }
-
-                                                </div>
-                                                    </div>
-                                        </div>
-                                    </div>
                                 </div>
+                                </div>*@
                             }
                         </div>
                     </section><!-- .order-detail -->

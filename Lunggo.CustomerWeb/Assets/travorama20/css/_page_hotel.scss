@@ -47,14 +47,14 @@
     /*Custom Column*/
     .col-left, col-right, .col-left-result, .col-right-result, .col-xs-left, .col-xs-middle, .col-xs-right, .col-left-hotel, .col-right-hotel, .col-half, .col-left-page, .col-right-page, 
     .col-left-slider, col-right-slider, .col-left-rs, .col-right-rs, .rb-left, .rb-mid, .rb-right, .room-sort-left, .room-sort-mid, .room-sort-right, .room-left, .room-right,
-    .room-rl, .room-rm, .room-rr, .wb-left, .wb-mid, .wb-right, .ot-left, .ot-right, .col-2, .col-3, .col-4, .col-6, .col-8, .form-sm {
+    .room-rl, .room-rm, .room-rr, .wb-left, .wb-mid, .wb-right, .ot-left, .ot-right, .col-2, .col-3, .col-4, .col-6, .col-8, .form-sm, .col-sp-3, .col-7, .cols-3 {
         position: relative;
         min-height: 1px;
     }
 
     .col-left, .col-left-result, .col-right-result, .col-left-hotel, .col-right-hotel, .col-xs-left, .col-xs-middle, .col-xs-right, .col-half, .col-left-page, .col-right-page,
     .col-left-slider, .col-right-slider, .col-left-rs, .col-right-rs, .rb-left, .rb-mid, .rb-right, .room-sort-left, .room-sort-mid, .room-sort-right, .room-left, .room-right,
-    .room-rl, .room-rm, .room-rr, .wb-left, .wb-mid, .wb-right, .ot-left, .ot-right, .col-2, .col-3, .col-4, .col-6, .col-8, .quarter, .form-sm  {float: left;}
+    .room-rl, .room-rm, .room-rr, .wb-left, .wb-mid, .wb-right, .ot-left, .ot-right, .col-2, .col-3, .col-4, .col-6, .col-8, .quarter, .form-sm, .col-sp-3, .col-7, .cols-3  {float: left;}
     
     .col-right {float: right;}
     
@@ -84,7 +84,8 @@
 
     .ot-left {width: 22%;}  .ot-right {width: 78%;} 
 
-    .col-2 {width:20%} .col-3 {width: 33.333333333333336%;} .col-4 {width: 40%;} .col-6 {width: 60%;} .col-8 {width: 80%;} 
+    .col-2 {width:20%} .col-3 {width: 33.333333333333336%;} .col-4 {width: 40%;} .cols-3 {width: 45%;}
+    .col-sp-3 {width: 30%;} .col-6 {width: 60%;} .col-7 {width: 70%;} .col-8 {width: 80%;} 
 
     /*Icon*/
     .star-outline {
@@ -633,25 +634,12 @@
         .rh-content {
             border: 1px solid #ccc;
             background: #fff;
-            padding: 15px 20px;
+            padding: 20px 10px;
             .rh-row {padding: 0 15px;}
             .hotel-title-lg {margin-bottom: 10px;}
-            .rh-location {
-                margin: 10px 0;
-                margin-left: 20px;
-                &:before {@extend .maps-icon;}
-            }
             .rh-detail {
                 line-height: 22px;
                 margin-bottom: 15px;
-            }
-            .rh-top {
-                border-top: 1px solid #ccc;
-                padding: 15px 0;
-                .hotel-facility {
-                    position: absolute;
-                    right: 0;
-                }
             }
             .rh-tnc {
                 padding: 0;
@@ -662,7 +650,56 @@
                 margin-bottom: 10px;
             }
         }
+        .rh-location {
+            margin: 10px 0;
+            margin-left: 20px;
+            &:before {@extend .maps-icon;}
+        }
+        .rh-policy, .rh-cancel {margin-top: 15px;}
+        .blue-list {margin-bottom: 0;}
+        .col-7 {padding-left: 15px;}
         &.notes-hotel {margin-top: 20px;}
+        .rh-img {
+            width: 160px;
+            height: 160px;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+        .rh-table {
+            .cols-title {
+                background: #1daee4;
+                color: #fff;
+                font-weight: bold;
+                text-align: center;
+                padding: 2px 0;
+            }
+            .cols-value {
+                font-weight: 600;
+                background: #e9e7e8;
+                padding: 15px 0;
+                height: 70px;
+                text-align: center;
+            }
+        }
+        .rh-title {margin-bottom: 10px;}
+        .br {
+            width: 100%;
+            height: 1px;
+            border: 1px dashed #ccc;
+            margin: 15px 0;
+        }
+        .maps-icon {
+            content: '';
+            display: inline-block;
+            background: url(/Assets/travorama20/images/Hotel/location.png) no-repeat;
+            width: 12px;
+            height: 17px;
+            vertical-align: middle;
+            position: absolute;
+            margin-left: -20px;
+            margin-top: 2px;
+        }
     }
 
     /*Hotel Checkout Page*/

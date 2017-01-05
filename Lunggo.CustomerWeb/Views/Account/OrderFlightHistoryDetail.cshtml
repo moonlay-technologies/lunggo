@@ -286,8 +286,15 @@
                         @if (Model is HotelReservationForDisplay)
                         {
                             var rsv = Model as HotelReservationForDisplay;
-                            var indexroom = 1;
-                            <div class="rh-container review-hotel page-hotel">
+                            
+                            <div class="review-hotel page-hotel">
+                                <h4><b>DETAIL HOTEL</b></h4>
+                                <div class="rh-container">
+                                    @Html.Partial("/Views/Shared/Desktop/_HotelDetail.cshtml", rsv.HotelDetail)
+                                </div>
+                            </div>
+
+                            @*<div class="rh-container review-hotel page-hotel">
                                 <h4><b>DETAIL HOTEL</b></h4>
                                 <div class="rh-content">
                                     <div class="rh-row clearfix">
@@ -431,7 +438,7 @@
 
                                     </div>
                                 </div>
-                            </div><!-- .info-hotel -->
+                            </div>*@
                         }
                     </section>
                 </div><!-- .history-content -->
