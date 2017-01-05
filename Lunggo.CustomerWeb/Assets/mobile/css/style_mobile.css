@@ -3622,28 +3622,45 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
   text-align: center;
   font-size: 14px; }
 
-.page.page-orderdetail .order-detail .content-body {
-  margin-bottom: 20px; }
-  .page.page-orderdetail .order-detail .content-body > div > header {
-    background: #dedede;
-    padding: 10px 15px;
-    color: #575757; }
-  .page.page-orderdetail .order-detail .content-body > div > section {
-    padding: 20px 15px; }
-    .page.page-orderdetail .order-detail .content-body > div > section.oh-container {
-      padding: 10px 15px; }
-      .page.page-orderdetail .order-detail .content-body > div > section.oh-container label.control-label.col-xs-5 {
-        padding: 7px 0;
-        font-size: 11px; }
-        .page.page-orderdetail .order-detail .content-body > div > section.oh-container label.control-label.col-xs-5:after {
-          content: ':';
-          right: 0;
-          position: absolute; }
-      .page.page-orderdetail .order-detail .content-body > div > section.oh-container > .form-horizontal {
-        margin-bottom: 0; }
-        .page.page-orderdetail .order-detail .content-body > div > section.oh-container > .form-horizontal .form-group {
-          font-size: 11px;
-          margin: 0; }
+.page.page-orderdetail .order-detail .content-body > div > header {
+  background: #dedede;
+  padding: 10px 15px;
+  color: #575757;
+  position: relative; }
+  .page.page-orderdetail .order-detail .content-body > div > header .btn.btn-yellow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 15px; }
+
+.page.page-orderdetail .order-detail .content-body > div > section {
+  padding: 20px 15px; }
+  .page.page-orderdetail .order-detail .content-body > div > section.oh-container {
+    padding: 10px 15px; }
+    .page.page-orderdetail .order-detail .content-body > div > section.oh-container label.control-label.col-xs-5 {
+      padding: 7px 0;
+      font-size: 11px; }
+      .page.page-orderdetail .order-detail .content-body > div > section.oh-container label.control-label.col-xs-5:after {
+        content: ':';
+        right: 0;
+        position: absolute; }
+    .page.page-orderdetail .order-detail .content-body > div > section.oh-container > .form-horizontal {
+      margin-bottom: 0; }
+      .page.page-orderdetail .order-detail .content-body > div > section.oh-container > .form-horizontal .form-group {
+        font-size: 11px;
+        margin: 0; }
+
+.page.page-orderdetail .order-detail .content-body .oh-form {
+  margin-top: 15px;
+  background: #f9f9f9; }
+  .page.page-orderdetail .order-detail .content-body .oh-form .oh-row {
+    margin-bottom: 10px; }
+    .page.page-orderdetail .order-detail .content-body .oh-form .oh-row .col-4:after {
+      content: ':';
+      float: right;
+      margin-right: 0px; }
+    .page.page-orderdetail .order-detail .content-body .oh-form .oh-row .col-6 {
+      padding-left: 10px; }
 
 .page.page-orderdetail .order-detail .info-hotel .page-hotel {
   background: transparent; }
@@ -4145,6 +4162,8 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     color: #3a8e1b; }
   .page-hotel .orange-txt {
     color: #ff7200; }
+  .page-hotel .white-txt {
+    color: #ffffff; }
   .page-hotel .bg-title {
     font-size: 19px;
     text-transform: uppercase;
@@ -5144,8 +5163,21 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     margin-bottom: 15px; }
   .page-hotel .form-box .sqr-blue-list {
     padding-top: 5px; }
+  .page-hotel .form-box .fb-room {
+    border-top: 1px solid #e8e8e8;
+    padding-top: 15px;
+    margin-bottom: 15px; }
+    .page-hotel .form-box .fb-room:first-child {
+      border-top: none;
+      padding-top: 0; }
+    .page-hotel .form-box .fb-room:last-child {
+      margin-bottom: 0; }
+    .page-hotel .form-box .fb-room .fb-img {
+      margin: 10px 0 15px; }
+    .page-hotel .form-box .fb-room .blue-list {
+      margin: 10px 0 20px !important; }
   .page-hotel .fb-hotel .star {
-    margin-right: 19px; }
+    margin-left: 10px; }
   .page-hotel .fb-hotel .location {
     padding-left: 15px;
     margin: 10px 0; }
@@ -5154,17 +5186,17 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
       margin-left: -15px;
       background-size: 70%;
       background-repeat: no-repeat; }
-  .page-hotel .fb-hotel .fb-img {
+  .page-hotel .fb-hotel .fb-req {
+    margin-top: 20px; }
+  .page-hotel .fb-hotel .fb-row .col-6:before {
+    content: ': '; }
+  .page-hotel .fb-img {
     width: 100%;
     height: 110px;
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
     margin-bottom: 10px; }
-  .page-hotel .fb-hotel .fb-req {
-    margin-top: 20px; }
-  .page-hotel .fb-hotel .fb-row .col-6:before {
-    content: ': '; }
   .page-hotel .overlay--detail-room.overlay .overlay__content {
     padding: 0; }
   .page-hotel .overlay--detail-room .dr-container .dr-title {
@@ -5234,19 +5266,6 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
       font-size: 11px; }
     .page-hotel.page-checkout .form-box .fb-bed {
       margin: 15px 0; }
-    .page-hotel.page-checkout .form-box .fb-room {
-      border-top: 1px solid #e8e8e8;
-      padding-top: 15px;
-      margin-bottom: 15px; }
-      .page-hotel.page-checkout .form-box .fb-room:first-child {
-        border-top: none;
-        padding-top: 0; }
-      .page-hotel.page-checkout .form-box .fb-room:last-child {
-        margin-bottom: 0; }
-      .page-hotel.page-checkout .form-box .fb-room .fb-img {
-        margin: 10px 0 15px; }
-      .page-hotel.page-checkout .form-box .fb-room .blue-list {
-        margin: 10px 0 20px !important; }
     .page-hotel.page-checkout .payment-method {
       font-size: 13px; }
       .page-hotel.page-checkout .payment-method .select-bank-wrapper {
@@ -5291,7 +5310,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         margin-top: 10px;
         resize: none; }
   .page-hotel.page-thankyou {
-    font-size: 13px;
+    font-size: 12px;
     background: #f9f9f9; }
     .page-hotel.page-thankyou h3 {
       margin: 20px 0;
@@ -5813,3 +5832,11 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         padding: 0 15px; }
       .page-hotel .overlay.overlay--hotel-form .overlay__content > .form-wrapper .ag-list {
         margin: 0 15px; }
+  .page-hotel .rh-table {
+    background: #e9e7e8;
+    text-align: center; }
+    .page-hotel .rh-table .cols-title {
+      background: #2fb4e6;
+      padding: 2px 0; }
+    .page-hotel .rh-table .cols-value {
+      padding: 10px 0; }

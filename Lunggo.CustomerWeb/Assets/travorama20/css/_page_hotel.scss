@@ -667,19 +667,17 @@
             background-repeat: no-repeat;
         }
         .rh-table {
+            background: #e9e7e8;
+            text-align: center;
             .cols-title {
                 background: #1daee4;
                 color: #fff;
                 font-weight: bold;
-                text-align: center;
                 padding: 2px 0;
             }
             .cols-value {
                 font-weight: 600;
-                background: #e9e7e8;
                 padding: 15px 0;
-                height: 70px;
-                text-align: center;
             }
         }
         .rh-title {margin-bottom: 10px;}

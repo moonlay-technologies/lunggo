@@ -73,9 +73,16 @@
 .page.page-orderdetail {
     .order-detail {
         .content-header {background:#2eb4e7; color:#fff; padding:15px 0; text-align:center; font-size: 14px;}
-        .content-body { margin-bottom: 20px;
+        .content-body {
             &>div {
-                &>header {background:#dedede; padding:10px 15px; color:#575757;}
+                &>header {background:#dedede; padding:10px 15px; color:#575757; position: relative;
+                    .btn.btn-yellow {
+                        position: absolute;
+                        top: 50%;
+                        transform: translateY(-50%);
+                        right: 15px;
+                    }
+                }
                 &>section { padding:20px 15px;
                     &.oh-container { padding: 10px 15px;
                         label.control-label.col-xs-5 {
@@ -95,6 +102,18 @@
                             }
                         }
                     }
+                }
+            }
+            .oh-form { 
+                margin-top: 15px;
+                background: #f9f9f9;
+                .oh-row {margin-bottom: 10px;
+                    .col-4:after {
+                        content: ':';
+                        float: right;
+                        margin-right: 0px;
+                    }
+                    .col-6 {padding-left: 10px;}
                 }
             }
         }

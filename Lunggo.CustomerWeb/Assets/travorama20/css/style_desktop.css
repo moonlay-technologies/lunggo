@@ -6152,18 +6152,17 @@ file: /Assets/travorama20/css/_page_flight.scss
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat; }
-  .page-hotel .rh-container .rh-table .cols-title {
-    background: #1daee4;
-    color: #fff;
-    font-weight: bold;
-    text-align: center;
-    padding: 2px 0; }
-  .page-hotel .rh-container .rh-table .cols-value {
-    font-weight: 600;
+  .page-hotel .rh-container .rh-table {
     background: #e9e7e8;
-    padding: 15px 0;
-    height: 70px;
     text-align: center; }
+    .page-hotel .rh-container .rh-table .cols-title {
+      background: #1daee4;
+      color: #fff;
+      font-weight: bold;
+      padding: 2px 0; }
+    .page-hotel .rh-container .rh-table .cols-value {
+      font-weight: 600;
+      padding: 15px 0; }
   .page-hotel .rh-container .rh-title {
     margin-bottom: 10px; }
   .page-hotel .rh-container .br {

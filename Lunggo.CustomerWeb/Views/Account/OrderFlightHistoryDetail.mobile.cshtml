@@ -38,7 +38,7 @@
             }
 
         }
-        catch{}
+        catch { }
         return text.Length == 0 ? "" : text.Substring(0, text.Length - 1);
     }
 
@@ -70,7 +70,6 @@
 }
 
 <section class="account-content page-loading" ng-class="{'page-loaded' : pageLoaded}">
-
     <div class="page-overlay" ng-show="datafailed">
         <div class="overlay-content">
             <div ng-show="errormsg == 'No Reservation Matched'">
@@ -131,13 +130,11 @@
             </div>
         </div>
     </div>
-
     <div class="order-detail">
         <header class="content-header">
             <span>NOMOR PESANAN: <b>@Model.RsvNo</b></span>
         </header>
         <section class="content-body">
-
             <div class="info-buyer">
                 <header>
                     <form action="" method="post" name="submitForm" id="rsvno" class="hidden">
@@ -160,68 +157,52 @@
                         }
                     </h4>
                 </header>
-
-                <section class="oh-container">
-                    <div class="form form-horizontal">
-                        
-                        <div class="form-group">
-                            <label class="control-label col-xs-5">Nama Pemesan</label>
-                            <div class="col-xs-7">
-                                <p class="form-control-static">@Model.Contact.Name</p>
-                            </div>
+                <div class="container-page">
+                    <div class="oh-form page-hotel clearfix">
+                        <div class="oh-row clearfix">
+                            <div class="col-4">Nama Pemesan</div>
+                            <div class="col-6">@Model.Contact.Name</div>
                         </div>
-                        <div class="form-group">
-                            <label class="control-label col-xs-5">Tanggal Pemesanan</label>
-                            <div class="col-xs-7">
-                                <p class="form-control-static">@Model.RsvTime.AddHours(7).ToString("f", CultureInfo.CreateSpecificCulture("id-ID")) WIB</p>
-                            </div>
+                        <div class="oh-row clearfix">
+                            <div class="col-4">Tanggal Pemesanan</div>
+                            <div class="col-6">@Model.RsvTime.AddHours(7).ToString("f", CultureInfo.CreateSpecificCulture("id-ID")) WIB</div>
                         </div>
                         @if (Model is FlightReservationForDisplay)
                         {
-                            <div class="form-group">
-                                <label class="control-label col-xs-5">Tipe</label>
-                                <div class="col-xs-7">
-                                    <p class="form-control-static">Penerbangan</p>
-                                </div>
+                            <div class="oh-row clearfix">
+                                <div class="col-4">Tipe</div>
+                                <div class="col-6">Penerbangan</div>
                             </div>
                         }
                         @if (Model is HotelReservationForDisplay)
                         {
-                            <div class="form-group">
-                                <label class="control-label col-xs-5">Tipe</label>
-                                <div class="col-xs-7">
-                                    <p class="form-control-static">Hotel</p>
-                                </div>
+                            <div class="oh-row clearfix">
+                                <div class="col-4">Tipe</div>
+                                <div class="col-6">Hotel</div>
                             </div>
                         }
-                        <div class="form-group">
-                            <label class="control-label col-xs-5">Harga Pesanan</label>
-                            <div class="col-xs-7">
-                                <p class="form-control-static">Rp @Model.Payment.FinalPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</p>
-                            </div>
+                        <div class="oh-row clearfix">
+                            <div class="col-4">Harga Pesanan</div>
+                            <div class="col-6">Rp @Model.Payment.FinalPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</div>
                         </div>
-                        <div class="form-group" ng-show="flight.payment.method">
-                            <label class="control-label col-xs-5">Metode Pembayaran</label>
-                            <div class="col-xs-7">
-                                <p class="form-control-static">@Model.Payment.Method</p>
-                            </div>
+                        <div class="oh-row clearfix" ng-show="flight.payment.method">
+                            <div class=" col-4">Metode Pembayaran</div>
+                            <div class="col-6">@Model.Payment.Method</div>
                         </div>
-                        <div class="form-group">
-                            <label class="control-label col-xs-5">Status Pembayaran</label>
-                            <div class="col-xs-7">
-                                <p class="form-control-static">@EnumDisplay.PaymentStatus(Model.Payment.Status)</p>
-                            </div>
+                        <div class="oh-row clearfix">
+                            <div class="col-4">Status Pembayaran</div>
+                            <div class="col-6">@EnumDisplay.PaymentStatus(Model.Payment.Status)</div>
                         </div>
-                        <div class="form-group">
+                        <div class="oh-row clearfix">
                             @if (Model is FlightReservationForDisplay)
                             {
-                                <label class="control-label col-xs-5">Penumpang</label>
+                                <div class="col-4">Penumpang</div>
                             }
                             @if (Model is HotelReservationForDisplay)
                             {
-                                <label class="control-label col-xs-5">Tamu </label>
+                                <div class="col-4">Tamu</div>
                             }
-                            <div class="col-xs-7">
+                            <div class="col-6">
                                 <ol class="passenger-list">
                                     @foreach (var pax in Model.Pax)
                                     {
@@ -234,100 +215,96 @@
                                             </div>
                                         </li>
                                     }
-                                    
+
                                 </ol>
                             </div>
                         </div>
-                     </div>
-                </section>
-            </div><!-- .info-buyer -->
-            
-            @if (Model is FlightReservationForDisplay)
-            {
-                var rsv = Model as FlightReservationForDisplay;
-                <div class="info-flight">
-                    <header>
-                        <h4><b>@Html.I18NString("CW00199")</b></h4>
-                    </header>
-                    <section>
-                        @foreach (var trip in rsv.Itinerary.Trips)
-                        {
-                            <div >
-                                <div class="flight departure">
-                                    <div class="row">
-                                        <div class="col-xs-3">
-                                            <img ng-src="@trip.Segments[0].AirlineLogoUrl" alt="@trip.Segments[0].AirlineName" class="flight__airline__image" />
+                    </div>
+                    
+                    @if (Model is FlightReservationForDisplay)
+                    {
+                        var rsv = Model as FlightReservationForDisplay;
+                        <div class="info-flight">
+                            <header>
+                                <h4><b>@Html.I18NString("CW00199")</b></h4>
+                            </header>
+                            <section>
+                                @foreach (var trip in rsv.Itinerary.Trips)
+                                {
+                                <div>
+                                    <div class="flight departure">
+                                        <div class="row">
+                                            <div class="col-xs-3">
+                                                <img ng-src="@trip.Segments[0].AirlineLogoUrl" alt="@trip.Segments[0].AirlineName" class="flight__airline__image" />
+                                            </div>
+                                            <div class="col-xs-9">
+                                                <p class="flight__airline__name"><span>@trip.Segments[0].AirlineName</span> </p>
+                                            </div>
                                         </div>
-                                        <div class="col-xs-9">
-                                            <p class="flight__airline__name"><span>@trip.Segments[0].AirlineName</span> </p>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-xs-12">
-                                            <p>@trip.OriginCity - @trip.DestinationCity</p>
-                                            <p>@trip.DepartureDate.GetValueOrDefault().ToString("D", CultureInfo.CreateSpecificCulture("id-ID"))</p>
+                                        <div class="row">
+                                            <div class="col-xs-12">
+                                                <p>@trip.OriginCity - @trip.DestinationCity</p>
+                                                <p>@trip.DepartureDate.GetValueOrDefault().ToString("D", CultureInfo.CreateSpecificCulture("id-ID"))</p>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                             </div>
-                        }
-                        
-                    </section>
-
-                </div><!-- .info-flight -->
-            }
-            
-            @if (Model is HotelReservationForDisplay)
-            {
-                var reservation = Model as HotelReservationForDisplay;
-
-                <div class=" page-hotel review-hotel" style="background:#f9f9f9; padding: 10px;">
-                    <div class="review-room clearfix">
-                        <h3 class="summary__title"><b>REVIEW</b> PESANAN</h3>
-
-                        <div class="form-group">
-                            @Html.Partial("/Views/Shared/Mobile/_HotelDetail.cshtml", reservation.HotelDetail)
+                                }
+                            </section>
                         </div>
-                        @Html.Partial("/Views/Shared/Mobile/_RoomDetail.cshtml", reservation.HotelDetail)
+                    }
+
+                    @if (Model is HotelReservationForDisplay)
+                    {
+                        var reservation = Model as HotelReservationForDisplay;
+
+                        <div class=" page-hotel review-hotel" style="background:#f9f9f9;">
+                            <div class="review-room clearfix">
+                                <h3 class="summary__title"><b>REVIEW</b> PESANAN</h3>
+
+                                <div class="form-group">
+                                    @Html.Partial("/Views/Shared/Mobile/_HotelDetail.cshtml", reservation.HotelDetail)
+                                </div>
+                                @Html.Partial("/Views/Shared/Mobile/_RoomDetail.cshtml", reservation.HotelDetail)
+                            </div>
+                        </div>
+                    }
+                    <div class="refund-detail hidden">
+                        <header>
+                            <h4><b>@Html.I18NString("CW00199")</b></h4>
+                        </header>
+                        <section>
+                            <div class="form form-horizontal">
+                                @*<div class="form-group">
+                                        <label class="control-label col-xs-3">No Refund</label>
+                                        <div class="col-xs-9">
+                                            <p class="form-control-static">
+                                                <span>
+                                                    @(Model.Payment.Refund != null ?
+                                                        Model.Payment.Refund.Amount.ToString() : "-")
+                                                </span>
+                                            </p>
+                                        </div>
+                                    </div>*@
+                                <div class="form-group">
+                                    <label class="control-label col-xs-3">Tgl Pengajuan</label>
+                                    <div class="col-xs-9">
+                                        <p class="form-control-static">
+                                            <span>{{refundDate | date : 'dd MMMM yyyy , HH:mm' : 'UTC'}}</span>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-xs-3">Status Refund</label>
+                                    <div class="col-xs-9">
+                                        <p class="form-control-static">-</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
                     </div>
                 </div>
-            }
-            <div class="refund-detail hidden">
-                <header>
-                    <h4><b>@Html.I18NString("CW00199")</b></h4>
-                </header>
-                <section>
-                    <div class="form form-horizontal">
-                        @*<div class="form-group">
-                            <label class="control-label col-xs-3">No Refund</label>
-                            <div class="col-xs-9">
-                                <p class="form-control-static">
-                                    <span>
-                                        @(Model.Payment.Refund != null ?
-                                            Model.Payment.Refund.Amount.ToString() : "-")
-                                    </span>
-                                </p>
-                            </div>
-                        </div>*@
-                        <div class="form-group">
-                            <label class="control-label col-xs-3">Tgl Pengajuan</label>
-                            <div class="col-xs-9">
-                                <p class="form-control-static">
-                                    <span>{{refundDate | date : 'dd MMMM yyyy , HH:mm' : 'UTC'}}</span>
-                                </p>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label col-xs-3">Status Refund</label>
-                            <div class="col-xs-9">
-                                <p class="form-control-static">-</p>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-            </div><!-- .refund-detail -->
-
+            </div>
         </section>
-    </div><!-- .history-content -->
-
-</section><!-- .account-content -->
+    </div>
+</section>
