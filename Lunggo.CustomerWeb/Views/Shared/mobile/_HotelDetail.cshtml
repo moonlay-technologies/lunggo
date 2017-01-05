@@ -19,33 +19,14 @@
     var sumAdult = 0;
     var sumChild = 0;
     var orderedRooms = new List<Tuple<string, int>>();
-    
+    var totalRoom = 0;
+
     try
     {
-
-        foreach (var room in Model.Rooms)
-        {
-            var roomName = room.RoomName;
-            var sum = 0;
-            foreach (var rate in room.Rates)
-            {
-                sum += rate.RateCount;
-                sumAdult += rate.AdultCount;
-                sumChild += rate.ChildCount;
-                if (rate.ChildCount <= 0)
-                {
-                    continue;
-                }
-                listAges.AddRange(rate.ChildrenAges);
-            }
-            orderedRooms.Add(new Tuple<string, int>(roomName, sum)); ;
-        }
+        totalRoom += Model.Rooms.Sum(room => room.Rates.Sum(rate => rate.Breakdowns.Sum(config => config.RateCount)));
     }
     catch (Exception)
-    {
-
-        throw;
-    }
+    { }
 }
 
 @functions{
@@ -130,7 +111,7 @@
         </div>
         <div class="fb-row clearfix">
             <div class="col-4">Kamar</div>
-            <div class="col-6 bold-txt">@Model.Rooms.Sum(r => r.Rates.Sum(c => c.RateCount)) Kamar</div>
+            <div class="col-6 bold-txt">@totalRoom Kamar</div>
         </div>
         @if (Model.Policy != null && Model.Policy.Count > 0)
         {

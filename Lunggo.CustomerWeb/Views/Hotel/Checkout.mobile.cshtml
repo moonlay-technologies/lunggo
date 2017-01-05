@@ -25,7 +25,7 @@
     var orderedRooms = new List<Tuple<string, int>>();
     var listAges = new List<int>();
     var hotelMainImage = "http://photos.hotelbeds.com/giata/" + Model.HotelDetail.MainImage;
-    
+    var totalRoom = 0;
     try
     {
 
@@ -41,16 +41,22 @@
             var sum = 0;
             foreach (var rate in room.Rates)
             {
-                sum += rate.RoomCount;
-                sumAdult += rate.AdultCount;
-                sumChild += rate.ChildCount;
-                if (rate.ChildCount <= 0)
+
+                foreach (var config in rate.Breakdowns)
                 {
-                    continue;
+                    sum += config.RateCount;
+                    totalRoom += config.RateCount;
+                    sumAdult += config.AdultCount;
+                    sumChild += config.ChildCount;
+                    if (config.ChildCount <= 0)
+                    {
+                        continue;
+                    }
+                    listAges.AddRange(config.ChildrenAges);
                 }
-                listAges.AddRange(rate.ChildrenAges);
+
             }
-            orderedRooms.Add(new Tuple<string, int>(roomName, sum)); ;
+            orderedRooms.Add(new Tuple<string, int>(roomName, sum)); 
         }
 
     }
@@ -122,15 +128,7 @@
     <!-- angular controller -->
     <script>
     var langCode = '@OnlineContext.GetActiveLanguageCode()';
-    var hotelDetail = @Html.Raw(Model.HotelDetail.Serialize());
     var expirytime = '@Model.ExpiryTime.ToString("o")';
-    var originalFare = '@Model.HotelDetail.OriginalFare';
-    var netFare = '@Model.HotelDetail.NetFare';
-    var totalRoom = '@Model.HotelDetail.Rooms.SelectMany(r => r.Rates).Sum(p => p.RoomCount)';
-    var checkin = '@Model.HotelDetail.CheckInDate.ToString("D",CultureInfo.CreateSpecificCulture("id-ID"))';
-    var checkout = '@Model.HotelDetail.CheckOutDate.ToString("D", CultureInfo.CreateSpecificCulture("id-ID"))';
-    var nights = '@((Model.HotelDetail.CheckOutDate - Model.HotelDetail.CheckInDate).Days)';
-    var country = '@Model.HotelDetail.CountryName';
 
     if (getParam('page') == 2) {
         currentPage = getParam('page');
@@ -139,6 +137,7 @@
     }
     var token = '@Model.Token';
     var hotelImg = '@hotelMainImage';
+        var netFare = '@Model.HotelDetail.NetTotalFare';
     </script>
     <script src="/Assets/travorama20/js/HotelCheckoutController.js"></script>
 }
@@ -382,14 +381,14 @@
             </header>
             <div class="popup__body price-change-body">
                 <div class="container_new">
-                    <span>Harga tiket ini berubah menjadi Rp {{book.newPrice}} disebabkan perubahan harga dari pihak hotel.</span>
+                    <span>Harga tiket ini berubah menjadi Rp {{book.newPrice| number : fractionSize}} disebabkan perubahan harga dari pihak hotel.</span>
                 </div>
             </div>
             <div class="popup__footer">
                 <div class="container_new price-change-footer">
                     <div class="row">
                         <div class="col-xs-12">
-                            <form name="finalForm" id="finalForm" ng-submit="book.checkCreditCard()" class="ng-pristine ng-valid">
+                            <form name="finalForm" id="finalForm" ng-submit="book.send()" class="ng-pristine ng-valid">
                                 <input type="submit" class="btn btn-yellow" value="PESAN HOTEL INI">
                             </form>
                         </div>

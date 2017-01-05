@@ -46,10 +46,14 @@
     {
         foreach (var rate in room.Rates)
         {
-            <div class="rr-row clearfix">
-                <div class="col-half">@rate.RateCount @ToTitleCase(room.RoomName) @ToTitleCase(rate.BoardDescription) x @night Malam</div>
-                <div class="col-half right-txt semibold-txt">Rp @(rate.NetTotalFare.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID")))</div>
-            </div>
+            foreach (var config in rate.Breakdowns)
+            {
+                <div class="rr-row clearfix">
+                    <div class="col-half">@config.RateCount @ToTitleCase(room.RoomName) @ToTitleCase(config.BoardDescription) x @night Malam</div>
+                    <div class="col-half right-txt semibold-txt">Rp @(config.NetTotalFare.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID")))</div>
+                </div>
+            }
+
         }
     }
     

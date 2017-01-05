@@ -106,16 +106,9 @@
     <!-- angular controller -->
     <script>
         var langCode = '@OnlineContext.GetActiveLanguageCode()';
-        var hotelDetail = @Html.Raw(Model.HotelDetail.Serialize()); //tbd
         var expirytime = '@Model.ExpiryTime.ToString("o")';
-        var originalFare = '@Model.HotelDetail.OriginalTotalFare'; //TBD
-        var netFare = '@Model.HotelDetail.NetTotalFare'; //TBD
-        var totalRoom = '@totalRoom';  //TBD
-        var checkin = '@Model.HotelDetail.CheckInDate.ToString("D",CultureInfo.CreateSpecificCulture("id-ID"))'; //TBD
-        var checkout = '@Model.HotelDetail.CheckOutDate.ToString("D", CultureInfo.CreateSpecificCulture("id-ID"))'; //TBD
-        var nights = '@((Model.HotelDetail.CheckOutDate - Model.HotelDetail.CheckInDate).Days)';
-        var country = '@Model.HotelDetail.CountryName'; //tbd
-        
+            var netFare = '@Model.HotelDetail.NetTotalFare'; 
+
         if (getParam('page') == 2) {
             currentPage = getParam('page');
         } else {

@@ -12,7 +12,6 @@
     Layout = "/Views/Shared/Desktop/_LayoutDesktop.cshtml";
     ViewBag.BodyClass = "page-thankyou";
     ViewBag.Title = "Terima Kasih";
-    //ViewBag.AngularController = "ThankyouController";
     ViewBag.BookingFailed = false;
 }
 
@@ -21,57 +20,11 @@
     var timeout = ConfigManager.GetInstance().GetConfigValue("flight", "paymentTimeout");
     Model.Payment.Status = PaymentStatus.Settled;
 
-    var timelimit = Model.Payment.TimeLimit.GetValueOrDefault();
-    var orderedRooms = new List<Tuple<string, int>>();
-    var rooms = new List<HotelRoomForDisplay>();
-    var totalAdult = 0;
-    var totalChild = 0;
-    var images = new List<Image>();
-    var hotelImg = "";
-    var roomImg = "";
     var night = 0;
-    try
+    if (Model is HotelReservationForDisplay)
     {
-        if (Model is HotelReservationForDisplay)
-        {
-            var rsv = Model as HotelReservationForDisplay;
-            rooms = rsv.HotelDetail.Rooms;
-            var rsvNo = Model.RsvNo;
-            night = (rsv.HotelDetail.CheckOutDate - rsv.HotelDetail.CheckInDate).Days;
-            images = HotelService.GetInstance().GetHotelDetailFromDb(rsv.HotelDetail.HotelCode).ImageUrl;
-            var orDefault = images.Where(i => i.Type == "GEN").ToList().FirstOrDefault();
-            if (orDefault != null)
-            {
-                hotelImg = images == null
-                    ? null
-                    : "http://photos.hotelbeds.com/giata/" + orDefault.Path;
-            }
-            var firstOrDefault = images.Where(i => i.Type == "HAB").ToList().FirstOrDefault();
-            if (firstOrDefault != null)
-            {
-                roomImg = images == null
-                    ? null
-                    : "http://photos.hotelbeds.com/giata/" + firstOrDefault.Path;
-            }
-        foreach (var room in rooms)
-        {
-            var roomName = HotelService.GetInstance().GetHotelRoom(room.RoomCode).RoomDescId;
-            var sum = 0;
-            foreach (var rate in room.Rates)
-            {
-                //sum += rate.RateCount;
-                //    totalAdult += rate.AdultCount;
-                //    totalChild += rate.ChildCount;
-            }
-                orderedRooms.Add(new Tuple<string, int>(roomName, sum));
-                ;
-        }
-        }
-
-    }
-    catch
-    {
-
+        var rsv = Model as HotelReservationForDisplay;
+        night = (rsv.HotelDetail.CheckOutDate - rsv.HotelDetail.CheckInDate).Days;
     }
 }
 @functions{
@@ -124,13 +77,6 @@
     <script>
     var langCode = 'en';
     var printTimeout = '';
-    var rsvType = '';
-    var totalRoom = 0;
-    var rating = "";
-    var nights = 0;
-    var checkin = "";
-    var checkout = "";
-    var netFare = 0;
     var page = 'Flight';
     // development only start
     printTimeout = new Date(); // please change this print time out to actual time
@@ -145,20 +91,7 @@
     }).on('finish.countdown', function () {
         $('.print .btn').removeClass('disabled');
     });
-    @if (Model is HotelReservationForDisplay)
-    {
-        var rsvType = "hotel";
-        var hotel = Model as HotelReservationForDisplay;
-        @:var hotelDetails = '@hotel.HotelDetail';
-        @:var rating = '@hotel.HotelDetail.StarRating'
-        @:var originalFare = '@hotel.HotelDetail.OriginalTotalFare';
-        @:var netFare = '@hotel.HotelDetail.NetTotalFare';
-        @*@:var totalRoom = '@hotel.HotelDetail.Rooms.SelectMany(r => r.Rates).Sum(p => p.RateCount)';*@
-        @:var checkin = '@hotel.HotelDetail.CheckInDate.ToString("D",CultureInfo.CreateSpecificCulture("id-ID"))';
-        @:var checkout = '@hotel.HotelDetail.CheckOutDate.ToString("D", CultureInfo.CreateSpecificCulture("id-ID"))';
-        @:var nights = '@((hotel.HotelDetail.CheckOutDate - hotel.HotelDetail.CheckInDate).Days)';
-        @:page = 'Hotel';
-    }
+    
     </script>
     <!-- angular controller -->
     <script src="/Assets/travorama20/js/ThankYouController.js"></script>
@@ -443,19 +376,21 @@
                                         @if (Model is HotelReservationForDisplay)
                                         {
                                             var rsv = Model as HotelReservationForDisplay;
-                                            foreach (var room in rooms)
+                                            foreach (var room in rsv.HotelDetail.Rooms)
                                             {
                                                 foreach (var rate in room.Rates)
                                                 {
-                                                    <dl class="total-room">
-                                                        <dt class="dt-title">
-                                                            2 Kamar Deluks
-                                                            Kamar saja x 1 Malam
-                                                        </dt>
-                                                        <dd class="dd-price">
-                                                            Rp 1.000.000
-                                                        </dd>
-                                                    </dl>
+                                                    foreach (var config in rate.Breakdowns)
+                                                    {
+                                                        <dl class="total-room">
+                                                            <dt class="dt-title">
+                                                                @config.RateCount @ToTitleCase(room.RoomName) @ToTitleCase(config.BoardDescription) x @night Malam
+                                                            </dt>
+                                                            <dd class="dd-price">
+                                                                Rp @config.NetTotalFare.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))
+                                                            </dd>
+                                                        </dl>
+                                                    }
                                                 }
                                             }
 

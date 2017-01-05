@@ -282,8 +282,14 @@
     <Content Include="Assets\css\neweticket.css">
       <DependentUpon>neweticket.scss</DependentUpon>
     </Content>
+    <Content Include="Assets\css\neweticket.min.css">
+      <DependentUpon>neweticket.css</DependentUpon>
+    </Content>
     <Content Include="Assets\css\promo.css">
       <DependentUpon>promo.scss</DependentUpon>
+    </Content>
+    <Content Include="Assets\css\promo.min.css">
+      <DependentUpon>promo.css</DependentUpon>
     </Content>
     <Content Include="Assets\fonts\bootstrap\glyphicons-halflings-regular.svg" />
     <Content Include="Assets\fonts\DINB-webfont.svg" />
@@ -1026,8 +1032,17 @@
     <Content Include="Assets\js\sampleData\HNDCGK231015-100y.js" />
     <Content Include="Assets\js\xml2json.min.js" />
     <Content Include="Assets\mobile\css\global-error.css" />
+    <Content Include="Assets\mobile\css\global-error.min.css">
+      <DependentUpon>global-error.css</DependentUpon>
+    </Content>
     <Content Include="Assets\mobile\css\help_section.css" />
+    <Content Include="Assets\mobile\css\help_section.min.css">
+      <DependentUpon>help_section.css</DependentUpon>
+    </Content>
     <Content Include="Assets\mobile\css\style_mobile.css" />
+    <Content Include="Assets\mobile\css\style_mobile.min.css">
+      <DependentUpon>style_mobile.css</DependentUpon>
+    </Content>
     <Content Include="Assets\mobile\images\adult.png" />
     <Content Include="Assets\mobile\images\anak-bw.png" />
     <Content Include="Assets\mobile\images\anak.png" />
@@ -1154,6 +1169,9 @@
     <Content Include="Assets\travorama20\angularDirectory\search\hotelSearch.service.js" />
     <Content Include="Assets\travorama20\css\help_section.min.css" />
     <Content Include="Assets\travorama20\css\style_desktop.css" />
+    <Content Include="Assets\travorama20\css\style_desktop.min.css">
+      <DependentUpon>style_desktop.css</DependentUpon>
+    </Content>
     <Content Include="Assets\travorama20\images\app-store-bg.png" />
     <Content Include="Assets\travorama20\images\app-store-cs.png" />
     <Content Include="Assets\travorama20\images\Hotel\bed.png" />

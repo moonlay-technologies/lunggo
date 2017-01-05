@@ -22,10 +22,6 @@
 @{
     
     var timelimit = Model.Payment.TimeLimit.GetValueOrDefault();
-    var orderedRooms = new List<Tuple<string, int>>();
-    var rooms = new List<HotelRoomForDisplay>();
-    var totalAdult = 0;
-    var totalChild = 0;
     var images = new List<Image>();
     var hotelImg = "";
     var roomImg = "";
@@ -35,8 +31,7 @@
         if (Model is HotelReservationForDisplay)
         {
             var rsv = Model as HotelReservationForDisplay;
-            rooms = rsv.HotelDetail.Rooms;
-        var rsvNo = Model.RsvNo;
+            var rsvNo = Model.RsvNo;
             images = HotelService.GetInstance().GetHotelDetailFromDb(rsv.HotelDetail.HotelCode).ImageUrl;
             var orDefault = images.Where(i => i.Type == "GEN").ToList().FirstOrDefault();
             if (orDefault != null)
@@ -52,19 +47,8 @@
                     ? null
                     : "http://photos.hotelbeds.com/giata/" + firstOrDefault.Path;
             }
-        foreach (var room in rooms)
-        {
-            var roomName = HotelService.GetInstance().GetHotelRoom(room.RoomCode).RoomDescId;
-                
-            foreach (var rate in room.Rates)
-            {
-                //sum += rate.RateCount;
-                //    totalAdult += rate.AdultCount;
-                //    totalChild += rate.ChildCount;
-            }
-                orderedRooms.Add(new Tuple<string, int>(roomName, sum));
+        
         }
-    }
     }
     catch { }
     }
@@ -132,34 +116,7 @@
     $('.date-picker').datepicker({
         minDate: new Date()
     });
-    var rsvType = ''; //tbd
-    var totalRoom = 0;//tbd
-    var rating = ""; //tbd
-    var nights = 0; //tbd
-    var checkin = ""; //tbd
-    var checkout = "";//tbd
-    var netFare = 0;//tbd
-    var hotelDetails = ''; //tbd
-    var rating = ''; //tbd
-    var originalFare = '';//tbd
-    var netFare = ''; //tbd 
-    var totalRoom = '';//tbd
-    var checkin = ''; //tbd
-    var checkout = ''; //tbd
-    var nights = ''; //tbd
-    @if (Model is HotelReservationForDisplay)
-        {
-            var hotel = Model as HotelReservationForDisplay;
-        @:hotelDetails = '@hotel.HotelDetail'; //tbd
-        @:rating = '@hotel.HotelDetail.StarRating' //tbd
-            @:originalFare = '@hotel.HotelDetail.OriginalTotalFare'; ///tbd
-            @:netFare = '@hotel.HotelDetail.NetTotalFare'; //tbd
-            @:totalRoom =3; //tbd
-            @*@:totalRoom = '@hotel.HotelDetail.Rooms.SelectMany(r => r.Rates).Sum(p => p.RateCount)';*@
-        @:checkin = '@hotel.HotelDetail.CheckInDate.ToString("D", CultureInfo.CreateSpecificCulture("id-ID"))'; //tbd
-        @:checkout = '@hotel.HotelDetail.CheckOutDate.ToString("D", CultureInfo.CreateSpecificCulture("id-ID"))';//tbd
-        @:nights = '@((hotel.HotelDetail.CheckOutDate - hotel.HotelDetail.CheckInDate).Days)';//tbd
-            }
+    
     </script>
     <!-- angular controller -->
     <script src="/Assets/travorama20/js/ConfirmationController.js"></script>
