@@ -280,6 +280,7 @@
     <Content Include="Assets\css\invoice.css">
       <DependentUpon>invoice.scss</DependentUpon>
     </Content>
+    <Content Include="Assets\css\invoice.min.css" />
     <Content Include="Assets\css\jquery-ui.min.css" />
     <Content Include="Assets\css\neweticket.css">
       <DependentUpon>neweticket.scss</DependentUpon>
