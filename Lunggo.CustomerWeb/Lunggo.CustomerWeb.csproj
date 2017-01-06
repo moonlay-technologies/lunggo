@@ -290,6 +290,7 @@
     <Content Include="Assets\fonts\fontawesome-webfont.svg" />
     <Content Include="Assets\fonts\Gotham-Bold.svg" />
     <Content Include="Assets\fonts\Gotham-Medium.svg" />
+    <Content Include="Assets\fonts\OpenSans-Regular.svg" />
     <Content Include="Assets\images\adult-icon.png" />
     <Content Include="Assets\images\airlines\0V.png" />
     <Content Include="Assets\images\airlines\2J.png" />
@@ -1425,6 +1426,10 @@
     <Content Include="Assets\travorama20\css\_screenSmall.scss" />
     <Content Include="Assets\css\neweticket.scss" />
     <Content Include="Assets\css\promo.scss" />
+    <Content Include="Assets\fonts\OpenSans-Regular.eot" />
+    <Content Include="Assets\fonts\OpenSans-Regular.ttf" />
+    <Content Include="Assets\fonts\OpenSans-Regular.woff" />
+    <Content Include="Assets\fonts\OpenSans-Regular.woff2" />
     <None Include="Properties\PublishProfiles\prod-cw %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\dv1-cw.pubxml" />
     <None Include="Properties\PublishProfiles\dv2-cw.pubxml" />
