@@ -73,6 +73,8 @@ namespace Lunggo.ApCommon.Hotel.Service
             convertedHotel.NetTotalFare = convertedHotel.Rooms.SelectMany(r => r.Rates).SelectMany(r => r.Breakdowns).Sum(b => b.NetTotalFare);
             convertedHotel.OriginalCheapestFare = convertedHotel.Rooms.SelectMany(r => r.Rates).Min(r => r.Breakdowns[0].OriginalFare);
             convertedHotel.NetCheapestFare = convertedHotel.Rooms.SelectMany(r => r.Rates).Min(r => r.Breakdowns[0].NetFare);
+            convertedHotel.OriginalCheapestTotalFare = convertedHotel.Rooms.SelectMany(r => r.Rates).Min(r => r.Breakdowns[0].OriginalTotalFare);
+            convertedHotel.NetCheapestTotalFare = convertedHotel.Rooms.SelectMany(r => r.Rates).Min(r => r.Breakdowns[0].NetTotalFare);
             return convertedHotel;
         }
 
@@ -159,8 +161,10 @@ namespace Lunggo.ApCommon.Hotel.Service
                             : hotelDetail.ImageUrl == null ? null : string.Concat(baseUrl, hotelDetail.ImageUrl.Where(x => x.Type == "GEN").Select(x => x.Path).FirstOrDefault()),
                     OriginalTotalFare = hotelDetail.OriginalTotalFare,
                     OriginalCheapestFare = hotelDetail.OriginalCheapestFare,
+                    OriginalCheapestTotalFare = hotelDetail.OriginalCheapestTotalFare,
                     NetTotalFare = hotelDetail.NetTotalFare,
                     NetCheapestFare = hotelDetail.NetCheapestFare,
+                    NetCheapestTotalFare = hotelDetail.NetCheapestTotalFare,
                     IsWifiAccessAvailable = hotelDetail.Facilities != null &&
                             ((hotelDetail.Facilities != null || hotelDetail.Facilities.Count != 0) &&
                             hotelDetail.Facilities.Any(f => (f.FacilityGroupCode == 60 && f.FacilityCode == 261)

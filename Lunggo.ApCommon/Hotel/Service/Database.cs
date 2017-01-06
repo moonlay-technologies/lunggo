@@ -125,6 +125,8 @@ namespace Lunggo.ApCommon.Hotel.Service
                 var cheapestPrice = hotelDetail.Rooms.SelectMany(r => r.Rates).Min(r => r.Price.Local);
                 hotelDetail.NetCheapestFare = cheapestPrice;
                 hotelDetail.OriginalCheapestFare = cheapestPrice * 1.01M;
+                hotelDetail.NetCheapestTotalFare = cheapestPrice;
+                hotelDetail.OriginalCheapestTotalFare = cheapestPrice * 1.01M;
 
                 hotelReservation.HotelDetails = hotelDetail;
                 

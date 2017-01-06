@@ -238,6 +238,8 @@ namespace Lunggo.ApCommon.Hotel.Service
                 NetTotalFare = price,
                 OriginalTotalFare = price * 1.01M,
                 NetCheapestFare = cheapestPrice,
+                NetCheapestTotalFare = cheapestPrice,
+                OriginalCheapestTotalFare = cheapestPrice * 1.01M,
                 OriginalCheapestFare = cheapestPrice * 1.01M,
                 TotalAdult = input.Passengers.Count(p => p.Type == PaxType.Adult),
                 TotalChildren = input.Passengers.Count(p => p.Type == PaxType.Child),

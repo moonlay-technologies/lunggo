@@ -68,10 +68,14 @@ namespace Lunggo.ApCommon.Hotel.Model
         public decimal OriginalTotalFare { get; set; }
         [JsonProperty("originalCheapestFare", NullValueHandling = NullValueHandling.Ignore)]
         public decimal OriginalCheapestFare { get; set; }
+        [JsonProperty("originalCheapestTotalFare", NullValueHandling = NullValueHandling.Ignore)]
+        public decimal OriginalCheapestTotalFare { get; set; }
         [JsonProperty("netTotalFare", NullValueHandling = NullValueHandling.Ignore)]
         public decimal NetTotalFare { get; set; }
         [JsonProperty("netCheapestFare", NullValueHandling = NullValueHandling.Ignore)]
         public decimal NetCheapestFare { get; set; }
+        [JsonProperty("netCheapestTotalFare", NullValueHandling = NullValueHandling.Ignore)]
+        public decimal NetCheapestTotalFare { get; set; }
         [JsonProperty("discount", NullValueHandling = NullValueHandling.Ignore)]
         public decimal Discount { get; set; }
         [JsonProperty("isWifiAccessAvailable", NullValueHandling = NullValueHandling.Ignore)]
@@ -240,6 +244,10 @@ namespace Lunggo.ApCommon.Hotel.Model
         public int TotalAdult { get; set; }
         [JsonProperty("totalChildren", NullValueHandling = NullValueHandling.Ignore)]
         public int TotalChildren { get; set; }
+        [JsonProperty("netCheapestTotalFare", NullValueHandling = NullValueHandling.Ignore)]
+        public decimal NetCheapestTotalFare { get; set; }
+        [JsonProperty("originalCheapestTotalFare", NullValueHandling = NullValueHandling.Ignore)]
+        public decimal OriginalCheapestTotalFare { get; set; }
     }
 
     public class Segment

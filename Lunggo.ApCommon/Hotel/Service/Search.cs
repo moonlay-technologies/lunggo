@@ -435,6 +435,9 @@ namespace Lunggo.ApCommon.Hotel.Service
                     hotel.OriginalTotalFare = hotel.NetTotalFare * 1.01M;
                     hotel.NetCheapestFare = hotel.Rooms.SelectMany(r => r.Rates).Min(r => Math.Round(r.Price.Local/r.RateCount/r.NightCount));
                     hotel.OriginalCheapestFare = hotel.NetCheapestFare * 1.01M;
+                    hotel.NetCheapestTotalFare = hotel.Rooms.SelectMany(r => r.Rates).Min(r => r.Price.Local);
+                    hotel.OriginalCheapestTotalFare = hotel.NetCheapestTotalFare * 1.01M;
+
                     shortlistHotel.Add(hotel);
                 }
             }

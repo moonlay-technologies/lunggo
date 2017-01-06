@@ -260,12 +260,12 @@
                                     </div>
                                     <div class="room-rr">
                                         <div class="price" id="detail-price-night">
-                                            <div class="underline-txt">Rp {{room.rate.originalFare | number}}</div>
-                                            <div class="lg-txt"><b><sup>Rp</sup> {{room.rate.netFare | number}}</b></div>
+                                            <div class="underline-txt">Rp {{room.rate.breakdowns[0].originalFare | number}}</div>
+                                            <div class="lg-txt"><b><sup>Rp</sup> {{room.rate.breakdowns[0].netFare | number}}</b></div>
                                         </div>
                                         <div class="price" id="detail-price-total" style="display: none;">
-                                            <div class="underline-txt">Rp 999.999</div>
-                                            <div class="lg-txt"><b><sup>Rp</sup> 999.999</b></div>
+                                            <div class="underline-txt">Rp {{room.rate.breakdowns[0].originalTotalFare | number}}</div>
+                                            <div class="lg-txt"><b><sup>Rp</sup> {{room.rate.breakdowns[0].netTotalFare | number}}</b></div>
                                         </div>
                                         <div class="xs-txt">*Harga Termasuk Pajak & Service Charge</div>
                                         <a href="" class="btn btn-yellow small" ng-click="bookRoom(room)">PESAN</a>
