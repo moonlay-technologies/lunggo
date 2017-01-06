@@ -140,6 +140,14 @@
             </div>
         }
     </div>
+    
+    @if (!string.IsNullOrEmpty(Model.SpecialRequest))
+    {
+        <div class="rh-policy clearfix">
+            <div class="rh-title blue-txt bold-txt">Special Request</div>
+            <div class="" style="text-transform: capitalize">@Model.SpecialRequest</div>
+        </div>
+    }
     @foreach (var room in Model.Rooms)
     {
         <div class="rh-row clearfix">
@@ -154,69 +162,70 @@
                         <div class="blue-txt bold-txt rh-title">Tipe Kamar : @ToTitleCase(room.RoomName)</div>
                         <div class="rh-table clearfix">
                             
-                                <div class="cols-1 room-sort-mid clearfix">
-                                    <div class="cols-title">Kamar</div>
-                                    @foreach (var config in rate.Breakdowns)
-                                    {
-                                        <div class="cols-value">@config.RateCount</div>
-                                    }
+                            <div class="cols-1 room-sort-mid clearfix">
+                                <div class="cols-title">Kamar</div>
+                                @foreach (var config in rate.Breakdowns)
+                                {
+                                    <div class="cols-value">@config.RateCount</div>
+                                }
                                     
-                                </div>
-                                <div class="cols-2 room-sort-mid clearfix">
-                                    <div class="cols-title">Dewasa</div>
-                                    @foreach (var config in rate.Breakdowns)
-                                    {
-                                        <div class="cols-value">@config.AdultCount</div>
-                                    }
+                            </div>
+                            <div class="cols-2 room-sort-mid clearfix">
+                                <div class="cols-title">Dewasa</div>
+                                @foreach (var config in rate.Breakdowns)
+                                {
+                                    <div class="cols-value">@config.AdultCount</div>
+                                }
                                     
-                                </div>
-                                <div class="cols-3 clearfix">
-                                    <div class="cols-title">Anak</div>
-                                    @foreach (var config in rate.Breakdowns)
-                                    {
-                                        <div class="cols-value">
-                                            @if (@config.ChildCount > 0)
-                                            {
-                                                <span>@config.ChildCount </span>
-                                                <span>
-                                                    (@for (var a = 0; a < config.ChildrenAges.Count; a++)
-                                                    {
-                                                        if (a != config.ChildrenAges.Count - 1)
-                                                        {
-                                                            @config.ChildrenAges[a]
-                                                            <span>th, </span>
-                                                        }
-                                                        else
-                                                        {
-                                                            @config.ChildrenAges[a]
-                                                            <span>th)</span>
-                                                        }
-                                                    }
+                            </div>
+                            <div class="cols-3 clearfix">
+                                <div class="cols-title">Anak</div>
+                                @foreach (var config in rate.Breakdowns)
+                                {
+                                    <div class="cols-value">
+                                        @if (@config.ChildCount > 0)
+                                        {
+                                            <span>@config.ChildCount </span>
+                                            <span>
+                                                (@for (var a = 0; a < config.ChildrenAges.Count; a++)
+                                                 {
+                                                     if (a != config.ChildrenAges.Count - 1)
+                                                     {
+                                                         @config.ChildrenAges[a]
+                                                         <span>th, </span>
+                                                     }
+                                                     else
+                                                     {
+                                                         @config.ChildrenAges[a]
+                                                         <span>th)</span>
+                                                     }
+                                                 }
 
-                                                </span>
-                                            }
-                                            else
-                                            {
-                                                <span>-</span>
-                                            }
-                                        </div>
-                                    }
+                                            </span>
+                                        }
+                                        else
+                                        {
+                                            <span>-</span>
+                                        }
+                                    </div>
+                                }
                                    
-                                </div>
-                                <div class="cols-4 quarter clearfix">
-                                    <div class="cols-title">Board</div>
-                                    @foreach (var config in rate.Breakdowns)
-                                    {
-                                        <div class="cols-value">@ToTitleCase(config.BoardDescription)</div>
-                                    }
+                            </div>
+                            <div class="cols-4 quarter clearfix">
+                                <div class="cols-title">Board</div>
+                                @foreach (var config in rate.Breakdowns)
+                                {
+                                    <div class="cols-value">@ToTitleCase(config.BoardDescription)</div>
+                                }
                                     
-                                </div>
+                            </div>
                             
                             
                         </div>
                     </div>
 
                 </div>
+                
                 if (rate.TermAndCondition != null && rate.TermAndCondition.Count != 0 && !rate.TermAndCondition.Exists(r => r.Length < 3))
                 {
                     <div class="rh-policy clearfix">

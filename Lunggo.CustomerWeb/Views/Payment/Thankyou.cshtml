@@ -18,7 +18,7 @@
 @{
     var payment = Model.Payment.Status;
     var timeout = ConfigManager.GetInstance().GetConfigValue("flight", "paymentTimeout");
-    Model.Payment.Status = PaymentStatus.Settled;
+    //Model.Payment.Status = PaymentStatus.Settled;
 
     var night = 0;
     if (Model is HotelReservationForDisplay)
