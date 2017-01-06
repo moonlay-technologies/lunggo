@@ -937,6 +937,11 @@ app.controller('paymentController', [
             return ['Tahun'].concat(years);
         }
 
+        $scope.$watch('paymentMethod', function(newValue, oldValue) {
+            if (newValue != oldValue) {
+                $scope.notifCardLength = false;
+            }
+        },true);
         // ********************************** END *********************************************
     }
 ]);
