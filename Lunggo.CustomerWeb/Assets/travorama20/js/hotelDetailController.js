@@ -213,6 +213,29 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
                             }
                         });
                     }
+                    else if (link == '#menu-desc') {
+                        header = $("#menu-desc");
+                        $(window).scroll(function () {
+                            var scroll = $(window).scrollTop();
+
+                            if (scroll >= 1800) {
+                                header.addClass("up-height");
+                            } else {
+                                header.removeClass("up-height");
+                            }
+                        });
+                    } else if (link == '#menu-tnc') {
+                        header = $("#menu-tnc");
+                        $(window).scroll(function () {
+                            var scroll = $(window).scrollTop();
+
+                            if (scroll >= 1800) {
+                                header.addClass("up-height");
+                            } else {
+                                header.removeClass("up-height");
+                            }
+                        });
+                    }
                 });
             }, 0);
 
