@@ -6,14 +6,14 @@
     ViewBag.BodyClass = "page-hotel page-search";
     ViewBag.Title = "Pencarian Hotel";
     ViewBag.AngularController = "hotelSearchController";
-    
+
 }
 
 @section AdditionalCSS{
     <link href="/Assets/css/jquery-ui.min.css" rel="stylesheet" />
 }
 @{
-    long location ;
+    long location;
     var x = long.TryParse(Model.SearchParamObject.Location, out location);
     var loc = "";
     var foundLocation = HotelService.GetInstance().AutoCompletes.Where(c => c.Id == location).ToList()[0];
@@ -53,13 +53,13 @@
                 }
             });
             $("#amount").val("$" + $("#slider-range").slider("values", 0) +
-              " - $" + $("#slider-range").slider("values", 1));
+                " - $" + $("#slider-range").slider("values", 1));
         });
     </script>
     <script>
-        
+
         var loc = '@loc';
-        
+
     </script>
     <script type="text/javascript" src="/Assets/travorama20/js/HotelController.js"></script>
     <script src="/Assets/travorama20/angularDirectory/search/hotelSearch.service.js"></script>
@@ -85,7 +85,7 @@
                             <input type="text" ng-pattern="/^[a-zA-Z]*$/" ng-model="filter.nameFilter" ng-disabled="hotels.length < 1" class="form-hotel-name form-control" tra-on-enter="filterHotels()">
                         </div>
                         <div class="filter-group">
-                            <label class="filter-title">Harga Hotel</label> 
+                            <label class="filter-title">Harga Hotel</label>
                             <div class="slider-price slider-range" id="slider-range"></div>
                             <div class="slider-minmax">
                                 <span>Rp {{filter.minPrice | number}}</span>
@@ -167,18 +167,29 @@
                 </div>
                 <div class="col-right-result">
                     <div class="sort clearfix" ng-show="totalHotelCount > 0">
-                        <div class="col-2"><span class="bold-txt">Urut Berdasarkan:</span></div>
-                        <div class="col-4">
+                        <div class="sort-l"><span class="bold-txt">Urut Berdasarkan :</span></div>
+                        <div class="sort-r">
                             <label class="round pointer" ng-class="{ active : sortBy == sortByType.ascendingPrice }" ng-click="changeSorting(sortByType.ascendingPrice)">
                                 <span class="radio"></span>
                                 <span class="name">Harga Terendah</span>
                             </label>
                         </div>
-                        <div class="col-4">
+                        <div class="sort-r">
                             <label class="round pointer" ng-class="{ active : sortBy == sortByType.descendingPrice }" ng-click="changeSorting(sortByType.descendingPrice)">
                                 <span class="radio"></span>
                                 <span class="name">Harga Tertinggi</span>
                             </label>
+                        </div>
+                    </div>
+                    <div class="tab-hotel-price clearfix" ng-show="searchDone">
+                        <div class="col-half bold-txt right-txt">
+                            Tampilkan Harga :
+                        </div>
+                        <div class="tab-wrapper col-half">
+                            <div class="tab-border clearfix">
+                                <div class="col-6 tab-list active" href="#price-night">Per kamar, per malam</div>
+                                <div class="col-4 tab-list" href="#price-total">Harga total</div>
+                            </div>
                         </div>
                     </div>
                     <div class="text-center" ng-show="searchDone && returnedHotelCount == 0"><h3> Hotel tidak ditemukan, silakan ganti filter atau destinasi anda.</h3></div>
@@ -205,10 +216,11 @@
                                     </div>
                                     <div class="location">
                                         <div><span ng-show="hotel.area == null || hotel.area.length < 1">{{toTitleCase(hotel.address)}}</span> {{toTitleCase(hotel.area)}}</div>
-                                        <span ng-show ="hotel.area == null || hotel.area.length < 1">{{toTitleCase(hotel.city)}}<span ng-show="hotel.postalCd != null || hotel.postalCd.length > 0"> {{hotel.postalCd}}</span></span>
+                                        <span ng-show="hotel.area == null || hotel.area.length < 1">{{toTitleCase(hotel.city)}}<span ng-show="hotel.postalCd != null || hotel.postalCd.length > 0"> {{hotel.postalCd}}</span></span>
                                     </div>
+                                    
                                     @*=================== ini review row ================*@
-                                    <div class="review clearfix">
+                                    @*<div class="review clearfix">
                                         <div class="col-half left">
                                             <b><span class="md-txt">8.0</span> - </b> Sangat Baik
                                             <br /><span class="grey-txt">540 ulasan</span>
@@ -217,16 +229,26 @@
                                             <span class="trip-advisor"></span>
                                             <br /><span class="grey-txt">540 ulasan</span>
                                         </div>
-                                    </div>
-                                    @*=================== ini review row ================*@
-                                    <div class="price clearfix">
+                                    </div>*@
+                                    <div class="break"></div>
+                                    <div class="price clearfix" id="price-night" style="display: block">
                                         <div class="col-half">
-                                            <span class="txt-md"><b>Harga per malam mulai dari:</b></span>
+                                            <span class="txt-md"><b>Harga per kamar, per malam :</b></span>
                                             <br /><span class="xs-txt">(*Termasuk Pajak & Service Charge)</span>
                                         </div>
                                         <div class="col-half">
                                             <span class="underline-txt">Rp {{hotel.originalCheapestFare | currency:'':0}}</span>
                                             <br /><span class="lg-txt"><b><sup>Rp</sup> {{hotel.netCheapestFare | currency:'':0}}</b></span>
+                                        </div>
+                                    </div>
+                                    <div class="price clearfix" id="price-total">
+                                        <div class="col-half">
+                                            <span class="txt-md"><b>Harga total :</b></span>
+                                            <br /><span class="xs-txt">(*Termasuk Pajak & Service Charge)</span>
+                                        </div>
+                                        <div class="col-half">
+                                            <span class="underline-txt">Rp 999.999</span>
+                                            <br /><span class="lg-txt"><b><sup>Rp</sup> 999.999</b></span>
                                         </div>
                                     </div>
                                 </div>
@@ -250,7 +272,7 @@
             </div>
         </div>
     </div>
-    
+
     <div class="bookfailed-popup" ng-show="expired">
         <div class="overlay-content">
             <section style="padding-top:60px; padding-left:225px;">

@@ -47,14 +47,14 @@
     /*Custom Column*/
     .col-left, col-right, .col-left-result, .col-right-result, .col-xs-left, .col-xs-middle, .col-xs-right, .col-left-hotel, .col-right-hotel, .col-half, .col-left-page, .col-right-page, 
     .col-left-slider, col-right-slider, .col-left-rs, .col-right-rs, .rb-left, .rb-mid, .rb-right, .room-sort-left, .room-sort-mid, .room-sort-right, .room-left, .room-right,
-    .room-rl, .room-rm, .room-rr, .wb-left, .wb-mid, .wb-right, .ot-left, .ot-right, .col-2, .col-3, .col-4, .col-6, .col-8, .form-sm, .col-sp-3, .col-7, .cols-3 {
+    .room-rl, .room-rm, .room-rr, .wb-left, .wb-mid, .wb-right, .ot-left, .ot-right, .col-2, .col-3, .col-4, .col-6, .col-8, .form-sm, .col-sp-3, .col-7, .cols-3, .tab-l, .tab-r {
         position: relative;
         min-height: 1px;
     }
 
     .col-left, .col-left-result, .col-right-result, .col-left-hotel, .col-right-hotel, .col-xs-left, .col-xs-middle, .col-xs-right, .col-half, .col-left-page, .col-right-page,
     .col-left-slider, .col-right-slider, .col-left-rs, .col-right-rs, .rb-left, .rb-mid, .rb-right, .room-sort-left, .room-sort-mid, .room-sort-right, .room-left, .room-right,
-    .room-rl, .room-rm, .room-rr, .wb-left, .wb-mid, .wb-right, .ot-left, .ot-right, .col-2, .col-3, .col-4, .col-6, .col-8, .quarter, .form-sm, .col-sp-3, .col-7, .cols-3  {float: left;}
+    .room-rl, .room-rm, .room-rr, .wb-left, .wb-mid, .wb-right, .ot-left, .ot-right, .col-2, .col-3, .col-4, .col-6, .col-8, .quarter, .form-sm, .col-sp-3, .col-7, .cols-3, .tab-l, .tab-r  {float: left;}
     
     .col-right {float: right;}
     
@@ -86,6 +86,8 @@
 
     .col-2 {width:20%} .col-3 {width: 33.333333333333336%;} .col-4 {width: 40%;} .cols-3 {width: 45%;}
     .col-sp-3 {width: 30%;} .col-6 {width: 60%;} .col-7 {width: 70%;} .col-8 {width: 80%;} 
+
+    .tab-l {width:30%;} .tab-r {width: 70%;}
 
     /*Icon*/
     .star-outline {
@@ -699,6 +701,18 @@
             position: absolute;
             margin-left: -20px;
             margin-top: 2px;
+        }
+    }
+    .tab-hotel-price {
+        line-height: 30px;
+        .tab-wrapper {
+            text-align: center;
+            padding-left: 20px;
+            .tab-border {border-bottom: 1px solid #ccc;
+                .tab-list { cursor: pointer;
+                    &.active {border-bottom: 5px solid #1daee4;}
+                }
+            }
         }
     }
 

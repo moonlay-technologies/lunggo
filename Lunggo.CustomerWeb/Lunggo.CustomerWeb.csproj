@@ -1171,7 +1171,9 @@
     <Content Include="Assets\travorama20\angularDirectory\priceDetail\priceDetailTemplate.html" />
     <Content Include="Assets\travorama20\angularDirectory\search\hotelSearch.service.js" />
     <Content Include="Assets\travorama20\css\help_section.min.css" />
-    <Content Include="Assets\travorama20\css\style_desktop.css" />
+    <Content Include="Assets\travorama20\css\style_desktop.css">
+      <DependentUpon>style_desktop.scss</DependentUpon>
+    </Content>
     <Content Include="Assets\travorama20\css\style_desktop.min.css">
       <DependentUpon>style_desktop.css</DependentUpon>
     </Content>
