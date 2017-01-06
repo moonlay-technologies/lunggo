@@ -940,6 +940,7 @@ app.controller('paymentController', [
         $scope.$watch('paymentMethod', function(newValue, oldValue) {
             if (newValue != oldValue) {
                 $scope.notifCardLength = false;
+                $scope.dateOver = false;
             }
         },true);
         // ********************************** END *********************************************
