@@ -51,7 +51,7 @@
                 <div class="hotel-bottom grey-txt">
                     <div class="hb-top">
                         <div class="row">
-                            <div class="col-xs-8">
+                            <div class="col-xs-7">
                                 <h4 class="hotel-name blue-txt uppercase bold-txt">@Model.HotelDetail.HotelName</h4>
                                 @if (Model.HotelDetail.StarRating == 0 || Model.HotelDetail.StarRating == 1)
                                 {
@@ -80,37 +80,48 @@
                                     @Model.HotelDetail.PhonesNumbers[0]
                                 </p>
                             </div>
-                            <div class="col-xs-4 right-txt">
-                                <h4 class="regular-txt no-reserve">
-                                    Nomor Pesanan
-                                    <h3 class="blue-txt bold-txt">@Model.RsvNo</h3>
-                                </h4>
+                            <div class="col-xs-5 right-txt clearfix">
+                                <div class="row">
+                                    <h4 class="regular-txt no-reserve">
+                                        Nomor Pesanan
+                                        <h3 class="blue-txt bold-txt">@Model.HotelDetail.BookingReference</h3>
+                                    </h4>
+                                </div>
+                                <div class="row">
+                                    Bookable and Payable by @Model.HotelDetail.SupplierName<br/>
+                                    VAT: @Model.HotelDetail.SupplierVat
+                                </div>
                             </div>
+
                         </div>
                     </div>
                     <div class="hb-bottom">
                         <h4 class="semibold-txt">DETAIL PEMESANAN</h4>
                         <div class="hotel-detail">
                             <div class="row semibold-txt">
+                                <div class="col-xs-3">No. Reservasi Travorama</div>
+                                <div class="col-xs-9">@Model.RsvNo</div>
+                            </div>
+                            <div class="row semibold-txt">
                                 <div class="col-xs-3">Nama Tamu</div>
                                 <div class="col-xs-9">@EnumDisplay.Title(Model.Pax[0].Title) @Model.Pax[0].Name</div>
                             </div>
                             @if (!string.IsNullOrEmpty(Model.HotelDetail.SpecialRequest))
                             {
-                            <div class="row semibold-txt">
-                                <div class="col-xs-3">Special Request</div>
-                                <div class="col-xs-9">
-                                    @Model.HotelDetail.SpecialRequest
+                                <div class="row semibold-txt">
+                                    <div class="col-xs-3">Special Request</div>
+                                    <div class="col-xs-9">
+                                        @Model.HotelDetail.SpecialRequest
+                                    </div>
                                 </div>
-                            </div>
                             }
                             <div class="row semibold-txt">
                                 <div class="col-xs-3"></div>
                                 <div class="col-xs-9 unpoint clearfix">
                                     <div class="row clearfix blue-txt semibold-txt">
-                                        <div class="col-xs-4">Check-in-from</div>
+                                        <div class="col-xs-4">Check in</div>
                                         <div class="col-xs-3"><div class="dash-border"></div></div>
-                                        <div class="col-xs-4">Check-out-until</div>
+                                        <div class="col-xs-4">Check out</div>
                                     </div>
                                     <div class="row clearfix blue-txt semibold-txt">
                                         <div class="col-xs-4"><h4>@Model.HotelDetail.CheckInDate.ToString("D", CultureInfo.CreateSpecificCulture("id-ID"))</h4></div>
@@ -138,19 +149,16 @@
             <div class="page page-2">
                 <header class="page-header white-txt">
                     <div class="row">
-                        <div class="col-xs-7">
+                        <div class="col-xs-8">
                             <div class="regular-txt room-title">Tipe Kamar</div>
                             <h4 class="bold-txt">@room.RoomName</h4>
                         </div>
-                        <div class="col-xs-5 right-txt clearfix">
+                        <div class="col-xs-4 right-txt clearfix">
                             <div class="row">
-                                <h4 class="regular-txt no-reserve">
+                                <div class=" white-txt regular-txt no-reserve">
                                     Nomor Pesanan
-                                    <h3 class="blue-txt bold-txt">@Model.RsvNo</h3>
-                                </h4>
-                            </div>
-                            <div class="row">
-                                Bookable and Payable<br />by HOTELBEDS
+                                </div>
+                                <h4 class="white-txt bold-txt">@Model.HotelDetail.BookingReference</h4>
                             </div>
                         </div>
                     </div>
@@ -238,18 +246,19 @@
                                             }
                                             else
                                             {
-                                                <li class="col-half">
+                                                <div class="col-half">
                                                     @for (var i = 0; i < facilities.Count / 2; i++)
                                                     {
-                                                        @facilities[i]
+                                                        <li>@facilities[i]</li>
                                                     }
-                                                </li>
-                                                <li class="col-half">
+                                                </div>
+                                                
+                                                <div class="col-half">
                                                     @for (var j = facilities.Count / 2; j < facilities.Count; j++)
                                                     {
-                                                        @facilities[j]
+                                                       <li>@facilities[j]</li> 
                                                     }
-                                                </li>
+                                                </div>
                                             }
                                         }
                                     </ul>
