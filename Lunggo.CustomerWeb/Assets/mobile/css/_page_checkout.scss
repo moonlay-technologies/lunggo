@@ -155,7 +155,7 @@
             label {display:block; width:100%; background:#fff; color:#fff; margin-bottom: 15px;
                 header {background:#36b6e7; position:relative; @include clearfix();
                     .input-wrapper {float:left; background:#028ec3; width:30px; text-align:center; position:absolute; height:100%;
-                        input[name="paymentMethod"] {
+                        input {
                             width: 15px;
                             height: 15px;
                             border: 0;
@@ -164,8 +164,11 @@
                     }
                     h5 {padding:12px; margin:0; float:left; padding-left:40px; font-weight:600; width:100%; font-size: 13px;}
                 }
-                section {text-align:center; padding:15px; border: 1px solid #e9e9e9;}
+                section {text-align:center; padding:15px; border: 1px solid #e9e9e9;
+                    img {height: 50px;}
+                }
             }
+            .selected-bank {display: none;}
         }
     }
 

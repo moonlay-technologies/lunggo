@@ -131,7 +131,7 @@ namespace Lunggo.CustomerWeb.Controllers
             return RedirectToAction("Payment", "Payment", new { rsvNo });
         }
 
-        
+
         //public ActionResult DetailHotel(string searchId, int hotelCd)
         //{
         //    return View(new { searchId, hotelCd });
@@ -169,6 +169,5 @@ namespace Lunggo.CustomerWeb.Controllers
         {
             return View();
         }
-        
     }
 }

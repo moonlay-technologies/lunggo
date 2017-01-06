@@ -54,6 +54,7 @@ namespace Lunggo.ApCommon.Payment.Service
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
                 string mediumCd = null;
+                string submethodCd = null;
                 string methodCd = null;
                 string statusCd = null;
                 DateTime? time = null;
@@ -71,11 +72,13 @@ namespace Lunggo.ApCommon.Payment.Service
                 decimal? localFinalPrice = null;
                 decimal? localPaidAmount = null;
                 string invoiceNo = null;
-
+                
                 if (payment.Medium != PaymentMedium.Undefined)
                     mediumCd = PaymentMediumCd.Mnemonic(payment.Medium);
                 if (payment.Method != PaymentMethod.Undefined)
                     methodCd = PaymentMethodCd.Mnemonic(payment.Method);
+                if (payment.SubMethod != PaymentSubMethod.Undefined)
+                    submethodCd = PaymentSubMethodCd.Mnemonic(payment.SubMethod);
                 if (payment.Status != PaymentStatus.Undefined)
                     statusCd = PaymentStatusCd.Mnemonic(payment.Status);
                 if (payment.Time.HasValue)
@@ -116,6 +119,7 @@ namespace Lunggo.ApCommon.Payment.Service
                     RsvNo = rsvNo,
                     MediumCd = mediumCd,
                     MethodCd = methodCd,
+                    SubMethod = submethodCd,
                     StatusCd = statusCd,
                     Time = time,
                     TransferAccount = transferAccount,

@@ -4,6 +4,7 @@
 @using Lunggo.ApCommon.Hotel.Service
 @using Lunggo.ApCommon.Flight.Model
 @using PaymentMethod = Lunggo.ApCommon.Payment.Constant.PaymentMethod
+@using PaymentSubMethod = Lunggo.ApCommon.Payment.Constant.PaymentSubMethod
 @model Lunggo.ApCommon.Product.Model.ReservationForDisplayBase
 
 @{
@@ -188,7 +189,7 @@
                 <div class="instruction">
                     @if (Model.Payment.Method == PaymentMethod.VirtualAccount)
                     {
-                        <h3>PANDUAN <b>TRANSFER</b></h3>
+                        <h3>PANDUAN <b>VIRTUAL ACCOUNT</b></h3>
                         <header>
                             <div class="text-right">No. Pesanan: <b>@Model.RsvNo</b></div>
                         </header>
@@ -197,7 +198,7 @@
                         <section class="pesanan-container clearfix">
                             <div class="text">
                                 <p>Pemesanan dan harga sudah di konfirmasi oleh Maskapai. Setelah pembayaran diterima, e-tiket akan dikirimkan ke e-mail Anda dalam waktu maks. <b>60 menit</b></p>
-                                <p>Mohon selesaikan pembayaran melalui <b>ATM</b></p>
+                                <p>Mohon selesaikan pembayaran melalui <b>Virtual Account</b></p>
                             </div>
                         </section>
                         }
@@ -206,7 +207,7 @@
                             <section class="pesanan-container clearfix">
                                 <div class="text">
                                     <p>Pemesanan dan harga sudah di konfirmasi oleh pihak Hotel. Setelah pembayaran diterima, voucher akan dikirimkan ke e-mail Anda dalam waktu maks. <b>60 menit</b></p>
-                                    <p>Mohon selesaikan pembayaran melalui <b>ATM</b></p>
+                                    <p>Mohon selesaikan pembayaran melalui <b>Virtual Account</b></p>
                                 </div>
                             </section>
                         }
@@ -220,48 +221,52 @@
                         <div class="instruction-accordion">
                             <div class="accordion-content">
                                 <div class="accordion-wrapper">
-                                    <div class="accordion-title accordion">ATM Mandiri/Jaringan ATM Bersama:</div>
-                                    <div class="accordion-content">
-                                        <ol>
-                                            <li><p>Masukkan PIN Anda.</p></li>
-                                            <li><p>Di Menu Utama, pilih <b>Transaksi Lainnya.</b></p></li>
-                                            <li><p>Pilih <b>Transfer</b>.</p></li>
-                                            <li><p>Pilih <b>Antar Bank Online</b>.</p></li>
-                                            <li><p>Masukkan nomor <b>013 @Model.Payment.TransferAccount</b> (kode 013 dan 16 digit nomor akun virtual pembayaran).</p></li>
-                                            <li><p>Masukkan jumlah harga tiket yang harus Anda bayar Rp. <b>@Model.Payment.FinalPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</b> (jika jumlah yang dimasukkan tidak sama dengan jumlah tagihan, transaksi akan ditolak).</p></li>
-                                            <li><p>No. referensi dapat dikosongkan, lalu tekan <b>Benar</b>.</p></li>
-                                            <li><p>Di halaman konfirmasi transfer akan muncul jumlah yang dibayarkan, no. rekening tujuan. Jika informasinya telah cocok, tekan <b>Benar</b>.</p></li>
-                                            <li><p>Transaksi berhasil.</p></li>
-                                        </ol>
-                                    </div>
+                                    @if (Model.Payment.SubMethod == PaymentSubMethod.Permata)
+                                    {
+                                        <div class="accordion-title accordion active">Jaringan ATM Bersama:</div>
+                                        <div class="accordion-content show">
+                                            <ol>
+                                                <li><p>Masukkan PIN Anda.</p></li>
+                                                <li><p>Di Menu Utama, pilih <b>Transaksi Lainnya.</b></p></li>
+                                                <li><p>Pilih <b>Transfer</b>.</p></li>
+                                                <li><p>Pilih <b>Antar Bank Online</b>.</p></li>
+                                                <li><p>Masukkan nomor <b>013 @Model.Payment.TransferAccount</b> (kode 013 dan 16 digit nomor akun virtual pembayaran).</p></li>
+                                                <li><p>Masukkan jumlah harga tiket yang harus Anda bayar <b>Rp @Model.Payment.FinalPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</b> (jika jumlah yang dimasukkan tidak sama dengan jumlah tagihan, transaksi akan ditolak).</p></li>
+                                                <li><p>No. referensi dapat dikosongkan, lalu tekan <b>Benar</b>.</p></li>
+                                                <li><p>Di halaman konfirmasi transfer akan muncul jumlah yang dibayarkan, no. rekening tujuan. Jika informasinya telah cocok, tekan <b>Benar</b>.</p></li>
+                                                <li><p>Transaksi berhasil.</p></li>
+                                            </ol>
+                                        </div>
 
-                                    <div class="accordion-title accordion">ATM BCA/Jaringan ATM PRIMA:</div>
-                                    <div class="accordion-content">
-                                        <ol>
-                                            <li><p>Masukkan PIN Anda.</p></li>
-                                            <li><p>Di Menu Utama, pilih <b>Transaksi Lainnya</b>.</p></li>
-                                            <li><p>Pilih <b>Transfer</b>.</p></li>
-                                            <li><p>Pilih <b>Ke Rekening Bank Lain</b>.</p></li>
-                                            <li><p>Masukkan kode <b>013</b> (Kode Bank Permata) lalu tekan <b>Benar</b>.</p></li>
-                                            <li><p>Masukkan jumlah harga tiket yang harus Anda bayar Rp. <b>@Model.Payment.FinalPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</b> (jika jumlah yang dimasukkan tidak sama dengan jumlah tagihan, transaksi akan ditolak).</p></li>
-                                            <li><p>Masukkan <b>@Model.Payment.TransferAccount</b> (16 digit nomor akun virtual pembayaran) lalu tekan <b>Benar</b>.</p></li>
-                                            <li><p>Di halaman konfirmasi transfer akan muncul jumlah yang dibayarkan, no. rekening tujuan. Jika informasinya telah cocok, tekan <b>Benar</b>.</p></li>
-                                            <li><p>Transaksi berhasil.</p></li>
-                                        </ol>
-                                    </div>
+                                        <div class="accordion-title accordion active">Jaringan ATM PRIMA:</div>
+                                        <div class="accordion-content show">
+                                            <ol>
+                                                <li><p>Masukkan PIN Anda.</p></li>
+                                                <li><p>Di Menu Utama, pilih <b>Transaksi Lainnya</b>.</p></li>
+                                                <li><p>Pilih <b>Transfer</b>.</p></li>
+                                                <li><p>Pilih <b>Ke Rekening Bank Lain</b>.</p></li>
+                                                <li><p>Masukkan kode <b>013</b> (Kode Bank Permata) lalu tekan <b>Benar</b>.</p></li>
+                                                <li><p>Masukkan jumlah harga tiket yang harus Anda bayar <b>Rp @Model.Payment.FinalPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</b> (jika jumlah yang dimasukkan tidak sama dengan jumlah tagihan, transaksi akan ditolak).</p></li>
+                                                <li><p>Masukkan <b>@Model.Payment.TransferAccount</b> (16 digit nomor akun virtual pembayaran) lalu tekan <b>Benar</b>.</p></li>
+                                                <li><p>Di halaman konfirmasi transfer akan muncul jumlah yang dibayarkan, no. rekening tujuan. Jika informasinya telah cocok, tekan <b>Benar</b>.</p></li>
+                                                <li><p>Transaksi berhasil.</p></li>
+                                            </ol>
+                                        </div>
 
-                                    <div class="accordion-title accordion">ATM Bank Permata/Jaringan ATM Alto:</div>
-                                    <div class="accordion-content">
-                                        <ol>
-                                            <li><p>Masukkan PIN Anda.</p></li>
-                                            <li><p>Di Menu Utama, pilih <b>Transaksi Lainnya</b>.</p></li>
-                                            <li><p>Pilih <b>Transaksi Pembayaran</b>.</p></li>
-                                            <li><p>Pilih <b>Pembayaran Virtual Account</b>.</p></li>
-                                            <li><p>Masukkan 16 digit nomor akun virtual pembayaran <b>@Model.Payment.TransferAccount</b>.</p></li>
-                                            <li><p>Di halaman konfirmasi transfer akan muncul jumlah yang dibayarkan, no. rekening tujuan. Jika informasinya telah cocok, tekan <b>Benar</b>.</p></li>
-                                            <li><p>Transaksi berhasil.</p></li>
-                                        </ol>
-                                    </div>
+                                        <div class="accordion-title accordion active">Jaringan ATM Alto:</div>
+                                        <div class="accordion-content show">
+                                            <ol>
+                                                <li><p>Masukkan PIN Anda.</p></li>
+                                                <li><p>Di Menu Utama, pilih <b>Transaksi Lainnya</b>.</p></li>
+                                                <li><p>Pilih <b>Transaksi Pembayaran</b>.</p></li>
+                                                <li><p>Pilih <b>Pembayaran Virtual Account</b>.</p></li>
+                                                <li><p>Masukkan 16 digit nomor akun virtual pembayaran <b>@Model.Payment.TransferAccount</b>.</p></li>
+                                                <li><p>Di halaman konfirmasi transfer akan muncul jumlah yang dibayarkan, no. rekening tujuan. Jika informasinya telah cocok, tekan <b>Benar</b>.</p></li>
+                                                <li><p>Transaksi berhasil.</p></li>
+                                            </ol>
+                                        </div>
+                                    }
+                                        
                                 </div>
                             </div>
                         </div>
@@ -290,6 +295,7 @@
                                 </div>
                             </section>
                         }
+                  
                         <section class="bank-detail">
                             <div class="bank">
                                 <div class="row">

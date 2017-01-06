@@ -271,6 +271,10 @@
                         <div style="font-weight: bold">Tamu</div>
                         <div>{{changeTitle(guestInfo.title)}} {{guestInfo.name}}</div>
                     </div>
+                    <div class="rr-row clearfix" ng-show="buyerInfo.message!= null && buyerInfo.message.length >0">
+                        <div style=" font-weight: bold">Catatan</div>
+                        <div>{{buyerInfo.message}}</div>
+                    </div>
                 </div>
             </div>
             @Html.Partial("/Views/Shared/Mobile/_PriceDetail.cshtml", new HotelReservationForDisplay

@@ -30,7 +30,7 @@ body {font-family:'din', helvetica, arial, sans-serif; width:100%; height:100%; 
 
 p {margin-bottom:0;}
 
-.page {width:21cm; height:29.6cm; position:absolute; -webkit-print-color-adjust:exact; //background:url(/Assets/images/eticket-background.png) left 70% no-repeat;
+.page {width:21cm; height:29.6cm;  -webkit-print-color-adjust:exact; //position:absolute; background:url(/Assets/images/eticket-background.png) left 70% no-repeat;
     &:before, &:after {@include clearfix;}
 }
 .page.page-2 {top:29.6cm;}
@@ -43,9 +43,9 @@ Site Header
     .page-header-right {
         &:before, &:after {@include clearfix;}
         &>div {float:left;}
-        .page-title {padding-right:3mm;
+        /*.page-title {padding-right:3mm;
             h3 {color:#38B3E3; font-weight:bold; margin:0; margin-top:5.5mm; font-size:24pt; vertical-align:bottom; line-height:100%;}
-        }
+        }*/
         .page-help {padding-left:3mm; padding-top:15px; border-left:2px solid #ddd;
             p {margin-bottom:0; line-height:100%; margin-bottom:5px;}
             p:last-child {margin-bottom:0;}
@@ -149,50 +149,133 @@ Site Footer
 /*Voucher Hotel*/
 .page-hotel-voucher {
     font-family: 'Open Sans', sans-serif;
-    font-size: 12px;
+    font-size: 9pt;
     .col-half {
        width: 50%;
        float: left;
        position: relative;
        min-height: 1px;
     }
-    h4 {font-size: 16px;}
-    h3 {font-size: 20px;}
-    .page-content {padding-bottom: 1cm;}
+    .col-3 {
+       width: 30%;
+       float: left;
+       position: relative;
+       min-height: 1px;
+    }
+    .col-7 {
+       width: 70%;
+       float: left;
+       position: relative;
+       min-height: 1px;
+    }
+    h4 {font-size: 12pt; line-height: 100%; margin: 0;}
+    h3 {font-size: 20pt; line-height: 100%; margin: 0;}
+    .page-header {
+        margin: 0;
+        padding: 0.5cm 1cm;
+        border-bottom: 0;
+        background: #38b3e3;
+        .page-title h3 {
+            margin: 2mm 0;
+        }
+    }
+    .page-content {padding: 0;}
     .black-txt {color: #000000;}
     .blue-txt {color: #15b1e4;}
+    .white-txt {color: #ffffff;}
     .grey-txt {color: #525252;}
+    .lightgrey-txt {color: #eaeaea;}
     .uppercase {text-transform: uppercase;}
-    .md-txt {font-size: 15px;}
+    .sm-txt {font-size: 7.5pt;}
+    .bold-txt {font-weight: 700}
+    .semibold-txt {font-weight: 600}
+    .regular-txt {font-weight: normal}
+    .right-txt {text-align: right;}
+    .italic-txt {font-style: italic;}
     .hotel-wrapper {width: 100%;
-        .hotel-top {
-            margin: 1cm 0 0.5cm;
-            &>p {
-                border-bottom: 2px solid #15b1e4;
-                margin-bottom: 0.5cm;
+        &.room {
+            padding: 0.6cm 1cm;
+            h3, h4 {display: inline-block;}
+            h3.lightgrey-txt {padding: 0 5mm;}
+            .room-top {
+                border-bottom: 0.6mm dotted #b7b7b7;
+                .guest {margin: 5mm 0;}
             }
-        }
-        .hotel-middle {margin-top: 0.5cm;
-            .right-side {
-                padding-left: 30px; 
-                border-left: 1px solid #ddd;
-                p {margin-bottom: 0.25cm;}
-            }
+            .room-bottom {margin: 5mm 0;}
+            .tnc {padding: 5mm 0;}
         }
         .hotel-bottom {
-            margin-top: 0.5cm;
-            border-top: 1px solid #ddd;
-            .hotel-detail .row {margin-bottom: 0.25cm;}
+            padding: 0.6cm 1cm;
+            h3 {letter-spacing: 0.5mm;}
+            .hb-top {
+                .hotel-name {letter-spacing: 0.2mm;}
+                .no-reserve {margin-bottom: 3mm;}
+                .phone {
+                    margin: 3mm 0;
+                    margin-left: 6mm;
+                    &:before {
+                        position: absolute;
+                        left: 2mm;
+                        background: url(/Assets/images/phone.png) no-repeat;
+                        width: 4mm;
+                        height: 5mm;
+                        content: '';
+                        display: inline-block;
+                        vertical-align: middle;
+                        background-size: 100%;
+                    }
+                }
+                .location {
+                    margin: 3mm 0;
+                    margin-left: 6mm;
+                    &:before {
+                        position: absolute;
+                        left: 2mm;
+                        background: url(/Assets/images/location.png) no-repeat;
+                        width: 4mm;
+                        height: 5.5mm;
+                        content: '';
+                        display: inline-block;
+                        vertical-align: middle;
+                        background-size: 100%;
+                    }
+                }
+            }
+            .hb-bottom {
+                margin: 6mm 0;
+                .hotel-detail {
+                    margin-top: 4mm;
+                }
+            }
         }
-        .img-wifi, .img-phone, .img-email{padding-right: 5px;}
-        .img-swim {
-            padding-right: 5px; 
-            padding-left: 15px;
+        .row {margin-bottom: 2.5mm;
+            &>.col-xs-9:before {
+                content: ':';
+                position: absolute;
+                left: 0;
+            }
         }
-        .img-hotel {width: 100%;}
     }
-
+    .room-title {margin-bottom: 2mm;}
+    
     /*Icon*/
+    .img-wifi, .img-phone, .img-email, .img-locatio, .img-swim {margin-right: 3mm;}
+    .img-logo {
+        width: 4cm;
+        height: 1cm;
+    }
+    .img-hotel {
+        width: 21cm; 
+        height: 5cm; 
+        background-size: cover; 
+        background-position: center; 
+        background-repeat: no-repeat;
+    }
+    .img-email {
+        width: 5.5mm;
+        height: 4mm;
+    }
+    
     .star-outline {
         content: '';
         display: inline-block;
@@ -220,6 +303,7 @@ Site Footer
         background: url(/Assets/travorama20/images/Hotel/star.png);
         height: 16px;
         width: 17px;
+        margin: 2mm 0;
         &.star-2 {width: 34px;} 
         &.star-3 {width: 51px;}
         &.star-4 {width: 68px;}
@@ -238,3 +322,8 @@ Site Footer
     }
 }
 
+@media print {
+  .page { 
+    page-break-before: always;
+  }
+}

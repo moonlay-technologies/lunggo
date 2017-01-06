@@ -14,6 +14,8 @@ namespace Lunggo.ApCommon.Payment.Model
     {
         [JsonProperty("method", NullValueHandling = NullValueHandling.Ignore)]
         public PaymentMethod Method { get; set; }
+        [JsonProperty("submethod", NullValueHandling = NullValueHandling.Ignore)]
+        public PaymentSubMethod SubMethod { get; set; }
         [JsonProperty("status", NullValueHandling = NullValueHandling.Ignore)]
         public PaymentStatus Status { get; set; }
         [JsonProperty("time", NullValueHandling = NullValueHandling.Ignore)]
@@ -50,6 +52,7 @@ namespace Lunggo.ApCommon.Payment.Model
     {
         public PaymentMedium Medium { get; set; }
         public PaymentMethod Method { get; set; }
+        public PaymentSubMethod SubMethod { get; set; }
         public PaymentStatus Status { get; set; }
         public FailureReason FailureReason { get; set; }
         public DateTime? Time { get; set; }
@@ -117,6 +120,7 @@ namespace Lunggo.ApCommon.Payment.Model
                 {
                     Medium = PaymentMediumCd.Mnemonic(record.MediumCd),
                     Method = PaymentMethodCd.Mnemonic(record.MethodCd),
+                    SubMethod = PaymentSubMethodCd.Mnemonic(record.SubMethod),
                     Status = PaymentStatusCd.Mnemonic(record.StatusCd),
                     Time = record.Time,
                     TimeLimit = DateTime.SpecifyKind(record.TimeLimit.GetValueOrDefault(), DateTimeKind.Utc),
@@ -143,7 +147,7 @@ namespace Lunggo.ApCommon.Payment.Model
         {
             protected override string GetQuery(dynamic condition = null)
             {
-                return "SELECT MediumCd, MethodCd, StatusCd, Time, TimeLimit, TransferAccount, RedirectionUrl, " +
+                return "SELECT MediumCd, MethodCd, SubMethod, StatusCd, Time, TimeLimit, TransferAccount, RedirectionUrl, " +
                        "ExternalId, DiscountCode, OriginalPriceIdr, DiscountNominal, UniqueCode, FinalPriceIdr, " +
                        "PaidAmountIdr, LocalCurrencyCd, LocalRate, LocalFinalPrice, LocalPaidAmount, InvoiceNo " +
                        "FROM Payment " +

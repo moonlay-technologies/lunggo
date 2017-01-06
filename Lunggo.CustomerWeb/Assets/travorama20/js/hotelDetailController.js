@@ -1,7 +1,6 @@
 ﻿// home controller
 app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource', '$timeout', 'hotelSearchSvc', 'imageSvc', function ($scope, $log, $http, $resource, $timeout, hotelSearchSvc, imageSvc) {
 
-    $scope.destinationName = ""; //tbd
     $scope.hotel = {};
     $scope.searchId = '';
     $scope.searchParam = '';
@@ -207,12 +206,25 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
                         $(window).scroll(function () {
                             var scroll = $(window).scrollTop();
 
-                            if (scroll >= 1200) {
+                            if (scroll >= 1800) {
                                 header.addClass("up-height");
                             } else {
                                 header.removeClass("up-height");
                             }
                         });
+                    }
+                });
+
+                // Hotel Detail Slider
+                $('#image-gallery').lightSlider({
+                    gallery: true,
+                    item: 1,
+                    thumbItem: 6,
+                    slideMargin: 0,
+                    loop: true,
+                    keyPress: true,
+                    onSliderLoad: function () {
+                        $('#image-gallery').removeClass('cS-hidden');
                     }
                 });
             }, 0);
@@ -342,30 +354,30 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
         }
     }
    
-    var initiateSlider = function () {
-        $('#image-gallery').lightSlider({
-            gallery: true,
-            item: 1,
-            thumbItem: 6,
-            slideMargin: 0,
-            loop: true,
-            keyPress: true,
-            onSliderLoad: function () {
-                $('#image-gallery').removeClass('cS-hidden');
-            }
-        });
+    //var initiateSlider = function () {
+    //    $('#image-gallery').lightSlider({
+    //        gallery: true,
+    //        item: 1,
+    //        thumbItem: 6,
+    //        slideMargin: 0,
+    //        loop: true,
+    //        keyPress: true,
+    //        onSliderLoad: function () {
+    //            $('#image-gallery').removeClass('cS-hidden');
+    //        }
+    //    });
 
-        $timeout(function () {
-            var altImagePath = document.location.origin + '/Assets/travorama20/images/Hotel/no-hotel.png';
-            var elements = angular.element(document.querySelectorAll('#imgtum'));
+    //    $timeout(function () {
+    //        var altImagePath = document.location.origin + '/Assets/travorama20/images/Hotel/no-hotel.png';
+    //        var elements = angular.element(document.querySelectorAll('#imgtum'));
 
-            //angular.each(elements, function(key, value) {
-            //    elements[key].removeAttr('src');
-            //    elements[key].attr('src', altImagePath); // set default image
-            //});
-        }, 0);
+    //        //angular.each(elements, function(key, value) {
+    //        //    elements[key].removeAttr('src');
+    //        //    elements[key].attr('src', altImagePath); // set default image
+    //        //});
+    //    }, 0);
 
-    }
+    //}
 
     $scope.isFreeRefund = function (room, index) {
         if (room.rate.isRefundable) {
