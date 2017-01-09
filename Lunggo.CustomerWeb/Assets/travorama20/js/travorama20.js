@@ -1310,6 +1310,7 @@ function flightFormSearchFunctions() {
         Cookies.set('child', FlightSearchConfig.flightForm.passenger.child, { expires: 9999 });
         Cookies.set('infant', FlightSearchConfig.flightForm.passenger.infant, { expires: 9999 });
         Cookies.set('cabin', FlightSearchConfig.flightForm.cabin, { expires: 9999 });
+        Cookies.set('hotelSearchLocation', hotelSearch.locationDisplay, { expires: 9999 });
     }
 
     function generateFlightSearchParam() {
