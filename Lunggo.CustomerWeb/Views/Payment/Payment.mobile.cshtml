@@ -23,6 +23,7 @@
     var images = new List<Image>();
     var hotelImg = "";
     var roomImg = "";
+    var listAges = new List<int>();
     try
     {
         if (Model.Reservation is HotelReservationForDisplay)
@@ -222,12 +223,7 @@
         var hotel = Model.Reservation as HotelReservationForDisplay;
         @:originalPrice = '@hotel.HotelDetail.OriginalTotalFare';
         @:price = '@hotel.HotelDetail.NetTotalFare';
-        @*@:totalRoom = 3;
-        @*@:totalRoom = '@hotel.HotelDetail.Rooms.SelectMany(r => r.Rates).Sum(p => p.RateCount)';*@
-            @:checkin = '@hotel.HotelDetail.CheckInDate.ToString("D",CultureInfo.CreateSpecificCulture("id-ID"))';
-            @:checkout = '@hotel.HotelDetail.CheckOutDate.ToString("D", CultureInfo.CreateSpecificCulture("id-ID"))';
-            @:nights = '@((hotel.HotelDetail.CheckOutDate - hotel.HotelDetail.CheckInDate).Days)';
-            @:totalpax = '@totalpax';*@
+       
         }
     // change current page
     if (getParam('page') == 4) {
