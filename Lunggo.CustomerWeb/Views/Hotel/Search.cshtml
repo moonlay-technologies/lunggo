@@ -198,7 +198,7 @@
                     </div>
                     <div class="text-center" ng-show="searchDone && returnedHotelCount == 0"><h3> Hotel tidak ditemukan, silakan ganti filter atau destinasi anda.</h3></div>
                     <div class="hotel-list-container" ng-show="searchDone">
-                        <a href="" ng-repeat="hotel in hotels" ng-click="GotoDetailHotel(hotel.hotelCd)" class="hl-wrapper">
+                        <a ng-repeat="hotel in hotels" ng-click="GotoDetailHotel(hotel.hotelCd)" class="hl-wrapper">
                             <div class="hotel-list clearfix pointer">
                                 <div class="col-2">
                                     <img class="img-list" hotel-list-image ng-src="{{hotel.mainImage}}" alt="Hotel" />

@@ -55,7 +55,7 @@ namespace Lunggo.CustomerWeb.Controllers
             if (payment.Method == PaymentMethod.BankTransfer ||
                 payment.Method == PaymentMethod.VirtualAccount)
             {
-                return RedirectToAction("Confirmation", "Payment", new { rsvNo });
+                return RedirectToAction("Instruction", "Payment", new { rsvNo });
             }
             else if (!string.IsNullOrEmpty(paymentUrl))
             {
@@ -68,7 +68,7 @@ namespace Lunggo.CustomerWeb.Controllers
             }
         }
 
-        public ActionResult Confirmation(string rsvNo)
+        public ActionResult Instruction(string rsvNo)
         {
             ReservationForDisplayBase rsv;
             if (rsvNo[0] == '1')
