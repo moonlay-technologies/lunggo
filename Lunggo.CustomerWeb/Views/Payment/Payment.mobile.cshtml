@@ -380,7 +380,7 @@
                                         <img src="/Assets/images/cimb-clicks.jpg" alt="CIMB Niaga" />
                                     </section>
                                 </label>
-                                <div class="notifcimb" ng-show="paymentMethod == '@PaymentMethod.CimbClicks'" style="color:red">
+                                <div class="notifcimb" ng-show="paymentMethod == '@PaymentMethod.CimbClicks'" style="color:red" id="CimbClicks">
                                     <p>
                                         Setelah mengklik tombol di bawah ini, Anda akan dialihkan ke halaman pembayaran dan tidak dapat memilih metode pembayaran yang lainnya.
                                     </p>
@@ -429,10 +429,10 @@
                     </div><!-- .summary--payment -->
                     @if (!User.Identity.IsAuthenticated || (User.Identity.IsAuthenticated && true /*tambah kredit kart baru*/ ))
                     {
-                        <div id="CreditCard" class="credit-card-form" ng-show="paymentMethod == '@PaymentMethod.CreditCard'">
+                        <div class="credit-card-form" ng-show="paymentMethod == '@PaymentMethod.CreditCard'">
 
                             <form name="creditCardForm" novalidate>
-                                <h3 class="no-spacing"><b>DETAIL </b>KARTU KREDIT/DEBIT</h3>
+                                <h3 id="CreditCard" class="no-spacing"><b>DETAIL </b>KARTU KREDIT/DEBIT</h3>
 
                                 <!-- credit card selector end -->
                                 <!-- new credit card start -->
@@ -491,9 +491,9 @@
                             </form>
                         </div>
                 <!-- .credit-card-form -->
-                        <div id="MandiriClickPay" class="credit-card-form" ng-show="paymentMethod == '@PaymentMethod.MandiriClickPay'">
+                        <div class="credit-card-form" ng-show="paymentMethod == '@PaymentMethod.MandiriClickPay'">
                             <div class="form-group">
-                                <h3><b>DETAIL</b> PEMBAYARAN - <b>MANDIRI CLICKPAY</b></h3>
+                                <h3 id="MandiriClickPay"><b>DETAIL</b> PEMBAYARAN - <b>MANDIRI CLICKPAY</b></h3>
                                 <div class="form-group" ng-class="{'has-error' : !checkNumber(MandiriClickPay.CardNo)}">
                                     <label class="control-label">Nomor Kartu</label>
                                     <input type="text" value="" class="form-control cc-number" maxlength="19" ng-model="MandiriClickPay.CardNo" />
