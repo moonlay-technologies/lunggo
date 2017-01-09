@@ -263,6 +263,8 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
           cursor: not-allowed; }
           .hotel-date-picker .ui-datepicker .ui-datepicker-group .ui-datepicker-calendar .ui-state-disabled span, .hotel-date-picker .ui-datepicker .ui-datepicker-group .ui-datepicker-calendar .ui-datepicker-unselectable span, .date-picker .ui-datepicker .ui-datepicker-group .ui-datepicker-calendar .ui-state-disabled span, .date-picker .ui-datepicker .ui-datepicker-group .ui-datepicker-calendar .ui-datepicker-unselectable span {
             color: #666; }
+        .hotel-date-picker .ui-datepicker .ui-datepicker-group .ui-datepicker-calendar .ui-state-holiday span, .hotel-date-picker .ui-datepicker .ui-datepicker-group .ui-datepicker-calendar .ui-state-holiday a, .hotel-date-picker .ui-datepicker .ui-datepicker-group .ui-datepicker-calendar .ui-datepicker-week-end.ui-state-holiday span, .hotel-date-picker .ui-datepicker .ui-datepicker-group .ui-datepicker-calendar .ui-datepicker-week-end.ui-state-holiday a, .date-picker .ui-datepicker .ui-datepicker-group .ui-datepicker-calendar .ui-state-holiday span, .date-picker .ui-datepicker .ui-datepicker-group .ui-datepicker-calendar .ui-state-holiday a, .date-picker .ui-datepicker .ui-datepicker-group .ui-datepicker-calendar .ui-datepicker-week-end.ui-state-holiday span, .date-picker .ui-datepicker .ui-datepicker-group .ui-datepicker-calendar .ui-datepicker-week-end.ui-state-holiday a {
+          color: red; }
         .hotel-date-picker .ui-datepicker .ui-datepicker-group .ui-datepicker-calendar .ui-datepicker-week-end span, .hotel-date-picker .ui-datepicker .ui-datepicker-group .ui-datepicker-calendar .ui-datepicker-week-end a, .date-picker .ui-datepicker .ui-datepicker-group .ui-datepicker-calendar .ui-datepicker-week-end span, .date-picker .ui-datepicker .ui-datepicker-group .ui-datepicker-calendar .ui-datepicker-week-end a {
           color: #fed83e; }
         .hotel-date-picker .ui-datepicker .ui-datepicker-group .ui-datepicker-calendar .ui-datepicker-week-end a:hover, .date-picker .ui-datepicker .ui-datepicker-group .ui-datepicker-calendar .ui-datepicker-week-end a:hover {
@@ -422,11 +424,9 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     height: 475px;
     overflow: auto; }
     .search-location .hotel-location-search .hotel-autocomplete-pre .text-pre, .search-hotel .hotel-location-search .hotel-autocomplete-pre .text-pre {
-      display: none; }
+      display: block; }
     .search-location .hotel-location-search .hotel-autocomplete-pre .text-loading, .search-hotel .hotel-location-search .hotel-autocomplete-pre .text-loading {
-      display: none; }
-    .search-location .hotel-location-search .hotel-autocomplete-no-result, .search-hotel .hotel-location-search .hotel-autocomplete-no-result {
-      display: none; }
+      display: block; }
     .search-location .hotel-location-search .hotel-autocomplete-result ul, .search-hotel .hotel-location-search .hotel-autocomplete-result ul {
       margin: 0;
       padding: 0; }
@@ -960,13 +960,14 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
   font-size: 13px;
   font-weight: 600; }
   .accordion-wrapper .accordion-title.active:after {
-    content: "\2796"; }
+    content: '-'; }
   .accordion-wrapper .accordion-title:after {
-    content: '\02795';
-    font-size: 13px;
+    content: '+';
+    font-size: 20px;
     color: #fff;
     float: right;
-    margin-left: 5px; }
+    margin-left: 5px;
+    line-height: 20px; }
 
 .accordion-wrapper .accordion-content {
   max-height: 0;
@@ -1983,6 +1984,9 @@ file : /Assets/travorama20/css/_page_index.scss
         .page-index .section-search .page-slider .slick-dots li.slick-active button {
           background: #1daee4;
           color: #1daee4; }
+
+.page-index .holiday {
+  color: red !important; }
 
 .page-index .section-reason {
   position: relative;
@@ -4922,11 +4926,11 @@ file: /Assets/travorama20/css/_page_flight.scss
   .page-hotel .room-rr {
     width: 28%; }
   .page-hotel .wb-left {
-    width: 40%; }
+    width: 30%; }
   .page-hotel .wb-mid {
     width: 3%; }
   .page-hotel .wb-right {
-    width: 57%; }
+    width: 67%; }
   .page-hotel .ot-left {
     width: 22%; }
   .page-hotel .ot-right {
@@ -6248,6 +6252,8 @@ file: /Assets/travorama20/css/_page_flight.scss
     -moz-border-radius: 2px;
     -ms-border-radius: 2px;
     border-radius: 2px; }
+  .page-hotel.page-checkout-hotel .review-hotel .col-right-hotel {
+    margin: 20px 0; }
 
 /*
 
@@ -6317,14 +6323,14 @@ file : /Assets/travorama20/css/_page_checkout.scss
   min-height: 1px; }
 
 .page-checkout .form-mandiri-payment .col-sm-left {
-  width: 50%;
+  width: 15%;
   font-weight: 700; }
 
 .page-checkout .form-mandiri-payment .col-sm-middle {
   width: 2%; }
 
 .page-checkout .form-mandiri-payment .col-sm-right {
-  width: 48%; }
+  width: 83%; }
 
 .page-checkout .step-button .btn {
   margin-top: 15px;
@@ -6332,6 +6338,9 @@ file : /Assets/travorama20/css/_page_checkout.scss
   width: 200px; }
   .page-checkout .step-button .btn.btn-grey {
     margin-right: 10px; }
+
+.page-checkout form[name="finalForm"] {
+  margin-top: 25px; }
 
 .form-group {
   margin-bottom: 20px; }
@@ -6354,6 +6363,8 @@ label.control-label {
     padding-left: 25px; }
   .checkout-content > .container, .confirmation-content > .container {
     max-width: none; }
+  .checkout-content .selected-bank, .confirmation-content .selected-bank {
+    display: none; }
 
 .passenger-detail .passenger-form, .content-step .flight-detail, .buyer-review, .passenger-review {
   margin-bottom: 25px; }
@@ -6689,38 +6700,39 @@ label.control-label {
 .passenger-detail .passenger-form.inactive .passenger-content {
   display: none; }
 
-.payment-wrapper {
-  margin-bottom: 24px; }
-  .payment-wrapper .payment {
-    margin-bottom: 6px; }
-    .payment-wrapper .payment label {
-      display: block;
-      cursor: pointer; }
-    .payment-wrapper .payment header {
-      background: #1daee4;
-      position: relative; }
-      .payment-wrapper .payment header .input-wrapper {
-        height: 100%;
-        position: absolute;
-        background: #028ec3;
-        width: 30px;
-        text-align: center;
-        padding-top: 6px; }
-      .payment-wrapper .payment header h5 {
-        color: #fff;
-        color: #fff;
-        margin: 0;
-        padding: 10px;
-        padding-left: 40px;
-        font-size: 12px;
-        font-weight: 600; }
-    .payment-wrapper .payment section {
-      padding: 12px;
-      border: 1px solid #ccc;
+.payment-wrapper .payment {
+  margin-bottom: 6px; }
+  .payment-wrapper .payment label {
+    display: block;
+    cursor: pointer; }
+  .payment-wrapper .payment header {
+    background: #1daee4;
+    position: relative; }
+    .payment-wrapper .payment header .input-wrapper {
+      height: 100%;
+      position: absolute;
+      background: #028ec3;
+      width: 30px;
       text-align: center;
-      background: #fff; }
-    .payment-wrapper .payment.disabled {
-      opacity: 0.5; }
+      padding-top: 6px; }
+    .payment-wrapper .payment header h5 {
+      color: #fff;
+      color: #fff;
+      margin: 0;
+      padding: 10px;
+      padding-left: 40px;
+      font-size: 12px;
+      font-weight: 600; }
+  .payment-wrapper .payment section {
+    padding: 12px;
+    border: 1px solid #ccc;
+    text-align: center;
+    background: #fff; }
+    .payment-wrapper .payment section img {
+      width: auto;
+      height: 45px; }
+  .payment-wrapper .payment.disabled {
+    opacity: 0.5; }
 
 .credit-card-form .cc-number.visa {
   background-image: url(/Assets/images/visa-logo.jpg);
