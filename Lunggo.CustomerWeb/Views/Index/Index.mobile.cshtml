@@ -22,15 +22,16 @@
     <script type="text/javascript" src="/Assets/vendor/slick/slick.min.js"></script>
     <script src="/Assets/js/jquery.ui.touch-punch.min.js"></script>
     <script src="/Assets/vendor/slick/slick.min.js"></script>
-    <script src="/Assets/js/jquery.cookie.min.js"></script>
+    <script src="/Assets/js/js.cookie.js"></script>
 }
 
 @section PageJS {
+   
     <script src="/Assets/travorama20/angularDirectory/search/hotelSearch.service.js"></script>
     <script src="/Assets/travorama20/js/homeController.js"></script>
 }
 
-<div class="page-loading form-container" ng-class="{'page-loaded' : PageConfig.Loaded}">
+<div class="page-loading form-container" ng-class="{'page-loaded' : PageConfig.Loaded}" ng-init="getCookies()">
     <div class="carousel-inner" role="listbox">
         @if (DateTime.UtcNow.AddHours(7).Date <= new DateTime(2016, 12, 15))
         {
@@ -99,7 +100,8 @@
                                 <div class="field-container">
                                     <p class="os-bold">Pulang Pergi ?</p>
                                     <label class="switch">
-                                        <input type="checkbox" ng-model="val" ng-true-value="true" ng-false-value="false" ng-click="DatePicker.SetDefaultReturnDate(val)">
+                                        <input type="checkbox" ng-model="val" ng-true-value="true" ng-false-value="false" ng-click="DatePicker.SetDefaultReturnDate(val)"
+                                               id="flightType">
                                         <div class="slider round"></div>
                                     </label>
                                 </div>

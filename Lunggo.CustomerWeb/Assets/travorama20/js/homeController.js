@@ -3,6 +3,7 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
 
 
     $(document).ready(function() {
+
         if (Cookies.get('hotelSearchLocationDisplay')) {
             $scope.hotelSearch.locationDisplay = Cookies.get('hotelSearchLocationDisplay');
         } else {
