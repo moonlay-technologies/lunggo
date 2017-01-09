@@ -213,6 +213,29 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
                             }
                         });
                     }
+                    else if (link == '#menu-desc') {
+                        header = $("#menu-desc");
+                        $(window).scroll(function () {
+                            var scroll = $(window).scrollTop();
+
+                            if (scroll >= 1800) {
+                                header.addClass("up-height");
+                            } else {
+                                header.removeClass("up-height");
+                            }
+                        });
+                    } else if (link == '#menu-tnc') {
+                        header = $("#menu-tnc");
+                        $(window).scroll(function () {
+                            var scroll = $(window).scrollTop();
+
+                            if (scroll >= 1800) {
+                                header.addClass("up-height");
+                            } else {
+                                header.removeClass("up-height");
+                            }
+                        });
+                    }
                 });
 
                 // Hotel Detail Slider
@@ -429,14 +452,6 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
 
 
     $scope.bookRoom = function (room) {
-        var childrenages = room.rate.regsId.split(',')[2].split('|')[10];
-        var ages = [];
-        if (childrenages != null && childrenages.length != 0) {
-            var age = childrenages.split('~');
-            for (var i = 0; i < age.length; i++) {
-                ages.push(parseInt(age[i]));
-            }
-        }
         $scope.booking = true;
 
         selectService.query({}, {
@@ -444,10 +459,10 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
             "regs": [
                   {
                       "regsId": room.rate.regsId,
-                      "rateCount": room.rate.roomCount,
-                      "adultCount": room.rate.adultCount,
-                      "childCount": room.rate.childCount,
-                      "childrenAges": ages
+                      "rateCount": room.rate.breakdowns[0].rateCount,
+                      "adultCount": room.rate.breakdowns[0].adultCount,
+                      "childCount": room.rate.breakdowns[0].childCount,
+                      "childrenAges": room.rate.breakdowns[0].childrenAges
                   }
             ]
         }).$promise.then(function (data) {

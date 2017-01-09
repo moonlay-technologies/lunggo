@@ -92,14 +92,9 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds
 
                     if (occ.ChildrenAges != null)
                     {
-                        //occ.ChildrenAges.Sort();
-                        occ.ChildrenAges = occ.ChildrenAges.Take(occ.ChildCount).ToList();
+                        occ.ChildrenAges.ForEach(room.childOf);
                     }
 
-                    for (int i = 0; i < occ.ChildCount; i++)
-                    {
-                        room.childOf(occ.ChildrenAges[i]);
-                    }
                     avail.rooms.Add(room);
                 }
             }
@@ -148,6 +143,7 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds
                                 {
                                     AdultCount = x.adults,
                                     ChildCount = x.children,
+                                    ChildrenAges = string.IsNullOrWhiteSpace(x.childrenAges) ? null : x.childrenAges.Split(',').Select(int.Parse).ToList(),
                                     RateCount = x.rooms,
                                     NightCount = condition.Nights,
                                     Allotment = x.allotment,
@@ -160,11 +156,12 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds
                                     }).ToList(),
                                     RateKey = x.rateKey,
                                     Price = new Price(),
-                                    Boards = x.boardCode,
+                                    Board = x.boardCode,
                                     Cancellation = x.cancellationPolicies == null ? null : x.cancellationPolicies.Select(y => new Cancellation
                                     {
                                         Fee = y.amount*condition.Nights,
-                                        StartTime = y.from.ToUniversalTime()
+                                        StartTime = y.from.ToUniversalTime(),
+                                        FeePercentage = Math.Ceiling((y.amount / x.net) * 10)/10
                                     }).ToList(),
                                     Class = x.rateClass,
                                     Type = x.rateType.ToString(),

@@ -214,7 +214,19 @@
                     </div>
                     <div class="room-sort clearfix">
                         <div class="col-6">Tipe Kamar</div>
-                        <div class="col-4">Harga Kamar</div>
+                        <div class="col-4">
+                            <div class="tab-hotel-price clearfix">
+                                <div class="tab-l bold-txt right-txt">
+                                    Tampilkan Harga:
+                                </div>
+                                <div class="tab-wrapper tab-r">
+                                    <div class="tab-border clearfix">
+                                        <div class="col-6 tab-list active" href="#detail-price-night">Per kamar, per malam</div>
+                                        <div class="col-4 tab-list" href="#detail-price-total">Harga total</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <ul class="room-list-container">
                         <li ng-show="$index+1 <= roomCount" ng-repeat="room in hotel.room track by $index">
@@ -247,8 +259,14 @@
                                         </div>
                                     </div>
                                     <div class="room-rr">
-                                        <div class="underline-txt">Rp {{room.rate.originalFare | number}}</div>
-                                        <div class="lg-txt"><b><sup>Rp</sup> {{room.rate.netFare | number}}</b></div>
+                                        <div class="price" id="detail-price-night">
+                                            <div class="underline-txt">Rp {{room.rate.breakdowns[0].originalFare | number}}</div>
+                                            <div class="lg-txt"><b><sup>Rp</sup> {{room.rate.breakdowns[0].netFare | number}}</b></div>
+                                        </div>
+                                        <div class="price" id="detail-price-total" style="display: none;">
+                                            <div class="underline-txt">Rp {{room.rate.breakdowns[0].originalTotalFare | number}}</div>
+                                            <div class="lg-txt"><b><sup>Rp</sup> {{room.rate.breakdowns[0].netTotalFare | number}}</b></div>
+                                        </div>
                                         <div class="xs-txt">*Harga Termasuk Pajak & Service Charge</div>
                                         <a href="" class="btn btn-yellow small" ng-click="bookRoom(room)">PESAN</a>
                                     </div>
@@ -287,8 +305,8 @@
                                                     </ul>
                                                     <ul class="blue-list">
                                                         <li ng-repeat="cancellation in room.rate.cancellation track by $index">
-                                                            - Pembatalan setelah tanggal <span style="color:#1daee4">{{setHoursToWIB(cancellation.startTime) | date:'dd MMMM yyyy HH:mm'}} WIB</span>
-                                                            akan dikenakan biaya pembatalan sebesar <span style="color:#ff7200">Rp {{cancellation.singleFee | number}}</span>.
+                                                            Pembatalan setelah tanggal <span style="color:#1daee4">{{setHoursToWIB(cancellation.startTime) | date:'dd MMMM yyyy HH:mm'}} WIB</span>
+                                                            akan dikenakan biaya pembatalan sebesar <span style="color:#ff7200">{{(cancellation.feePercentage *100).toFixed(0)}}%</span>.
                                                         </li>
                                                     </ul>
                                                 </div>

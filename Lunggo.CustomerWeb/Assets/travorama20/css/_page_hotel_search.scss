@@ -65,7 +65,19 @@
         .col-right-result {
             padding-left: 30px;
             position: relative;
-            .sort .col-2 {margin-top: 5px;}
+            .sort {
+                background: #eaeaea;
+                padding: 10px 15px;
+                border-radius: 2px;
+                border: 1px solid #ccc;
+                margin-bottom: 30px;
+                .sort-l {width: 30%; margin-top: 5px;}
+                .sort-r {width: 35%;}
+                .sort-l, .sort-r {
+                    position: relative;
+                    float: left;
+                }
+            }
             .hl-wrapper {display: block;}
             .hl-select {
                 display: block;
@@ -136,8 +148,7 @@
             }
             .price {
                 color: #ff7200;
-                padding-top: 10px;
-                border-top: 1px solid #ccc;
+                display: none;
             }
             .pagination {
                 margin: 25px 0 0;    
@@ -185,6 +196,12 @@
                         }
                     }
                 }
+            }
+            .break {
+                width: 100%;
+                height: 1px;
+                background: #ccc;
+                margin: 10px 0;
             }
         }
     }

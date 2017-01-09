@@ -29,15 +29,15 @@
             var sum = 0;
             foreach (var rate in room.Rates)
             {
-                sum += rate.RoomCount;
-                sumAdult += rate.AdultCount;
-                sumChild += rate.ChildCount;
-                if (rate.ChildCount <= 0)
-                {
-                    continue;
+                //sum += rate.RateCount;
+                //sumAdult += rate.AdultCount;
+                //sumChild += rate.ChildCount;
+                //if (rate.ChildCount <= 0)
+                //{
+                //    continue;
+                //}
+                //listAges.AddRange(rate.ChildrenAges);
                 }
-                listAges.AddRange(rate.ChildrenAges);
-            }
             orderedRooms.Add(new Tuple<string, int>(roomName, sum)); ;
         }
     }
@@ -75,7 +75,7 @@
                 }
             }
         }
-        catch{}
+        catch { }
         return text.Length == 0 ? "" : text.Substring(0, text.Length - 1);
     }
     
@@ -96,48 +96,64 @@
                 {
                     <div class="fb-room">
                         <div class="clearfix">
-                            <div class="col-8"><div class="blue-txt bold-txt lg-txt" style="text-transform: capitalize">@ToTitleCase(room.RoomName) @ToTitleCase(rate.BoardDescription)</div></div>
+                            <div class="col-8"><div class="blue-txt bold-txt lg-txt" style="text-transform: capitalize">@ToTitleCase(room.RoomName) Kamar Saja</div></div>
                             @*<div class="col-2"><span class="meal-icon pull-right"></span><span class="wifi-icon pull-right"></span></div>*@
                         </div>
                         <div class="fb-img" style="background-image: url(@roomImg)"></div>
-                        <div class="clearfix">
-                            <div class="fb-row clearfix">
-                                <div class="col-6">Jumlah Kamar</div>
-                                <div class="col-4 bold-txt">@rate.RoomCount Kamar</div>
-                            </div>
-                            <div class="fb-row clearfix">
-                                <div class="col-6">Tamu per Kamar</div>
-                                <div class="col-4 bold-txt">
-                                    @rate.AdultCount Dewasa @if (rate.ChildCount > 0)
-                                                            {
-                                                                <span>, @rate.ChildCount Anak</span>
-                                                            }
+                        <div class="rh-table clearfix">
+                            <div class="cols-1 col-2 clearfix">
+                                <div class="cols-title bold-txt white-txt">Kamar</div>
+                                    @foreach (var config in rate.Breakdowns)
+                                    {
+                                        <div class="cols-value semibold-txt">@config.RateCount</div>
+                                    }                        
                                 </div>
-                            </div>
-                            @if (rate.ChildCount > 0)
-                            {
-                                <div class="fb-row clearfix">
-                                    <div class="col-6">Umur Anak</div>
-                                    <div class="col-4 bold-txt">
-                                        <span>
-                                            @for (var a = 0; a < listAges.Count; a++)
+                            <div class="cols-2 col-2 clearfix">
+                                <div class="cols-title bold-txt white-txt">Dewasa</div>
+                                    @foreach (var config in rate.Breakdowns)
+                                    {
+                                        <div class="cols-value semibold-txt">@config.AdultCount</div>
+                                    }
+                                </div>
+                            <div class="cols-3 col-4 clearfix">
+                                <div class="cols-title bold-txt white-txt">Anak</div>
+                                  @foreach (var config in rate.Breakdowns)
+                                    {
+                                        <div class="cols-value semibold-txt">
+                                            @if (@config.ChildCount > 0)
                                             {
-                                                if (a != listAges.Count - 1)
-                                                {
-                                                    @listAges[a]
-                                                    <span>Tahun, </span>
-                                                }
-                                                else
-                                                {
-                                                    @listAges[a] <span>Tahun</span>
-                                                }
+                                                <span>@config.ChildCount </span>
+                                                <span>
+                                                    (@for (var a = 0; a < config.ChildrenAges.Count; a++)
+                                                    {
+                                                        if (a != config.ChildrenAges.Count - 1)
+                                                        {
+                                                            @config.ChildrenAges[a]
+                                                            <span>th, </span>
+                                                        }
+                                                        else
+                                                        {
+                                                            @config.ChildrenAges[a]
+                                                            <span>th)</span>
+                                                        }
+                                                    }</span>
                                             }
-                                        </span>
-                                    </div>
+                                            else
+                                            {
+                                                <span>-</span>
+                                            }
+                                        </div>
+                                    }
+                                   
                                 </div>
-                            }
-
-                        </div>
+                            <div class="cols-4 col-2 clearfix">
+                                <div class="cols-title bold-txt white-txt">Board</div>
+                                    @foreach (var config in rate.Breakdowns)
+                                    {
+                                        <div class="cols-value semibold-txt">@ToTitleCase(config.BoardDescription)</div>
+                                    }
+                                </div>
+                            </div>
                         <ul class="blue-list blue-txt">
                             @if (rate.IsFreeCancel)
                             {
@@ -153,7 +169,7 @@
                             {
                                 <li>
                                     Pembatalan setelah tanggal <span style="color:#1daee4">@cancellation.StartTime.AddHours(7).ToString("dd MMMM yyyy HH:mm", CultureInfo.CreateSpecificCulture("id-ID")) WIB</span>
-                                    akan dikenakan biaya pembatalan sebesar <span style="color:#ff7200">Rp @cancellation.SingleFee.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</span> per kamar.
+                                    akan dikenakan biaya pembatalan sebesar <span style="color:#ff7200">@((cancellation.FeePercentage * 100).ToString("####"))%</span>
                                 </li>
                             }
 
@@ -184,21 +200,13 @@
                                                 <div class="grey-txt">@policy</div>
                                             </li>
                                         }
-
                                     </ul>
                                 }
-                                
                             </div>
                         }
-                        
                     </div>
-                
-                    <hr/>
-                
                 }
-
             }
-
         </div>
     </div>
 </div>

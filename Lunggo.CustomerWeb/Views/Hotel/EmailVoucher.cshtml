@@ -5,6 +5,7 @@
 @model Lunggo.ApCommon.Hotel.Model.HotelReservationForDisplay
 @{
     ViewBag.SiteHeader = "header-email";
+    var roomlist = "";
 }
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
@@ -107,7 +108,8 @@
                     <table width="100%" style="margin-bottom: 10px;">
                         <tr style="border-bottom: 1px dashed #ccc; height: 30px;">
                             <td width="30%" style="color:#999;">Pemesanan Anda</td>
-                            <td width="70%" style="font-weight: 700; text-align: right;">@((Model.HotelDetail.CheckOutDate - Model.HotelDetail.CheckInDate).Days) Malam, @Model.HotelDetail.Rooms.SelectMany(r => r.Rates).Sum(p => p.RoomCount) Kamar</td>
+                            <td width="70%" style="font-weight: 700; text-align: right;">@((Model.HotelDetail.CheckOutDate - Model.HotelDetail.CheckInDate).Days) Malam, 
+                            @Model.HotelDetail.Rooms.SelectMany(r => r.Rates).SelectMany(f =>f.Breakdowns).Sum(c => c.RateCount) Kamar</td>
                         </tr>
                         <tr style="border-bottom: 1px dashed #ccc; height: 30px;">
                             <td width="30%" style="color:#999;">Check in</td>
@@ -136,7 +138,22 @@
             <tr>
                 <td width="5%"></td>
                 <td colspan="2" width="90%" style="padding-bottom: 30px;">
-                    <p style="font-weight: 700; color: #15b1e4;">@Model.HotelDetail.Rooms[0].Rates[0].RoomCount Kamar @HotelService.GetInstance().GetHotelRoom(Model.HotelDetail.Rooms[0].RoomCode).RoomDescId @HotelService.GetInstance().GetHotelBoardDescId(Model.HotelDetail.Rooms[0].Rates[0].Boards)</p>
+                    
+                    @for (var n = 0; n < Model.HotelDetail.Rooms.Count; n++)
+                    {
+                        if (n != Model.HotelDetail.Rooms.Count - 1)
+                        {
+                            roomlist += Model.HotelDetail.Rooms[n].Rates.SelectMany(r => r.Breakdowns).Sum(f => f.RateCount) + " "
+                                        + Model.HotelDetail.Rooms[n].RoomName + ", ";
+
+                        }
+                        else
+                        {
+                            roomlist += Model.HotelDetail.Rooms[n].Rates.SelectMany(r => r.Breakdowns).Sum(f => f.RateCount) + " "
+                                        + Model.HotelDetail.Rooms[n].RoomName;
+                        }
+                    }
+                    <p style="font-weight: 700; color: #15b1e4;">@roomlist</p>
                     <p style="color: #15b1e4;">sudah termasuk 10% Pajak.</p>
                     <p style="color: #15b1e4;">sudah termasuk 10% Biaya layanan.</p>
                     <p style="font-style: italic; font-size: 10px">

@@ -64,7 +64,7 @@ namespace Lunggo.Framework.Mail
                 if (mailModel.ListFileInfo != null && mailModel.ListFileInfo.Count > 0)
                     foreach (var file in mailModel.ListFileInfo)
                     {
-                        sendGridMessage.AddAttachment(file.Data, file.FileName);
+                        sendGridMessage.AddAttachment(new MemoryStream(file.FileData), file.FileName);
                     }
 
                 return sendGridMessage;

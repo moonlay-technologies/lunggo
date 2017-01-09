@@ -5,6 +5,7 @@
 @model Lunggo.ApCommon.Hotel.Model.HotelReservationForDisplay
 @{
     ViewBag.SiteHeader = "header-email";
+    var roomlist = "";
 }
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
@@ -109,66 +110,84 @@
                     <table width="100%" style="margin-bottom: 10px;">
                         <tr style="border-bottom: 1px dashed #ccc; height: 30px;">
                             <td width="30%" style="color:#999;">Pemesanan Anda</td>
-                            <td width="70%" style="font-weight: 700; text-align: right;">@((Model.HotelDetail.CheckOutDate - Model.HotelDetail.CheckInDate).Days) Malam, @Model.HotelDetail.Rooms.SelectMany(r => r.Rates).Sum(p => p.RoomCount) Kamar</td>
-                        </tr>
-                        <tr style="border-bottom: 1px dashed #ccc; height: 30px;">
-                            <td width="30%" style="color:#999;">Check in</td>
-                            <td width="70%" style="font-weight: 700; text-align: right;">@Model.HotelDetail.CheckInDate.ToString("D", CultureInfo.CreateSpecificCulture("id-ID"))</td>
-                        </tr>
-                        <tr style="border-bottom: 1px dashed #ccc; height: 30px;">
-                            <td width="30%" style="color:#999;">Check out</td>
-                            <td width="70%" style="font-weight: 700; text-align: right;">@Model.HotelDetail.CheckOutDate.ToString("D", CultureInfo.CreateSpecificCulture("id-ID"))</td>
-                        </tr>
-                        <tr style="border-bottom: 1px dashed #ccc; height: 30px;">
-                            <td width="30%" style="color:#999;">Client Reference</td>
-                            <td width="70%" style="font-weight: 700; text-align: right;">@Model.HotelDetail.ClientReference</td>
-                        </tr>
-                        <tr style="border-bottom: 1px dashed #ccc; height: 30px;">
-                            <td width="30%" style="color:#999;">Booking Reference</td>
-                            <td width="70%" style="font-weight: 700; text-align: right;">@Model.HotelDetail.BookingReference</td>
-                        </tr>
-                        <tr style="border-bottom: 1px solid #000; height: 50px; vertical-align: text-top;">
-                            <td width="30%" style="color:#999; padding-top: 5px;">Dipesan oleh</td>
-                            <td width="70%" style="padding-top: 5px; font-weight: 700; text-align: right;">@EnumDisplay.Title(Model.Contact.Title) @Model.Contact.Name</td>
-                        </tr>
-                    </table>
-                </td>
-                <td width="5%"></td>
-            </tr>
-            <tr>
-                <td width="5%"></td>
-                <td colspan="2" width="90%" style="padding-bottom: 30px;">
-                    <p style="font-weight: 700; color: #15b1e4;">@Model.HotelDetail.Rooms[0].Rates[0].RoomCount Kamar @HotelService.GetInstance().GetHotelRoom(Model.HotelDetail.Rooms[0].RoomCode).RoomDescId @HotelService.GetInstance().GetHotelBoardDescId(Model.HotelDetail.Rooms[0].Rates[0].Boards)</p>
-                    <p style="color: #15b1e4;">sudah termasuk 10% Pajak.</p>
-                    <p style="color: #15b1e4;">sudah termasuk 10% Biaya layanan.</p>
-                    <p style="font-style: italic; font-size: 10px">
-                        &quot;Payable through @Model.HotelDetail.SupplierName, acting as agent for the service operating
+                            <td width="70%" style="font-weight: 700; text-align: right;">
+                                @((Model.HotelDetail.CheckOutDate - Model.HotelDetail.CheckInDate).Days) Malam,
+                            @Model.HotelDetail.Rooms.SelectMany(r => r.Rates).SelectMany(f => f.Breakdowns).Sum(c => c.RateCount) Kamar
+                        </td>
+                    </tr>
+                    <tr style="border-bottom: 1px dashed #ccc; height: 30px;">
+                        <td width="30%" style="color:#999;">Check in</td>
+                        <td width="70%" style="font-weight: 700; text-align: right;">@Model.HotelDetail.CheckInDate.ToString("D", CultureInfo.CreateSpecificCulture("id-ID")) - mulai jam 14.00</td>
+                    </tr>
+                    <tr style="border-bottom: 1px dashed #ccc; height: 30px;">
+                        <td width="30%" style="color:#999;">Check out</td>
+                        <td width="70%" style="font-weight: 700; text-align: right;">@Model.HotelDetail.CheckOutDate.ToString("D", CultureInfo.CreateSpecificCulture("id-ID")) - sampai jam 12.00</td>
+                    </tr>
+                    <tr style="border-bottom: 1px dashed #ccc; height: 30px;">
+                        <td width="30%" style="color:#999;">Client Reference</td>
+                        <td width="70%" style="font-weight: 700; text-align: right;">@Model.HotelDetail.ClientReference</td>
+                    </tr>
+                    <tr style="border-bottom: 1px dashed #ccc; height: 30px;">
+                        <td width="30%" style="color:#999;">Booking Reference</td>
+                        <td width="70%" style="font-weight: 700; text-align: right;">@Model.HotelDetail.BookingReference</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid #000; height: 50px; vertical-align: text-top;">
+                        <td width="30%" style="color:#999; padding-top: 5px;">Dipesan oleh</td>
+                        <td width="70%" style="padding-top: 5px; font-weight: 700; text-align: right;">@EnumDisplay.Title(Model.Contact.Title) @Model.Contact.Name</td>
+                    </tr>
+                </table>
+            </td>
+            <td width="5%"></td>
+        </tr>
+        <tr>
+            <td width="5%"></td>
+            <td colspan="2" width="90%" style="padding-bottom: 30px;">
 
-                        company, details of which can be provided upon request&quot;. VAT: @Model.HotelDetail.SupplierVat
+                @for (var n = 0; n < Model.HotelDetail.Rooms.Count; n++)
+                {
+                    if (n != Model.HotelDetail.Rooms.Count - 1)
+                    {
+                        roomlist += Model.HotelDetail.Rooms[n].Rates.SelectMany(r => r.Breakdowns).Sum(f => f.RateCount) + " "
+                                    + Model.HotelDetail.Rooms[n].RoomName + ", ";
 
-                        Reference: @Model.HotelDetail.BookingReference
-                    </p>
-                    <span style="color: #ff7200; font-size: 15px; font-weight: 700;">Harga Total</span>
-                    <span style="color: #ff7200; font-size: 15px; font-weight: 700; float: right;">Rp @Model.Payment.FinalPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</span>
+                    }
+                    else
+                    {
+                        roomlist += Model.HotelDetail.Rooms[n].Rates.SelectMany(r => r.Breakdowns).Sum(f => f.RateCount) + " "
+                                    + Model.HotelDetail.Rooms[n].RoomName;
+                    }
+                }
+                <p style="font-weight: 700; color: #15b1e4;">@roomlist</p>
+                <p style="color: #15b1e4;">sudah termasuk 10% Pajak.</p>
+                <p style="color: #15b1e4;">sudah termasuk 10% Biaya layanan.</p>
+                <p style="font-style: italic; font-size: 10px">
+                    &quot;Payable through @Model.HotelDetail.SupplierName, acting as agent for the service operating
 
-                </td>
-                <td width="5%"></td>
-            </tr>
-            <tr>
-                <td width="5%"></td>
-                <td colspan="2" width="90%">
-                    <p style="font-size: 10px; opacity: 0.5; font-style: italic;margin-top: 1px; margin-bottom: 0;">Jika pembayaran dilakukan lewat dari tanggal yang telah ditentukan, booking Anda akan dibatalkan otomatis oleh sistem kami. Untuk booking yang sama, Anda harus melakukan pemesanan ulang dan kemungkinan besar harga akan naik.</p>
-                </td>
-                <td width="5%"></td>
-            </tr>
-        </tbody>
-        <tfoot width="100%">
-            <tr>
-                <td></td>
-                <td style="padding-bottom:30px;"></td>
-                <td></td>
-            </tr>
-        </tfoot>
-    </table>
+                    company, details of which can be provided upon request&quot;. VAT: @Model.HotelDetail.SupplierVat
+
+                    Reference: @Model.HotelDetail.BookingReference
+                </p>
+                <span style="color: #ff7200; font-size: 15px; font-weight: 700;">Harga Total</span>
+                <span style="color: #ff7200; font-size: 15px; font-weight: 700; float: right;">Rp @Model.Payment.FinalPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</span>
+
+            </td>
+            <td width="5%"></td>
+        </tr>
+        <tr>
+            <td width="5%"></td>
+            <td colspan="2" width="90%">
+                <p style="font-size: 10px; opacity: 0.5; font-style: italic;margin-top: 1px; margin-bottom: 0;">Jika pembayaran dilakukan lewat dari tanggal yang telah ditentukan, booking Anda akan dibatalkan otomatis oleh sistem kami. Untuk booking yang sama, Anda harus melakukan pemesanan ulang dan kemungkinan besar harga akan naik.</p>
+            </td>
+            <td width="5%"></td>
+        </tr>
+    </tbody>
+    <tfoot width="100%">
+        <tr>
+            <td></td>
+            <td style="padding-bottom:30px;"></td>
+            <td></td>
+        </tr>
+    </tfoot>
+</table>
 </body>
 </html>

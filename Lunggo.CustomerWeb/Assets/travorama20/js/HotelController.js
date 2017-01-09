@@ -20,6 +20,28 @@
         $('body .hotel-form').slideToggle("slow");
         $('.search-hotel, .search-calendar-hotel').hide();
     });
+
+    // Tab Hotel Price
+    $('body .tab-border .tab-list').click(function () {
+        $(this).addClass('active');
+        $(this).siblings().removeClass('active');
+
+        var id = $(this).attr('href');
+
+        // Search Hotel
+        var parentSearch = $(this).closest('.col-right-result').find('.hotel-list-container').children();
+        var priceSearch = parentSearch.find('.price');
+
+        $(priceSearch).not(id).hide();
+        $(priceSearch).not(id).siblings().fadeIn();
+
+        // Detail Hotel
+        var parentDetail = $(this).closest('.room').find('.room-list-container').children();
+        var priceDetail = parentDetail.find('.price');
+
+        $(priceDetail).not(id).hide();
+        $(priceDetail).not(id).siblings().fadeIn();
+    });
 });
 
 function customCheckbox() {

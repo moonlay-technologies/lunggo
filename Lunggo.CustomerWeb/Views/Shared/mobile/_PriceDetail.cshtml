@@ -46,10 +46,14 @@
     {
         foreach (var rate in room.Rates)
         {
-            <div class="rr-row clearfix">
-                <div class="col-half">@rate.RoomCount @ToTitleCase(room.RoomName) @ToTitleCase(rate.BoardDescription) x @night Malam</div>
-                <div class="col-half right-txt semibold-txt">Rp @((rate.NetFare * rate.RoomCount * night).ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID")))</div>
-            </div>
+            foreach (var config in rate.Breakdowns)
+            {
+                <div class="rr-row clearfix">
+                    <div class="col-half">@config.RateCount @ToTitleCase(room.RoomName) @ToTitleCase(config.BoardDescription) x @night Malam</div>
+                    <div class="col-half right-txt semibold-txt">Rp @(config.NetTotalFare.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID")))</div>
+                </div>
+            }
+
         }
     }
     
@@ -76,7 +80,7 @@
     {
         <div class="rr-row clearfix total">
             <div class="col-half bold-txt lg-txt">Total</div>
-            <div class="col-half bold-txt lg-txt right-txt orange-txt">Rp @Model.HotelDetail.NetFare.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</div>
+            <div class="col-half bold-txt lg-txt right-txt orange-txt">Rp @Model.HotelDetail.NetTotalFare.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</div>
         </div>
     }
 

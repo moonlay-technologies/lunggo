@@ -155,9 +155,8 @@ namespace Lunggo.ApCommon.Hotel.Service
             
             result.HotelDetails = AddDetailInfoForSearchResult(result.HotelDetails);
             result.HotelFilterDisplayInfo = SetHotelFilterDisplayInfo(result.HotelDetails, AutocompleteTypeCd.Mnemonic(detailDestination.Type));
-            var sortedHotel = result.HotelDetails.OrderByDescending(x => x.NetFare);
-            result.MaxPrice = sortedHotel.Select(x => x.NetFare).FirstOrDefault();
-            result.MinPrice = sortedHotel.Select(x => x.NetFare).LastOrDefault();
+            result.MaxPrice = result.HotelDetails.Max(x => x.NetCheapestFare);
+            result.MinPrice = result.HotelDetails.Min(x => x.NetCheapestFare);
             //result.DestinationName = detailDestination.Destination;
 
             //REMEMBER TO UNCOMMENT THIS
@@ -432,7 +431,13 @@ namespace Lunggo.ApCommon.Hotel.Service
                     //    FullFacilityCode = x.FacilityGroupCode + "" + x.FacilityCode
                     //}).ToList();
                     hotel.StarCode = GetSimpleCodeByCategoryCode(hotel.StarRating);
-                    CalculatePriceHotel(hotel);
+                    hotel.NetTotalFare = hotel.Rooms.SelectMany(r => r.Rates).Sum(r => r.Price.Local);
+                    hotel.OriginalTotalFare = hotel.NetTotalFare * 1.01M;
+                    hotel.NetCheapestFare = hotel.Rooms.SelectMany(r => r.Rates).Min(r => Math.Round(r.Price.Local/r.RateCount/r.NightCount));
+                    hotel.OriginalCheapestFare = hotel.NetCheapestFare * 1.01M;
+                    hotel.NetCheapestTotalFare = hotel.Rooms.SelectMany(r => r.Rates).Min(r => r.Price.Local);
+                    hotel.OriginalCheapestTotalFare = hotel.NetCheapestTotalFare * 1.01M;
+
                     shortlistHotel.Add(hotel);
                 }
             }
@@ -441,32 +446,16 @@ namespace Lunggo.ApCommon.Hotel.Service
 
         public List<Occupancy> PreProcessOccupancies(List<Occupancy> paxData)
         {
-            var maxAdult = 0;
-            var maxChild = 0;
-            List<int> childAges = new List<int>();
-            var occupancies = new List<Occupancy>();
-            foreach (var data in paxData)
+            return new List<Occupancy>
             {
-                if (data.AdultCount > maxAdult)
-                    maxAdult = data.AdultCount;
-                if (data.ChildCount > maxChild)
+                new Occupancy
                 {
-                    maxChild = data.ChildCount;
-                    foreach (var age in data.ChildrenAges)
-                    {
-                        childAges.Add(age);
-                    }
-                }  
-            }
-            var pax = new Occupancy
-            {
-                RoomCount = paxData.Count,
-                AdultCount = maxAdult,
-                ChildCount = maxChild,
-                ChildrenAges = childAges,
+                    RoomCount = paxData.Sum(d => d.RoomCount),
+                    AdultCount = paxData.Max(d => d.AdultCount),
+                    ChildCount = paxData.Max(d => d.ChildCount),
+                    ChildrenAges = paxData.SelectMany(d => d.ChildrenAges).Take(paxData.Max(d => d.ChildCount)).ToList()
+                }
             };
-            occupancies.Add(pax);
-            return occupancies;
         }
     }
 }

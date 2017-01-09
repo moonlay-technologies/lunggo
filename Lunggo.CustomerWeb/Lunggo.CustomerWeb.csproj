@@ -277,6 +277,10 @@
     <Content Include="Assets\bootstrap\bootstrap.css" />
     <Content Include="Assets\bootstrap\bootstrap.min.css" />
     <Content Include="Assets\css\font-awesome.min.css" />
+    <Content Include="Assets\css\invoice.css">
+      <DependentUpon>invoice.scss</DependentUpon>
+    </Content>
+    <Content Include="Assets\css\invoice.min.css" />
     <Content Include="Assets\css\jquery-ui.min.css" />
     <Content Include="Assets\css\neweticket.css">
       <DependentUpon>neweticket.scss</DependentUpon>
@@ -296,6 +300,9 @@
     <Content Include="Assets\fonts\fontawesome-webfont.svg" />
     <Content Include="Assets\fonts\Gotham-Bold.svg" />
     <Content Include="Assets\fonts\Gotham-Medium.svg" />
+    <Content Include="Assets\fonts\OpenSans-Bold.svg" />
+    <Content Include="Assets\fonts\OpenSans-Regular.svg" />
+    <Content Include="Assets\fonts\OpenSans-Semibold.svg" />
     <Content Include="Assets\images\adult-icon.png" />
     <Content Include="Assets\images\airlines\0V.png" />
     <Content Include="Assets\images\airlines\2J.png" />
@@ -1167,7 +1174,9 @@
     <Content Include="Assets\travorama20\angularDirectory\priceDetail\priceDetailTemplate.html" />
     <Content Include="Assets\travorama20\angularDirectory\search\hotelSearch.service.js" />
     <Content Include="Assets\travorama20\css\help_section.min.css" />
-    <Content Include="Assets\travorama20\css\style_desktop.css" />
+    <Content Include="Assets\travorama20\css\style_desktop.css">
+      <DependentUpon>style_desktop.scss</DependentUpon>
+    </Content>
     <Content Include="Assets\travorama20\css\style_desktop.min.css">
       <DependentUpon>style_desktop.css</DependentUpon>
     </Content>
@@ -1446,6 +1455,19 @@
     <Content Include="Assets\travorama20\css\_screenSmall.scss" />
     <Content Include="Assets\css\neweticket.scss" />
     <Content Include="Assets\css\promo.scss" />
+    <Content Include="Assets\css\invoice.scss" />
+    <Content Include="Assets\fonts\OpenSans-Regular.eot" />
+    <Content Include="Assets\fonts\OpenSans-Regular.ttf" />
+    <Content Include="Assets\fonts\OpenSans-Regular.woff" />
+    <Content Include="Assets\fonts\OpenSans-Regular.woff2" />
+    <Content Include="Assets\fonts\OpenSans-Bold.eot" />
+    <Content Include="Assets\fonts\OpenSans-Bold.ttf" />
+    <Content Include="Assets\fonts\OpenSans-Bold.woff" />
+    <Content Include="Assets\fonts\OpenSans-Bold.woff2" />
+    <Content Include="Assets\fonts\OpenSans-Semibold.eot" />
+    <Content Include="Assets\fonts\OpenSans-Semibold.ttf" />
+    <Content Include="Assets\fonts\OpenSans-Semibold.woff" />
+    <Content Include="Assets\fonts\OpenSans-Semibold.woff2" />
     <None Include="Properties\PublishProfiles\prod-cw %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\dv1-cw.pubxml" />
     <None Include="Properties\PublishProfiles\dv2-cw.pubxml" />
@@ -1598,6 +1620,7 @@
     <Content Include="Views\Shared\Mobile\_SearchHotelForm.cshtml" />
     <Content Include="Views\Shared\Mobile\_SelectCheckInDate.cshtml" />
     <Content Include="Views\Shared\Mobile\_Summary.cshtml" />
+    <Content Include="Views\Shared\Desktop\_HotelDetail.cshtml" />
     <None Include="Views\Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

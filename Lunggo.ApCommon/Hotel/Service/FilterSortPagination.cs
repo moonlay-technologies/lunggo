@@ -37,7 +37,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                 (filterParam.AccommodationTypeFilter == null || filterParam.AccommodationTypeFilter.Contains(p.AccomodationType)) &&
                 (facilityData.Count == 0 ||  facilityData.Any(e => p.Facilities.Select(x => x.FacilityGroupCode + "" + x.FacilityCode ).ToList().Contains(e))) &&
                 (filterParam.StarFilter == null || filterParam.StarFilter.Contains(p.StarCode)) &&
-                (filterParam.PriceFilter == null || (p.NetFare >= filterParam.PriceFilter.MinPrice && p.NetFare <= filterParam.PriceFilter.MaxPrice))
+                (filterParam.PriceFilter == null || (p.NetCheapestFare >= filterParam.PriceFilter.MinPrice && p.NetCheapestFare <= filterParam.PriceFilter.MaxPrice))
                 ).ToList();
             }
             return hotels;
@@ -68,10 +68,10 @@ namespace Lunggo.ApCommon.Hotel.Service
             switch (SortingTypeCd.Mnemonic(param))
             {
                 case SortingType.AscendingPrice:
-                    sortedHotel = hotels.OrderBy(p => p.NetFare).ToList();
+                    sortedHotel = hotels.OrderBy(p => p.NetCheapestFare).ToList();
                     break;
                 case SortingType.DescendingPrice:
-                    sortedHotel = hotels.OrderByDescending(p => p.NetFare).ToList();
+                    sortedHotel = hotels.OrderByDescending(p => p.NetCheapestFare).ToList();
                     break;
                 case SortingType.AscendingStar:
                     sortedHotel = hotels.OrderBy(p => p.StarCode).ToList();
@@ -80,7 +80,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                     sortedHotel = hotels.OrderByDescending(p => p.StarCode).ToList();
                     break;
                 default:
-                    sortedHotel = hotels.OrderBy(p => p.NetFare).ToList();
+                    sortedHotel = hotels.OrderBy(p => p.NetCheapestFare).ToList();
                     break;
             }
             return sortedHotel;

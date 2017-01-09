@@ -9,6 +9,6 @@ namespace Lunggo.WebAPI.ApiSrc.Hotel.Model
     public class HotelRoomDetailApiResponse : ApiResponseBase
     {
         [JsonProperty("roomDetails", NullValueHandling = NullValueHandling.Ignore)]
-        public HotelRoom RoomDetails { get; set; } 
+        public HotelRoomForDisplay RoomDetails { get; set; } 
     }
 }

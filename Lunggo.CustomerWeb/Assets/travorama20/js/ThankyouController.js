@@ -6,12 +6,7 @@
     });
     $scope.hide = false;
     $scope.returnUrl = window.location.origin;
-    $scope.totalRoom = totalRoom;
-    $scope.checkin = checkin;
-    $scope.checkout = checkout;
-    $scope.nights = nights;
     $scope.roomService = 0;
-    $scope.netFare = netFare;
     $scope.returnUrl = window.location.origin;
     $scope.pageLoaded = true;
 

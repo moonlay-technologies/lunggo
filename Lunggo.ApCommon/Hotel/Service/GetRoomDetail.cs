@@ -22,16 +22,7 @@ namespace Lunggo.ApCommon.Hotel.Service
             var searchResultData = GetSearchHotelResultFromCache(roomDetailInput.SearchId);
             var hotel = searchResultData.HotelDetails.SingleOrDefault(p => p.HotelCode == roomDetailInput.HotelCode);
             var room = hotel.Rooms.SingleOrDefault(p=>p.RoomCode == roomDetailInput.RoomCode);
-            if (room != null)
-            {
-                return new GetRoomDetailOutput
-                {
-                    Room = ConvertToSingleHotelRoomForDisplay(room)
-                };
-            }
-            
-            else
-                return new GetRoomDetailOutput();
+            return new GetRoomDetailOutput {Room = room};
         }
     }
 }

@@ -104,7 +104,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                                 RateKey = rateRecord.RateKey,
                                 AdultCount = rateRecord.AdultCount.GetValueOrDefault(),
                                 ChildCount = rateRecord.ChildCount.GetValueOrDefault(),
-                                Boards = rateRecord.Board,
+                                Board = rateRecord.Board,
                                 Cancellation = rateRecord.Cancellation.Deserialize<List<Cancellation>>(),
                                 PaymentType = PaymentTypeCd.Mnemonic(rateRecord.PaymentType),
                                 RateCount = rateRecord.RoomCount.GetValueOrDefault(),
@@ -120,10 +120,15 @@ namespace Lunggo.ApCommon.Hotel.Service
                     }
 
                 var price = hotelDetail.Rooms.SelectMany(r => r.Rates).Sum(r => r.Price.Local);
-                hotelDetail.NetFare = price;
-                hotelDetail.OriginalFare = price * 1.01M;
+                hotelDetail.NetTotalFare = price;
+                hotelDetail.OriginalTotalFare = price * 1.01M;
+                var cheapestPrice = hotelDetail.Rooms.SelectMany(r => r.Rates).Min(r => r.Price.Local);
+                hotelDetail.NetCheapestFare = cheapestPrice;
+                hotelDetail.OriginalCheapestFare = cheapestPrice * 1.01M;
+                hotelDetail.NetCheapestTotalFare = cheapestPrice;
+                hotelDetail.OriginalCheapestTotalFare = cheapestPrice * 1.01M;
 
-                    hotelReservation.HotelDetails = hotelDetail;
+                hotelReservation.HotelDetails = hotelDetail;
                 
                 var paxRecords = PaxTableRepo.GetInstance()
                         .Find(conn, new PaxTableRecord { RsvNo = rsvNo }).ToList();
@@ -291,7 +296,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                             Id = rateId,
                             AdultCount = rate.AdultCount,
                             ChildCount = rate.ChildCount,
-                            Board = rate.Boards,
+                            Board = rate.Board,
                             Cancellation = rate.Cancellation.Serialize(),
                             InsertDate = DateTime.UtcNow,
                             InsertBy = "LunggoSystem",
