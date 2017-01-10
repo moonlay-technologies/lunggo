@@ -56,25 +56,25 @@ namespace Lunggo.ApCommon.Hotel.Service
             var getSearchDataFromCache = GetSearchHotelResultFromCache(searchId);
             if (getSearchDataFromCache != null)
             {
-                List<HotelDetail> firstPageHotelDetail = getSearchDataFromCache.HotelDetails;
+                List<HotelDetail> firstPage = getSearchDataFromCache.HotelDetails;
 
                 //Sorting
-                if (firstPageHotelDetail != null) firstPageHotelDetail = SortHotel(firstPageHotelDetail, input.SortingParam);
+                if (firstPage != null) firstPage = SortHotel(firstPage, input.SortingParam);
                 input.Page = input.Page != 0 ? input.Page : 1;
                 input.PerPage = input.PerPage != 0 ? input.PerPage : 100;
                 int totalPage = (int)Math.Ceiling((decimal)getSearchDataFromCache.HotelDetails.Count / input.PerPage);
-                firstPageHotelDetail = SetPagination(firstPageHotelDetail, input.Page, input.PerPage);
+                firstPage = SetPagination(firstPage, input.Page, input.PerPage);
                 return new SearchHotelOutput
                 {
                     IsSuccess = true,
                     SearchId = getSearchDataFromCache.SearchId,
                     DestinationName = getSearchDataFromCache.DestinationName,
                     FilteredHotelCount = getSearchDataFromCache.HotelDetails.Count,
-                    HotelDetailLists = ConvertToHotelDetailForDisplay(firstPageHotelDetail),
+                    HotelDetailLists = ConvertToHotelDetailForDisplay(firstPage),
                     Page = input.Page,
                     PerPage = input.PerPage,
                     PageCount = totalPage,
-                    ReturnedHotelCount = firstPageHotelDetail.Count,
+                    ReturnedHotelCount = firstPage.Count,
                     TotalHotelCount = getSearchDataFromCache.HotelDetails.Count,
                     HotelFilterDisplayInfo = getSearchDataFromCache.HotelFilterDisplayInfo,
                     MaxPrice = getSearchDataFromCache.MaxPrice,
