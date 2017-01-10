@@ -174,9 +174,10 @@
                 padding: 0 25px;
                 display: inline-block;
                 a {
-                    text-decoration: underline;
+                    cursor: pointer;
+                    text-decoration: none;
                     color: #000;
-                    &:hover {color: $color-main-blue;}
+                    &:hover {color: $color-main-blue; text-decoration: underline;}
                 }
                 &:before {
                     content: '';
@@ -486,6 +487,7 @@
         padding: 20px 0 15px;
         .ih-accordion {margin-bottom: 15px;
             .accordion-wrapper {
+                /*.accordion-wrap {padding-top: 70px;}*/
                 .accordion-title {
                     padding: 12px 25px;
                     &.up-height {margin-top:70px;}

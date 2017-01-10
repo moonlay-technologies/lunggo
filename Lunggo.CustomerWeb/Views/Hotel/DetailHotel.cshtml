@@ -9,7 +9,10 @@
 @{
     var hotelCd = Model.HotelCode;
     var hotelDetail = HotelService.GetInstance().GetHotelDetailFromTableStorage(Convert.ToInt32(hotelCd));
+    var lat = hotelDetail.Latitude;
+    var lng = hotelDetail.Longitude;
     var loc = ToTitleCase(hotelDetail.HotelName + ", " + hotelDetail.City);
+    var hotelName = hotelDetail.HotelName;
 }
 
 @functions{
@@ -75,25 +78,27 @@
     <script src="/Assets/travorama20/angularDirectory/search/hotelSearch.service.js"></script>
     <script src="/Assets/travorama20/angularDirectory/common/hotelAutocomplete.service.js"></script>
     <script type="text/javascript" src="/Assets/js/jquery.ui.datepicker-id.js"></script>
-
+    <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCRAmMz6GPXsXi1pZAl5QUsjNTcY0ZfqVA&callback=initMap">
+    </script>
     <script type="text/javascript">
         function initMap() {
-            var myLatLng = { lat: -6.193842, lng: 106.822231 };
-            
+            var myLatLng = { lat: @lat, lng: @lng };
+
             var map = new google.maps.Map(document.getElementById('map'), {
-                zoom: 12,
-                center: myLatLng
+                zoom: 17,
+                center: myLatLng,
+                mapTypeControl: false,
+                streetViewControl: false,
+                fullscreenControl: false
             });
 
             var marker = new google.maps.Marker({
                 position: myLatLng,
                 map: map,
-                title: 'Insert Hotel Name Here!'
+                title: '@hotelName'
             });
         }
-    </script>
-    <script async defer
-            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCRAmMz6GPXsXi1pZAl5QUsjNTcY0ZfqVA&callback=initMap">
     </script>
 }
 
@@ -222,10 +227,10 @@
                 <div class="menu-hotel clearfix">
                     <div class="col-left-hotel mh-title md-txt">Informasi Hotel</div>
                     <ul class=" col-right-hotel mh-container">
-                        <li class="mh-list"><a href="#menu-facility">Fasilitas Hotel</a></li>
-                        <li class="mh-list"><a href="#menu-desc">Deskripsi Hotel</a></li>
-                        <li class="mh-list"><a href="#menu-map">Peta Hotel</a></li>
-                        <li class="mh-list" ng-show="hotel.policy != null && hotel.policy.length > 0"><a href="#menu-tnc">Syarat & Ketentuan Hotel</a></li>
+                        <li class="mh-list"><a data-value="menu-facility">Fasilitas Hotel</a></li>
+                        <li class="mh-list"><a data-value="menu-desc">Deskripsi Hotel</a></li>
+                        <li class="mh-list"><a data-value="menu-map">Peta Hotel</a></li>
+                        <li class="mh-list" ng-show="hotel.policy != null && hotel.policy.length > 0"><a data-value="menu-tnc">Syarat & Ketentuan Hotel</a></li>
                     </ul>
                 </div>
                 <div class="room clearfix">

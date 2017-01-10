@@ -199,43 +199,20 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
                 });
 
                 // Hotel Detail
+
+                // Payment Mobile
                 $('.mh-list a').click(function () {
-                    var link = $(this).attr('href');
-                    if (link == '#menu-facility') {
-                        var header = $("#menu-facility");
-                        $(window).scroll(function () {
-                            var scroll = $(window).scrollTop();
-
-                            if (scroll >= 1800) {
-                                header.addClass("up-height");
-                            } else {
-                                header.removeClass("up-height");
-                            }
-                        });
-                    }
-                    else if (link == '#menu-desc') {
-                        header = $("#menu-desc");
-                        $(window).scroll(function () {
-                            var scroll = $(window).scrollTop();
-
-                            if (scroll >= 1800) {
-                                header.addClass("up-height");
-                            } else {
-                                header.removeClass("up-height");
-                            }
-                        });
-                    } else if (link == '#menu-tnc') {
-                        header = $("#menu-tnc");
-                        $(window).scroll(function () {
-                            var scroll = $(window).scrollTop();
-
-                            if (scroll >= 1800) {
-                                header.addClass("up-height");
-                            } else {
-                                header.removeClass("up-height");
-                            }
-                        });
-                    }
+                    $(window).on("scroll", function () {
+                        if ($(window).scrollTop() > 1800) {
+                            $('.site-header').fadeOut();
+                        } else {
+                            $('.site-header').fadeIn();
+                        }
+                    });
+                    var val = $(this).data('value');
+                    $('html, body').animate({
+                        scrollTop: $("#" + val).offset().top
+                    }, 1000);
                 });
 
                 // Hotel Detail Slider
