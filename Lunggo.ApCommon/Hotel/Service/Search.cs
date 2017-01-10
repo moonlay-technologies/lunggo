@@ -478,14 +478,15 @@ namespace Lunggo.ApCommon.Hotel.Service
         {
             if (input == null)
                 return null;
-            string generatedSearchId = "";
+            var checkout = input.CheckIn.AddDays(input.Nights).Date;
+            string generatedSearchId = input.CheckIn.Year + "" + input.CheckIn.Month + "" + input.CheckIn.Day + "|" + checkout.Year + "" + checkout.Month + "" + checkout.Day;
             if (input.HotelCode != 0)
             {
-                generatedSearchId = input.CheckIn.Date + "|" + input.CheckIn.AddDays(input.Nights).Date + "|" + input.HotelCode;
+                generatedSearchId =  generatedSearchId + "|" + input.HotelCode;
             }
             else
             {
-                generatedSearchId = input.CheckIn.Date + "|" + input.CheckIn.AddDays(input.Nights).Date + "|" + input.Location;
+                generatedSearchId = generatedSearchId + "|" + input.Location;
             }
             
             foreach (var occupancy in occupancies)
