@@ -17,37 +17,37 @@
 
     if (Model.HotelDetailData.Facilities.Business != null)
     {
-        hotelFac.Add(SetFacilityForDisplay(Model.HotelDetailData.Facilities.Business, "Business"));
+        hotelFac.Add(SetFacilityForDisplay(Model.HotelDetailData.Facilities.Business, "Bisnis"));
     }
 
     if (Model.HotelDetailData.Facilities.Entertainment != null)
     {
-        hotelFac.Add(SetFacilityForDisplay(Model.HotelDetailData.Facilities.Entertainment, "Entertain"));
+        hotelFac.Add(SetFacilityForDisplay(Model.HotelDetailData.Facilities.Entertainment, "Hiburan"));
     }
 
     if (Model.HotelDetailData.Facilities.General != null)
     {
-        hotelFac.Add(SetFacilityForDisplay(Model.HotelDetailData.Facilities.General, "General"));
+        hotelFac.Add(SetFacilityForDisplay(Model.HotelDetailData.Facilities.General, "Umum"));
     }
 
     if (Model.HotelDetailData.Facilities.Health != null)
     {
-        hotelFac.Add(SetFacilityForDisplay(Model.HotelDetailData.Facilities.Health, "Health"));
+        hotelFac.Add(SetFacilityForDisplay(Model.HotelDetailData.Facilities.Health, "Kesehatan"));
     }
 
     if (Model.HotelDetailData.Facilities.Meal != null)
     {
-        hotelFac.Add(SetFacilityForDisplay(Model.HotelDetailData.Facilities.Meal, "Meal"));
+        hotelFac.Add(SetFacilityForDisplay(Model.HotelDetailData.Facilities.Meal, "Makanan"));
     }
 
     if (Model.HotelDetailData.Facilities.Other != null)
     {
-        hotelFac.Add(SetFacilityForDisplay(Model.HotelDetailData.Facilities.Other, "Other"));
+        hotelFac.Add(SetFacilityForDisplay(Model.HotelDetailData.Facilities.Other, "Lainnya"));
     }
 
     if (Model.HotelDetailData.Facilities.Sport != null)
     {
-        hotelFac.Add(SetFacilityForDisplay(Model.HotelDetailData.Facilities.Sport, "Sport"));
+        hotelFac.Add(SetFacilityForDisplay(Model.HotelDetailData.Facilities.Sport, "Olah Raga"));
     }    
 
 }
@@ -319,46 +319,39 @@
                  {
                      <div class="sh-row clearfix">
                          <div class="col-2">
-                             @if (facility.FacilityGroup == "General")
+                             @if (facility.FacilityGroup == "Umum")
                              {
                                  <div class="col-2 fac-general">
-                                     @facility.FacilityGroup
                                  </div>
                              }
-                             else if (facility.FacilityGroup == "Health")
+                             else if (facility.FacilityGroup == "Kesehatan")
                              {
                                  <div class="col-2 fac-health">
-                                     @facility.FacilityGroup
                                  </div>
                              }
-                             else if (facility.FacilityGroup == "Sport")
+                             else if (facility.FacilityGroup == "Olah Raga")
                              {
                                  <div class="col-2 fac-sport">
-                                     @facility.FacilityGroup
                                  </div>
                              }
-                             else if (facility.FacilityGroup == "Business")
+                             else if (facility.FacilityGroup == "Bisnis")
                              {
                                  <div class="col-2 fac-business">
-                                     @facility.FacilityGroup
                                  </div>
                              }
-                             else if (facility.FacilityGroup == "Meal")
+                             else if (facility.FacilityGroup == "Makanan")
                              {
                                  <div class="col-2 fac-meal">
-                                     @facility.FacilityGroup
                                  </div>
                              }
-                             else if (facility.FacilityGroup == "Entertain")
+                             else if (facility.FacilityGroup == "Hiburan")
                              {
                                  <div class="col-2 fac-ent">
-                                     @facility.FacilityGroup
                                  </div>
                              }
-                             else if (facility.FacilityGroup == "Other")
+                             else if (facility.FacilityGroup == "Lainnya")
                              {
                                  <div class="col-2 fac-other">
-                                     @facility.FacilityGroup
                                  </div>
                              }
                          </div>

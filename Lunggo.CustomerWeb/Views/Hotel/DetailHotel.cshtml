@@ -12,37 +12,37 @@
  
     if (Model.HotelDetailData.Facilities.Business != null)
     {
-        hotelFac.Add(SetFacilityForDisplay(Model.HotelDetailData.Facilities.Business, "Business"));
+        hotelFac.Add(SetFacilityForDisplay(Model.HotelDetailData.Facilities.Business, "Bisnis"));
     }
 
     if (Model.HotelDetailData.Facilities.Entertainment != null)
     {
-        hotelFac.Add(SetFacilityForDisplay(Model.HotelDetailData.Facilities.Entertainment, "Entertainment"));
+        hotelFac.Add(SetFacilityForDisplay(Model.HotelDetailData.Facilities.Entertainment, "Hiburan"));
     }
 
     if (Model.HotelDetailData.Facilities.General != null)
     {
-        hotelFac.Add(SetFacilityForDisplay(Model.HotelDetailData.Facilities.General, "General"));
+        hotelFac.Add(SetFacilityForDisplay(Model.HotelDetailData.Facilities.General, "Umum"));
     }
 
     if (Model.HotelDetailData.Facilities.Health != null)
     {
-        hotelFac.Add(SetFacilityForDisplay(Model.HotelDetailData.Facilities.Health, "Health"));
+        hotelFac.Add(SetFacilityForDisplay(Model.HotelDetailData.Facilities.Health, "Kesehatan"));
     }
 
     if (Model.HotelDetailData.Facilities.Meal != null)
     {
-        hotelFac.Add(SetFacilityForDisplay(Model.HotelDetailData.Facilities.Meal, "Meal"));
+        hotelFac.Add(SetFacilityForDisplay(Model.HotelDetailData.Facilities.Meal, "Makanan"));
     }
 
     if (Model.HotelDetailData.Facilities.Other != null)
     {
-        hotelFac.Add(SetFacilityForDisplay(Model.HotelDetailData.Facilities.Other, "Other"));
+        hotelFac.Add(SetFacilityForDisplay(Model.HotelDetailData.Facilities.Other, "Lainnya"));
     }
 
     if (Model.HotelDetailData.Facilities.Sport != null)
     {
-        hotelFac.Add(SetFacilityForDisplay(Model.HotelDetailData.Facilities.Sport, "Sport"));
+        hotelFac.Add(SetFacilityForDisplay(Model.HotelDetailData.Facilities.Sport, "Olah Raga"));
     }    
 }
 
@@ -448,43 +448,43 @@
                                         {
                                             <div class="ih-row clearfix">
                                                 <div class="col-2">
-                                                    @if (facility.FacilityGroup == "General")
+                                                    @if (facility.FacilityGroup == "Umum")
                                                     {
                                                         <div class="ih-left general-lg-icon">
                                                             @facility.FacilityGroup
                                                         </div>
                                                     }
-                                                    else if (facility.FacilityGroup == "Health")
+                                                    else if (facility.FacilityGroup == "Kesehatan")
                                                     {
                                                         <div class="ih-left health-lg-icon">
                                                             @facility.FacilityGroup
                                                         </div>
                                                     }
-                                                    else if (facility.FacilityGroup == "Sport")
+                                                    else if (facility.FacilityGroup == "Olah Raga")
                                                     {
                                                         <div class="ih-left sport-lg-icon">
                                                             @facility.FacilityGroup
                                                         </div>
                                                     }
-                                                    else if (facility.FacilityGroup == "Business")
+                                                    else if (facility.FacilityGroup =="Bisnis")
                                                     {
                                                         <div class="ih-left business-lg-icon">
                                                             @facility.FacilityGroup
                                                         </div>
                                                     }
-                                                    else if (facility.FacilityGroup == "Meal")
+                                                    else if (facility.FacilityGroup == "Makanan")
                                                     {
                                                         <div class="ih-left meal-lg-icon">
                                                             @facility.FacilityGroup
                                                         </div>
                                                     }
-                                                    else if (facility.FacilityGroup == "Entertainment")
+                                                    else if (facility.FacilityGroup == "Hiburan")
                                                     {
                                                         <div class="ih-left ent-lg-icon">
                                                             @facility.FacilityGroup
                                                         </div>
                                                     }
-                                                    else if (facility.FacilityGroup == "Other")
+                                                    else if (facility.FacilityGroup == "Lainnya")
                                                     {
                                                         <div class="ih-left other-lg-icon">
                                                             @facility.FacilityGroup
