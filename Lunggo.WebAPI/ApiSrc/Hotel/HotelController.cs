@@ -203,6 +203,28 @@ namespace Lunggo.WebAPI.ApiSrc.Hotel
                 return ApiResponseBase.ExceptionHandling(e);
             }
         }
+
+        [HttpPost]
+        [LunggoCorsPolicy]
+        [Route("v1/hotel/availableRate")]
+        public ApiResponseBase GetAvailableRate()
+        {
+            var lang = ApiRequestBase.GetHeaderValue("Language");
+            OnlineContext.SetActiveLanguageCode(lang);
+            var currency = ApiRequestBase.GetHeaderValue("Currency");
+            OnlineContext.SetActiveCurrencyCode(currency);
+            HotelAvailableRateApiRequest request = null;
+            try
+            {
+                request = ApiRequestBase.DeserializeRequest<HotelAvailableRateApiRequest>();
+                var apiResponse = HotelLogic.GetAvailableRates(request);
+                return apiResponse;
+            }
+            catch (Exception e)
+            {
+                return ApiResponseBase.ExceptionHandling(e, request);
+            }
+        }
     }
     
 
