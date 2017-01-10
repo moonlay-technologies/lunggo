@@ -399,7 +399,7 @@ app.controller('hotelcheckoutController', [
                 }
                 
                 $log.debug($scope.book.postData);
-                $scope.book.postData = JSON.parse($scope.book.postData);
+                $scope.book.postData = JSON.parse(JSON.stringify($scope.book.postData));
 
                 $log.debug($scope.book.postData);
 

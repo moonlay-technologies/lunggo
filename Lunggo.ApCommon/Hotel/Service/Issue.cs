@@ -199,6 +199,8 @@ namespace Lunggo.ApCommon.Hotel.Service
                     ErrorMessages = new List<string> {"At least one rate can not be found in refresh ratekey"}
                 };
             }
+
+            rsvData.HotelDetails.Rooms.ForEach(ro => ro.Rates = BundleRates(ro.Rates));
             
             var newPrice = rsvData.HotelDetails.Rooms.Sum(room => room.Rates.Sum(rate => rate.Price.Supplier));
             if (newPrice != oldPrice)

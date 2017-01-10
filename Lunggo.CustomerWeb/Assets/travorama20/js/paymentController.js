@@ -641,7 +641,7 @@ app.controller('paymentController', [
                                 case undefined:
                                     if (returnData.data.paymentStatus == 4) {
                                         $scope.errorLog = 'Payment Denied';
-                                        $scope.errorMessage = 'Alat pembayaran Anda tidak dapat digunakan. Silakan membayar menggunakan alat pembayaran lainnya';
+                                        $scope.errorMessage = 'Pembayaran Anda gagal. Silakan perbaiki data pembayaran atau gunakan alat pembayaran lainnya';
                                         $scope.pay.checked = true;
                                         $scope.pay.isSuccess = false;
                                         $scope.pay.isPaying = false;

@@ -146,7 +146,7 @@
     {
         foreach (var rate in room.Rates)
         {
-            <div class="page page-2">
+            <div class="page page-@(room.Rates.IndexOf(rate) + 2)">
                 <header class="page-header white-txt">
                     <div class="row">
                         <div class="col-xs-8">
