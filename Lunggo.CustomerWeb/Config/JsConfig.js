@@ -201,6 +201,12 @@ var HotelBookConfig = {
     working: false
 };
 
+var HotelAvailableRatesConfig = {
+    Url: 'https://api.local.travorama.com/v1/hotel/availableRate',
+    working: false
+};
+
+
 var GetHolidayConfig = {
     Url: 'https://api.local.travorama.com/v1/calendar/id',
     working: false

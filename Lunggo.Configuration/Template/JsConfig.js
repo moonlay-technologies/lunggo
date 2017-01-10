@@ -201,6 +201,12 @@ var HotelBookConfig = {
     working: false
 };
 
+var HotelAvailableRatesConfig = {
+    Url: '$apiUrl$$hotelAvailableRatesPath$',
+    working: false
+};
+
+
 var GetHolidayConfig = {
     Url: '$apiUrl$$holidayListPath$',
     working: false

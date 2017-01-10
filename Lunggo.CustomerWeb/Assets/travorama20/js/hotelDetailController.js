@@ -16,16 +16,14 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
     $scope.minRoomCount = 3;
     $scope.maxRoomCount = 100;
     $scope.pageLoaded = true;
-    $scope.searchDone = true;
+    $scope.searchDone = false;
     $scope.loc = loc;
     $scope.hotelImages = hotelImages;
     $scope.selectedRoom = '';
-    $scope.loading = false;
     $scope.selectFailed = false;
     $scope.booking = false;
     $scope.expired = false;
     $scope.showPopularDestinations = false;
-    //Variabel sementara
     $scope.hideRoomDetail = true;
     $('#inputLocationHotel').on('click', function () {
         $scope.showPopularDestinations = true;
@@ -33,16 +31,17 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
 
     $scope.init = function (model) {
         $log.debug(model);
+       
         $scope.searchId = model.searchId;
         $scope.searchParam = model.searchParam;
-        $scope.loading = false;
-        
         var mydata = $scope.searchParam.split('.');
         var cekin = mydata[2];
         var cekout = mydata[3];
         var nightcount = mydata[4];
         var roomcount = mydata[5];
         var occupancies = mydata[6].split('|');
+        var totalOcc = occupancies.length;
+        var hotelCode = model.hotelCd;
 
         var searchParamObject = {
             nightCount: nightcount,
@@ -69,7 +68,8 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
             searchParamObject.occupancies.push({
                 adultCount: occdata[0],
                 childCount: occdata[1],
-                childrenAges: occdata[1] == 0 ? [0, 0, 0, 0] : ages
+                childrenAges: occdata[1] == 0 ? [0, 0, 0, 0] : ages,
+                roomCount : 1
             });
         }
 
@@ -86,29 +86,10 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
         
         $scope.hotelSearch.destinationCheckinDate = moment(cekin, "YYYY-MM-DD").locale("id").format('dddd, DD MMMM YYYY');
         $scope.hotelSearch.destinationCheckoutDate = moment(cekout, "YYYY-MM-DD").locale("id").format('dddd, DD MMMM YYYY');
-        
-        var resource = $resource(HotelDetailsConfig.Url + '/:searchId/:hotelCd',
-            {},
-            {
-                query: {
-                    method: 'GET',
-                    params: { searchId: model.searchId, hotelCd: model.hotelCd },
-                    isArray: false
-                }
-            }
-        );
 
-        //resource.query({}, {}).$promise.then(function (data) {
-        //    $scope.loading = false;
-        //    validateResponse(data);
-        //    $scope.searchDone = true;
-        //    $scope.hotel = data.hotelDetails;
-        //    $scope.hotelSearch.locationDisplay = $scope.hotel.destinationName;
-        //    $scope.hotelSearch.destinationName = $scope.hotel.destinationName;
-        //    //$log.debug($scope.hotel.images);
-            var loadedImages = 0;
-            var maxImages = 6;
-            var tempHotelImages = [];
+        var loadedImages = 0;
+        var maxImages = 6;
+        var tempHotelImages = [];
 
         //Remove broken images
         $scope.hotelImages = JSON.parse($scope.hotelImages);
@@ -134,137 +115,157 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
                 });
             });
 
-        //    // apakah code di bawah ini sudah efektif?
-        //    $.each($scope.hotel.room, function (roomKey, room) {
-        //        $.each(room.roomImages, function (imageKey, roomImage) {
-        //            $scope.hotel.room[roomKey].roomImages[imageKey] = roomImage;
-        //        });
-        //    });
-            
-        //    var cekin = $scope.hotel.room[0].rate.regsId.split(',')[2].split('|')[0];
-        //    var cekout = $scope.hotel.room[0].rate.regsId.split(',')[2].split('|')[1];
-        //    $scope.hotel.checkinDate = new Date(parseInt(cekin.substring(0, 4)), parseInt(cekin.substring(4, 6)) - 1, parseInt(cekin.substring(6, 8)));
-        //    $scope.hotel.checkoutDate = new Date(parseInt(cekout.substring(0, 4)), parseInt(cekout.substring(4, 6)) - 1, parseInt(cekout.substring(6, 8)));
-        //    $scope.hotel.nightCount = (new Date($scope.hotel.checkoutDate) - new Date($scope.hotel.checkinDate)) / (3600 * 24 * 1000);
-            
-        //    setFacilityDisplay();
-        //    //setTncDisplay();
-        //    setDescriptionDisplay();
-        //    $timeout(function() { hotelDetailFunctions(); }, 0);
-        //    //$timeout(function () { initiateSlider(); }, 0);
-        //    $timeout(function () {  accordionFunctions(); }, 0);
+        $timeout(function () {
+            // **********
+            // Search Detail Tab
+            $('body .detail-tab').each(function (index, item) {
+                if (index > 0) {
+                    $(item).hide();
+                }
+            });
+            $('body .hotel-detail-menu-action a').on('click touchstart', function () {
+                var id = $(this).attr('attr-link');
+                $('body .detail-tab').hide();
+                $(id).show();
+            });
 
-            
-        //    $scope.hotel.room.sort(function(a, b) {
-        //        return a.rate.netFare - b.rate.netFare;
-        //    });
-        //    $log.debug($scope.hotel);
-            $timeout(function () {
-                // **********
-                // Search Detail Tab
-                $('body .detail-tab').each(function (index, item) {
-                    if (index > 0) {
-                        $(item).hide();
-                    }
-                });
-                $('body .hotel-detail-menu-action a').on('click touchstart', function () {
-                    var id = $(this).attr('attr-link');
-                    $('body .detail-tab').hide();
-                    $(id).show();
-                });
+          
+                //Shorten Area
 
-                 //**********
-                 //Shorten Area
+                //Search Detail
+            $('body .sh-desc a').on('click touchstart', function () {
+                $('body .sh-desc a').toggleClass('active');
+                $('body .sh-txt').toggleClass('opened');
+            });
 
-                 //Search Detail
-                $('body .sh-desc a').on('click touchstart', function () {
-                    $('body .sh-desc a').toggleClass('active');
-                    $('body .sh-txt').toggleClass('opened');
-                });
+           
 
-                 //**********
-                 //Open Detail Room
-                $('body .dh-list').on('click', function () {
-                    var id = $(this).parent();
+                //**********
+                //Slick Slider Detail Hotel
+            $('.dh-slider').slick({
+                autoplay: true,
+                autoplaySpeed: 2500,
+                dots: false
+            });
 
-                    id.toggleClass('active');
-                    id.siblings().removeClass('active');
+                //Hotel Detail
+            $('.mh-list a').click(function () {
+                var link = $(this).attr('href');
+                if (link == '#menu-facility') {
+                    var header = $("#menu-facility");
+                    $(window).scroll(function () {
+                        var scroll = $(window).scrollTop();
 
-                    id.find('.dh-list-detail').toggleClass('active');
-                    id.siblings().find('.dh-list-detail').removeClass('active');
-                });
+                        if (scroll >= 1800) {
+                            header.addClass("up-height");
+                        } else {
+                            header.removeClass("up-height");
+                        }
+                    });
+                }
+                else if (link == '#menu-desc') {
+                    header = $("#menu-desc");
+                    $(window).scroll(function () {
+                        var scroll = $(window).scrollTop();
 
-                 //**********
-                 //Slick Slider Detail Hotel
-                $('.dh-slider').slick({
-                    autoplay: true,
-                    autoplaySpeed: 2500,
-                    dots: false
-                });
+                        if (scroll >= 1800) {
+                            header.addClass("up-height");
+                        } else {
+                            header.removeClass("up-height");
+                        }
+                    });
+                } else if (link == '#menu-tnc') {
+                    header = $("#menu-tnc");
+                    $(window).scroll(function () {
+                        var scroll = $(window).scrollTop();
 
-                 //Hotel Detail
-                $('.mh-list a').click(function () {
-                    var link = $(this).attr('href');
-                    if (link == '#menu-facility') {
-                        var header = $("#menu-facility");
-                        $(window).scroll(function () {
-                            var scroll = $(window).scrollTop();
+                        if (scroll >= 1800) {
+                            header.addClass("up-height");
+                        } else {
+                            header.removeClass("up-height");
+                        }
+                    });
+                }
+            });
 
-                            if (scroll >= 1800) {
-                                header.addClass("up-height");
-                            } else {
-                                header.removeClass("up-height");
-                            }
+            // Hotel Detail Slider
+            $('#image-gallery').lightSlider({
+                gallery: true,
+                item: 1,
+                thumbItem: 6,
+                slideMargin: 0,
+                loop: true,
+                keyPress: true,
+                onSliderLoad: function () {
+                    $('#image-gallery').removeClass('cS-hidden');
+                }
+            });
+        }, 0);
+
+        $timeout(function() {
+            resource.query({}, {
+                "hotelCode": hotelCode,
+                "nights": nightcount,
+                "checkIn": moment(cekin, "YYYY-MM-DD"),
+                "checkout": moment(cekout, "YYYY-MM-DD"),
+                "occupancies": searchParamObject.occupancies.slice(0, totalOcc)
+            }).$promise.then(function(data) {
+                $scope.searchDone = true;
+                $scope.hideRoomDetail = false;
+                if (data != null) {
+                    if (data.rooms != null && data.rooms.length > 0) {
+                        $scope.hotel.rooms = data.rooms;
+                        // apakah code di bawah ini sudah efektif?
+                        $.each($scope.hotel.rooms, function (roomKey, room) {
+                            $.each(room.roomImages, function (imageKey, roomImage) {
+                                $scope.hotel.rooms[roomKey].roomImages[imageKey] = roomImage;
+                            });
+                        });
+
+                        cekin = $scope.hotel.rooms[0].rate.regsId.split(',')[2].split('|')[0];
+                        cekout = $scope.hotel.rooms[0].rate.regsId.split(',')[2].split('|')[1];
+                        $scope.hotel.checkinDate = new Date(parseInt(cekin.substring(0, 4)), parseInt(cekin.substring(4, 6)) - 1, parseInt(cekin.substring(6, 8)));
+                        $scope.hotel.checkoutDate = new Date(parseInt(cekout.substring(0, 4)), parseInt(cekout.substring(4, 6)) - 1, parseInt(cekout.substring(6, 8)));
+                        $scope.hotel.nightCount = (new Date($scope.hotel.checkoutDate) - new Date($scope.hotel.checkinDate)) / (3600 * 24 * 1000);
+
+                        
+                        $timeout(function () { hotelDetailFunctions(); }, 0);
+                        $timeout(function () { accordionFunctions(); }, 0);
+                        //**********
+                        //Open Detail Room in Mobile
+                        $timeout(function() {
+                            $('body .dh-list').on('click', function() {
+                                var id = $(this).parent();
+
+                                id.toggleClass('active');
+                                id.siblings().removeClass('active');
+
+                                id.find('.dh-list-detail').toggleClass('active');
+                                id.siblings().find('.dh-list-detail').removeClass('active');
+                            });
+                        }, 0);
+
+                        $scope.hotel.rooms.sort(function(a, b) {
+                            return a.rate.breakdowns[0].netFare - b.rate.breakdowns[0].netFare;
                         });
                     }
-                    else if (link == '#menu-desc') {
-                        header = $("#menu-desc");
-                        $(window).scroll(function () {
-                            var scroll = $(window).scrollTop();
-
-                            if (scroll >= 1800) {
-                                header.addClass("up-height");
-                            } else {
-                                header.removeClass("up-height");
-                            }
-                        });
-                    } else if (link == '#menu-tnc') {
-                        header = $("#menu-tnc");
-                        $(window).scroll(function () {
-                            var scroll = $(window).scrollTop();
-
-                            if (scroll >= 1800) {
-                                header.addClass("up-height");
-                            } else {
-                                header.removeClass("up-height");
-                            }
-                        });
-                    }
-                });
-
-                // Hotel Detail Slider
-                $('#image-gallery').lightSlider({
-                    gallery: true,
-                    item: 1,
-                    thumbItem: 6,
-                    slideMargin: 0,
-                    loop: true,
-                    keyPress: true,
-                    onSliderLoad: function () {
-                        $('#image-gallery').removeClass('cS-hidden');
-                    }
-                });
-            }, 0);
-
-        //}, function (error) {
-        //    $log.debug(error);
-
-        //});
+                }
+            });
+        }, 0);
         $scope.hotelSearch.location = $scope.getLocationCode();
     }
 
     // ********************** DISPLAY HOTEL DETAILS *********************************
     
+        var resource = $resource(HotelAvailableRatesConfig.Url,
+            {},
+            {
+                query: {
+                    method: 'POST',
+                    isArray: false
+                }
+            }
+        );
     $scope.setDescriptionDisplay = function (descriptions) {
         if (descriptions != null && descriptions.length > 0) {
             var description = [];
@@ -324,6 +325,8 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
 
             list.toggleClass('active');
             list.siblings().removeClass('active');
+
+           
         });
 
         $("body .change-room").click(function () {
@@ -406,6 +409,8 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
 
     // ******************************* SELECT ROOM **********************************
 
+    
+  
     var selectService = $resource(HotelSelectConfig.Url,
           {},
           {

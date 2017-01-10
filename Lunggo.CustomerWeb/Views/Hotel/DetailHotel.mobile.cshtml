@@ -193,9 +193,7 @@
                 <div class="item" @*ng-if="hotelImages.length >= 6"*@>
                     <div class="dh-img" style="background-image: url({{hotelImages[5]}});"></div>
                 </div>
-                <div ng-show="loading" class="text-center" style="height: 320px;">
-                    <img src="/Assets/images/load.gif" class="img-loading">
-            </div>
+                
             </div>
             <div class="dh-title">
                 <div class="dh-name lg-txt blue-txt bold-txt">@Model.HotelDetailData.HotelName</div>
@@ -229,10 +227,14 @@
             <div class="dh-location sm-txt">
                 @ToTitleCase(Model.HotelDetailData.Address) @ToTitleCase(Model.HotelDetailData.AreaName) @Model.HotelDetailData.City @Model.HotelDetailData.PostalCode, @Model.HotelDetailData.CountryName
             </div>
-            <div class="dh-listing" ng-hide="hideRoomDetail">
+            
+            <div ng-show="!searchDone" class="text-center">
+                <img src="/Assets/images/load.gif" class="img-loading">
+            </div>
+            <div class="dh-listing" ng-hide="hideRoomDetail && !searchDone">
                 <div class="dh-list-title bold-txt lg-txt darkgrey-txt">Informasi Kamar & Harga </div>
                 <ul class="dh-list-container">
-                    <li ng-show="$index+1 <= roomCount" ng-repeat="room in hotel.room track by $index">
+                    <li ng-show="$index+1 <= roomCount" ng-repeat="room in hotel.rooms track by $index">
                         <div class="dh-list clearfix">
                             <div class="col-left-hotel">
                                 <div class="dh-img-sm" style="background-image: url({{room.roomImages[0]}});"></div>
@@ -281,11 +283,11 @@
                     </li>
                 </ul>
                 <div class="btn-show">
-                    @*<span class="hotel-result-txt">Jumlah Tipe Kamar Tersedia: <b>{{hotel.room.length}}</b></span>*@
+                    @*<span class="hotel-result-txt">Jumlah Tipe Kamar Tersedia: <b>{{hotel.rooms.length}}</b></span>*@
                     <a href="" class="orange-txt" ng-click="togleDisplay()">
                         Tampilkan
-                        <span class="more" ng-show="roomCount == minRoomCount">semua</span>
-                        <span class="less" ng-show="roomCount == maxRoomCount">sebagian</span>
+                        <span class="more" ng-show="roomCount == minRoomCount">Semua</span>
+                        <span class="less" ng-show="roomCount == maxRoomCount">Sebagian</span>
                     </a>
                 </div>
             </div>
@@ -465,7 +467,7 @@
                             </div>
                         </div>
                         <div class="dr-detail">
-                            <div class="bold-txt lg-txt darkgrey-txt">{{selectedRoom.roomName}} ({{selectedRoom.rate.boardDesc}})</div>
+                            <div class="bold-txt lg-txt darkgrey-txt">{{selectedRoom.roomName}} ({{selectedRoom.rate.breakdowns[0].boardDesc}})</div>
                             <div class="sm-txt grey-txt">
                                 <div ng-show="selectedRoom.rate.isFreeCancel">Pembatalan Gratis </div>
                                 <div ng-show="!selectedRoom.rate.isFreeCancel && selectedRoom.rate.isRefundable">Kebijakan Pembatalan Berlaku </div>

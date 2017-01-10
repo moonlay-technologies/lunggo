@@ -161,10 +161,8 @@
 
         <div class="detail-hotel-content">
             @Html.Partial("/Views/Shared/Desktop/_BreadCrumb.cshtml")
-            <div ng-show="!searchDone" class="text-center">
-                <img src="/Assets/images/load.gif" style="width:5%; margin-left: 10%">
-            </div>
-            <div class="detail-hotel" ng-show="searchDone">
+            
+            <div class="detail-hotel">
                 <div class="big-slider">
                     <div class="top-desc">
                         <span class="slider-title-lg blue-txt">@Model.HotelDetailData.HotelName</span>
@@ -304,7 +302,11 @@
                         }                    
                     </ul>
                 </div>
-                <div class="room clearfix" ng-hide="hideRoomDetail">
+                
+                <div ng-show="!searchDone" class="text-center">
+                    <img src="/Assets/images/load.gif" style="width:5%; margin-left: 10%">
+                </div>
+                <div class="room clearfix" ng-hide="hideRoomDetail && !searchDone">
                     <div class="top-title clearfix">
                         <div class="col-left-rs bg-title"><b>Pilih</b> Kamar </div>
                         <div class="col-right-rs total-day">{{hotel.nightCount}} Malam <b>( {{hotel.checkinDate | date : 'EEEE, dd MMM yyyy'}} - {{hotel.checkoutDate | date : 'EEEE, dd MMM yyyy'}} )</b></div>
@@ -326,7 +328,7 @@
                         </div>
                     </div>
                     <ul class="room-list-container">
-                        <li ng-show="$index+1 <= roomCount" ng-repeat="room in hotel.room track by $index">
+                        <li ng-show="$index+1 <= roomCount" ng-repeat="room in hotel.rooms track by $index">
                             <div class="room-list clearfix">
                                 <div class="room-left" ng-show="room.roomImages === undefined || room.roomImages.length <= 0"><div class="no-room-pic"></div></div>
                                 <div class="room-left" ng-show="room.roomImages !== undefined && room.roomImages.length > 0"><div class="room-pic" alt-image style="background-image: url({{room.roomImages[0]}});"></div></div>
@@ -425,7 +427,7 @@
                         </li>
                     </ul>
                     <div class="hotel-result clearfix">
-                        <span class="hotel-result-txt">Jumlah Tipe Kamar Tersedia: <b>{{hotel.room.length}}</b></span>
+                        <span class="hotel-result-txt">Jumlah Tipe Kamar Tersedia: <b>{{hotel.rooms.length}}</b></span>
                         <a href="" class="btn-hotel-result btn-blue small" ng-click="togleDisplay()">
                             Tampilkan
                             <text ng-show="roomCount == minRoomCount">semua</text>
