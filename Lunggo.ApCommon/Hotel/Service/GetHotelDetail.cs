@@ -19,7 +19,7 @@ namespace Lunggo.ApCommon.Hotel.Service
         {
             var hotelDetail = GetHotelDetailFromDb(input.HotelCode);
             SetHotelFullFacilityCode(hotelDetail);
-            decimal originalPrice, netFare;
+            //decimal originalPrice, netFare;
             if (hotelDetail == null)
                 return new GetHotelDetailOutput
                 {
@@ -28,34 +28,37 @@ namespace Lunggo.ApCommon.Hotel.Service
                     ErrorMessages = new List<string> { "SearchID no longer valid" }
                 };
 
-            bool searchIdExpired = false;
-            if (SetDetailFromSearchResult(ref hotelDetail, input.SearchId, out originalPrice, out netFare) == searchIdExpired) {
-                return new GetHotelDetailOutput
-                {
-                    IsSuccess = false,
-                    Errors = new List<HotelError> { HotelError.SearchIdNoLongerValid },
-                    ErrorMessages = new List<string> { "SearchID no longer valid" }
-                };
-            };
+            //bool searchIdExpired = false;
+
+            hotelDetail.DestinationName = GetDestinationNameFromDict(hotelDetail.DestinationCode).Name;
+            //if (SetDetailFromSearchResult(ref hotelDetail, input.SearchId, out originalPrice, out netFare) == searchIdExpired) {
+            //    return new GetHotelDetailOutput
+            //    {
+            //        IsSuccess = false,
+            //        Errors = new List<HotelError> { HotelError.SearchIdNoLongerValid },
+            //        ErrorMessages = new List<string> { "SearchID no longer valid" }
+            //    };
+            //};
            
-            hotelDetail.Rooms = SetRoomPerRate(hotelDetail.Rooms);
+            //hotelDetail.Rooms = SetRoomPerRate(hotelDetail.Rooms);
             //hotelDetail.Rooms = FilterRoomByCapacity(hotelDetail.Rooms);
-            if (hotelDetail.Rooms.Count != 0)
-            {
-                foreach (var room in hotelDetail.Rooms)
-                {
-                    var cid = room.SingleRate.RateKey != null ? room.SingleRate.RateKey.Split('|')[0] : room.SingleRate.RegsId.Split('|')[0];
-                    var checkInDate = new DateTime(Convert.ToInt32(cid.Substring(0, 4)),
-                         Convert.ToInt32(cid.Substring(4, 2)), Convert.ToInt32(cid.Substring(6, 2)));
-                    room.SingleRate.TermAndCondition = GetRateCommentFromTableStorage(room.SingleRate.RateCommentsId,
-                        checkInDate).Select(x => x.Description).ToList();
-                }
-            }
+            //if (hotelDetail.Rooms.Count != 0)
+            //{
+            //    foreach (var room in hotelDetail.Rooms)
+            //    {
+            //        var cid = room.SingleRate.RateKey != null ? room.SingleRate.RateKey.Split('|')[0] : room.SingleRate.RegsId.Split('|')[0];
+            //        var checkInDate = new DateTime(Convert.ToInt32(cid.Substring(0, 4)),
+            //             Convert.ToInt32(cid.Substring(4, 2)), Convert.ToInt32(cid.Substring(6, 2)));
+            //        room.SingleRate.TermAndCondition = GetRateCommentFromTableStorage(room.SingleRate.RateCommentsId,
+            //            checkInDate).Select(x => x.Description).ToList();
+            //    }
+            //}
             
             return new GetHotelDetailOutput
             {
                 IsSuccess = true,
-                HotelDetail = ConvertToHotelDetailsBaseForDisplay(hotelDetail,originalPrice,netFare)
+                HotelDetail = ConvertToHotelDetailOnlyForDisplay(hotelDetail)
+                //HotelDetail = ConvertToHotelDetailsBaseForDisplay(hotelDetail,originalPrice,netFare)
             };
         }
 
@@ -83,7 +86,7 @@ namespace Lunggo.ApCommon.Hotel.Service
             if (searchResulthotel == null)
                 hotel = null;
             hotel.Rooms = searchResulthotel.Rooms;
-            hotel.DestinationName = searchResultData.DestinationName;
+            //hotel.DestinationName = searchResultData.DestinationName; //pindah ke main method Get Hotel Details
 
             if (hotel.ImageUrl != null)
             {

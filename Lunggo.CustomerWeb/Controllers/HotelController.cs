@@ -1,4 +1,6 @@
-﻿using Lunggo.ApCommon.Hotel.Service;
+﻿using Lunggo.ApCommon.Hotel.Model.Logic;
+using Lunggo.ApCommon.Hotel.Service;
+using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Sdk.auto.model;
 using Lunggo.ApCommon.Payment.Service;
 using Lunggo.CustomerWeb.Models;
 using System;
@@ -56,11 +58,16 @@ namespace Lunggo.CustomerWeb.Controllers
         //}
         public ActionResult DetailHotel(string searchId, int hotelCd, string searchParam)
         {
+            var hotelDetail = HotelService.GetInstance().GetHotelDetail(new GetHotelDetailInput
+            {
+                HotelCode = hotelCd
+            }).HotelDetail;
             return View(new HotelDetailModel.HotelDetail
             {
                 HotelCode = hotelCd,
                 SearchId = searchId,
-                SearchParam = searchParam
+                SearchParam = searchParam,
+                HotelDetailData = hotelDetail
             });
         }
 

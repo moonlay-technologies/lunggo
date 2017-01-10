@@ -1,4 +1,5 @@
 ﻿@using Lunggo.ApCommon.Hotel.Service
+@using Lunggo.Framework.Extension
 @model Lunggo.CustomerWeb.Models.HotelDetailModel.HotelDetail
 @{
     Layout = "/Views/Shared/Desktop/_LayoutDesktop.cshtml";
@@ -7,9 +8,43 @@
     ViewBag.AngularController = "hotelDetailController";
 }
 @{
-    var hotelCd = Model.HotelCode;
-    var hotelDetail = HotelService.GetInstance().GetHotelDetailFromTableStorage(Convert.ToInt32(hotelCd));
-    var loc = ToTitleCase(hotelDetail.HotelName + ", " + hotelDetail.City);
+    var loc = ToTitleCase(Model.HotelDetailData.HotelName + ", " + Model.HotelDetailData.City);
+    var hotelFac = new List<FacilityModel>();
+ 
+    if (Model.HotelDetailData.Facilities.Business != null)
+    {
+        hotelFac.Add(SetFacilityForDisplay(Model.HotelDetailData.Facilities.Business, "Business"));
+    }
+
+    if (Model.HotelDetailData.Facilities.Entertainment != null)
+    {
+        hotelFac.Add(SetFacilityForDisplay(Model.HotelDetailData.Facilities.Entertainment, "Entertainment"));
+    }
+
+    if (Model.HotelDetailData.Facilities.General != null)
+    {
+        hotelFac.Add(SetFacilityForDisplay(Model.HotelDetailData.Facilities.General, "General"));
+    }
+
+    if (Model.HotelDetailData.Facilities.Health != null)
+    {
+        hotelFac.Add(SetFacilityForDisplay(Model.HotelDetailData.Facilities.Health, "Health"));
+    }
+
+    if (Model.HotelDetailData.Facilities.Meal != null)
+    {
+        hotelFac.Add(SetFacilityForDisplay(Model.HotelDetailData.Facilities.Meal, "Meal"));
+    }
+
+    if (Model.HotelDetailData.Facilities.Other != null)
+    {
+        hotelFac.Add(SetFacilityForDisplay(Model.HotelDetailData.Facilities.Other, "Other"));
+    }
+
+    if (Model.HotelDetailData.Facilities.Sport != null)
+    {
+        hotelFac.Add(SetFacilityForDisplay(Model.HotelDetailData.Facilities.Sport, "Sport"));
+    }    
 }
 
 @functions{
@@ -52,6 +87,49 @@
         return input[0] + input.Substring(1, input.Length - 1).ToLower();
     }
 
+    public class FacilityModel 
+    {
+        public List<List<String>> FacilityList { get; set; }
+        public string FacilityGroup { get; set; }
+    }
+
+    public FacilityModel SetFacilityForDisplay(List<string> facilities, string groupName)
+    {
+        var facilityModel = new FacilityModel
+        {
+            FacilityList = new List<List<string>>()
+        };
+        for (var k = 0; k <= 3; k++)
+        {
+            facilityModel.FacilityList.Add(new List<string>());
+        }
+
+        facilityModel.FacilityGroup = groupName;
+        for (var i = 0; i < facilities.Count; i++)
+        {
+            if (i%4 == 0)
+            {
+                facilityModel.FacilityList[0].Add(facilities[i]);
+            }
+            else if (i%4 == 1)
+            {
+                facilityModel.FacilityList[1].Add(facilities[i]);
+            }
+            else if (i % 4 == 2)
+            {
+                facilityModel.FacilityList[2].Add(facilities[i]);
+            }
+        
+            else if (i%4 == 3)
+            {
+                facilityModel.FacilityList[3].Add(facilities[i]);
+            }
+        }
+
+        return facilityModel;
+    }
+}
+
 }
 @section AdditionalCSS{
     <link href="/Assets/css/jquery-ui.min.css" rel="stylesheet" />
@@ -69,6 +147,7 @@
 
 @section PageJS{
     <script>var loc = '@loc';</script>
+    <script> var hotelImages = '@Html.Raw(Model.HotelDetailData.ImageUrl.Serialize())';</script>
     <script src="/Assets/travorama20/js/hotelDetailController.js"></script>
     <script type="text/javascript" src="/Assets/travorama20/js/HotelController.js"></script>
     <script>accordionFunctions()</script>
@@ -89,36 +168,52 @@
             <div class="detail-hotel" ng-show="searchDone">
                 <div class="big-slider">
                     <div class="top-desc">
-                        <span class="slider-title-lg blue-txt">{{hotel.hotelName}}</span>
-                        <div class="star" ng-if="hotel.starRating == 1"></div>
-                        <div class="star star-2" ng-if="hotel.starRating == 2"></div>
-                        <div class="star star-3" ng-if="hotel.starRating == 3"></div>
-                        <div class="star star-4" ng-if="hotel.starRating == 4"></div>
-                        <div class="star star-5" ng-if="hotel.starRating == 5"></div>
+                        <span class="slider-title-lg blue-txt">@Model.HotelDetailData.HotelName</span>
+                        @if (Model.HotelDetailData.StarRating == 1)
+                        {
+                            <div class="star"></div>
+                        }
+                        else if (Model.HotelDetailData.StarRating == 2)
+                        {
+                            <div class="star star-2"></div>
+                        }
+                        else if (Model.HotelDetailData.StarRating == 3)
+                        {
+                            <div class="star star-3"></div>
+                        }
+                        else if (Model.HotelDetailData.StarRating == 4)
+                        {
+                            <div class="star star-4"></div>
+                        }
+                        else if (Model.HotelDetailData.StarRating == 5)
+                        {
+                            <div class="star star-5"></div>
+                        }
+                        
                         <br />
-                        <span class="address" style="text-transform: capitalize">{{hotel.address}} {{hotel.area}} {{hotel.city}} {{hotel.postalCd}}, {{hotel.country}}</span>
+                        <span class="address" style="text-transform: capitalize">@ToTitleCase(Model.HotelDetailData.Address) @ToTitleCase(Model.HotelDetailData.AreaName) @Model.HotelDetailData.City @Model.HotelDetailData.PostalCode, @Model.HotelDetailData.CountryName</span>
                         @*<a href="#" class="btn-blue small">Lihat Peta</a>*@
                     </div>
                     <div class="slider-container clearfix">
                         <div class="slider clearfix">
                             <ul id="image-gallery" class="gallery list-unstyled cS-hidden">
-                                <li data-thumb="{{hotel.images[0]}}" alt-image>
-                                    <div style="background-image: url({{hotel.images[0]}}); width: 100%; height: 590px; background-size: cover; background-position: center center;"></div>
+                                <li data-thumb="{{hotelImages[0]}}" alt-image>
+                                    <div style="background-image: url({{hotelImages[0]}}); width: 100%; height: 590px; background-size: cover; background-position: center center;"></div>
                                 </li>
-                                <li data-thumb="{{hotel.images[1]}}" alt-image>
-                                    <div style="background-image: url({{hotel.images[1]}}); width: 100%; height: 590px; background-size: cover; background-position: center center;"></div>
+                                <li data-thumb="{{hotelImages[1]}}" alt-image>
+                                    <div style="background-image: url({{hotelImages[1]}}); width: 100%; height: 590px; background-size: cover; background-position: center center;"></div>
                                 </li>
-                                <li data-thumb="{{hotel.images[2]}}" alt-image>
-                                    <div style="background-image: url({{hotel.images[2]}}); width: 100%; height: 590px; background-size: cover; background-position: center center;"></div>
+                                <li data-thumb="{{hotelImages[2]}}" alt-image>
+                                    <div style="background-image: url({{hotelImages[2]}}); width: 100%; height: 590px; background-size: cover; background-position: center center;"></div>
                                 </li>
-                                <li data-thumb="{{hotel.images[3]}}" alt-image>
-                                    <div style="background-image: url({{hotel.images[3]}}); width: 100%; height: 590px; background-size: cover; background-position: center center;"></div>
+                                <li data-thumb="{{hotelImages[3]}}" alt-image>
+                                    <div style="background-image: url({{hotelImages[3]}}); width: 100%; height: 590px; background-size: cover; background-position: center center;"></div>
                                 </li>
-                                <li data-thumb="{{hotel.images[4]}}" alt-image>
-                                    <div style="background-image: url({{hotel.images[4]}}); width: 100%; height: 590px; background-size: cover; background-position: center center;"></div>
+                                <li data-thumb="{{hotelImages[4]}}" alt-image>
+                                    <div style="background-image: url({{hotelImages[4]}}); width: 100%; height: 590px; background-size: cover; background-position: center center;"></div>
                                 </li>
-                                <li data-thumb="{{hotel.images[5]}}" alt-image>
-                                    <div style="background-image: url({{hotel.images[5]}}); width: 100%; height: 590px; background-size: cover; background-position: center center;"></div>
+                                <li data-thumb="{{hotelImages[5]}}" alt-image>
+                                    <div style="background-image: url({{hotelImages[5]}}); width: 100%; height: 590px; background-size: cover; background-position: center center;"></div>
                                 </li>
                             </ul>
                         </div>
@@ -204,7 +299,10 @@
                     <ul class=" col-right-hotel mh-container">
                         <li class="mh-list"><a href="#menu-facility">Fasilitas Hotel</a></li>
                         <li class="mh-list"><a href="#menu-desc">Deskripsi Hotel</a></li>
-                        <li class="mh-list" ng-show="hotel.policy != null && hotel.policy.length > 0"><a href="#menu-tnc">Syarat & Ketentuan Hotel</a></li>
+                        @if (Model.HotelDetailData.Policy != null && Model.HotelDetailData.Policy.Count > 0)
+                        {
+                            <li class="mh-list"><a href="#menu-tnc">Syarat & Ketentuan Hotel</a></li>
+                        }                    
                     </ul>
                 </div>
                 <div class="room clearfix">
@@ -344,42 +442,125 @@
                         <div class="accordion-wrapper">
                             <div class="accordion-title accordion md-txt" id="menu-facility">Fasilitas Hotel</div>
                             <div class="accordion-content show">
-                                <div class="ih-row clearfix" ng-repeat="facilities in hotel.facilities track by $index" ng-hide="facilities === undefined">
-                                    <div class="col-2">
-                                        <div class="ih-left" ng-class="{'general-lg-icon':facilities.facilityGroup == 'general',
+                                <div class="ih-row clearfix">
+                                    @if (hotelFac != null && hotelFac.Count > 0)
+                                    {
+                                        foreach (var facility in hotelFac)
+                                        {
+                                            <div class="ih-row clearfix">
+                                                <div class="col-2">
+                                                    @if (facility.FacilityGroup == "General")
+                                                    {
+                                                        <div class="ih-left general-lg-icon">
+                                                            @facility.FacilityGroup
+                                                        </div>
+                                                    }
+                                                    else if (facility.FacilityGroup == "Health")
+                                                    {
+                                                        <div class="ih-left health-lg-icon">
+                                                            @facility.FacilityGroup
+                                                        </div>
+                                                    }
+                                                    else if (facility.FacilityGroup == "Sport")
+                                                    {
+                                                        <div class="ih-left sport-lg-icon">
+                                                            @facility.FacilityGroup
+                                                        </div>
+                                                    }
+                                                    else if (facility.FacilityGroup == "Business")
+                                                    {
+                                                        <div class="ih-left business-lg-icon">
+                                                            @facility.FacilityGroup
+                                                        </div>
+                                                    }
+                                                    else if (facility.FacilityGroup == "Meal")
+                                                    {
+                                                        <div class="ih-left meal-lg-icon">
+                                                            @facility.FacilityGroup
+                                                        </div>
+                                                    }
+                                                    else if (facility.FacilityGroup == "Entertainment")
+                                                    {
+                                                        <div class="ih-left ent-lg-icon">
+                                                            @facility.FacilityGroup
+                                                        </div>
+                                                    }
+                                                    else if (facility.FacilityGroup == "Other")
+                                                    {
+                                                        <div class="ih-left other-lg-icon">
+                                                            @facility.FacilityGroup
+                                                        </div>
+                                                    }
+                                                </div>
+                                                <div class="col-8" hid>
+                                                    @foreach (var facilityList in facility.FacilityList)
+                                                    {
+                                                        <div class="ih-right quarter clearfix">
+                                                            <ul class="blue-list">
+                                                                @foreach (var name in facilityList)
+                                                                {
+                                                                    <li>@name</li>
+                                                                }
+                                                            </ul>
+                                                        </div>
+                                                    }
+                                                </div>
+                                            </div>
+                                                
+                                        }
+                                    }
+                                </div>
+
+                                @*<div class="ih-row clearfix" ng-repeat="facilities in hotel.facilities track by $index" ng-hide="facilities === undefined" hidden>
+                                        <div class="col-2">
+                                            <div class="ih-left" ng-class="{'general-lg-icon':facilities.facilityGroup == 'general',
                                                                         'health-lg-icon':facilities.facilityGroup == 'health',
                                                                         'sport-lg-icon':facilities.facilityGroup == 'sport',
                                                                         'business-lg-icon':facilities.facilityGroup == 'business',
                                                                         'meal-lg-icon':facilities.facilityGroup == 'meal',
                                                                         'ent-lg-icon':facilities.facilityGroup == 'entertainment',
                                                                         'other-lg-icon':facilities.facilityGroup == 'other'}">
-                                            {{facilities.facilityGroup | uppercase}}
+                                                {{facilities.facilityGroup | uppercase}}
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="col-8">
-                                        <div class="ih-right quarter clearfix" ng-repeat="facilityList in facilities.facilityList track by $index">
-                                            <ul class="blue-list">
-                                                <li ng-repeat="facilityName in facilityList track by $index">{{facilityName}}</li>
-                                            </ul>
+                                        <div class="col-8">
+                                            <div class="ih-right quarter clearfix" ng-repeat="facilityList in facilities.facilityList track by $index">
+                                                <ul class="blue-list">
+                                                    <li ng-repeat="facilityName in facilityList track by $index">{{facilityName}}</li>
+                                                </ul>
+                                            </div>
                                         </div>
-                                    </div>
-                                </div>
+                                    </div>*@
                                 <div class="tnc-hotel italic-txt">* Fasilitas berbayar</div>
                             </div>
-                            <div ng-show="hotel.description != null && hotel.description.length > 0" class="accordion-title accordion md-txt" id="menu-desc">Deskripsi Hotel</div>
-                            <div ng-show="hotel.description != null && hotel.description.length > 0" class="accordion-content show">
-                                <div class="ih-desc clearfix" ng-repeat="description in hotel.description track by $index">
-                                    {{description}}
+                            
+                            @if (!string.IsNullOrEmpty(Model.HotelDetailData.Description))
+                            {
+                                <div class="accordion-title accordion md-txt" id="menu-desc">Deskripsi Hotel</div>
+                                <div class="accordion-content show">
+                                    
+                                    <div class="ih-desc clearfix">
+                                        @Model.HotelDetailData.Description
+                                    </div>
                                 </div>
-                            </div>
-                            <div ng-show="hotel.policy != null && hotel.policy.length > 0" class="accordion-title accordion md-txt" id="menu-tnc">Perlu Diingat</div>
-                            <div ng-show="hotel.policy != null && hotel.policy.length > 0" class="accordion-content show">
-                                <div class="snk-container clearfix">
-                                    <ul class="blue-list">
-                                        <li ng-repeat="policy in hotel.policy track by $index">{{policy}}</li>
-                                    </ul>
+                            }
+                            
+                            @if (Model.HotelDetailData.Policy != null && Model.HotelDetailData.Policy.Count > 0)
+                            {
+                                <div class="accordion-title accordion md-txt" id="menu-tnc">Perlu Diingat</div>
+                                <div class="accordion-content show">
+                                    <div class="snk-container clearfix">
+                                        <ul class="blue-list">
+                                            @foreach (var policy in Model.HotelDetailData.Policy)
+                                            {
+                                                <li>@policy</li>
+                                            }
+                                            
+                                        </ul>
+                                    </div>
                                 </div>
-                            </div>
+                            }
+                            
                         </div>
                     </div>
                 </div>

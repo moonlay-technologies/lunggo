@@ -10,22 +10,6 @@ namespace Lunggo.ApCommon.Hotel.Model
 
     public class HotelFacilityForDisplay
     {
-        //[JsonProperty("facilityCd", NullValueHandling = NullValueHandling.Ignore)]
-        //public int FacilityCode;
-        //[JsonProperty("facilityDesc", NullValueHandling = NullValueHandling.Ignore)]
-        //public string FacilityDescription;
-        //[JsonProperty("facilityGroupCd", NullValueHandling = NullValueHandling.Ignore)]
-        //public int FacilityGroupCode;
-        //[JsonProperty("facilityGroupDesc", NullValueHandling = NullValueHandling.Ignore)]
-        //public string FacilityGroupDescription;
-        //[JsonProperty("mustDisplay", NullValueHandling = NullValueHandling.Ignore)]
-        //public bool MustDisplay;
-        //[JsonProperty("isFree", NullValueHandling = NullValueHandling.Ignore)]
-        //public bool IsFree;
-        //[JsonProperty("isAvailable", NullValueHandling = NullValueHandling.Ignore)]
-        //public bool IsAvailable;
-        //[JsonProperty("fullCd", NullValueHandling = NullValueHandling.Ignore)]
-        //public string FullFacilityCode { get; set; }
         [JsonProperty("general", NullValueHandling = NullValueHandling.Ignore)]
         public List<string> General { get; set; }
         [JsonProperty("sport", NullValueHandling = NullValueHandling.Ignore)]
