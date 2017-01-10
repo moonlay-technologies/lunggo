@@ -11,8 +11,11 @@
 
     var hotelCd = Model.HotelCode;
     var hotelDetail = HotelService.GetInstance().GetHotelDetailFromTableStorage(Convert.ToInt32(hotelCd));
-    
+
+    var lat = hotelDetail.Latitude;
+    var lng = hotelDetail.Longitude;
     var loc = ToTitleCase(hotelDetail.HotelName + ", " + hotelDetail.City);
+    var hotelName = hotelDetail.HotelName;
 
 }
 
@@ -79,6 +82,28 @@
     <script src="/Assets/mobile/js/HotelController.js"></script>
     <script src="/Assets/travorama20/angularDirectory/search/hotelSearch.service.js"></script>
     <script type="text/javascript" src="/Assets/js/jquery.ui.datepicker-id.js"></script>
+    <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCRAmMz6GPXsXi1pZAl5QUsjNTcY0ZfqVA&callback=initMap">
+    </script>
+    <script type="text/javascript">
+        function initMap() {
+            var myLatLng = { lat: @lat, lng: @lng };
+
+            var map = new google.maps.Map(document.getElementById('map-canvas'), {
+                zoom: 15,
+                center: myLatLng,
+                mapTypeControl: false,
+                streetViewControl: false,
+                fullscreenControl: false
+            });
+
+            var marker = new google.maps.Marker({
+                position: myLatLng,
+                map: map,
+                title: '@hotelName'
+            });
+        }
+    </script>
 }
 
 <div class="travorama-hotel-mobile" ng-init="init(@Newtonsoft.Json.JsonConvert.SerializeObject(Model))">
@@ -132,6 +157,9 @@
             </div>
             <div class="dh-location sm-txt">
                 {{hotel.address}} {{hotel.area}} {{hotel.city}} {{hotel.postalCd}}, {{hotel.country}}
+            </div>
+            <div class="map-hotel">
+                <div id="map-canvas"></div>
             </div>
             <div class="dh-listing">
                 <div class="dh-list-title bold-txt lg-txt darkgrey-txt">Informasi Kamar & Harga </div>
