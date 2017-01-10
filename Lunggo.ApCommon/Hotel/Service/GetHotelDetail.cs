@@ -110,64 +110,64 @@ namespace Lunggo.ApCommon.Hotel.Service
                 }    
             }
         }
-        public List<HotelRoom> SetRoomPerRate(List<HotelRoom> hotelRoom)
-        {
-            var roomList = new List<HotelRoom>();
-            foreach (var room in hotelRoom)
-            {
+        //public List<HotelRoom> SetRoomPerRate(List<HotelRoom> hotelRoom)
+        //{
+        //    var roomList = new List<HotelRoom>();
+        //    foreach (var room in hotelRoom)
+        //    {
 
-                foreach (var rate in room.Rates)
-                {
-                    var singleRoom = new HotelRoom
-                    {
-                        RoomCode = room.RoomCode,
-                        RoomName = room.RoomName,
-                        Type = room.Type,
-                        TypeName = room.TypeName,
-                        Images = room.Images,
-                        Facilities = room.Facilities,
-                        characteristicCd = room.characteristicCd,
-                        SingleRate = rate
-                    };
-                    roomList.Add(singleRoom);
-                }
-            }
-            return roomList;
-        }
+        //        foreach (var rate in room.Rates)
+        //        {
+        //            var singleRoom = new HotelRoom
+        //            {
+        //                RoomCode = room.RoomCode,
+        //                RoomName = room.RoomName,
+        //                Type = room.Type,
+        //                TypeName = room.TypeName,
+        //                Images = room.Images,
+        //                Facilities = room.Facilities,
+        //                characteristicCd = room.characteristicCd,
+        //                SingleRate = rate
+        //            };
+        //            roomList.Add(singleRoom);
+        //        }
+        //    }
+        //    return roomList;
+        //}
 
-        public List<HotelRoom> FilterRoomByCapacity(List<HotelRoom> rooms)
-        {
-            var maxPax = 0;
-            var maxAdult = 0;
-            var maxChild = 0;
-            var roomList = new List<HotelRoom>();
-            //Take Max Pax first
-            foreach (var room in rooms)
-            {
-                var totalPax = room.SingleRate.AdultCount + room.SingleRate.ChildCount;
-                if (maxPax == 0)
-                {
-                    maxPax = totalPax;
-                    maxAdult = room.SingleRate.AdultCount;
-                    maxChild = room.SingleRate.ChildCount;
-                }
-                if (totalPax > maxPax)
-                {
-                    maxPax = totalPax;
-                    maxAdult = room.SingleRate.AdultCount;
-                    maxChild = room.SingleRate.ChildCount;
-                }
-            }
+        //public List<HotelRoom> FilterRoomByCapacity(List<HotelRoom> rooms)
+        //{
+        //    var maxPax = 0;
+        //    var maxAdult = 0;
+        //    var maxChild = 0;
+        //    var roomList = new List<HotelRoom>();
+        //    //Take Max Pax first
+        //    foreach (var room in rooms)
+        //    {
+        //        var totalPax = room.SingleRate.AdultCount + room.SingleRate.ChildCount;
+        //        if (maxPax == 0)
+        //        {
+        //            maxPax = totalPax;
+        //            maxAdult = room.SingleRate.AdultCount;
+        //            maxChild = room.SingleRate.ChildCount;
+        //        }
+        //        if (totalPax > maxPax)
+        //        {
+        //            maxPax = totalPax;
+        //            maxAdult = room.SingleRate.AdultCount;
+        //            maxChild = room.SingleRate.ChildCount;
+        //        }
+        //    }
 
-            foreach (var room in rooms)
-            {
-                if (room.SingleRate.AdultCount == maxAdult && room.SingleRate.ChildCount == maxChild)
-                {
-                    roomList.Add(room);
-                }
-            }
-            return roomList;
-        } 
+        //    foreach (var room in rooms)
+        //    {
+        //        if (room.SingleRate.AdultCount == maxAdult && room.SingleRate.ChildCount == maxChild)
+        //        {
+        //            roomList.Add(room);
+        //        }
+        //    }
+        //    return roomList;
+        //} 
 
     }
 }

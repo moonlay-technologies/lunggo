@@ -51,10 +51,40 @@ namespace Lunggo.ApCommon.Hotel.Service
 
         public SearchHotelOutput DoSearchByLocation(SearchHotelInput input)
         {
-            Guid generatedSearchId = Guid.NewGuid();
+            var occupancies = PreProcessOccupancies(input.Occupancies);
+            var searchId = GenerateSearchId(input, occupancies);
+            var getSearchDataFromCache = GetSearchHotelResultFromCache(searchId);
+            if (getSearchDataFromCache != null)
+            {
+                List<HotelDetail> firstPageHotelDetail = getSearchDataFromCache.HotelDetails;
+
+                //Sorting
+                if (firstPageHotelDetail != null) firstPageHotelDetail = SortHotel(firstPageHotelDetail, input.SortingParam);
+                input.Page = input.Page != 0 ? input.Page : 1;
+                input.PerPage = input.PerPage != 0 ? input.PerPage : 100;
+                int totalPage = (int)Math.Ceiling((decimal)getSearchDataFromCache.HotelDetails.Count / input.PerPage);
+                firstPageHotelDetail = SetPagination(firstPageHotelDetail, input.Page, input.PerPage);
+                return new SearchHotelOutput
+                {
+                    IsSuccess = true,
+                    SearchId = getSearchDataFromCache.SearchId,
+                    DestinationName = getSearchDataFromCache.DestinationName,
+                    FilteredHotelCount = getSearchDataFromCache.HotelDetails.Count,
+                    HotelDetailLists = ConvertToHotelDetailForDisplay(firstPageHotelDetail),
+                    Page = input.Page,
+                    PerPage = input.PerPage,
+                    PageCount = totalPage,
+                    ReturnedHotelCount = firstPageHotelDetail.Count,
+                    TotalHotelCount = getSearchDataFromCache.HotelDetails.Count,
+                    HotelFilterDisplayInfo = getSearchDataFromCache.HotelFilterDisplayInfo,
+                    MaxPrice = getSearchDataFromCache.MaxPrice,
+                    MinPrice = getSearchDataFromCache.MinPrice,
+                };
+            }
+            //Guid generatedSearchId = Guid.NewGuid();
             var hotelBedsClient = new HotelBedsSearchHotel();
             var allCurrency = Currency.GetAllCurrencies();
-            SaveAllCurrencyToCache(generatedSearchId.ToString(), allCurrency);
+            SaveAllCurrencyToCache(searchId, allCurrency);
             var request = new SearchHotelCondition();
             var detailDestination = GetLocationById(input.Location);
 
@@ -65,7 +95,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                 request.CheckIn = input.CheckIn;
                 request.Nights = input.Nights;
                 request.Checkout = input.CheckIn.AddDays(input.Nights);
-                request.SearchId = generatedSearchId.ToString();
+                request.SearchId = searchId;
             }
             else
             {
@@ -73,7 +103,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                 request.Checkout = input.CheckIn.AddDays(input.Nights);
                 request.Nights = input.Nights;
                 request.Occupancies = input.Occupancies;
-                request.SearchId = generatedSearchId.ToString();
+                request.SearchId = searchId;
 
                 switch (AutocompleteTypeCd.Mnemonic(detailDestination.Type))
                 {
@@ -100,7 +130,7 @@ namespace Lunggo.ApCommon.Hotel.Service
             result.Occupancies = realOccupancies;
             swAv.Stop();
             Debug.Print("AVAIALABILITY:" + swAv.Elapsed.ToString());
-            result.SearchId = generatedSearchId.ToString();
+            result.SearchId = searchId;
 
 
             if (result.HotelDetails == null || result.HotelDetails.Count == 0)
@@ -442,6 +472,28 @@ namespace Lunggo.ApCommon.Hotel.Service
                 }
             }
             return shortlistHotel;
+        }
+
+        public string GenerateSearchId(SearchHotelInput input, List<Occupancy> occupancies)
+        {
+            if (input == null)
+                return null;
+            string generatedSearchId = "";
+            if (input.HotelCode != 0)
+            {
+                generatedSearchId = input.CheckIn.Date + "|" + input.CheckIn.AddDays(input.Nights).Date + "|" + input.HotelCode;
+            }
+            else
+            {
+                generatedSearchId = input.CheckIn.Date + "|" + input.CheckIn.AddDays(input.Nights).Date + "|" + input.Location;
+            }
+            
+            foreach (var occupancy in occupancies)
+            {
+                var occStringJoin = occupancy.AdultCount + "~" + occupancy.ChildCount + "|" + string.Join("~", occupancy.ChildrenAges);
+                generatedSearchId = generatedSearchId + "|" + occStringJoin;
+            }
+            return generatedSearchId;
         }
 
         public List<Occupancy> PreProcessOccupancies(List<Occupancy> paxData)

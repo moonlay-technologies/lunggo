@@ -19,14 +19,14 @@ namespace Lunggo.ApCommon.Hotel.Service
             var redisService = RedisService.GetInstance();
             var redisKey = "searchId:" + searchId;
             var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
-            var redisValue =  currencies.Serialize() ;
+            var redisValue =  currencies.Serialize();
             //var i = 1;
 
             for (var i = 0; i < ApConstant.RedisMaxRetry; i++)
             {
                 try
                 {
-                    redisDb.StringSet(redisKey, redisValue);
+                    redisDb.StringSet(redisKey, redisValue, TimeSpan.FromMinutes(30));
                     return;
                 }       
                 catch
@@ -35,6 +35,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                 }
             }           
         }
+
 
         public Dictionary<string, Currency> GetAllCurrenciesFromCache(string searchId)
         {
