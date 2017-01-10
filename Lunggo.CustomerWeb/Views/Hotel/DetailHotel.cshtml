@@ -7,7 +7,7 @@
     ViewBag.AngularController = "hotelDetailController";
 }
 @{
-    var loc = ToTitleCase(Model.HotelDetailData.HotelName + ", " + Model.HotelDetailData.City);
+    var loc = Html.Raw(Model.HotelDetailData.HotelName) + ", " + Model.HotelDetailData.City;
     var hotelFac = new List<FacilityModel>();
  
     if (Model.HotelDetailData.Facilities.Business != null)

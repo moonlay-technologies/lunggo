@@ -12,7 +12,7 @@
     var hotelCd = Model.HotelCode;
     //var hotelDetail = HotelService.GetInstance().GetHotelDetailFromTableStorage(Convert.ToInt32(hotelCd));
     
-    var loc = ToTitleCase(Model.HotelDetailData.HotelName + ", " + Model.HotelDetailData.City);
+    var loc = Html.Raw(ToTitleCase(Model.HotelDetailData.HotelName) + ", " + Model.HotelDetailData.City);
     var hotelFac = new List<FacilityModel>();
 
     if (Model.HotelDetailData.Facilities.Business != null)
@@ -293,7 +293,7 @@
             
         </div>
     <div class="detail-tab spec-hotel" id="spec-menu">
-        @if (Model.HotelDetailData.Description != null && Model.HotelDetailData.Description.Length > 0)
+        @if (!string.IsNullOrEmpty(Model.HotelDetailData.Description))
         {
             <div class="sh-desc">
                 <div class="sh-title darkgrey-txt lg-txt bold-txt">Deskripsi </div>
