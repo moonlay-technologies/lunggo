@@ -75,6 +75,26 @@
     <script src="/Assets/travorama20/angularDirectory/search/hotelSearch.service.js"></script>
     <script src="/Assets/travorama20/angularDirectory/common/hotelAutocomplete.service.js"></script>
     <script type="text/javascript" src="/Assets/js/jquery.ui.datepicker-id.js"></script>
+
+    <script type="text/javascript">
+        function initMap() {
+            var myLatLng = { lat: -6.193842, lng: 106.822231 };
+            
+            var map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 12,
+                center: myLatLng
+            });
+
+            var marker = new google.maps.Marker({
+                position: myLatLng,
+                map: map,
+                title: 'Insert Hotel Name Here!'
+            });
+        }
+    </script>
+    <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCRAmMz6GPXsXi1pZAl5QUsjNTcY0ZfqVA&callback=initMap">
+    </script>
 }
 
 @Html.Partial("/Views/Shared/Desktop/_PageSlider.cshtml")
@@ -204,6 +224,7 @@
                     <ul class=" col-right-hotel mh-container">
                         <li class="mh-list"><a href="#menu-facility">Fasilitas Hotel</a></li>
                         <li class="mh-list"><a href="#menu-desc">Deskripsi Hotel</a></li>
+                        <li class="mh-list"><a href="#menu-map">Peta Hotel</a></li>
                         <li class="mh-list" ng-show="hotel.policy != null && hotel.policy.length > 0"><a href="#menu-tnc">Syarat & Ketentuan Hotel</a></li>
                     </ul>
                 </div>
@@ -380,6 +401,23 @@
                                     </ul>
                                 </div>
                             </div>
+                            <div class="accordion-title accordion md-txt" id="menu-map">Peta Hotel</div>
+                            <div class="accordion-content show">
+                                <div class="map-title">
+                                    <div class="title-wrapper clearfix">
+                                        <div class="blue-txt bold-txt md-txt">{{hotel.hotelName}}</div>
+                                        <span class="star" ng-if="hotel.starRating == 1"></span>
+                                        <span class="star star-2" ng-if="hotel.starRating == 2"></span>
+                                        <span class="star star-3" ng-if="hotel.starRating == 3"></span>
+                                        <span class="star star-4" ng-if="hotel.starRating == 4"></span>
+                                        <span class="star star-5" ng-if="hotel.starRating == 5"></span>
+                                    </div>
+                                    <div class="map-location" style="text-transform: capitalize">{{hotel.address}} {{hotel.area}} {{hotel.city}} {{hotel.postalCd}}, {{hotel.country}}</div>
+                                </div>
+                                <div class="map-hotel">
+                                    <div id="map"></div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -409,7 +447,7 @@
             </div>
         </div>
     </div>
-    
+
     <div class="bookfailed-popup" ng-show="expired">
         <div class="overlay-content">
             <section style="padding-top:60px; padding-left:225px;">

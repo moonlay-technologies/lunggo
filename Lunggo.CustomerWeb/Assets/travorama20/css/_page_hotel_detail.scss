@@ -519,6 +519,38 @@
                 }
                 .tnc-hotel {margin-top: 15px;}
             }
+            .map-title {
+                margin-bottom: 10px;
+                margin: 0 40px 15px;
+                &:before {
+                    width: 30px;
+                    height: 40px;
+                    @extend .hotel-blue-icon;
+                    display: inline-block;
+                    content: '';
+                    position: absolute;
+                    margin-left: -40px;
+                    margin-top: 0;
+                }
+            }
+            .title-wrapper {margin-bottom: 10px;
+                div {    
+                    float: left;
+                    margin-right: 15px;
+                }
+                .star {
+                    float: left;
+                    position: relative;
+                }
+            }
+            .map-hotel {
+                width: 100%;
+                height: 400px;
+                #map {
+                    width: 100%;
+                    height: 100%;
+                }
+            }
         }
         .ih-row {
             border-top: 1px solid #ccc;
