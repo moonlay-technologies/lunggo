@@ -25,7 +25,8 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
     $scope.booking = false;
     $scope.expired = false;
     $scope.showPopularDestinations = false;
- 
+    //Variabel sementara
+    $scope.hideRoomDetail = true;
     $('#inputLocationHotel').on('click', function () {
         $scope.showPopularDestinations = true;
     });

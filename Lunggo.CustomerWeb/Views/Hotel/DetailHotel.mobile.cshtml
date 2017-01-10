@@ -1,4 +1,4 @@
-﻿@using Lunggo.ApCommon.Hotel.Service
+﻿@using Lunggo.Framework.Extension
 @model Lunggo.CustomerWeb.Models.HotelDetailModel.HotelDetail
 @{
     Layout = "/Views/Shared/mobile/_LayoutMobile.cshtml";
@@ -10,13 +10,91 @@
 @{
 
     var hotelCd = Model.HotelCode;
-    var hotelDetail = HotelService.GetInstance().GetHotelDetailFromTableStorage(Convert.ToInt32(hotelCd));
+    //var hotelDetail = HotelService.GetInstance().GetHotelDetailFromTableStorage(Convert.ToInt32(hotelCd));
     
-    var loc = ToTitleCase(hotelDetail.HotelName + ", " + hotelDetail.City);
+    var loc = ToTitleCase(Model.HotelDetailData.HotelName + ", " + Model.HotelDetailData.City);
+    var hotelFac = new List<FacilityModel>();
+
+    if (Model.HotelDetailData.Facilities.Business != null)
+    {
+        hotelFac.Add(SetFacilityForDisplay(Model.HotelDetailData.Facilities.Business, "Business"));
+    }
+
+    if (Model.HotelDetailData.Facilities.Entertainment != null)
+    {
+        hotelFac.Add(SetFacilityForDisplay(Model.HotelDetailData.Facilities.Entertainment, "Entertain"));
+    }
+
+    if (Model.HotelDetailData.Facilities.General != null)
+    {
+        hotelFac.Add(SetFacilityForDisplay(Model.HotelDetailData.Facilities.General, "General"));
+    }
+
+    if (Model.HotelDetailData.Facilities.Health != null)
+    {
+        hotelFac.Add(SetFacilityForDisplay(Model.HotelDetailData.Facilities.Health, "Health"));
+    }
+
+    if (Model.HotelDetailData.Facilities.Meal != null)
+    {
+        hotelFac.Add(SetFacilityForDisplay(Model.HotelDetailData.Facilities.Meal, "Meal"));
+    }
+
+    if (Model.HotelDetailData.Facilities.Other != null)
+    {
+        hotelFac.Add(SetFacilityForDisplay(Model.HotelDetailData.Facilities.Other, "Other"));
+    }
+
+    if (Model.HotelDetailData.Facilities.Sport != null)
+    {
+        hotelFac.Add(SetFacilityForDisplay(Model.HotelDetailData.Facilities.Sport, "Sport"));
+    }    
 
 }
 
 @functions{
+
+    public class FacilityModel
+    {
+        public List<List<String>> FacilityList { get; set; }
+        public string FacilityGroup { get; set; }
+    }
+
+    public FacilityModel SetFacilityForDisplay(List<string> facilities, string groupName)
+    {
+        var facilityModel = new FacilityModel
+        {
+            FacilityList = new List<List<string>>()
+        };
+        for (var k = 0; k <= 3; k++)
+        {
+            facilityModel.FacilityList.Add(new List<string>());
+        }
+
+        facilityModel.FacilityGroup = groupName;
+        for (var i = 0; i < facilities.Count; i++)
+        {
+            if (i % 4 == 0)
+            {
+                facilityModel.FacilityList[0].Add(facilities[i]);
+            }
+            else if (i % 4 == 1)
+            {
+                facilityModel.FacilityList[1].Add(facilities[i]);
+            }
+            else if (i % 4 == 2)
+            {
+                facilityModel.FacilityList[2].Add(facilities[i]);
+            }
+
+            else if (i % 4 == 3)
+            {
+                facilityModel.FacilityList[3].Add(facilities[i]);
+            }
+        }
+
+        return facilityModel;
+    }
 
     public string ToTitleCase(string input)
     {
@@ -67,6 +145,9 @@
     <script>
         var loc = '@loc';
     </script>
+    <script>
+        var hotelImages = '@Html.Raw(Model.HotelDetailData.ImageUrl.Serialize())';
+    </script>
     <script src="/Assets/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="/Assets/vendor/slick/slick.min.js"></script>
     <script type="text/javascript" src="/Assets/vendor/dotdotdot/jquery.dotdotdot.min.js"></script>
@@ -94,36 +175,51 @@
     <div class="detail-hotel-container">
         <div class="detail-tab detail-hotel" id="detail-menu">
             <div class="dh-slider">
-                <div class="item" @*ng-if="hotel.images.length >= 1"*@>
-                    <div class="dh-img" style="background-image: url({{hotel.images[0]}});"></div>
+                <div class="item" @*ng-if="hotelImages.length >= 1"*@>
+                    <div class="dh-img" style="background-image: url({{hotelImages[0]}});"></div>
                 </div>
-                <div class="item" @*ng-if="hotel.images.length >= 2"*@>
-                    <div class="dh-img" style="background-image: url({{hotel.images[1]}});"></div>
+                <div class="item" @*ng-if="hotelImages.length >= 2"*@>
+                    <div class="dh-img" style="background-image: url({{hotelImages[1]}});"></div>
                 </div>
-                <div class="item" @*ng-if="hotel.images.length >= 3"*@>
-                    <div class="dh-img" style="background-image: url({{hotel.images[2]}});"></div>
+                <div class="item" @*ng-if="hotelImages.length >= 3"*@>
+                    <div class="dh-img" style="background-image: url({{hotelImages[2]}});"></div>
                 </div>
-                <div class="item" @*ng-if="hotel.images.length >= 4"*@>
-                    <div class="dh-img" style="background-image: url({{hotel.images[3]}});"></div>
+                <div class="item" @*ng-if="hotelImages.length >= 4"*@>
+                    <div class="dh-img" style="background-image: url({{hotelImages[3]}});"></div>
                 </div>
-                <div class="item" @*ng-if="hotel.images.length >= 5"*@>
-                    <div class="dh-img" style="background-image: url({{hotel.images[4]}});"></div>
+                <div class="item" @*ng-if="hotelImages.length >= 5"*@>
+                    <div class="dh-img" style="background-image: url({{hotelImages[4]}});"></div>
                 </div>
-                <div class="item" @*ng-if="hotel.images.length >= 6"*@>
-                    <div class="dh-img" style="background-image: url({{hotel.images[5]}});"></div>
+                <div class="item" @*ng-if="hotelImages.length >= 6"*@>
+                    <div class="dh-img" style="background-image: url({{hotelImages[5]}});"></div>
                 </div>
                 <div ng-show="loading" class="text-center" style="height: 320px;">
                     <img src="/Assets/images/load.gif" class="img-loading">
             </div>
             </div>
             <div class="dh-title">
-                <div class="dh-name lg-txt blue-txt bold-txt">{{hotel.hotelName}}</div>
+                <div class="dh-name lg-txt blue-txt bold-txt">@Model.HotelDetailData.HotelName</div>
                 <div class="clearfix">
-                    <div class="col-half" ng-if="hotel.starRating == 1"><span class="star"></span></div>
-                    <div class="col-half" ng-if="hotel.starRating == 2"><span class="star star-2"></span></div>
-                    <div class="col-half" ng-if="hotel.starRating == 3"><span class="star star-3"></span></div>
-                    <div class="col-half" ng-if="hotel.starRating == 4"><span class="star star-4"></span></div>
-                    <div class="col-half" ng-if="hotel.starRating == 5"><span class="star star-5"></span></div>
+                    @switch (Model.HotelDetailData.StarRating)
+                    {
+                        case 1:
+                            <div class="col-half"><span class="star"></span></div>
+                            break;
+                        case 2:
+                            <div class="col-half"><span class="star star-2"></span></div>
+                            break;
+                        case 3:
+                            <div class="col-half"><span class="star star-3"></span></div>
+                            break;
+                        case 4:
+                            <div class="col-half"><span class="star star-4"></span></div>
+                            break;
+                        case 5:
+                            <div class="col-half"><span class="star star-5"></span></div>
+                            break;
+
+                    }
+                    
                     @*<div class="col-half share-group">
                         <a href="#" class="like"></a>
                         <a href="#" class="share"></a>
@@ -131,9 +227,9 @@
                 </div>
             </div>
             <div class="dh-location sm-txt">
-                {{hotel.address}} {{hotel.area}} {{hotel.city}} {{hotel.postalCd}}, {{hotel.country}}
+                @ToTitleCase(Model.HotelDetailData.Address) @ToTitleCase(Model.HotelDetailData.AreaName) @Model.HotelDetailData.City @Model.HotelDetailData.PostalCode, @Model.HotelDetailData.CountryName
             </div>
-            <div class="dh-listing">
+            <div class="dh-listing" ng-hide="hideRoomDetail">
                 <div class="dh-list-title bold-txt lg-txt darkgrey-txt">Informasi Kamar & Harga </div>
                 <ul class="dh-list-container">
                     <li ng-show="$index+1 <= roomCount" ng-repeat="room in hotel.room track by $index">
@@ -175,10 +271,10 @@
                                 </div>
                                 <a href="#" class="blue-txt downline-txt sm-txt" ng-click="PageConfig.SetOverlay('detail-room'); seeRoomDetail(room)">Detail Info Kamar</a>
                                 @*<div class="facility">
-                                        <span class="wifi"></span>
-                                        <span class="meal"></span>
-                                        <span class="ac"></span>
-                                    </div>*@
+                                <span class="wifi"></span>
+                                <span class="meal"></span>
+                                <span class="ac"></span>
+                            </div>*@
                                 <a ng-click="bookRoom(room)" class="checkout-btn btn btn-yellow small">PESAN</a>
                             </div>
                         </div>
@@ -191,46 +287,100 @@
                         <span class="more" ng-show="roomCount == minRoomCount">semua</span>
                         <span class="less" ng-show="roomCount == maxRoomCount">sebagian</span>
                     </a>
-            </div>
+                </div>
             </div>
         </div>
             
         </div>
-        <div class="detail-tab spec-hotel" id="spec-menu">
-            <div class="sh-desc" ng-show="hotel.description.length > 0">
+    <div class="detail-tab spec-hotel" id="spec-menu">
+        @if (Model.HotelDetailData.Description != null && Model.HotelDetailData.Description.Length > 0)
+        {
+            <div class="sh-desc">
                 <div class="sh-title darkgrey-txt lg-txt bold-txt">Deskripsi </div>
                 <div ng-show="loading" class="text-center">
                     <img src="/Assets/images/load.gif" style="width: 30px; height: 30px; margin-top: 5%;">
                 </div>
                 <div class="sh-txt darkgrey-txt">
-                    <span ng-repeat="description in hotel.description track by $index">{{description}}<br /></span>
+                    <span>@Model.HotelDetailData.Description<br /></span>
                 </div>
                 <a class="toggle"><span class="sh-open"></span><span class="sh-close"></span></a>
             </div>
-            <div class="sh-facility">
-                <div class="sh-title darkgrey-txt lg-txt bold-txt">Fasilitas Utama Hotel</div>
-                @*<div ng-show="loading" class="text-center">
+        }
+     @if (hotelFac != null && hotelFac.Count > 0)
+     {
+         <div class="sh-facility">
+             <div class="sh-title darkgrey-txt lg-txt bold-txt">Fasilitas Utama Hotel</div>
+             @*<div ng-show="loading" class="text-center">
                     <img src="/Assets/images/load.gif" style="width: 30px; height: 30px; margin-top: 5%;">
                     </div>*@
-                <div class="sh-list-facility grey-txt clearfix">
-                    <div class="sh-row clearfix" ng-repeat="facilities in hotel.facilities track by $index" ng-hide="facilities === undefined">
-                        <div class="col-2" ng-class="{'fac-general':facilities.facilityGroup == 'general',
-                                                                        'fac-health':facilities.facilityGroup == 'health',
-                                                                        'fac-sport':facilities.facilityGroup == 'sport',
-                                                                        'fac-business':facilities.facilityGroup == 'business',
-                                                                        'fac-meal':facilities.facilityGroup == 'meal',
-                                                                        'fac-ent':facilities.facilityGroup == 'entertainment',
-                                                                        'fac-other':facilities.facilityGroup == 'other'}">
-                         
-                        </div>
-                        <div class="col-8 clearfix">
-                            <ul class="col-half blue-list" ng-repeat="facilityList in facilities.facilityList.slice(0, facilities.facilityList.length) track by $index">
-                                <li ng-repeat="facilityName in facilityList track by $index"> {{facilityName}}</li>
-                            </ul>
-                        </div>
-                    </div>
-                    
-                    @*<ul class="col-half sh-list">
+             <div class="sh-list-facility grey-txt clearfix">
+                
+                 @foreach (var facility in hotelFac)
+                 {
+                     <div class="sh-row clearfix">
+                         <div class="col-2">
+                             @if (facility.FacilityGroup == "General")
+                             {
+                                 <div class="col-2 fac-general">
+                                     @facility.FacilityGroup
+                                 </div>
+                             }
+                             else if (facility.FacilityGroup == "Health")
+                             {
+                                 <div class="col-2 fac-health">
+                                     @facility.FacilityGroup
+                                 </div>
+                             }
+                             else if (facility.FacilityGroup == "Sport")
+                             {
+                                 <div class="col-2 fac-sport">
+                                     @facility.FacilityGroup
+                                 </div>
+                             }
+                             else if (facility.FacilityGroup == "Business")
+                             {
+                                 <div class="col-2 fac-business">
+                                     @facility.FacilityGroup
+                                 </div>
+                             }
+                             else if (facility.FacilityGroup == "Meal")
+                             {
+                                 <div class="col-2 fac-meal">
+                                     @facility.FacilityGroup
+                                 </div>
+                             }
+                             else if (facility.FacilityGroup == "Entertain")
+                             {
+                                 <div class="col-2 fac-ent">
+                                     @facility.FacilityGroup
+                                 </div>
+                             }
+                             else if (facility.FacilityGroup == "Other")
+                             {
+                                 <div class="col-2 fac-other">
+                                     @facility.FacilityGroup
+                                 </div>
+                             }
+                         </div>
+
+                         <div class="col-8 clearfix">
+                             @foreach (var facilityList in facility.FacilityList)
+                             {
+                                 <ul class="col-half blue-list">
+                                     @foreach (var name in facilityList)
+                                     {
+                                         <li>@name</li>
+                                     }
+                                 </ul>
+                             }
+                                    
+                         </div>
+                     </div>
+                 }
+                 
+
+
+                 @*<ul class="col-half sh-list">
                         <li class="bed-blue">Bed</li>
                         <li class="meal-blue">Breakfast</li>
                         <li class="bell-blue">Room Service</li>
@@ -250,21 +400,30 @@
                         <li class="car-blue">Hotel Car</li>
                         <li class="ac-blue">AC</li>
                     </ul>*@
-                </div>
-                * Fasilitas Berbayar
+             </div>
+             * Fasilitas Berbayar
+         </div>
+     }
+     @if (Model.HotelDetailData.Policy != null && Model.HotelDetailData.Policy.Count > 0)
+     {
+        <div class="sh-policy">
+            <div class="sh-title darkgrey-txt lg-txt bold-txt">Perlu Diingat</div>
+            <div ng-show="loading" class="text-center">
+                <img src="/Assets/images/load.gif" style="width: 30px; height: 30px; margin-top: 5%;">
             </div>
-            <div class="sh-policy" ng-show="hotel.policy.length > 0">
-                <div class="sh-title darkgrey-txt lg-txt bold-txt">Perlu Diingat</div>
-                <div ng-show="loading" class="text-center">
-                    <img src="/Assets/images/load.gif" style="width: 30px; height: 30px; margin-top: 5%;">
-            </div>
-                <div class="sh-policy-txt darkgrey-txt">
-                    <ul>
-                        <li ng-repeat="policy in hotel.policy track by $index">{{policy}}</li>
-                    </ul>
-                </div>
+            <div class="sh-policy-txt darkgrey-txt">
+                <ul>
+                    @foreach (var pol in Model.HotelDetailData.Policy)
+                    {
+                        <li>@pol</li>
+                    }
+                    
+                </ul>
             </div>
         </div>
+     }
+        
+    </div>
     <div class="overlay overlay--theme--blue overlay--detail-room" ng-class="{ 'active' : (PageConfig.ActiveOverlay == 'detail-room') }">
         <header class="overlay__header">
             <h3 class="overlay__title">
@@ -390,5 +549,4 @@
             </div>
         </div>
     </div>
-</div>
 </div>

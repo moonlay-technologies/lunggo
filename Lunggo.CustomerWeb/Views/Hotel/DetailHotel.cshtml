@@ -1,5 +1,4 @@
-﻿@using Lunggo.ApCommon.Hotel.Service
-@using Lunggo.Framework.Extension
+﻿@using Lunggo.Framework.Extension
 @model Lunggo.CustomerWeb.Models.HotelDetailModel.HotelDetail
 @{
     Layout = "/Views/Shared/Desktop/_LayoutDesktop.cshtml";
@@ -305,7 +304,7 @@
                         }                    
                     </ul>
                 </div>
-                <div class="room clearfix">
+                <div class="room clearfix" ng-hide="hideRoomDetail">
                     <div class="top-title clearfix">
                         <div class="col-left-rs bg-title"><b>Pilih</b> Kamar </div>
                         <div class="col-right-rs total-day">{{hotel.nightCount}} Malam <b>( {{hotel.checkinDate | date : 'EEEE, dd MMM yyyy'}} - {{hotel.checkoutDate | date : 'EEEE, dd MMM yyyy'}} )</b></div>
@@ -492,7 +491,7 @@
                                                         </div>
                                                     }
                                                 </div>
-                                                <div class="col-8" hid>
+                                                <div class="col-8">
                                                     @foreach (var facilityList in facility.FacilityList)
                                                     {
                                                         <div class="ih-right quarter clearfix">
