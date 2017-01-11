@@ -206,8 +206,8 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
             resource.query({}, {
                 "hotelCode": hotelCode,
                 "nights": nightcount,
-                "checkIn": moment(cekin, "YYYY-MM-DD"),
-                "checkout": moment(cekout, "YYYY-MM-DD"),
+                "checkIn": moment.utc(cekin, "YYYY-MM-DD"),
+                "checkout": moment.utc(cekout, "YYYY-MM-DD"),
                 "occupancies": searchParamObject.occupancies.slice(0, totalOcc)
             }).$promise.then(function(data) {
                 $scope.searchDone = true;

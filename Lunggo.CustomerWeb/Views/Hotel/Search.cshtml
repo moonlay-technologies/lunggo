@@ -1,4 +1,5 @@
 ﻿@using Lunggo.ApCommon.Hotel.Service
+@using Lunggo.CustomerWeb.Models
 @using Lunggo.Framework.Extension
 @model Lunggo.CustomerWeb.Models.HotelSearchApiRequest
 @{
@@ -71,7 +72,10 @@
     <script src="/Assets/travorama20/js/hotelSearchController.js"></script>
 }
 
-@Html.Partial("/Views/Shared/Desktop/_PageSlider.cshtml")
+@Html.Partial("/Views/Shared/Desktop/_PageSlider.cshtml", new HotelLocation
+{
+    Location = loc
+})
 <div class="travorama-hotel" ng-init="init(@Model.Serialize())">
     <div class="container">
         <div class="search-list">

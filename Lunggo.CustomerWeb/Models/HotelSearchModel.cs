@@ -32,24 +32,6 @@ namespace Lunggo.CustomerWeb.Models
    
     public class HotelSearchApiRequest
     {
-        //[JsonProperty("searchHotelType")]
-        //public string SearchHotelType { get; set; }
-        //[JsonProperty("location")]
-        //public string Location { get; set; }
-        //[JsonProperty("checkinDate")]
-        //public DateTime CheckinDate { get; set; }
-        //[JsonProperty("checkoutDate")]
-        //public DateTime CheckoutDate { get; set; }
-        //[JsonProperty("adultCount")]
-        //public int AdultCount { get; set; }
-        //[JsonProperty("childCount")]
-        //public int ChildCount { get; set; }
-        //[JsonProperty("nightCount")]
-        //public int NightCount { get; set; }
-        //[JsonProperty("roomCount")]
-        //public int RoomCount { get; set; }
-        //[JsonProperty("childrenAges")]
-        //public string[] ChildrenAges { get; set; }
         [JsonProperty("searchParam")]
         public string SearchParam { get; set; }
         [JsonProperty("searchParamObject")]
@@ -89,10 +71,6 @@ namespace Lunggo.CustomerWeb.Models
 
                 SearchParamObject.Occupancies.Add(occupancy);
             }
-            //SearchParamObject.AdultCount = int.Parse(parameters[(int)RequestParam.AdultCount]);
-            //SearchParamObject.ChildCount = int.Parse(parameters[(int)RequestParam.ChildCount]);
-            
-            //SearchParamObject.ChildrenAges = parameters[(int)RequestParam.ChildrenAges].Split(',').ToArray<string>();
             SearchParam = query.ToString();
         }
     }
@@ -115,16 +93,6 @@ namespace Lunggo.CustomerWeb.Models
         public List<Occupancy> Occupancies { get; set; }
     }
 
-    public class HotelSearchOccupancy
-    {
-        [JsonProperty("adultCount")]
-        public int AdultCount { get; set; }
-        [JsonProperty("childCount")]
-        public int ChildCount { get; set; }
-
-        [JsonProperty("childrenAges")]
-        public string[] ChildrenAges { get; set; }
-    }
     public class HotelRequestFilter
     {
         [JsonProperty("priceFilter")]
@@ -267,5 +235,13 @@ namespace Lunggo.CustomerWeb.Models
         public bool HighestStar { get; set; }
         [JsonProperty("highestReviewScore")]
         public bool HighestReviewScore { get; set; }
+    }
+
+    public class HotelLocation
+    {
+        [JsonProperty("location")]
+        public string Location{ get; set; }
+        [JsonProperty("code")]
+        public int Code { get; set; }
     }
 }

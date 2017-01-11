@@ -1,4 +1,5 @@
-﻿@{
+﻿@model Lunggo.CustomerWeb.Models.HotelLocation
+@{
     //tried to load angular more than once
     //Layout = "/Views/Shared/mobile/_LayoutMobile.cshtml";
     ViewBag.BodyClass = "page-hotel page-search";
@@ -11,7 +12,7 @@
 
 <div class="hotel-summary">
     <div class="summary-left">
-        <div style="text-transform:capitalize"><b>{{loc}}</b>, {{hotelSearch.roomCount}} Kamar</div>
+        <div style="text-transform:capitalize"><b>@Model.Location</b>, {{hotelSearch.roomCount}} Kamar</div>
         <div class="semibold-txt">{{hotelSearch.destinationNightCount}} Malam ({{hotelSearch.destinationCheckinDate | date : 'EEEE, dd MMM yyyy'}} - {{hotelSearch.destinationCheckoutDate | date : 'EEEE, dd MMM yyyy'}})</div>
     </div>
     <a ng-click="PageConfig.SetOverlay('hotel-form')" class="summary-right"><span>GANTI</span></a>

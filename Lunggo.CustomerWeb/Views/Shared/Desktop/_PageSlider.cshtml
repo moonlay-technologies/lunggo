@@ -1,4 +1,5 @@
-﻿@{
+﻿@model Lunggo.CustomerWeb.Models.HotelLocation
+@{
     ViewBag.BodyClass = "page-hotel page-slider";
 }
 
@@ -11,8 +12,8 @@
     <div class="container clearfix">
         <div class="col-8">
             <div class="result-form-left">
-                <span class="md-txt" ng-bind-html="loc">Hasil Pencarian Hotel di: <b>{{loc}}</b ></span><br /> 
-                <span class="">{{hotelSearch.destinationNightCount}} Malam <b>( {{hotelSearch.destinationCheckinDate | date : 'EEEE, dd MMM yyyy'}} - {{hotelSearch.destinationCheckoutDate | date : 'EEEE, dd MMM yyyy'}} )</b></span>
+                <span class="md-txt" ng-bind-html="loc">Hasil Pencarian Hotel di: <b>@Model.Location</b ></span><br /> 
+                <span class="">{{hotelSearch.destinationNightCount}} Malam <b>({{hotelSearch.destinationCheckinDate | date : 'EEEE, dd MMM yyyy'}} - {{hotelSearch.destinationCheckoutDate | date : 'EEEE, dd MMM yyyy'}})</b></span>
             </div>
         </div>
         <div class="col-2">

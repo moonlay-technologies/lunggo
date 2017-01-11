@@ -1,4 +1,5 @@
-﻿@using Lunggo.Framework.Extension
+﻿@using Lunggo.CustomerWeb.Models
+@using Lunggo.Framework.Extension
 @model Lunggo.CustomerWeb.Models.HotelDetailModel.HotelDetail
 @{
     Layout = "/Views/Shared/mobile/_LayoutMobile.cshtml";
@@ -9,10 +10,7 @@
 }
 @{
 
-    var hotelCd = Model.HotelCode;
-    //var hotelDetail = HotelService.GetInstance().GetHotelDetailFromTableStorage(Convert.ToInt32(hotelCd));
-    
-    var loc = Html.Raw(ToTitleCase(Model.HotelDetailData.HotelName) + ", " + Model.HotelDetailData.City);
+    var loc = Model.HotelDetailData.HotelName + ", " + Model.HotelDetailData.City;
     var hotelFac = new List<FacilityModel>();
 
     if (Model.HotelDetailData.Facilities.Business != null)
@@ -164,7 +162,10 @@
 
 <div class="travorama-hotel-mobile" ng-init="init(@Newtonsoft.Json.JsonConvert.SerializeObject(Model))">
     <div class="top-content">
-        @Html.Partial("/Views/Shared/Mobile/_Summary.cshtml")
+        @Html.Partial("/Views/Shared/Mobile/_Summary.cshtml", new HotelLocation
+        {
+            Location = loc
+        })
         <div class="hotel-detail-menu clearfix">
             <div class="hotel-detail-menu-action">
                 <a href="#" attr-link="#detail-menu">UMUM</a>

@@ -1,5 +1,5 @@
 ﻿@using Lunggo.ApCommon.Hotel.Service
-@using Lunggo.Framework.Extension
+@using Lunggo.CustomerWeb.Models
 @model Lunggo.CustomerWeb.Models.HotelSearchApiRequest
 @{
     Layout = "/Views/Shared/mobile/_LayoutMobile.cshtml";
@@ -54,7 +54,10 @@
 
 <div class="travorama-hotel-mobile" ng-init="init(@Newtonsoft.Json.JsonConvert.SerializeObject(Model))">
     <div class="top-content">
-        @Html.Partial("/Views/Shared/Mobile/_Summary.cshtml")
+        @Html.Partial("/Views/Shared/Mobile/_Summary.cshtml", new HotelLocation
+        {
+            Location = loc
+        })
         <div class="hotel-sort-filter clearfix">
             <div class="hotel-sort-filter-action">
                 <a ng-click="PageConfig.SetOverlay('hotel-filter')">FILTER</a>
