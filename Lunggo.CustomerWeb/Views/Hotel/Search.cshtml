@@ -74,7 +74,7 @@
 
 @Html.Partial("/Views/Shared/Desktop/_PageSlider.cshtml", new HotelLocation
 {
-    Location = loc
+    Location = loc, IsHotelSearch = false
 })
 <div class="travorama-hotel" ng-init="init(@Model.Serialize())">
     <div class="container">

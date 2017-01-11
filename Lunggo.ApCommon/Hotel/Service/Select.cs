@@ -17,10 +17,10 @@ namespace Lunggo.ApCommon.Hotel.Service
     {
         public SelectHotelRoomOutput SelectHotelRoom (SelectHotelRoomInput input)
         {
-            //var decryptedData = input.RegsIds.Select(DecryptRegsId).ToList();
             var rateList = new List<HotelRate>();
-            var someData = DecryptRegsId(input.RegsIds[0].RegId);
-            var hotel = GetHotelDetailFromDb(someData.HotelCode);
+            //var someData = DecryptRegsId(input.RegsIds[0].RegId);
+            var hotelCd = Convert.ToInt32(input.RegsIds[0].RegId.Split('|')[4]);
+            var hotel = GetHotelDetailFromDb(hotelCd);
             hotel.StarCode = GetSimpleCodeByCategoryCode(hotel.StarRating);
             hotel.Rooms = new List<HotelRoom>();
             var cekin = input.RegsIds[0].RegId.Split(',')[2].Split('|')[0];
@@ -69,20 +69,20 @@ namespace Lunggo.ApCommon.Hotel.Service
                         RateCommentsId = rate.RateCommentsId
                     }).ToList().First();
 
-                var searchResultData = GetSearchHotelResultFromCache(input.SearchId);
-                if (searchResultData == null)
-                {
-                    return new SelectHotelRoomOutput
-                    {
-                        Errors = new List<HotelError> { HotelError.SearchIdNoLongerValid },
-                        IsSuccess = false,
-                        ErrorMessages = new List<string> { "Search Id No Longer Valid" }
-                    };
-                }
-                foreach (var paxData in searchResultData.Occupancies)
+                //var searchResultData = GetSearchHotelResultFromCache(input.SearchId);
+                //if (searchResultData == null)
+                //{
+                //    return new SelectHotelRoomOutput
+                //    {
+                //        Errors = new List<HotelError> { HotelError.SearchIdNoLongerValid },
+                //        IsSuccess = false,
+                //        ErrorMessages = new List<string> { "Search Id No Longer Valid" }
+                //    };
+                //}
+                foreach (var paxData in input.RegsIds)
                 {
                     var splittedRateKey = newRate.RateKey.Split('|');
-                    var occ = paxData.RoomCount + "~" + paxData.AdultCount + "~" + paxData.ChildCount;
+                    var occ = paxData.RateCount + "~" + paxData.AdultCount + "~" + paxData.ChildCount;
                     splittedRateKey[9] = occ;
                     if (paxData.ChildrenAges != null)
                     {
@@ -96,7 +96,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                     var fixRateKey = string.Join("|",splittedRateKey);
                     var fixRate = new HotelRate
                     {
-                        RateCount = paxData.RoomCount,
+                        RateCount = paxData.RateCount,
                         RateKey = fixRateKey,
                         AdultCount = paxData.AdultCount,
                         Board = newRate.Board,
@@ -121,7 +121,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                                 .Select(x => x.Description)
                                 .ToList()
                     };
-                    fixRate.Price.SetSupplier(newRate.Price.Supplier/newRate.RateCount*paxData.RoomCount,
+                    fixRate.Price.SetSupplier(newRate.Price.Supplier/newRate.RateCount*paxData.RateCount,
                         newRate.Price.SupplierCurrency);
                     fixRate.Price.SetMargin(newRate.Price.Margin);
                     fixRate.Price.CalculateFinalAndLocal(newRate.Price.LocalCurrency);
@@ -129,7 +129,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                     {
                         foreach (var item in fixRate.Cancellation)
                         {
-                            item.Fee = item.Fee / newRate.RateCount * paxData.RoomCount;
+                            item.Fee = item.Fee / newRate.RateCount * paxData.RateCount;
                         }    
                     }
                     

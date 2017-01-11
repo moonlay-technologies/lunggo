@@ -1,12 +1,18 @@
-﻿<form class="hotel-form" name="hotel-form" novalidate>
+﻿@using Lunggo.CustomerWeb.Models
+@model HotelLocation
+
+<form class="hotel-form" name="hotel-form" novalidate>
     <div class="th-form clearfix">
         <div class="clearfix">
-            <div class="form-group form__hotel col-4">
-                <input type="text" value="" class="change-hotel form-control" placeholder="Kota, Wilayah atau Nama Hotel" id="inputLocationHotel"
-                       ng-init="hotelSearch.locationDisplay = loc" ng-model="hotelSearch.locationDisplay" ng-click="view.showHotelSearch = true"
-                       autocomplete="off">
-            </div>
-
+            @if (!Model.IsHotelSearch)
+            {
+                <div class="form-group form__hotel col-4">
+                    <input type="text" value="" class="change-hotel form-control" placeholder="Kota, Wilayah atau Nama Hotel" id="inputLocationHotel"
+                           ng-init="hotelSearch.locationDisplay = loc" ng-model="hotelSearch.locationDisplay" ng-click="view.showHotelSearch = true"
+                           autocomplete="off">
+                </div>
+            }
+           
             <div class="col-6 clearfix">
                 <div class="form-group form__date col-half">
                     <div class="field-container">
@@ -85,8 +91,21 @@
             </div>
         </div>
         
-        <div class="form-group form__submit pull-left">
-            <button class="btn btn-yellow btn-block btn-lg btnSubmit" ng-click="hotelSearch.getHotels(hotelSearch)">CARI HOTEL</button>
-        </div>
+        @if (Model.IsHotelSearch)
+        {
+            <div class="form-group form__submit pull-left">
+                <button class="btn btn-yellow btn-block btn-lg btnSubmit" ng-click="availableRates(hotelSearch.nightCount,
+                        hotelSearch.checkinDate, hotelSearch.checkoutDate, hotelSearch.occupancies,hotelSearch.roomCount)">
+                    CARI HOTEL
+                </button>
+            </div>
+        }
+        else
+        {
+            <div class="form-group form__submit pull-left">
+                <button class="btn btn-yellow btn-block btn-lg btnSubmit" ng-click="hotelSearch.getHotels(hotelSearch)">CARI HOTEL</button>
+            </div>
+        }
+        
     </div>
 </form>

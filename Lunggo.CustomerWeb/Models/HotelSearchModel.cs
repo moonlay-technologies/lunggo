@@ -241,7 +241,7 @@ namespace Lunggo.CustomerWeb.Models
     {
         [JsonProperty("location")]
         public string Location{ get; set; }
-        [JsonProperty("code")]
-        public int Code { get; set; }
+        [JsonProperty("isHotelSearch")]
+        public bool IsHotelSearch { get; set; }
     }
 }

@@ -1,4 +1,5 @@
-﻿@{
+﻿@using Lunggo.CustomerWeb.Models
+@{
     Layout = "/Views/Shared/mobile/_LayoutMobile.cshtml";
     ViewBag.Title = "Enjoy Your Every Moment";
     ViewBag.BodyClass = "page page-home";
@@ -151,7 +152,10 @@
             </div>
             <div id="tab-hotel" class="tab-pane tp-hotel page-hotel-mobile active">
                 <div class="form-wrapper">
-                    @Html.Partial("/Views/Shared/Mobile/_SearchHotelForm.cshtml")
+                    @Html.Partial("/Views/Shared/Mobile/_SearchHotelForm.cshtml", new HotelLocation
+                    {
+                        IsHotelSearch = false
+                    })
                 </div>
             </div>
         </div>

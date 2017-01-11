@@ -164,7 +164,7 @@
     <div class="top-content">
         @Html.Partial("/Views/Shared/Mobile/_Summary.cshtml", new HotelLocation
         {
-            Location = loc
+            Location = loc,IsHotelSearch = true
         })
         <div class="hotel-detail-menu clearfix">
             <div class="hotel-detail-menu-action">
@@ -232,10 +232,10 @@
             <div ng-show="!searchDone" class="text-center">
                 <img src="/Assets/images/load.gif" class="img-loading">
             </div>
-            <div class="dh-listing" ng-hide="hideRoomDetail && !searchDone">
+            <div class="dh-listing" ng-hide="!searchDone">
                 <div class="dh-list-title bold-txt lg-txt darkgrey-txt">Informasi Kamar & Harga </div>
                 <ul class="dh-list-container">
-                    <li ng-show="$index+1 <= roomCount" ng-repeat="room in hotel.rooms track by $index">
+                    <li ng-show="$index+1 <= roomCount" ng-repeat="room in singleRoom track by $index">
                         <div class="dh-list clearfix">
                             <div class="col-left-hotel">
                                 <div class="dh-img-sm" style="background-image: url({{room.roomImages[0]}});"></div>
@@ -246,7 +246,7 @@
                                     <div ng-show="room.rate.isFreeCancel">Pembatalan Gratis </div>
                                     <div ng-show="!room.rate.isFreeCancel && room.rate.isRefundable">Kebijakan Pembatalan Berlaku </div>
                                     <div ng-show="!room.rate.isFreeCancel && !room.rate.isRefundable">Tidak Dapat Dibatalkan </div>
-                                    <div class="max-visitor" ng-if="room.rate.boards != 'RO'">Termasuk Sarapan</div>
+                                    <div class="max-visitor" ng-if="room.rate.breakdowns[0].board != 'RO'">Termasuk Sarapan</div>
                                 </div>
                                 <div class="price orange-txt">
                                     <div class="underline-txt sm-txt">Rp {{room.rate.breakdowns[0].originalFare | number}}</div>

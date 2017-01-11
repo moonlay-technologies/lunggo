@@ -11,6 +11,7 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
     $scope.hotel.childCount = 1;
     $scope.hotel.nightCount = "";
     $scope.hotel.roomCount = 2;
+    $scope.availableRateId = '';
     $scope.returnUrl = "/";
     $scope.roomCount = 3;
     $scope.minRoomCount = 3;
@@ -25,6 +26,8 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
     $scope.expired = false;
     $scope.showPopularDestinations = false;
     $scope.hideRoomDetail = true;
+    $scope.singleRoom = [];
+    $scope.hotelCode = '';
     $('#inputLocationHotel').on('click', function () {
         $scope.showPopularDestinations = true;
     });
@@ -41,13 +44,13 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
         var roomcount = mydata[5];
         var occupancies = mydata[6].split('|');
         var totalOcc = occupancies.length;
-        var hotelCode = model.hotelCd;
+        $scope.hotelCode = model.hotelCd;
 
         var searchParamObject = {
             nightCount: nightcount,
             roomCount: roomcount,
-            checkinDate: moment(cekin, "YYYY-MM-DD"),
-            checkoutDate: moment(cekout, "YYYY-MM-DD"),
+            checkinDate: moment.utc(cekin, "YYYY-MM-DD"),
+            checkoutDate: moment.utc(cekout, "YYYY-MM-DD"),
             occupancies:[]
         }
 
@@ -203,54 +206,8 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
         }, 0);
 
         $timeout(function() {
-            resource.query({}, {
-                "hotelCode": hotelCode,
-                "nights": nightcount,
-                "checkIn": moment.utc(cekin, "YYYY-MM-DD"),
-                "checkout": moment.utc(cekout, "YYYY-MM-DD"),
-                "occupancies": searchParamObject.occupancies.slice(0, totalOcc)
-            }).$promise.then(function(data) {
-                $scope.searchDone = true;
-                $scope.hideRoomDetail = false;
-                if (data != null) {
-                    if (data.rooms != null && data.rooms.length > 0) {
-                        $scope.hotel.rooms = data.rooms;
-                        // apakah code di bawah ini sudah efektif?
-                        $.each($scope.hotel.rooms, function (roomKey, room) {
-                            $.each(room.roomImages, function (imageKey, roomImage) {
-                                $scope.hotel.rooms[roomKey].roomImages[imageKey] = roomImage;
-                            });
-                        });
-
-                        cekin = $scope.hotel.rooms[0].rate.regsId.split(',')[2].split('|')[0];
-                        cekout = $scope.hotel.rooms[0].rate.regsId.split(',')[2].split('|')[1];
-                        $scope.hotel.checkinDate = new Date(parseInt(cekin.substring(0, 4)), parseInt(cekin.substring(4, 6)) - 1, parseInt(cekin.substring(6, 8)));
-                        $scope.hotel.checkoutDate = new Date(parseInt(cekout.substring(0, 4)), parseInt(cekout.substring(4, 6)) - 1, parseInt(cekout.substring(6, 8)));
-                        $scope.hotel.nightCount = (new Date($scope.hotel.checkoutDate) - new Date($scope.hotel.checkinDate)) / (3600 * 24 * 1000);
-
-                        
-                        $timeout(function () { hotelDetailFunctions(); }, 0);
-                        $timeout(function () { accordionFunctions(); }, 0);
-                        //**********
-                        //Open Detail Room in Mobile
-                        $timeout(function() {
-                            $('body .dh-list').on('click', function() {
-                                var id = $(this).parent();
-
-                                id.toggleClass('active');
-                                id.siblings().removeClass('active');
-
-                                id.find('.dh-list-detail').toggleClass('active');
-                                id.siblings().find('.dh-list-detail').removeClass('active');
-                            });
-                        }, 0);
-
-                        $scope.hotel.rooms.sort(function(a, b) {
-                            return a.rate.breakdowns[0].netFare - b.rate.breakdowns[0].netFare;
-                        });
-                    }
-                }
-            });
+            $scope.availableRates(nightcount, searchParamObject.checkinDate, searchParamObject.checkoutDate,
+                searchParamObject.occupancies, totalOcc);
         }, 0);
         $scope.hotelSearch.location = $scope.getLocationCode();
     }
@@ -297,7 +254,7 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
     }
 
     var hotelDetailFunctions = function () {
-        // Open Room Detail
+        // Open Room Details
         $('body .room-rl').on('click', function () {
             var parent1 = $(this).closest('.room-list').find('.room-left');
             var parent2 = parent1.closest('.room-list-container li').find('.hotel-detail');
@@ -335,6 +292,26 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
             parent2.find('.option').toggle();
             parent2.siblings().find('.hotel-detail, .option').hide();
         });
+    }
+
+    var setSingleRoom = function(rooms) {
+        var singleRoom = [];
+        for (var i = 0; i < rooms.length; i++) {
+            for (var j = 0; j < rooms[i].rates.length; j++) {
+                singleRoom.push({
+                    "roomCode": rooms[i].roomCode,
+                    "roomName": rooms[i].roomName,
+                    "Type": rooms[i].Type,
+                    "TypeName": rooms[i].TypeName,
+                    "roomImages": rooms[i].roomImages,
+                    "facilityCode": rooms[i].facilityCode,
+                    "characteristic": rooms[i].characteristic,
+                    "rate": rooms[i].rates[j]
+                });
+            }
+        }
+
+        return singleRoom;
     }
 
     $scope.togleDisplay = function () {
@@ -427,14 +404,14 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
         $scope.booking = true;
 
         selectService.query({}, {
-            "searchId": $scope.searchId,
+            "searchId": $scope.availableRateId,
             "regs": [
                   {
-                      "regsId": room.rate.regsId,
-                      "rateCount": room.rate.breakdowns[0].rateCount,
-                      "adultCount": room.rate.breakdowns[0].adultCount,
-                      "childCount": room.rate.breakdowns[0].childCount,
-                      "childrenAges": room.rate.breakdowns[0].childrenAges
+                      "regsId": room.regsId,
+                      "rateCount": room.breakdowns[0].rateCount,
+                      "adultCount": room.breakdowns[0].adultCount,
+                      "childCount": room.breakdowns[0].childCount,
+                      "childrenAges": room.breakdowns[0].childrenAges
                   }
             ]
         }).$promise.then(function (data) {
@@ -488,6 +465,75 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
         $(this).select();
     });
 
+    $scope.availableRates = function (nightCount, checkIn, checkOut, occupancies, totalOcc) {
+        $scope.searchDone = false;
+        var x = checkIn.format('YYYY');
+        var y = checkIn.format('MM');
+        var z = checkIn.format('DD');
+        var ci = x + "-" + y + "-" + z;
+        var a = checkOut.format('YYYY');
+        var b = checkOut.format('MM');
+        var c = checkOut.format('DD');
+        var co = a+ "-" + b + "-" + c;
+
+        //var newcheckIn = moment("2017-03-03", "YYYY-MM-DD").locale("id");
+        //var newcheckOut = moment("2017-03-06", "YYYY-MM-DD").locale("id");
+        var newcheckIn = new Date(ci);
+        var newcheckOut = new Date(co);
+        resource.query({}, {
+            "hotelCode": $scope.hotelCode,
+            "nights": nightCount,
+            "checkIn": newcheckIn,
+            "checkout": newcheckOut,
+            "occupancies": occupancies.slice(0, totalOcc)
+        }).$promise.then(function (data) {
+            $scope.searchDone = true;
+            $scope.hideRoomDetail = false;
+            if (data != null) {
+                if (data.rooms != null && data.rooms.length > 0) {
+                    $scope.hotel.rooms = data.rooms;
+                    $scope.availableRateId = data.id;
+                    $scope.singleRoom = setSingleRoom(data.rooms);
+                    $log.debug($scope.singleRoom);
+                    $.each($scope.hotel.rooms, function(roomKey, room) {
+                        $.each(room.roomImages, function(imageKey, roomImage) {
+                            $scope.hotel.rooms[roomKey].roomImages[imageKey] = roomImage;
+                        });
+                    });
+
+                    var cekin = $scope.hotel.rooms[0].rates[0].regsId.split(',')[2].split('|')[0];
+                    var cekout = $scope.hotel.rooms[0].rates[0].regsId.split(',')[2].split('|')[1];
+                    $scope.hotel.checkinDate = new Date(parseInt(cekin.substring(0, 4)), parseInt(cekin.substring(4, 6)) - 1, parseInt(cekin.substring(6, 8)));
+                    $scope.hotel.checkoutDate = new Date(parseInt(cekout.substring(0, 4)), parseInt(cekout.substring(4, 6)) - 1, parseInt(cekout.substring(6, 8)));
+                    $scope.hotel.nightCount = (new Date($scope.hotel.checkoutDate) - new Date($scope.hotel.checkinDate)) / (3600 * 24 * 1000);
+
+
+                    $timeout(function() { hotelDetailFunctions(); }, 0);
+                    $timeout(function() { accordionFunctions(); }, 0);
+                    //**********
+                    //Open Detail Room in Mobile
+                    $timeout(function() {
+                        $('body .dh-list').on('click', function() {
+                            var id = $(this).parent();
+
+                            id.toggleClass('active');
+                            id.siblings().removeClass('active');
+
+                            id.find('.dh-list-detail').toggleClass('active');
+                            id.siblings().find('.dh-list-detail').removeClass('active');
+                        });
+                    }, 0);
+
+                    $scope.singleRoom.sort(function(a, b) {
+                        return a.rate.breakdowns[0].netFare - b.rate.breakdowns[0].netFare;
+                    });
+                }
+            } else {
+                $scope.searchDone = false;
+            }
+        });
+
+    }
     // ********************************* END ****************************************
     
 }]);

@@ -73,9 +73,9 @@ namespace Lunggo.ApCommon.Hotel.Service
                 }
             }
             SetRegIdsAndTnc(singleHotel.Rooms, result.CheckIn, singleHotel.HotelCode);
-            var rooms = new List<HotelRoom>();
-            rooms = SetRoomPerRate(singleHotel.Rooms);
-            return rooms;
+            //var rooms = new List<HotelRoom>();
+           // rooms = SetRoomPerRate(singleHotel.Rooms);
+            return singleHotel.Rooms;
         }
 
         public List<HotelRoom> SetRoomPerRate(List<HotelRoom> hotelRoom)

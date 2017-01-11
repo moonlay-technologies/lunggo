@@ -423,7 +423,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                     TypeDescription = GetHotelRoomRateTypeId(rateDetail.Type),
                     Class = rateDetail.Class,
                     ClassDescription = GetHotelRoomRateClassId(rateDetail.Class),
-                    RegsId = rateDetail.RateKey,
+                    RegsId = rateDetail.RegsId,
                     Breakdowns = new List<RateBreakdown>
                     {
                         new RateBreakdown
@@ -491,8 +491,10 @@ namespace Lunggo.ApCommon.Hotel.Service
             return
                 breakdown1.AdultCount == breakdown2.AdultCount &&
                 breakdown1.ChildCount == breakdown2.ChildCount &&
+                ((breakdown1.ChildrenAges == null && breakdown2.ChildrenAges ==null) ||
+                !(breakdown1.ChildrenAges == null || breakdown2.ChildrenAges == null) &&
                 breakdown1.ChildrenAges.Count == breakdown2.ChildrenAges.Count &&
-                breakdown1.ChildrenAges.Zip(breakdown2.ChildrenAges, (a, b) => a == b).All(x => x) &&
+                breakdown1.ChildrenAges.Zip(breakdown2.ChildrenAges, (a, b) => a == b).All(x => x)) &&
                 breakdown1.Board == breakdown2.Board;
         }
 
@@ -504,7 +506,10 @@ namespace Lunggo.ApCommon.Hotel.Service
             return
                 rate1.Type == rate2.Type &&
                 rate1.Class == rate2.Class &&
-                rate1.TermAndCondition.Zip(rate2.TermAndCondition, (a,b) => a == b).All(x => x) &&
+                ((rate1.TermAndCondition == null && rate2.TermAndCondition == null) ||
+                !(rate1.TermAndCondition == null || rate2.TermAndCondition == null) &&
+                rate1.TermAndCondition.Count == rate2.TermAndCondition.Count &&
+                rate1.TermAndCondition.Zip(rate2.TermAndCondition, (a,b) => a == b).All(x => x)) &&
                 rate1.PaymentType == rate2.PaymentType &&
                 IsSimilarCancellation(rate1.Cancellation, rate2.Cancellation);
         }

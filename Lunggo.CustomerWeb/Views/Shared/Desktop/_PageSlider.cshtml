@@ -1,4 +1,5 @@
-﻿@model Lunggo.CustomerWeb.Models.HotelLocation
+﻿@using Lunggo.CustomerWeb.Models
+@model HotelLocation
 @{
     ViewBag.BodyClass = "page-hotel page-slider";
 }
@@ -24,7 +25,10 @@
     </div>
     <div class="container">
         <div class="search-result-form-content">
-            @Html.Partial("/Views/Shared/Desktop/_SearchHotelForm.cshtml")
+            @Html.Partial("/Views/Shared/Desktop/_SearchHotelForm.cshtml", new HotelLocation
+            {
+                IsHotelSearch = Model.IsHotelSearch
+            })
         </div><!-- .search-result-form-content -->  
         @Html.Partial("/Views/Shared/Desktop/_SearchHotel.cshtml")
         @Html.Partial("/Views/Shared/Desktop/_SearchCalendarHotel.cshtml")
