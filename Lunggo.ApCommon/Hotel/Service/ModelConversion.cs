@@ -226,6 +226,12 @@ namespace Lunggo.ApCommon.Hotel.Service
                     PhonesNumbers = hotelDetail.PhonesNumbers,
                     PostalCode = hotelDetail.PostalCode
                 };
+                if (!string.IsNullOrEmpty(hotelDetail.ZoneCode))
+                {
+                    hotel.ZoneName = hotelDetail.ZoneCode.Split('-').Length == 2
+                        ? GetZoneNameFromDict(hotelDetail.ZoneCode)
+                        : GetZoneNameFromDict(hotelDetail.DestinationCode + "-" + hotelDetail.ZoneCode);
+                }
                 convertedHotels.Add(hotel);
             };
             return convertedHotels.ToList();
