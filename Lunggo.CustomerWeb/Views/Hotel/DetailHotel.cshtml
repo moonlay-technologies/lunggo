@@ -237,7 +237,7 @@
                                     <div class="room-rl">
                                         <div class="blue-txt md-txt" style="text-transform: capitalize"><b>{{room.roomName}}</b></div>
                                         <div class="facility"></div>
-                                        <div class="max-people" ng-if="room.rate.boards != 'RO'">Termasuk Sarapan</div>
+                                        <div class="max-people" ng-if="room.rate.breakdowns[0].board != 'RO'">Termasuk Sarapan</div>
                                         <div ng-show="room.rate.isFreeCancel">Pembatalan Gratis </div>
                                         <div ng-show="!room.rate.isFreeCancel && room.rate.isRefundable">Kebijakan Pembatalan Berlaku </div>
                                         <div ng-show="!room.rate.isFreeCancel && !room.rate.isRefundable">Tidak Dapat Dibatalkan </div>
@@ -287,7 +287,7 @@
                                     <div class="col-left-bottom">
                                         <ul class="hd-list">
                                             <li class="hd-size">: 3 x 3 m</li>
-                                            <li class="hd-bed">: {{room.rate.boardDesc}}</li>
+                                            <li class="hd-bed">: {{room.rate.breakdowns[0].boardDesc}}</li>
                                             <li class="hd-view">: City View</li>
                                         </ul>
                                     </div>

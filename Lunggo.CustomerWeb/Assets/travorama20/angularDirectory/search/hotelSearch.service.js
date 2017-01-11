@@ -184,7 +184,7 @@
         scope.hotelSearch.occupancies = [];
         scope.hotelSearch.locationType = '';
         var defaultValue = {
-            locationCode: 16173,
+            locationCode: 15059,
             locationDisplay: "Bali, Indonesia",
             checkinDate: moment().locale("id").add(5, 'days'),
             checkoutDate: moment().locale("id").add(7, 'days'),
