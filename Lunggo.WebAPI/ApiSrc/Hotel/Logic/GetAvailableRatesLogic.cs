@@ -61,7 +61,9 @@ namespace Lunggo.WebAPI.ApiSrc.Hotel.Logic
             {
                 return new HotelAvailableRateApiResponse
                 {
-                    Rooms =  availableRatesOutput.Rooms
+                    Id = availableRatesOutput.Id,
+                    Total = availableRatesOutput.Total,
+                    Rooms =  availableRatesOutput.Rooms,
                 };
             }
             else

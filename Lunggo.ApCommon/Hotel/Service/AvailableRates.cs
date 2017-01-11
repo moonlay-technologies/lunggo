@@ -42,9 +42,10 @@ namespace Lunggo.ApCommon.Hotel.Service
                     };
                 }
                 var rooms = ProcessRoomFromSearchResult(result);
-
+                SaveAvailableRateToCache(generatedSearchId.ToString(), rooms);
                 return new AvailableRatesOutput
                 {
+                    Id = generatedSearchId.ToString(),
                     IsSuccess = true,
                     Total = rooms.Count,
                     Rooms = ConvertToHotelRoomsForDisplay(rooms)

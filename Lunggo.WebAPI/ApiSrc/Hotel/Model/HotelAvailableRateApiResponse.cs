@@ -14,5 +14,7 @@ namespace Lunggo.WebAPI.ApiSrc.Hotel.Model
         public List<HotelRoomForDisplay> Rooms { get; set; }
         [JsonProperty("total")]
         public int Total { get; set; }
+        [JsonProperty("id")]
+        public string Id { get; set; }
     }
 }
