@@ -485,9 +485,9 @@ Site Footer
           margin-top: 4mm; }
     .page-hotel-voucher .hotel-wrapper .row {
       margin-bottom: 2.5mm; }
-      .page-hotel-voucher .hotel-wrapper .row.unpoint:before {
+      .page-hotel-voucher .hotel-wrapper .row > .col-xs-9.unpoint:before {
         content: ''; }
-      .page-hotel-voucher .hotel-wrapper .row:before {
+      .page-hotel-voucher .hotel-wrapper .row > .col-xs-9:before {
         content: ':';
         position: absolute;
         left: 0; }

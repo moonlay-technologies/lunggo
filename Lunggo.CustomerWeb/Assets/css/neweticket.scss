@@ -534,11 +534,13 @@ Site Footer
         }
         .row {
             margin-bottom: 2.5mm;
-            &.unpoint:before {content: '';}
-            &:before {
-                content: ':';
-                position: absolute;
-                left: 0;
+            &>.col-xs-9 {
+                &.unpoint:before {content: '';}
+                &:before {
+                    content: ':';
+                    position: absolute;
+                    left: 0;
+                }
             }
         }
         .hb-bottom {
