@@ -106,7 +106,7 @@ namespace Lunggo.ApCommon.Hotel.Service
             {
                 foreach (var data in hotel.Facilities)
                 {
-                    data.FullFacilityCode = data.FacilityGroupCode + "" + data.FacilityCode;
+                    data.FullFacilityCode = ((data.FacilityGroupCode*1000) + data.FacilityCode).ToString();
                 }    
             }
         }
