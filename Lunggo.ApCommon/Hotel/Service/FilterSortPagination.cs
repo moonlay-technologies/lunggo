@@ -17,28 +17,40 @@ namespace Lunggo.ApCommon.Hotel.Service
         public List<HotelDetail> FilterHotel(List<HotelDetail> hotels, HotelFilter filterParam)
         {
 
-            var facilityData = new List<string>();
+            var facilityData = new Dictionary<string,List<string>>();
 
             if (hotels != null && filterParam != null)
             {
                 SetValidFilter(filterParam);
                 if (filterParam.FacilityFilter != null)
                 {
-                    foreach (var facilities in filterParam.FacilityFilter.Select(param => HotelFacilityFilters[param].FacilityCode))
+                    foreach (var facility in filterParam.FacilityFilter)
                     {
-                        facilityData.AddRange(facilities);
+                        var facilityList = HotelFacilityFilters[facility].FacilityCode;
+                        facilityData.Add(facility,facilityList);
                     }
                 }
-                hotels = hotels.Where(p =>
-                    (p.Facilities != null) &&
-                    (string.IsNullOrEmpty(filterParam.NameFilter) || p.HotelName.IndexOf(filterParam.NameFilter, StringComparison.CurrentCultureIgnoreCase)> -1) &&
-                (filterParam.AreaFilter == null || filterParam.AreaFilter.Contains(p.AreaCode)) &&
-                (filterParam.ZoneFilter == null || filterParam.ZoneFilter.Contains(p.ZoneCode)) &&
-                (filterParam.AccommodationTypeFilter == null || filterParam.AccommodationTypeFilter.Contains(p.AccomodationType)) &&
-                (facilityData.Count == 0 ||  facilityData.Any(e => p.Facilities.Select(x => x.FacilityGroupCode + "" + x.FacilityCode ).ToList().Contains(e))) &&
-                (filterParam.StarFilter == null || filterParam.StarFilter.Contains(p.StarCode)) &&
-                (filterParam.PriceFilter == null || (p.NetCheapestFare >= filterParam.PriceFilter.MinPrice && p.NetCheapestFare <= filterParam.PriceFilter.MaxPrice))
-                ).ToList();
+
+                //NameFilter
+                hotels = hotels.Where(p=>string.IsNullOrEmpty(filterParam.NameFilter) || p.HotelName.IndexOf(filterParam.NameFilter, StringComparison.CurrentCultureIgnoreCase)> -1).ToList();
+                //AreaFilter
+                hotels = hotels.Where(p => filterParam.AreaFilter == null || filterParam.AreaFilter.Contains(p.AreaCode)).ToList();
+                //ZoneFilter
+                hotels = hotels.Where(p => filterParam.ZoneFilter == null || filterParam.ZoneFilter.Contains(p.ZoneCode)).ToList();
+                //FacilityFilter
+                if (facilityData.Count != 0)
+                {
+                    foreach (var facItem in facilityData)
+                    {
+                        hotels = hotels.Where(p => p.Facilities == null ||  facItem.Value.Any(e => p.Facilities.Select(x => x.FacilityGroupCode + "" + x.FacilityCode ).ToList().Contains(e))).ToList();
+                    }
+                }
+                
+                //StarFilter
+                hotels = hotels.Where(p => filterParam.StarFilter == null || filterParam.StarFilter.Contains(p.StarCode)).ToList();
+                //PriceFilter
+                hotels = hotels.Where(p => filterParam.PriceFilter == null || (p.NetCheapestFare >= filterParam.PriceFilter.MinPrice && p.NetCheapestFare <= filterParam.PriceFilter.MaxPrice)).ToList();
+
             }
             return hotels;
         }
@@ -177,7 +189,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                         {
                             foreach (var facility in hotelDetail.Facilities)
                             {
-                                var concatedFacility = facility.FacilityGroupCode + "" + facility.FacilityCode;
+                                var concatedFacility = facility.FacilityGroupCode+ "" + facility.FacilityCode;
 
                                 foreach (var key in keys)
                                 {
