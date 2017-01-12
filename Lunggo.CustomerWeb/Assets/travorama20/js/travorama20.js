@@ -6,6 +6,21 @@ $(function() {
 if (typeof (angular) == 'object') {
     var app = angular.module('travorama', ['ngRoute', 'ngResource']);
 
+    app.service('flightParam', function () {
+        var param = {
+            oriCity: '',
+            oriArpt: '',
+            destCity: '',
+            destArpt:''
+        };
+        return {
+            setPropertyOri: function(oriCity, oriArpt) {
+                param.oriCity = oriCity;
+                
+            }
+        };
+    });
+
     app.factory('DataSource', ['$http', function ($http) {
         return {
             get: function (file, callback, transform) {
@@ -731,7 +746,7 @@ function flightFormSearchFunctions() {
         $('.search-location .location-recommend .tab-content>div').removeClass('active');
         $('.search-location .location-recommend .tab-content>div.'+showClass).addClass('active');
     });
-    $('.search-location .location-recommend .tab-content a').click(function (evt) {
+    $('.search-location .location-recommend .tab-content a').click(function (evt, sharedProperties) {
         evt.preventDefault();
         var locationCode = $(this).attr('data-code');
         var locationCity = $(this).text();
@@ -1321,13 +1336,21 @@ function flightFormSearchFunctions() {
         var flightSearchParam;
         // generate flight search param
         if (FlightSearchConfig.flightForm.type == 'return') {
-            flightSearchParam = departureParam + '.' + returnParam + '-' + passengerParam;
+            flightSearchParam = departureParam + '~' + returnParam + '-' + passengerParam;
         } else {
             flightSearchParam = departureParam + '-' + passengerParam ;
         }
         $('.form-flight input[name="info"]').val(flightSearchParam);
+        var urlLink = FlightSearchConfig.flightForm.originCity + '-' + FlightSearchConfig.flightForm.destinationCity + '.' +
+            FlightSearchConfig.flightForm.origin + '.' + FlightSearchConfig.flightForm.destination + '/' + flightSearchParam;
+        $('.form-flight').attr("action", "id/tiket-pesawat/cari/" + urlLink);
+        gotoFlightSearch(urlLink);
         //console.log(flightSearchParam);
-        $('.form-flight').submit();
+        //$('.form-flight').submit();
+    }
+
+    function gotoFlightSearch(url) {
+        window.location = window.location.origin + '/id/tiket-pesawat/cari/' + url;
     }
 }
 

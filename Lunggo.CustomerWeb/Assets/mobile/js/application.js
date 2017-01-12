@@ -2,6 +2,7 @@
 if (typeof (angular) == 'object') {
 
     var app = angular.module('travoramaMobile', ['ngRoute', 'ngResource']);
+
     // root scope
     app.run(function ($rootScope, $log) {
         $rootScope.travoramaModuleName = 'travoramaMobile';
