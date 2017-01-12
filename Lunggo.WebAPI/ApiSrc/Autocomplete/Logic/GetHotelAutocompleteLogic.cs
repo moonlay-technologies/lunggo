@@ -28,7 +28,7 @@ namespace Lunggo.WebAPI.ApiSrc.Autocomplete.Logic
             var hotelLocations = new List<HotelAutocompleteApi>();
             foreach (var item in hotelLocationIds)
             {
-                var hotelDict = hotel.AutoCompletes.First(h => h.Id == item);
+                var hotelDict = HotelService.AutoCompletes.First(h => h.Id == item);
                 var input = new HotelAutocompleteApi();
                 switch (hotelDict.Type)
                 {

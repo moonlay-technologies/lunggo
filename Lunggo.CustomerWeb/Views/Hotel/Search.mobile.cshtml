@@ -13,7 +13,7 @@
     long location = 0;
     var x = long.TryParse(Model.SearchParamObject.Location, out location);
     var loc = "";
-    var foundLocation = HotelService.GetInstance().AutoCompletes.Where(c => c.Id == location).ToList()[0];
+    var foundLocation = HotelService.AutoCompletes.Where(c => c.Id == location).ToList()[0];
     if (foundLocation != null)
     {
         if (foundLocation.Type == 1)
