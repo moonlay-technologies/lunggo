@@ -52,7 +52,7 @@ namespace Lunggo.ApCommon.Hotel.Service
         public void UpdateAutocomplete()
         {
             Console.WriteLine("Update AutoComplete");
-            GetInstance()._Autocompletes = new Dictionary<long, Autocomplete>();
+            _Autocompletes = new Dictionary<long, Autocomplete>();
             long index = 1;
             foreach (var country in Countries)
             {
@@ -81,7 +81,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                                     HotelCount = hotelZoneTotal,
                                 };
 
-                                GetInstance().AutocompleteList.Add(singleAutoComplete);
+                                AutocompleteList.Add(singleAutoComplete);
                                 index++;
 
                                 if (zone.Areas != null)
@@ -102,7 +102,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                                                 Type = 3,
                                                 HotelCount = GetInstance().GetHotelListByLocationFromStorage(area.Code).Count,
                                             };
-                                            GetInstance().AutocompleteList.Add(singleAutoComplete);
+                                            AutocompleteList.Add(singleAutoComplete);
                                             index++;
                                         }
                                     }
@@ -119,7 +119,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                         Type = 1,
                         HotelCount = hotelDestCount,
                     };
-                    GetInstance().AutocompleteList.Add(singleDest);
+                    AutocompleteList.Add(singleDest);
                     index++;
                 }
             }

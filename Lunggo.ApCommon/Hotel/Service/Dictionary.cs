@@ -184,9 +184,9 @@ namespace Lunggo.ApCommon.Hotel.Service
         }
 
         //FOR AUTOCOMPLETE
-        public Dictionary<long, Autocomplete> _Autocompletes;
-        public List<HotelAutoComplete> AutoCompletes = new List<HotelAutoComplete>();
-        public List<HotelAutoComplete> AutocompleteList = new List<HotelAutoComplete>();
+        public static Dictionary<long, Autocomplete> _Autocompletes;
+        public static List<HotelAutoComplete> AutoCompletes = new List<HotelAutoComplete>();
+        public static List<HotelAutoComplete> AutocompleteList = new List<HotelAutoComplete>();
 
         public static string[] GeoCodeApiKeyList;
 
@@ -206,15 +206,15 @@ namespace Lunggo.ApCommon.Hotel.Service
         public static Dictionary<string, HotelRoomType> HotelRoomTypeDict;
         public static Dictionary<string, RoomCharacteristic> HotelRoomCharacteristicDict;
 
-        public Dictionary<string, RateClass> HotelRoomRateClassDict;
-        public Dictionary<string, RateType> HotelRoomRateTypeDict;
-        public Dictionary<string, PaymentType> HotelRoomPaymentTypeDict;
-        public Dictionary<string, CountryDict> HotelCountry;
-        public Dictionary<string, Destination> HotelDestinationDict;
-        public Dictionary<string, Country> HotelDestinationCountryDict;
-        public Dictionary<string, Zone> HotelDestinationZoneDict;
-        public Dictionary<string, Area> HotelDestinationAreaDict;
-        public Dictionary<int, string> HotelCodeAndZoneDict;
+        public static Dictionary<string, RateClass> HotelRoomRateClassDict;
+        public static Dictionary<string, RateType> HotelRoomRateTypeDict;
+        public static Dictionary<string, PaymentType> HotelRoomPaymentTypeDict;
+        public static Dictionary<string, CountryDict> HotelCountry;
+        public static Dictionary<string, Destination> HotelDestinationDict;
+        public static Dictionary<string, Country> HotelDestinationCountryDict;
+        public static Dictionary<string, Zone> HotelDestinationZoneDict;
+        public static Dictionary<string, Area> HotelDestinationAreaDict;
+        public static Dictionary<int, string> HotelCodeAndZoneDict;
         public static Dictionary<string, FacilityFilter> HotelFacilityFilters;
 
         public static List<Country> Countries;
@@ -297,7 +297,7 @@ namespace Lunggo.ApCommon.Hotel.Service
 
         private static void PopulateHotel()
         {
-            var index = GetInstance()._Autocompletes.Count + 1;
+            var index = _Autocompletes.Count + 1;
             for (var i = 1; i < 1000; i++)
             {
                 var hotel = new HotelDetailsBase();
@@ -314,7 +314,8 @@ namespace Lunggo.ApCommon.Hotel.Service
                             + GetInstance().GetDestinationNameFromDict(hotel.DestinationCode).Name + ", "
                             + GetInstance().GetCountryNameFromDict(hotel.CountryCode).Name
                     };
-                    GetInstance()._Autocompletes.Add(index, input);
+
+                    _Autocompletes.Add(index, input);
                     index++;
                 }
                 catch
@@ -334,8 +335,10 @@ namespace Lunggo.ApCommon.Hotel.Service
             var segments = GetInstance().GetHotelSegmentFromStorage();
             foreach (var segment in segments)
             {
-                HotelSegmentDictEng.Add(segment.Code, segment.NameEn);
-                HotelSegmentDictId.Add(segment.Code, segment.NameId);
+                if (!HotelSegmentDictEng.ContainsKey(segment.Code))
+                    HotelSegmentDictEng.Add(segment.Code, segment.NameEn);
+                if (!HotelSegmentDictId.ContainsKey(segment.Code))
+                    HotelSegmentDictId.Add(segment.Code, segment.NameId);
             }
 
         }
@@ -400,8 +403,10 @@ namespace Lunggo.ApCommon.Hotel.Service
             var facilitiesGrp = GetInstance().GetHotelFacilityGroupFromStorage();
             foreach (var group in facilitiesGrp)
             {
-                HotelFacilityGroupDictEng.Add(group.Code, group.NameEn);
-                HotelFacilityGroupDictId.Add(group.Code, group.NameId);
+                if (!HotelFacilityGroupDictEng.ContainsKey(group.Code))
+                    HotelFacilityGroupDictEng.Add(group.Code, group.NameEn);
+                if (!HotelFacilityGroupDictId.ContainsKey(group.Code))
+                    HotelFacilityGroupDictId.Add(group.Code, group.NameId);
             }
         }
 
@@ -423,11 +428,12 @@ namespace Lunggo.ApCommon.Hotel.Service
                     }
                     else
                     {
-                        HotelFacilityFilters.Add(splittedLine[1], new FacilityFilter
-                        {
-                            Code = splittedLine[1],
-                            FacilityCode = new List<string> { splittedLine[0] }
-                        });
+                        if (!HotelFacilityFilters.ContainsKey(splittedLine[1]))
+                            HotelFacilityFilters.Add(splittedLine[1], new FacilityFilter
+                            {
+                                Code = splittedLine[1],
+                                FacilityCode = new List<string> { splittedLine[0] }
+                            });
                     }
                 }
             }
@@ -442,7 +448,8 @@ namespace Lunggo.ApCommon.Hotel.Service
                 var facilityGroup = facilityGroups.Where(f => f.Code == 60).ToList()[index];
                 foreach (var fac in facilityGroup.Facilities)
                 {
-                    HotelRoomFacility.Add(fac.Code, fac);
+                    if (!HotelRoomFacility.ContainsKey(fac.Code))
+                        HotelRoomFacility.Add(fac.Code, fac);
                 }
             }
         }
@@ -461,7 +468,8 @@ namespace Lunggo.ApCommon.Hotel.Service
 
             foreach (var room in rooms)
             {
-                HotelRoomDict.Add(room.RoomCd, room);
+                if (!HotelRoomDict.ContainsKey(room.RoomCd))
+                    HotelRoomDict.Add(room.RoomCd, room);
             }
 
         }
@@ -475,7 +483,8 @@ namespace Lunggo.ApCommon.Hotel.Service
                 HotelRoomType x;
                 if (!HotelRoomTypeDict.TryGetValue(room.RoomType.Type, out x))
                 {
-                    HotelRoomTypeDict.Add(room.RoomType.Type, room.RoomType);
+                    if (!HotelRoomTypeDict.ContainsKey(room.RoomType.Type))
+                        HotelRoomTypeDict.Add(room.RoomType.Type, room.RoomType);
                 }
             }
         }
@@ -488,7 +497,8 @@ namespace Lunggo.ApCommon.Hotel.Service
                 RoomCharacteristic x;
                 if (!HotelRoomCharacteristicDict.TryGetValue(room.RoomCharacteristic.CharacteristicCd, out x))
                 {
-                    HotelRoomCharacteristicDict.Add(room.RoomCharacteristic.CharacteristicCd, room.RoomCharacteristic);
+                    if (!HotelRoomCharacteristicDict.ContainsKey(room.RoomCharacteristic.CharacteristicCd))
+                        HotelRoomCharacteristicDict.Add(room.RoomCharacteristic.CharacteristicCd, room.RoomCharacteristic);
                 }
             }
 
@@ -496,7 +506,7 @@ namespace Lunggo.ApCommon.Hotel.Service
 
         private static void PopulateHotelRoomRateClassDict(String hotelRoomRateClassFilePath)
         {
-            GetInstance().HotelRoomRateClassDict = new Dictionary<string, RateClass>(); ;
+            HotelRoomRateClassDict = new Dictionary<string, RateClass>(); ;
 
             using (var file = new StreamReader(hotelRoomRateClassFilePath))
             {
@@ -506,19 +516,20 @@ namespace Lunggo.ApCommon.Hotel.Service
                     line = file.ReadLine();
                     var splittedLine = line.Split('|');
 
-                    GetInstance().HotelRoomRateClassDict.Add(splittedLine[0], new RateClass
-                    {
-                        Code = splittedLine[0],
-                        DescEn = splittedLine[1],
-                        DescId = splittedLine[2]
-                    });
+                    if (!HotelRoomRateClassDict.ContainsKey(splittedLine[0]))
+                        HotelRoomRateClassDict.Add(splittedLine[0], new RateClass
+                        {
+                            Code = splittedLine[0],
+                            DescEn = splittedLine[1],
+                            DescId = splittedLine[2]
+                        });
                 }
             }
         }
 
         private static void PopulateHotelRoomRateTypeDict(String hotelRoomRateTypeFilePath)
         {
-            GetInstance().HotelRoomRateTypeDict = new Dictionary<string, RateType>();
+            HotelRoomRateTypeDict = new Dictionary<string, RateType>();
 
             using (var file = new StreamReader(hotelRoomRateTypeFilePath))
             {
@@ -528,19 +539,20 @@ namespace Lunggo.ApCommon.Hotel.Service
                     line = file.ReadLine();
                     var splittedLine = line.Split('|');
 
-                    GetInstance().HotelRoomRateTypeDict.Add(splittedLine[0], new RateType
-                    {
-                        Type = splittedLine[0],
-                        DescEn = splittedLine[1],
-                        DescId = splittedLine[2]
-                    });
+                    if (!HotelRoomRateTypeDict.ContainsKey(splittedLine[0]))
+                        HotelRoomRateTypeDict.Add(splittedLine[0], new RateType
+                        {
+                            Type = splittedLine[0],
+                            DescEn = splittedLine[1],
+                            DescId = splittedLine[2]
+                        });
                 }
             }
         }
 
         private static void PopulateHotelRoomPaymentTypeDict(String hotelRoomPaymentTypeFilePath)
         {
-            GetInstance().HotelRoomPaymentTypeDict = new Dictionary<string, PaymentType>();
+            HotelRoomPaymentTypeDict = new Dictionary<string, PaymentType>();
 
             using (var file = new StreamReader(hotelRoomPaymentTypeFilePath))
             {
@@ -550,12 +562,13 @@ namespace Lunggo.ApCommon.Hotel.Service
                     line = file.ReadLine();
                     var splittedLine = line.Split('|');
 
-                    GetInstance().HotelRoomPaymentTypeDict.Add(splittedLine[0], new PaymentType
-                    {
-                        Type = splittedLine[0],
-                        DescEn = splittedLine[1],
-                        DescId = splittedLine[2]
-                    });
+                    if (!HotelRoomPaymentTypeDict.ContainsKey(splittedLine[0]))
+                        HotelRoomPaymentTypeDict.Add(splittedLine[0], new PaymentType
+                        {
+                            Type = splittedLine[0],
+                            DescEn = splittedLine[1],
+                            DescId = splittedLine[2]
+                        });
                 }
             }
         }
@@ -567,7 +580,8 @@ namespace Lunggo.ApCommon.Hotel.Service
             var accomodations = GetInstance().GetHotelAccomodationFromStorage();
             foreach (var acc in accomodations)
             {
-                HotelAccomodations.Add(acc.Code, acc);
+                if (!HotelAccomodations.ContainsKey(acc.Code))
+                    HotelAccomodations.Add(acc.Code, acc);
             }
         }
 
@@ -578,8 +592,8 @@ namespace Lunggo.ApCommon.Hotel.Service
             var boards = GetInstance().GetHotelBoardFromStorage();
             foreach (var board in boards)
             {
-                HotelBoards.Add(board.Code, board);
-
+                if (!HotelBoards.ContainsKey(board.Code))
+                    HotelBoards.Add(board.Code, board);
             }
             
         }
@@ -590,7 +604,8 @@ namespace Lunggo.ApCommon.Hotel.Service
             var chains = GetInstance().GetHotelChainFromStorage();
             foreach (var chain in chains)
             {
-                HotelChains.Add(chain.Code, chain);
+                if (!HotelChains.ContainsKey(chain.Code))
+                    HotelChains.Add(chain.Code, chain);
             }
         }
 
@@ -600,17 +615,19 @@ namespace Lunggo.ApCommon.Hotel.Service
             var categories = GetInstance().GetHotelCategoryFromStorage();
             foreach (var category in categories)
             {
-                HotelCategories.Add(category.Code, category);
+                if (!HotelCategories.ContainsKey(category.Code))
+                    HotelCategories.Add(category.Code, category);
             }
         }
 
         private static void PopulateHotelCountriesDict()
         {
-            GetInstance().HotelCountry = new Dictionary<string, CountryDict>();
+            HotelCountry = new Dictionary<string, CountryDict>();
             var countries = GetInstance().GetHotelCountryFromStorage();
             foreach (var country in countries)
             {
-                GetInstance().HotelCountry.Add(country.CountryCode, country);
+                if (!HotelCountry.ContainsKey(country.CountryCode))
+                    HotelCountry.Add(country.CountryCode, country);
             }
         }
 
@@ -804,38 +821,40 @@ namespace Lunggo.ApCommon.Hotel.Service
 
         private static void PopulateHotelDestinationCountryDict(IEnumerable<Country> countries)
         {
-            GetInstance().HotelDestinationCountryDict = new Dictionary<string, Country>();
+            HotelDestinationCountryDict = new Dictionary<string, Country>();
             foreach (var country in countries)
             {
-                GetInstance().HotelDestinationCountryDict.Add(country.Code, country);
+                if (!HotelDestinationCountryDict.ContainsKey(country.Code))
+                    HotelDestinationCountryDict.Add(country.Code, country);
             }
         }
 
         private static void PopulateHotelDestinationDict(IEnumerable<Country> countries)
         {
-            GetInstance().HotelDestinationDict = new Dictionary<string, Destination>();
+            HotelDestinationDict = new Dictionary<string, Destination>();
             foreach (var destination in countries.SelectMany(country => country.Destinations))
             {
-                GetInstance().HotelDestinationDict.Add(destination.Code, destination);
+                if (!HotelDestinationDict.ContainsKey(destination.Code))
+                    HotelDestinationDict.Add(destination.Code, destination);
             }
         }
 
         private static void PopulateHotelZoneDict(IEnumerable<Country> countries)
         {
-            GetInstance().HotelDestinationZoneDict = new Dictionary<string, Zone>();
+            HotelDestinationZoneDict = new Dictionary<string, Zone>();
             var zones =
                 countries.SelectMany(country => country.Destinations).SelectMany(destination => destination.Zones).Where(z => z != null).ToList();
             zones = zones.Distinct().ToList();
             foreach (var zone in zones)
             {
-                if(!GetInstance().HotelDestinationZoneDict.ContainsKey(zone.Code))
-                GetInstance().HotelDestinationZoneDict.Add(zone.Code, zone);
+                if (!HotelDestinationZoneDict.ContainsKey(zone.Code))
+                    HotelDestinationZoneDict.Add(zone.Code, zone);
             }
         }
 
         private static void PopulateHotelAreaDict(IEnumerable<Country> countries)
         {
-            GetInstance().HotelDestinationAreaDict = new Dictionary<string, Area>();
+            HotelDestinationAreaDict = new Dictionary<string, Area>();
             var areas =
                 countries.SelectMany(country => country.Destinations)
                     .SelectMany(destination => destination.Zones)
@@ -843,9 +862,9 @@ namespace Lunggo.ApCommon.Hotel.Service
             areas = areas.Distinct().ToList();
             foreach (var area in areas)
             {
-                if (!string.IsNullOrEmpty(area.Code) && !GetInstance().HotelDestinationAreaDict.ContainsKey(area.Code))
+                if (!string.IsNullOrEmpty(area.Code) && !HotelDestinationAreaDict.ContainsKey(area.Code))
                 {
-                    GetInstance().HotelDestinationAreaDict.Add(area.Code, area);
+                    HotelDestinationAreaDict.Add(area.Code, area);
                 }
             }
         }
