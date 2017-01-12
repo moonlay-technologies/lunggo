@@ -53,7 +53,6 @@ span.italic {
   border-radius: 0;
   border-bottom: 1px solid #dcdcdc;
   height: 30px; }
-
 .contactus-page .container-page textarea.form-control {
   -webkit-box-shadow: none;
   -moz-box-shadow: none;
@@ -63,29 +62,21 @@ span.italic {
   border-radius: 0;
   border: 1px solid #dcdcdc;
   height: 80px; }
-
 .contactus-page .container-page label.control-label {
   margin-bottom: 15px;
   font-weight: 400; }
-
 .contactus-page .btn.btn-yellow {
   border: none; }
-
 .contactus-page input[type="text"]::-webkit-input-placeholder, .contactus-page input[type="password"]::-webkit-input-placeholder, .contactus-page input[type="number"]::-webkit-input-placeholder, .contactus-page input[type="email"]::-webkit-input-placeholder, .contactus-page textarea::-webkit-input-placeholder {
   font-style: italic; }
-
 .contactus-page input[type="text"]::-moz-placeholder, .contactus-page input[type="password"]::-moz-placeholder, .contactus-page input[type="number"]::-moz-placeholder, .contactus-page input[type="email"]::-moz-placeholder, .contactus-page textarea::-moz-placeholder {
   font-style: italic; }
-
 .contactus-page input[type="text"]:-ms-input-placeholder, .contactus-page input[type="password"]:-ms-input-placeholder, .contactus-page input[type="number"]:-ms-input-placeholder, .contactus-page input[type="email"]:-ms-input-placeholder, .contactus-page textarea:-ms-input-placeholder {
   font-style: italic; }
-
 .contactus-page input[type="text"]:-moz-placeholder, .contactus-page input[type="password"]:-moz-placeholder, .contactus-page input[type="number"]:-moz-placeholder, .contactus-page input[type="email"]:-moz-placeholder, .contactus-page textarea:-moz-placeholder {
   font-style: italic; }
-
 .contactus-page .form-group textarea {
   resize: none; }
-
 .contactus-page .section-title {
   font-weight: 700; }
   .contactus-page .section-title.stripe {
@@ -165,4 +156,5 @@ span.italic {
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
-    max-width: 270px; } }
+    max-width: 270px; }
+ }
