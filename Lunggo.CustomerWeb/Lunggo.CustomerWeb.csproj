@@ -277,6 +277,9 @@
     <Content Include="Assets\bootstrap\bootstrap.css" />
     <Content Include="Assets\bootstrap\bootstrap.min.css" />
     <Content Include="Assets\css\font-awesome.min.css" />
+    <Content Include="Assets\css\help_section.css">
+      <DependentUpon>help_section.scss</DependentUpon>
+    </Content>
     <Content Include="Assets\css\invoice.css">
       <DependentUpon>invoice.scss</DependentUpon>
     </Content>
@@ -1173,7 +1176,6 @@
     <Content Include="Assets\travorama20\angularDirectory\priceDetail\priceDetailDirMobile.js" />
     <Content Include="Assets\travorama20\angularDirectory\priceDetail\priceDetailTemplate.html" />
     <Content Include="Assets\travorama20\angularDirectory\search\hotelSearch.service.js" />
-    <Content Include="Assets\travorama20\css\help_section.min.css" />
     <Content Include="Assets\travorama20\css\style_desktop.css">
       <DependentUpon>style_desktop.scss</DependentUpon>
     </Content>
@@ -1438,7 +1440,6 @@
     <Content Include="Assets\mobile\css\_page_hotel_detail.scss" />
     <Content Include="Assets\mobile\css\_page_hotel_search.scss" />
     <Content Include="Assets\mobile\css\_page_static.scss" />
-    <Content Include="Assets\travorama20\css\help_section.css.map" />
     <Content Include="Assets\travorama20\css\style_desktop.scss" />
     <Content Include="Assets\travorama20\css\_footer.scss" />
     <Content Include="Assets\travorama20\css\_header.scss" />
@@ -1468,6 +1469,7 @@
     <Content Include="Assets\fonts\OpenSans-Semibold.ttf" />
     <Content Include="Assets\fonts\OpenSans-Semibold.woff" />
     <Content Include="Assets\fonts\OpenSans-Semibold.woff2" />
+    <Content Include="Assets\css\help_section.scss" />
     <None Include="Properties\PublishProfiles\prod-cw %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\dv1-cw.pubxml" />
     <None Include="Properties\PublishProfiles\dv2-cw.pubxml" />
