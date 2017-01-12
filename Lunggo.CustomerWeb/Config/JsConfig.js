@@ -47,7 +47,7 @@ var FlightSearchConfig = {
             if (trip == false) {
                 url = departureParam + '-' + passengerParam;
             } else {
-                url = departureParam + '.' + returnParam + '-' + passengerParam;
+                url = departureParam + '~' + returnParam + '-' + passengerParam;
             }
             // return the search url
             return url;

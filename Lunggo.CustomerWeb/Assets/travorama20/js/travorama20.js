@@ -1341,6 +1341,10 @@ function flightFormSearchFunctions() {
             flightSearchParam = departureParam + '-' + passengerParam ;
         }
         $('.form-flight input[name="info"]').val(flightSearchParam);
+        FlightSearchConfig.flightForm.originCity = FlightSearchConfig.flightForm.originCity.replace(/\s+/g, '-');
+        FlightSearchConfig.flightForm.originCity = FlightSearchConfig.flightForm.originCity.replace(/[^0-9a-zA-Z-]/gi, '');
+        FlightSearchConfig.flightForm.destinationCity = FlightSearchConfig.flightForm.destinationCity.replace(/\s+/g, '-');
+        FlightSearchConfig.flightForm.destinationCity = FlightSearchConfig.flightForm.destinationCity.replace(/[^0-9a-zA-Z-]/gi, '');
         var urlLink = FlightSearchConfig.flightForm.originCity + '-' + FlightSearchConfig.flightForm.destinationCity + '.' +
             FlightSearchConfig.flightForm.origin + '.' + FlightSearchConfig.flightForm.destination + '/' + flightSearchParam;
         $('.form-flight').attr("action", "id/tiket-pesawat/cari/" + urlLink);
