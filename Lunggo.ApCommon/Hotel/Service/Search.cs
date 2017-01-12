@@ -184,6 +184,16 @@ namespace Lunggo.ApCommon.Hotel.Service
             };
             
             result.HotelDetails = AddDetailInfoForSearchResult(result.HotelDetails);
+            if (result.HotelDetails == null || result.HotelDetails.Count == 0)
+                return new SearchHotelOutput()
+                {
+                    IsSuccess = true,
+                    DestinationName = result.DestinationName,
+                    ReturnedHotelCount = 0,
+                    TotalHotelCount = 0,
+                    FilteredHotelCount = 0
+                };
+
             result.HotelFilterDisplayInfo = SetHotelFilterDisplayInfo(result.HotelDetails, AutocompleteTypeCd.Mnemonic(detailDestination.Type));
             result.MaxPrice = result.HotelDetails.Max(x => x.NetCheapestFare);
             result.MinPrice = result.HotelDetails.Min(x => x.NetCheapestFare);
