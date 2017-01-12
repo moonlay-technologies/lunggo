@@ -224,6 +224,14 @@
     }
 }
 
+.map-content {
+    width: 150px;
+    height: auto;
+    overflow: hidden;
+    font-size: 11px;
+    .hotel-title {margin-bottom: 6px;}
+}
+
 @media only screen and (min-width: 414px) and (max-height: 736px) {
     .dh-img, .map-hotel {height: 300px;}
 } @media only screen and (min-width: 375px) and (max-height: 667px) {

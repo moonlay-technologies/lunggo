@@ -27,6 +27,7 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
     $scope.lat = lat;
     $scope.lng = lng;
     $scope.hotelName = hotelName;
+    $scope.hotelAddress = hotelAddress;
  
     $('#inputLocationHotel').on('click', function () {
         $scope.showPopularDestinations = true;
@@ -262,12 +263,15 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
             }
         });
 
-        // Construct a new InfoWindow.
+        var infoDesc = '<div class="map-content">' +
+            '<div class="hotel-title bold-txt blue-txt">' + $scope.hotelName + '</div>' +
+            '<div class="hotel-address regular-txt">' + $scope.hotelAddress + '</div>' +
+            '</div>';
+
         var infoWindow = new google.maps.InfoWindow({
-            content: $scope.hotelName
+            content: infoDesc
         });
 
-        // Opens the InfoWindow when marker is clicked.
         marker.addListener('click', function () {
             infoWindow.open(map, marker);
         });

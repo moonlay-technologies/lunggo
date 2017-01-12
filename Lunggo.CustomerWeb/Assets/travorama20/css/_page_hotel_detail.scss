@@ -577,6 +577,12 @@
                 &.ih-r {padding-left: 15px;}
             }
         }
-        
+    }
+    .map-content {
+        width: 200px;
+        height: auto;
+        overflow: hidden;
+        font-size: 12px;
+        .hotel-title {margin-bottom: 6px;}
     }
 }

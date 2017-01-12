@@ -13,6 +13,7 @@
     var hotelDetail = HotelService.GetInstance().GetHotelDetailFromTableStorage(Convert.ToInt32(hotelCd));
     var loc = ToTitleCase(hotelDetail.HotelName + ", " + hotelDetail.City);
     var hotelName = hotelDetail.HotelName;
+    var hotelAddress = hotelDetail.Address;
     var lat = hotelDetail.Latitude;
     var lng = hotelDetail.Longitude;
 
@@ -71,6 +72,7 @@
         var lat = @lat;
         var lng = @lng;
         var hotelName = '@hotelName';
+        var hotelAddress = '@hotelAddress';
     </script>
     <script src="/Assets/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="/Assets/vendor/slick/slick.min.js"></script>

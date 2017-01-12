@@ -11,6 +11,7 @@
     var hotelDetail = HotelService.GetInstance().GetHotelDetailFromTableStorage(Convert.ToInt32(hotelCd));
     var loc = ToTitleCase(hotelDetail.HotelName + ", " + hotelDetail.City);
     var hotelName = hotelDetail.HotelName;
+    var hotelAddress = hotelDetail.Address;
     var lat = hotelDetail.Latitude;
     var lng = hotelDetail.Longitude;
 }
@@ -76,6 +77,7 @@
         var lat = @lat;
         var lng = @lng;
         var hotelName = '@hotelName';
+        var hotelAddress = '@hotelAddress';
     </script>
     <script src="/Assets/travorama20/js/hotelDetailController.js"></script>
     <script type="text/javascript" src="/Assets/travorama20/js/HotelController.js"></script>
