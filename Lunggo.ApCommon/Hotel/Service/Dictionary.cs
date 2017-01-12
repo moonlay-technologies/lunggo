@@ -828,8 +828,9 @@ namespace Lunggo.ApCommon.Hotel.Service
             zones = zones.Distinct().ToList();
             foreach (var zone in zones)
             {
-                if(!GetInstance().HotelDestinationZoneDict.ContainsKey(zone.Code))
-                GetInstance().HotelDestinationZoneDict.Add(zone.Code, zone);
+                var zoneCode = zone.Code.Split('-').Length == 2 ? zone.Code : zone.DestinationCode + "-" + zone.Code;
+                if (!GetInstance().HotelDestinationZoneDict.ContainsKey(zoneCode))
+                    GetInstance().HotelDestinationZoneDict.Add(zoneCode, zone);
             }
         }
 

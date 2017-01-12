@@ -200,7 +200,6 @@ namespace Lunggo.ApCommon.Hotel.Service
                                         hotelFacilityDict[key] = true;
                                     }
                                 }
-
                             }
                             foreach (var key in keys)
                             {
@@ -219,25 +218,32 @@ namespace Lunggo.ApCommon.Hotel.Service
                     {
                         foreach (var zone in zoneDict.Keys)
                         {
-                            filter.ZoneFilter.Add(new ZoneFilterInfo
+                            if (!string.IsNullOrEmpty(zoneDict[zone].Name))
                             {
-                                Code = zoneDict[zone].Code,
-                                Count = zoneDict[zone].Count,
-                                Name = zoneDict[zone].Name,
-                            });
+                                filter.ZoneFilter.Add(new ZoneFilterInfo
+                                {
+                                    Code = zoneDict[zone].Code,
+                                    Count = zoneDict[zone].Count,
+                                    Name = zoneDict[zone].Name,
+                                });
+                            }
                         }
                     }
 
                     if (searchLocationType == AutocompleteType.Zone)
                     {
+                        
                         foreach (var area in areaDict.Keys)
                         {
-                            filter.AreaFilter.Add(new AreaFilterInfo
+                            if (!string.IsNullOrEmpty(areaDict[area].Name))
                             {
-                                Code = areaDict[area].Code,
-                                Count = areaDict[area].Count,
-                                Name = areaDict[area].Name,
-                            });
+                                filter.AreaFilter.Add(new AreaFilterInfo
+                                {
+                                    Code = areaDict[area].Code,
+                                    Count = areaDict[area].Count,
+                                    Name = areaDict[area].Name,
+                                });
+                            }
                         }
                     }
 

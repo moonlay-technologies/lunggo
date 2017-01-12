@@ -318,6 +318,13 @@ namespace Lunggo.ApCommon.Hotel.Service
                         break;
                 }
             }
+            displayFacilities.Business = displayFacilities.Business == null ? null : displayFacilities.Business.Where(x => !string.IsNullOrEmpty(x)).ToList();
+            displayFacilities.Entertainment = displayFacilities.Entertainment == null ? null : displayFacilities.Entertainment.Where(x => !string.IsNullOrEmpty(x)).ToList();
+            displayFacilities.General = displayFacilities.General == null ? null : displayFacilities.General.Where(x => !string.IsNullOrEmpty(x)).ToList();
+            displayFacilities.Health = displayFacilities.Health == null ? null : displayFacilities.Health.Where(x => !string.IsNullOrEmpty(x)).ToList();
+            displayFacilities.Meal = displayFacilities.Meal == null ? null : displayFacilities.Meal.Where(x => !string.IsNullOrEmpty(x)).ToList();
+            displayFacilities.Other = displayFacilities.Other == null ? null : displayFacilities.Other.Where(x => !string.IsNullOrEmpty(x)).ToList();
+            displayFacilities.Sport = displayFacilities.Sport == null ? null : displayFacilities.Sport.Where(x => !string.IsNullOrEmpty(x)).ToList();
             return displayFacilities;
         }
 
