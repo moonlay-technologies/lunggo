@@ -5735,7 +5735,7 @@ file: /Assets/travorama20/css/_page_flight.scss
           list-style: none;
           background: #dcdcdc; }
           .page-hotel .travorama-hotel .detail-hotel .menu-hotel .mh-container li.mh-list {
-            padding: 0 25px;
+            padding: 0 20px;
             display: inline-block; }
             .page-hotel .travorama-hotel .detail-hotel .menu-hotel .mh-container li.mh-list a {
               cursor: pointer;

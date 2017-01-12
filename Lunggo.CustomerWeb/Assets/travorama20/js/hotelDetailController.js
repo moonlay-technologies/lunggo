@@ -24,6 +24,9 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
     $scope.booking = false;
     $scope.expired = false;
     $scope.showPopularDestinations = false;
+    $scope.lat = lat;
+    $scope.lng = lng;
+    $scope.hotelName = hotelName;
  
     $('#inputLocationHotel').on('click', function () {
         $scope.showPopularDestinations = true;
@@ -147,7 +150,7 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
             //setTncDisplay();
             setDescriptionDisplay();
             $timeout(function() { hotelDetailFunctions(); }, 0);
-            //$timeout(function () { initiateSlider(); }, 0);
+            $timeout(function () { initiateMap(); }, 0);
             $timeout(function () {  accordionFunctions(); }, 0);
 
             
@@ -238,6 +241,38 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
 
     // ********************** DISPLAY HOTEL DETAILS *********************************
     
+    var initiateMap = function () {
+        var myLatLng = { lat: $scope.lat, lng: $scope.lng };
+
+        var map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 15,
+            center: myLatLng,
+            mapTypeControl: false,
+            streetViewControl: false,
+            fullscreenControl: false
+        });
+
+        var marker = new google.maps.Marker({
+            position: myLatLng,
+            map: map,
+            title: $scope.hotelName,
+            attribution: {
+                source: 'AIzaSyCRAmMz6GPXsXi1pZAl5QUsjNTcY0ZfqVA',
+                webUrl: 'https://developers.google.com/maps/'
+            }
+        });
+
+        // Construct a new InfoWindow.
+        var infoWindow = new google.maps.InfoWindow({
+            content: 'Google Sydney'
+        });
+
+        // Opens the InfoWindow when marker is clicked.
+        marker.addListener('click', function () {
+            infoWindow.open(map, marker);
+        });
+    }
+ 
     var setDescriptionDisplay = function () {
         if ($scope.hotel.description != null && $scope.hotel.description.length > 0) {
             var description = [];
@@ -293,7 +328,7 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
                     tempFacilityList[2].push(facilityName);
                 } else if (index % 4 == 3) {
                     tempFacilityList[3].push(facilityName);
-    }
+                }
             });
 
             facilityOrder = $scope.getFacilityOrder(facilityGroup);
