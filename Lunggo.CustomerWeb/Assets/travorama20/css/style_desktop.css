@@ -5341,6 +5341,8 @@ file: /Assets/travorama20/css/_page_flight.scss
       .page-hotel .search-result-form .search-calendar-hotel .ui-datepicker-group {
         width: 50%;
         padding: 15px 50px; }
+      .page-hotel .search-result-form .search-calendar-hotel .calendar-body {
+        background: #252525; }
     .page-hotel .search-result-form form[name="hotel-form"].hotel-form {
       margin-top: 15px;
       padding-top: 15px;
