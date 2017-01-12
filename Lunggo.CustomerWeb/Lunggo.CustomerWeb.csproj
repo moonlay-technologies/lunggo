@@ -577,6 +577,7 @@
     <Content Include="Assets\images\Bank-Mandiri-small.jpg" />
     <Content Include="Assets\images\Bank-Mandiri.jpg" />
     <Content Include="Assets\images\Bank-Mandiri.png" />
+    <Content Include="Assets\images\default-banner.jpg" />
     <Content Include="Assets\images\banner\download-app.jpg" />
     <Content Include="Assets\images\banner\standard-web-banner.jpg" />
     <Content Include="Assets\images\bca-logo.jpg" />
@@ -636,7 +637,6 @@
     <Content Include="Assets\images\contact-sprite.jpg" />
     <Content Include="Assets\images\creditCard.jpg" />
     <Content Include="Assets\images\default-banner-2.jpg" />
-    <Content Include="Assets\images\default-banner.jpg" />
     <Content Include="Assets\images\email-facebook.jpg" />
     <Content Include="Assets\images\email-image.jpg" />
     <Content Include="Assets\images\email-instagram.jpg" />
@@ -1472,6 +1472,7 @@
     <None Include="Properties\PublishProfiles\travorama-dv2-cw %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-dv2-cw.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-prod-cw %282%29.pubxml" />
+    <None Include="Properties\PublishProfiles\travorama-prod-cw - Web Deploy %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-prod-cw - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-prod-cw-staging - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-prod-cw.pubxml" />
