@@ -60,31 +60,31 @@
 
 }
 @section AdditionalCSS{
-    <link href="/Assets/css/jquery-ui.min.css" rel="stylesheet" />
-    <link rel="stylesheet" type="text/css" href="/Assets/vendor/slick/slick.css" />
-    <link href="/Assets/vendor/lightslider/lightslider.css" rel="stylesheet" />
+<link href="/Assets/css/jquery-ui.min.css" rel="stylesheet" />
+<link rel="stylesheet" type="text/css" href="/Assets/vendor/slick/slick.css" />
+<link href="/Assets/vendor/lightslider/lightslider.css" rel="stylesheet" />
 }
 
 @section AdditionalJS {
-    <script>
+<script>
     var loc = '@loc';
-        var lat = @lat;
-        var lng = @lng;
-        var hotelName = '@hotelName';
-    </script>
-    <script src="/Assets/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="/Assets/vendor/slick/slick.min.js"></script>
-    <script type="text/javascript" src="/Assets/vendor/dotdotdot/jquery.dotdotdot.min.js"></script>
-    <script src="/Assets/vendor/lightslider/lightslider.js"></script>
-    
+    var lat = @lat;
+    var lng = @lng;
+    var hotelName = '@hotelName';
+</script>
+<script src="/Assets/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/Assets/vendor/slick/slick.min.js"></script>
+<script type="text/javascript" src="/Assets/vendor/dotdotdot/jquery.dotdotdot.min.js"></script>
+<script src="/Assets/vendor/lightslider/lightslider.js"></script>
+
 }
 
 @section PageJS{
 <script src="/Assets/travorama20/js/hotelDetailController.js"></script>
-    <script src="/Assets/mobile/js/HotelController.js"></script>
-    <script src="/Assets/travorama20/angularDirectory/search/hotelSearch.service.js"></script>
-    <script type="text/javascript" src="/Assets/js/jquery.ui.datepicker-id.js"></script>
-    <script type="text/javascript" src="http://maps.google.com/maps/api/js?key=AIzaSyCRAmMz6GPXsXi1pZAl5QUsjNTcY0ZfqVA"></script>
+<script src="/Assets/mobile/js/HotelController.js"></script>
+<script src="/Assets/travorama20/angularDirectory/search/hotelSearch.service.js"></script>
+<script type="text/javascript" src="/Assets/js/jquery.ui.datepicker-id.js"></script>
+<script type="text/javascript" src="http://maps.google.com/maps/api/js?key=AIzaSyCRAmMz6GPXsXi1pZAl5QUsjNTcY0ZfqVA"></script>
 }
 
 <div class="travorama-hotel-mobile" ng-init="init(@Newtonsoft.Json.JsonConvert.SerializeObject(Model))">
@@ -96,31 +96,31 @@
                 <a href="#" attr-link="#spec-menu">RINCIAN</a>
             </div>
         </div>
-        </div>
+    </div>
     <div class="detail-hotel-container">
         <div class="detail-tab detail-hotel" id="detail-menu">
             <div class="dh-slider">
-                <div class="item" @*ng-if="hotel.images.length >= 1"*@>
+                <div class="item" @ * ng-if="hotel.images.length >= 1" * @>
                     <div class="dh-img" style="background-image: url({{hotel.images[0]}});"></div>
                 </div>
-                <div class="item" @*ng-if="hotel.images.length >= 2"*@>
+                <div class="item" @ * ng-if="hotel.images.length >= 2" * @>
                     <div class="dh-img" style="background-image: url({{hotel.images[1]}});"></div>
                 </div>
-                <div class="item" @*ng-if="hotel.images.length >= 3"*@>
+                <div class="item" @ * ng-if="hotel.images.length >= 3" * @>
                     <div class="dh-img" style="background-image: url({{hotel.images[2]}});"></div>
                 </div>
-                <div class="item" @*ng-if="hotel.images.length >= 4"*@>
+                <div class="item" @ * ng-if="hotel.images.length >= 4" * @>
                     <div class="dh-img" style="background-image: url({{hotel.images[3]}});"></div>
                 </div>
-                <div class="item" @*ng-if="hotel.images.length >= 5"*@>
+                <div class="item" @ * ng-if="hotel.images.length >= 5" * @>
                     <div class="dh-img" style="background-image: url({{hotel.images[4]}});"></div>
                 </div>
-                <div class="item" @*ng-if="hotel.images.length >= 6"*@>
+                <div class="item" @ * ng-if="hotel.images.length >= 6" * @>
                     <div class="dh-img" style="background-image: url({{hotel.images[5]}});"></div>
                 </div>
                 <div ng-show="loading" class="text-center" style="height: 320px;">
                     <img src="/Assets/images/load.gif" class="img-loading">
-            </div>
+                </div>
             </div>
             <div class="dh-title">
                 <div class="dh-name lg-txt blue-txt bold-txt">{{hotel.hotelName}}</div>
@@ -131,8 +131,8 @@
                     <div class="col-half" ng-if="hotel.starRating == 4"><span class="star star-4"></span></div>
                     <div class="col-half" ng-if="hotel.starRating == 5"><span class="star star-5"></span></div>
                     @*<div class="col-half share-group">
-                        <a href="#" class="like"></a>
-                        <a href="#" class="share"></a>
+                    <a href="#" class="like"></a>
+                    <a href="#" class="share"></a>
                     </div>*@
                 </div>
             </div>
@@ -184,10 +184,10 @@
                                 </div>
                                 <a href="#" class="blue-txt downline-txt sm-txt" ng-click="PageConfig.SetOverlay('detail-room'); seeRoomDetail(room)">Detail Info Kamar</a>
                                 @*<div class="facility">
-                                        <span class="wifi"></span>
-                                        <span class="meal"></span>
-                                        <span class="ac"></span>
-                                    </div>*@
+                                <span class="wifi"></span>
+                                <span class="meal"></span>
+                                <span class="ac"></span>
+                                </div>*@
                                 <a ng-click="bookRoom(room)" class="checkout-btn btn btn-yellow small">PESAN</a>
                             </div>
                         </div>
@@ -200,80 +200,80 @@
                         <span class="more" ng-show="roomCount == minRoomCount">semua</span>
                         <span class="less" ng-show="roomCount == maxRoomCount">sebagian</span>
                     </a>
-            </div>
+                </div>
             </div>
         </div>
-            
-        </div>
-        <div class="detail-tab spec-hotel" id="spec-menu">
-            <div class="sh-desc" ng-show="hotel.description.length > 0">
-                <div class="sh-title darkgrey-txt lg-txt bold-txt">Deskripsi </div>
-                <div ng-show="loading" class="text-center">
-                    <img src="/Assets/images/load.gif" style="width: 30px; height: 30px; margin-top: 5%;">
-                </div>
-                <div class="sh-txt darkgrey-txt">
-                    <span ng-repeat="description in hotel.description track by $index">{{description}}<br /></span>
-                </div>
-                <a class="toggle"><span class="sh-open"></span><span class="sh-close"></span></a>
+
+    </div>
+    <div class="detail-tab spec-hotel" id="spec-menu">
+        <div class="sh-desc" ng-show="hotel.description.length > 0">
+            <div class="sh-title darkgrey-txt lg-txt bold-txt">Deskripsi </div>
+            <div ng-show="loading" class="text-center">
+                <img src="/Assets/images/load.gif" style="width: 30px; height: 30px; margin-top: 5%;">
             </div>
-            <div class="sh-facility">
-                <div class="sh-title darkgrey-txt lg-txt bold-txt">Fasilitas Utama Hotel</div>
-                @*<div ng-show="loading" class="text-center">
-                    <img src="/Assets/images/load.gif" style="width: 30px; height: 30px; margin-top: 5%;">
-                    </div>*@
-                <div class="sh-list-facility grey-txt clearfix">
-                    <div class="sh-row clearfix" ng-repeat="facilities in hotel.facilities track by $index" ng-hide="facilities === undefined">
-                        <div class="col-2" ng-class="{'fac-general':facilities.facilityGroup == 'general',
+            <div class="sh-txt darkgrey-txt">
+                <span ng-repeat="description in hotel.description track by $index">{{description}}<br /></span>
+            </div>
+            <a class="toggle"><span class="sh-open"></span><span class="sh-close"></span></a>
+        </div>
+        <div class="sh-facility">
+            <div class="sh-title darkgrey-txt lg-txt bold-txt">Fasilitas Utama Hotel</div>
+            @*<div ng-show="loading" class="text-center">
+            <img src="/Assets/images/load.gif" style="width: 30px; height: 30px; margin-top: 5%;">
+            </div>*@
+            <div class="sh-list-facility grey-txt clearfix">
+                <div class="sh-row clearfix" ng-repeat="facilities in hotel.facilities track by $index" ng-hide="facilities === undefined">
+                    <div class="col-2" ng-class="{'fac-general':facilities.facilityGroup == 'general',
                                                                         'fac-health':facilities.facilityGroup == 'health',
                                                                         'fac-sport':facilities.facilityGroup == 'sport',
                                                                         'fac-business':facilities.facilityGroup == 'business',
                                                                         'fac-meal':facilities.facilityGroup == 'meal',
                                                                         'fac-ent':facilities.facilityGroup == 'entertainment',
                                                                         'fac-other':facilities.facilityGroup == 'other'}">
-                         
-                        </div>
-                        <div class="col-8 clearfix">
-                            <ul class="col-half blue-list" ng-repeat="facilityList in facilities.facilityList.slice(0, facilities.facilityList.length) track by $index">
-                                <li ng-repeat="facilityName in facilityList track by $index"> {{facilityName}}</li>
-                            </ul>
-                        </div>
+
                     </div>
-                    
-                    @*<ul class="col-half sh-list">
-                        <li class="bed-blue">Bed</li>
-                        <li class="meal-blue">Breakfast</li>
-                        <li class="bell-blue">Room Service</li>
-                        <li class="wifi-blue">Public WiFi</li>
-                        <li class="bed-blue">Bed</li>
-                        <li class="meal-grey">Breakfast</li>
-                        <li class="bell-grey">Room Service</li>
-                        <li class="wifi-grey">Public WiFi</li>
-                    </ul>
-                    <ul class="col-half sh-list">
-                        <li class="pool-blue">Swimming Pool</li>
-                        <li class="meal-blue">Breakfast</li>
-                        <li class="tv-blue">TV</li>
-                        <li class="car-blue">Hotel Car</li>
-                        <li class="ac-grey">AC</li>
-                        <li class="tv-blue">TV</li>
-                        <li class="car-blue">Hotel Car</li>
-                        <li class="ac-blue">AC</li>
-                    </ul>*@
+                    <div class="col-8 clearfix">
+                        <ul class="col-half blue-list" ng-repeat="facilityList in facilities.facilityList.slice(0, facilities.facilityList.length) track by $index">
+                            <li ng-repeat="facilityName in facilityList track by $index"> {{facilityName}}</li>
+                        </ul>
+                    </div>
                 </div>
-                * Fasilitas Berbayar
+
+                @*<ul class="col-half sh-list">
+                <li class="bed-blue">Bed</li>
+                <li class="meal-blue">Breakfast</li>
+                <li class="bell-blue">Room Service</li>
+                <li class="wifi-blue">Public WiFi</li>
+                <li class="bed-blue">Bed</li>
+                <li class="meal-grey">Breakfast</li>
+                <li class="bell-grey">Room Service</li>
+                <li class="wifi-grey">Public WiFi</li>
+                </ul>
+                <ul class="col-half sh-list">
+                <li class="pool-blue">Swimming Pool</li>
+                <li class="meal-blue">Breakfast</li>
+                <li class="tv-blue">TV</li>
+                <li class="car-blue">Hotel Car</li>
+                <li class="ac-grey">AC</li>
+                <li class="tv-blue">TV</li>
+                <li class="car-blue">Hotel Car</li>
+                <li class="ac-blue">AC</li>
+                </ul>*@
             </div>
-            <div class="sh-policy" ng-show="hotel.policy.length > 0">
-                <div class="sh-title darkgrey-txt lg-txt bold-txt">Perlu Diingat</div>
-                <div ng-show="loading" class="text-center">
-                    <img src="/Assets/images/load.gif" style="width: 30px; height: 30px; margin-top: 5%;">
+            * Fasilitas Berbayar
+        </div>
+        <div class="sh-policy" ng-show="hotel.policy.length > 0">
+            <div class="sh-title darkgrey-txt lg-txt bold-txt">Perlu Diingat</div>
+            <div ng-show="loading" class="text-center">
+                <img src="/Assets/images/load.gif" style="width: 30px; height: 30px; margin-top: 5%;">
             </div>
-                <div class="sh-policy-txt darkgrey-txt">
-                    <ul>
-                        <li ng-repeat="policy in hotel.policy track by $index">{{policy}}</li>
-                    </ul>
-                </div>
+            <div class="sh-policy-txt darkgrey-txt">
+                <ul>
+                    <li ng-repeat="policy in hotel.policy track by $index">{{policy}}</li>
+                </ul>
             </div>
         </div>
+    </div>
     <div class="overlay overlay--theme--blue overlay--detail-room" ng-class="{ 'active' : (PageConfig.ActiveOverlay == 'detail-room') }">
         <header class="overlay__header">
             <h3 class="overlay__title">
@@ -294,30 +294,30 @@
                                 <div class="col-half" ng-if="hotel.starRating == 4"><span class="star star-4"></span></div>
                                 <div class="col-half" ng-if="hotel.starRating == 5"><span class="star star-5"></span></div>
                                 @*<div class="col-half share-group">
-                                    <a href="#" class="like"></a>
-                                    <a href="#" class="share"></a>
-                                    </div>*@
+                                <a href="#" class="like"></a>
+                                <a href="#" class="share"></a>
+                                </div>*@
                             </div>
                         </div>
                         <div class="dh-slider dr-slider">
-                            <div class="item" @*ng-if="selectedRoom.roomImages.length >= 1"*@>
+                            <div class="item" @ * ng-if="selectedRoom.roomImages.length >= 1" * @>
                                 <div class="dh-img" style="background-image: url({{selectedRoom.roomImages[0]}});"></div>
-                            </div><div class="item" @*ng-if="selectedRoom.roomImages.length >= 1"*@>
+                            </div><div class="item" @ * ng-if="selectedRoom.roomImages.length >= 1" * @>
                                 <div class="dh-img" style="background-image: url({{selectedRoom.roomImages[1]}});"></div>
                             </div>
-                            <div class="item" @*ng-if="selectedRoom.roomImages.length >= 2"*@>
+                            <div class="item" @ * ng-if="selectedRoom.roomImages.length >= 2" * @>
                                 <div class="dh-img" style="background-image: url({{selectedRoom.roomImages[1]}});"></div>
                             </div>
-                            <div class="item" @*ng-if="selectedRoom.roomImages.length >= 3"*@>
+                            <div class="item" @ * ng-if="selectedRoom.roomImages.length >= 3" * @>
                                 <div class="dh-img" style="background-image: url({{selectedRoom.roomImages[2]}});"></div>
                             </div>
-                            <div class="item" @*ng-if="selectedRoom.roomImages.length >= 4"*@>
+                            <div class="item" @ * ng-if="selectedRoom.roomImages.length >= 4" * @>
                                 <div class="dh-img" style="background-image: url({{selectedRoom.roomImages[3]}});"></div>
                             </div>
-                            <div class="item" @*ng-if="selectedRoom.roomImages.length >= 5"*@>
+                            <div class="item" @ * ng-if="selectedRoom.roomImages.length >= 5" * @>
                                 <div class="dh-img" style="background-image: url({{selectedRoom.roomImages[4]}});"></div>
                             </div>
-                            <div class="item" @*ng-if="selectedRoom.roomImages.length >= 6"*@>
+                            <div class="item" @ * ng-if="selectedRoom.roomImages.length >= 6" * @>
                                 <div class="dh-img" style="background-image: url({{selectedRoom.roomImages[5]}});"></div>
                             </div>
                         </div>
@@ -330,18 +330,18 @@
                                 <div class="max-visitor" ng-show="selectedRoom.rate.boards != 'RO'">Termasuk Sarapan</div>
                             </div>
                             <div class="price orange-txt">
-                                    <div class="underline-txt sm-txt">Rp {{selectedRoom.rate.breakdowns[0].originalFare | number}}</div>
+                                <div class="underline-txt sm-txt">Rp {{selectedRoom.rate.breakdowns[0].originalFare | number}}</div>
                                 <a href="#" class="detail"></a>
-                                    <div class="lg-txt"><b><sup>Rp</sup> {{selectedRoom.rate.breakdowns[0].netFare | number}}</b></div>
+                                <div class="lg-txt"><b><sup>Rp</sup> {{selectedRoom.rate.breakdowns[0].netFare | number}}</b></div>
                                 <span class="xs-txt">(*Termasuk Pajak)</span>
                             </div>
                             <a ng-click="bookRoom(selectedRoom)" class="btn btn-yellow small">PESAN</a>
                         </div>
-                            <div class="dr-policy" ng-show="selectedRoom.rate.cancellation != null && selectedRoom.rate.cancellation.length > 0">
+                        <div class="dr-policy" ng-show="selectedRoom.rate.cancellation != null && selectedRoom.rate.cancellation.length > 0">
                             <div class="bold-txt lg-txt darkgrey-txt">Kebijakan Pembatalan</div>
                             <ul class="blue-list dr-txt darkgrey-txt">
                                 <li ng-show="selectedRoom.rate.isFreeCancel">
-                                        Gratis pembatalan sebelum <span style="color:#1daee4">{{setHoursToWIB(selectedRoom.rate.freeUntil) | date:'dd MMMM yyyy HH:mm'}}</span> WIB.
+                                    Gratis pembatalan sebelum <span style="color:#1daee4">{{setHoursToWIB(selectedRoom.rate.freeUntil) | date:'dd MMMM yyyy HH:mm'}}</span> WIB.
                                 </li>
                                 <li ng-repeat="cancellation in selectedRoom.rate.cancellation track by $index">
                                     Pembatalan setelah <span style="color:#1daee4">{{setHoursToWIB(cancellation.startTime) | date:'dd MMMM yyyy HH:mm'}} WIB</span>
@@ -350,11 +350,11 @@
                                 </li>
                             </ul>
                         </div>
-                            <div class="dr-info" ng-show="selectedRoom.rate.tnc != null && selectedRoom.rate.tnc.length > 0">
+                        <div class="dr-info" ng-show="selectedRoom.rate.tnc != null && selectedRoom.rate.tnc.length > 0">
                             <div class="bold-txt lg-txt darkgrey-txt">Info Kamar</div>
                             <ul class="blue-list dr-txt darkgrey-txt">
                                 <li ng-repeat="tnc in selectedRoom.rate.tnc">{{tnc}} <br /></li>
-                                </ul>
+                            </ul>
                         </div>
                     </div>
                 </div>
@@ -362,10 +362,10 @@
         </section>
     </div>
 
-        @Html.Partial("/Views/Shared/Mobile/_Autocomplete.cshtml")
+    @Html.Partial("/Views/Shared/Mobile/_Autocomplete.cshtml")
 
-        <!-- overlay hotel date -->
-        @Html.Partial("/Views/Shared/Mobile/_SelectCheckInDate.cshtml")
+    <!-- overlay hotel date -->
+    @Html.Partial("/Views/Shared/Mobile/_SelectCheckInDate.cshtml")
 
     <div class="popup__wrapper popup--revalidate" ng-class="{'active': booking}">
         <div class="popup">
