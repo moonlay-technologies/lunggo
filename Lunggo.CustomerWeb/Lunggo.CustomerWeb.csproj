@@ -1468,6 +1468,8 @@
     <Content Include="Assets\fonts\OpenSans-Semibold.ttf" />
     <Content Include="Assets\fonts\OpenSans-Semibold.woff" />
     <Content Include="Assets\fonts\OpenSans-Semibold.woff2" />
+    <Content Include="App_Code\ToTitleCase.cshtml" />
+    <Content Include="App_Code\MsToTime.cshtml" />
     <None Include="Properties\PublishProfiles\prod-cw %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\dv1-cw.pubxml" />
     <None Include="Properties\PublishProfiles\dv2-cw.pubxml" />

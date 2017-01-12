@@ -1,12 +1,7 @@
-﻿@using System.Diagnostics.Eventing.Reader
-@using System.Globalization
+﻿@using System.Globalization
 @using Lunggo.ApCommon.Constant
-@using Lunggo.ApCommon.Flight.Constant
 @using Lunggo.ApCommon.Flight.Model
-@using Lunggo.ApCommon.Flight.Service
 @using Lunggo.ApCommon.Hotel.Model
-@using Lunggo.ApCommon.Hotel.Service
-@using Lunggo.Framework.Config
 @using Lunggo.ApCommon.Payment.Constant
 @using PaymentSubMethod = Lunggo.ApCommon.Payment.Constant.PaymentSubMethod
 @model Lunggo.ApCommon.Product.Model.ReservationForDisplayBase
@@ -28,56 +23,6 @@
     var images = new List<Image>();
 
     }
-
-@functions{
-
-    public string ToTitleCase(string input)
-    {
-
-        var text = "";
-        try
-        {
-            var splittedText = input.Split(' ');
-            foreach (var word in splittedText)
-            {
-                var splittedByStrips = word.Split('-');
-                var w = "";
-                if (splittedByStrips.Count() != 1)
-                {
-                    foreach (var part in splittedByStrips)
-                    {
-                        w += ApplyTitleCase(part) + "-";
-                    }
-                    text += w.Substring(0, w.Length - 1) + " ";
-                }
-                else
-                {
-                    text += word[0] + word.Substring(1, word.Length - 1).ToLower() + " ";
-                }
-            }
-
-        }
-        catch
-        {
-
-        }
-        return text.Length == 0 ? "" : text.Substring(0, text.Length - 1);
-    }
-
-    public string ApplyTitleCase(string input)
-    {
-        return input[0] + input.Substring(1, input.Length - 1).ToLower();
-    }
-    public string msToTime(double duration)
-    {
-        var hours = Convert.ToInt32(duration) / (1000 * 60 * 60);
-        var minutes = (Convert.ToInt32(duration) / (1000 * 60)) % 60;
-
-        return hours + "j " + minutes + "m";
-    }
-    
-    
-}
 
 @section AdditionalJS {
     <!-- additional Angular JS-->
@@ -397,7 +342,7 @@
                                                 <h5>@reservation.Itinerary.Trips[0].Segments[segment].DepartureAirportName</h5>
                                             </div>
                                             <div class="flight__separator">
-                                                <h5><b>Durasi: </b>@msToTime(reservation.Itinerary.Trips[0].Segments[segment].Duration.GetValueOrDefault())</h5>
+                                                <h5><b>Durasi: </b>@MsToTime.ConvertMsToTime(reservation.Itinerary.Trips[0].Segments[segment].Duration.GetValueOrDefault())</h5>
                                             </div>
                                             <div class="flight__arrival">
                                                 <h5>@reservation.Itinerary.Trips[0].Segments[segment].ArrivalTime.GetValueOrDefault().ToString("d MMM yyyy", new CultureInfo("id-ID"))</h5>
@@ -411,7 +356,7 @@
                                 @if (reservation.Itinerary.Trips[0].Transits.Count > 0 && segment < reservation.Itinerary.Trips[0].TotalTransit)
                                 {
                                     <div class="transit">
-                                        <span>Transit di @reservation.Itinerary.Trips[0].Segments[segment].ArrivalCity (@reservation.Itinerary.Trips[0].Segments[segment].ArrivalAirport) selama <b>@msToTime(reservation.Itinerary.Trips[0].Transits.ElementAt(segment).Duration)</b></span>
+                                        <span>Transit di @reservation.Itinerary.Trips[0].Segments[segment].ArrivalCity (@reservation.Itinerary.Trips[0].Segments[segment].ArrivalAirport) selama <b>@MsToTime.ConvertMsToTime(reservation.Itinerary.Trips[0].Transits.ElementAt(segment).Duration)</b></span>
                                     </div>
                                 <!-- .transit -->
                                 }
@@ -458,7 +403,7 @@
                                                     <h5>@reservation.Itinerary.Trips[1].Segments[segment].DepartureAirportName</h5>
                                                 </div>
                                                 <div class="flight__separator">
-                                                    <h5><b>Durasi: </b>@msToTime(reservation.Itinerary.Trips[1].Segments[segment].Duration.GetValueOrDefault())</h5>
+                                                    <h5><b>Durasi: </b>@MsToTime.ConvertMsToTime(reservation.Itinerary.Trips[1].Segments[segment].Duration.GetValueOrDefault())</h5>
                                                 </div>
                                                 <div class="flight__arrival">
                                                     <h5>@reservation.Itinerary.Trips[1].Segments[segment].ArrivalTime.GetValueOrDefault().ToString("d MMM yyyy", new CultureInfo("id-ID"))</h5>
@@ -472,7 +417,7 @@
                                     @if (reservation.Itinerary.Trips[1].Transits.Count > 0 && segment < reservation.Itinerary.Trips[1].TotalTransit)
                                     {
                                         <div class="transit">
-                                            <span>Transit di @reservation.Itinerary.Trips[1].Segments[segment].ArrivalCity (@reservation.Itinerary.Trips[1].Segments[segment].ArrivalAirport) selama <b>@msToTime(reservation.Itinerary.Trips[1].Transits.ElementAt(segment).Duration)</b></span>
+                                            <span>Transit di @reservation.Itinerary.Trips[1].Segments[segment].ArrivalCity (@reservation.Itinerary.Trips[1].Segments[segment].ArrivalAirport) selama <b>@MsToTime.ConvertMsToTime(reservation.Itinerary.Trips[1].Transits.ElementAt(segment).Duration)</b></span>
                                         </div>
                                         <!-- .transit -->
                                     }

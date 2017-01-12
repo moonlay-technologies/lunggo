@@ -24,6 +24,7 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
     $scope.selectFailed = false;
     $scope.booking = false;
     $scope.expired = false;
+    $scope.noResults = true;
     $scope.showPopularDestinations = false;
     $scope.hideRoomDetail = true;
     $scope.singleRoom = [];
@@ -71,7 +72,7 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
             searchParamObject.occupancies.push({
                 adultCount: occdata[0],
                 childCount: occdata[1],
-                childrenAges: occdata[1] == 0 ? [0, 0, 0, 0] : ages,
+                childrenAges: occdata[1] == "0" ? [0, 0, 0, 0] : ages,
                 roomCount : 1
             });
         }
@@ -80,7 +81,8 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
             searchParamObject.occupancies.push({
                 adultCount: 1,
                 childCount: 0,
-                childrenAges: [0, 0, 0, 0]
+                childrenAges: [0, 0, 0, 0],
+                roomCount : 1
             });
         }
         hotelSearchSvc.initializeSearchForm($scope, searchParamObject);
@@ -467,6 +469,7 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
 
     $scope.availableRates = function (nightCount, checkIn, checkOut, occupancies, totalOcc) {
         $scope.searchDone = false;
+        $scope.noResults = false;
         var x = checkIn.format('YYYY');
         var y = checkIn.format('MM');
         var z = checkIn.format('DD');
@@ -475,9 +478,7 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
         var b = checkOut.format('MM');
         var c = checkOut.format('DD');
         var co = a+ "-" + b + "-" + c;
-
-        //var newcheckIn = moment("2017-03-03", "YYYY-MM-DD").locale("id");
-        //var newcheckOut = moment("2017-03-06", "YYYY-MM-DD").locale("id");
+        
         var newcheckIn = new Date(ci);
         var newcheckOut = new Date(co);
         resource.query({}, {
@@ -529,6 +530,7 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
                     });
                 }
             } else {
+                $scope.noResults = true;
                 $scope.searchDone = false;
             }
         });

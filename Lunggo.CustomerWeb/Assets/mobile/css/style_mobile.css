@@ -4981,6 +4981,9 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
       border-bottom: 1px solid #e9e9e9;
       line-height: 12px;
       color: #666; }
+    .page-hotel .travorama-hotel-mobile .detail-hotel .dh-listing .dh-date {
+      padding: 15px;
+      border-bottom: 1px solid #e9e9e9; }
     .page-hotel .travorama-hotel-mobile .detail-hotel .dh-listing .dh-list-title {
       padding: 20px 15px 15px; }
     .page-hotel .travorama-hotel-mobile .detail-hotel .dh-listing .dh-list-container {

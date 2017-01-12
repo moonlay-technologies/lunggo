@@ -1,6 +1,6 @@
 ﻿@using Lunggo.ApCommon.Hotel.Service
 @using Lunggo.CustomerWeb.Models
-@model Lunggo.CustomerWeb.Models.HotelSearchApiRequest
+@model HotelSearchApiRequest
 @{
     Layout = "/Views/Shared/mobile/_LayoutMobile.cshtml";
     ViewBag.BodyClass = "page-hotel page-search";
@@ -10,8 +10,8 @@
 }
 
 @{
-    long location = 0;
-    var x = long.TryParse(Model.SearchParamObject.Location, out location);
+    long location;
+    long.TryParse(Model.SearchParamObject.Location, out location);
     var loc = "";
     var foundLocation = HotelService.GetInstance().AutoCompletes.Where(c => c.Id == location).ToList()[0];
     if (foundLocation != null)
@@ -66,7 +66,7 @@
         </div>
     </div>
     <div class="search-list" search-scroll>
-        <div ng-show="!searchDone" class="text-center" style="height: 320px;">
+        <div ng-show="!searchDone" class="text-center" style="height: 30px; padding: 30px;">
             <img class="img-loading" src="/Assets/images/load.gif">
         </div>
         <div class="text-center" ng-show="searchDone && page == 1 && returnedHotelCount == 0"><h3> Hotel tidak ditemukan, silakan ganti filter atau destinasi anda.</h3></div>
@@ -83,7 +83,7 @@
                         <div class="star star-5 " ng-if="hotel.starRating == 5"></div>
                         <div class="location grey-txt">{{toTitleCase(hotel.area)}}
                             <span ng-show="hotel.area == null || hotel.area.length < 1">{{toTitleCase(hotel.address)}} {{toTitleCase(hotel.zone)}} <span ng-show="hotel.postalCd != null || hotel.postalCd.length > 0"> {{hotel.postalCd}}</span></span>
-</div>
+                        </div>
                         <div class="price orange-txt">
                             <div class="txt-md semibold-txt">Harga per malam mulai dari:</div>
                             <div class="underline-txt sm-txt">Rp {{hotel.originalCheapestFare | currency:'':0}}</div>
