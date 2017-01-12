@@ -264,7 +264,7 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
 
         // Construct a new InfoWindow.
         var infoWindow = new google.maps.InfoWindow({
-            content: 'Google Sydney'
+            content: $scope.hotelName
         });
 
         // Opens the InfoWindow when marker is clicked.
