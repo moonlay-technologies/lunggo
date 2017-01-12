@@ -171,12 +171,13 @@
             list-style: none;
             background: #dcdcdc;
             li.mh-list {
-                padding: 0 25px;
+                padding: 0 20px;
                 display: inline-block;
                 a {
-                    text-decoration: underline;
+                    cursor: pointer;
+                    text-decoration: none;
                     color: #000;
-                    &:hover {color: $color-main-blue;}
+                    &:hover {color: $color-main-blue; text-decoration: underline;}
                 }
                 &:before {
                     content: '';
@@ -486,6 +487,7 @@
         padding: 20px 0 15px;
         .ih-accordion {margin-bottom: 15px;
             .accordion-wrapper {
+                /*.accordion-wrap {padding-top: 70px;}*/
                 .accordion-title {
                     padding: 12px 25px;
                     &.up-height {margin-top:70px;}
@@ -518,6 +520,38 @@
                     }
                 }
                 .tnc-hotel {margin-top: 15px;}
+            }
+            .map-title {
+                margin-bottom: 10px;
+                margin: 0 40px 15px;
+                &:before {
+                    width: 30px;
+                    height: 40px;
+                    @extend .hotel-blue-icon;
+                    display: inline-block;
+                    content: '';
+                    position: absolute;
+                    margin-left: -40px;
+                    margin-top: 0;
+                }
+            }
+            .title-wrapper {margin-bottom: 10px;
+                div {    
+                    float: left;
+                    margin-right: 15px;
+                }
+                .star {
+                    float: left;
+                    position: relative;
+                }
+            }
+            .map-hotel {
+                width: 100%;
+                height: 400px;
+                #map {
+                    width: 100%;
+                    height: 100%;
+                }
             }
         }
         .ih-row {
