@@ -42,7 +42,9 @@
                 border-top: 1px solid #ccc;
                 padding: 25px 20px;
             }
-            .rs-rating {font-weight: 600;
+            .rs-rating {
+                @extend .os-semibold;
+                font-weight: 600;
                 .rs-txt-big {
                     font-size: 40px;
                     float: right;
@@ -61,6 +63,7 @@
                     width: 100%;
                     margin-top: 10px;
                     font-size: 11px;
+                    @extend .os-semibold;
                     font-weight: 600;
                     line-height: 11px;
                     .rb-container {margin-bottom: 12px;}
@@ -143,6 +146,7 @@
     .menu-hotel {
         margin-bottom: 20px;
         .mh-title {
+            @extend .os-semibold;
             font-weight: 600;
             color: #fff;
             background: #a0a0a0;
@@ -388,6 +392,7 @@
                 margin: 0;
                 list-style: none;
                 padding: 15px 30px;
+                @extend .os-semibold;
                 font-weight: 600;
                 line-height: 25px;
                 li {
@@ -508,7 +513,6 @@
                     margin-bottom: 0;
                     border-bottom: 1px solid #e3e3e3;
                     &.show {
-                        padding: 15px 30px;
                         border: 1px solid #ccc;
                         .snk-container {padding: 15px 0;
                             .blue-list {
@@ -559,6 +563,7 @@
             padding: 15px 0;
             &:first-child {border-top: none;}
             .ih-left {
+                @extend .os-semibold;
                 font-weight: 600;
                 text-align: center;
                 &.hotel-blue:before {@extend .hotel-blue-icon;}

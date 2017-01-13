@@ -82,6 +82,7 @@ file : /Assets/travorama20/css/_page_checkout.scss
 //General
 .form-group {margin-bottom: 20px;}
 label.control-label {
+    @extend .os-regular;
     font-weight: 400;
     margin-bottom: 10px;
 }
@@ -105,6 +106,7 @@ label.control-label {
         color: #fff;
         padding: 7px 15px;
         font-size: 13px;
+        @extend .os-semibold;
         font-weight: 600;
         position: relative;
     }
@@ -151,11 +153,11 @@ label.control-label {
             &:before,&:after {content:""; clear:both; display:block; width:100%;}
             .segment-airline-name {font-weight:bold; color:$color-main-blue; font-size:12px; padding-right:30px; display:block; padding-left:10%; margin-top:0; padding-top:7.5px;}
             .segment-number {float:left; width:5%; position:absolute; top:10px;
-                span {background:$color-main-blue; color:#fff; font-weight:600; padding:3px 10px;}
+                span {background:$color-main-blue; color:#fff; @extend .os-semibold; font-weight:600; padding:3px 10px;}
             }
             .segment-left {float:left; width:10%; margin-left:10%; position:relative;
                 .segment-airline-logo {width:50px; border:$border-default; float:left; margin-right:15px;}
-                .segment-airline-number {font-weight:600; color:$color-main-blue; font-size:12px;}
+                .segment-airline-number {@extend .os-semibold; font-weight:600; color:$color-main-blue; font-size:12px;}
             }
             .segment-right {@extend .segment-left; width:80%; margin-left:0;
                 &:before,&:after {content:""; clear:both; display:block; width:100%;}
@@ -175,14 +177,14 @@ label.control-label {
             .segment-operator {display:block; clear:both; padding-left:60px; padding-right:60px; padding-top:5px;
                 p {border-top:$border-default; margin-top:10px; padding-top:10px; margin-bottom:0; font-style:italic;
                     img {height:20px;}
-                    span {font-weight:600;}
+                    span {@extend .os-semibold; font-weight:600;}
                 }
             }
         }
         // flight transit
         .transit {text-align:center; padding:15px 0;
             &:after {border-top:1px dashed $color-main-blue; content:""; display:block; width:100%; position:relative; top:-10px;}
-            p {background:#fff; display:inline; font-style:italic; font-weight:600; color:$color-main-blue; background:#fff; position:relative; z-index:2; padding:0 10px;}
+            p {background:#fff; display:inline; font-style:italic; @extend .os-semibold; font-weight:600; color:$color-main-blue; background:#fff; position:relative; z-index:2; padding:0 10px;}
         }
     }
 }
@@ -247,7 +249,7 @@ label.control-label {
         label {display:block; cursor:pointer;}
         header {background:$color-main-blue; position:relative;
             .input-wrapper {height:100%; position:absolute; background:#028ec3; width:30px; text-align:center; padding-top:6px;}
-            h5 {color:#fff; color:#fff; margin:0; padding:10px; padding-left:40px; font-size:12px; font-weight:600;}
+            h5 {color:#fff; color:#fff; margin:0; padding:10px; padding-left:40px; font-size:12px; @extend .os-semibold; font-weight:600;}
         }
         section {padding:12px; border:$border-default; text-align:center; background:#fff;
             img {
@@ -293,7 +295,7 @@ label.control-label {
     .ui-datepicker {width:250px !important; position:relative; background:#252525; color:#fff;
         .ui-datepicker-group {width:100%; padding:15px;
             & + .ui-datepicker-group {border-top:$border-default;}
-            .ui-datepicker-title {color:#fff; color:$color-main-blue; font-size:14px; font-weight:600; margin-bottom:10px;}
+            .ui-datepicker-title {color:#fff; color:$color-main-blue; font-size:14px; @extend .os-semibold; font-weight:600; margin-bottom:10px;}
             .ui-datepicker-calendar {width:100%; color:#fff;
                 thead {
                     th {text-align:center; padding-bottom:10px;
@@ -394,7 +396,7 @@ label.control-label {
         .ui-datepicker-header {padding-bottom:10px;
             .ui-datepicker-prev, .ui-datepicker-next {display:inline; color:#fff; cursor:pointer;}
             .ui-datepicker-next {float:right;}
-            .ui-datepicker-title {color:$color-main-blue; font-size:14px; font-weight:600; margin-top:10px;
+            .ui-datepicker-title {color:$color-main-blue; font-size:14px; @extend .os-semibold; font-weight:600; margin-top:10px;
                 .ui-datepicker-month {}
                 .ui-datepicker-year {}
             }
@@ -424,6 +426,7 @@ label.control-label {
 // page thank you
 .page-thankyou {
     .section-title.stripe {
+        @extend .os-semibold;
         font-weight: 600;
         background: url(/Assets/images/yellow-stripe.png) center bottom no-repeat;
         padding-bottom: 20px;

@@ -22,6 +22,7 @@
                 padding: 7px 20px;
                 color: #fff;
                 font-size: 16px;
+                @extend .os-semibold;
                 font-weight: 600;
             }
             .filter-group {
@@ -154,6 +155,7 @@
                 margin: 25px 0 0;    
                 text-align: center;
                 width: 100%;
+                @extend .os-semibold;
                 font-weight: 600;
                 .page-container { 
                     display: inline-block;

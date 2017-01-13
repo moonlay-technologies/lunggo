@@ -41,6 +41,7 @@ file : /Assets/travorama20/css/_page_password.scss
         }
         h4 {
             font-size: 12px;
+            @extend .os-regular;
             font-weight: 400;
             margin: 0;
         }
@@ -78,7 +79,7 @@ file : /Assets/travorama20/css/_page_password.scss
 // section benefit
 .section-benefit {padding:30px 0;
     .benefit {text-align:center;
-        h4 {color:$color-main-blue; font-weight:600;}
+        h4 {color:$color-main-blue; @extend .os-semibold; font-weight:600;}
     }
 }
 
@@ -95,11 +96,11 @@ file : /Assets/travorama20/css/_page_password.scss
         header {background:$color-main-blue; padding:12px;
             &:after {@include clearfix();}
             &:before {width:50px; height:50px; background-image:url(/Assets/images/user-account-sprite.png); background-repeat:no-repeat; display:inline-block; content:""; vertical-align:middle; margin-right:12px;}
-            span {font-weight:600; font-size:12px; display:inline-block; width:110px; vertical-align:middle;}
+            span {@extend .os-semibold; font-weight:600; font-size:12px; display:inline-block; width:110px; vertical-align:middle;}
         }
         ul {margin:0; padding:0;
             li {
-                a {display:block; background:#c6f0ff; font-size:12px; color:$color-main-blue; cursor:pointer; font-weight:600; padding:0 12px; position:relative;
+                a {display:block; background:#c6f0ff; font-size:12px; color:$color-main-blue; cursor:pointer; @extend .os-semibold; font-weight:600; padding:0 12px; position:relative;
                     &:before {width:50px; height:50px; display:inline-block; content:""; vertical-align:middle; background-image:url(/Assets/images/user-account-sprite.png); background-repeat:no-repeat; background-position:-50px; margin-right:12px;}
                     // if active
                     &.active {background:#abe9ff;

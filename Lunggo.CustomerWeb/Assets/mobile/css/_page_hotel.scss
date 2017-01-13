@@ -1,7 +1,7 @@
 ﻿&.page-hotel.no-scroll {overflow: auto !important;}
 .page-hotel {
     /*General*/
-    font-family: 'Open Sans', sans-serif;
+    @extend .os-regular;
     font-weight: 400;
     color: #000;
     letter-spacing: 0;
@@ -23,8 +23,8 @@
     .underline-txt {text-decoration: line-through;} 
     .downline-txt {text-decoration: underline;}
     .bold-txt {font-weight: 700;}
-    .semibold-txt {font-weight: 600;}
-    .normal-txt {font-weight: 400;}   
+    .semibold-txt {@extend .os-semibold; font-weight: 600;}
+    .normal-txt {@extend .os-regular; font-weight: 400;}   
     .blue-txt {color: $color-main-blue;
         &.bg {
             font-size: 15px;
@@ -65,6 +65,7 @@
         &.btn-blue {
             background: #1daee4;
             color: #fff;
+            @extend .os-semibold;
             font-weight: 600;
             text-decoration: none;
             display: inline-block;

@@ -19,7 +19,7 @@ file : /Assets/travorama20/css/_page_index.scss
                 nav {
                     ul {margin:0; padding:0;
                         li {float:left; width: 50%; list-style:none;
-                            a {color:#4f4f4f; background:#d2d2d2; display:block; padding:13px 0px; text-align:center; font-weight:600; text-decoration:none; font-size:14px;
+                            a {color:#4f4f4f; background:#d2d2d2; display:block; padding:13px 0px; text-align:center; @extend .os-semibold; font-weight:600; text-decoration:none; font-size:14px;
                                 &:before {content:""; width:20px; height:20px; display:inline-block; background-image:url(/Assets/images/search-tab-sprite.png); margin-bottom:-5px; margin-right:5px;}
                             }
                             &.active {border-right:0;
@@ -68,7 +68,7 @@ file : /Assets/travorama20/css/_page_index.scss
                         &>div:first-child {padding-right:3px;}
                         &>div:last-child {padding-left:3px;}
                     }
-                    .form-flight-departure {background:#fff; color:#6a6a6a; padding:7px 10px 0px; @include border-radius($border-radius-default); border:$border-default; font-weight:600; cursor:pointer; height:75px;
+                    .form-flight-departure {background:#fff; color:#6a6a6a; padding:7px 10px 0px; @include border-radius($border-radius-default); border:$border-default; @extend .os-semibold; font-weight:600; cursor:pointer; height:75px;
                         &:before, &:after {@include clearfix();}
                         small {display:block; font-weight:normal; margin-bottom:-10px; font-size:9px;}
                         .date {float:left; font-size:42px; margin-right:0px; width:60px; margin-top:5px;}
@@ -102,7 +102,7 @@ file : /Assets/travorama20/css/_page_index.scss
                         small {font-sizE:9px; line-height:0;
                             br {display:block; margin-top:0; margin-bottom:-5px; content:"";}
                         }
-                        .passenger-input {width:50px; position:absolute; top:25px; right:5px; border:0; text-align:right; font-size:36px; padding:0; line-height:0; margin:0; letter-spacing:0; font-weight:600;}
+                        .passenger-input {width:50px; position:absolute; top:25px; right:5px; border:0; text-align:right; font-size:36px; padding:0; line-height:0; margin:0; letter-spacing:0; @extend .os-semibold; font-weight:600;}
                         .option {display:none; z-index:3; width:100%; text-align:center; padding:0; position:absolute;
                             span {}
                         }
@@ -126,10 +126,10 @@ file : /Assets/travorama20/css/_page_index.scss
                         &>div:first-child {padding-right: 5px;}
                         &>div:last-child {padding-left: 5px;}
                     }
-                    .form-hotel-checkout, .form-hotel-checkin {cursor: pointer; background:#fff; color:#6a6a6a; padding:10px 8px; @include border-radius($border-radius-default); border:$border-default; font-weight:600;
+                    .form-hotel-checkout, .form-hotel-checkin {cursor: pointer; background:#fff; color:#6a6a6a; padding:10px 8px; @include border-radius($border-radius-default); border:$border-default; @extend .os-semibold; font-weight:600;
                         &:before, &:after {@include clearfix();}
                         small {display:block; font-weight:normal;}
-                        span.grey-txt {font-weight: 400;}
+                        span.grey-txt {@extend .os-regular; font-weight: 400;}
                         .date {float:left; font-size:42px; width:60px; line-height: 42px;}
                         .month {display:block; font-size:17px; line-height: 26px;}
                         .year {display:block; font-size:17px; line-height: 10px;}
@@ -155,6 +155,7 @@ file : /Assets/travorama20/css/_page_index.scss
                             /*input {width:50px; position:absolute; right:5px; border:0; text-align:right; font-size:30px; padding:0; line-height:0; margin:0; letter-spacing:0; font-weight:600; height: 30px; background: transparent;}*/
                             .input-hotel {
                                 font-size: 30px;
+                                @extend .os-semibold;
                                 font-weight: 600;
                                 line-height: 30px;
                                 text-align: right;    
@@ -257,6 +258,7 @@ file : /Assets/travorama20/css/_page_index.scss
                                 height: 50px;
                                 font-size: 24px;
                                 line-height: 50px;
+                                @extend .os-semibold;
                                 font-weight: 600;
                                 text-align: right;
                                 color: #6a6a6a;
@@ -364,7 +366,7 @@ file : /Assets/travorama20/css/_page_index.scss
                 h3 {float:left; width:65%; position:absolute; bottom:0; left:0; z-index:2; color:#fff; padding:15px; margin:0;
                     small {display:block; color:#fff; margin-bottom:5px;}
                 }
-                span {float:left; width:35%; position:absolute; bottom:0; right:0; z-index:2; padding:150px 10px 15px; background:url(/Assets/images/popular-destination-bg.png) bottom center repeat-x; color:#ffd132; text-align:center; font-weight:600; text-decoration:underline;}
+                span {float:left; width:35%; position:absolute; bottom:0; right:0; z-index:2; padding:150px 10px 15px; background:url(/Assets/images/popular-destination-bg.png) bottom center repeat-x; color:#ffd132; text-align:center; @extend .os-semibold; font-weight:600; text-decoration:underline;}
             }
             img {}
             //*****
@@ -514,6 +516,7 @@ file : /Assets/travorama20/css/_page_index.scss
             .form-hotel-visitor {background:#fff; padding: 8px 6px; color:#6a6a6a; @include border-radius($border-radius-default); border:$border-default; position:relative; height:50px;
                 .input-hotel {
                     font-size: 26px;
+                    @extend .os-semibold;
                     font-weight: 600;
                     line-height: 36px;
                     text-align: right;

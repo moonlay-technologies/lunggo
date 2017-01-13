@@ -109,11 +109,52 @@ $button-border: #c9cdd2;
 }
 
 /*--------------------*/
+/*Font Family*/
+@font-face {
+    font-family: 'Open Sans Bold';
+    src: url("../../fonts/OpenSans-Bold.eot");
+    src: url("../../fonts/OpenSans-Bold.eot?#iefix") format("embedded-opentype"), url("../../fonts/OpenSans-Bold.woff2") format("woff2"), url("../../fonts/OpenSans-Bold.woff") format("woff"), url("../../fonts/OpenSans-Bold.ttf") format("truetype"), url("../../fonts/OpenSans-Bold.svg#din-boldregular") format("svg");
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Open Sans';
+    src: url("../../fonts/OpenSans-Semibold.eot");
+    src: url("../../fonts/OpenSans-Regular.eot?#iefix") format("embedded-opentype"), url("../../fonts/OpenSans-Regular.woff2") format("woff2"), url("../../fonts/OpenSans-Regular.woff") format("woff"), url("../../fonts/OpenSans-Regular.ttf") format("truetype"), url("../../fonts/OpenSans-Regular.svg#din-regularregular") format("svg");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Open Sans Semibold';
+    src: url("../../fonts/OpenSans-Semibold.eot");
+    src: url("../../fonts/OpenSans-Semibold.eot?#iefix") format("embedded-opentype"), url("../../fonts/OpenSans-Semibold.woff2") format("woff2"), url("../../fonts/OpenSans-Semibold.woff") format("woff"), url("../../fonts/OpenSans-Semibold.ttf") format("truetype"), url("../../fonts/OpenSans-Semibold.svg#din-semiboldregular") format("svg");
+    font-weight: normal;
+    font-style: normal;
+}
+
+/*--------------------*/
 /* font */
 .os-light {font-weight: 300;}
-.os-regular {font-weight: 400;}
-.os-semibold {font-weight: 600;}
-.os-bold {font-weight: 700;}
+.os-regular {font-family: 'Open Sans';}
+.os-semibold {font-family: 'Open Sans Semibold';}
+.os-bold {font-family: 'Open Sans Bold';}
+
+.regular-txt {
+    @extend .os-regular;
+    font-weight: 400;
+}
+
+.semibold-txt {
+    font-family:'Open Sans Semibold';
+    font-weight: 600;
+}
+
+.bold-txt {
+    font-family:'Open Sans Bold';
+    font-weight: 700;
+}
 
 /*--------------------*/
 // General Styling
@@ -178,7 +219,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
             span.number-promo {content: ''; width: 12px; height: 12px; background: red; display: block; border-radius: 12px; float: right; font-size: 6px; line-height: 12px; color: #fff;}
         }
         .change-hotel, .flight-swap {@extend & .site-menu; background:url(/Assets/mobile/images/flight-swap.png) no-repeat; left:auto; right:15px; width: 23px; height: 25px; top: 18px;}
-        .flight-detail {@extend & .site-menu; width:40px; background:none; left:auto; right:15px; color:$color-main-blue; text-decoration:none; text-align:right; font-weight:600; padding:10px 0; font-size:14px;}
+        .flight-detail {@extend & .site-menu; width:40px; background:none; left:auto; right:15px; color:$color-main-blue; text-decoration:none; text-align:right; @extend .os-semibold; font-weight:600; padding:10px 0; font-size:14px;}
         .login-hotel {@extend & .site-menu; background:url(/Assets/mobile/images/Hotel/login.png) no-repeat; left:auto; right:15px; width: 20px; height: 20px; top: 20px; background-size: 100%;}
     }
 }
@@ -189,7 +230,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     .burger-content__header {background:#028ec3; color:#fff; width:300px; height:$header-height; top:0;
         ul {list-style:none; margin:0; padding:10px 20px;
             li {display:inline-block; width:70px; padding-top:10px; padding-bottom:10px; padding-left:15px;
-                a {color:#fff; font-weight:600;}
+                a {color:#fff; @extend .os-semibold; font-weight:600;}
                 // specific class
                 &.language {
                     img {width:22px;}
@@ -197,12 +238,12 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
                 &.currency {border-left:1px solid $color-main-blue; padding-left:30px;}
             }
         }
-        .burger-content__close {color:#fff; position:absolute; right:40px; top:12px; font-size:18px; font-weight:400; cursor: pointer; text-decoration: none; text-transform: lowercase; line-height: 30px;}
+        .burger-content__close {color:#fff; position:absolute; right:40px; top:12px; font-size:18px; @extend .os-regular;font-weight:400; cursor: pointer; text-decoration: none; text-transform: lowercase; line-height: 30px;}
     }
     .burger-content__body {background:#fff; min-height: 100%;
         ul {list-style:none; margin:0; padding:0; 
             li {
-                a {color:$color-main-blue; padding:13.5px 0px; padding-left:70px; display:block; font-weight:600; position:relative;
+                a {color:$color-main-blue; padding:13.5px 0px; padding-left:70px; display:block; @extend .os-semibold; font-weight:600; position:relative;
                     &:before {content:""; width:30px; height:30px; display:block; position:absolute; margin-left:-40px; top:8px; background-repeat:no-repeat; background-image:url(/Assets/mobile/images/burger-sprite.png);}
                 }
                 //active
@@ -418,7 +459,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     .popup {text-align:center; background:none; padding-top:50px;
         .revalidate-image {}
         .revalidate-anim {padding:10px 0;}
-        p {font-size:16px; color:#fff; font-weight:600;}
+        p {font-size:16px; color:#fff; @extend .os-semibold; font-weight:600;}
     }
 }
 
@@ -427,14 +468,14 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
 .overlay {position:fixed; width:100%; height:100%; top:100%; left:0; z-index:1000; background:#fff; padding-top:0; overflow:auto; @include transition($transition-default);
     .overlay__header {background:#878787; color:#fff; padding:22px 18px; height:$header-height; position:fixed; z-index:1; top:0; left:0; width:100%; display:none; text-align:center;
         .overlay__title {margin:0;
-            small {color:#fff; font-weight:600; font-size:14px;}
+            small {color:#fff; @extend .os-semibold; font-weight:600; font-size:14px;}
         }
         h3.overlay__title {
             @extend .os-bold;
             font-size: 13px;
             text-transform: uppercase;
         }
-        .overlay__close {float:right; font-size:17px; cursor: pointer; text-transform: lowercase; line-height: 9px; font-weight: 400;}
+        .overlay__close {float:right; font-size:17px; cursor: pointer; text-transform: lowercase; line-height: 9px; @extend .os-regular; font-weight: 400;}
     }
     .overlay__content, .overlay__body {background:#fff; min-height:100%; padding:12px; z-index: -1; top: 60px; position: relative;/*padding-bottom:$header-height;*/}
     .overlay__footer {position:fixed; width:100%; bottom:0; left:0; background:#616161; padding:12px; color:#fff; height:$header-height; display:none;}
@@ -506,7 +547,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
                 .airport__link, .hotel__link {position:absolute; display:block; width:100%; height:100%; left:0; top:0; z-index:2; }
                 .airport__code, .hotel__code {display:inline-block; vertical-align:middle; font-weight:bold; font-size:32px; padding-left:15px; padding-right:15px; color:$color-main-blue; width:30%; text-align:center;}
                 .airport__detail, .hotel__detail {display:inline-block; vertical-align:-webkit-baseline-middle; font-size:12px; line-height:14px; width:65%;
-                    .airport__location, .hotel__location {z-index:3; margin:0; font-weight:600; margin-bottom:5px;}
+                    .airport__location, .hotel__location {z-index:3; margin:0; @extend .os-semibold; font-weight:600; margin-bottom:5px;}
                     .airport__name, .hotel__result {z-index:3; margin:0;}
             }
             }
@@ -903,6 +944,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         padding: 11px 15px;
         width: 100%;
         font-size: 13px;
+        @extend .os-semibold;
         font-weight: 600;
         &.active:after {content: "-"}
         &:after {
@@ -967,7 +1009,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
                 }
             }
             input {display:none;}
-            .name {padding-left:30px; font-weight: 400;}
+            .name {padding-left:30px; @extend .os-regular; font-weight: 400;}
         }
     }
 }
@@ -986,7 +1028,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
                 vertical-align: middle;
             }
             input {display:none;}
-            .name {padding-left:30px; font-weight: 400;}
+            .name {padding-left:30px; @extend .os-regular; font-weight: 400;}
         }
     }
 }
@@ -1006,7 +1048,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
             label {font-weight:normal;}
             &+.filter-group {border-top: 1px solid #999;}
             .filter-group__header {margin-bottom: 5px;
-                .filter-group__title {margin:0; font-weight:600; font-size: 12px;}
+                .filter-group__title {margin:0; @extend .os-semibold; font-weight:600; font-size: 12px;}
             }
             .filter-group__content {
                 label {display:block; padding:12px 0;

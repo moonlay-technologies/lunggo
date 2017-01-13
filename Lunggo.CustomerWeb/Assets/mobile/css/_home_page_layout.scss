@@ -454,7 +454,7 @@ input[name="hotel-night"], input[name="hotel-visitor"] {
 
 /*Font style*/
 .blue-txt {color: #2fb4e6;}
-.semibold-txt {font-weight: 600;}
+.semibold-txt {@extend .os-semibold; font-weight: 600;}
 .bold-txt {font-weight: 700;}
 .right-txt {text-align: right;}
 .sm-txt {font-size: 9px;}

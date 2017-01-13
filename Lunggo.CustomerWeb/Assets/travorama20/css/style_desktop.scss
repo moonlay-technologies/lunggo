@@ -86,6 +86,39 @@ $mobile-app: '../images/mobile-app.png';
     -o-transform: translate($x, $y);
     transform: translate($x, $y);
 }
+
+/*--------------------*/
+/*Font Family*/
+@font-face {
+    font-family: 'Open Sans Bold';
+    src: url("../../fonts/OpenSans-Bold.eot");
+    src: url("../../fonts/OpenSans-Bold.eot?#iefix") format("embedded-opentype"), url("../../fonts/OpenSans-Bold.woff2") format("woff2"), url("../../fonts/OpenSans-Bold.woff") format("woff"), url("../../fonts/OpenSans-Bold.ttf") format("truetype"), url("../../fonts/OpenSans-Bold.svg#din-boldregular") format("svg");
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Open Sans';
+    src: url("../../fonts/OpenSans-Semibold.eot");
+    src: url("../../fonts/OpenSans-Regular.eot?#iefix") format("embedded-opentype"), url("../../fonts/OpenSans-Regular.woff2") format("woff2"), url("../../fonts/OpenSans-Regular.woff") format("woff"), url("../../fonts/OpenSans-Regular.ttf") format("truetype"), url("../../fonts/OpenSans-Regular.svg#din-regularregular") format("svg");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Open Sans Semibold';
+    src: url("../../fonts/OpenSans-Semibold.eot");
+    src: url("../../fonts/OpenSans-Semibold.eot?#iefix") format("embedded-opentype"), url("../../fonts/OpenSans-Semibold.woff2") format("woff2"), url("../../fonts/OpenSans-Semibold.woff") format("woff"), url("../../fonts/OpenSans-Semibold.ttf") format("truetype"), url("../../fonts/OpenSans-Semibold.svg#din-semiboldregular") format("svg");
+    font-weight: normal;
+    font-style: normal;
+}
+
+/*--------------------*/
+/* font */
+.os-regular {font-family: 'Open Sans';}
+.os-semibold {font-family: 'Open Sans Semibold';}
+.os-bold {font-family: 'Open Sans Bold';}
+
 /*--------------------*/
 /* general class */
 html {height:100%;}
@@ -119,12 +152,12 @@ span.close {cursor:pointer;}
 }
 
 .semibold-txt {
-    font-family:'Open Sans';
+    font-family:'Open Sans Semibold';
     font-weight: 600;
 }
 
 .bold-txt {
-    font-family:'Open Sans';
+    font-family:'Open Sans Bold';
     font-weight: 700;
 }
 
@@ -145,7 +178,7 @@ span.close {cursor:pointer;}
     border-radius: 2px;
 }
 
-.section-title.stripe {font-weight:600; background:url(/Assets/images/yellow-stripe.png) center bottom no-repeat; padding-bottom:30px; margin-bottom:45px;
+.section-title.stripe {@extend .os-semibold; font-weight:600; background:url(/Assets/images/yellow-stripe.png) center bottom no-repeat; padding-bottom:30px; margin-bottom:45px;
     &.small-stripe {background-image:url(/Assets/images/yellow-stripe-small.png);}
     span {color:#1eafe4; font-weight:bold;}
 }
@@ -195,7 +228,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
 // and form Date Selector pop up
 // search calendar
 .search-calendar, .search-calendar-hotel {width:320px; height:520px; background:#252525; position:absolute; top:0; left:325px; z-index:2; display:none;
-    .calendar-header {height:40px; background:#4e4e4e; color:#fff; font-weight:600; font-size:17px; padding:10px 15px;
+    .calendar-header {height:40px; background:#4e4e4e; color:#fff; @extend .os-semibold; font-weight:600; font-size:17px; padding:10px 15px;
         .close-calendar, .close-calendar-hotel {float:right; cursor:pointer;}
     }
     .calendar-body {padding-top:15px;}
@@ -206,7 +239,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     .ui-datepicker {width:100% !important; position:relative;
         .ui-datepicker-group {width:100%; padding:15px;
             & + .ui-datepicker-group {border-top:$border-default;}
-            .ui-datepicker-title {color:#fff; color:$color-main-blue; font-size:14px; font-weight:600; margin-bottom:10px;}
+            .ui-datepicker-title {color:#fff; color:$color-main-blue; font-size:14px; @extend .os-semibold; font-weight:600; margin-bottom:10px;}
             .ui-datepicker-calendar {width:100%; color:#fff;
                 thead {
                     th {text-align:center; padding-bottom:10px;
@@ -245,7 +278,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
 
 // location dropdown
 .search-location, .search-hotel {width:850px; min-height:520px; background:#fff; position:absolute; top:0; left:325px; z-index:3; display:none;
-    .location-header {height:40px; background:#4e4e4e; color:#fff; font-weight:600; font-size:17px; padding:10px 15px;
+    .location-header {height:40px; background:#4e4e4e; color:#fff; @extend .os-semibold; font-weight:600; font-size:17px; padding:10px 15px;
         .close-location, .close-hotel {float:right; cursor:pointer;}
     }
     .location-body {color:#333; height: 400px;
@@ -276,7 +309,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
                     h3 {color:$color-main-blue; font-size:14px; font-weight:bold; margin-top:10px; margin-bottom:6px;}
                     ul {margin:0; padding:0; list-style:none; margin-bottom:23px;
                         li {margin-bottom:0px;
-                            a {color:#2f2f2f; font-weight:600; font-size:13px;
+                            a {color:#2f2f2f; @extend .os-semibold; font-weight:600; font-size:13px;
                                 &:hover {text-decoration:none;
                                     &:before {content:url(/Assets/images/recommend-selector.png); position:absolute; left:0px;}
                                 }
@@ -382,7 +415,7 @@ border:1px solid #CE9A01;-webkit-box-shadow: #FFF563 0px 1px 0px inset;-moz-box-
 .page-overlay {position:fixed; width:100%; height:100%; top :0; left:0; z-index:1000; background:rgba(0,0,0,0.7);
     .overlay-content {width:400px; height:220px; background:#fff; position:absolute; margin:auto; top:0; right:0; bottom:0; left:0; @include border-radius($border-radius-default); overflow:hidden;
         header {background:$color-main-blue; text-align:center; color:#fff; padding:15px;
-            h4 {margin:0; font-weight:600;}
+            h4 {margin:0; @extend .os-semibold; font-weight:600;}
             .close {color:#fff; opacity:1;}
         }
         section {padding:15px;
@@ -460,7 +493,7 @@ border:1px solid #CE9A01;-webkit-box-shadow: #FFF563 0px 1px 0px inset;-moz-box-
     .popup {text-align:center; background:none; padding-top:50px;
         .revalidate-image {}
         .revalidate-anim {padding:10px 0;}
-        p {font-size:16px; color:#fff; font-weight:600;}
+        p {font-size:16px; color:#fff; @extend .os-semibold; font-weight:600;}
     }
 }
 /*.modal {
@@ -583,6 +616,7 @@ border:1px solid #CE9A01;-webkit-box-shadow: #FFF563 0px 1px 0px inset;-moz-box-
         padding: 7px 15px;
         width: 100%;
         font-size: 13px;
+        @extend .os-semibold;
         font-weight: 600;
         &.active:after {content: '-'}
         &:after {
@@ -643,11 +677,11 @@ border:1px solid #CE9A01;-webkit-box-shadow: #FFF563 0px 1px 0px inset;-moz-box-
                 dl {
                     margin-bottom: 12px;
                     &:before, &:after {@include clearfix();}
-                    dt {font-weight:600; width:60%; float:left; position:relative;
+                    dt {@extend .os-semibold; font-weight:600; width:60%; float:left; position:relative;
                         &:before {content:""; position:absolute; width:7px; height:7px; background:#fd8524; left:-12px; top:3px;}
                         &.dt-title {width: 45%;}
                     }
-                    dd {font-weight:600; width:40%; float:left; text-align:right;
+                    dd {@extend .os-semibold; font-weight:600; width:40%; float:left; text-align:right;
                         &.dd-price {width: 55%;}
                     }
                 }
@@ -724,6 +758,7 @@ border:1px solid #CE9A01;-webkit-box-shadow: #FFF563 0px 1px 0px inset;-moz-box-
                 color: #fff;
                 padding: 7px 15px;
                 font-size: 15px;
+                @extend .os-semibold;
                 font-weight: 600;
                 position: relative;
             }

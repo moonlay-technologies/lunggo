@@ -8,17 +8,51 @@
 /*--------------------*/
 /* mixins */
 /*--------------------*/
+/*Font Family*/
+@font-face {
+  font-family: 'Open Sans Bold';
+  src: url("../../fonts/OpenSans-Bold.eot");
+  src: url("../../fonts/OpenSans-Bold.eot?#iefix") format("embedded-opentype"), url("../../fonts/OpenSans-Bold.woff2") format("woff2"), url("../../fonts/OpenSans-Bold.woff") format("woff"), url("../../fonts/OpenSans-Bold.ttf") format("truetype"), url("../../fonts/OpenSans-Bold.svg#din-boldregular") format("svg");
+  font-weight: bold;
+  font-style: normal; }
+
+@font-face {
+  font-family: 'Open Sans';
+  src: url("../../fonts/OpenSans-Semibold.eot");
+  src: url("../../fonts/OpenSans-Regular.eot?#iefix") format("embedded-opentype"), url("../../fonts/OpenSans-Regular.woff2") format("woff2"), url("../../fonts/OpenSans-Regular.woff") format("woff"), url("../../fonts/OpenSans-Regular.ttf") format("truetype"), url("../../fonts/OpenSans-Regular.svg#din-regularregular") format("svg");
+  font-weight: normal;
+  font-style: normal; }
+
+@font-face {
+  font-family: 'Open Sans Semibold';
+  src: url("../../fonts/OpenSans-Semibold.eot");
+  src: url("../../fonts/OpenSans-Semibold.eot?#iefix") format("embedded-opentype"), url("../../fonts/OpenSans-Semibold.woff2") format("woff2"), url("../../fonts/OpenSans-Semibold.woff") format("woff"), url("../../fonts/OpenSans-Semibold.ttf") format("truetype"), url("../../fonts/OpenSans-Semibold.svg#din-semiboldregular") format("svg");
+  font-weight: normal;
+  font-style: normal; }
+
+/*--------------------*/
 /* font */
 .os-light, .page.page-home .form-container .form-wrapper form .form__destination .title-destination, .page.page-home .form-container .form-wrapper form .form__origin .title-destination, .page.page-home .form-container .form-wrapper form span.city, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__destination .title-destination, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__origin .title-destination, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form span.city, .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__destination .title-destination, .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__origin .title-destination, .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form span.city {
   font-weight: 300; }
 
-.os-regular, .form-group label.control-label, .overlay.overlay--passenger-selector .overlay__content .passenger-selector__body .note > p, .page.page-home .form-container .form-wrapper form span.code-airport, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form span.code-airport, .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form span.code-airport {
-  font-weight: 400; }
+.os-regular, .regular-txt, .burger-content .burger-content__header .burger-content__close, .form-group label.control-label, .overlay .overlay__header .overlay__close, .overlay.overlay--passenger-selector .overlay__content .passenger-selector__body .note > p, .overlay--flight-sort .overlay__content label .name, .overlay--hotel-sort .overlay__content label .name, .page.page-home .form-container .form-wrapper form span.code-airport, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form span.code-airport, .page-hotel, .page-hotel .normal-txt, .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form span.code-airport {
+  font-family: 'Open Sans'; }
 
-.os-semibold, .overlay.overlay--passenger-selector .overlay__content .passenger-selector__body .selector a, .overlay.overlay--passenger-selector .overlay__content .passenger-selector__body .selector span, .overlay.overlay--datepicker .overlay__content .overlay-selector .overlay-selector__body .event, .overlay--flight-filter .overlay__content .reset .btn-reset, .overlay--hotel-filter .overlay__content .reset .btn-reset {
-  font-weight: 600; }
+.os-semibold, .site-header .header-display .flight-detail, .burger-content .burger-content__header ul li a, .burger-content .burger-content__body ul li a, .popup__wrapper.popup--revalidate .popup p, .overlay .overlay__header .overlay__title small, .overlay.overlay--airport-select .overlay__content ul.result li.airport .airport__detail .airport__location, .overlay.overlay--airport-select .overlay__content ul.result li.airport .airport__detail .hotel__location, .overlay.overlay--airport-select .overlay__content ul.result li.airport .hotel__detail .airport__location, .overlay.overlay--airport-select .overlay__content ul.result li.airport .hotel__detail .hotel__location, .overlay.overlay--airport-select .overlay__content ul.result li.hotel .airport__detail .airport__location, .overlay.overlay--airport-select .overlay__content ul.result li.hotel .airport__detail .hotel__location, .overlay.overlay--airport-select .overlay__content ul.result li.hotel .hotel__detail .airport__location, .overlay.overlay--airport-select .overlay__content ul.result li.hotel .hotel__detail .hotel__location, .overlay.overlay--hotel-select .overlay__content ul.result li.airport .airport__detail .airport__location, .overlay.overlay--hotel-select .overlay__content ul.result li.airport .airport__detail .hotel__location, .overlay.overlay--hotel-select .overlay__content ul.result li.airport .hotel__detail .airport__location, .overlay.overlay--hotel-select .overlay__content ul.result li.airport .hotel__detail .hotel__location, .overlay.overlay--hotel-select .overlay__content ul.result li.hotel .airport__detail .airport__location, .overlay.overlay--hotel-select .overlay__content ul.result li.hotel .airport__detail .hotel__location, .overlay.overlay--hotel-select .overlay__content ul.result li.hotel .hotel__detail .airport__location, .overlay.overlay--hotel-select .overlay__content ul.result li.hotel .hotel__detail .hotel__location, .overlay.overlay--passenger-selector .overlay__content .passenger-selector__body .selector a, .overlay.overlay--passenger-selector .overlay__content .passenger-selector__body .selector span, .overlay.overlay--datepicker .overlay__content .overlay-selector .overlay-selector__body .event, .accordion-wrapper .accordion-title, .overlay--flight-filter .overlay__content .filter-group .filter-group__header .filter-group__title, .overlay--hotel-filter .overlay__content .filter-group .filter-group__header .filter-group__title, .overlay--flight-filter .overlay__content .reset .btn-reset, .overlay--hotel-filter .overlay__content .reset .btn-reset, .page.page-home .form-container .semibold-txt, .page.page-flight .overlay.overlay--flight-form .overlay__content .semibold-txt, .overlay--flight-detail .overlay__content .flight-wrapper .transit span, .page.page-checkout .page__header .step__wrapper .step span, .page.page-checkout .page__header .step__wrapper .step-hotel span, .page.page-checkout .passenger .passenger__header .passenger__title, .page.page-checkout .summary.summary--payment label header h5, .page.page-useraccount .menu-user span, .page.page-useraccount .user-menu .menu-wrapper ul li a, .page.page-useraccount .user-profile .form-wrapper > div > header span, .page.page-useraccount .user-history .page-title span, .page-overlay .overlay-container header.overlay-header, .page.page-howtoorder .howto-content .list__wrapper .list .list__header h3, .page.page-howtoorder .howto-content .list__wrapper .list .list__header h3:before, .page-hotel .semibold-txt, .page-hotel a.btn-blue, .page-hotel .overlay.overlay--hotel-form .overlay__content .semibold-txt {
+  font-family: 'Open Sans Semibold'; }
 
 .os-bold, .form-group button, .form-wrapper.form-wrapper--register a, .form-wrapper.form-wrapper--login a, .overlay .overlay__header h3.overlay__title, .overlay.overlay--passenger-selector .overlay__content .passenger-selector__body .selected .number, .overlay.overlay--datepicker .overlay__content .overlay-selector .overlay-selector__header .nav-tabs > li, .desc {
+  font-family: 'Open Sans Bold'; }
+
+.regular-txt {
+  font-weight: 400; }
+
+.semibold-txt {
+  font-family: 'Open Sans Semibold';
+  font-weight: 600; }
+
+.bold-txt {
+  font-family: 'Open Sans Bold';
   font-weight: 700; }
 
 /*--------------------*/
@@ -4020,7 +4054,6 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
 
 .page-hotel {
   /*General*/
-  font-family: 'Open Sans', sans-serif;
   font-weight: 400;
   color: #000;
   letter-spacing: 0;

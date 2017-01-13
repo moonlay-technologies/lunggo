@@ -14,7 +14,7 @@
                     &:before {content:""; display:inline-block; width:25px; height:25px; background-image:url(/Assets/images/static-header-sprite.png); background-repeat:no-repeat; background-position:0 0; vertical-align:middle; margin-right:6px;}
                 }
                 // if active
-                &.active {background:#f9f9f9; color:#003b70; font-weight:600;}
+                &.active {background:#f9f9f9; color:#003b70; @extend .os-semibold; font-weight:600;}
                 &.terms {
                     span:before {background-position:0 0;}
                     &.active span:before {background-position:0 -25px;}
@@ -43,7 +43,7 @@
                         span {font-size:14px; text-decoration:underline; cursor:pointer;}
                     }
                 }
-                &:before {content:counter(main-number); counter-increment:main-number; background:#ffd632; color:#4f3500; position:absolute; height:30px; width:30px; text-align:center; @include border-radius(50px); font-size:14px; font-weight:600; padding-top:5px;}
+                &:before {content:counter(main-number); counter-increment:main-number; background:#ffd632; color:#4f3500; position:absolute; height:30px; width:30px; text-align:center; @include border-radius(50px); font-size:14px; @extend .os-semibold; font-weight:600; padding-top:5px;}
                 &>ol {list-style:none; counter-reset:sub-number;
                     &>li {position:relative; background:#fff; padding:12px; border:$border-default; padding-left:42px;
                         &:before {content:counter(main-number) '.' counter(sub-number); counter-increment:sub-number; position:absolute; top:12px; left:12px;}
@@ -76,7 +76,7 @@
     ol.listing {list-style:none; counter-reset:main-counter; margin:0; padding:0;
         > li {position:relative; padding-left:40px;
             &:before {content:counter(main-counter); counter-increment:main-counter; background:#ffd632; color:#4f3500; position:absolute; width:30px; height:30px; text-align:center; font-weight:bold; @include border-radius(30px); padding-top:6px; top:0; left:0;}
-            h4 {color:$color-main-blue; font-weight:600; line-height:18px; padding-top:6px;}
+            h4 {color:$color-main-blue; @extend .os-semibold; font-weight:600; line-height:18px; padding-top:6px;}
             ol {list-style:lower-alpha;
                 > li {color:$color-main-blue; font-weight:bold;
                     p {color:#333; font-weight:normal;}
@@ -99,7 +99,7 @@
             .contact {padding-left:100px; position:relative; font-size:14px;
                 &:before {width:100px; height:100px; background-image:url(/Assets/images/contact-sprite.jpg); background-position:0 0; background-repeat:no-repeat; content:""; display:block; position:absolute; left:0; top:0;}
                 &:after {@include clearfix();}
-                h5 {color:$color-main-blue; font-size:16px; font-weight:600; padding-top:30px;}
+                h5 {color:$color-main-blue; font-size:16px; @extend .os-semibold; font-weight:600; padding-top:30px;}
                 // contact info
                 &.address {margin-top:-30px;
                     &:before {background-position:0px 0;}
@@ -134,7 +134,7 @@
                 }
             }
             .list-detail {background:#061c38; color:#fff; display:none;
-                .detail-title {color:#00deff; font-weight:600;}
+                .detail-title {color:#00deff; @extend .os-semibold; font-weight:600;}
                 .container {position:relative; padding-top:30px; padding-bottom:30px;}
                 .close-list {position:absolute; right:0; top:-2px;}
             }
@@ -163,7 +163,7 @@
         &:before {position:absolute; width:50%; right:50%; top:0; height:100%; content:""; display:block;}
         &:after {position:absolute; width:50%; left:50%; top:0; height:100%; content:""; display:block;}
         .row {text-align:center; position:relative; z-index:2;}
-        a {display:block; color:#fff; font-size:16px; font-weight:600; padding:16px 0;
+        a {display:block; color:#fff; font-size:16px; @extend .os-semibold; font-weight:600; padding:16px 0;
             &.active {background:url(/Assets/images/arrow-white.png) bottom center no-repeat;}
             span:before {content:""; display:inline-block; width:30px; height:30px; background:url(/Assets/images/howto-sprite.png); vertical-align:middle; margin-right:12px;}
         }

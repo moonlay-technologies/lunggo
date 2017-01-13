@@ -1634,7 +1634,6 @@
     <Folder Include="Areas\Api\Views\Shared\" />
     <Folder Include="Assets\images\slider\" />
     <Folder Include="Assets\images\_sample\" />
-    <Folder Include="Assets\travorama20\fonts\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

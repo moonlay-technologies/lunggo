@@ -165,7 +165,7 @@
             }
             .transit {display:block; width:100%; text-align:center; padding:12px 0; margin-bottom:12px;
                 &:after {content:""; display:block; width:100%; border-bottom:1px dashed $color-main-blue; margin-top:-9px;}
-                span {color:$color-main-blue; font-style:italic; background:#fff; display:inline-block; position:relative; margin-left:auto; margin-right:auto; font-weight:600;}
+                span {color:$color-main-blue; font-style:italic; background:#fff; display:inline-block; position:relative; margin-left:auto; margin-right:auto; @extend .os-semibold; font-weight:600;}
             }
         }
         .container-detail {
