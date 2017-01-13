@@ -289,6 +289,7 @@
     <Content Include="Assets\css\promo.min.css">
       <DependentUpon>promo.css</DependentUpon>
     </Content>
+    <Content Include="Assets\css\travorama-mobileApp.css" />
     <Content Include="Assets\fonts\bootstrap\glyphicons-halflings-regular.svg" />
     <Content Include="Assets\fonts\DINB-webfont.svg" />
     <Content Include="Assets\fonts\DINR-webfont.svg" />
@@ -577,6 +578,11 @@
     <Content Include="Assets\images\Bank-Mandiri-small.jpg" />
     <Content Include="Assets\images\Bank-Mandiri.jpg" />
     <Content Include="Assets\images\Bank-Mandiri.png" />
+    <Content Include="Assets\images\campaign\MobileApp\app-store-cs.png" />
+    <Content Include="Assets\images\campaign\MobileApp\app-store.png" />
+    <Content Include="Assets\images\campaign\MobileApp\background.jpg" />
+    <Content Include="Assets\images\campaign\MobileApp\box-photo.png" />
+    <Content Include="Assets\images\campaign\MobileApp\play-store.png" />
     <Content Include="Assets\images\default-banner.jpg" />
     <Content Include="Assets\images\banner\download-app.jpg" />
     <Content Include="Assets\images\banner\standard-web-banner.jpg" />
@@ -1464,6 +1470,7 @@
     <Content Include="Assets\fonts\OpenSans-Semibold.ttf" />
     <Content Include="Assets\fonts\OpenSans-Semibold.woff" />
     <Content Include="Assets\fonts\OpenSans-Semibold.woff2" />
+    <Content Include="Assets\css\travorama-mobileApp.scss" />
     <None Include="Properties\PublishProfiles\prod-cw %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\dv1-cw.pubxml" />
     <None Include="Properties\PublishProfiles\dv2-cw.pubxml" />

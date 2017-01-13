@@ -46,7 +46,9 @@ namespace Lunggo.ApCommon.Hotel.Service
                 HotelName = hotelDetail.HotelName,
                 Address = hotelDetail.Address,
                 City = hotelDetail.City,
-                ZoneName = hotelDetail.ZoneCode.Split('-').Length == 2 ?
+                ZoneName = string.IsNullOrEmpty(hotelDetail.ZoneCode)
+                        ? ""
+                        : hotelDetail.ZoneCode.Split('-').Length == 2 ?
                     GetZoneNameFromDict(hotelDetail.ZoneCode) : GetZoneNameFromDict(hotelDetail.DestinationCode + "-" + hotelDetail.ZoneCode),
                 StarRating = Convert.ToInt32((hotelDetail.StarCode)),
                 //ChainName = GetHotelChainDesc(hotelDetail.Chain),
@@ -91,7 +93,9 @@ namespace Lunggo.ApCommon.Hotel.Service
                 City = hotelDetail.City,
                 CountryName = GetCountryNameFromDict(hotelDetail.CountryCode).Name,
                 DestinationName = GetDestinationNameFromDict(hotelDetail.DestinationCode).Name,
-                ZoneName = hotelDetail.ZoneCode.Split('-').Length == 2 ?
+                ZoneName = string.IsNullOrEmpty(hotelDetail.ZoneCode)
+                        ? ""
+                        : hotelDetail.ZoneCode.Split('-').Length == 2 ?
                 GetZoneNameFromDict(hotelDetail.ZoneCode) : GetZoneNameFromDict(hotelDetail.DestinationCode + "-" + hotelDetail.ZoneCode),
                 StarRating = hotelDetail.StarCode != 0
                     ? hotelDetail.StarCode
@@ -211,7 +215,9 @@ namespace Lunggo.ApCommon.Hotel.Service
                                 .Select(x => x.Description).SingleOrDefault(),
                 PhonesNumbers = hotelDetail.PhonesNumbers,
                 AreaName = GetAreaNameFromDict(hotelDetail.AreaCode),
-                ZoneName = hotelDetail.ZoneCode.Split('-').Length == 2 ?
+                ZoneName = string.IsNullOrEmpty(hotelDetail.ZoneCode)
+                        ? ""
+                        : hotelDetail.ZoneCode.Split('-').Length == 2 ?
                     GetZoneNameFromDict(hotelDetail.ZoneCode) : GetZoneNameFromDict(hotelDetail.DestinationCode + "-" + hotelDetail.ZoneCode),
                 StarRating = GetSimpleCodeByCategoryCode(hotelDetail.StarRating),
                 ChainName = GetHotelChainDesc(hotelDetail.Chain),
@@ -447,8 +453,10 @@ namespace Lunggo.ApCommon.Hotel.Service
             return
                 breakdown1.AdultCount == breakdown2.AdultCount &&
                 breakdown1.ChildCount == breakdown2.ChildCount &&
+                ((breakdown1.ChildrenAges == null && breakdown2.ChildrenAges == null) ||
+                !(breakdown1.ChildrenAges == null || breakdown2.ChildrenAges == null) &&
                 breakdown1.ChildrenAges.Count == breakdown2.ChildrenAges.Count &&
-                breakdown1.ChildrenAges.Zip(breakdown2.ChildrenAges, (a, b) => a == b).All(x => x) &&
+                breakdown1.ChildrenAges.Zip(breakdown2.ChildrenAges, (a, b) => a == b).All(x => x)) &&
                 breakdown1.Board == breakdown2.Board;
         }
 
@@ -460,7 +468,10 @@ namespace Lunggo.ApCommon.Hotel.Service
             return
                 rate1.Type == rate2.Type &&
                 rate1.Class == rate2.Class &&
-                rate1.TermAndCondition.Zip(rate2.TermAndCondition, (a, b) => a == b).All(x => x) &&
+                ((rate1.TermAndCondition == null && rate2.TermAndCondition == null) ||
+                !(rate1.TermAndCondition == null || rate2.TermAndCondition == null) &&
+                rate1.TermAndCondition.Count == rate2.TermAndCondition.Count &&
+                rate1.TermAndCondition.Zip(rate2.TermAndCondition, (a, b) => a == b).All(x => x)) &&
                 rate1.PaymentType == rate2.PaymentType &&
                 IsSimilarCancellation(rate1.Cancellation, rate2.Cancellation);
         }

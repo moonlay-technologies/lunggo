@@ -441,6 +441,7 @@
     <None Include="Properties\PublishProfiles\travorama-prod-backend %285%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-prod-backend %286%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-prod-backend %287%29.pubxml" />
+    <None Include="Properties\PublishProfiles\travorama-prod-backend - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-prod-backend.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-qa-tap.pubxml" />
     <None Include="Scripts\jquery-2.1.0.intellisense.js" />

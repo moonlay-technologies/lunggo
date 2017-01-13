@@ -52,11 +52,22 @@
         <hr />
         <table class="table table-hover table-no-border">
             <tbody>
-                <tr>
-                    <td>Harga Total</td>
-                    <td>:</td>
-                    <td>@Model.Payment.FinalPriceIdr.ToString("Rp 0,0", CultureInfo.CreateSpecificCulture("id-ID"))</td>
-                </tr>
+                @if (Model.Payment.FinalPriceIdr != 0M)
+                {
+                    <tr>
+                        <td>Harga Total</td>
+                        <td>:</td>
+                        <td>@Model.Payment.FinalPriceIdr.ToString("Rp 0,0", CultureInfo.CreateSpecificCulture("id-ID"))</td>
+                    </tr>
+                }
+                else
+                {
+                    <tr>
+                        <td>Harga Pesanan</td>
+                        <td>:</td>
+                        <td>@Model.Payment.OriginalPriceIdr.ToString("Rp 0,0", CultureInfo.CreateSpecificCulture("id-ID"))</td>
+                    </tr>
+                }
                 @if (Model.Payment.DiscountNominal != 0)
                 {
                     <tr>
@@ -75,12 +86,15 @@
                         <td>@Model.Payment.OriginalPriceIdr.ToString("Rp 0,0", CultureInfo.CreateSpecificCulture("id-ID"))</td>
                     </tr>
                 }
-
-                <tr>
-                    <td>Metode Pembayaran</td>
-                    <td>:</td>
-                    <td>@Model.Payment.Method.ToString()</td>
-                </tr>
+                
+                @if (Model.Payment.Method != PaymentMethod.Undefined)
+                {
+                    <tr>
+                        <td>Metode Pembayaran</td>
+                        <td>:</td>
+                        <td>@Model.Payment.Method.ToString()</td>
+                    </tr>
+                }
                 <tr>
                     <td>Status Pembayaran</td>
                     <td>:</td>
@@ -88,7 +102,7 @@
                         @switch (Model.Payment.Status)
                         {
                             case PaymentStatus.Pending:
-                                <span class="label label-default" style="font-size:larger;">Pending</span><br />
+                                
                                 break;
                             case PaymentStatus.Settled:
                             <span class="label label-success" style="font-size:larger;">Complete</span><br />

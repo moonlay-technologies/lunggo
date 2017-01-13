@@ -15,7 +15,9 @@
     </div>
 
     <div class="row">
-        @{ Html.RenderPartial("RenderHotel", Model.HotelDetails); }
+        <div class="col-md-12">
+            @{ Html.RenderPartial("RenderHotel", Model.HotelDetails); }
+        </div>
     </div>
 
     <div class="row">

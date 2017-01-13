@@ -417,29 +417,15 @@ namespace Lunggo.ApCommon.Hotel.Service
             var shortlistHotel = new List<HotelDetail>();
             foreach (var hotel in result)
             {
-                //var detail = GetHotelDetailFromDb(hotel.HotelCode);
-                //var detail = GetHotelAmenitiesAndAccomodationTypeFromTableStorage(hotel.HotelCode);
-                //hotel.AccomodationType = detail.AccomodationType;
-                if (hotel.AccomodationType == "HOTEL")
-                {
-                    //hotel.Facilities = detail.Facilities == null
-                    //? null
-                    //: detail.Facilities.Select(x => new HotelFacility
-                    //{
-                    //    FacilityCode = x.FacilityCode,
-                    //    FacilityGroupCode = x.FacilityGroupCode,
-                    //    FullFacilityCode = x.FacilityGroupCode + "" + x.FacilityCode
-                    //}).ToList();
-                    hotel.StarCode = GetSimpleCodeByCategoryCode(hotel.StarRating);
-                    hotel.NetTotalFare = hotel.Rooms.SelectMany(r => r.Rates).Sum(r => r.Price.Local);
-                    hotel.OriginalTotalFare = hotel.NetTotalFare * 1.01M;
-                    hotel.NetCheapestFare = hotel.Rooms.SelectMany(r => r.Rates).Min(r => Math.Round(r.Price.Local/r.RateCount/r.NightCount));
-                    hotel.OriginalCheapestFare = hotel.NetCheapestFare * 1.01M;
-                    hotel.NetCheapestTotalFare = hotel.Rooms.SelectMany(r => r.Rates).Min(r => r.Price.Local);
-                    hotel.OriginalCheapestTotalFare = hotel.NetCheapestTotalFare * 1.01M;
+                hotel.StarCode = GetSimpleCodeByCategoryCode(hotel.StarRating);
+                hotel.NetTotalFare = hotel.Rooms.SelectMany(r => r.Rates).Sum(r => r.Price.Local);
+                hotel.OriginalTotalFare = hotel.NetTotalFare * 1.01M;
+                hotel.NetCheapestFare = hotel.Rooms.SelectMany(r => r.Rates).Min(r => Math.Round(r.Price.Local/r.RateCount/r.NightCount));
+                hotel.OriginalCheapestFare = hotel.NetCheapestFare * 1.01M;
+                hotel.NetCheapestTotalFare = hotel.Rooms.SelectMany(r => r.Rates).Min(r => r.Price.Local);
+                hotel.OriginalCheapestTotalFare = hotel.NetCheapestTotalFare * 1.01M;
 
-                    shortlistHotel.Add(hotel);
-                }
+                shortlistHotel.Add(hotel);
             }
             return shortlistHotel;
         }

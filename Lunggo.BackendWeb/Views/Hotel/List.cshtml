@@ -71,10 +71,10 @@
                                 @hotelDetails.CheckOutDate.ToString("d MMM yyyy")
                             </td>
                             <td>
-                                @hotelDetails.Rooms.SelectMany(r => r.Rates).Sum(r => r.RateCount) Kamar
+                                @hotelDetails.Rooms.SelectMany(r => r.Rates).SelectMany(r => r.Breakdowns).Sum(b => b.RateCount) Kamar
                             </td>
                             <td>
-                                @hotelDetails.Rooms.SelectMany(r => r.Rates).Sum(r => r.AdultCount + r.ChildCount) Orang
+                                @hotelDetails.Rooms.SelectMany(r => r.Rates).SelectMany(r => r.Breakdowns).Sum(b => b.AdultCount + b.ChildCount) Orang
                             </td>
                             <td>
                                 @(rsv.Payment.FinalPrice == 0 ? rsv.Payment.OriginalPrice.ToString("Rp 0,0", CultureInfo.CreateSpecificCulture("id-ID")) : rsv.Payment.FinalPrice.ToString("Rp 0,0", CultureInfo.CreateSpecificCulture("id-ID")))
