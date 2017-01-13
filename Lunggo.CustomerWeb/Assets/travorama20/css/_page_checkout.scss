@@ -7,6 +7,7 @@ file : /Assets/travorama20/css/_page_checkout.scss
 
 // page checkout
 .page-checkout {
+    @extend .os-regular; 
     //TnC popup
     .tnc-popup {position:fixed; width:100%; height:100%; top :0; left:0; z-index:1000; background:rgba(0,0,0,0.7);display: block;
         .popup {
@@ -27,6 +28,7 @@ file : /Assets/travorama20/css/_page_checkout.scss
                     span.popup-title {
                         color: #15b1e4;
                         font-size:16px;
+                        @extend .os-bold; 
                         font-weight: 700;
                          &.stripe {
                             background: url(/Assets/mobile/images/yellow-stripe.png) center bottom no-repeat;
@@ -62,7 +64,7 @@ file : /Assets/travorama20/css/_page_checkout.scss
             position: relative;
             min-height: 1px;
         }
-        .col-sm-left {width: 15%; font-weight: 700;}
+        .col-sm-left {width: 15%; @extend .os-bold; font-weight: 700;}
         .col-sm-middle {width: 2%;}
         .col-sm-right {width: 83%;}
     }
@@ -527,6 +529,7 @@ label.control-label {
                 span.popup-title {
                     color: #15b1e4;
                     font-size: 20px;
+                    @extend .os-bold; 
                     font-weight: 700;
                     &.stripe {
                         background: url(/Assets/mobile/images/yellow-stripe.png) center bottom no-repeat;
@@ -575,6 +578,7 @@ label.control-label {
                     position: absolute;
                     left: 0;
                     top: 0;
+                    @extend .os-bold; 
                     font-weight: 700;
                 }
                 &.sec:before {
@@ -584,6 +588,7 @@ label.control-label {
                     position: absolute;
                     left: 0;
                     top: 0;
+                    @extend .os-bold; 
                     font-weight: 700;
                 }
             }
@@ -640,6 +645,7 @@ label.control-label {
                 .col-8:before {
                     content: '\00a0:\00a0';
                     display: inline-block;
+                    @extend .os-bold; 
                     font-weight: 700;
                 }
             }

@@ -5,6 +5,7 @@ file : /Assets/travorama20/css/_page_index.scss
 
 
 .page-index {
+    @extend .os-regular; 
     //*****
     // section search 
     .section-search {height:520px; position:relative;
@@ -133,7 +134,7 @@ file : /Assets/travorama20/css/_page_index.scss
                         .date {float:left; font-size:42px; width:60px; line-height: 42px;}
                         .month {display:block; font-size:17px; line-height: 26px;}
                         .year {display:block; font-size:17px; line-height: 10px;}
-                        .date-hotel {font-size: 18px; line-height: 25px; font-weight: 700;}
+                        .date-hotel {font-size: 18px; line-height: 25px; @extend .os-bold; font-weight: 700;}
                     }
                     // hotel room
                     .form-group.hotel-room-result {

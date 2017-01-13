@@ -8,6 +8,7 @@ file: /Assets/travorama20/css/_page_flight.scss
 // *****
 // page flight
 .page-flight {
+    @extend .os-regular; 
     // *****
     // search location
     .search-location, .search-hotel {position:absolute; top:95px;
@@ -411,15 +412,15 @@ file: /Assets/travorama20/css/_page_flight.scss
                 .segment-price-row{ margin-bottom:0px }
                 .segment-price-q{ content: "";position: absolute;width: 7px;height: 7px;background: #fd8524;left: 0px;top: 3px;}
                 .segment-price-left{float: left;width: 45%;position: relative; font-weight:500;font-size:14px;padding-left: 14px;}
-                .segment-price-middle{float: left;width: 5%;position: relative; font-weight:700;font-size:14px;}
-                .segment-price-right{float: left;width: 50%;position: relative; text-align: right;font-weight:700;font-size:15px;}
+                .segment-price-middle{float: left;width: 5%;position: relative; @extend .os-bold; font-weight:700;font-size:14px;}
+                .segment-price-right{float: left;width: 50%;position: relative; text-align: right;@extend .os-bold; font-weight:700;font-size:15px;}
                 .segment-price-total{border-top: 1px dotted #fd8524;/*padding-top: 13px;*/
-                    .segment-price-left{float: left;width: 50%;position: relative; font-weight:700;font-size:15px;padding-left: 14px;}
-                    .segment-price-right{float: left;width: 50%;position: relative; text-align: right;font-weight:700;font-size:15px;}
+                    .segment-price-left{float: left;width: 50%;position: relative; @extend .os-bold; font-weight:700;font-size:15px;padding-left: 14px;}
+                    .segment-price-right{float: left;width: 50%;position: relative; text-align: right;@extend .os-bold; font-weight:700;font-size:15px;}
                     .discount{color:#1daee4;}
                 }
                 .segment-netprice-total{border-top: 1px solid #fd8524;padding-top: 13px;margin-top: 54px;
-                    .segment-price-left{float: left;width: 50%;position: relative; font-weight:700;font-size:15px;padding-left: 14px;margin-top: 0px;}
+                    .segment-price-left{float: left;width: 50%;position: relative; @extend .os-bold; font-weight:700;font-size:15px;padding-left: 14px;margin-top: 0px;}
                     .segment-price-right{float: left;width: 50%;position: relative; text-align: right;@extend .os-semibold; font-weight:600;font-size:15px;}
                     h6.segment-price-left {/*padding-top: 10px;*/float: left; color:#ff7200;font-size:10px;font-weight:500;}
                     .orange-total-price {color: #ff7200 !important;font-size: 21px !important;font-weight: bold !important;margin: 0 !important;margin-bottom: 8px !important;/*margin-top: 5px;*/ }

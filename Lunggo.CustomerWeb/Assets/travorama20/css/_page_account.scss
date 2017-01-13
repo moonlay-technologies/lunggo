@@ -7,6 +7,7 @@ file : /Assets/travorama20/css/_page_password.scss
 
 // page account
 .page-account {
+    @extend .os-regular; 
     .form-section {padding:50px 0; background-position:center top; background-repeat:no-repeat;}
     form {
         background: rgba(255,255,255,0.3);
@@ -172,6 +173,7 @@ file : /Assets/travorama20/css/_page_password.scss
                         }
                         a {
                             color: #fff;
+                            @extend .os-bold; 
                             font-weight: 700;
                             font-size: 14px;
                             text-decoration: none;

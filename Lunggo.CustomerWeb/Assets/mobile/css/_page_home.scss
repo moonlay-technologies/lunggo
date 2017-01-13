@@ -5,6 +5,7 @@ $app-store: '../images/app-store.png';
 $play-store: '../images/play-store.png';
 
 .page.page-home {
+    @extend .os-regular;
     overflow-y: auto;
     @include clearfix(); 
     background: $color-white;

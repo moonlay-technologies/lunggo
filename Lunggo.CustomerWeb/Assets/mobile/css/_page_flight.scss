@@ -2,6 +2,7 @@
 // flight page
 
 .page.page-flight {
+    @extend .os-regular;
     // flight loading
     .flight-loading {background:#ffae93; display:block; width:100%; height:5px; position:relative;
         .flight-progress {background:#ff7d51; position:absolute; height:100%; top:0; left:0;}
@@ -178,6 +179,7 @@
                         text-align: center;
                         text-transform: uppercase;
                         font-size: 12px;
+                        @extend .os-bold; 
                         font-weight: 700;
                         padding: 17px;
                     }
@@ -208,13 +210,14 @@
                                 &.segment-price-name {
                                     padding: 8px 25px 15px;
                                     margin: 0;
+                                    @extend .os-bold; 
                                     font-weight: 700;
                                     color: $color-main-blue;
                                     font-size: 14px;
                                 }
                                 &.segment-price-left, &.segment-price-middle, &.segment-price-right {
                                     float:left; 
-                                    &.ng-binding {font-weight: 700;}
+                                    &.ng-binding {@extend .os-bold; font-weight: 700;}
                                     &.discount {color: $color-main-blue;}
                                 }
                                 &.segment-price-left {width: 30%;}
@@ -228,11 +231,11 @@
                             }
                             .segment-price-total {
                                 border-top: 1px dotted $color-orange;
-                                & > h5.segment-price-left, & > h5.segment-price-right {width: 50%; font-weight: 700;}
+                                & > h5.segment-price-left, & > h5.segment-price-right {width: 50%; @extend .os-bold; font-weight: 700;}
                             }
                             .segment-netprice-total {
                                 border-top: 1px solid $color-orange;
-                                & > h5.segment-price-left, & > h5.segment-price-right {width: 50%; font-weight: 700;}
+                                & > h5.segment-price-left, & > h5.segment-price-right {width: 50%; @extend .os-bold; font-weight: 700;}
                                 h6.segment-price-left {color: $color-orange;}
                             }
                             .segment-price-q:before {

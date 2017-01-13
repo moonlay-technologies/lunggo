@@ -1,5 +1,6 @@
 ﻿// page static
 .page-static {
+    @extend .os-regular; 
     .site-content {padding:0; padding-bottom:24px;
         section > .container {max-width: none;}
     }

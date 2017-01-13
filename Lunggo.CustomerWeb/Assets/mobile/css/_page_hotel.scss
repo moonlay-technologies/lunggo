@@ -22,12 +22,13 @@
     .italic-txt {font-style: italic;}
     .underline-txt {text-decoration: line-through;} 
     .downline-txt {text-decoration: underline;}
-    .bold-txt {font-weight: 700;}
+    .bold-txt {@extend .os-bold; font-weight: 700;}
     .semibold-txt {@extend .os-semibold; font-weight: 600;}
     .normal-txt {@extend .os-regular; font-weight: 400;}   
     .blue-txt {color: $color-main-blue;
         &.bg {
             font-size: 15px;
+            @extend .os-bold; 
             font-weight: 700;
             line-height: 18px;
         }
@@ -1075,6 +1076,7 @@
                             position: absolute;
                             left: 0;
                             top: 0;
+                            @extend .os-bold; 
                             font-weight: 700;
                         }
                         &.sec:before {
@@ -1084,6 +1086,7 @@
                             position: absolute;
                             left: 0;
                             top: 0;
+                            @extend .os-bold; 
                             font-weight: 700;
                         }
                     }

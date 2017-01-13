@@ -7,6 +7,7 @@
             margin-bottom: 15px;
             .slider-title-lg {
                 font-size: 20px;
+                @extend .os-bold; 
                 font-weight: 700;
                 margin-right: 30px;
                 vertical-align: text-bottom;
@@ -32,6 +33,7 @@
                 padding: 7px 20px;
                 text-align: center;
                 color: #fff;
+                @extend .os-bold; 
                 font-weight: 700;
                 &:before {
                     @extend .hotel-icon;
@@ -200,6 +202,7 @@
         position: relative;
         .total-day {text-align: right;}
         .room-sort {
+            @extend .os-bold; 
             font-weight: 700;
             text-align: center;
             line-height: 30px;
@@ -272,6 +275,7 @@
                             padding: 3px 7px;
                             color: #fff;
                             font-family: georgia;
+                            @extend .os-bold; 
                             font-weight: 700;
                             font-size: 11px;
                             line-height: 11px;
@@ -448,6 +452,7 @@
                         &:last-child {margin-bottom: 0;}
                     }
                     .hd-title {
+                        @extend .os-bold; 
                         font-weight: 700;
                         margin-bottom: 5px;
                         font-size: 14px;

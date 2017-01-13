@@ -21,7 +21,7 @@
     .xs-txt {font-size: 9px;}
     .italic-txt {font-style: italic;}
     .underline-txt {text-decoration: line-through;} 
-    .bold-txt {font-weight: 700;}
+    .bold-txt {@extend .os-bold; font-weight: 700;}
     .semibold-txt {@extend .os-semibold; font-weight: 600;}
     .normal-txt {font-weight: 400; @extend .os-regular;}   
     .grey-txt {color: #969696;}
@@ -29,6 +29,7 @@
     .blue-txt {color: $color-main-blue;
         &.bg {
             font-size: 16px;
+            @extend .os-bold; 
             font-weight: 700;
             line-height: 20px;
         }

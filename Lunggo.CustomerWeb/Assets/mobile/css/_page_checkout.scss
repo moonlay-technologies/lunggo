@@ -1,4 +1,5 @@
 ﻿.page.page-checkout {
+    @extend .os-regular;
     // *****
     // page header
 
@@ -96,6 +97,7 @@
                     & > dd {
                         color: #ff9a24;
                         font-size: 16px;
+                        @extend .os-bold; 
                         font-weight: 700;
                     }
                 }
@@ -104,9 +106,9 @@
         // price
         &.summary--price {
             dl {@include clearfix();
-                dt {float:left; width:50%; font-weight:normal; position:relative; padding-left:12px; font-weight:700;
+                dt {float:left; width:50%; font-weight:normal; position:relative; padding-left:12px; @extend .os-bold; font-weight:700;
                 }
-                dd {float:left; width:50%; text-align:right; font-weight:700;}
+                dd {float:left; width:50%; text-align:right; @extend .os-bold; font-weight:700;}
                 // total price
                 &.total-price {
                     dt {width:35%;
@@ -218,7 +220,7 @@
         margin: 20px 0;
         font-size: 14px; 
     }
-    .col-left {width: 55%; font-weight: 700;}
+    .col-left {width: 55%; @extend .os-bold; font-weight: 700;}
     .col-middle {width: 3%;}
     .col-right {width: 42%;}
     .col-left, .col-middle, .col-right {
