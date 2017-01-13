@@ -206,6 +206,7 @@ function ($scope, $log, $window, $http, $resource, $timeout, hotelSearchSvc) {
 
     $scope.hotel = {
         searchHotel: function () {
+            $scope.setCookie();
             hotelSearchSvc.gotoHotelSearch($scope.hotelSearch);
         }
     }
@@ -214,12 +215,24 @@ function ($scope, $log, $window, $http, $resource, $timeout, hotelSearchSvc) {
 
     // *************************** GO TO DETAIL HOTEL **************************
 
-    $scope.GotoDetailHotel = function (hotelCd) {
-        $log.debug('redirect to detail hotel with hotelCd: ' + hotelCd);
-        $window.open('/id/Hotel/DetailHotel?' +
-            "searchId=" + $scope.hotelSearch.searchId + "&" +
-            "hotelCd=" + hotelCd + "&" +
-            "searchParam=" + $scope.searchParam, '_blank');
+    $scope.GotoDetailHotel = function (hotel) {
+        var url = $scope.getUrlHotelDetail(hotel);
+        $window.open(url); 
+    }
+
+    $scope.getUrlHotelDetail = function(hotel) {
+        var hotelName = hotel.hotelName;
+        hotelName = hotelName.replace(/\s+/g, '-');
+        hotelName = hotelName.replace(/[^0-9a-zA-Z-]/gi, '').toLowerCase();
+
+        var destinationName = hotel.destinationName;
+        destinationName = destinationName.replace(/\s+/g, '-');
+        destinationName = destinationName.replace(/[^0-9a-zA-Z-]/gi, '').toLowerCase();
+        $log.debug('redirect to detail hotel with hotelCd: ' + hotel.hotelCd);
+        var url = '/id/hotel/' + hotel.country + '/' + destinationName +
+            '/' + hotelName + '-' + hotel.hotelCd + "/?" + $scope.searchParam; 
+
+        return url;
     }
 
     // ****************************** END **************************************

@@ -40,6 +40,7 @@
 
 }
 @section AdditionalJS {
+<script src="/Assets/js/js.cookie.js"></script>
     <script src="/Assets/js/jquery-ui.min.js"></script>
     <script type="text/javascript" src="/Assets/js/jquery.ui.datepicker-id.js"></script>
     <script src="/Assets/js/bootstrap.min.js"></script>
@@ -202,7 +203,7 @@
                     </div>
                     <div class="text-center" ng-show="searchDone && returnedHotelCount == 0"><h3> Hotel tidak ditemukan, silakan ganti filter atau destinasi anda.</h3></div>
                     <div class="hotel-list-container" ng-show="searchDone">
-                        <a ng-repeat="hotel in hotels" ng-click="GotoDetailHotel(hotel.hotelCd)" class="hl-wrapper">
+                        <a ng-repeat="hotel in hotels" class="hl-wrapper" href="{{getUrlHotelDetail(hotel)}}" target="_blank">
                             <div class="hotel-list clearfix pointer">
                                 <div class="col-2">
                                     <img class="img-list" hotel-list-image ng-src="{{hotel.mainImage}}" alt="Hotel" />
@@ -226,18 +227,18 @@
                                         <div><span ng-show="hotel.area == null || hotel.area.length < 1">{{toTitleCase(hotel.address)}}</span> {{toTitleCase(hotel.area)}}</div>
                                         <span ng-show="hotel.area == null || hotel.area.length < 1">{{toTitleCase(hotel.city)}}<span ng-show="hotel.postalCd != null || hotel.postalCd.length > 0"> {{hotel.postalCd}}</span></span>
                                     </div>
-                                    
+
                                     @*=================== ini review row ================*@
                                     @*<div class="review clearfix">
-                                        <div class="col-half left">
-                                            <b><span class="md-txt">8.0</span> - </b> Sangat Baik
-                                            <br /><span class="grey-txt">540 ulasan</span>
-                                        </div>
-                                        <div class="col-half">
-                                            <span class="trip-advisor"></span>
-                                            <br /><span class="grey-txt">540 ulasan</span>
-                                        </div>
-                                    </div>*@
+                        <div class="col-half left">
+                            <b><span class="md-txt">8.0</span> - </b> Sangat Baik
+                            <br /><span class="grey-txt">540 ulasan</span>
+                        </div>
+                        <div class="col-half">
+                            <span class="trip-advisor"></span>
+                            <br /><span class="grey-txt">540 ulasan</span>
+                        </div>
+                    </div>*@
                                     <div class="break"></div>
                                     <div class="price clearfix" id="price-night" style="display: block">
                                         <div class="col-half">

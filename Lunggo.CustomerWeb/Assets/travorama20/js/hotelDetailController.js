@@ -36,7 +36,7 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
     $scope.init = function (model) {
         $log.debug(model);
        
-        $scope.searchId = model.searchId;
+        //$scope.searchId = model.searchId;
         $scope.searchParam = model.searchParam;
         var mydata = $scope.searchParam.split('.');
         var cekin = mydata[2];
