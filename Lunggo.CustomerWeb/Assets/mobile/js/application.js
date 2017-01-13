@@ -775,7 +775,7 @@ if (typeof (angular) == 'object') {
                     $rootScope.FlightSearchForm.AirportDestination.Code = Cookies.get('destination');
                 } else {
                     $rootScope.FlightSearchForm.AirportDestination.Code = 'DPS';
-        }
+                }
 
                 if (Cookies.get('destinationCity')) {
                     $rootScope.FlightSearchForm.AirportDestination.City = Cookies.get('destinationCity');
@@ -834,6 +834,7 @@ if (typeof (angular) == 'object') {
             });
         }
 
+    
         function setCookies() {
             Cookies.set('origin', $rootScope.FlightSearchForm.AirportOrigin.Code, { expires: 9999 });
             Cookies.set('originCity', $rootScope.FlightSearchForm.AirportOrigin.City, { expires: 9999 });

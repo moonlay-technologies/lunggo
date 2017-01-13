@@ -4,6 +4,7 @@
     // on document ready
     angular.element(document).ready(function () {
         var a = $scope.flightFixRequest();
+        $rootScope.getCookies();
         //$scope.FlightFunctions.GetFlight('departure');
         $scope.FlightFunctions.GetFlight('return');
     });
