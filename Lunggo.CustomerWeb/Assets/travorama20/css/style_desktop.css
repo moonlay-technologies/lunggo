@@ -30,7 +30,7 @@ file : /Assets/travorama20/css/travorama20.scss
   font-family: 'Open Sans';
   font-weight: 600; }
 
-.os-bold, .widget-container .widget.price-detail .widget-content dl.total-price dt, .site-footer-menu .web-banner .menu-right .text-lg-banner, .page-index .section-search .search-form .tab-content .tab-hotel .form-hotel-checkout .date-hotel, .page-index .section-search .search-form .tab-content .tab-hotel .form-hotel-checkin .date-hotel, .page-flight .flight-review-wrapper.active .flight-review .price-detail .segment .segment-price .segment-price-middle, .page-flight .flight.active .price-detail .segment .segment-price .segment-price-middle, .page-flight .flight-review-wrapper.active .flight-review .price-detail .segment .segment-price .segment-price-right, .page-flight .flight.active .price-detail .segment .segment-price .segment-price-right, .page-flight .flight-review-wrapper.active .flight-review .price-detail .segment .segment-price .segment-price-total .segment-price-left, .page-flight .flight.active .price-detail .segment .segment-price .segment-price-total .segment-price-left, .page-flight .flight-review-wrapper.active .flight-review .price-detail .segment .segment-price .segment-price-total .segment-price-right, .page-flight .flight.active .price-detail .segment .segment-price .segment-price-total .segment-price-right, .page-flight .flight-review-wrapper.active .flight-review .price-detail .segment .segment-price .segment-netprice-total .segment-price-left, .page-flight .flight.active .price-detail .segment .segment-price .segment-netprice-total .segment-price-left, .page-hotel .bold-txt, .page-hotel .blue-txt.bg, .page-hotel .travorama-hotel .detail-hotel .big-slider .top-desc .slider-title-lg, .page-hotel .travorama-hotel .detail-hotel .big-slider .col-right-slider .rs-title, .page-hotel .travorama-hotel .detail-hotel .room .room-sort, .page-hotel .travorama-hotel .detail-hotel .room .room-list .room-right .room-rl .info-room .info-icon, .page-hotel .travorama-hotel .detail-hotel .room .hotel-detail .col-right-result .hd-description .hd-title, .page-checkout .tnc-popup .popup .popup-container .popup-header span.popup-title, .page-checkout .form-mandiri-payment .col-sm-left, .page-thankyou .bookfailed-popup .overlay-content .popup-container .popup-header span.popup-title, .page-thankyou.page-hotel .tp-counter .tp-list.minute:before, .page-thankyou.page-hotel .tp-counter .tp-list.sec:before, .page-thankyou.page-hotel .tp-detail .tpb-container .col-8:before, .page-account-profile .account-content .history-content .tab-header > nav > ul > li a {
+.os-bold, .btn.btn-yellow, .btn.btn-grey, .btn.btn-gray, .section-title.stripe span, .list-blue li:before, .search-location .location-body .location-recommend .tab-header nav ul li span, .search-hotel .location-body .location-recommend .tab-header nav ul li span, .search-location .location-body .location-recommend .tab-content > div h3, .search-hotel .location-body .location-recommend .tab-content > div h3, .button_popup, .btn.popup-btn-yellow, .popup__wrapper .popup .popup__header .popup__title, .widget-container .widget.price-detail .widget-content dl.total-price dt, .widget-container .widget.price-detail .widget-content dl.total-price dd, .widget-container .widget.flight .widget-content .airline .airline-name, .widget-container .widget.flight .widget-content .airline .airline-number, .widget-container .widget.flight .widget-content .route h4, .widget-container .widget.countdown .widget-content .timer h5, .site-header .menu-bottom .menu-main nav ul li a, .site-footer-menu .menu-right .call-center h2, .site-footer-menu .menu-right .list-title, .site-footer-menu .web-banner .menu-right .text-lg-banner, .page-index .section-search .search-form .tab-content .tab-flight .form-flight-oneway h5, .page-index .section-search .search-form .tab-content .tab-hotel .form-hotel-checkout .date-hotel, .page-index .section-search .search-form .tab-content .tab-hotel .form-hotel-checkin .date-hotel, .page-index .section-feedback h2, .page-index .section-feedback blockquote footer, .page-flight .search-result-filter .filter-left > span, .page-flight .search-result-filter .filter-right .filter-trigger > div span, .page-flight .search-result-filter .filter-right .filter-content > div .close-filter, .page-flight .search-result-filter .filter-right .filter-content > div h3, .page-flight .search-result-warning .notice .close-notice, .page-flight .search-result-sort .container > div span, .page-flight .flight .flight-summary .flight-summary-left .summary-top .summary-top-left h5, .page-flight .flight .flight-summary .flight-summary-left .summary-top .summary-top-right .flight-date-departure h4 span, .page-flight .flight .flight-summary .flight-summary-left .summary-top .summary-top-right .flight-date-arrival h4 span, .page-flight.page-flight-return .search-result-container .flight .flight-summary .flight-summary-left .summary-top .summary-top-right .flight-date-arrival h4 span, .page-flight .flight .flight-summary .flight-summary-left .summary-top .summary-top-right .flight-review-wrapper .flight-review .flight-review-summary .summary-left .summary-flight .flight-content .flight-date .flight-date-arrival h4 span, .flight-review-wrapper .flight-review .flight-review-summary .summary-left .summary-flight .flight-content .flight-date .page-flight .flight .flight-summary .flight-summary-left .summary-top .summary-top-right .flight-date-arrival h4 span, .page-flight .flight .flight-summary .flight-summary-right h4, .page-flight .flight .flight-detail > h3 .close-flight-detail, .page-flight .flight .flight-detail .segment .segment-left .segment-airline-name, .page-flight .flight .flight-detail .segment .segment-right .segment-airline-name, .page-flight.page-flight-oneway .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight .flight-detail .segment .segment-right .segment-airline-name, .page-flight.page-flight-return .flight .search-result-container > .selected .search-result-selected .flight-detail .segment .segment-right .segment-airline-name, .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight .flight-detail .segment .segment-right .segment-airline-name, .page-flight .flight .flight-review-wrapper .flight-review .price-detail .detail-flight .flight-detail .segment .segment-right .segment-airline-name, .flight-review-wrapper .flight-review .price-detail .detail-flight .page-flight .flight .flight-detail .segment .segment-right .segment-airline-name, .page-flight .flight .flight-review-wrapper .flight-review .price-detail .price-detail-wrapper .flight-detail .segment .segment-right .segment-airline-name, .flight-review-wrapper .flight-review .price-detail .price-detail-wrapper .page-flight .flight .flight-detail .segment .segment-right .segment-airline-name, .page-flight .flight .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail .segment .segment-right .segment-airline-name, .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .page-flight .flight .flight-detail .segment .segment-right .segment-airline-name, .page-flight .flight .flight-review-wrapper .flight-review .flight-review-detail .price-detail-wrapper .flight-detail .segment .segment-right .segment-airline-name, .flight-review-wrapper .flight-review .flight-review-detail .price-detail-wrapper .page-flight .flight .flight-detail .segment .segment-right .segment-airline-name, .page-flight .flight .flight-detail .segment .segment-right .segment-departure h3, .page-flight .flight .flight-detail .segment .segment-right .segment-arrival h3, .page-flight.page-flight-oneway .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight .flight-detail .segment .segment-right .segment-arrival h3, .page-flight.page-flight-return .flight .search-result-container > .selected .search-result-selected .flight-detail .segment .segment-right .segment-arrival h3, .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight .flight-detail .segment .segment-right .segment-arrival h3, .page-flight.page-flight-return .search-result-container .flight .flight-detail .segment .segment-right .segment-arrival h3, .page-flight .flight .flight-review-wrapper .flight-review .price-detail .detail-flight .flight-detail .segment .segment-right .segment-arrival h3, .flight-review-wrapper .flight-review .price-detail .detail-flight .page-flight .flight .flight-detail .segment .segment-right .segment-arrival h3, .page-flight .flight .flight-review-wrapper .flight-review .price-detail .price-detail-wrapper .flight-detail .segment .segment-right .segment-arrival h3, .flight-review-wrapper .flight-review .price-detail .price-detail-wrapper .page-flight .flight .flight-detail .segment .segment-right .segment-arrival h3, .page-flight .flight .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail .segment .segment-right .segment-arrival h3, .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .page-flight .flight .flight-detail .segment .segment-right .segment-arrival h3, .page-flight .flight .flight-review-wrapper .flight-review .flight-review-detail .price-detail-wrapper .flight-detail .segment .segment-right .segment-arrival h3, .flight-review-wrapper .flight-review .flight-review-detail .price-detail-wrapper .page-flight .flight .flight-detail .segment .segment-right .segment-arrival h3, .page-flight .flight .flight-detail .segment .segment-right .segment-duration h5 span, .page-flight .flight-review-wrapper.active .flight-review .price-detail > h3 .close-price-detail, .page-flight .flight.active .price-detail > h3 .close-price-detail, .page-flight .flight-review-wrapper.active .flight-review .price-detail .segment .segment-price .segment-price-middle, .page-flight .flight.active .price-detail .segment .segment-price .segment-price-middle, .page-flight .flight-review-wrapper.active .flight-review .price-detail .segment .segment-price .segment-price-right, .page-flight .flight.active .price-detail .segment .segment-price .segment-price-right, .page-flight .flight-review-wrapper.active .flight-review .price-detail .segment .segment-price .segment-price-total .segment-price-left, .page-flight .flight.active .price-detail .segment .segment-price .segment-price-total .segment-price-left, .page-flight .flight-review-wrapper.active .flight-review .price-detail .segment .segment-price .segment-price-total .segment-price-right, .page-flight .flight.active .price-detail .segment .segment-price .segment-price-total .segment-price-right, .page-flight .flight-review-wrapper.active .flight-review .price-detail .segment .segment-price .segment-netprice-total .segment-price-left, .page-flight .flight.active .price-detail .segment .segment-price .segment-netprice-total .segment-price-left, .page-flight .flight-review-wrapper.active .flight-review .price-detail .segment .segment-price .segment-price-name, .page-flight .flight.active .price-detail .segment .segment-price .segment-price-name, .page-flight .flight-review-wrapper.active .flight-review .price-detail .segment .segment-price .segment-airline-name, .page-flight .flight.active .price-detail .segment .segment-price .segment-airline-name, .page-flight.page-flight-oneway .flight-review-wrapper .flight-review .flight-review-detail > h3, .page-flight.page-flight-oneway .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail > h3 .close-flight-detail, .page-flight.page-flight-oneway .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail .segment .segment-left .segment-airline-name, .page-flight.page-flight-oneway .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail .segment .segment-right .segment-airline-name, .page-flight.page-flight-oneway .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail .segment .segment-right .segment-departure h3, .page-flight.page-flight-oneway .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail .segment .segment-right .segment-arrival h3, .page-flight.page-flight-oneway .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail .segment .segment-right .segment-duration h5 span, .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-airline h3, .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-date .flight-date-departure h4 span, .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-date .flight-date-arrival h4 span, .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-date .flight .flight-summary .flight-summary-left .summary-top .summary-top-right .flight-date-arrival h4 span, .page-flight.page-flight-return .search-result-container > .selected .flight .flight-summary .flight-summary-left .summary-top .summary-top-right .search-result-selected .flight-date .flight-date-arrival h4 span, .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-review-wrapper .flight-review .flight-review-summary .summary-left .summary-flight .flight-content .flight-date .flight-date-arrival h4 span, .flight-review-wrapper .flight-review .flight-review-summary .summary-left .summary-flight .flight-content .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-date .flight-date-arrival h4 span, .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-detail .segment .segment-left .segment-airline-name, .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-detail .segment .segment-right .segment-airline-name, .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-detail .segment .segment-right .segment-departure h3, .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-detail .segment .segment-right .segment-arrival h3, .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-detail .segment .segment-right .segment-duration h5 span, .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-price label, .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-price h3, .page-flight.page-flight-return .search-result-container .search-result-filter .filter-left > span, .flight-review-wrapper .flight-review .flight-review-summary .summary-left .summary-flight header h3, .flight-review-wrapper .flight-review .flight-review-summary .summary-left .summary-flight .flight-content .flight-airline h5, .flight-review-wrapper .flight-review .flight-review-summary .summary-left .summary-flight .flight-content .flight-date .flight-date-departure h4 span, .flight-review-wrapper .flight-review .flight-review-summary .summary-left .summary-flight .flight-content .flight-date .page-flight.page-flight-return .search-result-container .flight .flight-summary .flight-summary-left .summary-top .summary-top-right .flight-date-arrival h4 span, .page-flight.page-flight-return .search-result-container .flight .flight-summary .flight-summary-left .summary-top .summary-top-right .flight-review-wrapper .flight-review .flight-review-summary .summary-left .summary-flight .flight-content .flight-date .flight-date-arrival h4 span, .flight-review-wrapper .flight-review .flight-review-summary .summary-left .summary-flight .flight-content .flight-date .flight-date-arrival h4 span, .flight-review-wrapper .flight-review .flight-review-summary .summary-right h3, .flight-review-wrapper .flight-review .price-detail .detail-flight .flight-header h3, .flight-review-wrapper .flight-review .price-detail .price-detail-wrapper .flight-header h3, .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-header h3, .flight-review-wrapper .flight-review .flight-review-detail .price-detail-wrapper .flight-header h3, .flight-review-wrapper .flight-review .price-detail .detail-flight .flight-detail > h3 .close-flight-detail, .flight-review-wrapper .flight-review .price-detail .price-detail-wrapper .flight-detail > h3 .close-flight-detail, .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail > h3 .close-flight-detail, .flight-review-wrapper .flight-review .flight-review-detail .price-detail-wrapper .flight-detail > h3 .close-flight-detail, .flight-review-wrapper .flight-review .price-detail .detail-flight .flight-detail .segment .segment-left .segment-airline-name, .flight-review-wrapper .flight-review .price-detail .detail-flight .flight-detail .segment .segment-right .segment-airline-name, .flight-review-wrapper .flight-review .price-detail .price-detail-wrapper .flight-detail .segment .segment-left .segment-airline-name, .flight-review-wrapper .flight-review .price-detail .price-detail-wrapper .flight-detail .segment .segment-right .segment-airline-name, .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail .segment .segment-left .segment-airline-name, .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail .segment .segment-right .segment-airline-name, .flight-review-wrapper .flight-review .flight-review-detail .price-detail-wrapper .flight-detail .segment .segment-left .segment-airline-name, .flight-review-wrapper .flight-review .flight-review-detail .price-detail-wrapper .flight-detail .segment .segment-right .segment-airline-name, .flight-review-wrapper .flight-review .price-detail .detail-flight .flight-detail .segment .segment-right .segment-departure h3, .page-flight.page-flight-oneway .flight-review-wrapper .flight-review .price-detail .flight-review-detail .detail-flight .flight-detail .segment .segment-right .segment-arrival h3, .page-flight.page-flight-oneway .flight-review-wrapper .flight-review .flight-review-detail .price-detail .detail-flight .flight-detail .segment .segment-right .segment-arrival h3, .flight-review-wrapper .flight-review .price-detail .detail-flight .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-detail .segment .segment-right .segment-arrival h3, .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-review-wrapper .flight-review .price-detail .detail-flight .flight-detail .segment .segment-right .segment-arrival h3, .flight-review-wrapper .flight-review .price-detail .detail-flight .flight-detail .segment .segment-right .segment-arrival h3, .flight-review-wrapper .flight-review .price-detail .price-detail-wrapper .flight-detail .segment .segment-right .segment-departure h3, .flight-review-wrapper .flight-review .price-detail .price-detail-wrapper .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-detail .segment .segment-right .segment-arrival h3, .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-review-wrapper .flight-review .price-detail .price-detail-wrapper .flight-detail .segment .segment-right .segment-arrival h3, .flight-review-wrapper .flight-review .price-detail .price-detail-wrapper .flight-detail .segment .segment-right .segment-arrival h3, .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail .segment .segment-right .segment-departure h3, .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-detail .segment .segment-right .segment-arrival h3, .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail .segment .segment-right .segment-arrival h3, .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail .segment .segment-right .segment-arrival h3, .flight-review-wrapper .flight-review .flight-review-detail .price-detail-wrapper .flight-detail .segment .segment-right .segment-departure h3, .page-flight.page-flight-oneway .flight-review-wrapper .flight-review .flight-review-detail .price-detail-wrapper .detail-flight .flight-detail .segment .segment-right .segment-arrival h3, .page-flight.page-flight-oneway .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .price-detail-wrapper .flight-detail .segment .segment-right .segment-arrival h3, .flight-review-wrapper .flight-review .flight-review-detail .price-detail-wrapper .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-detail .segment .segment-right .segment-arrival h3, .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-review-wrapper .flight-review .flight-review-detail .price-detail-wrapper .flight-detail .segment .segment-right .segment-arrival h3, .flight-review-wrapper .flight-review .flight-review-detail .price-detail-wrapper .flight-detail .segment .segment-right .segment-arrival h3, .flight-review-wrapper .flight-review .price-detail .detail-flight .flight-detail .segment .segment-right .segment-duration h5 span, .flight-review-wrapper .flight-review .price-detail .price-detail-wrapper .flight-detail .segment .segment-right .segment-duration h5 span, .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail .segment .segment-right .segment-duration h5 span, .flight-review-wrapper .flight-review .flight-review-detail .price-detail-wrapper .flight-detail .segment .segment-right .segment-duration h5 span, .flight-review-wrapper .flight-review .flight-review-detail .flight-header h3, .flight-review-wrapper .flight-review .price-detail .flight-header h3, .flight-review-wrapper .flight-review .flight-review-detail section > h3, .flight-review-wrapper .flight-review .price-detail > h3.detail-title, .page-hotel .bold-txt, .page-hotel .blue-txt.bg, .page-hotel .travorama-hotel .detail-hotel .big-slider .top-desc .slider-title-lg, .page-hotel .travorama-hotel .detail-hotel .big-slider .col-right-slider .rs-title, .page-hotel .travorama-hotel .detail-hotel .room .room-sort, .page-hotel .travorama-hotel .detail-hotel .room .room-list .room-right .room-rl .info-room .info-icon, .page-hotel .travorama-hotel .detail-hotel .room .hotel-detail .col-right-result .hd-description .hd-title, .page-hotel .rh-container .rh-table .cols-title, .page-checkout .tnc-popup .popup .popup-container .popup-header span.popup-title, .page-checkout .form-mandiri-payment .col-sm-left, .checkout-step .step b, .flight-detail .detail-content .segment .segment-airline-name, .flight-detail .detail-content .segment .segment-right .segment-departure h3, .page-flight .flight .flight-detail .detail-content .segment .segment-right .segment-arrival h3, .page-flight.page-flight-oneway .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail .detail-content .segment .segment-right .segment-arrival h3, .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-detail .detail-content .segment .segment-right .segment-arrival h3, .page-flight.page-flight-return .search-result-container .flight .flight-detail .detail-content .segment .segment-right .segment-arrival h3, .flight-review-wrapper .flight-review .price-detail .detail-flight .flight-detail .detail-content .segment .segment-right .segment-arrival h3, .flight-review-wrapper .flight-review .price-detail .price-detail-wrapper .flight-detail .detail-content .segment .segment-right .segment-arrival h3, .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail .detail-content .segment .segment-right .segment-arrival h3, .flight-review-wrapper .flight-review .flight-review-detail .price-detail-wrapper .flight-detail .detail-content .segment .segment-right .segment-arrival h3, .flight-detail .detail-content .segment .segment-right .segment-arrival h3, .flight-detail .detail-content .segment .segment-right .segment-departure h4, .page-flight .flight .flight-detail .detail-content .segment .segment-right .segment-arrival h4, .page-flight.page-flight-oneway .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail .detail-content .segment .segment-right .segment-arrival h4, .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-detail .detail-content .segment .segment-right .segment-arrival h4, .page-flight.page-flight-return .search-result-container .flight .flight-detail .detail-content .segment .segment-right .segment-arrival h4, .flight-review-wrapper .flight-review .price-detail .detail-flight .flight-detail .detail-content .segment .segment-right .segment-arrival h4, .flight-review-wrapper .flight-review .price-detail .price-detail-wrapper .flight-detail .detail-content .segment .segment-right .segment-arrival h4, .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail .detail-content .segment .segment-right .segment-arrival h4, .flight-review-wrapper .flight-review .flight-review-detail .price-detail-wrapper .flight-detail .detail-content .segment .segment-right .segment-arrival h4, .flight-detail .detail-content .segment .segment-right .segment-arrival h4, .flight-detail .detail-content .segment .segment-right .segment-duration h5 span, .buyer-review header .toggle:after, .passenger-review header .toggle:after, .passenger-detail .passenger-form header .toggle:after, .page-confirmation .confirmation-content .instruction .bank-detail .bank dl dd, .page-confirmation .confirmation-content .instruction .confirmation-order .confirm-order-detail .confirm-passenger ol li:before, .page-confirmation .confirmation-content .instruction .confirmation-order .confirm-order-detail .confirm-order .confirm-flight span, .page-thankyou .countdown .timer > div h5, .page-thankyou .order-detail section h4, .page-thankyou .order-detail section .order-detail-left .va-passenger .passenger ol li:before, .page-thankyou .order-detail section .order-detail-left .order .flight .col-xs-9, .page-thankyou .order-detail section .order-detail-left .order .flight span, .page-thankyou .order-detail .order-detail-right .price-detail dl dd, .page-thankyou .order-detail .order-detail-right .price-detail dl.total-price dd, .page-thankyou .order-detail .order-detail-right .payment-detail h5, .page-thankyou .bookfailed-popup .overlay-content .popup-container .popup-header span.popup-title, .page-thankyou.page-hotel .tp-counter .tp-list.minute:before, .page-thankyou.page-hotel .tp-counter .tp-list.sec:before, .page-thankyou.page-hotel .tp-detail .tpb-container .col-8:before, .page-password .form-wrapper header .header-title, .page-account form hgroup h1, .page-account form hgroup h4, .page-account form a, .page-account-register hgroup h1, .page-account-register hgroup h4, .page-account-profile .account-content .history-content .tab-header > nav > ul > li a, .page-account-profile .order-wrapper .order.flight header, .page-account-profile .order-wrapper .order.flight section .detail .status, .page-account-profile .order-detail .flight .col-xs-9, .page-account-profile .order-detail .flight span, .page-faq .question-wrapper > ol > li > header h2, .page-term ol.listing > li:before, .page-static ol.listing > li:before, .page-term ol.listing > li ol > li, .page-static ol.listing > li ol > li, .page-contact .section-subtitle, .page-howtopay .list-wrapper .list .list-summary h4, .page-howtoorder .list-wrapper .list .list-summary h4, .page-campaign.campaign-2016-calendar .step h5 {
   font-family: 'Open Sans';
   font-weight: 700; }
 
@@ -53,6 +53,9 @@ body {
 
 hr {
   border-top: 1px solid #ccc; }
+
+b, strong {
+  font-weight: 700; }
 
 .img-loading {
   width: 50px;
@@ -108,13 +111,11 @@ span.close {
 .btn.btn-yellow {
   background: #ffd632;
   border: 2px solid #ebb600;
-  color: #4f3500;
-  font-weight: bold; }
+  color: #4f3500; }
 
 .btn.btn-grey, .btn.btn-gray {
   background: #adadad;
   color: #fff;
-  font-weight: bold;
   border: 2px solid #999; }
 
 .btn.block {
@@ -134,8 +135,7 @@ span.close {
   .section-title.stripe.small-stripe {
     background-image: url(/Assets/images/yellow-stripe-small.png); }
   .section-title.stripe span {
-    color: #1eafe4;
-    font-weight: bold; }
+    color: #1eafe4; }
 
 .dropdown-wrapper {
   position: relative; }
@@ -208,7 +208,6 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
       -moz-border-radius: 50px;
       -ms-border-radius: 50px;
       border-radius: 50px;
-      font-weight: bold;
       width: 25px;
       height: 25px;
       padding-top: 5px;
@@ -390,7 +389,6 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
               color: #626262;
               background: #eaeaea;
               font-size: 14px;
-              font-weight: bold;
               height: 60px;
               padding: 0 20px;
               display: table-cell;
@@ -412,7 +410,6 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
       .search-location .location-body .location-recommend .tab-content > div h3, .search-hotel .location-body .location-recommend .tab-content > div h3 {
         color: #1daee4;
         font-size: 14px;
-        font-weight: bold;
         margin-top: 10px;
         margin-bottom: 6px; }
       .search-location .location-body .location-recommend .tab-content > div ul, .search-hotel .location-body .location-recommend .tab-content > div ul {
@@ -538,7 +535,6 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
   text-decoration: none;
   display: inline-block;
   text-shadow: 0px 1px 0 rgba(255, 255, 255, 0.44);
-  font-weight: bold;
   color: #63460C;
   background-color: #FFD65E;
   background-image: -webkit-gradient(linear, left top, left bottom, from(#FFD65E), to(#FEBF04));
@@ -552,8 +548,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
 .btn.popup-btn-yellow {
   background: #ffd632;
   border: 2px solid #ebb600;
-  color: #4f3500;
-  font-weight: bold; }
+  color: #4f3500; }
 
 .btn.popup-block {
   display: block;
@@ -704,8 +699,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
       padding: 12px; }
       .popup__wrapper .popup .popup__header .popup__title {
         text-align: center;
-        margin: 0;
-        font-weight: bold; }
+        margin: 0; }
     .popup__wrapper .popup .popup__body {
       padding: 20px; }
     .popup__wrapper .popup .popup__footer {
@@ -1076,7 +1070,6 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     .widget-container .widget.price-detail .widget-content dl.total-price dd {
       color: #ff7200;
       font-size: 16px;
-      font-weight: bold;
       width: 60%; }
 .widget-container .widget.price-detail footer {
   padding: 12px;
@@ -1100,7 +1093,6 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
       margin-right: 12px;
       background: #fff; }
     .widget-container .widget.flight .widget-content .airline .airline-name, .widget-container .widget.flight .widget-content .airline .airline-number {
-      font-weight: bold;
       color: #1daee4; }
   .widget-container .widget.flight .widget-content .route:before, .widget-container .widget.flight .widget-content .route:after {
     display: block;
@@ -1117,8 +1109,6 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     content: "";
     border-top: 3px solid #1daee4;
     margin-top: 50px; }
-  .widget-container .widget.flight .widget-content .route h4 {
-    font-weight: bold; }
 .widget-container .widget.countdown .widget-content {
   background: #ffd632;
   padding: 12px; }
@@ -1136,7 +1126,6 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     .widget-container .widget.countdown .widget-content .timer > div {
       display: inline-block; }
     .widget-container .widget.countdown .widget-content .timer h5 {
-      font-weight: bold;
       font-size: 36px;
       margin-bottom: 0;
       margin-top: 0; }
@@ -1172,6 +1161,45 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
   .widget-container .widget.hotel .widget-wrapper.notes .sqr-blue-list li {
     padding-left: 8px;
     margin-bottom: 10px; }
+
+/*Back to Top*/
+#back-to-top {
+  position: fixed;
+  bottom: 60px;
+  right: 60px;
+  z-index: 9999;
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+  border: 2px solid #1daee4;
+  border-radius: 50px;
+  -webkit-transition: opacity 0.2s ease-out;
+  -moz-transition: opacity 0.2s ease-out;
+  -o-transition: opacity 0.2s ease-out;
+  transition: opacity 0.2s ease-out;
+  opacity: 0;
+  visibility: hidden; }
+  #back-to-top:after {
+    background-image: url(/Assets/images/go-top.png);
+    width: 30px;
+    height: 30px;
+    content: '';
+    display: block;
+    margin: 7px 8px;
+    background-size: 100%;
+    background-repeat: no-repeat; }
+  #back-to-top:hover {
+    opacity: 1; }
+  #back-to-top.show {
+    opacity: 0.5;
+    visibility: visible;
+    z-index: 1; }
+    #back-to-top.show:hover {
+      opacity: 1;
+      -webkit-transition: opacity 0.2s ease-out;
+      -moz-transition: opacity 0.2s ease-out;
+      -o-transition: opacity 0.2s ease-out;
+      transition: opacity 0.2s ease-out; }
 
 /*--------------------*/
 /* imports */
@@ -1255,7 +1283,6 @@ file : /Assets/travorama20/css/_header.scss
           padding-top: 3px; }
           .site-header .menu-bottom .menu-main nav ul li a {
             color: #1daee4;
-            font-weight: bold;
             font-size: 13px;
             padding: 5px 10px;
             display: inline-block; }
@@ -1372,8 +1399,7 @@ including in this file :
     .site-footer-menu .menu-right .call-center p {
       margin-bottom: 0; }
     .site-footer-menu .menu-right .call-center h2 {
-      margin: 0;
-      font-weight: bold; }
+      margin: 0; }
   .site-footer-menu .menu-right .asita {
     text-align: center; }
     .site-footer-menu .menu-right .asita img {
@@ -1394,8 +1420,6 @@ including in this file :
     width: 20%; }
   .site-footer-menu .menu-right .menu-about {
     margin-left: 20px; }
-  .site-footer-menu .menu-right .list-title {
-    font-weight: bold; }
   .site-footer-menu .menu-right ul {
     padding: 0;
     margin: 0;
@@ -1624,7 +1648,6 @@ file : /Assets/travorama20/css/_page_index.scss
         cursor: not-allowed; }
         .page-index .section-search .search-form .tab-content .tab-flight .form-flight-oneway h5 {
           font-size: 21px;
-          font-weight: bold;
           margin-top: 14px; }
       .page-index .section-search .search-form .tab-content .tab-flight .form-group.flight-class {
         margin-bottom: 7px;
@@ -2236,8 +2259,6 @@ file : /Assets/travorama20/css/_page_index.scss
   background-size: cover;
   color: #fff;
   padding: 45px 0; }
-  .page-index .section-feedback h2 {
-    font-weight: bold; }
   .page-index .section-feedback blockquote {
     border-left: none;
     padding: 0; }
@@ -2259,7 +2280,6 @@ file : /Assets/travorama20/css/_page_index.scss
         position: absolute; }
     .page-index .section-feedback blockquote footer {
       color: #fff;
-      font-weight: bold;
       padding-left: 90px; }
       .page-index .section-feedback blockquote footer:before {
         content: "";
@@ -2657,7 +2677,6 @@ file: /Assets/travorama20/css/_page_flight.scss
     width: 7%;
     border-top: 1px solid #ccc; }
     .page-flight .search-result-filter .filter-left > span {
-      font-weight: bold;
       padding: 15px 0;
       display: block;
       font-size: 13px; }
@@ -2679,7 +2698,6 @@ file: /Assets/travorama20/css/_page_flight.scss
         padding-right: 0;
         text-align: center; }
         .page-flight .search-result-filter .filter-right .filter-trigger > div span {
-          font-weight: bold;
           color: #1daee4;
           font-size: 13px;
           display: inline-block;
@@ -2736,12 +2754,10 @@ file: /Assets/travorama20/css/_page_flight.scss
         width: 20px;
         height: 20px;
         text-align: center;
-        font-weight: bold;
         cursor: pointer;
         padding: 2px; }
       .page-flight .search-result-filter .filter-right .filter-content > div h3 {
         margin-top: 0;
-        font-weight: bold;
         font-size: 14px; }
         .page-flight .search-result-filter .filter-right .filter-content > div h3 span {
           padding-right: 20px; }
@@ -2824,7 +2840,6 @@ file: /Assets/travorama20/css/_page_flight.scss
       margin-bottom: 0; }
     .page-flight .search-result-warning .notice .close-notice {
       color: #fff;
-      font-weight: bold;
       cursor: pointer; }
     .page-flight .search-result-warning .notice:after {
       width: 14px;
@@ -2846,7 +2861,6 @@ file: /Assets/travorama20/css/_page_flight.scss
     float: left;
     text-align: center; }
     .page-flight .search-result-sort .container > div span {
-      font-weight: bold;
       font-size: 14px;
       cursor: pointer; }
       .page-flight .search-result-sort .container > div span:before {
@@ -2935,7 +2949,6 @@ file: /Assets/travorama20/css/_page_flight.scss
         width: 25%; }
         .page-flight .flight .flight-summary .flight-summary-left .summary-top .summary-top-left h5 {
           color: #1daee4;
-          font-weight: bold;
           margin: 14px 0; }
         .page-flight .flight .flight-summary .flight-summary-left .summary-top .summary-top-left img {
           height: 55px; }
@@ -2952,7 +2965,6 @@ file: /Assets/travorama20/css/_page_flight.scss
             font-weight: 600;
             font-size: 18px; }
             .page-flight .flight .flight-summary .flight-summary-left .summary-top .summary-top-right .flight-date-departure h4 span, .page-flight .flight .flight-summary .flight-summary-left .summary-top .summary-top-right .flight-date-arrival h4 span, .page-flight.page-flight-return .search-result-container .flight .flight-summary .flight-summary-left .summary-top .summary-top-right .flight-date-arrival h4 span, .page-flight .flight .flight-summary .flight-summary-left .summary-top .summary-top-right .flight-review-wrapper .flight-review .flight-review-summary .summary-left .summary-flight .flight-content .flight-date .flight-date-arrival h4 span, .flight-review-wrapper .flight-review .flight-review-summary .summary-left .summary-flight .flight-content .flight-date .page-flight .flight .flight-summary .flight-summary-left .summary-top .summary-top-right .flight-date-arrival h4 span {
-              font-weight: bold;
               margin-left: 10px; }
             .page-flight .flight .flight-summary .flight-summary-left .summary-top .summary-top-right .flight-date-departure h4 span.overday, .page-flight .flight .flight-summary .flight-summary-left .summary-top .summary-top-right .flight-date-arrival h4 span.overday, .page-flight.page-flight-return .search-result-container .flight .flight-summary .flight-summary-left .summary-top .summary-top-right .flight-date-arrival h4 span.overday {
               font-size: 11px;
@@ -3061,7 +3073,6 @@ file: /Assets/travorama20/css/_page_flight.scss
       text-decoration-color: #ff7200; }
     .page-flight .flight .flight-summary .flight-summary-right h4 {
       font-size: 25px;
-      font-weight: bold;
       margin: 0;
       margin-bottom: 3px;
       margin-top: 5px; }
@@ -3092,7 +3103,6 @@ file: /Assets/travorama20/css/_page_flight.scss
       .page-flight .flight .flight-detail > h3 .close-flight-detail {
         color: #bbb;
         cursor: pointer;
-        font-weight: bold;
         font-size: 13px;
         margin-right: 4px; }
     .page-flight .flight .flight-detail .segment:before, .page-flight .flight .flight-detail .segment:after {
@@ -3129,7 +3139,6 @@ file: /Assets/travorama20/css/_page_flight.scss
         float: left;
         margin-right: 15px; }
       .page-flight .flight .flight-detail .segment .segment-left .segment-airline-name, .page-flight .flight .flight-detail .segment .segment-right .segment-airline-name, .page-flight.page-flight-oneway .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight .flight-detail .segment .segment-right .segment-airline-name, .page-flight.page-flight-return .flight .search-result-container > .selected .search-result-selected .flight-detail .segment .segment-right .segment-airline-name, .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight .flight-detail .segment .segment-right .segment-airline-name, .page-flight .flight .flight-review-wrapper .flight-review .price-detail .detail-flight .flight-detail .segment .segment-right .segment-airline-name, .flight-review-wrapper .flight-review .price-detail .detail-flight .page-flight .flight .flight-detail .segment .segment-right .segment-airline-name, .page-flight .flight .flight-review-wrapper .flight-review .price-detail .price-detail-wrapper .flight-detail .segment .segment-right .segment-airline-name, .flight-review-wrapper .flight-review .price-detail .price-detail-wrapper .page-flight .flight .flight-detail .segment .segment-right .segment-airline-name, .page-flight .flight .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail .segment .segment-right .segment-airline-name, .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .page-flight .flight .flight-detail .segment .segment-right .segment-airline-name, .page-flight .flight .flight-review-wrapper .flight-review .flight-review-detail .price-detail-wrapper .flight-detail .segment .segment-right .segment-airline-name, .flight-review-wrapper .flight-review .flight-review-detail .price-detail-wrapper .page-flight .flight .flight-detail .segment .segment-right .segment-airline-name {
-        font-weight: bold;
         color: #1daee4;
         font-size: 12px;
         padding-right: 30px; }
@@ -3180,7 +3189,6 @@ file: /Assets/travorama20/css/_page_flight.scss
           margin-bottom: 5px;
           font-size: 11px; }
         .page-flight .flight .flight-detail .segment .segment-right .segment-departure h3, .page-flight .flight .flight-detail .segment .segment-right .segment-arrival h3, .page-flight.page-flight-oneway .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight .flight-detail .segment .segment-right .segment-arrival h3, .page-flight.page-flight-return .flight .search-result-container > .selected .search-result-selected .flight-detail .segment .segment-right .segment-arrival h3, .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight .flight-detail .segment .segment-right .segment-arrival h3, .page-flight.page-flight-return .search-result-container .flight .flight-detail .segment .segment-right .segment-arrival h3, .page-flight .flight .flight-review-wrapper .flight-review .price-detail .detail-flight .flight-detail .segment .segment-right .segment-arrival h3, .flight-review-wrapper .flight-review .price-detail .detail-flight .page-flight .flight .flight-detail .segment .segment-right .segment-arrival h3, .page-flight .flight .flight-review-wrapper .flight-review .price-detail .price-detail-wrapper .flight-detail .segment .segment-right .segment-arrival h3, .flight-review-wrapper .flight-review .price-detail .price-detail-wrapper .page-flight .flight .flight-detail .segment .segment-right .segment-arrival h3, .page-flight .flight .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail .segment .segment-right .segment-arrival h3, .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .page-flight .flight .flight-detail .segment .segment-right .segment-arrival h3, .page-flight .flight .flight-review-wrapper .flight-review .flight-review-detail .price-detail-wrapper .flight-detail .segment .segment-right .segment-arrival h3, .flight-review-wrapper .flight-review .flight-review-detail .price-detail-wrapper .page-flight .flight .flight-detail .segment .segment-right .segment-arrival h3 {
-          font-weight: bold;
           margin: 0;
           margin-bottom: 5px;
           font-size: 18px; }
@@ -3197,8 +3205,6 @@ file: /Assets/travorama20/css/_page_flight.scss
           border-bottom: 3px solid #1daee4;
           text-align: center;
           padding-bottom: 5px; }
-          .page-flight .flight .flight-detail .segment .segment-right .segment-duration h5 span {
-            font-weight: bold; }
       .page-flight .flight .flight-detail .segment .segment-right .segment-arrival {
         padding-left: 0; }
     .page-flight .flight .flight-detail .segment .segment-operator {
@@ -3294,7 +3300,6 @@ file: /Assets/travorama20/css/_page_flight.scss
     .page-flight .flight-review-wrapper.active .flight-review .price-detail > h3 .close-price-detail, .page-flight .flight.active .price-detail > h3 .close-price-detail {
       color: #bbb;
       cursor: pointer;
-      font-weight: bold;
       font-size: 13px;
       margin-right: 4px; }
   .page-flight .flight-review-wrapper.active .flight-review .price-detail .segment:before, .page-flight .flight-review-wrapper.active .flight-review .price-detail .segment:after, .page-flight .flight.active .price-detail .segment:before, .page-flight .flight.active .price-detail .segment:after {
@@ -3406,7 +3411,6 @@ file: /Assets/travorama20/css/_page_flight.scss
         margin-bottom: 8px !important;
         /*margin-top: 5px;*/ }
     .page-flight .flight-review-wrapper.active .flight-review .price-detail .segment .segment-price .segment-price-name, .page-flight .flight.active .price-detail .segment .segment-price .segment-price-name {
-      font-weight: bold;
       color: #1daee4;
       font-size: 12px;
       margin-top: -40px;
@@ -3421,7 +3425,6 @@ file: /Assets/travorama20/css/_page_flight.scss
       float: left;
       margin-right: 15px; }
     .page-flight .flight-review-wrapper.active .flight-review .price-detail .segment .segment-price .segment-airline-name, .page-flight .flight.active .price-detail .segment .segment-price .segment-airline-name {
-      font-weight: bold;
       color: #1daee4;
       font-size: 12px;
       padding-right: 30px; }
@@ -3480,6 +3483,9 @@ file: /Assets/travorama20/css/_page_flight.scss
   font-weight: 600;
   color: #1daee4;
   font-size: 13px; }
+.page-flight .search-result-container, .page-flight .search-result-list {
+  position: relative;
+  z-index: 1; }
 
 .price-detail-trigger {
   display: inline-block;
@@ -3612,7 +3618,6 @@ file: /Assets/travorama20/css/_page_flight.scss
       text-align: center;
       padding: 15px;
       margin: 0;
-      font-weight: bold;
       font-size: 16px; }
     .page-flight.page-flight-oneway .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail {
       padding-bottom: 20px;
@@ -3625,8 +3630,7 @@ file: /Assets/travorama20/css/_page_flight.scss
         font-size: 13px; }
         .page-flight.page-flight-oneway .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail > h3 .close-flight-detail {
           color: #bbb;
-          cursor: pointer;
-          font-weight: bold; }
+          cursor: pointer; }
       .page-flight.page-flight-oneway .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail .segment:before, .page-flight.page-flight-oneway .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail .segment:after {
         content: "";
         clear: both;
@@ -3659,7 +3663,6 @@ file: /Assets/travorama20/css/_page_flight.scss
           float: left;
           margin-right: 15px; }
         .page-flight.page-flight-oneway .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail .segment .segment-left .segment-airline-name, .page-flight.page-flight-oneway .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail .segment .segment-right .segment-airline-name {
-          font-weight: bold;
           color: #1daee4;
           font-size: 12px; }
         .page-flight.page-flight-oneway .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail .segment .segment-left .segment-airline-number, .page-flight.page-flight-oneway .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail .segment .segment-right .segment-airline-number {
@@ -3708,7 +3711,6 @@ file: /Assets/travorama20/css/_page_flight.scss
             margin-bottom: 5px;
             font-size: 12px; }
           .page-flight.page-flight-oneway .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail .segment .segment-right .segment-departure h3, .page-flight.page-flight-oneway .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail .segment .segment-right .segment-arrival h3 {
-            font-weight: bold;
             margin: 0;
             margin-bottom: 10px;
             font-size: 14px; }
@@ -3725,8 +3727,6 @@ file: /Assets/travorama20/css/_page_flight.scss
             border-bottom: 3px solid #1daee4;
             text-align: center;
             padding-bottom: 5px; }
-            .page-flight.page-flight-oneway .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail .segment .segment-right .segment-duration h5 span {
-              font-weight: bold; }
         .page-flight.page-flight-oneway .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail .segment .segment-right .segment-arrival {
           padding-left: 0; }
       .page-flight.page-flight-oneway .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail .transit {
@@ -3844,7 +3844,6 @@ file: /Assets/travorama20/css/_page_flight.scss
       width: 80%;
       margin: 0;
       color: #3fabe3;
-      font-weight: bold;
       display: table; }
       .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-airline h3 img {
         height: 35px;
@@ -3898,7 +3897,6 @@ file: /Assets/travorama20/css/_page_flight.scss
         font-weight: 600;
         font-size: 16px; }
         .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-date .flight-date-departure h4 span, .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-date .flight-date-arrival h4 span, .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-date .flight .flight-summary .flight-summary-left .summary-top .summary-top-right .flight-date-arrival h4 span, .page-flight.page-flight-return .search-result-container > .selected .flight .flight-summary .flight-summary-left .summary-top .summary-top-right .search-result-selected .flight-date .flight-date-arrival h4 span, .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-review-wrapper .flight-review .flight-review-summary .summary-left .summary-flight .flight-content .flight-date .flight-date-arrival h4 span, .flight-review-wrapper .flight-review .flight-review-summary .summary-left .summary-flight .flight-content .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-date .flight-date-arrival h4 span {
-          font-weight: bold;
           display: block; }
       .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-date .flight-date-departure h5, .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-date .flight-date-arrival h5, .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-date .flight .flight-summary .flight-summary-left .summary-top .summary-top-right .flight-date-arrival h5, .page-flight.page-flight-return .search-result-container > .selected .flight .flight-summary .flight-summary-left .summary-top .summary-top-right .search-result-selected .flight-date .flight-date-arrival h5, .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-review-wrapper .flight-review .flight-review-summary .summary-left .summary-flight .flight-content .flight-date .flight-date-arrival h5, .flight-review-wrapper .flight-review .flight-review-summary .summary-left .summary-flight .flight-content .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-date .flight-date-arrival h5 {
         font-size: 10px; }
@@ -3990,7 +3988,6 @@ file: /Assets/travorama20/css/_page_flight.scss
           margin-right: 15px;
           margin-bottom: 10px; }
         .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-detail .segment .segment-left .segment-airline-name, .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-detail .segment .segment-right .segment-airline-name {
-          font-weight: bold;
           color: #1daee4;
           font-size: 12px;
           padding-right: 30px; }
@@ -4016,7 +4013,6 @@ file: /Assets/travorama20/css/_page_flight.scss
             margin-bottom: 5px;
             font-size: 11px; }
           .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-detail .segment .segment-right .segment-departure h3, .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-detail .segment .segment-right .segment-arrival h3 {
-            font-weight: bold;
             margin: 0;
             margin-bottom: 5px;
             font-size: 18px; }
@@ -4034,8 +4030,6 @@ file: /Assets/travorama20/css/_page_flight.scss
             border-bottom: 3px solid #1daee4;
             text-align: center;
             padding-bottom: 5px; }
-            .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-detail .segment .segment-right .segment-duration h5 span {
-              font-weight: bold; }
         .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-detail .segment .segment-right .segment-arrival {
           padding-left: 0; }
       .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-detail .segment .segment-operator {
@@ -4079,11 +4073,9 @@ file: /Assets/travorama20/css/_page_flight.scss
       padding-top: 15px;
       padding-bottom: 15px; }
       .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-price label {
-        font-weight: bold;
         font-size: 12px; }
       .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-price h3 {
         color: #ff7200;
-        font-weight: bold;
         font-size: 27px;
         margin-top: 0;
         margin-bottom: 0; }
@@ -4165,7 +4157,6 @@ file: /Assets/travorama20/css/_page_flight.scss
     width: 10%;
     border-top: none; }
     .page-flight.page-flight-return .search-result-container .search-result-filter .filter-left > span {
-      font-weight: bold;
       padding: 15px 0;
       display: block;
       font-size: 14px; }
@@ -4437,7 +4428,6 @@ file: /Assets/travorama20/css/_page_flight.scss
           background-size: contain; }
         .flight-review-wrapper .flight-review .flight-review-summary .summary-left .summary-flight header h3 {
           margin: 0;
-          font-weight: bold;
           font-size: 12px;
           padding: 10px;
           padding-left: 25px;
@@ -4457,8 +4447,7 @@ file: /Assets/travorama20/css/_page_flight.scss
         text-align: center;
         border-right: 1px solid #ccc; }
         .flight-review-wrapper .flight-review .flight-review-summary .summary-left .summary-flight .flight-content .flight-airline h5 {
-          color: #1daee4;
-          font-weight: bold; }
+          color: #1daee4; }
         .flight-review-wrapper .flight-review .flight-review-summary .summary-left .summary-flight .flight-content .flight-airline img {
           height: 65px; }
       .flight-review-wrapper .flight-review .flight-review-summary .summary-left .summary-flight .flight-content .flight-date {
@@ -4474,7 +4463,6 @@ file: /Assets/travorama20/css/_page_flight.scss
             font-weight: 600;
             font-size: 18px; }
             .flight-review-wrapper .flight-review .flight-review-summary .summary-left .summary-flight .flight-content .flight-date .flight-date-departure h4 span, .flight-review-wrapper .flight-review .flight-review-summary .summary-left .summary-flight .flight-content .flight-date .page-flight.page-flight-return .search-result-container .flight .flight-summary .flight-summary-left .summary-top .summary-top-right .flight-date-arrival h4 span, .page-flight.page-flight-return .search-result-container .flight .flight-summary .flight-summary-left .summary-top .summary-top-right .flight-review-wrapper .flight-review .flight-review-summary .summary-left .summary-flight .flight-content .flight-date .flight-date-arrival h4 span, .flight-review-wrapper .flight-review .flight-review-summary .summary-left .summary-flight .flight-content .flight-date .flight-date-arrival h4 span {
-              font-weight: bold;
               margin-left: 10px; }
           .flight-review-wrapper .flight-review .flight-review-summary .summary-left .summary-flight .flight-content .flight-date .flight-date-departure h5, .flight-review-wrapper .flight-review .flight-review-summary .summary-left .summary-flight .flight-content .flight-date .page-flight.page-flight-return .search-result-container .flight .flight-summary .flight-summary-left .summary-top .summary-top-right .flight-date-arrival h5, .page-flight.page-flight-return .search-result-container .flight .flight-summary .flight-summary-left .summary-top .summary-top-right .flight-review-wrapper .flight-review .flight-review-summary .summary-left .summary-flight .flight-content .flight-date .flight-date-arrival h5, .flight-review-wrapper .flight-review .flight-review-summary .summary-left .summary-flight .flight-content .flight-date .flight-date-arrival h5 {
             font-size: 12px; }
@@ -4547,7 +4535,6 @@ file: /Assets/travorama20/css/_page_flight.scss
       padding-top: 80px; }
       .flight-review-wrapper .flight-review .flight-review-summary .summary-right h3 {
         color: #ff7200;
-        font-weight: bold;
         font-size: 27px;
         margin-bottom: 0;
         margin-top: 0; }
@@ -4574,7 +4561,6 @@ file: /Assets/travorama20/css/_page_flight.scss
         background-size: contain; }
       .flight-review-wrapper .flight-review .price-detail .detail-flight .flight-header h3, .flight-review-wrapper .flight-review .price-detail .price-detail-wrapper .flight-header h3, .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-header h3, .flight-review-wrapper .flight-review .flight-review-detail .price-detail-wrapper .flight-header h3 {
         margin: 0;
-        font-weight: bold;
         font-size: 12px;
         padding: 10px;
         padding-left: 25px;
@@ -4601,8 +4587,7 @@ file: /Assets/travorama20/css/_page_flight.scss
         font-size: 13px; }
         .flight-review-wrapper .flight-review .price-detail .detail-flight .flight-detail > h3 .close-flight-detail, .flight-review-wrapper .flight-review .price-detail .price-detail-wrapper .flight-detail > h3 .close-flight-detail, .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail > h3 .close-flight-detail, .flight-review-wrapper .flight-review .flight-review-detail .price-detail-wrapper .flight-detail > h3 .close-flight-detail {
           color: #bbb;
-          cursor: pointer;
-          font-weight: bold; }
+          cursor: pointer; }
       .flight-review-wrapper .flight-review .price-detail .detail-flight .flight-detail .segment:before, .flight-review-wrapper .flight-review .price-detail .detail-flight .flight-detail .segment:after, .flight-review-wrapper .flight-review .price-detail .price-detail-wrapper .flight-detail .segment:before, .flight-review-wrapper .flight-review .price-detail .price-detail-wrapper .flight-detail .segment:after, .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail .segment:before, .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail .segment:after, .flight-review-wrapper .flight-review .flight-review-detail .price-detail-wrapper .flight-detail .segment:before, .flight-review-wrapper .flight-review .flight-review-detail .price-detail-wrapper .flight-detail .segment:after {
         content: "";
         clear: both;
@@ -4635,7 +4620,6 @@ file: /Assets/travorama20/css/_page_flight.scss
           float: left;
           margin-right: 15px; }
         .flight-review-wrapper .flight-review .price-detail .detail-flight .flight-detail .segment .segment-left .segment-airline-name, .flight-review-wrapper .flight-review .price-detail .detail-flight .flight-detail .segment .segment-right .segment-airline-name, .flight-review-wrapper .flight-review .price-detail .price-detail-wrapper .flight-detail .segment .segment-left .segment-airline-name, .flight-review-wrapper .flight-review .price-detail .price-detail-wrapper .flight-detail .segment .segment-right .segment-airline-name, .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail .segment .segment-left .segment-airline-name, .page-flight.page-flight-oneway .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail .segment .segment-right .segment-airline-name, .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail .segment .segment-right .segment-airline-name, .flight-review-wrapper .flight-review .flight-review-detail .price-detail-wrapper .flight-detail .segment .segment-left .segment-airline-name, .flight-review-wrapper .flight-review .flight-review-detail .price-detail-wrapper .flight-detail .segment .segment-right .segment-airline-name {
-          font-weight: bold;
           color: #1daee4;
           font-size: 12px; }
         .flight-review-wrapper .flight-review .price-detail .detail-flight .flight-detail .segment .segment-left .segment-airline-number, .flight-review-wrapper .flight-review .price-detail .detail-flight .flight-detail .segment .segment-right .segment-airline-number, .flight-review-wrapper .flight-review .price-detail .price-detail-wrapper .flight-detail .segment .segment-left .segment-airline-number, .flight-review-wrapper .flight-review .price-detail .price-detail-wrapper .flight-detail .segment .segment-right .segment-airline-number, .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail .segment .segment-left .segment-airline-number, .page-flight.page-flight-oneway .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail .segment .segment-right .segment-airline-number, .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail .segment .segment-right .segment-airline-number, .flight-review-wrapper .flight-review .flight-review-detail .price-detail-wrapper .flight-detail .segment .segment-left .segment-airline-number, .flight-review-wrapper .flight-review .flight-review-detail .price-detail-wrapper .flight-detail .segment .segment-right .segment-airline-number {
@@ -4686,7 +4670,6 @@ file: /Assets/travorama20/css/_page_flight.scss
             margin-bottom: 5px;
             font-size: 12px; }
           .flight-review-wrapper .flight-review .price-detail .detail-flight .flight-detail .segment .segment-right .segment-departure h3, .page-flight.page-flight-oneway .flight-review-wrapper .flight-review .price-detail .flight-review-detail .detail-flight .flight-detail .segment .segment-right .segment-arrival h3, .page-flight.page-flight-oneway .flight-review-wrapper .flight-review .flight-review-detail .price-detail .detail-flight .flight-detail .segment .segment-right .segment-arrival h3, .flight-review-wrapper .flight-review .price-detail .detail-flight .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-detail .segment .segment-right .segment-arrival h3, .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-review-wrapper .flight-review .price-detail .detail-flight .flight-detail .segment .segment-right .segment-arrival h3, .flight-review-wrapper .flight-review .price-detail .detail-flight .flight-detail .segment .segment-right .segment-arrival h3, .flight-review-wrapper .flight-review .price-detail .price-detail-wrapper .flight-detail .segment .segment-right .segment-departure h3, .flight-review-wrapper .flight-review .price-detail .price-detail-wrapper .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-detail .segment .segment-right .segment-arrival h3, .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-review-wrapper .flight-review .price-detail .price-detail-wrapper .flight-detail .segment .segment-right .segment-arrival h3, .flight-review-wrapper .flight-review .price-detail .price-detail-wrapper .flight-detail .segment .segment-right .segment-arrival h3, .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail .segment .segment-right .segment-departure h3, .page-flight.page-flight-oneway .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail .segment .segment-right .segment-arrival h3, .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-detail .segment .segment-right .segment-arrival h3, .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail .segment .segment-right .segment-arrival h3, .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail .segment .segment-right .segment-arrival h3, .flight-review-wrapper .flight-review .flight-review-detail .price-detail-wrapper .flight-detail .segment .segment-right .segment-departure h3, .page-flight.page-flight-oneway .flight-review-wrapper .flight-review .flight-review-detail .price-detail-wrapper .detail-flight .flight-detail .segment .segment-right .segment-arrival h3, .page-flight.page-flight-oneway .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .price-detail-wrapper .flight-detail .segment .segment-right .segment-arrival h3, .flight-review-wrapper .flight-review .flight-review-detail .price-detail-wrapper .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-detail .segment .segment-right .segment-arrival h3, .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-review-wrapper .flight-review .flight-review-detail .price-detail-wrapper .flight-detail .segment .segment-right .segment-arrival h3, .flight-review-wrapper .flight-review .flight-review-detail .price-detail-wrapper .flight-detail .segment .segment-right .segment-arrival h3 {
-            font-weight: bold;
             margin: 0;
             margin-bottom: 10px;
             font-size: 14px; }
@@ -4703,8 +4686,6 @@ file: /Assets/travorama20/css/_page_flight.scss
             border-bottom: 3px solid #1daee4;
             text-align: center;
             padding-bottom: 5px; }
-            .flight-review-wrapper .flight-review .price-detail .detail-flight .flight-detail .segment .segment-right .segment-duration h5 span, .flight-review-wrapper .flight-review .price-detail .price-detail-wrapper .flight-detail .segment .segment-right .segment-duration h5 span, .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail .segment .segment-right .segment-duration h5 span, .flight-review-wrapper .flight-review .flight-review-detail .price-detail-wrapper .flight-detail .segment .segment-right .segment-duration h5 span {
-              font-weight: bold; }
         .flight-review-wrapper .flight-review .price-detail .detail-flight .flight-detail .segment .segment-right .segment-arrival, .flight-review-wrapper .flight-review .price-detail .price-detail-wrapper .flight-detail .segment .segment-right .segment-arrival, .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail .segment .segment-right .segment-arrival, .flight-review-wrapper .flight-review .flight-review-detail .price-detail-wrapper .flight-detail .segment .segment-right .segment-arrival {
           padding-left: 0; }
       .flight-review-wrapper .flight-review .price-detail .detail-flight .flight-detail .transit, .flight-review-wrapper .flight-review .price-detail .price-detail-wrapper .flight-detail .transit, .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail .transit, .flight-review-wrapper .flight-review .flight-review-detail .price-detail-wrapper .flight-detail .transit {
@@ -4744,7 +4725,6 @@ file: /Assets/travorama20/css/_page_flight.scss
         background-size: contain; }
       .flight-review-wrapper .flight-review .flight-review-detail .flight-header h3, .flight-review-wrapper .flight-review .price-detail .flight-header h3 {
         margin: 0;
-        font-weight: bold;
         font-size: 12px;
         padding: 10px;
         padding-left: 25px;
@@ -4766,7 +4746,6 @@ file: /Assets/travorama20/css/_page_flight.scss
       text-align: center;
       padding: 15px;
       margin: 0;
-      font-weight: bold;
       font-size: 16px;
       border-top: 5px solid #1daee4; }
 
@@ -5460,7 +5439,9 @@ file: /Assets/travorama20/css/_page_flight.scss
       .page-hotel .travorama-hotel .search-list .top-title .total-result {
         text-align: right; }
     .page-hotel .travorama-hotel .search-list .search-list-result {
-      margin: 15px 0; }
+      margin: 15px 0;
+      position: relative;
+      z-index: 2; }
       .page-hotel .travorama-hotel .search-list .search-list-result .filter .map-filter {
         margin-bottom: 15px; }
         .page-hotel .travorama-hotel .search-list .search-list-result .filter .map-filter iframe {
@@ -5550,7 +5531,7 @@ file: /Assets/travorama20/css/_page_flight.scss
         .page-hotel .travorama-hotel .search-list .search-list-result .col-right-result .location {
           margin: 7px 0;
           margin-left: 20px;
-          line-height: 16px;
+          line-height: 20px;
           color: #000; }
           .page-hotel .travorama-hotel .search-list .search-list-result .col-right-result .location:before {
             position: absolute;
@@ -5628,6 +5609,8 @@ file: /Assets/travorama20/css/_page_flight.scss
           margin: 10px 0; }
     .page-hotel .travorama-hotel .detail-hotel {
       border-top: 1px solid #ccc;
+      position: relative;
+      z-index: 2;
       /*Slider*/ }
       .page-hotel .travorama-hotel .detail-hotel .big-slider {
         position: relative;
@@ -5861,8 +5844,9 @@ file: /Assets/travorama20/css/_page_flight.scss
                   border-radius: 18px;
                   margin-right: 5px; }
                 .page-hotel .travorama-hotel .detail-hotel .room .room-list .room-right .room-rl .info-room > .blue-txt.sm-txt {
-                  text-decoration: underline;
-                  cursor: default; }
+                  cursor: pointer; }
+                  .page-hotel .travorama-hotel .detail-hotel .room .room-list .room-right .room-rl .info-room > .blue-txt.sm-txt:hover {
+                    text-decoration: underline; }
                   .page-hotel .travorama-hotel .detail-hotel .room .room-list .room-right .room-rl .info-room > .blue-txt.sm-txt:after {
                     width: 0;
                     height: 0;
@@ -5990,7 +5974,8 @@ file: /Assets/travorama20/css/_page_flight.scss
             padding: 15px;
             border-left: 1px dashed #1daee4;
             min-height: 212px;
-            position: relative; }
+            position: relative;
+            line-height: 20px; }
             .page-hotel .travorama-hotel .detail-hotel .room .hotel-detail .col-right-result .hd-right-container {
               margin: 15px;
               margin-right: 0;
@@ -6081,6 +6066,8 @@ file: /Assets/travorama20/css/_page_flight.scss
                     line-height: 20px;
                     margin: 7px 0 0;
                     padding: 0; }
+              .page-hotel .travorama-hotel .detail-hotel .info-hotel .ih-accordion .accordion-wrapper .accordion-content .blue-list li {
+                line-height: 20px; }
             .page-hotel .travorama-hotel .detail-hotel .info-hotel .ih-accordion .accordion-wrapper .tnc-hotel {
               margin-top: 15px; }
           .page-hotel .travorama-hotel .detail-hotel .info-hotel .ih-accordion .map-title {
@@ -6109,7 +6096,7 @@ file: /Assets/travorama20/css/_page_flight.scss
               width: 100%;
               height: 100%; }
         .page-hotel .travorama-hotel .detail-hotel .info-hotel .ih-row {
-          border-top: 1px solid #ccc;
+          border-top: 1px solid #e8e8e8;
           padding: 15px 0; }
           .page-hotel .travorama-hotel .detail-hotel .info-hotel .ih-row:first-child {
             border-top: none; }
@@ -6120,7 +6107,8 @@ file: /Assets/travorama20/css/_page_flight.scss
           text-align: center;
           margin: 15px 0 30px; }
         .page-hotel .travorama-hotel .detail-hotel .info-hotel .ih-desc {
-          margin-bottom: 15px; }
+          margin-bottom: 15px;
+          line-height: 20px; }
           .page-hotel .travorama-hotel .detail-hotel .info-hotel .ih-desc .col-half.ih-l {
             padding-right: 15px; }
           .page-hotel .travorama-hotel .detail-hotel .info-hotel .ih-desc .col-half.ih-r {
@@ -6178,7 +6166,6 @@ file: /Assets/travorama20/css/_page_flight.scss
     .page-hotel .rh-container .rh-table .cols-title {
       background: #1daee4;
       color: #fff;
-      font-weight: bold;
       padding: 2px 0; }
     .page-hotel .rh-container .rh-table .cols-value {
       font-weight: 600;
@@ -6418,8 +6405,7 @@ label.control-label {
       display: block;
       padding-left: 10px; }
     .checkout-step .step b {
-      font-size: 14px;
-      font-weight: bold; }
+      font-size: 14px; }
   .checkout-step.active-1:before {
     background: #032e55; }
   .checkout-step.active-3:after {
@@ -6460,7 +6446,6 @@ label.control-label {
       display: block;
       width: 100%; }
     .flight-detail .detail-content .segment .segment-airline-name {
-      font-weight: bold;
       color: #1daee4;
       font-size: 12px;
       padding-right: 30px;
@@ -6511,12 +6496,10 @@ label.control-label {
           margin-bottom: 5px;
           font-size: 11px; }
         .flight-detail .detail-content .segment .segment-right .segment-departure h3, .page-flight .flight .flight-detail .detail-content .segment .segment-right .segment-arrival h3, .page-flight.page-flight-oneway .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail .detail-content .segment .segment-right .segment-arrival h3, .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-detail .detail-content .segment .segment-right .segment-arrival h3, .page-flight.page-flight-return .search-result-container .flight .flight-detail .detail-content .segment .segment-right .segment-arrival h3, .flight-review-wrapper .flight-review .price-detail .detail-flight .flight-detail .detail-content .segment .segment-right .segment-arrival h3, .flight-review-wrapper .flight-review .price-detail .price-detail-wrapper .flight-detail .detail-content .segment .segment-right .segment-arrival h3, .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail .detail-content .segment .segment-right .segment-arrival h3, .flight-review-wrapper .flight-review .flight-review-detail .price-detail-wrapper .flight-detail .detail-content .segment .segment-right .segment-arrival h3, .flight-detail .detail-content .segment .segment-right .segment-arrival h3 {
-          font-weight: bold;
           margin: 0;
           margin-bottom: 5px;
           font-size: 16px; }
         .flight-detail .detail-content .segment .segment-right .segment-departure h4, .page-flight .flight .flight-detail .detail-content .segment .segment-right .segment-arrival h4, .page-flight.page-flight-oneway .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail .detail-content .segment .segment-right .segment-arrival h4, .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-detail .detail-content .segment .segment-right .segment-arrival h4, .page-flight.page-flight-return .search-result-container .flight .flight-detail .detail-content .segment .segment-right .segment-arrival h4, .flight-review-wrapper .flight-review .price-detail .detail-flight .flight-detail .detail-content .segment .segment-right .segment-arrival h4, .flight-review-wrapper .flight-review .price-detail .price-detail-wrapper .flight-detail .detail-content .segment .segment-right .segment-arrival h4, .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail .detail-content .segment .segment-right .segment-arrival h4, .flight-review-wrapper .flight-review .flight-review-detail .price-detail-wrapper .flight-detail .detail-content .segment .segment-right .segment-arrival h4, .flight-detail .detail-content .segment .segment-right .segment-arrival h4 {
-          font-weight: bold;
           margin: 0;
           margin-bottom: 5px;
           font-size: 12px; }
@@ -6528,8 +6511,6 @@ label.control-label {
           border-bottom: 3px solid #1daee4;
           text-align: center;
           padding-bottom: 5px; }
-          .flight-detail .detail-content .segment .segment-right .segment-duration h5 span {
-            font-weight: bold; }
       .flight-detail .detail-content .segment .segment-right .segment-arrival {
         padding-left: 0; }
     .flight-detail .detail-content .segment .segment-operator {
@@ -6585,7 +6566,6 @@ label.control-label {
     position: absolute;
     font-size: 28px;
     color: #fff;
-    font-weight: bold;
     top: 0;
     left: 0;
     text-align: center;
@@ -6625,7 +6605,6 @@ label.control-label {
     position: absolute;
     font-size: 28px;
     color: #fff;
-    font-weight: bold;
     top: 0;
     left: 0;
     text-align: center;
@@ -6665,7 +6644,6 @@ label.control-label {
     position: absolute;
     font-size: 28px;
     color: #fff;
-    font-weight: bold;
     top: 0;
     left: 0;
     text-align: center;
@@ -6856,8 +6834,7 @@ label.control-label {
       font-weight: normal; }
     .page-confirmation .confirmation-content .instruction .bank-detail .bank dl dd {
       float: left;
-      width: 50%;
-      font-weight: bold; }
+      width: 50%; }
 .page-confirmation .confirmation-content .instruction .transfer-instruction ol {
   margin-left: 5px;
   padding-left: 5px;
@@ -6889,8 +6866,7 @@ label.control-label {
             counter-increment: passenger-counter;
             position: absolute;
             left: 0;
-            color: #1daee4;
-            font-weight: bold; }
+            color: #1daee4; }
     .page-confirmation .confirmation-content .instruction .confirmation-order .confirm-order-detail .confirm-order .confirm-flight {
       padding-left: 36px;
       position: relative; }
@@ -6898,7 +6874,6 @@ label.control-label {
         height: 36px;
         margin-right: 24px; }
       .page-confirmation .confirmation-content .instruction .confirmation-order .confirm-order-detail .confirm-order .confirm-flight span {
-        font-weight: bold;
         color: #1daee4; }
       .page-confirmation .confirmation-content .instruction .confirmation-order .confirm-order-detail .confirm-order .confirm-flight:before {
         content: '';
@@ -6987,7 +6962,6 @@ label.control-label {
           vertical-align: top;
           padding-top: 6px; }
         .page-thankyou .countdown .timer > div h5 {
-          font-weight: bold;
           font-size: 36px;
           margin: 0; }
         .page-thankyou .countdown .timer > div span {
@@ -7010,7 +6984,6 @@ label.control-label {
     position: relative;
     min-height: 350px; }
     .page-thankyou .order-detail section h4 {
-      font-weight: bold;
       letter-spacing: 0;
       margin-bottom: 18px; }
     .page-thankyou .order-detail section .order-detail-left {
@@ -7033,8 +7006,7 @@ label.control-label {
               counter-increment: passenger-counter;
               position: absolute;
               left: 0;
-              color: #1daee4;
-              font-weight: bold; }
+              color: #1daee4; }
       .page-thankyou .order-detail section .order-detail-left .va-passenger .virtual-account {
         margin-bottom: 24px;
         padding-left: 23px; }
@@ -7049,13 +7021,10 @@ label.control-label {
       .page-thankyou .order-detail section .order-detail-left .order .flight {
         padding-left: 36px;
         position: relative; }
-        .page-thankyou .order-detail section .order-detail-left .order .flight .col-xs-9 {
-          font-weight: bold; }
         .page-thankyou .order-detail section .order-detail-left .order .flight img {
           height: 36px;
           margin-right: 24px; }
         .page-thankyou .order-detail section .order-detail-left .order .flight span {
-          font-weight: bold;
           color: #1daee4; }
         .page-thankyou .order-detail section .order-detail-left .order .flight:before {
           content: '';
@@ -7101,8 +7070,7 @@ label.control-label {
       .page-thankyou .order-detail .order-detail-right .price-detail dl dd {
         width: 45%;
         float: left;
-        text-align: right;
-        font-weight: bold; }
+        text-align: right; }
       .page-thankyou .order-detail .order-detail-right .price-detail dl.total-price {
         border-top: 1px solid #ccc;
         padding-top: 12px; }
@@ -7115,11 +7083,9 @@ label.control-label {
         .page-thankyou .order-detail .order-detail-right .price-detail dl.total-price dd {
           width: 60%;
           color: #ff6900;
-          font-weight: bold;
           font-size: 16px; }
     .page-thankyou .order-detail .order-detail-right .payment-detail h5 {
-      color: #1daee4;
-      font-weight: bold; }
+      color: #1daee4; }
   .page-thankyou .bookfailed-popup .overlay-content .popup-container {
     max-width: 280px;
     float: right;
@@ -7253,8 +7219,7 @@ file : /Assets/travorama20/css/_page_password.scss
     background: #1daee4;
     padding: 12px; }
     .page-password .form-wrapper header .header-title {
-      margin: 0;
-      font-weight: bold; }
+      margin: 0; }
   .page-password .form-wrapper section {
     background: #e2e2e2;
     padding: 25px 50px; }
@@ -7289,7 +7254,6 @@ file : /Assets/travorama20/css/_page_password.scss
   .page-account form hgroup {
     margin-bottom: 24px; }
     .page-account form hgroup h1, .page-account form hgroup h4 {
-      font-weight: bold;
       color: #525252; }
   .page-account form input {
     text-align: center;
@@ -7300,7 +7264,6 @@ file : /Assets/travorama20/css/_page_password.scss
     -ms-border-radius: 3px;
     border-radius: 3px; }
   .page-account form a {
-    font-weight: bold;
     color: inherit; }
   .page-account form .link-container p > a {
     color: #37bcf2;
@@ -7347,8 +7310,6 @@ file : /Assets/travorama20/css/_page_password.scss
 .page-account-register hgroup {
   text-align: right;
   margin-bottom: 20px; }
-  .page-account-register hgroup h1, .page-account-register hgroup h4 {
-    font-weight: bold; }
 .page-account-register form[name="registerForm"] {
   width: 300px;
   border-radius: 3px;
@@ -7514,8 +7475,7 @@ file : /Assets/travorama20/css/_page_password.scss
     padding: 10px 55px; }
     .page-account-profile .order-wrapper .order.flight header {
       padding: 5px;
-      font-size: 12px;
-      font-weight: bold; }
+      font-size: 12px; }
       .page-account-profile .order-wrapper .order.flight header .row {
         margin-bottom: 3px; }
       .page-account-profile .order-wrapper .order.flight header span {
@@ -7524,14 +7484,12 @@ file : /Assets/travorama20/css/_page_password.scss
       margin-bottom: 3px; }
     .page-account-profile .order-wrapper .order.flight section .detail .col-xs-4 {
       width: 30%; }
-    .page-account-profile .order-wrapper .order.flight section .detail .status {
-      font-weight: bold; }
-      .page-account-profile .order-wrapper .order.flight section .detail .status.success {
-        color: #14b413; }
-      .page-account-profile .order-wrapper .order.flight section .detail .status.failed {
-        color: #fe0001; }
-      .page-account-profile .order-wrapper .order.flight section .detail .status.pending {
-        color: #b551ea; }
+    .page-account-profile .order-wrapper .order.flight section .detail .status.success {
+      color: #14b413; }
+    .page-account-profile .order-wrapper .order.flight section .detail .status.failed {
+      color: #fe0001; }
+    .page-account-profile .order-wrapper .order.flight section .detail .status.pending {
+      color: #b551ea; }
     .page-account-profile .order-wrapper .order.flight section .action {
       float: right; }
     .page-account-profile .order-wrapper .order.flight + .order {
@@ -7570,13 +7528,10 @@ file : /Assets/travorama20/css/_page_password.scss
 .page-account-profile .order-detail .flight {
   padding-left: 36px;
   position: relative; }
-  .page-account-profile .order-detail .flight .col-xs-9 {
-    font-weight: bold; }
   .page-account-profile .order-detail .flight img {
     height: 36px;
     margin-right: 24px; }
   .page-account-profile .order-detail .flight span {
-    font-weight: bold;
     color: #1daee4; }
   .page-account-profile .order-detail .flight:before {
     content: '';
@@ -7710,8 +7665,7 @@ file : /Assets/travorama20/css/_page_password.scss
       .page-faq .question-wrapper > ol > li > header h2 {
         color: #1daee4;
         font-size: 18px;
-        line-height: 30px;
-        font-weight: bold; }
+        line-height: 30px; }
         .page-faq .question-wrapper > ol > li > header h2 span {
           font-size: 14px;
           text-decoration: underline;
@@ -7796,7 +7750,6 @@ file : /Assets/travorama20/css/_page_password.scss
       width: 30px;
       height: 30px;
       text-align: center;
-      font-weight: bold;
       -webkit-border-radius: 30px;
       -moz-border-radius: 30px;
       -ms-border-radius: 30px;
@@ -7812,8 +7765,7 @@ file : /Assets/travorama20/css/_page_password.scss
     .page-term ol.listing > li ol, .page-static ol.listing > li ol {
       list-style: lower-alpha; }
       .page-term ol.listing > li ol > li, .page-static ol.listing > li ol > li {
-        color: #1daee4;
-        font-weight: bold; }
+        color: #1daee4; }
         .page-term ol.listing > li ol > li p, .page-static ol.listing > li ol > li p {
           color: #333;
           font-weight: normal; }
@@ -7822,7 +7774,6 @@ file : /Assets/travorama20/css/_page_password.scss
   margin-bottom: 20px; }
 .page-contact .section-subtitle {
   margin-bottom: 50px;
-  font-weight: bold;
   font-size: 16px; }
 .page-contact .section-map {
   height: 250px;
@@ -7882,7 +7833,6 @@ file : /Assets/travorama20/css/_page_password.scss
       padding-left: 85px;
       max-width: none; }
     .page-howtopay .list-wrapper .list .list-summary h4, .page-howtoorder .list-wrapper .list .list-summary h4 {
-      font-weight: bold;
       color: #1daee4;
       position: relative; }
       .page-howtopay .list-wrapper .list .list-summary h4:before, .page-howtoorder .list-wrapper .list .list-summary h4:before {
@@ -8035,7 +7985,5 @@ file : /Assets/travorama20/css/_page_password.scss
   padding-bottom: 30px; }
 .page-campaign.campaign-2016-calendar .step li {
   margin-bottom: 35px; }
-.page-campaign.campaign-2016-calendar .step h5 {
-  font-weight: bold; }
 .page-campaign.campaign-2016-calendar .step img {
   border: 2px solid #1daee4; }

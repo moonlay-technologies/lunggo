@@ -5,6 +5,8 @@
     }
     .search-list-result {
         margin: 15px 0;
+        position: relative;
+        z-index: 2;
         .filter {
             .map-filter {
                 margin-bottom: 15px;
@@ -105,7 +107,7 @@
             .location {
                 margin: 7px 0;
                 margin-left: 20px;
-                line-height: 16px;
+                line-height: 20px;
                 color: #000;
                 &:before {
                     @extend .maps-icon;

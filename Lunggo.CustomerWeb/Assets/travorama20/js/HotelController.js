@@ -42,26 +42,11 @@
         $(priceDetail).not(id).hide();
         $(priceDetail).not(id).siblings().fadeIn();
     });
-});
 
-function customCheckbox() {
-    // **********
-    // Custom Checkbox
-    $('body .sqr').on('click', function () {
-        var id = $(this).find('.check');
-        if ($(id).is(':checked')) {
-            id.checked = true;
-            $(this).addClass('active');
-        } else {
-            id.checked = false;
-            $(this).removeClass('active');
-        }
-});
-}
 
-//********************
-// hotel form search function
-jQuery(document).ready(function ($) {
+    //********************
+    // hotel form search function
+
     //Show hotel
     $('.change-hotel').click(function (evt) {
         evt.stopPropagation();
@@ -91,7 +76,7 @@ jQuery(document).ready(function ($) {
 
     function hideCalendar() {
         $('.search-calendar-hotel').hide();
-}
+    }
     $('.close-calendar-hotel').click(function () { hideCalendar(); });
 
     //*****
@@ -117,7 +102,7 @@ jQuery(document).ready(function ($) {
         $(this).children('.option').toggle();
         $('.search-calendar-hotel, .search-hotel, .form-room .option, .select-age .option, .form-adult .option, .form-child .option').hide();
     });
-   
+
     $('body .form-adult').on('click', function () {
         $(this).children('.option').toggle();
         $('.search-calendar-hotel, .search-hotel, .form-room .option, .form-night .option, .select-age .option, .form-child .option').hide();
@@ -137,4 +122,22 @@ jQuery(document).ready(function ($) {
     $('body .form-room span').on('click', function () {
         $('body .room-row').show();
     });
+
+    //call back to top fuction
+    backToTop();
 });
+
+function customCheckbox() {
+    // **********
+    // Custom Checkbox
+    $('body .sqr').on('click', function () {
+        var id = $(this).find('.check');
+        if ($(id).is(':checked')) {
+            id.checked = true;
+            $(this).addClass('active');
+        } else {
+            id.checked = false;
+            $(this).removeClass('active');
+        }
+});
+}

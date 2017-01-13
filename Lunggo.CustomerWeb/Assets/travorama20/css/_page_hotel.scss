@@ -682,7 +682,7 @@
             .cols-title {
                 background: #1daee4;
                 color: #fff;
-                font-weight: bold;
+                @extend .os-bold;
                 padding: 2px 0;
             }
             .cols-value {

@@ -29,7 +29,7 @@
   font-family: 'Open Sans';
   font-weight: 600; }
 
-.os-bold, .section-title, .form-group button, .form-wrapper.form-wrapper--register a, .form-wrapper.form-wrapper--login a, .overlay .overlay__header h3.overlay__title, .overlay.overlay--passenger-selector .overlay__content .passenger-selector__body .selected .number, .overlay.overlay--datepicker .overlay__content .overlay-selector .overlay-selector__header .nav-tabs > li, .desc, .main-tab .tab-detail.nav-tabs > li.active > a, .main-tab .tab-detail.nav-tabs > li > a, .page.page-home .form-container .bold-txt, .page.page-flight .overlay.overlay--flight-form .overlay__content .bold-txt, .overlay--flight-detail .overlay__content .container-detail .tab-detail.nav-tabs > li.active > a, .overlay--flight-detail .overlay__content .container-detail .tab-detail.nav-tabs > li > a, .overlay--flight-detail .overlay__content .container-detail > .tab-content .price-detail-mobile .segment .segment-price h5.segment-price-name, .overlay--flight-detail .overlay__content .container-detail > .tab-content .price-detail-mobile .segment .segment-price h5.segment-price-left.ng-binding, .overlay--flight-detail .overlay__content .container-detail > .tab-content .price-detail-mobile .segment .segment-price h5.segment-price-middle.ng-binding, .overlay--flight-detail .overlay__content .container-detail > .tab-content .price-detail-mobile .segment .segment-price h5.segment-price-right.ng-binding, .overlay--flight-detail .overlay__content .container-detail > .tab-content .price-detail-mobile .segment .segment-price .segment-price-total > h5.segment-price-left, .overlay--flight-detail .overlay__content .container-detail > .tab-content .price-detail-mobile .segment .segment-price .segment-price-total > h5.segment-price-right, .overlay--flight-detail .overlay__content .container-detail > .tab-content .price-detail-mobile .segment .segment-price .segment-netprice-total > h5.segment-price-left, .overlay--flight-detail .overlay__content .container-detail > .tab-content .price-detail-mobile .segment .segment-price .segment-netprice-total > h5.segment-price-right, .page.page-checkout .summary .summary__body > dl:last-child > dd, .page.page-checkout .summary.summary--price dl dt, .page.page-checkout .summary.summary--price dl dd, .page.page-checkout .col-left, .page.page-faqs .question-wrapper > ol > li:before, .page.page-promo .promo-list a, .page-hotel .bold-txt, .page-hotel .blue-txt.bg, .page-hotel.page-thankyou .thankyou-page .tp-timer .tp-counter .tp-list.minute:before, .page-hotel.page-thankyou .thankyou-page .tp-timer .tp-counter .tp-list.sec:before, .page-hotel .overlay.overlay--hotel-form .overlay__content .bold-txt {
+.os-bold, .btn.btn-yellow, .btn.btn-grey, .btn.btn-gray, .section-title, .form-wrapper .form-wrapper__header .form-wrapper__title, .form-group button, .form-wrapper.form-wrapper--register a, .form-wrapper.form-wrapper--login a, .popup__wrapper .popup .popup__header .popup__title, .overlay .overlay__header h3.overlay__title, .overlay.overlay--airport-select .overlay__content .autocomplete-preload .list__header h4, .overlay.overlay--hotel-select .overlay__content .autocomplete-preload .list__header h4, .overlay.overlay--airport-select .overlay__content ul.result li.airport .airport__code, .overlay.overlay--airport-select .overlay__content ul.result li.airport .hotel__code, .overlay.overlay--airport-select .overlay__content ul.result li.hotel .airport__code, .overlay.overlay--airport-select .overlay__content ul.result li.hotel .hotel__code, .overlay.overlay--hotel-select .overlay__content ul.result li.airport .airport__code, .overlay.overlay--hotel-select .overlay__content ul.result li.airport .hotel__code, .overlay.overlay--hotel-select .overlay__content ul.result li.hotel .airport__code, .overlay.overlay--hotel-select .overlay__content ul.result li.hotel .hotel__code, .overlay.overlay--passenger-selector .overlay__content .passenger-selector__body .selected .number, .overlay.overlay--datepicker .overlay__content .overlay-selector .overlay-selector__header .nav-tabs > li, .overlay.overlay--datepicker .ui-datepicker .ui-datepicker-header .ui-datepicker-month, .notifbox h3, .desc, .countdown .widget-content .timer h5, .summary--price dl dd, .summary--passenger h4, .summary--passenger dl dd, .summary--voucher h4, .summary--payment label header h5, .main-tab .tab-detail.nav-tabs > li.active > a, .main-tab .tab-detail.nav-tabs > li > a, .page.page-home .form-container .bold-txt, .page.page-flight .flight-summary .summary-right, .page.page-flight .tab-filter .flight-sort-filter-action a, .page.page-flight .flight-sort-filter .flight-sort-filter-action a, .page.page-flight .flight-selection, .page.page-flight .flight-selection .change-departure span, .page.page-flight .flight-list .flight .flight-header .flight-airline span, .page.page-flight .flight-list .flight .flight-content .content-left .flight-time span, .page.page-flight .flight-list .flight .flight-content .content-right .flight-time span, .page.page-flight .flight-list .flight .flight-content .content-right .flight-price, .page.page-flight .overlay.overlay--flight-form .overlay__content .bold-txt, .overlay--flight-detail .overlay__content .flight-title .flight-change span, .overlay--flight-detail .overlay__content .container-detail .tab-detail.nav-tabs > li.active > a, .overlay--flight-detail .overlay__content .container-detail .tab-detail.nav-tabs > li > a, .overlay--flight-detail .overlay__content .container-detail > .tab-content .price-detail-mobile .segment .segment-price h5.segment-price-name, .overlay--flight-detail .overlay__content .container-detail > .tab-content .price-detail-mobile .segment .segment-price h5.segment-price-left.ng-binding, .overlay--flight-detail .overlay__content .container-detail > .tab-content .price-detail-mobile .segment .segment-price h5.segment-price-middle.ng-binding, .overlay--flight-detail .overlay__content .container-detail > .tab-content .price-detail-mobile .segment .segment-price h5.segment-price-right.ng-binding, .overlay--flight-detail .overlay__content .container-detail > .tab-content .price-detail-mobile .segment .segment-price .segment-price-total > h5.segment-price-left, .overlay--flight-detail .overlay__content .container-detail > .tab-content .price-detail-mobile .segment .segment-price .segment-price-total > h5.segment-price-right, .overlay--flight-detail .overlay__content .container-detail > .tab-content .price-detail-mobile .segment .segment-price .segment-netprice-total > h5.segment-price-left, .overlay--flight-detail .overlay__content .container-detail > .tab-content .price-detail-mobile .segment .segment-price .segment-netprice-total > h5.segment-price-right, .page.page-checkout .passenger .passenger__header, .page.page-checkout .summary .summary__body > dl:last-child > dd, .page.page-checkout .summary.summary--price dl dt, .page.page-checkout .summary.summary--price dl dd, .page.page-checkout .summary.summary--passenger h4, .page.page-checkout .summary.summary--passenger dl dd, .page.page-checkout .summary.summary--voucher h4, .page.page-checkout .overlay--flight-detail dl dd, .page.page-checkout .col-left, .page.page-confirmation .countdown .widget-content .timer h5, .page.page-orderdetail .info-flight .flight .flight__airline__name, .page.page-contact .contact-map .contact-list h4, .page-resetpassword .passwordform .resetpassword header, .page-resetpassword .passwordform .resetpassword header .toggle:after, .page.page-faqs .question-wrapper > ol > li:before, .page.page-faqs .question-wrapper > ol > li .faq-title, .page.page-faqs .question-wrapper > ol > li > ol > li:before, .page.page-faqs .question-wrapper > ol > li > ol > li > header h3, .page.page-howtoorder .howto-content .howto-note h3, .page.page-promo .promo-list a, .page-hotel .bold-txt, .page-hotel .blue-txt.bg, .page-hotel .top-content .hotel-sort-filter .hotel-sort-filter-action a, .page-hotel .top-content .hotel-detail-menu .hotel-detail-menu-action a, .page-hotel .top-content .hotel-summary .summary-right, .page-hotel.page-thankyou .thankyou-page .tp-timer .tp-counter .tp-list.minute:before, .page-hotel.page-thankyou .thankyou-page .tp-timer .tp-counter .tp-list.sec:before, .page-hotel .overlay.overlay--hotel-form .overlay__content .bold-txt {
   font-family: 'Open Sans';
   font-weight: 700; }
 
@@ -65,6 +65,9 @@ body {
   letter-spacing: 0;
   -webkit-font-smoothing: antialiased; }
 
+b, strong {
+  font-weight: 700; }
+
 img {
   max-width: 100%; }
 
@@ -92,14 +95,12 @@ img {
 .btn.btn-yellow {
   background: #ffd531;
   color: #000000;
-  font-weight: bold;
   border-radius: 2px;
   box-shadow: none; }
 
 .btn.btn-grey, .btn.btn-gray {
   background: #adadad;
   color: #fff;
-  font-weight: bold;
   box-shadow: none; }
 
 .btn.block {
@@ -397,7 +398,6 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
       left: 0;
       top: 0; }
     .form-wrapper .form-wrapper__header .form-wrapper__title {
-      font-weight: bold;
       margin-top: 5px;
       margin-bottom: 2px;
       font-size: 18px; }
@@ -500,8 +500,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
       padding: 12px; }
       .popup__wrapper .popup .popup__header .popup__title {
         text-align: center;
-        margin: 0;
-        font-weight: bold; }
+        margin: 0; }
     .popup__wrapper .popup .popup__body {
       padding: 20px; }
     .popup__wrapper .popup .popup__footer {
@@ -662,8 +661,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     margin: 0;
     background: #dedede;
     color: #656565;
-    padding: 10px;
-    font-weight: bold; }
+    padding: 10px; }
   .overlay.overlay--airport-select .overlay__content ul.result li.airport, .overlay.overlay--hotel-select .overlay__content ul.result li.airport {
     padding: 10px 0; }
   .overlay.overlay--airport-select .overlay__content ul.result li.hotel, .overlay.overlay--hotel-select .overlay__content ul.result li.hotel {
@@ -686,7 +684,6 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     .overlay.overlay--airport-select .overlay__content ul.result li.airport .airport__code, .overlay.overlay--airport-select .overlay__content ul.result li.airport .hotel__code, .overlay.overlay--airport-select .overlay__content ul.result li.hotel .airport__code, .overlay.overlay--airport-select .overlay__content ul.result li.hotel .hotel__code, .overlay.overlay--hotel-select .overlay__content ul.result li.airport .airport__code, .overlay.overlay--hotel-select .overlay__content ul.result li.airport .hotel__code, .overlay.overlay--hotel-select .overlay__content ul.result li.hotel .airport__code, .overlay.overlay--hotel-select .overlay__content ul.result li.hotel .hotel__code {
       display: inline-block;
       vertical-align: middle;
-      font-weight: bold;
       font-size: 32px;
       padding-left: 15px;
       padding-right: 15px;
@@ -875,7 +872,6 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     content: "";
     clear: both; }
   .overlay.overlay--datepicker .ui-datepicker .ui-datepicker-header .ui-datepicker-month {
-    font-weight: bold;
     text-transform: uppercase; }
   .overlay.overlay--datepicker .ui-datepicker .ui-datepicker-header .ui-datepicker-prev, .overlay.overlay--datepicker .ui-datepicker .ui-datepicker-header .ui-datepicker-next {
     position: absolute;
@@ -923,8 +919,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
   .notifbox h3 {
     font-size: 14px;
     position: absolute;
-    color: #fff;
-    font-weight: bold; }
+    color: #fff; }
 
 .container_new p {
   padding: 10px;
@@ -1000,7 +995,6 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     .countdown .widget-content .timer > div {
       display: inline-block; }
     .countdown .widget-content .timer h5 {
-      font-weight: bold;
       font-size: 36px;
       margin-bottom: 0;
       margin-top: 0; }
@@ -1026,8 +1020,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
 .summary--price dl dd {
   float: left;
   width: 50%;
-  text-align: right;
-  font-weight: bold; }
+  text-align: right; }
 .summary--price dl.total-price {
   border-top: 1px solid #ccc;
   padding-top: 10px; }
@@ -1043,8 +1036,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
 .summary--passenger {
   color: black; }
   .summary--passenger h4 {
-    color: black;
-    font-weight: bold; }
+    color: black; }
   .summary--passenger ol {
     padding-left: 20px; }
   .summary--passenger dl {
@@ -1066,14 +1058,11 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         right: 10px; }
     .summary--passenger dl dd {
       float: left;
-      width: 50%;
-      font-weight: bold; }
+      width: 50%; }
 
 .summary--voucher {
   background: #eaeaea;
   padding: 10px; }
-  .summary--voucher h4 {
-    font-weight: bold; }
 
 .summary--payment label {
   display: block;
@@ -1100,7 +1089,6 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
       margin: 0;
       float: left;
       padding-left: 40px;
-      font-weight: bold;
       width: 100%; }
   .summary--payment label section {
     text-align: center;
@@ -2080,7 +2068,6 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     display: block;
     vertical-align: middle;
     text-align: center;
-    font-weight: bold;
     position: absolute;
     right: 0; }
     .page.page-flight .flight-summary .summary-right span {
@@ -2107,7 +2094,6 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     text-align: center;
     display: block;
     width: 50%;
-    font-weight: bold;
     padding: 15px 0; }
   .page.page-flight .tab-filter .flight-sort-filter-action a + a, .page.page-flight .flight-sort-filter .flight-sort-filter-action a + a {
     border-left: 1px solid #8f8f8f; }
@@ -2120,8 +2106,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     font-size: 11px; }
 .page.page-flight .flight-selection {
   background: #e5e3e4;
-  position: relative;
-  font-weight: bold; }
+  position: relative; }
   .page.page-flight .flight-selection .flight-info {
     padding: 15px;
     padding-left: 50px; }
@@ -2153,8 +2138,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
       left: 0;
       margin: auto;
       width: 50px;
-      height: 20px;
-      font-weight: bold; }
+      height: 20px; }
 .page.page-flight .flight-list .flight {
   padding: 12px; }
   .page.page-flight .flight-list .flight:after {
@@ -2170,8 +2154,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     .page.page-flight .flight-list .flight .flight-header .flight-airline .flight-airline-image {
       height: 30px; }
     .page.page-flight .flight-list .flight .flight-header .flight-airline span {
-      color: #2ca3e1;
-      font-weight: bold; }
+      color: #2ca3e1; }
   .page.page-flight .flight-list .flight .flight-header.col-xs-8 {
     padding: 0; }
   .page.page-flight .flight-list .flight .flight-content:after {
@@ -2188,7 +2171,6 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
       content: "";
       clear: both; }
     .page.page-flight .flight-list .flight .flight-content .content-left .flight-time span, .page.page-flight .flight-list .flight .flight-content .content-right .flight-time span {
-      font-weight: bold;
       float: left;
       display: block; }
     .page.page-flight .flight-list .flight .flight-content .content-left .flight-time .separator, .page.page-flight .flight-list .flight .flight-content .content-right .flight-time .separator {
@@ -2216,7 +2198,6 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
       text-decoration: line-through; }
     .page.page-flight .flight-list .flight .flight-content .content-right .flight-price {
       margin-top: 0;
-      font-weight: bold;
       font-size: 16px; }
   .page.page-flight .flight-list .flight .flight-footer .flight-detail-button {
     display: inline-block;
@@ -2758,8 +2739,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         left: 0;
         margin: auto;
         width: 50px;
-        height: 20px;
-        font-weight: bold; }
+        height: 20px; }
     .overlay--flight-detail .overlay__content .flight-title.flight-title--return .flight-info:before {
       background-position: -22px 0; }
   .overlay--flight-detail .overlay__content .flight-notice {
@@ -3138,7 +3118,6 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
   .page.page-checkout .passenger .passenger__header {
     background: #2eb4e7;
     color: #fff;
-    font-weight: bold;
     padding: 10px 15px; }
     .page.page-checkout .passenger .passenger__header .passenger__title {
       margin: 0;
@@ -3201,8 +3180,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
 .page.page-checkout .summary.summary--passenger {
   color: #63c6ec; }
   .page.page-checkout .summary.summary--passenger h4 {
-    color: #63c6ec;
-    font-weight: bold; }
+    color: #63c6ec; }
   .page.page-checkout .summary.summary--passenger ol {
     padding-left: 20px; }
   .page.page-checkout .summary.summary--passenger dl {
@@ -3224,14 +3202,11 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         right: 10px; }
     .page.page-checkout .summary.summary--passenger dl dd {
       float: left;
-      width: 50%;
-      font-weight: bold; }
+      width: 50%; }
 .page.page-checkout .summary.summary--voucher {
   background: #eaeaea;
   padding: 10px;
   margin-bottom: 10px; }
-  .page.page-checkout .summary.summary--voucher h4 {
-    font-weight: bold; }
   .page.page-checkout .summary.summary--voucher .container_new p {
     margin-left: 0;
     margin-right: 0;
@@ -3320,8 +3295,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
 .page.page-checkout .overlay--flight-detail dl dd {
   float: left;
   width: 50%;
-  text-align: right;
-  font-weight: bold; }
+  text-align: right; }
 .page.page-checkout .overlay--flight-detail dl.total-price {
   border-top: 1px solid #ccc;
   padding-top: 10px; }
@@ -3417,7 +3391,6 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     .page.page-confirmation .countdown .widget-content .timer > div {
       display: inline-block; }
     .page.page-confirmation .countdown .widget-content .timer h5 {
-      font-weight: bold;
       font-size: 36px;
       margin-bottom: 0;
       margin-top: 0; }
@@ -3647,7 +3620,6 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
   margin-bottom: 20px; }
   .page.page-orderdetail .info-flight .flight .flight__airline__name {
     color: #2fb4e6;
-    font-weight: bold;
     padding-top: 10px; }
   .page.page-orderdetail .info-flight .flight:before {
     content: '';
@@ -3767,8 +3739,6 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         background-position: -30px 0; }
     .page.page-contact .contact-map .contact-list > div + div {
       border-top: 1px solid #7fcae7; }
-    .page.page-contact .contact-map .contact-list h4 {
-      font-weight: bold; }
 .page.page-contact .contact-social:after {
   display: block;
   width: 100%;
@@ -3829,7 +3799,6 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
       color: #fff;
       padding: 10px 20px;
       font-size: 13px;
-      font-weight: bold;
       position: relative; }
       .page-resetpassword .passwordform .resetpassword header .toggle {
         content: "";
@@ -3847,7 +3816,6 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
           position: absolute;
           font-size: 28px;
           color: #fff;
-          font-weight: bold;
           top: 0;
           left: 0;
           text-align: center;
@@ -3890,7 +3858,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
   .page.page-faqs .question-wrapper > ol > li {
     position: relative;
     /*&>header {color:#1daee4;
-                    h2 {font-size:16px; font-weight:bold;}
+                    h2 {font-size:16px; @extend .os-bold;}
                 }*/ }
     .page.page-faqs .question-wrapper > ol > li:before {
       content: counter(main-number);
@@ -3912,7 +3880,6 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     .page.page-faqs .question-wrapper > ol > li .faq-title {
       padding: 12px 0;
       font-size: 16px;
-      font-weight: bold;
       color: #2eb4e7;
       margin-left: 5px; }
     .page.page-faqs .question-wrapper > ol > li > ol {
@@ -3934,14 +3901,12 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
           top: 8px;
           left: 5px;
           color: #1daee4;
-          font-size: 14px;
-          font-weight: bold; }
+          font-size: 14px; }
         .page.page-faqs .question-wrapper > ol > li > ol > li > header {
           color: #1daee4; }
           .page.page-faqs .question-wrapper > ol > li > ol > li > header h3 {
             font-size: 14px;
-            margin-top: 0;
-            font-weight: bold; }
+            margin-top: 0; }
         .page.page-faqs .question-wrapper > ol > li > ol > li + li {
           margin-top: 15px; }
 .page.page-faqs .question-wrapper .toggle {
@@ -4014,8 +3979,6 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
       .page.page-howtoorder .howto-content .list__wrapper .list .list__content img {
         margin: 15px 0;
         max-width: 100%; }
-.page.page-howtoorder .howto-content .howto-note h3 {
-  font-weight: bold; }
 .page.page-howtoorder .howto-content .howto-note p span {
   color: #2fb4e6; }
 
@@ -4632,7 +4595,6 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     color: #fff;
     text-align: center;
     display: block;
-    font-weight: bold;
     padding: 15px 0;
     background: #616161;
     text-decoration: none;
@@ -4665,7 +4627,6 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
       display: block;
       vertical-align: middle;
       text-align: center;
-      font-weight: bold;
       position: absolute;
       right: 0; }
       .page-hotel .top-content .hotel-summary .summary-right span {

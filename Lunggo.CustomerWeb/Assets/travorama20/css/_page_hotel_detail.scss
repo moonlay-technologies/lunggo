@@ -1,5 +1,7 @@
 ﻿.detail-hotel {
     border-top: 1px solid #ccc;
+    position: relative;
+    z-index: 2;
     .big-slider {
         position: relative;
         margin: 15px 0 10px;
@@ -283,8 +285,8 @@
                             margin-right: 5px;
                         }
                         &>.blue-txt.sm-txt {
-                            text-decoration: underline;
-                            cursor: default;
+                            &:hover {text-decoration: underline;}
+                            cursor: pointer;
                             &:after {
                                 width: 0;
                                 height: 0;
@@ -434,6 +436,7 @@
                 border-left: 1px dashed #1daee4;
                 min-height: 212px;
                 position: relative;
+                line-height: 20px;
                 .hd-right-container {
                     margin: 15px;
                     margin-right: 0;
@@ -527,6 +530,7 @@
                             }
                         }
                     }
+                    .blue-list li {line-height: 20px;}
                 }
                 .tnc-hotel {margin-top: 15px;}
             }
@@ -564,7 +568,7 @@
             }
         }
         .ih-row {
-            border-top: 1px solid #ccc;
+            border-top: 1px solid #e8e8e8;
             padding: 15px 0;
             &:first-child {border-top: none;}
             .ih-left {
@@ -581,7 +585,7 @@
             text-align: center;
             margin: 15px 0 30px;
         }
-        .ih-desc {margin-bottom: 15px;
+        .ih-desc {margin-bottom: 15px; line-height: 20px;
             .col-half {
                 &.ih-l {padding-right: 15px;}
                 &.ih-r {padding-left: 15px;}

@@ -67,7 +67,7 @@
     // *****
     // passenger
     .passenger {background:#fff; border:$border-default; margin: 20px 0; border-radius: 2px;
-        .passenger__header {background:#2eb4e7; color:#fff; font-weight:bold; padding:10px 15px;
+        .passenger__header {background:#2eb4e7; color:#fff; @extend .os-bold; padding:10px 15px;
             .passenger__title {margin:0; @extend .os-semibold; font-weight: 600; font-size: 13px;}
         }
         .passenger__body {padding:10px;}
@@ -121,7 +121,7 @@
         }
         // passenger
         &.summary--passenger {color:#63c6ec;
-            h4 {color:#63c6ec; font-weight:bold;}
+            h4 {color:#63c6ec; @extend .os-bold;}
             ol {padding-left:20px;
                 li {}
             }
@@ -129,7 +129,7 @@
                 dt {float:left; width:50%; font-weight:normal; position:relative;
                     &:after {position:absolute; content:':'; right:10px;}
                 }
-                dd {float:left; width:50%; font-weight:bold;}
+                dd {float:left; width:50%; @extend .os-bold;}
             }
         }
         // voucher
@@ -137,7 +137,7 @@
             background:#eaeaea;
             padding:10px;
             margin-bottom: 10px;
-            h4 {font-weight:bold;}
+            h4 {@extend .os-bold;}
             .container_new p {
                 margin-left: 0;
                 margin-right: 0;
@@ -192,7 +192,7 @@
             dt {float:left; width:50%; font-weight:normal; position:relative; padding-left:12px;
                 &:before {position:absolute; content:''; width:7px; height:7px; background:#ff7200; top:3px; left:0;}
             }
-            dd {float:left; width:50%; text-align:right; font-weight:bold;}
+            dd {float:left; width:50%; text-align:right; @extend .os-bold;}
             // total price
             &.total-price {border-top:$border-default; padding-top:10px;
                 dt {width:35%;
@@ -270,7 +270,7 @@
         .widget-content {background:#ffd632; padding:15px;
             .timer {background:#ffefb0; padding:12px; text-align:center; border-bottom: 1px solid #dab939; color: #4d4e4e;
                 &>div {display:inline-block;}
-                h5 {font-weight: bold; font-size: 36px; margin-bottom: 0; margin-top: 0;}
+                h5 {@extend .os-bold; font-size: 36px; margin-bottom: 0; margin-top: 0;}
                 span {font-size: 12px;}
                 .separator {vertical-align: top; margin-left: 6px; margin-right: 6px;}
             }

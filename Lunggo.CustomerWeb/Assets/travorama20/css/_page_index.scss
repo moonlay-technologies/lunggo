@@ -80,7 +80,7 @@ file : /Assets/travorama20/css/_page_index.scss
                         &.disabled {cursor:not-allowed; color: #464545; background-color: #5f5f5f; border-color: transparent;}
                     }
                     .form-flight-oneway {@extend .form-flight-departure; display:none; cursor:not-allowed;
-                        h5 {font-size:21px; font-weight:bold; margin-top:14px;}
+                        h5 {font-size:21px; @extend .os-bold; margin-top:14px;}
                     }
                     // flight class
                     .form-group.flight-class {margin-bottom:7px; position:relative;}
@@ -436,13 +436,13 @@ file : /Assets/travorama20/css/_page_index.scss
     //*****
     // section feedback
     .section-feedback {background:url(/Assets/images/feedback-bg.jpg) top center no-repeat; background-size:cover; color:#fff; padding:45px 0;
-        h2 {font-weight:bold;}
+        h2 {@extend .os-bold;}
         blockquote {border-left:none; padding:0;
             p {padding-left:90px; position:relative; padding-top:15px; padding-bottom:50px;
                 &:before {content:url('/Assets/images/quote-open.png'); position:absolute; font-size:60px; left:0; top:0;}
                 &:after {content:url('/Assets/images/quote-close.png'); font-size:60px; vertical-align:top; position:absolute;}
             }
-            footer {color:#fff; font-weight:bold; padding-left:90px;
+            footer {color:#fff; @extend .os-bold; padding-left:90px;
                 &:before {content:""; border-top:1px solid #fff; width:50%; display:block; float:left; margin-top:10px; margin-right:10px;}
             }
         }

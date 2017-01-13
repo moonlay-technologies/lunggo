@@ -143,6 +143,7 @@
     <!-- angular controller -->
     <script src="/Assets/travorama20/angularDirectory/priceDetail/priceDetailDir.js"></script>
     <script src="/Assets/travorama20/js/returnFlightController.js"></script>
+    <script>backToTop()</script>
 }
 <section class="page-slider">
     <div class="container">
@@ -163,19 +164,19 @@
                         <b>@data.Trips[0].DepartureDate.ToString("dddd, dd MMMM yyyy", new CultureInfo("id-ID")) - @data.Trips[1].DepartureDate.ToString("dddd, dd MMMM yyyy", new CultureInfo("id-ID"))</b> | <b>@(data.AdultCount + data.ChildCount + data.InfantCount) Orang</b>
                         @if (data.ChildCount != 0 && data.InfantCount != 0)
                         {
-                            <span>(@data.AdultCount Dewasa , @data.ChildCount Anak, @data.InfantCount Bayi)</span>
+                        <span>(@data.AdultCount Dewasa , @data.ChildCount Anak, @data.InfantCount Bayi)</span>
                         }
                         else if (data.ChildCount != 0 && data.InfantCount == 0)
                         {
-                            <span>(@data.AdultCount Dewasa , @data.ChildCount Anak)</span>
+                        <span>(@data.AdultCount Dewasa , @data.ChildCount Anak)</span>
                         }
                         else if (data.ChildCount == 0 && data.InfantCount != 0)
                         {
-                            <span>(@data.AdultCount Dewasa , @data.InfantCount Bayi)</span>
+                        <span>(@data.AdultCount Dewasa , @data.InfantCount Bayi)</span>
                         }
                         else if (data.ChildCount == 0 && data.InfantCount == 0)
                         {
-                            <span>(@data.AdultCount Dewasa)</span>
+                        <span>(@data.AdultCount Dewasa)</span>
                         }
                     </h4>
                 </div>
@@ -196,6 +197,7 @@
     </div>
 </section><!-- .search-result-form -->
 <section class="search-result return page-loading" ng-controller="returnFlightController" ng-class="{'page-loaded': pageLoaded}">
+    <a href="#" id="back-to-top" title="Back to top"></a>
 
     <form class="hidden pushToken" action="@Url.Action("Select", "Flight")" method="post">
         <input type="text" name="token" value="" class="fareToken" />

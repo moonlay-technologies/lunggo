@@ -133,7 +133,7 @@
     .info-flight {
         .flight {position:relative; padding-left:30px; margin-bottom:20px;
             .flight__airline__logo {}
-            .flight__airline__name {color:$color-main-blue; font-weight:bold; padding-top:10px;}
+            .flight__airline__name {color:$color-main-blue; @extend .os-bold; padding-top:10px;}
             &:before {content:''; width:20px; height:20px; position:absolute; top:0; left:0; background-color:$color-main-blue; background-repeat:no-repeat; background-size:200%; border:2px solid $color-main-blue; background-image:url(/assets/images/plane-updown-sprite.png);}
             &.departure {}
             &.return {
@@ -201,7 +201,7 @@
                 &.email:before {background-position:-30px 0;}
             }
             &>div+div {border-top:1px solid #7fcae7;}
-            h4 {font-weight:bold;}
+            h4 {@extend .os-bold;}
         }
     }
     .contact-social {@include clearfix();
@@ -256,9 +256,9 @@
     .passwordform {
         margin: 0 15px;
         .resetpassword {margin: 15px 0 30px;
-            header {background:$color-main-blue; color:#fff; padding: 10px 20px; font-size:13px; font-weight:bold; position:relative;
+            header {background:$color-main-blue; color:#fff; padding: 10px 20px; font-size:13px; @extend .os-bold; position:relative;
                 .toggle {content:""; position:absolute; top:0; right:0; padding:0; background:#028ec3; height:100%; display:block; width:40px; cursor:pointer;
-                    &:after {content:"-"; position:absolute; font-size:28px; color:#fff; font-weight:bold; top:0; left:0; text-align:center; width:100%;}
+                    &:after {content:"-"; position:absolute; font-size:28px; color:#fff; @extend .os-bold; top:0; left:0; text-align:center; width:100%;}
                 }
             }
             .content {padding:15px; border:$border-default; border-top:none; background:#fff; 

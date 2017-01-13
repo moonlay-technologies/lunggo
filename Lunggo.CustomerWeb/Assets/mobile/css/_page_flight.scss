@@ -11,14 +11,14 @@
     .flight-summary {background-color:#2eb4e7; color:#fff; position:relative; @include clearfix();
         p {margin-bottom:0;}
         .summary-left {float:left; width:77%; padding:12px;}
-        .summary-right {@extend & .summary-left; padding:0; width:25%; color:#fff; height:100%; background-color:#0b84b1; display:block; vertical-align:middle; text-align:center; font-weight:bold; position:absolute; right:0;
+        .summary-right {@extend & .summary-left; padding:0; width:25%; color:#fff; height:100%; background-color:#0b84b1; display:block; vertical-align:middle; text-align:center; @extend .os-bold; position:absolute; right:0;
             span {position:absolute; top:0; left:0; right:0; bottom:0; margin:auto; height:auto; width:auto; width:50px; height:20px;}
         }
     }
     // flight sort and filter
     .tab-filter, .flight-sort-filter {
         .flight-sort-filter-action {background:#616161; @include clearfix();
-            a {float:left; color:#fff; text-align:center; display:block; width:50%; font-weight:bold; padding:15px 0;}
+            a {float:left; color:#fff; text-align:center; display:block; width:50%; @extend .os-bold; padding:15px 0;}
             a+a {border-left:1px solid #8f8f8f;}
         }
     }
@@ -27,7 +27,7 @@
         p {margin-bottom:0; font-size:11px;}
     }
     // flight selection
-    .flight-selection {background:#e5e3e4; position:relative; font-weight:bold;
+    .flight-selection {background:#e5e3e4; position:relative; @extend .os-bold;
         .flight-info {padding:15px; padding-left:50px;
             &:before {content:""; position:absolute; top:50%; margin-top:-10px; left:15px; width:22px; height:20px; background:url(/Assets/images/flight-review-title-sprite.png) no-repeat;}
             &.flight-info--return {
@@ -35,7 +35,7 @@
             }
         }
         .change-departure {width:25%; position:absolute; height:100%; background:#b7b7b7; color:#fff; text-align:center; right:0; top:0;
-            span {position:absolute; top:0; right:0; bottom:0; left:0; margin:auto; width:50px; height:20px; font-weight:bold;}
+            span {position:absolute; top:0; right:0; bottom:0; left:0; margin:auto; width:50px; height:20px; @extend .os-bold;}
         }
     }
     // flight list
@@ -46,14 +46,14 @@
             .flight-header {
                 .flight-airline {margin-top:0; margin-bottom:0;
                     .flight-airline-image {height:30px;}
-                    span {color:#2ca3e1; font-weight:bold;}
+                    span {color:#2ca3e1; @extend .os-bold;}
                 }
                 &.col-xs-8 {padding: 0;}
             }
             .flight-content {@include clearfix();
                 .content-left {float:left; width:50%;
                     .flight-time {@include clearfix();
-                        span {font-weight:bold; float:left; display:block;}
+                        span {@extend .os-bold; float:left; display:block;}
                         .departure {}
                         .separator {width:10%; border-top:2px solid $color-main-blue; height:10px; position:relative; top:7px; margin-left:5px; margin-right:5px;}
                         .arrival {}
@@ -64,7 +64,7 @@
                 .content-right {@extend & .content-left; text-align:right; color:#ff7200;
                     label {font-weight:normal;}
                     .flight-price-was {margin:0; text-decoration:line-through;}
-                    .flight-price {margin-top:0; font-weight:bold; font-size:16px;}
+                    .flight-price {margin-top:0; @extend .os-bold; font-size:16px;}
                 }
             }
             .flight-footer {
@@ -136,7 +136,7 @@
                 &:before {content:""; position:absolute; top:50%; margin-top:-10px; left:15px; width:22px; height:20px; background:url(/Assets/images/flight-review-title-sprite.png) no-repeat;}
             }
             .flight-change {width:25%; position:absolute; height:100%; background:#b7b7b7; color:#fff; text-align:center; right:0; top:0;
-                span {position:absolute; top:0; right:0; bottom:0; left:0; margin:auto; width:50px; height:20px; font-weight:bold;}
+                span {position:absolute; top:0; right:0; bottom:0; left:0; margin:auto; width:50px; height:20px; @extend .os-bold;}
             }
             // departure and arrival
             &.flight-title--departure {}

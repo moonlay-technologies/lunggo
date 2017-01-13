@@ -26,18 +26,18 @@
                 .faq-title {
                     padding: 12px 0;
                     font-size: 16px;
-                    font-weight: bold;
+                    @extend .os-bold;
                     color: #2eb4e7;
                     margin-left: 5px;
                 }
                 /*&>header {color:#1daee4;
-                    h2 {font-size:16px; font-weight:bold;}
+                    h2 {font-size:16px; @extend .os-bold;}
                 }*/
                 &>ol {padding-left:0; list-style:none; counter-reset:sub-number;
                     &>li {background:#fff; margin-left:-25px; padding:10px; border:$border-default; position:relative; padding-left:30px; margin-bottom: 5px;
-                        &:before {content:counter(main-number) '.' counter(sub-number); counter-increment:sub-number; position:absolute; top:8px; left:5px; color:#1daee4; font-size:14px; font-weight:bold;}
+                        &:before {content:counter(main-number) '.' counter(sub-number); counter-increment:sub-number; position:absolute; top:8px; left:5px; color:#1daee4; font-size:14px; @extend .os-bold;}
                         &>header {color:#1daee4;
-                            h3 {font-size:14px; margin-top:0; font-weight:bold;}
+                            h3 {font-size:14px; margin-top:0; @extend .os-bold;}
                         }
                         & + li {margin-top:15px;}
                     }
@@ -97,7 +97,7 @@
             }
         }
         .howto-note {
-            h3 {font-weight:bold;}
+            h3 {@extend .os-bold;}
             p {
                 span {color:$color-main-blue;}
             }

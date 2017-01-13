@@ -109,13 +109,13 @@ file: /Assets/travorama20/css/_page_flight.scss
     // flight filter
     .search-result-filter {margin-bottom:15px; letter-spacing:0;
         .filter-left {float:left; width:7%; border-top:$border-default;
-            &>span {font-weight:bold; padding:15px 0; display:block; font-size:13px;}
+            &>span {@extend .os-bold; padding:15px 0; display:block; font-size:13px;}
         }
         .filter-right {float:left; width:93%; border-top:$border-default;
             .filter-trigger {background:#eceaea;
                 &:before, &:after {@include clearfix();}
                 &>div {float:left; width:25%; padding:15px; padding-right:0; text-align:center;
-                    span {font-weight:bold; color:$color-main-blue; font-size:13px; display:inline-block; cursor:pointer; position:relative; padding-left:28px;
+                    span {@extend .os-bold; color:$color-main-blue; font-size:13px; display:inline-block; cursor:pointer; position:relative; padding-left:28px;
                         &:before {width:20px; height:20px; background:url(/Assets/images/flight-filter-title-sprite.png) no-repeat; content:""; position:absolute; left:0; top:0;}
                     }
                     &+div {border-left:$border-default;}
@@ -144,8 +144,8 @@ file: /Assets/travorama20/css/_page_flight.scss
             }
             .filter-content {
                 &>div {background:#999999; color:#fff; padding:25px; position:relative; display:none;
-                    .close-filter {position:absolute; top:0; right:0; color:#fff; background:#525252; font-size:12px; width:20px; height:20px; text-align:center; font-weight:bold; cursor:pointer; padding:2px;}
-                    h3 {margin-top:0; font-weight:bold; font-size:14px;
+                    .close-filter {position:absolute; top:0; right:0; color:#fff; background:#525252; font-size:12px; width:20px; height:20px; text-align:center; @extend .os-bold; cursor:pointer; padding:2px;}
+                    h3 {margin-top:0; @extend .os-bold; font-size:14px;
                         span {padding-right:20px;
                             label {font-weight:normal; text-decoration:underline; cursor:pointer; font-size:14px; color:#fed446; margin-left:10px;}
                         }
@@ -197,7 +197,7 @@ file: /Assets/travorama20/css/_page_flight.scss
     .search-result-warning {margin-bottom:10px;
         .notice {background:#FF9A24; color:#fff; padding:6px 12px; font-size:13px; @include border-radius($border-radius-default); position:relative;
             p {margin-bottom:0;}
-            .close-notice {color:#fff; font-weight:bold; cursor:pointer;}
+            .close-notice {color:#fff; @extend .os-bold; cursor:pointer;}
             &:after {width:14px; height:10px; background:url(/Assets/images/flight-notice-arrow.png) center center no-repeat; content:""; display:block; position:absolute; top:100%; right:150px;}
         }
     }
@@ -207,7 +207,7 @@ file: /Assets/travorama20/css/_page_flight.scss
     .search-result-sort {padding:10px 0;
         &:before, &:after {@include clearfix();}
         .container>div {float:left; text-align:center;
-            span {font-weight:bold; font-size:14px; cursor:pointer;
+            span {@extend .os-bold; font-size:14px; cursor:pointer;
                 &:before {content:url(/Assets/images/flight-sort-switch.png); margin-right:5px;}
                 &.active {color:$color-main-blue;}
             }
@@ -248,13 +248,13 @@ file: /Assets/travorama20/css/_page_flight.scss
                 .summary-top {border-bottom:$border-default;
                     &:before, &:after {@include clearfix();}
                     .summary-top-left {text-align:center; float:left; width:25%;
-                        h5 {color:$color-main-blue; font-weight:bold; margin: 14px 0;}
+                        h5 {color:$color-main-blue; @extend .os-bold; margin: 14px 0;}
                         img {height:55px;}
                     }
                     .summary-top-right {float:left; width:75%; padding-top:15px;
                         .flight-date-departure {float:left; width:35%; padding-right:20px; text-align:right;
                             h4 {@extend .os-semibold; font-weight:600; font-size:18px;
-                                span {font-weight:bold; margin-left:10px;}
+                                span {@extend .os-bold; margin-left:10px;}
                                 span.overday {font-size:11px; background:#aaa; color:#fff; position:relative; top:-3px; padding:3px;}
                             }
                             h5 {font-size:12px;}
@@ -308,7 +308,7 @@ file: /Assets/travorama20/css/_page_flight.scss
             .flight-summary-right {color:$color-main-orange; padding:10px; float:left; width:27%; padding-left:20px;
                 &:before, &:after {@include clearfix();}
                 .original-price {text-decoration:line-through; text-decoration-color: $color-main-orange; }
-                h4 {font-size:25px; font-weight:bold; margin:0; margin-bottom:3px; margin-top:5px;}
+                h4 {font-size:25px; @extend .os-bold; margin:0; margin-bottom:3px; margin-top:5px;}
                 small {display:block; font-size:12px; margin-bottom:7px; font-size:10px;}
                 .btn {padding-right:30px; padding-left:30px;}
                 sup {top:-7px;}
@@ -316,7 +316,7 @@ file: /Assets/travorama20/css/_page_flight.scss
         }
         .flight-detail {border-top:$border-default; padding-bottom:20px; position:relative; height:auto; overflow:hidden; margin-bottom:0; display: none;
             &>h3 {padding:15px 15px 15px 35px; @extend .os-semibold; font-weight:600; color:$color-main-blue; margin:0; font-size:13px;
-                .close-flight-detail {color:#bbb; cursor:pointer; font-weight:bold; font-size:13px; margin-right:4px;}
+                .close-flight-detail {color:#bbb; cursor:pointer; @extend .os-bold; font-size:13px; margin-right:4px;}
             }
             .segment {
                 &:before,&:after {content:""; clear:both; display:block; width:100%;}
@@ -326,7 +326,7 @@ file: /Assets/travorama20/css/_page_flight.scss
                 .segment-left {float:left; width:23%; position:relative;
                     &:after {content:""; background-repeat:no-repeat; background-size:contain; width:10px; position:absolute; right:15px; top:15px; width:0; height:20px;}
                     .segment-airline-logo {width:50px; border:$border-default; float:left; margin-right:15px;}
-                    .segment-airline-name {font-weight:bold; color:$color-main-blue; font-size:12px; padding-right:30px;}
+                    .segment-airline-name {@extend .os-bold; color:$color-main-blue; font-size:12px; padding-right:30px;}
                     .segment-airline-number {@extend .os-semibold; font-weight:600; color:$color-main-blue; font-size:12px;}
                     .flight-facility {display:block; padding-top:12px;
                         span {background:url(/Assets/images/flight-facilities-sprite.png) no-repeat; display:inline-block; margin-right: 5px;
@@ -359,12 +359,12 @@ file: /Assets/travorama20/css/_page_flight.scss
                     &>div {float:left;}
                     .segment-departure {width:33.33333334%; padding-top:7.5px; padding-left:15px;
                         h5 {margin:0; margin-bottom:5px; font-size:11px;}
-                        h3 {font-weight:bold; margin:0; margin-bottom:5px; font-size:18px;}
+                        h3 {@extend .os-bold; margin:0; margin-bottom:5px; font-size:18px;}
                         h4 {@extend .os-semibold; font-weight:600; margin:0; margin-bottom:5px; font-size:13px;}
                     }
                     .segment-duration {width:33.33333334%; padding-right:40px; padding-top:20px;
                         h5 {border-bottom:3px solid $color-main-blue; text-align:center; padding-bottom:5px;
-                            span {font-weight:bold;}
+                            span {@extend .os-bold;}
                         }
                     }
                     .segment-arrival {@extend .segment-departure; padding-left:0;}
@@ -402,7 +402,7 @@ file: /Assets/travorama20/css/_page_flight.scss
     .flight-review-wrapper .flight-review .price-detail.ng-hide, .flight .price-detail {max-height:0; overflow:hidden; display:none;} 
     .flight-review-wrapper.active .flight-review .price-detail, .flight.active .price-detail {position:relative; height:auto; margin-bottom:0; display: block;
         &>h3 {/*margin: 0; padding: 15px 15px 15px 35px; font-weight:600; color:$color-main-blue; font-size:13px;*/
-            .close-price-detail {color:#bbb; cursor:pointer; font-weight:bold; font-size:13px; margin-right:4px;}
+            .close-price-detail {color:#bbb; cursor:pointer; @extend .os-bold; font-size:13px; margin-right:4px;}
         }
         .segment {
             &:before,&:after {content:""; clear:both; display:block; width:80%;}
@@ -425,12 +425,12 @@ file: /Assets/travorama20/css/_page_flight.scss
                     h6.segment-price-left {/*padding-top: 10px;*/float: left; color:#ff7200;font-size:10px;font-weight:500;}
                     .orange-total-price {color: #ff7200 !important;font-size: 21px !important;font-weight: bold !important;margin: 0 !important;margin-bottom: 8px !important;/*margin-top: 5px;*/ }
                 }
-                .segment-price-name{ font-weight: bold;color: $color-main-blue;font-size: 12px; margin-top: -40px; margin-left: 70px;}
+                .segment-price-name{@extend .os-bold; ;color: $color-main-blue;font-size: 12px; margin-top: -40px; margin-left: 70px;}
                 .segment-price-number{@extend .os-semibold; font-weight:600; color:$color-main-blue; font-size:12px;}
 
 
                 .segment-airline-logo {width:50px; border:$border-default; float:left; margin-right:15px;}
-                .segment-airline-name {font-weight:bold; color:$color-main-blue; font-size:12px; padding-right:30px;}
+                .segment-airline-name {@extend .os-bold; color:$color-main-blue; font-size:12px; padding-right:30px;}
                 .segment-airline-number {@extend .os-semibold; font-weight:600; color:$color-main-blue; font-size:12px;}
                 .flight-facility {display:block; padding-top:58px;
                     span {background:url(/Assets/images/flight-facilities-sprite.png) no-repeat; display:inline-block; margin:0 5px;
@@ -448,6 +448,10 @@ file: /Assets/travorama20/css/_page_flight.scss
         }
     }
     .price-detail > h3 {margin: 0; padding: 15px 15px 15px 35px; @extend .os-semibold; font-weight:600; color:$color-main-blue; font-size:13px;}
+    .search-result-container, .search-result-list {
+        position: relative;
+        z-index: 1;
+    }
 }
 
 //price-detail 2 silubab start
@@ -541,11 +545,11 @@ file: /Assets/travorama20/css/_page_flight.scss
             }
             // flight review detail
             .flight-review-detail {border-top:5px solid $color-main-blue; display:none; background:#fff;
-                &>h3 {background:#bfeeff; color:$color-main-blue; text-align:center; padding:15px; margin:0; font-weight:bold; font-size:16px;}
+                &>h3 {background:#bfeeff; color:$color-main-blue; text-align:center; padding:15px; margin:0; @extend .os-bold; font-size:16px;}
                 .detail-flight {
                     .flight-detail {padding-bottom:20px; position:relative;
                         &>h3 {padding:15px 15px 15px 35px; @extend .os-semibold; font-weight:600; color:$color-main-blue; margin:0; font-size:13px;
-                            .close-flight-detail {color:#bbb; cursor:pointer; font-weight:bold;}
+                            .close-flight-detail {color:#bbb; cursor:pointer; @extend .os-bold;}
                         }
                         .segment {
                             &:before,&:after {content:""; clear:both; display:block; width:100%;}
@@ -555,7 +559,7 @@ file: /Assets/travorama20/css/_page_flight.scss
                             .segment-left {float:left; width:23%; position:relative; padding-right:25px;
                                 &:after {content:""; background-repeat:no-repeat; width:0px; height:35px; position:absolute; right:15px; top:15px;}
                                 .segment-airline-logo {height:50px; border:$border-default; float:left; margin-right:15px;}
-                                .segment-airline-name {font-weight:bold; color:$color-main-blue; font-size:12px;}
+                                .segment-airline-name {@extend .os-bold; color:$color-main-blue; font-size:12px;}
                                 .segment-airline-number {@extend .os-semibold; font-weight:600; color:$color-main-blue; font-size:12px;}
                                 .flight-facilities {padding-right:5px; padding-top:5px;
                                     span {background:url(/Assets/images/flight-facilities-sprite.png) no-repeat; display:inline-block; margin:0;
@@ -570,12 +574,12 @@ file: /Assets/travorama20/css/_page_flight.scss
                                 &>div {float:left;}
                                 .segment-departure {width:33.33333334%; padding-top:5px; padding-left:15px;
                                     h5 {margin:0; margin-bottom:5px; font-size:12px;}
-                                    h3 {font-weight:bold; margin:0; margin-bottom:10px; font-size:14px;}
+                                    h3 {@extend .os-bold; margin:0; margin-bottom:10px; font-size:14px;}
                                     h4 {@extend .os-semibold; font-weight:600; margin:0; margin-bottom:5px; font-size:12px;}
                                 }
                                 .segment-duration {width:33.33333334%; padding-right:40px; padding-top:25px;
                                     h5 {border-bottom:3px solid $color-main-blue; text-align:center; padding-bottom:5px;
-                                        span {font-weight:bold;}
+                                        span {@extend .os-bold;}
                                     }
                                 }
                                 .segment-arrival {@extend .segment-departure; padding-left:0;}
@@ -666,7 +670,7 @@ file: /Assets/travorama20/css/_page_flight.scss
                 &>div {border-top:$border-default;}
                 .flight-airline {
                     &:before, &:after {@include clearfix();}
-                    h3 {float:left; width:80%; margin:0; color:#3fabe3; font-weight:bold; display:table;
+                    h3 {float:left; width:80%; margin:0; color:#3fabe3; @extend .os-bold; display:table;
                         img {height:35px; margin-left:10px; margin-right:10px; float:left;}
                         span {font-size:12px; display:block; float:left; display:table-cell; vertical-align:middle; padding-top:10px;}
                     }
@@ -682,7 +686,7 @@ file: /Assets/travorama20/css/_page_flight.scss
                     &:before, &:after {@include clearfix();}
                     .flight-date-departure {float:left; width:35%; padding-right:20px; text-align:right;
                         h4 {@extend .os-semibold; font-weight:600; font-size:16px;
-                            span {font-weight:bold; display:block;}
+                            span {@extend .os-bold; display:block;}
                         }
                         h5 {font-size:10px;}
                     }
@@ -713,7 +717,7 @@ file: /Assets/travorama20/css/_page_flight.scss
                         }
                         .segment-left {float:left; width:100%; position:relative; display:block; padding-left:40px;
                             .segment-airline-logo {width:30px; border:$border-default; float:left; margin-right:15px; margin-bottom:10px;}
-                            .segment-airline-name {font-weight:bold; color:$color-main-blue; font-size:12px; padding-right:30px;}
+                            .segment-airline-name {@extend .os-bold; color:$color-main-blue; font-size:12px; padding-right:30px;}
                             .segment-airline-number {@extend .os-semibold; font-weight:600; color:$color-main-blue; font-size:12px;}
                         }
                         .segment-right {@extend & .segment-left; width:90%; display:block;
@@ -721,12 +725,12 @@ file: /Assets/travorama20/css/_page_flight.scss
                             &>div {float:left;}
                             .segment-departure {width:33.33333334%; padding-top:7.5px;
                                 h5 {margin:0; margin-bottom:5px; font-size:11px;}
-                                h3 {font-weight:bold; margin:0; margin-bottom:5px; font-size:18px;}
+                                h3 {@extend .os-bold; margin:0; margin-bottom:5px; font-size:18px;}
                                 h4 {@extend .os-semibold; font-weight:600; margin:0; margin-bottom:5px; font-size:13px;}
                             }
                             .segment-duration {width:33.33333334%; padding-right:5px; padding-left:5px; padding-top:20px;
                                 h5 {border-bottom:3px solid $color-main-blue; text-align:center; padding-bottom:5px;
-                                    span {font-weight:bold;}
+                                    span {@extend .os-bold;}
                                 }
                             }
                             .segment-arrival {@extend & .segment-departure; padding-left:0;}
@@ -744,8 +748,8 @@ file: /Assets/travorama20/css/_page_flight.scss
                     }
                 }
                 .flight-price {text-align:center; padding-top:15px; padding-bottom:15px;
-                    label {font-weight:bold; font-size:12px;}
-                    h3 {color:$color-main-orange; font-weight:bold; font-size:27px; margin-top:0; margin-bottom:0;}
+                    label {@extend .os-bold; font-size:12px;}
+                    h3 {color:$color-main-orange; @extend .os-bold; font-size:27px; margin-top:0; margin-bottom:0;}
                     p {font-size:9px; color:$color-main-orange; margin-bottom:0;}
                     .btn {width:80%; margin-right:auto; margin-left:auto; padding-top:10px; padding-bottom:10px; font-size:12px; margin-top:15px;}
                 }
@@ -781,7 +785,7 @@ file: /Assets/travorama20/css/_page_flight.scss
         .search-result-filter {margin-bottom:15px;
             .container {padding:0;}
             .filter-left {float:left; width:10%; border-top:none;
-                &>span {font-weight:bold; padding:15px 0; display:block; font-size:14px;}
+                &>span {@extend .os-bold; padding:15px 0; display:block; font-size:14px;}
             }
             .filter-right {float:left; width:90%; border-top:none;
                 .filter-trigger {
@@ -959,19 +963,19 @@ file: /Assets/travorama20/css/_page_flight.scss
                     }
                     header {background:#eaeaea; position:relative; padding-left:40px;
                         &:after {content:""; position:absolute; top:0; left:0; height:100%; overflow:hidden; width:50px; background:url(/Assets/images/flight-detail-active.png) top left no-repeat; background-size:contain;}
-                        h3 {margin:0; font-weight:bold; font-size:12px; padding:10px; padding-left:25px; position:relative;
+                        h3 {margin:0; @extend .os-bold; font-size:12px; padding:10px; padding-left:25px; position:relative;
                             &:after {position:absolute; width:15px; height:15px; background:url(/Assets/images/flight-review-title-sprite.png) no-repeat; background-size:200%; content:""; top:10px; left:0;}
                         }
                     }
                     .flight-content {
                         .flight-airline {width:25%; float:left; text-align:center; border-right:$border-default;
-                            h5 {color:$color-main-blue; font-weight:bold;}
+                            h5 {color:$color-main-blue; @extend .os-bold;}
                              img {height:65px;}
                         }
                         .flight-date {width:75%; float:left; padding-top:12px;
                             .flight-date-departure {float:left; width:35%; padding-right:20px; text-align:right;
                                 h4 {@extend .os-semibold; font-weight:600; font-size:18px;
-                                    span {font-weight:bold; margin-left:10px;}
+                                    span {@extend .os-bold; margin-left:10px;}
                                 }
                                 h5 {font-size:12px;}
                             }
@@ -1002,7 +1006,7 @@ file: /Assets/travorama20/css/_page_flight.scss
             }
             .summary-right {width:25%; float:left; text-align:center; padding-top:80px;
                 label {}
-                h3 {color:$color-main-orange; font-weight:bold; font-size:27px; margin-bottom:0; margin-top:0;}
+                h3 {color:$color-main-orange; @extend .os-bold; font-size:27px; margin-bottom:0; margin-top:0;}
                 p {color:$color-main-orange; font-size:9px;}
                 .btn {padding-right:50px; padding-left:50px;}
             }
@@ -1012,7 +1016,7 @@ file: /Assets/travorama20/css/_page_flight.scss
             .detail-flight, .price-detail-wrapper {
                 .flight-header {background:#eaeaea; position:relative; padding-left:40px; margin-bottom:25px;
                     &:after {content:""; position:absolute; top:0; left:0; height:100%; overflow:hidden; width:50px; background:url(/Assets/images/flight-review-title-bg.png) top left no-repeat; background-size:contain;}
-                    h3 {margin:0; font-weight:bold; font-size:12px; padding:10px; padding-left:25px; position:relative;
+                    h3 {margin:0; @extend .os-bold; font-size:12px; padding:10px; padding-left:25px; position:relative;
                         &:after {position:absolute; width:15px; height:15px; background:url(/Assets/images/flight-review-title-sprite.png) no-repeat; background-size:200%; content:""; top:10px; left:0;}
                     }
                 }
@@ -1021,7 +1025,7 @@ file: /Assets/travorama20/css/_page_flight.scss
                 }
                 .flight-detail {padding-bottom:20px; position:relative;
                     &>h3 {padding:15px 15px 15px 35px; @extend .os-semibold; font-weight:600; color:$color-main-blue; margin:0; font-size:13px;
-                        .close-flight-detail {color:#bbb; cursor:pointer; font-weight:bold;}
+                        .close-flight-detail {color:#bbb; cursor:pointer; @extend .os-bold;}
                     }
                     .segment {
                         &:before,&:after {content:""; clear:both; display:block; width:100%;}
@@ -1031,7 +1035,7 @@ file: /Assets/travorama20/css/_page_flight.scss
                         .segment-left {float:left; width:23%; position:relative; padding-right:25px;
                             &:after {content:""; background-repeat:no-repeat; width:0px; height:35px; position:absolute; right:15px; top:15px;}
                             .segment-airline-logo {height:50px; border:$border-default; float:left; margin-right:15px;}
-                            .segment-airline-name {font-weight:bold; color:$color-main-blue; font-size:12px;}
+                            .segment-airline-name {@extend .os-bold; color:$color-main-blue; font-size:12px;}
                             .segment-airline-number {@extend .os-semibold; font-weight:600; color:$color-main-blue; font-size:12px;}
                             .flight-facility {display:block; padding-top:12px;
                                 span {background:url(/Assets/images/flight-facilities-sprite.png) no-repeat; display:inline-block; margin-right: 5px;
@@ -1064,12 +1068,12 @@ file: /Assets/travorama20/css/_page_flight.scss
                             &>div {float:left;}
                             .segment-departure {width:33.33333334%; padding-top:5px; padding-left:15px;
                                 h5 {margin:0; margin-bottom:5px; font-size:12px;}
-                                h3 {font-weight:bold; margin:0; margin-bottom:10px; font-size:14px;}
+                                h3 {@extend .os-bold; margin:0; margin-bottom:10px; font-size:14px;}
                                 h4 {@extend .os-semibold; font-weight:600; margin:0; margin-bottom:5px; font-size:12px;}
                             }
                             .segment-duration {width:33.33333334%; padding-right:40px; padding-top:25px;
                                 h5 {border-bottom:3px solid $color-main-blue; text-align:center; padding-bottom:5px;
-                                    span {font-weight:bold;}
+                                    span {@extend .os-bold;}
                                 }
                             }
                             .segment-arrival {@extend .segment-departure; padding-left:0;}
@@ -1085,13 +1089,13 @@ file: /Assets/travorama20/css/_page_flight.scss
         .flight-review-detail, .price-detail {
             .flight-header {background:#eaeaea; position:relative; padding-left:40px; margin-bottom:25px;
                 &:after {content:""; position:absolute; top:0; left:0; height:100%; overflow:hidden; width:50px; background:url(/Assets/images/flight-review-title-bg.png) top left no-repeat; background-size:contain;}
-                h3 {margin:0; font-weight:bold; font-size:12px; padding:10px; padding-left:25px; position:relative;
+                h3 {margin:0; @extend .os-bold; font-size:12px; padding:10px; padding-left:25px; position:relative;
                     &:after {position:absolute; width:15px; height:15px; background:url(/Assets/images/flight-review-title-sprite.png) no-repeat; background-size:200%; content:""; top:10px; left:0;}
                 }
             } &.flight-return {
                 .flight-header h3:after {background-position:-15px;}
             }
         }
-        .flight-review-detail section > h3, .price-detail > h3.detail-title {background:#bfeeff; color:$color-main-blue; text-align:center; padding:15px; margin:0; font-weight:bold; font-size:16px; border-top:5px solid $color-main-blue;}        
+        .flight-review-detail section > h3, .price-detail > h3.detail-title {background:#bfeeff; color:$color-main-blue; text-align:center; padding:15px; margin:0; @extend .os-bold; font-size:16px; border-top:5px solid $color-main-blue;}        
     }
 }

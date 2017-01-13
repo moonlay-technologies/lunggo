@@ -14,10 +14,10 @@ file : /Assets/travorama20/css/_page_password.scss
         padding: 20px 15px;
         color:#525252;
         hgroup {margin-bottom:24px;
-            h1,h4 {font-weight:bold; color:#525252;}
+            h1,h4 {@extend .os-bold; color:#525252;}
         }
         input {text-align:center; padding:12px 0; height:auto; @include border-radius(3px);}
-        a {font-weight:bold; color:inherit;}
+        a {@extend .os-bold; color:inherit;}
         .link-container p > a {color: #37bcf2; text-decoration: underline;}
     }
     .form-horizontal .form-group {
@@ -68,7 +68,7 @@ file : /Assets/travorama20/css/_page_password.scss
         h1 {font-size:40px;}
     }
     hgroup {text-align:right; margin-bottom:20px;
-        h1,h4 {font-weight:bold;}
+        h1,h4 {@extend .os-bold;}
     }
     form[name="registerForm"] {
         width: 300px;
@@ -192,7 +192,7 @@ file : /Assets/travorama20/css/_page_password.scss
             &.flight, &.hotel {background:#f1f1f1; background-position:top left; background-repeat:no-repeat;}
             // flight order
             &.flight { background-image:url(/Assets/images/order-flight-list-bg.png); padding: 10px 55px;
-                header {padding:5px; font-size:12px; font-weight:bold;
+                header {padding:5px; font-size:12px; @extend .os-bold;
                     .row {margin-bottom:3px;}
                     span {color:$color-main-blue;}
                 }
@@ -200,7 +200,7 @@ file : /Assets/travorama20/css/_page_password.scss
                     .row {margin-bottom:3px;}
                     .detail {
                         .col-xs-4 {width:30%;}
-                        .status {font-weight:bold;
+                        .status {@extend .os-bold;
                             &.success {color:#14b413;}
                             &.failed {color:#fe0001;}
                             &.pending {color:#b551ea;}
@@ -246,9 +246,9 @@ file : /Assets/travorama20/css/_page_password.scss
         h2, h4 {letter-spacing:0;}
         h4 {margin-bottom:18px;}
         .flight {padding-left:36px; position:relative;
-            .col-xs-9 {font-weight:bold;}
+            .col-xs-9 {@extend .os-bold;}
             img {height:36px; margin-right:24px;}
-            span {font-weight:bold; color:$color-main-blue;}
+            span {@extend .os-bold; color:$color-main-blue;}
             &:before {content:''; width:20px; height:20px; position:absolute; top:0; left:0; background-color:$color-main-blue; background-image:url(/Assets/images/plane-updown-sprite.png); background-size:200%; background-repeat:no-repeat; border:2px solid $color-main-blue;}
             // departure flight
             &.departure {}

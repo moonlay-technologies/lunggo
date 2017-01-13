@@ -721,6 +721,7 @@
     <Content Include="Assets\images\flight-weight.png" />
     <Content Include="Assets\images\form-selection-sprite.png" />
     <Content Include="Assets\images\global-error.jpg" />
+    <Content Include="Assets\images\go-top.png" />
     <Content Include="Assets\images\googlePlay.png" />
     <Content Include="Assets\images\gray-bg.png" />
     <Content Include="Assets\images\grey-bg.png" />

@@ -66,7 +66,6 @@
 @section AdditionalJS {
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="/Assets/js/jquery-ui.min.js"></script>
-    <script src="/Assets/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="/Assets/vendor/slick/slick.min.js"></script>
     <script src="/Assets/vendor/lightslider/lightslider.js"></script>
 }
@@ -81,7 +80,6 @@
     </script>
     <script src="/Assets/travorama20/js/hotelDetailController.js"></script>
     <script type="text/javascript" src="/Assets/travorama20/js/HotelController.js"></script>
-    <script>accordionFunctions()</script>
     <script src="/Assets/travorama20/angularDirectory/search/hotelSearch.service.js"></script>
     <script src="/Assets/travorama20/angularDirectory/common/hotelAutocomplete.service.js"></script>
     <script type="text/javascript" src="/Assets/js/jquery.ui.datepicker-id.js"></script>
@@ -91,9 +89,9 @@
 @Html.Partial("/Views/Shared/Desktop/_PageSlider.cshtml")
 <div class="travorama-hotel" ng-init="init(@Newtonsoft.Json.JsonConvert.SerializeObject(Model))" ng-class="{'page-loaded' : pageLoaded}">
     <div class="container">
-
         <div class="detail-hotel-content">
             @Html.Partial("/Views/Shared/Desktop/_BreadCrumb.cshtml")
+            <a href="#" id="back-to-top" title="Back to top"></a>
             <div ng-show="!searchDone" class="text-center">
                 <img src="/Assets/images/load.gif" style="width:5%; margin-left: 10%">
             </div>
@@ -438,7 +436,6 @@
             </div>
         </div>
     </div>
-
     <div class="bookfailed-popup" ng-show="expired">
         <div class="overlay-content">
             <section style="padding-top:60px; padding-left:225px;">

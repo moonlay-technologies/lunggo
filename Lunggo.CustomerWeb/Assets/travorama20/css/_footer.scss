@@ -31,7 +31,7 @@ including in this file :
         .call-center {margin-top:10px;
             img {float:left; padding-right:10px; width:60px;}
             p {margin-bottom:0;}
-            h2 {margin:0; font-weight:bold;}
+            h2 {margin:0; @extend .os-bold;}
         }
         .asita {text-align:center;
             img {height:auto; vertical-align:bottom; position:relative; top:10px;}
@@ -51,7 +51,7 @@ including in this file :
         .menu-about {margin-left:20px;}
         .menu-other {}
 
-        .list-title {font-weight:bold;}
+        .list-title {@extend .os-bold;}
         ul {padding:0; margin:0; list-style:none;
             li {margin-bottom:2px;}
         }
