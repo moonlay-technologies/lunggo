@@ -15,7 +15,6 @@ namespace Lunggo.CustomerWeb.Controllers
     public class FlightController : Controller
     {
         [DeviceDetectionFilter]
-        //-{destinationCity}.{originAirport}.{destinationAirport}
         [Route("id/tiket-pesawat/cari/{searchParam}/{searchId}")]
         public ActionResult Search(string searchId, string searchParam)
         {

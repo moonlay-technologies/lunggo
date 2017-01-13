@@ -12,5 +12,13 @@ namespace Lunggo.WebAPI.ApiSrc.Autocomplete.Model
         public string Type { get; set; }
         [JsonProperty("numOfHotels", NullValueHandling = NullValueHandling.Ignore)]
         public int? NumOfHotels { get; set; }
+        [JsonProperty("country", NullValueHandling = NullValueHandling.Ignore)]
+        public string Country { get; set; }
+        [JsonProperty("destination", NullValueHandling = NullValueHandling.Ignore)]
+        public string Destination { get; set; }
+        [JsonProperty("zone", NullValueHandling = NullValueHandling.Ignore)]
+        public string Zone { get; set; }
+        [JsonProperty("area", NullValueHandling = NullValueHandling.Ignore)]
+        public string Area { get; set; }
     }
 }

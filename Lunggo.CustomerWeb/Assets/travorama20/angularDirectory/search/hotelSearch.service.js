@@ -93,24 +93,46 @@
                     if (data.hotels == null || data.hotels.length == 0) {
                         alert('Mohon maaf. Hotel ini telah terisi penuh.');
                     } else {
-                       
                         $log.debug('redirect to detail hotel with hotelCd: ' + data.hotels[0].hotelCd);
-                        window.location.href ='/id/Hotel/DetailHotel?' +
-                            "searchId=" + data.searchId + "&" +
-                            "hotelCd=" + data.hotels[0].hotelCd + "&" +
-                            "searchParam=" + searchParam(hotelSearch);
-                        
+                        window.location.href = '/id/Hotel/DetailHotel?' +
+                           "searchId=" + data.searchId + "&" +
+                           "hotelCd=" + data.hotels[0].hotelCd + "&" +
+                           "searchParam=" + searchParam(hotelSearch);
                     }
                 }
             });
 
             
         } else {
-        var param = searchParam(hotelSearch);
-        $log.debug(param);
-        if (param != false) {
-            location.href = '/id/Hotel/Search/' + param;
-        }
+            var param = searchParam(hotelSearch);
+            $log.debug(param);
+            if (param != false) {
+                hotelSearch.urlData.country = hotelSearch.urlData.country.replace(/\s+/g, '-');
+                hotelSearch.urlData.country = hotelSearch.urlData.country.replace(/[^0-9a-zA-Z-]/gi, '');
+
+                hotelSearch.urlData.destination = hotelSearch.urlData.destination.replace(/\s+/g, '-');
+                hotelSearch.urlData.destination = hotelSearch.urlData.destination.replace(/[^0-9a-zA-Z-]/gi, '');
+
+                if (hotelSearch.urlData.zone != null && hotelSearch.urlData.zone.length > 0) {
+                    hotelSearch.urlData.zone = hotelSearch.urlData.zone.replace(/\s+/g, '-');
+                    hotelSearch.urlData.zone = hotelSearch.urlData.zone.replace(/[^0-9a-zA-Z-]/gi, '');
+                }
+                
+                if (hotelSearch.urlData.area != null && hotelSearch.urlData.area.length > 0) {
+                    hotelSearch.urlData.area = hotelSearch.urlData.area.replace(/\s+/g, '-');
+                    hotelSearch.urlData.area = hotelSearch.urlData.area.replace(/[^0-9a-zA-Z-]/gi, '');
+                }
+               
+                var urlParam = '/id/hotel/cari/' + hotelSearch.urlData.country + '/' + hotelSearch.urlData.destination;
+
+                if (hotelSearch.urlData.type == 'Zone') {
+                    urlParam += '/' + hotelSearch.urlData.zone;
+                } else if (hotelSearch.urlData.type == 'Area') {
+                    urlParam += '/' + hotelSearch.urlData.zone + '/' + hotelSearch.urlData.area;
+                }
+                location.href = urlParam + '/' + param;
+                
+            }
         }
         
     };
@@ -183,6 +205,14 @@
         scope.hotelSearch.perPage = 20;
         scope.hotelSearch.occupancies = [];
         scope.hotelSearch.locationType = '';
+        scope.hotelSearch.urlData = {
+            destination: '',
+            country: '',
+            type: '',
+            zone: '',
+            hotelName: '',
+            area: ''
+        };
         var defaultValue = {
             locationCode: 16173,
             locationDisplay: "Bali, Indonesia",
@@ -303,9 +333,14 @@
             scope.hotelSearch.locationDisplay = location.name;
             scope.view.showHotelSearch = false;
             scope.hotelSearch.locationType = location.type;
+            scope.hotelSearch.urlData.country = location.country;
+            scope.hotelSearch.urlData.destination = location.destination;
+            scope.hotelSearch.urlData.zone = location.zone;
+            scope.hotelSearch.urlData.area = location.area;
+            scope.hotelSearch.urlData.type = location.type;
         }
 
-        scope.$watch('hotelSearch.locationDisplay', function (newValue, oldValue) {
+        scope.$watch('hotelSearch.locationDisplay', function (newValue) {
             if (newValue != null && newValue.length >= 3) {
                 scope.autocompletePre = false;
                 scope.autocompleteLoading = true;
@@ -386,6 +421,11 @@
                     } else {
                         scope.hotelSearch.location = data.hotelAutocomplete[0].id;
                         scope.hotelSearch.locationDisplay = data.hotelAutocomplete[0].name;
+                        scope.hotelSearch.urlData.country = data.hotelAutocomplete[0].country;
+                        scope.hotelSearch.urlData.destination = data.hotelAutocomplete[0].destination;
+                        scope.hotelSearch.urlData.zone = data.hotelAutocomplete[0].zone;
+                        scope.hotelSearch.urlData.area = data.hotelAutocomplete[0].area;
+                        scope.hotelSearch.urlData.type = data.hotelAutocomplete[0].type;
                         scope.hideLocation();
                     }
                 }, 0);

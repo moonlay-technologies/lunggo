@@ -50,6 +50,9 @@ function ($scope, $log, $window, $http, $resource, $timeout, hotelSearchSvc) {
     $scope.returnUrl = "/";
     $scope.expired = false;
     $scope.showPopularDestinations = false;
+    $scope.view = {
+        showHotelSearch : false
+    }
     // ***************************************END*******************************
 
     // ****************************** INITS ************************************

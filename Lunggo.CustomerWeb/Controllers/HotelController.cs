@@ -16,6 +16,9 @@ namespace Lunggo.CustomerWeb.Controllers
     public class HotelController : Controller
     {
         // GET: Hotel
+        [Route("id/hotel/cari/{country}/{destination}")]
+        [Route("id/hotel/cari/{country}/{destination}/{zone}")]
+        [Route("id/hotel/cari/{country}/{destination}/{zone}/{area}")]
         public ActionResult Search()
         {
             try
