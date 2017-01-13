@@ -272,6 +272,8 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
             content: infoDesc
         });
 
+        infoWindow.open(map, marker);
+
         marker.addListener('click', function () {
             infoWindow.open(map, marker);
         });
