@@ -75,6 +75,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ExpireReservation.cs" />
     <Compile Include="Init.cs" />
     <Compile Include="IssueVoucher.cs" />
     <Compile Include="Program.cs" />
