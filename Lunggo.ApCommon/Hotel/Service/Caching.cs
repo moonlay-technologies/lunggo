@@ -86,6 +86,26 @@ namespace Lunggo.ApCommon.Hotel.Service
 
         }
 
+        public DateTime? GetAvailableRatesExpiry(string token)
+        {
+            for (var i = 0; i < ApConstant.RedisMaxRetry; i++)
+            {
+                try
+                {
+                    var redisService = RedisService.GetInstance();
+                    var redisKey = "HotelAvailableRates:" + token;
+                    var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
+                    var timeToLive = redisDb.KeyTimeToLive(redisKey).GetValueOrDefault();
+                    var expiryTime = DateTime.UtcNow + timeToLive;
+                    return expiryTime;
+                }
+                catch
+                {
+                }
+            }
+            return DateTime.UtcNow;
+        }
+
         public List<HotelRoom> GetAvailableRatesFromCache(string token)
         {
             var redisService = RedisService.GetInstance();

@@ -48,7 +48,8 @@ namespace Lunggo.ApCommon.Hotel.Service
                     Id = generatedSearchId.ToString(),
                     IsSuccess = true,
                     Total = rooms.Count,
-                    Rooms = ConvertToHotelRoomsForDisplay(rooms)
+                    Rooms = ConvertToHotelRoomsForDisplay(rooms),
+                    ExpiryTime = GetAvailableRatesExpiry(generatedSearchId.ToString())
                 };
             }
             return new AvailableRatesOutput

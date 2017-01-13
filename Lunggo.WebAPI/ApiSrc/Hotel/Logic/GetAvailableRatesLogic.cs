@@ -7,6 +7,7 @@ using Lunggo.ApCommon.Hotel.Constant;
 using Lunggo.ApCommon.Hotel.Model.Logic;
 using Lunggo.ApCommon.Hotel.Service;
 using Lunggo.Framework.Config;
+using Lunggo.Framework.Extension;
 using Lunggo.Framework.Log;
 using Lunggo.WebAPI.ApiSrc.Common.Model;
 using Lunggo.WebAPI.ApiSrc.Hotel.Model;
@@ -64,6 +65,7 @@ namespace Lunggo.WebAPI.ApiSrc.Hotel.Logic
                     Id = availableRatesOutput.Id,
                     Total = availableRatesOutput.Total,
                     Rooms =  availableRatesOutput.Rooms,
+                    ExpiryTime = availableRatesOutput.ExpiryTime.TruncateMilliseconds()
                 };
             }
             else

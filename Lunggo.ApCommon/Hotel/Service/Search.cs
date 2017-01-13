@@ -19,6 +19,7 @@ using Lunggo.ApCommon.Hotel.Query;
 using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds;
 using Lunggo.ApCommon.Payment.Model;
 using Lunggo.ApCommon.Product.Model;
+using Lunggo.Framework.Config;
 using Lunggo.Framework.Documents;
 using Lunggo.Framework.Extension;
 using Lunggo.Framework.SharedModel;
@@ -79,6 +80,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                     HotelFilterDisplayInfo = getSearchDataFromCache.HotelFilterDisplayInfo,
                     MaxPrice = getSearchDataFromCache.MaxPrice,
                     MinPrice = getSearchDataFromCache.MinPrice,
+                    ExpiryTime = GetSearchHotelResultExpiry(getSearchDataFromCache.SearchId)
                 };
             }
             //Guid generatedSearchId = Guid.NewGuid();
@@ -229,7 +231,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                 MinPrice = result.MinPrice,
                 IsSpecificHotel = searchType.Equals("Hotel"),
                 HotelCode = searchType.Equals("Hotel") ? (int?)firstPageHotelDetails.Select(x => x.HotelCode).FirstOrDefault() : null,
-                //ExpiryTime = GetSearchHotelResultExpiry(result.SearchId)
+                ExpiryTime = DateTime.UtcNow.AddMinutes(int.Parse(ConfigManager.GetInstance().GetConfigValue("hotel", "hotelSearchResultCacheTimeout")))
             };
         }
 
@@ -267,7 +269,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                     HotelFilterDisplayInfo = searchResult.HotelFilterDisplayInfo,
                     MaxPrice = searchResult.MaxPrice,
                     MinPrice = searchResult.MinPrice,
-                    //ExpiryTime = GetSearchHotelResultExpiry(input.SearchId)
+                    ExpiryTime = GetSearchHotelResultExpiry(input.SearchId)
                 };
             int pageCount = 0;
             input.Page = input.Page != 0 ? input.Page : 1;
@@ -292,7 +294,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                 MaxPrice = searchResult.MaxPrice,
                 MinPrice = searchResult.MinPrice,
                 IsSuccess = true,
-                //ExpiryTime = GetSearchHotelResultExpiry(input.SearchId)
+                ExpiryTime = GetSearchHotelResultExpiry(input.SearchId)
             };
         }
 

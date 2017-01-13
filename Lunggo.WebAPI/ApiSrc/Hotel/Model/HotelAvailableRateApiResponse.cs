@@ -16,5 +16,7 @@ namespace Lunggo.WebAPI.ApiSrc.Hotel.Model
         public int Total { get; set; }
         [JsonProperty("id")]
         public string Id { get; set; }
+        [JsonProperty("expTime", NullValueHandling = NullValueHandling.Ignore)]
+        public DateTime? ExpiryTime { get; set; }
     }
 }
