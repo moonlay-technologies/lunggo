@@ -6,7 +6,7 @@ if (typeof (angular) == 'object') {
     // root scope
     app.run(function ($rootScope, $log) {
         $rootScope.travoramaModuleName = 'travoramaMobile';
-
+        $rootScope.val = false;
         $.datepicker.setDefaults(
             $.extend(
             { 'dateFormat': 'dd/mm/yy' },
@@ -510,18 +510,18 @@ if (typeof (angular) == 'object') {
         $rootScope.FlightSearchForm = {
             Trip: 'false',
             AirportOrigin: {
-                City: 'Jakarta',
-                Code: 'CGK',
-                Country: 'Indonesia'
+                City: '',
+                Code: '',
+                Country: ''
             },// origin
             AirportDestination: {
-                City: 'Denpasar (Bali)',
-                Code: 'DPS',
-                Country: 'Indonesia'
+                City: '',
+                Code: '',
+                Country: ''
             },// destination
             DepartureDate: '',
             ReturnDate: '',
-            Passenger: [1, 0, 0],
+            Passenger: [],
             Cabin: 'y',
             AutoComplete: {
                 Target: 'departure',
@@ -670,6 +670,7 @@ if (typeof (angular) == 'object') {
             },// passenger picker
             Url: '',
             Submit: function () {
+                setCookies();
                if ($rootScope.FlightSearchForm.DepartureDate == '') {
                     var departure = new Date();
                     departure.setDate(departure.getDate() + 1);
@@ -707,6 +708,7 @@ if (typeof (angular) == 'object') {
             }// submit
         };//$rootScope.FlightSearchForm
 
+        //Autocomplete
         $('.autocomplete-result ul.result').on('click', 'li', function (overlay) {
 
             //var overlay = '' || flight
@@ -750,6 +752,103 @@ if (typeof (angular) == 'object') {
                 );
             }
         }
+        // Cookies
+
+        $rootScope.getCookies = function() {
+            $(document).ready(function () {
+
+                $.getScript("js.cookie.js", function () { });
+
+                if (Cookies.get('origin')) {
+                    $rootScope.FlightSearchForm.AirportOrigin.Code = Cookies.get('origin');
+                } else {
+                    $rootScope.FlightSearchForm.AirportOrigin.Code = 'CGK';
+                }
+
+                if (Cookies.get('originCity')) {
+                    $rootScope.FlightSearchForm.AirportOrigin.City = Cookies.get('originCity');
+                } else {
+                    $rootScope.FlightSearchForm.AirportOrigin.City = 'Jakarta';
+                }
+
+                if (Cookies.get('destination')) {
+                    $rootScope.FlightSearchForm.AirportDestination.Code = Cookies.get('destination');
+                } else {
+                    $rootScope.FlightSearchForm.AirportDestination.Code = 'DPS';
+        }
+
+                if (Cookies.get('destinationCity')) {
+                    $rootScope.FlightSearchForm.AirportDestination.City = Cookies.get('destinationCity');
+                } else {
+                    $rootScope.FlightSearchForm.AirportDestination.City = 'Denpasar';
+                }
+
+                if (Cookies.get('departure')) {
+                    $rootScope.FlightSearchForm.DepartureDate = new Date(Cookies.get('departure'));
+                } else {
+                    $rootScope.FlightSearchForm.DepartureDate = new Date();
+                }
+
+                if (Cookies.get('return')) {
+                    $rootScope.FlightSearchForm.ReturnDate = new Date(Cookies.get('return'));
+                } else {
+
+                    $rootScope.FlightSearchForm.ReturnDate = moment().locale("id").add(1, 'days');
+                }
+
+                if (Cookies.get('type')) {
+                    $rootScope.FlightSearchForm.Trip = Cookies.get('type');
+                    var type = Cookies.get('type') == "true" ? true : false;
+                    $rootScope.val = type;
+                    $('#flightType').prop('checked', type);
+                } else {
+                    $rootScope.FlightSearchForm.Trip = false;
+                    $rootScope.val = false;
+                    $('#flightType').prop('checked', false);
+                }
+
+                if (Cookies.get('adult')) {
+                    $rootScope.FlightSearchForm.Passenger.push(parseInt(Cookies.get('adult')));
+                } else {
+                    $rootScope.FlightSearchForm.Passenger.push(1);
+                }
+
+                if (Cookies.get('child')) {
+                    $rootScope.FlightSearchForm.Passenger.push(parseInt(Cookies.get('child')));
+                } else {
+                    $rootScope.FlightSearchForm.Passenger.push(0);
+                }
+
+                if (Cookies.get('infant')) {
+                    $rootScope.FlightSearchForm.Passenger.push(parseInt(Cookies.get('infant')));
+                } else {
+                    $rootScope.FlightSearchForm.Passenger.push(0);
+                }
+
+                if (Cookies.get('cabin')) {
+                    $rootScope.FlightSearchForm.Cabin = Cookies.get('cabin');
+                } else {
+                    $rootScope.FlightSearchForm.Passenger[2] = 'y';
+                }
+
+            });
+        }
+
+        function setCookies() {
+            Cookies.set('origin', $rootScope.FlightSearchForm.AirportOrigin.Code, { expires: 9999 });
+            Cookies.set('originCity', $rootScope.FlightSearchForm.AirportOrigin.City, { expires: 9999 });
+            Cookies.set('destination', $rootScope.FlightSearchForm.AirportDestination.Code, { expires: 9999 });
+            Cookies.set('destinationCity', $rootScope.FlightSearchForm.AirportDestination.City, { expires: 9999 });
+            Cookies.set('departure', $rootScope.FlightSearchForm.DepartureDate, { expires: 9999 });
+            Cookies.set('return', $rootScope.FlightSearchForm.ReturnDate, { expires: 9999 });
+            Cookies.set('type', $rootScope.FlightSearchForm.Trip, { expires: 9999 });
+            Cookies.set('adult', $rootScope.FlightSearchForm.Passenger[0], { expires: 9999 });
+            Cookies.set('child', $rootScope.FlightSearchForm.Passenger[1], { expires: 9999 });
+            Cookies.set('infant', $rootScope.FlightSearchForm.Passenger[2], { expires: 9999 });
+            Cookies.set('cabin', $rootScope.FlightSearchForm.Cabin, { expires: 9999 });
+        };
+
+        //Holidays and Dates
         var authAccess = getAuthAccess();
         if (authAccess == 1 || authAccess == 2) {
             $.ajax({
@@ -834,7 +933,6 @@ if (typeof (angular) == 'object') {
             });
         }
         
-
         function  highlight(date) {
             var x = new Date(date);
             var xmonth = x.getMonth();
@@ -968,6 +1066,8 @@ if (typeof (angular) == 'object') {
                 }
             });
         //});
+
+        //Some Initialisations
         //used in Search
         $rootScope.initAirport = function (target, airport, city) {
             if (target == 'departure') {
@@ -991,6 +1091,9 @@ if (typeof (angular) == 'object') {
             returnDate.setDate(returnDate.getDate());
             $rootScope.FlightSearchForm.ReturnDate = returnDate;
         }
+
+        
+
     });//app.run
 }
 
@@ -1189,6 +1292,8 @@ function refreshAuthAccess() {
         return true;
     }
 }
+
+
 
 //************************************************END*********************************************************
 // accordion functions
