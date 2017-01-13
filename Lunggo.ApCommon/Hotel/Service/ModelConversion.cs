@@ -67,7 +67,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                 PhonesNumbers = hotelDetail.PhonesNumbers,
                 CountryName = GetCountryNameFromDict(hotelDetail.CountryCode).Name,
                 DestinationName = GetDestinationNameFromDict(hotelDetail.DestinationCode).Name,
-                PostalCode = hotelDetail.PostalCode
+                PostalCode = hotelDetail.PostalCode == "0" ? null : hotelDetail.PostalCode
             };
             convertedHotel.OriginalTotalFare = convertedHotel.Rooms.SelectMany(r => r.Rates).SelectMany(r => r.Breakdowns).Sum(b => b.OriginalTotalFare);
             convertedHotel.NetTotalFare = convertedHotel.Rooms.SelectMany(r => r.Rates).SelectMany(r => r.Breakdowns).Sum(b => b.NetTotalFare);
@@ -166,7 +166,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                     BookingReference = hotelDetail.BookingReference,
                     ClientReference = hotelDetail.ClientReference,
                     PhonesNumbers = hotelDetail.PhonesNumbers,
-                    PostalCode = hotelDetail.PostalCode
+                    PostalCode = hotelDetail.PostalCode == "0" ? null : hotelDetail.PostalCode
                 };
             return hotel;
         }
@@ -224,7 +224,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                     BookingReference = hotelDetail.BookingReference,
                     ClientReference = hotelDetail.ClientReference,
                     PhonesNumbers = hotelDetail.PhonesNumbers,
-                    PostalCode = hotelDetail.PostalCode
+                    PostalCode = hotelDetail.PostalCode == "0" ? null : hotelDetail.PostalCode
                 };
                 if (!string.IsNullOrEmpty(hotelDetail.ZoneCode))
                 {
@@ -251,7 +251,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                 Latitude = hotelDetail.Latitude,
                 Longitude = hotelDetail.Longitude,
                 Email = hotelDetail.Email,
-                PostalCode = hotelDetail.PostalCode,
+                PostalCode = hotelDetail.PostalCode == "0" ? null : hotelDetail.PostalCode,
                 Description = hotelDetail.Description == null ? null : hotelDetail.Description.Where(x => x.languageCode.Equals("IND"))
                                 .Select(x => x.Description).SingleOrDefault(),
                 PhonesNumbers = hotelDetail.PhonesNumbers,
@@ -360,6 +360,13 @@ namespace Lunggo.ApCommon.Hotel.Service
                         break;
                 }
             }
+            displayFacilities.Business = displayFacilities.Business == null ? null : displayFacilities.Business.Where(x => !string.IsNullOrEmpty(x)).ToList();
+            displayFacilities.Entertainment = displayFacilities.Entertainment == null ? null : displayFacilities.Entertainment.Where(x => !string.IsNullOrEmpty(x)).ToList();
+            displayFacilities.General = displayFacilities.General == null ? null : displayFacilities.General.Where(x => !string.IsNullOrEmpty(x)).ToList();
+            displayFacilities.Health = displayFacilities.Health == null ? null : displayFacilities.Health.Where(x => !string.IsNullOrEmpty(x)).ToList();
+            displayFacilities.Meal = displayFacilities.Meal == null ? null : displayFacilities.Meal.Where(x => !string.IsNullOrEmpty(x)).ToList();
+            displayFacilities.Other = displayFacilities.Other == null ? null : displayFacilities.Other.Where(x => !string.IsNullOrEmpty(x)).ToList();
+            displayFacilities.Sport = displayFacilities.Sport == null ? null : displayFacilities.Sport.Where(x => !string.IsNullOrEmpty(x)).ToList();
             return displayFacilities;
         }
 

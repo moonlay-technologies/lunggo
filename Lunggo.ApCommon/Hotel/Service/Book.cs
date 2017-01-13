@@ -193,6 +193,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                 };
             var rsvDetail = CreateHotelReservation(input, bookInfo);
             InsertHotelRsvToDb(rsvDetail);
+            ExpireReservationWhenTimeout(rsvDetail.RsvNo, rsvDetail.Payment.TimeLimit);
             return new BookHotelOutput
             {
                 IsPriceChanged = false,
