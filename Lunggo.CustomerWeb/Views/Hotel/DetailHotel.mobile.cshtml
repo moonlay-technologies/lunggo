@@ -510,4 +510,22 @@
             </div>
         </div>
     </div>
+    
+    <div class="popup__wrapper" ng-class="{'active': expired}">
+        <div class="popup">
+            <header class="popup__header">
+                <h4 class="popup__title">Pencarian Kadaluarsa</h4>
+            </header>
+            <div class="popup__body">
+                <div class="container_new">
+                    <span>Pencarian Anda sudah kadaluarsa. Silakan klik tombol di bawah untuk pencarian ulang.</span>
+                </div>
+            </div>
+            <div class="popup__footer">
+                <div class="container_new">
+                    <a class="btn btn-block btn-yellow" ng-click="refreshPage()">CARI ULANG</a>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

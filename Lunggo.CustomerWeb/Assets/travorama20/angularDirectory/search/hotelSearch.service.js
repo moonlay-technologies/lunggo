@@ -307,7 +307,7 @@
 
         scope.getLocationCode = function () {
             var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
-            var locationCode = hashes[2].split('.')[1];
+            var locationCode = hashes[0].split('.')[0].split('=')[1];
             return locationCode;
         }
 

@@ -1,6 +1,6 @@
 ﻿// home controller
-app.controller('hotelSearchController', ['$scope', '$log', '$window', '$http', '$resource', '$timeout', 'hotelSearchSvc',
-function ($scope, $log, $window, $http, $resource, $timeout, hotelSearchSvc) {
+app.controller('hotelSearchController', ['$scope', '$log', '$window', '$http', '$resource', '$timeout', '$interval','hotelSearchSvc',
+function ($scope, $log, $window, $http, $resource, $timeout, $interval, hotelSearchSvc) {
 
     // **************************GENERAL VARIABLES*****************************
    
@@ -53,6 +53,7 @@ function ($scope, $log, $window, $http, $resource, $timeout, hotelSearchSvc) {
     $scope.view = {
         showHotelSearch : false
     }
+   
     // ***************************************END*******************************
 
     // ****************************** INITS ************************************
@@ -159,6 +160,17 @@ function ($scope, $log, $window, $http, $resource, $timeout, hotelSearchSvc) {
                 $scope.changeSearch.searchId = data.searchId;
             }
 
+            $scope.expiryDate = new Date(data.expTime);
+            //$scope.expiryDate = new Date();
+            //$scope.expiryDate = $scope.expiryDate.setMinutes($scope.expiryDate.getMinutes() + 1);
+            $interval(function () {
+                var nowTime = new Date();
+                if (nowTime > $scope.expiryDate) {
+                    $scope.expired = true;
+                    
+                }
+            }, 1000);
+
             $scope.hotelSearch.destinationName = data.destinationName;
             $scope.hotelSearch.locationDisplay = data.destinationName;
             if (isMobile) {
@@ -211,6 +223,9 @@ function ($scope, $log, $window, $http, $resource, $timeout, hotelSearchSvc) {
         }
     }
 
+    $scope.refreshPage = function() {
+        location.reload();
+    }
     // ****************************** END **************************************
 
     // *************************** GO TO DETAIL HOTEL **************************

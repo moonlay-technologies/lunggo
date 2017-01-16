@@ -65,7 +65,6 @@
     <script>
 
         var loc = '@loc';
-
     </script>
     <script type="text/javascript" src="/Assets/travorama20/js/HotelController.js"></script>
     <script src="/Assets/travorama20/angularDirectory/search/hotelSearch.service.js"></script>
@@ -290,6 +289,9 @@
                 <div style="padding-top:5px;"><span style="font-size:13px">Hasil pencarian Anda <span style="color: #15b1e4;font-size:13px"><b> sudah kadaluarsa</b></span>.</span></div>
                 <div><span style="font-size:13px">Anda akan dialihkan ke halaman pencarian yang baru.</span></div>
             </section>
+            <div align="right" style="padding-right:30px;padding-top:30px;">
+                <a class="btn popup-btn-yellow book-failed" ng-click="refreshPage()"><b>CARI ULANG</b></a>
+            </div>
         </div>
     </div>
 </div>
