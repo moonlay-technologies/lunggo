@@ -117,14 +117,14 @@
             <header class="tab-header">
                 <nav>
                     <ul>
-                        <li class="flight"><a data-toggle="tab" href="#plane" ng-click="changeTab('flight')">Pesawat</a></li>
-                        <li class="hotel active"><a data-toggle="tab" href="#hotel" ng-click="changeTab('hotel')">Hotel</a></li>
+                        <li class="flight"><a data-toggle="tab" id="#plane" ng-click="showForm('flight')" >Penerbangan</a></li>
+                        <li class="hotel active"><a data-toggle="tab" id="#hotel" ng-click="showForm('hotel')">Hotel</a></li>
                         @*<li class="activity" data-toggle="tooltip" data-placement="bottom" title="Coming soon!"><a href="#">Activity</a></li>*@
                     </ul>
                 </nav>
             </header>
             <section class="tab-content">
-                <div class="tab-flight tab-pane cleafix" id="plane" ng-click="changeTab()">
+                <div class="tab-flight tab-pane cleafix" id="plane" ng-class="{'active' : isFlight}">
                     <form class="form form-horizontal form-flight" action="id/Flight/" method="GET" autocomplete="off">
                         <h3 class="text-center">Cari <b>Tiket Pesawat</b></h3>
 
@@ -137,7 +137,7 @@
                             </div>
                             <div class="col-xs-6">
                                 <label>
-                                    <input type="radio" name="flightType" class="form-flight-type" value="oneWay"/>
+                                    <input type="radio" name="flightType" class="form-flight-type" value="oneWay" />
                                     <span>Sekali Jalan</span>
                                 </label>
                             </div>
@@ -257,69 +257,71 @@
 
                     </form>
                 </div><!-- .tab-flight -->
-                <div class="tab-hotel tab-pane clearfix active" id="hotel">
-
-                    <h3 class="text-center">Cari <b>Kamar Hotel</b><br /><span class="sub-title">(Domestik &amp; Internasional)</span></h3>
-                    <form class="form form-horizontal form-hotel page-hotel" ng-submit="hotel.searchHotel()" autocomplete="off">
-                        <div class="form-group hotel-location ">
-                            <div class="col-xs-12">
-                                <input type="text" name="hotelLocation" value="" id ="inputLocationHotel"
-                                       class="form-hotel-location form-control" placeholder="Kota, Wilayah atau Nama Hotel" 
-                                       ng-model="hotelSearch.locationDisplay" ng-click="view.showHotelSearch = true" />
-                            </div>
-                        </div>
-
-                        <div class="form-group hotel-date">
-                            <div class="col-xs-12">
-                                <div class="form-hotel-checkin text-center">
-                                    <span class="grey-txt">Tanggal Check in</span>
-                                    <div class="date-hotel">{{hotelSearch.checkinDateDisplay}}</div>
+                <div class="tab-hotel tab-pane clearfix active" id="hotel" ng-class="{'active' : !isFlight}">
+                    <div>
+                        <h3 class="text-center">Cari <b>Kamar Hotel</b><br /><span class="sub-title">(Domestik &amp; Internasional)</span></h3>
+                        <form class="form form-horizontal form-hotel page-hotel" ng-submit="hotel.searchHotel()" autocomplete="off">
+                            <div class="form-group hotel-location ">
+                                <div class="col-xs-12">
+                                    <input type="text" name="hotelLocation" value="" id="inputLocationHotel"
+                                           class="form-hotel-location form-control" placeholder="Kota, Wilayah atau Nama Hotel"
+                                           ng-model="hotelSearch.locationDisplay" ng-click="view.showHotelSearch = true" />
                                 </div>
                             </div>
-                        </div>
-                        <div class="form-group hotel-room-night">
-                            <div class="col-xs-6 dropdown-container">
-                                <div class="form-control form-hotel-night clearfix">
-                                    <div class="col-4"><span class="grey-txt">Malam</span></div>
-                                    <div class="col-6 input-hotel">{{hotelSearch.nightCount}}</div>
-                                    <div class="option" ng-model="hotelSearch.nightCount">
-                                        <span data-value="" ng-repeat="nightCount in hotelSearch.nightrange track by $index"
-                                              ng-click="hotelSearch.nightCount = nightCount">{{nightCount}}</span>
+
+                            <div class="form-group hotel-date">
+                                <div class="col-xs-12">
+                                    <div class="form-hotel-checkin text-center">
+                                        <span class="grey-txt">Tanggal Check in</span>
+                                        <div class="date-hotel">{{hotelSearch.checkinDateDisplay}}</div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-xs-6 dropdown-container">
-                                <div class="form-control form-hotel-room clearfix">
-                                    <div class="col-4"><span class="grey-txt">Jumlah Kamar</span></div>
-                                    <div class="col-6 input-hotel">{{hotelSearch.roomCount}}</div>
-                                    <div class="option" ng-model="hotelSearch.roomCount">
-                                        <span data-value="" ng-repeat="roomCount in hotelSearch.roomrange track by $index"
-                                              ng-click="hotelSearch.roomCount = roomCount">{{roomCount}}</span>
+                            <div class="form-group hotel-room-night">
+                                <div class="col-xs-6 dropdown-container">
+                                    <div class="form-control form-hotel-night clearfix">
+                                        <div class="col-4"><span class="grey-txt">Malam</span></div>
+                                        <div class="col-6 input-hotel">{{hotelSearch.nightCount}}</div>
+                                        <div class="option" ng-model="hotelSearch.nightCount">
+                                            <span data-value="" ng-repeat="nightCount in hotelSearch.nightrange track by $index"
+                                                  ng-click="hotelSearch.nightCount = nightCount">{{nightCount}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-6 dropdown-container">
+                                    <div class="form-control form-hotel-room clearfix">
+                                        <div class="col-4"><span class="grey-txt">Jumlah Kamar</span></div>
+                                        <div class="col-6 input-hotel">{{hotelSearch.roomCount}}</div>
+                                        <div class="option" ng-model="hotelSearch.roomCount">
+                                            <span data-value="" ng-repeat="roomCount in hotelSearch.roomrange track by $index"
+                                                  ng-click="hotelSearch.roomCount = roomCount">{{roomCount}}</span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="form-group hotel-detail clearfix">
-                            <div class="col-xs-12 white-txt">Rincian Jumlah Tamu</div>
-                            <div class="col-xs-6 white-txt total-adult clearfix">
-                                <div class="col-half title">Jumlah Dewasa</div>
-                                <span class="text-right semibold-txt col-half total">{{hotelSearch.totalAdult}}</span>
+                            <div class="form-group hotel-detail clearfix">
+                                <div class="col-xs-12 white-txt">Rincian Jumlah Tamu</div>
+                                <div class="col-xs-6 white-txt total-adult clearfix">
+                                    <div class="col-half title">Jumlah Dewasa</div>
+                                    <span class="text-right semibold-txt col-half total">{{hotelSearch.totalAdult}}</span>
+                                </div>
+                                <div class="col-xs-6 white-txt total-child clearfix">
+                                    <div class="col-half title">Jumlah Anak</div>
+                                    <span class="text-right semibold-txt col-half total">{{hotelSearch.totalChildren}}</span>
+                                </div>
                             </div>
-                            <div class="col-xs-6 white-txt total-child clearfix">
-                                <div class="col-half title">Jumlah Anak</div>
-                                <span class="text-right semibold-txt col-half total">{{hotelSearch.totalChildren}}</span>
+                            <div class="col-xs-12 white-txt" ng-show="hotelSearch.searchinghotel">
+                                Sedang melakukan pencarian...
                             </div>
-                        </div>
-                        <div class="col-xs-12 white-txt" ng-show="hotelSearch.searchinghotel">
-                            Sedang melakukan pencarian...
-                        </div>
 
-                        <div class="form-group hotel-submit">
-                            <div class="col-xs-12">
-                                <input type="submit" name="hotelSubmit" value="CARI" class="btn btn-yellow block form-control" />
+                            <div class="form-group hotel-submit">
+                                <div class="col-xs-12">
+                                    <input type="submit" name="hotelSubmit" value="CARI" class="btn btn-yellow block form-control" />
+                                </div>
                             </div>
-                        </div>
-                    </form>
+                        </form>
+                    </div>
+
                 </div><!-- .tab-hotel -->
                 <div class="tab-activity">
                     <hgroup>

@@ -102,6 +102,13 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
         }
     }
    
+    $scope.showForm= function(tab) {
+        if (tab == 'hotel') {
+            $scope.isFlight = false;
+        } else if (tab == 'flight') {
+            $scope.isFlight = true;
+        }
+    }
     //=============== hotel start ======================
     $scope.showPopularDestinations = false;
     hotelSearchSvc.initializeSearchForm($scope);
@@ -304,7 +311,7 @@ jQuery(document).ready(function ($) {
             itemF.parent().find('#plane').addClass('active');
             itemF.parent().find('#plane').siblings().removeClass('active');
 
-            var linkF = $(this).find('a').attr('href', '#plane');
+            var linkF = $(this).find('a').attr('id', '#plane');
 
             linkF.parent().addClass('active');
             linkF.parent().siblings().removeClass('active');
@@ -317,7 +324,7 @@ jQuery(document).ready(function ($) {
             item.parent().find('#hotel').addClass('active');
             item.parent().find('#hotel').siblings().removeClass('active');
 
-            var link = $(this).find('a').attr('href', '#hotel');
+            var link = $(this).find('a').attr('id', '#hotel');
 
             link.parent().addClass('active');
             link.parent().siblings().removeClass('active');
