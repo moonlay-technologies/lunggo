@@ -18,12 +18,12 @@
 }
 <section class="form-section page-loading" ng-class="{'page-loaded': pageLoaded}" ng-app="travorama" ng-controller="authController">
 
-    <div class="container">
+    <div class="container normal-txt">
         <div class="login-form">
             <form class="form register-form form-horizontal" name="loginForm" novalidate ng-submit="form.submit()">
                 @Html.AntiForgeryToken()
                 <hgroup>
-                    <h1>Masuk</h1>
+                    <h1 class="lg-txt">Masuk</h1>
                     <h4>Dengan Akun <b>Travorama</b></h4>
                 </hgroup>
                 <div class="form-group">
@@ -35,7 +35,7 @@
                 </div>
 
                 <div class="form-group">
-                    <input type="submit" value="@Html.I18NString("CW00130")" class="btn btn-yellow form-control" ng-disabled="loginForm.$invalid || form.submitting " />
+                    <input type="submit" value="@Html.I18NString("CW00130")" class="btn btn-yellow form-control md-txt" ng-disabled="loginForm.$invalid || form.submitting " />
                 </div>
 
                 <div class="form-group text-right">

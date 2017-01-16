@@ -16,7 +16,9 @@ file : /Assets/travorama20/css/_page_password.scss
         hgroup {margin-bottom:24px;
             h1,h4 {@extend .os-bold; color:#525252;}
         }
-        input {text-align:center; padding:12px 0; height:auto; @include border-radius(3px);}
+        input {text-align:center; @include border-radius(3px);
+            &[type="submit"]{padding: 10px 0; text-transform: uppercase;}
+        }
         a {@extend .os-bold; color:inherit;}
         .link-container p > a {color: #37bcf2; text-decoration: underline;}
     }
@@ -78,10 +80,11 @@ file : /Assets/travorama20/css/_page_password.scss
 }
 
 // section benefit
-.section-benefit {padding:30px 0;
+.section-benefit {padding:15px 0 30px;
     .benefit {text-align:center;
         h4 {color:$color-main-blue; @extend .os-semibold; font-weight:600;}
     }
+    &.container {max-width: none !important;}
 }
 
 // account page
