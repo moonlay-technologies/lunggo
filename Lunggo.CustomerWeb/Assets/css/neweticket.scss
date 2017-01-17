@@ -585,10 +585,23 @@ Site Footer
         background-repeat: no-repeat;
     }
     .map-img {
-        width: 21cm;
+	    width: 19.3cm;
         height: 5.5cm;
+        background-size: contain;
+        background-position: center;
+        background-repeat: no-repeat;
+        position: relative;
+        :after {
+	        content: '';
+	        background: url('http://maps.google.com/mapfiles/ms/icons/red-dot.png') center no-repeat;
+	        width: 6mm;
+	        height: 10mm;
+	        position: absolute;
+	        left: 50%;
+	        top: 50%;
+	        transform: translate(-50%, -50%);
+	    }
     }
-
     .img-email {
         width: 5.5mm;
         height: 4mm;

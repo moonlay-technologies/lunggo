@@ -531,8 +531,21 @@ Site Footer
     background-position: center;
     background-repeat: no-repeat; }
   .page-hotel-voucher .map-img {
-    width: 21cm;
-    height: 5.5cm; }
+    width: 19.3cm;
+    height: 5.5cm;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative; }
+    .page-hotel-voucher .map-img :after {
+      content: '';
+      background: url("http://maps.google.com/mapfiles/ms/icons/red-dot.png") center no-repeat;
+      width: 6mm;
+      height: 10mm;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%); }
   .page-hotel-voucher .img-email {
     width: 5.5mm;
     height: 4mm; }
