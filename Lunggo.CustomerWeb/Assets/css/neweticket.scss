@@ -523,10 +523,7 @@ Site Footer
                     }
                 }
             }
-            .hb-middle {
-                padding: 4mm 0;
-                .map-img {width: 100%;}
-            }
+            .hb-middle {padding: 4mm 0;}
             .hb-bottom {
                 margin: 6mm 0;
                 .hotel-detail {margin-top: 4mm;}
@@ -587,6 +584,11 @@ Site Footer
         background-position: center;
         background-repeat: no-repeat;
     }
+    .map-img {
+        width: 21cm;
+        height: 5.5cm;
+    }
+
     .img-email {
         width: 5.5mm;
         height: 4mm;

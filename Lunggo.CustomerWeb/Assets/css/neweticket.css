@@ -477,8 +477,6 @@ Site Footer
           background-size: 100%; }
       .page-hotel-voucher .hotel-wrapper .hotel-bottom .hb-middle {
         padding: 4mm 0; }
-        .page-hotel-voucher .hotel-wrapper .hotel-bottom .hb-middle .map-img {
-          width: 100%; }
       .page-hotel-voucher .hotel-wrapper .hotel-bottom .hb-bottom {
         margin: 6mm 0; }
         .page-hotel-voucher .hotel-wrapper .hotel-bottom .hb-bottom .hotel-detail {
@@ -532,6 +530,9 @@ Site Footer
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat; }
+  .page-hotel-voucher .map-img {
+    width: 21cm;
+    height: 5.5cm; }
   .page-hotel-voucher .img-email {
     width: 5.5mm;
     height: 4mm; }
@@ -577,5 +578,4 @@ Site Footer
 
 @media print {
   .page {
-    page-break-before: always; }
- }
+    page-break-before: always; } }
