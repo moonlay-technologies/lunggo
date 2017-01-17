@@ -202,9 +202,9 @@
                 <div class="menu-hotel clearfix">
                     <div class="col-left-hotel mh-title md-txt">Informasi Hotel</div>
                     <ul class=" col-right-hotel mh-container">
-                        <li class="mh-list"><a href="#menu-facility">Fasilitas Hotel</a></li>
-                        <li class="mh-list"><a href="#menu-desc">Deskripsi Hotel</a></li>
-                        <li class="mh-list" ng-show="hotel.policy != null && hotel.policy.length > 0"><a href="#menu-tnc">Syarat & Ketentuan Hotel</a></li>
+                        <li class="mh-list"><a id="#menu-facility">Fasilitas Hotel</a></li>
+                        <li class="mh-list"><a id="#menu-desc">Deskripsi Hotel</a></li>
+                        <li class="mh-list" ng-show="hotel.policy != null && hotel.policy.length > 0"><a id="#menu-tnc">Syarat & Ketentuan Hotel</a></li>
                     </ul>
                 </div>
                 <div class="room clearfix">
@@ -343,7 +343,7 @@
                     <div class="ih-accordion">
                         <div class="accordion-wrapper">
                             <div class="accordion-title accordion md-txt" id="menu-facility">Fasilitas Hotel</div>
-                            <div class="accordion-content show">
+                            <div class="accordion-content show facility-content">
                                 <div class="ih-row clearfix" ng-repeat="facilities in hotel.facilities track by $index" ng-hide="facilities === undefined">
                                     <div class="col-2">
                                         <div class="ih-left" ng-class="{'general-lg-icon':facilities.facilityGroup == 'general',
@@ -366,7 +366,7 @@
                                 </div>
                                 <div class="tnc-hotel italic-txt">* Fasilitas berbayar</div>
                             </div>
-                            <div ng-show="hotel.description != null && hotel.description.length > 0" class="accordion-title accordion md-txt" id="menu-desc">Deskripsi Hotel</div>
+                            <div ng-show="hotel.description != null && hotel.description.length > 0" class="accordion-title desc-title accordion md-txt" id="menu-desc">Deskripsi Hotel</div>
                             <div ng-show="hotel.description != null && hotel.description.length > 0" class="accordion-content show">
                                 <div class="ih-desc clearfix" ng-repeat="description in hotel.description track by $index">
                                     {{description}}
