@@ -102,13 +102,22 @@
                                             </div>
                                         }
                                     </div>
+                                   
                                     <div class="form-group">
-                                        <div class="control-label col-xs-3">Harga Tiket</div>
+                                        <div class="control-label col-xs-3">Harga Pesanan</div>
                                         <div class="col-xs-9">
-                                            <p>Rp @Model.Payment.FinalPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</p>
+                                            @if (Model.Payment.FinalPrice == 0)
+                                            {
+                                                <p>Rp @Model.Payment.OriginalPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</p>
+                                            }
+                                            else
+                                            {
+                                                <p>Rp @Model.Payment.FinalPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</p>
+                                            }
+
                                         </div>
                                     </div>
-
+                                   
                                     @if (Model.Payment.Method != PaymentMethod.Undefined)
                                     {
                                         <div class="form-group">

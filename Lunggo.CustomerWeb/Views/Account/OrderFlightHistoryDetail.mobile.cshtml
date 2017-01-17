@@ -5,7 +5,7 @@
 @model Lunggo.ApCommon.Product.Model.ReservationForDisplayBase
 @{
     Layout = "/Views/Shared/mobile/_LayoutMobile.cshtml";
-    ViewBag.Title = "Detail Reservasi";
+    ViewBag.Title = "Detail Pesanan";
     ViewBag.BodyClass = "page page-orderdetail page-checkout";
     ViewBag.AngularController = "OrderDetailController";
 }
@@ -139,7 +139,15 @@
                         }
                         <div class="oh-row clearfix">
                             <div class="col-4">Harga Pesanan</div>
-                            <div class="col-6">Rp @Model.Payment.FinalPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</div>
+                            @if (Model.Payment.FinalPrice == 0)
+                            {
+                                <div class="col-6">Rp @Model.Payment.OriginalPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</div>
+                            }
+                            else
+                            {
+                                <div class="col-6">Rp @Model.Payment.FinalPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</div>
+                            }
+                            
                         </div>
                         <div class="oh-row clearfix" ng-show="flight.payment.method">
                             <div class=" col-4">Metode Pembayaran</div>

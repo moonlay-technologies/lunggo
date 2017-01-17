@@ -166,7 +166,9 @@
                 <img src="/Assets/images/load.gif" style="width: 50px; height: 50px; margin-left: 45%; margin-top: 5%">
             </div>
             <div class="tab-content tab-order">
+                
                 <div id="order-flight" class="tab-pane tp-flight active">
+                    <h3 ng-if="flightlist.length == 0" style="text-align: center">Belum ada pemesanan</h3>
                     <ul class="history-list">
                         <li class="" ng-repeat="flight in flightlist track by $index" ng-class="{'done' : flight.payment.status == 3, 'pending' : flight.payment.status == 2 ||  flight.payment.status == 6, 'canceled' : flight.payment.status == 1 || flight.payment.status == 4 || flight.payment.status == 5 || flight.payment.status == 8}">
                             <div class="row">
@@ -226,7 +228,7 @@
                     </ul>
                 </div>
                 <div id="order-hotel" class="tab-pane tp-hotel">
-                    <h3 ng-if="hotellist.length == 0">Belum ada pemesanan.</h3>
+                    <h3 ng-if="hotellist.length == 0" style="text-align: center">Belum ada pemesanan</h3>
                     <div ng-if="hotellist.length > 0">
                         <ul class="history-list">
                             <li class="" ng-repeat="hotel in hotellist track by $index"
