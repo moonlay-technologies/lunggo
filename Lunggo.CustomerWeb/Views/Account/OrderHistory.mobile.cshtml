@@ -6,8 +6,7 @@
     ViewBag.Title = "Profil";
     ViewBag.BodyClass = "page page-useraccount";
     ViewBag.AngularController = "UserAccountController";
-    
-    //var rsvs = Model.OrderByDescending(rsv => rsv.RsvTime).ToList();
+    ViewBag.CurrentPage = "Profile";
 }
 
 @section AdditionalJS{
@@ -54,7 +53,7 @@
         <div class="menu-wrapper">
             <ul>
                 <li class="menu-profile">
-                    <a ng-click="PageConfig.ChangePage('profile'); formMessage = ''">Ubah Profil</a>
+                    <a ng-click="PageConfig.ChangePage('profile'); formMessage = ''">Profil Saya</a>
                 </li>
                 <li class="menu-history">
                     <a ng-click="PageConfig.ChangePage('history')">Pesanan Saya</a>

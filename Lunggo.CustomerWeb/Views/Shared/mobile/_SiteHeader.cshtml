@@ -17,7 +17,6 @@
             <img src="/Assets/images/travorama-logo-color.png" alt="Travorama" class="site-logo" />
         </a>
 
-        @*<a href="#" @*class="user-menu hidden"></a>*@
         @if (ViewBag.CurrentPage == "home")
         {
             <a class="promo" href="@Url.Action("Promo","StaticPage")"><span class="number-promo">1</span></a>
@@ -26,18 +25,7 @@
         {
             <a class="flight-swap" ng-click="FlightFunctions.SwapFlight()"></a>
         }
-        @*@if (ViewBag.CurrentPage == "search-hotel")
-        {
-            <a class="change-hotel"></a>
-        }*@
-        @*@if (ViewBag.CurrentPage == "detail-hotel")
-        {
-            <a class="login-hotel"></a>
-        }*@
-        @*@if (ViewBag.FlightDetail == "true")
-            {
-                <a class="flight-detail" ng-click="PageConfig.SetOverlay('flight-detail')">Detail</a>
-            }*@
+
     </div>
 
     <div class="burger-content" ng-class="{'active' : PageConfig.BurgerShown}">
@@ -57,24 +45,15 @@
         </div><!-- .border-content-header -->
         <div class="burger-content__body">
             <ul>
-                <section ng-if="isLogin == true">
-                    
-                    @*<div ng-if ="name != null">
-                        <li class="account" >
-                            <a ng-click="PageConfig.ToggleBurger()" href="@Url.Action("OrderHistory", "Account")">{{name}}</a>
-                        </li>
-                    </div>*@
-                    
+                <section ng-if="isLogin">
+
                     <div>
-                        <li class="account" ng-if="name.length != 0">
+                        <li class="account @(ViewBag.CurrentPage == "Profile" ? "active" : "")" ng-if="name.length != 0">
                             <a href="@Url.Action("OrderHistory", "Account")">{{name}}</a>
                         </li>
-                        <li class="account" ng-if="name.length == 0">
+                        <li class="account @(ViewBag.CurrentPage == "Profile" ? "active" : "")" ng-if="name.length == 0">
                             <a href="@Url.Action("OrderHistory", "Account")">{{email}}</a>
                         </li>
-                        @*<li class="account" ng-if="name.length == 0">
-                            <a ng-click="PageConfig.ToggleBurger()" href="@Url.Action("OrderHistory", "Account")">{{email}}</a>
-                        </li>*@
                     </div>
 
                     <li class="logout hidden @(ViewBag.CurrentPage == "Log Out" ? "active" : "") ">

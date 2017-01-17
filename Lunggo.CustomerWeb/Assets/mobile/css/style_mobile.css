@@ -292,7 +292,10 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         background-position: -30px 0; }
       .burger-content .burger-content__body ul li.account {
         padding-top: 10px;
-        padding-bottom: 10px; }
+        padding-bottom: 10px;
+        background-image: url(/Assets/mobile/images/next.png);
+        background-position: 280px 25px;
+        background-repeat: no-repeat; }
         .burger-content .burger-content__body ul li.account a:before {
           width: 45px;
           height: 45px;
