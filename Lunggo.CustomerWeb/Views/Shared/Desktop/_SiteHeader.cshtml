@@ -64,13 +64,8 @@
                                         <li class="dropdown-wrapper">
                                             <a href="#" data-trigger="dropdown" ng-show="isLogin && name.length > 0"> {{name}} <span class="caret"></span></a>
                                             <a href="#" data-trigger="dropdown" ng-show="isLogin && name.length == 0"> {{email}} <span class="caret"></span></a>
-                                            <a href="#" data-trigger="dropdown" ng-show="!isLogin">Member<span class="caret"></span></a>
-                                            <div class="dropdown-content my-account">
-                                                <ul ng-if="isLogin">
-                                                    <li><a href="@Url.Action("OrderHistory", "Account")">Akun Saya</a></li>
-                                                    <li><a href="" ng-click="logout.getLogout()">Keluar</a></li>
-                                                </ul>
-                                                <ul ng-if="!isLogin">
+                                            <div ng-if="!isLogin">
+                                                <ul >
                                                     <li>
                                                         <a href="@Url.Action("Login", "Account", new {ReturnUrl = Context.Request.Url.PathAndQuery}) ">
                                                             Masuk
@@ -78,6 +73,14 @@
                                                     </li>
                                                     <li><a href="@Url.Action("Register", "Account")">Daftar</a></li>
                                                 </ul>
+                                            </div>
+                                            <div class="dropdown-content my-account" ng-if="isLogin">
+                                                <ul>
+                                                    <li><a href="@( Url.Action("OrderHistory", "Account") + "#profile")">Profil Saya</a></li>
+                                                    <li><a href="@(Url.Action("OrderHistory", "Account") + "#order")">Pesanan Saya</a></li>
+                                                    <li><a href="" ng-click="logout.getLogout()">Keluar</a></li>
+                                                </ul>
+
                                             </div>
                                         </li>
                                     </ul>
