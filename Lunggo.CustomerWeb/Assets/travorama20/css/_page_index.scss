@@ -536,8 +536,9 @@ file : /Assets/travorama20/css/_page_index.scss
                 &:last-child {
                     border-bottom: none;
                     margin-bottom: 0;
-                }
+                } 
             }
         }   
     }
+    &>#ui-datepicker-div { display: none !important;}
 }

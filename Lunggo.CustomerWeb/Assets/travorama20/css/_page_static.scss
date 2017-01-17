@@ -44,6 +44,7 @@
                         span {font-size:14px; text-decoration:underline; cursor:pointer;}
                     }
                 }
+                .faq-content {margin-top: 12px;}
                 &:before {content:counter(main-number); counter-increment:main-number; background:#ffd632; color:#4f3500; position:absolute; height:30px; width:30px; text-align:center; @include border-radius(50px); font-size:14px; @extend .os-semibold; font-weight:600; padding-top:5px;}
                 &>ol {list-style:none; counter-reset:sub-number;
                     &>li {position:relative; background:#fff; padding:12px; border:$border-default; padding-left:42px;
@@ -57,7 +58,7 @@
                         > section {}
                         // if active
                         &.active {
-                            > header {margin-bottom:12px;
+                            > header {
                                 > h3 {
                                     span {background-position:1px 0;}
                                 }

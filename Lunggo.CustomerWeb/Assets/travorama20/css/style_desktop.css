@@ -2473,6 +2473,9 @@ file : /Assets/travorama20/css/_page_index.scss
         border-bottom: none;
         margin-bottom: 0; }
 
+.page-index > #ui-datepicker-div {
+  display: none !important; }
+
 /*
 
 FLIGHT Page styling
@@ -5462,6 +5465,8 @@ file: /Assets/travorama20/css/_page_flight.scss
       .page-hotel .search-result-form .search-calendar-hotel .ui-datepicker-group {
         width: 50%;
         padding: 15px 50px; }
+      .page-hotel .search-result-form .search-calendar-hotel .calendar-body {
+        background: #252525; }
     .page-hotel .search-result-form form[name="hotel-form"].hotel-form {
       margin-top: 15px;
       padding-top: 15px;
@@ -7840,6 +7845,8 @@ file : /Assets/travorama20/css/_page_password.scss
           font-size: 14px;
           text-decoration: underline;
           cursor: pointer; }
+    .page-faq .question-wrapper > ol > li .faq-content {
+      margin-top: 12px; }
     .page-faq .question-wrapper > ol > li:before {
       content: counter(main-number);
       counter-increment: main-number;
@@ -7895,10 +7902,8 @@ file : /Assets/travorama20/css/_page_password.scss
         .page-faq .question-wrapper > ol > li > ol > li > section {
           height: 0;
           overflow: hidden; }
-        .page-faq .question-wrapper > ol > li > ol > li.active > header {
-          margin-bottom: 12px; }
-          .page-faq .question-wrapper > ol > li > ol > li.active > header > h3 span {
-            background-position: 1px 0; }
+        .page-faq .question-wrapper > ol > li > ol > li.active > header > h3 span {
+          background-position: 1px 0; }
         .page-faq .question-wrapper > ol > li > ol > li.active > section {
           display: block;
           height: auto; }
