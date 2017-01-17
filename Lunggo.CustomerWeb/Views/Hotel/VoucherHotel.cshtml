@@ -50,7 +50,7 @@
                 <div class="hotel-bottom grey-txt">
                     <div class="hb-top">
                         <div class="row">
-                            <div class="col-xs-7">
+                            <div class="col-xs-6">
                                 <h4 class="hotel-name blue-txt uppercase bold-txt">@Model.HotelDetail.HotelName</h4>
                                 @if (Model.HotelDetail.StarRating == 0 || Model.HotelDetail.StarRating == 1)
                                 {
@@ -79,14 +79,14 @@
                                     @Model.HotelDetail.PhonesNumbers[0]
                                 </p>
                             </div>
-                            <div class="col-xs-5 right-txt clearfix">
+                            <div class="col-xs-6 right-txt clearfix">
                                 <div class="row">
                                     <h4 class="regular-txt no-reserve">
                                         Nomor Pesanan
                                         <h3 class="blue-txt bold-txt">@Model.HotelDetail.BookingReference</h3>
                                     </h4>
                                 </div>
-                                <div class="row">
+                                <div class="row tnc">
                                     Payable through @Model.HotelDetail.SupplierName, acting as agent for the service operating
                                     company, details of which can be provided upon request. VAT: @Model.HotelDetail.SupplierVat
                                     Reference: @Model.HotelDetail.BookingReference
