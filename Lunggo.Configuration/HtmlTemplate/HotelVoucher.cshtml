@@ -19,8 +19,7 @@
 
     <title>Travorama - Voucher</title>
 
-    <!-- stylesheets -->
-    <link rel="stylesheet" href="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/bootstrap/bootstrap.min.css")" />
+    <link rel="stylesheet" href="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/css/bootstrap.min.css")" />
     <link rel="stylesheet" href="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/css/font-awesome.min.css")" />
     <link rel="stylesheet" href="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/css/neweticket.css")" />
 </head>
@@ -94,6 +93,9 @@
                             </div>
 
                         </div>
+                    </div>
+                    <div class="hb-middle">
+                        <img class="map-img" src="@Model.HotelDetail.MapImage" />
                     </div>
                     <div class="hb-bottom">
                         <h4 class="semibold-txt">DETAIL PEMESANAN</h4>
