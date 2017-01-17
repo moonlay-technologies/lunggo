@@ -449,13 +449,14 @@ if (typeof (angular) == 'object') {
             SetOption: function (options, overlay, position) {
                 overlay = overlay || 'flight-form';
                 $rootScope.DatePicker.overlay = overlay;
-                if (position == 'search-single' || position == 'search-return') {
+                if (position == 'search-single' || position == 'search-return' || position == 'form-index') {
                     $rootScope.FlightSearchForm.DepartureDate = new Date($rootScope.FlightSearchForm.DepartureDate);
                     $rootScope.FlightSearchForm.ReturnDate = new Date($rootScope.FlightSearchForm.ReturnDate);
                 }
                 $rootScope.DatePicker.Position = position;
 
                 if (options.Target == 'departure') {
+                    $('.ui-datepicker.departure-date').datepicker("setDate", new Date($rootScope.FlightSearchForm.DepartureDate));
                     $rootScope.DatePicker.Settings.Target = '.flight-search-form-departure';
                     $('.ui-datepicker').datepicker('option', 'minDate', new Date());
                     if ($rootScope.FlightSearchForm.Trip == "true" && $rootScope.FlightSearchForm.ReturnDate) {
@@ -468,6 +469,7 @@ if (typeof (angular) == 'object') {
                         $('.ui-datepicker').datepicker('option', 'maxDate', null);
                     }
                 } else if (options.Target == 'return') {
+                    $('.ui-datepicker.return-date').datepicker("setDate", new Date($rootScope.FlightSearchForm.ReturnDate));
                     $rootScope.DatePicker.Settings.Target = '.flight-search-form-return';
                     if ($rootScope.FlightSearchForm.DepartureDate) {
                         $('.ui-datepicker').datepicker('option', 'minDate', $rootScope.FlightSearchForm.DepartureDate);
@@ -480,6 +482,7 @@ if (typeof (angular) == 'object') {
                     }
 
                 } else {
+                    //$('.ui-datepicker.checkindate').datepicker("setDate", new Date($rootScope.FlightSearchForm.ReturnDate));
                     $('.ui-datepicker.checkindate').datepicker('option', 'minDate', new Date());
                     $('.ui-datepicker.checkindate').datepicker('option', 'maxDate', null);
                 }
@@ -941,7 +944,7 @@ if (typeof (angular) == 'object') {
             var xyear = x.getFullYear();
             if (xday == 15)
                 getSelectedMonth(xyear, xmonth + 1);
-            $('ui-datepicker').datepicker('option','gotoCurrent',true);
+            //$('ui-datepicker').datepicker('option','gotoCurrent',true);
 
       
             for (var i = 0; i < $rootScope.DatePicker.Holidays.length; i++) {

@@ -49,6 +49,7 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
         if (Cookies.get('hotelSearchCheckInDate')) {
             $scope.hotelSearch.checkinDate = new Date(Cookies.get('hotelSearchCheckInDate'));
             $scope.hotelSearch.checkinDateDisplay = moment($scope.hotelSearch.checkinDate).locale("id").format('LL');
+            $('.ui-datepicker.checkindate').datepicker("setDate", new Date($scope.hotelSearch.checkinDateDisplay));
         } else {
             $scope.hotelSearch.checkinDate = moment().locale("id").add(5, 'days');
             $scope.hotelSearch.checkinDateDisplay = moment($scope.hotelSearch.checkinDate).locale("id").format('LL');
@@ -152,12 +153,6 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
     }
 
     $scope.hotel.searchHotel = function () {
-
-        //for (var h = 0; h < $scope.hotelSearch.roomCount; h++) {
-        //    for (var j = $scope.hotelSearch.occupancies[h].childCount; j < 4; j++) {
-        //        $scope.hotelSearch.occupancies[h].childrenAges[j] = 0;
-        //    }
-        //}
         for (var k = $scope.hotelSearch.roomCount; k < 8; k++) {
             $scope.hotelSearch.occupancies[k].adultCount = 1;
             $scope.hotelSearch.occupancies[k].childCount = 0;
@@ -165,7 +160,6 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
         }
         setCookie();
         hotelSearchSvc.gotoHotelSearch($scope.hotelSearch);
-
     };
 
     $scope.HotelSearchForm = {
@@ -200,19 +194,8 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
         Cookies.set('urlZone', $scope.hotelSearch.urlData.zone, { expires: 9999 });
         Cookies.set('urlArea', $scope.hotelSearch.urlData.area, { expires: 9999 });
         Cookies.set('urlType', $scope.hotelSearch.urlData.type, { expires: 9999 });
-
     }
 
-    //function getCookie(name) {
-    //    var nameEQ = name + "=";
-    //    var ca = document.cookie.split(';');
-    //    for (var i = 0; i < ca.length; i++) {
-    //        var c = ca[i];
-    //        while (c.charAt(0) == ' ') c = c.substring(1, c.length);
-    //        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
-    //    }
-    //    return null;
-    //}
     //=============== hotel end ======================
 }]);
 
