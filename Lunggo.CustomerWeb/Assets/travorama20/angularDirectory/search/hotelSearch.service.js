@@ -346,6 +346,7 @@
             if (newValue != null && newValue.length >= 3) {
                 scope.autocompletePre = false;
                 scope.autocompleteLoading = true;
+                scope.showPopularDestinations = false;
                 scope.hotelSearch.autocompleteResource.get({ prefix: newValue }).$promise.then(function(data) {
                     $timeout(function() {
                         scope.autocompleteLoading = false;
