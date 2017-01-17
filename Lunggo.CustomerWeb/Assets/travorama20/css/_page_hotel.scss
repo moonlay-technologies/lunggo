@@ -411,7 +411,6 @@
     
     /*Form & Lable*/
     .form-control {
-        height: 36px;
         box-shadow: none;
          .option {
             position: absolute;
@@ -646,6 +645,7 @@
             border: 1px solid #ccc;
             background: #fff;
             padding: 20px 10px;
+            line-height: 20px;
             .rh-row {padding: 0 15px;}
             .hotel-title-lg {margin-bottom: 10px;}
             .rh-detail {
@@ -690,7 +690,7 @@
                 @extend .os-semibold;
                 font-weight: 600;
                 padding: 10px 0;
-                height: 50px;
+                height: 60px;
 
             }
         }

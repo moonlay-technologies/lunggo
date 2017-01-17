@@ -143,6 +143,13 @@ span.close {
     border-radius: 2px;
     text-transform: uppercase;
     padding: 10px 20px; }
+  .btn.btn-yellow.sm-btn {
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    -ms-border-radius: 2px;
+    border-radius: 2px;
+    text-transform: uppercase;
+    padding: 6px 12px; }
 
 .btn.btn-grey, .btn.btn-gray {
   background: #adadad;
@@ -5303,7 +5310,6 @@ file: /Assets/travorama20/css/_page_flight.scss
       -o-transition: all 0.3s ease;
       transition: all 0.3s ease; }
   .page-hotel .form-control {
-    height: 36px;
     box-shadow: none; }
     .page-hotel .form-control .option {
       position: absolute;
@@ -6244,7 +6250,8 @@ file: /Assets/travorama20/css/_page_flight.scss
   .page-hotel .rh-container .rh-content {
     border: 1px solid #ccc;
     background: #fff;
-    padding: 20px 10px; }
+    padding: 20px 10px;
+    line-height: 20px; }
     .page-hotel .rh-container .rh-content .rh-row {
       padding: 0 15px; }
     .page-hotel .rh-container .rh-content .hotel-title-lg {
@@ -6285,7 +6292,7 @@ file: /Assets/travorama20/css/_page_flight.scss
     .page-hotel .rh-container .rh-table .cols-value {
       font-weight: 600;
       padding: 10px 0;
-      height: 50px; }
+      height: 60px; }
   .page-hotel .rh-container .rh-title {
     margin-bottom: 10px; }
   .page-hotel .rh-container .br {
@@ -7833,8 +7840,7 @@ file : /Assets/travorama20/css/_page_password.scss
 .page-faq .question-wrapper > ol {
   list-style: none;
   counter-reset: main-number;
-  padding-left: 0;
-  margin-bottom: 50px; }
+  padding-left: 0; }
   .page-faq .question-wrapper > ol > li {
     position: relative; }
     .page-faq .question-wrapper > ol > li > header {
@@ -7941,7 +7947,7 @@ file : /Assets/travorama20/css/_page_password.scss
     .page-term ol.listing > li h4, .page-static ol.listing > li h4 {
       color: #1daee4;
       font-weight: 600;
-      line-height: 18px;
+      line-height: 22px;
       padding-top: 6px; }
     .page-term ol.listing > li ol, .page-static ol.listing > li ol {
       list-style: lower-alpha; }
@@ -7950,6 +7956,24 @@ file : /Assets/travorama20/css/_page_password.scss
         .page-term ol.listing > li ol > li p, .page-static ol.listing > li ol > li p {
           color: #333;
           font-weight: normal; }
+
+.page-term .static-container, .page-static .static-container {
+  margin-bottom: 50px; }
+
+.page-term ol.listing > li ol {
+  padding-left: 0;
+  line-height: 20px; }
+  .page-term ol.listing > li ol > li {
+    padding-bottom: 7.5px; }
+
+.page-privacy p {
+  line-height: 20px; }
+
+.page-privacy.page-static ol.listing > li {
+  padding-bottom: 7.5px; }
+
+.page-privacy ul {
+  padding-left: 18px; }
 
 .page-contact .section-title {
   margin-bottom: 20px; }
@@ -8167,6 +8191,11 @@ file : /Assets/travorama20/css/_page_password.scss
 
 .page-howtoorder .section-howtoorder {
   padding-top: 30px; }
+  .page-howtoorder .section-howtoorder.container {
+    max-width: none !important; }
+
+.page-howtoorder .list-wrapper .list .list-summary > .container {
+  width: 808px; }
 
 .page-howtopay .line span {
   background-position: -30px 0; }
@@ -8177,6 +8206,8 @@ file : /Assets/travorama20/css/_page_password.scss
 
 .page-howtopay .section-howtopay {
   padding-top: 30px; }
+  .page-howtopay .section-howtopay.container {
+    max-width: none !important; }
 
 .page-campaign p {
   font-size: 13px; }

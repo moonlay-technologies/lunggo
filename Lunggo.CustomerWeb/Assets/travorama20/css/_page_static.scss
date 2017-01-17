@@ -35,9 +35,8 @@
 
 // page questions
 .page-faq {
-
     .question-wrapper {
-        &>ol {list-style:none; counter-reset:main-number; padding-left: 0; margin-bottom: 50px;
+        &>ol {list-style:none; counter-reset:main-number; padding-left: 0;
             &>li {position:relative;
                 > header {padding-left:40px;
                     h2 {color:$color-main-blue; font-size:18px; line-height:30px; @extend .os-bold;
@@ -79,7 +78,7 @@
     ol.listing {list-style:none; counter-reset:main-counter; margin:0; padding:0;
         > li {position:relative; padding-left:40px;
             &:before {content:counter(main-counter); counter-increment:main-counter; background:#ffd632; color:#4f3500; position:absolute; width:30px; height:30px; text-align:center; @extend .os-bold; @include border-radius(30px); padding-top:6px; top:0; left:0;}
-            h4 {color:$color-main-blue; @extend .os-semibold; font-weight:600; line-height:18px; padding-top:6px;}
+            h4 {color:$color-main-blue; @extend .os-semibold; font-weight:600; line-height:22px; padding-top:6px;}
             ol {list-style:lower-alpha;
                 > li {color:$color-main-blue; @extend .os-bold;
                     p {color:#333; font-weight:normal;}
@@ -87,6 +86,19 @@
             }
         }
     }
+    .static-container {margin-bottom: 50px;}
+}
+
+.page-term ol.listing > li ol {
+    padding-left: 0;
+    line-height: 20px;
+    &>li {padding-bottom: 7.5px;}
+}
+
+.page-privacy {
+    p {line-height: 20px;}
+    &.page-static ol.listing > li {padding-bottom: 7.5px;}
+    ul {padding-left:18px;}
 }
 
 // page contact
@@ -201,7 +213,10 @@
         img {width:742px; margin-left:-160px;}
     }
     .howto-header {background:url(/Assets/images/howtoorder-header.jpg) top center no-repeat; background-size:cover;}
-    .section-howtoorder {padding-top:30px;}
+    .section-howtoorder {padding-top:30px;
+        &.container {max-width: none !important;}
+    }
+    .list-wrapper .list .list-summary > .container {width: 808px}
 }
 
 .page-howtopay {
@@ -209,7 +224,9 @@
         span {background-position:-30px 0;}
     }
     .howto-header {background:url(/Assets/images/howtopay-header.jpg) top center no-repeat; background-size:cover;}
-    .section-howtopay {padding-top:30px;}
+    .section-howtopay {padding-top:30px;
+        &.container {max-width: none !important;}
+    }
 }
 
 // page campaign
