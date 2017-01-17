@@ -60,6 +60,8 @@ namespace Lunggo.ApCommon.Hotel.Model
         public List<POI> Pois { get; set; }
         [JsonProperty("mainImage", NullValueHandling = NullValueHandling.Ignore)]
         public string MainImage { get; set; }
+        [JsonProperty("mapImage", NullValueHandling = NullValueHandling.Ignore)]
+        public string MapImage { get; set; }
         [JsonProperty("images", NullValueHandling = NullValueHandling.Ignore)]
         public List<string> ImageUrl { get; set; }
         [JsonProperty("review", NullValueHandling = NullValueHandling.Ignore)]
