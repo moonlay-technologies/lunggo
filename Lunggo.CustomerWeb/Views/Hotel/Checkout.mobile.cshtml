@@ -142,266 +142,268 @@
     <script src="/Assets/travorama20/js/HotelCheckoutController.js"></script>
 }
 
-<header class="page__header">
-    <div class="step__wrapper">
-        <div class="step step-1" style = "width: 50%" ng-class="{'active' : currentPage == 1, 'inactive' : currentPage > 1}"><span class=" xlg-txt">1. Data Pemesan</span></div>
-        <div class="step step-2" style="width: 50%" ng-class="{'active' : currentPage == 2, 'inactive' : currentPage > 2}"><span class="xlg-txt">2. Review Pesanan</span></div>
-        
-    </div>
-</header>
-<section class="checkout-content">
-    <div class=" page-step-1" ng-show="currentPage == 1">
-        <div class="form-hotel">
-            <h3><b>DATA</b> PEMESAN</h3>
-            <form name="BuyerForm" novalidate>
-                <div class="form-group">
-                    <label class="control-label">Titel : </label>
-                    <select class="form-control" name="title" ng-model="buyerInfo.title" ng-init="buyerInfo.title = titles[0].value">
-                        <option ng-repeat="title in titles" value="{{title.value}}">{{title.name}}</option>
-                    </select>
-                </div>
-                <div class="form-group important">
-                    <label class="control-label">Nama Lengkap<span class="imp"></span> : </label>
-                    <input type="text" value="" ng-model="buyerInfo.name" name="name" class="form-control nama" placeholder="Nama Lengkap" required />
-                    <div ng-show="!checkName(buyerInfo.name)" style="color:red">
-                        Nama tidak boleh mengandung karakter selain alfabet dan spasi
-                    </div>
-                </div>
-                
-                <div class="form-group important">
-                    <label class="control-label">Nomor Telepon<span class="imp"></span> : </label>
-                    <div class="row">
-                        <div class="col-xs-12 bottom-divider">
-                            <p><small>Kode Negara</small></p>
-                            <select class="form-control" name="PhoneCode" ng-model="buyerInfo.countryCode" ng-init="buyerInfo.countryCode = '62'">
-                                <option ng-repeat="country in countries" ng-selected="country.dial_code == buyerInfo.countryCode" value="{{country.dial_code}}">{{country.name}} ({{country.dial_code}})</option>
-                            </select>
-                       </div>
-                        <div class="col-xs-12">
-                            <p><small>Nomor Telepon (Tanpa Kode Negara)</small></p>
-                            <input type="number" value="" ng-model="buyerInfo.phone" name="Phone" class="form-control" placeholder="Ex : 821 2345 6789" required />
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group important" ng-class="{'has-error' : BuyerForm.email.$touched && BuyerForm.email.$invalid}">
-                    <label class=" control-label">Masukkan alamat e-mail Anda<span class="imp"></span> : </label>
-                    <input type="email" value="" ng-model="buyerInfo.email" name="Email" class="form-control" placeholder="Ex: name@domain.com" required />
-                </div>
- 
-                <input type="checkbox" name="diffPerson" ng-model="diffPerson" value="false" ng-change="cleanGuestInfo()"> <span class="italic-txt bold-txt">Saya membuat reservasi untuk orang lain.</span><br>
-                <div ng-show ="diffPerson">
-                    <h3><b>DATA</b> TAMU</h3>
+<div class="checkout-hotel">
+    <header class="page__header">
+        <div class="step__wrapper">
+            <div class="step step-1" style="width: 50%" ng-class="{'active' : currentPage == 1, 'inactive' : currentPage > 1}"><span class=" xlg-txt">1. Data Pemesan</span></div>
+            <div class="step step-2" style="width: 50%" ng-class="{'active' : currentPage == 2, 'inactive' : currentPage > 2}"><span class="xlg-txt">2. Review Pesanan</span></div>
+
+        </div>
+    </header>
+    <section class="checkout-content ">
+        <div class=" page-step-1" ng-show="currentPage == 1">
+            <div class="form-hotel">
+                <h3><b>DATA</b> PEMESAN</h3>
+                <form name="BuyerForm" novalidate>
                     <div class="form-group">
                         <label class="control-label">Titel : </label>
-                        <select class="form-control" name="title" ng-model="guestInfo.title" ng-init="guestInfo.title = titles[0].value">
+                        <select class="form-control" name="title" ng-model="buyerInfo.title" ng-init="buyerInfo.title = titles[0].value">
                             <option ng-repeat="title in titles" value="{{title.value}}">{{title.name}}</option>
                         </select>
                     </div>
                     <div class="form-group important">
                         <label class="control-label">Nama Lengkap<span class="imp"></span> : </label>
-                        <input type="text" value="" ng-model="guestInfo.name" name="name" class="form-control nama" placeholder="Nama Lengkap" required />
-                        <div ng-show="!checkName(guestInfo.name)" style="color:red">
+                        <input type="text" value="" ng-model="buyerInfo.name" name="name" class="form-control nama" placeholder="Nama Lengkap" required />
+                        <div ng-show="!checkName(buyerInfo.name)" style="color:red">
                             Nama tidak boleh mengandung karakter selain alfabet dan spasi
                         </div>
                     </div>
-                </div>
- 
-                <div class="form-group">
-                    <div class="form-request">
-                        <div class="">Permintaan Khusus (opsional)</div>
-                        <textarea name="form-request" placeholder="Silakan tulis permintaan khusus Anda di sini" ng-model="buyerInfo.message"></textarea>
+
+                    <div class="form-group important">
+                        <label class="control-label">Nomor Telepon<span class="imp"></span> : </label>
+                        <div class="row">
+                            <div class="col-xs-12 bottom-divider">
+                                <p><small>Kode Negara</small></p>
+                                <select class="form-control" name="PhoneCode" ng-model="buyerInfo.countryCode" ng-init="buyerInfo.countryCode = '62'">
+                                    <option ng-repeat="country in countries" ng-selected="country.dial_code == buyerInfo.countryCode" value="{{country.dial_code}}">{{country.name}} ({{country.dial_code}})</option>
+                                </select>
+                            </div>
+                            <div class="col-xs-12">
+                                <p><small>Nomor Telepon (Tanpa Kode Negara)</small></p>
+                                <input type="number" value="" ng-model="buyerInfo.phone" name="Phone" class="form-control" placeholder="Ex : 821 2345 6789" required />
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <div style="color:red" ng-show="form.incompleteContactTitle">
-                        Gelar pada Nama Pemesan Belum Ditambahkan <br /> <br />
+                    <div class="form-group important" ng-class="{'has-error' : BuyerForm.email.$touched && BuyerForm.email.$invalid}">
+                        <label class=" control-label">Masukkan alamat e-mail Anda<span class="imp"></span> : </label>
+                        <input type="email" value="" ng-model="buyerInfo.email" name="Email" class="form-control" placeholder="Ex: name@domain.com" required />
                     </div>
-                    <div style="color:red" ng-show="form.incompleteContactName">
-                        Nama pada Data Pemesan Belum Ditambahkan <br /> <br />
+
+                    <input type="checkbox" name="diffPerson" ng-model="diffPerson" value="false" ng-change="cleanGuestInfo()"> <span class="italic-txt bold-txt">Saya membuat reservasi untuk orang lain.</span><br>
+                    <div ng-show="diffPerson">
+                        <h3><b>DATA</b> TAMU</h3>
+                        <div class="form-group">
+                            <label class="control-label">Titel : </label>
+                            <select class="form-control" name="title" ng-model="guestInfo.title" ng-init="guestInfo.title = titles[0].value">
+                                <option ng-repeat="title in titles" value="{{title.value}}">{{title.name}}</option>
+                            </select>
+                        </div>
+                        <div class="form-group important">
+                            <label class="control-label">Nama Lengkap<span class="imp"></span> : </label>
+                            <input type="text" value="" ng-model="guestInfo.name" name="name" class="form-control nama" placeholder="Nama Lengkap" required />
+                            <div ng-show="!checkName(guestInfo.name)" style="color:red">
+                                Nama tidak boleh mengandung karakter selain alfabet dan spasi
+                            </div>
+                        </div>
                     </div>
-                    <div style="color:red" ng-show="form.incompleteContactPhone">
-                        Nomor Telepon pada Data Pemesan Belum Lengkap. Silakan Pilih Kode Negara atau Lengkapi Nomor Telepon<br /> <br />
+
+                    <div class="form-group">
+                        <div class="form-request">
+                            <div class="">Permintaan Khusus (opsional)</div>
+                            <textarea name="form-request" placeholder="Silakan tulis permintaan khusus Anda di sini" ng-model="buyerInfo.message"></textarea>
+                        </div>
                     </div>
-                    <div style="color:red" ng-show="form.incompleteContactEmail">
-                        Alamat E-Mail pada Data Pemesan Belum Ditambahkan<br /> <br />
+                    <div class="form-group">
+                        <div style="color:red" ng-show="form.incompleteContactTitle">
+                            Gelar pada Nama Pemesan Belum Ditambahkan <br /> <br />
+                        </div>
+                        <div style="color:red" ng-show="form.incompleteContactName">
+                            Nama pada Data Pemesan Belum Ditambahkan <br /> <br />
+                        </div>
+                        <div style="color:red" ng-show="form.incompleteContactPhone">
+                            Nomor Telepon pada Data Pemesan Belum Lengkap. Silakan Pilih Kode Negara atau Lengkapi Nomor Telepon<br /> <br />
+                        </div>
+                        <div style="color:red" ng-show="form.incompleteContactEmail">
+                            Alamat E-Mail pada Data Pemesan Belum Ditambahkan<br /> <br />
+                        </div>
+                        <div style="color:red" ng-show="form.incompleteGuestTitle">
+                            Gelar pada Nama Tamu Belum Ditambahkan <br /> <br />
+                        </div>
+                        <div style="color:red" ng-show="form.incompleteGuestName">
+                            Nama pada Data Tamu Belum Ditambahkan <br /> <br />
+                        </div>
+                        <button class="btn btn-yellow form-control" ng-click="validateForm(1)" ng-disabled="BuyerForm.$invalid || buyerInfo.title == titles[0].value">LANJUT</button>
                     </div>
-                    <div style="color:red" ng-show="form.incompleteGuestTitle">
-                        Gelar pada Nama Tamu Belum Ditambahkan <br /> <br />
-                    </div>
-                    <div style="color:red" ng-show="form.incompleteGuestName">
-                        Nama pada Data Tamu Belum Ditambahkan <br /> <br />
-                    </div>
-                    <button class="btn btn-yellow form-control" ng-click="validateForm(1)" ng-disabled="BuyerForm.$invalid || buyerInfo.title == titles[0].value">LANJUT</button>
-                </div>
-            </form>
+                </form>
+            </div>
         </div>
-    </div>
-    <div class=" page-step-2" ng-show="currentPage == 2">
-        <div class="review-hotel">
-            <h3 class="summary__title"><b>REVIEW</b> PESANAN</h3>
-            <div class="form-group">
-                <div class="form-box">
-                    <div class="fb-hotel">
-                        <div class="fb-header"><b>Detail Hotel</b></div>
-                        <div class="fb-body">
-                            @Html.Partial("/Views/Shared/Mobile/_HotelDetail.cshtml", Model.HotelDetail)
+        <div class=" page-step-2" ng-show="currentPage == 2">
+            <div class="review-hotel">
+                <h3 class="summary__title"><b>REVIEW</b> PESANAN</h3>
+                <div class="form-group">
+                    <div class="form-box">
+                        <div class="fb-hotel">
+                            <div class="fb-header"><b>Detail Hotel</b></div>
+                            <div class="fb-body">
+                                @Html.Partial("/Views/Shared/Mobile/_HotelDetail.cshtml", Model.HotelDetail)
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            @Html.Partial("/Views/Shared/Mobile/_RoomDetail.cshtml", Model.HotelDetail)
-             
-            <div class="guest-detail clearfix">
-                <h3 class="summary__title"><b>DETAIL </b>PEMESAN</h3>
-                <div class="clearfix">
-                    <div class="rr-row clearfix">
-                        <div style="font-weight: bold">Nama Pemesan</div>
-                        <div>{{changeTitle(buyerInfo.title)}} {{buyerInfo.name}}</div>
-                    </div>
-                    <div class="rr-row clearfix">
-                        <div style="font-weight: bold">E-Mail</div>
-                        <div>{{buyerInfo.email}}</div>
-                    </div>
-                    <div class="rr-row clearfix">
-                        <div style="font-weight: bold">Nomor Telepon</div>
-                        <div>+{{buyerInfo.countryCode}}{{buyerInfo.phone}}</div>
-                    </div>
-                    <div class="rr-row clearfix">
-                        <div style="font-weight: bold">Tamu</div>
-                        <div>{{changeTitle(guestInfo.title)}} {{guestInfo.name}}</div>
-                    </div>
-                    <div class="rr-row clearfix" ng-show="buyerInfo.message!= null && buyerInfo.message.length >0">
-                        <div style=" font-weight: bold">Catatan</div>
-                        <div>{{buyerInfo.message}}</div>
+                @Html.Partial("/Views/Shared/Mobile/_RoomDetail.cshtml", Model.HotelDetail)
+
+                <div class="guest-detail clearfix">
+                    <h3 class="summary__title"><b>DETAIL </b>PEMESAN</h3>
+                    <div class="clearfix">
+                        <div class="rr-row clearfix">
+                            <div style="font-weight: bold">Nama Pemesan</div>
+                            <div>{{changeTitle(buyerInfo.title)}} {{buyerInfo.name}}</div>
+                        </div>
+                        <div class="rr-row clearfix">
+                            <div style="font-weight: bold">E-Mail</div>
+                            <div>{{buyerInfo.email}}</div>
+                        </div>
+                        <div class="rr-row clearfix">
+                            <div style="font-weight: bold">Nomor Telepon</div>
+                            <div>+{{buyerInfo.countryCode}}{{buyerInfo.phone}}</div>
+                        </div>
+                        <div class="rr-row clearfix">
+                            <div style="font-weight: bold">Tamu</div>
+                            <div>{{changeTitle(guestInfo.title)}} {{guestInfo.name}}</div>
+                        </div>
+                        <div class="rr-row clearfix" ng-show="buyerInfo.message!= null && buyerInfo.message.length >0">
+                            <div style=" font-weight: bold">Catatan</div>
+                            <div>{{buyerInfo.message}}</div>
+                        </div>
                     </div>
                 </div>
-            </div>
-            @Html.Partial("/Views/Shared/Mobile/_PriceDetail.cshtml", new HotelReservationForDisplay
+                @Html.Partial("/Views/Shared/Mobile/_PriceDetail.cshtml", new HotelReservationForDisplay
             {
                 HotelDetail = Model.HotelDetail
             })
-            
-            <form action="" method="post" name="submitForm" id="rsvno" class="hidden">
-                <input type="text" name="RsvNo" value="" id="rsvno-input" />
-            </form>
-            <div class="form-group clearfix">
-                <div class="col-xs-6"><button class="btn btn-grey form-control" ng-click="changePage(1)">KEMBALI</button></div>
-                <div class="col-xs-6"><button class="btn btn-yellow form-control" ng-disabled="book.booking" ng-click="book.send()">PESAN</button></div>
-            </div>
-        </div>
-    </div>
-    <div class="popup__wrapper" ng-class="{'active': book.isPriceChanged}">
-        <div class="popup">
-            <header class="popup__header">
-                <h4 class="popup__title">Harga Berubah</h4>
-            </header>
-            <div class="popup__body price-change-body">
-                <div class="container_new">
-                    <span>Harga tiket ini berubah menjadi Rp {{book.newPrice | number : fractionSize}} disebabkan perubahan harga dari maskapai.</span>
+
+                <form action="" method="post" name="submitForm" id="rsvno" class="hidden">
+                    <input type="text" name="RsvNo" value="" id="rsvno-input" />
+                </form>
+                <div class="form-group clearfix">
+                    <div class="col-xs-6"><button class="btn btn-grey form-control" ng-click="changePage(1)">KEMBALI</button></div>
+                    <div class="col-xs-6"><button class="btn btn-yellow form-control" ng-disabled="book.booking" ng-click="book.send()">PESAN</button></div>
                 </div>
             </div>
-            <div class="popup__footer">
-                <div class="container_new price-change-footer">
-                    <div class="row">
-                        <div class="col-xs-12">
-                            <form name="finalForm" id="finalForm" ng-submit="book.checkCreditCard()" class="ng-pristine ng-valid">
-                                <input type="submit" class="btn btn-yellow" value="PESAN PENERBANGAN INI">
-                            </form>
-                        </div>
-                        <div class="col-xs-12">
-                            <a class="btn btn-grey btn-block" href="{{returnUrl}}">KEMBALI</a>
+        </div>
+        <div class="popup__wrapper" ng-class="{'active': book.isPriceChanged}">
+            <div class="popup">
+                <header class="popup__header">
+                    <h4 class="popup__title">Harga Berubah</h4>
+                </header>
+                <div class="popup__body price-change-body">
+                    <div class="container_new">
+                        <span>Harga tiket ini berubah menjadi Rp {{book.newPrice | number : fractionSize}} disebabkan perubahan harga dari maskapai.</span>
+                    </div>
+                </div>
+                <div class="popup__footer">
+                    <div class="container_new price-change-footer">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <form name="finalForm" id="finalForm" ng-submit="book.checkCreditCard()" class="ng-pristine ng-valid">
+                                    <input type="submit" class="btn btn-yellow" value="PESAN PENERBANGAN INI">
+                                </form>
+                            </div>
+                            <div class="col-xs-12">
+                                <a class="btn btn-grey btn-block" href="{{returnUrl}}">KEMBALI</a>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="popup__wrapper" ng-class="{'active': expired}">
-        <div class="popup">
-            <header class="popup__header">
-                <h4 class="popup__title">Checkout Kadaluarsa</h4>
-            </header>
-            <div class="popup__body">
-                <div class="container_new">
-                    <span>Maaf, waktu checkout Anda sudah habis. Silakan klik tombol dibawah untuk kembali ke halaman pencarian.</span>
+        <div class="popup__wrapper" ng-class="{'active': expired}">
+            <div class="popup">
+                <header class="popup__header">
+                    <h4 class="popup__title">Checkout Kadaluarsa</h4>
+                </header>
+                <div class="popup__body">
+                    <div class="container_new">
+                        <span>Maaf, waktu checkout Anda sudah habis. Silakan klik tombol dibawah untuk kembali ke halaman pencarian.</span>
+                    </div>
                 </div>
-            </div>
-            <div class="popup__footer">
-                <div class="container_new">
-                    <a class="btn btn-block btn-yellow" href="{{returnUrl}}">KEMBALI</a>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <div class="popup__wrapper" ng-class="{'active': book.checked && book.isSuccess}">
-        <div class="popup">
-            <header class="popup__header">
-                <h4 class="popup__title">Pemesanan Berhasil</h4>
-            </header>
-            <div class="popup__body">
-                <div class="container_new">
-                    <span>Hotel Tersedia. Mengalihkan Anda ke halaman pembayaran.</span>
+                <div class="popup__footer">
+                    <div class="container_new">
+                        <a class="btn btn-block btn-yellow" href="{{returnUrl}}">KEMBALI</a>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <div class="popup__wrapper" ng-class="{'active': book.checked && !book.isSuccess}">
-        <div class="popup">
-            <header class="popup__header">
-                <h4 class="popup__title">Pemesanan Gagal</h4>
-            </header>
-            <div class="popup__body">
-                <div class="container_new">
-                    <span>Mohon Maaf, pemesanan Anda gagal di proses.</span>
-                </div>
-            </div>
-            <div class="popup__footer">
-                <div class="container_new">
-                    <a class="btn btn-block btn-yellow" href="{{returnUrl}}">KEMBALI</a>
+        <div class="popup__wrapper" ng-class="{'active': book.checked && book.isSuccess}">
+            <div class="popup">
+                <header class="popup__header">
+                    <h4 class="popup__title">Pemesanan Berhasil</h4>
+                </header>
+                <div class="popup__body">
+                    <div class="container_new">
+                        <span>Hotel Tersedia. Mengalihkan Anda ke halaman pembayaran.</span>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <div class="popup__wrapper" ng-class="{'active': book.booking}">
-        <div class="popup">
-            <header class="popup__header">
-                <h4 class="popup__title">Mohon Tunggu</h4>
-            </header>
-            <div class="popup__body">
-                <div class="container_new">
-                    <span>Sedang memproses pemesanan Anda ke pihak hotel. Proses ini dapat berlangsung hingga 5 (lima) menit.</span>
+        <div class="popup__wrapper" ng-class="{'active': book.checked && !book.isSuccess}">
+            <div class="popup">
+                <header class="popup__header">
+                    <h4 class="popup__title">Pemesanan Gagal</h4>
+                </header>
+                <div class="popup__body">
+                    <div class="container_new">
+                        <span>Mohon Maaf, pemesanan Anda gagal di proses.</span>
+                    </div>
+                </div>
+                <div class="popup__footer">
+                    <div class="container_new">
+                        <a class="btn btn-block btn-yellow" href="{{returnUrl}}">KEMBALI</a>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <div class="popup__wrapper" ng-class="{'active': book.isPriceChanged}">
-        <div class="popup">
-            <header class="popup__header">
-                <h4 class="popup__title">Harga Berubah</h4>
-            </header>
-            <div class="popup__body price-change-body">
-                <div class="container_new">
-                    <span>Harga tiket ini berubah menjadi Rp {{book.newPrice| number : fractionSize}} disebabkan perubahan harga dari pihak hotel.</span>
+        <div class="popup__wrapper" ng-class="{'active': book.booking}">
+            <div class="popup">
+                <header class="popup__header">
+                    <h4 class="popup__title">Mohon Tunggu</h4>
+                </header>
+                <div class="popup__body">
+                    <div class="container_new">
+                        <span>Sedang memproses pemesanan Anda ke pihak hotel. Proses ini dapat berlangsung hingga 5 (lima) menit.</span>
+                    </div>
                 </div>
             </div>
-            <div class="popup__footer">
-                <div class="container_new price-change-footer">
-                    <div class="row">
-                        <div class="col-xs-12">
-                            <form name="finalForm" id="finalForm" ng-submit="book.send()" class="ng-pristine ng-valid">
-                                <input type="submit" class="btn btn-yellow" value="PESAN HOTEL INI">
-                            </form>
-                        </div>
-                        <div class="col-xs-12">
-                            <a class="btn btn-grey btn-block" href="{{PageConfig.ReturnUrl}}">KEMBALI</a>
+        </div>
+
+        <div class="popup__wrapper" ng-class="{'active': book.isPriceChanged}">
+            <div class="popup">
+                <header class="popup__header">
+                    <h4 class="popup__title">Harga Berubah</h4>
+                </header>
+                <div class="popup__body price-change-body">
+                    <div class="container_new">
+                        <span>Harga tiket ini berubah menjadi Rp {{book.newPrice| number : fractionSize}} disebabkan perubahan harga dari pihak hotel.</span>
+                    </div>
+                </div>
+                <div class="popup__footer">
+                    <div class="container_new price-change-footer">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <form name="finalForm" id="finalForm" ng-submit="book.send()" class="ng-pristine ng-valid">
+                                    <input type="submit" class="btn btn-yellow" value="PESAN HOTEL INI">
+                                </form>
+                            </div>
+                            <div class="col-xs-12">
+                                <a class="btn btn-grey btn-block" href="{{PageConfig.ReturnUrl}}">KEMBALI</a>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
+</div>

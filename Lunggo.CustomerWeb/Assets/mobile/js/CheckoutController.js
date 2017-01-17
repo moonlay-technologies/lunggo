@@ -174,6 +174,9 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
     $scope.PageConfig.ActivePageChanged = false;
     $scope.PageConfig.ActivePage = 1;
     $scope.PageConfig.ChangePage = function (page) {
+        $('html, body').animate({
+            scrollTop: $(".checkout-flight").offset().top
+        }, 1500);
         $scope.PageConfig.ActivePage = page;
         $location.hash("page-" + page);
     }
@@ -343,6 +346,7 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
     //********************FUNCTIONS TO FILL FORM*******************
 
     $scope.validateForm = function (page) {
+        
         if (page == 1) {
             if (!$scope.CheckTitle([$scope.buyerInfo])) {
                 $scope.form.incompleteContactTitle = true;
@@ -408,6 +412,7 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
 
             if (!$scope.form.hasDuplicatePaxName && !$scope.form.incompleteTitles && !$scope.form.incompleteBirthDates
                 && !$scope.form.incompletePassportData && !$scope.form.checkNameIncomplete) {
+              
                 $scope.PageConfig.ChangePage(3);
             }
         }
