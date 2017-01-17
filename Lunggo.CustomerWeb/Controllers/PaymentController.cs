@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 using Lunggo.ApCommon.Flight.Service;
@@ -55,7 +58,11 @@ namespace Lunggo.CustomerWeb.Controllers
             if (payment.Method == PaymentMethod.BankTransfer ||
                 payment.Method == PaymentMethod.VirtualAccount)
             {
-                return RedirectToAction("Instruction", "Payment", new { rsvNo });
+                SHA512 hashstring = SHA512Managed.Create();
+                byte[] hash = hashstring.ComputeHash(Encoding.UTF8.GetBytes(rsvNo));
+                var regId = BitConverter.ToString(hash);
+                regId = regId.Replace("-", "").ToLower();
+                return RedirectToAction("Instruction", "Payment", new { rsvNo, regId });
             }
             else if (!string.IsNullOrEmpty(paymentUrl))
             {
@@ -68,21 +75,29 @@ namespace Lunggo.CustomerWeb.Controllers
             }
         }
 
-        public ActionResult Instruction(string rsvNo)
+        public ActionResult Instruction(string rsvNo, string regId)
         {
-            ReservationForDisplayBase rsv;
-            if (rsvNo[0] == '1')
-                rsv = FlightService.GetInstance().GetReservationForDisplay(rsvNo);
-            else
-                rsv = HotelService.GetInstance().GetReservationForDisplay(rsvNo);
-            if ((rsv.Payment.Method == PaymentMethod.BankTransfer || rsv.Payment.Method == PaymentMethod.VirtualAccount) 
-                && rsv.Payment.Status == PaymentStatus.Pending)
+            SHA512 hashstring = SHA512Managed.Create();
+            byte[] hash = hashstring.ComputeHash(Encoding.UTF8.GetBytes(rsvNo));
+            var signature = BitConverter.ToString(hash);
+            signature = signature.Replace("-", "").ToLower();
+            if (regId.Equals(signature))
             {
-                return View(rsv);
+                ReservationForDisplayBase rsv;
+                if (rsvNo[0] == '1')
+                    rsv = FlightService.GetInstance().GetReservationForDisplay(rsvNo);
+                else
+                    rsv = HotelService.GetInstance().GetReservationForDisplay(rsvNo);
+                if ((rsv.Payment.Method == PaymentMethod.BankTransfer || rsv.Payment.Method == PaymentMethod.VirtualAccount)
+                    && rsv.Payment.Status == PaymentStatus.Pending)
+                {
+                    return View(rsv);
+                }
+                else
+                    TempData["AllowThisThankyouPage"] = rsvNo;
+                return RedirectToAction("Thankyou", "Payment", new { rsvNo });
             }
-            else
-                TempData["AllowThisThankyouPage"] = rsvNo;
-            return RedirectToAction("Thankyou", "Payment", new { rsvNo });
+            return RedirectToAction("Index", "Index");
         }
 
 
