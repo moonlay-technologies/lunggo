@@ -37,7 +37,7 @@
 .page-faq {
 
     .question-wrapper {
-        &>ol {list-style:none; counter-reset:main-number;
+        &>ol {list-style:none; counter-reset:main-number; padding-left: 0; margin-bottom: 50px;
             &>li {position:relative;
                 > header {padding-left:40px;
                     h2 {color:$color-main-blue; font-size:18px; line-height:30px; @extend .os-bold;
@@ -47,8 +47,9 @@
                 .faq-content {margin-top: 12px;}
                 &:before {content:counter(main-number); counter-increment:main-number; background:#ffd632; color:#4f3500; position:absolute; height:30px; width:30px; text-align:center; @include border-radius(50px); font-size:14px; @extend .os-semibold; font-weight:600; padding-top:5px;}
                 &>ol {list-style:none; counter-reset:sub-number;
-                    &>li {position:relative; background:#fff; padding:12px; border:$border-default; padding-left:42px;
-                        &:before {content:counter(main-number) '.' counter(sub-number); counter-increment:sub-number; position:absolute; top:12px; left:12px;}
+                    &>li {position:relative; background:#fff; padding:14px; border:$border-default; padding-left:42px; border-bottom: none;
+                        &:last-child {border-bottom: $border-default;}
+                        &:before {content:counter(main-number) '.' counter(sub-number); counter-increment:sub-number; position:absolute; top:12px; left:12px; @extend .os-bold; color: #1daee4;}
                         > header {color:$color-main-blue; cursor:pointer;
                             > h3 {margin:0; font-size:17px; padding-right:25px;
                                 span {width:23px; height:22px; border:2px solid $color-main-blue; display:inline-block; @include border-radius(15px); background-image:url(/Assets/images/faq-toggle-sprite.png); background-position:-13px 0; position:absolute; right:10px; top:10px;}
