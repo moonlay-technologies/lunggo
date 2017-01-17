@@ -241,7 +241,15 @@
                                     <ul class="blue-point">
                                         @if (Model.HotelDetail.Facilities != null && Model.HotelDetail.Facilities.Other != null && Model.HotelDetail.Facilities.Other.Count != 0)
                                         {
-                                            var facilities = Model.HotelDetail.Facilities.Other.Where(f => f.Length > 0).ToList();
+                                            var facilities = new List<string>();
+                                            foreach (var fac in Model.HotelDetail.Facilities.Other)
+                                            {
+                                                if (fac.Length > 0)
+                                                {
+                                                    facilities.Add(fac);
+                                                }
+                                            }
+                                                //Model.HotelDetail.Facilities.Other.Where(f => f.Length > 0).ToList();
                                             if (facilities.Count == 1)
                                             {
                                                 <li>@facilities[0]</li>
