@@ -6,122 +6,71 @@ ver 0.1 Alpha
 */
 
 @font-face {
-    font-family: 'din';
-    src: url("../fonts/DINB-webfont.eot");
-    src: url("../fonts/DINB-webfont.eot?#iefix") format("embedded-opentype"), url("../fonts/DINB-webfont.woff2") format("woff2"), url("../fonts/DINB-webfont.woff") format("woff"), url("../fonts/DINB-webfont.ttf") format("truetype"), url("../fonts/DINB-webfont.svg#din-boldregular") format("svg");
-    font-weight: bold;
-    font-style: normal;
-}
+  font-family: 'din';
+  src: url("../fonts/DINB-webfont.eot");
+  src: url("../fonts/DINB-webfont.eot?#iefix") format("embedded-opentype"), url("../fonts/DINB-webfont.woff2") format("woff2"), url("../fonts/DINB-webfont.woff") format("woff"), url("../fonts/DINB-webfont.ttf") format("truetype"), url("../fonts/DINB-webfont.svg#din-boldregular") format("svg");
+  font-weight: bold;
+  font-style: normal; }
 
 @font-face {
-    font-family: 'din';
-    src: url("../fonts/DINR-webfont.eot");
-    src: url("../fonts/DINR-webfont.eot?#iefix") format("embedded-opentype"), url("../fonts/DINR-webfont.woff2") format("woff2"), url("../fonts/DINR-webfont.woff") format("woff"), url("../fonts/DINR-webfont.ttf") format("truetype"), url("../fonts/DINR-webfont.svg#din-regularregular") format("svg");
-    font-weight: normal;
-    font-style: normal;
-}
+  font-family: 'din';
+  src: url("../fonts/DINR-webfont.eot");
+  src: url("../fonts/DINR-webfont.eot?#iefix") format("embedded-opentype"), url("../fonts/DINR-webfont.woff2") format("woff2"), url("../fonts/DINR-webfont.woff") format("woff"), url("../fonts/DINR-webfont.ttf") format("truetype"), url("../fonts/DINR-webfont.svg#din-regularregular") format("svg");
+  font-weight: normal;
+  font-style: normal; }
 
 @font-face {
-    font-family: 'Open Sans Bold';
-    src: url("../fonts/OpenSans-Bold.eot");
-    src: url("../fonts/OpenSans-Bold.eot?#iefix") format("embedded-opentype"), url("../fonts/OpenSans-Bold.woff2") format("woff2"), url("../fonts/OpenSans-Bold.woff") format("woff"), url("../fonts/OpenSans-Bold.ttf") format("truetype"), url("../fonts/OpenSans-Bold.svg#din-boldregular") format("svg");
-    font-weight: bold;
-    font-style: normal;
-}
+  font-family: 'Open Sans Bold';
+  src: url("../fonts/OpenSans-Bold.eot");
+  src: url("../fonts/OpenSans-Bold.eot?#iefix") format("embedded-opentype"), url("../fonts/OpenSans-Bold.woff2") format("woff2"), url("../fonts/OpenSans-Bold.woff") format("woff"), url("../fonts/OpenSans-Bold.ttf") format("truetype"), url("../fonts/OpenSans-Bold.svg#din-boldregular") format("svg");
+  font-weight: bold;
+  font-style: normal; }
 
 @font-face {
-    font-family: 'Open Sans';
-    src: url("../fonts/OpenSans-Regular.eot");
-    src: url("../fonts/OpenSans-Regular.eot?#iefix") format("embedded-opentype"), url("../fonts/OpenSans-Regular.woff2") format("woff2"), url("../fonts/OpenSans-Regular.woff") format("woff"), url("../fonts/OpenSans-Regular.ttf") format("truetype"), url("../fonts/OpenSans-Regular.svg#din-regularregular") format("svg");
-    font-weight: normal;
-    font-style: normal;
-}
+  font-family: 'Open Sans';
+  src: url("../fonts/OpenSans-Regular.eot");
+  src: url("../fonts/OpenSans-Regular.eot?#iefix") format("embedded-opentype"), url("../fonts/OpenSans-Regular.woff2") format("woff2"), url("../fonts/OpenSans-Regular.woff") format("woff"), url("../fonts/OpenSans-Regular.ttf") format("truetype"), url("../fonts/OpenSans-Regular.svg#din-regularregular") format("svg");
+  font-weight: normal;
+  font-style: normal; }
 
 @font-face {
-    font-family: 'Open Sans Semibold';
-    src: url("../fonts/OpenSans-Semibold.eot");
-    src: url("../fonts/OpenSans-Semibold.eot?#iefix") format("embedded-opentype"), url("../fonts/OpenSans-Semibold.woff2") format("woff2"), url("../fonts/OpenSans-Semibold.woff") format("woff"), url("../fonts/OpenSans-Semibold.ttf") format("truetype"), url("../fonts/OpenSans-Semibold.svg#din-semiboldregular") format("svg");
-    font-weight: normal;
-    font-style: normal;
-}
+  font-family: 'Open Sans Semibold';
+  src: url("../fonts/OpenSans-Semibold.eot");
+  src: url("../fonts/OpenSans-Semibold.eot?#iefix") format("embedded-opentype"), url("../fonts/OpenSans-Semibold.woff2") format("woff2"), url("../fonts/OpenSans-Semibold.woff") format("woff"), url("../fonts/OpenSans-Semibold.ttf") format("truetype"), url("../fonts/OpenSans-Semibold.svg#din-semiboldregular") format("svg");
+  font-weight: normal;
+  font-style: normal; }
 
-@mixin clearfix {
-    content: "";
-    clear: both;
-    width: 100%;
-    display: block;
-}
+@mixin clearfix {content:""; clear:both; width:100%; display:block;}
 
-@page {
-    size: A4;
-    margin: 0;
-    position: relative;
-    padding: 1cm;
-}
+@page {size:A4; margin:0; position:relative; padding:1cm;}
 
 /**
 General Styling
 */
-body {
-    font-family: 'din', helvetica, arial, sans-serif;
-    width: 100%;
-    height: 100%;
-    -webkit-print-color-adjust: exact;
+body {font-family:'din', helvetica, arial, sans-serif; width:100%; height:100%; -webkit-print-color-adjust: exact; }
+
+p {margin-bottom:0;}
+
+.page {width:21cm; height:29.7cm; position:absolute; -webkit-print-color-adjust:exact; //background:url(/Assets/images/eticket-background.png) left 70% no-repeat;
+    &:before, &:after {@include clearfix;}
 }
-
-p {margin-bottom: 0;}
-
-.page {
-    width: 21cm;
-    height: 29.7cm;
-    position: absolute;
-    -webkit-print-color-adjust: exact; //background:url(/Assets/images/eticket-background.png) left 70% no-repeat;
-    &:before, &:after {
-        @include clearfix;
-    }
-}
-
-.page.page-2 {top: 29.7cm;}
-
-.page.page-3 {top: 59.2cm;}
+.page.page-2 {top:29.7cm;}
+.page.page-3 {top:59.2cm;}
 
 /**
 Site Header
 */
-.page-header {
-    margin: 0;
-    padding: 1cm 1cm 0;
-    border-bottom: 0;
-
+.page-header {margin:0; padding:1cm 1cm 0; border-bottom:0;
     .page-header-right {
         &:before, &:after {@include clearfix;}
-        & > div {float: left;}
-        .page-title {
-            padding-right: 3mm;
-            h3 {
-                color: #38B3E3;
-                font-weight: bold;
-                margin: 0;
-                margin-top: 5.5mm;
-                font-size: 24pt;
-                vertical-align: bottom;
-                line-height: 100%;
-            }
+        &>div {float:left;}
+        .page-title {padding-right:3mm;
+            h3 {color:#38B3E3; font-weight:bold; margin:0; margin-top:5.5mm; font-size:24pt; vertical-align:bottom; line-height:100%;}
         }
-        .page-help {
-            padding-left: 3mm;
-            padding-top: 15px;
-            border-left: 2px solid #ddd;
-            p {
-                margin-bottom: 0;
-                line-height: 100%;
-                margin-bottom: 5px;
-            }
-            p:last-child {margin-bottom: 0;}
-            span {
-                color: #38B3E3;
-                font-weight: bold;
-            }
+        .page-help {padding-left:3mm; padding-top:15px; border-left:2px solid #ddd;
+            p {margin-bottom:0; line-height:100%; margin-bottom:5px;}
+            p:last-child {margin-bottom:0;}
+            span {color:#38B3E3; font-weight:bold;}
         }
     }
 }
@@ -129,282 +78,93 @@ Site Header
 /**
 Site Content
 */
-.page-content {padding: 0 1cm;}
+.page-content {padding:0 1cm;}
 
 /* flight list detail */
-.flight-list-wrapper {
-    width: 100%;
-    margin-bottom: 25px;
-    .flight-title {
-        text-align: center;
-        position: relative;
-        font-size: 12pt;
-        font-weight: bold;
-        color: #666;
-        -webkit-print-color-adjust: exact;
-        & > span {
-            background: url(/Assets/images/white-bg.png) top center repeat #fff;
-            z-index: 2;
-            position: relative;
-            padding: 0 20px;
-            overflow: hidden;
-            z-index: 2;
-            -webkit-print-color-adjust: exact;
+.flight-list-wrapper {width:100%; margin-bottom:25px;
+    .flight-title {text-align:center; position:relative; font-size:12pt; font-weight:bold; color:#666; -webkit-print-color-adjust:exact;
+        &>span {background:url(/Assets/images/white-bg.png) top center repeat #fff; z-index:2; position:relative; padding:0 20px; overflow:hidden; z-index:2; -webkit-print-color-adjust:exact;
         }
-        &:after {
-            content: "";
-            display: block;
-            clear: both;
-            width: 100%;
-            border-top: 2px solid #666;
-            position: absolute;
-            margin-top: -10px;
-        }
+        &:after {content:""; display:block; clear:both; width:100%; border-top:2px solid #666; position:absolute; margin-top:-10px;}
     }
-    /*Adding Changes here*/
-    .flight-name {
-        width: 100%;
-        margin-bottom: 3mm;
-        .flight-icon {
-            text-align: center;
-            float: left;
-            width: 13%;
-            margin-right: 2%; /* ini buat icon maskapai dan no pnr, width 12, margin 3*/
-            .flight-airline {width: 100%;}
-        }
-        .flight-det {
-            width: 100%;
-            position: relative;
 
-            .flight-number {
-                float: left;
-                width: 67%;
-                margin-right: 3%;
-                margin-bottom: 10px;
-                padding-bottom: 5px;
-                font-size: 8pt;
-                font-style: italic;
+    /*Adding Changes here*/
+    .flight-name{ width:100%;margin-bottom:3mm;
+        .flight-icon {text-align:center; float:left; width:13%; margin-right:2%; /* ini buat icon maskapai dan no pnr, width 12, margin 3*/
+                .flight-airline {width:100%;}
             }
-            /* buat no penerbangan*/
-            .flight-pnr {
-                position: absolute;
-                top: 0;
-                right: 0;
-                float: right;
-                width: 21%;
-                background: #38B3E3 url(/Assets/images/blue-bg.png) center center repeat;
-                border: 1px solid #38B3E3;
-                color: #fff;
-                padding: 1mm 0;
-                font-weight: bold;
-                text-align: center;
-                font-size: 8pt;
-            }
-            .ticket-date {
-                width: 100%;
-                position: relative;
-                .date-now {
-                    float: left;
-                    width: 50%;
-                    margin-right: 3%;
-                }
-                .line-date {
-                    top: 40px;
-                    right: 0;
-                    position: absolute;
-                    width: 62%;
-                }
+        .flight-det{ width:100%; position:relative;
+            .flight-number { float:left;width:67%; margin-right:3%; margin-bottom:10px; padding-bottom:5px; font-size:8pt; font-style:italic;} /* buat no penerbangan*/
+            .flight-pnr {position:absolute; top:0; right:0;float:right; width:21%; background:#38B3E3 url(/Assets/images/blue-bg.png) center center repeat; border:1px solid #38B3E3; color:#fff; padding:1mm 0; font-weight:bold; text-align:center; font-size:8pt;}
+            .ticket-date{width:100%;position:relative;
+                .date-now{float:left; width:50%; margin-right:3%}
+                .line-date{top:40px;right:0;position: absolute;width:62%}
             }
         }
-    }
+    }    
 
     .flight-list {
-        .flight {
-            width: 100%;
-            margin-bottom: 3mm;
+        .flight {width:100%; margin-bottom:3mm;
             &:before, &:after {@include clearfix;}
-            h3, h4 {
-                margin: 0;
-                padding: 0;
+            h3, h4 {margin:0; padding:0;}
+            .flight-name{ width:100%;margin-bottom:3mm;
+        .flight-icon {text-align:center; float:left; width:13%; margin-right:2%; /* ini buat icon maskapai dan no pnr, width 12, margin 3*/
+                .flight-airline {width:100%;}
             }
-            .flight-name {
-                width: 100%;
-                margin-bottom: 3mm;
-                .flight-icon {
-                    text-align: center;
-                    float: left;
-                    width: 13%;
-                    margin-right: 2%; /* ini buat icon maskapai dan no pnr, width 12, margin 3*/
-                    .flight-airline {width: 100%;}
-                }
-                .flight-det {
-                    width: 100%;
-                    position: relative;
-                    .flight-number {
-                        float: left;
-                        width: 67%;
-                        margin-right: 3%;
-                        margin-bottom: 10px;
-                        padding-bottom: 5px;
-                        font-size: 8pt;
-                        font-style: italic;
-                    }
-                    /* buat no penerbangan*/
-                    .flight-pnr {
-                        position: absolute;
-                        top: 0;
-                        right: 0;
-                        float: right;
-                        width: 21%;
-                        background: #38B3E3 url(/Assets/images/blue-bg.png) center center repeat;
-                        border: 1px solid #38B3E3;
-                        color: #fff;
-                        padding: 1mm 0;
-                        font-weight: bold;
-                        text-align: center;
-                        font-size: 8pt;
-                    }
-                    .ticket-date {
-                        width: 100%;
-                        position: relative;
-                        .date-now {
-                            float: left;
-                            width: 50%;
-                            margin-right: 3%;
-                        }
-                        .line-date {
-                            right: 0;
-                            position: absolute;
-                            width: 62%;
-                        }
-                    }
-                }
+        .flight-det{ width:100%; position:relative;
+            .flight-number { float:left;width:67%; margin-right:3%; margin-bottom:10px; padding-bottom:5px; font-size:8pt; font-style:italic;} /* buat no penerbangan*/
+            .flight-pnr {position:absolute; top:0; right:0;float:right; width:21%; background:#38B3E3 url(/Assets/images/blue-bg.png) center center repeat; border:1px solid #38B3E3; color:#fff; padding:1mm 0; font-weight:bold; text-align:center; font-size:8pt;}
+            .ticket-date{width:100%;position:relative;
+                .date-now{float:left; width:50%; margin-right:3%}
+                .line-date{right:0;position: absolute;width:62%}
             }
-            .flight-detail {
-                float: right;
-                width: 85%;
-                margin-top: 10px;
-
-                .flight-route {
-                    width: 100%; /* ini membentuk table buat table detail penerbangan*/
-                    &:before, &:after {@include clearfix;}
-                    & > div {float: left;
-                        h3:first-child {font-weight: bold;}
-                    }
-                    h3 {
-                        font-size: 10pt;
-                        margin-bottom: 1mm;
-                    }
-                    .departure-airline {
-                        text-align: right;
-                        width: 20%;
-                    }
-                    .departure-date {
-                        text-align: right;
-                        width: 15%;
-                    }
-                    .duration {
-                        text-align: center;
-                        width: 30%;
-                        padding: 0 15px;
-                        :after {
-                            content: "";
-                            display: block;
-                            width: 100%;
-                            clear: both;
-                            border-bottom: 1px solid #333;
-                            padding-top: 5px;
-                        }
-                        h3 {
-                            font-weight: normal !important;
-                            font-size: 8pt;
-                        }
-                    }
-                    .arrival-date {width: 15%;}
-                    .arrival-airline {width: 20%;}
-                }
-            }
-        }   
-
-        .transit {
-            float: right;
-            width: 100%;
-            border: 1px dashed #666;
-            padding: 2mm 0;
-            text-align: center;
-            margin-bottom: 3mm;
-            font-size: 8pt;
         }
+    }
+            .flight-detail {float:right; width:85%;margin-top:10px;
+                .flight-route {width:100%;     /* ini membentuk table buat table detail penerbangan*/
+                    &:before,&:after {@include clearfix;}
+                    &>div {float:left;
+                        h3:first-child {font-weight:bold;}
+                    }
+                    h3 {font-size:10pt; margin-bottom:1mm;}
+                    .departure-airline {text-align:right; width:20%;}
+                    .departure-date {text-align:right; width:15%;}
+                    .duration {text-align:center; width:30%; padding:0 15px;
+                        :after {content:""; display:block; width:100%; clear:both; border-bottom:1px solid #333; padding-top:5px;}
+                        h3 {font-weight:normal !important; font-size:8pt;}
+                    }
+                    .arrival-date {width:15%;}
+                    .arrival-airline {width:20%;}
+                }
+            }
+        }
+        .transit {float:right; width:100%; border:1px dashed #666; padding:2mm 0; text-align:center; margin-bottom:3mm; font-size:8pt;}
     }
 }
 
 /* passengers */
-.passenger-wrapper {
-    width: 100%;
-    margin-bottom: 25px;
-
-    thead {
-        border: 2px solid #666;
-        th {
-            padding: 1mm 0;
-            font-size: 10pt;
-        }
+.passenger-wrapper {width:100%; margin-bottom:25px;
+    thead {border:2px solid #666;
+        th {padding:1mm 0; font-size:10pt;}
     }
     tbody {
-        td {
-            padding: 1mm 0;
-            font-size: 10pt;
+        td {padding:1mm 0; font-size:10pt;}
+    }
+    .no {width:10%; text-align:center;}
+    .name {width:70%;}
+    .type {width:20%; text-align:center;}
+}
+
+.flight-title2 {text-align:center; position:relative; font-size:12pt; font-weight:bold; color:#666; -webkit-print-color-adjust:exact;
+        &>span {background:url(/Assets/images/white-bg.png) top center repeat #fff; z-index:2; position:relative; padding:0 20px; overflow:hidden; z-index:2; -webkit-print-color-adjust:exact;
         }
+        &:after {content:""; display:block; clear:both; width:100%; border-top:2px solid #666; position:absolute; margin-top:-10px;}
     }
-    .no {
-        width: 10%;
-        text-align: center;
-    }
-    .name {width: 70%;}
-    .type {
-        width: 20%;
-        text-align: center;
-    }
-}
-
-.flight-title2 {
-    text-align: center;
-    position: relative;
-    font-size: 12pt;
-    font-weight: bold;
-    color: #666;
-    -webkit-print-color-adjust: exact;
-
-    & > span {
-        background: url(/Assets/images/white-bg.png) top center repeat #fff;
-        z-index: 2;
-        position: relative;
-        padding: 0 20px;
-        overflow: hidden;
-        z-index: 2;
-        -webkit-print-color-adjust: exact;
-    }
-
-    &:after {
-        content: "";
-        display: block;
-        clear: both;
-        width: 100%;
-        border-top: 2px solid #666;
-        position: absolute;
-        margin-top: -10px;
-    }
-}
 
 /**
 Site Footer
 */
-.page-footer {
-    position: absolute;
-    width: 100%;
-    bottom: 0;
-    padding-bottom: 10px;
-    -webkit-print-color-adjust: exact;
+.page-footer {position:absolute; width:100%; bottom:0; padding-bottom:10px; -webkit-print-color-adjust:exact; 
 }
 
 /*Voucher Hotel*/
@@ -412,33 +172,25 @@ Site Footer
     font-family: 'Open Sans', sans-serif;
     font-size: 9pt;
     .col-half {
-        width: 50%;
-        float: left;
-        position: relative;
-        min-height: 1px;
+       width: 50%;
+       float: left;
+       position: relative;
+       min-height: 1px;
     }
     .col-3 {
-        width: 30%;
-        float: left;
-        position: relative;
-        min-height: 1px;
+       width: 30%;
+       float: left;
+       position: relative;
+       min-height: 1px;
     }
     .col-7 {
-        width: 70%;
-        float: left;
-        position: relative;
-        min-height: 1px;
+       width: 70%;
+       float: left;
+       position: relative;
+       min-height: 1px;
     }
-    h4 {
-        font-size: 12pt;
-        line-height: 100%;
-        margin: 0;
-    }
-    h3 {
-        font-size: 20pt;
-        line-height: 100%;
-        margin: 0;
-    }
+    h4 {font-size: 12pt; line-height: 100%; margin: 0;}
+    h3 {font-size: 20pt; line-height: 100%; margin: 0;}
     .page-header {
         margin: 0;
         padding: 0.5cm 1cm;
@@ -446,9 +198,9 @@ Site Footer
         background: #38b3e3;
         .page-title h3 {
             margin: 2mm 0;
-            color: #fff;
-            font-weight: 700;
-            font-size: 20pt;
+            color: #fff; 
+            font-weight: 700; 
+            font-size: 20pt; 
         }
     }
     .page-content {padding: 0;}
@@ -461,31 +213,29 @@ Site Footer
     .sm-txt {font-size: 7.5pt;}
     .bold-txt {
         font-family: 'Open Sans Bold', sans-serif;
-        font-weight: 700;
+        font-weight: 700
     }
     .semibold-txt {
         font-family: 'Open Sans Semibold', sans-serif;
-        font-weight: 600;
+        font-weight: 600
     }
     .regular-txt {
         font-family: 'Open Sans', sans-serif;
-        font-weight: normal;
+        font-weight: normal
     }
     .right-txt {text-align: right;}
     .italic-txt {font-style: italic;}
-    .hotel-wrapper {
-        width: 100%;
+    .hotel-wrapper {width: 100%;
         &.room {
             padding: 0.6cm 1cm;
             h3, h4 {display: inline-block;}
             h3.lightgrey-txt {padding: 0 5mm;}
             .room-top {
                 border-bottom: 0.6mm dotted #b7b7b7;
-                .guest {margin: 5mm 0; }
+                .guest {margin: 5mm 0;}
             }
             .room-bottom {margin: 5mm 0;}
         }
-
         .hotel-bottom {
             padding: 0.6cm 1cm;
             h3 {letter-spacing: 0.5mm;}
@@ -526,13 +276,14 @@ Site Footer
             .hb-middle {padding: 4mm 0;}
             .hb-bottom {
                 margin: 6mm 0;
-                .hotel-detail {margin-top: 4mm;}
+                .hotel-detail {
+                    margin-top: 4mm;
+                }
             }
         }
-        .row {
-            margin-bottom: 2.5mm;
+        .row {margin-bottom: 2.5mm;
             &>.col-xs-9 {
-                &.unpoint:before {content: '';}
+                &.unpoint:before {content:'';}
                 &:before {
                     content: ':';
                     position: absolute;
@@ -540,12 +291,8 @@ Site Footer
                 }
             }
         }
-        .hb-bottom {
-            margin: 6mm 0;
-            .hotel-detail {margin-top: 4mm;}
-        }
     }
-    .room-title {margin-bottom: 2mm; }
+    .room-title {margin-bottom: 2mm;}
     .tnc {padding: 5mm 0;}
     .space {margin-right: 2mm;}
     .dash-border {
@@ -566,10 +313,9 @@ Site Footer
             height: 5px;
             border-radius: 5px;
             vertical-align: middle;
-            margin: -2px 6px 0;
+            margin: 2px 6px;
         }
     }
-    .room-title {margin-bottom: 2mm;}
 
     /*Icon*/
     .img-wifi, .img-phone, .img-email, .img-locatio, .img-swim {margin-right: 3mm;}
@@ -578,10 +324,10 @@ Site Footer
         height: 1cm;
     }
     .img-hotel {
-        width: 21cm;
-        height: 5cm;
-        background-size: cover;
-        background-position: center;
+        width: 21cm; 
+        height: 5cm; 
+        background-size: cover; 
+        background-position: center; 
         background-repeat: no-repeat;
     }
     .map-img {
@@ -606,28 +352,25 @@ Site Footer
         width: 5.5mm;
         height: 4mm;
     }
+    
     .star-outline {
         content: '';
         display: inline-block;
         background: url(/Assets/travorama20/images/Hotel/star-outline.png);
         height: 16px;
-    }
-    .so-1 {
+    } .so-1 {
         @extend .star-outline;
         width: 19px;
         margin-left: 68px;
-    }
-    .so-2 {
+    } .so-2 {
         @extend .star-outline;
         width: 38px;
         margin-left: 51px;
-    }
-    .so-3 {
+    } .so-3 {
         @extend .star-outline;
         width: 57px;
         margin-left: 34px;
-    }
-    .so-4 {
+    } .so-4 {
         @extend .star-outline;
         width: 76px;
         margin-left: 17px;
@@ -638,26 +381,20 @@ Site Footer
         height: 16px;
         width: 17px;
         margin: 2mm 0;
-        &.star-2 {width: 34px;}
+        &.star-2 {width: 34px;} 
         &.star-3 {width: 51px;}
         &.star-4 {width: 68px;}
         &.star-5 {width: 85px;}
+        
         &.e-star {
             &:after {@extend .so-4;}
             &.star-2 {width: 34px;
                 &:after {@extend .so-3;}
-            }
-            &.star-3 {width: 51px;
+            } &.star-3 {width: 51px; 
                 &:after {@extend .so-2;}
-            }
-            &.star-4 {width: 68px;
+            } &.star-4 {width: 68px;
                 &:after {@extend .so-1;}
-            }
-            &.star-5 {width: 85px;}
+            } &.star-5 {width: 85px;}
         }
     }
-}
-
-@media print {
-    .page { page-break-before: always;}
 }
