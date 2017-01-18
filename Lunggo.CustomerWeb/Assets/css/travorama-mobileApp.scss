@@ -1,0 +1,84 @@
+﻿body.page-mobileApp {background: #ffffff;}
+.travorama-mobileApp {
+    .mobileApp-top {
+        background-image: url('/Assets/images/campaign/MobileApp/background.jpg');
+        display: block;
+        width: 100%;
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        min-height: 780px;
+        text-align: center;
+        .big-txt {
+            font-size: 32px; 
+            font-weight: 600;
+            line-height: 40px;
+            padding-top: 120px;
+        }
+        .sm-txt {
+            font-size: 14px;
+            margin: 35px 0 25px;
+        }
+        .app-download {
+            a {
+                &.playstore-icon {    
+                    background: url("/Assets/images/campaign/MobileApp/play-store.png") no-repeat;
+                    width: 134px;
+                    height: 46px;
+                    display: inline-block;
+                }
+                &.appstore-icon {
+                    background: url("/Assets/images/campaign/MobileApp/app-store.png") no-repeat;
+                    width: 138px;
+                    height: 46px;
+                    display: inline-block;
+                    margin-left: 30px;
+                }
+            }
+            
+        }
+    }
+    .mobileApp-bottom {
+        margin: 45px auto;
+        .title-bg {
+            font-size: 28px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-align: center;
+            margin-bottom: 45px;
+            span.blue-txt {color: #1daee4;}
+        }
+        .mobileApp-content {
+            background: url('/Assets/images/campaign/MobileApp/box-photo.png');
+            background-repeat: no-repeat;
+            background-size: 100%;
+            padding: 100px 0 50px;
+        }
+        .mobileApp-txtbx {
+            height: 220px;
+            &.right {margin-left: 415px;}
+            &.left {
+                margin-right: 435px;
+                text-align: right;
+            }
+            .txtbx-title {
+                color: #1daee4;
+                font-size: 14px;
+                font-weight: 700;
+                margin-bottom: 5px;
+            }
+            &.txtbx-1 {padding: 18px 67px 0;}
+            &.txtbx-2 {padding: 10px 60px 0;}
+            &.txtbx-3 {padding: 16px 67px 0;}
+            &.txtbx-4 {padding: 16px 60px 0;}
+            &.txtbx-5 {padding: 18px 67px 0;}
+            &.txtbx-6 {padding: 22px 60px 0;}
+            &.txtbx-7 {padding: 52px 67px 0;}
+            .txtbx-desc {line-height:14px;}
+        }
+    }
+    .mobileApp-wrapper {max-width: none;
+        &.container {width: 860px; padding:0;}
+    }
+}

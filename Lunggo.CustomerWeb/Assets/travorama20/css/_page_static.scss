@@ -35,19 +35,20 @@
 
 // page questions
 .page-faq {
-
     .question-wrapper {
-        &>ol {list-style:none; counter-reset:main-number;
+        &>ol {list-style:none; counter-reset:main-number; padding-left: 0;
             &>li {position:relative;
                 > header {padding-left:40px;
                     h2 {color:$color-main-blue; font-size:18px; line-height:30px; @extend .os-bold;
                         span {font-size:14px; text-decoration:underline; cursor:pointer;}
                     }
                 }
+                .faq-content {margin-top: 12px;}
                 &:before {content:counter(main-number); counter-increment:main-number; background:#ffd632; color:#4f3500; position:absolute; height:30px; width:30px; text-align:center; @include border-radius(50px); font-size:14px; @extend .os-semibold; font-weight:600; padding-top:5px;}
                 &>ol {list-style:none; counter-reset:sub-number;
-                    &>li {position:relative; background:#fff; padding:12px; border:$border-default; padding-left:42px;
-                        &:before {content:counter(main-number) '.' counter(sub-number); counter-increment:sub-number; position:absolute; top:12px; left:12px;}
+                    &>li {position:relative; background:#fff; padding:14px; border:$border-default; padding-left:42px; border-bottom: none;
+                        &:last-child {border-bottom: $border-default;}
+                        &:before {content:counter(main-number) '.' counter(sub-number); counter-increment:sub-number; position:absolute; top:12px; left:12px; @extend .os-bold; color: #1daee4;}
                         > header {color:$color-main-blue; cursor:pointer;
                             > h3 {margin:0; font-size:17px; padding-right:25px;
                                 span {width:23px; height:22px; border:2px solid $color-main-blue; display:inline-block; @include border-radius(15px); background-image:url(/Assets/images/faq-toggle-sprite.png); background-position:-13px 0; position:absolute; right:10px; top:10px;}
@@ -57,7 +58,7 @@
                         > section {}
                         // if active
                         &.active {
-                            > header {margin-bottom:12px;
+                            > header {
                                 > h3 {
                                     span {background-position:1px 0;}
                                 }
@@ -77,7 +78,7 @@
     ol.listing {list-style:none; counter-reset:main-counter; margin:0; padding:0;
         > li {position:relative; padding-left:40px;
             &:before {content:counter(main-counter); counter-increment:main-counter; background:#ffd632; color:#4f3500; position:absolute; width:30px; height:30px; text-align:center; @extend .os-bold; @include border-radius(30px); padding-top:6px; top:0; left:0;}
-            h4 {color:$color-main-blue; @extend .os-semibold; font-weight:600; line-height:18px; padding-top:6px;}
+            h4 {color:$color-main-blue; @extend .os-semibold; font-weight:600; line-height:22px; padding-top:6px;}
             ol {list-style:lower-alpha;
                 > li {color:$color-main-blue; @extend .os-bold;
                     p {color:#333; font-weight:normal;}
@@ -85,6 +86,19 @@
             }
         }
     }
+    .static-container {margin-bottom: 50px;}
+}
+
+.page-term ol.listing > li ol {
+    padding-left: 0;
+    line-height: 20px;
+    &>li {padding-bottom: 7.5px;}
+}
+
+.page-privacy {
+    p {line-height: 20px;}
+    &.page-static ol.listing > li {padding-bottom: 7.5px;}
+    ul {padding-left:18px;}
 }
 
 // page contact
@@ -199,7 +213,10 @@
         img {width:742px; margin-left:-160px;}
     }
     .howto-header {background:url(/Assets/images/howtoorder-header.jpg) top center no-repeat; background-size:cover;}
-    .section-howtoorder {padding-top:30px;}
+    .section-howtoorder {padding-top:30px;
+        &.container {max-width: none !important;}
+    }
+    .list-wrapper .list .list-summary > .container {width: 808px}
 }
 
 .page-howtopay {
@@ -207,7 +224,9 @@
         span {background-position:-30px 0;}
     }
     .howto-header {background:url(/Assets/images/howtopay-header.jpg) top center no-repeat; background-size:cover;}
-    .section-howtopay {padding-top:30px;}
+    .section-howtopay {padding-top:30px;
+        &.container {max-width: none !important;}
+    }
 }
 
 // page campaign

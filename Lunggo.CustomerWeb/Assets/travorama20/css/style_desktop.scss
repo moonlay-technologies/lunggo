@@ -156,6 +156,20 @@ span.close {cursor:pointer;}
     font-weight: 700;
 }
 
+.darkgrey-txt {color: #555555;}
+.blue-txt {color: $color-main-blue;
+    &.bg {
+        font-size: 16px;
+        @extend .os-bold; 
+        font-weight: 700;
+        line-height: 20px;
+    }
+}
+.grey-txt {color: #999;}
+.green-txt {color: #3a8e1b;}
+.orange-txt {color: #ff7200;}
+.white-txt {color: #ffffff;}
+
 /*Custom scrollbar*/ 
 .custom-scroll {
     &::-webkit-scrollbar {width: 13px;}
@@ -165,9 +179,12 @@ span.close {cursor:pointer;}
 
 .btn.btn-yellow {background:#ffd632; border:2px solid #ebb600; color:#4f3500; @extend .os-bold; height: auto;
     &.lg-btn {@include border-radius(2px); text-transform: uppercase; padding: 10px 20px;}
-    &.sm-btn {}
+    &.sm-btn {@include border-radius(2px); text-transform: uppercase; padding: 6px 12px;}
 }
-.btn.btn-grey, .btn.btn-gray {background:#adadad; color:#fff; @extend .os-bold; border:2px solid #999;}
+.btn.btn-grey, .btn.btn-gray {background:#adadad; color:#fff; @extend .os-bold; border:2px solid #999;
+    &.lg-btn {@include border-radius(2px); text-transform: uppercase; padding: 10px 20px;}
+    &.sm-btn {@include border-radius(2px); text-transform: uppercase; padding: 6px 12px;}
+}
 .btn.block {display:block; width:100%;}
 
 .result-form-right .btn-yellow {

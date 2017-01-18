@@ -277,6 +277,12 @@
     <Content Include="Assets\bootstrap\bootstrap.css" />
     <Content Include="Assets\bootstrap\bootstrap.min.css" />
     <Content Include="Assets\css\font-awesome.min.css" />
+    <Content Include="Assets\css\global-error.css">
+      <DependentUpon>global-error.scss</DependentUpon>
+    </Content>
+    <Content Include="Assets\css\help_section.css">
+      <DependentUpon>help_section.scss</DependentUpon>
+    </Content>
     <Content Include="Assets\css\invoice.css">
       <DependentUpon>invoice.scss</DependentUpon>
     </Content>
@@ -293,6 +299,9 @@
     </Content>
     <Content Include="Assets\css\promo.min.css">
       <DependentUpon>promo.css</DependentUpon>
+    </Content>
+    <Content Include="Assets\css\travorama-mobileApp.css">
+      <DependentUpon>travorama-mobileApp.scss</DependentUpon>
     </Content>
     <Content Include="Assets\fonts\bootstrap\glyphicons-halflings-regular.svg" />
     <Content Include="Assets\fonts\DINB-webfont.svg" />
@@ -616,7 +625,12 @@
     <Content Include="Assets\images\campaign\malaysia-text.png" />
     <Content Include="Assets\images\campaign\malaysia-thumb.jpg" />
     <Content Include="Assets\images\campaign\malaysia.jpg" />
+    <Content Include="Assets\images\campaign\MobileApp\app-store-cs.png" />
+    <Content Include="Assets\images\campaign\MobileApp\app-store.png" />
+    <Content Include="Assets\images\campaign\MobileApp\background.jpg" />
+    <Content Include="Assets\images\campaign\MobileApp\box-photo.png" />
     <Content Include="Assets\images\campaign\MobileApp\mobile-app-banner.jpg" />
+    <Content Include="Assets\images\campaign\MobileApp\play-store.png" />
     <Content Include="Assets\images\campaign\OnlineRevolution2016\credit-card.png" />
     <Content Include="Assets\images\campaign\OnlineRevolution2016\debit.png" />
     <Content Include="Assets\images\campaign\OnlineRevolution2016\OnlineRevolution-page-mobile.jpg" />
@@ -1039,14 +1053,6 @@
     <Content Include="Assets\js\sampleData\CGKHND201015-100y.js" />
     <Content Include="Assets\js\sampleData\HNDCGK231015-100y.js" />
     <Content Include="Assets\js\xml2json.min.js" />
-    <Content Include="Assets\mobile\css\global-error.css" />
-    <Content Include="Assets\mobile\css\global-error.min.css">
-      <DependentUpon>global-error.css</DependentUpon>
-    </Content>
-    <Content Include="Assets\mobile\css\help_section.css" />
-    <Content Include="Assets\mobile\css\help_section.min.css">
-      <DependentUpon>help_section.css</DependentUpon>
-    </Content>
     <Content Include="Assets\mobile\css\style_mobile.css" />
     <Content Include="Assets\mobile\css\style_mobile.min.css">
       <DependentUpon>style_mobile.css</DependentUpon>
@@ -1175,12 +1181,8 @@
     <Content Include="Assets\travorama20\angularDirectory\priceDetail\priceDetailDirMobile.js" />
     <Content Include="Assets\travorama20\angularDirectory\priceDetail\priceDetailTemplate.html" />
     <Content Include="Assets\travorama20\angularDirectory\search\hotelSearch.service.js" />
-    <Content Include="Assets\travorama20\css\help_section.min.css" />
     <Content Include="Assets\travorama20\css\style_desktop.css">
       <DependentUpon>style_desktop.scss</DependentUpon>
-    </Content>
-    <Content Include="Assets\travorama20\css\style_desktop.min.css">
-      <DependentUpon>style_desktop.css</DependentUpon>
     </Content>
     <Content Include="Assets\travorama20\images\app-store-bg.png" />
     <Content Include="Assets\travorama20\images\app-store-cs.png" />
@@ -1428,8 +1430,6 @@
     <Content Include="Assets\fonts\Gotham-Medium.otf" />
     <Content Include="Assets\fonts\Gotham-Medium.ttf" />
     <Content Include="Assets\fonts\Gotham-Medium.woff" />
-    <Content Include="Assets\mobile\css\global-error.scss" />
-    <Content Include="Assets\mobile\css\help_section.scss" />
     <Content Include="Assets\mobile\css\style_mobile.scss" />
     <Content Include="Assets\mobile\css\_home_page_layout.scss" />
     <Content Include="Assets\mobile\css\_page_account.scss" />
@@ -1440,7 +1440,6 @@
     <Content Include="Assets\mobile\css\_page_hotel_detail.scss" />
     <Content Include="Assets\mobile\css\_page_hotel_search.scss" />
     <Content Include="Assets\mobile\css\_page_static.scss" />
-    <Content Include="Assets\travorama20\css\help_section.css.map" />
     <Content Include="Assets\travorama20\css\style_desktop.scss" />
     <Content Include="Assets\travorama20\css\_footer.scss" />
     <Content Include="Assets\travorama20\css\_header.scss" />
@@ -1470,6 +1469,9 @@
     <Content Include="Assets\fonts\OpenSans-Semibold.ttf" />
     <Content Include="Assets\fonts\OpenSans-Semibold.woff" />
     <Content Include="Assets\fonts\OpenSans-Semibold.woff2" />
+    <Content Include="Assets\css\help_section.scss" />
+    <Content Include="Assets\css\global-error.scss" />
+    <Content Include="Assets\css\travorama-mobileApp.scss" />
     <None Include="Properties\PublishProfiles\prod-cw %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\dv1-cw.pubxml" />
     <None Include="Properties\PublishProfiles\dv2-cw.pubxml" />

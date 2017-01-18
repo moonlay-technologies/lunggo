@@ -81,15 +81,15 @@ namespace Lunggo.ApCommon.Flight.Service
                 var seachedItinListsForDisplay =
                     searchedItinLists.Skip(ParseTripType(input.SearchId) != TripType.OneWay ? 1 : 0).Select(lists => lists.Select(ConvertToItineraryForDisplay).ToList()).ToArray();
 
-                var combos = searchedSuppliers.SelectMany(sup => GetCombosFromCache(input.SearchId, sup)).ToList();
-                SetComboFare(seachedItinListsForDisplay, searchedItinLists[0], combos, localCurrency);
+                //var combos = searchedSuppliers.SelectMany(sup => GetCombosFromCache(input.SearchId, sup)).ToList();
+                //SetComboFare(seachedItinListsForDisplay, searchedItinLists[0], combos, localCurrency);
 
                 var expiry = searchedSuppliers.Select(supplier => GetSearchedItinerariesExpiry(input.SearchId, supplier)).Min();
                 output.IsSuccess = true;
                 output.SearchId = input.SearchId;
                 output.ExpiryTime = expiry;
                 output.ItineraryLists = seachedItinListsForDisplay;
-                output.Combos = combos.Any() ? combos.Select(ConvertToComboForDisplay).ToList() : null;
+                //output.Combos = combos.Any() ? combos.Select(ConvertToComboForDisplay).ToList() : null;
                 output.Progress = CalculateProgress(input.Progress, searchedSupplierIds.Count, Suppliers.Count);
 
                 //if (output.Progress == 100)
