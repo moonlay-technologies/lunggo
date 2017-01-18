@@ -268,18 +268,22 @@
                     </ul>
                 </div>
                 
-                <div ng-show="!searchDone" class="text-center">
-                    <img src="/Assets/images/load.gif" style="width:5%; margin-left: 10%">
-                </div>
-                <div ng-show="noResults" style="font-size: 20px; text-align: center">
-                    Hasil pencarian kamar tidak ditemukan
-                </div>
-                <div class="room clearfix" ng-hide="!searchDone">
+                
+                <div class="room clearfix" >
                     <div class="top-title clearfix">
                         <div class="col-left-rs bg-title"><b>Pilih</b> Kamar </div>
-                        <div class="col-right-rs total-day">{{hotel.nightCount}} Malam <b>( {{hotel.checkinDate | date : 'EEEE, dd MMM yyyy'}} - {{hotel.checkoutDate | date : 'EEEE, dd MMM yyyy'}} )</b></div>
+                        <div ng-hide="!searchDone">
+                            <div class="col-right-rs total-day">{{hotel.nightCount}} Malam <b>({{hotel.checkinDate | date : 'EEEE, dd MMM yyyy'}} - {{hotel.checkoutDate | date : 'EEEE, dd MMM yyyy'}})</b></div>
+                            <div class="col-right-rs total-day">{{lastSearch.totalOcc}} Kamar</div>
+                        </div>                  
                     </div>
-                    <div class="room-sort clearfix">
+                    <div ng-show="!searchDone" class="text-center">
+                        <img src="/Assets/images/load.gif" style="width:5%; margin-left: 10%">
+                    </div>
+                    <div ng-show="noResults" style="font-size: 20px; text-align: center">
+                        Hasil pencarian kamar tidak ditemukan
+                    </div>
+                    <div class="room-sort clearfix" ng-hide="!searchDone">
                         <div class="col-6">Tipe Kamar</div>
                         <div class="col-4">
                             <div class="tab-hotel-price clearfix">

@@ -13,10 +13,14 @@
     <div class="container clearfix">
         <div class="col-8">
             <div class="result-form-left">
-                <span class="md-txt" ng-bind-html="loc">Hasil Pencarian Hotel di: <b>@ToTitleCase.ConvertToTitleCase(Model.Location)</b ></span><br /> 
                 @if (!Model.IsHotelSearch)
                 {
+                    <span class="md-txt">Hasil Pencarian Hotel di <b>@ToTitleCase.ConvertToTitleCase(Model.Location)</b></span><br />
                     <span class="">{{hotelSearch.destinationNightCount}} Malam <b>({{hotelSearch.destinationCheckinDate | date : 'EEEE, dd MMM yyyy'}} - {{hotelSearch.destinationCheckoutDate | date : 'EEEE, dd MMM yyyy'}})</b></span>
+                }
+                else 
+                {
+                    <span class="md-txt">Hasil Pencarian Kamar di <b>@ToTitleCase.ConvertToTitleCase(Model.Location)</b></span><br />
                 }
                 
             </div>

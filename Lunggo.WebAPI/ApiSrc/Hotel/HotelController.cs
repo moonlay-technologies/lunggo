@@ -13,6 +13,7 @@ namespace Lunggo.WebAPI.ApiSrc.Hotel
     {
         [HttpPost]
         [LunggoCorsPolicy]
+        [Authorize]
         [Route("v1/hotel/book")]
         public ApiResponseBase BookHotel()
         {
@@ -35,6 +36,7 @@ namespace Lunggo.WebAPI.ApiSrc.Hotel
 
         [HttpPost]
         [LunggoCorsPolicy]
+        [Authorize]
         [Route("v1/hotel/select")]
         public ApiResponseBase SelectHotel()
         {
@@ -101,6 +103,7 @@ namespace Lunggo.WebAPI.ApiSrc.Hotel
 
         [HttpPost]
         [LunggoCorsPolicy]
+        [Authorize]
         [Route("v1/hotel/search")]
         public ApiResponseBase SearchHotel()
         {
@@ -124,6 +127,7 @@ namespace Lunggo.WebAPI.ApiSrc.Hotel
 
         [HttpGet]
         [LunggoCorsPolicy]
+        [Authorize]
         [Route("v1/hotel/GetHotelDetail/{searchId}/{hotelCd}")]
         public ApiResponseBase GetHotelDetail(string searchId, int hotelCd)
         {
@@ -206,6 +210,7 @@ namespace Lunggo.WebAPI.ApiSrc.Hotel
 
         [HttpPost]
         [LunggoCorsPolicy]
+        [Authorize]
         [Route("v1/hotel/availableRate")]
         public ApiResponseBase GetAvailableRate()
         {

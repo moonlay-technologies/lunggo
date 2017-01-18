@@ -108,7 +108,8 @@
     @if (Model.IsHotelSearch)
     {
         <div class="bottom-wrap form-group form__submit">
-            <button class="btn btn-yellow btn-block btn-lg btnSubmit" ng-click="PageConfig.SetOverlay(); availableRates(hotelSearch.nightCount,
+            <button class="btn btn-yellow btn-block btn-lg btnSubmit" ng-click="PageConfig.SetOverlay();
+                    slideToResults('Mobile'); availableRates(hotelSearch.nightCount,
                     hotelSearch.checkinDate, hotelSearch.checkoutDate, hotelSearch.occupancies,hotelSearch.roomCount)">
                 CARI KAMAR
             </button>

@@ -234,7 +234,6 @@ function ($scope, $log, $window, $http, $resource, $timeout, $interval, hotelSea
         $scope.pageCount = 0;
 
         $timeout(function () { }, 1);
-
         searchPromise().then(function (data) {
             $scope.expired = false;
             if (validateResponse(data) == false) {
