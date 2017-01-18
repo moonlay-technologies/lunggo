@@ -19,7 +19,8 @@
 
     <title>Travorama - Voucher</title>
 
-    <link rel="stylesheet" href="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/css/bootstrap.min.css")" />
+    <!-- stylesheets -->
+    <link rel="stylesheet" href="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/bootstrap/bootstrap.min.css")" />
     <link rel="stylesheet" href="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/css/font-awesome.min.css")" />
     <link rel="stylesheet" href="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/css/neweticket.css")" />
 </head>
@@ -45,12 +46,12 @@
         <section class="page-content">
             <div class="hotel-wrapper">
                 <div class="hotel-top">
-                    <div class="map-img" style="background-image: url('@Model.HotelDetail.MainImage');"></div>
+                    <div style="background-image: url(@Model.HotelDetail.MainImage);" class="img-hotel"></div>
                 </div>
                 <div class="hotel-bottom grey-txt">
                     <div class="hb-top">
                         <div class="row">
-                            <div class="col-xs-7">
+                            <div class="col-xs-6">
                                 <h4 class="hotel-name blue-txt uppercase bold-txt">@Model.HotelDetail.HotelName</h4>
                                 @if (Model.HotelDetail.StarRating == 0 || Model.HotelDetail.StarRating == 1)
                                 {
@@ -79,24 +80,26 @@
                                     @Model.HotelDetail.PhonesNumbers[0]
                                 </p>
                             </div>
-                            <div class="col-xs-5 right-txt clearfix">
+                            <div class="col-xs-6 right-txt clearfix">
                                 <div class="row">
                                     <h4 class="regular-txt no-reserve">
                                         Nomor Pesanan
                                         <h3 class="blue-txt bold-txt">@Model.HotelDetail.BookingReference</h3>
                                     </h4>
                                 </div>
-                                <div class="row">
-                                    Payable through @Model.HotelDetail.SupplierName, acting as agent for the service operating
-                                    company, details of which can be provided upon request. VAT: @Model.HotelDetail.SupplierVat
-                                    Reference: @Model.HotelDetail.BookingReference
+                                <div class="row tnc">
+                                    Payable through @Model.HotelDetail.SupplierName, <br />
+                                    acting as agent for the service operating company, details of which can be provided upon request. <br />
+                                    VAT: @Model.HotelDetail.SupplierVat Reference: @Model.HotelDetail.BookingReference
                                 </div>
                             </div>
 
                         </div>
                     </div>
                     <div class="hb-middle">
-                        <img class="map-img" src="@Model.HotelDetail.MapImage" />
+                        <div class="map-img" style="background-image: url(@Model.HotelDetail.MapImage)"></div>
+                        <div class="map-marker" style="background-image: url('http://maps.google.com/mapfiles/ms/icons/red-dot.png')"></div>
+                        <div class="map-name">@Model.HotelDetail.HotelName</div>
                     </div>
                     <div class="hb-bottom">
                         <h4 class="semibold-txt">DETAIL PEMESANAN</h4>
@@ -127,9 +130,9 @@
                                         <div class="col-xs-4">Check out</div>
                                     </div>
                                     <div class="row clearfix blue-txt semibold-txt">
-                                        <div class="col-xs-4"><h4>@Model.HotelDetail.CheckInDate.ToString("D", CultureInfo.CreateSpecificCulture("id-ID"))</h4></div>
+                                        <div class="col-xs-4"><h4 class="h4-height">@Model.HotelDetail.CheckInDate.ToString("D", CultureInfo.CreateSpecificCulture("id-ID"))</h4></div>
                                         <div class="col-xs-3"></div>
-                                        <div class="col-xs-4"><h4>@Model.HotelDetail.CheckOutDate.ToString("D", CultureInfo.CreateSpecificCulture("id-ID"))</h4></div>
+                                        <div class="col-xs-4"><h4 class="h4-height">@Model.HotelDetail.CheckOutDate.ToString("D", CultureInfo.CreateSpecificCulture("id-ID"))</h4></div>
                                     </div>
                                     <div class="row clearfix">
                                         <div class="col-xs-4">14.00</div>
@@ -242,15 +245,7 @@
                                     <ul class="blue-point">
                                         @if (Model.HotelDetail.Facilities != null && Model.HotelDetail.Facilities.Other != null && Model.HotelDetail.Facilities.Other.Count != 0)
                                         {
-                                            var facilities = new List<string>();
-                                            foreach (var fac in Model.HotelDetail.Facilities.Other)
-                                            {
-                                                if (fac.Length > 0)
-                                                {
-                                                    facilities.Add(fac);
-                                                }
-                                            }
-                                            //Model.HotelDetail.Facilities.Other.Where(f => f.Length > 0).ToList();
+                                            var facilities = Model.HotelDetail.Facilities.Other.Where(f => f.Length > 0).ToList();
                                             if (facilities.Count == 1)
                                             {
                                                 <li>@facilities[0]</li>

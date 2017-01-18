@@ -74,7 +74,7 @@ namespace Lunggo.CloudApp.EticketHandler
                     : "http://photos.hotelbeds.com/giata/bigger/" + firstOrDefault.Path;
 
             reservation.HotelDetail.MapImage =
-                "https://maps.googleapis.com/maps/api/staticmap?center="+ reservation.HotelDetail.Latitude +",+"+ reservation.HotelDetail.Longitude+ "&zoom=17&scale=false&size=640x180&maptype=roadmap&key=AIzaSyCRAmMz6GPXsXi1pZAl5QUsjNTcY0ZfqVA&visual_refresh=true";
+                "https://maps.googleapis.com/maps/api/staticmap?center="+ reservation.HotelDetail.Latitude +",+"+ reservation.HotelDetail.Longitude+ "&zoom=15&scale=false&size=640x180&maptype=roadmap&key=AIzaSyCRAmMz6GPXsXi1pZAl5QUsjNTcY0ZfqVA&visual_refresh=true";
             Trace.WriteLine("Parsing Voucher Template for RsvNo " + rsvNo + "...");
             sw.Start();
             var voucherTemplate = templateService.GenerateTemplate(reservation, "HotelVoucher");

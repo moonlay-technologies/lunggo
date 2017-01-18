@@ -64,9 +64,9 @@ Site Header
     .page-header-right {
         &:before, &:after {@include clearfix;}
         &>div {float:left;}
-        .page-title {padding-right:3mm;
+        /*.page-title {padding-right:3mm;
             h3 {color:#38B3E3; font-weight:bold; margin:0; margin-top:5.5mm; font-size:24pt; vertical-align:bottom; line-height:100%;}
-        }
+        }*/
         .page-help {padding-left:3mm; padding-top:15px; border-left:2px solid #ddd;
             p {margin-bottom:0; line-height:100%; margin-bottom:5px;}
             p:last-child {margin-bottom:0;}
@@ -189,7 +189,9 @@ Site Footer
        position: relative;
        min-height: 1px;
     }
-    h4 {font-size: 12pt; line-height: 100%; margin: 0;}
+    h4 {font-size: 12pt; line-height: 100%; margin: 0;
+        &.h4-height {line-height: 16pt !important;}
+    }
     h3 {font-size: 20pt; line-height: 100%; margin: 0;}
     .page-header {
         margin: 0;
@@ -273,7 +275,7 @@ Site Footer
                     }
                 }
             }
-            .hb-middle {padding: 4mm 0;}
+            .hb-middle {padding: 4mm 0; position: relative;}
             .hb-bottom {
                 margin: 6mm 0;
                 .hotel-detail {
@@ -293,7 +295,7 @@ Site Footer
         }
     }
     .room-title {margin-bottom: 2mm;}
-    .tnc {font-size: 7em;}
+    .tnc {font-size: 6pt;}
     .space {margin-right: 2mm;}
     .dash-border {
         width: 80%;
@@ -313,7 +315,7 @@ Site Footer
             height: 5px;
             border-radius: 5px;
             vertical-align: middle;
-            margin: 2px 6px;
+            margin: -2px 6px 0;
         }
     }
 
@@ -331,22 +333,31 @@ Site Footer
         background-repeat: no-repeat;
     }
     .map-img {
-	    width: 19.3cm;
+	    width: 19cm;
         height: 5.5cm;
         background-size: contain;
         background-position: center;
         background-repeat: no-repeat;
         position: relative;
-        :after {
-	        content: '';
-	        background: url('http://maps.google.com/mapfiles/ms/icons/red-dot.png') center no-repeat;
-	        width: 6mm;
-	        height: 10mm;
-	        position: absolute;
-	        left: 50%;
-	        top: 50%;
-	        transform: translate(-50%, -50%);
-	    }
+    }
+    .map-marker {
+	    background-image: url('http://maps.google.com/mapfiles/ms/icons/red-dot.png');
+        background-repeat: no-repeat;
+        height: 24pt;
+        width: 20pt;
+	    position: absolute;
+	    left: 50%;
+	    top: 50%;
+	    transform: translate(-50%, -50%);
+    }
+    .map-name {
+	    position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%,-50%);
+        font-size: 12pt;
+        font-family: 'Open Sans Semibold';
+        margin-top: 7mm;
     }
     .img-email {
         width: 5.5mm;
