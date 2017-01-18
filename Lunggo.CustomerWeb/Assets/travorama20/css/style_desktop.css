@@ -309,11 +309,11 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
 
 .search-calendar, .search-calendar-hotel {
   width: 320px;
-  height: 520px;
+  max-height: 320px;
+  width: 908px;
   background: #252525;
   position: absolute;
   top: 0;
-  left: 325px;
   z-index: 2;
   display: none; }
   .search-calendar .calendar-header, .search-calendar-hotel .calendar-header {
@@ -332,13 +332,13 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     display: none; }
 
 .hotel-date-picker, .date-picker {
-  padding: 15px; }
+  padding: 25px 50px; }
   .hotel-date-picker .ui-datepicker, .date-picker .ui-datepicker {
     width: 100% !important;
     position: relative; }
     .hotel-date-picker .ui-datepicker .ui-datepicker-group, .date-picker .ui-datepicker .ui-datepicker-group {
       width: 100%;
-      padding: 15px; }
+      padding: 15px 50px; }
       .hotel-date-picker .ui-datepicker .ui-datepicker-group + .ui-datepicker-group, .date-picker .ui-datepicker .ui-datepicker-group + .ui-datepicker-group {
         border-top: 1px solid #ccc; }
       .hotel-date-picker .ui-datepicker .ui-datepicker-group .ui-datepicker-title, .date-picker .ui-datepicker .ui-datepicker-group .ui-datepicker-title {
@@ -1287,8 +1287,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     opacity: 1; }
   #back-to-top.show {
     opacity: .5;
-    visibility: visible;
-    z-index: 1; }
+    visibility: visible; }
     #back-to-top.show:hover {
       opacity: 1;
       -webkit-transition: opacity 0.2s ease-out;
@@ -2735,7 +2734,8 @@ file: /Assets/travorama20/css/_page_flight.scss
       -ms-border-radius: 2px;
       border-radius: 2px;
       position: relative;
-      cursor: pointer; }
+      cursor: pointer;
+      height: 49px; }
       .page-flight .search-result-form form.change-flight .change-flight-class:after {
         content: url(/Assets/images/select-arrow.png);
         position: absolute;
@@ -3362,21 +3362,16 @@ file: /Assets/travorama20/css/_page_flight.scss
 
 .page-flight .search-calendar {
   position: absolute;
-  top: 150px;
-  width: 670px;
-  height: 300px; }
+  top: 188px; }
   .page-flight .search-calendar .calendar-body {
     padding-top: 0; }
-  .page-flight .search-calendar .date-picker {
-    padding-left: 30px;
-    padding-right: 30px; }
   .page-flight .search-calendar .ui-datepicker:before, .page-flight .search-calendar .ui-datepicker:after {
     display: block;
     width: 100%;
     content: "";
     clear: both; }
   .page-flight .search-calendar .ui-datepicker-group {
-    width: 300px;
+    width: 50%;
     float: left; }
   .page-flight .search-calendar .ui-datepicker-group-last {
     border-top: none !important;
@@ -3399,10 +3394,6 @@ file: /Assets/travorama20/css/_page_flight.scss
     left: auto !important;
     right: -15px !important;
     overflow: hidden; }
-  .page-flight .search-calendar#departure {
-    left: 5px; }
-  .page-flight .search-calendar#return {
-    left: 155px; }
 
 .page-flight .flight-review-wrapper .flight-review .price-detail.ng-hide, .page-flight .flight .price-detail {
   max-height: 0;
@@ -5472,14 +5463,14 @@ file: /Assets/travorama20/css/_page_flight.scss
     .page-hotel .search-result-form > .container {
       max-width: none !important; }
     .page-hotel .search-result-form .search-hotel {
-      top: 405px;
+      top: 425px;
       left: initial;
       width: 908px; }
       .page-hotel .search-result-form .search-hotel .location-body {
         border: 1px solid #ccc;
         height: 475px; }
     .page-hotel .search-result-form .search-calendar-hotel {
-      top: 405px;
+      top: 425px;
       left: initial;
       max-height: 320px;
       width: 908px; }
@@ -5578,8 +5569,7 @@ file: /Assets/travorama20/css/_page_flight.scss
         text-align: right; }
     .page-hotel .travorama-hotel .search-list .search-list-result {
       margin: 15px 0;
-      position: relative;
-      z-index: 2; }
+      position: relative; }
       .page-hotel .travorama-hotel .search-list .search-list-result .filter .map-filter {
         margin-bottom: 15px; }
         .page-hotel .travorama-hotel .search-list .search-list-result .filter .map-filter iframe {
@@ -5748,7 +5738,6 @@ file: /Assets/travorama20/css/_page_flight.scss
     .page-hotel .travorama-hotel .detail-hotel {
       border-top: 1px solid #ccc;
       position: relative;
-      z-index: 2;
       /*Slider*/ }
       .page-hotel .travorama-hotel .detail-hotel .big-slider {
         position: relative;
