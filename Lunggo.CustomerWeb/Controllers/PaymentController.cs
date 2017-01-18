@@ -25,6 +25,10 @@ namespace Lunggo.CustomerWeb.Controllers
         {
             try
             {
+                if (string.IsNullOrEmpty(regId))
+                {
+                    return RedirectToAction("Index", "Index");
+                }
                 var signature = GenerateId(rsvNo);
                 if (regId.Equals(signature))
                 {
@@ -81,6 +85,10 @@ namespace Lunggo.CustomerWeb.Controllers
 
         public ActionResult Instruction(string rsvNo, string regId)
         {
+            if (string.IsNullOrEmpty(regId))
+            {
+                return RedirectToAction("Index", "Index");
+            }
             var signature = GenerateId(rsvNo);
             if (regId.Equals(signature))
             {
@@ -104,6 +112,10 @@ namespace Lunggo.CustomerWeb.Controllers
 
         public ActionResult Thankyou(string rsvNo, string regId)
         {
+            if (string.IsNullOrEmpty(regId))
+            {
+                return RedirectToAction("Index", "Index");
+            }
             var signature = GenerateId(rsvNo);
             if (regId.Equals(signature))
             {
@@ -174,8 +186,7 @@ namespace Lunggo.CustomerWeb.Controllers
             for (int i = 1; i < 4; i++)
             {
                 generatedNumber = new Random(generatedNumber).Next();
-                double regId = generatedNumber*555;
-                result = result + "" + regId;
+                result = result + "" + generatedNumber;
             }
             return result;
         }

@@ -186,8 +186,7 @@ namespace Lunggo.CustomerWeb.Controllers
             for (int i = 1; i < 4; i++)
             {
                 generatedNumber = new Random(generatedNumber).Next();
-                double regId = generatedNumber * 555;
-                result = result + "" + regId;
+                result = result + "" + generatedNumber;
             }
             return result;
         }
