@@ -111,7 +111,7 @@
     <script src="/Assets/Travorama20/js/homeController.js"></script>
 }
 
-<section class="section-search">
+<section class="section-search normal-txt">
     <div class="container">
         <div class="search-form">
             <header class="tab-header">
@@ -158,7 +158,7 @@
                         <div class="form-group flight-date">
                             <div class="col-xs-6">
                                 <div class="form-flight-departure">
-                                    <small>Tanggal Keberangkatan</small>
+                                    <div class="grey-txt xs-txt">Tanggal Keberangkatan</div>
                                     <span class="date">28</span>
                                     <span class="month">Okt</span>
                                     <span class="year">2015</span>
@@ -166,13 +166,13 @@
                             </div>
                             <div class="col-xs-6">
                                 <div class="form-flight-return">
-                                    <small>Tanggal Pulang</small>
+                                    <div class="grey-txt xs-txt">Tanggal Pulang</div>
                                     <span class="date">28</span>
                                     <span class="month">Okt</span>
                                     <span class="year">2015</span>
                                 </div>
                                 <div class="form-flight-oneway">
-                                    <small>Tanggal Pulang</small>
+                                    <div class="grey-txt xs-txt">Tanggal Pulang</div>
                                     <h5>SEKALI JALAN</h5>
                                 </div>
                             </div>
@@ -181,7 +181,7 @@
                         <div class="form-group flight-class">
                             <div class="col-xs-12">
                                 <div class="form-control text-center form-flight-class">
-                                    <span>Kelas Ekonomi</span>
+                                    <span class="grey-txt">Kelas Ekonomi</span>
                                     <div class="option">
                                         <span class="economy" data-value="y">Kelas Ekonomi</span>
                                         <span class="business" data-value="c">Kelas Bisnis</span>
@@ -195,9 +195,9 @@
                             <div class="col-xs-4">
                                 <div class="form-flight-passenger adult" data-toggle="tooltip" data-placement="left" title="Tidak boleh kosong">
                                     <h5 class="passenger-input adult">1</h5>
-                                    <small>
+                                    <div class="grey-txt">
                                         Dewasa<br />(&gt;12th)
-                                    </small>
+                                    </div>
                                     <div class="option">
                                         <span>1</span>
                                         <span>2</span>
@@ -214,9 +214,9 @@
                             <div class="col-xs-4">
                                 <div class="form-flight-passenger child">
                                     <h5 class="passenger-input child">0</h5>
-                                    <small>
+                                    <div class="grey-txt">
                                         Anak<br />(2-12th)
-                                    </small>
+                                    </div>
                                     <div class="option">
                                         <span>0</span>
                                         <span>1</span>
@@ -234,9 +234,9 @@
                             <div class="col-xs-4">
                                 <div class="form-flight-passenger infant" data-toggle="tooltip" data-placement="right" title="Tidak boleh lebih dari jumlah penumpang dewasa">
                                     <h5 class="passenger-input infant">0</h5>
-                                    <small>
+                                    <div class="grey-txt">
                                         Bayi<br />(&lt;2th)
-                                    </small>
+                                    </div>
                                     <div class="option">
                                         <span>0</span>
                                         <span>1</span>
@@ -280,7 +280,7 @@
                         <div class="form-group hotel-room-night">
                             <div class="col-xs-6 dropdown-container">
                                 <div class="form-control form-hotel-night clearfix">
-                                    <div class="col-4"><span class="grey-txt">Malam</span></div>
+                                    <div class="col-4"><span class="grey-txt normal-txt">Malam</span></div>
                                     <div class="col-6 input-hotel">{{hotelSearch.nightCount}}</div>
                                     <div class="option" ng-model="hotelSearch.nightCount">
                                         <span data-value="" ng-repeat="nightCount in hotelSearch.nightrange track by $index"
@@ -290,7 +290,7 @@
                             </div>
                             <div class="col-xs-6 dropdown-container">
                                 <div class="form-control form-hotel-room clearfix">
-                                    <div class="col-4"><span class="grey-txt">Jumlah Kamar</span></div>
+                                    <div class="col-4"><span class="grey-txt normal-txt">Jumlah Kamar</span></div>
                                     <div class="col-6 input-hotel">{{hotelSearch.roomCount}}</div>
                                     <div class="option" ng-model="hotelSearch.roomCount">
                                         <span data-value="" ng-repeat="roomCount in hotelSearch.roomrange track by $index"

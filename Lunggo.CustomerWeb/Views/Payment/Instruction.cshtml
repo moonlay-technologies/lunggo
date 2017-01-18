@@ -139,7 +139,7 @@
         </div>
     </section><!-- .checkout-step -->
 
-    <div class="confirmation-content">
+    <div class="confirmation-content normal-txt">
 
         <div class="container">
             <div class="col-left">
@@ -147,7 +147,7 @@
                 <div class="instruction">
                     @if (Model.Payment.Method == PaymentMethod.VirtualAccount)
                     {
-                        <h3>PANDUAN <b>VIRTUAL ACCOUNT</b></h3>
+                        <h3 class="lg-txt">PANDUAN <b>VIRTUAL ACCOUNT</b></h3>
                         <header>
                             <div class="text-right">No. Pesanan: <b>@Model.RsvNo</b></div>
                         </header>
@@ -231,7 +231,7 @@
                     }
                     else
                     {
-                        <h3>PANDUAN <b>TRANSFER</b></h3>
+                        <h3 class="lg-txt">PANDUAN <b>TRANSFER</b></h3>
                         <header>
                             <div class="text-right">No. Pesanan: <b>@Model.RsvNo</b></div>
                         </header>
@@ -449,14 +449,14 @@
                     </section><!-- .order-detail -->
                     <!--</section>-->
                     <div class="btn-detail-penerbangan">
-                        <a href="@Url.Action("Thankyou", "Payment", new { Model.RsvNo })" class="btn btn-yellow"> SAYA SUDAH BAYAR</a>
+                        <a href="@Url.Action("Thankyou", "Payment", new { Model.RsvNo })" class="btn btn-yellow md-txt lg-btn"> SAYA SUDAH BAYAR</a>
                     </div>
                 </div>
             </div>
             <div class="col-right">
                 <div class="widget-container">
                     <div class="widget price-detail">
-                        <h3 class="widget-title"><b>RINCIAN</b> HARGA</h3>
+                        <h3 class="widget-title lg-txt"><b>RINCIAN</b> HARGA</h3>
                         <div class="widget-content">
                             <dl>
                                 <dt>Total Tiket</dt>
@@ -483,7 +483,7 @@
                         </div>
                     </div><!-- .widget.price-detail -->
                     <div class="widget countdown">
-                        <h3 class="widget-title"><b>SISA</b> WAKTU</h3>
+                        <h3 class="widget-title lg-txt"><b>SISA</b> WAKTU</h3>
                         <div class="widget-content">
                             <p>Sisa waktu Anda untuk melakukan pembayaran</p>
                             <div class="timer">
@@ -527,7 +527,7 @@
             <div class="row" style="padding-top:5px;">
                 <div class=" col-xs-6"></div>
                 <div class="col-xs-3">
-                    <a class="btn btn-grey btn-block" href="/" style="width:100%">KEMBALI</a>
+                    <a class="btn btn-grey btn-block sm-btn" href="/" style="width:100%">KEMBALI</a>
                 </div>
             </div>
         </div>

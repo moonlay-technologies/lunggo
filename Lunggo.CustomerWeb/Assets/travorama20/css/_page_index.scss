@@ -47,7 +47,7 @@ file : /Assets/travorama20/css/_page_index.scss
                 &>div {display:none;}
                 &>div.active {display:block;}
                 &:before, &:after {@include clearfix();}
-                input {color:#6a6a6a;}
+                input {color:#999;}
                 input[type="submit"] {color:#4f3500;}
                 //*****
                 // tab flight
@@ -72,8 +72,8 @@ file : /Assets/travorama20/css/_page_index.scss
                     .form-flight-departure {background:#fff; color:#6a6a6a; padding:7px 10px 0px; @include border-radius($border-radius-default); border:$border-default; @extend .os-semibold; font-weight:600; cursor:pointer; height:75px;
                         &:before, &:after {@include clearfix();}
                         small {display:block; font-weight:normal; margin-bottom:-10px; font-size:9px;}
-                        .date {float:left; font-size:42px; margin-right:0px; width:60px; margin-top:5px;}
-                        .month {display:block; margin-top:13px; margin-bottom:-5px; font-size:17px;}
+                        .date {float:left; font-size:42px; margin-right:0px; width:60px; line-height:100%;}
+                        .month {display:block; margin-bottom:-5px; font-size:17px;}
                         .year {display:block; font-size:17px;}
                     }
                     .form-flight-return {@extend .form-flight-departure;

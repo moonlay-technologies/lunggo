@@ -247,15 +247,15 @@
         <!-- payment start here -->
 
         <div ng-app="travorama" ng-controller="paymentController" class="page-loading" ng-class="{'page-loaded' : pageLoaded}">
-            <section class="checkout-content">
+            <section class="checkout-content normal-txt">
                 <div class="container">
                     <div class="row">
                         <div class="col-left">
                             <!-- ******************** -->
                             <div class="content-step" id="step-4">
-                                <h3><b>METODE</b> PEMBAYARAN</h3>
+                                <h3 class="lg-txt"><b>METODE</b> PEMBAYARAN</h3>
 
-                                <h4><b>Nomor Reservasi :</b> @Model.RsvNo</h4>
+                                <h4 class="md-txt"><b>Nomor Reservasi :</b> @Model.RsvNo</h4>
                                 <p>Silakan pilih <b>metode pembayaran</b> di bawah ini yang ingin Anda gunakan:</p>
 
                                 <div class="payment-wrapper">
@@ -331,7 +331,7 @@
                                         </div><!-- .payment -->
                                     </div>
                                     <div class="row selected-bank" id="BankTransfer">
-                                        <div class="col-xs-12"><h3>PILIHAN <b>BANK</b></h3></div>
+                                        <div class="col-xs-12"><h3 class="lg-txt">PILIHAN <b>BANK</b></h3></div>
                                         <div class="payment mandiri col-xs-4" ng-click="selectBank(1)">
                                             <label>
                                                 <header>
@@ -347,7 +347,7 @@
                                         </div>
                                     </div>
                                     <div class="row selected-bank" id="VirtualAccount">
-                                        <div class="col-xs-12"><h3>PILIHAN <b>BANK</b></h3></div>
+                                        <div class="col-xs-12"><h3 class="lg-txt">PILIHAN <b>BANK</b></h3></div>
                                         <div class="payment permata col-xs-4" ng-click="selectBank(3)">
                                             <label>
                                                 <header>
@@ -380,7 +380,7 @@
                                 {
                                     <div class="credit-card-form clearfix" ng-show="paymentMethod == '@PaymentMethod.CreditCard'">
                                         <form name="creditCardForm" novalidate>
-                                            <h3 class="no-spacing">DETAIL <b>KARTU KREDIT/DEBIT</b></h3>
+                                            <h3 class="no-spacing lg-txt">DETAIL <b>KARTU KREDIT/DEBIT</b></h3>
 
                                             <!-- new credit card start -->
                                             <div ng-if="CreditCard.TwoClickToken == 'false'">
@@ -447,7 +447,7 @@
                                 <form name="mandiriClickPayForm" novalidate>
                                     <div class="mandiri-clikpay-form" ng-show="paymentMethod == '@PaymentMethod.MandiriClickPay'">
                                         <div class="form-group clearfix">
-                                            <h3><b>DETAIL</b> PEMBAYARAN - <b>MANDIRI CLICKPAY</b></h3>
+                                            <h3 class="lg-txt"><b>DETAIL</b> PEMBAYARAN - <b>MANDIRI CLICKPAY</b></h3>
                                             <div class="form-group" ng-class="{'has-error' : !checkNumber(MandiriClickPay.CardNo)}">
                                                 <label class="control-label">Nomor Kartu</label>
                                                 <input type="text" value="" class="form-control cc-number" maxlength="19" ng-model="MandiriClickPay.CardNo" />
@@ -519,7 +519,7 @@
 
                                         <p>*Dengan klik tombol ‘Bayar’, Anda telah setuju dengan <a href="@Url.Action("Terms","StaticPage")" target="_blank">syarat &amp; ketentuan</a> dan <a href="@Url.Action("Privacy","StaticPage")" target="_blank">kebijakan privasi</a></p>
 
-                                        <input type="submit" class="btn btn-yellow" value="{{ !checkoutForm.loading? 'BAYAR' : 'MEMPROSES' }}" ng-disabled="(checkoutForm.loading || !paymentMethod) || !creditCardForm.$valid">
+                                        <input type="submit" class="btn btn-yellow md-txt lg-btn" value="{{ !checkoutForm.loading? 'BAYAR' : 'MEMPROSES' }}" ng-disabled="(checkoutForm.loading || !paymentMethod) || !creditCardForm.$valid">
 
                                     </form>
 
@@ -538,7 +538,7 @@
 
                             <div class="widget-container">
                                 <div class="widget price-detail">
-                                    <h3 class="widget-title"><b>RINCIAN</b> HARGA</h3>
+                                    <h3 class="widget-title lg-txt"><b>RINCIAN</b> HARGA</h3>
                                     <div class="widget-content">
                                         <dl>
                                             @if (Model.Reservation is FlightReservationForDisplay)
@@ -580,7 +580,7 @@
                                     </div>
                                 </div><!-- .widget.price-detail -->
                                 <div class="widget voucher" ng-class="{'hide' : CreditCardPromo.Valid}">
-                                    <h3 class="widget-title"><b>KODE</b> VOUCHER</h3>
+                                    <h3 class="widget-title lg-txt"><b>KODE</b> VOUCHER</h3>
                                     <div class="widget-content">
                                         <span><b>Punya Kupon Travorama ?</b></span>
                                         <p>Masukkan di sini</p>
@@ -601,8 +601,8 @@
                                             <div class="form-group">
                                                 <div class="row">
                                                     <div class="col-xs-6 col-xs-offset-6">
-                                                        <input type="submit" value="CEK" class="btn btn-yellow form-control" ng-click="voucher.check()" ng-disabled="!voucher.code || voucher.checking" ng-hide="voucher.checked" />
-                                                        <input type="submit" value="RESET" class="btn btn-yellow form-control" ng-click="voucher.reset()" ng-show="voucher.checked" />
+                                                        <input type="submit" value="CEK" class="btn btn-yellow form-control normal-txt sm-btn" ng-click="voucher.check()" ng-disabled="!voucher.code || voucher.checking" ng-hide="voucher.checked" />
+                                                        <input type="submit" value="RESET" class="btn btn-yellow form-control normal-txt sm-btn" ng-click="voucher.reset()" ng-show="voucher.checked" />
                                                     </div>
                                                 </div>
                                             </div>
@@ -610,7 +610,7 @@
                                     </div>
                                 </div><!-- .widget.voucher -->
                                 <div class="widget countdown">
-                                    <h3 class="widget-title"><b>SISA</b> WAKTU</h3>
+                                    <h3 class="widget-title lg-txt"><b>SISA</b> WAKTU</h3>
                                     <div class="widget-content">
                                         <p>Sisa waktu Anda untuk melakukan pembayaran</p>
                                         <div class="timer">
@@ -636,7 +636,7 @@
 
                                     <div class="widget flight">
                                         <div class="flight-detail" id="departure-flight" ng-if="trips[0]">
-                                            <h3 class="widget-title"><b>RINCIAN</b> PENERBANGAN</h3>
+                                            <h3 class="widget-title lg-txt"><b>RINCIAN</b> PENERBANGAN</h3>
                                             <div>
                                                 <header><span>PENERBANGAN PERGI</span></header>
                                                 <div class="widget-content">
@@ -698,7 +698,7 @@
                                     var reservation = Model.Reservation as HotelReservationForDisplay;
                                     <div class="widget hotel page-hotel">
                                         <div class="hotel-detail">
-                                            <h3 class="widget-title"><b>RINCIAN</b> PEMESANAN</h3>
+                                            <h3 class="widget-title lg-txt"><b>RINCIAN</b> PEMESANAN</h3>
                                             <div class="widget-wrapper">
                                                 <div class="widget-subtitle">Detail Hotel</div>
                                                 <div class="widget-content">
@@ -831,7 +831,7 @@
                     <div class="row" style="padding-top:5px;">
                         <div class=" col-xs-6"></div>
                         <div class="col-xs-3">
-                            <a class="btn btn-grey btn-block" href="/" style="width:100%">KEMBALI</a>
+                            <a class="btn btn-grey btn-block sm-btn" href="/" style="width:100%">KEMBALI</a>
                         </div>
                     </div>
                 </div>
@@ -851,10 +851,10 @@
                         </div>
                         <div class="row">
                             <div class="col-xs-6">
-                                <a class="btn btn-grey btn-block" ng-click="pay.transfer = false;" style="width:100%">KEMBALI</a>
+                                <a class="btn btn-grey btn-block sm-btn" ng-click="pay.transfer = false;" style="width:100%">KEMBALI</a>
                             </div>
                             <div class="col-xs-6">
-                                <input type="submit" class="btn btn-yellow" ng-click="pay.middle('transfer')" value="SETUJU">
+                                <input type="submit" class="btn btn-yellow sm-btn" ng-click="pay.middle('transfer')" value="SETUJU">
                             </div>
                         </div>
                     </div>
@@ -873,10 +873,10 @@
                         </div>
                         <div class="row">
                             <div class="col-xs-6">
-                                <a class="btn btn-grey btn-block" ng-click="pay.virtualAccount = false;" style="width:100%">KEMBALI</a>
+                                <a class="btn btn-grey btn-block sm-btn" ng-click="pay.virtualAccount = false;" style="width:100%">KEMBALI</a>
                             </div>
                             <div class="col-xs-6">
-                                <input type="submit" class="btn btn-yellow" ng-click="pay.middle('virtualAccount')" value="SETUJU">
+                                <input type="submit" class="btn btn-yellow sm-btn" ng-click="pay.middle('virtualAccount')" value="SETUJU">
                             </div>
                         </div>
                     </div>
@@ -893,7 +893,7 @@
                         <div style="padding-top:5px; padding-right:30px;"><span style="font-size:12px">{{errorMessage}}</span></div>
                     </section>
                     <div align="right" style="padding-right:30px;padding-top:10px;">
-                        <a class="btn popup-btn-yellow book-failed" ng-click="pay.close()"><b>Tutup</b></a>
+                        <a class="btn popup-btn-yellow book-failed sm-btn" ng-click="pay.close()"><b>Tutup</b></a>
                     </div>
                 </div>
             </div>
@@ -908,7 +908,7 @@
                         <div style="padding-top:5px; padding-right:30px;"><span style="font-size:12px">Silakan pilih salah satu bank yang tersedia sebelum mengklik tombol Bayar</span></div>
                     </section>
                     <div align="right" style="padding-right:30px;padding-top:10px;">
-                        <a class="btn popup-btn-yellow book-failed" ng-click="mustSelectBank = false;"><b>Tutup</b></a>
+                        <a class="btn popup-btn-yellow book-failed sm-btn" ng-click="mustSelectBank = false;"><b>Tutup</b></a>
                     </div>
                 </div>
             </div>
@@ -922,7 +922,7 @@
                         <div style="padding-top:5px; padding-right:30px;"><span style="font-size:12px">Input yang Anda masukkan tidak valid. Silakan cek kembali.</span></div>
                     </section>
                     <div align="right" style="padding-right:30px;padding-top:10px;">
-                        <a class="btn popup-btn-yellow book-failed" ng-click="pay.inputValid = true"><b>Tutup</b></a>
+                        <a class="btn popup-btn-yellow book-failed sm-btn" ng-click="pay.inputValid = true"><b>Tutup</b></a>
                     </div>
                 </div>
             </div>
@@ -937,9 +937,9 @@
                         <div style="padding-top:5px;"><span style="font-size:12px">{{errorMessage}}</span></div>
                     </section>
                     <div align="right" style="padding-right:30px;">
-                        <a class="btn popup-btn-yellow book-failed" ng-click="pay.continuePay('voucher')" ng-show="!pay.clickpay"><b>Ya</b></a>
-                        <a class="btn popup-btn-yellow book-failed" ng-click="pay.continueVoucher = false;" ng-show="!pay.clickpay"><b>Tidak</b></a>
-                        <a class="btn popup-btn-yellow book-failed" ng-click="pay.continueVoucher = false;" ng-show="pay.clickpay"><b>Tutup</b></a>
+                        <a class="btn popup-btn-yellow book-failed sm-btn" ng-click="pay.continuePay('voucher')" ng-show="!pay.clickpay"><b>Ya</b></a>
+                        <a class="btn popup-btn-yellow book-failed sm-btn" ng-click="pay.continueVoucher = false;" ng-show="!pay.clickpay"><b>Tidak</b></a>
+                        <a class="btn popup-btn-yellow book-failed sm-btn" ng-click="pay.continueVoucher = false;" ng-show="pay.clickpay"><b>Tutup</b></a>
                     </div>
                 </div>
             </div>
@@ -955,8 +955,8 @@
                         <div style="padding-top:5px;"><span style="font-size:12px">{{errorMessage}}</span></div>
                     </section>
                     <div align="right" style="padding-right:30px;">
-                        <a class="btn popup-btn-yellow book-failed" ng-click="pay.continuePay('bin')"><b>Ya</b></a>
-                        <a class="btn popup-btn-yellow book-failed" ng-click="pay.continueBIN = false;"><b>Tidak</b></a>
+                        <a class="btn popup-btn-yellow book-failed sm-btn" ng-click="pay.continuePay('bin')"><b>Ya</b></a>
+                        <a class="btn popup-btn-yellow book-failed sm-btn" ng-click="pay.continueBIN = false;"><b>Tidak</b></a>
 
                     </div>
                 </div>
