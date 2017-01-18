@@ -1,5 +1,4 @@
 ﻿@using System.Globalization
-
 @using Lunggo.ApCommon.Flight.Constant
 @using Lunggo.ApCommon.Flight.Model
 @using Lunggo.ApCommon.Flight.Service
@@ -29,7 +28,7 @@
         var infoPart = parts.Last();
         isValid = ((tripPart.Length + 1) % 13 == 0) && (infoPart.Length == 4);
 
-        trips = tripPart.Split('.').Select(info => new FlightTrip
+        trips = tripPart.Split('~').Select(info => new FlightTrip
         {
             OriginAirport = info.Substring(0, 3),
             OriginCity = FlightService.GetInstance().GetAirportCity(info.Substring(0, 3)),
@@ -87,6 +86,7 @@
     <script type="text/javascript" src="/Assets/js/jquery.ui.datepicker-id.js"></script>
     <script src="/Assets/js/bootstrap.min.js"></script>
     <script src="/Assets/js/jquery.ui.touch-punch.min.js"></script>
+<script src="/Assets/js/js.cookie.js"></script>
 }
 @section AdditionalCSS{
     <link href="/Assets/css/jquery-ui.min.css" rel="stylesheet" />

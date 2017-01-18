@@ -2,6 +2,7 @@
 if (typeof (angular) == 'object') {
 
     var app = angular.module('travoramaMobile', ['ngRoute', 'ngResource']);
+
     // root scope
     app.run(function ($rootScope, $log) {
         $rootScope.travoramaModuleName = 'travoramaMobile';
@@ -448,13 +449,14 @@ if (typeof (angular) == 'object') {
             SetOption: function (options, overlay, position) {
                 overlay = overlay || 'flight-form';
                 $rootScope.DatePicker.overlay = overlay;
-                if (position == 'search-single' || position == 'search-return') {
+                if (position == 'search-single' || position == 'search-return' || position == 'form-index') {
                     $rootScope.FlightSearchForm.DepartureDate = new Date($rootScope.FlightSearchForm.DepartureDate);
                     $rootScope.FlightSearchForm.ReturnDate = new Date($rootScope.FlightSearchForm.ReturnDate);
                 }
                 $rootScope.DatePicker.Position = position;
 
                 if (options.Target == 'departure') {
+                    $('.ui-datepicker.departure-date').datepicker("setDate", new Date($rootScope.FlightSearchForm.DepartureDate));
                     $rootScope.DatePicker.Settings.Target = '.flight-search-form-departure';
                     $('.ui-datepicker').datepicker('option', 'minDate', new Date());
                     if ($rootScope.FlightSearchForm.Trip == "true" && $rootScope.FlightSearchForm.ReturnDate) {
@@ -467,6 +469,7 @@ if (typeof (angular) == 'object') {
                         $('.ui-datepicker').datepicker('option', 'maxDate', null);
                     }
                 } else if (options.Target == 'return') {
+                    $('.ui-datepicker.return-date').datepicker("setDate", new Date($rootScope.FlightSearchForm.ReturnDate));
                     $rootScope.DatePicker.Settings.Target = '.flight-search-form-return';
                     if ($rootScope.FlightSearchForm.DepartureDate) {
                         $('.ui-datepicker').datepicker('option', 'minDate', $rootScope.FlightSearchForm.DepartureDate);
@@ -479,6 +482,7 @@ if (typeof (angular) == 'object') {
                     }
 
                 } else {
+                    //$('.ui-datepicker.checkindate').datepicker("setDate", new Date($rootScope.FlightSearchForm.ReturnDate));
                     $('.ui-datepicker.checkindate').datepicker('option', 'minDate', new Date());
                     $('.ui-datepicker.checkindate').datepicker('option', 'maxDate', null);
                 }
@@ -695,8 +699,14 @@ if (typeof (angular) == 'object') {
                     cabin: $rootScope.FlightSearchForm.Cabin
                 });
 
+                var origincity = $rootScope.FlightSearchForm.AirportOrigin.City.replace(/\s+/g, '-');
+                origincity = $rootScope.FlightSearchForm.AirportOrigin.City.replace(/[^0-9a-zA-Z-]/gi, '');
+                var destinationcity = $rootScope.FlightSearchForm.AirportDestination.City.replace(/\s+/g, '-');
+                destinationcity = $rootScope.FlightSearchForm.AirportDestination.City.replace(/[^0-9a-zA-Z-]/gi, '');
+                var urlLink = origincity + '-' + destinationcity + '.' +
+                        $rootScope.FlightSearchForm.AirportOrigin.Code + '.' + $rootScope.FlightSearchForm.AirportDestination.Code + '/';
                 // redirect page to search page
-                window.location = window.location.origin + '/id/Flight/Search?info=' + $rootScope.FlightSearchForm.Url;
+                window.location = window.location.origin + '/id/tiket-pesawat/cari/' +urlLink + $rootScope.FlightSearchForm.Url;
 
             }// submit
         };//$rootScope.FlightSearchForm
@@ -827,6 +837,7 @@ if (typeof (angular) == 'object') {
             });
         }
 
+    
         function setCookies() {
             Cookies.set('origin', $rootScope.FlightSearchForm.AirportOrigin.Code, { expires: 9999 });
             Cookies.set('originCity', $rootScope.FlightSearchForm.AirportOrigin.City, { expires: 9999 });
@@ -933,7 +944,7 @@ if (typeof (angular) == 'object') {
             var xyear = x.getFullYear();
             if (xday == 15)
                 getSelectedMonth(xyear, xmonth + 1);
-            $('ui-datepicker').datepicker('option','gotoCurrent',true);
+            //$('ui-datepicker').datepicker('option','gotoCurrent',true);
 
       
             for (var i = 0; i < $rootScope.DatePicker.Holidays.length; i++) {

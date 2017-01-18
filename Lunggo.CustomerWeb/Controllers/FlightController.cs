@@ -1,38 +1,33 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
-using System.Web;
 using System.Web.Mvc;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Service;
-
-using Lunggo.ApCommon.Identity.Users;
-using Lunggo.ApCommon.Payment;
-using Lunggo.ApCommon.Payment.Constant;
-using Lunggo.ApCommon.Payment.Model;
 using Lunggo.ApCommon.Payment.Service;
-using Lunggo.ApCommon.Product.Constant;
 using Lunggo.CustomerWeb.Models;
 using Lunggo.Framework.Filter;
-using Lunggo.Framework.SharedModel;
-using Lunggo.Framework.Util;
 
 namespace Lunggo.CustomerWeb.Controllers
 {
     public class FlightController : Controller
     {
         [DeviceDetectionFilter]
-        public ActionResult Search(FlightSearchData search)
+        [Route("id/tiket-pesawat/cari/{searchParam}/{searchId}")]
+        public ActionResult Search(string searchId, string searchParam)
         {
+            var search = new FlightSearchData
+            {
+                info = searchId
+            };
             try
             {
-                var parts = search.info.Split('-');
+                var parts = searchId.Split('-');
                 var tripPart = parts.First();
 
-                var trips = tripPart.Split('.').Select(info => new FlightTrip
+                var trips = tripPart.Split('~').Select(info => new FlightTrip
                 {
                     OriginAirport = info.Substring(0, 3),
                     DestinationAirport = info.Substring(3, 3),
@@ -45,6 +40,7 @@ namespace Lunggo.CustomerWeb.Controllers
                 var requestId = Guid.NewGuid().ToString();
                 FlightService.GetInstance().SetFlightRequestTripType(requestId, tripType == TripType.RoundTrip);
                 ViewBag.RequestId = requestId;
+               
                 switch (tripType)
                 {
                     case TripType.OneWay:

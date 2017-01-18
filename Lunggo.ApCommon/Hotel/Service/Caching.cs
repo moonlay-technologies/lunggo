@@ -19,14 +19,14 @@ namespace Lunggo.ApCommon.Hotel.Service
             var redisService = RedisService.GetInstance();
             var redisKey = "searchId:" + searchId;
             var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
-            var redisValue =  currencies.Serialize() ;
+            var redisValue =  currencies.Serialize();
             //var i = 1;
 
             for (var i = 0; i < ApConstant.RedisMaxRetry; i++)
             {
                 try
                 {
-                    redisDb.StringSet(redisKey, redisValue);
+                    redisDb.StringSet(redisKey, redisValue, TimeSpan.FromMinutes(30));
                     return;
                 }       
                 catch
@@ -35,6 +35,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                 }
             }           
         }
+
 
         public Dictionary<string, Currency> GetAllCurrenciesFromCache(string searchId)
         {
@@ -61,6 +62,71 @@ namespace Lunggo.ApCommon.Hotel.Service
             }
             var currencies = cacheObject.Deserialize<Dictionary<string, Currency>>();
             return currencies;
+        }
+
+        public void SaveAvailableRateToCache(string token, List<HotelRoom> rooms)
+        {
+            var redisService = RedisService.GetInstance();
+            var redisKey = "HotelAvailableRates:" + token;
+            var timeout = int.Parse(ConfigManager.GetInstance().GetConfigValue("hotel", "hotelSearchResultCacheTimeout")); //TODO Change this
+            var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
+            var redisValue = rooms.ToCacheObject();
+            for (var i = 0; i < ApConstant.RedisMaxRetry; i++)
+            {
+                try
+                {
+                    redisDb.StringSet(redisKey, redisValue, TimeSpan.FromMinutes(timeout));
+                    return;
+                }
+                catch
+                {
+
+                }
+            }
+
+        }
+
+        public DateTime? GetAvailableRatesExpiry(string token)
+        {
+            for (var i = 0; i < ApConstant.RedisMaxRetry; i++)
+            {
+                try
+                {
+                    var redisService = RedisService.GetInstance();
+                    var redisKey = "HotelAvailableRates:" + token;
+                    var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
+                    var timeToLive = redisDb.KeyTimeToLive(redisKey).GetValueOrDefault();
+                    var expiryTime = DateTime.UtcNow + timeToLive;
+                    return expiryTime;
+                }
+                catch
+                {
+                }
+            }
+            return DateTime.UtcNow;
+        }
+
+        public List<HotelRoom> GetAvailableRatesFromCache(string token)
+        {
+            var redisService = RedisService.GetInstance();
+            var redisKey = "HotelAvailableRates:" + token;
+            var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
+            var cacheObject = new RedisValue();
+            for (var i = 0; i < ApConstant.RedisMaxRetry; i++)
+            {
+                try
+                {
+                    cacheObject = redisDb.StringGet(redisKey);
+                    var availableRates = cacheObject.DeconvertTo<List<HotelRoom>>();
+                    return availableRates;
+                }
+                catch
+                {
+
+                }
+            }
+            return new List<HotelRoom>();
+
         }
         public void SaveSelectedHotelDetailsToCache(string token, HotelDetailsBase hotel)
         {

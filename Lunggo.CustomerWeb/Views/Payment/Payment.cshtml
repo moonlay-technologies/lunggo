@@ -66,7 +66,6 @@
                         }
                         listAges.AddRange(config.ChildrenAges);
                     }
-
                 }
                 orderedRooms.Add(new Tuple<string, int>(roomName, sum)); ;
             }
@@ -86,50 +85,12 @@
     ViewBag.Title = "Pembayaran";
 }
 
-@functions{
-
-    public string ToTitleCase(string input)
-    {
-
-        var text = "";
-        try
-        {
-            var splittedText = input.Split(' ');
-            foreach (var word in splittedText)
-            {
-                var splittedByStrips = word.Split('-');
-                var w = "";
-                if (splittedByStrips.Count() != 1)
-                {
-                    foreach (var part in splittedByStrips)
-                    {
-                        w += ApplyTitleCase(part) + "-";
-                    }
-                    text += w.Substring(0, w.Length - 1) + " ";
-                }
-                else
-                {
-                    text += word[0] + word.Substring(1, word.Length - 1).ToLower() + " ";
-                }
-            }
-
-        }
-        catch { }
-
-        return text.Length == 0 ? "" : text.Substring(0, text.Length - 1);
-    }
-
-    public string ApplyTitleCase(string input)
-    {
-        return input[0] + input.Substring(1, input.Length - 1).ToLower();
-    }
-
-}
 @section AdditionalCSS {
     <link href="/Assets/css/jquery-ui.min.css" rel="stylesheet" />
     <!-- fancybox CSS-->
     <link href="/Assets/vendor/fancybox/jquery.fancybox.css" rel="stylesheet" />
 }
+
 @section AdditionalJS {
     <!-- additional Angular JS-->
     <script src="/Assets/js/jquery.countdown.min.js"></script>
@@ -708,7 +669,7 @@
                                                                 <div class="img-sm" style="background-image: url(@hotelImg);"></div>
                                                             </div>
                                                             <div class="col-right-hotel">
-                                                                <span class="blue-txt bold-txt">@reservation.HotelDetail.HotelName</span>
+                                                                <span class="blue-txt bold-txt">@ToTitleCase.ConvertToTitleCase(reservation.HotelDetail.HotelName)</span>
                                                                 @if (reservation.HotelDetail.StarRating == 1)
                                                                 {
                                                                     <div class="star"></div>
@@ -732,8 +693,8 @@
                                                             </div>
                                                         </div>
                                                         <div class="wt-bottom">
-                                                            @ToTitleCase(reservation.HotelDetail.Address) @ToTitleCase(reservation.HotelDetail.ZoneName),
-                                                            @ToTitleCase(reservation.HotelDetail.DestinationName) @reservation.HotelDetail.PostalCode, @ToTitleCase(reservation.HotelDetail.CountryName)
+                                                            @ToTitleCase.ConvertToTitleCase(reservation.HotelDetail.Address) @ToTitleCase.ConvertToTitleCase(reservation.HotelDetail.ZoneName),
+                                                            @ToTitleCase.ConvertToTitleCase(reservation.HotelDetail.DestinationName) @reservation.HotelDetail.PostalCode, @ToTitleCase.ConvertToTitleCase(reservation.HotelDetail.CountryName)
                                                         </div>
                                                     </div>
                                                     <div class="widget-bottom">
@@ -766,12 +727,12 @@
                                                                     if (i != orderedRooms.Count - 1)
                                                                     {
                                                                         @orderedRooms[i].Item2<span> </span>
-                                                                        @ToTitleCase(orderedRooms[i].Item1)<span>, </span>
+                                                                        @ToTitleCase.ConvertToTitleCase(orderedRooms[i].Item1)<span>, </span>
                                                                     }
                                                                     else
                                                                     {
                                                                         @orderedRooms[i].Item2<span> </span>
-                                                                        @ToTitleCase(orderedRooms[i].Item1)
+                                                                        @ToTitleCase.ConvertToTitleCase(orderedRooms[i].Item1)
                                                                     }
 
                                                                 }

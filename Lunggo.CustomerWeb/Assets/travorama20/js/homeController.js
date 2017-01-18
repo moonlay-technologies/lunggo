@@ -16,9 +16,40 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
             $scope.hotelSearch.location = 16173;
         }
 
+        if (Cookies.get('urlCountry')) {
+            $scope.hotelSearch.urlData.country = Cookies.get('urlCountry');
+        } else {
+            $scope.hotelSearch.urlData.country = 'Indonesia';
+        }
+
+        if (Cookies.get('urlDestination')) {
+            $scope.hotelSearch.urlData.destination = Cookies.get('urlDestination');
+        } else {
+            $scope.hotelSearch.urlData.destination = 'Bali';
+        }
+
+        if (Cookies.get('urlZone')) {
+            $scope.hotelSearch.urlData.zone = Cookies.get('urlZone');
+        } else {
+            $scope.hotelSearch.urlData.zone = null;
+        }
+
+        if (Cookies.get('urlArea')) {
+            $scope.hotelSearch.urlData.area = Cookies.get('urlArea');
+        } else {
+            $scope.hotelSearch.urlData.area = null;
+        }
+
+        if (Cookies.get('urlType')) {
+            $scope.hotelSearch.urlData.type = Cookies.get('urlType');
+        } else {
+            $scope.hotelSearch.urlData.type = 'Destination';
+        }
+
         if (Cookies.get('hotelSearchCheckInDate')) {
             $scope.hotelSearch.checkinDate = new Date(Cookies.get('hotelSearchCheckInDate'));
             $scope.hotelSearch.checkinDateDisplay = moment($scope.hotelSearch.checkinDate).locale("id").format('LL');
+            $('.ui-datepicker.checkindate').datepicker("setDate", new Date($scope.hotelSearch.checkinDateDisplay));
         } else {
             $scope.hotelSearch.checkinDate = moment().locale("id").add(5, 'days');
             $scope.hotelSearch.checkinDateDisplay = moment($scope.hotelSearch.checkinDate).locale("id").format('LL');
@@ -71,7 +102,14 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
             $('.form-child-age').hide();
         }
     }
-    
+   
+    $scope.showForm= function(tab) {
+        if (tab == 'hotel') {
+            $scope.isFlight = false;
+        } else if (tab == 'flight') {
+            $scope.isFlight = true;
+        }
+    }
     //=============== hotel start ======================
     $scope.showPopularDestinations = false;
     hotelSearchSvc.initializeSearchForm($scope);
@@ -115,10 +153,13 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
     }
 
     $scope.hotel.searchHotel = function () {
-
+        for (var k = $scope.hotelSearch.roomCount; k < 8; k++) {
+            $scope.hotelSearch.occupancies[k].adultCount = 1;
+            $scope.hotelSearch.occupancies[k].childCount = 0;
+            $scope.hotelSearch.occupancies[k].childrenAges = [0, 0, 0, 0];
+        }
         setCookie();
         hotelSearchSvc.gotoHotelSearch($scope.hotelSearch);
-
     };
 
     $scope.HotelSearchForm = {
@@ -148,18 +189,13 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
         Cookies.set('hotelSearchNights', $scope.hotelSearch.nightCount, { expires: 9999 });
         Cookies.set('hotelSearchRooms', $scope.hotelSearch.roomCount, { expires: 9999 });
         Cookies.set('hotelSearchOccupancies', $scope.hotelSearch.occupancies, { expires: 9999 });
+        Cookies.set('urlCountry', $scope.hotelSearch.urlData.country, { expires: 9999 });
+        Cookies.set('urlDestination', $scope.hotelSearch.urlData.destination, { expires: 9999 });
+        Cookies.set('urlZone', $scope.hotelSearch.urlData.zone, { expires: 9999 });
+        Cookies.set('urlArea', $scope.hotelSearch.urlData.area, { expires: 9999 });
+        Cookies.set('urlType', $scope.hotelSearch.urlData.type, { expires: 9999 });
     }
 
-    //function getCookie(name) {
-    //    var nameEQ = name + "=";
-    //    var ca = document.cookie.split(';');
-    //    for (var i = 0; i < ca.length; i++) {
-    //        var c = ca[i];
-    //        while (c.charAt(0) == ' ') c = c.substring(1, c.length);
-    //        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
-    //    }
-    //    return null;
-    //}
     //=============== hotel end ======================
 }]);
 
@@ -258,7 +294,7 @@ jQuery(document).ready(function ($) {
             itemF.parent().find('#plane').addClass('active');
             itemF.parent().find('#plane').siblings().removeClass('active');
 
-            var linkF = $(this).find('a').attr('href', '#plane');
+            var linkF = $(this).find('a').attr('id', '#plane');
 
             linkF.parent().addClass('active');
             linkF.parent().siblings().removeClass('active');
@@ -271,7 +307,7 @@ jQuery(document).ready(function ($) {
             item.parent().find('#hotel').addClass('active');
             item.parent().find('#hotel').siblings().removeClass('active');
 
-            var link = $(this).find('a').attr('href', '#hotel');
+            var link = $(this).find('a').attr('id', '#hotel');
 
             link.parent().addClass('active');
             link.parent().siblings().removeClass('active');

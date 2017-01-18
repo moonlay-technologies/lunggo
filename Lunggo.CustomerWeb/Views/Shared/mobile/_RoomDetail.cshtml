@@ -48,44 +48,6 @@
     }
 }
 
-@functions{
-
-    public string ToTitleCase(string input)
-    {
-
-        var text = "";
-        try
-        {
-            var splittedText = input.Split(' ');
-            foreach (var word in splittedText)
-            {
-                var splittedByStrips = word.Split('-');
-                var w = "";
-                if (splittedByStrips.Count() != 1)
-                {
-                    foreach (var part in splittedByStrips)
-                    {
-                        w += ApplyTitleCase(part) + "-";
-                    }
-                    text += w.Substring(0, w.Length - 1) + " ";
-                }
-                else
-                {
-                    text += word[0] + word.Substring(1, word.Length - 1).ToLower() + " ";
-                }
-            }
-        }
-        catch { }
-        return text.Length == 0 ? "" : text.Substring(0, text.Length - 1);
-    }
-    
-    public string ApplyTitleCase(string input)
-    {
-        return input[0] + input.Substring(1, input.Length - 1).ToLower();
-    }
-
-}
-
 <div class="form-group">
     <div class="form-box">
         <div class="fb-header"><b>Detail Kamar</b></div>
@@ -96,7 +58,7 @@
                 {
                     <div class="fb-room">
                         <div class="clearfix">
-                            <div class="col-8"><div class="blue-txt bold-txt lg-txt" style="text-transform: capitalize">@ToTitleCase(room.RoomName) Kamar Saja</div></div>
+                            <div class="col-8"><div class="blue-txt bold-txt lg-txt" style="text-transform: capitalize">@ToTitleCase.ConvertToTitleCase(room.RoomName) Kamar Saja</div></div>
                             @*<div class="col-2"><span class="meal-icon pull-right"></span><span class="wifi-icon pull-right"></span></div>*@
                         </div>
                         <div class="fb-img" style="background-image: url(@roomImg)"></div>
@@ -150,7 +112,7 @@
                                 <div class="cols-title bold-txt white-txt">Board</div>
                                     @foreach (var config in rate.Breakdowns)
                                     {
-                                        <div class="cols-value semibold-txt">@ToTitleCase(config.BoardDescription)</div>
+                                        <div class="cols-value semibold-txt">@ToTitleCase.ConvertToTitleCase(config.BoardDescription)</div>
                                     }
                                 </div>
                             </div>

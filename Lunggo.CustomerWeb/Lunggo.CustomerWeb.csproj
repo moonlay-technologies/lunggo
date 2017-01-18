@@ -1286,34 +1286,7 @@
     <Content Include="Config\HotelLocation.csv" />
     <Content Include="Config\Country.csv" />
     <Content Include="App_Data\wurfl-latest.zip" />
-    <Content Include="Config\HotelAccomodation.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Config\HotelBoard.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Config\HotelCategory.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Config\HotelChain.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Config\HotelCountries.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Config\HotelDestinations.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Config\HotelFacilities.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="Config\HotelFacilitiesFilterGroup.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Config\HotelFacilityGroup.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Config\HotelRoom.csv">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Config\HotelRoomOriginal.csv">
@@ -1326,9 +1299,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Config\HotelRoomRateType.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Config\HotelSegment.csv">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\bootstrap\bootstrap.css.map" />
@@ -1472,6 +1442,8 @@
     <Content Include="Assets\fonts\OpenSans-Semibold.woff2" />
     <Content Include="Assets\css\help_section.scss" />
     <Content Include="Assets\css\global-error.scss" />
+    <Content Include="App_Code\ToTitleCase.cshtml" />
+    <Content Include="App_Code\MsToTime.cshtml" />
     <Content Include="Assets\css\travorama-mobileApp.scss" />
     <None Include="Properties\PublishProfiles\prod-cw %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\dv1-cw.pubxml" />
@@ -1487,6 +1459,7 @@
     <None Include="Properties\PublishProfiles\travorama-prod-cw__staging2 %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-prod-cw__staging2 %285%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-prod-cw__staging2.pubxml" />
+    <None Include="Properties\PublishProfiles\travorama-qa-cw - Web Deploy.pubxml" />
     <None Include="Service References\Mystifly.OnePointService.Flight\OnePoint.disco" />
     <None Include="Service References\Mystifly.OnePointService.Flight\configuration91.svcinfo" />
     <None Include="Service References\Mystifly.OnePointService.Flight\configuration.svcinfo" />

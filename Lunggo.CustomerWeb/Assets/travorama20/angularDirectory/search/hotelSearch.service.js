@@ -55,6 +55,7 @@
     };
 
     factory.gotoHotelSearch = function (hotelSearch) {
+       
         $log.debug('using search service. going to hotel search...');
         if (hotelSearch.locationType == 'Hotel') {
             hotelSearch.searchinghotel = true;
@@ -93,24 +94,46 @@
                     if (data.hotels == null || data.hotels.length == 0) {
                         alert('Mohon maaf. Hotel ini telah terisi penuh.');
                     } else {
-                       
                         $log.debug('redirect to detail hotel with hotelCd: ' + data.hotels[0].hotelCd);
-                        window.location.href ='/id/Hotel/DetailHotel?' +
-                            "searchId=" + data.searchId + "&" +
-                            "hotelCd=" + data.hotels[0].hotelCd + "&" +
-                            "searchParam=" + searchParam(hotelSearch);
-                        
+                        window.location.href = '/id/Hotel/DetailHotel?' +
+                           "searchId=" + data.searchId + "&" +
+                           "hotelCd=" + data.hotels[0].hotelCd + "&" +
+                           "searchParam=" + searchParam(hotelSearch);
                     }
                 }
             });
 
             
         } else {
-        var param = searchParam(hotelSearch);
-        $log.debug(param);
-        if (param != false) {
-            location.href = '/id/Hotel/Search/' + param;
-        }
+            var param = searchParam(hotelSearch);
+            $log.debug(param);
+            if (param != false) {
+                hotelSearch.urlData.country = hotelSearch.urlData.country.replace(/\s+/g, '-');
+                hotelSearch.urlData.country = hotelSearch.urlData.country.replace(/[^0-9a-zA-Z-]/gi, '');
+
+                hotelSearch.urlData.destination = hotelSearch.urlData.destination.replace(/\s+/g, '-');
+                hotelSearch.urlData.destination = hotelSearch.urlData.destination.replace(/[^0-9a-zA-Z-]/gi, '');
+
+                if (hotelSearch.urlData.zone != null && hotelSearch.urlData.zone.length > 0) {
+                    hotelSearch.urlData.zone = hotelSearch.urlData.zone.replace(/\s+/g, '-');
+                    hotelSearch.urlData.zone = hotelSearch.urlData.zone.replace(/[^0-9a-zA-Z-]/gi, '');
+                }
+                
+                if (hotelSearch.urlData.area != null && hotelSearch.urlData.area.length > 0) {
+                    hotelSearch.urlData.area = hotelSearch.urlData.area.replace(/\s+/g, '-');
+                    hotelSearch.urlData.area = hotelSearch.urlData.area.replace(/[^0-9a-zA-Z-]/gi, '');
+                }
+               
+                var urlParam = '/id/hotel/cari/' + hotelSearch.urlData.country + '/' + hotelSearch.urlData.destination;
+
+                if (hotelSearch.urlData.type == 'Zone') {
+                    urlParam += '/' + hotelSearch.urlData.zone;
+                } else if (hotelSearch.urlData.type == 'Area') {
+                    urlParam += '/' + hotelSearch.urlData.zone + '/' + hotelSearch.urlData.area;
+                }
+                location.href = urlParam + '/' + param;
+                
+            }
         }
         
     };
@@ -183,6 +206,14 @@
         scope.hotelSearch.perPage = 20;
         scope.hotelSearch.occupancies = [];
         scope.hotelSearch.locationType = '';
+        scope.hotelSearch.urlData = {
+            destination: '',
+            country: '',
+            type: '',
+            zone: '',
+            hotelName: '',
+            area: ''
+        };
         var defaultValue = {
             locationCode: 16173,
             locationDisplay: "Bali, Indonesia",
@@ -270,12 +301,13 @@
         scope.hotelSearch.totalAdult = 0;
         scope.hotelSearch.totalChildren = 0;
         scope.hotelSearch.getHotels = function () {
+            scope.setCookie();
             factory.gotoHotelSearch(this);
         }
 
         scope.getLocationCode = function () {
             var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
-            var locationCode = hashes[2].split('.')[1];
+            var locationCode = hashes[0].split('.')[0].split('=')[1];
             return locationCode;
         }
 
@@ -303,12 +335,18 @@
             scope.hotelSearch.locationDisplay = location.name;
             scope.view.showHotelSearch = false;
             scope.hotelSearch.locationType = location.type;
+            scope.hotelSearch.urlData.country = location.country;
+            scope.hotelSearch.urlData.destination = location.destination;
+            scope.hotelSearch.urlData.zone = location.zone;
+            scope.hotelSearch.urlData.area = location.area;
+            scope.hotelSearch.urlData.type = location.type;
         }
 
-        scope.$watch('hotelSearch.locationDisplay', function (newValue, oldValue) {
+        scope.$watch('hotelSearch.locationDisplay', function (newValue) {
             if (newValue != null && newValue.length >= 3) {
                 scope.autocompletePre = false;
                 scope.autocompleteLoading = true;
+                scope.showPopularDestinations = false;
                 scope.hotelSearch.autocompleteResource.get({ prefix: newValue }).$promise.then(function(data) {
                     $timeout(function() {
                         scope.autocompleteLoading = false;
@@ -386,6 +424,11 @@
                     } else {
                         scope.hotelSearch.location = data.hotelAutocomplete[0].id;
                         scope.hotelSearch.locationDisplay = data.hotelAutocomplete[0].name;
+                        scope.hotelSearch.urlData.country = data.hotelAutocomplete[0].country;
+                        scope.hotelSearch.urlData.destination = data.hotelAutocomplete[0].destination;
+                        scope.hotelSearch.urlData.zone = data.hotelAutocomplete[0].zone;
+                        scope.hotelSearch.urlData.area = data.hotelAutocomplete[0].area;
+                        scope.hotelSearch.urlData.type = data.hotelAutocomplete[0].type;
                         scope.hideLocation();
                     }
                 }, 0);
@@ -472,30 +515,77 @@
             }
         }
 
-        scope.$watch('hotelSearch.roomCount', function (newValue) {
-            scope.hotelSearch.totalAdult = 0;
-            scope.hotelSearch.totalChildren = 0;
-            for (var i = 0; i < newValue; i++) {
-                scope.hotelSearch.totalAdult += scope.hotelSearch.occupancies[i].adultCount;
-                scope.hotelSearch.totalChildren += scope.hotelSearch.occupancies[i].childCount;
-            }
+        //scope.$watch('hotelSearch.roomCount', function (newValue) {
+        //    scope.hotelSearch.totalAdult = 0;
+        //    scope.hotelSearch.totalChildren = 0;
+        //    for (var i = 0; i < newValue; i++) {
+        //        scope.hotelSearch.totalAdult += scope.hotelSearch.occupancies[i].adultCount;
+        //        scope.hotelSearch.totalChildren += scope.hotelSearch.occupancies[i].childCount;
+        //    }
 
-        });
+        //});
 
         for (var x = 0; x < scope.hotelSearch.occupancies.length; x++) {
-            scope.$watch("hotelSearch.occupancies['" + x + "'].adultCount", function (val, oldVal) {
-                if (val != null) {
-                scope.hotelSearch.totalAdult = scope.hotelSearch.totalAdult - oldVal + val;
+            scope.$watchGroup(['hotelSearch.roomCount', "hotelSearch.occupancies['" + x + "'].adultCount"], function (val, oldVal) {
+                val[0] = parseInt(val[0]);
+                val[1] = parseInt(val[1]);
+                oldVal[0] = parseInt(oldVal[0]);
+                oldVal[1] = parseInt(oldVal[1]);
+                scope.hotelSearch.totalAdult = 0;
+                scope.hotelSearch.totalChildren = 0;
+                for (i = 0; i < val[0]; i++) {
+                    scope.hotelSearch.totalAdult += scope.hotelSearch.occupancies[i].adultCount;
+                    scope.hotelSearch.totalChildren += scope.hotelSearch.occupancies[i].childCount;
                 }
+                //if (val[0] != oldVal[0]) {
+                //    scope.hotelSearch.totalAdult = 0;
+                //    scope.hotelSearch.totalChildren = 0;
+                //    for (i = 0; i < val[0]; i++) {
+                //        scope.hotelSearch.totalAdult += scope.hotelSearch.occupancies[i].adultCount;
+                //        scope.hotelSearch.totalChildren += scope.hotelSearch.occupancies[i].childCount;
+                //    }
+                //}
+                //else if (val[1] != oldVal[1]) {
+                    
+                //    //scope.hotelSearch.totalAdult = scope.hotelSearch.totalAdult - oldVal[1] + val[1];
+                //}
                 
             });
-            scope.$watch("hotelSearch.occupancies['" + x + "'].childCount", function (val, oldVal) {
-                if (val != null) {
-                scope.hotelSearch.totalChildren = scope.hotelSearch.totalChildren - oldVal + val;
+            scope.$watchGroup(['hotelSearch.roomCount',"hotelSearch.occupancies['" + x + "'].childCount"], function (val, oldVal) {
+                val[0] = parseInt(val[0]);
+                val[1] = parseInt(val[1]);
+                oldVal[0] = parseInt(oldVal[0]);
+                oldVal[1] = parseInt(oldVal[1]);
+                if (val[0] != oldVal[0]) {
+                    scope.hotelSearch.totalAdult = 0;
+                    scope.hotelSearch.totalChildren = 0;
+                    for (i = 0; i < val[0]; i++) {
+                        scope.hotelSearch.totalAdult += scope.hotelSearch.occupancies[i].adultCount;
+                        scope.hotelSearch.totalChildren += scope.hotelSearch.occupancies[i].childCount;
+                    }
+                }
+                else if (val[1] != oldVal[1]) {
+                    //scope.hotelSearch.totalChildren = scope.hotelSearch.totalChildren - oldVal[1] + val[1];
+                    scope.hotelSearch.totalAdult = 0;
+                    scope.hotelSearch.totalChildren = 0;
+                    for (i = 0; i < val[0]; i++) {
+                        scope.hotelSearch.totalAdult += scope.hotelSearch.occupancies[i].adultCount;
+                        scope.hotelSearch.totalChildren += scope.hotelSearch.occupancies[i].childCount;
+                    }
                 }
                 
             });
         }
+
+        //scope.$watchCollection(['hotelSearch.roomCount', 'hotelSearch.occupancies'] , function (newVal, oldVal) {
+        //    scope.hotelSearch.totalAdult = 0;
+        //    scope.hotelSearch.totalChildren = 0;
+        //    for (i = 0; i < newVal[0]; i++) {
+        //        scope.hotelSearch.totalAdult += newVal[1][i].adultCount;
+        //        scope.hotelSearch.totalChildren += newVal[1][i].childCount;
+        //    }
+
+        //});
         
         scope.initChildrenAges = function (n) {
 
@@ -511,6 +601,24 @@
                 });
             } 
         }
+
+        //COOKIES
+        scope.setCookie = function () {
+            Cookies.set('hotelSearchLocationDisplay', scope.hotelSearch.locationDisplay, { expires: 9999 });
+            Cookies.set('hotelSearchLocation', scope.hotelSearch.location, { expires: 9999 });
+            Cookies.set('hotelSearchCheckInDate', scope.hotelSearch.checkinDate, { expires: 9999 });
+            Cookies.set('hotelSearchCheckOutDate', scope.hotelSearch.checkoutDate, { expires: 9999 });
+            Cookies.set('hotelSearchNights', scope.hotelSearch.nightCount, { expires: 9999 });
+            Cookies.set('hotelSearchRooms', scope.hotelSearch.roomCount, { expires: 9999 });
+            Cookies.set('hotelSearchOccupancies', scope.hotelSearch.occupancies, { expires: 9999 });
+            Cookies.set('urlCountry', scope.hotelSearch.urlData.country, { expires: 9999 });
+            Cookies.set('urlDestination', scope.hotelSearch.urlData.destination, { expires: 9999 });
+            Cookies.set('urlZone', scope.hotelSearch.urlData.zone, { expires: 9999 });
+            Cookies.set('urlArea', scope.hotelSearch.urlData.area, { expires: 9999 });
+            Cookies.set('urlType', scope.hotelSearch.urlData.type, { expires: 9999 });
+
+        }
+        
     }
 
     var searchParam = function (hotelSearch) {

@@ -30,7 +30,7 @@
         var infoPart = parts.Last();
         isValid = ((tripPart.Length + 1) % 13 == 0) && (infoPart.Length == 4);
 
-        trips = tripPart.Split('.').Select(info => new FlightTrip
+        trips = tripPart.Split('~').Select(info => new FlightTrip
         {
             OriginAirport = info.Substring(0, 3),
             DestinationAirport = info.Substring(3, 3),

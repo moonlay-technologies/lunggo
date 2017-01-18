@@ -1,6 +1,6 @@
 ﻿@using Lunggo.ApCommon.Hotel.Service
-@using Lunggo.Framework.Extension
-@model Lunggo.CustomerWeb.Models.HotelSearchApiRequest
+@using Lunggo.CustomerWeb.Models
+@model HotelSearchApiRequest
 @{
     Layout = "/Views/Shared/mobile/_LayoutMobile.cshtml";
     ViewBag.BodyClass = "page-hotel page-search";
@@ -10,8 +10,8 @@
 }
 
 @{
-    long location = 0;
-    var x = long.TryParse(Model.SearchParamObject.Location, out location);
+    long location;
+    long.TryParse(Model.SearchParamObject.Location, out location);
     var loc = "";
     var foundLocation = HotelService.GetInstance().AutoCompletes.Where(c => c.Id == location).ToList()[0];
     if (foundLocation != null)
@@ -42,6 +42,7 @@
     <script type="text/javascript" src="/Assets/js/jquery.ui.datepicker-id.js"></script>
     <script src="/Assets/js/bootstrap.min.js"></script>
     <script src="/Assets/js/jquery.ui.touch-punch.min.js"></script>
+    <script src="/Assets/js/js.cookie.js"></script>
 }
 
 @section PageJS{
@@ -54,7 +55,10 @@
 
 <div class="travorama-hotel-mobile" ng-init="init(@Newtonsoft.Json.JsonConvert.SerializeObject(Model))">
     <div class="top-content">
-        @Html.Partial("/Views/Shared/Mobile/_Summary.cshtml")
+        @Html.Partial("/Views/Shared/Mobile/_Summary.cshtml", new HotelLocation
+        {
+            Location = loc, IsHotelSearch = false
+        })
         <div class="hotel-sort-filter clearfix">
             <div class="hotel-sort-filter-action">
                 <a ng-click="PageConfig.SetOverlay('hotel-filter')">FILTER</a>
@@ -63,12 +67,12 @@
         </div>
     </div>
     <div class="search-list" search-scroll>
-        <div ng-show="!searchDone" class="text-center" style="height: 320px;">
+        <div ng-show="!searchDone" class="text-center" style="height: 30px; padding: 30px;">
             <img class="img-loading" src="/Assets/images/load.gif">
         </div>
         <div class="text-center" ng-show="searchDone && page == 1 && returnedHotelCount == 0"><h3> Hotel tidak ditemukan, silakan ganti filter atau destinasi anda.</h3></div>
         <ul class="hotel-list-container">
-            <li ng-repeat="hotel in hotels" ng-click="GotoDetailHotel(hotel.hotelCd)">
+            <li ng-repeat="hotel in hotels" ng-click="GotoDetailHotel(hotel)">
                 <div class="hotel-list clearfix">
                     <div class="col-left-hotel"><div class="img-list" alt-image style="background-image: url({{hotel.mainImage}});"></div></div>
                     <div class="col-right-hotel">
@@ -78,13 +82,14 @@
                         <div class="star star-3 " ng-if="hotel.starRating == 3"></div>
                         <div class="star star-4 " ng-if="hotel.starRating == 4"></div>
                         <div class="star star-5 " ng-if="hotel.starRating == 5"></div>
-                        <div class="location grey-txt">{{toTitleCase(hotel.area)}}
+                        <div class="location grey-txt">
+                            {{toTitleCase(hotel.area)}}
                             <span ng-show="hotel.area == null || hotel.area.length < 1">{{toTitleCase(hotel.address)}} {{toTitleCase(hotel.zone)}} <span ng-show="hotel.postalCd != null || hotel.postalCd.length > 0"> {{hotel.postalCd}}</span></span>
-</div>
+                        </div>
                         <div class="price orange-txt">
                             <div class="txt-md semibold-txt">Harga per malam mulai dari:</div>
                             <div class="underline-txt sm-txt">Rp {{hotel.originalCheapestFare | currency:'':0}}</div>
-                            <a ng-click="GotoDetailHotel(hotel.hotelCd)" class="detail"></a>
+                            <a ng-click="GotoDetailHotel(hotel)" class="detail"></a>
                             <div class="lg-txt"><b><sup>Rp</sup> {{hotel.netCheapestFare | currency:'':0}}</b></div>
                             <span class="xs-txt">(*Termasuk Pajak & Service Charge)</span>
                         </div>
@@ -237,12 +242,12 @@
             </header>
             <div class="popup__body">
                 <div class="container_new">
-                    <span>Pencarian Anda sudah kadaluarsa. Silakan klik tombol di bawah untuk kembali ke halaman awal.</span>
+                    <span>Pencarian Anda sudah kadaluarsa. Silakan klik tombol di bawah untuk pencarian ulang.</span>
                 </div>
             </div>
             <div class="popup__footer">
                 <div class="container_new">
-                    <a class="btn btn-block btn-yellow" href="{{returnUrl}}">KEMBALI</a>
+                    <a class="btn btn-block btn-yellow" ng-click="refreshPage()">CARI ULANG</a>
                 </div>
             </div>
         </div>

@@ -1,0 +1,54 @@
+﻿@functions{
+    public static string ConvertToTitleCase(string input)
+    {
+
+        var text = "";
+        try
+        {
+            var splittedText = input.Split(' ');
+            foreach (var word in splittedText)
+            {
+                var splittedByStrips = word.Split('-');
+                var w = "";
+                if (splittedByStrips.Count() != 1)
+                {
+                    foreach (var part in splittedByStrips)
+                    {
+                        w += ApplyTitleCase(part) + "-";
+                    }
+                    text += w.Substring(0, w.Length - 1) + " ";
+                }
+                else
+                {
+                    if (word.Length > 1)
+                    {
+                        text += word[0] + word.Substring(1, word.Length - 1).ToLower() + " ";
+                    }
+                    else
+                    {
+                        text += word + " ";
+                    }
+
+                }
+            }
+
+        }
+        catch
+        {
+            var x = "";
+        }
+        return text.Length == 0 ? "" : text.Substring(0, text.Length - 1);
+    }
+
+    public static string ApplyTitleCase(string input)
+    {
+        if (input.Length > 1)
+        {
+            return input[0] + input.Substring(1, input.Length - 1).ToLower();
+        }
+        else
+        {
+            return input;
+        }
+    }
+}

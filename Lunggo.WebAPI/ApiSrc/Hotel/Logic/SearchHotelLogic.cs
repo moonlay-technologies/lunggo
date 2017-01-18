@@ -119,7 +119,7 @@ namespace Lunggo.WebAPI.ApiSrc.Hotel.Logic
                         MaxPrice = searchServiceResponse.MaxPrice,
                         MinPrice = searchServiceResponse.MinPrice,
                         HotelFilterDisplayInfo = searchServiceResponse.HotelFilterDisplayInfo,
-                        //ExpiryTime = searchServiceResponse.ExpiryTime.TruncateMilliseconds()
+                        ExpiryTime = searchServiceResponse.ExpiryTime.TruncateMilliseconds()
                     };
 
                 return new HotelSearchApiResponse

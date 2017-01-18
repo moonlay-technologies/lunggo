@@ -106,7 +106,7 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Content
                                     ? null
                                     : hotelRS.phones.Select(p => p.phoneNumber).ToList(),
                             City = hotelRS.city == null ? null : hotelRS.city.content,
-                            PostalCode = hotelRS.postalCode,
+                            PostalCode = hotelRS.postalCode ?? null,
                             StarRating = hotelRS.categoryCode,
                             Terminals =
                                 hotelRS.terminals == null

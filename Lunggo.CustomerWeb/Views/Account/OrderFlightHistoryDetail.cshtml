@@ -15,47 +15,6 @@
     ViewBag.PageActiveSection = "order";
 }
 
-@functions{
-
-    public string ToTitleCase(string input)
-    {
-
-        var text = "";
-        try
-        {
-            var splittedText = input.Split(' ');
-            foreach (var word in splittedText)
-            {
-                var splittedByStrips = word.Split('-');
-                var w = "";
-                if (splittedByStrips.Count() != 1)
-                {
-                    foreach (var part in splittedByStrips)
-                    {
-                        w += ApplyTitleCase(part) + "-";
-                    }
-                    text += w.Substring(0, w.Length - 1) + " ";
-                }
-                else
-                {
-                    text += word[0] + word.Substring(1, word.Length - 1).ToLower() + " ";
-                }
-            }
-
-        }
-        catch
-        {
-
-        }
-        return text.Length == 0 ? "" : text.Substring(0, text.Length - 1);
-    }
-
-    public string ApplyTitleCase(string input)
-    {
-        return input[0] + input.Substring(1, input.Length - 1).ToLower();
-    }
-
-}
 @section AdditionalJS{
     <!-- additional Angular JS-->
 }
@@ -143,19 +102,28 @@
                                             </div>
                                         }
                                     </div>
+                                   
                                     <div class="form-group">
-                                        <div class="control-label col-xs-3">Harga Tiket</div>
+                                        <div class="control-label col-xs-3">Harga Pesanan</div>
                                         <div class="col-xs-9">
-                                            <p>Rp @Model.Payment.FinalPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</p>
+                                            @if (Model.Payment.FinalPrice == 0)
+                                            {
+                                                <p>Rp @Model.Payment.OriginalPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</p>
+                                            }
+                                            else
+                                            {
+                                                <p>Rp @Model.Payment.FinalPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</p>
+                                            }
+
                                         </div>
                                     </div>
-
+                                   
                                     @if (Model.Payment.Method != PaymentMethod.Undefined)
                                     {
                                         <div class="form-group">
                                             <div class="control-label col-xs-3">Metode Pembayaran</div>
                                             <div class="col-xs-9">
-                                                <p>@Model.Payment.Method</p>
+                                                <p>@EnumDisplay.PaymentMethod(Model.Payment.Method)</p>
                                             </div>
                                         </div>
                                     }

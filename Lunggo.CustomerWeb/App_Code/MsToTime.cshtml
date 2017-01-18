@@ -1,0 +1,9 @@
+﻿@functions{
+    public static string ConvertMsToTime(double duration)
+    {
+        var hours = Convert.ToInt32(duration) / (1000 * 60 * 60);
+        var minutes = (Convert.ToInt32(duration) / (1000 * 60)) % 60;
+
+        return hours + "j " + minutes + "m";
+    }
+}

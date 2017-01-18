@@ -1,12 +1,12 @@
-﻿using Lunggo.ApCommon.Hotel.Service;
-using Lunggo.ApCommon.Payment.Service;
+﻿using System.Linq;
+using System.Web;
+using System.Web.UI;
+using Lunggo.ApCommon.Hotel.Model.Logic;
+using Lunggo.ApCommon.Hotel.Service;
 using Lunggo.CustomerWeb.Models;
 using System;
-using System.Collections.Generic;
 using System.Collections.Specialized;
-using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 
 namespace Lunggo.CustomerWeb.Controllers
@@ -14,6 +14,9 @@ namespace Lunggo.CustomerWeb.Controllers
     public class HotelController : Controller
     {
         // GET: Hotel
+        [Route("id/hotel/cari/{country}/{destination}")]
+        [Route("id/hotel/cari/{country}/{destination}/{zone}")]
+        [Route("id/hotel/cari/{country}/{destination}/{zone}/{area}")]
         public ActionResult Search()
         {
             try
@@ -29,45 +32,25 @@ namespace Lunggo.CustomerWeb.Controllers
             }
 
         }
-        //public ActionResult Search()
-        //{
-        //    return View();
-        //    }
-        //public ActionResult DetailHotel()
-        //    {
-        //    return View();
-        //    }
-        //public ActionResult Checkout()
-        //{
-        //    //try
-        //    //{
-        //    //    NameValueCollection query = HttpUtility.ParseQueryString(searchParam);
-        //    //    HotelSearchApiRequest model = new HotelSearchApiRequest(query);
-        //    //    searchParam = model.SearchParam;
-        //    //    var searchParamObject = model.SearchParamObject;
 
-        //    //    return View(new { searchId, hotelCd, searchParam, searchParamObject });
-        //    //}
-        //    //catch (Exception ex)
-        //    //{
-        //    //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest, ex.Message);
-        //    //}
-        //    return View();
-        //}
-        public ActionResult DetailHotel(string searchId, int hotelCd, string searchParam)
+        [Route("id/hotel/{country}/{destination}/{hotelParam}")]
+        public ActionResult DetailHotel(String hotelParam)
         {
+
+            var searchParam = HttpUtility.UrlDecode(Request.QueryString.ToString());
+            var hotelCd = Convert.ToInt32(hotelParam.Split('-').Last());
+            var hotelDetail = HotelService.GetInstance().GetHotelDetail(new GetHotelDetailInput
+            {
+                HotelCode = hotelCd
+            }).HotelDetail;
             return View(new HotelDetailModel.HotelDetail
             {
                 HotelCode = hotelCd,
-                SearchId = searchId,
-                SearchParam = searchParam
+                //SearchId = searchId,
+                SearchParam = searchParam,
+                HotelDetailData = hotelDetail
             });
         }
-
-        //public ActionResult Checkout()
-        //{
-        //    return View();
-        //}
 
         [RequireHttps]
         public ActionResult Checkout(string token)
@@ -92,19 +75,11 @@ namespace Lunggo.CustomerWeb.Controllers
                 try
                 {
                     var hotelService = HotelService.GetInstance();
-                    var payment = PaymentService.GetInstance();
-                    //var expiryTime = hotelService.GetSelectionExpiry(token);
-                    //var savedPassengers = flight.GetSavedPassengers(User.Identity.GetEmail());
-                    //var savedCreditCards = User.Identity.IsAuthenticated
-                    //    ? payment.GetSavedCreditCards(User.Identity.GetEmail())
-                    //    : new List<SavedCreditCard>();
                     return View(new HotelCheckoutData
                     {
                         Token = token,
                         HotelDetail = hotelDetail,
                         ExpiryTime = hotelService.GetSelectionExpiry(token).GetValueOrDefault(),
-                        //SavedPassengers = savedPassengers,
-                        //SavedCreditCards = savedCreditCards
                     });
                 }
                 catch
@@ -131,11 +106,6 @@ namespace Lunggo.CustomerWeb.Controllers
             return RedirectToAction("Payment", "Payment", new { rsvNo });
         }
 
-
-        //public ActionResult DetailHotel(string searchId, int hotelCd)
-        //{
-        //    return View(new { searchId, hotelCd });
-        //}
 
         public ActionResult Confirmation()
         {
