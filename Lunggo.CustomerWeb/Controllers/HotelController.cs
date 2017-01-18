@@ -1,4 +1,6 @@
-﻿using Lunggo.ApCommon.Hotel.Service;
+﻿using System.Security.Cryptography;
+using System.Text;
+using Lunggo.ApCommon.Hotel.Service;
 using Lunggo.ApCommon.Payment.Service;
 using Lunggo.CustomerWeb.Models;
 using System;
@@ -120,7 +122,6 @@ namespace Lunggo.CustomerWeb.Controllers
             {
                 return RedirectToAction("Index", "Index");
             }
-
         }
 
         [RequireHttps]
@@ -128,7 +129,8 @@ namespace Lunggo.CustomerWeb.Controllers
         [ActionName("Checkout")]
         public ActionResult CheckoutPost(string rsvNo)
         {
-            return RedirectToAction("Payment", "Payment", new { rsvNo });
+            var regId = GenerateId(rsvNo);
+            return RedirectToAction("Payment", "Payment", new { rsvNo, regId});
         }
 
 
@@ -170,5 +172,26 @@ namespace Lunggo.CustomerWeb.Controllers
         {
             return View();
         }
+
+        #region Helpers
+
+        public string GenerateId(string key)
+        {
+            string result = "";
+            if (key.Length > 7)
+            {
+                key = key.Substring(key.Length - 7);
+            }
+            int generatedNumber = (int)double.Parse(key);
+            for (int i = 1; i < 4; i++)
+            {
+                generatedNumber = new Random(generatedNumber).Next();
+                double regId = generatedNumber * 555;
+                result = result + "" + regId;
+            }
+            return result;
+        }
+
+        #endregion
     }
 }

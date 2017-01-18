@@ -711,31 +711,38 @@ namespace Lunggo.CustomerWeb.Controllers
         public ActionResult OrderHistory(string rsvNo)
         {
             var RsvNo = rsvNo;
-            return RedirectToAction("OrderFlightHistoryDetail", "Account", new { rsvNo = RsvNo });
+            var RegId = GenerateId(rsvNo);
+            return RedirectToAction("OrderFlightHistoryDetail", "Account", new { rsvNo = RsvNo, regId = RegId });
         }
 
         [System.Web.Mvc.AllowAnonymous]
-        public ActionResult OrderFlightHistoryDetail(string rsvNo)
+        public ActionResult OrderFlightHistoryDetail(string rsvNo, string regId)
         {
-            var flightService = FlightService.GetInstance();
-            var hotelService = HotelService.GetInstance();
-            ReservationForDisplayBase displayReservation;
-            if (rsvNo.Substring(0, 1) == "1")
+            var signature = GenerateId(rsvNo);
+            if (regId.Equals(signature))
             {
-                displayReservation = flightService.GetReservationForDisplay(rsvNo);
+                var flightService = FlightService.GetInstance();
+                var hotelService = HotelService.GetInstance();
+                ReservationForDisplayBase displayReservation;
+                if (rsvNo.Substring(0, 1) == "1")
+                {
+                    displayReservation = flightService.GetReservationForDisplay(rsvNo);
+                }
+                else
+                {
+                    displayReservation = hotelService.GetReservationForDisplay(rsvNo);
+                }
+                return View(displayReservation);
             }
-            else
-            {
-                displayReservation = hotelService.GetReservationForDisplay(rsvNo);
-            }
-            return View(displayReservation);
+            return RedirectToAction("Index", "Index");
         }
 
         [System.Web.Mvc.HttpPost]
         [System.Web.Mvc.AllowAnonymous]
-        public ActionResult OrderFlightHistoryDetail(string rsvNo, string status)
+        public ActionResult OrderFlightHistoryDetailPost(string rsvNo, string status)
         {
             ReservationForDisplayBase rsv;
+            var regId = GenerateId(rsvNo);
             var flightService = FlightService.GetInstance();
             var hotelService = HotelService.GetInstance();
             ReservationForDisplayBase displayReservation;
@@ -762,26 +769,26 @@ namespace Lunggo.CustomerWeb.Controllers
                         return RedirectToAction("Index", "Index"); // buat cari baru, blom fix
 
                     case RsvDisplayStatus.FailedPaid:
-                        return RedirectToAction("Thankyou", "Payment", new { rsvNo = rsvNo });
+                        return RedirectToAction("Thankyou", "Payment", new {rsvNo, regId });
 
                     case RsvDisplayStatus.FailedUnpaid:
-                        return RedirectToAction("Thankyou", "Payment", new { rsvNo = rsvNo });
+                        return RedirectToAction("Thankyou", "Payment", new { rsvNo, regId });
 
                     case RsvDisplayStatus.Issued:
-                        return RedirectToAction("Eticket", "Payment", new { rsvNo = rsvNo });
+                        return RedirectToAction("Eticket", "Payment", new {rsvNo });
 
                     case RsvDisplayStatus.Paid:
-                        return RedirectToAction("Thankyou", "Payment", new { rsvNo = rsvNo });
+                        return RedirectToAction("Thankyou", "Payment", new { rsvNo, regId });
 
                     case RsvDisplayStatus.PaymentDenied:
-                        return RedirectToAction("Thankyou", "Payment", new { rsvNo = rsvNo });
+                        return RedirectToAction("Thankyou", "Payment", new { rsvNo, regId });
 
                     case RsvDisplayStatus.PendingPayment:
 
                         if (displayReservation.Payment.Method == PaymentMethod.BankTransfer ||
                             displayReservation.Payment.Method == PaymentMethod.VirtualAccount)
                         {
-                            return RedirectToAction("Instruction", "Payment", new { rsvNo = rsvNo });
+                            return RedirectToAction("Instruction", "Payment", new {rsvNo, regId });
                             // jika bank transfer & VA
                         }
                         else if (displayReservation.Payment.Method == PaymentMethod.CimbClicks)
@@ -790,17 +797,17 @@ namespace Lunggo.CustomerWeb.Controllers
                         }
                         else
                         {
-                            return RedirectToAction("Thankyou", "Payment", new { rsvNo = rsvNo });
+                            return RedirectToAction("Thankyou", "Payment", new { rsvNo, regId });
                         }
 
                     case RsvDisplayStatus.Reserved:
-                        return RedirectToAction("Payment", "Payment", new { rsvNo = rsvNo });
+                        return RedirectToAction("Payment", "Payment", new { rsvNo, regId });
 
                     case RsvDisplayStatus.VerifyingPayment:
                         if (displayReservation.Payment.Method == PaymentMethod.BankTransfer ||
                             displayReservation.Payment.Method == PaymentMethod.VirtualAccount)
                         {
-                            return RedirectToAction("Instruction", "Payment", new { rsvNo = rsvNo });
+                            return RedirectToAction("Instruction", "Payment", new { rsvNo, regId });
                             // jika bank transfer & VA
                         }
                         else if (displayReservation.Payment.Method == PaymentMethod.CimbClicks)
@@ -809,11 +816,11 @@ namespace Lunggo.CustomerWeb.Controllers
                         }
                         else
                         {
-                            return RedirectToAction("Thankyou", "Payment", new { rsvNo = rsvNo });
+                            return RedirectToAction("Thankyou", "Payment", new { rsvNo, regId });
                         }
 
                     default:
-                        return RedirectToAction("OrderFlightHistoryDetail", "Account", new { rsvNo = rsvNo });
+                        return RedirectToAction("OrderFlightHistoryDetail", "Account", new { rsvNo, regId });
 
                 }
 
@@ -827,5 +834,26 @@ namespace Lunggo.CustomerWeb.Controllers
         {
             return Redirect("https://lunggostorageqa.blob.core.windows.net/eticket/" + rsvNo + ".pdf");
         }
+
+        #region Helpers
+
+        public string GenerateId(string key)
+        {
+            string result = "";
+            if (key.Length > 7)
+            {
+                key = key.Substring(key.Length - 7);
+            }
+            int generatedNumber = (int)double.Parse(key);
+            for (int i = 1; i < 4; i++)
+            {
+                generatedNumber = new Random(generatedNumber).Next();
+                double regId = generatedNumber * 555;
+                result = result + "" + regId;
+            }
+            return result;
+        }
+
+        #endregion
     }
 }
