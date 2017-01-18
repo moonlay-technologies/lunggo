@@ -200,41 +200,22 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
 
                 // Hotel Detail
                 $('.mh-list a').click(function () {
-                    var link = $(this).attr('href');
+                    var link = $(this).attr('id');
+                    var header;
                     if (link == '#menu-facility') {
-                        var header = $("#menu-facility");
-                        $(window).scroll(function () {
-                            var scroll = $(window).scrollTop();
-
-                            if (scroll >= 1800) {
-                                header.addClass("up-height");
-                            } else {
-                                header.removeClass("up-height");
-                            }
-                        });
+                        $('html, body').animate({
+                            scrollTop: $(".info-hotel").offset().top
+                        }, 1000);
                     }
                     else if (link == '#menu-desc') {
-                        header = $("#menu-desc");
-                        $(window).scroll(function () {
-                            var scroll = $(window).scrollTop();
+                        $('html, body').animate({
+                            scrollTop: $("#menu-desc").offset().top - 80
+                        },1000);
 
-                            if (scroll >= 1800) {
-                                header.addClass("up-height");
-                            } else {
-                                header.removeClass("up-height");
-                            }
-                        });
                     } else if (link == '#menu-tnc') {
-                        header = $("#menu-tnc");
-                        $(window).scroll(function () {
-                            var scroll = $(window).scrollTop();
-
-                            if (scroll >= 1800) {
-                                header.addClass("up-height");
-                            } else {
-                                header.removeClass("up-height");
-                            }
-                        });
+                        $('html, body').animate({
+                            scrollTop: $("#menu-tnc").offset().top - 80
+                        }, 1000);
                     }
                 });
 
