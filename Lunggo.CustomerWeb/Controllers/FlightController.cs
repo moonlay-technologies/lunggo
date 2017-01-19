@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
@@ -57,6 +58,42 @@ namespace Lunggo.CustomerWeb.Controllers
             }
         }
 
+        [DeviceDetectionFilter]
+        [Route("id/tiket-pesawat/cari/{searchParam}")]
+        public ActionResult Search(string searchParam)
+        {
+            var parts = searchParam.Split('.');
+            var originAirport = parts[1];
+            var destinationAirport = parts[2];
+            var todaydate = DateTime.Today.AddDays(1);
+            var randomDate = new DateTime(2017, 4, 1);
+            var date = randomDate.Date.ToString();
+            var month = randomDate.Month.ToString();
+            var search = originAirport + destinationAirport + todaydate.Date.ToString() + todaydate.Month +
+                             todaydate.Year.ToString().Substring(0, 2) + "-100y";
+
+            try
+            {
+                var trips = new List<FlightTrip>
+                {
+                    new FlightTrip{
+                        OriginAirport = originAirport,
+                        DestinationAirport = destinationAirport,
+                        DepartureDate = todaydate
+                    }
+                };
+
+                var tripType = FlightService.GetInstance().ParseTripType(trips);
+                var requestId = Guid.NewGuid().ToString();
+                FlightService.GetInstance().SetFlightRequestTripType(requestId, tripType == TripType.RoundTrip);
+                ViewBag.RequestId = requestId;
+                return View("Search-Single", search);
+            }
+            catch
+            {
+                return View("Search-Single", search);
+            }
+        }
         [HttpPost]
         public ActionResult Select(string token)
         {
