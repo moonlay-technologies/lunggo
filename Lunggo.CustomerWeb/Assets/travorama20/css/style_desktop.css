@@ -7767,20 +7767,19 @@ file : /Assets/travorama20/css/_page_password.scss
   .page-account-profile .order-detail .passenger-list li {
     position: relative;
     margin-bottom: 1px;
-    padding-left: 30px;
+    padding-left: 40px;
     background: #efefef; }
     .page-account-profile .order-detail .passenger-list li:before {
       content: counter(passenger-number);
       counter-increment: passenger-number;
       position: absolute;
       text-align: center;
-      width: 20px;
       height: 100%;
       color: #fff;
       background: #1daee4;
       z-index: 2;
       left: 0;
-      padding: 6px; }
+      padding: 6px 12px; }
     .page-account-profile .order-detail .passenger-list li .row > div {
       padding: 6px; }
     .page-account-profile .order-detail .passenger-list li .row div + div {
