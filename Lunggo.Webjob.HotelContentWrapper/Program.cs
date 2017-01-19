@@ -25,14 +25,14 @@ namespace Lunggo.Webjob.HotelContentWrapper
             stopwatch.Start();
 
             var hotelService = HotelService.GetInstance();
-            //hotelService.UpdateHotelContentAll();
+            hotelService.UpdateHotelContentAll();
             //Console.WriteLine("On Running");
             //var x = HotelService.FacilityGroups;
             //Console.ReadKey();
             ///*Try to get file name*/
             //hotelService.UpdateHotelImage();
-            var blobService = BlobStorageService.GetInstance();
-            var u = blobService.GetFileNameList("hotelimage");
+            //var blobService = BlobStorageService.GetInstance();
+            //var u = blobService.GetFileNameList("hotelimage", "standard/120819");
             stopwatch.Stop();
             Debug.Print("Done in : {0}", stopwatch.Elapsed);
             Console.WriteLine("Done in : {0}", stopwatch.Elapsed);
