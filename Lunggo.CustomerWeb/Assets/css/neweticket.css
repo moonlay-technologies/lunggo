@@ -68,12 +68,24 @@ p {
     clear: both;
     width: 100%;
     display: block; }
-
-.page.page-2 {
-  top: 29.7cm; }
-
-.page.page-3 {
-  top: 59.2cm; }
+  .page.page-2 {
+    top: 29.7cm; }
+  .page.page-3 {
+    top: 59.2cm; }
+  .page.page-4 {
+    top: 89.1cm; }
+  .page.page-5 {
+    top: 118.8cm; }
+  .page.page-6 {
+    top: 148.5cm; }
+  .page.page-7 {
+    top: 178.2cm; }
+  .page.page-8 {
+    top: 207.9cm; }
+  .page.page-9 {
+    top: 237.6cm; }
+  .page.page-10 {
+    top: 267.3cm; }
 
 /**
 Site Header
@@ -82,30 +94,36 @@ Site Header
   margin: 0;
   padding: 1cm 1cm 0;
   border-bottom: 0; }
-  .page-header .page-header-right {
-    /*.page-title {padding-right:3mm;
-            h3 {color:#38B3E3; font-weight:bold; margin:0; margin-top:5.5mm; font-size:24pt; vertical-align:bottom; line-height:100%;}
-        }*/ }
-    .page-header .page-header-right:before, .page-header .page-header-right:after {
-      content: "";
-      clear: both;
-      width: 100%;
-      display: block; }
-    .page-header .page-header-right > div {
-      float: left; }
-    .page-header .page-header-right .page-help {
-      padding-left: 3mm;
-      padding-top: 15px;
-      border-left: 2px solid #ddd; }
-      .page-header .page-header-right .page-help p {
-        margin-bottom: 0;
-        line-height: 100%;
-        margin-bottom: 5px; }
-      .page-header .page-header-right .page-help p:last-child {
-        margin-bottom: 0; }
-      .page-header .page-header-right .page-help span {
-        color: #38B3E3;
-        font-weight: bold; }
+  .page-header .page-header-right:before, .page-header .page-header-right:after {
+    content: "";
+    clear: both;
+    width: 100%;
+    display: block; }
+  .page-header .page-header-right > div {
+    float: left; }
+  .page-header .page-header-right .page-title {
+    padding-right: 3mm; }
+    .page-header .page-header-right .page-title h3 {
+      color: #38B3E3;
+      font-weight: bold;
+      margin: 0;
+      margin-top: 5.5mm;
+      font-size: 24pt;
+      vertical-align: bottom;
+      line-height: 100%; }
+  .page-header .page-header-right .page-help {
+    padding-left: 3mm;
+    padding-top: 15px;
+    border-left: 2px solid #ddd; }
+    .page-header .page-header-right .page-help p {
+      margin-bottom: 0;
+      line-height: 100%;
+      margin-bottom: 5px; }
+    .page-header .page-header-right .page-help p:last-child {
+      margin-bottom: 0; }
+    .page-header .page-header-right .page-help span {
+      color: #38B3E3;
+      font-weight: bold; }
 
 /**
 Site Content

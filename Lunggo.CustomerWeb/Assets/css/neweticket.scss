@@ -53,9 +53,16 @@ p {margin-bottom:0;}
 
 .page {width:21cm; height:29.7cm; position:absolute; -webkit-print-color-adjust:exact; //background:url(/Assets/images/eticket-background.png) left 70% no-repeat;
     &:before, &:after {@include clearfix;}
+    &.page-2 {top:29.7cm;}
+    &.page-3 {top:59.2cm;}
+    &.page-4 {top:89.1cm;}
+    &.page-5 {top:118.8cm;}
+    &.page-6 {top:148.5cm;}
+    &.page-7 {top:178.2cm;}
+    &.page-8 {top:207.9cm;}
+    &.page-9 {top:237.6cm;}
+    &.page-10 {top:267.3cm;}
 }
-.page.page-2 {top:29.7cm;}
-.page.page-3 {top:59.2cm;}
 
 /**
 Site Header
@@ -64,9 +71,9 @@ Site Header
     .page-header-right {
         &:before, &:after {@include clearfix;}
         &>div {float:left;}
-        /*.page-title {padding-right:3mm;
+        .page-title {padding-right:3mm;
             h3 {color:#38B3E3; font-weight:bold; margin:0; margin-top:5.5mm; font-size:24pt; vertical-align:bottom; line-height:100%;}
-        }*/
+        }
         .page-help {padding-left:3mm; padding-top:15px; border-left:2px solid #ddd;
             p {margin-bottom:0; line-height:100%; margin-bottom:5px;}
             p:last-child {margin-bottom:0;}
