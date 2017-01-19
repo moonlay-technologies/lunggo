@@ -11,10 +11,9 @@ file: /Assets/travorama20/css/_page_flight.scss
     @extend .os-regular; 
     // *****
     // search location
-    .search-location, .search-hotel {position:absolute; top:95px;
+    .search-location {position:absolute; top:188px; border:$border-default;
         &#origin {left:5px;}
         &#destination {left:5px;}
-        .location-body {border:$border-default;}
         li {color:#666;
             &:hover {color:#fff;}
         }
@@ -89,7 +88,7 @@ file: /Assets/travorama20/css/_page_flight.scss
             }
             .change-flight-destination {width:65%; float:left; @extend & .change-flight-origin;}
             .change-flight-class {width:34%; margin-left:1%; float:left; background:#fff; @include border-radius($border-radius-default); position:relative; cursor:pointer; height: 49px;
-                &:after {content:url(/Assets/images/select-arrow.png); position:absolute; right:10px; top:7px;}
+                &:after {content:url(/Assets/images/select-arrow.png); position:absolute; right:10px; top: 50%; transform: translateY(-50%);}
                 .option {
                     span {text-align:left;}
                 }
@@ -384,12 +383,19 @@ file: /Assets/travorama20/css/_page_flight.scss
     }
 
     // search calendar
-    .search-calendar {position:absolute; top:188px;
-        .calendar-body {padding-top:0;}
+    .search-calendar {
+        position: absolute;
+        top: 188px;
+        width: 908px;
+        left: 5px;
+        height: auto;
+        .calendar-body {padding:25px 50px;
+            .date-picker {padding: 0;}
+        }
         .ui-datepicker {
             &:before, &:after {@include clearfix();}
         }
-        .ui-datepicker-group {width:50%; float:left;}
+        .ui-datepicker-group {width:50%; float:left; padding:15px 50px;}
         .ui-datepicker-group-last {border-top:none !important; border-left:$border-default;}
         .ui-datepicker-prev {background:url(/Assets/images/calendar-sprite.png) no-repeat; width:22px; height:37px; text-indent:-1000px; top:80px !important; left:-15px !important; overflow:hidden;}
         .ui-datepicker-next {background:url(/Assets/images/calendar-sprite.png) no-repeat; background-position:-22px; width:22px; height:37px; text-indent:-1000px; top:80px !important; left:auto !important; right:-15px !important; overflow:hidden;}

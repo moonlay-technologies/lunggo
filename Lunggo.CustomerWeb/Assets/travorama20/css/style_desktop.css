@@ -309,11 +309,11 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
 
 .search-calendar, .search-calendar-hotel {
   width: 320px;
-  max-height: 320px;
-  width: 908px;
+  height: 520px;
   background: #252525;
   position: absolute;
   top: 0;
+  left: 325px;
   z-index: 2;
   display: none; }
   .search-calendar .calendar-header, .search-calendar-hotel .calendar-header {
@@ -322,7 +322,8 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     color: #fff;
     font-weight: 600;
     font-size: 17px;
-    padding: 10px 15px; }
+    padding: 10px 15px;
+    line-height: 100%; }
     .search-calendar .calendar-header .close-calendar, .search-calendar .calendar-header .close-calendar-hotel, .search-calendar-hotel .calendar-header .close-calendar, .search-calendar-hotel .calendar-header .close-calendar-hotel {
       float: right;
       cursor: pointer; }
@@ -332,13 +333,13 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     display: none; }
 
 .hotel-date-picker, .date-picker {
-  padding: 25px 50px; }
+  padding: 15px; }
   .hotel-date-picker .ui-datepicker, .date-picker .ui-datepicker {
     width: 100% !important;
     position: relative; }
     .hotel-date-picker .ui-datepicker .ui-datepicker-group, .date-picker .ui-datepicker .ui-datepicker-group {
       width: 100%;
-      padding: 15px 50px; }
+      padding: 15px; }
       .hotel-date-picker .ui-datepicker .ui-datepicker-group + .ui-datepicker-group, .date-picker .ui-datepicker .ui-datepicker-group + .ui-datepicker-group {
         border-top: 1px solid #ccc; }
       .hotel-date-picker .ui-datepicker .ui-datepicker-group .ui-datepicker-title, .date-picker .ui-datepicker .ui-datepicker-group .ui-datepicker-title {
@@ -415,7 +416,8 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     color: #fff;
     font-weight: 600;
     font-size: 17px;
-    padding: 10px 15px; }
+    padding: 10px 15px;
+    line-height: 100%; }
     .search-location .location-header .close-location, .search-location .location-header .close-hotel, .search-hotel .location-header .close-location, .search-hotel .location-header .close-hotel {
       float: right;
       cursor: pointer; }
@@ -1734,6 +1736,8 @@ file : /Assets/travorama20/css/_page_index.scss
         color: #464545;
         background-color: #5f5f5f;
         border-color: transparent; }
+        .page-index .section-search .search-form .tab-content .tab-flight .form-flight-return.disabled .grey-txt {
+          color: #464545; }
       .page-index .section-search .search-form .tab-content .tab-flight .form-flight-oneway {
         display: none;
         cursor: not-allowed; }
@@ -2523,18 +2527,17 @@ FLIGHT Page styling
 file: /Assets/travorama20/css/_page_flight.scss
 
 */
-.page-flight .search-location, .page-flight .search-hotel {
+.page-flight .search-location {
   position: absolute;
-  top: 95px; }
-  .page-flight .search-location#origin, .page-flight .search-hotel#origin {
+  top: 188px;
+  border: 1px solid #ccc; }
+  .page-flight .search-location#origin {
     left: 5px; }
-  .page-flight .search-location#destination, .page-flight .search-hotel#destination {
+  .page-flight .search-location#destination {
     left: 5px; }
-  .page-flight .search-location .location-body, .page-flight .search-hotel .location-body {
-    border: 1px solid #ccc; }
-  .page-flight .search-location li, .page-flight .search-hotel li {
+  .page-flight .search-location li {
     color: #666; }
-    .page-flight .search-location li:hover, .page-flight .search-hotel li:hover {
+    .page-flight .search-location li:hover {
       color: #fff; }
 
 .page-flight .page-progress {
@@ -2740,7 +2743,8 @@ file: /Assets/travorama20/css/_page_flight.scss
         content: url(/Assets/images/select-arrow.png);
         position: absolute;
         right: 10px;
-        top: 7px; }
+        top: 50%;
+        transform: translateY(-50%); }
       .page-flight .search-result-form form.change-flight .change-flight-class .option span {
         text-align: left; }
       .page-flight .search-result-form form.change-flight .change-flight-class span {
@@ -3362,9 +3366,14 @@ file: /Assets/travorama20/css/_page_flight.scss
 
 .page-flight .search-calendar {
   position: absolute;
-  top: 188px; }
+  top: 188px;
+  width: 908px;
+  left: 5px;
+  height: auto; }
   .page-flight .search-calendar .calendar-body {
-    padding-top: 0; }
+    padding: 25px 50px; }
+    .page-flight .search-calendar .calendar-body .date-picker {
+      padding: 0; }
   .page-flight .search-calendar .ui-datepicker:before, .page-flight .search-calendar .ui-datepicker:after {
     display: block;
     width: 100%;
@@ -3372,7 +3381,8 @@ file: /Assets/travorama20/css/_page_flight.scss
     clear: both; }
   .page-flight .search-calendar .ui-datepicker-group {
     width: 50%;
-    float: left; }
+    float: left;
+    padding: 15px 50px; }
   .page-flight .search-calendar .ui-datepicker-group-last {
     border-top: none !important;
     border-left: 1px solid #ccc; }

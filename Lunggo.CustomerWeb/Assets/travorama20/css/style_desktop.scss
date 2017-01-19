@@ -244,17 +244,17 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
 // form Search Location pop up
 // and form Date Selector pop up
 // search calendar
-.search-calendar, .search-calendar-hotel {width:320px; max-height: 320px; width: 908px; background:#252525; position:absolute; top: 0; z-index:2; display:none;
-    .calendar-header {height:40px; background:#4e4e4e; color:#fff; @extend .os-semibold; font-weight:600; font-size:17px; padding:10px 15px;
+.search-calendar, .search-calendar-hotel {width:320px; height:520px; background:#252525; position:absolute; top:0; left:325px; z-index:2; display:none;
+    .calendar-header {height:40px; background:#4e4e4e; color:#fff; @extend .os-semibold; font-weight:600; font-size:17px; padding:10px 15px; line-height: 100%;
         .close-calendar, .close-calendar-hotel {float:right; cursor:pointer;}
     }
     .calendar-body {padding-top:15px;}
     .home-nav {display:none;}
 }
 // datepicker
-.hotel-date-picker, .date-picker {padding: 25px 50px;
+.hotel-date-picker, .date-picker {padding:15px;
     .ui-datepicker {width:100% !important; position:relative;
-        .ui-datepicker-group {width:100%; padding: 15px 50px;
+        .ui-datepicker-group {width:100%; padding:15px;
             & + .ui-datepicker-group {border-top:$border-default;}
             .ui-datepicker-title {color:#fff; color:$color-main-blue; font-size:14px; @extend .os-semibold; font-weight:600; margin-bottom:10px;}
             .ui-datepicker-calendar {width:100%; color:#fff;
@@ -292,10 +292,9 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         }
     }
 }
-
 // location dropdown
 .search-location, .search-hotel {width:850px; min-height:520px; background:#fff; position:absolute; top:0; left:325px; z-index:3; display:none;
-    .location-header {height:40px; background:#4e4e4e; color:#fff; @extend .os-semibold; font-weight:600; font-size:17px; padding:10px 15px;
+    .location-header {height:40px; background:#4e4e4e; color:#fff; @extend .os-semibold; font-weight:600; font-size:17px; padding:10px 15px; line-height: 100%;
         .close-location, .close-hotel {float:right; cursor:pointer;}
     }
     .location-body {color:#333; height: 400px;
