@@ -47,6 +47,7 @@ namespace Lunggo.WebAPI.ApiSrc.Autocomplete
 
         [HttpGet]
         [LunggoCorsPolicy]
+        //[Authorize]
         [Route("v1/autocomplete/hotel/{prefix}")]
         [Route("v1/autocomplete/hotel/{prefix}/{dest}/{zone}/{area}/{hotel}")]
         public ApiResponseBase HotelLocations(string prefix, int dest = 10, int zone = 10,int area=10, int hotel = 10)

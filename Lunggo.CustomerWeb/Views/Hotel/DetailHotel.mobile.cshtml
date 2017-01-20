@@ -25,7 +25,7 @@
     if (Model.HotelDetailData.Facilities.Entertainment != null)
     {
         hotelFac.Add(SetFacilityForDisplay(Model.HotelDetailData.Facilities.Entertainment, "Hiburan"));
-}
+    }
 
     if (Model.HotelDetailData.Facilities.General != null)
     {
@@ -38,29 +38,29 @@
     }
 
     if (Model.HotelDetailData.Facilities.Meal != null)
-        {
+    {
         hotelFac.Add(SetFacilityForDisplay(Model.HotelDetailData.Facilities.Meal, "Makanan"));
     }
 
     if (Model.HotelDetailData.Facilities.Other != null)
-            {
+    {
         hotelFac.Add(SetFacilityForDisplay(Model.HotelDetailData.Facilities.Other, "Lainnya"));
     }
 
     if (Model.HotelDetailData.Facilities.Sport != null)
-                {
+    {
         hotelFac.Add(SetFacilityForDisplay(Model.HotelDetailData.Facilities.Sport, "Olah Raga"));
-                    }
+    }    
 
-                }
+}
 
 @functions{
 
     public class FacilityModel
-                {
+    {
         public List<List<String>> FacilityList { get; set; }
         public string FacilityGroup { get; set; }
-                }
+    }
 
     public FacilityModel SetFacilityForDisplay(List<string> facilities, string groupName)
     {
@@ -71,7 +71,7 @@
         for (var k = 0; k <= 3; k++)
         {
             facilityModel.FacilityList.Add(new List<string>());
-            }
+        }
 
         facilityModel.FacilityGroup = groupName;
         for (var i = 0; i < facilities.Count; i++)
@@ -79,24 +79,24 @@
             if (i%4 == 0)
             {
                 facilityModel.FacilityList[0].Add(facilities[i]);
-        }
+            }
             else if (i%4 == 1)
-        {
+            {
                 facilityModel.FacilityList[1].Add(facilities[i]);
-        }
+            }
             else if (i%4 == 2)
             {
                 facilityModel.FacilityList[2].Add(facilities[i]);
-    }
+            }
 
             else if (i%4 == 3)
-    {
+            {
                 facilityModel.FacilityList[3].Add(facilities[i]);
-    }
+            }
         }
 
         return facilityModel;
-}
+    }
 }
 @section AdditionalCSS{
     <link href="/Assets/css/jquery-ui.min.css" rel="stylesheet" />
@@ -253,11 +253,11 @@
                                 </div>
                                 <a href="#" class="blue-txt downline-txt sm-txt" ng-click="PageConfig.SetOverlay('detail-room'); seeRoomDetail(room)">Detail Info Kamar</a>
                                 @*<div class="facility">
-                                    <span class="wifi"></span>
-                                    <span class="meal"></span>
-                                    <span class="ac"></span>
-                                </div>*@
-                                <a ng-click="bookRoom(room)" class="checkout-btn btn btn-yellow small">PESAN</a>
+                                <span class="wifi"></span>
+                                <span class="meal"></span>
+                                <span class="ac"></span>
+                            </div>*@
+                                <a ng-click="bookRoom(room.rate)" class="checkout-btn btn btn-yellow small">PESAN</a>
                             </div>
                         </div>
                     </li>
@@ -274,7 +274,7 @@
         </div>
             
         </div>
-        <div class="detail-tab spec-hotel" id="spec-menu">
+    <div class="detail-tab spec-hotel" id="spec-menu">
         @if (!string.IsNullOrEmpty(Model.HotelDetailData.Description))
         {
             <div class="sh-desc">
@@ -290,13 +290,13 @@
         }
      @if (hotelFac != null && hotelFac.Count > 0)
      {
-            <div class="sh-facility">
-                <div class="sh-title darkgrey-txt lg-txt bold-txt">Fasilitas Utama Hotel</div>
-                @*<div ng-show="loading" class="text-center">
+         <div class="sh-facility">
+             <div class="sh-title darkgrey-txt lg-txt bold-txt">Fasilitas Utama Hotel</div>
+             @*<div ng-show="loading" class="text-center">
                     <img src="/Assets/images/load.gif" style="width: 30px; height: 30px; margin-top: 5%;">
                     </div>*@
-                <div class="sh-list-facility grey-txt clearfix">
-                         
+             <div class="sh-list-facility grey-txt clearfix">
+                
                  @foreach (var facility in hotelFac)
                  {
                      <div class="sh-row clearfix">
@@ -336,9 +336,9 @@
                                  <div class="col-2 fac-other">
                                  </div>
                              }
-                        </div>
+                         </div>
 
-                        <div class="col-8 clearfix">
+                         <div class="col-8 clearfix">
                              @foreach (var facilityList in facility.FacilityList)
                              {
                                  <ul class="col-half blue-list">
@@ -346,16 +346,16 @@
                                      {
                                          <li>@name</li>
                                      }
-                            </ul>
+                                 </ul>
                              }
                                     
-                        </div>
-                    </div>
+                         </div>
+                     </div>
                  }
                  
 
-                    
-                    @*<ul class="col-half sh-list">
+
+                 @*<ul class="col-half sh-list">
                         <li class="bed-blue">Bed</li>
                         <li class="meal-blue">Breakfast</li>
                         <li class="bell-blue">Room Service</li>
@@ -375,30 +375,30 @@
                         <li class="car-blue">Hotel Car</li>
                         <li class="ac-blue">AC</li>
                     </ul>*@
-                </div>
-                * Fasilitas Berbayar
-            </div>
+             </div>
+             * Fasilitas Berbayar
+         </div>
      }
      @if (Model.HotelDetailData.Policy != null && Model.HotelDetailData.Policy.Count > 0)
      {
         <div class="sh-policy">
-                <div class="sh-title darkgrey-txt lg-txt bold-txt">Perlu Diingat</div>
-                <div ng-show="loading" class="text-center">
-                    <img src="/Assets/images/load.gif" style="width: 30px; height: 30px; margin-top: 5%;">
+            <div class="sh-title darkgrey-txt lg-txt bold-txt">Perlu Diingat</div>
+            <div ng-show="loading" class="text-center">
+                <img src="/Assets/images/load.gif" style="width: 30px; height: 30px; margin-top: 5%;">
             </div>
-                <div class="sh-policy-txt darkgrey-txt">
-                    <ul>
+            <div class="sh-policy-txt darkgrey-txt">
+                <ul>
                     @foreach (var pol in Model.HotelDetailData.Policy)
                     {
                         <li>@pol</li>
                     }
                     
-                    </ul>
-                </div>
+                </ul>
             </div>
+        </div>
      }
         
-        </div>
+    </div>
     <div class="overlay overlay--theme--blue overlay--detail-room" ng-class="{ 'active' : (PageConfig.ActiveOverlay == 'detail-room') }">
         <header class="overlay__header">
             <h3 class="overlay__title">
@@ -538,8 +538,8 @@
             <div class="popup__footer">
                 <div class="container_new">
                     <a class="btn btn-block btn-yellow" ng-click="refreshPage()">CARI ULANG</a>
+                </div>
             </div>
         </div>
     </div>
-</div>
 </div>

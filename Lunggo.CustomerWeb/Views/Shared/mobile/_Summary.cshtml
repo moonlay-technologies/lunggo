@@ -13,10 +13,6 @@
 <div class="hotel-summary">
     <div class="summary-left">
         <div style="text-transform:capitalize"><b>@ToTitleCase.ConvertToTitleCase(Model.Location)</b>
-            @if (!Model.IsHotelSearch)
-            {
-                <span>, {{hotelSearch.roomCount}} Kamar</span>
-            }
         </div>
         @if (!Model.IsHotelSearch)
         {
