@@ -29,10 +29,10 @@
         <Logs scheduledTransferPeriod="PT1M" scheduledTransferLogLevelFilter="Error" />
       </DiagnosticMonitorConfiguration>
     </WadCfg>
-    <StorageAccount>lunggostorageqa</StorageAccount>
+    <StorageAccount />
   </PublicConfig>
   <PrivateConfig xmlns="http://schemas.microsoft.com/ServiceHosting/2010/10/DiagnosticsConfiguration">
-    <StorageAccount endpoint="https://core.windows.net" name="lunggostorageqa" key="ECUAdynBjM6ttLekJLBMNCoXHEUEulWkLwT5r8iTDXeW9GuHCD7sx5IOF9CtdI6/vyJbfX6XHxPbgiao8a2Umw==" />
+    <StorageAccount endpoint="" />
   </PrivateConfig>
   <IsEnabled>true</IsEnabled>
 </DiagnosticsConfiguration>

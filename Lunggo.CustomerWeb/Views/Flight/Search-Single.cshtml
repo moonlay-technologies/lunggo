@@ -117,6 +117,7 @@
     <script src="/Assets/travorama20/angularDirectory/priceDetail/priceDetailDir.js"></script>
     <script src="/Assets/travorama20/js/singleFlightController.js"></script>
     @*<script src="https://github.com/angular/angular.js/blob/master/src/ngLocale/angular-locale_id-id.js"></script>*@
+    <script>backToTop()</script>
 }
 
 @if (isValid)
@@ -175,6 +176,7 @@
         </div>
     </section><!-- .search-result-form -->
     <section class="search-result one-way page-loading" ng-controller="singleFlightController" ng-class="{'page-loaded': pageLoaded}">
+        <a href="#" id="back-to-top" title="Back to top"></a>
 
         <div class="page-progress" ng-show="loading && loadingFlight && flightRequest.FinalProgress < 100">
             <div class="container">

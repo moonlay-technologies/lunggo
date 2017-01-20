@@ -735,6 +735,7 @@
     <Content Include="Assets\images\flight-weight.png" />
     <Content Include="Assets\images\form-selection-sprite.png" />
     <Content Include="Assets\images\global-error.jpg" />
+    <Content Include="Assets\images\go-top.png" />
     <Content Include="Assets\images\googlePlay.png" />
     <Content Include="Assets\images\gray-bg.png" />
     <Content Include="Assets\images\grey-bg.png" />
@@ -761,6 +762,7 @@
     <Content Include="Assets\images\hotel-review-header.png" />
     <Content Include="Assets\images\hotel-star-4.jpg" />
     <Content Include="Assets\images\hotel-star-4.png" />
+    <Content Include="Assets\images\hotel\markers.png" />
     <Content Include="Assets\images\hourglass.png" />
     <Content Include="Assets\images\hover-menu-arrow.png" />
     <Content Include="Assets\images\howto-bg.jpg" />
@@ -1611,7 +1613,6 @@
     <Folder Include="Areas\Api\Views\Shared\" />
     <Folder Include="Assets\images\slider\" />
     <Folder Include="Assets\images\_sample\" />
-    <Folder Include="Assets\travorama20\fonts\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

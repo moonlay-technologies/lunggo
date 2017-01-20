@@ -1,5 +1,7 @@
 ﻿.detail-hotel {
     border-top: 1px solid #ccc;
+    position: relative;
+    z-index: 2;
     .big-slider {
         position: relative;
         margin: 15px 0 10px;
@@ -7,6 +9,7 @@
             margin-bottom: 15px;
             .slider-title-lg {
                 font-size: 20px;
+                @extend .os-bold; 
                 font-weight: 700;
                 margin-right: 30px;
                 vertical-align: text-bottom;
@@ -32,6 +35,7 @@
                 padding: 7px 20px;
                 text-align: center;
                 color: #fff;
+                @extend .os-bold; 
                 font-weight: 700;
                 &:before {
                     @extend .hotel-icon;
@@ -42,7 +46,9 @@
                 border-top: 1px solid #ccc;
                 padding: 25px 20px;
             }
-            .rs-rating {font-weight: 600;
+            .rs-rating {
+                @extend .os-semibold;
+                font-weight: 600;
                 .rs-txt-big {
                     font-size: 40px;
                     float: right;
@@ -61,6 +67,7 @@
                     width: 100%;
                     margin-top: 10px;
                     font-size: 11px;
+                    @extend .os-semibold;
                     font-weight: 600;
                     line-height: 11px;
                     .rb-container {margin-bottom: 12px;}
@@ -143,6 +150,7 @@
     .menu-hotel {
         margin-bottom: 20px;
         .mh-title {
+            @extend .os-semibold;
             font-weight: 600;
             color: #fff;
             background: #a0a0a0;
@@ -171,12 +179,13 @@
             list-style: none;
             background: #dcdcdc;
             li.mh-list {
-                padding: 0 25px;
+                padding: 0 20px;
                 display: inline-block;
                 a {
-                    text-decoration: underline;
+                    cursor: pointer;
+                    text-decoration: none;
                     color: #000;
-                    &:hover {color: $color-main-blue;}
+                    &:hover {color: $color-main-blue; text-decoration: underline;}
                 }
                 &:before {
                     content: '';
@@ -195,6 +204,7 @@
         position: relative;
         .total-day {text-align: right;}
         .room-sort {
+            @extend .os-bold; 
             font-weight: 700;
             text-align: center;
             line-height: 30px;
@@ -267,6 +277,7 @@
                             padding: 3px 7px;
                             color: #fff;
                             font-family: georgia;
+                            @extend .os-bold; 
                             font-weight: 700;
                             font-size: 11px;
                             line-height: 11px;
@@ -274,8 +285,8 @@
                             margin-right: 5px;
                         }
                         &>.blue-txt.sm-txt {
-                            text-decoration: underline;
-                            cursor: default;
+                            &:hover {text-decoration: underline;}
+                            cursor: pointer;
                             &:after {
                                 width: 0;
                                 height: 0;
@@ -387,6 +398,7 @@
                 margin: 0;
                 list-style: none;
                 padding: 15px 30px;
+                @extend .os-semibold;
                 font-weight: 600;
                 line-height: 25px;
                 li {
@@ -424,6 +436,7 @@
                 border-left: 1px dashed #1daee4;
                 min-height: 212px;
                 position: relative;
+                line-height: 20px;
                 .hd-right-container {
                     margin: 15px;
                     margin-right: 0;
@@ -442,6 +455,7 @@
                         &:last-child {margin-bottom: 0;}
                     }
                     .hd-title {
+                        @extend .os-bold; 
                         font-weight: 700;
                         margin-bottom: 5px;
                         font-size: 14px;
@@ -486,6 +500,7 @@
         padding: 20px 0 15px;
         .ih-accordion {margin-bottom: 15px;
             .accordion-wrapper {
+                /*.accordion-wrap {padding-top: 70px;}*/
                 .accordion-title {
                     padding: 12px 25px;
                     &.up-height {margin-top:70px;}
@@ -506,7 +521,6 @@
                     margin-bottom: 0;
                     border-bottom: 1px solid #e3e3e3;
                     &.show {
-                        padding: 15px 30px;
                         border: 1px solid #ccc;
                         .snk-container {padding: 15px 0;
                             .blue-list {
@@ -516,15 +530,49 @@
                             }
                         }
                     }
+                    .blue-list li {line-height: 20px;}
                 }
                 .tnc-hotel {margin-top: 15px;}
             }
+            .map-title {
+                margin-bottom: 10px;
+                margin: 0 40px 15px;
+                &:before {
+                    width: 30px;
+                    height: 40px;
+                    @extend .hotel-blue-icon;
+                    display: inline-block;
+                    content: '';
+                    position: absolute;
+                    margin-left: -40px;
+                    margin-top: 0;
+                }
+            }
+            .title-wrapper {margin-bottom: 10px;
+                div {    
+                    float: left;
+                    margin-right: 15px;
+                }
+                .star {
+                    float: left;
+                    position: relative;
+                }
+            }
+            .map-hotel {
+                width: 100%;
+                height: 400px;
+                #map {
+                    width: 100%;
+                    height: 100%;
+                }
+            }
         }
         .ih-row {
-            border-top: 1px solid #ccc;
+            border-top: 1px solid #e8e8e8;
             padding: 15px 0;
             &:first-child {border-top: none;}
             .ih-left {
+                @extend .os-semibold;
                 font-weight: 600;
                 text-align: center;
                 &.hotel-blue:before {@extend .hotel-blue-icon;}
@@ -537,12 +585,18 @@
             text-align: center;
             margin: 15px 0 30px;
         }
-        .ih-desc {margin-bottom: 15px;
+        .ih-desc {margin-bottom: 15px; line-height: 20px;
             .col-half {
                 &.ih-l {padding-right: 15px;}
                 &.ih-r {padding-left: 15px;}
             }
         }
-        
+    }
+    .map-content {
+        width: 200px;
+        height: auto;
+        overflow: hidden;
+        font-size: 12px;
+        .hotel-title {margin-bottom: 6px;}
     }
 }

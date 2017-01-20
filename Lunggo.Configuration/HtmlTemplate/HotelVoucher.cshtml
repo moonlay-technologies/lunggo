@@ -4,9 +4,7 @@
 @using Lunggo.ApCommon.Constant
 @using Microsoft.Data.OData.Query.SemanticAst
 @model Lunggo.ApCommon.Hotel.Model.HotelReservationForDisplay
-@{
-    ViewBag.SiteHeader = "header-email";
-}
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -19,8 +17,7 @@
 
     <title>Travorama - Voucher</title>
 
-    <!-- stylesheets -->
-    <link rel="stylesheet" href="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/bootstrap/bootstrap.min.css")" />
+    <link rel="stylesheet" href="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/css/bootstrap.min.css")" />
     <link rel="stylesheet" href="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/css/font-awesome.min.css")" />
     <link rel="stylesheet" href="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/css/neweticket.css")" />
 </head>
@@ -94,6 +91,9 @@
                             </div>
 
                         </div>
+                    </div>
+                    <div class="hb-middle">
+                        <img class="map-img" src="@Model.HotelDetail.MapImage" />
                     </div>
                     <div class="hb-bottom">
                         <h4 class="semibold-txt">DETAIL PEMESANAN</h4>
@@ -169,16 +169,20 @@
                             <h4 class="bold-txt">Rincian Tamu</h4>
                             @foreach (var config in rate.Breakdowns)
                             {
-                                var ages = "(";
-                                for (var i = 0; i < config.ChildrenAges.Count; i++)
+                                var ages = "";
+                                if (config.ChildrenAges != null)
                                 {
-                                    if (i != config.ChildrenAges.Count - 1)
+                                    ages = "(";
+                                    for (var i = 0; i < config.ChildrenAges.Count; i++)
                                     {
-                                        ages += @config.ChildrenAges[i] + " th, ";
-                                    }
-                                    else
-                                    {
-                                        ages += @config.ChildrenAges[i] + " th)";
+                                        if (i != config.ChildrenAges.Count - 1)
+                                        {
+                                            ages += @config.ChildrenAges[i] + " th, ";
+                                        }
+                                        else
+                                        {
+                                            ages += @config.ChildrenAges[i] + " th)";
+                                        }
                                     }
                                 }
                                 <div class="guest bold-txt clearfix">

@@ -343,7 +343,7 @@
                                                     {
                                                         <dl class="total-room">
                                                             <dt class="dt-title">
-                                                                @config.RateCount @ToTitleCase(room.RoomName) @ToTitleCase(config.BoardDescription) x @night Malam
+                                                                @config.RateCount @ToTitleCase.ConvertToTitleCase(room.RoomName) @ToTitleCase.ConvertToTitleCase(config.BoardDescription) x @night Malam
                                                             </dt>
                                                             <dd class="dd-price">
                                                                 Rp @config.NetTotalFare.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))

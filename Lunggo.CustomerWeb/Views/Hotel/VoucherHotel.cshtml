@@ -38,7 +38,7 @@
                 <div class="col-xs-12">
                     <div class="pull-right">
                         <img class="img-email" src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/voucher/email-white.png")" /><span class="white-txt">cs@travorama.com</span>
-            </div>
+                    </div>
                 </div>
             </div>
         </header>
@@ -46,10 +46,10 @@
             <div class="hotel-wrapper">
                 <div class="hotel-top">
                     <div style="background-image: url(@Model.HotelDetail.MainImage);" class="img-hotel"></div>
-                    </div>
+                </div>
                 <div class="hotel-bottom grey-txt">
                     <div class="hb-top">
-                    <div class="row">
+                        <div class="row">
                             <div class="col-xs-7">
                                 <h4 class="hotel-name blue-txt uppercase bold-txt">@Model.HotelDetail.HotelName</h4>
                                 @if (Model.HotelDetail.StarRating == 0 || Model.HotelDetail.StarRating == 1)
@@ -85,18 +85,21 @@
                                         Nomor Pesanan
                                         <h3 class="blue-txt bold-txt">@Model.HotelDetail.BookingReference</h3>
                                     </h4>
-                        </div>
+                                </div>
                                 <div class="row">
-                                    Bookable and Payable by @Model.HotelDetail.SupplierName<br/>
+                                    Bookable and Payable by @Model.HotelDetail.SupplierName<br />
                                     VAT: @Model.HotelDetail.SupplierVat
-                    </div>
-                </div>
+                                </div>
+                            </div>
 
                         </div>
                     </div>
+                    <div class="hb-middle">
+                        <img class="map-img" src="@Model.HotelDetail.MapImage" />
+                    </div>
                     <div class="hb-bottom">
                         <h4 class="semibold-txt">DETAIL PEMESANAN</h4>
-                    <div class="hotel-detail">
+                        <div class="hotel-detail">
                             <div class="row semibold-txt">
                                 <div class="col-xs-3">No. Reservasi Travorama</div>
                                 <div class="col-xs-9">@Model.RsvNo</div>
@@ -109,10 +112,10 @@
                             {
                                 <div class="row semibold-txt">
                                     <div class="col-xs-3">Special Request</div>
-                            <div class="col-xs-9">
+                                    <div class="col-xs-9">
                                         @Model.HotelDetail.SpecialRequest
-                            </div>
-                        </div>
+                                    </div>
+                                </div>
                             }
                             <div class="row semibold-txt">
                                 <div class="col-xs-3"></div>
@@ -121,45 +124,45 @@
                                         <div class="col-xs-4">Check in</div>
                                         <div class="col-xs-3"><div class="dash-border"></div></div>
                                         <div class="col-xs-4">Check out</div>
-                            </div>
+                                    </div>
                                     <div class="row clearfix blue-txt semibold-txt">
                                         <div class="col-xs-4"><h4>@Model.HotelDetail.CheckInDate.ToString("D", CultureInfo.CreateSpecificCulture("id-ID"))</h4></div>
                                         <div class="col-xs-3"></div>
                                         <div class="col-xs-4"><h4>@Model.HotelDetail.CheckOutDate.ToString("D", CultureInfo.CreateSpecificCulture("id-ID"))</h4></div>
-                            </div>
+                                    </div>
                                     <div class="row clearfix">
                                         <div class="col-xs-4">14.00</div>
                                         <div class="col-xs-3"></div>
                                         <div class="col-xs-4">12.00</div>
-                        </div>
-                            </div>
-                            </div>
-                        </div>
-                            </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
+                    </div>
+                </div>
+            </div>
         </section>
     </div>
 
-                        @foreach (var room in Model.HotelDetail.Rooms)
-                        {
-                            foreach (var rate in room.Rates)
-                            {
+    @foreach (var room in Model.HotelDetail.Rooms)
+    {
+        foreach (var rate in room.Rates)
+        {
             <div class="page page-2">
                 <header class="page-header white-txt">
                     <div class="row">
                         <div class="col-xs-8">
                             <div class="regular-txt room-title">Tipe Kamar</div>
                             <h4 class="bold-txt">@room.RoomName</h4>
-                            </div>
+                        </div>
                         <div class="col-xs-4 right-txt clearfix">
                             <div class="row">
                                 <div class=" white-txt regular-txt no-reserve">
                                     Nomor Pesanan
-                            </div>
+                                </div>
                                 <h4 class="white-txt bold-txt">@Model.HotelDetail.BookingReference</h4>
-                        </div>
                             </div>
+                        </div>
                     </div>
                 </header>
                 <section class="page-content">
@@ -167,19 +170,19 @@
                         <div class="room-top">
                             <h4 class="bold-txt">Rincian Tamu</h4>
                             @foreach (var config in rate.Breakdowns)
-                                    {
+                            {
                                 var ages = "(";
                                 for (var i = 0; i < config.ChildrenAges.Count; i++)
-                                            {
+                                {
                                     if (i != config.ChildrenAges.Count - 1)
-                                                {
+                                    {
                                         ages += @config.ChildrenAges[i] + " th, ";
-                                                }
-                                                else
-                                                {
+                                    }
+                                    else
+                                    {
                                         ages += @config.ChildrenAges[i] + " th)";
-                                                }
-                                            }
+                                    }
+                                }
                                 <div class="guest bold-txt clearfix">
                                     <div class="col-xs-2">@config.RateCount Kamar</div>
                                     <div class="col-xs-5 blue-txt">
@@ -191,83 +194,82 @@
                                             <span class="">@config.ChildCount Anak</span>
                                             <span class="space"></span>
                                             <span class="semibold-txt">@ages</span>
-                                    }
-                            </div>
-                                    <div class="col-xs-5">@config.BoardDescription</div>
+                                        }
                                     </div>
-                            }
+                                    <div class="col-xs-5">@config.BoardDescription</div>
                                 </div>
+                            }
+                        </div>
                         <div class="room-bottom clearfix">
                             <div class="row">
-                                    <div class="col-xs-3">
+                                <div class="col-xs-3">
                                     <div class="bold-txt">Ketentuan Pembatalan</div>
-                                    </div>
-                                    <div class="col-xs-9">
-                                        @if (rate.IsFreeCancel)
+                                </div>
+                                <div class="col-xs-9">
+                                    @if (rate.IsFreeCancel)
+                                    {
+                                        <p>
+                                            Gratis pembatalan sebelum tanggal @rate.FreeUntil.GetValueOrDefault().ToString("f", CultureInfo.CreateSpecificCulture("id-ID")) WIB.
+                                        </p>
+                                    }
+
+                                    @if (rate.Cancellation != null && rate.Cancellation.Count > 0)
+                                    {
+                                        foreach (var policy in rate.Cancellation)
                                         {
                                             <p>
-                                            Gratis pembatalan sebelum tanggal @rate.FreeUntil.GetValueOrDefault().ToString("f", CultureInfo.CreateSpecificCulture("id-ID")) WIB.
+                                                Pembatalan setelah tanggal @policy.StartTime.ToString("f", CultureInfo.CreateSpecificCulture("id-ID")) akan dikenakan biaya sebesar @((policy.FeePercentage * 100).ToString("####"))%.<br />
                                             </p>
                                         }
-
-                                            @if (rate.Cancellation != null && rate.Cancellation.Count > 0)
-                                            {
-                                                foreach (var policy in rate.Cancellation)
-                                                {
-                                            <p>
-                                                Pembatalan setelah tanggal @policy.StartTime.ToString("f", CultureInfo.CreateSpecificCulture("id-ID")) akan dikenakan biaya sebesar @((policy.FeePercentage * 100).ToString("####"))%.<br />
-                                        </p>
-                            }
-                        }
+                                    }
 
                                 </div>
                             </div>
                             <div class="row">
-                            <div class="col-xs-3">
+                                <div class="col-xs-3">
                                     <div class="bold-txt">Ketentuan</div>
-                            </div>
-                            <div class="col-xs-9">
+                                </div>
+                                <div class="col-xs-9">
                                     @String.Join(". ", rate.TermAndCondition)
+                                </div>
                             </div>
-                        </div>
                             <div class="row">
-                            <div class="col-xs-3">
+                                <div class="col-xs-3">
                                     <div class="bold-txt">Fasilitas</div>
-                            </div>
+                                </div>
                                 <div class="col-xs-9 clearfix">
                                     <ul class="blue-point">
                                         @if (Model.HotelDetail.Facilities != null && Model.HotelDetail.Facilities.Other != null && Model.HotelDetail.Facilities.Other.Count != 0)
-                                {
-                                    var facilities = Model.HotelDetail.Facilities.Other.Where(f => f.Length > 0).ToList();
-                                    if (facilities.Count == 1)
-                                    {
+                                        {
+                                            var facilities = Model.HotelDetail.Facilities.Other.Where(f => f.Length > 0).ToList();
+                                            if (facilities.Count == 1)
+                                            {
                                                 <li>@facilities[0]</li>
-                                    }
-                                    else
-                                    {
-                                        <div class="col-half">
-                                            @for (var i = 0; i < facilities.Count / 2; i++)
+                                            }
+                                            else
                                             {
+                                                <div class="col-half">
+                                                    @for (var i = 0; i < facilities.Count / 2; i++)
+                                                    {
                                                         <li>@facilities[i]</li>
-                                            }
-                                        </div>
-                                                
-                                        <div class="col-half">
+                                                    }
+                                                </div>
+
+                                                <div class="col-half">
                                                     @for (var j = facilities.Count / 2; j < facilities.Count; j++)
-                                            {
-                                                       <li>@facilities[j]</li> 
+                                                    {
+                                                        <li>@facilities[j]</li>
+                                                    }
+                                                </div>
                                             }
-                                        </div>
-                                    }
-                                }
+                                        }
                                     </ul>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
+                </section>
             </div>
-        </section>
-    </div>
-    </body>*@
         }
     }
 </body>

@@ -1,5 +1,5 @@
 ﻿
-$(function() {
+$(function () {
     $('[data-toggle="tooltip"]').tooltip();
 });
 
@@ -60,7 +60,7 @@ var trial = 0;
 
 //********************
 // site header function
-$('html').click(function() {
+$('html').click(function () {
     $('.dropdown-content').hide();
     $('.form-flight-class').siblings('.option').hide();
 });
@@ -135,12 +135,12 @@ function subscribeFormFunctions() {
     SubscribeConfig.email = '';
     SubscribeConfig.name = '';
 
-    $('form.subscribe-form input[type="submit"]').click(function(evt) {
+    $('form.subscribe-form input[type="submit"]').click(function (evt) {
         evt.preventDefault();
         validateForm();
     });
     function validateForm() {
-        $('form.subscribe-form input[type="submit"]').prop('disabled',true);
+        $('form.subscribe-form input[type="submit"]').prop('disabled', true);
         $('form.subscribe-form input[type="submit"]').val('LOADING');
         SubscribeConfig.email = $('form.subscribe-form input.subscribe-email').val();
         SubscribeConfig.name = $('form.subscribe-form input.subscribe-name').val();
@@ -185,11 +185,11 @@ function subscribeFormFunctions() {
         if (trial > 3) {
             trial = 0;
         }
-        $('form.subscribe-form .subscribe-email, form.subscribe-form .subscribe-name').prop('disabled',true);
+        $('form.subscribe-form .subscribe-email, form.subscribe-form .subscribe-name').prop('disabled', true);
         $.ajax({
             url: SubscribeConfig.Url,
             method: 'POST',
-            data: JSON.stringify({ "email" : SubscribeConfig.email, "name" : SubscribeConfig.name}),
+            data: JSON.stringify({ "email": SubscribeConfig.email, "name": SubscribeConfig.name }),
             headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') }
         }).done(function (returnData) {
 
@@ -260,7 +260,7 @@ $(document).ready(function () {
         $.ajax({
             url: SubscribeConfig.Url,
             method: 'POST',
-            data: JSON.stringify({ "email" : email, "name" : subscriberName}),
+            data: JSON.stringify({ "email": email, "name": subscriberName }),
             headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') }
         }).done(function (returnData) {
             console.log('done');
@@ -278,8 +278,7 @@ $(document).ready(function () {
                     div.style.display = "none";
                 });
             }
-            else
-            {
+            else {
                 var normalflow = document.getElementById("normalflow");
                 var memberexist = document.getElementById("memberexist");
                 if (returnData.IsMemberExist) {
@@ -291,12 +290,11 @@ $(document).ready(function () {
                         close.style.display = "none";
                     });
                 }
-                else
-                {
+                else {
                     console.log('failed');
                 }
             }
-            
+
         }).error(function (returnData) {
             trial++;
             if (refreshAuthAccess() && trial < 4) //refresh cookie
@@ -307,8 +305,7 @@ $(document).ready(function () {
     }
 });
 
-function getAnonymousFirstAccess()
-{
+function getAnonymousFirstAccess() {
     var status = 0;
     $.ajax({
         url: LoginConfig.Url,
@@ -324,14 +321,13 @@ function getAnonymousFirstAccess()
             setCookie("accesstoken", returnData.accessToken, returnData.expTime);
             setCookie("refreshtoken", returnData.refreshToken, returnData.expTime);
             if (getCookie('accesstoken')) {
-                status =  1;
+                status = 1;
             }
             else {
                 status = 0;
             }
         }
-        else
-        {
+        else {
             status = 0;
         }
     });
@@ -339,8 +335,7 @@ function getAnonymousFirstAccess()
 }
 
 
-function getAnonymousAccessByRefreshToken(refreshToken)
-{
+function getAnonymousAccessByRefreshToken(refreshToken) {
     var status = 0;
     $.ajax({
         url: LoginConfig.Url,
@@ -359,8 +354,7 @@ function getAnonymousAccessByRefreshToken(refreshToken)
                 status = 0;
             }
         }
-        else
-        {
+        else {
             status = 0;
         }
     });
@@ -368,8 +362,7 @@ function getAnonymousAccessByRefreshToken(refreshToken)
 }
 
 
-function getLoginAccessByRefreshToken(refreshToken)
-{
+function getLoginAccessByRefreshToken(refreshToken) {
     var status = 0;
     $.ajax({
         url: LoginConfig.Url,
@@ -383,22 +376,20 @@ function getLoginAccessByRefreshToken(refreshToken)
             setCookie("refreshtoken", returnData.refreshToken, returnData.expTime);
             setCookie("authkey", returnData.accessToken, returnData.expTime);
             if (getCookie('accesstoken')) {
-                status =  2;
+                status = 2;
             }
             else {
                 status = 0;
             }
         }
-        else
-        {
+        else {
             status = 0;
         }
     });
     return status;
 }
 
-function getAuthAccess()
-{
+function getAuthAccess() {
     var token = getCookie('accesstoken');
     var refreshToken = getCookie('refreshtoken');
     var authKey = getCookie('authkey');
@@ -411,8 +402,7 @@ function getAuthAccess()
         else {
             if (refreshToken) {
                 status = getLoginAccessByRefreshToken(refreshToken);
-                if (status == 0)
-                {
+                if (status == 0) {
                     status = getAnonymousFirstAccess();
                 }
             }
@@ -421,8 +411,7 @@ function getAuthAccess()
             }
         }
     }
-    else
-    {
+    else {
         if (token) {
             return 1;
         }
@@ -430,8 +419,7 @@ function getAuthAccess()
             //Get Anonymous Token By Refresh Token
             if (refreshToken) {
                 status = getAnonymousAccessByRefreshToken(refreshToken);
-                if (status == 0)
-                {
+                if (status == 0) {
                     status = getAnonymousFirstAccess();
                 }
             }
@@ -445,8 +433,7 @@ function getAuthAccess()
 }
 
 
-function refreshAuthAccess()
-{
+function refreshAuthAccess() {
     /*
     * If failed to get Authorization, but accesstoken is still exist
     */
@@ -469,8 +456,7 @@ function refreshAuthAccess()
                 return false;
             }
         }
-        else
-        {
+        else {
             status = getAnonymousAccessByRefreshToken(refreshToken);
             if (status == 0) {
                 status = getAnonymousFirstAccess();
@@ -484,8 +470,7 @@ function refreshAuthAccess()
             }
         }
     }
-    else
-    {
+    else {
         getAnonymousFirstAccess();
         return true;
     }
@@ -511,23 +496,23 @@ function flightPageFunctions() {
     });
     // toggle filter
     $('.search-result-filter .filter-trigger span').click(function () {
-        
+
         //if (ct % 2 == 0) {
-            $(this).parent().siblings().removeClass('active');
-            $(this).parent().addClass('active');
-            var targetFilter = $(this).attr('data-target');
-            if ($('.search-result-filter .filter-content>div#' + targetFilter).hasClass("active")) {
-                $('.search-result-filter .close-filter').click();
-                    ct += 1;
-            } else {
-                $('.search-result-filter .filter-content>div').removeClass('active');
-                $('.search-result-filter .filter-content>div#' + targetFilter).addClass('active');
-                ct += 1;
-            }
-            
+        $(this).parent().siblings().removeClass('active');
+        $(this).parent().addClass('active');
+        var targetFilter = $(this).attr('data-target');
+        if ($('.search-result-filter .filter-content>div#' + targetFilter).hasClass("active")) {
+            $('.search-result-filter .close-filter').click();
+            ct += 1;
+        } else {
+            $('.search-result-filter .filter-content>div').removeClass('active');
+            $('.search-result-filter .filter-content>div#' + targetFilter).addClass('active');
+            ct += 1;
+        }
+
     });
     // close filter
-    $('.search-result-filter .close-filter').click(function() {
+    $('.search-result-filter .close-filter').click(function () {
         $(this).parent().removeClass('active');
         $(this).parent().parent().siblings('.filter-trigger').children().removeClass('active');
         ct += 1;
@@ -557,7 +542,7 @@ var flightPageSearchFormParam = {
 function indexPageFunctions() {
     flightFormSearchFunctions();
 
-    $(document).ready(function() {
+    $(document).ready(function () {
         changeTheme(indexPageDestination);
     });
     // change header background
@@ -565,7 +550,7 @@ function indexPageFunctions() {
         location = location.toLowerCase();
         var backgroundImage = "";
         var locationCode = '';
-        if ( location.length > 0 ) {
+        if (location.length > 0) {
             switch (location) {
                 case "jakarta":
                     backgroundImage = '/Assets/images/campaign/jakarta.jpg';
@@ -610,8 +595,8 @@ function indexPageFunctions() {
             }
 
             // change value on HTML
-            $('.form-flight-destination').val(location+' ('+locationCode+')');
-            $('.slider').css('background-image','url('+backgroundImage+')');
+            $('.form-flight-destination').val(location + ' (' + locationCode + ')');
+            $('.slider').css('background-image', 'url(' + backgroundImage + ')');
             FlightSearchConfig.flightForm.destination = locationCode;
             $('html,  body').stop().animate({
                 scrollTop: 0
@@ -627,7 +612,7 @@ function indexPageFunctions() {
 function staticPageFunctions() {
     // *****
     // toggle FAQ question
-    $('.toggle-all').on('click',function() {
+    $('.toggle-all').on('click', function () {
         if ($(this).hasClass('active')) {
             $(this).closest('li').children('ol').children('li').removeClass('active');
         } else {
@@ -635,12 +620,12 @@ function staticPageFunctions() {
         }
         checkQuestion();
     });
-    $('.accordion-wrapper ol li ol li header').on('click',function() {
+    $('.accordion-wrapper ol li ol li header').on('click', function () {
         $(this).closest('li').toggleClass('active');
         checkQuestion();
     });
     // check faqs
-    var checkQuestion = function() {
+    var checkQuestion = function () {
         $('.accordion-wrapper>ol>li').each(function () {
             if ($(this).children('ol').find('.active').length > 0) {
                 $(this).find('.toggle-all').addClass('active').text('Hide All');
@@ -675,7 +660,7 @@ function flightFormSearchFunctions() {
 
     //*****
     // index page config
-    FlightSearchConfig.autocomplete = {    
+    FlightSearchConfig.autocomplete = {
         loading: false,
         keyword: {},
         result: {},
@@ -685,9 +670,9 @@ function flightFormSearchFunctions() {
         maxPassenger: 9,
         currentSelection: '',
         origin: '',
-        originCity:'',
-        destination : '',
-        destinationCity : '',
+        originCity: '',
+        destination: '',
+        destinationCity: '',
         type: 'return',
         departureDate: '',
         returnDate: '',
@@ -701,7 +686,7 @@ function flightFormSearchFunctions() {
 
     //*****
     // select flight type
-    $('.form-flight-type').click(function() {
+    $('.form-flight-type').click(function () {
         FlightSearchConfig.flightForm.type = $('input[name="flightType"]:checked').val();
 
         $('.change-flight-class .option, .form-flight-passenger .option , .search-location, .search-calendar').hide();
@@ -729,8 +714,8 @@ function flightFormSearchFunctions() {
     // flight recommendation
     $('.search-location .location-recommend .nav-click.prev').click(function (evt) {
         evt.preventDefault();
-        if ( parseInt($('.search-location .location-recommend .tab-header nav ul').css('margin-left')) < 0 ) {
-            $('.search-location .location-recommend .tab-header nav ul').css('margin-left','+=135px');
+        if (parseInt($('.search-location .location-recommend .tab-header nav ul').css('margin-left')) < 0) {
+            $('.search-location .location-recommend .tab-header nav ul').css('margin-left', '+=135px');
         }
     });
     $('.search-location .location-recommend .nav-click.next').click(function (evt) {
@@ -739,12 +724,12 @@ function flightFormSearchFunctions() {
             $('.search-location .location-recommend .tab-header nav ul').css('margin-left', '-=135px');
         }
     });
-    $('.search-location .location-recommend nav ul li ').click(function() {
+    $('.search-location .location-recommend nav ul li ').click(function () {
         var showClass = $(this).attr('data-show');
         $(this).addClass('active');
         $(this).siblings().removeClass('active');
         $('.search-location .location-recommend .tab-content>div').removeClass('active');
-        $('.search-location .location-recommend .tab-content>div.'+showClass).addClass('active');
+        $('.search-location .location-recommend .tab-content>div.' + showClass).addClass('active');
     });
     $('.search-location .location-recommend .tab-content a').click(function (evt, sharedProperties) {
         evt.preventDefault();
@@ -761,7 +746,7 @@ function flightFormSearchFunctions() {
                 alert('Kota Asal dan Tujuan Tidak Boleh Sama');
                 $('.flight-submit-button').addClass('disabled');
             }
-            
+
         } else {
             if (locationCity != FlightSearchConfig.flightForm.originCity) {
                 FlightSearchConfig.flightForm.destination = locationCode;
@@ -773,14 +758,14 @@ function flightFormSearchFunctions() {
                 alert('Kota Asal dan Tujuan Tidak Boleh Sama');
                 $('.flight-submit-button').addClass('disabled');
             }
-            
+
         }
         hideLocation();
     });
 
     //*****
     // on swap target
-    $('.switch-destination').click(function() {
+    $('.switch-destination').click(function () {
         var prevOrigin = $('.form-flight-origin').val();
         var prevOriginCode = FlightSearchConfig.flightForm.origin;
         var prevOriginCity = FlightSearchConfig.flightForm.originCity;
@@ -793,7 +778,7 @@ function flightFormSearchFunctions() {
         FlightSearchConfig.flightForm.origin = prevDestinationCode;
         FlightSearchConfig.flightForm.destination = prevOriginCode;
         FlightSearchConfig.flightForm.originCity = prevDestinationCity;
-        FlightSearchConfig.flightForm.destinationCity =prevOriginCity;
+        FlightSearchConfig.flightForm.destinationCity = prevOriginCity;
     });
 
     $('.form-flight').on('keyup keypress', function (e) {
@@ -860,11 +845,11 @@ function flightFormSearchFunctions() {
     function generateSearchResult(list) {
         $('.autocomplete-result ul').empty();
         for (var i = 0 ; i < list.length; i++) {
-            $('.autocomplete-result ul').append('<li data-code="'+ list[i].code +'" data-city="'+list[i].city+'">'+list[i].city+' ('+list[i].code+'), '+list[i].name+', '+list[i].country+'</li>');
+            $('.autocomplete-result ul').append('<li data-code="' + list[i].code + '" data-city="' + list[i].city + '">' + list[i].city + ' (' + list[i].code + '), ' + list[i].name + ', ' + list[i].country + '</li>');
         }
     }
     // select search result
-    $('.autocomplete-result ul').on('click','li',function() {
+    $('.autocomplete-result ul').on('click', 'li', function () {
         var locationCode = $(this).attr('data-code');
         var locationCity = $(this).attr('data-city');
         if ($('.search-location').attr('data-place') == 'origin') {
@@ -912,12 +897,12 @@ function flightFormSearchFunctions() {
             }
         }
     });
-    $('.form-flight-location').keydown(function(evt) {
+    $('.form-flight-location').keydown(function (evt) {
         if (evt.keyCode == 9 || evt.which == 9) {
             evt.preventDefault();
         }
     });
-    $('.form-flight-location').focusout(function(evt) {
+    $('.form-flight-location').focusout(function (evt) {
         if ($(this).hasClass('form-flight-origin')) {
             $(this).val((FlightSearchConfig.flightForm.originCity + " (" + FlightSearchConfig.flightForm.origin + ")"));
         } else {
@@ -927,12 +912,12 @@ function flightFormSearchFunctions() {
 
     //*****
     // date selector
-    $('.form-flight-departure').click(function() {
+    $('.form-flight-departure').click(function () {
         showCalendar('departure');
-        $('.date-picker').datepicker('option','minDate', new Date());
+        $('.date-picker').datepicker('option', 'minDate', new Date());
     });
     $('.form-flight-return').click(function () {
-        if( !$(this).hasClass('disabled') ){
+        if (!$(this).hasClass('disabled')) {
             if (FlightSearchConfig.flightForm.departureDate) {
                 $('.date-picker').datepicker('option', 'minDate', new Date(FlightSearchConfig.flightForm.departureDate));
             } else {
@@ -950,7 +935,7 @@ function flightFormSearchFunctions() {
             url: GetHolidayConfig.Url,
             method: 'GET',
             headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') }
-        }).done(function(returnData) {
+        }).done(function (returnData) {
             if (returnData.status == 200) {
                 if (returnData.events != null) {
                     for (var i = 0; i < returnData.events.length; i++) {
@@ -962,7 +947,7 @@ function flightFormSearchFunctions() {
                 }
             }
 
-        }).error(function(returnData) {
+        }).error(function (returnData) {
 
         });
     }
@@ -993,7 +978,7 @@ function flightFormSearchFunctions() {
             console.log(data);
             var target;
             var chosenDate = new Date(data);
-            if ( $('.search-calendar').attr('data-date') == 'departure' ) {
+            if ($('.search-calendar').attr('data-date') == 'departure') {
                 FlightSearchConfig.flightForm.departureDate = new Date(data);
                 if (FlightSearchConfig.flightForm.departureDate > FlightSearchConfig.flightForm.returnDate) {
                     FlightSearchConfig.flightForm.returnDate = new Date(data);
@@ -1008,13 +993,13 @@ function flightFormSearchFunctions() {
                 target = '.form-flight-return';
             }
             $(target + ' .date').html(('0' + chosenDate.getDate()).slice(-2));
-            $(target + ' .month').html( translateMonth(chosenDate.getMonth()) );
+            $(target + ' .month').html(translateMonth(chosenDate.getMonth()));
             $(target + ' .year').html(chosenDate.getFullYear());
             $('.search-calendar').hide();
         },
         beforeShowDay: highlightDays
     });
-    
+
     // set current date as default
     $(document).ready(function () {
         // set default date for departure flight
@@ -1022,7 +1007,7 @@ function flightFormSearchFunctions() {
         if (Cookies.get('departure')) {
             var cookieDateDeparture = new Date(Cookies.get('departure'));
             var nowDate = new Date();
-            if ( cookieDateDeparture > nowDate ) {
+            if (cookieDateDeparture > nowDate) {
                 departureDate = new Date(Cookies.get('departure'));
             } else {
                 departureDate = new Date();
@@ -1043,7 +1028,7 @@ function flightFormSearchFunctions() {
         if (Cookies.get('return')) {
             var cookieDateReturn = new Date(Cookies.get('return'));
             var tomorrowDate = new Date();
-            tomorrowDate.setDate( tomorrowDate.getDate() + 1 );
+            tomorrowDate.setDate(tomorrowDate.getDate() + 1);
             if (cookieDateReturn > nowDate) {
                 returnDate = new Date(Cookies.get('return'));
             } else {
@@ -1063,7 +1048,7 @@ function flightFormSearchFunctions() {
 
         // set default flight and return flight
         if (Cookies.get('origin')) {
-            $('.form-flight-origin').val(Cookies.get('originCity') +' ('+ Cookies.get('origin')+')');
+            $('.form-flight-origin').val(Cookies.get('originCity') + ' (' + Cookies.get('origin') + ')');
             FlightSearchConfig.flightForm.origin = Cookies.get('origin');
             FlightSearchConfig.flightForm.originCity = Cookies.get('originCity');
         } else {
@@ -1143,7 +1128,7 @@ function flightFormSearchFunctions() {
 
     });
 
-    $(window).load(function() {
+    $(window).load(function () {
         // flight type
         if (Cookies.get('type')) {
             if (Cookies.get('type').toLowerCase() == 'return') {
@@ -1161,7 +1146,7 @@ function flightFormSearchFunctions() {
         $(this).find('.option').toggle();
         $('.form-flight-passenger .option, .search-calendar, .search-location').hide();
     });
-    $('.form-flight-class .option span').click(function() {
+    $('.form-flight-class .option span').click(function () {
         $('.form-flight-class>span').html($(this).html());
         FlightSearchConfig.flightForm.cabin = $(this).attr('data-value');
         $('.form-group.flight-class').click();
@@ -1189,7 +1174,7 @@ function flightFormSearchFunctions() {
     function hideLocation() {
         $('.search-location').hide();
     }
-    $('.close-location').click(function() { hideLocation(); });
+    $('.close-location').click(function () { hideLocation(); });
 
     //*****
     // show and hide search calendar
@@ -1210,7 +1195,7 @@ function flightFormSearchFunctions() {
     function hideCalendar() {
         $('.search-calendar').hide();
     }
-    $('.close-calendar').click(function() { hideCalendar(); });
+    $('.close-calendar').click(function () { hideCalendar(); });
 
     //*****
     // validate passenger
@@ -1230,7 +1215,7 @@ function flightFormSearchFunctions() {
         evt.stopPropagation();
         var parentClass = $(this).closest('.form-flight-passenger');
         var optionValue = parseInt($(this).text());
-        if ( parentClass.hasClass('adult') ) {
+        if (parentClass.hasClass('adult')) {
             if (optionValue > (FlightSearchConfig.flightForm.maxPassenger - (FlightSearchConfig.flightForm.passenger.child + FlightSearchConfig.flightForm.passenger.infant))) {
                 alert(alertText.over);
                 optionValue = (FlightSearchConfig.flightForm.maxPassenger - (FlightSearchConfig.flightForm.passenger.child + FlightSearchConfig.flightForm.passenger.infant));
@@ -1248,7 +1233,7 @@ function flightFormSearchFunctions() {
                 optionValue = (FlightSearchConfig.flightForm.maxPassenger - (FlightSearchConfig.flightForm.passenger.adult + FlightSearchConfig.flightForm.passenger.infant));
             }
             FlightSearchConfig.flightForm.passenger.child = optionValue;
-            $('.passenger-input.child').text( optionValue );
+            $('.passenger-input.child').text(optionValue);
         } else if (parentClass.hasClass('infant')) {
             if (optionValue > FlightSearchConfig.flightForm.passenger.adult) {
                 alert(alertText.infant);
@@ -1265,8 +1250,8 @@ function flightFormSearchFunctions() {
         $(this).parent().hide();
     });
 
-    $('.passenger-input').keyup(function() {
-        console.log( $(this).val() );
+    $('.passenger-input').keyup(function () {
+        console.log($(this).val());
         console.log(FlightSearchConfig.flightForm.passenger);
         if ($(this).hasClass('adult')) {
             if ($(this).val() < 1) {
@@ -1279,13 +1264,13 @@ function flightFormSearchFunctions() {
             if ($('.passenger-input.infant').val() > $(this).val()) {
                 $('.passenger-input.infant').val($(this).val());
             }
-        } 
+        }
     });
 
     //*****
     // submit validation
     $('.flight-submit-button').on('click', function (evt) {
-        $(this).prop('disabled',true);
+        $(this).prop('disabled', true);
         evt.preventDefault();
         validateFlightForm();
     });
@@ -1338,7 +1323,7 @@ function flightFormSearchFunctions() {
         if (FlightSearchConfig.flightForm.type == 'return') {
             flightSearchParam = departureParam + '~' + returnParam + '-' + passengerParam;
         } else {
-            flightSearchParam = departureParam + '-' + passengerParam ;
+            flightSearchParam = departureParam + '-' + passengerParam;
         }
         $('.form-flight input[name="info"]').val(flightSearchParam);
         FlightSearchConfig.flightForm.originCity = FlightSearchConfig.flightForm.originCity.replace(/\s+/g, '-');
@@ -1373,3 +1358,28 @@ function accordionFunctions() {
     }
 }
 
+function backToTop() {
+    jQuery(document).ready(function ($) {
+        if ($('#back-to-top').length) {
+            var scrollTrigger = 700, // px
+                backToTop = function () {
+                    var scrollTop = $(window).scrollTop();
+                    if (scrollTop > scrollTrigger) {
+                        $('#back-to-top').addClass('show');
+                    } else {
+                        $('#back-to-top').removeClass('show');
+                    }
+                };
+            backToTop();
+            $(window).on('scroll', function () {
+                backToTop();
+            });
+            $('#back-to-top').on('click', function (e) {
+                e.preventDefault();
+                $('html,body').animate({
+                    scrollTop: 0
+                }, 700);
+            });
+        }
+    });
+}

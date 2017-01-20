@@ -19,7 +19,7 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
     $scope.maxRoomCount = 100;
     $scope.pageLoaded = true;
     $scope.searchDone = false;
-    $scope.loc = loc;
+   
     $scope.hotelImages = hotelImages;
     $scope.selectedRoom = '';
     $scope.selectFailed = false;
@@ -36,7 +36,12 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
         checkOut: '',
         occupancies : '',
         totalOcc : ''
-    }
+        }
+
+        $scope.lat = lat;
+        $scope.lng = lng;
+        $scope.hotelName = hotelName;
+        $scope.hotelAddress = hotelAddress;
  
         var promise;
     $('#inputLocationHotel').on('click', function () {
@@ -45,7 +50,7 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
 
     $scope.init = function (model) {
         $log.debug(model);
-       
+        
         //$scope.searchId = model.searchId;
         $scope.searchParam = model.searchParam;
         var mydata = $scope.searchParam.split('.');
@@ -129,7 +134,7 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
                     }
                 });
             });
-            
+            $timeout(function () { initiateMap(); }, 0);
             $timeout(function () {
                 // **********
                 // Search Detail Tab
@@ -163,26 +168,40 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
                     dots: false
                 });
 
-                //Hotel Detail
-                $('.mh-list a').click(function () {
-                    var link = $(this).attr('id');
-                    var header;
-                    if (link == '#menu-facility') {
-                        $('html, body').animate({
-                            scrollTop: $(".info-hotel").offset().top
-                        }, 1000);
-                            }
-                    else if (link == '#menu-desc') {
-                        $('html, body').animate({
-                            scrollTop: $("#menu-desc").offset().top - 80
-                        },1000);
 
-                    } else if (link == '#menu-tnc') {
-                        $('html, body').animate({
-                            scrollTop: $("#menu-tnc").offset().top - 80
-                        }, 1000);
-                    }
+                $('.mh-list a').click(function () {
+                    $(window).on("scroll", function () {
+                        if ($(window).scrollTop() > 1800) {
+                            $('.site-header').fadeOut();
+                        } else {
+                            $('.site-header').fadeIn();
+                        }
+                    });
+                    var val = $(this).data('value');
+                    $('html, body').animate({
+                        scrollTop: $("#" + val).offset().top
+                    }, 1000);
                 });
+                //Hotel Detail
+                //$('.mh-list a').click(function () {
+                //    var link = $(this).attr('id');
+                //    var header;
+                //    if (link == '#menu-facility') {
+                //        $('html, body').animate({
+                //            scrollTop: $(".info-hotel").offset().top
+                //        }, 1000);
+                //            }
+                //    else if (link == '#menu-desc') {
+                //        $('html, body').animate({
+                //            scrollTop: $("#menu-desc").offset().top - 80
+                //        },1000);
+
+                //    } else if (link == '#menu-tnc') {
+                //        $('html, body').animate({
+                //            scrollTop: $("#menu-tnc").offset().top - 80
+                //        }, 1000);
+                //    }
+                //        });
 
                 // Hotel Detail Slider
                 $('#image-gallery').lightSlider({
@@ -207,15 +226,53 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
 
     // ********************** DISPLAY HOTEL DETAILS *********************************
     
-        var resource = $resource(HotelAvailableRatesConfig.Url,
-            {},
-            {
-                query: {
-                    method: 'POST',
-                    isArray: false
-                }
+    var initiateMap = function () {
+        var myLatLng = { lat: $scope.lat, lng: $scope.lng };
+
+        var map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 17,
+            center: myLatLng,
+            mapTypeControl: false,
+            streetViewControl: false,
+            fullscreenControl: false
+        });
+
+        var marker = new google.maps.Marker({
+            position: myLatLng,
+            map: map,
+            title: $scope.hotelName,
+            attribution: {
+                source: 'AIzaSyCRAmMz6GPXsXi1pZAl5QUsjNTcY0ZfqVA',
+                webUrl: 'https://developers.google.com/maps/'
             }
-        );
+        });
+
+        var infoDesc = '<div class="map-content">' +
+            '<div class="hotel-title bold-txt blue-txt">' + $scope.hotelName + '</div>' +
+            '<div class="hotel-address regular-txt">' + $scope.hotelAddress + '</div>' +
+            '</div>';
+
+        var infoWindow = new google.maps.InfoWindow({
+            content: infoDesc
+        });
+
+        infoWindow.open(map, marker);
+
+        marker.addListener('click', function () {
+            infoWindow.open(map, marker);
+        });
+    }
+
+    var resource = $resource(HotelAvailableRatesConfig.Url,
+        {},
+        {
+            query: {
+                method: 'POST',
+                isArray: false
+            }
+        }
+    );
+ 
     $scope.setDescriptionDisplay = function (descriptions) {
         if (descriptions != null && descriptions.length > 0) {
             var description = [];
@@ -301,7 +358,7 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
                     "characteristic": rooms[i].characteristic,
                     "rate": rooms[i].rates[j]
                 });
-            }
+    }
         }
 
         return singleRoom;

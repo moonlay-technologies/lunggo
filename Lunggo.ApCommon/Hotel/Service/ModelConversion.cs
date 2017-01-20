@@ -105,6 +105,8 @@ namespace Lunggo.ApCommon.Hotel.Service
                 CheckInDate = hotelDetail.CheckInDate,
                 CheckOutDate = hotelDetail.CheckOutDate,
                 NightCount = hotelDetail.NightCount,
+                Latitude = hotelDetail.Latitude,
+                Longitude = hotelDetail.Longitude,
                 SpecialRequest = hotelDetail.SpecialRequest,
                 SupplierVat = hotelDetail.SupplierVat,
                 SupplierName = hotelDetail.SupplierName,

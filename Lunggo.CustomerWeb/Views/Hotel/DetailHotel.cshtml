@@ -10,7 +10,11 @@
 @{
     var loc = Html.Raw(Model.HotelDetailData.HotelName) + ", " + Model.HotelDetailData.City;
     var hotelFac = new List<_Page_Views_Hotel_DetailHotel_cshtml.FacilityModel>();
- 
+    var hotelName = Model.HotelDetailData.HotelName;
+    var hotelAddress = Model.HotelDetailData.Address;
+    var lat = Model.HotelDetailData.Latitude;
+    var lng = Model.HotelDetailData.Longitude;
+
     if (Model.HotelDetailData.Facilities.Business != null)
     {
         hotelFac.Add(SetFacilityForDisplay(Model.HotelDetailData.Facilities.Business, "Bisnis"));
@@ -101,20 +105,25 @@
 @section AdditionalJS {
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="/Assets/js/jquery-ui.min.js"></script>
-    <script src="/Assets/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="/Assets/vendor/slick/slick.min.js"></script>
     <script src="/Assets/vendor/lightslider/lightslider.js"></script>
 }
 
 @section PageJS{
-    <script>var loc = '@loc';</script>
-    <script> var hotelImages = '@Html.Raw(Model.HotelDetailData.ImageUrl.Serialize())';</script>
+    <script>
+        var loc = '@loc';
+        var lat = @lat;
+        var lng = @lng;
+        var hotelName = '@hotelName';
+        var hotelAddress = '@hotelAddress';
+    </script>
+    <script> var hotelImages = '@Html.Raw(Model.HotelDetailData.ImageUrl.Serialize())';</script> 
     <script src="/Assets/travorama20/js/hotelDetailController.js"></script>
     <script type="text/javascript" src="/Assets/travorama20/js/HotelController.js"></script>
-    <script>accordionFunctions()</script>
     <script src="/Assets/travorama20/angularDirectory/search/hotelSearch.service.js"></script>
     <script src="/Assets/travorama20/angularDirectory/common/hotelAutocomplete.service.js"></script>
     <script type="text/javascript" src="/Assets/js/jquery.ui.datepicker-id.js"></script>
+    <script type="text/javascript" src="https://maps.google.com/maps/api/js?key=AIzaSyCRAmMz6GPXsXi1pZAl5QUsjNTcY0ZfqVA"></script>
 }
 
 @Html.Partial("/Views/Shared/Desktop/_PageSlider.cshtml", new HotelLocation
@@ -123,10 +132,12 @@
 })
 <div class="travorama-hotel" ng-init="init(@Newtonsoft.Json.JsonConvert.SerializeObject(Model))" ng-class="{'page-loaded' : pageLoaded}">
     <div class="container">
-
         <div class="detail-hotel-content">
             @Html.Partial("/Views/Shared/Desktop/_BreadCrumb.cshtml")
-            
+            <a href="#" id="back-to-top" title="Back to top"></a>
+            @*<div ng-show="!searchDone" class="text-center">
+                <img src="/Assets/images/load.gif" style="width:5%; margin-left: 10%">
+            </div>*@
             <div class="detail-hotel">
                 <div class="big-slider">
                     <div class="top-desc">
@@ -259,12 +270,13 @@
                 <div class="menu-hotel clearfix">
                     <div class="col-left-hotel mh-title md-txt">Informasi Hotel</div>
                     <ul class=" col-right-hotel mh-container">
-                        <li class="mh-list"><a href="#menu-facility">Fasilitas Hotel</a></li>
-                        <li class="mh-list"><a href="#menu-desc">Deskripsi Hotel</a></li>
+                        <li class="mh-list"><a data-value="menu-map">Peta Hotel</a></li>
+                        <li class="mh-list"><a data-value="menu-facility">Fasilitas Hotel</a></li>
+                        <li class="mh-list"><a data-value="menu-desc">Deskripsi Hotel</a></li>                        
                         @if (Model.HotelDetailData.Policy != null && Model.HotelDetailData.Policy.Count > 0)
                         {
                             <li class="mh-list"><a href="#menu-tnc">Syarat & Ketentuan Hotel</a></li>
-                        }                    
+                        } 
                     </ul>
                 </div>
                 
@@ -409,10 +421,29 @@
                 </div>
                 <div class="info-hotel">
                     <div class="top-title clearfix">
-                        <div class="col-left-rs bg-title"><b>Fasilitas</b> </div>
+                        <div class="col-left-rs bg-title"><b>Rincian Hotel</b> </div>
                     </div>
                     <div class="ih-accordion">
                         <div class="accordion-wrapper">
+                            
+                            <div class="accordion-title accordion md-txt" id="menu-map">Peta Hotel</div>
+                            <div class="accordion-content show">
+                                <div class="map-title">
+                                    <div class="title-wrapper clearfix">
+                                        <div class="blue-txt bold-txt md-txt">@Model.HotelDetailData.HotelName</div>
+                                        <span class="star" ng-if="hotel.starRating == 1"></span>
+                                        <span class="star star-2" ng-if="hotel.starRating == 2"></span>
+                                        <span class="star star-3" ng-if="hotel.starRating == 3"></span>
+                                        <span class="star star-4" ng-if="hotel.starRating == 4"></span>
+                                        <span class="star star-5" ng-if="hotel.starRating == 5"></span>
+                                    </div>
+                                    <div class="map-location" style="text-transform: capitalize">@ToTitleCase.ConvertToTitleCase(Model.HotelDetailData.Address) @ToTitleCase.ConvertToTitleCase(Model.HotelDetailData.AreaName) @ToTitleCase.ConvertToTitleCase(Model.HotelDetailData.City) @Model.HotelDetailData.PostalCode, @ToTitleCase.ConvertToTitleCase(Model.HotelDetailData.CountryName)</div>
+                                </div>
+                                <div class="map-hotel">
+                                    <div id="map"></div>
+                                </div>
+                            </div>
+
                             <div class="accordion-title accordion md-txt" id="menu-facility">Fasilitas Hotel</div>
                             <div class="accordion-content show">
                                 <div class="ih-row clearfix">
@@ -514,26 +545,27 @@
                                     
                                     <div class="ih-desc clearfix">
                                         @Model.HotelDetailData.Description
+                                    </div>
                                 </div>
-                            </div>
                             }
+                            
                             
                             @if (Model.HotelDetailData.Policy != null && Model.HotelDetailData.Policy.Count > 0)
                             {
                                 <div class="accordion-title accordion md-txt" id="menu-tnc">Perlu Diingat</div>
                                 <div class="accordion-content show">
-                                <div class="snk-container clearfix">
-                                    <ul class="blue-list">
+                                    <div class="snk-container clearfix">
+                                        <ul class="blue-list">
                                             @foreach (var policy in Model.HotelDetailData.Policy)
                                             {
                                                 <li>@policy</li>
                                             }
                                             
-                                    </ul>
+                                        </ul>
+                                    </div>
                                 </div>
-                            </div>
-                            }
-                            
+                                
+                            }   
                         </div>
                     </div>
                 </div>

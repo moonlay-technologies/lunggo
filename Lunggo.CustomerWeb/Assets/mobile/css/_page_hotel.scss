@@ -1,7 +1,7 @@
 ﻿&.page-hotel.no-scroll {overflow: auto !important;}
 .page-hotel {
     /*General*/
-    font-family: 'Open Sans', sans-serif;
+    @extend .os-regular;
     font-weight: 400;
     color: #000;
     letter-spacing: 0;
@@ -22,12 +22,13 @@
     .italic-txt {font-style: italic;}
     .underline-txt {text-decoration: line-through;} 
     .downline-txt {text-decoration: underline;}
-    .bold-txt {font-weight: 700;}
-    .semibold-txt {font-weight: 600;}
-    .normal-txt {font-weight: 400;}   
+    .bold-txt {@extend .os-bold; font-weight: 700;}
+    .semibold-txt {@extend .os-semibold; font-weight: 600;}
+    .normal-txt {@extend .os-regular; font-weight: 400;}   
     .blue-txt {color: $color-main-blue;
         &.bg {
             font-size: 15px;
+            @extend .os-bold; 
             font-weight: 700;
             line-height: 18px;
         }
@@ -65,6 +66,7 @@
         &.btn-blue {
             background: #1daee4;
             color: #fff;
+            @extend .os-semibold;
             font-weight: 600;
             text-decoration: none;
             display: inline-block;
@@ -607,7 +609,7 @@
             color: #fff;
             text-align: center;
             display: block;
-            font-weight: bold;
+            @extend .os-bold;
             padding: 15px 0;
             background: #616161;
             text-decoration:none;
@@ -620,7 +622,7 @@
         .hotel-summary {background-color:#2eb4e7; color:#fff; position:relative; @include clearfix();
             p {margin-bottom:0;}
             .summary-left {float:left; width:77%; padding:12px;}
-            .summary-right {@extend & .summary-left; padding:0; width:25%; color:#fff; height:100%; background-color:#0b84b1; display:block; vertical-align:middle; text-align:center; font-weight:bold; position:absolute; right:0;
+            .summary-right {@extend & .summary-left; padding:0; width:25%; color:#fff; height:100%; background-color:#0b84b1; display:block; vertical-align:middle; text-align:center; @extend .os-bold; position:absolute; right:0;
                 span {position:absolute; top:0; left:0; right:0; bottom:0; margin:auto; height:auto; width:auto; width:50px; height:20px;}
             }
         }
@@ -934,7 +936,7 @@
         
         .page__header .step__wrapper .step span {
             font-size: 11px;
-            //font-weight: bold;
+            //@extend .os-bold;
             padding: 8px 20px;
         }
         .wifi-icon, .meal-icon {
@@ -1074,6 +1076,7 @@
                             position: absolute;
                             left: 0;
                             top: 0;
+                            @extend .os-bold; 
                             font-weight: 700;
                         }
                         &.sec:before {
@@ -1083,6 +1086,7 @@
                             position: absolute;
                             left: 0;
                             top: 0;
+                            @extend .os-bold; 
                             font-weight: 700;
                         }
                     }
