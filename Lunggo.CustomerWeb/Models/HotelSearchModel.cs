@@ -32,33 +32,14 @@ namespace Lunggo.CustomerWeb.Models
    
     public class HotelSearchApiRequest
     {
-        //[JsonProperty("searchHotelType")]
-        //public string SearchHotelType { get; set; }
-        //[JsonProperty("location")]
-        //public string Location { get; set; }
-        //[JsonProperty("checkinDate")]
-        //public DateTime CheckinDate { get; set; }
-        //[JsonProperty("checkoutDate")]
-        //public DateTime CheckoutDate { get; set; }
-        //[JsonProperty("adultCount")]
-        //public int AdultCount { get; set; }
-        //[JsonProperty("childCount")]
-        //public int ChildCount { get; set; }
-        //[JsonProperty("nightCount")]
-        //public int NightCount { get; set; }
-        //[JsonProperty("roomCount")]
-        //public int RoomCount { get; set; }
-        //[JsonProperty("childrenAges")]
-        //public string[] ChildrenAges { get; set; }
         [JsonProperty("searchParam")]
         public string SearchParam { get; set; }
         [JsonProperty("searchParamObject")]
         public SearchParameter SearchParamObject { get; set; }
 
-        public HotelSearchApiRequest(NameValueCollection query)
+        public HotelSearchApiRequest(string query)
         {
-            string queryString = query[0];
-            List<string> parameters = queryString.Split('.').ToList<string>();
+            List<string> parameters = query.Split('.').ToList();
             SearchParamObject = new SearchParameter();
             SearchParamObject.SearchHotelType = parameters[(int)RequestParam.SearchHotelType];
             SearchParamObject.Location = parameters[(int)RequestParam.Location];
@@ -89,11 +70,7 @@ namespace Lunggo.CustomerWeb.Models
 
                 SearchParamObject.Occupancies.Add(occupancy);
             }
-            //SearchParamObject.AdultCount = int.Parse(parameters[(int)RequestParam.AdultCount]);
-            //SearchParamObject.ChildCount = int.Parse(parameters[(int)RequestParam.ChildCount]);
-            
-            //SearchParamObject.ChildrenAges = parameters[(int)RequestParam.ChildrenAges].Split(',').ToArray<string>();
-            SearchParam = query.ToString();
+            SearchParam = query;
         }
     }
 
@@ -115,16 +92,6 @@ namespace Lunggo.CustomerWeb.Models
         public List<Occupancy> Occupancies { get; set; }
     }
 
-    public class HotelSearchOccupancy
-    {
-        [JsonProperty("adultCount")]
-        public int AdultCount { get; set; }
-        [JsonProperty("childCount")]
-        public int ChildCount { get; set; }
-
-        [JsonProperty("childrenAges")]
-        public string[] ChildrenAges { get; set; }
-    }
     public class HotelRequestFilter
     {
         [JsonProperty("priceFilter")]
@@ -267,5 +234,41 @@ namespace Lunggo.CustomerWeb.Models
         public bool HighestStar { get; set; }
         [JsonProperty("highestReviewScore")]
         public bool HighestReviewScore { get; set; }
+    }
+
+    public class HotelLocation
+    {
+        [JsonProperty("location")]
+        public string Location{ get; set; }
+        [JsonProperty("isHotelSearch")]
+        public bool IsHotelSearch { get; set; }
+    }
+
+    public class AutocompleteResponse
+    {
+        [JsonProperty("hotelAutocomplete")]
+        public List<HotelAutocomplete> Autocompletes { get; set; }
+        [JsonProperty("count")]
+        public int? Count { get; set; }
+    }
+
+    public class HotelAutocomplete
+    {
+        [JsonProperty("id", NullValueHandling = NullValueHandling.Ignore)]
+        public long Id { get; set; }
+        [JsonProperty("name", NullValueHandling = NullValueHandling.Ignore)]
+        public string Name { get; set; }
+        [JsonProperty("type", NullValueHandling = NullValueHandling.Ignore)]
+        public string Type { get; set; }
+        [JsonProperty("numOfHotels", NullValueHandling = NullValueHandling.Ignore)]
+        public int? NumOfHotels { get; set; }
+        [JsonProperty("country", NullValueHandling = NullValueHandling.Ignore)]
+        public string Country { get; set; }
+        [JsonProperty("destination", NullValueHandling = NullValueHandling.Ignore)]
+        public string Destination { get; set; }
+        [JsonProperty("zone", NullValueHandling = NullValueHandling.Ignore)]
+        public string Zone { get; set; }
+        [JsonProperty("area", NullValueHandling = NullValueHandling.Ignore)]
+        public string Area { get; set; }
     }
 }

@@ -159,8 +159,11 @@ app.controller('accountController', [
 
             for (var i = 0; i < hotel.room.length; i++) {
                 for (var j = 0; j < hotel.room[i].rates.length; j++) {
-                    sumAdult += hotel.room[i].rates[j].adultCount;
-                    sumChild += hotel.room[i].rates[j].childCount;
+                    for (var k = 0; k < hotel.room[i].rates[j].breakdowns.length; k++) {
+                        sumAdult += hotel.room[i].rates[j].breakdowns[k].adultCount;
+                        sumChild += hotel.room[i].rates[j].breakdowns[k].childCount;
+                    }
+                    
                 }
             }
 
@@ -171,18 +174,22 @@ app.controller('accountController', [
             var rooms = [];
 
             for (var i = 0; i < hotel.room.length; i++) {
+                var totalroom = 0;
                 for (var j = 0; j < hotel.room[i].rates.length; j++) {
-                    room = {
-                        'roomName': hotel.room[i].roomName, 'boardType': hotel.room[i].rates[j].boardDesc,
-                        'roomCount': hotel.room[i].rates[j].roomCount
-                    };
-                    rooms.push(room);
+                    for (var k = 0; k < hotel.room[i].rates[j].breakdowns.length; k++) {
+                        totalroom += hotel.room[i].rates[j].breakdowns[k].rateCount;
+                    }
                 }
+                var room = {
+                    'roomName': hotel.room[i].roomName,
+                    'roomCount': totalroom
+                };
+                rooms.push(room);
             }
 
             var roomstc = '';
-            for (var k = 0; k < rooms.length; k++) {
-                roomstc += parseInt(rooms[k].roomCount) + ' ' + rooms[k].roomName + ' ' + rooms[k].boardType + ', ';
+            for (var m = 0; m < rooms.length; m++) {
+                roomstc += parseInt(rooms[m].roomCount) + ' ' + rooms[m].roomName + ', ';
             }
             roomstc = roomstc.substring(0, roomstc.length - 2);
             return roomstc;
@@ -192,7 +199,10 @@ app.controller('accountController', [
             var sumRoom = 0;
             for (var i = 0; i < hotel.room.length; i++) {
                 for (var j = 0; j < hotel.room[i].rates.length; j++) {
-                    sumRoom += hotel.room[i].rates[j].roomCount;
+                    for (var k = 0; k < hotel.room[i].rates[j].breakdowns.length; k++) {
+                        sumRoom += hotel.room[i].rates[j].breakdowns[k].rateCount;
+                    }
+                    
                 }
             }
             return sumRoom;

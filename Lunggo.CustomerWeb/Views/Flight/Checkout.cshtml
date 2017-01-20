@@ -1,6 +1,4 @@
-﻿@using Lunggo.ApCommon.Identity.Users
-@using Lunggo.ApCommon.Payment.Constant
-@using Lunggo.Framework.Context
+﻿@using Lunggo.Framework.Context
 @using Lunggo.Framework.Extension
 @using Lunggo.Framework.Config
 @model Lunggo.CustomerWeb.Models.FlightCheckoutData
@@ -242,7 +240,7 @@
                                 <div style="color:red" ng-show="form.incompleteContactEmail">
                                     Alamat E-Mail pada Data Kontak Belum Ditambahkan<br /> <br />
                                 </div>
-                                <button class="btn btn-yellow go-top" ng-click="validateForm(1)">LANJUTKAN</button>
+                                <button class="btn btn-yellow go-top md-txt lg-btn" ng-click="validateForm(1)">LANJUTKAN</button>
                             </div>
 
                         </div><!-- .content-step#step-1 -->
@@ -384,8 +382,8 @@
                                 <div ng-show="form.incompletePassportData" style="color:red">
                                     Data Paspor Belum Lengkap atau Tanggal Kadaluarsa Tidak Valid
                                 </div>
-                                <button class="btn btn-grey" ng-click="changePage(1)">KEMBALI</button>
-                                <button class="btn btn-yellow go-top" ng-click="validateForm(2)">
+                                <button class="btn btn-grey md-txt lg-btn" ng-click="changePage(1)">KEMBALI</button>
+                                <button class="btn btn-yellow go-top md-txt lg-btn" ng-click="validateForm(2)">
                                     LANJUTKAN
                                 </button>
                             </div>
@@ -399,72 +397,74 @@
 
                             <h3><b>RINCIAN</b> PESANAN</h3>
                             <!--Info Pemesan-->
-                            <div class="buyer-review">
+                            <div class="buyer-review page-hotel">
                                 <header>
                                     <span>Data Kontak</span>
                                 </header>
                                 <section class="buyer-content">
-                                    <div class="buyer-list-item">
-                                        <h3 class="buyer-list-heading"><b>{{changeTitle(buyerInfo.title)}} {{buyerInfo.name}}</b></h3>
-                                        <div class="buyer-list-content">
-                                            <p>
-                                                <span class="buyer-label">No. Telepon</span>
-                                                <span class="buyer-data">+{{buyerInfo.countryCode}}{{buyerInfo.phone}}</span>
-                                            </p>
-                                            <p>
-                                                <span class="buyer-label">E-mail</span>
-                                                <span class="buyer-data">{{buyerInfo.email}}</span>
-                                            </p>
+                                    <div class="buyer-list-item clearfix">
+                                        <div class="buyer-row clearfix">
+                                            <div class="col-2">Pemesan</div>
+                                            <div class="col-8 bold-txt">{{changeTitle(buyerInfo.title)}} {{buyerInfo.name}}</div>
+                                        </div>
+                                        <div class="buyer-row clearfix">
+                                            <div class="col-2">No. Telepon</div>
+                                            <div class="col-8">+{{buyerInfo.countryCode}}{{buyerInfo.phone}}</div>
+                                        </div>
+                                        <div class="buyer-row clearfix">
+                                            <div class="col-2">E-mail</div>
+                                            <div class="col-8">{{buyerInfo.email}}</div>
                                         </div>
                                     </div>
                                 </section>
                             </div><!--Info Pemesan-->
                             <!--Info Penumpang-->
-                            <div class="passenger-review">
+                            <div class="passenger-review page-hotel">
                                 <header>
                                     <span>Daftar Penumpang</span>
                                 </header>
 
                                 <section class="review-content clearfix" ng-repeat="passenger in passengers track by $index">
                                     <div class="passenger-list-item">
-                                        <div class="col-md-12">
-                                            <div class="col-md-8">
-                                                <h3 class="passenger-list-heading">
+                                        <div class="clearfix">
+                                            <div class="col-6">
+                                                <div class="passenger-list-heading">
                                                     <b> {{$index+1}}. {{changeTitle(passenger.title)}} {{passenger.name}} </b>
                                                     <medium> ({{passenger.typeName}}) </medium>
-                                                </h3>
+                                                </div>
                                             </div>
-                                            <div ng-if="passenger.typeName == 'Dewasa'" class="col-md-4 total-price text-right">
+                                            <div ng-if="passenger.typeName == 'Dewasa'" class="col-4 total-price text-right">
                                                 <medium> Rp {{adultFare | number:0}}</medium>
                                             </div>
-                                            <div ng-if="passenger.typeName == 'Anak'" class="col-md-4 total-price text-right">
+                                            <div ng-if="passenger.typeName == 'Anak'" class="col-4 total-price text-right">
                                                 <medium> Rp {{childFare | number:0}}</medium>
                                             </div>
-                                            <div ng-if="passenger.typeName == 'Bayi'" class="col-md-4 total-price text-right">
+                                            <div ng-if="passenger.typeName == 'Bayi'" class="col-4 total-price text-right">
                                                 <medium> Rp {{infantFare | number:0}}</medium>
                                             </div>
                                         </div>
 
                                         <div class="passenger-list-content">
-                                            <p ng-if="birthDateRequired || passenger.type != 'adult'">
-                                                <span class="passenger-label">Tgl. Lahir</span>
-                                                <span class="passenger-data">{{passenger.birth.date}} {{months[passenger.birth.month].name}} {{passenger.birth.year}}</span>
-                                            </p>
-                                            <p ng-if="passportRequired">
-                                                <span class="passenger-label">Nomor Paspor</span>
-                                                <span class="passenger-data">{{passenger.passport.number}}</span>
-                                            </p>
-                                            <p ng-if="passportRequired">
-                                                <span class="passenger-label">Tgl. Kadaluarsa Paspor</span>
-                                                <span class="passenger-data">{{passenger.passport.expire.date}} {{months[passenger.passport.expire.month].name}} {{passenger.passport.expire.year}}</span>
-                                            </p>
-                                            <p ng-if="passportRequired">
-                                                <span class="passenger-label">Negara Penerbit Paspor</span>
-                                                <span class="passenger-data">{{displayCountry(passenger.passport.country)}}</span>
-                                            <p ng-if="nationalityRequired">
-                                                <span class="passenger-label">Kewarganegaraan</span>
-                                                <span class="passenger-data">{{displayCountry(passenger.nationality)}}</span>
-                                            </p>
+                                            <div class="clearfix passenger-container" ng-if="birthDateRequired || passenger.type != 'adult'">
+                                                <div class="passenger-label col-2">Tgl. Lahir</div>
+                                                <div class="passenger-data col-8">{{passenger.birth.date}} {{months[passenger.birth.month].name}} {{passenger.birth.year}}</div>
+                                            </div>
+                                            <div class="clearfix passenger-container" ng-if="passportRequired">
+                                                <div class="passenger-label col-2">Nomor Paspor</div>
+                                                <div class="passenger-data col-8">{{passenger.passport.number}}</div>
+                                            </div>
+                                            <div class="clearfix passenger-container" ng-if="passportRequired">
+                                                <div class="passenger-label col-2">Tgl. Kadaluarsa Paspor</div>
+                                                <div class="passenger-data col-8">{{passenger.passport.expire.date}} {{months[passenger.passport.expire.month].name}} {{passenger.passport.expire.year}}</div>
+                                            </div>
+                                            <div class="clearfix passenger-container" ng-if="passportRequired">
+                                                <div class="passenger-label col-2">Negara Penerbit Paspor</div>
+                                                <div class="passenger-data col-8">{{displayCountry(passenger.passport.country)}}</div>
+                                                <div class="clearfix passenger-container" ng-if="nationalityRequired">
+                                                    <div class="passenger-label col-2">Kewarganegaraan</div>
+                                                    <div class="passenger-data col-8">{{displayCountry(passenger.nationality)}}</div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </section>
@@ -606,8 +606,8 @@
                                         <input type="text" name="Payment.Method" value="" ng-model="paymentMethod" />
                                     </div>
 
-                                    <a class="btn btn-grey" ng-click="changePage(2)" ng-disabled="checkoutForm.loading">KEMBALI</a>
-                                    <input type="submit" ng-disabled="finalForm.$invalid" class="btn btn-yellow go-top" value="{{ !checkoutForm.loading? 'PESAN' : 'MEMPROSES' }}">
+                                    <a class="btn btn-grey md-txt lg-btn" ng-click="changePage(2)" ng-disabled="checkoutForm.loading">KEMBALI</a>
+                                    <input type="submit" ng-disabled="finalForm.$invalid" class="btn btn-yellow go-top md-txt lg-btn" value="{{ !checkoutForm.loading? 'PESAN' : 'MEMPROSES' }}">
 
                                 </form>
 

@@ -13,7 +13,7 @@
     $scope.Progress = 0;
     $scope.trial = 0;
     $scope.selectError = false;
-
+    $rootScope.getCookies();
     $scope.PageConfig = $rootScope.PageConfig;
     $scope.PageConfig.ActiveSection = 'departure';
     $scope.PageConfig.ActiveOverlay = '';

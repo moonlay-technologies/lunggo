@@ -27,47 +27,6 @@
         night = (rsv.HotelDetail.CheckOutDate - rsv.HotelDetail.CheckInDate).Days;
     }
 }
-@functions{
-
-    public string ToTitleCase(string input)
-    {
-
-        var text = "";
-        try
-        {
-            var splittedText = input.Split(' ');
-            foreach (var word in splittedText)
-            {
-                var splittedByStrips = word.Split('-');
-                var w = "";
-                if (splittedByStrips.Count() != 1)
-                {
-                    foreach (var part in splittedByStrips)
-                    {
-                        w += ApplyTitleCase(part) + "-";
-                    }
-                    text += w.Substring(0, w.Length - 1) + " ";
-                }
-                else
-                {
-                    text += word[0] + word.Substring(1, word.Length - 1).ToLower() + " ";
-                }
-            }
-
-        }
-        catch
-        {
-
-        }
-        return text.Length == 0 ? "" : text.Substring(0, text.Length - 1);
-    }
-
-    public string ApplyTitleCase(string input)
-    {
-        return input[0] + input.Substring(1, input.Length - 1).ToLower();
-    }
-
-}
 @section AdditionalJS {
     <!-- additional Angular JS-->
     <script src="/Assets/js/jquery.countdown.min.js"></script>
@@ -384,7 +343,7 @@
                                                     {
                                                         <dl class="total-room">
                                                             <dt class="dt-title">
-                                                                @config.RateCount @ToTitleCase(room.RoomName) @ToTitleCase(config.BoardDescription) x @night Malam
+                                                                @config.RateCount @ToTitleCase.ConvertToTitleCase(room.RoomName) @ToTitleCase.ConvertToTitleCase(config.BoardDescription) x @night Malam
                                                             </dt>
                                                             <dd class="dd-price">
                                                                 Rp @config.NetTotalFare.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))

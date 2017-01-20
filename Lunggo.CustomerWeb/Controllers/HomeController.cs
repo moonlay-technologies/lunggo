@@ -94,8 +94,10 @@ namespace Lunggo.CustomerWeb.Controllers
                     TempData["AllowThisReservationCheck"] = rsvNo;
                     var rsvNoSet = new
                     {
-                        RsvNo = displayReservation.RsvNo
+                        RsvNo = displayReservation.RsvNo,
+                        regId = GenerateId(rsvNo)
                     };
+
 
                     return RedirectToAction("OrderFlightHistoryDetail", "Account", rsvNoSet);
                 }
@@ -109,5 +111,25 @@ namespace Lunggo.CustomerWeb.Controllers
                 
             return View();
         }
+
+        #region Helpers
+
+        public string GenerateId(string key)
+        {
+            string result = "";
+            if (key.Length > 7)
+            {
+                key = key.Substring(key.Length - 7);
+            }
+            int generatedNumber = (int)double.Parse(key);
+            for (int i = 1; i < 4; i++)
+            {
+                generatedNumber = new Random(generatedNumber).Next();
+                result = result + "" + generatedNumber;
+            }
+            return result;
+        }
+
+        #endregion
     }
 }

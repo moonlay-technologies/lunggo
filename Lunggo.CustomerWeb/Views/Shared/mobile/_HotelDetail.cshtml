@@ -5,7 +5,6 @@
    
     var night = (Model.CheckOutDate - Model.CheckInDate).Days;
     var hotelImg = "";
-    var roomImg = "";
     var images = HotelService.GetInstance().GetHotelDetailFromDb(Model.HotelCode).ImageUrl;
     var orDefault = images.Where(i => i.Type == "GEN").ToList().FirstOrDefault();
     if (orDefault != null)
@@ -15,10 +14,8 @@
             : "http://photos.hotelbeds.com/giata/" + orDefault.Path;
     }
 
-    var listAges = new List<int>();
-    var sumAdult = 0;
-    var sumChild = 0;
-    var orderedRooms = new List<Tuple<string, int>>();
+    new List<int>();
+    new List<Tuple<string, int>>();
     var totalRoom = 0;
 
     try
@@ -29,47 +26,9 @@
     { }
 }
 
-@functions{
-
-    public string ToTitleCase(string input)
-    {
-
-        var text = "";
-        try
-        {
-            var splittedText = input.Split(' ');
-            foreach (var word in splittedText)
-            {
-                var splittedByStrips = word.Split('-');
-                var w = "";
-                if (splittedByStrips.Count() != 1)
-                {
-                    foreach (var part in splittedByStrips)
-                    {
-                        w += ApplyTitleCase(part) + "-";
-                    }
-                    text += w.Substring(0, w.Length - 1) + " ";
-                }
-                else
-                {
-                    text += word[0] + word.Substring(1, word.Length - 1).ToLower() + " ";
-                }
-            }
-        }
-        catch{}
-        return text.Length == 0 ? "" : text.Substring(0, text.Length - 1);
-    }
-    
-    public string ApplyTitleCase(string input)
-    {
-        return input[0] + input.Substring(1, input.Length - 1).ToLower();
-    }
-
-}
-
 <div class="fb-hotel">
     <div class="clearfix">
-        <div class="col-6 lg-txt blue-txt bold-txt">@ToTitleCase(Model.HotelName)</div>
+        <div class="col-6 lg-txt blue-txt bold-txt">@ToTitleCase.ConvertToTitleCase(Model.HotelName)</div>
         <div class="col-4">
             @if (Model.StarRating == 1)
             {
@@ -93,8 +52,8 @@
             }           
         </div>
     </div>
-    <div class="location sm-txt" style="text-transform: capitalize">@ToTitleCase(Model.Address) @ToTitleCase(Model.ZoneName),
-    @ToTitleCase(Model.DestinationName), @Model.PostalCode, @Model.CountryName</div>
+    <div class="location sm-txt" style="text-transform: capitalize">@ToTitleCase.ConvertToTitleCase(Model.Address) @ToTitleCase.ConvertToTitleCase(Model.ZoneName),
+    @ToTitleCase.ConvertToTitleCase(Model.DestinationName), @Model.PostalCode, @Model.CountryName</div>
     <div class="fb-img" style="background-image: url(@hotelImg)"></div>
     <div class="clearfix">
         <div class="fb-row clearfix">

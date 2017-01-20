@@ -5,6 +5,7 @@
     }
     .search-list-result {
         margin: 15px 0;
+        position: relative;
         .filter {
             .map-filter {
                 margin-bottom: 15px;
@@ -22,6 +23,7 @@
                 padding: 7px 20px;
                 color: #fff;
                 font-size: 16px;
+                @extend .os-semibold;
                 font-weight: 600;
             }
             .filter-group {
@@ -104,7 +106,7 @@
             .location {
                 margin: 7px 0;
                 margin-left: 20px;
-                line-height: 16px;
+                line-height: 20px;
                 color: #000;
                 &:before {
                     @extend .maps-icon;
@@ -154,6 +156,7 @@
                 margin: 25px 0 0;    
                 text-align: center;
                 width: 100%;
+                @extend .os-semibold;
                 font-weight: 600;
                 .page-container { 
                     display: inline-block;

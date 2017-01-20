@@ -298,11 +298,14 @@
     <Compile Include="ApiSrc\Auxiliary\Model\NewsletterSubscribeApiRequest.cs" />
     <Compile Include="ApiSrc\Hotel\Logic\BookLogic.cs" />
     <Compile Include="ApiSrc\Hotel\Logic\CancelBookingLogic.cs" />
+    <Compile Include="ApiSrc\Hotel\Logic\GetAvailableRatesLogic.cs" />
     <Compile Include="ApiSrc\Hotel\Logic\GetSelectedHotelDetailLogic.cs" />
     <Compile Include="ApiSrc\Hotel\Logic\GetRateLogic.cs" />
     <Compile Include="ApiSrc\Hotel\Logic\GetRoomDetailLogic.cs" />
     <Compile Include="ApiSrc\Hotel\Logic\GetHotelDetailLogic.cs" />
     <Compile Include="ApiSrc\Hotel\Logic\SearchHotelLogic.cs" />
+    <Compile Include="ApiSrc\Hotel\Model\HotelAvailableRateApiRequest.cs" />
+    <Compile Include="ApiSrc\Hotel\Model\HotelAvailableRateApiResponse.cs" />
     <Compile Include="ApiSrc\Hotel\Model\HotelBookApiRequest.cs" />
     <Compile Include="ApiSrc\Hotel\Model\HotelBookApiResponse.cs" />
     <Compile Include="ApiSrc\Hotel\Model\HotelCancelBookingApiRequest.cs" />
@@ -363,34 +366,7 @@
     <Content Include="Config\Airport.csv" />
     <Content Include="Config\Airline.csv" />
     <Content Include="Config\Country.csv" />
-    <Content Include="Config\HotelAccomodation.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Config\HotelBoard.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Config\HotelCategory.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Config\HotelChain.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Config\HotelCountries.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Config\HotelDestinations.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Config\HotelFacilities.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="Config\HotelFacilitiesFilterGroup.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Config\HotelFacilityGroup.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Config\HotelRoom.csv">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Config\HotelRoomOriginal.csv">
@@ -403,9 +379,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Config\HotelRoomRateType.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Config\HotelSegment.csv">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="Properties\PublishProfiles\prod-api %282%29.pubxml" />

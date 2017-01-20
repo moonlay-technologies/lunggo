@@ -1,6 +1,6 @@
 ﻿.page-hotel {
     /*General*/
-    font-family: 'Open Sans', sans-serif;
+    @extend .os-regular;
     font-size: 12px;
     font-weight: 400;
     color: #000;
@@ -21,22 +21,9 @@
     .xs-txt {font-size: 9px;}
     .italic-txt {font-style: italic;}
     .underline-txt {text-decoration: line-through;} 
-    .bold-txt {font-weight: 700;}
-    .semibold-txt {font-weight: 600;}
-    .normal-txt {font-weight: 400;}   
-    .grey-txt {color: #969696;}
-    .darkgrey-txt {color: #555555;}
-    .blue-txt {color: $color-main-blue;
-        &.bg {
-            font-size: 16px;
-            font-weight: 700;
-            line-height: 20px;
-        }
-    }
-    .grey-txt {color: #999;}
-    .green-txt {color: #3a8e1b;}
-    .orange-txt {color: #ff7200;}
-    .white-txt {color: #ffffff;}
+    .bold-txt {@extend .os-bold; font-weight: 700;}
+    .semibold-txt {@extend .os-semibold; font-weight: 600;}
+    .normal-txt {font-weight: 400; @extend .os-regular;}   
     .right-txt {text-align: right;}
     .bg-title {
         font-size: 19px;
@@ -316,6 +303,7 @@
                 &.name {
                     margin-left: 5px;
                     font-weight: 400;
+                    @extend .os-regular;
                 }
             }
 		    .checkbox {
@@ -348,6 +336,7 @@
                 width: 100%;
                 padding-left: 4px;
                 font-weight: 400;
+                @extend .os-regular;
             }
             .radio {
                 border: 1px solid #ccc;
@@ -372,12 +361,13 @@
         }
 
         /*Custom label*/
-        &.confirmation-buyer span.name {font-weight: 600;}
+        &.confirmation-buyer span.name {@extend .os-semibold; font-weight: 600;}
     }
     a {
         &.btn-blue {
             background: #1daee4;
             color: #fff;
+            @extend .os-semibold;
             font-weight: 600;
             text-decoration: none;
             display: inline-block;
@@ -392,6 +382,7 @@
         &.btn-green {
             background: #3a8e1b;
             color: #fff;
+            @extend .os-semibold;
             font-weight: 600;
             text-decoration: none;
             padding: 6px 20px;
@@ -406,7 +397,6 @@
     
     /*Form & Lable*/
     .form-control {
-        height: 36px;
         box-shadow: none;
          .option {
             position: absolute;
@@ -525,18 +515,19 @@
         .search-result-form-trigger {padding: 10px 15px;}
         &>.container {max-width: none !important;}
         .search-hotel {
-            top: 405px;
+            top: 425px;
             left: initial;
             width: 908px;
             .location-body {border:$border-default; height: 475px;}
         }
         .search-calendar-hotel {
-            top: 405px;
+            top: 425px;
             left: initial;
             max-height: 320px;
             width: 908px;
             .hotel-date-picker {padding: 25px 50px;}
             .ui-datepicker-group {width: 50%; padding: 15px 50px}
+            .calendar-body {background: #252525;}
         }
         /*form search hotel*/
         form[name="hotel-form"]{
@@ -546,8 +537,8 @@
                 border-top: 1px solid #6F879E;
                 display: none;
                 .form-control {
-                    height: 45px;
-                    padding: 6px 8px;
+                    height: 49px;
+                    padding: 6px 12px;
                     @include border-radius(2px);
                     &.select-age {cursor: pointer;}
                     &.form-date {cursor: pointer;
@@ -599,6 +590,7 @@
     
     .main-title {
         font-size: 25px;
+        @extend .os-regular;
         font-weight: 400;
         margin: 15px 0;
         line-height: 32px;
@@ -617,6 +609,7 @@
         margin: 30px 0;
         .bread-crumb {
             margin-bottom: 15px;
+            @extend .os-semibold;
             font-weight: 600;
         }
         &>.container {max-width: none !important;}
@@ -630,6 +623,7 @@
             background: #1daee4;
             padding: 8px 25px;
             font-size: 14px;
+            @extend .os-semibold;
             font-weight: 600;
             color: #fff;
         }
@@ -637,6 +631,7 @@
             border: 1px solid #ccc;
             background: #fff;
             padding: 20px 10px;
+            line-height: 20px;
             .rh-row {padding: 0 15px;}
             .hotel-title-lg {margin-bottom: 10px;}
             .rh-detail {
@@ -674,13 +669,14 @@
             .cols-title {
                 background: #1daee4;
                 color: #fff;
-                font-weight: bold;
+                @extend .os-bold;
                 padding: 2px 0;
             }
             .cols-value {
+                @extend .os-semibold;
                 font-weight: 600;
                 padding: 10px 0;
-                height: 50px;
+                height: 60px;
 
             }
         }

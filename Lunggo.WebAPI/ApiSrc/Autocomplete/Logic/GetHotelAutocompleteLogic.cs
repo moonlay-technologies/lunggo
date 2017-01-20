@@ -35,17 +35,28 @@ namespace Lunggo.WebAPI.ApiSrc.Autocomplete.Logic
                     case 1:
                         input.Name = hotelDict.Destination + ", " + hotelDict.Country;
                         input.NumOfHotels = hotelDict.HotelCount;
+                        input.Destination = hotelDict.Destination;
+                        input.Country = hotelDict.Country;
                         break;
                     case 2:
                         input.Name = hotelDict.Zone + ", " + hotelDict.Destination + ", " + hotelDict.Country;
                         input.NumOfHotels = hotelDict.HotelCount;
+                        input.Zone = hotelDict.Zone;
+                        input.Destination = hotelDict.Destination;
+                        input.Country = hotelDict.Country;
                         break;
                     case 3:
                         input.Name = hotelDict.Area + ", " + hotelDict.Destination + ", " + hotelDict.Country;
                         input.NumOfHotels = hotelDict.HotelCount;
+                        input.Area = hotelDict.Area;
+                        input.Zone = hotelDict.Zone;
+                        input.Destination = hotelDict.Destination;
+                        input.Country = hotelDict.Country;
                         break;
                     case 4:
                         input.Name = hotelDict.HotelName + ", " + hotelDict.Destination + ", " + hotelDict.Country;
+                        input.Country = hotelDict.Country;
+                        input.Destination = hotelDict.Destination;
                         input.NumOfHotels = 0;
                         break;
                 }

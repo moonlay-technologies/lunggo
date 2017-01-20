@@ -47,7 +47,7 @@ var FlightSearchConfig = {
             if (trip == false) {
                 url = departureParam + '-' + passengerParam;
             } else {
-                url = departureParam + '.' + returnParam + '-' + passengerParam;
+                url = departureParam + '~' + returnParam + '-' + passengerParam;
             }
             // return the search url
             return url;
@@ -200,6 +200,12 @@ var HotelBookConfig = {
     Url: '$apiUrl$$hotelBookPath$',
     working: false
 };
+
+var HotelAvailableRatesConfig = {
+    Url: '$apiUrl$$hotelAvailableRatesPath$',
+    working: false
+};
+
 
 var GetHolidayConfig = {
     Url: '$apiUrl$$holidayListPath$',

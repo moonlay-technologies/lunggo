@@ -10,7 +10,7 @@ including in this file :
 */
 
 /* site footer menu */
-.site-footer-menu {background:#303030; color:#fff; padding:0 0 30px; width:100%; /*bottom:152px; position: absolute;*/
+.site-footer-menu {@extend .os-regular; background:#303030; color:#fff; padding:0 0 30px; width:100%; /*bottom:152px; position: absolute;*/
     a {color:#fff;}
 
     .menu-left {padding-right:50px;
@@ -31,7 +31,7 @@ including in this file :
         .call-center {margin-top:10px;
             img {float:left; padding-right:10px; width:60px;}
             p {margin-bottom:0;}
-            h2 {margin:0; font-weight:bold;}
+            h2 {margin:0; @extend .os-bold;}
         }
         .asita {text-align:center;
             img {height:auto; vertical-align:bottom; position:relative; top:10px;}
@@ -51,7 +51,7 @@ including in this file :
         .menu-about {margin-left:20px;}
         .menu-other {}
 
-        .list-title {font-weight:bold;}
+        .list-title {@extend .os-bold;}
         ul {padding:0; margin:0; list-style:none;
             li {margin-bottom:2px;}
         }
@@ -69,6 +69,7 @@ including in this file :
             padding: 20px 0;
             .text-lg-banner {
                 font-size: 20px;
+                @extend .os-bold; 
                 font-weight: 700;
                 line-height: 36px;
                 .top-txt {line-height: 42px;}

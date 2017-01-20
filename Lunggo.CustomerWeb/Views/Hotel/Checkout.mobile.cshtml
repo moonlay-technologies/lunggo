@@ -66,48 +66,6 @@
     }
 
 }
-@functions{
-
-    public string ToTitleCase(string input)
-    {
-
-        var text = "";
-        try
-        {
-            var splittedText = input.Split(' ');
-            foreach (var word in splittedText)
-            {
-                var splittedByStrips = word.Split('-');
-                var w = "";
-                if (splittedByStrips.Count() != 1)
-                {
-                    foreach (var part in splittedByStrips)
-                    {
-                        w += ApplyTitleCase(part) + "-";
-                    }
-                    text += w.Substring(0, w.Length - 1) + " ";
-                }
-                else
-                {
-                    text += word[0] + word.Substring(1, word.Length - 1).ToLower() + " ";
-                }
-            }
-
-        }
-        catch
-        {
-
-        }
-        return text.Length == 0 ? "" : text.Substring(0, text.Length - 1);
-    }
-
-
-    public string ApplyTitleCase(string input)
-    {
-        return input[0] + input.Substring(1, input.Length - 1).ToLower();
-    }
-
-}
 
 @section AdditionalCSS {
     <link href="/Assets/css/jquery-ui.min.css" rel="stylesheet" />
@@ -142,14 +100,15 @@
     <script src="/Assets/travorama20/js/HotelCheckoutController.js"></script>
 }
 
+<div class="checkout-hotel">
 <header class="page__header">
     <div class="step__wrapper">
-        <div class="step step-1" style = "width: 50%" ng-class="{'active' : currentPage == 1, 'inactive' : currentPage > 1}"><span class=" xlg-txt">1. Data Pemesan</span></div>
-        <div class="step step-2" style="width: 50%" ng-class="{'active' : currentPage == 2, 'inactive' : currentPage > 2}"><span class="xlg-txt">2. Review Pesanan</span></div>
+        <div class="step step-1" style = "width: 50%; height:45px; " ng-class="{'active' : currentPage == 1, 'inactive' : currentPage > 1}"><span class=" xlg-txt" style=" font-size: 14px;">1. Data Pemesan</span></div>
+        <div class="step step-2" style="width: 50%;height:45px;" ng-class="{'active' : currentPage == 2, 'inactive' : currentPage > 2}"><span class="xlg-txt" style=" font-size: 14px;">2. Review Pesanan</span></div>
         
     </div>
 </header>
-<section class="checkout-content">
+    <section class="checkout-content ">
     <div class=" page-step-1" ng-show="currentPage == 1">
         <div class="form-hotel">
             <h3><b>DATA</b> PEMESAN</h3>
@@ -189,7 +148,7 @@
                 </div>
  
                 <input type="checkbox" name="diffPerson" ng-model="diffPerson" value="false" ng-change="cleanGuestInfo()"> <span class="italic-txt bold-txt">Saya membuat reservasi untuk orang lain.</span><br>
-                <div ng-show ="diffPerson">
+                    <div ng-show="diffPerson">
                     <h3><b>DATA</b> TAMU</h3>
                     <div class="form-group">
                         <label class="control-label">Titel : </label>
@@ -405,3 +364,4 @@
         </div>
     </div>
 </section>
+</div>

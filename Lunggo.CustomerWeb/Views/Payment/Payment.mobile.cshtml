@@ -88,48 +88,6 @@
     ViewBag.Title = "Pembayaran";
 }
 
-@functions{
-
-    public string ToTitleCase(string input)
-    {
-
-        var text = "";
-        try
-        {
-            var splittedText = input.Split(' ');
-            foreach (var word in splittedText)
-            {
-                var splittedByStrips = word.Split('-');
-                var w = "";
-                if (splittedByStrips.Count() != 1)
-                {
-                    foreach (var part in splittedByStrips)
-                    {
-                        w += ApplyTitleCase(part) + "-";
-                    }
-                    text += w.Substring(0, w.Length - 1) + " ";
-                }
-                else
-                {
-                    text += word[0] + word.Substring(1, word.Length - 1).ToLower() + " ";
-                }
-            }
-
-        }
-        catch
-        {
-
-        }
-        return text.Length == 0 ? "" : text.Substring(0, text.Length - 1);
-    }
-
-    public string ApplyTitleCase(string input)
-    {
-        return input[0] + input.Substring(1, input.Length - 1).ToLower();
-    }
-
-}
-
 @section AdditionalCSS {
     <link href="/Assets/css/jquery-ui.min.css" rel="stylesheet" />
     <!-- fancybox CSS-->
@@ -168,7 +126,6 @@
         var langCode = '@OnlineContext.GetActiveLanguageCode()';
         var currentPage = 1;
         var transferWindow = ['@ConfigManager.GetInstance().GetConfigValue("general","bankTransferStartTime")', '@ConfigManager.GetInstance().GetConfigValue("general","bankTransferEndTime")'];
-        //var transferWindow = [ '1100', '1124' ];
         // messages
         var message = '@ViewBag.Message';
         // flight detail
@@ -176,13 +133,8 @@
         var paymentDetail = '';
         var flightDetail = '';
         var trips = '';
-    //var hotelDetails = '';
         var price = '';
         var originalPrice = '';
-    //var totalRoom = '';
-    //var checkin = '';
-    //var checkout = '';
-    //var totalpax = '';
         var nights = '';
         @if (Model.Reservation is FlightReservationForDisplay)
         {
@@ -203,28 +155,28 @@
         @:redirectionUrl = '@Model.Reservation.Payment.RedirectionUrl';
                                                             }
         @if (Model.Reservation is FlightReservationForDisplay)
-    {
-        @:var departureDate;
-                                                            var reservation = Model.Reservation as FlightReservationForDisplay;
-        if (reservation.Itinerary.Trips != null)
-         {
-             if (reservation.Itinerary.Trips.Count == 2)
+        {
+            @:var departureDate;
+                                                                var reservation = Model.Reservation as FlightReservationForDisplay;
+            if (reservation.Itinerary.Trips != null)
              {
-                 @:departureDate = '@reservation.Itinerary.Trips[1].DepartureDate';
-                                                                 }
-             else
-             {
-                 @:departureDate = '@reservation.Itinerary.Trips[0].DepartureDate';
-                                                                 }
-         }
-    }
+                 if (reservation.Itinerary.Trips.Count == 2)
+                 {
+                     @:departureDate = '@reservation.Itinerary.Trips[1].DepartureDate';
+                                                                     }
+                 else
+                 {
+                     @:departureDate = '@reservation.Itinerary.Trips[0].DepartureDate';
+                                                                     }
+             }
+        }
         @if (Model.Reservation is HotelReservationForDisplay)
-    {
-        var hotel = Model.Reservation as HotelReservationForDisplay;
-        @:originalPrice = '@hotel.HotelDetail.OriginalTotalFare';
-        @:price = '@hotel.HotelDetail.NetTotalFare';
-       
-                                                }
+        {
+            var hotel = Model.Reservation as HotelReservationForDisplay;
+            @:originalPrice = '@hotel.HotelDetail.OriginalTotalFare';
+            @:price = '@hotel.HotelDetail.NetTotalFare';
+
+        }                                           
         // change current page
         if (getParam('page') == 4) {
             currentPage = getParam('page');

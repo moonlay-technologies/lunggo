@@ -1,6 +1,7 @@
 ﻿// page static
 .page-static {
-    .site-content {padding:0; padding-bottom:24px;
+    @extend .os-regular; 
+    .site-content {padding:0;
         section > .container {max-width: none;}
     }
 }
@@ -14,7 +15,7 @@
                     &:before {content:""; display:inline-block; width:25px; height:25px; background-image:url(/Assets/images/static-header-sprite.png); background-repeat:no-repeat; background-position:0 0; vertical-align:middle; margin-right:6px;}
                 }
                 // if active
-                &.active {background:#f9f9f9; color:#003b70; font-weight:600;}
+                &.active {background:#f9f9f9; color:#003b70; @extend .os-semibold; font-weight:600;}
                 &.terms {
                     span:before {background-position:0 0;}
                     &.active span:before {background-position:0 -25px;}
@@ -34,19 +35,20 @@
 
 // page questions
 .page-faq {
-
     .question-wrapper {
-        &>ol {list-style:none; counter-reset:main-number;
+        &>ol {list-style:none; counter-reset:main-number; padding-left: 0;
             &>li {position:relative;
                 > header {padding-left:40px;
-                    h2 {color:$color-main-blue; font-size:18px; line-height:30px; font-weight:bold;
+                    h2 {color:$color-main-blue; font-size:18px; line-height:30px; @extend .os-bold;
                         span {font-size:14px; text-decoration:underline; cursor:pointer;}
                     }
                 }
-                &:before {content:counter(main-number); counter-increment:main-number; background:#ffd632; color:#4f3500; position:absolute; height:30px; width:30px; text-align:center; @include border-radius(50px); font-size:14px; font-weight:600; padding-top:5px;}
+                .faq-content {margin-top: 12px;}
+                &:before {content:counter(main-number); counter-increment:main-number; background:#ffd632; color:#4f3500; position:absolute; height:30px; width:30px; text-align:center; @include border-radius(50px); font-size:14px; @extend .os-semibold; font-weight:600; padding-top:5px;}
                 &>ol {list-style:none; counter-reset:sub-number;
-                    &>li {position:relative; background:#fff; padding:12px; border:$border-default; padding-left:42px;
-                        &:before {content:counter(main-number) '.' counter(sub-number); counter-increment:sub-number; position:absolute; top:12px; left:12px;}
+                    &>li {position:relative; background:#fff; padding:14px; border:$border-default; padding-left:42px; border-bottom: none;
+                        &:last-child {border-bottom: $border-default;}
+                        &:before {content:counter(main-number) '.' counter(sub-number); counter-increment:sub-number; position:absolute; top:12px; left:12px; @extend .os-bold; color: #1daee4;}
                         > header {color:$color-main-blue; cursor:pointer;
                             > h3 {margin:0; font-size:17px; padding-right:25px;
                                 span {width:23px; height:22px; border:2px solid $color-main-blue; display:inline-block; @include border-radius(15px); background-image:url(/Assets/images/faq-toggle-sprite.png); background-position:-13px 0; position:absolute; right:10px; top:10px;}
@@ -56,7 +58,7 @@
                         > section {}
                         // if active
                         &.active {
-                            > header {margin-bottom:12px;
+                            > header {
                                 > h3 {
                                     span {background-position:1px 0;}
                                 }
@@ -75,23 +77,36 @@
 .page-term, .page-static {
     ol.listing {list-style:none; counter-reset:main-counter; margin:0; padding:0;
         > li {position:relative; padding-left:40px;
-            &:before {content:counter(main-counter); counter-increment:main-counter; background:#ffd632; color:#4f3500; position:absolute; width:30px; height:30px; text-align:center; font-weight:bold; @include border-radius(30px); padding-top:6px; top:0; left:0;}
-            h4 {color:$color-main-blue; font-weight:600; line-height:18px; padding-top:6px;}
+            &:before {content:counter(main-counter); counter-increment:main-counter; background:#ffd632; color:#4f3500; position:absolute; width:30px; height:30px; text-align:center; @extend .os-bold; @include border-radius(30px); padding-top:6px; top:0; left:0;}
+            h4 {color:$color-main-blue; @extend .os-semibold; font-weight:600; line-height:22px; padding-top:6px;}
             ol {list-style:lower-alpha;
-                > li {color:$color-main-blue; font-weight:bold;
+                > li {color:$color-main-blue; @extend .os-bold;
                     p {color:#333; font-weight:normal;}
                 }
             }
         }
     }
+    .static-container {margin-bottom: 50px;}
+    }
+
+.page-term ol.listing > li ol {
+    padding-left: 0;
+    line-height: 20px;
+    &>li {padding-bottom: 7.5px;}
+}
+
+.page-privacy {
+    p {line-height: 20px;}
+    &.page-static ol.listing > li {padding-bottom: 7.5px;}
+    ul {padding-left:18px;}
 }
 
 // page contact
 .page-contact {
     .section-title {margin-bottom:20px;}
-    .section-subtitle {margin-bottom:50px; font-weight:bold; font-size:16px;}
+    .section-subtitle {margin-bottom:50px; @extend .os-bold; font-size:16px;}
     // *****
-    .section-map {height:250px; margin-bottom:50px;
+    .section-map {height:250px; margin-bottom:35px;
         #map {height:100%; width:100%; display:block;}
     }
     .section-contact {padding-bottom:50px;
@@ -99,7 +114,7 @@
             .contact {padding-left:100px; position:relative; font-size:14px;
                 &:before {width:100px; height:100px; background-image:url(/Assets/images/contact-sprite.jpg); background-position:0 0; background-repeat:no-repeat; content:""; display:block; position:absolute; left:0; top:0;}
                 &:after {@include clearfix();}
-                h5 {color:$color-main-blue; font-size:16px; font-weight:600; padding-top:30px;}
+                h5 {color:$color-main-blue; font-size:16px; @extend .os-semibold; font-weight:600; padding-top:30px;}
                 // contact info
                 &.address {margin-top:-30px;
                     &:before {background-position:0px 0;}
@@ -115,8 +130,14 @@
                 }
             }
         }
-        .contact-form-wrapper {background-color:#eaeaea; padding:24px;}
-        & > .container {max-width: none;}
+        .contact-form-wrapper {background-color:#eaeaea; padding:20px 21px 0; @include border-radius(2px);
+            label.control-label {
+                font-weight: 400;
+                margin-bottom: 10px;
+            }
+        }
+        &.container {max-width: none !important;}
+        &>.container {margin-top: 40px;}
     }
 }
 
@@ -126,7 +147,7 @@
         .list {counter-increment:list-item;
             .list-summary {
                 & > .container {padding-left:85px; max-width: none;}
-                h4 {font-weight:bold; color:$color-main-blue;  position:relative;
+                h4 {@extend .os-bold; color:$color-main-blue;  position:relative;
                     &:before {content:"0" counter(list-item); position:absolute; font-size:32px; color:#fff; background:url(/Assets/images/list-bg.png) top center no-repeat; background-size:contain; padding:20px; padding-top:5px; right:100%;}
                 }
                 .list-image {text-align:center;
@@ -134,7 +155,7 @@
                 }
             }
             .list-detail {background:#061c38; color:#fff; display:none;
-                .detail-title {color:#00deff; font-weight:600;}
+                .detail-title {color:#00deff; @extend .os-semibold; font-weight:600;}
                 .container {position:relative; padding-top:30px; padding-bottom:30px;}
                 .close-list {position:absolute; right:0; top:-2px;}
             }
@@ -163,7 +184,7 @@
         &:before {position:absolute; width:50%; right:50%; top:0; height:100%; content:""; display:block;}
         &:after {position:absolute; width:50%; left:50%; top:0; height:100%; content:""; display:block;}
         .row {text-align:center; position:relative; z-index:2;}
-        a {display:block; color:#fff; font-size:16px; font-weight:600; padding:16px 0;
+        a {display:block; color:#fff; font-size:16px; @extend .os-semibold; font-weight:600; padding:16px 0;
             &.active {background:url(/Assets/images/arrow-white.png) bottom center no-repeat;}
             span:before {content:""; display:inline-block; width:30px; height:30px; background:url(/Assets/images/howto-sprite.png); vertical-align:middle; margin-right:12px;}
         }
@@ -192,7 +213,10 @@
         img {width:742px; margin-left:-160px;}
     }
     .howto-header {background:url(/Assets/images/howtoorder-header.jpg) top center no-repeat; background-size:cover;}
-    .section-howtoorder {padding-top:30px;}
+    .section-howtoorder {padding-top:30px;
+        &.container {max-width: none !important;}
+    }
+    .list-wrapper .list .list-summary > .container {width: 808px}
 }
 
 .page-howtopay {
@@ -200,7 +224,9 @@
         span {background-position:-30px 0;}
     }
     .howto-header {background:url(/Assets/images/howtopay-header.jpg) top center no-repeat; background-size:cover;}
-    .section-howtopay {padding-top:30px;}
+    .section-howtopay {padding-top:30px;
+        &.container {max-width: none !important;}
+    }
 }
 
 // page campaign
@@ -211,7 +237,7 @@
     .site-content {padding-bottom:30px;}
     .step {
         li {margin-bottom:35px;}
-        h5 {font-weight:bold;}
+        h5 {@extend .os-bold;}
         img {border:2px solid $color-main-blue;}
     }
 }

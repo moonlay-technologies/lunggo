@@ -3,36 +3,32 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
-using System.Web;
 using System.Web.Mvc;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Service;
-
-using Lunggo.ApCommon.Identity.Users;
-using Lunggo.ApCommon.Payment;
-using Lunggo.ApCommon.Payment.Constant;
-using Lunggo.ApCommon.Payment.Model;
 using Lunggo.ApCommon.Payment.Service;
-using Lunggo.ApCommon.Product.Constant;
 using Lunggo.CustomerWeb.Models;
 using Lunggo.Framework.Filter;
-using Lunggo.Framework.SharedModel;
-using Lunggo.Framework.Util;
 
 namespace Lunggo.CustomerWeb.Controllers
 {
     public class FlightController : Controller
     {
         [DeviceDetectionFilter]
-        public ActionResult Search(FlightSearchData search)
+        [Route("id/tiket-pesawat/cari/{searchParam}/{searchId}")]
+        public ActionResult Search(string searchId, string searchParam)
         {
+            var search = new FlightSearchData
+            {
+                info = searchId
+            };
             try
             {
-                var parts = search.info.Split('-');
+                var parts = searchId.Split('-');
                 var tripPart = parts.First();
 
-                var trips = tripPart.Split('.').Select(info => new FlightTrip
+                var trips = tripPart.Split('~').Select(info => new FlightTrip
                 {
                     OriginAirport = info.Substring(0, 3),
                     DestinationAirport = info.Substring(3, 3),
@@ -45,6 +41,7 @@ namespace Lunggo.CustomerWeb.Controllers
                 var requestId = Guid.NewGuid().ToString();
                 FlightService.GetInstance().SetFlightRequestTripType(requestId, tripType == TripType.RoundTrip);
                 ViewBag.RequestId = requestId;
+               
                 switch (tripType)
                 {
                     case TripType.OneWay:
@@ -61,18 +58,54 @@ namespace Lunggo.CustomerWeb.Controllers
             }
         }
 
+        [DeviceDetectionFilter]
+        [Route("id/tiket-pesawat/cari/{searchParam}")]
+        public ActionResult Search(string searchParam)
+        {
+            var parts = searchParam.Split('-').ToList();
+            var originAirport = parts[parts.Count -2];
+            var destinationAirport = parts[parts.Count - 1];
+            var todaydate = DateTime.Today.AddDays(1);
+            var data = originAirport + destinationAirport + todaydate.Day.ToString("d2") + todaydate.Month.ToString("d2") +
+                             todaydate.Year.ToString().Substring(2, 2) + "-100y";
+
+            var search = new FlightSearchData
+            {
+                info = data
+            };
+            try
+            {
+                var trips = new List<FlightTrip>
+                {
+                    new FlightTrip{
+                        OriginAirport = originAirport,
+                        DestinationAirport = destinationAirport,
+                        DepartureDate = todaydate
+                    }
+                };
+
+                var tripType = FlightService.GetInstance().ParseTripType(trips);
+                var requestId = Guid.NewGuid().ToString();
+                FlightService.GetInstance().SetFlightRequestTripType(requestId, tripType == TripType.RoundTrip);
+                ViewBag.RequestId = requestId;
+                return View("Search-Single", search);
+            }
+            catch
+            {
+                return View("Search-Single", search);
+            }
+        }
         [HttpPost]
         public ActionResult Select(string token)
         {
             var tokens = token;
-            return RedirectToAction("Checkout", "Flight", new { token = tokens });
+            return RedirectToAction("Checkout", "Flight", new { token = tokens});
         }
 
         [RequireHttps]
         public ActionResult Checkout(string token)
         {
             var itin = FlightService.GetInstance().GetItineraryForDisplay(token);
-            
             if (itin != null)
             {
                 if (TempData["FlightCheckoutOrBookingError"] != null)
@@ -118,7 +151,7 @@ namespace Lunggo.CustomerWeb.Controllers
             {
                 return RedirectToAction("Index", "Index");
             }
-
+            
         }
 
         //Buat ngelempar ke halaman payment
@@ -127,7 +160,8 @@ namespace Lunggo.CustomerWeb.Controllers
         [ActionName("Checkout")]
         public ActionResult CheckoutPost(string rsvNo)
         {
-            return RedirectToAction("Payment", "Payment", new { rsvNo });
+            var regId = GenerateId(rsvNo);
+            return RedirectToAction("Payment", "Payment", new { rsvNo, regId });
         }
         
         public ActionResult TopDestinations()
@@ -138,6 +172,22 @@ namespace Lunggo.CustomerWeb.Controllers
         }
 
         #region Helpers
+
+        public string GenerateId(string key)
+        {
+            string result = "";
+            if (key.Length > 7)
+            {
+                key = key.Substring(key.Length - 7);
+            }
+            int generatedNumber = (int)double.Parse(key);
+            for (int i = 1; i < 4; i++)
+            {
+                generatedNumber = new Random(generatedNumber).Next();
+                result = result + "" + generatedNumber;
+            }
+            return result;
+        }
 
         public static string RsvNoHash(string rsvNo)
         {

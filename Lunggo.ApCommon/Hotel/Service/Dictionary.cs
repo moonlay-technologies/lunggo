@@ -336,9 +336,9 @@ namespace Lunggo.ApCommon.Hotel.Service
             foreach (var segment in segments)
             {
                 if (!HotelSegmentDictEng.ContainsKey(segment.Code))
-                    HotelSegmentDictEng.Add(segment.Code, segment.NameEn);
+                HotelSegmentDictEng.Add(segment.Code, segment.NameEn);
                 if (!HotelSegmentDictId.ContainsKey(segment.Code))
-                    HotelSegmentDictId.Add(segment.Code, segment.NameId);
+                HotelSegmentDictId.Add(segment.Code, segment.NameId);
             }
 
         }
@@ -404,9 +404,9 @@ namespace Lunggo.ApCommon.Hotel.Service
             foreach (var group in facilitiesGrp)
             {
                 if (!HotelFacilityGroupDictEng.ContainsKey(group.Code))
-                    HotelFacilityGroupDictEng.Add(group.Code, group.NameEn);
+                HotelFacilityGroupDictEng.Add(group.Code, group.NameEn);
                 if (!HotelFacilityGroupDictId.ContainsKey(group.Code))
-                    HotelFacilityGroupDictId.Add(group.Code, group.NameId);
+                HotelFacilityGroupDictId.Add(group.Code, group.NameId);
             }
         }
 
@@ -429,11 +429,11 @@ namespace Lunggo.ApCommon.Hotel.Service
                     else
                     {
                         if (!HotelFacilityFilters.ContainsKey(splittedLine[1]))
-                            HotelFacilityFilters.Add(splittedLine[1], new FacilityFilter
-                            {
-                                Code = splittedLine[1],
-                                FacilityCode = new List<string> { splittedLine[0] }
-                            });
+                        HotelFacilityFilters.Add(splittedLine[1], new FacilityFilter
+                        {
+                            Code = splittedLine[1],
+                            FacilityCode = new List<string> { splittedLine[0] }
+                        });
                     }
                 }
             }
@@ -449,7 +449,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                 foreach (var fac in facilityGroup.Facilities)
                 {
                     if (!HotelRoomFacility.ContainsKey(fac.Code))
-                        HotelRoomFacility.Add(fac.Code, fac);
+                    HotelRoomFacility.Add(fac.Code, fac);
                 }
             }
         }
@@ -469,7 +469,7 @@ namespace Lunggo.ApCommon.Hotel.Service
             foreach (var room in rooms)
             {
                 if (!HotelRoomDict.ContainsKey(room.RoomCd))
-                    HotelRoomDict.Add(room.RoomCd, room);
+                HotelRoomDict.Add(room.RoomCd, room);
             }
 
         }
@@ -484,7 +484,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                 if (!HotelRoomTypeDict.TryGetValue(room.RoomType.Type, out x))
                 {
                     if (!HotelRoomTypeDict.ContainsKey(room.RoomType.Type))
-                        HotelRoomTypeDict.Add(room.RoomType.Type, room.RoomType);
+                    HotelRoomTypeDict.Add(room.RoomType.Type, room.RoomType);
                 }
             }
         }
@@ -498,7 +498,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                 if (!HotelRoomCharacteristicDict.TryGetValue(room.RoomCharacteristic.CharacteristicCd, out x))
                 {
                     if (!HotelRoomCharacteristicDict.ContainsKey(room.RoomCharacteristic.CharacteristicCd))
-                        HotelRoomCharacteristicDict.Add(room.RoomCharacteristic.CharacteristicCd, room.RoomCharacteristic);
+                    HotelRoomCharacteristicDict.Add(room.RoomCharacteristic.CharacteristicCd, room.RoomCharacteristic);
                 }
             }
 
@@ -518,11 +518,11 @@ namespace Lunggo.ApCommon.Hotel.Service
 
                     if (!HotelRoomRateClassDict.ContainsKey(splittedLine[0]))
                         HotelRoomRateClassDict.Add(splittedLine[0], new RateClass
-                        {
-                            Code = splittedLine[0],
-                            DescEn = splittedLine[1],
-                            DescId = splittedLine[2]
-                        });
+                    {
+                        Code = splittedLine[0],
+                        DescEn = splittedLine[1],
+                        DescId = splittedLine[2]
+                    });
                 }
             }
         }
@@ -541,11 +541,11 @@ namespace Lunggo.ApCommon.Hotel.Service
 
                     if (!HotelRoomRateTypeDict.ContainsKey(splittedLine[0]))
                         HotelRoomRateTypeDict.Add(splittedLine[0], new RateType
-                        {
-                            Type = splittedLine[0],
-                            DescEn = splittedLine[1],
-                            DescId = splittedLine[2]
-                        });
+                    {
+                        Type = splittedLine[0],
+                        DescEn = splittedLine[1],
+                        DescId = splittedLine[2]
+                    });
                 }
             }
         }
@@ -564,11 +564,11 @@ namespace Lunggo.ApCommon.Hotel.Service
 
                     if (!HotelRoomPaymentTypeDict.ContainsKey(splittedLine[0]))
                         HotelRoomPaymentTypeDict.Add(splittedLine[0], new PaymentType
-                        {
-                            Type = splittedLine[0],
-                            DescEn = splittedLine[1],
-                            DescId = splittedLine[2]
-                        });
+                    {
+                        Type = splittedLine[0],
+                        DescEn = splittedLine[1],
+                        DescId = splittedLine[2]
+                    });
                 }
             }
         }
@@ -581,7 +581,7 @@ namespace Lunggo.ApCommon.Hotel.Service
             foreach (var acc in accomodations)
             {
                 if (!HotelAccomodations.ContainsKey(acc.Code))
-                    HotelAccomodations.Add(acc.Code, acc);
+                HotelAccomodations.Add(acc.Code, acc);
             }
         }
 
@@ -593,7 +593,7 @@ namespace Lunggo.ApCommon.Hotel.Service
             foreach (var board in boards)
             {
                 if (!HotelBoards.ContainsKey(board.Code))
-                    HotelBoards.Add(board.Code, board);
+                HotelBoards.Add(board.Code, board);
             }
             
         }
@@ -605,7 +605,7 @@ namespace Lunggo.ApCommon.Hotel.Service
             foreach (var chain in chains)
             {
                 if (!HotelChains.ContainsKey(chain.Code))
-                    HotelChains.Add(chain.Code, chain);
+                HotelChains.Add(chain.Code, chain);
             }
         }
 
@@ -616,7 +616,7 @@ namespace Lunggo.ApCommon.Hotel.Service
             foreach (var category in categories)
             {
                 if (!HotelCategories.ContainsKey(category.Code))
-                    HotelCategories.Add(category.Code, category);
+                HotelCategories.Add(category.Code, category);
             }
         }
 

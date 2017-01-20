@@ -1,4 +1,5 @@
 ﻿@using Lunggo.ApCommon.Hotel.Service
+@using Lunggo.CustomerWeb.Models
 @using Lunggo.Framework.Extension
 @model Lunggo.CustomerWeb.Models.HotelSearchApiRequest
 @{
@@ -16,7 +17,11 @@
     long location;
     var x = long.TryParse(Model.SearchParamObject.Location, out location);
     var loc = "";
-    var foundLocation = HotelService.AutoCompletes.Where(c => c.Id == location).ToList()[0];
+    var locFound = false;
+    var k = HotelService.AutoCompletes.Where(c => c.Id == location).ToList();
+    if (k.Count > 0)
+    {
+        var foundLocation = k[0];
     if (foundLocation != null)
     {
         if (foundLocation.Type == 1)
@@ -36,9 +41,13 @@
             loc = foundLocation.HotelName + ", " + foundLocation.Destination + ", " + foundLocation.Country;
         }
     }
+        locFound = true;
+    }
+
 
 }
 @section AdditionalJS {
+<script src="/Assets/js/js.cookie.js"></script>
     <script src="/Assets/js/jquery-ui.min.js"></script>
     <script type="text/javascript" src="/Assets/js/jquery.ui.datepicker-id.js"></script>
     <script src="/Assets/js/bootstrap.min.js"></script>
@@ -61,9 +70,8 @@
         });
     </script>
     <script>
-
+        var locFound = @Json.Encode(locFound);
         var loc = '@loc';
-
     </script>
     <script type="text/javascript" src="/Assets/travorama20/js/HotelController.js"></script>
     <script src="/Assets/travorama20/angularDirectory/search/hotelSearch.service.js"></script>
@@ -71,11 +79,15 @@
     <script src="/Assets/travorama20/js/hotelSearchController.js"></script>
 }
 
-@Html.Partial("/Views/Shared/Desktop/_PageSlider.cshtml")
+@Html.Partial("/Views/Shared/Desktop/_PageSlider.cshtml", new HotelLocation
+{
+    Location = loc, IsHotelSearch = false
+})
 <div class="travorama-hotel" ng-init="init(@Model.Serialize())">
     <div class="container">
         <div class="search-list">
             @Html.Partial("/Views/Shared/Desktop/_BreadCrumb.cshtml")
+            <a href="#" id="back-to-top" title="Back to top"></a>
             <div class="top-title clearfix">
                 <div class="col-left bg-title"><b>Hasil</b> Pencarian </div>
                 <div class="col-right total-result">Jumlah Hotel Ditemukan: <b>{{filteredHotelCount}}</b></div>
@@ -198,7 +210,7 @@
                     </div>
                     <div class="text-center" ng-show="searchDone && returnedHotelCount == 0"><h3> Hotel tidak ditemukan, silakan ganti filter atau destinasi anda.</h3></div>
                     <div class="hotel-list-container" ng-show="searchDone">
-                        <a ng-repeat="hotel in hotels" ng-click="GotoDetailHotel(hotel.hotelCd)" class="hl-wrapper">
+                        <a ng-repeat="hotel in hotels" class="hl-wrapper" href="{{getUrlHotelDetail(hotel)}}" target="_blank">
                             <div class="hotel-list clearfix pointer">
                                 <div class="col-2">
                                     <img class="img-list" hotel-list-image ng-src="{{hotel.mainImage}}" alt="Hotel" />
@@ -285,6 +297,9 @@
                 <div style="padding-top:5px;"><span style="font-size:13px">Hasil pencarian Anda <span style="color: #15b1e4;font-size:13px"><b> sudah kadaluarsa</b></span>.</span></div>
                 <div><span style="font-size:13px">Anda akan dialihkan ke halaman pencarian yang baru.</span></div>
             </section>
+            <div align="right" style="padding-right:30px;padding-top:30px;">
+                <a class="btn popup-btn-yellow book-failed" ng-click="refreshPage()"><b>CARI ULANG</b></a>
+            </div>
         </div>
     </div>
 </div>

@@ -251,6 +251,8 @@
     <Compile Include="Hotel\Model\HotelFacility.cs" />
     <Compile Include="Hotel\Model\HotelRoomFacilities.cs" />
     <Compile Include="Hotel\Model\HotelSorting.cs" />
+    <Compile Include="Hotel\Model\Logic\AvailableRatesInput.cs" />
+    <Compile Include="Hotel\Model\Logic\AvailableRatesOutput.cs" />
     <Compile Include="Hotel\Model\Logic\GetHotelDetailInput.cs" />
     <Compile Include="Hotel\Model\Logic\GetHotelDetailOutput.cs" />
     <Compile Include="Hotel\Model\Logic\HotelCancelBookingInput.cs" />
@@ -264,6 +266,7 @@
     <Compile Include="Hotel\Query\GetRsvNosByUserIdQuery.cs" />
     <Compile Include="Hotel\Query\SearchReservationQuery.cs" />
     <Compile Include="Hotel\Query\UpdateReservationDetailQuery.cs" />
+    <Compile Include="Hotel\Service\AvailableRates.cs" />
     <Compile Include="Hotel\Service\CancelBooking.cs" />
     <Compile Include="Hotel\Service\ContentUpdate.cs" />
     <Compile Include="Flight\Query\UpdateBookingIdQuery.cs" />

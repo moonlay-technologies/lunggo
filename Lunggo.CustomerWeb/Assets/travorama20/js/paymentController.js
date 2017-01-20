@@ -964,7 +964,7 @@ jQuery(document).ready(function ($) {
 
         $('html, body').animate({
             scrollTop: $("#" + val).offset().top
-        }, 1000);
+        }, 700);
 
         $('input[value="' + val + '"]').attr('chekcked', true);
     });

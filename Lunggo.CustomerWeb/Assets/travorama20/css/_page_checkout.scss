@@ -7,6 +7,7 @@ file : /Assets/travorama20/css/_page_checkout.scss
 
 // page checkout
 .page-checkout {
+    @extend .os-regular; 
     //TnC popup
     .tnc-popup {position:fixed; width:100%; height:100%; top :0; left:0; z-index:1000; background:rgba(0,0,0,0.7);display: block;
         .popup {
@@ -27,6 +28,7 @@ file : /Assets/travorama20/css/_page_checkout.scss
                     span.popup-title {
                         color: #15b1e4;
                         font-size:16px;
+                        @extend .os-bold; 
                         font-weight: 700;
                          &.stripe {
                             background: url(/Assets/mobile/images/yellow-stripe.png) center bottom no-repeat;
@@ -62,7 +64,7 @@ file : /Assets/travorama20/css/_page_checkout.scss
             position: relative;
             min-height: 1px;
         }
-        .col-sm-left {width: 15%; font-weight: 700;}
+        .col-sm-left {width: 15%; @extend .os-bold; font-weight: 700;}
         .col-sm-middle {width: 2%;}
         .col-sm-right {width: 83%;}
     }
@@ -82,6 +84,7 @@ file : /Assets/travorama20/css/_page_checkout.scss
 //General
 .form-group {margin-bottom: 20px;}
 label.control-label {
+    @extend .os-regular;
     font-weight: 400;
     margin-bottom: 10px;
 }
@@ -105,6 +108,7 @@ label.control-label {
         color: #fff;
         padding: 7px 15px;
         font-size: 13px;
+        @extend .os-semibold;
         font-weight: 600;
         position: relative;
     }
@@ -120,7 +124,7 @@ label.control-label {
         &.inactive {background:#a6a6a6;}
         &.inactive + .step {border-left:2px solid #a6a6a6;}
         span {@include skew-x(30deg); display:block; padding-left:10px;}
-        b {font-size:14px; font-weight:bold;}
+        b {font-size:14px; @extend .os-bold;}
     }
 
     // if step 4 active
@@ -149,25 +153,25 @@ label.control-label {
         // flight segment
         .segment {position:relative; padding-bottom:12px;
             &:before,&:after {content:""; clear:both; display:block; width:100%;}
-            .segment-airline-name {font-weight:bold; color:$color-main-blue; font-size:12px; padding-right:30px; display:block; padding-left:10%; margin-top:0; padding-top:7.5px;}
+            .segment-airline-name {@extend .os-bold; color:$color-main-blue; font-size:12px; padding-right:30px; display:block; padding-left:10%; margin-top:0; padding-top:7.5px;}
             .segment-number {float:left; width:5%; position:absolute; top:10px;
-                span {background:$color-main-blue; color:#fff; font-weight:600; padding:3px 10px;}
+                span {background:$color-main-blue; color:#fff; @extend .os-semibold; font-weight:600; padding:3px 10px;}
             }
             .segment-left {float:left; width:10%; margin-left:10%; position:relative;
                 .segment-airline-logo {width:50px; border:$border-default; float:left; margin-right:15px;}
-                .segment-airline-number {font-weight:600; color:$color-main-blue; font-size:12px;}
+                .segment-airline-number {@extend .os-semibold; font-weight:600; color:$color-main-blue; font-size:12px;}
             }
             .segment-right {@extend .segment-left; width:80%; margin-left:0;
                 &:before,&:after {content:""; clear:both; display:block; width:100%;}
                 &>div {float:left;}
                 .segment-departure {width:35%; padding-top:7.5px; padding-left:15px;
                     h5 {margin:0; margin-bottom:5px; font-size:11px;}
-                    h3 {font-weight:bold; margin:0; margin-bottom:5px; font-size:16px;}
-                    h4 {font-weight:bold; margin:0; margin-bottom:5px; font-size:12px;}
+                    h3 {@extend .os-bold; margin:0; margin-bottom:5px; font-size:16px;}
+                    h4 {@extend .os-bold; margin:0; margin-bottom:5px; font-size:12px;}
                 }
                 .segment-duration {width:30%; padding-right:20px; padding-top:20px;
                     h5 {border-bottom:3px solid $color-main-blue; text-align:center; padding-bottom:5px;
-                        span {font-weight:bold;}
+                        span {@extend .os-bold;}
                     }
                 }
                 .segment-arrival {@extend .segment-departure; padding-left:0;}
@@ -175,14 +179,14 @@ label.control-label {
             .segment-operator {display:block; clear:both; padding-left:60px; padding-right:60px; padding-top:5px;
                 p {border-top:$border-default; margin-top:10px; padding-top:10px; margin-bottom:0; font-style:italic;
                     img {height:20px;}
-                    span {font-weight:600;}
+                    span {@extend .os-semibold; font-weight:600;}
                 }
             }
         }
         // flight transit
         .transit {text-align:center; padding:15px 0;
             &:after {border-top:1px dashed $color-main-blue; content:""; display:block; width:100%; position:relative; top:-10px;}
-            p {background:#fff; display:inline; font-style:italic; font-weight:600; color:$color-main-blue; background:#fff; position:relative; z-index:2; padding:0 10px;}
+            p {background:#fff; display:inline; font-style:italic; @extend .os-semibold; font-weight:600; color:$color-main-blue; background:#fff; position:relative; z-index:2; padding:0 10px;}
         }
     }
 }
@@ -190,15 +194,23 @@ label.control-label {
 .buyer-review{
     header {
         .toggle {content:""; position:absolute; top:0; right:0; padding:0; background:#028ec3; height:100%; display:block; width:40px; cursor:pointer;
-            &:after {content:"-"; position:absolute; font-size:28px; color:#fff; font-weight:bold; top:0; left:0; text-align:center; width:100%;}
+            &:after {content:"-"; position:absolute; font-size:28px; color:#fff; @extend .os-bold; top:0; left:0; text-align:center; width:100%;}
         }
     }
     .buyer-content{padding:20px; border:$border-default; border-top:none; background:#fff;
-        .buyer-list-item{
+        .buyer-list-item {
             .buyer-list-heading{margin-top:0px;padding-top:0px; font-size:14px;}
             .buyer-list-content{margin-left: 19px;
                 .buyer-label{font-size:13px; display:inline-block;width:195px;}
                 .buyer-data{font-size:13px;padding-bottom:2px;}
+            }
+            .buyer-row {line-height: 26px;
+                .col-8 {line-height: 20px;
+                    &:before {
+                        content: ': ';
+                        font-weight: 400;
+                    }
+                }
             }
         }
     }
@@ -208,15 +220,16 @@ label.control-label {
 .passenger-review{
     header {
         .toggle {content:""; position:absolute; top:0; right:0; padding:0; background:#028ec3; height:100%; display:block; width:40px; cursor:pointer;
-            &:after {content:"-"; position:absolute; font-size:28px; color:#fff; font-weight:bold; top:0; left:0; text-align:center; width:100%;}
+            &:after {content:"-"; position:absolute; font-size:28px; color:#fff; @extend .os-bold; top:0; left:0; text-align:center; width:100%;}
         }
     }
     .review-content{padding:20px; border:$border-default; border-top:none; background:#fff;
         .passenger-list-item{
-            .passenger-list-heading{margin-top:0px;padding-top:0px; font-size:14px;}
-            .passenger-list-content{margin-left: 19px;
-                .passenger-label{font-size:13px; display:inline-block;width:195px;}
-                .passenger-data{font-size:13px;padding-bottom:2px;}
+            .passenger-list-heading{margin-top:0px;padding-top:0px;}
+            .passenger-list-content{
+                padding-left:12px;
+                .passenger-data:before {content:': ';}
+                .passenger-container {margin-top: 7px;}
             }
         }
     }
@@ -229,7 +242,7 @@ label.control-label {
     .passenger-form {
         header {
             .toggle {content:""; position:absolute; top:0; right:0; padding:0; background:#028ec3; height:100%; display:block; width:40px; cursor:pointer;
-                &:after {content:"-"; position:absolute; font-size:28px; color:#fff; font-weight:bold; top:0; left:0; text-align:center; width:100%;}
+                &:after {content:"-"; position:absolute; font-size:28px; color:#fff; @extend .os-bold; top:0; left:0; text-align:center; width:100%;}
             }
         }
         .passenger-content {padding:12px; border:$border-default; border-top:none; background:#fff;}
@@ -247,7 +260,7 @@ label.control-label {
         label {display:block; cursor:pointer;}
         header {background:$color-main-blue; position:relative;
             .input-wrapper {height:100%; position:absolute; background:#028ec3; width:30px; text-align:center; padding-top:6px;}
-            h5 {color:#fff; color:#fff; margin:0; padding:10px; padding-left:40px; font-size:12px; font-weight:600;}
+            h5 {color:#fff; color:#fff; margin:0; padding:10px; padding-left:40px; font-size:12px; @extend .os-semibold; font-weight:600;}
         }
         section {padding:12px; border:$border-default; text-align:center; background:#fff;
             img {
@@ -293,7 +306,7 @@ label.control-label {
     .ui-datepicker {width:250px !important; position:relative; background:#252525; color:#fff;
         .ui-datepicker-group {width:100%; padding:15px;
             & + .ui-datepicker-group {border-top:$border-default;}
-            .ui-datepicker-title {color:#fff; color:$color-main-blue; font-size:14px; font-weight:600; margin-bottom:10px;}
+            .ui-datepicker-title {color:#fff; color:$color-main-blue; font-size:14px; @extend .os-semibold; font-weight:600; margin-bottom:10px;}
             .ui-datepicker-calendar {width:100%; color:#fff;
                 thead {
                     th {text-align:center; padding-bottom:10px;
@@ -342,7 +355,7 @@ label.control-label {
                     dl {margin-bottom:4px;
                         &:before, &:after {@include clearfix();}
                         dt {float:left; width:50%; font-weight:normal;}
-                        dd {float:left; width:50%; font-weight:bold;}
+                        dd {float:left; width:50%; @extend .os-bold;}
                     }
                 }
             }
@@ -363,14 +376,14 @@ label.control-label {
                     .confirm-passenger {margin-bottom:24px;
                         ol {counter-reset:passenger-counter; list-style:none; margin:0; padding:0;
                             li {position:relative; padding-left:21px; font-size:12px;
-                            &:before {content:'0' counter(passenger-counter); counter-increment:passenger-counter; position:absolute; left:0; color:$color-main-blue; font-weight:bold;}
+                            &:before {content:'0' counter(passenger-counter); counter-increment:passenger-counter; position:absolute; left:0; color:$color-main-blue; @extend .os-bold;}
                             }
                         }
                     }
                     .confirm-order {
                         .confirm-flight {padding-left:36px; position:relative;
                             img {height:36px; margin-right:24px;}
-                            span {font-weight:bold; color:$color-main-blue;}
+                            span {@extend .os-bold; color:$color-main-blue;}
                             &:before {content:''; width:20px; height:20px; position:absolute; top:0; left:0; background-color:$color-main-blue; background-image:url(/Assets/images/plane-updown-sprite.png); background-size:200%; background-repeat:no-repeat; border:2px solid $color-main-blue;}
                             // departure flight
                              &.departure {}
@@ -394,7 +407,7 @@ label.control-label {
         .ui-datepicker-header {padding-bottom:10px;
             .ui-datepicker-prev, .ui-datepicker-next {display:inline; color:#fff; cursor:pointer;}
             .ui-datepicker-next {float:right;}
-            .ui-datepicker-title {color:$color-main-blue; font-size:14px; font-weight:600; margin-top:10px;
+            .ui-datepicker-title {color:$color-main-blue; font-size:14px; @extend .os-semibold; font-weight:600; margin-top:10px;
                 .ui-datepicker-month {}
                 .ui-datepicker-year {}
             }
@@ -424,6 +437,7 @@ label.control-label {
 // page thank you
 .page-thankyou {
     .section-title.stripe {
+        @extend .os-semibold;
         font-weight: 600;
         background: url(/Assets/images/yellow-stripe.png) center bottom no-repeat;
         padding-bottom: 20px;
@@ -441,7 +455,7 @@ label.control-label {
                     &:before {}
                 }
                 &.separator {font-size:32px; vertical-align:top; padding-top:6px;}
-                h5 {font-weight:bold; font-size:36px; margin:0;}
+                h5 {@extend .os-bold; font-size:36px; margin:0;}
                 span {font-size:14px;}
             }
         }
@@ -456,14 +470,14 @@ label.control-label {
     .order-detail {
         header {background:$color-main-blue; color:#fff; padding:6px 12px;}
         section {background:#f3f1f2; position:relative; min-height:350px;
-            h4 {font-weight:bold; letter-spacing:0; margin-bottom:18px;}
+            h4 {@extend .os-bold; letter-spacing:0; margin-bottom:18px;}
 
             .order-detail-left {padding:12px 24px;
                 .va-passenger{
                     .passenger {margin-bottom:24px;padding-left: 0px;margin-left:0;
                     ol {counter-reset:passenger-counter; list-style:none; margin:0; padding:0;
                         li {position:relative; padding-left:21px; font-size:12px;
-                            &:before {content:'0' counter(passenger-counter); counter-increment:passenger-counter; position:absolute; left:0; color:$color-main-blue; font-weight:bold;}
+                            &:before {content:'0' counter(passenger-counter); counter-increment:passenger-counter; position:absolute; left:0; color:$color-main-blue; @extend .os-bold;}
                         }
                     }
                 }
@@ -475,9 +489,9 @@ label.control-label {
                 
             .order {
                 .flight {padding-left:36px; position:relative;
-                    .col-xs-9 {font-weight:bold;}
+                    .col-xs-9 {@extend .os-bold;}
                     img {height:36px; margin-right:24px;}
-                    span {font-weight:bold; color:$color-main-blue;}
+                    span {@extend .os-bold; color:$color-main-blue;}
                     &:before {content:''; width:20px; height:20px; position:absolute; top:0; left:0; background-color:$color-main-blue; background-image:url(/Assets/images/plane-updown-sprite.png); background-size:200%; background-repeat:no-repeat; border:2px solid $color-main-blue;}
                     // departure flight
                     &.departure {}
@@ -496,17 +510,17 @@ label.control-label {
                     dt {width:55%; float:left; font-weight:normal; position:relative; padding-left:12px;
                         &:before {content:""; width:6px; height:6px; position:absolute; top:3px; left:0; background:#ff6900;}
                     }
-                    dd {width:45%; float:left; text-align:right; font-weight:bold;}
+                    dd {width:45%; float:left; text-align:right; @extend .os-bold;}
                 }
                 dl.total-price {border-top:$border-default; padding-top:12px;
                     dt {width:40%;
                         &:before {content:""; width:0; height:0;}
                     }
-                    dd {width:60%; color:#ff6900; font-weight:bold; font-size:16px;}
+                    dd {width:60%; color:#ff6900; @extend .os-bold; font-size:16px;}
                 }
             }
             .payment-detail {
-                h5 {color:$color-main-blue; font-weight:bold;}
+                h5 {color:$color-main-blue; @extend .os-bold;}
             }
         }
 
@@ -524,6 +538,7 @@ label.control-label {
                 span.popup-title {
                     color: #15b1e4;
                     font-size: 20px;
+                    @extend .os-bold; 
                     font-weight: 700;
                     &.stripe {
                         background: url(/Assets/mobile/images/yellow-stripe.png) center bottom no-repeat;
@@ -572,6 +587,7 @@ label.control-label {
                     position: absolute;
                     left: 0;
                     top: 0;
+                    @extend .os-bold; 
                     font-weight: 700;
                 }
                 &.sec:before {
@@ -581,6 +597,7 @@ label.control-label {
                     position: absolute;
                     left: 0;
                     top: 0;
+                    @extend .os-bold; 
                     font-weight: 700;
                 }
             }
@@ -637,6 +654,7 @@ label.control-label {
                 .col-8:before {
                     content: '\00a0:\00a0';
                     display: inline-block;
+                    @extend .os-bold; 
                     font-weight: 700;
                 }
             }

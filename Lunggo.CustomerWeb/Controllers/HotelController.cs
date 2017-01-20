@@ -1,27 +1,91 @@
-﻿using Lunggo.ApCommon.Hotel.Service;
-using Lunggo.ApCommon.Payment.Service;
+﻿using System.Linq;
+using System.Web;
+using Lunggo.ApCommon.Hotel.Model.Logic;
+using Lunggo.ApCommon.Hotel.Service;
+using System.Security.Cryptography;
+using System.Text;
 using Lunggo.CustomerWeb.Models;
 using System;
-using System.Collections.Generic;
 using System.Collections.Specialized;
-using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
+using Lunggo.Framework.Config;
+using Lunggo.Framework.Extension;
+using RestSharp;
 
 namespace Lunggo.CustomerWeb.Controllers
 {
     public class HotelController : Controller
     {
         // GET: Hotel
-        public ActionResult Search()
+        [Route("id/hotel/cari/{country}/{destination}")]
+        [Route("id/hotel/cari/{country}/{destination}/{zone}")]
+        [Route("id/hotel/cari/{country}/{destination}/{zone}/{area}")]
+        public ActionResult Search(string country, string destination, string zone, string area)
         {
             try
             {
-                NameValueCollection query = Request.QueryString;
-                HotelSearchApiRequest model = new HotelSearchApiRequest(query);
+                var source = ConfigManager.GetInstance().GetConfigValue("api", "apiUrl");
+                var query = Request.QueryString;
+                if (query.HasKeys())
+                {
+                    var model = new HotelSearchApiRequest(query[0]);
+                    return View(model);
+                }
 
-                return View(model);
+                string location;
+                if (zone != null)
+                {
+                    location = area ?? zone;
+                }
+                else
+                {
+                    location = destination;
+                }
+                
+                var client = new RestClient(source);
+                string url = @"/v1/autocomplete/hotel//" + location;
+                var searchRequest = new RestRequest(url, Method.GET);
+                var searchResponse = client.Execute(searchRequest);
+                var data = searchResponse.Content.Deserialize<AutocompleteResponse>();
+
+                long locationId = 0;
+                if (zone != null)
+                {
+                    if (area != null)
+                    {
+                        var selected = data.Autocompletes.Where(r => r.Type == "Area" && r.Country == country).ToList();
+                        if (selected.Count > 0)
+                        {
+                            locationId = selected[0].Id;
+                        }
+                    }
+                    else
+                    {
+                        var selected = data.Autocompletes.Where(r => r.Type == "Zone" && r.Country == country).ToList();
+                        if (selected.Count > 0)
+                        {
+                            locationId = selected[0].Id;
+                        }
+                    }
+                }
+                else
+                {
+                    var selected = data.Autocompletes.Where(r => r.Type == "Destination" && r.Country == country).ToList();
+                    if (selected.Count > 0)
+                    {
+                        locationId = selected[0].Id;
+                    }
+                }
+
+                var tomorrowDate = DateTime.Today.AddDays(1);
+                var nextDate = tomorrowDate.AddDays(1);
+                var newquery = "info=Location." + locationId + "." + tomorrowDate.Year + "-" +
+                         tomorrowDate.Month.ToString("d2") + "-" + tomorrowDate.Day.ToString("d2")
+                         + "." + nextDate.Year + "-" + nextDate.Month.ToString("d2") + "-" + 
+                         nextDate.Day.ToString("d2") + ".1.1.1~0";
+                var newmodel = new HotelSearchApiRequest(newquery);
+                return View(newmodel);
             }
             catch (Exception ex)
             {
@@ -29,45 +93,56 @@ namespace Lunggo.CustomerWeb.Controllers
             }
 
         }
-        //public ActionResult Search()
-        //{
-        //    return View();
-        //    }
-        //public ActionResult DetailHotel()
-        //    {
-        //    return View();
-        //    }
-        //public ActionResult Checkout()
-        //{
-        //    //try
-        //    //{
-        //    //    NameValueCollection query = HttpUtility.ParseQueryString(searchParam);
-        //    //    HotelSearchApiRequest model = new HotelSearchApiRequest(query);
-        //    //    searchParam = model.SearchParam;
-        //    //    var searchParamObject = model.SearchParamObject;
 
-        //    //    return View(new { searchId, hotelCd, searchParam, searchParamObject });
-        //    //}
-        //    //catch (Exception ex)
-        //    //{
-        //    //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest, ex.Message);
-        //    //}
-        //    return View();
-        //}
-        public ActionResult DetailHotel(string searchId, int hotelCd, string searchParam)
+        [Route("id/hotel/{country}/{destination}/{hotelParam}")]
+        public ActionResult DetailHotel(String hotelParam)
         {
+            var source = ConfigManager.GetInstance().GetConfigValue("api", "apiUrl");
+
+            var hotelCd = Convert.ToInt32(hotelParam.Split('-').Last());
+            var hotelDetail = HotelService.GetInstance().GetHotelDetail(new GetHotelDetailInput
+            {
+                HotelCode = hotelCd
+            }).HotelDetail;
+
+            var client = new RestClient(source);
+            string url = @"/v1/autocomplete/hotel//" + hotelDetail.DestinationName;
+            var searchRequest = new RestRequest(url, Method.GET);
+            var searchResponse = client.Execute(searchRequest);
+            var data = searchResponse.Content.Deserialize<AutocompleteResponse>();
+            long locationId = 0;
+            var selected = data.Autocompletes.Where(r => r.Type == "Destination").ToList();
+            if (selected.Count > 0)
+        {
+                locationId = selected[0].Id;
+            }
+
+            if (Request != null && Request.QueryString != null && Request.QueryString.ToString().Length > 0)
+            {
+                var searchParam = HttpUtility.UrlDecode(Request.QueryString.ToString());
+                
             return View(new HotelDetailModel.HotelDetail
             {
                 HotelCode = hotelCd,
-                SearchId = searchId,
-                SearchParam = searchParam
+                    //SearchId = searchId,
+                    SearchParam = searchParam,
+                    HotelDetailData = hotelDetail
             });
         }
 
-        //public ActionResult Checkout()
-        //{
-        //    return View();
-        //}
+            var tomorrowDate = DateTime.Today.AddDays(1);
+            var nextDate = tomorrowDate.AddDays(1);
+            var searchParams = "Location." + locationId + "." + tomorrowDate.Year + "-" + tomorrowDate.Month.ToString("d2") + "-" + tomorrowDate.Day.ToString("d2") +
+                               "." + nextDate.Year + "-" + nextDate.Month.ToString("d2") + "-" + nextDate.Day.ToString("d2") + ".1.1.1~0";
+                    
+            return View(new HotelDetailModel.HotelDetail
+            {
+                HotelCode = hotelCd,
+                //SearchId = searchId,
+                SearchParam = searchParams,
+                HotelDetailData = hotelDetail
+            });
+        }
 
         [RequireHttps]
         public ActionResult Checkout(string token)
@@ -80,7 +155,6 @@ namespace Lunggo.CustomerWeb.Controllers
                 {
                     ViewBag.Message = "BookFailed";
                     return View();
-
                 }
 
                 if (token == null)
@@ -92,19 +166,11 @@ namespace Lunggo.CustomerWeb.Controllers
                 try
                 {
                     var hotelService = HotelService.GetInstance();
-                    var payment = PaymentService.GetInstance();
-                    //var expiryTime = hotelService.GetSelectionExpiry(token);
-                    //var savedPassengers = flight.GetSavedPassengers(User.Identity.GetEmail());
-                    //var savedCreditCards = User.Identity.IsAuthenticated
-                    //    ? payment.GetSavedCreditCards(User.Identity.GetEmail())
-                    //    : new List<SavedCreditCard>();
                     return View(new HotelCheckoutData
                     {
                         Token = token,
                         HotelDetail = hotelDetail,
                         ExpiryTime = hotelService.GetSelectionExpiry(token).GetValueOrDefault(),
-                        //SavedPassengers = savedPassengers,
-                        //SavedCreditCards = savedCreditCards
                     });
                 }
                 catch
@@ -116,11 +182,7 @@ namespace Lunggo.CustomerWeb.Controllers
                     });
                 }
             }
-            else
-            {
                 return RedirectToAction("Index", "Index");
-            }
-
         }
 
         [RequireHttps]
@@ -128,14 +190,10 @@ namespace Lunggo.CustomerWeb.Controllers
         [ActionName("Checkout")]
         public ActionResult CheckoutPost(string rsvNo)
         {
-            return RedirectToAction("Payment", "Payment", new { rsvNo });
+            var regId = GenerateId(rsvNo);
+            return RedirectToAction("Payment", "Payment", new { rsvNo, regId});
         }
 
-
-        //public ActionResult DetailHotel(string searchId, int hotelCd)
-        //{
-        //    return View(new { searchId, hotelCd });
-        //}
 
         public ActionResult Confirmation()
         {
@@ -170,5 +228,25 @@ namespace Lunggo.CustomerWeb.Controllers
         {
             return View();
         }
+
+        #region Helpers
+
+        public string GenerateId(string key)
+        {
+            string result = "";
+            if (key.Length > 7)
+            {
+                key = key.Substring(key.Length - 7);
+            }
+            int generatedNumber = (int)double.Parse(key);
+            for (int i = 1; i < 4; i++)
+            {
+                generatedNumber = new Random(generatedNumber).Next();
+                result = result + "" + generatedNumber;
+            }
+            return result;
+        }
+
+        #endregion
     }
 }

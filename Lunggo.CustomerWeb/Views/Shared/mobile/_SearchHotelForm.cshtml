@@ -1,6 +1,10 @@
-﻿<form class="hotel-form" name="hotel-form" novalidate ng-class="{'active' : (PageConfig.ActiveOverlay == 'hotel-form')}">
+﻿@using Lunggo.CustomerWeb.Models
+@model HotelLocation
+<form class="hotel-form" name="hotel-form" novalidate ng-class="{'active' : (PageConfig.ActiveOverlay == 'hotel-form')}">
     <div class="th-form">
         <div class="top-wrap">
+            @if (!Model.IsHotelSearch)
+            {
             <div class="form-group form__hotel">
                 <div class="field-container" ng-click="PageConfig.SetOverlay('hotel-select')">
                     <p class="form-control form-hotel">
@@ -10,6 +14,8 @@
                     </p>
                 </div>
             </div>
+            }
+            
             <div class="form-group form__date">
                 <div class="field-container">
                     <p class="form-control form-date" ng-click="DatePicker.SetOption({Target : 'checkin'}, ' ', 'hotel'); PageConfig.SetOverlay('datepicker-hotel')">
@@ -98,8 +104,23 @@
             </div>
         </div>
     </div>
-    <div class="bottom-wrap form-group form__submit">
-        <button class="btn btn-yellow btn-block btn-lg btnSubmit" ng-click="hotelSearch.getHotels(hotelSearch)">CARI HOTEL</button>
+    
+    @if (Model.IsHotelSearch)
+    {
+        <div class="bottom-wrap form-group form__submit">
+            <button class="btn btn-yellow btn-block btn-lg btnSubmit" ng-click="PageConfig.SetOverlay();
+                    slideToResults('Mobile'); availableRates(hotelSearch.nightCount,
+                    hotelSearch.checkinDate, hotelSearch.checkoutDate, hotelSearch.occupancies,hotelSearch.roomCount)">
+                CARI KAMAR
+            </button>
     </div>
+    }
+    else
+    {
+    <div class="bottom-wrap form-group form__submit">
+        <button class="btn btn-yellow btn-block btn-lg btnSubmit" ng-click="hotel.searchHotel()">CARI HOTEL</button>
+    </div>
+    }
+    
 </form>
 

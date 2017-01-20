@@ -1,9 +1,10 @@
-﻿@{
-    //tried to load angular more than once
-    //Layout = "/Views/Shared/mobile/_LayoutMobile.cshtml";
+﻿@model Lunggo.CustomerWeb.Models.HotelLocation
+
+@{
     ViewBag.BodyClass = "page-hotel page-search";
     ViewBag.Title = "Pencarian Hotel";
 }
+
 
 @section AdditionalCSS{
     <link href="/Assets/css/jquery-ui.min.css" rel="stylesheet" />
@@ -11,8 +12,13 @@
 
 <div class="hotel-summary">
     <div class="summary-left">
-        <div style="text-transform:capitalize"><b>{{loc}}</b>, {{hotelSearch.roomCount}} Kamar</div>
-        <div class="semibold-txt">{{hotelSearch.destinationNightCount}} Malam ({{hotelSearch.destinationCheckinDate | date : 'EEEE, dd MMM yyyy'}} - {{hotelSearch.destinationCheckoutDate | date : 'EEEE, dd MMM yyyy'}})</div>
+        <div style="text-transform:capitalize"><b>@ToTitleCase.ConvertToTitleCase(Model.Location)</b>
+        </div>
+        @if (!Model.IsHotelSearch)
+        {
+            <div class="semibold-txt">{{hotelSearch.destinationNightCount}} Malam ({{hotelSearch.destinationCheckinDate | date : 'EEEE, dd MMM yyyy'}} - {{hotelSearch.destinationCheckoutDate | date : 'EEEE, dd MMM yyyy'}})</div>
+        }
+        
     </div>
     <a ng-click="PageConfig.SetOverlay('hotel-form')" class="summary-right"><span>GANTI</span></a>
 </div>

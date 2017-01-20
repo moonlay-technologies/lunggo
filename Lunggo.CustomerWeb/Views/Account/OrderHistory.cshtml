@@ -201,7 +201,7 @@
                                                             <input type="text" name="RsvNo" value="" id="rsvno-input" />
                                                         </form>
                                                         <div class="action">
-                                                            <button class="btn btn-yellow" ng-click="submitRsvNo(flight.rsvNo)">@Html.I18NString("CW00175")</button>
+                                                            <a class="btn btn-yellow" ng-href="@Url.Action("SelectReservation", "Account")?rsvNo={{flight.rsvNo}}">@Html.I18NString("CW00175")</a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -232,7 +232,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="action-hotel" style="margin-top:-80px">
-                                                    <button class="btn btn-yellow" ng-click="submitRsvNo(hotel.rsvNo)">DETAIL</button>
+                                                    <a class="btn btn-yellow" ng-href="@Url.Action("SelectReservation", "Account")?rsvNo={{hotel.rsvNo}}">DETAIL</a>
                                                 </div>
                                             </div>
                                             <div class="order-bottom">

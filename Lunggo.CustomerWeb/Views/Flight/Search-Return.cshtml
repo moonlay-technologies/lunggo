@@ -30,7 +30,7 @@
         var infoPart = parts.Last();
         isValid = ((tripPart.Length + 1) % 13 == 0) && (infoPart.Length == 4);
 
-        trips = tripPart.Split('.').Select(info => new FlightTrip
+        trips = tripPart.Split('~').Select(info => new FlightTrip
         {
             OriginAirport = info.Substring(0, 3),
             DestinationAirport = info.Substring(3, 3),
@@ -143,6 +143,7 @@
     <!-- angular controller -->
     <script src="/Assets/travorama20/angularDirectory/priceDetail/priceDetailDir.js"></script>
     <script src="/Assets/travorama20/js/returnFlightController.js"></script>
+    <script>backToTop()</script>
 }
 <section class="page-slider">
     <div class="container">
@@ -163,26 +164,26 @@
                         <b>@data.Trips[0].DepartureDate.ToString("dddd, dd MMMM yyyy", new CultureInfo("id-ID")) - @data.Trips[1].DepartureDate.ToString("dddd, dd MMMM yyyy", new CultureInfo("id-ID"))</b> | <b>@(data.AdultCount + data.ChildCount + data.InfantCount) Orang</b>
                         @if (data.ChildCount != 0 && data.InfantCount != 0)
                         {
-                            <span>(@data.AdultCount Dewasa , @data.ChildCount Anak, @data.InfantCount Bayi)</span>
+                        <span>(@data.AdultCount Dewasa , @data.ChildCount Anak, @data.InfantCount Bayi)</span>
                         }
                         else if (data.ChildCount != 0 && data.InfantCount == 0)
                         {
-                            <span>(@data.AdultCount Dewasa , @data.ChildCount Anak)</span>
+                        <span>(@data.AdultCount Dewasa , @data.ChildCount Anak)</span>
                         }
                         else if (data.ChildCount == 0 && data.InfantCount != 0)
                         {
-                            <span>(@data.AdultCount Dewasa , @data.InfantCount Bayi)</span>
+                        <span>(@data.AdultCount Dewasa , @data.InfantCount Bayi)</span>
                         }
                         else if (data.ChildCount == 0 && data.InfantCount == 0)
                         {
-                            <span>(@data.AdultCount Dewasa)</span>
+                        <span>(@data.AdultCount Dewasa)</span>
                         }
                     </h4>
                 </div>
             </div>
             <div class="col-sm-3">
-                <div class="result-form-right">
-                    <a class="btn btn-yellow block search-result-form-trigger">UBAH PENCARIAN</a>
+                <div class="result-form-right pull-right">
+                    <a class="btn btn-yellow search-result-form-trigger md-txt lg-btn">UBAH PENCARIAN</a>
                 </div>
             </div>
         </div>
@@ -196,8 +197,9 @@
     </div>
 </section><!-- .search-result-form -->
 <section class="search-result return page-loading" ng-controller="returnFlightController" ng-class="{'page-loaded': pageLoaded}">
+    <a href="#" id="back-to-top" title="Back to top"></a>
 
-    <form class="hidden pushToken" action="@Url.Action("Select", "Flight")" method="post">
+    <form class="hidden pushToken" action="/id/Flight/Select" method="post">
         <input type="text" name="token" value="" class="fareToken" />
     </form>
 
@@ -309,7 +311,7 @@
                     <label>Harga per orang:</label>
                     <h3><sup>Rp</sup>{{departureFlightConfig.flightList[departureFlightConfig.chosenFlight].netAdultFare | number}}</h3>
                     <p>Termasuk Pajak &amp; Service Charge</p>
-                    <input type="submit" value="GANTI PENERBANGAN PERGI" class="btn btn-grey block" ng-click="setChosenFlight('departure',-1)" />
+                    <input type="submit" value="GANTI PENERBANGAN PERGI" class="btn btn-grey block lg-btn" ng-click="setChosenFlight('departure',-1)" />
                 </div>
             </div><!-- .search-result-selected -->
 
@@ -529,7 +531,7 @@
                                 <span class="original-price"> Rp {{flight.originalAdultFare | number}} </span>
                                 <h4 class="flight-price"><sup>Rp</sup> {{flight.netAdultFare | number}}</h4>
                                 <small>*Termasuk Pajak &amp; Service Charge</small>
-                                <a class="btn btn-yellow" ng-click="setChosenFlight('departure',flight.IndexNo)">PESAN</a>
+                                <a class="btn btn-yellow sm-btn" ng-click="setChosenFlight('departure',flight.IndexNo)">PESAN</a>
                             </div>
                         </div><!-- .flight-summary -->
                         <div class="flight-detail" ng-show="departureFlightConfig.activeFlight == flight.IndexNo">
@@ -671,7 +673,7 @@
                     <label>Harga per orang:</label>
                     <h3><sup>Rp</sup>{{returnFlightConfig.flightList[returnFlightConfig.chosenFlight].netAdultFare | number}}</h3>
                     <p>Termasuk Pajak &amp; Service Charge</p>
-                    <input type="submit" value="GANTI PENERBANGAN PULANG" class="btn btn-grey block" ng-click="setChosenFlight('return',-1)" />
+                    <input type="submit" value="GANTI PENERBANGAN PULANG" class="btn btn-grey block lg-btn" ng-click="setChosenFlight('return',-1)" />
                 </div>
             </div><!-- .search-result-selected -->
 
@@ -887,7 +889,7 @@
                                 <span class="original-price"> Rp {{flight.originalAdultFare | number}} </span>
                                 <h4 class="flight-price"><sup>Rp</sup> {{flight.netAdultFare | number}}</h4>
                                 <small>*Termasuk Pajak &amp; Service Charge</small>
-                                <a class="btn btn-yellow" ng-click="setChosenFlight('return',flight.IndexNo)">PESAN</a>
+                                <a class="btn btn-yellow sm-btn" ng-click="setChosenFlight('return',flight.IndexNo)">PESAN</a>
                             </div>
                         </div><!-- .flight-summary -->
                         <div class="flight-detail" ng-show="returnFlightConfig.activeFlight == flight.IndexNo">
@@ -1049,7 +1051,7 @@
                         <label>Harga Tiket per Orang:</label>
                         <h3><sup>Rp</sup> {{departureFlightConfig.flightList[departureFlightConfig.chosenFlight].netAdultFare + returnFlightConfig.flightList[returnFlightConfig.chosenFlight].netAdultFare | number}}</h3>
                         <p>*Harga termasuk Pajak &amp; Service Charge</p>
-                        <input type="submit" class="btn btn-yellow" value="PESAN" ng-click="selectFlight(departureFlightConfig.chosenFlight, returnFlightConfig.chosenFlight);" @*ng-hide="departureFlightConfig.validating || returnFlightConfig.validating || pageConfig.flightsValidated" ng-click="pageConfig.redirectingPage"*@ />
+                        <input type="submit" class="btn btn-yellow sm-btn" value="PESAN" ng-click="selectFlight(departureFlightConfig.chosenFlight, returnFlightConfig.chosenFlight);" @*ng-hide="departureFlightConfig.validating || returnFlightConfig.validating || pageConfig.flightsValidated" ng-click="pageConfig.redirectingPage"*@ />
                         @*<input type="submit" class="btn btn-yellow" value="LANJUTKAN" ng-click="revalidateSubmit()" />*@
                         @*<div ng-show="pageConfig.flightsValidated && (!departureFlightConfig.validateAvailable || !returnFlightConfig.validateAvailable )">
                                 <input type="submit" class="btn btn-yellow" value="LANJUTKAN" ng-show="(departureFlightConfig.validateNewfare || returnFlightConfig.validateNewfare)" ng-click="revalidateFlight(departureFlightConfig.chosenFlight, returnFlightConfig.chosenFlight)" ng-disabled="pageConfig.redirectingPage" />
@@ -1204,7 +1206,7 @@
                 <div><span style="font-size:13px">Silakan klik tombol di bawah untuk kembali ke halaman awal.</span></div>
             </section>
             <div align="right" style="padding-right:30px;padding-top:30px;">
-                <a class="btn popup-btn-yellow book-failed" href="{{returnUrl}}"><b>CARI ULANG</b></a>
+                <a class="btn popup-btn-yellow book-failed sm-btn" href="{{returnUrl}}"><b>CARI ULANG</b></a>
             </div>
         </div>
     </div>
@@ -1218,7 +1220,7 @@
                 <div><span style="font-size:13px">Silakan klik tombol di bawah ini untuk memperbaharui halaman pencarian Anda.</span></div>
             </section>
             <div align="right" style="padding-right:30px;padding-top:20px;">
-                <a class="btn popup-btn-yellow book-failed" href="#"><b>CARI LAGI</b></a>
+                <a class="btn popup-btn-yellow book-failed sm-btn" href="#"><b>CARI LAGI</b></a>
             </div>
         </div>
     </div>

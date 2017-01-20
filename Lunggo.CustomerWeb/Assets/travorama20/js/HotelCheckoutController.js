@@ -1,11 +1,14 @@
 ﻿// travorama angular app - checkout controller
 app.controller('hotelcheckoutController', [
     '$http', '$scope', '$interval', '$location', '$log', function ($http, $scope, $interval, $location, $log) {
-
+        
         $scope.returnUrl = document.referrer == (window.location.origin + window.location.pathname + window.location.search) ? '/' : document.referrer;
         
         // set hash to page 1
         angular.element(document).ready(function () {
+            $('html, body').animate({
+                scrollTop: $(".checkout-hotel").offset().top
+            }, 500);
             if (getParam('page') == 2) {
                 $location.hash('page-2');
             } else {
@@ -187,6 +190,9 @@ app.controller('hotelcheckoutController', [
         }
         
         $scope.validateForm = function (page) {
+            $('html, body').animate({
+                scrollTop: $(".checkout-hotel").offset().top
+            }, 500);
             if (page == 1) {
                 if (!$scope.CheckTitle($scope.buyerInfo)) {
                     $scope.form.incompleteContactTitle = true;
@@ -236,6 +242,9 @@ app.controller('hotelcheckoutController', [
         
         $scope.changePage = function (page) {
             $location.hash("page-" + page);
+            $('html, body').animate({
+                scrollTop: $(".checkout-hotel").offset().top
+            }, 500);
             // change current page variable
             $scope.currentPage = page;
             // change step class

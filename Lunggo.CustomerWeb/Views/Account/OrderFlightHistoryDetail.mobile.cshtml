@@ -5,55 +5,11 @@
 @model Lunggo.ApCommon.Product.Model.ReservationForDisplayBase
 @{
     Layout = "/Views/Shared/mobile/_LayoutMobile.cshtml";
-    ViewBag.Title = "Detail Reservasi";
+    ViewBag.Title = "Detail Pesanan";
     ViewBag.BodyClass = "page page-orderdetail page-checkout";
     ViewBag.AngularController = "OrderDetailController";
 }
 
-
-@functions{
-    public string ToTitleCase(string input)
-    {
-
-        var text = "";
-        try
-        {
-            var splittedText = input.Split(' ');
-            foreach (var word in splittedText)
-            {
-                var splittedByStrips = word.Split('-');
-                var w = "";
-                if (splittedByStrips.Count() != 1)
-                {
-                    foreach (var part in splittedByStrips)
-                    {
-                        w += ApplyTitleCase(part) + "-";
-                    }
-                    text += w.Substring(0, w.Length - 1) + " ";
-                }
-                else
-                {
-                    text += word[0] + word.Substring(1, word.Length - 1).ToLower() + " ";
-                }
-            }
-
-        }
-        catch { }
-        return text.Length == 0 ? "" : text.Substring(0, text.Length - 1);
-    }
-
-    public string ApplyTitleCase(string input)
-    {
-        return input[0] + input.Substring(1, input.Length - 1).ToLower();
-    }
-    public string msToTime(double duration)
-    {
-        var hours = Convert.ToInt32(duration) / (1000 * 60 * 60);
-        var minutes = (Convert.ToInt32(duration) / (1000 * 60)) % 60;
-
-        return hours + "j " + minutes + "m";
-    }
-}
 @section AdditionalJS{
     <!-- additional Angular JS-->
 }
@@ -183,7 +139,15 @@
                         }
                         <div class="oh-row clearfix">
                             <div class="col-4">Harga Pesanan</div>
-                            <div class="col-6">Rp @Model.Payment.FinalPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</div>
+                            @if (Model.Payment.FinalPrice == 0)
+                            {
+                                <div class="col-6">Rp @Model.Payment.OriginalPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</div>
+                            }
+                            else
+                            {
+                                <div class="col-6">Rp @Model.Payment.FinalPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</div>
+                            }
+                            
                         </div>
                         <div class="oh-row clearfix" ng-show="flight.payment.method">
                             <div class=" col-4">Metode Pembayaran</div>

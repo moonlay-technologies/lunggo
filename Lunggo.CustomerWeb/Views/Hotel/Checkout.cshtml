@@ -58,45 +58,6 @@
     
 }
 
-@functions{
-
-    public string ToTitleCase(string input)
-    {
-
-        var text = "";
-        try
-        {
-            var splittedText = input.Split(' ');
-            foreach (var word in splittedText)
-            {
-                var splittedByStrips = word.Split('-');
-                var w = "";
-                if (splittedByStrips.Count() != 1)
-                {
-                    w = splittedByStrips.Aggregate(w, (current, part) => current + (ApplyTitleCase(part) + "-"));
-                    text += w.Substring(0, w.Length - 1) + " ";
-                }
-                else
-                {
-                    text += word[0] + word.Substring(1, word.Length - 1).ToLower() + " ";
-                }
-            }
-
-        }
-        catch
-        {
-
-        }
-        return text.Length == 0 ? "" : text.Substring(0, text.Length - 1);
-    }
-
-   
-    public string ApplyTitleCase(string input)
-    {
-        return input[0] + input.Substring(1, input.Length - 1).ToLower();
-    }
-
-}
 @section AdditionalJS {
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="/Assets/js/bootstrap.min.js"></script>
@@ -280,7 +241,7 @@
                         <div style="color:red" ng-show="form.incompleteGuestName">
                             Nama pada Data Tamu Belum Ditambahkan <br /> <br />
                         </div>
-                        <button class="btn btn-yellow go-top" ng-click="validateForm(1)">LANJUTKAN</button>
+                        <button class="btn btn-yellow go-top lg-btn md-txt" ng-click="validateForm(1)">LANJUTKAN</button>
                     </div>
 
                 </div>
@@ -299,22 +260,26 @@
                                 <span>Data Pemesan dan Tamu</span>
                             </header>
                             <section class="buyer-content">
-                                <div class="buyer-list-item">
-                                    <h3 class="buyer-list-heading"><b> Pemesan: {{changeTitle(buyerInfo.title)}} {{buyerInfo.name}}</b></h3>
-                                    <div class="buyer-list-content">
-                                        <p>
-                                            <span class="buyer-label">No. Telepon</span>
-                                            <span class="buyer-data">+{{buyerInfo.countryCode}}{{buyerInfo.phone}}</span>
-                                        </p>
-                                        <p>
-                                            <span class="buyer-label">E-mail</span>
-                                            <span class="buyer-data">{{buyerInfo.email}}</span>
-                                        </p>
+                                <div class="buyer-list-item clearfix">
+                                    <div class="buyer-row clearfix">
+                                        <div class="col-2">Pemesan</div>
+                                        <div class="col-8 bold-txt">{{changeTitle(buyerInfo.title)}} {{buyerInfo.name}}</div>
                                     </div>
-                                    <h3 class="buyer-list-heading"><b> Tamu: {{changeTitle(guestInfo.title)}} {{guestInfo.name}}</b></h3>
-                                    <h3 class="buyer-list-heading" ng-show="buyerInfo.message != null && buyerInfo.message != ''"><b>Catatan: </b></h3>
-                                    <div class="buyer-list-content">
-                                        {{buyerInfo.message}}
+                                    <div class="buyer-row clearfix">
+                                        <div class="col-2">No. Telepon</div>
+                                        <div class="col-8">+{{buyerInfo.countryCode}}{{buyerInfo.phone}}</div>
+                                    </div>
+                                    <div class="buyer-row clearfix">
+                                        <div class="col-2">E-mail</div>
+                                        <div class="col-8">{{buyerInfo.email}}</div>
+                                    </div>
+                                    <div class="buyer-row clearfix">
+                                        <div class="col-2">Tamu</div>
+                                        <div class="col-8 bold-txt">{{changeTitle(guestInfo.title)}} {{guestInfo.name}}</div>
+                                    </div>
+                                    <div class="buyer-row clearfix" ng-show="buyerInfo.message != null && buyerInfo.message != ''">
+                                        <div class="col-2">Catatan</div>
+                                        <div class="col-8">{{buyerInfo.message}}</div>
                                     </div>
                                 </div>
                             </section>
@@ -324,8 +289,8 @@
                         <input type="text" name="RsvNo" value="" id="rsvno-input" />
                     </form>
                     <div class="step-button">
-                        <button class="btn btn-grey" ng-click="changePage(1)">KEMBALI</button>
-                        <button class="btn btn-yellow go-top" ng-disabled="book.booking" ng-click="book.send()">PESAN</button>
+                            <button class="btn btn-grey md-txt lg-btn" ng-click="changePage(1)">KEMBALI</button>
+                            <button class="btn btn-yellow go-top md-txt lg-btn" ng-disabled="book.booking" ng-click="book.send()">PESAN</button>
                     </div>
                     </div>
             </div>
@@ -343,8 +308,8 @@
                                     {
                             <dl class="total-room">
                                 <dt class="dt-title">
-                                                @config.RateCount @ToTitleCase(room.RoomName) 
-                                                @ToTitleCase(config.BoardDescription) x @night Malam
+                                                @config.RateCount @ToTitleCase.ConvertToTitleCase(room.RoomName) 
+                                                @ToTitleCase.ConvertToTitleCase(config.BoardDescription) x @night Malam
                                 </dt>
                                 <dd class="dd-price">
                                                 Rp @config.NetTotalFare.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))
@@ -380,7 +345,7 @@
                                                 <div class="img-sm" style="background-image: url(@Model.HotelDetail.MainImage);"></div>
                                             </div>
                                             <div class="col-right-hotel">
-                                                <span class="blue-txt bold-txt">@ToTitleCase(Model.HotelDetail.HotelName)</span>
+                                                <span class="blue-txt bold-txt">@ToTitleCase.ConvertToTitleCase(Model.HotelDetail.HotelName)</span>
                                                 <br />
                                                 <span class="star" ng-show="hotelDetail.starRating == 1"></span>
                                                 <span class="star star-2" ng-show="hotelDetail.starRating == 2"></span>
@@ -390,8 +355,8 @@
                                             </div>
                                         </div>
                                         <div class="wt-bottom">
-                                            @ToTitleCase(Model.HotelDetail.Address) @ToTitleCase(Model.HotelDetail.ZoneName),
-                                            @ToTitleCase(Model.HotelDetail.DestinationName), @Model.HotelDetail.PostalCode, @Model.HotelDetail.CountryName
+                                            @ToTitleCase.ConvertToTitleCase(Model.HotelDetail.Address) @ToTitleCase.ConvertToTitleCase(Model.HotelDetail.ZoneName),
+                                            @ToTitleCase.ConvertToTitleCase(Model.HotelDetail.DestinationName), @Model.HotelDetail.PostalCode, @Model.HotelDetail.CountryName
                                         </div>
                                     </div>
                                     <div class="widget-bottom">
@@ -424,12 +389,12 @@
                                                     if (i != orderedRooms.Count - 1)
                                                     {
                                                 @orderedRooms[i].Item2<span> </span>
-                                                @ToTitleCase(orderedRooms[i].Item1)<span>, </span>
+                                                @ToTitleCase.ConvertToTitleCase(orderedRooms[i].Item1)<span>, </span>
                                                     }
                                                     else
                                                     {
                                                 @orderedRooms[i].Item2<span> </span>
-                                                @ToTitleCase(orderedRooms[i].Item1)
+                                                @ToTitleCase.ConvertToTitleCase(orderedRooms[i].Item1)
                                                     }
 
                                                 }
@@ -552,147 +517,5 @@
                 </footer>
             </section>
         </div>
-    </div>
-</div>
-
-@*<div class="rh-content">
-        <div class="rh-row clearfix">
-            <div class="col-sp-3">
-                <div class="rh-img" style="background-image: url(@Model.HotelDetail.MainImage);"></div>
-            </div>
-            <div class="col-7">
-                <div class="blue-txt bold-txt hotel-title-lg md-txt">{{capitalizeFirstLetter(hotelDetail.hotelName)}}</div>
-                @if (Model.HotelDetail.StarRating == 1)
-                {
-                    <div class="star"></div>
-                }
-                else if (Model.HotelDetail.StarRating == 2)
-                {
-                    <div class="star star-2"></div>
-                }
-                else if (Model.HotelDetail.StarRating == 3)
-                {
-                    <div class="star star-3"></div>
-                }
-                else if (Model.HotelDetail.StarRating == 4)
-                {
-                    <div class="star star-4"></div>
-                }
-                else if (Model.HotelDetail.StarRating == 5)
-                {
-                    <div class="star star-5"></div>
-                }
-                <div class="rh-location">
-                    @ToTitleCase(Model.HotelDetail.Address) @ToTitleCase(Model.HotelDetail.ZoneName),
-                    @ToTitleCase(Model.HotelDetail.DestinationName), @Model.HotelDetail.PostalCode, @Model.HotelDetail.CountryName
-                </div>
-                <div class="rh-row">
-                    <div class="wb-container clearfix">
-                        <div class="wb-left">Check in</div>
-                        <div class="wb-mid">:</div>
-                        <div class="wb-right bold-txt">{{checkin | date : "d MMMM yyyy"}}</div>
                     </div>
-                    <div class="wb-container clearfix">
-                        <div class="wb-left">Check out</div>
-                        <div class="wb-mid">:</div>
-                        <div class="wb-right bold-txt">{{checkout | date : "d MMMM yyyy"}}</div>
                     </div>
-                    <div class="wb-container clearfix">
-                        <div class="wb-left">Malam</div>
-                        <div class="wb-mid">:</div>
-                        <div class="wb-right bold-txt">{{nights}} Malam</div>
-                    </div>
-                    <div class="wb-container clearfix">
-                        <div class="wb-left">Kamar</div>
-                        <div class="wb-mid">:</div>
-                        <div class="wb-right bold-txt">{{totalRoom}} Kamar</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-                    @foreach (var room in rooms)
-                    {
-            <div class="rh-row clearfix">
-                            @foreach (var rate in room.Rates)
-                            {
-                    <div class="br"></div>
-                    <div class="clearfix">
-                        <div class="col-sp-3">
-                            <div class="rh-img" style="background-image: url(@roomImage);"></div>
-                        </div>
-                        <div class="col-7 clearfix">
-                            <div class="blue-txt bold-txt rh-title">Tipe Kamar : @ToTitleCase(room.RoomName)</div>
-                            <div class="rh-table clearfix">
-                                <div class="cols-1 room-sort-mid clearfix">
-                                    <div class="cols-title">Kamar</div>
-                                    <div class="cols-value">@rate.RoomCount</div>
-                                </div>
-                                <div class="cols-2 room-sort-mid clearfix">
-                                    <div class="cols-title">Dewasa</div>
-                                    <div class="cols-value">@rate.AdultCount</div>
-                                </div>
-                                <div class="cols-3 clearfix">
-                                    <div class="cols-title">Anak</div>
-                                    <div class="cols-value">
-                                        @if (@rate.ChildCount > 0)
-                                            {
-                                            <span>@rate.ChildCount </span>
-                                            <span>
-                                                (
-                                                @for (var a = 0; a < rate.ChildrenAges.Count; a++)
-                                                    {
-                                                        if (a != rate.ChildrenAges.Count - 1)
-                                                        {
-                                                @rate.ChildrenAges[a]
-                                                <span>th, </span>
-                                                        }
-                                                        else
-                                                        {
-                                                @rate.ChildrenAges[a]
-                                                <span>th</span>
-                                                        }
-                                                    }
-                                                )
-                                            </span>
-                                            }
-                                </div>
-                                </div>
-                                <div class="cols-4 quarter clearfix">
-                                    <div class="cols-title">Board</div>
-                                    <div class="cols-value">@ToTitleCase(rate.BoardDescription)</div>
-                                </div>
-                            </div>
-                        </div>
-
-                                </div>
-                                if (rate.TermAndCondition != null && rate.TermAndCondition.Count != 0 && !rate.TermAndCondition.Exists(r => r.Length < 3))
-                                {
-                        <div class="rh-policy clearfix">
-                            <div class="rh-title blue-txt bold-txt">Ketentuan</div>
-                            <div class="" style="text-transform: capitalize">@String.Join(". ", rate.TermAndCondition)</div>
-                                </div>
-                                }
-                                if (rate.Cancellation != null && rate.Cancellation.Count > 0)
-                                {
-                        <div class="rh-cancel clearfix">
-                            <div class="rh-title blue-txt bold-txt">Ketentuan Pembatalan</div>
-                            <ul class="blue-list">
-                                            @if (rate.IsFreeCancel)
-                                            {
-                                    <li>
-                                        Gratis pembatalan sebelum tanggal @rate.FreeUntil.GetValueOrDefault().AddHours(7).ToString("dd MMMM yyyy HH:mm", CultureInfo.CreateSpecificCulture("id-ID")) WIB.
-                                    </li>
-                                            }
-                                            @foreach (var policy in rate.Cancellation)
-                                        {
-                                            <div>
-                                                - Pembatalan setelah tanggal @policy.StartTime.AddHours(7).ToString("dd MMMM yyyy HH:mm", CultureInfo.CreateSpecificCulture("id-ID")) WIB akan dikenakan biaya sebesar @((policy.FeePercentage * 100).ToString("####"))%.<br />
-                                            </div>
-                                        }
-                            </ul>
-    </div>
-                            }
-                            }
-</div>
-                    }
-    </div>*@

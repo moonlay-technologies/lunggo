@@ -7,16 +7,19 @@ file : /Assets/travorama20/css/_page_password.scss
 
 // page account
 .page-account {
+    @extend .os-regular; 
     .form-section {padding:50px 0; background-position:center top; background-repeat:no-repeat;}
     form {
         background: rgba(255,255,255,0.3);
         padding: 20px 15px;
         color:#525252;
         hgroup {margin-bottom:24px;
-            h1,h4 {font-weight:bold; color:#525252;}
+            h1,h4 {@extend .os-bold; color:#525252;}
         }
-        input {text-align:center; padding:12px 0; height:auto; @include border-radius(3px);}
-        a {font-weight:bold; color:inherit;}
+        input {text-align:center; @include border-radius(3px);
+            &[type="submit"]{padding: 10px 0; text-transform: uppercase;}
+        }
+        a {@extend .os-bold; color:inherit;}
         .link-container p > a {color: #37bcf2; text-decoration: underline;}
     }
     .form-horizontal .form-group {
@@ -41,6 +44,7 @@ file : /Assets/travorama20/css/_page_password.scss
         }
         h4 {
             font-size: 12px;
+            @extend .os-regular;
             font-weight: 400;
             margin: 0;
         }
@@ -66,7 +70,7 @@ file : /Assets/travorama20/css/_page_password.scss
         h1 {font-size:40px;}
     }
     hgroup {text-align:right; margin-bottom:20px;
-        h1,h4 {font-weight:bold;}
+        h1,h4 {@extend .os-bold;}
     }
     form[name="registerForm"] {
         width: 300px;
@@ -76,10 +80,11 @@ file : /Assets/travorama20/css/_page_password.scss
 }
 
 // section benefit
-.section-benefit {padding:30px 0;
+.section-benefit {padding:15px 0 30px;
     .benefit {text-align:center;
-        h4 {color:$color-main-blue; font-weight:600;}
+        h4 {color:$color-main-blue; @extend .os-semibold; font-weight:600;}
     }
+    &.container {max-width: none !important;}
 }
 
 // account page
@@ -95,11 +100,11 @@ file : /Assets/travorama20/css/_page_password.scss
         header {background:$color-main-blue; padding:12px;
             &:after {@include clearfix();}
             &:before {width:50px; height:50px; background-image:url(/Assets/images/user-account-sprite.png); background-repeat:no-repeat; display:inline-block; content:""; vertical-align:middle; margin-right:12px;}
-            span {font-weight:600; font-size:12px; display:inline-block; width:110px; vertical-align:middle;}
+            span {@extend .os-semibold; font-weight:600; font-size:12px; display:inline-block; width:110px; vertical-align:middle;}
         }
         ul {margin:0; padding:0;
             li {
-                a {display:block; background:#c6f0ff; font-size:12px; color:$color-main-blue; cursor:pointer; font-weight:600; padding:0 12px; position:relative;
+                a {display:block; background:#c6f0ff; font-size:12px; color:$color-main-blue; cursor:pointer; @extend .os-semibold; font-weight:600; padding:0 12px; position:relative;
                     &:before {width:50px; height:50px; display:inline-block; content:""; vertical-align:middle; background-image:url(/Assets/images/user-account-sprite.png); background-repeat:no-repeat; background-position:-50px; margin-right:12px;}
                     // if active
                     &.active {background:#abe9ff;
@@ -171,6 +176,7 @@ file : /Assets/travorama20/css/_page_password.scss
                         }
                         a {
                             color: #fff;
+                            @extend .os-bold; 
                             font-weight: 700;
                             font-size: 14px;
                             text-decoration: none;
@@ -189,7 +195,7 @@ file : /Assets/travorama20/css/_page_password.scss
             &.flight, &.hotel {background:#f1f1f1; background-position:top left; background-repeat:no-repeat;}
             // flight order
             &.flight { background-image:url(/Assets/images/order-flight-list-bg.png); padding: 10px 55px;
-                header {padding:5px; font-size:12px; font-weight:bold;
+                header {padding:5px; font-size:12px; @extend .os-bold;
                     .row {margin-bottom:3px;}
                     span {color:$color-main-blue;}
                 }
@@ -197,7 +203,7 @@ file : /Assets/travorama20/css/_page_password.scss
                     .row {margin-bottom:3px;}
                     .detail {
                         .col-xs-4 {width:30%;}
-                        .status {font-weight:bold;
+                        .status {@extend .os-bold;
                             &.success {color:#14b413;}
                             &.failed {color:#fe0001;}
                             &.pending {color:#b551ea;}
@@ -243,9 +249,9 @@ file : /Assets/travorama20/css/_page_password.scss
         h2, h4 {letter-spacing:0;}
         h4 {margin-bottom:18px;}
         .flight {padding-left:36px; position:relative;
-            .col-xs-9 {font-weight:bold;}
+            .col-xs-9 {@extend .os-bold;}
             img {height:36px; margin-right:24px;}
-            span {font-weight:bold; color:$color-main-blue;}
+            span {@extend .os-bold; color:$color-main-blue;}
             &:before {content:''; width:20px; height:20px; position:absolute; top:0; left:0; background-color:$color-main-blue; background-image:url(/Assets/images/plane-updown-sprite.png); background-size:200%; background-repeat:no-repeat; border:2px solid $color-main-blue;}
             // departure flight
             &.departure {}
@@ -263,8 +269,8 @@ file : /Assets/travorama20/css/_page_password.scss
         }
         .passenger-list {list-style:none; counter-reset:passenger-number; margin:0; padding:0;
             p {margin-bottom:0;}
-            li {position:relative; margin-bottom:1px; padding-left:30px; background:#efefef;
-                &:before {content:counter(passenger-number); counter-increment:passenger-number; position:absolute; text-align:center; width:20px; height:100%; color:#fff; background:$color-main-blue; z-index:2; left:0; padding:6px;}
+            li {position:relative; margin-bottom:1px; padding-left:40px; background:#efefef;
+                &:before {content:counter(passenger-number); counter-increment:passenger-number; position:absolute; text-align:center; height:100%; color:#fff; background:$color-main-blue; z-index:2; left:0; padding:6px 12px;}
                 .row {
                     & > div {padding:6px;}
                     div+div {background:#e2e2e2;}

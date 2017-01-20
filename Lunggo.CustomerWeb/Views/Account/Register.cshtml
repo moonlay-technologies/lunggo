@@ -25,7 +25,7 @@
                 <h4>@Html.I18NString("CW00180")</h4>
             </hgroup>
         </div>
-        <div class="register-form">
+        <div class="register-form normal-txt">
             <form class="form register-form form-horizontal" name="registerForm" novalidate ng-submit="form.submit()">
 
                 <div class="form-group">
@@ -33,7 +33,7 @@
                 </div>
 
                 <div class="form-group">
-                    <input type="submit" value="@Html.I18NString("CW00127")" class="btn btn-yellow form-control" ng-disabled="registerForm.$invalid || form.submitting" />
+                    <input type="submit" value="@Html.I18NString("CW00127")" class="md-txt bold-txt btn btn-yellow form-control lg-btn" ng-disabled="registerForm.$invalid || form.submitting" />
                 </div>
 
                 <div class="link-container">
@@ -68,7 +68,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-sm-6 col-sm-offset-6">
-                            <a class="btn btn-yellow btn-block" ng-click="closeOverlay()">TUTUP</a>
+                            <a class="btn btn-yellow btn-block sm-btn" ng-click="closeOverlay()">TUTUP</a>
                         </div>
                     </div>
                 </div>
@@ -104,7 +104,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-sm-6 col-sm-offset-6">
-                            <a class="btn btn-yellow btn-block" ng-click="closeOverlay(); form.resubmitting = false; form.emailSent = false;">TUTUP</a>
+                            <a class="btn btn-yellow btn-block sm-btn" ng-click="closeOverlay(); form.resubmitting = false; form.emailSent = false;">TUTUP</a>
                         </div>
                     </div>
                 </div>
@@ -136,7 +136,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-sm-6 col-sm-offset-6">
-                            <a class="btn btn-yellow btn-block" ng-click="closeOverlay(); form.resubmitting = false; form.emailSent = false;">TUTUP</a>
+                            <a class="btn btn-yellow btn-block sm-btn" ng-click="closeOverlay(); form.resubmitting = false; form.emailSent = false;">TUTUP</a>
                         </div>
                     </div>
                 </div>
@@ -168,7 +168,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-sm-6 col-sm-offset-6">
-                            <a class="btn btn-yellow btn-block" ng-click="closeOverlay()">TUTUP</a>
+                            <a class="btn btn-yellow btn-block sm-btn" ng-click="closeOverlay()">TUTUP</a>
                         </div>
                     </div>
                 </div>
@@ -200,7 +200,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-sm-6 col-sm-offset-6">
-                            <a class="btn btn-yellow btn-block" href="@Url.Action("Login", "Account")">LOGIN</a>
+                            <a class="btn btn-yellow btn-block sm-btn" href="@Url.Action("Login", "Account")">LOGIN</a>
                         </div>
                     </div>
                 </div>
