@@ -216,51 +216,58 @@ namespace Lunggo.ApCommon.Hotel.Service
 
         public void UpdateHotelImage()
         {
-            //Get hotelDetail
-            //Get hotelImage
-            var baseBiggerUrl = ConfigManager.GetInstance().GetConfigValue("hotel", "bigSizeImage");
-            
+            Dictionary<int,string> hotelbedsBaseUrl = new Dictionary<int,string>();
+            hotelbedsBaseUrl.Add(0, ConfigManager.GetInstance().GetConfigValue("hotel", "bigSizeImage"));
+            hotelbedsBaseUrl.Add(1, ConfigManager.GetInstance().GetConfigValue("hotel", "standardSizeImage"));
             var blobService = BlobStorageService.GetInstance();
-            for (var i = 1; i <= 600000; i++)
+            for (var i = 1; i <= 650000; i++)
             {
                 try
                 {
                     var hotel = GetHotelDetailFromTableStorage(i);
                     Console.WriteLine("hotelCd: " + i);
+                    Debug.Print("hotelCd: " + i);
                     if (hotel.ImageUrl != null)
                     {
                         using (WebClient webClient = new WebClient())
                         {
                             foreach (var url in hotel.ImageUrl)
                             {
-                                try
+                                foreach (var baseUrl in hotelbedsBaseUrl)
                                 {
-                                    var completedUrl = string.Concat(baseBiggerUrl, url.Path);
-                                    byte[] imageFile = webClient.DownloadData(completedUrl);
-                                    string fileName = url.Path.Split('/').LastOrDefault();
-                                    blobService.WriteFileToBlob(new BlobWriteDto
+                                    try
                                     {
-                                        FileBlobModel = new FileBlobModel
+                                        var imageType = baseUrl.Key == 0 ? "bigger" : "standard";
+                                        Debug.Print(imageType);
+                                        var completedUrl = string.Concat(baseUrl.Value, url.Path);
+                                        byte[] imageFile = webClient.DownloadData(completedUrl);
+                                        string fileName = url.Path.Split('/').LastOrDefault();
+                                        Debug.Print("URL : " + imageType + "/" + i + "/" + url.Type + "/" + fileName);
+                                        blobService.WriteFileToBlob(new BlobWriteDto
                                         {
-                                            FileInfo = new FileInfo
+                                            FileBlobModel = new FileBlobModel
                                             {
-                                                FileName = i + "/" + url.Type + "/" +fileName,
-                                                ContentType = "image/jpeg",
-                                                FileData = imageFile
+                                                FileInfo = new FileInfo
+                                                {
+                                                    FileName = imageType + "/" + i + "/" + url.Type + "/" + fileName,
+                                                    ContentType = "image/jpeg",
+                                                    FileData = imageFile
+                                                },
+                                                Container = "HotelImage"
                                             },
-                                            Container = "HotelImage"
-                                        },
-                                        SaveMethod = SaveMethod.Force
-                                    });
-                                }
-                                catch
-                                {
-                                    continue;
+                                            SaveMethod = SaveMethod.Force
+                                        });
+                                    }
+                                    catch
+                                    {
+                                        continue;
+                                    }
                                 }
                             }
                         }
                     }
-                    Console.WriteLine("Hotel Location saved for: " + i);
+                    Console.WriteLine("Hotel Image saved for: " + i);
+                    Debug.Print("Hotel Image saved for: " + i);
                 }
                 catch
                 {
@@ -730,7 +737,6 @@ namespace Lunggo.ApCommon.Hotel.Service
             public string ZoneCd { get; set; }
             public string AreaCd { get; set; }
             public string AreaName { get; set; }
-
         }
     }
 }
