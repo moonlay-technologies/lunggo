@@ -1,4 +1,4 @@
-﻿@using Lunggo.CustomerWeb.Models
+﻿    @using Lunggo.CustomerWeb.Models
 @using Lunggo.Framework.Extension
 @model HotelDetailModel.HotelDetail
 @{
@@ -159,10 +159,48 @@
                     <div class="slider-container clearfix">
                         <div class="slider clearfix">
                             <ul id="image-gallery" class="gallery list-unstyled cS-hidden">
-                                <li data-thumb="{{hotelImages[0]}}" alt-image>
-                                    <div style="background-image: url({{hotelImages[0]}}); width: 100%; height: 590px; background-size: cover; background-position: center center;"></div>
+                                @if (Model.HotelDetailData.ImageUrl.Count >= 1)
+                                {
+                                    <li data-thumb="@Model.HotelDetailData.ImageUrl[0]" alt-image>
+                                        <div style="background-image: url(@Model.HotelDetailData.ImageUrl[0]); width: 100%; height: 590px; background-size: cover; background-position: center center;"></div>
+                                    </li>
+                                }
+                                
+                               @if (Model.HotelDetailData.ImageUrl.Count >= 2)
+                               {
+                                <li data-thumb="@Model.HotelDetailData.ImageUrl[1]" alt-image>
+                                    <div style="background-image: url(@Model.HotelDetailData.ImageUrl[1]); width: 100%; height: 590px; background-size: cover; background-position: center center;"></div>
                                 </li>
-                                <li data-thumb="{{hotelImages[1]}}" alt-image>
+                               }
+                                
+                                @if (Model.HotelDetailData.ImageUrl.Count >= 3)
+                                {
+                                    <li data-thumb="@Model.HotelDetailData.ImageUrl[2]" alt-image>
+                                        <div style="background-image: url(@Model.HotelDetailData.ImageUrl[2]); width: 100%; height: 590px; background-size: cover; background-position: center center;"></div>
+                                    </li>
+                                }
+                                
+                                @if (Model.HotelDetailData.ImageUrl.Count >= 4)
+                                {
+                                    <li data-thumb="@Model.HotelDetailData.ImageUrl[3]" alt-image>
+                                        <div style="background-image: url(@Model.HotelDetailData.ImageUrl[3]); width: 100%; height: 590px; background-size: cover; background-position: center center;"></div>
+                                    </li>
+                                }
+                                
+                                @if (Model.HotelDetailData.ImageUrl.Count >= 5)
+                                {
+                                    <li data-thumb="@Model.HotelDetailData.ImageUrl[4]" alt-image>
+                                        <div style="background-image: url(@Model.HotelDetailData.ImageUrl[4]); width: 100%; height: 590px; background-size: cover; background-position: center center;"></div>
+                                    </li>
+                                }
+                                
+                                @if (Model.HotelDetailData.ImageUrl.Count >= 6)
+                                {
+                                    <li data-thumb="@Model.HotelDetailData.ImageUrl[5]" alt-image>
+                                        <div style="background-image: url(@Model.HotelDetailData.ImageUrl[5]); width: 100%; height: 590px; background-size: cover; background-position: center center;"></div>
+                                    </li>
+                                }
+                                @*<li data-thumb="{{hotelImages[1]}}" alt-image>
                                     <div style="background-image: url({{hotelImages[1]}}); width: 100%; height: 590px; background-size: cover; background-position: center center;"></div>
                                 </li>
                                 <li data-thumb="{{hotelImages[2]}}" alt-image>
@@ -176,7 +214,7 @@
                                 </li>
                                 <li data-thumb="{{hotelImages[5]}}" alt-image>
                                     <div style="background-image: url({{hotelImages[5]}}); width: 100%; height: 590px; background-size: cover; background-position: center center;"></div>
-                                </li>
+                                </li>*@
                             </ul>
                         </div>
                         <div class="col-right-slider">

@@ -107,28 +107,28 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
         var tempHotelImages = [];
 
         //Remove broken images
-        $scope.hotelImages = JSON.parse($scope.hotelImages);
-            var imageCount = $scope.hotelImages.length;
-            var imageIndex = 0;
-            var finishedSlider = 0;
-            $.each($scope.hotelImages, function (key, value) {
-                imageSvc.isImage(value).then(function () {
-                    if (loadedImages < maxImages) {
-                        loadedImages++;
-                        tempHotelImages.push(value);
-                        $scope.hotelImages = tempHotelImages;
-                    }
-                    else return false;
-                }, function () {
-                    return; //equivalent of continue
-                }).finally(function () {
-                    imageIndex++;
-                    if (!finishedSlider && loadedImages == 1 || (imageIndex + 1 == imageCount && loadedImages < maxImages)) {
-                        $timeout(function () {}, 0);
-                        finishedSlider = true;
-                    }
-                });
-            });
+        //$scope.hotelImages = JSON.parse($scope.hotelImages);
+        //    var imageCount = $scope.hotelImages.length;
+        //    var imageIndex = 0;
+        //    var finishedSlider = 0;
+        //    $.each($scope.hotelImages, function (key, value) {
+        //        imageSvc.isImage(value).then(function () {
+        //            if (loadedImages < maxImages) {
+        //                loadedImages++;
+        //                tempHotelImages.push(value);
+        //                $scope.hotelImages = tempHotelImages;
+        //            }
+        //            else return false;
+        //        }, function () {
+        //            return; //equivalent of continue
+        //        }).finally(function () {
+        //            imageIndex++;
+        //            if (!finishedSlider && loadedImages == 1 || (imageIndex + 1 == imageCount && loadedImages < maxImages)) {
+        //                $timeout(function () {}, 0);
+        //                finishedSlider = true;
+        //            }
+        //        });
+        //    });
 
         $timeout(function () {
             // **********

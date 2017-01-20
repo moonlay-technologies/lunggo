@@ -97,7 +97,7 @@ function ($scope, $log, $window, $http, $resource, $timeout, $interval, hotelSea
     $scope.totalActualHotel = '';
     $scope.hotelFilterDisplayInfo = undefined;
     $scope.totalHotelCount = 0;
-
+    $scope.locFound = locFound;
     // Filter and Sort Variables
 
     $scope.filter = {
@@ -192,7 +192,12 @@ function ($scope, $log, $window, $http, $resource, $timeout, $interval, hotelSea
             searchId: $scope.hotelSearch.searchHotelType.searchId,
         }
         $scope.searchParam = model.searchParam;
-        $scope.searchHotel();
+        if ($scope.locFound) {
+            $scope.searchHotel();
+        } else {
+            $scope.searchDone = true;
+            $scope.returnedHotelCount = 0;
+        }
     }
 
     $('#inputLocationHotel').on('click', function () {

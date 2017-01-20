@@ -24,10 +24,10 @@ namespace Lunggo.CustomerWeb.Controllers
             try
             {
                 var source = ConfigManager.GetInstance().GetConfigValue("api", "apiUrl");
-                NameValueCollection query = Request.QueryString;
+                var query = Request.QueryString;
                 if (query.HasKeys())
                 {
-                    var model = new HotelSearchApiRequest(query);
+                    var model = new HotelSearchApiRequest(query[0]);
                     return View(model);
                 }
 
@@ -78,11 +78,10 @@ namespace Lunggo.CustomerWeb.Controllers
 
                 var tomorrowDate = DateTime.Today.AddDays(1);
                 var nextDate = tomorrowDate.AddDays(1);
-                var nq = "info=Location." + locationId + "." + tomorrowDate.Year + "-" +
+                var newquery = "info=Location." + locationId + "." + tomorrowDate.Year + "-" +
                          tomorrowDate.Month.ToString("d2") + "-" + tomorrowDate.Day.ToString("d2")
                          + "." + nextDate.Year + "-" + nextDate.Month.ToString("d2") + "-" + 
                          nextDate.Day.ToString("d2") + ".1.1.1~0";
-                var newquery = new NameValueCollection {{"data", nq}};
                 var newmodel = new HotelSearchApiRequest(newquery);
                 return View(newmodel);
             }
@@ -96,11 +95,25 @@ namespace Lunggo.CustomerWeb.Controllers
         [Route("id/hotel/{country}/{destination}/{hotelParam}")]
         public ActionResult DetailHotel(String hotelParam)
         {
+            var source = ConfigManager.GetInstance().GetConfigValue("api", "apiUrl");
+
             var hotelCd = Convert.ToInt32(hotelParam.Split('-').Last());
             var hotelDetail = HotelService.GetInstance().GetHotelDetail(new GetHotelDetailInput
             {
                 HotelCode = hotelCd
             }).HotelDetail;
+
+            var client = new RestClient(source);
+            string url = @"/v1/autocomplete/hotel//" + hotelDetail.DestinationName;
+            var searchRequest = new RestRequest(url, Method.GET);
+            var searchResponse = client.Execute(searchRequest);
+            var data = searchResponse.Content.Deserialize<AutocompleteResponse>();
+            long locationId = 0;
+            var selected = data.Autocompletes.Where(r => r.Type == "Destination").ToList();
+            if (selected.Count > 0)
+            {
+                locationId = selected[0].Id;
+            }
 
             if (Request != null && Request.QueryString != null && Request.QueryString.ToString().Length > 0)
             {
@@ -117,7 +130,7 @@ namespace Lunggo.CustomerWeb.Controllers
             
             var tomorrowDate = DateTime.Today.AddDays(1);
             var nextDate = tomorrowDate.AddDays(1);
-            var searchParams = tomorrowDate.Year + "-" + tomorrowDate.Month.ToString("d2") + "-" + tomorrowDate.Day.ToString("d2") +
+            var searchParams = "Location." + locationId + "." + tomorrowDate.Year + "-" + tomorrowDate.Month.ToString("d2") + "-" + tomorrowDate.Day.ToString("d2") +
                                "." + nextDate.Year + "-" + nextDate.Month.ToString("d2") + "-" + nextDate.Day.ToString("d2") + ".1.1.1~0";
                     
             return View(new HotelDetailModel.HotelDetail

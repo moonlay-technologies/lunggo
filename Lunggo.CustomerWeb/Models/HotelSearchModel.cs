@@ -37,10 +37,9 @@ namespace Lunggo.CustomerWeb.Models
         [JsonProperty("searchParamObject")]
         public SearchParameter SearchParamObject { get; set; }
 
-        public HotelSearchApiRequest(NameValueCollection query)
+        public HotelSearchApiRequest(string query)
         {
-            string queryString = query[0];
-            List<string> parameters = queryString.Split('.').ToList<string>();
+            List<string> parameters = query.Split('.').ToList();
             SearchParamObject = new SearchParameter();
             SearchParamObject.SearchHotelType = parameters[(int)RequestParam.SearchHotelType];
             SearchParamObject.Location = parameters[(int)RequestParam.Location];
@@ -71,7 +70,7 @@ namespace Lunggo.CustomerWeb.Models
 
                 SearchParamObject.Occupancies.Add(occupancy);
             }
-            SearchParam = query.ToString();
+            SearchParam = query;
         }
     }
 

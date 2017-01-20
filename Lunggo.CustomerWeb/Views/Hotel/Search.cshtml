@@ -17,26 +17,33 @@
     long location;
     var x = long.TryParse(Model.SearchParamObject.Location, out location);
     var loc = "";
-    var foundLocation = HotelService.GetInstance().AutoCompletes.Where(c => c.Id == location).ToList()[0];
-    if (foundLocation != null)
+    var locFound = false;
+    var k = HotelService.GetInstance().AutoCompletes.Where(c => c.Id == location).ToList();
+    if (k.Count > 0)
     {
-        if (foundLocation.Type == 1)
+        var foundLocation = k[0];
+        if (foundLocation != null)
         {
-            loc = foundLocation.Destination + ", " + foundLocation.Country;
+            if (foundLocation.Type == 1)
+            {
+                loc = foundLocation.Destination + ", " + foundLocation.Country;
+            }
+            else if (foundLocation.Type == 2)
+            {
+                loc = foundLocation.Zone + ", " + foundLocation.Destination + ", " + foundLocation.Country;
+            }
+            else if (foundLocation.Type == 3)
+            {
+                loc = foundLocation.Area + ", " + foundLocation.Destination + ", " + foundLocation.Country;
+            }
+            else if (foundLocation.Type == 4)
+            {
+                loc = foundLocation.HotelName + ", " + foundLocation.Destination + ", " + foundLocation.Country;
+            }
         }
-        else if (foundLocation.Type == 2)
-        {
-            loc = foundLocation.Zone + ", " + foundLocation.Destination + ", " + foundLocation.Country;
-        }
-        else if (foundLocation.Type == 3)
-        {
-            loc = foundLocation.Area + ", " + foundLocation.Destination + ", " + foundLocation.Country;
-        }
-        else if (foundLocation.Type == 4)
-        {
-            loc = foundLocation.HotelName + ", " + foundLocation.Destination + ", " + foundLocation.Country;
-        }
+        locFound = true;
     }
+    
 
 }
 @section AdditionalJS {
@@ -63,7 +70,7 @@
         });
     </script>
     <script>
-
+        var locFound = @Json.Encode(locFound);
         var loc = '@loc';
     </script>
     <script type="text/javascript" src="/Assets/travorama20/js/HotelController.js"></script>
