@@ -24,7 +24,7 @@ namespace Lunggo.ApCommon.Sequence
 
         public override long GetNext()
         {
-            return GetNextNumber(_properties);
+            return GetNextNumber(_properties)*23456789;
         }
     }
 }

@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 using Lunggo.ApCommon.Flight.Service;
@@ -18,22 +21,33 @@ namespace Lunggo.CustomerWeb.Controllers
     public class PaymentController : Controller
     {
         [RequireHttps]
-        public ActionResult Payment(string rsvNo)
+        public ActionResult Payment(string rsvNo, string regId)
         {
             try
             {
-                ReservationForDisplayBase rsv;
-                if (rsvNo[0] == '1')
-                    rsv = FlightService.GetInstance().GetReservationForDisplay(rsvNo);
-                else
-                    rsv = HotelService.GetInstance().GetReservationForDisplay(rsvNo);
-
-                return View(new PaymentData
+                if (string.IsNullOrEmpty(regId))
                 {
-                    RsvNo = rsvNo,
-                    Reservation = rsv,
-                    TimeLimit = rsv.Payment.TimeLimit.GetValueOrDefault(),
-                });
+                    return RedirectToAction("Index", "Index");
+                }
+                var signature = GenerateId(rsvNo);
+                if (regId.Equals(signature))
+                {
+                    ReservationForDisplayBase rsv;
+                    if (rsvNo[0] == '1')
+                        rsv = FlightService.GetInstance().GetReservationForDisplay(rsvNo);
+                    else
+                        rsv = HotelService.GetInstance().GetReservationForDisplay(rsvNo);
+
+                    return View(new PaymentData
+                    {
+                        RsvNo = rsvNo,
+                        Reservation = rsv,
+                        TimeLimit = rsv.Payment.TimeLimit.GetValueOrDefault(),
+                    });
+                    
+                }
+                return RedirectToAction("Index", "Index");
+                
             }
             catch
             {
@@ -52,10 +66,11 @@ namespace Lunggo.CustomerWeb.Controllers
         public ActionResult PaymentPost(string rsvNo, string paymentUrl)
         {
             var payment = PaymentService.GetInstance().GetPayment(rsvNo);
+            var regId = GenerateId(rsvNo);
             if (payment.Method == PaymentMethod.BankTransfer ||
                 payment.Method == PaymentMethod.VirtualAccount)
             {
-                return RedirectToAction("Instruction", "Payment", new { rsvNo });
+                return RedirectToAction("Instruction", "Payment", new { rsvNo, regId });
             }
             else if (!string.IsNullOrEmpty(paymentUrl))
             {
@@ -64,36 +79,54 @@ namespace Lunggo.CustomerWeb.Controllers
             else
             {
                 TempData["AllowThisThankyouPage"] = rsvNo;
-                return RedirectToAction("Thankyou", "Payment", new { rsvNo });
+                return RedirectToAction("Thankyou", "Payment", new { rsvNo, regId });
             }
         }
 
-        public ActionResult Instruction(string rsvNo)
+        public ActionResult Instruction(string rsvNo, string regId)
         {
-            ReservationForDisplayBase rsv;
-            if (rsvNo[0] == '1')
-                rsv = FlightService.GetInstance().GetReservationForDisplay(rsvNo);
-            else
-                rsv = HotelService.GetInstance().GetReservationForDisplay(rsvNo);
-            if ((rsv.Payment.Method == PaymentMethod.BankTransfer || rsv.Payment.Method == PaymentMethod.VirtualAccount) 
-                && rsv.Payment.Status == PaymentStatus.Pending)
+            if (string.IsNullOrEmpty(regId))
             {
+                return RedirectToAction("Index", "Index");
+            }
+            var signature = GenerateId(rsvNo);
+            if (regId.Equals(signature))
+            {
+                ReservationForDisplayBase rsv;
+                if (rsvNo[0] == '1')
+                    rsv = FlightService.GetInstance().GetReservationForDisplay(rsvNo);
+                else
+                    rsv = HotelService.GetInstance().GetReservationForDisplay(rsvNo);
+                if ((rsv.Payment.Method == PaymentMethod.BankTransfer || rsv.Payment.Method == PaymentMethod.VirtualAccount)
+                    && rsv.Payment.Status == PaymentStatus.Pending)
+                {
+                    return View(rsv);
+                }
+                else
+                    TempData["AllowThisThankyouPage"] = rsvNo;
+                return RedirectToAction("Thankyou", "Payment", new { rsvNo, regId = signature });
+            }
+            return RedirectToAction("Index", "Index");
+        }
+
+
+        public ActionResult Thankyou(string rsvNo, string regId)
+        {
+            if (string.IsNullOrEmpty(regId))
+            {
+                return RedirectToAction("Index", "Index");
+            }
+            var signature = GenerateId(rsvNo);
+            if (regId.Equals(signature))
+            {
+                ReservationForDisplayBase rsv;
+                if (rsvNo[0] == '1')
+                    rsv = FlightService.GetInstance().GetReservationForDisplay(rsvNo);
+                else
+                    rsv = HotelService.GetInstance().GetReservationForDisplay(rsvNo);
                 return View(rsv);
             }
-            else
-                TempData["AllowThisThankyouPage"] = rsvNo;
-            return RedirectToAction("Thankyou", "Payment", new { rsvNo });
-        }
-
-
-        public ActionResult Thankyou(string rsvNo)
-        {
-            ReservationForDisplayBase rsv;
-            if (rsvNo[0] == '1')
-                rsv = FlightService.GetInstance().GetReservationForDisplay(rsvNo);
-            else
-                rsv = HotelService.GetInstance().GetReservationForDisplay(rsvNo);
-            return View(rsv);
+            return RedirectToAction("Index", "Index");
         }
 
         [HttpPost]
@@ -139,5 +172,25 @@ namespace Lunggo.CustomerWeb.Controllers
             }
 
         }
+
+        #region Helpers
+
+        public string GenerateId(string key)
+        {
+            string result = "";
+            if (key.Length > 7)
+            {
+                key = key.Substring(key.Length - 7);
+            }
+            int generatedNumber = (int)double.Parse(key);
+            for (int i = 1; i < 4; i++)
+            {
+                generatedNumber = new Random(generatedNumber).Next();
+                result = result + "" + generatedNumber;
+            }
+            return result;
+        }
+
+        #endregion
     }
 }
