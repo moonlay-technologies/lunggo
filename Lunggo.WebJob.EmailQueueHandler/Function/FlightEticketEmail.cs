@@ -26,10 +26,10 @@ namespace Lunggo.WebJob.EmailQueueHandler.Function
             Console.WriteLine("Getting Required Files and Data from Storage...");
             sw.Start();
             var blobService = BlobStorageService.GetInstance();
-            var eticketFile = blobService.GetMemoryStreamByFileInContainer(rsvNo + ".pdf", "Eticket");
+            var eticketFile = blobService.GetByteArrayByFileInContainer(rsvNo + ".pdf", "Eticket");
             var flight = FlightService.GetInstance();
             var summary = flight.GetReservationForDisplay(rsvNo);
-            var invoiceFile = blobService.GetMemoryStreamByFileInContainer(rsvNo + ".pdf", "Invoice");
+            var invoiceFile = blobService.GetByteArrayByFileInContainer(rsvNo + ".pdf", "Invoice");
             //var summaryBytes = blobService.GetByteArrayByFileInContainer(rsvNo, "Reservation");
             //var summaryJson = Encoding.UTF8.GetString(summaryBytes);
             //var summary = JsonConvert.DeserializeObject<FlightReservationForDisplay>(summaryJson);
@@ -40,7 +40,7 @@ namespace Lunggo.WebJob.EmailQueueHandler.Function
             var mailService = MailService.GetInstance();
             var mailModel = new MailModel
             {
-                RecipientList = new[] {summary.Contact.Email},
+                RecipientList = new[] { summary.Contact.Email },
                 Subject = envPrefix + "[Travorama] E-tiket Anda - No. Pemesanan " + summary.RsvNo,
                 FromMail = "booking@travorama.com",
                 FromName = "Travorama",
@@ -50,13 +50,13 @@ namespace Lunggo.WebJob.EmailQueueHandler.Function
                     {
                         ContentType = "PDF",
                         FileName = "E-ticket Anda - No. Pemesanan " + summary.RsvNo + ".pdf",
-                        Data = eticketFile
+                        FileData = eticketFile
                     },
                     new FileInfo
                     {
                         ContentType = "PDF",
                         FileName = "Invoice Anda - No. Pemesanan " + summary.RsvNo + ".pdf",
-                        Data = invoiceFile
+                        FileData = invoiceFile
                     }
                 }
             };

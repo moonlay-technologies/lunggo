@@ -244,6 +244,18 @@ namespace Lunggo.ApCommon.Hotel.Service
             return imagePath.Select(image => string.Concat(baseUrl, image)).ToList();
         }
 
+        public string SelectMainHotelImage(List<string> images)
+        {
+            if (images == null)
+                return null;
+            var selectedImage = images.FirstOrDefault(x => x.Contains("GEN"));
+            if (selectedImage == null)
+            {
+                selectedImage = images.FirstOrDefault();
+            }
+            return selectedImage;
+        }
+
         public HotelFacilityForDisplay ConvertFacilityForDisplay(List<HotelFacility> facilities)
         {
             var displayFacilities = new HotelFacilityForDisplay();
