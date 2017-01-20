@@ -62,16 +62,17 @@ namespace Lunggo.CustomerWeb.Controllers
         [Route("id/tiket-pesawat/cari/{searchParam}")]
         public ActionResult Search(string searchParam)
         {
-            var parts = searchParam.Split('.');
-            var originAirport = parts[1];
-            var destinationAirport = parts[2];
+            var parts = searchParam.Split('-').ToList();
+            var originAirport = parts[parts.Count -2];
+            var destinationAirport = parts[parts.Count - 1];
             var todaydate = DateTime.Today.AddDays(1);
-            var randomDate = new DateTime(2017, 4, 1);
-            var date = randomDate.Date.ToString();
-            var month = randomDate.Month.ToString();
-            var search = originAirport + destinationAirport + todaydate.Date.ToString() + todaydate.Month +
-                             todaydate.Year.ToString().Substring(0, 2) + "-100y";
+            var data = originAirport + destinationAirport + todaydate.Day.ToString("d2") + todaydate.Month.ToString("d2") +
+                             todaydate.Year.ToString().Substring(2, 2) + "-100y";
 
+            var search = new FlightSearchData
+            {
+                info = data
+            };
             try
             {
                 var trips = new List<FlightTrip>

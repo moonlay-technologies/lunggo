@@ -703,8 +703,8 @@ if (typeof (angular) == 'object') {
                 origincity = $rootScope.FlightSearchForm.AirportOrigin.City.replace(/[^0-9a-zA-Z-]/gi, '');
                 var destinationcity = $rootScope.FlightSearchForm.AirportDestination.City.replace(/\s+/g, '-');
                 destinationcity = $rootScope.FlightSearchForm.AirportDestination.City.replace(/[^0-9a-zA-Z-]/gi, '');
-                var urlLink = origincity + '-' + destinationcity + '.' +
-                        $rootScope.FlightSearchForm.AirportOrigin.Code + '.' + $rootScope.FlightSearchForm.AirportDestination.Code + '/';
+                var urlLink = origincity + '-' + destinationcity + '-' +
+                        $rootScope.FlightSearchForm.AirportOrigin.Code + '-' + $rootScope.FlightSearchForm.AirportDestination.Code + '/';
                 // redirect page to search page
                 window.location = window.location.origin + '/id/tiket-pesawat/cari/' +urlLink + $rootScope.FlightSearchForm.Url;
 
