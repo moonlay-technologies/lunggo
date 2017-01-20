@@ -41,7 +41,7 @@
                                 <input type="password" name="password" value="" ng-model="form.password" placeholder="@Html.I18NString("CW00181")" class="form-control" ng-disabled="form.submitting" required />
                             </div>
                             <div class="form-group">
-                                <input type="submit" value="{{ form.submitting? 'LOADING' : '@buttonText' }}" class="btn btn-yellow form-control" ng-disabled="form.submitting || (resetForm.$invalid)" />
+                                <input type="submit" value="{{ form.submitting? 'LOADING' : '@buttonText' }}" class="btn btn-yellow form-control md-txt lg-btn" ng-disabled="form.submitting || (resetForm.$invalid)" />
                             </div>
 
                         </div>
@@ -61,7 +61,7 @@
             <h3 class="text-center">Reset Password Anda telah <b>berhasil.</b></h3>
             <p class="text-center"></p>
             <div class="text-center">
-                <a href="/" class="btn btn-yellow">KEMBALI KE HALAMAN DEPAN</a>
+                <a href="/" class="btn btn-yellow md-btn lg-btn">KEMBALI KE HALAMAN DEPAN</a>
             </div>
 
         </div>
@@ -94,7 +94,7 @@
                     <div class="container">
                         <div class="row">
                             <div class="col-sm-6 col-sm-offset-6">
-                                <a class="btn btn-yellow btn-block" href="@Url.Action("Login")">MASUK</a>
+                                <a class="btn btn-yellow btn-block sm-btn" href="@Url.Action("Login")">MASUK</a>
                             </div>
                         </div>
                     </div>
@@ -128,7 +128,7 @@
                     <div class="container">
                         <div class="row">
                             <div class="col-sm-6 col-sm-offset-6">
-                                <a class="btn btn-yellow btn-block" href="@Url.Action("Register")">DAFTAR</a>
+                                <a class="btn btn-yellow btn-block sm-btn" href="@Url.Action("Register")">DAFTAR</a>
                             </div>
                         </div>
                     </div>
@@ -163,7 +163,7 @@
                     <div class="container">
                         <div class="row">
                             <div class="col-sm-6 col-sm-offset-6">
-                                <a class="btn btn-yellow btn-block" href="@Url.Action("Register")" ng-click="closeoverlay()">DAFTAR</a>
+                                <a class="btn btn-yellow btn-block sm-btn" href="@Url.Action("Register")" ng-click="closeoverlay()">DAFTAR</a>
                             </div>
                         </div>
                     </div>
@@ -198,7 +198,7 @@
                     <div class="container">
                         <div class="row">
                             <div class="col-sm-6 col-sm-offset-6">
-                                <a class="btn btn-yellow btn-block" ng-click="reconfirm()">KIRIM ULANG</a>
+                                <a class="btn btn-yellow btn-block sm-btn" ng-click="reconfirm()">KIRIM ULANG</a>
                             </div>
                         </div>
                     </div>
@@ -233,7 +233,7 @@
                     <div class="container">
                         <div class="row">
                             <div class="col-sm-6 col-sm-offset-6">
-                                <a class="btn btn-yellow btn-block" ng-click="closeOverlay()">TUTUP</a>
+                                <a class="btn btn-yellow btn-block sm-btn" ng-click="closeOverlay()">TUTUP</a>
                             </div>
                         </div>
                     </div>
@@ -266,7 +266,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-sm-6 col-sm-offset-6">
-                            <a class="btn btn-yellow btn-block" href="/">KEMBALI</a>
+                            <a class="btn btn-yellow btn-block sm-btn" href="/">KEMBALI</a>
                         </div>
                     </div>
                 </div>
@@ -298,7 +298,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-sm-6 col-sm-offset-6">
-                            <a class="btn btn-yellow btn-block" ng-click="reconfirm()">KIRIM ULANG</a>
+                            <a class="btn btn-yellow btn-block sm-btn" ng-click="reconfirm()">KIRIM ULANG</a>
                         </div>
                     </div>
                 </div>

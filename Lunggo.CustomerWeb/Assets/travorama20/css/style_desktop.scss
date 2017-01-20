@@ -103,6 +103,15 @@ $mobile-app: '../images/mobile-app.png';
 .os-semibold {font-family: 'Open Sans'; font-weight: 600}
 .os-bold {font-family: 'Open Sans'; font-weight: 700}
 
+.xs-txt {font-size: 9px !important;}
+.sm-txt {font-size: 11px !important;}
+.normal-txt {font-size: 12px !important;}
+.md-txt {font-size: 16px !important;}
+.lg-txt {font-size: 19px !important;}
+.xlg-txt {font-size: 24px !important;}
+
+.up-txt {text-transform: uppercase;}
+
 /*--------------------*/
 /* general class */
 html {height:100%;}
@@ -147,6 +156,20 @@ span.close {cursor:pointer;}
     font-weight: 700;
 }
 
+.darkgrey-txt {color: #555555;}
+.blue-txt {color: $color-main-blue;
+    &.bg {
+        font-size: 16px;
+        @extend .os-bold; 
+        font-weight: 700;
+        line-height: 20px;
+    }
+}
+.grey-txt {color: #999;}
+.green-txt {color: #3a8e1b;}
+.orange-txt {color: #ff7200;}
+.white-txt {color: #ffffff;}
+
 /*Custom scrollbar*/ 
 .custom-scroll {
     &::-webkit-scrollbar {width: 13px;}
@@ -154,8 +177,14 @@ span.close {cursor:pointer;}
     &::-webkit-scrollbar-thumb {background: #999;}
 }
 
-.btn.btn-yellow {background:#ffd632; border:2px solid #ebb600; color:#4f3500; @extend .os-bold;}
-.btn.btn-grey, .btn.btn-gray {background:#adadad; color:#fff; @extend .os-bold; border:2px solid #999;}
+.btn.btn-yellow {background:#ffd632; border:2px solid #ebb600; color:#4f3500; @extend .os-bold; height: auto;
+    &.lg-btn {@include border-radius(2px); text-transform: uppercase; padding: 10px 20px;}
+    &.sm-btn {@include border-radius(2px); text-transform: uppercase; padding: 6px 12px;}
+}
+.btn.btn-grey, .btn.btn-gray {background:#adadad; color:#fff; @extend .os-bold; border:2px solid #999;
+    &.lg-btn {@include border-radius(2px); text-transform: uppercase; padding: 10px 20px;}
+    &.sm-btn {@include border-radius(2px); text-transform: uppercase; padding: 6px 12px;}
+}
 .btn.block {display:block; width:100%;}
 
 .result-form-right .btn-yellow {
@@ -204,8 +233,10 @@ input[type=number]::-webkit-outer-spin-button {
     }
 }
 
+input[type="submit"] {box-shadow: none !important;}
+
 input[type="text"], input[type="password"], input[type="number"], input[type="email"], select.form-control, .change-flight-class.form-control {
-    height: 36px; box-shadow: none; border: 1px solid #d6d6d6; -webkit-border-radius: 2px; -moz-border-radius: 2px; border-radius: 2px;
+    box-shadow: none; border: 1px solid #d6d6d6; -webkit-border-radius: 2px; -moz-border-radius: 2px; border-radius: 2px; font-size: 12px; padding: 15px 12px; height: auto
 }
 
 .form-control {color: #000000;}
@@ -214,7 +245,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
 // and form Date Selector pop up
 // search calendar
 .search-calendar, .search-calendar-hotel {width:320px; height:520px; background:#252525; position:absolute; top:0; left:325px; z-index:2; display:none;
-    .calendar-header {height:40px; background:#4e4e4e; color:#fff; @extend .os-semibold; font-weight:600; font-size:17px; padding:10px 15px;
+    .calendar-header {height:40px; background:#4e4e4e; color:#fff; @extend .os-semibold; font-weight:600; font-size:17px; padding:10px 15px; line-height: 100%;
         .close-calendar, .close-calendar-hotel {float:right; cursor:pointer;}
     }
     .calendar-body {padding-top:15px;}
@@ -261,10 +292,9 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         }
     }
 }
-
 // location dropdown
 .search-location, .search-hotel {width:850px; min-height:520px; background:#fff; position:absolute; top:0; left:325px; z-index:3; display:none;
-    .location-header {height:40px; background:#4e4e4e; color:#fff; @extend .os-semibold; font-weight:600; font-size:17px; padding:10px 15px;
+    .location-header {height:40px; background:#4e4e4e; color:#fff; @extend .os-semibold; font-weight:600; font-size:17px; padding:10px 15px; line-height: 100%;
         .close-location, .close-hotel {float:right; cursor:pointer;}
     }
     .location-body {color:#333; height: 400px;
@@ -786,7 +816,6 @@ border:1px solid #CE9A01;-webkit-box-shadow: #FFF563 0px 1px 0px inset;-moz-box-
     &.show {
         opacity: .5;
         visibility: visible;
-        z-index: 1;
         &:hover {
             opacity: 1;     
             @include transition(opacity 0.2s ease-out);

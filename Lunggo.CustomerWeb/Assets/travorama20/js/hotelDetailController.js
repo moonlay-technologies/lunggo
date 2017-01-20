@@ -230,7 +230,7 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
         var myLatLng = { lat: $scope.lat, lng: $scope.lng };
 
         var map = new google.maps.Map(document.getElementById('map'), {
-            zoom: 17,
+            zoom: 15,
             center: myLatLng,
             mapTypeControl: false,
             streetViewControl: false,

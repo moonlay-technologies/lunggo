@@ -102,7 +102,7 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
             $('.form-child-age').hide();
         }
     }
-   
+    
     $scope.showForm= function(tab) {
         if (tab == 'hotel') {
             $scope.isFlight = false;

@@ -241,7 +241,7 @@
                         <div style="color:red" ng-show="form.incompleteGuestName">
                             Nama pada Data Tamu Belum Ditambahkan <br /> <br />
                         </div>
-                        <button class="btn btn-yellow go-top" ng-click="validateForm(1)">LANJUTKAN</button>
+                        <button class="btn btn-yellow go-top lg-btn md-txt" ng-click="validateForm(1)">LANJUTKAN</button>
                     </div>
 
                 </div>
@@ -260,22 +260,26 @@
                                 <span>Data Pemesan dan Tamu</span>
                             </header>
                             <section class="buyer-content">
-                                <div class="buyer-list-item">
-                                    <h3 class="buyer-list-heading"><b> Pemesan: {{changeTitle(buyerInfo.title)}} {{buyerInfo.name}}</b></h3>
-                                    <div class="buyer-list-content">
-                                        <p>
-                                            <span class="buyer-label">No. Telepon</span>
-                                            <span class="buyer-data">+{{buyerInfo.countryCode}}{{buyerInfo.phone}}</span>
-                                        </p>
-                                        <p>
-                                            <span class="buyer-label">E-mail</span>
-                                            <span class="buyer-data">{{buyerInfo.email}}</span>
-                                        </p>
+                                <div class="buyer-list-item clearfix">
+                                    <div class="buyer-row clearfix">
+                                        <div class="col-2">Pemesan</div>
+                                        <div class="col-8 bold-txt">{{changeTitle(buyerInfo.title)}} {{buyerInfo.name}}</div>
                                     </div>
-                                    <h3 class="buyer-list-heading"><b> Tamu: {{changeTitle(guestInfo.title)}} {{guestInfo.name}}</b></h3>
-                                    <h3 class="buyer-list-heading" ng-show="buyerInfo.message != null && buyerInfo.message != ''"><b>Catatan: </b></h3>
-                                    <div class="buyer-list-content">
-                                        {{buyerInfo.message}}
+                                    <div class="buyer-row clearfix">
+                                        <div class="col-2">No. Telepon</div>
+                                        <div class="col-8">+{{buyerInfo.countryCode}}{{buyerInfo.phone}}</div>
+                                    </div>
+                                    <div class="buyer-row clearfix">
+                                        <div class="col-2">E-mail</div>
+                                        <div class="col-8">{{buyerInfo.email}}</div>
+                                    </div>
+                                    <div class="buyer-row clearfix">
+                                        <div class="col-2">Tamu</div>
+                                        <div class="col-8 bold-txt">{{changeTitle(guestInfo.title)}} {{guestInfo.name}}</div>
+                                    </div>
+                                    <div class="buyer-row clearfix" ng-show="buyerInfo.message != null && buyerInfo.message != ''">
+                                        <div class="col-2">Catatan</div>
+                                        <div class="col-8">{{buyerInfo.message}}</div>
                                     </div>
                                 </div>
                             </section>
@@ -285,8 +289,8 @@
                         <input type="text" name="RsvNo" value="" id="rsvno-input" />
                     </form>
                     <div class="step-button">
-                        <button class="btn btn-grey" ng-click="changePage(1)">KEMBALI</button>
-                        <button class="btn btn-yellow go-top" ng-disabled="book.booking" ng-click="book.send()">PESAN</button>
+                            <button class="btn btn-grey md-txt lg-btn" ng-click="changePage(1)">KEMBALI</button>
+                            <button class="btn btn-yellow go-top md-txt lg-btn" ng-disabled="book.booking" ng-click="book.send()">PESAN</button>
                     </div>
                     </div>
             </div>
@@ -513,5 +517,5 @@
                 </footer>
             </section>
         </div>
-    </div>
-</div>
+                    </div>
+                    </div>

@@ -6,18 +6,18 @@
         <div class="clearfix">
             @if (!Model.IsHotelSearch)
             {
-                <div class="form-group form__hotel col-4">
-                    <input type="text" value="" class="change-hotel form-control" placeholder="Kota, Wilayah atau Nama Hotel" id="inputLocationHotel"
-                           ng-init="hotelSearch.locationDisplay = loc" ng-model="hotelSearch.locationDisplay" ng-click="view.showHotelSearch = true"
-                           autocomplete="off">
-                </div>
+            <div class="form-group form__hotel col-4">
+                <input type="text" value="" class="change-hotel form-control normal-txt grey-txt" placeholder="Kota, Wilayah atau Nama Hotel" id="inputLocationHotel"
+                       ng-init="hotelSearch.locationDisplay = loc" ng-model="hotelSearch.locationDisplay" ng-click="view.showHotelSearch = true"
+                       autocomplete="off">
+            </div>
             }
-           
+
             <div class="col-6 clearfix">
                 <div class="form-group form__date col-half">
                     <div class="field-container">
                         <div class="form-control form-date clearfix">
-                            <div class="sm-txt grey-txt">Tanggal Check in</div>
+                            <div class=" normal-txt grey-txt">Tanggal Check in</div>
                             <div class="pull-right md-txt bold-txt darkgrey-txt" style="line-height: 10px;">{{hotelSearch.checkinDateDisplay}}</div>
                         </div>
                     </div>
@@ -25,7 +25,7 @@
                 <div class="form-group form__night quarter">
                     <div class="field-container">
                         <div class="form-control form-night">
-                            <div class="col-4"><span class="sm-txt grey-txt">Malam</span></div>
+                            <div class="col-4"><span class="normal-txt grey-txt">Malam</span></div>
                             <div class="col-6 input-hotel xlg-txt right-txt semibold-txt darkgrey-txt">{{hotelSearch.nightCount}}</div>
                             <div class="option" ng-model="hotelSearch.nightCount">
                                 <span data-value="" ng-repeat="nightCount in hotelSearch.nightrange track by $index"
@@ -38,7 +38,7 @@
                 <div class="form-group form__room quarter">
                     <div class="field-container">
                         <div class="form-control form-room">
-                            <div class="col-4"><span class="sm-txt grey-txt">Jumlah Kamar</span></div>
+                            <div class="col-4"><span class="normal-txt grey-txt">Jumlah Kamar</span></div>
                             <div class="col-6 input-hotel xlg-txt right-txt semibold-txt darkgrey-txt">{{hotelSearch.roomCount}}</div>
                             <div class="option" ng-model="hotelSearch.roomCount">
                                 <span data-value="" ng-repeat="roomCount in hotelSearch.roomrange track by $index"
@@ -55,7 +55,7 @@
                 <div class="col-4">
                     <div class="form-group form__adult col-half">
                         <div class="form-control form-adult clearfix">
-                            <div class="col-4"><span class="sm-txt grey-txt">Dewasa</span></div>
+                            <div class="col-4"><span class="normal-txt grey-txt">Dewasa</span></div>
                             <div class="col-6 input-hotel xlg-txt right-txt semibold-txt darkgrey-txt">{{hotelSearch.occupancies[n].adultCount}}</div>
                             <div class="option" ng-model="hotelSearch.occupancies[n].adultCount">
                                 <span data-value="" ng-repeat="adultCount in hotelSearch.adultrange" ng-init="hotelSearch.occupancies[n].adultCount = hotelSearch.occupancies[n].adultCount || 1"
@@ -65,7 +65,7 @@
                     </div>
                     <div class="form-group form__child col-half">
                         <div class="form-control form-child">
-                            <div class="col-4"><span class="sm-txt grey-txt">Anak</span></div>
+                            <div class="col-4"><span class="normal-txt grey-txt">Anak</span></div>
                             <div class="col-6 input-hotel xlg-txt right-txt semibold-txt darkgrey-txt">{{hotelSearch.occupancies[n].childCount}}</div>
                             <div class="option" ng-model="hotelSearch.occupancies[n].childCount">
                                 <span data-value="" ng-repeat="childCount in hotelSearch.childrange" ng-init="hotelSearch.occupancies[n].childCount = hotelSearch.occupancies[n].childCount || 0"
@@ -79,7 +79,7 @@
                     <div class="form-group form__child quarter" ng-repeat="child in [0,1,2,3] track by $index"
                          ng-show="hotelSearch.occupancies[n].childCount > $index">
                         <div class="form-control select-age">
-                            <div class="col-6"><span class="sm-txt grey-txt">Usia Anak {{$index}} (th)</span></div>
+                            <div class="col-6"><span class="normal-txt grey-txt">Usia Anak {{$index}} (th)</span></div>
                             <div class="col-4 input-hotel xlg-txt right-txt semibold-txt darkgrey-txt">{{hotelSearch.occupancies[n].childrenAges[child]}}</div>
                             <div class="option" ng-model="hotelSearch.occupancies[n].childrenAges[child]">
                                 <span data-value="" ng-repeat="childAge in hotelSearch.childagerange" @*hotelSearch.occupancies[n].childrenAges = [0,0,0,0]; *@
@@ -102,9 +102,9 @@
         }
         else
         {
-            <div class="form-group form__submit pull-left">
-                <button class="btn btn-yellow btn-block btn-lg btnSubmit" ng-click="hotelSearch.getHotels(hotelSearch)">CARI HOTEL</button>
-            </div>
+            <div class="form-group form__submit pull-right">
+            <button class="btn btn-yellow btn-block btn-lg btnSubmit md-txt lg-btn" ng-click="hotelSearch.getHotels(hotelSearch)">CARI HOTEL</button>
+        </div>
         }
         
     </div>

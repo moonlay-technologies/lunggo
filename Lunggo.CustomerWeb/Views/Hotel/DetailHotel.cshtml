@@ -272,7 +272,7 @@
                     <ul class=" col-right-hotel mh-container">
                         <li class="mh-list"><a data-value="menu-map">Peta Hotel</a></li>
                         <li class="mh-list"><a data-value="menu-facility">Fasilitas Hotel</a></li>
-                        <li class="mh-list"><a data-value="menu-desc">Deskripsi Hotel</a></li>                        
+                        <li class="mh-list"><a data-value="menu-desc">Deskripsi Hotel</a></li>
                         @if (Model.HotelDetailData.Policy != null && Model.HotelDetailData.Policy.Count > 0)
                         {
                             <li class="mh-list"><a href="#menu-tnc">Syarat & Ketentuan Hotel</a></li>
@@ -348,7 +348,7 @@
                                             <div class="lg-txt"><b><sup>Rp</sup> {{room.rate.breakdowns[0].netTotalFare | number}}</b></div>
                                         </div>
                                         <div class="xs-txt">*Harga Termasuk Pajak & Service Charge</div>
-                                            <a href="" class="btn btn-yellow small" ng-click="bookRoom(room.rate)">PESAN</a>
+                                        <a href="" class="btn btn-yellow sm-btn" ng-click="bookRoom(room.rate)">PESAN</a>
                                     </div>
                                 </div>
                             </div>
@@ -545,8 +545,8 @@
                                     
                                     <div class="ih-desc clearfix">
                                         @Model.HotelDetailData.Description
-                                    </div>
                                 </div>
+                            </div>
                             }
                             
                             
@@ -554,16 +554,16 @@
                             {
                                 <div class="accordion-title accordion md-txt" id="menu-tnc">Perlu Diingat</div>
                                 <div class="accordion-content show">
-                                    <div class="snk-container clearfix">
-                                        <ul class="blue-list">
+                                <div class="snk-container clearfix">
+                                    <ul class="blue-list">
                                             @foreach (var policy in Model.HotelDetailData.Policy)
                                             {
                                                 <li>@policy</li>
                                             }
                                             
-                                        </ul>
-                                    </div>
+                                    </ul>
                                 </div>
+                            </div>
                                 
                             }   
                         </div>

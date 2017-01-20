@@ -68,12 +68,24 @@ p {
     clear: both;
     width: 100%;
     display: block; }
-
-.page.page-2 {
-  top: 29.7cm; }
-
-.page.page-3 {
-  top: 59.2cm; }
+  .page.page-2 {
+    top: 29.7cm; }
+  .page.page-3 {
+    top: 59.2cm; }
+  .page.page-4 {
+    top: 89.1cm; }
+  .page.page-5 {
+    top: 118.8cm; }
+  .page.page-6 {
+    top: 148.5cm; }
+  .page.page-7 {
+    top: 178.2cm; }
+  .page.page-8 {
+    top: 207.9cm; }
+  .page.page-9 {
+    top: 237.6cm; }
+  .page.page-10 {
+    top: 267.3cm; }
 
 /**
 Site Header
@@ -384,6 +396,8 @@ Site Footer
     font-size: 12pt;
     line-height: 100%;
     margin: 0; }
+    .page-hotel-voucher h4.h4-height {
+      line-height: 16pt !important; }
   .page-hotel-voucher h3 {
     font-size: 20pt;
     line-height: 100%;
@@ -476,9 +490,8 @@ Site Footer
           vertical-align: middle;
           background-size: 100%; }
       .page-hotel-voucher .hotel-wrapper .hotel-bottom .hb-middle {
-        padding: 4mm 0; }
-        .page-hotel-voucher .hotel-wrapper .hotel-bottom .hb-middle .map-img {
-          width: 100%; }
+        padding: 4mm 0;
+        position: relative; }
       .page-hotel-voucher .hotel-wrapper .hotel-bottom .hb-bottom {
         margin: 6mm 0; }
         .page-hotel-voucher .hotel-wrapper .hotel-bottom .hb-bottom .hotel-detail {
@@ -491,14 +504,10 @@ Site Footer
         content: ':';
         position: absolute;
         left: 0; }
-    .page-hotel-voucher .hotel-wrapper .hb-bottom {
-      margin: 6mm 0; }
-      .page-hotel-voucher .hotel-wrapper .hb-bottom .hotel-detail {
-        margin-top: 4mm; }
   .page-hotel-voucher .room-title {
     margin-bottom: 2mm; }
   .page-hotel-voucher .tnc {
-    padding: 5mm 0; }
+    font-size: 6pt; }
   .page-hotel-voucher .space {
     margin-right: 2mm; }
   .page-hotel-voucher .dash-border {
@@ -519,8 +528,6 @@ Site Footer
       border-radius: 5px;
       vertical-align: middle;
       margin: -2px 6px 0; }
-  .page-hotel-voucher .room-title {
-    margin-bottom: 2mm; }
   .page-hotel-voucher .img-wifi, .page-hotel-voucher .img-phone, .page-hotel-voucher .img-email, .page-hotel-voucher .img-locatio, .page-hotel-voucher .img-swim {
     margin-right: 3mm; }
   .page-hotel-voucher .img-logo {
@@ -532,6 +539,30 @@ Site Footer
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat; }
+  .page-hotel-voucher .map-img {
+    width: 19cm;
+    height: 5.5cm;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative; }
+  .page-hotel-voucher .map-marker {
+    background-image: url("http://maps.google.com/mapfiles/ms/icons/red-dot.png");
+    background-repeat: no-repeat;
+    height: 24pt;
+    width: 20pt;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%); }
+  .page-hotel-voucher .map-name {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 12pt;
+    font-family: 'Open Sans Semibold';
+    margin-top: 7mm; }
   .page-hotel-voucher .img-email {
     width: 5.5mm;
     height: 4mm; }
@@ -574,8 +605,3 @@ Site Footer
       width: 68px; }
     .page-hotel-voucher .star.e-star.star-5 {
       width: 85px; }
-
-@media print {
-  .page {
-    page-break-before: always; }
- }

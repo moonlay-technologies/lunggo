@@ -161,8 +161,8 @@
                     </div>
                 </div>
                 <div class="col-sm-3">
-                    <div class="result-form-right">
-                        <a class="btn btn-yellow block search-result-form-trigger">UBAH PENCARIAN</a>
+                    <div class="result-form-right pull-right">
+                        <a class="btn btn-yellow block search-result-form-trigger md-txt lg-btn">UBAH PENCARIAN</a>
                     </div>
                 </div>
             </div>
@@ -203,13 +203,13 @@
                     <div><span style="font-size:13px">Silakan klik tombol di bawah ini untuk memparbaharui halaman pencarian Anda.</span></div>
                 </section>
                 <div align="right" style="padding-right:30px;padding-top:20px;">
-                    <a class="btn popup-btn-yellow book-failed" onclick="location.reload();"><b>CARI LAGI</b></a>
+                    <a class="btn popup-btn-yellow book-failed sm-btn" onclick="location.reload();"><b>CARI LAGI</b></a>
                 </div>
             </div>
         </div>
 
 
-        <form action="@Url.Action("Select", "Flight")" method="POST" class="hidden push-token">
+        <form action="/id/Flight/Select" method="POST" class="hidden push-token">
             <input type="text" name="token" value="" class="token" />
         </form>
 
@@ -434,7 +434,7 @@
                                 <span class="original-price"> Rp {{flight.originalAdultFare | number:0}} </span>
                                 <h4 class="flight-price"><sup>Rp</sup> {{flight.netAdultFare | number:0}}</h4>
                                 <small>Sudah Termasuk Pajak &amp; Service Charge</small>
-                                <a class="btn btn-yellow" ng-click="selectFlight(flight.IndexNo);">PESAN</a>
+                                <a class="btn btn-yellow sm-btn" ng-click="selectFlight(flight.IndexNo);">PESAN</a>
                             </div>
                         </div><!-- .flight-summary -->
 
@@ -551,7 +551,7 @@
 
                             <h3><sup>Rp</sup> {{flightList[flightSelected].netTotalFare | number:0}}</h3>
                             <p>*Harga termasuk Pajak &amp; Service Charge</p>
-                            <input type="submit" class="btn btn-yellow" value="LANJUTKAN" ng-click="selectSubmit()" ng-disabled="!selectFlightParam.validated" />
+                            <input type="submit" class="btn btn-yellow sm-btn" value="LANJUTKAN" ng-click="selectSubmit()" ng-disabled="!selectFlightParam.validated" />
 
                         </div>
                     </section>
@@ -630,7 +630,7 @@
                     <div><span style="font-size:13px">Silakan klik tombol di bawah untuk kembali ke halaman awal.</span></div>
                 </section>
                 <div align="right" style="padding-right:30px;padding-top:30px;">
-                    <a class="btn popup-btn-yellow book-failed" href="{{returnUrl}}"><b>CARI ULANG</b></a>
+                    <a class="btn popup-btn-yellow book-failed sm-btn" href="{{returnUrl}}"><b>CARI ULANG</b></a>
                 </div>
             </div>
         </div>

@@ -17,7 +17,7 @@
 
     // Ubah Pencarian Hotel
     $('body .search-result-form-trigger').on('click', function () {
-        $('body .hotel-form').slideToggle("slow");
+        $('body .hotel-form').slideToggle("700");
         $('.search-hotel, .search-calendar-hotel').hide();
     });
 

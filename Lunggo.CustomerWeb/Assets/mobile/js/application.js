@@ -832,7 +832,7 @@ if (typeof (angular) == 'object') {
                     $rootScope.FlightSearchForm.Cabin = Cookies.get('cabin');
                 } else {
                     $rootScope.FlightSearchForm.Passenger[2] = 'y';
-                }
+        }
 
             });
         }
