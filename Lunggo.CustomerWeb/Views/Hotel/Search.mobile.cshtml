@@ -13,6 +13,7 @@
     long location;
     long.TryParse(Model.SearchParamObject.Location, out location);
     var loc = "";
+    var locFound = false;
     var foundLocation = HotelService.GetInstance().AutoCompletes.Where(c => c.Id == location).ToList()[0];
     if (foundLocation != null)
     {
@@ -32,6 +33,7 @@
         {
             loc = foundLocation.HotelName + ", " + foundLocation.Destination + ", " + foundLocation.Country;
         }
+        locFound = true;
     }
 }
 @section AdditionalCSS{
@@ -46,7 +48,7 @@
 }
 
 @section PageJS{
-    <script>var loc = '@loc';</script>
+    <script>var loc = '@loc';  var locFound = @Json.Encode(locFound);</script>
     <script src="/Assets/mobile/js/HotelController.js"></script>
     <script src="/Assets/travorama20/angularDirectory/search/hotelSearch.service.js"></script>
     <script src="/Assets/travorama20/angularDirectory/common/hotelAutocomplete.service.js"></script>
