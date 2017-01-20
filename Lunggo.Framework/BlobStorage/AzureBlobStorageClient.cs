@@ -347,15 +347,15 @@ namespace Lunggo.Framework.BlobStorage
                 return blobs;
             }
 
-            internal List<string> GetListFileName(string containerName)
+            internal List<string> GetListFileName(string containerName, string folderName)
             {
                 CloudBlobContainer container = this._blobStorageClient.GetContainerReference(containerName.ToLower());
                 var fileNameList = new List<string>();
-                CloudBlobDirectory folder = container.GetDirectoryReference("1");
+                CloudBlobDirectory folder = container.GetDirectoryReference(folderName);
                 var listFileBlob = folder.ListBlobs(true);
                 foreach (var blobItem in listFileBlob)
                 {
-                    var temp = blobItem.Uri.Segments.Skip(2);
+                    var temp = blobItem.Uri.Segments.Skip(3);
                     fileNameList.Add(string.Join("",temp.ToArray()));
                 }
 

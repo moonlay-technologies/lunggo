@@ -2,6 +2,8 @@
 using System.Web;
 using Lunggo.ApCommon.Hotel.Model.Logic;
 using Lunggo.ApCommon.Hotel.Service;
+using System.Security.Cryptography;
+using System.Text;
 using Lunggo.CustomerWeb.Models;
 using System;
 using System.Collections.Specialized;
@@ -111,7 +113,7 @@ namespace Lunggo.CustomerWeb.Controllers
             long locationId = 0;
             var selected = data.Autocompletes.Where(r => r.Type == "Destination").ToList();
             if (selected.Count > 0)
-            {
+        {
                 locationId = selected[0].Id;
             }
 
@@ -119,15 +121,15 @@ namespace Lunggo.CustomerWeb.Controllers
             {
                 var searchParam = HttpUtility.UrlDecode(Request.QueryString.ToString());
                 
-                return View(new HotelDetailModel.HotelDetail
-                {
-                    HotelCode = hotelCd,
+            return View(new HotelDetailModel.HotelDetail
+            {
+                HotelCode = hotelCd,
                     //SearchId = searchId,
                     SearchParam = searchParam,
                     HotelDetailData = hotelDetail
-                });
-            }
-            
+            });
+        }
+
             var tomorrowDate = DateTime.Today.AddDays(1);
             var nextDate = tomorrowDate.AddDays(1);
             var searchParams = "Location." + locationId + "." + tomorrowDate.Year + "-" + tomorrowDate.Month.ToString("d2") + "-" + tomorrowDate.Day.ToString("d2") +
@@ -180,7 +182,7 @@ namespace Lunggo.CustomerWeb.Controllers
                     });
                 }
             }
-            return RedirectToAction("Index", "Index");
+                return RedirectToAction("Index", "Index");
         }
 
         [RequireHttps]
@@ -188,7 +190,8 @@ namespace Lunggo.CustomerWeb.Controllers
         [ActionName("Checkout")]
         public ActionResult CheckoutPost(string rsvNo)
         {
-            return RedirectToAction("Payment", "Payment", new { rsvNo });
+            var regId = GenerateId(rsvNo);
+            return RedirectToAction("Payment", "Payment", new { rsvNo, regId});
         }
 
 
@@ -225,5 +228,25 @@ namespace Lunggo.CustomerWeb.Controllers
         {
             return View();
         }
+
+        #region Helpers
+
+        public string GenerateId(string key)
+        {
+            string result = "";
+            if (key.Length > 7)
+            {
+                key = key.Substring(key.Length - 7);
+            }
+            int generatedNumber = (int)double.Parse(key);
+            for (int i = 1; i < 4; i++)
+            {
+                generatedNumber = new Random(generatedNumber).Next();
+                result = result + "" + generatedNumber;
+            }
+            return result;
+        }
+
+        #endregion
     }
 }

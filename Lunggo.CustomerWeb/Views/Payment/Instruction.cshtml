@@ -52,8 +52,8 @@
         }
     }
     catch { }
-}
-
+    }
+            
 @section AdditionalJS {
     <!-- additional Angular JS-->
     <script src="/Assets/js/jquery.countdown.min.js"></script>
@@ -409,7 +409,7 @@
                     </section><!-- .order-detail -->
                     <!--</section>-->
                     <div class="btn-detail-penerbangan">
-                        <a href="@Url.Action("Thankyou", "Payment", new { Model.RsvNo })" class="btn btn-yellow md-txt lg-btn"> SAYA SUDAH BAYAR</a>
+                        <a href="@Url.Action("InstructionPost", "Payment", new { Model.RsvNo })" class="btn btn-yellow"> SAYA SUDAH BAYAR</a>
                     </div>
                 </div>
             </div>

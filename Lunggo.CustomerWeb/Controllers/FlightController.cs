@@ -99,14 +99,13 @@ namespace Lunggo.CustomerWeb.Controllers
         public ActionResult Select(string token)
         {
             var tokens = token;
-            return RedirectToAction("Checkout", "Flight", new { token = tokens });
+            return RedirectToAction("Checkout", "Flight", new { token = tokens});
         }
 
         [RequireHttps]
         public ActionResult Checkout(string token)
         {
             var itin = FlightService.GetInstance().GetItineraryForDisplay(token);
-            
             if (itin != null)
             {
                 if (TempData["FlightCheckoutOrBookingError"] != null)
@@ -152,7 +151,7 @@ namespace Lunggo.CustomerWeb.Controllers
             {
                 return RedirectToAction("Index", "Index");
             }
-
+            
         }
 
         //Buat ngelempar ke halaman payment
@@ -161,7 +160,8 @@ namespace Lunggo.CustomerWeb.Controllers
         [ActionName("Checkout")]
         public ActionResult CheckoutPost(string rsvNo)
         {
-            return RedirectToAction("Payment", "Payment", new { rsvNo });
+            var regId = GenerateId(rsvNo);
+            return RedirectToAction("Payment", "Payment", new { rsvNo, regId });
         }
         
         public ActionResult TopDestinations()
@@ -172,6 +172,22 @@ namespace Lunggo.CustomerWeb.Controllers
         }
 
         #region Helpers
+
+        public string GenerateId(string key)
+        {
+            string result = "";
+            if (key.Length > 7)
+            {
+                key = key.Substring(key.Length - 7);
+            }
+            int generatedNumber = (int)double.Parse(key);
+            for (int i = 1; i < 4; i++)
+            {
+                generatedNumber = new Random(generatedNumber).Next();
+                result = result + "" + generatedNumber;
+            }
+            return result;
+        }
 
         public static string RsvNoHash(string rsvNo)
         {

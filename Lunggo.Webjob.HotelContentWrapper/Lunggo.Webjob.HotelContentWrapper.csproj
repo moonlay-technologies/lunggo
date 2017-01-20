@@ -131,8 +131,10 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Properties\PublishProfiles\travorama-local-webjob - FTP %282%29.pubxml" />
+    <None Include="Properties\PublishProfiles\travorama-local-webjob - FTP %283%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-local-webjob - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-local-webjob - Web Deploy %282%29.pubxml" />
+    <None Include="Properties\PublishProfiles\travorama-local-webjob - Web Deploy %283%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-local-webjob - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-prod-webjob - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-prod-webjob - Web Deploy.pubxml" />
