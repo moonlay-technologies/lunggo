@@ -109,6 +109,11 @@ namespace Lunggo.CustomerWeb.Controllers
             return RedirectToAction("Index", "Index");
         }
 
+        public ActionResult InstructionPost(string rsvNo)
+        {
+            var regId = GenerateId(rsvNo);
+            return RedirectToAction("Thankyou", "Payment", new { rsvNo, regId });
+        }
 
         public ActionResult Thankyou(string rsvNo, string regId)
         {
