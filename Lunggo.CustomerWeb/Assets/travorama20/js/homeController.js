@@ -106,8 +106,13 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
     $scope.showForm= function(tab) {
         if (tab == 'hotel') {
             $scope.isFlight = false;
+            $('.search-location').hide();
+            $('.search-calendar').hide();
         } else if (tab == 'flight') {
             $scope.isFlight = true;
+            $scope.view.showHotelSearch = false;
+            $('.search-calendar-hotel').hide();
+            $('.form-child-age').hide();
         }
     }
     //=============== hotel start ======================
