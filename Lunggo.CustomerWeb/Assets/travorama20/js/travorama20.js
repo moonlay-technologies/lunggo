@@ -11,12 +11,12 @@ if (typeof (angular) == 'object') {
             oriCity: '',
             oriArpt: '',
             destCity: '',
-            destArpt:''
+            destArpt: ''
         };
         return {
-            setPropertyOri: function(oriCity, oriArpt) {
+            setPropertyOri: function (oriCity, oriArpt) {
                 param.oriCity = oriCity;
-                
+
             }
         };
     });
@@ -1381,5 +1381,17 @@ function backToTop() {
                 }, 700);
             });
         }
+    });
+}
+
+function priceSilder() {
+    jQuery(document).ready(function ($) {
+        $('.slider-wrapper').slick({
+            autoplay: false,
+            dots: false,
+            speed: 700,
+            prevArrow: '<button type="button" class="slick-prev"></button>',
+            nextArrow: '<button type="button" class="slick-next"></button>'
+        });
     });
 }

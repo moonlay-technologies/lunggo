@@ -74,18 +74,23 @@
 
 @section AdditionalCSS{
     <link href="/Assets/css/jquery-ui.min.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="/Assets/vendor/slick/slick.css" />
+
 }
 
 @section AdditionalJS{
     <!-- additional Angular JS-->
     <script src="/Assets/js/js.cookie.js"></script>
     <script type="text/javascript" src="/Assets/js/jquery.ui.datepicker-id.js"></script>
+    <script type="text/javascript" src="/Assets/vendor/slick/slick.min.js"></script>
+
 }
 
 @section PageJS{
     <script>
         var langCode = 'en';
         flightPageFunctions();
+        backToTop();
         FlightSearchConfig.flightForm =
         {
             cabin: '@data.CabinClass',
@@ -117,7 +122,6 @@
     <script src="/Assets/travorama20/angularDirectory/priceDetail/priceDetailDir.js"></script>
     <script src="/Assets/travorama20/js/singleFlightController.js"></script>
     @*<script src="https://github.com/angular/angular.js/blob/master/src/ngLocale/angular-locale_id-id.js"></script>*@
-    <script>backToTop()</script>
 }
 
 @if (isValid)
@@ -225,6 +229,7 @@
                 <h3><b>HASIL</b> PENCARIAN</h3>
 
             </div>
+            @Html.Partial("/Views/Shared/Desktop/_PriceSlider.cshtml")
             <div class="search-result-filter" @*ng-show="Progress == 100"*@>
                 <div class="container">
                     <div class="filter-left">

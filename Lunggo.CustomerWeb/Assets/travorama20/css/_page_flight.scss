@@ -78,7 +78,7 @@ file: /Assets/travorama20/css/_page_flight.scss
             }
             .change-flight-return, .change-flight-oneway {@extend &.change-flight-departure; margin-left:2%;
                 &.disabled {cursor:not-allowed; color:#464545; background-color: #5f5f5f;
-                    .date, .month, .year {color:#464545;}
+                    .date, .month, .year, small.grey-txt {color:#464545 !important;}
                 }
             }
             .change-flight-oneway {display:none; cursor:not-allowed;}
@@ -107,10 +107,10 @@ file: /Assets/travorama20/css/_page_flight.scss
     // *****
     // flight filter
     .search-result-filter {margin-bottom:15px; letter-spacing:0;
-        .filter-left {float:left; width:7%; border-top:$border-default;
+        .filter-left {float:left; width:7%;
             &>span {@extend .os-bold; padding:15px 0; display:block; font-size:13px;}
         }
-        .filter-right {float:left; width:93%; border-top:$border-default;
+        .filter-right {float:left; width:93%;
             .filter-trigger {background:#eceaea;
                 &:before, &:after {@include clearfix();}
                 &>div {float:left; width:25%; padding:15px; padding-right:0; text-align:center;
@@ -454,6 +454,52 @@ file: /Assets/travorama20/css/_page_flight.scss
     .search-result-container, .search-result-list {
         position: relative;
         z-index: 1;
+    }
+    
+    /*Price Slider*/
+    .price-slider-flight {
+        margin-bottom: 10px;
+        .price-slider-title {
+            border-top: 1px solid #ccc;
+            margin-top: 10px;
+            padding-top: 15px;
+            font-size: 13px;
+        }
+        .ps-item {
+            width: 14.285714285714286%;
+            text-align: center;
+            padding: 0 15px;
+            float: left;
+            .ps-content {
+                background: #d5e7ef;
+                @include border-radius(2px);
+                border: 2px solid #1daee4;
+                padding: 10px 0;
+                cursor: pointer;
+                .ps-price {margin: 10px 0 20px;}
+                &:hover {
+                    background: #1daee4;
+                    color: #fff;
+                }
+            }
+            .ps-title {line-height: 30px;}
+        }
+        .ps-carousel {margin: 15px 0;}
+        .carousel-control {
+            color: #1daee4;
+            width: 0;
+            opacity: 1;
+            font-size: 0;
+            text-shadow: none;
+            .glyphicon-chevron-left, .glyphicon-chevron-right {
+                width: 30px;
+                height: 30px;
+                margin-top: -30px;
+                font-size: 30px;
+            }
+            .glyphicon-chevron-left {margin-left: -25px !important;}
+            .glyphicon-chevron-right {margin-right: -25px !important;}
+        }
     }
 }
 

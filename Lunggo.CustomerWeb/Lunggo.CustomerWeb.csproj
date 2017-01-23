@@ -1606,6 +1606,7 @@
     <Content Include="Views\Shared\Mobile\_Summary.cshtml" />
     <Content Include="Views\Shared\Desktop\_HotelDetail.cshtml" />
     <Content Include="Views\Shared\_metaTag.cshtml" />
+    <Content Include="Views\Shared\Desktop\_PriceSlider.cshtml" />
     <None Include="Views\Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
