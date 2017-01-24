@@ -1448,6 +1448,8 @@
     <Content Include="App_Code\ToTitleCase.cshtml" />
     <Content Include="App_Code\MsToTime.cshtml" />
     <Content Include="Assets\css\travorama-mobileApp.scss" />
+    <Content Include="Assets\travorama20\css\_page_hotel_search_listing.scss" />
+    <Content Include="Assets\travorama20\css\_page_hotel_map.scss" />
     <None Include="Properties\PublishProfiles\prod-cw %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\dv1-cw.pubxml" />
     <None Include="Properties\PublishProfiles\dv2-cw.pubxml" />
@@ -1606,6 +1608,8 @@
     <Content Include="Views\Shared\Mobile\_Summary.cshtml" />
     <Content Include="Views\Shared\Desktop\_HotelDetail.cshtml" />
     <Content Include="Views\Shared\_metaTag.cshtml" />
+    <Content Include="Views\Shared\Desktop\_HotelListing.cshtml" />
+    <Content Include="Views\Hotel\HotelMap.cshtml" />
     <None Include="Views\Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -1,0 +1,443 @@
+﻿@using Lunggo.ApCommon.Hotel.Service
+@using Lunggo.CustomerWeb.Models
+@using Lunggo.Framework.Extension
+@model Lunggo.CustomerWeb.Models.HotelSearchApiRequest
+@{
+    Layout = "/Views/Shared/Desktop/_LayoutDesktop.cshtml";
+    ViewBag.BodyClass = "page-hotel map page-search";
+    ViewBag.Title = "Pencarian Hotel";
+    ViewBag.AngularController = "hotelSearchController";
+
+}
+@section AdditionalCSS{
+    <link href="/Assets/css/jquery-ui.min.css" rel="stylesheet" />
+}
+
+@section AdditionalJS {
+    <script src="/Assets/js/js.cookie.js"></script>
+    <script src="/Assets/js/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="/Assets/js/jquery.ui.datepicker-id.js"></script>
+    <script src="/Assets/js/bootstrap.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCRAmMz6GPXsXi1pZAl5QUsjNTcY0ZfqVA&callback=initMap"
+            async defer></script>
+}
+
+@section PageJS{
+    <script>
+        jQuery(document).ready(function ($) {
+
+            // Search List Image
+            $(function () {
+                $("body .img-list").each(function (i, elem) {
+                    var img = $(elem);
+                    var div = $("<div />").css({
+                        background: "url(" + img.attr("src") + ") no-repeat",
+                        width: "100%",
+                        height: "135px",
+                        "background-size": "cover",
+                        "background-position": "center"
+                    });
+                    img.replaceWith(div);
+                });
+            });
+
+            $('body .dropdown').click(function () {
+                $('body .option').toggle();
+                $('.hotel-sort').text();
+                $('.form-hotel-sort .option > span').click(function () {
+                    $('.hotel-sort').text(this.innerHTML);
+                });
+            });
+
+            $('.zoom-map').click(function() {
+                var point = $(this).closest('.search-list-result').find('.row-content');
+                point.children('.search-list').hide();
+                point.children('.search-map').removeClass('col-half');
+            });
+            $('.list-map').click(function () {
+                var point = $(this).closest('.search-list-result').find('.row-content');
+                point.children('.search-list').show();
+                point.children('.search-map').addClass('col-half');
+            });
+        })
+    </script>
+    <script>
+        var map;
+        function initMap() {
+            map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 16,
+                center: new google.maps.LatLng(-33.91722, 151.23064),
+                mapTypeId: 'roadmap'
+            });
+
+            var iconBase = 'https://maps.google.com/mapfiles/kml/shapes/';
+            var icons = {
+                parking: {
+                    icon: iconBase + 'parking_lot_maps.png'
+                },
+                library: {
+                    icon: iconBase + 'library_maps.png'
+                },
+                info: {
+                    icon: iconBase + 'info-i_maps.png'
+                }
+            };
+
+            function addMarker(feature) {
+                var marker = new google.maps.Marker({
+                    position: feature.position,
+                    icon: icons[feature.type].icon,
+                    map: map
+                });
+            }
+
+            var features = [
+              {
+                  position: new google.maps.LatLng(-33.91721, 151.22630),
+                  type: 'info'
+              }, {
+                  position: new google.maps.LatLng(-33.91539, 151.22820),
+                  type: 'info'
+              }, {
+                  position: new google.maps.LatLng(-33.91747, 151.22912),
+                  type: 'info'
+              }, {
+                  position: new google.maps.LatLng(-33.91910, 151.22907),
+                  type: 'info'
+              }, {
+                  position: new google.maps.LatLng(-33.91725, 151.23011),
+                  type: 'info'
+              }, {
+                  position: new google.maps.LatLng(-33.91872, 151.23089),
+                  type: 'info'
+              }, {
+                  position: new google.maps.LatLng(-33.91784, 151.23094),
+                  type: 'info'
+              }, {
+                  position: new google.maps.LatLng(-33.91682, 151.23149),
+                  type: 'info'
+              }, {
+                  position: new google.maps.LatLng(-33.91790, 151.23463),
+                  type: 'info'
+              }, {
+                  position: new google.maps.LatLng(-33.91666, 151.23468),
+                  type: 'info'
+              }, {
+                  position: new google.maps.LatLng(-33.916988, 151.233640),
+                  type: 'info'
+              }, {
+                  position: new google.maps.LatLng(-33.91662347903106, 151.22879464019775),
+                  type: 'parking'
+              }, {
+                  position: new google.maps.LatLng(-33.916365282092855, 151.22937399734496),
+                  type: 'parking'
+              }, {
+                  position: new google.maps.LatLng(-33.91665018901448, 151.2282474695587),
+                  type: 'parking'
+              }, {
+                  position: new google.maps.LatLng(-33.919543720969806, 151.23112279762267),
+                  type: 'parking'
+              }, {
+                  position: new google.maps.LatLng(-33.91608037421864, 151.23288232673644),
+                  type: 'parking'
+              }, {
+                  position: new google.maps.LatLng(-33.91851096391805, 151.2344058214569),
+                  type: 'parking'
+              }, {
+                  position: new google.maps.LatLng(-33.91818154739766, 151.2346203981781),
+                  type: 'parking'
+              }, {
+                  position: new google.maps.LatLng(-33.91727341958453, 151.23348314155578),
+                  type: 'library'
+              }
+            ];
+
+            for (var i = 0, feature; feature = features[i]; i++) {
+                addMarker(feature);
+            }
+        }
+    </script>
+}
+
+@*@Html.Partial("/Views/Shared/Desktop/_PageSlider.cshtml")*@
+<div class="travorama-hotel hotel-map" ng-init="init(@Model.Serialize())">
+    <div class="container">
+        <div class="search-list">
+            @Html.Partial("/Views/Shared/Desktop/_BreadCrumb.cshtml")
+            <a href="#" id="back-to-top" title="Back to top"></a>
+            <div class="top-title clearfix">
+                <div class="col-left bg-title"><b>Hasil</b> Pencarian </div>
+                <div class="col-right total-result">Jumlah Hotel Ditemukan: <b>{{filteredHotelCount}}</b></div>
+            </div>
+            <div class="search-result-filter clearfix">
+                <div class="filter-left">
+                    <span class="os-bold">FILTER:</span>
+                </div>
+                <div class="filter-right">
+                    <div class="filter-trigger clearfix">
+                        <div class="filter-star"><span class="switch-filter os-bold" data-target="filter-star">Bintang Hotel</span></div>
+                        <div class="filter-price"><span class="switch-filter os-bold" data-target="filter-price">Harga</span></div>
+                        <div class="filter-area"><span class="switch-filter os-bold" data-target="filter-area">Hotel Area</span></div>
+                        <div class="filter-facility"><span class="switch-filter os-bold" data-target="filter-facility">Fitur Hotel</span></div>
+                    </div>
+                    @*<div class="filter-content">
+                            <div id="filter-departure-transit" class="filter-transit">
+                                <div class="close-filter">X</div>
+                                <h3>
+                                    Berdasarkan Pemberhentian
+                                    <span class="pull-right">
+                                        <label class="select-all" ng-click="setTransitFilter('departure','all')">Pilih Semua</label>
+                                        <label class="select-none" ng-click="setTransitFilter('departure','none')">Nihil</label>
+                                    </span>
+                                </h3>
+                                <div class="tab-detail">
+                                    <label><input type="checkbox" value="" ng-model="departureFlightConfig.flightFilter.transit[0]" class="ng-pristine ng-untouched ng-valid"> Penerbangan Langsung</label>
+                                    <label><input type="checkbox" value="" ng-model="departureFlightConfig.flightFilter.transit[1]" class="ng-pristine ng-untouched ng-valid"> 1x Transit</label>
+                                    <label><input type="checkbox" value="" ng-model="departureFlightConfig.flightFilter.transit[2]" class="ng-pristine ng-untouched ng-valid"> Lebih Dari 1x Transit</label>
+                                </div>
+                            </div>
+                            <div id="filter-departure-price" class="filter-price">
+                                <div class="close-filter">X</div>
+                                <h3>Berdasarkan Harga</h3>
+                                <div class="slider departure-price-slider ui-slider ui-corner-all ui-slider-horizontal ui-widget ui-widget-content" id="departure-price-slider"><div class="ui-slider-range ui-corner-all ui-widget-header" style="width: 100%; left: 0%;"></div><span tabindex="0" class="ui-slider-handle ui-corner-all ui-state-default" style="left: 0%;"></span><span tabindex="0" class="ui-slider-handle ui-corner-all ui-state-default" style="left: 100%;"></span></div>
+                                <div class="slider-minmax">
+                                    <span class="ng-binding">Rp 461.300</span>
+                                    <span class="pull-right ng-binding">Rp 612.200</span>
+                                </div>
+                                <div class="hidden">
+                                    <input type="text" name="priceSliderValueMin" value="" class="departure-price-slider-min ng-pristine ng-untouched ng-valid" ng-model="departureFlightConfig.flightFilter.price.current[0]">
+                                    <input type="text" name="priceSliderValueMax" value="" class="departure-price-slider-max ng-pristine ng-untouched ng-valid" ng-model="departureFlightConfig.flightFilter.price.current[1]">
+                                </div>
+                            </div>
+                            <div id="filter-departure-airline" class="filter-airline">
+                                <div class="close-filter">X</div>
+                                <h3>
+                                    Berdasarkan Maskapai
+                                    <span class="pull-right">
+                                        <label class="select-all" ng-click="setAirlineFilter('departure','all')">Pilih Semua</label>
+                                        <label class="select-none" ng-click="setAirlineFilter('departure','none')">Nihil</label>
+                                    </span>
+                                </h3>
+                                <div class="tab-detail">
+                                    <div class="col-sm-3">
+                                        <div class="airline">
+                                            <label>
+                                                <input type="checkbox" name="AIRASIA" ng-init="departureFlightConfig.flightFilter.airline.list[$index].checked = true" value="XT" ng-model="departureFlightConfig.flightFilter.airline.list[$index].checked" ng-click="checkAirline('departure')" class="ng-pristine ng-untouched ng-valid"> <img ng-src="https://www.travorama.com/Assets/Images/Airlines/XT.png" alt="AIRASIA" src="https://www.travorama.com/Assets/Images/Airlines/XT.png"><span class="ng-binding">AIRASIA</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="airline">
+                                        <label>
+                                            <input type="checkbox" name="SRIWIJAYA AIR" ng-init="departureFlightConfig.flightFilter.airline.list[$index + 1].checked = true" value="SJ" ng-model="departureFlightConfig.flightFilter.airline.list[$index + 1].checked" ng-click="checkAirline('departure')" class="ng-pristine ng-untouched ng-valid"> <img ng-src="https://www.travorama.com/Assets/Images/Airlines/SJ.png" alt="SRIWIJAYA AIR" src="https://www.travorama.com/Assets/Images/Airlines/SJ.png"><span class="ng-binding">SRIWIJAYA AIR</span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>*@
+                </div>
+            </div>
+            <div class="search-map-result clearfix">
+                <div class="col-6">
+                    <input type="text" name="hotelMapLocation" value="" class="form-hotel-location form-control" placeholder="Kota, Wilayah atau Nama Hotel">
+                </div>
+                <div class="col-4 clearfix">
+                    <div class="col-2">
+                        <div class="os-bold">Sort By:</div>
+                    </div>
+                    <div class="col-8">
+                        <div class="dropdown form-control form-hotel-sort clearfix">
+                            <div class="hotel-sort">Harga Terendah</div>
+                            <div class="option">
+                                <span>Harga Terendah</span>
+                                <span>Harga Tertinggi</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="search-list-result clearfix">
+                <div class="clearfix row-btn">
+                    <div class="col-half">
+                        <a class="list-map btn btn-blue os-bold md-txt big block">Tampilkan Pencarian List View</a>
+                    </div>
+                    <div class="col-half">
+                        <a class="zoom-map btn btn-orange os-bold md-txt big block">Perbesar Peta</a>
+                    </div>
+                </div>
+                <div class="clearfix row-content">
+                    <div class="col-half search-list">
+                        <div class="slr-hotel">
+                            <div class="hotel-list-container">
+                                <a class="hl-wrapper" @*href="{{getUrlHotelDetail(hotel)}}"*@ target="_blank">
+                                    <div class="hotel-list clearfix pointer">
+                                        <div class="col-2">
+                                            <img class="img-list" hotel-list-image src="http://photos.hotelbeds.com/giata/21/218580/218580a_hb_a_005.jpg" alt="Hotel" />
+                                        </div>
+                                        <div class="col-8">
+                                            <div class="clearfix">
+                                                <div class="col-8 blue-txt bg">{{hotel.hotelName}}</div>
+                                                <div class="col-2 facility">
+                                                    <span class="wifi" ng-show="hotel.isWifiAccessAvailable"></span>
+                                                    <span class="meal" ng-show="hotel.restaurant"></span>
+                                                </div>
+                                            </div>
+                                            <div class="star star-5"></div>
+                                            @*<div ng-class="{
+                                                 'star': hotel.starRating == 1,
+                                                 'star star-2': hotel.starRating == 2,
+                                                 'star star-3': hotel.starRating == 3,
+                                                 'star star-4': hotel.starRating == 4,
+                                                 'star star-5': hotel.starRating == 5}">
+                                                </div>*@
+                                            <div class="hotel-map-price">
+                                                <div class="price clearfix" id="price-night" style="display: block">
+                                                    <div class="txt-md"><b>Harga per kamar, per malam :</b></div>
+                                                    <div class="underline-txt">Rp 999.999.999</div>
+                                                    <div class="lg-txt"><b><sup>Rp</sup> 999.999.999</b></div>
+                                                    <div class="xs-txt">*Harga Termasuk Pajak & Service Charge</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                                <a class="hl-wrapper" @*href="{{getUrlHotelDetail(hotel)}}"*@ target="_blank">
+                                    <div class="hotel-list clearfix pointer">
+                                        <div class="col-2">
+                                            <img class="img-list" hotel-list-image src="http://photos.hotelbeds.com/giata/21/218580/218580a_hb_a_005.jpg" alt="Hotel" />
+                                        </div>
+                                        <div class="col-8">
+                                            <div class="clearfix">
+                                                <div class="col-8 blue-txt bg">{{hotel.hotelName}}</div>
+                                                <div class="col-2 facility">
+                                                    <span class="wifi" ng-show="hotel.isWifiAccessAvailable"></span>
+                                                    <span class="meal" ng-show="hotel.restaurant"></span>
+                                                </div>
+                                            </div>
+                                            <div class="star star-5"></div>
+                                            @*<div ng-class="{
+                                                 'star': hotel.starRating == 1,
+                                                 'star star-2': hotel.starRating == 2,
+                                                 'star star-3': hotel.starRating == 3,
+                                                 'star star-4': hotel.starRating == 4,
+                                                 'star star-5': hotel.starRating == 5}">
+                                                </div>*@
+                                            <div class="hotel-map-price">
+                                                <div class="price clearfix" id="price-night" style="display: block">
+                                                    <div class="txt-md"><b>Harga per kamar, per malam :</b></div>
+                                                    <div class="underline-txt">Rp 999.999.999</div>
+                                                    <div class="lg-txt"><b><sup>Rp</sup> 999.999.999</b></div>
+                                                    <div class="xs-txt">*Harga Termasuk Pajak & Service Charge</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                                <a class="hl-wrapper" @*href="{{getUrlHotelDetail(hotel)}}"*@ target="_blank">
+                                    <div class="hotel-list clearfix pointer">
+                                        <div class="col-2">
+                                            <img class="img-list" hotel-list-image src="http://photos.hotelbeds.com/giata/21/218580/218580a_hb_a_005.jpg" alt="Hotel" />
+                                        </div>
+                                        <div class="col-8">
+                                            <div class="clearfix">
+                                                <div class="col-8 blue-txt bg">{{hotel.hotelName}}</div>
+                                                <div class="col-2 facility">
+                                                    <span class="wifi" ng-show="hotel.isWifiAccessAvailable"></span>
+                                                    <span class="meal" ng-show="hotel.restaurant"></span>
+                                                </div>
+                                            </div>
+                                            <div class="star star-5"></div>
+                                            @*<div ng-class="{
+                                                 'star': hotel.starRating == 1,
+                                                 'star star-2': hotel.starRating == 2,
+                                                 'star star-3': hotel.starRating == 3,
+                                                 'star star-4': hotel.starRating == 4,
+                                                 'star star-5': hotel.starRating == 5}">
+                                                </div>*@
+                                            <div class="hotel-map-price">
+                                                <div class="price clearfix" id="price-night" style="display: block">
+                                                    <div class="txt-md"><b>Harga per kamar, per malam :</b></div>
+                                                    <div class="underline-txt">Rp 999.999.999</div>
+                                                    <div class="lg-txt"><b><sup>Rp</sup> 999.999.999</b></div>
+                                                    <div class="xs-txt">*Harga Termasuk Pajak & Service Charge</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                                <a class="hl-wrapper" @*href="{{getUrlHotelDetail(hotel)}}"*@ target="_blank">
+                                    <div class="hotel-list clearfix pointer">
+                                        <div class="col-2">
+                                            <img class="img-list" hotel-list-image src="http://photos.hotelbeds.com/giata/21/218580/218580a_hb_a_005.jpg" alt="Hotel" />
+                                        </div>
+                                        <div class="col-8">
+                                            <div class="clearfix">
+                                                <div class="col-8 blue-txt bg">{{hotel.hotelName}}</div>
+                                                <div class="col-2 facility">
+                                                    <span class="wifi" ng-show="hotel.isWifiAccessAvailable"></span>
+                                                    <span class="meal" ng-show="hotel.restaurant"></span>
+                                                </div>
+                                            </div>
+                                            <div class="star star-5"></div>
+                                            @*<div ng-class="{
+                                                 'star': hotel.starRating == 1,
+                                                 'star star-2': hotel.starRating == 2,
+                                                 'star star-3': hotel.starRating == 3,
+                                                 'star star-4': hotel.starRating == 4,
+                                                 'star star-5': hotel.starRating == 5}">
+                                                </div>*@
+                                            <div class="hotel-map-price">
+                                                <div class="price clearfix" id="price-night" style="display: block">
+                                                    <div class="txt-md"><b>Harga per kamar, per malam :</b></div>
+                                                    <div class="underline-txt">Rp 999.999.999</div>
+                                                    <div class="lg-txt"><b><sup>Rp</sup> 999.999.999</b></div>
+                                                    <div class="xs-txt">*Harga Termasuk Pajak & Service Charge</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                                <a class="hl-wrapper" @*href="{{getUrlHotelDetail(hotel)}}"*@ target="_blank">
+                                    <div class="hotel-list clearfix pointer">
+                                        <div class="col-2">
+                                            <img class="img-list" hotel-list-image src="http://photos.hotelbeds.com/giata/21/218580/218580a_hb_a_005.jpg" alt="Hotel" />
+                                        </div>
+                                        <div class="col-8">
+                                            <div class="clearfix">
+                                                <div class="col-8 blue-txt bg">{{hotel.hotelName}}</div>
+                                                <div class="col-2 facility">
+                                                    <span class="wifi" ng-show="hotel.isWifiAccessAvailable"></span>
+                                                    <span class="meal" ng-show="hotel.restaurant"></span>
+                                                </div>
+                                            </div>
+                                            <div class="star star-5"></div>
+                                            @*<div ng-class="{
+                                                 'star': hotel.starRating == 1,
+                                                 'star star-2': hotel.starRating == 2,
+                                                 'star star-3': hotel.starRating == 3,
+                                                 'star star-4': hotel.starRating == 4,
+                                                 'star star-5': hotel.starRating == 5}">
+                                                </div>*@
+                                            <div class="hotel-map-price">
+                                                <div class="price clearfix" id="price-night" style="display: block">
+                                                    <div class="txt-md"><b>Harga per kamar, per malam :</b></div>
+                                                    <div class="underline-txt">Rp 999.999.999</div>
+                                                    <div class="lg-txt"><b><sup>Rp</sup> 999.999.999</b></div>
+                                                    <div class="xs-txt">*Harga Termasuk Pajak & Service Charge</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-half search-map">
+                        <div class="slr-map">
+                            <div id="map"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

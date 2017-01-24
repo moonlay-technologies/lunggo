@@ -42,7 +42,7 @@ namespace Lunggo.CustomerWeb.Controllers
                 {
                     location = destination;
                 }
-                
+
                 var client = new RestClient(source);
                 string url = @"/v1/autocomplete/hotel//" + location;
                 var searchRequest = new RestRequest(url, Method.GET);
@@ -82,7 +82,7 @@ namespace Lunggo.CustomerWeb.Controllers
                 var nextDate = tomorrowDate.AddDays(1);
                 var newquery = "info=Location." + locationId + "." + tomorrowDate.Year + "-" +
                          tomorrowDate.Month.ToString("d2") + "-" + tomorrowDate.Day.ToString("d2")
-                         + "." + nextDate.Year + "-" + nextDate.Month.ToString("d2") + "-" + 
+                         + "." + nextDate.Year + "-" + nextDate.Month.ToString("d2") + "-" +
                          nextDate.Day.ToString("d2") + ".1.1.1~0";
                 var newmodel = new HotelSearchApiRequest(newquery);
                 return View(newmodel);
@@ -113,28 +113,28 @@ namespace Lunggo.CustomerWeb.Controllers
             long locationId = 0;
             var selected = data.Autocompletes.Where(r => r.Type == "Destination").ToList();
             if (selected.Count > 0)
-        {
+            {
                 locationId = selected[0].Id;
             }
 
             if (Request != null && Request.QueryString != null && Request.QueryString.ToString().Length > 0)
             {
                 var searchParam = HttpUtility.UrlDecode(Request.QueryString.ToString());
-                
-            return View(new HotelDetailModel.HotelDetail
-            {
-                HotelCode = hotelCd,
+
+                return View(new HotelDetailModel.HotelDetail
+                {
+                    HotelCode = hotelCd,
                     //SearchId = searchId,
                     SearchParam = searchParam,
                     HotelDetailData = hotelDetail
-            });
-        }
+                });
+            }
 
             var tomorrowDate = DateTime.Today.AddDays(1);
             var nextDate = tomorrowDate.AddDays(1);
             var searchParams = "Location." + locationId + "." + tomorrowDate.Year + "-" + tomorrowDate.Month.ToString("d2") + "-" + tomorrowDate.Day.ToString("d2") +
                                "." + nextDate.Year + "-" + nextDate.Month.ToString("d2") + "-" + nextDate.Day.ToString("d2") + ".1.1.1~0";
-                    
+
             return View(new HotelDetailModel.HotelDetail
             {
                 HotelCode = hotelCd,
@@ -182,7 +182,7 @@ namespace Lunggo.CustomerWeb.Controllers
                     });
                 }
             }
-                return RedirectToAction("Index", "Index");
+            return RedirectToAction("Index", "Index");
         }
 
         [RequireHttps]
@@ -191,7 +191,7 @@ namespace Lunggo.CustomerWeb.Controllers
         public ActionResult CheckoutPost(string rsvNo)
         {
             var regId = GenerateId(rsvNo);
-            return RedirectToAction("Payment", "Payment", new { rsvNo, regId});
+            return RedirectToAction("Payment", "Payment", new { rsvNo, regId });
         }
 
 
@@ -225,6 +225,10 @@ namespace Lunggo.CustomerWeb.Controllers
             return View(rsv);
         }
         public ActionResult SorryEmailHotel()
+        {
+            return View();
+        }
+        public ActionResult HotelMap()
         {
             return View();
         }

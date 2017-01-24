@@ -373,7 +373,22 @@
             display: inline-block;
             @include border-radius(2px);
             &.small {padding: 6px 15px; float: right;}
-            &.big {padding: 6px 20px;}
+            &.big {padding: 10px 15px;}
+            &:hover {
+                opacity: 0.7;
+                @include transition(all .3s ease);
+            }
+        }
+        &.btn-orange {
+            background: #ff7200;
+            color: #fff;
+            @extend .os-semibold;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            @include border-radius(2px);
+            &.small {padding: 6px 15px; float: right;}
+            &.big {padding: 10px 15px;}
             &:hover {
                 opacity: 0.7;
                 @include transition(all .3s ease);
@@ -617,6 +632,7 @@
         /* imports */
         @import 'page_hotel_search';
         @import 'page_hotel_detail';
+        @import 'page_hotel_search_listing';
     }
     .rh-container {
         .rh-main-title {
@@ -756,6 +772,23 @@
         } 
         .review-hotel {
             .col-right-hotel {margin: 20px 0;}
+        }
+    }
+    &.map {
+        /*Import*/
+        @import 'page_hotel_map';
+
+        /*Custom*/
+        .form-control {
+            height: 49px;
+            padding: 15px 12px;
+            cursor: pointer;
+            font-size: 12px;
+            @include border-radius(2px);
+            .option {
+                top: 49px;
+                left: 0;
+            }
         }
     }
 }
