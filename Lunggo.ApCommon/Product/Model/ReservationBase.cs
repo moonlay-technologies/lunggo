@@ -38,6 +38,7 @@ namespace Lunggo.ApCommon.Product.Model
     {
         public abstract ProductType Type { get; }
         public string RsvNo { get; set; }
+        public string RsvType { get; set; }
         public DateTime RsvTime { get; set; }
         public RsvStatus RsvStatus { get; set; }
         public CancellationType CancellationType { get; set; }

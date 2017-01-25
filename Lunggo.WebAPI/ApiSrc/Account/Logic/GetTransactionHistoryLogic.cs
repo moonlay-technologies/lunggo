@@ -10,6 +10,7 @@ using Lunggo.ApCommon.Hotel.Model;
 using Lunggo.ApCommon.Hotel.Service;
 using Lunggo.ApCommon.Identity.Users;
 using Lunggo.ApCommon.Product.Constant;
+using Lunggo.Framework.Http;
 using Lunggo.WebAPI.ApiSrc.Account.Model;
 using Microsoft.AspNet.Identity;
 

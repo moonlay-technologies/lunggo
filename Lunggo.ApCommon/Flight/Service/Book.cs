@@ -8,6 +8,7 @@ using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Model.Logic;
 using Lunggo.ApCommon.Identity.Auth;
+using Lunggo.ApCommon.Identity.Roles;
 using Lunggo.ApCommon.Identity.Users;
 using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.ApCommon.Payment.Model;
@@ -17,6 +18,7 @@ using Lunggo.ApCommon.Product.Model;
 using Lunggo.ApCommon.Sequence;
 using Lunggo.Framework.Config;
 using Lunggo.Framework.Context;
+using RestSharp.Extensions;
 
 namespace Lunggo.ApCommon.Flight.Service
 {
@@ -108,6 +110,15 @@ namespace Lunggo.ApCommon.Flight.Service
             reservation.User = HttpContext.Current.User.Identity.IsUserAuthorized()
                 ? HttpContext.Current.User.Identity.GetUser()
                 : null;
+            if (reservation.User != null)
+            {
+                var userId = HttpContext.Current.User.Identity.GetUser().Id;
+                var role = Role.GetFromDb(userId);
+                if (role.Contains("Booker"))
+                {
+                    reservation.RsvType = "AGENT";
+                }
+            }
             reservation.Payment = new PaymentDetails
             {
                 Status = PaymentStatus.Pending,

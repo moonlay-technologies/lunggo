@@ -1,0 +1,215 @@
+﻿@{
+    Layout = "/Views/Shared/Desktop/_B2BLayoutDesktop.cshtml";
+    ViewBag.BodyClass = "page-account page-account-register";
+    ViewBag.Title = "Registrasi Akun Travorama";
+    var loginProviders = Context.GetOwinContext().Authentication.GetAuthenticationTypes();
+    var facebookProvider = loginProviders.First();
+}
+
+@section AdditionalJS{
+    <!-- additional Angular JS-->
+}
+@section PageJS{
+    <script>
+        var langCode = 'id';
+    </script>
+    <!-- angular controller -->
+    <script src="/Assets/travorama20/js/accountController.js"></script>
+}
+<section class="form-section page-loading" ng-app="travorama" ng-controller="registerController" ng-class="{'page-loaded' : pageLoaded}">
+
+    <div class="container">
+        <div class="register-title">
+            <hgroup>
+                <h1>@Html.I18NString("CW00179")</h1>
+                <h4>@Html.I18NString("CW00180")</h4>
+            </hgroup>
+        </div>
+        <div class="register-form normal-txt">
+            <form class="form register-form form-horizontal" name="registerForm" novalidate ng-submit="form.submit()">
+
+                <div class="form-group">
+                    <input type="email" name="Email" value="" placeholder="@Html.I18NString("CW00123")" class="form-control" ng-model="form.email" required ng-disabled="form.submitting || form.submitted" />
+                </div>
+
+                <div class="form-group">
+                    <input type="submit" value="@Html.I18NString("CW00127")" class="md-txt bold-txt btn btn-yellow form-control lg-btn" ng-disabled="registerForm.$invalid || form.submitting" />
+                </div>
+
+                <div class="link-container">
+                    <p><a href="#" ng-show="form.isSucceeded" ng-click="form.resubmit()">Kirim Ulang E-mail Aktivasi</a></p>
+                    <p><b>Sudah Memiliki Akun?</b> <a href="@Url.Action("Login", "B2BAccount")">Masuk Sekarang</a></p>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="page-overlay" ng-show="overlay && !form.registered">
+        <div class="overlay-content">
+            <header>
+                <h4>Terima Kasih</h4>
+            </header>
+            <section>
+                <div>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-4 text-align">
+                                <img src="/Assets/images/smile-image.png" alt="Smile" />
+                            </div>
+                            <div class="col-sm-8">
+                                <h3>Terima kasih sudah mendaftar di Travorama</h3>
+                                <p>Silakan cek e-mail Anda untuk verifikasi alamat e-mail Anda.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <footer>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-6 col-sm-offset-6">
+                            <a class="btn btn-yellow btn-block sm-btn" ng-click="closeOverlay()">TUTUP</a>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div><!-- .page-overlay -->
+
+    <div class="page-overlay" ng-show="overlay && form.registered && form.emailSent && !form.emailConfirmed">
+        <div class="overlay-content">
+            <header>
+                <h4>Terima Kasih</h4>
+            </header>
+            <section>
+                <div>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-4 text-align">
+                                <img src="/Assets/images/smile-image.png" alt="Smile" />
+                            </div>
+                            <div class="col-sm-8" ng-hide="form.resubmitted">
+                                <h3>E-mail belum terkonfirmasi</h3>
+                                <p>Silakan cek e-mail Anda untuk mengkonfirmasi alamat e-mail Anda.<br /><a ng-click="form.resubmit()">Klik di sini</a> untuk mengirim kembali e-mail konfirmasi.</p>
+                            </div>
+                            <div class="col-sm-8" ng-show="form.resubmitted">
+                                <h3>E-mail verifikasi telah dikirim</h3>
+                                <p>Silakan cek e-mail Anda untuk verifikasi alamat e-mail Anda.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <footer>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-6 col-sm-offset-6">
+                            <a class="btn btn-yellow btn-block sm-btn" ng-click="closeOverlay(); form.resubmitting = false; form.emailSent = false;">TUTUP</a>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div><!-- .page-overlay -->
+
+    <div class="page-overlay" ng-show="overlay && form.resubmitted">
+        <div class="overlay-content">
+            <header>
+                <h4>Terima Kasih</h4>
+            </header>
+            <section>
+                <div>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-4 text-align">
+                                <img src="/Assets/images/smile-image.png" alt="Smile" />
+                            </div>
+                            <div class="col-sm-8">
+                                <h3>E-mail verifikasi telah dikirim</h3>
+                                <p>Silakan cek e-mail Anda untuk verifikasi alamat e-mail Anda.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <footer>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-6 col-sm-offset-6">
+                            <a class="btn btn-yellow btn-block sm-btn" ng-click="closeOverlay(); form.resubmitting = false; form.emailSent = false;">TUTUP</a>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div><!-- .page-overlay -->
+
+    <div class="page-overlay" ng-show="overlay && form.formatError">
+        <div class="overlay-content">
+            <header>
+                <h4>Mohon Maaf</h4>
+            </header>
+            <section>
+                <div>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-4 text-align">
+                                <img src="/Assets/images/sad-image.png" alt="Sad" />
+                            </div>
+                            <div class="col-sm-8" ng-hide="form.resubmitted">
+                                <h3>Format E-mail Anda Tidak Valid</h3>
+                                <p>Silakan masukkan e-mail anda dengan format name@domain.com</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <footer>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-6 col-sm-offset-6">
+                            <a class="btn btn-yellow btn-block sm-btn" ng-click="closeOverlay()">TUTUP</a>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div><!-- .page-overlay -->
+
+    <div class="page-overlay" ng-show="overlay && form.registered && form.emailSent && form.emailConfirmed">
+        <div class="overlay-content">
+            <header>
+                <h4>Terima Kasih</h4>
+            </header>
+            <section>
+                <div>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-4 text-align">
+                                <img src="/Assets/images/smile-image.png" alt="Smile" />
+                            </div>
+                            <div class="col-sm-8">
+                                <h3>Anda telah terdaftar di Travorama</h3>
+                                <p>Silahkan login untuk memasuki halaman akun Anda.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <footer>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-6 col-sm-offset-6">
+                            <a class="btn btn-yellow btn-block sm-btn" href="@Url.Action("Login", "B2BAccount")">LOGIN</a>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div><!-- .page-overlay -->
+
+
+</section><!-- .form-section -->
+@Html.Partial("/Views/Shared/_SectionBenefit.cshtml")
+
+

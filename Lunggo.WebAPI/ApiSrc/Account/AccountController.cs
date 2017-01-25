@@ -2,10 +2,12 @@
 using System.Web;
 using System.Web.Http;
 using Lunggo.ApCommon.Identity.Auth;
+using Lunggo.ApCommon.Identity.Users;
 using Lunggo.Framework.Extension;
 using Lunggo.WebAPI.ApiSrc.Account.Logic;
 using Lunggo.WebAPI.ApiSrc.Account.Model;
 using Lunggo.WebAPI.ApiSrc.Common.Model;
+using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Lunggo.Framework.Cors;
 
@@ -18,10 +20,12 @@ namespace Lunggo.WebAPI.ApiSrc.Account
         {
         }
 
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
+        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager, ApplicationRoleManager roleManager)
         {
             UserManager = userManager;
             SignInManager = signInManager;
+            RoleManager = roleManager;
+
         }
 
         private ApplicationUserManager _userManager;
@@ -38,6 +42,13 @@ namespace Lunggo.WebAPI.ApiSrc.Account
         {
             get { return _signInManager ?? HttpContext.Current.GetOwinContext().Get<ApplicationSignInManager>(); }
             private set { _signInManager = value; }
+        }
+
+        private ApplicationRoleManager _roleManager;
+        public ApplicationRoleManager RoleManager
+        {
+            get { return _roleManager ?? HttpContext.Current.GetOwinContext().Get<ApplicationRoleManager>(); }
+            private set { _roleManager = value; }
         }
         #endregion
 
@@ -216,6 +227,11 @@ namespace Lunggo.WebAPI.ApiSrc.Account
         [Route("v1/trxhistory")]
         public ApiResponseBase GetTransactionHistory(string filter = null, string sort = null, int? page = null, int? itemsPerPage = null)
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                var user = User.Identity;
+                var role = UserManager.GetRoles(HttpContext.Current.User.Identity.GetUser().Id);
+            }
             try
             {
                 var apiResponse = AccountLogic.GetTransactionHistory(filter, sort, page, itemsPerPage);

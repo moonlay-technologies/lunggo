@@ -9,12 +9,13 @@ using Lunggo.ApCommon.Hotel.Model.Logic;
 using Lunggo.ApCommon.Hotel.Constant;
 using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds;
 using Lunggo.ApCommon.Identity.Auth;
+using Lunggo.ApCommon.Identity.Roles;
 using Lunggo.ApCommon.Identity.Users;
 using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.ApCommon.Payment.Model;
 using Lunggo.ApCommon.Payment.Service;
 using Lunggo.ApCommon.Product.Constant;
-using Lunggo.ApCommon.Product.Model;
+using Lunggo.ApCommon.Product.Model; 
 using Lunggo.ApCommon.Sequence;
 using Lunggo.Framework.Context;
 using BookingStatusCd = Lunggo.ApCommon.Hotel.Constant.BookingStatusCd;
@@ -287,6 +288,15 @@ namespace Lunggo.ApCommon.Hotel.Service
                     ? HttpContext.Current.User.Identity.GetUser()
                     : null
             };
+            if (rsvDetail.User != null)
+            {
+                var userId = HttpContext.Current.User.Identity.GetUser().Id;
+                var role = Role.GetFromDb(userId);
+                if (role.Contains("Booker"))
+                {
+                    rsvDetail.RsvType = "AGENT";
+                }
+            }
 
             PaymentService.GetInstance().GetUniqueCode(rsvDetail.RsvNo, null, null);
 

@@ -551,6 +551,7 @@ namespace Lunggo.ApCommon.Flight.Service
                 {
                     RsvNo = reservation.RsvNo,
                     RsvTime = reservation.RsvTime.ToUniversalTime(),
+                    RsvType = reservation.RsvType,
                     RsvStatusCd = RsvStatusCd.Mnemonic(reservation.RsvStatus),
                     CancellationTypeCd = null,
                     UserId = reservation.User != null ? reservation.User.Id : null,

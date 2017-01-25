@@ -75,6 +75,16 @@ namespace Lunggo.Repository.TableRecord
 		        IncrementLog("UserId");
 		    }
 		}
+
+        public String RsvType
+        {
+            get { return _RsvType; }
+            set
+            {
+                _RsvType = value;
+                IncrementLog("RsvType");
+            }
+        }
 		public String InsertBy
 		{
 		    get { return _InsertBy; }
@@ -138,6 +148,7 @@ namespace Lunggo.Repository.TableRecord
 		private DateTime? _CancellationTime;
         private String _CancellationReference;
 		private String _UserId;
+        private String _RsvType;
 		private String _InsertBy;
 		private DateTime? _InsertDate;
 		private String _InsertPgId;
@@ -182,6 +193,7 @@ namespace Lunggo.Repository.TableRecord
 				new ColumnMetadata("CancellationTime", false),
                 new ColumnMetadata("CancellationReference", false),
 				new ColumnMetadata("UserId", false),
+                new ColumnMetadata("RsvType", false), 
 				new ColumnMetadata("InsertBy", false),
 				new ColumnMetadata("InsertDate", false),
 				new ColumnMetadata("InsertPgId", false),

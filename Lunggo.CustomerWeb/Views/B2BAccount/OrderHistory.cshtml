@@ -1,0 +1,285 @@
+﻿@model List<Lunggo.ApCommon.Flight.Model.FlightReservationForDisplay>
+
+@{
+    Layout = "/Views/Shared/Desktop/_B2BLayoutDesktop.cshtml";
+    ViewBag.BodyClass = "page-account page-account-profile";
+    ViewBag.PageActiveSection = "profile";
+    ViewBag.Title = "My Account";
+
+    //var rsvs = Model.OrderByDescending(rsv => rsv.RsvTime).ToList();
+}
+@{
+
+}
+@section AdditionalJS{
+    <!-- additional Angular JS-->
+    <script src="/Assets/js/bootstrap.min.js"></script>
+}
+
+@section PageJS{
+    <script>
+        var langCode = 'en';
+    </script>
+    <!-- angular controller -->
+    <script src="/Assets/travorama20/js/accountController.js"></script>
+}
+
+
+<div class="container page-loading" ng-controller="accountController" ng-class="{'page-loaded' : pageLoaded}">
+    <div class="row">
+
+        <div class="col-xs-3">
+            @Html.Partial("/Views/Shared/Desktop/_SectionUserMenu.cshtml")
+        </div>
+        <!-- ******************** -->
+
+        <div class="col-xs-9">
+            <section class="account-content">
+
+                <div class="profile-content" ng-show="currentSection == 'profile'">
+                    <header class="content-header">
+                        <h2><b>@Html.I18NString("CW00168")</b> @Html.I18NString("CW00158")</h2>
+                    </header>
+                    <section class="content-body">
+
+                        <form name="profileForm" class="form form-horizontal" novalidate>
+                            <header>
+                                <h4>
+                                    <b>LOGIN ID</b>
+                                    <span class="pull-right" ng-hide="userProfile.edit">
+                                        <a class="btn btn-yellow" ng-click="editForm('profile')">@Html.I18NString("CW00194")</a>
+                                    </span>
+                                    <span class="pull-right" ng-show="userProfile.edit">
+                                        <a class="btn btn-grey" ng-click="editForm('profile')" ng-hide="userProfile.updating">CANCEL</a>
+                                        <a class="btn btn-yellow" ng-click="editForm('profileSave')">{{userProfile.updating? 'MENYIMPAN' : 'SIMPAN'}}</a>
+                                    </span>
+                                </h4>
+                            </header>
+                            <div class="form-group has-error" ng-show="userProfile.updated">
+                                <div class="col-xs-12">
+                                    <label>Profil Anda telah berhasil diperbaharui.</label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-xs-3">
+                                    <p class="control-label">Nama</p>
+                                </div>
+                                <div class="col-xs-9">
+                                    <p class="form-control-static" ng-hide="userProfile.edit">{{userProfile.name}}</p>
+                                    <input type="text" name="name" ng-model="editProfile.name" value="editProfile.name" class="form-control" placeholder="Nama" ng-show="userProfile.edit" required ng-disabled="userProfile.updating" />
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-xs-3">
+                                    <p class="control-label">Kode Negara</p>@*@Html.I18NString("CW00193")*@
+                                </div>
+                                <div class="col-xs-9">
+                                    <p ng-if="userProfile.countryCallCd" class="form-control-static" ng-hide="userProfile.edit">{{userProfile.countryCallCd}}</p>
+                                    <select class="form-control" name="countryCallCd" ng-model="editProfile.countryCallCd" ng-init="editProfile.countryCallCd = 'xx'"
+                                            ng-show="userProfile.edit" ng-disabled="userProfile.updating">
+                                        <option ng-repeat="country in countries" ng-selected="country.dial_code == 'xx'" value="{{country.dial_code}}">{{country.name}} ({{country.dial_code}})</option>
+                                    </select>
+
+                                    @*<input type="number" name="countryCallCd" ng-model="editProfile.countryCallCd" value="editProfile.countryCallCd" class="form-control" placeholder="Kode Negara" ng-show="userProfile.edit" ng-disabled="userProfile.updating" />*@
+                                    <!--<select class="form-control" ng-show="userProfile.edit" ng-model="editProfile.country" ng-disabled="userProfile.updating">
+                                    <option ng-repeat="country in countries" value="{{country.dial_code}}" ng-selected="country.dial_code == userProfile.country">{{country.name}}</option>
+                                    </select> -->
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-xs-3">
+                                    <p class="control-label">@Html.I18NString("CW00093")</p>
+                                </div>
+                                <div class="col-xs-9">
+                                    <p ng-if="userProfile.phone" class="form-control-static" ng-hide="userProfile.edit">{{userProfile.phone}}</p>
+                                    <input type="number" name="phone" ng-model="editProfile.phone" value="editProfile.phone" class="form-control" placeholder="Nomor Telepon" ng-show="userProfile.edit" ng-disabled="userProfile.updating" />
+                                </div>
+                            </div>
+                            <!--<div class="form-group">
+                                <div class="col-xs-3">
+                                    <p class="control-label">Alamat</p>
+                                </div>
+                                <div class="col-xs-9">
+                                    <p class="form-control-static" ng-hide="userProfile.edit">{{userProfile.address}}</p>
+                                    <input type="text" name="address" ng-model="editProfile.address" class="form-control" placeholder="Alamat" ng-show="userProfile.edit" required ng-disabled="userProfile.updating" />
+                                </div>
+                            </div> -->
+
+                        </form>
+
+                        <form name="passwordForm" class="form form-horizontal" novalidate>
+                            <header>
+                                <h4>
+                                    <b>@Html.I18NString("CW00164")</b>
+                                    <span class="pull-right" ng-hide="password.edit">
+                                        <a class="btn btn-yellow" ng-click="editForm('password')">UBAH PASSWORD</a>
+                                    </span>
+                                    <span class="pull-right" ng-show="password.edit">
+                                        <a class="btn btn-grey" ng-click="editForm('password')" ng-hide="password.updating">CANCEL</a>
+                                        <a class="btn btn-yellow" ng-click="editForm('passwordSave')">{{password.updating? 'MENYIMPAN' : 'SIMPAN'}}</a>
+                                    </span>
+                                </h4>
+                            </header>
+                            <div class="form-group has-error" ng-show="password.failed">
+                                <div class="col-xs-12">
+                                    <label>Gagal menyimpan password baru Anda. Silahkan cek kembali password lama, password baru dan konfirmasi password Anda.</label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-xs-3">
+                                    <p class="control-label">@Html.I18NString("CW00165")</p>
+                                </div>
+                                <div class="col-xs-9">
+                                    <p class="form-control-static" ng-hide="password.edit">**********</p>
+                                    <input type="password" name="passwordCurrent" ng-model="passwordForm.currentPassword" value="" class="form-control" ng-show="password.edit" placeholder="Masukan password Anda saat ini" ng-disabled="password.updating" />
+                                </div>
+                            </div>
+                            <div class="form-group" ng-show="password.edit">
+                                <div class="col-xs-3">
+                                    <p class="control-label">@Html.I18NString("CW00166")</p>
+                                </div>
+                                <div class="col-xs-9">
+                                    <p class="form-control-static" ng-hide="password.edit">**********</p>
+                                    <input type="password" name="passwordNew" ng-model="passwordForm.newPassword" value="" class="form-control" ng-show="password.edit" placeholder="Masukan password baru Anda" ng-disabled="password.updating" />
+                                </div>
+                            </div>
+                            <div class="form-group" ng-show="password.edit">
+                                <div class="col-xs-3">
+                                    <p class="control-label">@Html.I18NString("CW00167")</p>
+                                </div>
+                                <div class="col-xs-9">
+                                    <p class="form-control-static" ng-hide="password.edit">**********</p>
+                                    <input type="password" name="passwordConfirmation" ng-model="passwordForm.confirmationPassword" value="" class="form-control" ng-show="password.edit" placeholder="Konfirmasi password baru Anda" ng-disabled="password.updating" />
+                                </div>
+                            </div>
+                        </form>
+
+                    </section>
+                </div><!-- .profile-content -->
+                <!-- ***** -->
+
+                <div class="history-content" ng-show="currentSection == 'order'">
+                    <header class="content-header">
+                        <h2><b>@Html.I18NString("CW00195")</b> @Html.I18NString("CW00196")</h2>
+                    </header>
+                    <section class="content-body">
+                        <header class="tab-header">
+                            <nav>
+                                <ul>
+                                    <li class="flight-history active"><a data-toggle="tab" href="#flight-history">Pesawat</a></li>
+                                    <li class="hotel-history"><a data-toggle="tab" href="#hotel-history">Hotel</a></li>
+                                </ul>
+                            </nav>
+                        </header>
+                        <div ng-show="loading">
+                            <img src="/Assets/images/load.gif" style="width: 50px; height: 50px; margin-left: 45%; margin-top: 5%">
+                        </div>
+                        <div class="tab-content">
+                            <div class="tab-flight-history tab-pane cleafix active" id="flight-history">
+
+                                <h3 ng-if="flightlist.length == 0">Belum ada pemesanan.</h3>
+                                <div ng-if="flightlist.length > 0" ng-repeat="flight in flightlist track by $index">
+                                    <div class="order-wrapper">
+                                        <div class="order flight">
+                                            <header>
+                                                <span> Nomor Pesanan : {{flight.rsvNo}}</span>
+                                            </header>
+                                            <section class="container">
+                                                <div class="row">
+                                                    <div class="col-xs-10">
+                                                        <div class="detail">
+                                                            <p>@Html.I18NString("CW00197") : <b>{{flight.itin.trips[0].origin}}</b> to <b>{{flight.itin.trips[0].destination}}</b></p>
+                                                            <p ng-if="flight.itin.trips.length > 1">@Html.I18NString("CW00057"): {{flight.itin.trips[0].segments[0].departureTime | date : 'EEEE, dd MMMM yyyy , HH:mm' :'UTC'}} | @Html.I18NString("CW00058"): {{flight.itin.trips[1].segments[0].departureTime | date : 'EEEE, dd MMMM yyyy , HH:mm' :'UTC'}}</p>
+                                                            <p ng-if="flight.itin.trips.length < 2">@Html.I18NString("CW00057"): {{flight.itin.trips[0].segments[0].departureTime | date : 'EEEE, dd MMMM yyyy , HH:mm' :'UTC'}}</p>
+                                                            <p>Status : <span class="success">{{paymentstatus(flight.payment.status)}}</span></p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xs-2">
+                                                        <form action="" method="post" name="submitForm" id="rsvno" class="hidden">
+                                                            <input type="text" name="RsvNo" value="" id="rsvno-input" />
+                                                        </form>
+                                                        <div class="action">
+                                                            <a class="btn btn-yellow" ng-href="@Url.Action("SelectReservation", "B2BAccount")?rsvNo={{flight.rsvNo}}">@Html.I18NString("CW00175")</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </section>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-hotel-history tab-pane cleafix" id="hotel-history">
+
+                                <h3 ng-if="hotellist.length == 0">Belum ada pemesanan.</h3>
+                                <div ng-if="hotellist.length > 0" ng-repeat="hotel in hotellist track by $index">
+                                    <div class="order-wrapper">
+                                        <div class="order hotel page-hotel">
+                                            <div class="order-top ">
+                                                <div class="ot clearfix">
+                                                    <div class="ot-left"><img src="{{hotel.hotelDetail.mainImage}}" alt="Hotel Image" style="max-width: 120px; max-height:120px; padding-right: 10px" /></div>
+                                                    <div class="ot-right" style="width:60%">
+                                                        <span class="blue-txt bold-txt">{{hotel.hotelDetail.hotelName}}</span><br />
+                                                        <span class="star" ng-if="hotel.hotelDetail.starRating == 1"></span>
+                                                        <span class="star star-2" ng-if="hotel.hotelDetail.starRating == 2"></span>
+                                                        <span class="star star-3" ng-if="hotel.hotelDetail.starRating == 3"></span>
+                                                        <span class="star star-4" ng-if="hotel.hotelDetail.starRating == 4"></span>
+                                                        <span class="star star-5" ng-if="hotel.hotelDetail.starRating == 5"></span>
+                                                        <div class="wt-location">
+                                                            {{hotel.hotelDetail.address}}{{hotel.hotelDetail.zone}}, {{hotel.hotelDetail.destinationName}}, {{hotel.hotelDetail.country}}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="action-hotel" style="margin-top:-80px">
+                                                    <a class="btn btn-yellow" ng-href="@Url.Action("SelectReservation", "B2BAccount")?rsvNo={{hotel.rsvNo}}">DETAIL</a>
+                                                </div>
+                                            </div>
+                                            <div class="order-bottom">
+                                                <div class="wb-container clearfix">
+                                                    <div class="ot-left">Check in</div>
+                                                    <div class="ot-right bold-txt">
+                                                        {{hotel.hotelDetail.checkIn | date : 'EEEE, dd MMM yyyy'}}
+                                                    </div>
+                                                    <div class="wb-container clearfix">
+                                                        <div class="ot-left">Check out</div>
+                                                        <div class="ot-right bold-txt">{{hotel.hotelDetail.checkOut | date : 'EEEE, dd MMM yyyy'}}</div>
+                                                    </div>
+                                                    <div class="wb-container clearfix">
+                                                        <div class="ot-left">Malam</div>
+                                                        <div class="ot-right bold-txt">{{nightcount(hotel.hotelDetail)}} Malam</div>
+                                                    </div>
+                                                    <div class="wb-container clearfix">
+                                                        <div class="ot-left">Jumlah Kamar</div>
+                                                        <div class="ot-right bold-txt">{{sumRoom(hotel.hotelDetail)}} Kamar</div>
+                                                    </div>
+                                                    <div class="wb-container clearfix">
+                                                        <div class="ot-left">Jenis Kamar</div>
+                                                        <div class="ot-right bold-txt">{{titleCase(totalRoom(hotel.hotelDetail))}}</div>
+                                                    </div>
+                                                    <div class="wb-container clearfix">
+                                                        <div class="ot-left">Jumlah Tamu</div>
+                                                        <div class="ot-right bold-txt">{{totalpax(hotel.hotelDetail).totalAdult}} Dewasa, {{totalpax(hotel.hotelDetail).totalChild}} Anak</div>
+                                                    </div>
+                                                    <div class="wb-container clearfix">
+                                                        <div class="ot-left">Status</div>
+                                                        <div class="ot-right bold-txt">{{paymentstatus(hotel.payment.status)}}</div>
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                </div><!-- .history-content -->
+
+            </section><!-- .account-content -->
+        </div>
+
+    </div>
+</div>

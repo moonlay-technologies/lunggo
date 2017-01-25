@@ -1,0 +1,116 @@
+﻿@{
+    Layout = "/Views/Shared/Desktop/_B2BLayoutDesktop.cshtml";
+    ViewBag.Title = "Masuk";
+    ViewBag.BodyClass = "page-account page-account-login";
+    var loginProviders = Context.GetOwinContext().Authentication.GetAuthenticationTypes();
+    var facebookProvider = loginProviders.First();
+}
+@section AdditionalJS{
+    <!-- additional Angular JS-->
+}
+@section PageJS{
+    <script>
+        var langCode = 'id';
+        var loginMessage = '@ViewBag.Message';
+    </script>
+    <!-- angular controller -->
+    <script src="/Assets/travorama20/js/accountController.js"></script>
+}
+<section class="form-section page-loading" ng-class="{'page-loaded': pageLoaded}" ng-app="travorama" ng-controller="authController">
+
+    <div class="container normal-txt">
+        <div class="login-form">
+            <form class="form register-form form-horizontal" name="loginForm" novalidate ng-submit="form.submit()">
+                @Html.AntiForgeryToken()
+                <hgroup>
+                    <h1 class="lg-txt">Masuk</h1>
+                    <h4>Dengan Akun <b>Travorama</b></h4>
+                </hgroup>
+                <div class="form-group">
+                    <input type="email" name="Email" value="" placeholder="@Html.I18NString("CW00123")" ng-model="form.email" class="form-control" required />
+                </div>
+
+                <div class="form-group">
+                    <input type="password" name="Password" value="" placeholder="@Html.I18NString("CW00124")" ng-model="form.password" class="form-control" required />
+                </div>
+
+                <div class="form-group">
+                    <input type="submit" value="@Html.I18NString("CW00130")" class="btn btn-yellow form-control md-txt lg-btn" ng-disabled="loginForm.$invalid || form.submitting " />
+                </div>
+
+                <div class="form-group text-right">
+                    <label class="control-label"><input type="checkbox" name="RememberMe" value="true" /> <span>@Html.I18NString("CW00125")</span></label>
+                </div>
+
+                <div class="form-group text-right">
+                    <a href="@Url.Action("ForgotPassword", "B2BAccount")">@Html.I18NString("CW00126")</a> | <a href="@Url.Action("Register", "B2BAccount")">@Html.I18NString("CW00127")</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="page-overlay" ng-show="overlay">
+        <div class="overlay-content">
+            <header>
+                <h4>PROSES MASUK GAGAL</h4>
+            </header>
+            <section>
+                <div>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-4 text-align">
+                                <img src="/Assets/images/sad-image.png" alt="Sad" />
+                            </div>
+                            <div class="col-sm-8">
+                                <div ng-show="errorMessage == 'NotRegistered'">
+                                    <h3>Anda belum terdaftar di Travorama</h3>
+                                    <p><a href="@Url.Action("Register", "B2BAccount")">Klik di sini</a> untuk mendaftar di Travorama.</p>
+                                </div>
+                                <div ng-show="errorMessage == 'InvalidInputData'">
+                                    <h3>E-mail / Password Salah</h3>
+                                    <p>Cek kembali alamat e-mail dan password Anda.</p>
+                                </div>
+                                <div ng-show="errorMessage == 'Failed'">
+                                    <h3>E-mail / Password Salah</h3>
+                                    <p>Cek kembali alamat e-mail dan password Anda.</p>
+                                </div>
+                                <div ng-show="errorMessage == 'AlreadyRegisteredButUnconfirmed'">
+                                    <h3>Akun Belum Aktif</h3>
+                                    <p>Cek kembali alamat e-mail Anda untuk mengaktifkan akun Anda.</p>
+                                </div>
+                                <div ng-show="errorMessage == 'AlreadyConfirmed'">
+                                    <h3>Akun Anda Telah Aktif</h3>
+                                    <p>Silakan masuk menggunakan e-mail dan password Anda.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <footer>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-6 col-sm-offset-6">
+                            <a class="btn btn-yellow btn-block sm-btn" ng-click="closeOverlay()">TUTUP</a>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div><!-- .page-overlay -->
+
+    <div class="login-succeed" ng-show="form.success">
+        <div class=" overlay-content">
+            <section style="padding-top:60px; padding-left:225px;">
+                <div><img src="/Assets/images/travorama-logo-color.png" height="22px" width="80px"></div>
+                <div style="padding-top:20px;"><span style="color: #15b1e4; font-size:20px"><b>Proses Masuk Berhasil</b></span></div>
+                <div><img src="~/Assets/images/popup/paymentyellowstrip.png" /></div>
+                <div style="padding-top:5px;"><span style="font-size:14px">Mengalihkan Anda ke halaman utama.</span></div>
+            </section>
+        </div>
+    </div>
+
+</section><!-- .form-section -->
+@Html.Partial("/Views/Shared/_SectionBenefit.cshtml")
+
+

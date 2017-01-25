@@ -44,6 +44,8 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
             var result = userManager.Create(user);
             if (result.Succeeded)
             {
+                //Add default User to Role Admin   
+                var roleResult= userManager.AddToRole(user.Id, "Booker");
                 var code = HttpUtility.UrlEncode(userManager.GenerateEmailConfirmationToken(user.Id));
                 var host = ConfigManager.GetInstance().GetConfigValue("general", "rootUrl");
                 var apiUrl = HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority);

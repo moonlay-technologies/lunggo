@@ -227,6 +227,11 @@
     <Compile Include="Areas\Api\Models\AccountResponseModel.cs" />
     <Compile Include="Areas\Api\Models\ResetPasswordViewModel.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\B2BAccountController.cs" />
+    <Compile Include="Controllers\B2BFlightController.cs" />
+    <Compile Include="Controllers\B2BHotelController.cs" />
+    <Compile Include="Controllers\B2BIndexController.cs" />
+    <Compile Include="Controllers\B2BThankYouController.cs" />
     <Compile Include="Controllers\FlightController.cs" />
     <Compile Include="Controllers\HelpSectionController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -1280,6 +1285,7 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Config\JsConfig.js" />
+    <Content Include="Content\Site.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Config\application.properties">
@@ -1606,12 +1612,32 @@
     <Content Include="Views\Shared\Mobile\_Summary.cshtml" />
     <Content Include="Views\Shared\Desktop\_HotelDetail.cshtml" />
     <Content Include="Views\Shared\_metaTag.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\B2BAccount\Register.cshtml" />
+    <Content Include="Views\B2BAccount\Login.cshtml" />
+    <Content Include="Views\B2BIndex\Index.cshtml" />
+    <Content Include="Views\B2BFlight\Search-Single.cshtml" />
+    <Content Include="Views\B2BFlight\Search-Return.cshtml" />
+    <Content Include="Views\B2BFlight\FlightSearchForm.cshtml" />
+    <Content Include="Views\B2BFlight\Checkout.cshtml" />
+    <Content Include="Views\B2BHotel\Search.cshtml" />
+    <Content Include="Views\B2BHotel\DetailHotel.cshtml" />
+    <Content Include="Views\B2BHotel\Checkout.cshtml" />
+    <Content Include="Views\B2BAccount\ConfirmEmail.cshtml" />
+    <Content Include="Views\B2BAccount\ForgotPassword.cshtml" />
+    <Content Include="Views\B2BAccount\ResetPassword.cshtml" />
+    <Content Include="Views\B2BAccount\OrderHistory.cshtml" />
+    <Content Include="Views\B2BAccount\OrderFlightHistoryDetail.cshtml" />
+    <Content Include="Views\B2BThankYou\Thankyou.cshtml" />
+    <Content Include="Views\Shared\Desktop\_B2BSiteHeader.cshtml" />
+    <Content Include="Views\Shared\Desktop\_B2BLayoutDesktop.cshtml" />
     <None Include="Views\Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
     <None Include="Views\Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
+    <Content Include="Views\_ViewStart.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Api\Views\Account\" />
