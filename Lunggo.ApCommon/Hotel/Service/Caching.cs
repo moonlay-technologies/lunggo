@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using Lunggo.ApCommon.Constant;
 using Lunggo.ApCommon.Hotel.Model;
@@ -438,6 +439,139 @@ namespace Lunggo.ApCommon.Hotel.Service
                 }
             }
                 return new List<HotelMarginRule>();
+        }
+
+        public List<decimal> GetLowestPricesForRangeOfDate(string location, DateTime startingTime,
+            DateTime endTime)
+        {
+            //var keyRoute = SetRoute(origin, destination);
+            var listofDates = new List<string>();
+            for (var date = startingTime.Date; date <= endTime; date = date.AddDays(1))
+            {
+                listofDates.Add(date.ToString("ddMMyy", CultureInfo.InvariantCulture));
+            }
+            var redis = RedisService.GetInstance();
+            var redisDb = redis.GetDatabase(ApConstant.SearchResultCacheName);
+            for (var i = 0; i < ApConstant.RedisMaxRetry; i++)
+            {
+                try
+                {
+                    var values = redisDb.HashGet(location, Array.ConvertAll(listofDates.ToArray(), item => (RedisValue)item)).ToList();
+                    return values.Select(value => Convert.ToDecimal(value)).ToList();
+                }
+                catch { }
+            }
+            return new List<decimal>();
+
+        }
+
+        public LowestPrice GetLowestPriceInRangeOfDate(string location, DateTime startDate,
+            DateTime endDate)
+        {
+            var listofDates = new List<string>();
+            for (var date = startDate.Date; date <= endDate; date = date.AddDays(1))
+            {
+                listofDates.Add(date.ToString("ddMMyy", CultureInfo.InvariantCulture));
+            }
+            var redis = RedisService.GetInstance();
+            var redisDb = redis.GetDatabase(ApConstant.SearchResultCacheName);
+            var values = new List<RedisValue>();
+            for (var i = 0; i < ApConstant.RedisMaxRetry; i++)
+            {
+                try
+                {
+                    values = redisDb.HashGet(location, Array.ConvertAll(listofDates.ToArray(), item => (RedisValue)item)).ToList();
+                    break;
+                }
+                catch { }
+            }
+
+            if (values.Count == 0)
+            {
+                return new LowestPrice();
+            }
+
+            var listOfPrices = values.Select(value => Convert.ToDecimal(value)).ToList();
+            var minPrice = listOfPrices.ElementAt(0);
+            var minDate = listofDates.ElementAt(0);
+            for (var ind = 1; ind < listOfPrices.Count; ind++)
+            {
+                if (listOfPrices.ElementAt(ind) >= minPrice) continue;
+                minPrice = listOfPrices.ElementAt(ind);
+                minDate = listofDates.ElementAt(ind);
+            }
+
+            return new LowestPrice
+            {
+                CheapestDate = minDate,
+                CheapestPrice = minPrice
+            };
+        }
+
+        public void SetLowestPriceToCache(List<HotelDetailForDisplay> hotelRsv, string locationCd)
+        {
+            
+            var lowestvalue = GetLowestPrice(hotelRsv);
+            var redis = RedisService.GetInstance();
+            var redisDb = redis.GetDatabase(ApConstant.SearchResultCacheName);
+            for (var i = 0; i < ApConstant.RedisMaxRetry; i++)
+            {
+                try
+                {
+                    foreach (DateTime day in EachDay(hotelRsv[0].CheckInDate, hotelRsv[0].CheckOutDate))
+                    {
+                        var keyDate = SetDate(day);
+                        redisDb.HashSet(locationCd, keyDate, Convert.ToString(lowestvalue));
+                        Console.WriteLine("Lowest value for location: " + locationCd + keyDate + " is " + lowestvalue);
+                    }
+                    break;
+                }
+                catch { }
             }
         }
+
+        public void SetLowestPriceToCache(string checkInDate, string locationCd, decimal minPrice)
+        {
+            var redis = RedisService.GetInstance();
+            var redisDb = redis.GetDatabase(ApConstant.SearchResultCacheName);
+            for (var i = 0; i < ApConstant.RedisMaxRetry; i++)
+            {
+                try
+                {
+                    redisDb.HashSet(locationCd, checkInDate, Convert.ToString(minPrice));
+                    Console.WriteLine("Lowest value for location: " + locationCd + checkInDate + " is " + minPrice);
+                    
+                    break;
+                }
+                catch { }
+            }
+        }
+
+        public void SetLowestPriceToCache(DateTime checkinDate, int nights, string locationCd, decimal lowestvalue)
+        {
+            var redis = RedisService.GetInstance();
+            var redisDb = redis.GetDatabase(ApConstant.SearchResultCacheName);
+            for (var i = 0; i < ApConstant.RedisMaxRetry; i++)
+            {
+                try
+                {
+                    for(var j = 0; j < nights; j++)
+                    {
+                        var day = checkinDate.AddDays(j);
+                        var keyDate = SetDate(day);
+                        redisDb.HashSet(locationCd, keyDate, Convert.ToString(lowestvalue));
+                        Console.WriteLine("Lowest value for location: " + locationCd + keyDate + " is " + lowestvalue);
+                    }
+                    break;
+                }
+                catch { }
+            }
+        }
+
+        public IEnumerable<DateTime> EachDay(DateTime from, DateTime thru)
+        {
+            for (var day = from.Date; day.Date < thru.Date; day = day.AddDays(1))
+                yield return day;
+        }
     }
+}

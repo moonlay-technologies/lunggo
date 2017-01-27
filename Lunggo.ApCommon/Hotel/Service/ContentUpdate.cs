@@ -53,7 +53,7 @@ namespace Lunggo.ApCommon.Hotel.Service
         {
             Console.WriteLine("Update AutoComplete");
             _Autocompletes = new Dictionary<long, Autocomplete>();
-            long index = 1;
+            //long index = 1;
             foreach (var country in Countries)
             {
                 foreach (var destination in country.Destinations)
@@ -72,7 +72,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                                 hotelDestCount += hotelZoneTotal;
                                 var singleAutoComplete = new HotelAutoComplete
                                 {
-                                    Id = index,
+                                    Id = Math.Abs(zone.Code.GetHashCode()),
                                     Code = zone.Code,
                                     Zone = zone.Name,
                                     Destination = destination.Name,
@@ -82,7 +82,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                                 };
 
                                 AutocompleteList.Add(singleAutoComplete);
-                                index++;
+                                //index++;
 
                                 if (zone.Areas != null)
                                 {
@@ -93,7 +93,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                                             Console.WriteLine("Area : {0}", area.Code);
                                             singleAutoComplete = new HotelAutoComplete
                                             {
-                                                Id = index,
+                                                Id = Math.Abs(area.Code.GetHashCode()),
                                                 Code = area.Code,
                                                 Area = area.Name,
                                                 Zone = zone.Name,
@@ -103,7 +103,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                                                 HotelCount = GetInstance().GetHotelListByLocationFromStorage(area.Code).Count,
                                             };
                                             AutocompleteList.Add(singleAutoComplete);
-                                            index++;
+                                            //index++;
                                         }
                                     }
                                 }
@@ -112,7 +112,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                     }
                     var singleDest = new HotelAutoComplete
                     {
-                        Id = index,
+                        Id = Math.Abs(destination.Code.GetHashCode()),
                         Code = destination.Code,
                         Destination = destination.Name,
                         Country = country.Name,
@@ -120,7 +120,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                         HotelCount = hotelDestCount,
                     };
                     AutocompleteList.Add(singleDest);
-                    index++;
+                    //index++;
                 }
             }
             SaveHotelAutocompleteToBlob();

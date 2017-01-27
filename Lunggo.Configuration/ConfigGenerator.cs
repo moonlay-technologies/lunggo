@@ -20,7 +20,7 @@ namespace Lunggo.Configuration
 
     public class ConfigGenerator
     {
-        private const DeploymentEnvironment Environment = DeploymentEnvironment.QA;
+        private const DeploymentEnvironment Environment = DeploymentEnvironment.Local;
         private const bool DeployHtmlTemplate = true;
         private const string FileExtension = "*.properties";
         private const string FinalProjectConfigFile = "application.properties";
@@ -359,6 +359,8 @@ namespace Lunggo.Configuration
             const string hotelBookPath = @"/v1/hotel/book";
             const string hotelAvailableRatesPath = @"/v1/hotel/availableRate";
             const string holidayListPath = @"/v1/calendar/id";
+            const string flightPriceCalendarPath = @"/v1/flight/pricecalendar";
+            const string hotelPriceCalendarPath = @"/v1/hotel/pricecalendar";
             var veritransTokenPath = _configDictionary["@@.*.veritrans.tokenEndPoint@@"];
             var veritransClientKey = _configDictionary["@@.*.veritrans.clientKey@@"];
 
@@ -399,6 +401,8 @@ namespace Lunggo.Configuration
             fileTemplate.SetAttribute("hotelBookPath", hotelBookPath);
             fileTemplate.SetAttribute("hotelAvailableRatesPath", hotelAvailableRatesPath);
             fileTemplate.SetAttribute("holidayListPath", holidayListPath);
+            fileTemplate.SetAttribute("flightPriceCalendarPath", flightPriceCalendarPath);
+            fileTemplate.SetAttribute("hotelPriceCalendarPath", hotelPriceCalendarPath);
             fileTemplate.SetAttribute("mobileUrl", mobileUrl);
 
             var fileContent = fileTemplate.ToString();

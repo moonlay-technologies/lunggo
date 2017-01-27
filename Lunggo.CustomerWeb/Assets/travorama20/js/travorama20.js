@@ -657,7 +657,8 @@ function flightFormSearchFunctions() {
         }
     });
 
-
+    getCheapestHotelPrice('BDO');
+    getCheapestFlightPrice('CGK', 'DPS');
     //*****
     // index page config
     FlightSearchConfig.autocomplete = {
@@ -1382,4 +1383,70 @@ function backToTop() {
             });
         }
     });
+}
+
+function getCheapestHotelPrice(location) {
+    var authAccess = getAuthAccess();
+    var date = new Date(), y = date.getFullYear(), m = date.getMonth();
+    var lastDay = new Date(y, m + 1, 0);
+    var startDate = ("0" + date.getDate()).slice(-2)
+         + ("0" + (date.getMonth() + 1)).slice(-2) + y.toString().substring(2, 4);
+    var endDate = ("0" + lastDay.getDate()).slice(-2)
+         + ("0" + (lastDay.getMonth() + 1)).slice(-2) + y.toString().substring(2, 4);
+    if (authAccess == 1 || authAccess == 2) {
+        $.ajax({
+            url: HotelPriceCalendarConfig.Url + '/' + location + '/' + startDate
+            + '/' + endDate + '/IDR',
+            method: 'GET',
+            headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') }
+        }).done(function (returnData) {
+            //if (returnData.status == 200) {
+                var cheapestPrice = returnData.cheapestPrice;
+                var cheapestDate;
+                if (returnData.cheapestDate != null && returnData.cheapestDate != '') {
+                    cheapestDate = new Date(returnData.cheapestDate);
+                    return [cheapestPrice, cheapestDate];
+                } else {
+                    return [-1, ''];
+                }
+                    
+            //}
+
+        }).error(function (returnData) {
+            return [-1, ''];
+        });
+    }
+}
+
+function getCheapestFlightPrice(origin, destination) {
+    var authAccess = getAuthAccess();
+    var date = new Date(), y = date.getFullYear(), m = date.getMonth();
+    var lastDay = new Date(y, m + 1, 0);
+    var startDate = ("0" + date.getDate()).slice(-2)
+         + ("0" + (date.getMonth() + 1)).slice(-2) + y.toString().substring(2, 4);
+    var endDate = ("0" + lastDay.getDate()).slice(-2)
+         + ("0" + (lastDay.getMonth() + 1)).slice(-2) + y.toString().substring(2, 4);
+    if (authAccess == 1 || authAccess == 2) {
+        $.ajax({
+            url: FlightPriceCalendarConfig.Url + '/' + origin + destination + '/' + startDate
+            + '/' + endDate + '/IDR',
+            method: 'GET',
+            headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') }
+        }).done(function (returnData) {
+            //if (returnData.status == 200) {
+            var cheapestPrice = returnData.cheapestPrice;
+            var cheapestDate;
+            if (returnData.cheapestDate != null && returnData.cheapestDate != '') {
+                cheapestDate = new Date(returnData.cheapestDate);
+                return [cheapestPrice, cheapestDate];
+            } else {
+                return [-1, ''];
+            }
+
+            //}
+
+        }).error(function (returnData) {
+            return [-1, ''];
+        });
+    }
 }
