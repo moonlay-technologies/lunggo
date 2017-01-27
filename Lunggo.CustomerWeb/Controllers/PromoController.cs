@@ -18,5 +18,9 @@ namespace Lunggo.CustomerWeb.Controllers
         {
             return View();
         }
+        public ActionResult Imlek()
+        {
+            return View();
+        }
     }
 }

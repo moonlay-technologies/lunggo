@@ -7,12 +7,14 @@
 }
 
 body.page-promo.promo-btn-mobile-app {padding-top:0;}
-.promo-btn {
+.page-promo {
     font-family: 'Open Sans';
-
+    &.promo-imlek {
+        .top-section a {background-image: url("/Assets/images/campaign/Imlek2017/Imlek2017-page.jpg");}
+    }
+    
     /*Desktop*/
 	.top-section a {
-        background-image: url("/Assets/images/campaign/OnlineRevolution2016/OnlineRevolution-page.jpg");
         display: block;
         width: 100%;
         background-position: center center;

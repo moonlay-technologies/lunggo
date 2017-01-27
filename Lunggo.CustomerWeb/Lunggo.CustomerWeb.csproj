@@ -586,6 +586,10 @@
     <Content Include="Assets\images\Bank-Mandiri-small.jpg" />
     <Content Include="Assets\images\Bank-Mandiri.jpg" />
     <Content Include="Assets\images\Bank-Mandiri.png" />
+    <Content Include="Assets\images\campaign\Imlek2017\Imlek2017-page-mobile.jpg" />
+    <Content Include="Assets\images\campaign\Imlek2017\Imlek2017-page.jpg" />
+    <Content Include="Assets\images\campaign\Imlek2017\Imlek2017-slider-mobile.jpg" />
+    <Content Include="Assets\images\campaign\Imlek2017\Imlek2017-slider.jpg" />
     <Content Include="Assets\images\campaign\MobileApp\app-store-cs.png" />
     <Content Include="Assets\images\campaign\MobileApp\app-store.png" />
     <Content Include="Assets\images\campaign\MobileApp\background.jpg" />
@@ -1606,6 +1610,8 @@
     <Content Include="Views\Shared\Mobile\_Summary.cshtml" />
     <Content Include="Views\Shared\Desktop\_HotelDetail.cshtml" />
     <Content Include="Views\Shared\_metaTag.cshtml" />
+    <Content Include="Views\Promo\Imlek.cshtml" />
+    <Content Include="Views\Promo\Imlek.mobile.cshtml" />
     <None Include="Views\Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

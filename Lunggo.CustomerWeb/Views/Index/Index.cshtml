@@ -117,7 +117,7 @@
             <header class="tab-header">
                 <nav>
                     <ul>
-                        <li class="flight"><a data-toggle="tab" id="#plane" ng-click="showForm('flight')" >Pesawat</a></li>
+                        <li class="flight"><a data-toggle="tab" id="#plane" ng-click="showForm('flight')">Pesawat</a></li>
                         <li class="hotel active"><a data-toggle="tab" id="#hotel" ng-click="showForm('hotel')">Hotel</a></li>
                         @*<li class="activity" data-toggle="tooltip" data-placement="bottom" title="Coming soon!"><a href="#">Activity</a></li>*@
                     </ul>
@@ -260,67 +260,67 @@
                 </div><!-- .tab-flight -->
                 <div class="tab-hotel tab-pane clearfix active" id="hotel" ng-class="{'active' : !isFlight}">
                     <div>
-                    <h3 class="text-center">Cari <b>Kamar Hotel</b><br /><span class="sub-title">(Domestik &amp; Internasional)</span></h3>
-                    <form class="form form-horizontal form-hotel page-hotel" ng-submit="hotel.searchHotel()" autocomplete="off">
-                        <div class="form-group hotel-location ">
-                            <div class="col-xs-12">
+                        <h3 class="text-center">Cari <b>Kamar Hotel</b><br /><span class="sub-title">(Domestik &amp; Internasional)</span></h3>
+                        <form class="form form-horizontal form-hotel page-hotel" ng-submit="hotel.searchHotel()" autocomplete="off">
+                            <div class="form-group hotel-location ">
+                                <div class="col-xs-12">
                                     <input type="text" name="hotelLocation" value="" id="inputLocationHotel"
                                            class="form-hotel-location form-control" placeholder="Kota, Wilayah atau Nama Hotel"
                                            ng-model="hotelSearch.locationDisplay" ng-click="view.showHotelSearch = true" />
-                            </div>
-                        </div>
-
-                        <div class="form-group hotel-date">
-                            <div class="col-xs-12">
-                                <div class="form-hotel-checkin text-center">
-                                    <span class="grey-txt">Tanggal Check in</span>
-                                    <div class="date-hotel">{{hotelSearch.checkinDateDisplay}}</div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="form-group hotel-room-night">
-                            <div class="col-xs-6 dropdown-container">
-                                <div class="form-control form-hotel-night clearfix">
-                                    <div class="col-4"><span class="grey-txt normal-txt">Malam</span></div>
-                                    <div class="col-6 input-hotel">{{hotelSearch.nightCount}}</div>
-                                    <div class="option" ng-model="hotelSearch.nightCount">
-                                        <span data-value="" ng-repeat="nightCount in hotelSearch.nightrange track by $index"
-                                              ng-click="hotelSearch.nightCount = nightCount">{{nightCount}}</span>
+
+                            <div class="form-group hotel-date">
+                                <div class="col-xs-12">
+                                    <div class="form-hotel-checkin text-center">
+                                        <span class="grey-txt">Tanggal Check in</span>
+                                        <div class="date-hotel">{{hotelSearch.checkinDateDisplay}}</div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-xs-6 dropdown-container">
-                                <div class="form-control form-hotel-room clearfix">
-                                    <div class="col-4"><span class="grey-txt normal-txt">Jumlah Kamar</span></div>
-                                    <div class="col-6 input-hotel">{{hotelSearch.roomCount}}</div>
-                                    <div class="option" ng-model="hotelSearch.roomCount">
-                                        <span data-value="" ng-repeat="roomCount in hotelSearch.roomrange track by $index"
-                                              ng-click="hotelSearch.roomCount = roomCount">{{roomCount}}</span>
+                            <div class="form-group hotel-room-night">
+                                <div class="col-xs-6 dropdown-container">
+                                    <div class="form-control form-hotel-night clearfix">
+                                        <div class="col-4"><span class="grey-txt normal-txt">Malam</span></div>
+                                        <div class="col-6 input-hotel">{{hotelSearch.nightCount}}</div>
+                                        <div class="option" ng-model="hotelSearch.nightCount">
+                                            <span data-value="" ng-repeat="nightCount in hotelSearch.nightrange track by $index"
+                                                  ng-click="hotelSearch.nightCount = nightCount">{{nightCount}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-6 dropdown-container">
+                                    <div class="form-control form-hotel-room clearfix">
+                                        <div class="col-4"><span class="grey-txt normal-txt">Jumlah Kamar</span></div>
+                                        <div class="col-6 input-hotel">{{hotelSearch.roomCount}}</div>
+                                        <div class="option" ng-model="hotelSearch.roomCount">
+                                            <span data-value="" ng-repeat="roomCount in hotelSearch.roomrange track by $index"
+                                                  ng-click="hotelSearch.roomCount = roomCount">{{roomCount}}</span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="form-group hotel-detail clearfix">
-                            <div class="col-xs-12 white-txt">Rincian Jumlah Tamu</div>
-                            <div class="col-xs-6 white-txt total-adult clearfix">
-                                <div class="col-half title">Jumlah Dewasa</div>
-                                <span class="text-right semibold-txt col-half total">{{hotelSearch.totalAdult}}</span>
+                            <div class="form-group hotel-detail clearfix">
+                                <div class="col-xs-12 white-txt">Rincian Jumlah Tamu</div>
+                                <div class="col-xs-6 white-txt total-adult clearfix">
+                                    <div class="col-half title">Jumlah Dewasa</div>
+                                    <span class="text-right semibold-txt col-half total">{{hotelSearch.totalAdult}}</span>
+                                </div>
+                                <div class="col-xs-6 white-txt total-child clearfix">
+                                    <div class="col-half title">Jumlah Anak</div>
+                                    <span class="text-right semibold-txt col-half total">{{hotelSearch.totalChildren}}</span>
+                                </div>
                             </div>
-                            <div class="col-xs-6 white-txt total-child clearfix">
-                                <div class="col-half title">Jumlah Anak</div>
-                                <span class="text-right semibold-txt col-half total">{{hotelSearch.totalChildren}}</span>
+                            <div class="col-xs-12 white-txt" ng-show="hotelSearch.searchinghotel">
+                                Sedang melakukan pencarian...
                             </div>
-                        </div>
-                        <div class="col-xs-12 white-txt" ng-show="hotelSearch.searchinghotel">
-                            Sedang melakukan pencarian...
-                        </div>
 
-                        <div class="form-group hotel-submit">
-                            <div class="col-xs-12">
-                                <input type="submit" name="hotelSubmit" value="CARI" class="btn btn-yellow block form-control md-txt lg-btn" />
+                            <div class="form-group hotel-submit">
+                                <div class="col-xs-12">
+                                    <input type="submit" name="hotelSubmit" value="CARI" class="btn btn-yellow block form-control md-txt lg-btn" />
+                                </div>
                             </div>
-                        </div>
-                    </form>
+                        </form>
                     </div>
 
                 </div><!-- .tab-hotel -->
@@ -353,19 +353,11 @@
     {
         <div class="page-slider">
             <div class="slider-wrapper" id="index-wrapper">
-                @if (DateTime.UtcNow.AddHours(7).Date <= new DateTime(2016, 12, 15))
+                @if (DateTime.UtcNow.AddHours(7).Date <= new DateTime(2017, 02, 15))
                 {
                     <div class="slider">
-                        <a href="@Url.Action("MatahariMall", "Promo")">
-                            <img src="/Assets/images/campaign/MatahariMall2016/MatahariMall-slider.jpg" alt="Matahari Mall" />
-                        </a>
-                    </div>
-                }
-                @if (DateTime.UtcNow.AddHours(7).Date <= new DateTime(2016, 12, 31))
-                {
-                    <div class="slider">
-                        <a href="@Url.Action("OnlineRevolution", "Promo")">
-                            <img src="/Assets/images/campaign/OnlineRevolution2016/OnlineRevolution-slider.jpg" alt="Online Revolution" />
+                        <a href="@Url.Action("Imlek", "Promo")">
+                            <img src="/Assets/images/campaign/Imlek2017/Imlek2017-slider.jpg" alt="Travorama Imlek 2017" />
                         </a>
                     </div>
                 }

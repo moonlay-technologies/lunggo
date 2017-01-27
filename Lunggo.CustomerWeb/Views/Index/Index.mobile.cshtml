@@ -28,23 +28,17 @@
 }
 
 @section PageJS {
-   
+
     <script src="/Assets/travorama20/angularDirectory/search/hotelSearch.service.js"></script>
     <script src="/Assets/travorama20/js/homeController.js"></script>
 }
 
 <div class="page-loading form-container" ng-class="{'page-loaded' : PageConfig.Loaded}" ng-init="getCookies()">
     <div class="carousel-inner" role="listbox">
-        @if (DateTime.UtcNow.AddHours(7).Date <= new DateTime(2016, 12, 15))
+        @if (DateTime.UtcNow.AddHours(7).Date <= new DateTime(2017, 02, 15))
         {
             <div class="item">
-                <a href="/id/Promo/MatahariMall"><img src="/Assets/images/campaign/MatahariMall2016/MatahariMall-slider-mobile.jpg" alt="Matahari Mall" /></a>
-            </div>
-        }
-        @if (DateTime.UtcNow.AddHours(7).Date <= new DateTime(2016, 12, 31))
-        {
-            <div class="item">
-                <a href="/id/Promo/OnlineRevolution"><img src="/Assets/images/campaign/OnlineRevolution2016/OnlineRevolution-slider-mobile.jpg" alt="Online Revolution" /></a>
+                <a href="/id/Promo/Imlek"><img src="/Assets/images/campaign/Imlek2017/Imlek2017-slider-mobile.jpg" alt="Travorama Imlek 2017" /></a>
             </div>
         }
         <div class="item">
