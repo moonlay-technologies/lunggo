@@ -1,0 +1,128 @@
+﻿.hotel-list-container {
+    .hl-wrapper {display: block;}
+    .hl-select {
+        display: block;
+        text-decoration: none;
+    }
+    .hotel-list {
+        margin-top: 15px;
+        padding: 14px;
+        background: #fff;
+        border: 1px solid #afafaf;
+        border-radius: 3px;
+        cursor:pointer;
+        &>.col-8 {padding-left: 15px;}
+        &:hover {
+            box-shadow: 3px 4px 6px #1d91e4;
+            transition: .4s;
+        }
+    }
+    .facility {
+        text-align: right;
+        .wifi {@extend .wifi-icon;}
+        .meal {@extend .meal-icon;}
+    }
+    .location {
+        margin: 7px 0;
+        margin-left: 20px;
+        line-height: 20px;
+        color: #000;
+        &:before {
+            @extend .maps-icon;
+            position: absolute;
+            left: 15px;
+        }
+    }
+    .review {
+        padding-bottom: 10px;
+        display:none;
+        .col-half {
+            &.left {
+                border-right: 1px solid #ccc;
+                .md-txt:before {
+                    @extend .plane-icon;
+                }
+                .grey-txt {margin-left: 32px;}
+            }
+            .grey-txt {margin-left: 40px;}
+            .trip-advisor {
+                &:before {
+                    content: '';
+                    background: url(/Assets/travorama20/images/Hotel/trip-advisor.png) no-repeat;
+                    width: 20px;
+                    height: 12px;
+                    display: inline-block;
+                    vertical-align: middle;
+                    margin-left: 15px;
+                    margin-right: 5px;
+                }
+                &:after {
+                    content: '';
+                    background: url(/Assets/travorama20/images/Hotel/trip-advisor-rating.png) no-repeat;
+                    width: 62px;
+                    height: 12px;
+                    display: inline-block;
+                    vertical-align: middle;
+                }
+            }
+        }
+    }
+    .price {
+        color: #ff7200;
+        display: none;
+    }
+    .pagination {
+        margin: 25px 0 0;    
+        text-align: center;
+        width: 100%;
+        @extend .os-semibold;
+        font-weight: 600;
+        .page-container { 
+            display: inline-block;
+            margin-left: 30px;
+            a {
+                &.prev {
+                    display: inline-block;
+                    width: 8px;
+                    height: 12px;
+                    background: url(/Assets/travorama20/images/Hotel/prev.png) no-repeat;
+                    vertical-align: middle;
+                }
+                &.next {
+                    display: inline-block;
+                    width: 8px;
+                    height: 12px;
+                    background: url(/Assets/travorama20/images/Hotel/next.png) no-repeat;
+                    vertical-align: middle;
+                }
+            }
+            ul.page-list {
+                padding: 0;
+                list-style-type: none;
+                display: inline-flex;
+                margin: 0;
+                li > a {
+                    display: inline-block;
+                    text-align: center;
+                    margin: 0 10px;
+                    line-height: 20px;
+                    width: 20px;
+                    height: 20px;
+                    color: #000;
+                    text-decoration: none;
+                    &.active, &:hover {
+                        background: #1daee4;
+                        color: #fff;
+                        border-radius: 2px;
+                    }
+                }
+            }
+        }
+    }
+    .break {
+        width: 100%;
+        height: 1px;
+        background: #ccc;
+        margin: 10px 0;
+    }
+}
