@@ -358,7 +358,7 @@ file : /Assets/travorama20/css/_page_index.scss
     }
     //*****
     // section popular
-    .section-popular {padding-top:30px;
+    .section-popular {padding-top:15px;
         &>.container {max-width: none;}
         .popular-left {padding-right:7.5px;}
         .popular-middle {padding-left:7.5px; padding-right:7.5px;}
@@ -653,20 +653,46 @@ file : /Assets/travorama20/css/_page_index.scss
                         text-align: center;
                         width: 80px;
                     }
-                    th {font-weight: 700;}
+                    th {
+                        font-weight: 700;
+                        color: #6a6a6a;
+                        padding: 10px 0;
+                    }
                     td {
                         font-weight: 600;
                         position: relative;
                         height: 80px;
+                        cursor: pointer;
                         &:before {
                             content: '';
                             display: block;
                             position: absolute;
                             width: 21px;
                             height: 21px;
-                            background: url(/Assets/images/hotel/marker-calendar.png);
+                            background: url(/Assets/images/hotel/marker-calendar.png) no-repeat;
                             top: 0;
                             left: 0;
+                        }
+                        a.ui-state-default {
+                            color: #000;
+                            text-decoration: none;
+                        }
+                        .price {color: #6a6a6a;}
+                        a.view-price.btn.btn-yellow.sm-btn.xs-txt.os-bold {
+                            margin-bottom: 0;
+                            padding: 2px 0;
+                            display: none;
+                            margin: 0 15px
+                        }
+                        &:hover {
+                            border: 2px solid #1daee4;
+                            box-shadow: 3px 3px 6px 0 #ccc;
+                            &:before {
+                                width: 31px;
+                                height: 31px;
+                                background-size: 100%;
+                            }
+                            a.view-price.btn.btn-yellow.sm-btn.xs-txt.os-bold {display: block;}
                         }
                     }
                 }
