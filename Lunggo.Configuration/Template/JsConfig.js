@@ -119,6 +119,10 @@ var RegisterConfig = {
     Url: '$apiUrl$$registerPath$'
 };
 
+var B2BRegisterConfig = {
+    Url: '$apiUrl$$b2bRegisterPath$'
+};
+
 var ResetPasswordConfig = {
     Url: '$apiUrl$$resetPasswordPath$'
 };
@@ -137,6 +141,14 @@ var ChangeProfileConfig = {
 
 var TrxHistoryConfig = {
     Url: '$apiUrl$$trxHistoryPath$'
+};
+
+var BookerTrxHistoryConfig = {
+    Url: '$apiUrl$$bookerTrxHistoryPath$'
+};
+
+var UpdateReservationConfig = {
+    Url: '$apiUrl$$updateReservationPath$'
 };
 
 var GetReservationConfig = {

@@ -22,7 +22,30 @@ namespace Lunggo.ApCommon.Flight.Service
             {
                 RsvNo = reservation.RsvNo,
                 RsvTime = reservation.RsvTime.TruncateMilliseconds(),
+                RsvType = reservation.RsvType ?? null,
                 RsvDisplayStatus = MapReservationStatus(reservation),
+                CancellationType = reservation.CancellationType,
+                CancellationTime = reservation.CancellationTime.TruncateMilliseconds(),
+                Itinerary = ConvertToItineraryForDisplay(reservation.Itineraries),
+                Contact = reservation.Contact,
+                Pax = ConvertToPaxForDisplay(reservation.Pax),
+                Payment = PaymentService.GetInstance().ConvertToPaymentDetailsForDisplay(reservation.Payment),
+                UserId = reservation.User != null ? reservation.User.Id : null,
+                DeviceId = reservation.State != null ? reservation.State.DeviceId : null
+            };
+        }
+
+        internal FlightReservationForDisplay ConvertToBookerReservationForDisplay(FlightReservation reservation)
+        {
+            if (reservation == null)
+                return null;
+
+            return new FlightReservationForDisplay
+            {
+                RsvNo = reservation.RsvNo,
+                RsvTime = reservation.RsvTime.TruncateMilliseconds(),
+                RsvType = reservation.RsvType ?? null,
+                RsvDisplayStatus = MapReservationStatus(reservation.RsvStatus),
                 CancellationType = reservation.CancellationType,
                 CancellationTime = reservation.CancellationTime.TruncateMilliseconds(),
                 Itinerary = ConvertToItineraryForDisplay(reservation.Itineraries),
@@ -62,6 +85,23 @@ namespace Lunggo.ApCommon.Flight.Service
                 return (paymentMethod == PaymentMethod.VirtualAccount || paymentMethod == PaymentMethod.BankTransfer)
                     ? RsvDisplayStatus.PendingPayment
                     : RsvDisplayStatus.VerifyingPayment;
+            return RsvDisplayStatus.Undefined;
+        }
+
+        private static RsvDisplayStatus MapReservationStatus(RsvStatus status)
+        {
+            if (status == RsvStatus.InProcess)
+                return RsvDisplayStatus.Pending;
+            if (status == RsvStatus.Completed || status == RsvStatus.Approved)
+                return RsvDisplayStatus.Approved;
+            if (status == RsvStatus.Expired)
+                return RsvDisplayStatus.Expired;
+            if (status == RsvStatus.Cancelled)
+                return RsvDisplayStatus.Cancelled;
+            if (status == RsvStatus.Failed)
+                return RsvDisplayStatus.FailedUnpaid;
+            if (status == RsvStatus.Rejected)
+                return RsvDisplayStatus.Rejected;
             return RsvDisplayStatus.Undefined;
         }
 

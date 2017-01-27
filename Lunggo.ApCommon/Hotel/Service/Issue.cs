@@ -27,6 +27,35 @@ namespace Lunggo.ApCommon.Hotel.Service
             IssueHotel(new IssueHotelTicketInput {RsvNo = rsvNo});
         }
 
+        internal void IssueBooker(string rsvNo)
+        {
+            IssueHotelForBooker(new IssueHotelTicketInput{RsvNo = rsvNo});
+        }
+
+        public IssueHotelTicketOutput IssueHotelForBooker(IssueHotelTicketInput input)
+        {
+            var rsvData = GetReservationFromDb(input.RsvNo);
+            if (rsvData == null)
+            {
+                return new IssueHotelTicketOutput
+                {
+                    IsSuccess = false,
+                };
+            }
+
+            var output = new IssueHotelTicketOutput();
+            if (rsvData.RsvStatus == RsvStatus.Approved)
+            {
+                var queueService = QueueService.GetInstance();
+                var queue = queueService.GetQueueByReference("HotelIssueVoucher");
+                queue.AddMessage(new CloudQueueMessage(input.RsvNo));
+                output.IsSuccess = true;
+                return output;
+            }
+            output.IsSuccess = false;
+            return output;
+        }
+
         public IssueHotelTicketOutput IssueHotel(IssueHotelTicketInput input)
         {
             var rsvData = GetReservationFromDb(input.RsvNo);

@@ -1631,6 +1631,7 @@
     <Content Include="Views\B2BThankYou\Thankyou.cshtml" />
     <Content Include="Views\Shared\Desktop\_B2BSiteHeader.cshtml" />
     <Content Include="Views\Shared\Desktop\_B2BLayoutDesktop.cshtml" />
+    <Content Include="Views\B2BAccount\ApproverReservationHistory.cshtml" />
     <None Include="Views\Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

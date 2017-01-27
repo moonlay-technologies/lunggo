@@ -7,7 +7,9 @@
         Completed = 2,
         Expired = 3,
         Cancelled = 4,
-        Failed = 5
+        Failed = 5,
+        Rejected = 6,
+        Approved = 7
     }
 
     public enum RsvDisplayStatus
@@ -22,7 +24,10 @@
         PaymentDenied = 7,
         Cancelled = 8,
         FailedPaid = 9,
-        FailedUnpaid = 10
+        FailedUnpaid = 10,
+        Rejected = 11,
+        Approved = 12,
+        Pending = 13
     }
 
     internal class RsvStatusCd
@@ -41,6 +46,10 @@
                     return "CANC";
                 case RsvStatus.Failed:
                     return "FAIL";
+                case RsvStatus.Rejected:
+                    return "REJE";
+                case RsvStatus.Approved:
+                    return "APRV";
                 default:
                     return null;
             }
@@ -60,9 +69,14 @@
                     return RsvStatus.Cancelled;
                 case "FAIL":
                     return RsvStatus.Failed;
+                case "REJE":
+                    return RsvStatus.Rejected;
+                case "APRV":
+                    return RsvStatus.Rejected;
                 default:
                     return RsvStatus.Undefined;
             }
         }
+
     }
 }

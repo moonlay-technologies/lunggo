@@ -13,7 +13,7 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
 {
     public static partial class AccountLogic
     {
-        public static ApiResponseBase Register(RegisterApiRequest request, ApplicationUserManager userManager)
+        public static ApiResponseBase B2BRegister(RegisterApiRequest request, ApplicationUserManager userManager)
         {
             if (!IsValid(request))
             {
@@ -45,10 +45,13 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
             if (result.Succeeded)
             {
                 //Add default User to Role Admin   
+                userManager.AddToRole(user.Id, "Booker");
+                userManager.GetRoles(user.Id);
+                userManager.RemoveFromRole(user.Id,"Customer");
                 var code = HttpUtility.UrlEncode(userManager.GenerateEmailConfirmationToken(user.Id));
                 var host = ConfigManager.GetInstance().GetConfigValue("general", "rootUrl");
                 var apiUrl = HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority);
-                var callbackUrl = host + "/id/Account/ConfirmEmail?userId=" + user.Id + "&code=" + code + "&apiUrl=" + apiUrl;
+                var callbackUrl = host + "/id/B2BAccount/ConfirmEmail?userId=" + user.Id + "&code=" + code + "&apiUrl=" + apiUrl;
                 userManager.SendEmailAsync(user.Id, "UserConfirmationEmail", callbackUrl).Wait();
 
                 return new ApiResponseBase
@@ -64,12 +67,6 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
                     ErrorCode = "ERRGEN99"
                 };
             }
-        }
-
-        private static bool IsValid(RegisterApiRequest request)
-        {
-            var vc = new ValidationContext(request, null, null);
-            return Validator.TryValidateObject(request, vc, null, true);
         }
     }
 }

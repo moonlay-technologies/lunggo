@@ -119,6 +119,10 @@ var RegisterConfig = {
     Url: 'https://api.local.travorama.com/v1/register'
 };
 
+var B2BRegisterConfig = {
+    Url: 'https://api.local.travorama.com/v1/b2bregister'
+};
+
 var ResetPasswordConfig = {
     Url: 'https://api.local.travorama.com/v1/resetpassword'
 };
@@ -137,6 +141,14 @@ var ChangeProfileConfig = {
 
 var TrxHistoryConfig = {
     Url: 'https://api.local.travorama.com/v1/trxhistory'
+};
+
+var BookerTrxHistoryConfig = {
+    Url: 'https://api.local.travorama.com/v1/bookertrxhistory'
+};
+
+var UpdateReservationConfig = {
+    Url: 'https://api.local.travorama.com/v1/updatereservation'
 };
 
 var GetReservationConfig = {

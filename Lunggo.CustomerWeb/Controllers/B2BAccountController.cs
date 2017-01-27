@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using Lunggo.ApCommon.Flight.Service;
 using Lunggo.ApCommon.Hotel.Service;
+using Lunggo.ApCommon.Identity.Roles;
 using Lunggo.ApCommon.Identity.Users;
 using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.ApCommon.Product.Constant;
@@ -671,10 +673,6 @@ namespace Lunggo.CustomerWeb.Controllers
         [System.Web.Mvc.AllowAnonymous]
         public ActionResult OrderHistory()
         {
-            //var flight = FlightService.GetInstance();
-            //var email = User.Identity.GetEmail();
-            //var reservations = flight.GetOverviewReservationsByContactEmail(email);
-            //return View(reservations ?? new List<FlightReservationForDisplay>());
             if (Request.Cookies["authkey"] != null)
             {
                 return View();

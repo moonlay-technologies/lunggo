@@ -30,7 +30,30 @@ namespace Lunggo.ApCommon.Hotel.Service
                 RsvNo = hotelReservation.RsvNo,
                 Payment = PaymentService.GetInstance().ConvertToPaymentDetailsForDisplay(hotelReservation.Payment),
                 RsvTime = hotelReservation.RsvTime,
+                RsvType = hotelReservation.RsvType ?? null,
                 RsvDisplayStatus = MapReservationStatus(hotelReservation)
+            };
+
+            return convertedRsv;
+        }
+
+        internal HotelReservationForDisplay ConvertToBookerReservationForDisplay(HotelReservation hotelReservation)
+        {
+            if (hotelReservation == null)
+                return null;
+
+            var convertedRsv = new HotelReservationForDisplay
+            {
+                CancellationTime = hotelReservation.CancellationTime,
+                CancellationType = hotelReservation.CancellationType,
+                Contact = hotelReservation.Contact,
+                HotelDetail = ConvertToHotelDetailWithRoomForDisplay(hotelReservation.HotelDetails),
+                Pax = ConvertToPaxForDisplay(hotelReservation.Pax),
+                RsvNo = hotelReservation.RsvNo,
+                Payment = PaymentService.GetInstance().ConvertToPaymentDetailsForDisplay(hotelReservation.Payment),
+                RsvTime = hotelReservation.RsvTime,
+                RsvType = hotelReservation.RsvType ?? null,
+                RsvDisplayStatus = MapReservationStatus(hotelReservation.RsvStatus)
             };
 
             return convertedRsv;
@@ -655,6 +678,23 @@ namespace Lunggo.ApCommon.Hotel.Service
                 return (paymentMethod == PaymentMethod.VirtualAccount || paymentMethod == PaymentMethod.BankTransfer)
                     ? RsvDisplayStatus.PendingPayment
                     : RsvDisplayStatus.VerifyingPayment;
+            return RsvDisplayStatus.Undefined;
+        }
+
+        private static RsvDisplayStatus MapReservationStatus(RsvStatus status)
+        {
+            if (status == RsvStatus.InProcess)
+                return RsvDisplayStatus.Pending;
+            if (status == RsvStatus.Completed || status == RsvStatus.Approved)
+                return RsvDisplayStatus.Approved;
+            if (status == RsvStatus.Expired)
+                return RsvDisplayStatus.Expired;
+            if (status == RsvStatus.Cancelled)
+                return RsvDisplayStatus.Cancelled;
+            if(status == RsvStatus.Failed)
+                return RsvDisplayStatus.FailedUnpaid;
+            if(status == RsvStatus.Rejected)
+                return RsvDisplayStatus.Rejected;
             return RsvDisplayStatus.Undefined;
         }
 

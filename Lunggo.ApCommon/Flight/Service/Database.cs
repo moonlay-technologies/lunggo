@@ -45,6 +45,23 @@ namespace Lunggo.ApCommon.Flight.Service
             }
         }
 
+        private List<FlightReservation> GetOverviewReservationsByApprover(string[] filters, string sort, int? page, int? itemsPerPage)
+        {
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                var rsvNos =
+                    GetRsvNosByApprover.GetInstance()
+                        .Execute(conn, new { Filters = filters, Sort = sort, Page = page, ItemsPerPage = itemsPerPage })
+                        .Distinct().ToList();
+                if (!rsvNos.Any())
+                    return null;
+                else
+                {
+                    return rsvNos.Select(GetOverviewReservationFromDb).Where(rsv => rsv != null).ToList();
+                }
+            }
+        }
+
         private List<FlightReservation> GetOverviewReservationsByDeviceIdFromDb(string deviceId, string[] filters, string sort, int? page, int? itemsPerPage)
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
@@ -86,6 +103,7 @@ namespace Lunggo.ApCommon.Flight.Service
                 {
                     RsvNo = rsvNo,
                     RsvTime = reservationRecord.RsvTime.GetValueOrDefault().SpecifyUtc(),
+                    RsvStatus = RsvStatusCd.Mnemonic(reservationRecord.RsvStatusCd),
                     Contact = Contact.GetFromDb(rsvNo),
                     Itineraries = new List<FlightItinerary>(),
                     Pax = new List<Pax>(),
@@ -337,6 +355,7 @@ namespace Lunggo.ApCommon.Flight.Service
                             {
                                 RsvNo = rsvNo,
                                 RsvTime = reservationRecord.RsvTime.GetValueOrDefault().SpecifyUtc(),
+                                RsvType = reservationRecord.RsvType,
                                 Contact = Contact.GetFromDb(rsvNo),
                                 Payment = PaymentDetails.GetFromDb(rsvNo),
                                 Itineraries = new List<FlightItinerary>(),

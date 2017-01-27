@@ -77,6 +77,27 @@ namespace Lunggo.ApCommon.Flight.Service
             return rsvs.Select(ConvertToReservationForDisplay).Where(r => r.RsvDisplayStatus != RsvDisplayStatus.Expired).ToList();
         }
 
+        public List<FlightReservationForDisplay> GetBookerOverviewReservationsByUserIdOrEmail(string userId, string email, string filter, string sort, int? page, int? itemsPerPage)
+        {
+            var filters = filter != null ? filter.Split(',') : null;
+            var rsvs = GetOverviewReservationsByUserIdOrEmailFromDb(userId, email, filters, sort, page, itemsPerPage) ?? new List<FlightReservation>();
+            return rsvs.Select(ConvertToBookerReservationForDisplay).ToList();
+        }
+
+        public List<FlightReservationForDisplay> GetOverviewReservationsByApprover(string filter, string sort, int? page, int? itemsPerPage)
+        {
+            var filters = filter != null ? filter.Split(',') : null;
+            var rsvs = GetOverviewReservationsByApprover(filters, sort, page, itemsPerPage) ?? new List<FlightReservation>();
+            return rsvs.Select(ConvertToBookerReservationForDisplay).ToList();
+        }
+
+        public List<FlightReservationForDisplay> GetReservationsByApprover(string userId, string email, string filter, string sort, int? page, int? itemsPerPage)
+        {
+            var filters = filter != null ? filter.Split(',') : null;
+            var rsvs = GetOverviewReservationsByUserIdOrEmailFromDb(userId, email, filters, sort, page, itemsPerPage) ?? new List<FlightReservation>();
+            return rsvs.Select(ConvertToReservationForDisplay).ToList();
+        }
+
         public List<FlightReservationForDisplay> GetOverviewReservationsByDeviceId(string deviceId, string filter, string sort, int? page, int? itemsPerPage)
         {
             var filters = filter != null ? filter.Split(',') : null;

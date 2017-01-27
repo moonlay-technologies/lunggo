@@ -193,7 +193,7 @@
                                                             <p>@Html.I18NString("CW00197") : <b>{{flight.itin.trips[0].origin}}</b> to <b>{{flight.itin.trips[0].destination}}</b></p>
                                                             <p ng-if="flight.itin.trips.length > 1">@Html.I18NString("CW00057"): {{flight.itin.trips[0].segments[0].departureTime | date : 'EEEE, dd MMMM yyyy , HH:mm' :'UTC'}} | @Html.I18NString("CW00058"): {{flight.itin.trips[1].segments[0].departureTime | date : 'EEEE, dd MMMM yyyy , HH:mm' :'UTC'}}</p>
                                                             <p ng-if="flight.itin.trips.length < 2">@Html.I18NString("CW00057"): {{flight.itin.trips[0].segments[0].departureTime | date : 'EEEE, dd MMMM yyyy , HH:mm' :'UTC'}}</p>
-                                                            <p>Status : <span class="success">{{bookingstatus(flight.rsvStatus)}}</span></p>
+                                                            <p>Status : <span class="success">{{bookingstatus(flight.payment.status)}}</span></p>
                                                         </div>
                                                     </div>
                                                     <div class="col-xs-2">
@@ -202,14 +202,6 @@
                                                         </form>
                                                         <div class="action">
                                                             <a class="btn btn-yellow" ng-href="@Url.Action("SelectReservation", "B2BAccount")?rsvNo={{flight.rsvNo}}">@Html.I18NString("CW00175")</a>
-                                                        </div>
-                                                        <div ng-if="signature">
-                                                            <div ng-if="flight.rsvStatus == 13" style="margin-top:-100px">
-                                                                <a class="btn btn-yellow" ng-click="updateReservation(fligh.rsvNo,approved)">APPROVE</a>
-                                                            </div>
-                                                            <div ng-if="flight.rsvStatus == 13" style="margin-top:-80px">
-                                                                <a class="btn btn-yellow" ng-click="updateReservation(flight.rsvNo,rejected)">REJECT</a>
-                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -242,9 +234,11 @@
                                                 <div class="action-hotel" style="margin-top:-80px">
                                                     <a class="btn btn-yellow" ng-href="@Url.Action("SelectReservation", "B2BAccount")?rsvNo={{hotel.rsvNo}}">DETAIL</a>
                                                 </div>
-                                                <div ng-if="signature">
-                                                    <a ng-if="hotel.rsvStatus == 13" class="btn btn-yellow" ng-click="updateReservation(hotel.rsvNo,approved)">APPROVE</a>
-                                                    <a ng-if="hotel.rsvStatus == 13" class="btn btn-yellow" ng-click="updateReservation(hotel.rsvNo,rejected)">REJECT</a>
+                                                <div class="action-hotel" ng-if="hotel.payment.status == 2 || hotel.payment.status == 6|| hotel.payment.status == 7" style="margin-top:-80px">
+                                                    <a class="btn btn-yellow" ng-href="@Url.Action("SelectReservation", "B2BAccount")?rsvNo={{hotel.rsvNo}}">APPROVE</a>
+                                                </div>
+                                                <div class="action-hotel" ng-if="hotel.payment.status == 2 || hotel.payment.status == 6|| hotel.payment.status == 7" style="margin-top:-80px">
+                                                    <a class="btn btn-yellow" ng-href="@Url.Action("SelectReservation", "B2BAccount")?rsvNo={{hotel.rsvNo}}">REJECT</a>
                                                 </div>
                                             </div>
                                             <div class="order-bottom">
@@ -275,7 +269,7 @@
                                                     </div>
                                                     <div class="wb-container clearfix">
                                                         <div class="ot-left">Status</div>
-                                                        <div class="ot-right bold-txt">{{bookingstatus(hotel.rsvStatus)}}</div>
+                                                        <div class="ot-right bold-txt">{{bookingstatus(hotel.payment.status)}}</div>
                                                     </div>
 
                                                 </div>

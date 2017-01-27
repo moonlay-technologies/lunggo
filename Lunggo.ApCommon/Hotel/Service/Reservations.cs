@@ -89,6 +89,13 @@ namespace Lunggo.ApCommon.Hotel.Service
             return rsvs.Select(ConvertToReservationForDisplay).Where(r => r.RsvDisplayStatus != RsvDisplayStatus.Expired).ToList().ToList();
         }
 
+        public List<HotelReservationForDisplay> GetBookerOverviewReservationsByUserIdOrEmail(string userId, string email, string filter, string sort, int? page, int? itemsPerPage)
+        {
+            var filters = filter != null ? filter.Split(',') : null;
+            var rsvs = GetOverviewReservationsByUserIdOrEmailFromDb(userId, email, filters, sort, page, itemsPerPage) ?? new List<HotelReservation>();
+            return rsvs.Select(ConvertToBookerReservationForDisplay).ToList();
+        }
+
         private List<HotelReservation> GetOverviewReservationsByUserIdOrEmailFromDb(string userId, string email, string[] filters, string sort, int? page, int? itemsPerPage)
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
@@ -96,6 +103,30 @@ namespace Lunggo.ApCommon.Hotel.Service
                 var rsvNos =
                     GetRsvNosByUserIdQuery.GetInstance()
                         .Execute(conn, new { UserId = userId, ContactEmail = email }, new { Filters = filters, Sort = sort, Page = page, ItemsPerPage = itemsPerPage })
+                        .Distinct().ToList();
+                if (!rsvNos.Any())
+                    return null;
+                else
+                {
+                    return rsvNos.Select(GetOverviewReservationFromDb).Where(rsv => rsv != null).ToList();
+                }
+            }
+        }
+
+        public List<HotelReservationForDisplay> GetOverviewReservationByApprover(string filter, string sort, int? page, int? itemsPerPage)
+        {
+            var filters = filter != null ? filter.Split(',') : null;
+            var rsvs = GetOverviewReservationByApproverFromDb(filters, sort, page, itemsPerPage) ?? new List<HotelReservation>();
+            return rsvs.Select(ConvertToBookerReservationForDisplay).ToList();
+        }
+
+        private List<HotelReservation> GetOverviewReservationByApproverFromDb(string []filters, string sort, int? page, int? itemsPerPage)
+        {
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                var rsvNos =
+                    GetReservationByApproverIdQuery.GetInstance()
+                        .Execute(conn, new { Filters = filters, Sort = sort, Page = page, ItemsPerPage = itemsPerPage })
                         .Distinct().ToList();
                 if (!rsvNos.Any())
                     return null;
@@ -120,6 +151,8 @@ namespace Lunggo.ApCommon.Hotel.Service
                 {
                     RsvNo = rsvNo,
                     RsvTime = reservationRecord.RsvTime.GetValueOrDefault().SpecifyUtc(),
+                    RsvType = reservationRecord.RsvType,
+                    RsvStatus = RsvStatusCd.Mnemonic(reservationRecord.RsvStatusCd),
                     Contact = Contact.GetFromDb(rsvNo),
                     Pax = new List<Pax>(),
                     HotelDetails = new HotelDetail(),
@@ -278,6 +311,35 @@ namespace Lunggo.ApCommon.Hotel.Service
         {
             var rsvs = GetSearchReservationsFromDb(search);
             return rsvs.Select(ConvertToReservationForDisplay).ToList();
+        }
+
+        public bool UpdateReservation(string rsvNo, string status)
+        {
+            if (status.Equals("Approved"))
+            {
+                try
+                {
+                    UpdateRsvStatusDb(rsvNo, RsvStatus.Approved);
+                    HotelService.GetInstance().IssueBooker(rsvNo);
+                    return true;
+                }
+                catch
+                {
+                    return false;
+                }       
+            }
+            else
+            {
+                try
+                {
+                    UpdateRsvStatusDb(rsvNo, RsvStatus.Rejected);
+                    return true;
+                }
+                catch
+                {
+                    return false;
+                }
+            }
         }
     }
 }

@@ -22,6 +22,13 @@ namespace Lunggo.ApCommon.Hotel.Service
             queue.AddMessage(new CloudQueueMessage(rsvNo));
         }
 
+        public void SendNewBookingInfo(string rsvNo)
+        {
+            var queueService = QueueService.GetInstance();
+            var queue = queueService.GetQueueByReference("NewBookingInfoEmail");
+            queue.AddMessage(new CloudQueueMessage(rsvNo));
+        }
+
         ///* Jika Gagal Issue karna Deposit Abis atau lainnya*/
         //public void SendIssueSlightDelayNotifToCustomer(string message) 
         //{

@@ -212,7 +212,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApiSrc\Account\AccountController.cs" />
+    <Compile Include="ApiSrc\Account\Logic\B2BRegisterLogic.cs" />
+    <Compile Include="ApiSrc\Account\Logic\B2BUpdateReservationLogic.cs" />
     <Compile Include="ApiSrc\Account\Logic\ChangePasswordLogic.cs" />
+    <Compile Include="ApiSrc\Account\Logic\GetBookerTransaction.cs" />
     <Compile Include="ApiSrc\Account\Logic\GetProfileLogic.cs" />
     <Compile Include="ApiSrc\Account\Logic\ForgotPasswordLogic.cs" />
     <Compile Include="ApiSrc\Account\Logic\ChangeProfileLogic.cs" />
@@ -223,11 +226,14 @@
     <Compile Include="ApiSrc\Account\Logic\ResendConfirmationEmailLogic.cs" />
     <Compile Include="ApiSrc\Account\Logic\RegisterLogic.cs" />
     <Compile Include="ApiSrc\Account\Logic\LoginLogic.cs" />
+    <Compile Include="ApiSrc\Account\Model\B2BUpdateReservationRequest.cs" />
+    <Compile Include="ApiSrc\Account\Model\B2BUpdateReservationResponse.cs" />
     <Compile Include="ApiSrc\Account\Model\ChangePasswordApiRequest.cs" />
     <Compile Include="ApiSrc\Account\Model\ChangeProfileApiResponse.cs" />
     <Compile Include="ApiSrc\Account\Model\ChangeProfileApiRequest.cs" />
     <Compile Include="ApiSrc\Account\Model\ConfirmEmailApiResponse.cs" />
     <Compile Include="ApiSrc\Account\Model\ForgotPasswordApiRequest.cs" />
+    <Compile Include="ApiSrc\Account\Model\BookerTransactionApiResponse.cs" />
     <Compile Include="ApiSrc\Account\Model\GetProfileApiResponse.cs" />
     <Compile Include="ApiSrc\Account\Model\ConfirmEmailApiRequest.cs" />
     <Compile Include="ApiSrc\Account\Model\LoginApiResponse.cs" />

@@ -16,6 +16,8 @@ namespace Lunggo.ApCommon.Product.Model
         public string RsvNo { get; set; }
         [JsonProperty("rsvTime", NullValueHandling = NullValueHandling.Ignore)]
         public DateTime RsvTime { get; set; }
+        [JsonProperty("rsvType", NullValueHandling = NullValueHandling.Ignore)]
+        public string RsvType { get; set; }
         [JsonProperty("rsvStatus", NullValueHandling = NullValueHandling.Ignore)]
         public RsvDisplayStatus RsvDisplayStatus { get; set; }
         [JsonProperty("cancelType", NullValueHandling = NullValueHandling.Ignore)]

@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Http;
 using Lunggo.ApCommon.Identity.Auth;
+using Lunggo.ApCommon.Identity.Roles;
 using Lunggo.ApCommon.Identity.Users;
 using Lunggo.Framework.Extension;
 using Lunggo.WebAPI.ApiSrc.Account.Logic;
@@ -82,6 +85,25 @@ namespace Lunggo.WebAPI.ApiSrc.Account
             {
                 request = ApiRequestBase.DeserializeRequest<RegisterApiRequest>();
                 var apiResponse = AccountLogic.Register(request, UserManager);
+                return apiResponse;
+            }
+            catch (Exception e)
+            {
+                return ApiResponseBase.ExceptionHandling(e, request);
+            }
+        }
+
+        [HttpPost]
+        [LunggoCorsPolicy]
+        [Authorize]
+        [Route("v1/b2bregister")]
+        public ApiResponseBase B2BRegister()
+        {
+            RegisterApiRequest request = null;
+            try
+            {
+                request = ApiRequestBase.DeserializeRequest<RegisterApiRequest>();
+                var apiResponse = AccountLogic.B2BRegister(request, UserManager);
                 return apiResponse;
             }
             catch (Exception e)
@@ -227,10 +249,11 @@ namespace Lunggo.WebAPI.ApiSrc.Account
         [Route("v1/trxhistory")]
         public ApiResponseBase GetTransactionHistory(string filter = null, string sort = null, int? page = null, int? itemsPerPage = null)
         {
+            string role = "";
             if (User.Identity.IsAuthenticated)
             {
                 var user = User.Identity;
-                var role = UserManager.GetRoles(HttpContext.Current.User.Identity.GetUser().Id);
+                role = UserManager.GetRoles(HttpContext.Current.User.Identity.GetUser().Id).FirstOrDefault();
             }
             try
             {
@@ -240,6 +263,61 @@ namespace Lunggo.WebAPI.ApiSrc.Account
             catch (Exception e)
             {
                 return ApiResponseBase.ExceptionHandling(e);
+            }
+        }
+
+        [HttpGet]
+        [LunggoCorsPolicy]
+        [Authorize]
+        [Route("v1/bookertrxhistory")]
+        public ApiResponseBase GetBookerTransactionHistory(string filter = null, string sort = null, int? page = null, int? itemsPerPage = null)
+        {
+            string role = "";
+            if (User.Identity.IsAuthenticated)
+            {
+                var user = User.Identity;
+                role = UserManager.GetRoles(HttpContext.Current.User.Identity.GetUser().Id).FirstOrDefault();
+            }
+            try
+            {
+                var apiResponse = AccountLogic.GetBookerTransaction(filter, sort, page, itemsPerPage,role);
+                return apiResponse;
+            }
+            catch (Exception e)
+            {
+                return ApiResponseBase.ExceptionHandling(e);
+            }
+        }
+
+        [HttpPost]
+        [Authorize]
+        [LunggoCorsPolicy]
+        [Route("v1/updatereservation")]
+        public ApiResponseBase UpdateReservation()
+        {
+            B2BUpdateReservationRequest request = null;
+            if (User.Identity.IsAuthenticated)
+            {
+                var user = User.Identity;
+                var role = UserManager.GetRoles(HttpContext.Current.User.Identity.GetUser().Id).FirstOrDefault();
+                if (role == null || !role.Equals("Approver"))
+                {
+                    return new ApiResponseBase
+                    {
+                        StatusCode = HttpStatusCode.Unauthorized,
+                        ErrorCode = "ERRUPR01"
+                    };
+                }
+            }
+            try
+            {
+                request = ApiRequestBase.DeserializeRequest<B2BUpdateReservationRequest>();
+                var apiResponse = AccountLogic.UpdateReservationLogic(request);
+                return apiResponse;
+            }
+            catch (Exception e)
+            {
+                return ApiResponseBase.ExceptionHandling(e, request);
             }
         }
 

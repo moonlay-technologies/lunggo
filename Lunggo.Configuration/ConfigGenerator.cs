@@ -345,11 +345,14 @@ namespace Lunggo.Configuration
             const string loginPath = @"/v1/login";
             const string getProfilePath = @"/v1/profile";
             const string registerPath = @"/v1/register";
+            const string b2bRegisterPath = @"/v1/b2bregister";
             const string resetPasswordPath = @"/v1/resetpassword";
             const string forgotPasswordPath = @"/v1/forgot";
             const string changePasswordPath = @"/v1/changepassword";
             const string changeProfilePath = @"/v1/profile";
             const string trxHistoryPath = @"/v1/trxhistory";
+            const string bookerTrxHistoryPath = @"/v1/bookertrxhistory";
+            const string updateReservationPath = @"/v1/updatereservation";
             const string getReservationPath = @"/v1/rsv/";
             const string resendConfirmationEmailPath = @"/v1/resendconfirmationemail";
             const string uniqueCodePaymentPath = @"/v1/payment/uniquecode";
@@ -381,10 +384,13 @@ namespace Lunggo.Configuration
             fileTemplate.SetAttribute("checkBinDiscountPath", checkBinDiscountPath);
             fileTemplate.SetAttribute("subscribePath", subscribePath);
             fileTemplate.SetAttribute("trxHistoryPath", trxHistoryPath);
+            fileTemplate.SetAttribute("bookerTrxHistoryPath", bookerTrxHistoryPath);
             fileTemplate.SetAttribute("getReservationPath", getReservationPath);
+            fileTemplate.SetAttribute("updateReservationPath", updateReservationPath);
             fileTemplate.SetAttribute("loginPath", loginPath);
             fileTemplate.SetAttribute("getProfilePath", getProfilePath);
             fileTemplate.SetAttribute("registerPath", registerPath);
+            fileTemplate.SetAttribute("b2bRegisterPath",b2bRegisterPath);
             fileTemplate.SetAttribute("resetPasswordPath", resetPasswordPath);
             fileTemplate.SetAttribute("forgotPasswordPath", forgotPasswordPath);
             fileTemplate.SetAttribute("changePasswordPath", changePasswordPath);

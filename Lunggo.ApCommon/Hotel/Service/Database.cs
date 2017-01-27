@@ -34,6 +34,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                 var hotelReservation = new HotelReservation
                 {
                     RsvNo = rsvNo,
+                    RsvType = reservationRecord.RsvType,
                     Contact = Contact.GetFromDb(rsvNo),
                     Pax = new List<Pax>(),
                     Payment = PaymentDetails.GetFromDb(rsvNo),
