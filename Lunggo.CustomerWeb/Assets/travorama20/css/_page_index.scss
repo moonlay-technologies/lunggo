@@ -404,6 +404,58 @@ file : /Assets/travorama20/css/_page_index.scss
                 &:hover {border-color:$color-main-blue;}
             }
         }
+        
+        // popular hotel
+        .popular-hotel {
+            .row:last-child {margin-top: 12px;}
+            .pop-hotel {
+                width: 100%;
+                height: 250px;
+                background-size: cover;
+                background-position: center;
+                background-repeat: no-repeat;
+                cursor: pointer;
+                position: relative;
+                &:before {
+                    content: '';
+                    background: #000;
+                    width: 100%;
+                    height: 250px;
+                    display: block;
+                    opacity: .2;
+                }
+                &:hover {
+                    .pop-inner .view-hotel {
+                        display: block;
+                        margin: 15px auto 0;
+                    }
+                    &:before {
+                        opacity: .5;
+                        @include transition(.4s);
+                    }
+                }
+                .pop-inner {
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    text-align: center;
+                    transform: translate(-50%, -50%);
+                    .view-hotel {display: none;}
+                    .xlg-txt.os-bold {line-height: 40px;}
+                    .location { margin-left: 13px;
+                        &:before {
+                            content: '';
+                            width: 13px;
+                            height: 21px;
+                            display: inline;
+                            background: url(/Assets/images/hotel/location-white.png) no-repeat;
+                            position: absolute;
+                            margin-left: -17px;
+                        }
+                    }
+                }
+            }
+        }
     }
 
     //*****
@@ -543,4 +595,109 @@ file : /Assets/travorama20/css/_page_index.scss
         }   
     }
     &>#ui-datepicker-div { display: none !important;}
+    
+    // section calendar price
+    .section-calendar-price {
+         &>.container {
+            padding: 40px 0 15px;
+            max-width: none !important;
+            border-bottom: 1px solid #ccc;
+        }
+        .popular-flight {
+            .yellow-txt {color: #ffd632;}
+            .pop-flight {
+                width: 100%;
+                height: 120px;
+                position: relative;
+                z-index: 0;
+                cursor: pointer;
+                margin-bottom: 5px;
+                &:before {
+                    content: '';
+                    display: block;
+                    background: #000;
+                    width: 100%;
+                    height: 120px;
+                    position: absolute;
+                    left: 0;
+                    top: 0;
+                    opacity: .2;
+                    z-index: -1;
+                }
+                &:hover:before {
+                    opacity: .5; 
+                    @include transition(.4s);
+                }
+                .bottom-txt {
+                    position: absolute;
+                    right: 0;
+                    bottom: 0;
+                    padding-bottom: 10px;
+                    padding-right: 20px;
+                }
+                .pf-wrapper {
+                    width: 100%;
+                    height: 120px;
+                    display: block;
+                    padding: 10px 20px;
+                }
+            }
+        }
+        .price-calendar {
+            .ui-datepicker-inline {
+                .ui-datepicker-prev, .ui-datepicker-next {display: none;}
+                & > .ui-datepicker-inline {display: none !important;}
+                .ui-datepicker-calendar {
+                    th, td {
+                        font-size: 15px;
+                        text-align: center;
+                        width: 80px;
+                    }
+                    th {font-weight: 700;}
+                    td {
+                        font-weight: 600;
+                        position: relative;
+                        height: 80px;
+                        &:before {
+                            content: '';
+                            display: block;
+                            position: absolute;
+                            width: 21px;
+                            height: 21px;
+                            background: url(/Assets/images/hotel/marker-calendar.png);
+                            top: 0;
+                            left: 0;
+                        }
+                    }
+                }
+            }
+        }
+        .price-calendar, .popular-flight {
+            .os-bold.md-txt {margin-bottom: 15px;}
+        }
+    }
+
+    // section why
+    .section-why {
+        margin: 30px 0;
+        &>.container {max-width: none !important;}
+        .sw-img {
+            margin: 50px auto 15px;
+            height: 54px;
+            + div + div {margin-top: 5px;}
+            &.sw-flight {
+                background: url(/Assets/images/hotel/why-flight.png) no-repeat;
+                width: 90px;
+            }
+            &.sw-hotel {
+                background: url(/Assets/images/hotel/why-hotel.png) no-repeat;
+                width: 37px;
+            }
+            &.sw-active {
+                background: url(/Assets/images/hotel/why-active.png) no-repeat;
+                width: 69px;
+            }
+        }
+        
+    }
 }
