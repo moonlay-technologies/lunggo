@@ -40,11 +40,16 @@ namespace Lunggo.WebJob.FlightProcessor
                     var searchRequest = new RestRequest("/v1/flight/" + searchId + "/0", Method.GET);
                     searchRequest.AddHeader("Authorization", "Bearer " + loginResponse.AccessToken);
                     var searchResponse = loginClient.Execute(searchRequest).Content.Deserialize<SearchResponseFormat>();
+                    var origin = searchId.Substring(0, 3);
+                    var destination = searchId.Substring(3, 3);
                     if (searchResponse.Flights != null)
                     {
                         foreach (var resp in searchResponse.Flights)
                         {
-                            FlightService.GetInstance().SetLowestPriceToCache(resp.Itins);
+                            if (resp != null && resp.Count > 0)
+                            {
+                                FlightService.GetInstance().SetLowestPriceToCache(resp.Itins, origin, destination);
+                            }                   
                         }
                     }
                     FlightService.GetInstance().InvalidateSearchingStatusInCache(searchId);

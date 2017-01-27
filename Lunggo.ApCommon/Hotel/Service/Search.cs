@@ -176,7 +176,7 @@ namespace Lunggo.ApCommon.Hotel.Service
             result.HotelDetails = AddDetailInfoForSearchResult(result.HotelDetails);
             //SetLowestPriceToCache();
             if (result.HotelDetails == null || result.HotelDetails.Count == 0)
-                return new SearchHotelOutput()
+                return new SearchHotelOutput
                 {
                     IsSuccess = true,
                     DestinationName = result.DestinationName,
@@ -206,7 +206,7 @@ namespace Lunggo.ApCommon.Hotel.Service
             var searchIds = detailDestination.Code + "|" + input.CheckIn.ToString("ddMMyy") + "|" + input.Nights + "|" + result.MinPrice;
             var priceCalendarQueue = QueueService.GetInstance().GetQueueByReference("HotelPriceCalendar");
             var searchTimeout = int.Parse(ConfigManager.GetInstance().GetConfigValue("hotel", "hotelSearchResultCacheTimeout"));
-            priceCalendarQueue.AddMessage(new CloudQueueMessage(searchIds), initialVisibilityDelay: new TimeSpan(0, searchTimeout, 0));
+            priceCalendarQueue.AddMessage(new CloudQueueMessage(searchIds), initialVisibilityDelay: new TimeSpan(0, 0, searchTimeout));
             //SetLowestPriceToCache(input.CheckIn, input.Nights, detailDestination.Code, result.MinPrice);
             return new SearchHotelOutput
             {
@@ -374,15 +374,15 @@ namespace Lunggo.ApCommon.Hotel.Service
             var searchIds = input.HotelCode + "|" + input.CheckIn.ToString("ddMMyy") + "|" + input.Nights + "|" + results.MinPrice;
             var priceCalendarQueue = QueueService.GetInstance().GetQueueByReference("hotelpricecalendar");
             var searchTimeout = int.Parse(ConfigManager.GetInstance().GetConfigValue("hotel", "hotelSearchResultCacheTimeout"));
-            priceCalendarQueue.AddMessage(new CloudQueueMessage(searchIds), initialVisibilityDelay: new TimeSpan(0, searchTimeout, 0));
+            priceCalendarQueue.AddMessage(new CloudQueueMessage(searchIds), initialVisibilityDelay: new TimeSpan(0, 0, searchTimeout));
             //SetLowestPriceToCache(input.CheckIn, input.Nights, Convert.ToString(input.HotelCode), results.MinPrice);
             return new SearchHotelOutput
-                        {
-                            IsSuccess = true,
-                            HotelRoom = ConvertToSingleHotelRoomForDisplay(roomHotel),
-                            ReturnedHotelCount = 1,
-                            TotalHotelCount = 1
-                        };
+            {
+                IsSuccess = true,
+                HotelRoom = ConvertToSingleHotelRoomForDisplay(roomHotel),
+                ReturnedHotelCount = 1,
+                TotalHotelCount = 1
+            };
         }
 
         public List<HotelDetail> ApplyHotelDetails(Dictionary<int, HotelDetailsBase> dict, List<HotelDetail> hotels)
