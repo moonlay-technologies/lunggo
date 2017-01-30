@@ -113,18 +113,37 @@
         jQuery(document).ready(function($) {
             $("#pc-datepicker").datepicker({
                 changeMonth: true,
-                changeYear: true
+                changeYear: true,
+                dayNamesMin: ["MGG", "SEN", "SEL", "RAB", "KAM", "JUM", "SAB"],
+                showOtherMonths: true,
+                beforeShow: addCustomInformation,
+                beforeShowDay: function(date) {
+                    return [true, date.getDay() === 5 || date.getDay() === 6 ? "weekend" : "weekday"];
+                },
+                onChangeMonthYear: addCustomInformation,
+                onSelect: addCustomInformation
             });
+            addCustomInformation();
+        });
+        function addCustomInformation() {
+            setTimeout(function() {
+                var price = $(".ui-datepicker-calendar td").filter(function() {
+                    var date = $(this).text();
+                    return /\d/.test(date);
+                });
 
-            $('body td').append(
-                '<div class="sm-txt os-regular price"><sup>Rp</sup> 555</div>' +
-                '<a class="view-price btn btn-yellow sm-btn xs-txt os-bold">LIHAT</a>'
-            );
-            $('.ui-datepicker-header').0('<div class="input-search">' +
-                '<input type="text" />' + '<input type="text" />' +
-                '</div>'
-            );
-        })
+                price.find('a').attr('data-custom', 110);
+                price.append('<a class="view-price btn btn-yellow sm-btn xs-txt os-bold">LIHAT</a>');
+
+                var input = $('.ui-datepicker .ui-datepicker-header');
+                input.prepend('<div class="search-input col-xs-8 row">' +
+                    '<div class="col-xs-6 map-input"><input type="text" name="searchFrom" /></div>' 
+                    + '<div class="col-xs-6 map-input"><input type="text" name="searchTo" /></div>' +
+                    '</div>');
+                $('.ui-datepicker .ui-datepicker-header').addClass('clearfix');
+                $('.ui-datepicker .ui-datepicker-title').addClass('col-xs-4');
+            }, 0);
+        }
     </script>
 }
 

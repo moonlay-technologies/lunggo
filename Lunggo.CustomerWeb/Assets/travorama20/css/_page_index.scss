@@ -644,10 +644,59 @@ file : /Assets/travorama20/css/_page_index.scss
             }
         }
         .price-calendar {
-            .ui-datepicker-inline {
+            min-height: 560px;
+            max-height: 620px;
+            .ui-datepicker-inline { padding-right: 20px;
                 .ui-datepicker-prev, .ui-datepicker-next {display: none;}
                 & > .ui-datepicker-inline {display: none !important;}
+                .ui-datepicker-header {    
+                    background: #f0f0f0;
+                    padding: 15px 10px 15px 6px;
+                    @include border-radius(2px);
+                    .map-input {
+                        input[name="searchFrom"], input[name="searchTo"] {
+                            border: none;
+                            padding: 12px;
+                            padding-left: 25px;
+                            width: 100%;
+                        }
+                        &:before {
+                            content: '';
+                            display: block;
+                            position: absolute;
+                            width: 13px;
+                            height: 18px;
+                            background: url(/Assets/travorama20/images/hotel/location.png) no-repeat;
+                            color: red;
+                            top: 50%;
+                            transform: translateY(-50%);
+                            margin-left: 7px;
+                        }
+                    }
+                    .ui-datepicker-month {
+                        width: 48%;
+                        margin-right: 12px;
+                    }
+                    .ui-datepicker-year {
+                        width: 45%;
+                    }
+                    select.ui-datepicker-month, select.ui-datepicker-year {
+                        padding: 15px 25px 15px 6px;
+                        border: none;
+                        font-size: 12px;
+                        -webkit-border-radius: 2px;
+                        -moz-border-radius: 2px;
+                        -ms-border-radius: 2px;
+                        border-radius: 2px;
+                        line-height: 100%;
+                        -webkit-appearance: none;
+                        -moz-appearance: none;
+                        text-indent: 1px;
+                        text-overflow: '';
+                    }
+                }
                 .ui-datepicker-calendar {
+                    margin: 0 auto;
                     th, td {
                         font-size: 15px;
                         text-align: center;
@@ -657,6 +706,7 @@ file : /Assets/travorama20/css/_page_index.scss
                         font-weight: 700;
                         color: #6a6a6a;
                         padding: 10px 0;
+                        &.ui-datepicker-week-end {color: red;}
                     }
                     td {
                         font-weight: 600;
@@ -669,21 +719,26 @@ file : /Assets/travorama20/css/_page_index.scss
                             position: absolute;
                             width: 21px;
                             height: 21px;
-                            background: url(/Assets/images/hotel/marker-calendar.png) no-repeat;
+                            background: url(/Assets/images/marker-calendar.png) no-repeat;
                             top: 0;
                             left: 0;
                         }
-                        a.ui-state-default {
+                        &.ui-datepicker-week-end.weekend, &.ui-datepicker-week-end.weekday {
+                            .ui-state-default {color: red;}
+                        }
+                        .ui-state-default {
                             color: #000;
                             text-decoration: none;
-                        }
-                        .price {color: #6a6a6a;}
+                        }                            
+                        &.ui-state-disabled .ui-state-default {opacity: 0.3;}
                         a.view-price.btn.btn-yellow.sm-btn.xs-txt.os-bold {
                             margin-bottom: 0;
                             padding: 2px 0;
                             display: none;
-                            margin: 0 15px
+                            margin: 0 15px;
+                            color: #000;
                         }
+                        &.ui-datepicker-other-month {color : #999;}
                         &:hover {
                             border: 2px solid #1daee4;
                             box-shadow: 3px 3px 6px 0 #ccc;
@@ -693,6 +748,17 @@ file : /Assets/travorama20/css/_page_index.scss
                                 background-size: 100%;
                             }
                             a.view-price.btn.btn-yellow.sm-btn.xs-txt.os-bold {display: block;}
+                        }
+                        a[data-custom] {
+                            position: relative;
+                            &:after {
+                                content: 'Rp ' attr(data-custom);
+                                display: block;
+                                font-size: 11px;
+                                font-weight: 400;
+                                color: #6a6a6a;
+                                margin-bottom: 5px;
+                            }
                         }
                     }
                 }
@@ -712,15 +778,15 @@ file : /Assets/travorama20/css/_page_index.scss
             height: 54px;
             + div + div {margin-top: 5px;}
             &.sw-flight {
-                background: url(/Assets/images/hotel/why-flight.png) no-repeat;
+                background: url(/Assets/images/why-flight.png) no-repeat;
                 width: 90px;
             }
             &.sw-hotel {
-                background: url(/Assets/images/hotel/why-hotel.png) no-repeat;
+                background: url(/Assets/images/why-hotel.png) no-repeat;
                 width: 37px;
             }
             &.sw-active {
-                background: url(/Assets/images/hotel/why-active.png) no-repeat;
+                background: url(/Assets/images/why-active.png) no-repeat;
                 width: 69px;
             }
         }
