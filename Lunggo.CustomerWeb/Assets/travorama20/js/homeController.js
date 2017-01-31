@@ -1,7 +1,7 @@
 ﻿// home controller
 app.controller('homeController', ['$scope', '$log', '$http', '$location', '$resource', '$timeout', 'hotelSearchSvc', function ($scope, $log, $http, $location, $resource, $timeout, hotelSearchSvc) {
 
-
+    
     $(document).ready(function() {
 
         if (Cookies.get('hotelSearchLocationDisplay')) {
@@ -88,6 +88,10 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
                 });
             }
         }
+
+        //var jkt = getCheapestFlightPrice('DPS', 'JKT');
+        //$scope.priceFlight.Jakarta.CheapestDate = jkt.cheapestDate;
+        //$scope.priceFlight.Jakarta.CheapestPrice = jkt.cheapestPrice;
     });
    // ================= FLIGHT ========================
 
@@ -110,6 +114,123 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
             $scope.isFlight = true;
         }
     }
+
+    $scope.priceFlight =
+    {
+        Denpasar: {
+            CheapestDate: '',
+            CheapestPrice: ''
+        },
+        Surabaya: {
+            CheapestDate: '',
+            CheapestPrice: ''
+        },
+        Jakarta: {
+            CheapestDate: '',
+            CheapestPrice: ''
+        },
+        Medan: {
+            CheapestDate: '',
+            CheapestPrice: ''
+        }
+    };
+    function getCheapestHotelPrice(location) {
+        var authAccess = getAuthAccess();
+        var date = new Date(), y = date.getFullYear(), m = date.getMonth();
+        var lastDay = new Date(y, m + 1, 0);
+        var startDate = ("0" + date.getDate()).slice(-2)
+             + ("0" + (date.getMonth() + 1)).slice(-2) + y.toString().substring(2, 4);
+        var endDate = ("0" + lastDay.getDate()).slice(-2)
+             + ("0" + (lastDay.getMonth() + 1)).slice(-2) + y.toString().substring(2, 4);
+        if (authAccess == 1 || authAccess == 2) {
+            $.ajax({
+                url: HotelPriceCalendarConfig.Url + '/' + location + '/' + startDate
+                + '/' + endDate + '/IDR',
+                method: 'GET',
+                headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') }
+            }).done(function (returnData) {
+                //if (returnData.status == 200) {
+                var cheapestPrice = returnData.cheapestPrice;
+                var cheapestDate;
+                if (returnData.cheapestDate != null && returnData.cheapestDate != '') {
+                    cheapestDate = new Date(returnData.cheapestDate);
+                    return [cheapestPrice, cheapestDate];
+                } else {
+                    return [-1, ''];
+                }
+
+                //}
+
+            }).error(function (returnData) {
+                return [-1, ''];
+            });
+        }
+    }
+
+    $scope.getCheapestFlightPrice = function(origin, destination) {
+        var authAccess = getAuthAccess();
+
+        //var date = new Date();
+        //var firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
+        //var lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+
+        var date = new Date(), y = date.getFullYear();
+        var lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+        //lastDay.setDate(date.getDate() + 1);
+        var startDate = ("0" + date.getDate()).slice(-2)
+             + ("0" + (date.getMonth() + 1)).slice(-2) + y.toString().substring(2, 4);
+        var endDate = ("0" + lastDay.getDate()).slice(-2)
+             + ("0" + (lastDay.getMonth() + 1)).slice(-2) + y.toString().substring(2, 4);
+        
+        if (authAccess == 1 || authAccess == 2) {
+            $.ajax({
+                url: FlightPriceCalendarConfig.Url + '/' + origin + destination + '/' + startDate
+                + '/' + endDate + '/IDR',
+                method: 'GET',
+                headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') }
+            }).done(function (returnData) {
+                //if (returnData.status == 200) {
+                var cheapestPrice = returnData.cheapestPrice;
+                var cheapestDate;
+                if (returnData.cheapestDate != null && returnData.cheapestDate != '') {
+                    cheapestDate = new Date(returnData.cheapestDate);
+                    if (origin == 'DPS' && destination == 'JKT') {
+                        $scope.priceFlight.Jakarta.CheapestPrice = cheapestPrice;
+                        $scope.priceFlight.Jakarta.CheapestDate = cheapestDate;
+                    } else if (origin == 'JKT' && destination == 'SUB') {
+                        $scope.priceFlight.Surabaya.CheapestPrice = cheapestPrice;
+                        $scope.priceFlight.Surabaya.CheapestDate = cheapestDate;
+                    }
+                    else if (origin == 'JKT' && destination == 'KNO') {
+                        $scope.priceFlight.Medan.CheapestPrice = cheapestPrice;
+                        $scope.priceFlight.Medan.CheapestDate = cheapestDate;
+                    }
+                    else if (origin == 'JKT' && destination == 'DPS') {
+                        $scope.priceFlight.Denpasar.CheapestPrice = cheapestPrice;
+                        $scope.priceFlight.Denpasar.CheapestDate = cheapestDate;
+                    }
+                    //return [cheapestPrice, cheapestDate];
+                }else {
+                    //return [-1, ''];
+                }
+
+                //}
+
+            }).error(function (returnData) {
+                //return [-1, ''];
+            });
+        }
+    }
+    $scope.selectedPopularDestination = {
+        origin: '',
+        destination: '',
+        cheapestDate: '',
+        cheapestPrice: '',
+    }
+    $scope.getCheapestFlightPrice('DPS', 'JKT');
+    $scope.getCheapestFlightPrice('JKT', 'DPS');
+    $scope.getCheapestFlightPrice('JKT', 'SUB');
+    $scope.getCheapestFlightPrice('JKT', 'KNO');
     //=============== hotel start ======================
     $scope.showPopularDestinations = false;
     hotelSearchSvc.initializeSearchForm($scope);
@@ -349,4 +470,24 @@ jQuery(document).ready(function ($) {
         prevArrow: '<button type="button" class="slick-prev hidden">Back</button>',
         nextArrow: '<button type="button" class="slick-next hidden">Next</button>'
     });
+
+    // Price Calendar
+    $("#pc-datepicker").datepicker({
+        changeMonth: true,
+        changeYear: true,
+        dayNamesMin: ["MGG", "SEN", "SEL", "RAB", "KAM", "JUM", "SAB"],
+        showOtherMonths: true,
+        beforeShow: addCustomInformation,
+        beforeShowDay: function (date) {
+            return [true, date.getDay() === 5 || date.getDay() === 6 ? "weekend" : "weekday"];
+        },
+        onChangeMonthYear: addCustomInformation,
+        onSelect: addCustomInformation
+    });
+    addCustomInformation();
+
+    $('.pop-hotel').hover(function () {
+        $(this).find('.view-hotel').slideToggle('fast');
+    });
+
 });

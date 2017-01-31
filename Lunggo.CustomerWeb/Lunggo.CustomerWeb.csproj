@@ -576,6 +576,7 @@
     <Content Include="Assets\images\airplane-image.jpg" />
     <Content Include="Assets\images\ajax-loader.gif" />
     <Content Include="Assets\images\appStore.png" />
+    <Content Include="Assets\images\arrow-down-grey.png" />
     <Content Include="Assets\images\arrow-down.png" />
     <Content Include="Assets\images\arrow-white.png" />
     <Content Include="Assets\images\asita-logo.png" />
@@ -763,7 +764,17 @@
     <Content Include="Assets\images\hotel-review-header.png" />
     <Content Include="Assets\images\hotel-star-4.jpg" />
     <Content Include="Assets\images\hotel-star-4.png" />
+    <Content Include="Assets\images\hotel\location-white.png" />
     <Content Include="Assets\images\hotel\markers.png" />
+    <Content Include="Assets\images\hotel\popular\bali.jpg" />
+    <Content Include="Assets\images\hotel\popular\flight-1.jpg" />
+    <Content Include="Assets\images\hotel\popular\flight-2.jpg" />
+    <Content Include="Assets\images\hotel\popular\flight-3.jpg" />
+    <Content Include="Assets\images\hotel\popular\flight-4.jpg" />
+    <Content Include="Assets\images\hotel\popular\jakarta.jpg" />
+    <Content Include="Assets\images\hotel\popular\macau.jpg" />
+    <Content Include="Assets\images\hotel\popular\surabaya.jpg" />
+    <Content Include="Assets\images\hotel\popular\yogya.jpg" />
     <Content Include="Assets\images\hourglass.png" />
     <Content Include="Assets\images\hover-menu-arrow.png" />
     <Content Include="Assets\images\howto-bg.jpg" />
@@ -800,6 +811,7 @@
     <Content Include="Assets\images\mandiri-logo.jpg" />
     <Content Include="Assets\images\mandiri.png" />
     <Content Include="Assets\images\map.jpg" />
+    <Content Include="Assets\images\marker-calendar.png" />
     <Content Include="Assets\images\mastercard-logo.jpg" />
     <Content Include="Assets\images\menu-icon-white.png" />
     <Content Include="Assets\images\menu-icon.png" />
@@ -943,6 +955,9 @@
     <Content Include="Assets\images\voucher\travorama-white.png" />
     <Content Include="Assets\images\warning-image.png" />
     <Content Include="Assets\images\white-bg.png" />
+    <Content Include="Assets\images\why-active.png" />
+    <Content Include="Assets\images\why-flight.png" />
+    <Content Include="Assets\images\why-hotel.png" />
     <Content Include="Assets\images\wifi.png" />
     <Content Include="Assets\images\yellow-stripe-small.png" />
     <Content Include="Assets\images\yellow-stripe.png" />
@@ -1606,6 +1621,8 @@
     <Content Include="Views\Shared\Mobile\_Summary.cshtml" />
     <Content Include="Views\Shared\Desktop\_HotelDetail.cshtml" />
     <Content Include="Views\Shared\_metaTag.cshtml" />
+    <Content Include="Views\Shared\Desktop\_PopularHotel.cshtml" />
+    <Content Include="Views\Shared\Desktop\_PopularFlight.cshtml" />
     <None Include="Views\Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

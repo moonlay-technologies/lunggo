@@ -1,0 +1,204 @@
+﻿<div class="popular-hotel">
+    <h2 class="section-title stripe text-center xlg-txt">TUJUAN HOTEL <span>TERPOPULER</span></h2>
+    <div class="row">
+        <div class="col-xs-6">
+            <div class="pop-hotel" style="background-image: url('/Assets/images/hotel/popular/jakarta.jpg')">
+                <div class="pop-inner">
+                    <div class="xlg-txt os-bold white-txt">Jakarta</div>
+                    <div class="normal-txt white-txt location">Indonesia</div>
+                    <div class="view-hotel">
+                        <div class="bottom-txt">
+                            <span class="normal-txt white-txt">mulai dari</span>
+                            <span class="md-txt os-bold yellow-txt">Rp 999.999</span>
+                        </div>
+                        <button class="btn btn-yellow sm-btn normal-txt os-bold" href="/id/jakarta" data-target="jakarta">LIHAT HOTEL</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-6">
+            <div class="pop-hotel" style="background-image: url('/Assets/images/hotel/popular/yogya.jpg')">
+                <div class="pop-inner">
+                    <div class="xlg-txt os-bold white-txt">Yogyakarta</div>
+                    <div class="normal-txt white-txt location">Indonesia</div>
+                    <div class="view-hotel">
+                        <div class="bottom-txt">
+                            <span class="normal-txt white-txt">mulai dari</span>
+                            <span class="md-txt os-bold yellow-txt">Rp 999.999</span>
+                        </div>
+                        <button class="btn btn-yellow sm-btn normal-txt os-bold" href="/id/jakarta" data-target="jakarta">LIHAT HOTEL</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-4">
+            <div class="pop-hotel" style="background-image: url('/Assets/images/hotel/popular/surabaya.jpg')">
+                <div class="pop-inner">
+                    <div class="xlg-txt os-bold white-txt">Surabaya</div>
+                    <div class="normal-txt white-txt location">Indonesia</div>
+                    <div class="view-hotel">
+                        <div class="bottom-txt">
+                            <span class="normal-txt white-txt">mulai dari</span>
+                            <span class="md-txt os-bold yellow-txt">Rp 999.999</span>
+                        </div>
+                        <button class="btn btn-yellow sm-btn normal-txt os-bold" href="/id/jakarta" data-target="jakarta">LIHAT HOTEL</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-4">
+            <div class="pop-hotel" style="background-image: url('/Assets/images/hotel/popular/bali.jpg')">
+                <div class="pop-inner">
+                    <div class="xlg-txt os-bold white-txt">Bali</div>
+                    <div class="normal-txt white-txt location">Indonesia</div>
+                    <div class="view-hotel">
+                        <div class="bottom-txt">
+                            <span class="normal-txt white-txt">mulai dari</span>
+                            <span class="md-txt os-bold yellow-txt">Rp 999.999</span>
+                        </div>
+                        <button class="btn btn-yellow sm-btn normal-txt os-bold" href="/id/jakarta" data-target="jakarta">LIHAT HOTEL</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-4">
+            <div class="pop-hotel" style="background-image: url('/Assets/images/hotel/popular/macau.jpg')">
+                <div class="pop-inner">
+                    <div class="xlg-txt os-bold white-txt">Macau</div>
+                    <div class="normal-txt white-txt location">Hongkong</div>
+                    <div class="view-hotel">
+                        <div class="bottom-txt">
+                            <span class="normal-txt white-txt">mulai dari</span>
+                            <span class="md-txt os-bold yellow-txt">Rp 999.999</span>
+                        </div>
+                        <button class="btn btn-yellow sm-btn normal-txt os-bold" href="/id/jakarta" data-target="jakarta">LIHAT HOTEL</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*@if (ViewBag.DestinationName == null || ViewBag.Destinationname == "")
+    {
+        <section class="section-popular">
+            <div class="container">
+                <h2 class="section-title stripe text-center xlg-txt">TUJUAN <span>TERPOPULER</span></h2>
+
+                <div class="row">
+                    <div class="col-xs-4 popular-left">
+                        <div class="destination small">
+                            <a href="/id/jakarta" data-target="jakarta">
+                                <h3>
+                                    <small>Penerbangan ke</small> <b>Jakarta</b>
+                                </h3>
+
+                            </a>
+                            <img src="/Assets/images/pop-jakarta.jpg" alt="Jakarta, Indonesia" />
+                        </div>
+                        <div class="destination medium yellow">
+                            <a href="/id/bali" data-target="bali">
+                                <h3>
+                                    <small>Penerbangan ke</small> <b>Bali</b>
+                                </h3>
+
+                            </a>
+                            <img src="/Assets/images/pop-bali.jpg" alt="Bali, Indonesia" />
+                        </div>
+                        <div class="destination large">
+                            <a href="/id/malaysia" data-target="malaysia">
+                                <h3>
+                                    <small>Penerbangan ke</small> <b>Malaysia</b>
+                                </h3>
+
+                            </a>
+                            <img src="/Assets/images/pop-malaysia.jpg" alt="Malaysia" />
+                        </div>
+                    </div>
+                    <div class="col-xs-4 popular-middle">
+                        <div class="destination half yellow">
+                            <a href="/id/yogyakarta" data-target="yogyakarta">
+                                <h3>
+                                    <small>Penerbangan ke</small> <b>Yogyakarta</b>
+                                </h3>
+
+                            </a>
+                            <img src="/Assets/images/pop-yogyakarta.jpg" alt="Yogyakarta, Indonesia" />
+                        </div>
+                        <div class="destination half yellow">
+                            <a href="/id/singapore" data-target="singapore">
+                                <h3>
+                                    <small>Penerbangan ke</small> <b>Singapura</b>
+                                </h3>
+
+                            </a>
+                            <img src="/Assets/images/pop-singapore.jpg" alt="Singapore" />
+                        </div>
+                    </div>
+                    <div class="col-xs-4 popular-right">
+                        <div class="destination large">
+                            <a href="/id/bandung" data-target="bandung">
+                                <h3>
+                                    <small>Penerbangan ke</small> <b>Bandung</b>
+                                </h3>
+
+                            </a>
+                            <img src="/Assets/images/pop-bandung.jpg" alt="Bandung, Indonesia" />
+                        </div>
+                        <div class="destination medium yellow">
+                            <a href="/id/surabaya" data-target="surabaya">
+                                <h3>
+                                    <small>Penerbangan ke</small> <b>Surabaya</b>
+                                </h3>
+
+                            </a>
+                            <img src="/Assets/images/pop-surabaya.jpg" alt="Surabaya, Indonesia" />
+                        </div>
+                        <div class="destination small">
+                            <a href="/id/hongkong" data-target="hongkong">
+                                <h3>
+                                    <small>Penerbangan ke</small> <b>Hongkong</b>
+                                </h3>
+
+                            </a>
+                            <img src="/Assets/images/pop-hongkong.jpg" alt="Hongkong" />
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+        <!-- .section-popular -->
+    }
+    else
+    {
+        <section class="section-popular">
+            <div class="container">
+                <h2 class="section-title stripe text-center">RUTE PENERBANGAN <span>TERPOPULER</span></h2>
+
+                <div class="route-wrapper" ng-app="travorama" ng-controller="homeController">
+
+                    <div class="row">
+
+                        <div class="col-xs-4" ng-repeat="destination in topDestinations">
+                            <div class="route">
+                                <header>
+                                    <h5><span>Rute Penerbangan</span></h5>
+                                </header>
+                                <section>
+                                    <h4><b>{{destination.name}}</b> ke <b>{{flightDestination.name}}</b></h4>
+                                    <p>Harga mulai dari <b>Rp {{destination.price | number}}</b></p>
+                                    <a class="btn btn-yellow" href="@Url.Action("Search","Flight")?info={{ destination.origin + '' + flightDestination.code + '' + departureDate  }}-100y">LIHAT SEKARANG</a>
+                                </section>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div><!-- .destination-wrapper -->
+
+            </div>
+        </section>
+    }*@
