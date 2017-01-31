@@ -298,7 +298,6 @@ namespace Lunggo.WebAPI.ApiSrc.Account
             B2BUpdateReservationRequest request = null;
             if (User.Identity.IsAuthenticated)
             {
-                var user = User.Identity;
                 var role = UserManager.GetRoles(HttpContext.Current.User.Identity.GetUser().Id).FirstOrDefault();
                 if (role == null || !role.Equals("Approver"))
                 {

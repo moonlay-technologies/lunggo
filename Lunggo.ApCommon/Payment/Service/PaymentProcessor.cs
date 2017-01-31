@@ -155,6 +155,18 @@ namespace Lunggo.ApCommon.Payment.Service
             return paymentDetails;
         }
 
+        public void UpdateBookerPaymentData(string rsvNo)
+        {
+            ReservationBase reservation;
+            if (rsvNo.StartsWith("1"))
+                reservation = FlightService.GetInstance().GetReservation(rsvNo);
+            else
+                reservation = HotelService.GetInstance().GetReservation(rsvNo);
+            var paymentDetails = reservation.Payment;
+            paymentDetails.FinalPriceIdr = paymentDetails.OriginalPriceIdr;
+            UpdatePaymentToDb(rsvNo, paymentDetails);
+        }
+
         public void ClearPayment(string rsvNo)
         {
             ClearPaymentSelection(rsvNo);

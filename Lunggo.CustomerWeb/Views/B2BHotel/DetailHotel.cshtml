@@ -1,15 +1,17 @@
 ﻿@using Lunggo.CustomerWeb.Models
 @using Lunggo.Framework.Extension
+@using Lunggo.Framework.Extension
+@using Newtonsoft.Json
 @model HotelDetailModel.HotelDetail
 @{
     Layout = "/Views/Shared/Desktop/_B2BLayoutDesktop.cshtml";
     ViewBag.BodyClass = "page-hotel page-detail";
     ViewBag.Title = "Detail Hotel";
-    ViewBag.AngularController = "hotelDetailController";
+    ViewBag.AngularController = "B2BHotelDetailController";
 }
 @{
     var loc = Html.Raw(Model.HotelDetailData.HotelName) + ", " + Model.HotelDetailData.City;
-    var hotelFac = new List<_Page_Views_Hotel_DetailHotel_cshtml.FacilityModel>();
+    var hotelFac = new List<FacilityModels>();
     var hotelName = Model.HotelDetailData.HotelName;
     var hotelAddress = Model.HotelDetailData.Address;
     var lat = Model.HotelDetailData.Latitude;
@@ -53,15 +55,15 @@
 
 @functions{
 
-    public class FacilityModel
+    public class FacilityModels
     {
         public List<List<String>> FacilityList { get; set; }
         public string FacilityGroup { get; set; }
     }
 
-    public FacilityModel SetFacilityForDisplay(List<string> facilities, string groupName)
+    public FacilityModels SetFacilityForDisplay(List<string> facilities, string groupName)
     {
-        var facilityModel = new FacilityModel
+        var facilityModel = new FacilityModels
         {
             FacilityList = new List<List<string>>()
         };
@@ -118,9 +120,9 @@
         var hotelAddress = '@hotelAddress';
     </script>
     <script> var hotelImages = '@Html.Raw(Model.HotelDetailData.ImageUrl.Serialize())';</script>
-    <script src="/Assets/travorama20/js/hotelDetailController.js"></script>
+    <script src="/Assets/travorama20/js/B2BHotelDetailController.js"></script>
     <script type="text/javascript" src="/Assets/travorama20/js/HotelController.js"></script>
-    <script src="/Assets/travorama20/angularDirectory/search/hotelSearch.service.js"></script>
+    <script src="/Assets/travorama20/angularDirectory/search/B2BHotelSearch.service.js"></script>
     <script src="/Assets/travorama20/angularDirectory/common/hotelAutocomplete.service.js"></script>
     <script type="text/javascript" src="/Assets/js/jquery.ui.datepicker-id.js"></script>
     <script type="text/javascript" src="https://maps.google.com/maps/api/js?key=AIzaSyCRAmMz6GPXsXi1pZAl5QUsjNTcY0ZfqVA"></script>

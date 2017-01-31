@@ -56,6 +56,17 @@ namespace Lunggo.ApCommon.Flight.Service
                 output.IsSuccess = true;
                 var reservation = CreateReservation(itins, input, bookResults);
                 InsertReservationToDb(reservation);
+                //For Booker Only
+                var userId = HttpContext.Current.User.Identity.GetUser().Id;
+                var role = Role.GetFromDb(userId);
+                if (role.Contains("Booker"))
+                {
+                    //Get Approver Email
+                    PaymentService.GetInstance().UpdateBookerPaymentData(reservation.RsvNo);
+                    var approver = User.GetApproverEmail(userId);
+                    SendNewBookingInfo(PreProcessBookerEmailNotif(reservation.RsvNo, approver));
+                }
+                //End
                 output.RsvNo = reservation.RsvNo;
                 output.TimeLimit = reservation.Itineraries.Min(itin => itin.TimeLimit);
                 ExpireReservationWhenTimeout(reservation.RsvNo, reservation.Payment.TimeLimit);
@@ -77,6 +88,12 @@ namespace Lunggo.ApCommon.Flight.Service
 
 
             return output;
+        }
+
+        private string PreProcessBookerEmailNotif(string rsvNo, List<string> approver)
+        {
+            var approverEmail = string.Join(",", approver);
+            return rsvNo + "," + approverEmail;
         }
 
         public string GetBookingRedirectionUrl(string rsvNo)

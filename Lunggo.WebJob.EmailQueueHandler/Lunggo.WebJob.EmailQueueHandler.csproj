@@ -111,6 +111,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Function\FlightBookerNotifEmail.cs" />
+    <Compile Include="Function\FlightBookingNotifEmail.cs" />
+    <Compile Include="Function\HotelBookerNotifEmail.cs" />
+    <Compile Include="Function\HotelBookingNotifEmail.cs" />
     <Compile Include="Function\HotelSaySorryFailedIssueNotifEmail.cs" />
     <Compile Include="Function\HotelVoucherEmail.cs" />
     <Compile Include="Function\FlightEticketSlightDelayNotifEmail.cs" />

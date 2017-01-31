@@ -6,6 +6,7 @@ using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Model.Logic;
 using Lunggo.ApCommon.Flight.Query;
 using Lunggo.ApCommon.Payment.Constant;
+using Lunggo.ApCommon.Product.Constant;
 using Lunggo.Framework.Database;
 using Lunggo.Framework.Queue;
 using Microsoft.WindowsAzure.Storage.Queue;
@@ -20,6 +21,12 @@ namespace Lunggo.ApCommon.Flight.Service
         {
             IssueTicket(new IssueTicketInput {RsvNo = rsvNo});
         }
+
+        internal void IssueBooker(string rsvNo)
+        {
+            IssueFlightForBooker(new IssueTicketInput { RsvNo = rsvNo });
+        }
+
 
         public IssueTicketOutput IssueTicket(IssueTicketInput input)
         {
@@ -36,6 +43,34 @@ namespace Lunggo.ApCommon.Flight.Service
             if (reservation.Payment.Method == PaymentMethod.Credit ||
                 (reservation.Payment.Method != PaymentMethod.Credit &&
                  reservation.Payment.Status == PaymentStatus.Settled))
+            {
+                var queueService = QueueService.GetInstance();
+                var queue = queueService.GetQueueByReference("FlightIssueTicket");
+                queue.AddMessage(new CloudQueueMessage(input.RsvNo));
+                output.IsSuccess = true;
+                return output;
+            }
+            else
+            {
+                output.IsSuccess = false;
+                output.Errors = new List<FlightError> { FlightError.NotEligibleToIssue };
+                return output;
+            }
+        }
+
+        public IssueTicketOutput IssueFlightForBooker(IssueTicketInput input)
+        {
+            var reservation = GetReservation(input.RsvNo);
+            var output = new IssueTicketOutput();
+
+            if (reservation == null)
+            {
+                output.IsSuccess = false;
+                output.Errors = new List<FlightError> { FlightError.InvalidInputData };
+                return output;
+            }
+
+            if (reservation.RsvStatus == RsvStatus.Approved)
             {
                 var queueService = QueueService.GetInstance();
                 var queue = queueService.GetQueueByReference("FlightIssueTicket");

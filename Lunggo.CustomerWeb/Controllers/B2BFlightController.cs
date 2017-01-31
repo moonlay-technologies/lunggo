@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using Lunggo.ApCommon.Flight.Constant;
@@ -10,7 +11,10 @@ using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Service;
 using Lunggo.ApCommon.Payment.Service;
 using Lunggo.CustomerWeb.Models;
+using Lunggo.Framework.Config;
+using Lunggo.Framework.Extension;
 using Lunggo.Framework.Filter;
+using RestSharp;
 
 namespace Lunggo.CustomerWeb.Controllers
 {
@@ -171,6 +175,26 @@ namespace Lunggo.CustomerWeb.Controllers
             var flightService = FlightService.GetInstance();
             var topDestinations = flightService.GetTopDestination();
             return View(topDestinations);
+        }
+
+        [System.Web.Mvc.AllowAnonymous]
+        public ActionResult UpdateReservation(string rsvNo, string status)
+        {
+            if (rsvNo == null || status == null)
+            {
+                return RedirectToAction("Index", "B2BIndex");
+            }
+            var isUpdated = FlightService.GetInstance().UpdateReservation(rsvNo, status);
+            if (isUpdated)
+            {
+                //Gak tau masih dia pergi kemana
+                return RedirectToAction("Index", "B2BIndex");
+            }
+            else
+            {
+                //Gak tau masih dia pergi kemana
+                return RedirectToAction("Index", "B2BIndex");
+            }
         }
 
         #region Helpers

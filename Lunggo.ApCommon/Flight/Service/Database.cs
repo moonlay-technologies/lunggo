@@ -356,6 +356,7 @@ namespace Lunggo.ApCommon.Flight.Service
                                 RsvNo = rsvNo,
                                 RsvTime = reservationRecord.RsvTime.GetValueOrDefault().SpecifyUtc(),
                                 RsvType = reservationRecord.RsvType,
+                                RsvStatus = RsvStatusCd.Mnemonic(reservationRecord.RsvStatusCd),
                                 Contact = Contact.GetFromDb(rsvNo),
                                 Payment = PaymentDetails.GetFromDb(rsvNo),
                                 Itineraries = new List<FlightItinerary>(),
@@ -945,6 +946,19 @@ namespace Lunggo.ApCommon.Flight.Service
                 }).ToArray();
                 query.Execute(conn, dbBookingStatusInfo);
             }
+        }
+
+        private void UpdateRsvStatusDb(string rsvNo, RsvStatus status)
+        {
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                ReservationTableRepo.GetInstance().Update(conn, new ReservationTableRecord
+                {
+                    RsvNo = rsvNo,
+                    RsvStatusCd = RsvStatusCd.Mnemonic(status)
+                });
+            }
+
         }
 
         //private static void UpdateIssueProgressToDb(string rsvNo, string progressMessage)

@@ -6,7 +6,7 @@
     ViewBag.FooterPayment = true;
     ViewBag.FooterFeedback = false;
     ViewBag.Title = "Enjoy Your Every Moment";
-    ViewBag.AngularController = "homeController";
+    ViewBag.AngularController = "B2BHomeController";
     //ViewBag.Campaign = true;
 
     // location
@@ -107,8 +107,8 @@
         var topDestinations = @Html.Raw(ViewBag.LocationList);
         var departureDate = '@(DateTime.Now.AddDays(1).ToString("ddMMyy"))';
     </script>
-    <script src="/Assets/travorama20/angularDirectory/search/hotelSearch.service.js"></script>
-    <script src="/Assets/Travorama20/js/homeController.js"></script>
+    <script src="/Assets/travorama20/angularDirectory/search/B2BHotelSearch.service.js"></script>
+    <script src="/Assets/Travorama20/js/B2BHomeController.js"></script>
 }
 
 <section class="section-search normal-txt">

@@ -716,11 +716,11 @@ namespace Lunggo.CustomerWeb.Controllers
                 ReservationForDisplayBase displayReservation;
                 if (rsvNo.Substring(0, 1) == "1")
                 {
-                    displayReservation = flightService.GetReservationForDisplay(rsvNo);
+                    displayReservation = flightService.GetBookerReservationForDisplay(rsvNo);
                 }
                 else
                 {
-                    displayReservation = hotelService.GetReservationForDisplay(rsvNo);
+                    displayReservation = hotelService.GetBookerReservationForDisplay(rsvNo);
                 }
                 return View(displayReservation);
             }

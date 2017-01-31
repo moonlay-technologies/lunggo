@@ -25,7 +25,14 @@ namespace Lunggo.ApCommon.Hotel.Service
         public void SendNewBookingInfo(string rsvNo)
         {
             var queueService = QueueService.GetInstance();
-            var queue = queueService.GetQueueByReference("NewBookingInfoEmail");
+            var queue = queueService.GetQueueByReference("HotelBookingNotifEmail");
+            queue.AddMessage(new CloudQueueMessage(rsvNo));
+        }
+
+        public void SendBookerBookingInfo(string rsvNo)
+        {
+            var queueService = QueueService.GetInstance();
+            var queue = queueService.GetQueueByReference("HotelBookerNotifEmail");
             queue.AddMessage(new CloudQueueMessage(rsvNo));
         }
 

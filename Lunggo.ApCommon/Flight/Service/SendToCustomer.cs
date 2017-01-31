@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Lunggo.Framework.Config;
 using Lunggo.Framework.Queue;
 using Microsoft.WindowsAzure.Storage.Queue;
@@ -28,12 +29,21 @@ namespace Lunggo.ApCommon.Flight.Service
             queue.AddMessage(new CloudQueueMessage(rsvNo));
         }
 
-        public void SendNewBookingInfo(string rsvNo)
+        public void SendNewBookingInfo(string message )
         {
             var queueService = QueueService.GetInstance();
-            var queue = queueService.GetQueueByReference("NewBookingInfoEmail");
+            var queue = queueService.GetQueueByReference("FlightBookingNotifEmail");
+            queue.AddMessage(new CloudQueueMessage(message));
+        }
+
+        public void SendBookerBookingInfo(string rsvNo)
+        {
+            var queueService = QueueService.GetInstance();
+            var queue = queueService.GetQueueByReference("FlightBookerNotifEmail");
             queue.AddMessage(new CloudQueueMessage(rsvNo));
         }
+
+
 
         //public void SendInstantPaymentConfirmedNotifToCustomer(string rsvNo)
         //{

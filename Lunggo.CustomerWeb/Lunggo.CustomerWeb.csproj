@@ -1186,6 +1186,7 @@
     <Content Include="Assets\travorama20\angularDirectory\priceDetail\priceDetailDir.js" />
     <Content Include="Assets\travorama20\angularDirectory\priceDetail\priceDetailDirMobile.js" />
     <Content Include="Assets\travorama20\angularDirectory\priceDetail\priceDetailTemplate.html" />
+    <Content Include="Assets\travorama20\angularDirectory\search\B2BHotelSearch.service.js" />
     <Content Include="Assets\travorama20\angularDirectory\search\hotelSearch.service.js" />
     <Content Include="Assets\travorama20\css\style_desktop.css">
       <DependentUpon>style_desktop.scss</DependentUpon>
@@ -1237,6 +1238,10 @@
     <Content Include="Assets\travorama20\images\play-store-bg.png" />
     <Content Include="Assets\travorama20\js\accountController.js" />
     <Content Include="Assets\travorama20\js\app.config.js" />
+    <Content Include="Assets\travorama20\js\B2BHomeController.js" />
+    <Content Include="Assets\travorama20\js\B2BHotelDetailController.js" />
+    <Content Include="Assets\travorama20\js\B2BHotelSearchController.js" />
+    <Content Include="Assets\travorama20\js\B2BTravorama20.js" />
     <Content Include="Assets\travorama20\js\checkoutController.js" />
     <Content Include="Assets\travorama20\js\ConfirmationController.js" />
     <Content Include="Assets\travorama20\js\ContactController.js" />

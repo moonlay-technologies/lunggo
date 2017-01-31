@@ -60,14 +60,14 @@
                                     <b>INFO PEMESANAN</b>
                                     @if (Model is FlightReservationForDisplay)
                                     {
-                                        <button class="pull-right btn btn-yellow sm-btn bold-txt normal-txt" ng-click="submitRsvNo(@Model.RsvNo, @Model.RsvDisplayStatus)">
-                                            {{ButtonText(rsvStatus, paymentMethod, 'flight')}}
+                                        <button class="pull-right btn btn-yellow sm-btn bold-txt normal-txt">
+                                            {{bookingstatus(rsvStatus)}}
                                         </button>
                                     }
                                     @if (Model is HotelReservationForDisplay)
                                     {
-                                        <button class="pull-right btn btn-yellow sm-btn bold-txt normal-txt" ng-click="submitRsvNo(@Model.RsvNo, @Model.RsvDisplayStatus)">
-                                            {{ButtonText(rsvStatus, paymentMethod, 'hotel')}}
+                                        <button class="pull-right btn btn-yellow sm-btn bold-txt normal-txt">
+                                            {{bookingstatus(rsvStatus)}}
                                         </button>
                                     }
                                 </h4>
@@ -118,7 +118,7 @@
                                         </div>
                                     </div>
 
-                                    @if (Model.Payment.Method != PaymentMethod.Undefined)
+                                    @*@if (Model.Payment.Method != PaymentMethod.Undefined)
                                     {
                                         <div class="form-group">
                                             <div class="control-label col-xs-3">Metode Pembayaran</div>
@@ -126,12 +126,12 @@
                                                 <p>@EnumDisplay.PaymentMethod(Model.Payment.Method)</p>
                                             </div>
                                         </div>
-                                    }
+                                    }*@
 
                                     <div class="form-group">
-                                        <div class="control-label col-xs-3">Status Pembayaran</div>
+                                        <div class="control-label col-xs-3">Status Pesanan</div>
                                         <div class="col-xs-9">
-                                            <p>@EnumDisplay.PaymentStatus(Model.Payment.Status)</p>
+                                            <p>{{bookingstatus(rsvStatus)}}</p>
                                         </div>
                                     </div>
                                     <div class="form-group">

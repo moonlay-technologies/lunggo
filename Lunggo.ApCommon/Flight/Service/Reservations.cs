@@ -45,6 +45,19 @@ namespace Lunggo.ApCommon.Flight.Service
             }
         }
 
+        public FlightReservationForDisplay GetBookerReservationForDisplay(string rsvNo)
+        {
+            try
+            {
+                var rsv = GetReservation(rsvNo);
+                return ConvertToBookerReservationForDisplay(rsv);
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
         public FlightReservation GetReservation(string rsvNo)
         {
             try
@@ -132,6 +145,37 @@ namespace Lunggo.ApCommon.Flight.Service
         public void ExpireReservations()
         {
             UpdateExpireReservationsToDb();
+        }
+
+        public bool UpdateReservation(string rsvNo, string status)
+        {
+            if (status.Equals("approved"))
+            {
+                try
+                {
+                    UpdateRsvStatusDb(rsvNo, RsvStatus.Approved);
+                    IssueBooker(rsvNo);
+                    SendBookerBookingInfo(rsvNo);
+                    return true;
+                }
+                catch
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                try
+                {
+                    UpdateRsvStatusDb(rsvNo, RsvStatus.Rejected);
+                    SendBookerBookingInfo(rsvNo);
+                    return true;
+                }
+                catch
+                {
+                    return false;
+                }
+            }
         }
 
         internal void CancelReservation(string rsvNo, CancellationType cancellationType)

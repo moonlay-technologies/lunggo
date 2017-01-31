@@ -585,6 +585,10 @@ app.controller('b2BAccountController', [
         $scope.passwordForm = {
             active: false
         };
+        $scope.isConfirm = false;
+        $scope.close = function () {
+            $scope.isConfirm = false;
+        }
 
         $scope.userProfile = {
             email: '',
@@ -791,6 +795,62 @@ app.controller('b2BAccountController', [
                 }
                 else {
                     $log.debug('Not Authorized');
+                }
+            }
+        }
+
+        $scope.updateReservation = {
+            rsvUpdated : false,
+            isConfirm : false,
+            rsvNo : "",
+            status: "",
+            select : function(rsvNo, status) {
+                $scope.updateReservation.rsvNo = rsvNo;
+                $scope.updateReservation.status = status;
+                $scope.updateReservation.isConfirm = true;
+            },
+            update : function (type) {
+                $scope.updateReservation.isConfirm = false;
+                var authAccess = getAuthAccess();
+                if (authAccess == 2) {
+                    //authorized
+                    $http({
+                        url: UpdateReservationConfig.Url,
+                        method: 'POST',
+                        data: {
+                            rsvNo: $scope.updateReservation.rsvNo,
+                            status: $scope.updateReservation.status
+                        },
+                        headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') }
+                    }).then(function (returnData) {
+                        //$log.debug(returnData);
+                        if (returnData.data.status == '200') {
+                            $log.debug('Success updating reservation');
+                            $scope.rsvUpdated = false;
+                            window.location.reload();
+                        }
+                        else {
+                            $log.debug(returnData.data.error);
+                            $log.debug(returnData);
+                            $scope.rsvUpdated = false;
+                            window.location.reload();
+                        }
+                    }).catch(function (returnData) {
+                        $scope.trial++;
+                        if (refreshAuthAccess() && $scope.trial < 4) //refresh cookie
+                        {
+                            $scope.updateReservation.update();
+                        }
+                        else {
+                            $log.debug('Failed Update Reservation');
+                            $log.debug(returnData);
+                            $scope.rsvUpdated = false;
+                            window.location.reload();
+                        }
+                    });
+                }
+                else { //if not authorized
+                    $scope.rsvUpdated = false;
                 }
             }
         }
@@ -1088,6 +1148,23 @@ app.controller('orderDetailController', [
             $('form#rsvno input#rsvno-input').val(rsvNo);
             $('form#rsvno input#message-input').val(rsvStatus);
             $('form#rsvno').submit();
+        }
+
+        $scope.bookingstatus = function (types) {
+            if (types == 12)
+                return 'APPROVED';
+            else if (types == 13)
+                return 'PENDING';
+            else if (types == 6)
+                return 'EXPIRED';
+            else if (types == 11)
+                return 'REJECTED';
+            else if (types == 8)
+                return 'CANCELLED';
+            else if (types == 10)
+                return 'FAILED';
+            else if (types == 0)
+                return 'PENDING';
         }
 
         // Get Profile and Execute
@@ -1397,6 +1474,111 @@ app.controller('authController', [
                         else if (returnData.data.error == 'ERALOG04') { $scope.errorMessage = 'Failed'; }
                         else if (returnData.data.error == 'ERALOG05') { $scope.errorMessage = 'NotRegistered'; }
                         else { $scope.errorMessage = 'Failed'; }
+                        $log.debug('Error : ' + returnData.data.error);
+                    }
+                }).catch(function (returnData) {
+                    $scope.trial++;
+                    if (refreshAuthAccess() && $scope.trial < 4) //refresh cookie
+                    {
+                        $scope.form.submit();
+                    }
+                    else {
+                        $scope.overlay = true;
+                        $scope.errorMessage = 'Failed';
+                        $log.debug('Failed to Login');
+                        $scope.form.submitting = false;
+                        $scope.form.submitted = false;
+                        $scope.form.isLogin = false;
+                    }
+                });
+            }
+            else {
+                $scope.form.submitting = false;
+                $scope.form.submitted = false;
+                $scope.form.isLogin = false;
+            }
+
+        }
+
+    }
+]);// auth controller end
+
+
+app.controller('b2bAuthController', [
+    '$scope', '$http', '$log', function ($scope, $http, $log) {
+
+        $scope.pageLoaded = true;
+        $scope.trial = 0;
+        var url = location.href +"";
+        $scope.message = loginMessage;
+        $scope.returnUrl = url.split('id')[0];
+        $scope.errorMessage = '';
+        if ($scope.message) {
+            $scope.overlay = true;
+        } else {
+            $scope.overlay = false;
+        }
+        $scope.closeOverlay = function () {
+            $scope.overlay = false;
+        }
+        $scope.form = {
+            email: '',
+            password: '',
+            submitting: false,
+            isLogin: false,
+            submitted: false,
+            success: false
+        };
+
+        $scope.form.submit = function () {
+            if ($scope.trial > 3) {
+                $scope.trial = 0;
+            }
+            $scope.form.submitting = true;
+            var authAccess = getAuthAccess();
+            if (authAccess == 2 || authAccess == 1) {
+                $http({
+                    method: 'POST',
+                    url: LoginConfig.Url,
+                    data: {
+                        userName: $scope.form.email,
+                        password: $scope.form.password,
+                        clientId: 'V2toa2VrOXFSWFZOUXpSM1QycEZlRTlIVlhwYWFrVjVUVVJrYlZsVVp6Vk5WRlp0VGtSR2FrOUhSWGhhYWsweFRucGpNRTE2U1RCT2VtTjNXbTFKZDFwcVFUMD0=',
+                        clientSecret: 'V2tkS2FFOUVhek5QUjFsNFRucFpNVmt5UlRST2JVWnNXVmRKTTA1dFVtaFBSMDVyV1dwQk5WcEhTWGxPZWtwcVRVUkpNVTFCUFQwPQ=='
+                    },
+                    headers: {
+                        'Authorization': 'Bearer ' + getCookie('accesstoken')
+                    }
+                }).then(function (returnData) {
+                    $scope.form.submitting = false;
+                    $scope.form.submitted = true;
+                    if (returnData.data.status == '200') {
+                        setCookie("accesstoken", returnData.data.accessToken, returnData.data.expTime);
+                        setCookie("refreshtoken", returnData.data.refreshToken, returnData.data.expTime);
+                        setCookie("authkey", returnData.data.accessToken, returnData.data.expTime);
+                        $scope.form.success = true;
+                        window.location.href = $scope.returnUrl + "id/B2BIndex/index";
+                    }
+                    else {
+                        $scope.overlay = true;
+                        if (returnData.data.error == 'ERALOG01') {
+                            $scope.errorMessage = 'RefreshNeeded';
+                        }
+                        else if (returnData.data.error == 'ERALOG02') {
+                            $scope.errorMessage = 'InvalidInputData';
+                        }
+                        else if (returnData.data.error == 'ERALOG03') {
+                            $scope.errorMessage = 'AlreadyRegisteredButUnconfirmed';
+                        }
+                        else if (returnData.data.error == 'ERALOG04') {
+                            $scope.errorMessage = 'Failed';
+                        }
+                        else if (returnData.data.error == 'ERALOG05') {
+                            $scope.errorMessage = 'NotRegistered';
+                        }
+                        else {
+                            $scope.errorMessage = 'Failed';
+                        }
                         $log.debug('Error : ' + returnData.data.error);
                     }
                 }).catch(function (returnData) {

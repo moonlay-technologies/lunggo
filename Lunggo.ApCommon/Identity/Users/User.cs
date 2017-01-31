@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -27,6 +28,15 @@ namespace Lunggo.ApCommon.Identity.Users
                     return null;
 
                 var user = UserExtension.ToCustomUser(record);
+                return user;
+            }
+        }
+
+        internal static List<string> GetApproverEmail(string userId)
+        {
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                var user = GetListApproverEmailQuery.GetInstance().Execute(conn, new { Id = userId }).ToList();
                 return user;
             }
         }

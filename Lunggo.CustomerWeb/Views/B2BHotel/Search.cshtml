@@ -6,7 +6,7 @@
     Layout = "/Views/Shared/Desktop/_B2BLayoutDesktop.cshtml";
     ViewBag.BodyClass = "page-hotel page-search";
     ViewBag.Title = "Pencarian Hotel";
-    ViewBag.AngularController = "hotelSearchController";
+    ViewBag.AngularController = "B2BHotelSearchController";
 
 }
 
@@ -73,10 +73,10 @@
         var locFound = @Json.Encode(locFound);
         var loc = '@loc';
     </script>
-    <script type="text/javascript" src="/Assets/travorama20/js/HotelController.js"></script>
-    <script src="/Assets/travorama20/angularDirectory/search/hotelSearch.service.js"></script>
+    <script type="text/javascript" src="/Assets/travorama20/js/B2BHotelSearchController.js"></script>
+    <script src="/Assets/travorama20/angularDirectory/search/B2BHotelSearch.service.js"></script>
     <script src="/Assets/travorama20/angularDirectory/common/hotelAutocomplete.service.js"></script>
-    <script src="/Assets/travorama20/js/hotelSearchController.js"></script>
+    <script src="/Assets/travorama20/js/B2BHotelSearchController.js"></script>
 }
 
 @Html.Partial("/Views/Shared/Desktop/_PageSlider.cshtml", new HotelLocation

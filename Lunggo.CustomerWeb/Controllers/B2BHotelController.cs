@@ -201,6 +201,26 @@ namespace Lunggo.CustomerWeb.Controllers
         {
             return View();
         }
+
+        public ActionResult UpdateReservation(string rsvNo, string status)
+        {
+            if(rsvNo == null ||  status == null)
+            {
+                return View("Index", "B2BIndex");
+            }
+            var isUpdated = HotelService.GetInstance().UpdateReservation(rsvNo, status);
+            if (isUpdated)
+            {
+                //Gak tau masih dia pergi kemana
+                return RedirectToAction("Index", "B2BIndex");
+            }
+            else
+            {
+                //Gak tau masih dia pergi kemana
+                return RedirectToAction("Index", "B2BIndex");
+            }
+        }
+
         public ActionResult OrderHotelHistoryDetail()
         {
             return View();
