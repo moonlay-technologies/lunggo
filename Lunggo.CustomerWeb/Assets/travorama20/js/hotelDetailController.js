@@ -37,7 +37,7 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
         occupancies : '',
         totalOcc : ''
     }
-
+        $scope.searchParamObject = {};
         $scope.lat = lat;
         $scope.lng = lng;
         $scope.hotelName = hotelName;
@@ -62,7 +62,7 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
         var totalOcc = occupancies.length;
         $scope.hotelCode = model.hotelCd;
 
-        var searchParamObject = {
+        $scope.searchParamObject = {
             nightCount: nightcount,
             roomCount: roomcount,
             checkinDate: moment.utc(cekin, "YYYY-MM-DD"),
@@ -84,7 +84,7 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
             } else {
                 ages = [0, 0, 0, 0];
             }
-            searchParamObject.occupancies.push({
+            $scope.searchParamObject.occupancies.push({
                 adultCount: occdata[0],
                 childCount: occdata[1],
                 childrenAges: occdata[1] == "0" ? [0, 0, 0, 0] : ages,
@@ -93,14 +93,14 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
         }
 
         for (var m = 0; m < 8 - roomcount; m++) {
-            searchParamObject.occupancies.push({
+            $scope.searchParamObject.occupancies.push({
                 adultCount: 1,
                 childCount: 0,
                 childrenAges: [0, 0, 0, 0],
                 roomCount : 1
             });
         }
-        hotelSearchSvc.initializeSearchForm($scope, searchParamObject);
+        hotelSearchSvc.initializeSearchForm($scope, $scope.searchParamObject);
         hotelSearchSvc.getHolidays();
         $('.hotel-date-picker').datepicker('option', 'beforeShowDay', hotelSearchSvc.highlightDays);
         
@@ -218,8 +218,8 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
         }, 0);
 
         $timeout(function() {
-            $scope.availableRates(nightcount, searchParamObject.checkinDate, searchParamObject.checkoutDate,
-                searchParamObject.occupancies, totalOcc);
+            $scope.availableRates(nightcount, $scope.searchParamObject.checkinDate, $scope.searchParamObject.checkoutDate,
+                $scope.searchParamObject.occupancies, totalOcc);
         }, 0);
         $scope.hotelSearch.location = $scope.getLocationCode();
     }
@@ -456,17 +456,19 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
         $scope.booking = true;
         var authAccess = getAuthAccess();
         if (authAccess == 1 || authAccess == 2) {
+            var regs = [];
+            for (var i = 0; i < $scope.lastSearch.totalOcc; i++) {
+                regs.push({
+                    "regsId": room.regsId,
+                    "rateCount": $scope.lastSearch.occupancies[i].roomCount,
+                    "adultCount": $scope.lastSearch.occupancies[i].adultCount,
+                    "childCount": $scope.lastSearch.occupancies[i].childCount,
+                    "childrenAges": $scope.lastSearch.occupancies[i].childrenAges.slice(0, $scope.lastSearch.occupancies[i].childCount)
+                });
+            }
         selectService.query({}, {
             "searchId": $scope.availableRateId,
-            "regs": [
-                  {
-                      "regsId": room.regsId,
-                      "rateCount": room.breakdowns[0].rateCount,
-                      "adultCount": room.breakdowns[0].adultCount,
-                      "childCount": room.breakdowns[0].childCount,
-                      "childrenAges": room.breakdowns[0].childrenAges
-                  }
-            ]
+            "regs": regs,
             }).$promise.then(function(data) {
             $scope.booking = false;
             if (data.status != 200 || data.token == null) {
@@ -559,8 +561,7 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
                     $scope.hotel.rooms = data.rooms;
                     $scope.expiryDate = new Date(data.expTime);
                     $scope.expiryDate = $scope.expiryDate.setMinutes($scope.expiryDate.getMinutes() + 1);
-
-                        promise = $interval(function() {
+                    promise = $interval(function() {
                         var nowTime = new Date();
                         if (nowTime > $scope.expiryDate) {
                             $scope.expired = true;
@@ -601,10 +602,13 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
                     $scope.singleRoom.sort(function(a, b) {
                         return a.rate.breakdowns[0].netFare - b.rate.breakdowns[0].netFare;
                     });
+                } else {
+                    $scope.noResults = true;
+                    $scope.searchDone = true;
                 }
             } else {
                 $scope.noResults = true;
-                $scope.searchDone = false;
+                $scope.searchDone = true;
             }
         });
         } else {

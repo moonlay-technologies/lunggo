@@ -30,13 +30,13 @@ namespace Lunggo.ApCommon.Hotel.Service
             
             hotel.CheckOutDate = new DateTime(Convert.ToInt32(cekout.Substring(0, 4)),
                 Convert.ToInt32(cekout.Substring(4, 2)), Convert.ToInt32(cekout.Substring(6, 2)));
-            foreach (var id in input.RegsIds)
+            foreach (var regsId in input.RegsIds)
             {
-                var data = DecryptRegsId(id.RegId);
-                HotelRoom output = new HotelRoom();
+                var data = DecryptRegsId(regsId.RegId);
+                var room = new HotelRoom();
                 try
                 {
-                    output = GetRoom(new GetRoomDetailInput
+                    room = GetRoom(new GetRoomDetailInput
                     {
                         HotelCode = data.HotelCode,
                         RoomCode = data.RoomCode,
@@ -52,114 +52,208 @@ namespace Lunggo.ApCommon.Hotel.Service
                         ErrorMessages = new List<string> { "Search Id No Longer Valid" }
                     };
                 }
-                
 
                 var originRateKey = data.RateKey;
-                var newRate = (from rate in output.Rates
-                    let roomRateKey = rate.RateKey
-                    where roomRateKey == originRateKey
-                    select new HotelRate
-                    {
-                        RateCount = id.RateCount, RateKey = rate.RateKey, AdultCount = id.AdultCount, 
-                        Board = rate.Board, Cancellation = rate.Cancellation, ChildrenAges = id.ChildrenAges,
-                        ChildCount = id.ChildCount, Class = rate.Class, Offers = rate.Offers, 
-                        PaymentType = rate.PaymentType, RegsId = rate.RegsId, Price = rate.Price,
-                        Type = rate.Type,NightCount = rate.NightCount,
-                        TermAndCondition = GetRateCommentFromTableStorage(rate.RateCommentsId, hotel.CheckInDate).Select(x => x.Description).ToList(),
-                        RateCommentsId = rate.RateCommentsId
-                    }).ToList().First();
+                var newRate = room.Rates.First(rate => rate.RateKey == originRateKey);
+                //from rate in room.Rates
+                //               let roomRateKey = rate.RateKey
+                //               where roomRateKey == originRateKey
+                //               select new HotelRate
+                //               {
+                //                   RateCount = rate.RateCount,
+                //                   RateKey = rate.RateKey,
+                //                   AdultCount = rate.AdultCount,
+                //                   Board = rate.Board,
+                //                   Cancellation = rate.Cancellation,
+                //                   ChildrenAges = rate.ChildrenAges,
+                //                   ChildCount = rate.ChildCount,
+                //                   Class = rate.Class,
+                //                   Offers = rate.Offers,
+                //                   PaymentType = rate.PaymentType,
+                //                   RegsId = rate.RegsId,
+                //                   Price = rate.Price,
+                //                   Type = rate.Type,
+                //                   NightCount = rate.NightCount,
+                //                   TermAndCondition = GetRateCommentFromTableStorage(rate.RateCommentsId, hotel.CheckInDate).Select(x => x.Description).ToList(),
+                //                   RateCommentsId = rate.RateCommentsId
+                //               }).ToList().First();
 
-                //var searchResultData = GetSearchHotelResultFromCache(input.SearchId);
-                //if (searchResultData == null)
-                //{
-                //    return new SelectHotelRoomOutput
-                //    {
-                //        Errors = new List<HotelError> { HotelError.SearchIdNoLongerValid },
-                //        IsSuccess = false,
-                //        ErrorMessages = new List<string> { "Search Id No Longer Valid" }
-                //    };
-                //}
-                foreach (var paxData in input.RegsIds)
+                newRate.Price.SetSupplier(newRate.Price.Supplier / newRate.RateCount * regsId.RateCount,
+                    newRate.Price.SupplierCurrency);
+                newRate.Price.CalculateFinalAndLocal(newRate.Price.LocalCurrency);
+
+                newRate.RateCount = regsId.RateCount;
+                newRate.AdultCount = regsId.AdultCount;
+                newRate.ChildCount = regsId.ChildCount;
+                newRate.ChildrenAges = regsId.ChildrenAges;
+
+                var splitRateKey = newRate.RateKey.Split('|');
+                var occupancy = regsId.RateCount + "~" + regsId.AdultCount + "~" + regsId.ChildCount;
+                splitRateKey[9] = occupancy;
+                if (regsId.ChildrenAges != null)
                 {
-                    var splittedRateKey = newRate.RateKey.Split('|');
-                    var occ = paxData.RateCount + "~" + paxData.AdultCount + "~" + paxData.ChildCount;
-                    splittedRateKey[9] = occ;
-                    if (paxData.ChildrenAges != null)
-                    {
-                        var childAges = string.Join("~", paxData.ChildrenAges);
-                        splittedRateKey[10] = childAges;
-                    }
-                    else
-                    {
-                        splittedRateKey[10] = "";
-                    }
-                    var fixRateKey = string.Join("|",splittedRateKey);
-                    var fixRate = new HotelRate
-                    {
-                        RateCount = paxData.RateCount,
-                        RateKey = fixRateKey,
-                        AdultCount = paxData.AdultCount,
-                        Board = newRate.Board,
-                        Cancellation = newRate.Cancellation == null ? null : newRate.Cancellation.Select(x=> new Cancellation
-                        {
-                            Fee = x.Fee,
-                            SingleFee = x.SingleFee,
-                            StartTime = x.StartTime,
-                            FeePercentage = x.FeePercentage,
-                        }).ToList(),
-                        ChildrenAges = paxData.ChildrenAges,
-                        ChildCount = paxData.ChildCount,
-                        Class = newRate.Class,
-                        Offers = newRate.Offers,
-                        PaymentType = newRate.PaymentType,
-                        RegsId = EncryptRegsId(data.HotelCode,data.RoomCode,fixRateKey),
-                        Price = new Price(),
-                        Type = newRate.Type,
-                        NightCount = newRate.NightCount,
-                        TermAndCondition = newRate.RateCommentsId == null ? null : 
-                            GetRateCommentFromTableStorage(newRate.RateCommentsId, hotel.CheckInDate)
-                                .Select(x => x.Description)
-                                .ToList()
-                    };
-                    fixRate.Price.SetSupplier(newRate.Price.Supplier/newRate.RateCount*paxData.RateCount,
-                        newRate.Price.SupplierCurrency);
-                    fixRate.Price.SetMargin(newRate.Price.Margin);
-                    fixRate.Price.CalculateFinalAndLocal(newRate.Price.LocalCurrency);
-                    if (fixRate.Cancellation != null)
-                    {
-                        foreach (var item in fixRate.Cancellation)
-                        {
-                            item.Fee = item.Fee / newRate.RateCount * paxData.RateCount;
-                        }    
-                    }
-                    
-                    rateList.Add(fixRate);
+                    var childAges = string.Join("~", regsId.ChildrenAges);
+                    splitRateKey[10] = childAges;
+                }
+                else
+                {
+                    splitRateKey[10] = "";
+                }
+                var newRateKey = string.Join("|", splitRateKey);
+                newRate.RateKey = newRateKey;
+
+                
+
+                var matchedRoom =
+                    hotel.Rooms.FirstOrDefault(
+                        r =>
+                            r.RoomCode == room.RoomCode && r.Type == room.Type &&
+                            r.characteristicCd == room.characteristicCd);
+                if (matchedRoom != null)
+                {
+                    room = matchedRoom;
+                }
+                else
+                {
+                    room.Rates = new List<HotelRate>();
+                    hotel.Rooms.Add(room);
                 }
 
-                rateList = BundleRates(rateList);
-
-                if (rateList.Count == 0)
-                {
-                    return new SelectHotelRoomOutput
-                    {
-                        Errors = new List<HotelError> { HotelError.RateKeyNotFound },
-                        IsSuccess = false,
-                        ErrorMessages = new List<string> { "Rate Key Invalid" }
-                    };
-                }
-                var newRoom = new HotelRoom
-                    {
-                        RoomCode = output.RoomCode,
-                        characteristicCd = output.characteristicCd,
-                        Facilities = output.Facilities,
-                        Images = output.Images,
-                        Rates = rateList,
-                        RoomName = output.RoomName,
-                        Type = output.Type,
-                        TypeName = output.TypeName,
-                    };
-                hotel.Rooms.Add(newRoom);        
+                room.Rates.Add(newRate);
             }
+
+            hotel.Rooms.ForEach(r => r.Rates = BundleRates(r.Rates));
+
+            //foreach (var id in input.RegsIds)
+            //{
+            //    var data = DecryptRegsId(id.RegId);
+            //    HotelRoom output = new HotelRoom();
+            //    try
+            //    {
+            //        output = GetRoom(new GetRoomDetailInput
+            //        {
+            //            HotelCode = data.HotelCode,
+            //            RoomCode = data.RoomCode,
+            //            SearchId = input.SearchId
+            //        });
+            //    }
+            //    catch
+            //    {
+            //        return new SelectHotelRoomOutput
+            //        {
+            //            Errors = new List<HotelError> { HotelError.SearchIdNoLongerValid },
+            //            IsSuccess = false,
+            //            ErrorMessages = new List<string> { "Search Id No Longer Valid" }
+            //        };
+            //    }
+                
+
+            //    var originRateKey = data.RateKey;
+            //    var newRate = (from rate in output.Rates
+            //        let roomRateKey = rate.RateKey
+            //        where roomRateKey == originRateKey
+            //        select new HotelRate
+            //        {
+            //            RateCount = id.RateCount, RateKey = rate.RateKey, AdultCount = id.AdultCount, 
+            //            Board = rate.Board, Cancellation = rate.Cancellation, ChildrenAges = id.ChildrenAges,
+            //            ChildCount = id.ChildCount, Class = rate.Class, Offers = rate.Offers, 
+            //            PaymentType = rate.PaymentType, RegsId = rate.RegsId, Price = rate.Price,
+            //            Type = rate.Type,NightCount = rate.NightCount,
+            //            TermAndCondition = GetRateCommentFromTableStorage(rate.RateCommentsId, hotel.CheckInDate).Select(x => x.Description).ToList(),
+            //            RateCommentsId = rate.RateCommentsId
+            //        }).ToList().First();
+
+            //    //var searchResultData = GetSearchHotelResultFromCache(input.SearchId);
+            //    //if (searchResultData == null)
+            //    //{
+            //    //    return new SelectHotelRoomOutput
+            //    //    {
+            //    //        Errors = new List<HotelError> { HotelError.SearchIdNoLongerValid },
+            //    //        IsSuccess = false,
+            //    //        ErrorMessages = new List<string> { "Search Id No Longer Valid" }
+            //    //    };
+            //    //}
+            //    foreach (var paxData in input.RegsIds)
+            //    {
+            //        var splittedRateKey = newRate.RateKey.Split('|');
+            //        var occ = paxData.RateCount + "~" + paxData.AdultCount + "~" + paxData.ChildCount;
+            //        splittedRateKey[9] = occ;
+            //        if (paxData.ChildrenAges != null)
+            //        {
+            //            var childAges = string.Join("~", paxData.ChildrenAges);
+            //            splittedRateKey[10] = childAges;
+            //        }
+            //        else
+            //        {
+            //            splittedRateKey[10] = "";
+            //        }
+            //        var fixRateKey = string.Join("|",splittedRateKey);
+            //        var fixRate = new HotelRate
+            //        {
+            //            RateCount = paxData.RateCount,
+            //            RateKey = fixRateKey,
+            //            AdultCount = paxData.AdultCount,
+            //            Board = newRate.Board,
+            //            Cancellation = newRate.Cancellation == null ? null : newRate.Cancellation.Select(x=> new Cancellation
+            //            {
+            //                Fee = x.Fee,
+            //                SingleFee = x.SingleFee,
+            //                StartTime = x.StartTime,
+            //                FeePercentage = x.FeePercentage,
+            //            }).ToList(),
+            //            ChildrenAges = paxData.ChildrenAges,
+            //            ChildCount = paxData.ChildCount,
+            //            Class = newRate.Class,
+            //            Offers = newRate.Offers,
+            //            PaymentType = newRate.PaymentType,
+            //            RegsId = EncryptRegsId(data.HotelCode,data.RoomCode,fixRateKey),
+            //            Price = new Price(),
+            //            Type = newRate.Type,
+            //            NightCount = newRate.NightCount,
+            //            TermAndCondition = newRate.RateCommentsId == null ? null : 
+            //                GetRateCommentFromTableStorage(newRate.RateCommentsId, hotel.CheckInDate)
+            //                    .Select(x => x.Description)
+            //                    .ToList()
+            //        };
+            //        fixRate.Price.SetSupplier(newRate.Price.Supplier/newRate.RateCount*paxData.RateCount,
+            //            newRate.Price.SupplierCurrency);
+            //        fixRate.Price.SetMargin(newRate.Price.Margin);
+            //        fixRate.Price.CalculateFinalAndLocal(newRate.Price.LocalCurrency);
+            //        if (fixRate.Cancellation != null)
+            //        {
+            //            foreach (var item in fixRate.Cancellation)
+            //            {
+            //                item.Fee = item.Fee / newRate.RateCount * paxData.RateCount;
+            //            }    
+            //        }
+                    
+            //        rateList.Add(fixRate);
+            //    }
+
+            //    rateList = BundleRates(rateList);
+
+            //    if (rateList.Count == 0)
+            //    {
+            //        return new SelectHotelRoomOutput
+            //        {
+            //            Errors = new List<HotelError> { HotelError.RateKeyNotFound },
+            //            IsSuccess = false,
+            //            ErrorMessages = new List<string> { "Rate Key Invalid" }
+            //        };
+            //    }
+            //    var newRoom = new HotelRoom
+            //        {
+            //            RoomCode = output.RoomCode,
+            //            characteristicCd = output.characteristicCd,
+            //            Facilities = output.Facilities,
+            //            Images = output.Images,
+            //            Rates = rateList,
+            //            RoomName = output.RoomName,
+            //            Type = output.Type,
+            //            TypeName = output.TypeName,
+            //        };
+            //    hotel.Rooms.Add(newRoom);        
+            //}
 
             hotel.SearchId = input.SearchId;
             

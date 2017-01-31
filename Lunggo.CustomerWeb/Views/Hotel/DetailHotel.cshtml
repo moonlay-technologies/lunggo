@@ -1,4 +1,4 @@
-﻿    @using Lunggo.CustomerWeb.Models
+﻿@using Lunggo.CustomerWeb.Models
 @using Lunggo.Framework.Extension
 @model HotelDetailModel.HotelDetail
 @{
@@ -333,7 +333,7 @@
                     <div ng-show="noResults" style="font-size: 20px; text-align: center">
                         Hasil pencarian kamar tidak ditemukan
                     </div>
-                    <div class="room-sort clearfix" ng-hide="!searchDone">
+                    <div class="room-sort clearfix" ng-hide="!searchDone || noResults">
                         <div class="col-6">Tipe Kamar</div>
                         <div class="col-4">
                             <div class="tab-hotel-price clearfix">
@@ -350,7 +350,7 @@
                         </div>
                     </div>
                     <div>
-                        <ul class="room-list-container" ng-hide="!searchDone">
+                        <ul class="room-list-container" ng-hide="!searchDone || noResults">
                             <li ng-show="$index+1 <= roomCount" ng-repeat="room in singleRoom track by $index">
                             <div class="room-list clearfix">
                                 <div class="room-left" ng-show="room.roomImages === undefined || room.roomImages.length <= 0"><div class="no-room-pic"></div></div>
@@ -452,7 +452,7 @@
                     </ul>
                     </div>
                    
-                    <div class="hotel-result clearfix" ng-hide="!searchDone">
+                    <div class="hotel-result clearfix" ng-hide="!searchDone  || noResults">
                         <span class="hotel-result-txt">Jumlah Tipe Kamar Tersedia: <b>{{singleRoom.length}}</b></span>
                         <a href="" class="btn-hotel-result btn-blue small" ng-click="togleDisplay()">
                             Tampilkan
