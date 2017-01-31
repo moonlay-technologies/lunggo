@@ -23,6 +23,7 @@
     var images = new List<Image>();
     var hotelImg = "";
     var roomImg = "";
+    <a href="~/Views/Payment/Payment.mobile.cshtml">~/Views/Payment/Payment.mobile.cshtml</a>
     var listAges = new List<int>();
     try
     {
@@ -405,6 +406,9 @@
                                         <input type="text" value="" class="form-control cc-number" maxlength="19" ng-model="CreditCard.Number" ng-blur="binDiscount.check()" ng-change="CreditCardPromo.Check(CreditCard.Number)" ng-class="{'visa' : (CreditCardPromo.Type == 'visa') , 'mastercard' : (CreditCardPromo.Type == 'mastercard') }" ng-required="(paymentMethod == '@PaymentMethod.CreditCard') && (CreditCard.TwoClick == 'false')" />
                                         <div ng-show="!checkNumber(CreditCard.Number)" style="color:red">
                                             Nomor kartu tidak boleh mengandung karakter selain angka
+                                        </div>
+                                        <div ng-show="binDiscount.text != ''" style="color:green">
+                                            {{binDiscount.text}}
                                         </div>
                                     </div>
 

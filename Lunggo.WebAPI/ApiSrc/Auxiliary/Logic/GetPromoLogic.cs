@@ -92,6 +92,15 @@ namespace Lunggo.WebAPI.ApiSrc.Auxiliary.Logic
                             "http://www.travorama.com/Assets/images/campaign/MatahariMall2016/MatahariMall-slider-mobile.jpg",
                         DetailsUrl = "http://www.travorama.com/id/promo/MatahariMallWebView"
                     });
+            if ((DateTime.UtcNow.AddHours(7).Date <= new DateTime(2017, 03, 31)))
+                promos.Add(
+                    new FeaturedPromo
+                    {
+                        Id = "3",
+                        BannerUrl =
+                            "http://www.travorama.com/Assets/images/campaign/TerbanginHemat/TerbanginHemat-slider-mobile.jpg",
+                        DetailsUrl = "http://www.travorama.com/id/promo/MatahariMallWebView"
+                    });
             return promos;
         }
     }

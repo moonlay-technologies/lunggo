@@ -352,6 +352,9 @@
                                                     <div ng-show="!checkNumber(CreditCard.Number)" style="color:red">
                                                         Nomor kartu tidak boleh mengandung karakter selain angka
                                                     </div>
+                                                    <div ng-show="binDiscount.text != ''" style="color:green">
+                                                        {{binDiscount.text}}
+                                                    </div>
                                                 </div>
                                                 <div class="form-group">
                                                     <div class="row">

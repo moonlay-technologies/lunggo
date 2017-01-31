@@ -26,5 +26,9 @@ namespace Lunggo.CustomerWeb.Controllers
         {
             return View();
         }
+        public ActionResult BTNTerbanginHematWebview()
+        {
+            return View();
+        }
     }
 }

@@ -1475,6 +1475,7 @@
     <None Include="Properties\PublishProfiles\travorama-prod-cw__staging2 %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-prod-cw__staging2 %285%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-prod-cw__staging2.pubxml" />
+    <None Include="Properties\PublishProfiles\travorama-qa-cw - Web Deploy %283%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-qa-cw - Web Deploy.pubxml" />
     <None Include="Service References\Mystifly.OnePointService.Flight\OnePoint.disco" />
     <None Include="Service References\Mystifly.OnePointService.Flight\configuration91.svcinfo" />
@@ -1620,6 +1621,7 @@
     <Content Include="Views\Promo\Imlek.mobile.cshtml" />
     <Content Include="Views\Promo\BTNTerbanginHemat.cshtml" />
     <Content Include="Views\Promo\BTNTerbanginHemat.mobile.cshtml" />
+    <Content Include="Views\Promo\BTNTerbanginHematWebview.cshtml" />
     <None Include="Views\Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
