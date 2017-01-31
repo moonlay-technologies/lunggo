@@ -302,8 +302,63 @@ body.page-index {margin-bottom: 0;}
                     img {height:100%; width:auto; display:none;}
                 }
             }
-            .slick-prev {position:absolute; top:50%; left:50%; margin-left:-500px; z-index:2;}
-            .slick-next {position:absolute; top:50%; right:50%; margin-right:-500px; z-index:2;}
+            .slick-arrow {
+                border: 0;
+                font-size: 0;
+                border-radius: 0;
+                padding: 0;
+                margin: 0;
+                width: 15%;
+                height: 520px;
+                background-color: transparent;
+                background-repeat: no-repeat;
+                transform: translateY(-50%);
+                top: 50%;
+                z-index: 2;
+                position: absolute;
+                outline: none;
+            }
+            .slick-prev {
+                background-image: -webkit-linear-gradient(left,rgba(0,0,0,.5) 0,rgba(0,0,0,.0001) 100%);
+                background-image: -o-linear-gradient(left,rgba(0,0,0,.5) 0,rgba(0,0,0,.0001) 100%);
+                background-image: -webkit-gradient(linear,left top,right top,from(rgba(0,0,0,.5)),to(rgba(0,0,0,.0001)));
+                background-image: linear-gradient(to right,rgba(0,0,0,.5) 0,rgba(0,0,0,.0001) 100%);
+                filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#80000000', endColorstr='#00000000', GradientType=1);
+                background-repeat: repeat-x;
+                left: 0;
+                right: auto;
+                &:before {
+                    content: '';
+                    display: block;
+                    position: absolute;
+                    width: 30px;
+                    height: 46px;
+                    background-image: url(/Assets/images/sprite-arrow.png);
+                    background-position: 0 0;
+                    left: 50%;
+                    transform: translateX(-50%);
+                }
+            }
+            .slick-next {
+                background-image: -webkit-linear-gradient(left,rgba(0,0,0,.0001) 0,rgba(0,0,0,.5) 100%);
+                background-image: -o-linear-gradient(left,rgba(0,0,0,.0001) 0,rgba(0,0,0,.5) 100%);
+                background-image: -webkit-gradient(linear,left top,right top,from(rgba(0,0,0,.0001)),to(rgba(0,0,0,.5)));
+                background-image: linear-gradient(to right,rgba(0,0,0,.0001) 0,rgba(0,0,0,.5) 100%);
+                filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#00000000', endColorstr='#80000000', GradientType=1);
+                background-repeat: repeat-x;
+                left: auto;
+                right: 0;
+                &:before {
+                    content: '';
+                    display: block;
+                    position: absolute;
+                    width: 30px;
+                    height: 46px;
+                    background-image: url(/Assets/images/sprite-arrow.png);
+                    background-position: -32px 0;
+                    right: 50%;
+                }
+            }
             .slick-dots {position:absolute; bottom:20px; text-align:right; width:100%; list-style:none; margin:0; padding:0; padding-right: 5%; 
                 li {list-style:none; display:inline-block;
                     &+li {margin-left:5px;}
@@ -480,7 +535,7 @@ body.page-index {margin-bottom: 0;}
 
     //*****
     // section payment
-    .section-payment {margin: 30px 0;
+    .section-payment {margin: 40px 0;
         img {vertical-align:bottom; height:50px;}
         img+img {margin-left:30px;}
         &>.container {max-width: none;}

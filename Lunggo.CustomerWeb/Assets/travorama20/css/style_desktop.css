@@ -254,6 +254,9 @@ form label.important:after {
 .text-main-color {
   color: #1daee4; }
 
+*:focus {
+  outline: none; }
+
 input[type=number]::-webkit-inner-spin-button,
 input[type=number]::-webkit-outer-spin-button {
   -webkit-appearance: none;
@@ -2086,18 +2089,58 @@ body.page-index {
           height: 100%;
           width: auto;
           display: none; }
+    .page-index .section-search .page-slider .slick-arrow {
+      border: 0;
+      font-size: 0;
+      border-radius: 0;
+      padding: 0;
+      margin: 0;
+      width: 15%;
+      height: 520px;
+      background-color: transparent;
+      background-repeat: no-repeat;
+      transform: translateY(-50%);
+      top: 50%;
+      z-index: 2;
+      position: absolute;
+      outline: none; }
     .page-index .section-search .page-slider .slick-prev {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      margin-left: -500px;
-      z-index: 2; }
+      background-image: -webkit-linear-gradient(left, rgba(0, 0, 0, 0.5) 0, rgba(0, 0, 0, 0.0001) 100%);
+      background-image: -o-linear-gradient(left, rgba(0, 0, 0, 0.5) 0, rgba(0, 0, 0, 0.0001) 100%);
+      background-image: -webkit-gradient(linear, left top, right top, from(rgba(0, 0, 0, 0.5)), to(rgba(0, 0, 0, 0.0001)));
+      background-image: linear-gradient(to right, rgba(0, 0, 0, 0.5) 0, rgba(0, 0, 0, 0.0001) 100%);
+      filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#80000000', endColorstr='#00000000', GradientType=1);
+      background-repeat: repeat-x;
+      left: 0;
+      right: auto; }
+      .page-index .section-search .page-slider .slick-prev:before {
+        content: '';
+        display: block;
+        position: absolute;
+        width: 30px;
+        height: 46px;
+        background-image: url(/Assets/images/sprite-arrow.png);
+        background-position: 0 0;
+        left: 50%;
+        transform: translateX(-50%); }
     .page-index .section-search .page-slider .slick-next {
-      position: absolute;
-      top: 50%;
-      right: 50%;
-      margin-right: -500px;
-      z-index: 2; }
+      background-image: -webkit-linear-gradient(left, rgba(0, 0, 0, 0.0001) 0, rgba(0, 0, 0, 0.5) 100%);
+      background-image: -o-linear-gradient(left, rgba(0, 0, 0, 0.0001) 0, rgba(0, 0, 0, 0.5) 100%);
+      background-image: -webkit-gradient(linear, left top, right top, from(rgba(0, 0, 0, 0.0001)), to(rgba(0, 0, 0, 0.5)));
+      background-image: linear-gradient(to right, rgba(0, 0, 0, 0.0001) 0, rgba(0, 0, 0, 0.5) 100%);
+      filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#00000000', endColorstr='#80000000', GradientType=1);
+      background-repeat: repeat-x;
+      left: auto;
+      right: 0; }
+      .page-index .section-search .page-slider .slick-next:before {
+        content: '';
+        display: block;
+        position: absolute;
+        width: 30px;
+        height: 46px;
+        background-image: url(/Assets/images/sprite-arrow.png);
+        background-position: -32px 0;
+        right: 50%; }
     .page-index .section-search .page-slider .slick-dots {
       position: absolute;
       bottom: 20px;
@@ -2398,7 +2441,7 @@ body.page-index {
     max-width: none; }
 
 .page-index .section-payment {
-  margin: 30px 0; }
+  margin: 40px 0; }
   .page-index .section-payment img {
     vertical-align: bottom;
     height: 50px; }

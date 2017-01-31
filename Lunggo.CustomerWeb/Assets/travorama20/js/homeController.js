@@ -336,9 +336,9 @@ jQuery(document).ready(function ($) {
     $('.slider-wrapper').slick({
         autoplay: true,
         autoplaySpeed: 4000,
-        dots: true,
-        prevArrow: '<button type="button" class="slick-prev hidden">Back</button>',
-        nextArrow: '<button type="button" class="slick-next hidden">Next</button>'
+        dots: false,
+        prevArrow: '<button type="button" class="slick-prev"></button>',
+        nextArrow: '<button type="button" class="slick-next"></button>'
     });
 
     // Slider Home Page Mobile
