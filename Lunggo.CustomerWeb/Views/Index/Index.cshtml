@@ -361,6 +361,14 @@
                         </a>
                     </div>
                 }
+                @if (DateTime.UtcNow.AddHours(7).Date <= new DateTime(2017, 03, 31))
+                {
+                    <div class="slider">
+                        <a href="@Url.Action("BTNTerbanginHemat", "Promo")">
+                            <img src="/Assets/images/campaign/TerbanginHemat/TerbanginHemat-slider.jpg" alt="Terbangin Hemat (Terbang & Nginap Hemat)" />
+                        </a>
+                    </div>
+                }
                 <div class="slider">
                     <a href="@Url.Action("TravoramaMobileApp","StaticPage")">
                         <img src="/Assets/images/campaign/MobileApp/mobile-app-banner.jpg" alt="Download Travorama Mobile App" />
