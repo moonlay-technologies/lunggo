@@ -13,8 +13,10 @@ namespace Lunggo.WebJob.PriceUpdater
         {
             Init();
             var todaydate = DateTime.UtcNow;
+            //var todaydate = new DateTime(2017, 6, 1, 0, 0, 0, DateTimeKind.Utc);
             var endofmonth = DateTime.DaysInMonth(todaydate.Year, todaydate.Month);
             var apiUrl = ConfigManager.GetInstance().GetConfigValue("api", "apiUrl");
+            Console.WriteLine(apiUrl);
             var loginClient = new RestClient(apiUrl);
             var difference = endofmonth - todaydate.Day;
             var baliCode = HotelService.AutoCompletes.First(c => c.Code == "BAI").Id;
@@ -44,6 +46,7 @@ namespace Lunggo.WebJob.PriceUpdater
             Console.WriteLine(@"Succeeded Login!");
             for (var i = 0; i <= difference; i++)
             {
+                FlightPriceUpdater("JKT", "DPS", todaydate.AddDays(i), accessToken, loginClient);
                 FlightPriceUpdater("JKT", "JOG", todaydate.AddDays(i), accessToken, loginClient);
                 FlightPriceUpdater("JKT", "KUL", todaydate.AddDays(i), accessToken, loginClient);
                 FlightPriceUpdater("JKT", "SIN", todaydate.AddDays(i), accessToken, loginClient);

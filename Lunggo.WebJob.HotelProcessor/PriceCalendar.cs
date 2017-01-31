@@ -37,8 +37,8 @@ namespace Lunggo.WebJob.HotelProcessor
                 if (loginResponse.Status == "200")
                 {
                     Console.WriteLine(@"Succeeded Login!");
-                    var searchRequest = new RestRequest("/v1/hotel/search", Method.POST) { RequestFormat = DataFormat.Json }; 
-                    searchRequest.AddHeader("Authorization", "Bearer " + loginResponse.AccessToken);
+                    //var searchRequest = new RestRequest("/v1/hotel/search", Method.POST) { RequestFormat = DataFormat.Json }; 
+                    //searchRequest.AddHeader("Authorization", "Bearer " + loginResponse.AccessToken);
                     
                     var data = searchId.Split('|');
                     var location = data[0];

@@ -263,7 +263,6 @@ namespace Lunggo.ApCommon.Flight.Service
             {
                 try
                 {
-
                     var redisTransaction = redisDb.CreateTransaction();
                     redisTransaction.AddCondition(Condition.KeyNotExists(redisKey));
                     redisTransaction.StringSetAsync(redisKey, true, TimeSpan.FromMinutes(5));
