@@ -27,9 +27,11 @@ namespace Lunggo.WebJob.HotelProcessor
             var apiUrl = ConfigManager.GetInstance().GetConfigValue("api", "apiUrl");
             var loginClient = new RestClient(apiUrl);
             var loginRequest = new RestRequest("/v1/login", Method.POST) {RequestFormat = DataFormat.Json};
+            Console.WriteLine(apiUrl);
             loginRequest.AddBody(new { clientId, clientSecret });
             Console.WriteLine(@"Start Login");
             var loginResponse = loginClient.Execute(loginRequest).Content.Deserialize<LoginFormat>();
+            Console.WriteLine(loginResponse);
             Console.WriteLine(@"login succeeded");
             Console.WriteLine(@"Login status = " + loginResponse.Status);
             try
