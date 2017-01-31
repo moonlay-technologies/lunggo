@@ -1383,3 +1383,17 @@ function backToTop() {
         }
     });
 }
+
+function addCustomInformation() {
+    setTimeout(function () {
+        var price = $(".ui-datepicker-calendar td").filter(function () {
+            var date = $(this).text();
+            return /\d/.test(date);
+        });
+
+        price.find('a').attr('data-custom', 110);
+        price.append('<a class="view-price btn btn-yellow sm-btn xs-txt os-bold">LIHAT</a>');
+
+        $('.ui-datepicker .ui-datepicker-title').addClass('col-xs-4');
+    }, 0);
+}

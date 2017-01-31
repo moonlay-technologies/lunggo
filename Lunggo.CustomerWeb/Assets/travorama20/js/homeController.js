@@ -349,4 +349,24 @@ jQuery(document).ready(function ($) {
         prevArrow: '<button type="button" class="slick-prev hidden">Back</button>',
         nextArrow: '<button type="button" class="slick-next hidden">Next</button>'
     });
+
+    // Price Calendar
+    $("#pc-datepicker").datepicker({
+        changeMonth: true,
+        changeYear: true,
+        dayNamesMin: ["MGG", "SEN", "SEL", "RAB", "KAM", "JUM", "SAB"],
+        showOtherMonths: true,
+        beforeShow: addCustomInformation,
+        beforeShowDay: function (date) {
+            return [true, date.getDay() === 5 || date.getDay() === 6 ? "weekend" : "weekday"];
+        },
+        onChangeMonthYear: addCustomInformation,
+        onSelect: addCustomInformation
+    });
+    addCustomInformation();
+
+    $('.pop-hotel').hover(function () {
+        $(this).find('.view-hotel').slideToggle('fast');
+    });
+
 });
