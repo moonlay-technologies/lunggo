@@ -26,6 +26,7 @@ namespace Lunggo.WebJob.HotelProcessor
             const string clientSecret = "V2tkS2FFOUVhek5QUjFsNFRucFpNVmt5UlRST2JVWnNXVmRKTTA1dFVtaFBSMDVyV1dwQk5WcEhTWGxPZWtwcVRVUkpNVTFCUFQwPQ==";
             var apiUrl = ConfigManager.GetInstance().GetConfigValue("api", "apiUrl");
             var loginClient = new RestClient(apiUrl);
+            Console.WriteLine(apiUrl);
             var loginRequest = new RestRequest("/v1/login", Method.POST) {RequestFormat = DataFormat.Json};
             Console.WriteLine(apiUrl);
             loginRequest.AddBody(new { clientId, clientSecret });

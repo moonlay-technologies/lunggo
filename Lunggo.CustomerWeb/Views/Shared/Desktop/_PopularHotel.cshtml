@@ -3,15 +3,15 @@
     <div class="row">
         <div class="col-xs-6">
             <div class="pop-hotel" style="background-image: url('/Assets/images/hotel/popular/jakarta.jpg')">
-                <div class="pop-inner">
+                <div class="pop-inner" >
                     <div class="xlg-txt os-bold white-txt">Jakarta</div>
                     <div class="normal-txt white-txt location">Indonesia</div>
                     <div class="view-hotel">
-                        <div class="bottom-txt">
+                        <div class="bottom-txt" ng-show="priceHotel.Jakarta.cheapestPrice != '' ">
                             <span class="normal-txt white-txt">mulai dari</span>
-                            <span class="md-txt os-bold yellow-txt">Rp 999.999</span>
+                            <span class="md-txt os-bold yellow-txt">Rp {{priceHotel.Jakarta.cheapestPrice | currency:'':0}}</span>
                         </div>
-                        <button class="btn btn-yellow sm-btn normal-txt os-bold" href="/id/jakarta" data-target="jakarta">LIHAT HOTEL</button>
+                        <button class="btn btn-yellow sm-btn normal-txt os-bold" href="/id/jakarta" ng-click="gotoCheapestDateHotel('JKT')" data-target="jakarta">LIHAT HOTEL</button>
                     </div>
                 </div>
             </div>
@@ -23,10 +23,10 @@
                     <div class="normal-txt white-txt location">Indonesia</div>
                     <div class="view-hotel">
                         <div class="bottom-txt">
-                            <span class="normal-txt white-txt">mulai dari</span>
-                            <span class="md-txt os-bold yellow-txt">Rp 999.999</span>
+                            <span class="normal-txt white-txt" ng-show="priceHotel.Yogyakarta.cheapestPrice != '' ">mulai dari</span>
+                            <span class="md-txt os-bold yellow-txt">Rp {{priceHotel.Yogyakarta.cheapestPrice | currency:'':0}}</span>
                         </div>
-                        <button class="btn btn-yellow sm-btn normal-txt os-bold" href="/id/jakarta" data-target="jakarta">LIHAT HOTEL</button>
+                        <button class="btn btn-yellow sm-btn normal-txt os-bold" href="/id/jakarta" ng-click="gotoCheapestDateHotel('JOG')" data-target="jakarta">LIHAT HOTEL</button>
                     </div>
                 </div>
             </div>
@@ -40,10 +40,10 @@
                     <div class="normal-txt white-txt location">Indonesia</div>
                     <div class="view-hotel">
                         <div class="bottom-txt">
-                            <span class="normal-txt white-txt">mulai dari</span>
-                            <span class="md-txt os-bold yellow-txt">Rp 999.999</span>
+                            <span class="normal-txt white-txt" ng-show="priceHotel.Surabaya.cheapestPrice != '' ">mulai dari</span>
+                            <span class="md-txt os-bold yellow-txt">Rp {{priceHotel.Surabaya.cheapestPrice | currency:'':0}}</span>
                         </div>
-                        <button class="btn btn-yellow sm-btn normal-txt os-bold" href="/id/jakarta" data-target="jakarta">LIHAT HOTEL</button>
+                        <button class="btn btn-yellow sm-btn normal-txt os-bold" href="/id/jakarta" ng-click="gotoCheapestDateHotel('SUB')" data-target="jakarta">LIHAT HOTEL</button>
                     </div>
                 </div>
             </div>
@@ -55,10 +55,10 @@
                     <div class="normal-txt white-txt location">Indonesia</div>
                     <div class="view-hotel">
                         <div class="bottom-txt">
-                            <span class="normal-txt white-txt">mulai dari</span>
-                            <span class="md-txt os-bold yellow-txt">Rp 999.999</span>
+                            <span class="normal-txt white-txt" ng-show="priceHotel.Bali.cheapestPrice != '' ">mulai dari</span>
+                            <span class="md-txt os-bold yellow-txt">Rp {{priceHotel.Bali.cheapestPrice| currency:'':0}}</span>
                         </div>
-                        <button class="btn btn-yellow sm-btn normal-txt os-bold" href="/id/jakarta" data-target="jakarta">LIHAT HOTEL</button>
+                        <button class="btn btn-yellow sm-btn normal-txt os-bold" href="/id/jakarta" ng-click="gotoCheapestDateHotel('BAI')" data-target="jakarta">LIHAT HOTEL</button>
                     </div>
                 </div>
             </div>
@@ -66,14 +66,14 @@
         <div class="col-xs-4">
             <div class="pop-hotel" style="background-image: url('/Assets/images/hotel/popular/macau.jpg')">
                 <div class="pop-inner">
-                    <div class="xlg-txt os-bold white-txt">Macau</div>
-                    <div class="normal-txt white-txt location">Hongkong</div>
+                    <div class="xlg-txt os-bold white-txt">Bandung</div>
+                    <div class="normal-txt white-txt location">Indonesia</div>
                     <div class="view-hotel">
                         <div class="bottom-txt">
-                            <span class="normal-txt white-txt">mulai dari</span>
-                            <span class="md-txt os-bold yellow-txt">Rp 999.999</span>
+                            <span class="normal-txt white-txt" ng-show="priceHotel.Bandung.cheapestPrice != '' ">mulai dari</span>
+                            <span class="md-txt os-bold yellow-txt">Rp {{priceHotel.Bandung.cheapestPrice | currency:'':0}}</span>
                         </div>
-                        <button class="btn btn-yellow sm-btn normal-txt os-bold" href="/id/jakarta" data-target="jakarta">LIHAT HOTEL</button>
+                        <button class="btn btn-yellow sm-btn normal-txt os-bold" href="/id/jakarta" ng-click="gotoCheapestDateHotel('MFM')" data-target="jakarta">LIHAT HOTEL</button>
                     </div>
                 </div>
             </div>

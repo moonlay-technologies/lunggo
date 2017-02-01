@@ -88,10 +88,6 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
                 });
             }
         }
-
-        //var jkt = getCheapestFlightPrice('DPS', 'JKT');
-        //$scope.priceFlight.Jakarta.CheapestDate = jkt.cheapestDate;
-        //$scope.priceFlight.Jakarta.CheapestPrice = jkt.cheapestPrice;
     });
    // ================= FLIGHT ========================
 
@@ -115,6 +111,10 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
         }
     }
 
+
+    //=============== Price Calendar, populate cheapest price for destinations ======================
+
+
     $scope.priceFlight =
     {
         Denpasar: {
@@ -134,7 +134,63 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
             CheapestPrice: ''
         }
     };
-    function getCheapestHotelPrice(location) {
+
+    $scope.priceHotel =
+    {
+        Bali: {
+            CheapestDate: '',
+            CheapestPrice: ''
+        },
+        Surabaya: {
+            CheapestDate: '',
+            CheapestPrice: ''
+        },
+        Jakarta: {
+            CheapestDate: '',
+            CheapestPrice: ''
+        },
+        Yogyakarta: {
+            CheapestDate: '',
+            CheapestPrice: ''
+        },
+        Bandung: {
+            CheapestDate: '',
+            CheapestPrice: ''
+        }
+    };
+
+    $scope.gotoCheapestDateFlight = function (dest, depdate) {
+        var date = new Date(depdate);
+        var datex = ("0" + date.getDate()).slice(-2) + ("0" + (date.getMonth() + 1)).slice(-2) + date.getFullYear().toString().substr(2, 2);
+        if (dest == 'DPS')
+            return '/id/tiket-pesawat/cari/Jakarta-Denpasar-JKT-DPS/JKTDPS' + datex + '-100y';
+        else if (dest == 'KNO')
+            return '/id/tiket-pesawat/cari/Jakarta-Medan-JKT-KNO/JKTKNO' + datex + '-100y';
+        else if (dest == 'SUB')
+            return '/id/tiket-pesawat/cari/Jakarta-Surabaya-JKT-SUB/JKTSUB' + datex + '-100y';
+        else if (dest == 'JKT')
+            return '/id/tiket-pesawat/cari/Denpasar-Jakarta-DPS-JKT/DPSJKT' + datex + '-100y';
+    }
+
+    $scope.gotoCheapestDateHotel = function (dest, depdate) {
+        var date = new Date();
+        var datex = date.getFullYear() + '-' + ("0" + (date.getMonth() + 1)).slice(-2) + '-' + ("0" + date.getDate()).slice(-2);
+        var nextdate = new Date();
+        nextdate.setDate(date.getDate() + 1);
+        var datey = nextdate.getFullYear() + '-' + ("0" + (nextdate.getMonth() + 1)).slice(-2) + '-' + ("0" + nextdate.getDate()).slice(-2);
+        if (dest == 'JKT')
+            window.location.href = '/id/hotel/cari/Indonesia/Jakarta/?info=Location.-2001512190.' + datex + '.' + datey + '.1.1.2~0';
+        else if (dest == 'SUB')
+            window.location.href = '/id/hotel/cari/Indonesia/Surabaya/?info=Location.681103437.' + datex + '.' + datey + '.1.1.2~0';
+        else if (dest == 'JOG')
+            window.location.href = '/id/hotel/cari/Indonesia/Yogyakarta/?info=Location.1439962957.' + datex + '.' + datey + '.1.1.2~0';
+        else if (dest == 'BAI')
+            window.location.href = '/id/hotel/cari/Indonesia/Bali/?info=Location.1890170571.' + datex + '.' + datey + '.1.1.2~0';
+        else if (dest == 'MFM')
+            window.location.href = '/id/hotel/cari/IMakau/Macau/?info=Location.-79525572.' + datex + '.' + datey + '.1.1.2~0';
+    }
+    
+    $scope.getCheapestHotelPrice = function(location) {
         var authAccess = getAuthAccess();
         var date = new Date(), y = date.getFullYear(), m = date.getMonth();
         var lastDay = new Date(y, m + 1, 0);
@@ -149,32 +205,49 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
                 method: 'GET',
                 headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') }
             }).done(function (returnData) {
-                //if (returnData.status == 200) {
                 var cheapestPrice = returnData.cheapestPrice;
                 var cheapestDate;
                 if (returnData.cheapestDate != null && returnData.cheapestDate != '') {
                     cheapestDate = new Date(returnData.cheapestDate);
-                    return [cheapestPrice, cheapestDate];
+                    if (location == 'BAI') {
+                        $scope.priceHotel.Bali.cheapestDate = cheapestDate;
+                        $scope.priceHotel.Bali.cheapestPrice = cheapestPrice;
+                    } else  if (location == 'BDO') {
+                        $scope.priceHotel.Bandung.cheapestDate = cheapestDate;
+                        $scope.priceHotel.Bandung.cheapestPrice = cheapestPrice;
+                    } else if (location == 'JOG') {
+                        $scope.priceHotel.Yogyakarta.cheapestDate = cheapestDate;
+                        $scope.priceHotel.Yogyakarta.cheapestPrice = cheapestPrice;
+                    }
+                    else if (location == 'JAV') {
+                        $scope.priceHotel.Jakarta.cheapestDate = cheapestDate;
+                        $scope.priceHotel.Jakarta.cheapestPrice = cheapestPrice;
+                    }
+                    else if (location == 'SUB') {
+                        $scope.priceHotel.Surabaya.cheapestDate = cheapestDate;
+                        $scope.priceHotel.Surabaya.cheapestPrice = cheapestPrice;
+                    }
                 } else {
-                    return [-1, ''];
+                   // return [-1, ''];
                 }
 
                 //}
 
             }).error(function (returnData) {
-                return [-1, ''];
+               // return [-1, ''];
             });
         }
     }
 
+    $scope.getCheapestHotelPrice('JAV');
+    $scope.getCheapestHotelPrice('BDO');
+    $scope.getCheapestHotelPrice('SUB');
+    $scope.getCheapestHotelPrice('BAI');
+    $scope.getCheapestHotelPrice('JOG');
+
     $scope.getCheapestFlightPrice = function(origin, destination) {
         var authAccess = getAuthAccess();
-
-        //var date = new Date();
-        //var firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
-        //var lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
-
-        var date = new Date(), y = date.getFullYear();
+        var date = new Date(), y = date.getFullYear(); m = date.getMonth();
         var lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
         //lastDay.setDate(date.getDate() + 1);
         var startDate = ("0" + date.getDate()).slice(-2)
@@ -197,6 +270,7 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
                     if (origin == 'DPS' && destination == 'JKT') {
                         $scope.priceFlight.Jakarta.CheapestPrice = cheapestPrice;
                         $scope.priceFlight.Jakarta.CheapestDate = cheapestDate;
+                       
                     } else if (origin == 'JKT' && destination == 'SUB') {
                         $scope.priceFlight.Surabaya.CheapestPrice = cheapestPrice;
                         $scope.priceFlight.Surabaya.CheapestDate = cheapestDate;
@@ -209,6 +283,12 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
                         $scope.priceFlight.Denpasar.CheapestPrice = cheapestPrice;
                         $scope.priceFlight.Denpasar.CheapestDate = cheapestDate;
                     }
+                    
+                    $scope.listCheapestPrice = [];
+                    for (var x = 0; x < returnData.listDatesAndPrices.length; x++) {
+                        $scope.listCheapestPrice.push(returnData.listDatesAndPrices[x].price);
+                    }
+                    addCustomInformation(m, y);
                     //return [cheapestPrice, cheapestDate];
                 }else {
                     //return [-1, ''];
@@ -221,12 +301,16 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
             });
         }
     }
+
+    var listCheapestPrice = [30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30];
     $scope.selectedPopularDestination = {
         origin: '',
         destination: '',
         cheapestDate: '',
         cheapestPrice: '',
     }
+
+    $scope.listCheapestPrice = [];
     $scope.getCheapestFlightPrice('DPS', 'JKT');
     $scope.getCheapestFlightPrice('JKT', 'DPS');
     $scope.getCheapestFlightPrice('JKT', 'SUB');
@@ -318,6 +402,104 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
     }
 
     //=============== hotel end ======================
+
+    //function addCustomInformation() {
+    //    setTimeout(function () {
+    //        var price = $(".ui-datepicker-calendar td").filter(function () {
+    //            var date = $(this).text();
+    //            var tesss = /\d/.test(date);
+    //            return /\d/.test(date);
+    //        });
+
+    //        price.find('a').attr('data-custom', 20);
+    //        price.append('<a class="view-price btn btn-yellow sm-btn xs-txt os-bold">LIHAT</a>');
+
+    //        $('.ui-datepicker .ui-datepicker-title').addClass('col-xs-4');
+    //    }, 0);
+    //}
+
+    
+    $("#pc-datepicker").datepicker({
+        changeMonth: true,
+        changeYear: true,
+        dayNamesMin: ["MGG", "SEN", "SEL", "RAB", "KAM", "JUM", "SAB"],
+        showOtherMonths: true,
+        onChangeMonthYear: function (year, month) {
+            addCustomInformation(month, year);
+        },
+        onSelect: function (date, dp) {
+            var month = date.getMonth() + 1;
+            var year = date.getFullYear();
+            addCustomInformation(month, year);
+        },
+    });
+    function addCustomInformation(mth, year) {
+        var eventDates = {};
+        eventDates = getEventDate(mth, year);
+
+        setTimeout(function () {
+            $(".ui-datepicker-calendar td").filter(function () {
+                var date = $(this).text();
+                //var tahun = $(this).attr('data-year');
+
+                if (year) {
+                    var month = mth;
+                    if (month == 0) {
+                        month = 1;
+                    }
+                    if (date < 10) {
+                        date = '0' + date;
+                    }
+
+                    var date_format = year + '/' + '0' + month + '/' + date;
+                    var highlight = eventDates[date_format];
+                    if (highlight) {
+                        //price.find('a').attr('data-custom', 200);
+                        //price.append('<a class="view-price btn btn-yellow sm-btn xs-txt os-bold">LIHAT</a>');
+
+                        $('.ui-datepicker .ui-datepicker-title').addClass('col-xs-4');
+                        $(this).find("a").attr('data-custom', highlight);
+                    }
+                }
+
+                return date;
+            });
+        }, 0);
+    }
+
+    function getEventDate(mth, year) {
+        var eventDates = {};
+        //if (year % 4 == 0) {
+            if (mth == 2) {
+                for (var d = 1; d <= 29; d++) {
+                    var x = year.toString() + '/' + ("0" + (mth)).slice(-2).toString() + '/' + ("0" + d.toString()).slice(-2);
+                    eventDates[x] = $scope.listCheapestPrice[d-1];
+                }
+            }else if(mth == 1 || mth ==3 || mth ==5 || mth ==7 || mth ==8 || mth == 10 || mth == 12) {
+                for (var d = 1; d <= 31; d++) {
+                    var x = year.toString() + '/' + ("0" + (mth)).slice(-2).toString() + '/' + ("0" + d.toString()).slice(-2);
+                    eventDates[x] = $scope.listCheapestPrice[d - 1];
+                }
+            }else if (mth == 4 || mth == 6 || mth == 9 || mth == 11){
+                for (var d = 1; d <= 30; d++) {
+                    var x = year.toString() + '/' + ("0" + (mth)).slice(-2).toString() + '/' + ("0" + d.toString()).slice(-2);
+                    eventDates[x] = $scope.listCheapestPrice[d - 1];
+                }
+            }
+        
+        //if (mth == 1) {
+        //    eventDates['2017/02/19'] = "Rp. 120.000";
+        //    eventDates['2017/02/20'] = "Rp. 90.000";
+        //}
+        //else {
+        //    eventDates['2017/01/29'] = "Rp. 70.000";
+        //    eventDates['2017/01/30'] = "Rp. 60.000";
+        //    eventDates['2017/01/31'] = "Rp. 70.000";
+        //}
+
+
+        return eventDates
+    }
 }]);
 
 //********************
@@ -472,22 +654,29 @@ jQuery(document).ready(function ($) {
     });
 
     // Price Calendar
-    $("#pc-datepicker").datepicker({
-        changeMonth: true,
-        changeYear: true,
-        dayNamesMin: ["MGG", "SEN", "SEL", "RAB", "KAM", "JUM", "SAB"],
-        showOtherMonths: true,
-        beforeShow: addCustomInformation,
-        beforeShowDay: function (date) {
-            return [true, date.getDay() === 5 || date.getDay() === 6 ? "weekend" : "weekday"];
-        },
-        onChangeMonthYear: addCustomInformation,
-        onSelect: addCustomInformation
-    });
-    addCustomInformation();
+    
 
     $('.pop-hotel').hover(function () {
         $(this).find('.view-hotel').slideToggle('fast');
     });
+
+   
+    function setPrice(date) {
+        var price = $(".ui-datepicker-calendar td").filter(function () {
+            var datex = $(this).text();
+            return /\d/.test(datex);
+        });
+
+        var x = new Date(date);
+        var listCheapestPrice = [30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30];
+        var cheapestprice = listCheapestPrice[x.getDate() - 1];
+        price.find('a').attr('data-custom', 200);
+        price.append('<a class="view-price btn btn-yellow sm-btn xs-txt os-bold">LIHAT</a>');
+
+        $('.ui-datepicker .ui-datepicker-title').addClass('col-xs-4');
+
+        return [true, date.getDay() === 5 || date.getDay() === 6 ? "weekend" : "weekday"];
+    }
+
 
 });

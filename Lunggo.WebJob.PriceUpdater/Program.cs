@@ -33,7 +33,6 @@ namespace Lunggo.WebJob.PriceUpdater
             var kulCd = HotelService.AutoCompletes.First(c => c.Code == "KUL").Id;
             var bgkCd = HotelService.AutoCompletes.First(c => c.Code == "BKK").Id;
             var hgkCd = HotelService.AutoCompletes.First(c => c.Code == "HKG").Id;
-
             var loginResponse = "";
             var accessToken = "";
             while (loginResponse != "200")
@@ -54,12 +53,12 @@ namespace Lunggo.WebJob.PriceUpdater
                 //FlightPriceUpdater("JKT", "HKG", todaydate.AddDays(i), accessToken, loginClient);
                 FlightPriceUpdater("JKT", "SUB", todaydate.AddDays(i), accessToken, loginClient);
                 FlightPriceUpdater("DPS", "JKT", todaydate.AddDays(i), accessToken, loginClient);
-                //HotelPriceUpdater("Bali", baliCode, todaydate.AddDays(i), accessToken, loginClient);
-                //HotelPriceUpdater("Jakarta", jktCode, todaydate.AddDays(i), accessToken, loginClient);
-                //HotelPriceUpdater("Bandung", bdoCd, todaydate.AddDays(i), accessToken, loginClient);
+                HotelPriceUpdater("Bali", baliCode, todaydate.AddDays(i), accessToken, loginClient);
+                HotelPriceUpdater("Jakarta", jktCode, todaydate.AddDays(i), accessToken, loginClient);
+                HotelPriceUpdater("Bandung", bdoCd, todaydate.AddDays(i), accessToken, loginClient);
                 //HotelPriceUpdater("Solo", soloCd, todaydate.AddDays(i), accessToken, loginClient);
-                //HotelPriceUpdater("Yogyakarta", jogCd, todaydate.AddDays(i), accessToken, loginClient);
-                //HotelPriceUpdater("Surabaya", subCd, todaydate.AddDays(i), accessToken, loginClient);
+                HotelPriceUpdater("Yogyakarta", jogCd, todaydate.AddDays(i), accessToken, loginClient);
+                HotelPriceUpdater("Surabaya", subCd, todaydate.AddDays(i), accessToken, loginClient);
                 //HotelPriceUpdater("Medan", mdnCd, todaydate.AddDays(i), accessToken, loginClient);
                 //HotelPriceUpdater("Palembang", plmCd, todaydate.AddDays(i), accessToken, loginClient);
                 //HotelPriceUpdater("Bogor", bgrCd, todaydate.AddDays(i), accessToken, loginClient);
