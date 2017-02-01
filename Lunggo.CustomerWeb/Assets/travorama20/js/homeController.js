@@ -288,7 +288,7 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
                     for (var x = 0; x < returnData.listDatesAndPrices.length; x++) {
                         $scope.listCheapestPrice.push(returnData.listDatesAndPrices[x].price);
                     }
-                    addCustomInformation(m, y);
+                    //addCustomInformation(m, y);
                     //return [cheapestPrice, cheapestDate];
                 }else {
                     //return [-1, ''];
@@ -302,10 +302,59 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
         }
     }
 
-    var listCheapestPrice = [30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30];
+    $scope.getFlightPrice = function (origin, destination, month, year) {
+        var authAccess = getAuthAccess();
+        var date = new Date(year, month - 1, 1), y = date.getFullYear(); m = date.getMonth();
+        var lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+        //lastDay.setDate(date.getDate() + 1);
+        var startDate = ("0" + date.getDate()).slice(-2)
+             + ("0" + (date.getMonth() + 1)).slice(-2) + y.toString().substring(2, 4);
+        var endDate = ("0" + lastDay.getDate()).slice(-2)
+             + ("0" + (lastDay.getMonth() + 1)).slice(-2) + y.toString().substring(2, 4);
+
+        if (authAccess == 1 || authAccess == 2) {
+            $.ajax({
+                url: FlightPriceCalendarConfig.Url + '/' + origin + destination + '/' + startDate
+                + '/' + endDate + '/IDR',
+                method: 'GET',
+                headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') }
+            }).done(function (returnData) {
+                //if (returnData.status == 200) {
+                var cheapestPrice = returnData.cheapestPrice;
+                var cheapestDate;
+                if (returnData.cheapestDate != null && returnData.cheapestDate != '') {
+                    cheapestDate = new Date(returnData.cheapestDate);
+                    $scope.listCheapestPrice = [];
+                    for (var x = 0; x < returnData.listDatesAndPrices.length; x++) {
+                        $scope.listCheapestPrice.push(returnData.listDatesAndPrices[x].price);
+                    }
+                    addCustomInformation(m, y);
+                    //return [cheapestPrice, cheapestDate];
+                } else {
+                    //return [-1, ''];
+                }
+
+                //}
+
+            }).error(function (returnData) {
+                //return [-1, ''];
+            });
+        }
+    }
+
+    $scope.editData = function () {
+         $scope.selectedPopularDestination.originCity =  $scope.selectedPopularDestination.originCity.replace(/\s+/g, '-');
+         $scope.selectedPopularDestination.originCity =  $scope.selectedPopularDestination.originCity.replace(/[^0-9a-zA-Z-]/gi, '');
+         $scope.selectedPopularDestination.destinationCity =  $scope.selectedPopularDestination.destinationCity.replace(/\s+/g, '-');
+         $scope.selectedPopularDestination.destinationCity =  $scope.selectedPopularDestination.destinationCity.replace(/[^0-9a-zA-Z-]/gi, '');
+         return $scope.selectedPopularDestination.originCity + '-' +  $scope.selectedPopularDestination.destinationCity + '-' +
+             $scope.selectedPopularDestination.origin + '-' +  $scope.selectedPopularDestination.destination + '/' ;
+    }
     $scope.selectedPopularDestination = {
         origin: '',
         destination: '',
+        originCity :'',
+        destinationCity :'',
         cheapestDate: '',
         cheapestPrice: '',
     }
@@ -403,22 +452,6 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
 
     //=============== hotel end ======================
 
-    //function addCustomInformation() {
-    //    setTimeout(function () {
-    //        var price = $(".ui-datepicker-calendar td").filter(function () {
-    //            var date = $(this).text();
-    //            var tesss = /\d/.test(date);
-    //            return /\d/.test(date);
-    //        });
-
-    //        price.find('a').attr('data-custom', 20);
-    //        price.append('<a class="view-price btn btn-yellow sm-btn xs-txt os-bold">LIHAT</a>');
-
-    //        $('.ui-datepicker .ui-datepicker-title').addClass('col-xs-4');
-    //    }, 0);
-    //}
-
-    
     $("#pc-datepicker").datepicker({
         changeMonth: true,
         changeYear: true,
@@ -454,11 +487,11 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
                     var date_format = year + '/' + '0' + month + '/' + date;
                     var highlight = eventDates[date_format];
                     if (highlight) {
-                        //price.find('a').attr('data-custom', 200);
-                        //price.append('<a class="view-price btn btn-yellow sm-btn xs-txt os-bold">LIHAT</a>');
-
+                        var datex = date + month + year.slice(-2);
+                        var url = $scope.editData() + datex + '-100y';
                         $('.ui-datepicker .ui-datepicker-title').addClass('col-xs-4');
                         $(this).find("a").attr('data-custom', highlight);
+                        $(this).append('<a class="view-price btn btn-yellow sm-btn xs-txt os-bold" href="' + url + '">LIHAT</a>');
                     }
                 }
 
