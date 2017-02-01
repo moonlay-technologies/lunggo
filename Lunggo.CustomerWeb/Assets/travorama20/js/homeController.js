@@ -473,8 +473,7 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
         setTimeout(function () {
             $(".ui-datepicker-calendar td").filter(function () {
                 var date = $(this).text();
-                //var tahun = $(this).attr('data-year');
-
+                
                 if (year) {
                     var month = mth;
                     if (month == 0) {
@@ -494,7 +493,6 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
                         $(this).append('<a class="view-price btn btn-yellow sm-btn xs-txt os-bold" href="' + url + '">LIHAT</a>');
                     }
                 }
-
                 return date;
             });
         }, 0);
