@@ -2627,7 +2627,7 @@ body.page-index {
   position: relative;
   z-index: 0;
   cursor: pointer;
-  margin-bottom: 5px; }
+  margin-bottom: 8px; }
   .page-index .section-calendar-price .popular-flight .pop-flight:before {
     content: '';
     display: block;
@@ -2658,8 +2658,8 @@ body.page-index {
     padding: 10px 20px; }
 
 .page-index .section-calendar-price .price-calendar {
-  min-height: 570px;
-  max-height: 630px;
+  min-height: 600px;
+  max-height: 660px;
   margin-right: 20px; }
   .page-index .section-calendar-price .price-calendar .search-map {
     position: relative;
@@ -2788,7 +2788,7 @@ body.page-index {
         color: #999; }
       .page-index .section-calendar-price .price-calendar .ui-datepicker-inline .ui-datepicker-calendar td:hover {
         border: 2px solid #1daee4;
-        box-shadow: 3px 3px 6px 0 #ccc; }
+        box-shadow: 3px 3px 12px 0 #ccc; }
         .page-index .section-calendar-price .price-calendar .ui-datepicker-inline .ui-datepicker-calendar td:hover:before {
           width: 31px;
           height: 31px;
