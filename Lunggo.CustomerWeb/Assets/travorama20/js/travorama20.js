@@ -713,30 +713,30 @@ function flightFormSearchFunctions() {
 
     //*****
     // flight recommendation
-    $('.search-location .location-recommend .nav-click.prev').click(function (evt) {
+    $('.section-search .search-location .location-recommend .nav-click.prev').click(function (evt) {
         evt.preventDefault();
-        if (parseInt($('.search-location .location-recommend .tab-header nav ul').css('margin-left')) < 0) {
-            $('.search-location .location-recommend .tab-header nav ul').css('margin-left', '+=135px');
+        if (parseInt($('.section-search .search-location .location-recommend .tab-header nav ul').css('margin-left')) < 0) {
+            $('.section-search .search-location .location-recommend .tab-header nav ul').css('margin-left', '+=135px');
         }
     });
-    $('.search-location .location-recommend .nav-click.next').click(function (evt) {
+    $('.section-search .search-location .location-recommend .nav-click.next').click(function (evt) {
         evt.preventDefault();
-        if (parseInt($('.search-location .location-recommend .tab-header nav ul').css('margin-left')) > -(135 * ($('.search-location .location-recommend .tab-header nav ul li').length - 4))) {
-            $('.search-location .location-recommend .tab-header nav ul').css('margin-left', '-=135px');
+        if (parseInt($('.section-search .search-location .location-recommend .tab-header nav ul').css('margin-left')) > -(135 * ($('.search-location .location-recommend .tab-header nav ul li').length - 4))) {
+            $('.section-search .search-location .location-recommend .tab-header nav ul').css('margin-left', '-=135px');
         }
     });
-    $('.search-location .location-recommend nav ul li ').click(function () {
+    $('.section-search .search-location .location-recommend nav ul li ').click(function () {
         var showClass = $(this).attr('data-show');
         $(this).addClass('active');
         $(this).siblings().removeClass('active');
-        $('.search-location .location-recommend .tab-content>div').removeClass('active');
-        $('.search-location .location-recommend .tab-content>div.' + showClass).addClass('active');
+        $('.section-search .search-location .location-recommend .tab-content>div').removeClass('active');
+        $('.section-search .search-location .location-recommend .tab-content>div.' + showClass).addClass('active');
     });
-    $('.search-location .location-recommend .tab-content a').click(function (evt, sharedProperties) {
+    $('.section-search .search-location .location-recommend .tab-content a').click(function (evt, sharedProperties) {
         evt.preventDefault();
         var locationCode = $(this).attr('data-code');
         var locationCity = $(this).text();
-        if ($('.search-location').attr('data-place') == 'origin') {
+        if ($('.section-search .search-location').attr('data-place') == 'origin') {
             if (locationCity != FlightSearchConfig.flightForm.destinationCity) {
                 FlightSearchConfig.flightForm.origin = locationCode;
                 FlightSearchConfig.flightForm.originCity = locationCity;
@@ -797,42 +797,42 @@ function flightFormSearchFunctions() {
             trial = 0;
         }
         FlightSearchConfig.autocomplete.loading = true;
-        $('autocomplete-pre .text-pre').hide();
-        $('autocomplete-pre .text-loading').show();
+        $('.section-search autocomplete-pre .text-pre').hide();
+        $('.section-search autocomplete-pre .text-loading').show();
         if (typeof (FlightSearchConfig.autocomplete.cache[keyword]) != "undefined") {
             FlightSearchConfig.autocomplete.result = FlightSearchConfig.autocomplete.cache[keyword];
             console.log('from cache : ');
             console.log(FlightSearchConfig.autocomplete.result);
             generateSearchResult(FlightSearchConfig.autocomplete.result);
             if (FlightSearchConfig.autocomplete.result.length > 0) {
-                $('.autocomplete-no-result').hide();
-                $('.autocomplete-pre .text-loading').hide();
-                $('.autocomplete-result').show();
+                $('.section-search .autocomplete-no-result').hide();
+                $('.section-search .autocomplete-pre .text-loading').hide();
+                $('.section-search .autocomplete-result').show();
             } else {
-                $('.autocomplete-pre .text-loading').hide();
-                $('.autocomplete-result').hide();
-                $('.autocomplete-no-result').show();
+                $('.section-search .autocomplete-pre .text-loading').hide();
+                $('.section-search .autocomplete-result').hide();
+                $('.section-search .autocomplete-no-result').show();
             }
         } else {
             $.ajax({
                 url: FlightAutocompleteConfig.Url + keyword,
                 headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') }
             }).done(function (returnData) {
-                $('.autocomplete-pre .text-pre').hide();
-                $('.autocomplete-pre .text-loading').hide();
+                $('.section-search .autocomplete-pre .text-pre').hide();
+                $('.section-search .autocomplete-pre .text-loading').hide();
                 FlightSearchConfig.autocomplete.loading = false;
                 FlightSearchConfig.autocomplete.result = returnData.airports;
                 FlightSearchConfig.autocomplete.cache[keyword] = returnData.airports;
                 console.log(returnData);
                 generateSearchResult(FlightSearchConfig.autocomplete.result);
                 if (returnData.airports.length > 0) {
-                    $('.autocomplete-no-result').hide();
-                    $('.autocomplete-pre .text-loading').hide();
-                    $('.autocomplete-result').show();
+                    $('.section-search .autocomplete-no-result').hide();
+                    $('.section-search .autocomplete-pre .text-loading').hide();
+                    $('.section-search .autocomplete-result').show();
                 } else {
-                    $('.autocomplete-pre .text-loading').hide();
-                    $('.autocomplete-result').hide();
-                    $('.autocomplete-no-result').show();
+                    $('.section-search .autocomplete-pre .text-loading').hide();
+                    $('.section-search .autocomplete-result').hide();
+                    $('.section-search .autocomplete-no-result').show();
                 }
             }).error(function (returnData) {
                 trial++;
@@ -844,16 +844,16 @@ function flightFormSearchFunctions() {
         }
     }
     function generateSearchResult(list) {
-        $('.autocomplete-result ul').empty();
+        $('.section-search .autocomplete-result ul').empty();
         for (var i = 0 ; i < list.length; i++) {
-            $('.autocomplete-result ul').append('<li data-code="' + list[i].code + '" data-city="' + list[i].city + '">' + list[i].city + ' (' + list[i].code + '), ' + list[i].name + ', ' + list[i].country + '</li>');
+            $('.section-search .autocomplete-result ul').append('<li data-code="' + list[i].code + '" data-city="' + list[i].city + '">' + list[i].city + ' (' + list[i].code + '), ' + list[i].name + ', ' + list[i].country + '</li>');
         }
     }
     // select search result
-    $('.autocomplete-result ul').on('click', 'li', function () {
+    $('.section-search  .autocomplete-result ul').on('click', 'li', function () {
         var locationCode = $(this).attr('data-code');
         var locationCity = $(this).attr('data-city');
-        if ($('.search-location').attr('data-place') == 'origin') {
+        if ($('.section-search .search-location').attr('data-place') == 'origin') {
             if (locationCity != FlightSearchConfig.flightForm.destinationCity) {
                 FlightSearchConfig.flightForm.origin = locationCode;
                 FlightSearchConfig.flightForm.originCity = locationCity;
@@ -885,16 +885,16 @@ function flightFormSearchFunctions() {
             hideLocation();
         } else {
             if ($(this).val().length >= 3) {
-                $('.search-location .location-recommend').hide();
-                $('.search-location .location-search').show();
+                $('.section-search .search-location .location-recommend').hide();
+                $('.section-search .search-location .location-search').show();
                 FlightSearchConfig.autocomplete.keyword = $(this).val();
                 getLocation(FlightSearchConfig.autocomplete.keyword);
             } else {
-                $('.search-location .location-recommend').hide();
-                $('.search-location .location-search').show();
-                $('.search-location .location-search .autocomplete-pre .text-pre').show();
-                $('.search-location .location-search .autocomplete-result').hide();
-                $('.search-location .location-search .autocomplete-no-result').hide();
+                $('.section-search .search-location .location-recommend').hide();
+                $('.section-search .search-location .location-search').show();
+                $('.section-search .search-location .location-search .autocomplete-pre .text-pre').show();
+                $('.section-search .search-location .location-search .autocomplete-result').hide();
+                $('.section-search .search-location .location-search .autocomplete-no-result').hide();
             }
         }
     });
@@ -1157,25 +1157,25 @@ function flightFormSearchFunctions() {
     // show and hide search location
     function showLocation(place) {
         place = place || $('.search-location').attr('data-place');
-        $('.search-location .location-recommend').show();
-        $('.search-location .location-search').hide();
+        $('.section-search .search-location .location-recommend').show();
+        $('.section-search .search-location .location-search').hide();
         if (place == 'origin') {
-            $('.search-location .location-header .origin').removeClass('hidden');
-            $('.search-location .location-header .destination').addClass('hidden');
+            $('.section-search .search-location .location-header .origin').removeClass('hidden');
+            $('.section-search .search-location .location-header .destination').addClass('hidden');
         } else {
-            $('.search-location .location-header .origin').addClass('hidden');
-            $('.search-location .location-header .destination').removeClass('hidden');
+            $('.section-search .search-location .location-header .origin').addClass('hidden');
+            $('.section-search .search-location .location-header .destination').removeClass('hidden');
         }
-        $('.search-location').attr('data-place', place);
-        $('.search-location').attr('id', place);
-        $('.search-location').show();
+        $('.section-search .search-location').attr('data-place', place);
+        $('.section-search .search-location').attr('id', place);
+        $('.section-search .search-location').show();
         hideCalendar();
     }
 
     function hideLocation() {
-        $('.search-location').hide();
+        $('.section-search .search-location').hide();
     }
-    $('.close-location').click(function () { hideLocation(); });
+    $('.section-search .close-location').click(function () { hideLocation(); });
 
     //*****
     // show and hide search calendar

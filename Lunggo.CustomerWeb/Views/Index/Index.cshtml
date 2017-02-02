@@ -413,14 +413,19 @@
                             </div>
                             <div class="clearfix">
                                 <div class="search-input col-xs-8 row">
-                                    <div class="col-xs-6 map-input"><input type="text" name="searchFrom"></div>
-                                    <div class="col-xs-6 map-input"><input type="text" name="searchTo"></div>
+                                    <div class="col-xs-6 map-input"><input type="text" name="searchFrom" placeholder="Pilih Kota/Bandara Asal"></div>
+                                    <div class="col-xs-6 map-input"><input type="text" name="searchTo" placeholder="Pilih Kota/Bandara Tujuan"></div>
                                 </div>
+                            </div>
+                            <div class="location-choice">
+                                @Html.Partial("/Views/Shared/Desktop/_SearchLocation.cshtml")
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+            
+            
             <div class="col-xs-4">
                 @Html.Partial("/Views/Shared/Desktop/_PopularFlight.cshtml")
             </div>
