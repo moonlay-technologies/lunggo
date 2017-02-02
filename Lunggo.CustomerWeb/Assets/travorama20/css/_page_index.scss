@@ -21,7 +21,7 @@ body.page-index {margin-bottom: 0;}
                 nav {
                     ul {margin:0; padding:0;
                         li {float:left; width: 50%; list-style:none;
-                            a {color:#4f4f4f; background:#d2d2d2; display:block; padding:13px 0px; text-align:center; @extend .os-semibold; font-weight:600; text-decoration:none; font-size:14px;
+                            a {color:#4f4f4f; background:#d2d2d2; display:block; padding:13px 0px; text-align:center; @extend .os-semibold; font-weight:600; text-decoration:none; font-size:14px; cursor: pointer;
                                 &:before {content:""; width:20px; height:20px; display:inline-block; background-image:url(/Assets/images/search-tab-sprite.png); margin-bottom:-5px; margin-right:5px;}
                             }
                             &.active {border-right:0;
@@ -788,6 +788,7 @@ body.page-index {margin-bottom: 0;}
                         -webkit-appearance: none;
                         -moz-appearance: none;
                         text-overflow: '';
+                        cursor: pointer;
                     }
                 }
                 .ui-datepicker-calendar {

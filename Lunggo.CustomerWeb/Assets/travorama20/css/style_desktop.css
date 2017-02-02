@@ -1621,7 +1621,8 @@ body.page-index {
             text-align: center;
             font-weight: 600;
             text-decoration: none;
-            font-size: 14px; }
+            font-size: 14px;
+            cursor: pointer; }
             .page-index .section-search .search-form .tab-header nav ul li a:before {
               content: "";
               width: 20px;
@@ -2744,7 +2745,8 @@ body.page-index {
     line-height: 100%;
     -webkit-appearance: none;
     -moz-appearance: none;
-    text-overflow: ''; }
+    text-overflow: '';
+    cursor: pointer; }
   .page-index .section-calendar-price .price-calendar .ui-datepicker-inline .ui-datepicker-calendar {
     margin: 0 auto; }
     .page-index .section-calendar-price .price-calendar .ui-datepicker-inline .ui-datepicker-calendar th, .page-index .section-calendar-price .price-calendar .ui-datepicker-inline .ui-datepicker-calendar td {
