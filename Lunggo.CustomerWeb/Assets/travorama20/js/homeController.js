@@ -373,6 +373,16 @@ jQuery(document).ready(function ($) {
         var tahun = $('#selectYear').val();
 
         var newDate = new Date(tahun, bulan, '01');
-        $('#pc-datepicker').datepicker("setDate", newDate);
+        $('#pc-datepicker').datepicker('setDate', newDate);
     });
+    setValueMY();
 });
+
+function setValueMY() {
+    var d = new Date();
+    var month = d.getMonth();
+    var year = d.getFullYear();
+
+    $('#selectMonth').val(month);
+    $('#selectYear').val(year);
+}
