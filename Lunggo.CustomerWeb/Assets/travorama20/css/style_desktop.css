@@ -2701,7 +2701,8 @@ body.page-index {
       right: 0;
       margin-right: 13px;
       bottom: 0;
-      padding: 8px 25px; }
+      padding: 8px 25px;
+      z-index: 1; }
   .page-index .section-calendar-price .price-calendar .ui-datepicker-inline .ui-datepicker-prev, .page-index .section-calendar-price .price-calendar .ui-datepicker-inline .search-calendar .calendar-body .ui-datepicker-next, .page-index .search-calendar .calendar-body .section-calendar-price .price-calendar .ui-datepicker-inline .ui-datepicker-next, .page-index .section-calendar-price .price-calendar .ui-datepicker-inline .search-calendar-hotel .calendar-body .ui-datepicker-next, .page-index .search-calendar-hotel .calendar-body .section-calendar-price .price-calendar .ui-datepicker-inline .ui-datepicker-next, .page-index .section-calendar-price .price-calendar .ui-datepicker-inline .ui-datepicker-next {
     display: none; }
   .page-index .section-calendar-price .price-calendar .ui-datepicker-inline > .ui-datepicker-inline {
@@ -2753,7 +2754,7 @@ body.page-index {
     .page-index .section-calendar-price .price-calendar .ui-datepicker-inline .ui-datepicker-calendar th {
       font-weight: 700;
       color: #6a6a6a;
-      padding: 10px 0; }
+      padding: 20px 0 15px; }
       .page-index .section-calendar-price .price-calendar .ui-datepicker-inline .ui-datepicker-calendar th.ui-datepicker-week-end {
         color: red; }
     .page-index .section-calendar-price .price-calendar .ui-datepicker-inline .ui-datepicker-calendar td {

@@ -744,6 +744,7 @@ body.page-index {margin-bottom: 0;}
                     margin-right: 13px;
                     bottom: 0;
                     padding: 8px 25px;
+                    z-index: 1;
                 }
             }
             .ui-datepicker-inline {
@@ -799,7 +800,7 @@ body.page-index {margin-bottom: 0;}
                     th {
                         font-weight: 700;
                         color: #6a6a6a;
-                        padding: 10px 0;
+                        padding: 20px 0 15px;
                         &.ui-datepicker-week-end {color: red;}
                     }
                     td {
