@@ -21,6 +21,7 @@
     .xs-txt {font-size: 9px;}
     .italic-txt {font-style: italic;}
     .underline-txt {text-decoration: line-through;} 
+    .under-txt {text-decoration: underline;} 
     .bold-txt {@extend .os-bold; font-weight: 700;}
     .semibold-txt {@extend .os-semibold; font-weight: 600;}
     .normal-txt {font-weight: 400; @extend .os-regular;}   
@@ -30,7 +31,9 @@
         text-transform: uppercase;
         margin-bottom: 15px;
     }
-    
+    .black-txt {color: #000000;}
+    .yellow-txt {color: #ffd632;}
+
     /*Custom Column*/
     .col-left, col-right, .col-left-result, .col-right-result, .col-xs-left, .col-xs-middle, .col-xs-right, .col-left-hotel, .col-right-hotel, .col-half, .col-left-page, .col-right-page, 
     .col-left-slider, col-right-slider, .col-left-rs, .col-right-rs, .rb-left, .rb-mid, .rb-right, .room-sort-left, .room-sort-mid, .room-sort-right, .room-left, .room-right,

@@ -763,6 +763,7 @@
     <Content Include="Assets\images\hotel-review-header.png" />
     <Content Include="Assets\images\hotel-star-4.jpg" />
     <Content Include="Assets\images\hotel-star-4.png" />
+    <Content Include="Assets\images\hotel\filter-hotel-map-white.png" />
     <Content Include="Assets\images\hotel\filter-hotel-map.png" />
     <Content Include="Assets\images\hotel\markers.png" />
     <Content Include="Assets\images\hourglass.png" />
@@ -1242,6 +1243,7 @@
     <Content Include="Assets\travorama20\js\HotelCheckoutController.js" />
     <Content Include="Assets\travorama20\js\HotelController.js" />
     <Content Include="Assets\travorama20\js\hotelDetailController.js" />
+    <Content Include="Assets\travorama20\js\HotelMap.js" />
     <Content Include="Assets\travorama20\js\hotelSearchController.js" />
     <Content Include="Assets\travorama20\js\paymentController.js" />
     <Content Include="Assets\travorama20\js\returnFlightController.js" />
