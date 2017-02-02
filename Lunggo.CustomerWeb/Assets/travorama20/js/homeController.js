@@ -352,8 +352,6 @@ jQuery(document).ready(function ($) {
 
     // Price Calendar
     $("#pc-datepicker").datepicker({
-        changeMonth: true,
-        changeYear: true,
         dayNamesMin: ["MGG", "SEN", "SEL", "RAB", "KAM", "JUM", "SAB"],
         showOtherMonths: true,
         beforeShow: addCustomInformation,
@@ -369,4 +367,12 @@ jQuery(document).ready(function ($) {
         $(this).find('.view-hotel').slideToggle('fast');
     });
 
+    //search calendar price
+    $('#submitCalendar').on('click', function () {
+        var bulan = $('#selectMonth').val();
+        var tahun = $('#selectYear').val();
+
+        var newDate = new Date(tahun, bulan, '01');
+        $('#pc-datepicker').datepicker("setDate", newDate);
+    });
 });

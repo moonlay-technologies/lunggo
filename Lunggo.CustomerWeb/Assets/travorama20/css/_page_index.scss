@@ -703,7 +703,7 @@ body.page-index {margin-bottom: 0;}
             .search-map {
                 position: relative;
                 background: #f0f0f0;
-                padding: 10px 0 15px;
+                padding: 15px 5px;
                 @include border-radius(2px);
                 .search-title {
                     line-height: 24px;
@@ -716,7 +716,6 @@ body.page-index {margin-bottom: 0;}
                     }
                 }
                 .search-input { 
-                    padding-left: 12px;
                     .map-input {
                         input[name="searchFrom"], input[name="searchTo"] {
                             border: none;
@@ -739,58 +738,48 @@ body.page-index {margin-bottom: 0;}
                     }
                 }
                 .btn-calendar {
-                    position: absolute;
-                    right: 0;
-                    margin-right: 13px;
-                    bottom: 0;
-                    padding: 8px 25px;
-                    z-index: 1;
+                    padding: 8px 0;
+                    margin-bottom: 0 !important;
+                    width: 100%;
+                }
+                .select-calendar {
+                    font-size: 12px;
+                    line-height: 100%;
+                    padding: 15px 25px 15px 6px;
+                    border: none;
+                    font-size: 12px;
+                    @include border-radius(2px);
+                    line-height: 100%;
+                    -webkit-appearance: none;
+                    -moz-appearance: none;
+                    text-overflow: '';
+                    cursor: pointer;
+                    width: 100%;
+                }                    
+                .normal-txt.semibold-txt {margin-bottom: 5px;}
+                .row:last-child .col-xs-4:first-child {
+                    &:before {
+                        margin-right: -67px;
+                        z-index: 1;
+                    }
+                    &:after {margin-right: 13px;}
+                    &:before, &:after {
+                        content: '';
+                        display: block;
+                        position: absolute;
+                        width: 12px;
+                        height: 8px;
+                        right: 0px;
+                        top: 50%;
+                        transform: translateY(-50%);
+                        background: url(/Assets/images/arrow-down-grey.png) no-repeat;
+                        
+                    }
                 }
             }
             .ui-datepicker-inline {
                 .ui-datepicker-prev, .ui-datepicker-next {display: none;}
                 & > .ui-datepicker-inline {display: none !important;}
-                .ui-datepicker-header {
-                    .ui-datepicker-title {
-                        position: absolute;
-                        right: 0;
-                        margin-top: -57px;
-                        margin-right: 20px;
-                        padding: 0;
-                        .ui-datepicker-month {width: 25%;}
-                        .ui-datepicker-year {
-                            width: 25%;
-                            margin-left: 4%;
-                        }
-                        &:after {margin-right: 126px;}
-                        &:before {margin-right: 202px; z-index: 1;}
-                        &:after, &:before {
-                            content: '';
-                            display: block;
-                            position: absolute;
-                            width: 12px;
-                            height: 8px;
-                            background: url(/Assets/images/arrow-down-grey.png) no-repeat;
-                            right: 0;
-                            top: 50%;
-                            transform: translateY(-50%);
-                        }
-                    }
-                    select.ui-datepicker-month, select.ui-datepicker-year {
-                        padding: 15px 25px 15px 6px;
-                        border: none;
-                        font-size: 12px;
-                        -webkit-border-radius: 2px;
-                        -moz-border-radius: 2px;
-                        -ms-border-radius: 2px;
-                        border-radius: 2px;
-                        line-height: 100%;
-                        -webkit-appearance: none;
-                        -moz-appearance: none;
-                        text-overflow: '';
-                        cursor: pointer;
-                    }
-                }
                 .ui-datepicker-calendar {
                     margin: 0 auto;
                     th, td {
@@ -834,7 +823,14 @@ body.page-index {margin-bottom: 0;}
                             margin: 0 15px;
                             color: #000;
                         }
-                        &.ui-datepicker-other-month {color : #999;}
+                        &.ui-datepicker-other-month {
+                            &:hover {
+                                border: none;
+                                box-shadow: none;
+                                a.view-price.btn.btn-yellow.sm-btn.xs-txt.os-bold {display: none;}
+                            }
+                            &:before {background: none;}
+                        }
                         &:hover {
                             border: 2px solid #1daee4;
                             box-shadow: 3px 3px 12px 0 #ccc;

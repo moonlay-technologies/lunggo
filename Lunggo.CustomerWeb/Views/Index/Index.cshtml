@@ -401,22 +401,54 @@
                     <div class="md-txt os-bold">Tiket Pesawat Termurah Setiap Hari</div>
                     <div id="pc-datepicker">
                         <div class="search-map">
-                            <div class="search-title row normal-txt semibold-txt">
-                                <div class="row col-xs-7">
+                            <div class="row normal-txt semibold-txt">
+                                <div class="col-xs-7">
                                     <div class="col-xs-6">Dari</div>
                                     <div class="col-xs-6">Ke</div>
                                 </div>
-                                <div class="row col-xs-3">
-                                    <div class="col-xs-6">Bulan</div>
-                                    <div class="col-xs-6">Tahun</div>
+                                <div class="col-xs-5">
+                                    <div class="col-xs-4">Bulan</div>
+                                    <div class="col-xs-4">Tahun</div>
                                 </div>
                             </div>
-                            <div class="clearfix">
-                                <div class="search-input col-xs-7 row">
-                                    <div class="col-xs-6 map-input"><input type="text" name="searchFrom"></div>
-                                    <div class="col-xs-6 map-input"><input type="text" name="searchTo"></div>
+                            <div class="row">
+                                <div class="search-input col-xs-7">
+                                    <div class="col-xs-6 map-input">
+                                        <input type="text" name="searchFrom">
+                                    </div>
+                                    <div class="col-xs-6 map-input">
+                                        <input type="text" name="searchTo">
+                                    </div>
                                 </div>
-                                <a class="btn btn-yellow lg-btn md-txt btn-calendar">CARI</a>
+                                <div class="col-xs-5">
+                                    <div class="col-xs-4">
+                                        <select class="select-calendar" id="selectMonth">
+                                            <option value="0">Jan</option>
+                                            <option value="1">Feb</option>
+                                            <option value="2">Mar</option>
+                                            <option value="3">Apr</option>
+                                            <option value="4">Mei</option>
+                                            <option value="5">Jun</option>
+                                            <option value="6">Jul</option>
+                                            <option value="7">Agu</option>
+                                            <option value="8">Sep</option>
+                                            <option value="9">Okt</option>
+                                            <option value="10">Nov</option>
+                                            <option value="11">Des</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-xs-4">
+                                        <select class="select-calendar" id="selectYear">
+                                            <option value="2012">2017</option>
+                                            <option value="2013">2018</option>
+                                            <option value="2014">2019</option>
+                                            <option value="2015">2020</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-xs-4">
+                                        <a class="btn btn-yellow lg-btn md-txt btn-calendar" id="submitCalendar">CARI</a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

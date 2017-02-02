@@ -1394,6 +1394,6 @@ function addCustomInformation() {
         price.find('a').attr('data-custom', 110);
         price.append('<a class="view-price btn btn-yellow sm-btn xs-txt os-bold">LIHAT</a>');
 
-        $('.ui-datepicker .ui-datepicker-title').addClass('col-xs-5');
+        $('.ui-datepicker .ui-datepicker-title').addClass('hidden');
     }, 0);
 }
