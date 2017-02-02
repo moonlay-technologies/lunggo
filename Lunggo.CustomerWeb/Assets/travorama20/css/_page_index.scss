@@ -738,6 +738,13 @@ body.page-index {margin-bottom: 0;}
                         }
                     }
                 }
+                .btn-calendar {
+                    position: absolute;
+                    right: 0;
+                    margin-right: 13px;
+                    bottom: 0;
+                    padding: 8px 25px;
+                }
             }
             .ui-datepicker-inline {
                 .ui-datepicker-prev, .ui-datepicker-next {display: none;}
@@ -749,13 +756,13 @@ body.page-index {margin-bottom: 0;}
                         margin-top: -57px;
                         margin-right: 20px;
                         padding: 0;
-                        .ui-datepicker-month {width: 43%;}
+                        .ui-datepicker-month {width: 25%;}
                         .ui-datepicker-year {
-                            width: 41%;
-                            margin-left: 6%;
+                            width: 25%;
+                            margin-left: 4%;
                         }
-                        &:after {margin-right: 27px;}
-                        &:before {margin-right: 127px; z-index: 1;}
+                        &:after {margin-right: 126px;}
+                        &:before {margin-right: 202px; z-index: 1;}
                         &:after, &:before {
                             content: '';
                             display: block;

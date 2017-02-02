@@ -2696,6 +2696,12 @@ body.page-index {
         top: 50%;
         transform: translateY(-50%);
         margin-left: 7px; }
+    .page-index .section-calendar-price .price-calendar .search-map .btn-calendar {
+      position: absolute;
+      right: 0;
+      margin-right: 13px;
+      bottom: 0;
+      padding: 8px 25px; }
   .page-index .section-calendar-price .price-calendar .ui-datepicker-inline .ui-datepicker-prev, .page-index .section-calendar-price .price-calendar .ui-datepicker-inline .search-calendar .calendar-body .ui-datepicker-next, .page-index .search-calendar .calendar-body .section-calendar-price .price-calendar .ui-datepicker-inline .ui-datepicker-next, .page-index .section-calendar-price .price-calendar .ui-datepicker-inline .search-calendar-hotel .calendar-body .ui-datepicker-next, .page-index .search-calendar-hotel .calendar-body .section-calendar-price .price-calendar .ui-datepicker-inline .ui-datepicker-next, .page-index .section-calendar-price .price-calendar .ui-datepicker-inline .ui-datepicker-next {
     display: none; }
   .page-index .section-calendar-price .price-calendar .ui-datepicker-inline > .ui-datepicker-inline {
@@ -2707,14 +2713,14 @@ body.page-index {
     margin-right: 20px;
     padding: 0; }
     .page-index .section-calendar-price .price-calendar .ui-datepicker-inline .ui-datepicker-header .ui-datepicker-title .ui-datepicker-month {
-      width: 43%; }
+      width: 25%; }
     .page-index .section-calendar-price .price-calendar .ui-datepicker-inline .ui-datepicker-header .ui-datepicker-title .ui-datepicker-year {
-      width: 41%;
-      margin-left: 6%; }
+      width: 25%;
+      margin-left: 4%; }
     .page-index .section-calendar-price .price-calendar .ui-datepicker-inline .ui-datepicker-header .ui-datepicker-title:after {
-      margin-right: 27px; }
+      margin-right: 126px; }
     .page-index .section-calendar-price .price-calendar .ui-datepicker-inline .ui-datepicker-header .ui-datepicker-title:before {
-      margin-right: 127px;
+      margin-right: 202px;
       z-index: 1; }
     .page-index .section-calendar-price .price-calendar .ui-datepicker-inline .ui-datepicker-header .ui-datepicker-title:after, .page-index .section-calendar-price .price-calendar .ui-datepicker-inline .ui-datepicker-header .ui-datepicker-title:before {
       content: '';
