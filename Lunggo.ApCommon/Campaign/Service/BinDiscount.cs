@@ -44,7 +44,7 @@ namespace Lunggo.ApCommon.Campaign.Service
             else
             {
                 rsv = HotelService.GetInstance().GetReservation(rsvNo);
-                discAmount = (rsv as HotelReservation).HotelDetails.Rooms.Sum(ro => ro.Rates.Sum(i => i.Price.OriginalIdr) * 0.1M);
+                discAmount = Math.Round((rsv as HotelReservation).HotelDetails.Rooms.Sum(ro => ro.Rates.Sum(i => i.Price.FinalIdr * 1.01M) * 0.1M));
             }
             var isAvailable = IsPanAndEmailEligibleInCache("btn", hashedPan, rsv.Contact.Email);
             var isValid = IsPromoValid(rsv, bin, hashedPan, voucherCode);
@@ -95,7 +95,7 @@ namespace Lunggo.ApCommon.Campaign.Service
 
         private bool IsReservationEligible(HotelReservation rsv)
         {
-            return rsv.HotelDetails.Rooms.Sum(ro => ro.Rates.Sum(i => i.Price.OriginalIdr)) >= 1500000;
+            return rsv.HotelDetails.Rooms.Sum(ro => ro.Rates.Sum(i => i.Price.FinalIdr*1.01M)) >= 1500000;
         }
 
         private bool DateValid()
