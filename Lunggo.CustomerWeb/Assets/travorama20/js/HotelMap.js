@@ -6,7 +6,7 @@
             var div = $("<div />").css({
                 background: "url(" + img.attr("src") + ") no-repeat",
                 width: "100%",
-                height: "135px",
+                height: "125px",
                 "background-size": "cover",
                 "background-position": "center"
             });
@@ -101,26 +101,40 @@
     });
 });
 
-var map;
 function initMap() {
-    map = new google.maps.Map(document.getElementById('map'), {
-        zoom: 16,
-        center: new google.maps.LatLng(-33.91722, 151.23064),
-        mapTypeId: 'roadmap'
+    var currentHotel = { lat: -8.710695, lng: 115.178775 };
+    var otherHotel = { lat: -8.711247, lng: 115.181347 };
+
+    var map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 15,
+        center: currentHotel,
+        mapTypeControl: false,
+        streetViewControl: false,
+        fullscreenControl: false
     });
 
-    var iconBase = 'https://maps.google.com/mapfiles/kml/shapes/';
+    var iconBase = '/Assets/images/hotel/markers-';
     var icons = {
-        parking: {
-            icon: iconBase + 'parking_lot_maps.png'
-        },
-        library: {
-            icon: iconBase + 'library_maps.png'
-        },
-        info: {
-            icon: iconBase + 'info-i_maps.png'
+        hotelBlue: {
+            icon: iconBase + 'blue.png'
+        }, hotelRed: {
+            icon: iconBase + 'red.png'
         }
     };
+
+    var features = [
+      {
+          position: currentHotel,
+          type: 'hotelBlue'
+      }, {
+          position: otherHotel,
+          type: 'hotelRed'
+      }
+    ];
+
+    for (var i = 0, feature; feature = features[i]; i++) {
+        addMarker(feature);
+    }
 
     function addMarker(feature) {
         var marker = new google.maps.Marker({
@@ -128,19 +142,25 @@ function initMap() {
             icon: icons[feature.type].icon,
             map: map
         });
-    }
 
-    var features = [
-      {
-          position: new google.maps.LatLng(-33.916988, 151.233640),
-          type: 'info'
-      }, {
-          position: new google.maps.LatLng(-33.91662347903106, 151.22879464019775),
-          type: 'parking'
-      }
-    ];
+        var infoDesc = '<div class="map-container">' +
+        '<div class="hotel-round"' + 'style="' + 'background-image: url(' + '/Assets/images/hotel/hotel-dummy.jpg' + ')"></div>' +
+        '<div class="map-content normal-txt">' +
+        '<div class="hotel-title bold-txt blue-txt">' + 'Everyday Smart' + '</div>' +
+        '<div class="' + 'star star-5' + '"></div>' +
+        '<small class="orange-txt sm-txt underline-txt">' + '999.999.999' + '</small>' +
+        '<div class="orange-txt bold-txt">' + '999.999.999' + '</div>' +
+        '</div>' +
+        '</div>';
 
-    for (var i = 0, feature; feature = features[i]; i++) {
-        addMarker(feature);
+        var infoWindow = new google.maps.InfoWindow({
+            content: infoDesc
+        });
+
+        infoWindow.open(map, marker);
+
+        marker.addListener('click', function () {
+            infoWindow.open(map, marker);
+        });
     }
 }

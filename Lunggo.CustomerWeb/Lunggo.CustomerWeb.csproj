@@ -765,7 +765,10 @@
     <Content Include="Assets\images\hotel-star-4.png" />
     <Content Include="Assets\images\hotel\filter-hotel-map-white.png" />
     <Content Include="Assets\images\hotel\filter-hotel-map.png" />
-    <Content Include="Assets\images\hotel\markers.png" />
+    <Content Include="Assets\images\hotel\hotel-dummy.jpg" />
+    <Content Include="Assets\images\hotel\markers-blue.png" />
+    <Content Include="Assets\images\hotel\markers-red.png" />
+    <Content Include="Assets\images\hotel\view-map.jpg" />
     <Content Include="Assets\images\hourglass.png" />
     <Content Include="Assets\images\hover-menu-arrow.png" />
     <Content Include="Assets\images\howto-bg.jpg" />
@@ -1670,7 +1673,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>23321</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>

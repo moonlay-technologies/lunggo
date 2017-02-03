@@ -6,7 +6,16 @@
         &>.col-8 {
             padding-left: 15px;
             padding: 10px;
-            width: 75%
+            width: 75%;
+            .hotel-map-price {
+                position: relative;
+                button.checkout {
+                    position: absolute;
+                    bottom: 0;
+                    right: 0;
+                    font-size: 12px;
+                }
+            }
         }
         &>.col-2 {width: 25%}
     }
@@ -131,8 +140,8 @@
     }
     .search-list-result {
         .row-btn {
-            .col-half:first-child {padding-right: 30px;}
-            a.btn { position: relative;
+            .col-half:first-child {padding-right: 45px;}
+            a.btn { position: relative; font-size: 14px;
                 &:before {
                     background: url(/Assets/images/hotel/filter-hotel-map.png) no-repeat;
                     content: "";
@@ -159,9 +168,9 @@
             .slr-hotel {
                 .hotel-list-container {
                     padding-right: 15px;
-                    max-height: 600px;
+                    max-height: 568px;
                     overflow-y: auto;
-                    &::-webkit-scrollbar {width: 13px;}
+                    &::-webkit-scrollbar {width: 10px;}
                     &::-webkit-scrollbar-track {background: #ddd;}
                     &::-webkit-scrollbar-thumb {background: #999;}
                 }
@@ -172,10 +181,10 @@
                 background: #fff;
                 border: 1px solid #ccc;
                 border-radius: 2px;
-                height: auto;
+                height: 568px;
                 #map {
                     width: 100%;
-                    height: 578px;
+                    height: 100%;
                 }
             }                       
             .search-list {padding-right: 30px}   
@@ -194,3 +203,34 @@
         }
     }
 }
+
+.map-container {
+    .hotel-round {
+        width: 90px;
+        height: 90px;
+        position: absolute;
+        left: 0;
+        border-radius: 90px;
+        background-size: cover;
+        background-position: center;
+        margin-left: -60px;
+        margin-top: -9px;
+        border: 2px solid #1daee4;
+    }
+    .map-content {
+        width: 160px;
+        height: 70px;
+        overflow: hidden;
+        padding-left: 35px;
+        small {font-size: 10px;}
+    }
+}
+
+.hotel-title {
+    font-size: 14px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.gm-style .gm-style-iw {overflow: initial;}

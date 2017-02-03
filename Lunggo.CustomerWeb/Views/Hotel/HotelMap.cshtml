@@ -5,7 +5,7 @@
 @{
     Layout = "/Views/Shared/Desktop/_LayoutDesktop.cshtml";
     ViewBag.BodyClass = "page-hotel map page-search";
-    ViewBag.Title = "Pencarian Hotel";
+    ViewBag.Title = "Pencarian Hotel Peta";
     ViewBag.AngularController = "hotelSearchController";
 
 }
@@ -184,10 +184,10 @@
             <div class="search-list-result clearfix">
                 <div class="clearfix row-btn">
                     <div class="col-half">
-                        <a class="list-map btn btn-blue os-bold md-txt big block">Tampilkan Pencarian List View</a>
+                        <a class="list-map btn btn-blue os-bold big block">Tampilkan Pencarian List View</a>
                     </div>
                     <div class="col-half">
-                        <a class="zoom-map btn btn-orange os-bold md-txt big block">Perbesar Peta</a>
+                        <a class="zoom-map btn btn-orange os-bold big block">Perbesar Peta</a>
                     </div>
                 </div>
                 <div class="clearfix row-content">
@@ -201,27 +201,21 @@
                                         </div>
                                         <div class="col-8">
                                             <div class="clearfix">
-                                                <div class="col-8 blue-txt bg">{{hotel.hotelName}}</div>
+                                                <div class="col-8 blue-txt bg hotel-title">{{hotel.hotelName}}</div>
                                                 <div class="col-2 facility">
                                                     <span class="wifi" ng-show="hotel.isWifiAccessAvailable"></span>
                                                     <span class="meal" ng-show="hotel.restaurant"></span>
                                                 </div>
                                             </div>
                                             <div class="star star-5"></div>
-                                            @*<div ng-class="{
-                                                 'star': hotel.starRating == 1,
-                                                 'star star-2': hotel.starRating == 2,
-                                                 'star star-3': hotel.starRating == 3,
-                                                 'star star-4': hotel.starRating == 4,
-                                                 'star star-5': hotel.starRating == 5}">
-                                                </div>*@
                                             <div class="hotel-map-price">
                                                 <div class="price clearfix" id="price-night" style="display: block">
-                                                    <div class="txt-md"><b>Harga per kamar, per malam :</b></div>
+                                                    <div class="txt-md black-txt"><b>Harga per kamar, per malam :</b></div>
                                                     <div class="underline-txt">Rp 999.999.999</div>
-                                                    <div class="lg-txt"><b><sup>Rp</sup> 999.999.999</b></div>
+                                                    <div class="hotel-title"><b><sup>Rp</sup> 999.999.999</b></div>
                                                     <div class="xs-txt">*Harga Termasuk Pajak & Service Charge</div>
                                                 </div>
+                                                <button href="#" class="btn btn-yellow sm-btn checkout">PESAN</button>
                                             </div>
                                         </div>
                                     </div>
@@ -233,27 +227,21 @@
                                         </div>
                                         <div class="col-8">
                                             <div class="clearfix">
-                                                <div class="col-8 blue-txt bg">{{hotel.hotelName}}</div>
+                                                <div class="col-8 blue-txt bg hotel-title">{{hotel.hotelName}}</div>
                                                 <div class="col-2 facility">
                                                     <span class="wifi" ng-show="hotel.isWifiAccessAvailable"></span>
                                                     <span class="meal" ng-show="hotel.restaurant"></span>
                                                 </div>
                                             </div>
                                             <div class="star star-5"></div>
-                                            @*<div ng-class="{
-                                                 'star': hotel.starRating == 1,
-                                                 'star star-2': hotel.starRating == 2,
-                                                 'star star-3': hotel.starRating == 3,
-                                                 'star star-4': hotel.starRating == 4,
-                                                 'star star-5': hotel.starRating == 5}">
-                                                </div>*@
                                             <div class="hotel-map-price">
                                                 <div class="price clearfix" id="price-night" style="display: block">
-                                                    <div class="txt-md"><b>Harga per kamar, per malam :</b></div>
+                                                    <div class="txt-md black-txt"><b>Harga per kamar, per malam :</b></div>
                                                     <div class="underline-txt">Rp 999.999.999</div>
-                                                    <div class="lg-txt"><b><sup>Rp</sup> 999.999.999</b></div>
+                                                    <div class="hotel-title"><b><sup>Rp</sup> 999.999.999</b></div>
                                                     <div class="xs-txt">*Harga Termasuk Pajak & Service Charge</div>
                                                 </div>
+                                                <button href="#" class="btn btn-yellow sm-btn checkout">PESAN</button>
                                             </div>
                                         </div>
                                     </div>
@@ -265,27 +253,21 @@
                                         </div>
                                         <div class="col-8">
                                             <div class="clearfix">
-                                                <div class="col-8 blue-txt bg">{{hotel.hotelName}}</div>
+                                                <div class="col-8 blue-txt bg hotel-title">{{hotel.hotelName}}</div>
                                                 <div class="col-2 facility">
                                                     <span class="wifi" ng-show="hotel.isWifiAccessAvailable"></span>
                                                     <span class="meal" ng-show="hotel.restaurant"></span>
                                                 </div>
                                             </div>
                                             <div class="star star-5"></div>
-                                            @*<div ng-class="{
-                                                 'star': hotel.starRating == 1,
-                                                 'star star-2': hotel.starRating == 2,
-                                                 'star star-3': hotel.starRating == 3,
-                                                 'star star-4': hotel.starRating == 4,
-                                                 'star star-5': hotel.starRating == 5}">
-                                                </div>*@
                                             <div class="hotel-map-price">
                                                 <div class="price clearfix" id="price-night" style="display: block">
-                                                    <div class="txt-md"><b>Harga per kamar, per malam :</b></div>
+                                                    <div class="txt-md black-txt"><b>Harga per kamar, per malam :</b></div>
                                                     <div class="underline-txt">Rp 999.999.999</div>
-                                                    <div class="lg-txt"><b><sup>Rp</sup> 999.999.999</b></div>
+                                                    <div class="hotel-title"><b><sup>Rp</sup> 999.999.999</b></div>
                                                     <div class="xs-txt">*Harga Termasuk Pajak & Service Charge</div>
                                                 </div>
+                                                <button href="#" class="btn btn-yellow sm-btn checkout">PESAN</button>
                                             </div>
                                         </div>
                                     </div>
@@ -297,27 +279,21 @@
                                         </div>
                                         <div class="col-8">
                                             <div class="clearfix">
-                                                <div class="col-8 blue-txt bg">{{hotel.hotelName}}</div>
+                                                <div class="col-8 blue-txt bg hotel-title">{{hotel.hotelName}}</div>
                                                 <div class="col-2 facility">
                                                     <span class="wifi" ng-show="hotel.isWifiAccessAvailable"></span>
                                                     <span class="meal" ng-show="hotel.restaurant"></span>
                                                 </div>
                                             </div>
                                             <div class="star star-5"></div>
-                                            @*<div ng-class="{
-                                                 'star': hotel.starRating == 1,
-                                                 'star star-2': hotel.starRating == 2,
-                                                 'star star-3': hotel.starRating == 3,
-                                                 'star star-4': hotel.starRating == 4,
-                                                 'star star-5': hotel.starRating == 5}">
-                                                </div>*@
                                             <div class="hotel-map-price">
                                                 <div class="price clearfix" id="price-night" style="display: block">
-                                                    <div class="txt-md"><b>Harga per kamar, per malam :</b></div>
+                                                    <div class="txt-md black-txt"><b>Harga per kamar, per malam :</b></div>
                                                     <div class="underline-txt">Rp 999.999.999</div>
-                                                    <div class="lg-txt"><b><sup>Rp</sup> 999.999.999</b></div>
+                                                    <div class="hotel-title"><b><sup>Rp</sup> 999.999.999</b></div>
                                                     <div class="xs-txt">*Harga Termasuk Pajak & Service Charge</div>
                                                 </div>
+                                                <button href="#" class="btn btn-yellow sm-btn checkout">PESAN</button>
                                             </div>
                                         </div>
                                     </div>
@@ -329,27 +305,21 @@
                                         </div>
                                         <div class="col-8">
                                             <div class="clearfix">
-                                                <div class="col-8 blue-txt bg">{{hotel.hotelName}}</div>
+                                                <div class="col-8 blue-txt bg hotel-title">{{hotel.hotelName}}</div>
                                                 <div class="col-2 facility">
                                                     <span class="wifi" ng-show="hotel.isWifiAccessAvailable"></span>
                                                     <span class="meal" ng-show="hotel.restaurant"></span>
                                                 </div>
                                             </div>
                                             <div class="star star-5"></div>
-                                            @*<div ng-class="{
-                                                 'star': hotel.starRating == 1,
-                                                 'star star-2': hotel.starRating == 2,
-                                                 'star star-3': hotel.starRating == 3,
-                                                 'star star-4': hotel.starRating == 4,
-                                                 'star star-5': hotel.starRating == 5}">
-                                                </div>*@
                                             <div class="hotel-map-price">
                                                 <div class="price clearfix" id="price-night" style="display: block">
-                                                    <div class="txt-md"><b>Harga per kamar, per malam :</b></div>
+                                                    <div class="txt-md black-txt"><b>Harga per kamar, per malam :</b></div>
                                                     <div class="underline-txt">Rp 999.999.999</div>
-                                                    <div class="lg-txt"><b><sup>Rp</sup> 999.999.999</b></div>
+                                                    <div class="hotel-title"><b><sup>Rp</sup> 999.999.999</b></div>
                                                     <div class="xs-txt">*Harga Termasuk Pajak & Service Charge</div>
                                                 </div>
+                                                <button href="#" class="btn btn-yellow sm-btn checkout">PESAN</button>
                                             </div>
                                         </div>
                                     </div>

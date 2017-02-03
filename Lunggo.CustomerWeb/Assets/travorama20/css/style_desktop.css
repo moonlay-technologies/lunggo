@@ -5530,6 +5530,44 @@ file: /Assets/travorama20/css/_page_flight.scss
     .page-hotel .travorama-hotel .search-list .search-list-result {
       margin: 15px 0;
       position: relative; }
+      .page-hotel .travorama-hotel .search-list .search-list-result .view-map {
+        background: url(/Assets/images/hotel/view-map.jpg);
+        width: 100%;
+        height: 125px;
+        position: relative;
+        margin-bottom: 15px; }
+        .page-hotel .travorama-hotel .search-list .search-list-result .view-map:hover:before {
+          opacity: 0.5;
+          transition: 0.4s; }
+        .page-hotel .travorama-hotel .search-list .search-list-result .view-map:before {
+          content: '';
+          width: 100%;
+          height: 125px;
+          position: absolute;
+          display: block;
+          background: #000;
+          top: 0;
+          left: 0;
+          opacity: 0.2; }
+        .page-hotel .travorama-hotel .search-list .search-list-result .view-map a.btn-blue.btn-view-map:hover {
+          \opacity: 1; }
+        .page-hotel .travorama-hotel .search-list .search-list-result .view-map .btn.btn-view-map {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          width: 80%;
+          padding-left: 40px; }
+          .page-hotel .travorama-hotel .search-list .search-list-result .view-map .btn.btn-view-map:before {
+            background: url(/Assets/images/hotel/filter-hotel-map.png) no-repeat;
+            content: "";
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 38px;
+            height: 24px;
+            background-position: -132px 0px;
+            margin-left: -40px; }
       .page-hotel .travorama-hotel .search-list .search-list-result .filter .map-filter {
         margin-bottom: 15px; }
         .page-hotel .travorama-hotel .search-list .search-list-result .filter .map-filter iframe {
@@ -6207,6 +6245,8 @@ file: /Assets/travorama20/css/_page_flight.scss
       height: 1px;
       background: #ccc;
       margin: 10px 0; }
+    .page-hotel .travorama-hotel .hotel-list-container button.see-map {
+      margin-top: 10px; }
   .page-hotel .rh-container .rh-main-title {
     background: #1daee4;
     padding: 8px 25px;
@@ -6335,6 +6375,13 @@ file: /Assets/travorama20/css/_page_flight.scss
         padding-left: 15px;
         padding: 10px;
         width: 75%; }
+        .page-hotel.map .hotel-map.travorama-hotel .hotel-list-container .hotel-list > .col-8 .hotel-map-price {
+          position: relative; }
+          .page-hotel.map .hotel-map.travorama-hotel .hotel-list-container .hotel-list > .col-8 .hotel-map-price button.checkout {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            font-size: 12px; }
       .page-hotel.map .hotel-map.travorama-hotel .hotel-list-container .hotel-list > .col-2 {
         width: 25%; }
     .page-hotel.map .hotel-map .search-result-filter {
@@ -6444,9 +6491,10 @@ file: /Assets/travorama20/css/_page_flight.scss
             text-align: center;
             transform: translateY(-50%); }
     .page-hotel.map .hotel-map .search-list-result .row-btn .col-half:first-child {
-      padding-right: 30px; }
+      padding-right: 45px; }
     .page-hotel.map .hotel-map .search-list-result .row-btn a.btn {
-      position: relative; }
+      position: relative;
+      font-size: 14px; }
       .page-hotel.map .hotel-map .search-list-result .row-btn a.btn:before {
         background: url(/Assets/images/hotel/filter-hotel-map.png) no-repeat;
         content: "";
@@ -6467,10 +6515,10 @@ file: /Assets/travorama20/css/_page_flight.scss
       margin: 20px 0; }
       .page-hotel.map .hotel-map .search-list-result .row-content .slr-hotel .hotel-list-container {
         padding-right: 15px;
-        max-height: 600px;
+        max-height: 568px;
         overflow-y: auto; }
         .page-hotel.map .hotel-map .search-list-result .row-content .slr-hotel .hotel-list-container::-webkit-scrollbar {
-          width: 13px; }
+          width: 10px; }
         .page-hotel.map .hotel-map .search-list-result .row-content .slr-hotel .hotel-list-container::-webkit-scrollbar-track {
           background: #ddd; }
         .page-hotel.map .hotel-map .search-list-result .row-content .slr-hotel .hotel-list-container::-webkit-scrollbar-thumb {
@@ -6481,10 +6529,10 @@ file: /Assets/travorama20/css/_page_flight.scss
         background: #fff;
         border: 1px solid #ccc;
         border-radius: 2px;
-        height: auto; }
+        height: 568px; }
         .page-hotel.map .hotel-map .search-list-result .row-content .slr-map #map {
           width: 100%;
-          height: 578px; }
+          height: 100%; }
       .page-hotel.map .hotel-map .search-list-result .row-content .search-list {
         padding-right: 30px; }
     .page-hotel.map .hotel-map .dropdown .hotel-sort {
@@ -6495,6 +6543,31 @@ file: /Assets/travorama20/css/_page_flight.scss
         right: 10px;
         top: 50%;
         transform: translateY(-50%); }
+    .page-hotel.map .map-container .hotel-round {
+      width: 90px;
+      height: 90px;
+      position: absolute;
+      left: 0;
+      border-radius: 90px;
+      background-size: cover;
+      background-position: center;
+      margin-left: -60px;
+      margin-top: -9px;
+      border: 2px solid #1daee4; }
+    .page-hotel.map .map-container .map-content {
+      width: 160px;
+      height: 70px;
+      overflow: hidden;
+      padding-left: 35px; }
+      .page-hotel.map .map-container .map-content small {
+        font-size: 10px; }
+    .page-hotel.map .hotel-title {
+      font-size: 14px;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap; }
+    .page-hotel.map .gm-style .gm-style-iw {
+      overflow: initial; }
     .page-hotel.map .form-control {
       height: 49px;
       padding: 15px 12px;
