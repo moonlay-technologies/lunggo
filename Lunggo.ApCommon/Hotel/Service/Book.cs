@@ -194,16 +194,20 @@ namespace Lunggo.ApCommon.Hotel.Service
                 };
             var rsvDetail = CreateHotelReservation(input, bookInfo);
             InsertHotelRsvToDb(rsvDetail);
-            //For Booker Only
-            var userId = HttpContext.Current.User.Identity.GetUser().Id;
-            var role = Role.GetFromDb(userId);
-            if (role.Contains("Booker"))
+            if (HttpContext.Current.User.Identity.IsUserAuthorized())
             {
-                PaymentService.GetInstance().UpdateBookerPaymentData(rsvDetail.RsvNo);
-                //Get Approver Email
-                var approver = User.GetApproverEmail(userId);
-                SendNewBookingInfo(PreProcessBookerEmailNotif(rsvDetail.RsvNo, approver));
+                //For Booker Only
+                var userId = HttpContext.Current.User.Identity.GetUser().Id;
+                var role = Role.GetFromDb(userId);
+                if (role.Contains("Booker"))
+                {
+                    PaymentService.GetInstance().UpdateBookerPaymentData(rsvDetail.RsvNo);
+                    //Get Approver Email
+                    var approver = User.GetApproverEmailByUserId(userId);
+                    SendNewBookingInfo(PreProcessBookerEmailNotif(rsvDetail.RsvNo, approver));
+                }
             }
+            
             ExpireReservationWhenTimeout(rsvDetail.RsvNo, rsvDetail.Payment.TimeLimit);
             return new BookHotelOutput
             {
@@ -214,10 +218,9 @@ namespace Lunggo.ApCommon.Hotel.Service
             };
         }
 
-        private string PreProcessBookerEmailNotif(string rsvNo, List<string> approver)
+        private string PreProcessBookerEmailNotif(string rsvNo, string approver)
         {
-            var approverEmail = string.Join(",", approver);
-            return rsvNo + "," + approverEmail;
+            return rsvNo + "," + approver;
         }
 
         private RevalidateHotelResult CheckRate(string rateKey, decimal ratePrice)

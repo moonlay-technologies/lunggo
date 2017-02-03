@@ -72,7 +72,7 @@
                 case "REJE":
                     return RsvStatus.Rejected;
                 case "APRV":
-                    return RsvStatus.Rejected;
+                    return RsvStatus.Approved;
                 default:
                     return RsvStatus.Undefined;
             }

@@ -1,5 +1,6 @@
 ﻿@using System.Globalization
 @using Lunggo.ApCommon.Constant
+@using Lunggo.ApCommon.Product.Constant
 @using Lunggo.Framework.Config
 @model Lunggo.ApCommon.Flight.Model.FlightReservationForDisplay
 
@@ -44,21 +45,28 @@
 
                     <!-- CONTENT  -->
 
-                    <p style="font-size: 12px">Nama Pemesan : @Model.Contact.Name</p>
-                    <p style="font-size: 12px">Email Pemesan : @Model.Contact.Email</p>
-                    <table width="50%" align="center">
-                        <tr width="100%" height="50px">
-                            <td width="5%"></td>
-                            <td width="40%" style="text-align: center;">
-                                <a style="background: #ffd632; padding: 8px 25px; color: #4f3500; font-weight: 700; border-radius: 3px; border: 2px solid #ebb600; text-decoration: none;" href="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/id/B2BFlight/UpdateReservation?rsvNo=" + Model.RsvNo + "&status=approved")">APPROVE</a>
-                            </td>
-                            <td width="40%" style="text-align: center;">
-                                <a style="background: #ffd632; padding: 8px 25px; color: #4f3500; font-weight: 700; border-radius: 3px; border: 2px solid #ebb600; text-decoration: none;" href="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/id/B2BFlight/UpdateReservation?rsvNo=" + Model.RsvNo + "&status=rejected")">REJECT</a>
-                            </td>
-                            <td width="5%"></td>
-                        </tr>
-                    </table>
- 
+                    <p style="font-size: 12px">Dear <span style="color: #15b1e4">@Model.Contact.Name,</span></p>
+                    
+                    @if (Model.RsvDisplayStatus == RsvDisplayStatus.Approved)
+                    {
+                        <p style="font-size: 12px">Terima kasih telah mempercayai <b>Travorama</b> dalam pemesanan tiket pesawat Anda.  <br /> Pemesanan Anda telah dikonfirmasi dengan sukses.</p>
+
+
+                        <a style="background-color: #ffd632; border: #e9d14d; display: inline-block; margin-left: 15%; text-decoration: none; font-family: arial, helvetica, sans-serif; width: 70%; padding-top: 17px; padding-bottom: 17px; text-align: center; font-size: 11px; color: #333333; margin-top: 10px;"><b>APPROVED</b></a>
+
+                        <p style="font-size: 12px">E-tiket Anda terdapat di lampiran atau klik tombol berikut untuk men-download e-tiket Anda :</p>
+                        <a style="background-color: #ffd632; border: #e9d14d; display: inline-block; margin-left: 15%; text-decoration: none; font-family: arial, helvetica, sans-serif; width: 70%; padding-top: 17px; padding-bottom: 17px; text-align: center; font-size: 11px; color: #333333; margin-top: 10px;" href="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/id/Payment/Eticket?rsvNo=" + Model.RsvNo)" target="_blank"><b>DOWNLOAD E-TIKET</b></a>
+
+                        <p style="font-size: 9px; text-align: center; margin-bottom: 30px;"><b>Cetak e-tiket Anda di atas kertas ukuran A4 untuk ditunjukkan pada proses check-in di bandara.</b></p>
+                        <p style="font-size: 9px; text-align: center;">*(Invoice / kuitansi pembayaran juga telah disertakan dalam lampiran)</p>
+                    }
+                    else
+                    {
+                        <p style="font-size: 12px">Mohon maaf, pesanan anda ditolak oleh pihak Travorama karena sesuatu hal. <br /> Terima kasih telah mempercayai <b>Travorama</b> dalam pemesanan tiket pesawat Anda.</p>
+
+                        <a style="background-color: #ffd632; border: #e9d14d; display: inline-block; margin-left:15%; text-decoration: none; font-family:arial, helvetica, sans-serif;width: 70%; padding-top: 17px; padding-bottom: 17px; text-align: center; font-size: 11px; color: #333333; margin-top: 10px;"><b>REJECTED</b></a>
+                    }    
+                                 
                     <p style="font-size: 12px;">Ringkasan pesanan Anda sebagai berikut :</p>
                     <table width="100%" style="margin-bottom: 10px;" cellpadding="0" cellspacing="0">
                         <tr>
@@ -83,7 +91,7 @@
                                     <p style=""><b>@Model.Itinerary.Trips[0].Segments[0].AirlineName (@Model.Itinerary.Trips[0].Segments[0].AirlineCode-@Model.Itinerary.Trips[0].Segments[0].FlightNumber)</b></p>
                                 }
                             </td>
-                            <td width="5%"></td>a
+                            <td width="5%"></td>
                             <td width="20%">
                                 <p style="opacity: 0.5">Rute</p>
                                 @if (Model.Itinerary.Trips.Count > 1)

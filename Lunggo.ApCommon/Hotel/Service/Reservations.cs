@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Web;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Hotel.Constant;
 using Lunggo.ApCommon.Hotel.Model;
@@ -148,17 +149,20 @@ namespace Lunggo.ApCommon.Hotel.Service
         public List<HotelReservationForDisplay> GetOverviewReservationByApprover(string filter, string sort, int? page, int? itemsPerPage)
         {
             var filters = filter != null ? filter.Split(',') : null;
-            var rsvs = GetOverviewReservationByApproverFromDb(filters, sort, page, itemsPerPage) ?? new List<HotelReservation>();
+            var approverId = HttpContext.Current.User.Identity.GetUser().Id;
+            if (string.IsNullOrEmpty(approverId))
+                return null;
+            var rsvs = GetOverviewReservationByApproverFromDb(approverId,filters, sort, page, itemsPerPage) ?? new List<HotelReservation>();
             return rsvs.Select(ConvertToBookerReservationForDisplay).ToList();
         }
 
-        private List<HotelReservation> GetOverviewReservationByApproverFromDb(string []filters, string sort, int? page, int? itemsPerPage)
+        private List<HotelReservation> GetOverviewReservationByApproverFromDb(string approverId,string []filters, string sort, int? page, int? itemsPerPage)
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
                 var rsvNos =
                     GetReservationByApproverIdQuery.GetInstance()
-                        .Execute(conn, new { Filters = filters, Sort = sort, Page = page, ItemsPerPage = itemsPerPage })
+                        .Execute(conn, new {ApproverId = approverId,Filters = filters, Sort = sort, Page = page, ItemsPerPage = itemsPerPage })
                         .Distinct().ToList();
                 if (!rsvNos.Any())
                     return null;
@@ -347,7 +351,12 @@ namespace Lunggo.ApCommon.Hotel.Service
 
         public bool UpdateReservation(string rsvNo, string status)
         {
-            if (status.Equals("Approved"))
+            var rsv = GetReservation(rsvNo);
+            if (rsv.RsvStatus != RsvStatus.InProcess)
+            {
+                return false;
+            }
+            if (status.Equals("approved"))
             {
                 try
                 {

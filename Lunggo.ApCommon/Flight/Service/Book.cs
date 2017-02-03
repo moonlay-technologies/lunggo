@@ -56,16 +56,20 @@ namespace Lunggo.ApCommon.Flight.Service
                 output.IsSuccess = true;
                 var reservation = CreateReservation(itins, input, bookResults);
                 InsertReservationToDb(reservation);
-                //For Booker Only
-                var userId = HttpContext.Current.User.Identity.GetUser().Id;
-                var role = Role.GetFromDb(userId);
-                if (role.Contains("Booker"))
+                if (HttpContext.Current.User.Identity.IsUserAuthorized())
                 {
-                    //Get Approver Email
-                    PaymentService.GetInstance().UpdateBookerPaymentData(reservation.RsvNo);
-                    var approver = User.GetApproverEmail(userId);
-                    SendNewBookingInfo(PreProcessBookerEmailNotif(reservation.RsvNo, approver));
+                    //For Booker Only
+                    var userId = HttpContext.Current.User.Identity.GetUser().Id;
+                    var role = Role.GetFromDb(userId);
+                    if (role.Contains("Booker"))
+                    {
+                        //Get Approver Email
+                        PaymentService.GetInstance().UpdateBookerPaymentData(reservation.RsvNo);
+                        var approver = User.GetApproverEmailByUserId(userId);
+                        SendNewBookingInfo(PreProcessBookerEmailNotif(reservation.RsvNo, approver));
+                    }
                 }
+                
                 //End
                 output.RsvNo = reservation.RsvNo;
                 output.TimeLimit = reservation.Itineraries.Min(itin => itin.TimeLimit);
@@ -90,10 +94,10 @@ namespace Lunggo.ApCommon.Flight.Service
             return output;
         }
 
-        private string PreProcessBookerEmailNotif(string rsvNo, List<string> approver)
+        private string PreProcessBookerEmailNotif(string rsvNo, string approver)
         {
-            var approverEmail = string.Join(",", approver);
-            return rsvNo + "," + approverEmail;
+            //var approverEmail = string.Join(",", approver);
+            return rsvNo + "," + approver;
         }
 
         public string GetBookingRedirectionUrl(string rsvNo)

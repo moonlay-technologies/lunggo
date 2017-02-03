@@ -45,13 +45,13 @@ namespace Lunggo.ApCommon.Flight.Service
             }
         }
 
-        private List<FlightReservation> GetOverviewReservationsByApprover(string[] filters, string sort, int? page, int? itemsPerPage)
+        private List<FlightReservation> GetOverviewReservationsByApprover(string approverId,string[] filters, string sort, int? page, int? itemsPerPage)
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
                 var rsvNos =
                     GetRsvNosByApprover.GetInstance()
-                        .Execute(conn, new { Filters = filters, Sort = sort, Page = page, ItemsPerPage = itemsPerPage })
+                        .Execute(conn, new { ApproverId = approverId ,Filters = filters, Sort = sort, Page = page, ItemsPerPage = itemsPerPage })
                         .Distinct().ToList();
                 if (!rsvNos.Any())
                     return null;

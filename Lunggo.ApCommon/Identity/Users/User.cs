@@ -32,11 +32,29 @@ namespace Lunggo.ApCommon.Identity.Users
             }
         }
 
-        internal static List<string> GetApproverEmail(string userId)
+        internal static List<string> GetListApproverEmail(string userId)
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
                 var user = GetListApproverEmailQuery.GetInstance().Execute(conn, new { Id = userId }).ToList();
+                return user;
+            }
+        }
+
+        internal static string GetApprover(string userId)
+        {
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                var user = GetApproverByUserIdQuery.GetInstance().Execute(conn, new {userId }).FirstOrDefault();
+                return user;
+            }
+        }
+
+        internal static string GetApproverEmailByUserId(string userId)
+        {
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                var user = GetApproverEmailByUserIdQuery.GetInstance().Execute(conn, new {userId }).FirstOrDefault();
                 return user;
             }
         }

@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Web;
 using Lunggo.ApCommon.Flight.Constant;
 
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Model.Logic;
+using Lunggo.ApCommon.Identity.Users;
 using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.ApCommon.Payment.Model;
 using Lunggo.ApCommon.Payment.Service;
@@ -100,7 +102,10 @@ namespace Lunggo.ApCommon.Flight.Service
         public List<FlightReservationForDisplay> GetOverviewReservationsByApprover(string filter, string sort, int? page, int? itemsPerPage)
         {
             var filters = filter != null ? filter.Split(',') : null;
-            var rsvs = GetOverviewReservationsByApprover(filters, sort, page, itemsPerPage) ?? new List<FlightReservation>();
+            var approverId = HttpContext.Current.User.Identity.GetUser().Id;
+            if (string.IsNullOrEmpty(approverId))
+                return null;
+            var rsvs = GetOverviewReservationsByApprover(approverId,filters, sort, page, itemsPerPage) ?? new List<FlightReservation>();
             return rsvs.Select(ConvertToBookerReservationForDisplay).ToList();
         }
 
@@ -149,6 +154,11 @@ namespace Lunggo.ApCommon.Flight.Service
 
         public bool UpdateReservation(string rsvNo, string status)
         {
+            var rsv = GetReservation(rsvNo);
+            if (rsv.RsvStatus != RsvStatus.InProcess)
+            {
+                return false;
+            }
             if (status.Equals("approved"))
             {
                 try
