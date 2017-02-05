@@ -2665,7 +2665,7 @@ body.page-index {
   .page-index .section-calendar-price .price-calendar .search-map {
     position: relative;
     background: #f0f0f0;
-    padding: 10px 0 15px;
+    padding: 15px 5px;
     -webkit-border-radius: 2px;
     -moz-border-radius: 2px;
     -ms-border-radius: 2px;
@@ -2679,74 +2679,63 @@ body.page-index {
         .page-index .section-calendar-price .price-calendar .search-map .search-title .row:last-child div {
           padding: 0;
           padding-left: 12px; }
-    .page-index .section-calendar-price .price-calendar .search-map .search-input {
-      padding-left: 12px; }
-      .page-index .section-calendar-price .price-calendar .search-map .search-input .map-input input[name="searchFrom"], .page-index .section-calendar-price .price-calendar .search-map .search-input .map-input input[name="searchTo"] {
-        border: none;
-        padding: 12px;
-        padding-left: 25px;
-        width: 100%; }
-      .page-index .section-calendar-price .price-calendar .search-map .search-input .map-input:before {
-        content: '';
-        display: block;
-        position: absolute;
-        width: 13px;
-        height: 18px;
-        background: url(/Assets/travorama20/images/hotel/location.png) no-repeat;
-        color: red;
-        top: 50%;
-        transform: translateY(-50%);
-        margin-left: 7px; }
-    .page-index .section-calendar-price .price-calendar .search-map .btn-calendar {
+    .page-index .section-calendar-price .price-calendar .search-map .search-input .map-input input[name="searchFrom"], .page-index .section-calendar-price .price-calendar .search-map .search-input .map-input input[name="searchTo"] {
+      border: none;
+      padding: 12px;
+      padding-left: 25px;
+      width: 100%; }
+    .page-index .section-calendar-price .price-calendar .search-map .search-input .map-input:before {
+      content: '';
+      display: block;
       position: absolute;
-      right: 0;
-      margin-right: 13px;
-      bottom: 0;
-      padding: 8px 25px;
+      width: 13px;
+      height: 18px;
+      background: url(/Assets/travorama20/images/hotel/location.png) no-repeat;
+      color: red;
+      top: 50%;
+      transform: translateY(-50%);
+      margin-left: 7px; }
+    .page-index .section-calendar-price .price-calendar .search-map .btn-calendar {
+      padding: 8px 0;
+      margin-bottom: 0 !important;
+      width: 100%; }
+    .page-index .section-calendar-price .price-calendar .search-map .select-calendar {
+      font-size: 12px;
+      line-height: 100%;
+      padding: 15px 25px 15px 6px;
+      border: none;
+      font-size: 12px;
+      -webkit-border-radius: 2px;
+      -moz-border-radius: 2px;
+      -ms-border-radius: 2px;
+      border-radius: 2px;
+      line-height: 100%;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      text-overflow: '';
+      cursor: pointer;
+      width: 100%; }
+    .page-index .section-calendar-price .price-calendar .search-map .normal-txt.semibold-txt {
+      margin-bottom: 5px; }
+    .page-index .section-calendar-price .price-calendar .search-map .row:last-child .col-xs-4:first-child:before {
+      margin-right: -67px;
       z-index: 1; }
-  .page-index .section-calendar-price .price-calendar .ui-datepicker-inline .ui-datepicker-prev, .page-index .section-calendar-price .price-calendar .ui-datepicker-inline .search-calendar .calendar-body .ui-datepicker-next, .page-index .search-calendar .calendar-body .section-calendar-price .price-calendar .ui-datepicker-inline .ui-datepicker-next, .page-index .section-calendar-price .price-calendar .ui-datepicker-inline .search-calendar-hotel .calendar-body .ui-datepicker-next, .page-index .search-calendar-hotel .calendar-body .section-calendar-price .price-calendar .ui-datepicker-inline .ui-datepicker-next, .page-index .section-calendar-price .price-calendar .ui-datepicker-inline .ui-datepicker-next {
-    display: none; }
-  .page-index .section-calendar-price .price-calendar .ui-datepicker-inline > .ui-datepicker-inline {
-    display: none !important; }
-  .page-index .section-calendar-price .price-calendar .ui-datepicker-inline .ui-datepicker-header .ui-datepicker-title {
-    position: absolute;
-    right: 0;
-    margin-top: -57px;
-    margin-right: 20px;
-    padding: 0; }
-    .page-index .section-calendar-price .price-calendar .ui-datepicker-inline .ui-datepicker-header .ui-datepicker-title .ui-datepicker-month {
-      width: 25%; }
-    .page-index .section-calendar-price .price-calendar .ui-datepicker-inline .ui-datepicker-header .ui-datepicker-title .ui-datepicker-year {
-      width: 25%;
-      margin-left: 4%; }
-    .page-index .section-calendar-price .price-calendar .ui-datepicker-inline .ui-datepicker-header .ui-datepicker-title:after {
-      margin-right: 126px; }
-    .page-index .section-calendar-price .price-calendar .ui-datepicker-inline .ui-datepicker-header .ui-datepicker-title:before {
-      margin-right: 202px;
-      z-index: 1; }
-    .page-index .section-calendar-price .price-calendar .ui-datepicker-inline .ui-datepicker-header .ui-datepicker-title:after, .page-index .section-calendar-price .price-calendar .ui-datepicker-inline .ui-datepicker-header .ui-datepicker-title:before {
+    .page-index .section-calendar-price .price-calendar .search-map .row:last-child .col-xs-4:first-child:after {
+      margin-right: 13px; }
+    .page-index .section-calendar-price .price-calendar .search-map .row:last-child .col-xs-4:first-child:before, .page-index .section-calendar-price .price-calendar .search-map .row:last-child .col-xs-4:first-child:after {
       content: '';
       display: block;
       position: absolute;
       width: 12px;
       height: 8px;
-      background: url(/Assets/images/arrow-down-grey.png) no-repeat;
-      right: 0;
+      right: 0px;
       top: 50%;
-      transform: translateY(-50%); }
-  .page-index .section-calendar-price .price-calendar .ui-datepicker-inline .ui-datepicker-header select.ui-datepicker-month, .page-index .section-calendar-price .price-calendar .ui-datepicker-inline .ui-datepicker-header select.ui-datepicker-year {
-    padding: 15px 25px 15px 6px;
-    border: none;
-    font-size: 12px;
-    -webkit-border-radius: 2px;
-    -moz-border-radius: 2px;
-    -ms-border-radius: 2px;
-    border-radius: 2px;
-    line-height: 100%;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    text-overflow: '';
-    cursor: pointer; }
+      transform: translateY(-50%);
+      background: url(/Assets/images/arrow-down-grey.png) no-repeat; }
+  .page-index .section-calendar-price .price-calendar .ui-datepicker-inline .ui-datepicker-prev, .page-index .section-calendar-price .price-calendar .ui-datepicker-inline .search-calendar .calendar-body .ui-datepicker-next, .page-index .search-calendar .calendar-body .section-calendar-price .price-calendar .ui-datepicker-inline .ui-datepicker-next, .page-index .section-calendar-price .price-calendar .ui-datepicker-inline .search-calendar-hotel .calendar-body .ui-datepicker-next, .page-index .search-calendar-hotel .calendar-body .section-calendar-price .price-calendar .ui-datepicker-inline .ui-datepicker-next, .page-index .section-calendar-price .price-calendar .ui-datepicker-inline .ui-datepicker-next {
+    display: none; }
+  .page-index .section-calendar-price .price-calendar .ui-datepicker-inline > .ui-datepicker-inline {
+    display: none !important; }
   .page-index .section-calendar-price .price-calendar .ui-datepicker-inline .ui-datepicker-calendar {
     margin: 0 auto; }
     .page-index .section-calendar-price .price-calendar .ui-datepicker-inline .ui-datepicker-calendar th, .page-index .section-calendar-price .price-calendar .ui-datepicker-inline .ui-datepicker-calendar td {
@@ -2786,8 +2775,13 @@ body.page-index {
         display: none;
         margin: 0 15px;
         color: #000; }
-      .page-index .section-calendar-price .price-calendar .ui-datepicker-inline .ui-datepicker-calendar td.ui-datepicker-other-month {
-        color: #999; }
+      .page-index .section-calendar-price .price-calendar .ui-datepicker-inline .ui-datepicker-calendar td.ui-datepicker-other-month:hover {
+        border: none;
+        box-shadow: none; }
+        .page-index .section-calendar-price .price-calendar .ui-datepicker-inline .ui-datepicker-calendar td.ui-datepicker-other-month:hover a.view-price.btn.btn-yellow.sm-btn.xs-txt.os-bold, .page-index .section-calendar-price .price-calendar .ui-datepicker-inline .ui-datepicker-calendar td.ui-datepicker-other-month:hover a.view-price.btn.btn-yellow.sm-btn.xs-txt, .page-index .section-calendar-price .price-calendar .ui-datepicker-inline .ui-datepicker-calendar td.ui-datepicker-other-month:hover .buyer-review header a.view-price.btn.btn-yellow.sm-btn.xs-txt.toggle:after, .buyer-review header .page-index .section-calendar-price .price-calendar .ui-datepicker-inline .ui-datepicker-calendar td.ui-datepicker-other-month:hover a.view-price.btn.btn-yellow.sm-btn.xs-txt.toggle:after, .page-index .section-calendar-price .price-calendar .ui-datepicker-inline .ui-datepicker-calendar td.ui-datepicker-other-month:hover .passenger-review header a.view-price.btn.btn-yellow.sm-btn.xs-txt.toggle:after, .passenger-review header .page-index .section-calendar-price .price-calendar .ui-datepicker-inline .ui-datepicker-calendar td.ui-datepicker-other-month:hover a.view-price.btn.btn-yellow.sm-btn.xs-txt.toggle:after, .page-index .section-calendar-price .price-calendar .ui-datepicker-inline .ui-datepicker-calendar td.ui-datepicker-other-month:hover .passenger-detail .passenger-form header a.view-price.btn.btn-yellow.sm-btn.xs-txt.toggle:after, .passenger-detail .passenger-form header .page-index .section-calendar-price .price-calendar .ui-datepicker-inline .ui-datepicker-calendar td.ui-datepicker-other-month:hover a.view-price.btn.btn-yellow.sm-btn.xs-txt.toggle:after, .page-index .section-calendar-price .price-calendar .ui-datepicker-inline .ui-datepicker-calendar td.ui-datepicker-other-month:hover .page-thankyou.page-hotel .tp-counter a.view-price.btn.btn-yellow.sm-btn.xs-txt.tp-list.minute:before, .page-thankyou.page-hotel .tp-counter .page-index .section-calendar-price .price-calendar .ui-datepicker-inline .ui-datepicker-calendar td.ui-datepicker-other-month:hover a.view-price.btn.btn-yellow.sm-btn.xs-txt.tp-list.minute:before, .page-index .section-calendar-price .price-calendar .ui-datepicker-inline .ui-datepicker-calendar td.ui-datepicker-other-month:hover .page-thankyou.page-hotel .tp-counter a.view-price.btn.btn-yellow.sm-btn.xs-txt.tp-list.sec:before, .page-thankyou.page-hotel .tp-counter .page-index .section-calendar-price .price-calendar .ui-datepicker-inline .ui-datepicker-calendar td.ui-datepicker-other-month:hover a.view-price.btn.btn-yellow.sm-btn.xs-txt.tp-list.sec:before, .page-index .section-calendar-price .price-calendar .ui-datepicker-inline .ui-datepicker-calendar td.ui-datepicker-other-month:hover .page-thankyou.page-hotel .tp-detail .tpb-container a.view-price.btn.btn-yellow.sm-btn.xs-txt.col-8:before, .page-thankyou.page-hotel .tp-detail .tpb-container .page-index .section-calendar-price .price-calendar .ui-datepicker-inline .ui-datepicker-calendar td.ui-datepicker-other-month:hover a.view-price.btn.btn-yellow.sm-btn.xs-txt.col-8:before {
+          display: none; }
+      .page-index .section-calendar-price .price-calendar .ui-datepicker-inline .ui-datepicker-calendar td.ui-datepicker-other-month:before {
+        background: none; }
       .page-index .section-calendar-price .price-calendar .ui-datepicker-inline .ui-datepicker-calendar td:hover {
         border: 2px solid #1daee4;
         box-shadow: 3px 3px 12px 0 #ccc; }

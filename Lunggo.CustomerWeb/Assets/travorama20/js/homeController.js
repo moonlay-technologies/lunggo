@@ -1,7 +1,7 @@
 ﻿// home controller
 app.controller('homeController', ['$scope', '$log', '$http', '$location', '$resource', '$timeout', 'hotelSearchSvc', function ($scope, $log, $http, $location, $resource, $timeout, hotelSearchSvc) {
 
-    
+
     $(document).ready(function() {
 
         if (Cookies.get('hotelSearchLocationDisplay')) {
@@ -301,7 +301,7 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
                     for (var x = 0; x < returnData.listDatesAndPrices.length; x++) {
                         $scope.listCheapestPrice.push(returnData.listDatesAndPrices[x].price);
                     }
-                    addCustomInformation(m + 1, y);
+                    //addCustomInformation(m + 1, y);
                     //return [cheapestPrice, cheapestDate];
                 }else {
                     //return [-1, ''];
@@ -317,8 +317,17 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
 
     $scope.getFlightPrice = function (origin, destination, month, year) {
         var authAccess = getAuthAccess();
-        var date = new Date(year, month - 1, 1), y = date.getFullYear(); m = date.getMonth();
-        var lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+        var date;
+        var todayDate = new Date();
+        var todayMonth = todayDate.getMonth();
+        var todayYear = todayDate.getFullYear();
+        if (todayMonth == parseInt(month) - 1 && year == todayYear) {
+            var date = new Date();
+        } else {
+            var date = new Date(year, month - 1, 1);
+        }
+        var y = date.getFullYear(); m = date.getMonth();
+        var lastDay = new Date(date.getFullYear(), m + 1, 0);
         //lastDay.setDate(date.getDate() + 1);
         var startDate = ("0" + date.getDate()).slice(-2)
              + ("0" + (date.getMonth() + 1)).slice(-2) + y.toString().substring(2, 4);
@@ -341,7 +350,7 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
                     for (var x = 0; x < returnData.listDatesAndPrices.length; x++) {
                         $scope.listCheapestPrice.push(returnData.listDatesAndPrices[x].price);
                     }
-                    addCustomInformation(m, y);
+                    addCustomInformation(m + 1, y);
                     //return [cheapestPrice, cheapestDate];
                 } else {
                     //return [-1, ''];
@@ -475,11 +484,11 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
         changeYear: true,
         dayNamesMin: ["MGG", "SEN", "SEL", "RAB", "KAM", "JUM", "SAB"],
         showOtherMonths: true,
-        onChangeMonthYear: function (year, month) {
-            $('.ui-datepicker .ui-datepicker-title').addClass('col-xs-5');
-            editForm(year, month);
-            //addCustomInformation(month, year);
-        },
+        //onChangeMonthYear: function (year, month) {
+        //    $('.ui-datepicker .ui-datepicker-title').addClass('col-xs-5');
+        //    //editForm(year, month);
+        //    //addCustomInformation(month, year);
+        //},
         onSelect: function (date) {
             var x = date.split('/');
             var day = x[0];
@@ -519,7 +528,7 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
                     if (highlight) {
                         var datex = date + ("0" + (month)).slice(-2).toString() + year.toString().slice(-2);
                         var url = $scope.editData() + datex + '-100y';
-                        $('.ui-datepicker .ui-datepicker-title').addClass('col-xs-5');
+                        $('.ui-datepicker .ui-datepicker-title').addClass('col-xs-4');
                         if (highlight != '0rb') {
                             $(this).find("a").attr('data-custom', highlight);
                         }
@@ -761,6 +770,27 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
         }
         hideLocation();
     });
+
+    //search calendar price
+    $('#submitCalendar').on('click', function () {
+        var bulan = $('#selectMonth').val();
+        var tahun = $('#selectYear').val();
+
+        var newDate = new Date(tahun, bulan, '01');
+        $('#pc-datepicker').datepicker('setDate', newDate);
+        $scope.getFlightPrice($scope.selectedPopularDestination.origin, $scope.selectedPopularDestination.destination,
+        parseInt(bulan) + 1, tahun);
+    });
+    setValueMY();
+
+    function setValueMY() {
+        var d = new Date();
+        var month = d.getMonth();
+        var year = d.getFullYear();
+
+        $('#selectMonth').val(month);
+        $('#selectYear').val(year);
+    }
 }]);
 
 //********************
@@ -914,7 +944,23 @@ jQuery(document).ready(function ($) {
         nextArrow: '<button type="button" class="slick-next hidden">Next</button>'
     });
 
+    //// Price Calendar
+    //$("#pc-datepicker").datepicker({
+    //    dayNamesMin: ["MGG", "SEN", "SEL", "RAB", "KAM", "JUM", "SAB"],
+    //    showOtherMonths: true,
+    //    beforeShow: addCustomInformation,
+    //    beforeShowDay: function (date) {
+    //        return [true, date.getDay() === 5 || date.getDay() === 6 ? "weekend" : "weekday"];
+    //    },
+    //    onChangeMonthYear: addCustomInformation,
+    //    onSelect: addCustomInformation
+    //});
+    //addCustomInformation();
+
     $('.pop-hotel').hover(function () {
         $(this).find('.view-hotel').slideToggle('fast');
     });
+
+    
 });
+
