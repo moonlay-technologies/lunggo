@@ -21,7 +21,7 @@ body.page-index {margin-bottom: 0;}
                 nav {
                     ul {margin:0; padding:0;
                         li {float:left; width: 50%; list-style:none;
-                            a {color:#4f4f4f; background:#d2d2d2; display:block; padding:13px 0px; text-align:center; @extend .os-semibold; font-weight:600; text-decoration:none; font-size:14px;
+                            a {color:#4f4f4f; background:#d2d2d2; display:block; padding:13px 0px; text-align:center; @extend .os-semibold; font-weight:600; text-decoration:none; font-size:14px; cursor: pointer;
                                 &:before {content:""; width:20px; height:20px; display:inline-block; background-image:url(/Assets/images/search-tab-sprite.png); margin-bottom:-5px; margin-right:5px;}
                             }
                             &.active {border-right:0;
@@ -302,8 +302,63 @@ body.page-index {margin-bottom: 0;}
                     img {height:100%; width:auto; display:none;}
                 }
             }
-            .slick-prev {position:absolute; top:50%; left:50%; margin-left:-500px; z-index:2;}
-            .slick-next {position:absolute; top:50%; right:50%; margin-right:-500px; z-index:2;}
+            .slick-arrow {
+                border: 0;
+                font-size: 0;
+                border-radius: 0;
+                padding: 0;
+                margin: 0;
+                width: 15%;
+                height: 520px;
+                background-color: transparent;
+                background-repeat: no-repeat;
+                transform: translateY(-50%);
+                top: 50%;
+                z-index: 2;
+                position: absolute;
+                outline: none;
+            }
+            .slick-prev {
+                background-image: -webkit-linear-gradient(left,rgba(0,0,0,.5) 0,rgba(0,0,0,.0001) 100%);
+                background-image: -o-linear-gradient(left,rgba(0,0,0,.5) 0,rgba(0,0,0,.0001) 100%);
+                background-image: -webkit-gradient(linear,left top,right top,from(rgba(0,0,0,.5)),to(rgba(0,0,0,.0001)));
+                background-image: linear-gradient(to right,rgba(0,0,0,.5) 0,rgba(0,0,0,.0001) 100%);
+                filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#80000000', endColorstr='#00000000', GradientType=1);
+                background-repeat: repeat-x;
+                left: 0;
+                right: auto;
+                &:before {
+                    content: '';
+                    display: block;
+                    position: absolute;
+                    width: 30px;
+                    height: 46px;
+                    background-image: url(/Assets/images/sprite-arrow.png);
+                    background-position: 0 0;
+                    left: 50%;
+                    transform: translateX(-50%);
+                }
+            }
+            .slick-next {
+                background-image: -webkit-linear-gradient(left,rgba(0,0,0,.0001) 0,rgba(0,0,0,.5) 100%);
+                background-image: -o-linear-gradient(left,rgba(0,0,0,.0001) 0,rgba(0,0,0,.5) 100%);
+                background-image: -webkit-gradient(linear,left top,right top,from(rgba(0,0,0,.0001)),to(rgba(0,0,0,.5)));
+                background-image: linear-gradient(to right,rgba(0,0,0,.0001) 0,rgba(0,0,0,.5) 100%);
+                filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#00000000', endColorstr='#80000000', GradientType=1);
+                background-repeat: repeat-x;
+                left: auto;
+                right: 0;
+                &:before {
+                    content: '';
+                    display: block;
+                    position: absolute;
+                    width: 30px;
+                    height: 46px;
+                    background-image: url(/Assets/images/sprite-arrow.png);
+                    background-position: -32px 0;
+                    right: 50%;
+                }
+            }
             .slick-dots {position:absolute; bottom:20px; text-align:right; width:100%; list-style:none; margin:0; padding:0; padding-right: 5%; 
                 li {list-style:none; display:inline-block;
                     &+li {margin-left:5px;}
@@ -480,7 +535,7 @@ body.page-index {margin-bottom: 0;}
 
     //*****
     // section payment
-    .section-payment {margin: 30px 0;
+    .section-payment {margin: 40px 0;
         img {vertical-align:bottom; height:50px;}
         img+img {margin-left:30px;}
         &>.container {max-width: none;}
@@ -609,7 +664,7 @@ body.page-index {margin-bottom: 0;}
                 position: relative;
                 z-index: 0;
                 cursor: pointer;
-                margin-bottom: 5px;
+                margin-bottom: 8px;
                 &:before {
                     content: '';
                     display: block;
@@ -642,8 +697,8 @@ body.page-index {margin-bottom: 0;}
             }
         }
         .price-calendar {
-            min-height: 570px;
-            max-height: 630px;
+            min-height: 600px;
+            max-height: 660px;
             margin-right: 20px;
             .search-map {
                 position: relative;
@@ -683,6 +738,14 @@ body.page-index {margin-bottom: 0;}
                         }
                     }
                 }
+                .btn-calendar {
+                    position: absolute;
+                    right: 0;
+                    margin-right: 13px;
+                    bottom: 0;
+                    padding: 8px 25px;
+                    z-index: 1;
+                }
             }
             .ui-datepicker-inline {
                 .ui-datepicker-prev, .ui-datepicker-next {display: none;}
@@ -694,13 +757,13 @@ body.page-index {margin-bottom: 0;}
                         margin-top: -57px;
                         margin-right: 20px;
                         padding: 0;
-                        .ui-datepicker-month {width: 43%;}
+                        .ui-datepicker-month {width: 25%;}
                         .ui-datepicker-year {
-                            width: 41%;
-                            margin-left: 6%;
+                            width: 25%;
+                            margin-left: 4%;
                         }
-                        &:after {margin-right: 27px;}
-                        &:before {margin-right: 127px; z-index: 1;}
+                        &:after {margin-right: 126px;}
+                        &:before {margin-right: 202px; z-index: 1;}
                         &:after, &:before {
                             content: '';
                             display: block;
@@ -725,6 +788,7 @@ body.page-index {margin-bottom: 0;}
                         -webkit-appearance: none;
                         -moz-appearance: none;
                         text-overflow: '';
+                        cursor: pointer;
                     }
                 }
                 .ui-datepicker-calendar {
@@ -737,7 +801,7 @@ body.page-index {margin-bottom: 0;}
                     th {
                         font-weight: 700;
                         color: #6a6a6a;
-                        padding: 10px 0;
+                        padding: 20px 0 15px;
                         &.ui-datepicker-week-end {color: red;}
                     }
                     td {
@@ -773,7 +837,7 @@ body.page-index {margin-bottom: 0;}
                         &.ui-datepicker-other-month {color : #999;}
                         &:hover {
                             border: 2px solid #1daee4;
-                            box-shadow: 3px 3px 6px 0 #ccc;
+                            box-shadow: 3px 3px 12px 0 #ccc;
                             &:before {
                                 width: 31px;
                                 height: 31px;

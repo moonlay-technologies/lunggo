@@ -254,6 +254,9 @@ form label.important:after {
 .text-main-color {
   color: #1daee4; }
 
+*:focus {
+  outline: none; }
+
 input[type=number]::-webkit-inner-spin-button,
 input[type=number]::-webkit-outer-spin-button {
   -webkit-appearance: none;
@@ -1618,7 +1621,8 @@ body.page-index {
             text-align: center;
             font-weight: 600;
             text-decoration: none;
-            font-size: 14px; }
+            font-size: 14px;
+            cursor: pointer; }
             .page-index .section-search .search-form .tab-header nav ul li a:before {
               content: "";
               width: 20px;
@@ -2086,18 +2090,58 @@ body.page-index {
           height: 100%;
           width: auto;
           display: none; }
+    .page-index .section-search .page-slider .slick-arrow {
+      border: 0;
+      font-size: 0;
+      border-radius: 0;
+      padding: 0;
+      margin: 0;
+      width: 15%;
+      height: 520px;
+      background-color: transparent;
+      background-repeat: no-repeat;
+      transform: translateY(-50%);
+      top: 50%;
+      z-index: 2;
+      position: absolute;
+      outline: none; }
     .page-index .section-search .page-slider .slick-prev {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      margin-left: -500px;
-      z-index: 2; }
+      background-image: -webkit-linear-gradient(left, rgba(0, 0, 0, 0.5) 0, rgba(0, 0, 0, 0.0001) 100%);
+      background-image: -o-linear-gradient(left, rgba(0, 0, 0, 0.5) 0, rgba(0, 0, 0, 0.0001) 100%);
+      background-image: -webkit-gradient(linear, left top, right top, from(rgba(0, 0, 0, 0.5)), to(rgba(0, 0, 0, 0.0001)));
+      background-image: linear-gradient(to right, rgba(0, 0, 0, 0.5) 0, rgba(0, 0, 0, 0.0001) 100%);
+      filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#80000000', endColorstr='#00000000', GradientType=1);
+      background-repeat: repeat-x;
+      left: 0;
+      right: auto; }
+      .page-index .section-search .page-slider .slick-prev:before {
+        content: '';
+        display: block;
+        position: absolute;
+        width: 30px;
+        height: 46px;
+        background-image: url(/Assets/images/sprite-arrow.png);
+        background-position: 0 0;
+        left: 50%;
+        transform: translateX(-50%); }
     .page-index .section-search .page-slider .slick-next {
-      position: absolute;
-      top: 50%;
-      right: 50%;
-      margin-right: -500px;
-      z-index: 2; }
+      background-image: -webkit-linear-gradient(left, rgba(0, 0, 0, 0.0001) 0, rgba(0, 0, 0, 0.5) 100%);
+      background-image: -o-linear-gradient(left, rgba(0, 0, 0, 0.0001) 0, rgba(0, 0, 0, 0.5) 100%);
+      background-image: -webkit-gradient(linear, left top, right top, from(rgba(0, 0, 0, 0.0001)), to(rgba(0, 0, 0, 0.5)));
+      background-image: linear-gradient(to right, rgba(0, 0, 0, 0.0001) 0, rgba(0, 0, 0, 0.5) 100%);
+      filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#00000000', endColorstr='#80000000', GradientType=1);
+      background-repeat: repeat-x;
+      left: auto;
+      right: 0; }
+      .page-index .section-search .page-slider .slick-next:before {
+        content: '';
+        display: block;
+        position: absolute;
+        width: 30px;
+        height: 46px;
+        background-image: url(/Assets/images/sprite-arrow.png);
+        background-position: -32px 0;
+        right: 50%; }
     .page-index .section-search .page-slider .slick-dots {
       position: absolute;
       bottom: 20px;
@@ -2398,7 +2442,7 @@ body.page-index {
     max-width: none; }
 
 .page-index .section-payment {
-  margin: 30px 0; }
+  margin: 40px 0; }
   .page-index .section-payment img {
     vertical-align: bottom;
     height: 50px; }
@@ -2584,7 +2628,7 @@ body.page-index {
   position: relative;
   z-index: 0;
   cursor: pointer;
-  margin-bottom: 5px; }
+  margin-bottom: 8px; }
   .page-index .section-calendar-price .popular-flight .pop-flight:before {
     content: '';
     display: block;
@@ -2615,8 +2659,8 @@ body.page-index {
     padding: 10px 20px; }
 
 .page-index .section-calendar-price .price-calendar {
-  min-height: 570px;
-  max-height: 630px;
+  min-height: 600px;
+  max-height: 660px;
   margin-right: 20px; }
   .page-index .section-calendar-price .price-calendar .search-map {
     position: relative;
@@ -2653,6 +2697,13 @@ body.page-index {
         top: 50%;
         transform: translateY(-50%);
         margin-left: 7px; }
+    .page-index .section-calendar-price .price-calendar .search-map .btn-calendar {
+      position: absolute;
+      right: 0;
+      margin-right: 13px;
+      bottom: 0;
+      padding: 8px 25px;
+      z-index: 1; }
   .page-index .section-calendar-price .price-calendar .ui-datepicker-inline .ui-datepicker-prev, .page-index .section-calendar-price .price-calendar .ui-datepicker-inline .search-calendar .calendar-body .ui-datepicker-next, .page-index .search-calendar .calendar-body .section-calendar-price .price-calendar .ui-datepicker-inline .ui-datepicker-next, .page-index .section-calendar-price .price-calendar .ui-datepicker-inline .search-calendar-hotel .calendar-body .ui-datepicker-next, .page-index .search-calendar-hotel .calendar-body .section-calendar-price .price-calendar .ui-datepicker-inline .ui-datepicker-next, .page-index .section-calendar-price .price-calendar .ui-datepicker-inline .ui-datepicker-next {
     display: none; }
   .page-index .section-calendar-price .price-calendar .ui-datepicker-inline > .ui-datepicker-inline {
@@ -2664,14 +2715,14 @@ body.page-index {
     margin-right: 20px;
     padding: 0; }
     .page-index .section-calendar-price .price-calendar .ui-datepicker-inline .ui-datepicker-header .ui-datepicker-title .ui-datepicker-month {
-      width: 43%; }
+      width: 25%; }
     .page-index .section-calendar-price .price-calendar .ui-datepicker-inline .ui-datepicker-header .ui-datepicker-title .ui-datepicker-year {
-      width: 41%;
-      margin-left: 6%; }
+      width: 25%;
+      margin-left: 4%; }
     .page-index .section-calendar-price .price-calendar .ui-datepicker-inline .ui-datepicker-header .ui-datepicker-title:after {
-      margin-right: 27px; }
+      margin-right: 126px; }
     .page-index .section-calendar-price .price-calendar .ui-datepicker-inline .ui-datepicker-header .ui-datepicker-title:before {
-      margin-right: 127px;
+      margin-right: 202px;
       z-index: 1; }
     .page-index .section-calendar-price .price-calendar .ui-datepicker-inline .ui-datepicker-header .ui-datepicker-title:after, .page-index .section-calendar-price .price-calendar .ui-datepicker-inline .ui-datepicker-header .ui-datepicker-title:before {
       content: '';
@@ -2694,7 +2745,8 @@ body.page-index {
     line-height: 100%;
     -webkit-appearance: none;
     -moz-appearance: none;
-    text-overflow: ''; }
+    text-overflow: '';
+    cursor: pointer; }
   .page-index .section-calendar-price .price-calendar .ui-datepicker-inline .ui-datepicker-calendar {
     margin: 0 auto; }
     .page-index .section-calendar-price .price-calendar .ui-datepicker-inline .ui-datepicker-calendar th, .page-index .section-calendar-price .price-calendar .ui-datepicker-inline .ui-datepicker-calendar td {
@@ -2704,7 +2756,7 @@ body.page-index {
     .page-index .section-calendar-price .price-calendar .ui-datepicker-inline .ui-datepicker-calendar th {
       font-weight: 700;
       color: #6a6a6a;
-      padding: 10px 0; }
+      padding: 20px 0 15px; }
       .page-index .section-calendar-price .price-calendar .ui-datepicker-inline .ui-datepicker-calendar th.ui-datepicker-week-end {
         color: red; }
     .page-index .section-calendar-price .price-calendar .ui-datepicker-inline .ui-datepicker-calendar td {
@@ -2738,7 +2790,7 @@ body.page-index {
         color: #999; }
       .page-index .section-calendar-price .price-calendar .ui-datepicker-inline .ui-datepicker-calendar td:hover {
         border: 2px solid #1daee4;
-        box-shadow: 3px 3px 6px 0 #ccc; }
+        box-shadow: 3px 3px 12px 0 #ccc; }
         .page-index .section-calendar-price .price-calendar .ui-datepicker-inline .ui-datepicker-calendar td:hover:before {
           width: 31px;
           height: 31px;

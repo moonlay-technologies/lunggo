@@ -378,6 +378,10 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
     $scope.getCheapestFlightPrice('JKT', 'DPS');
     $scope.getCheapestFlightPrice('JKT', 'SUB');
     $scope.getCheapestFlightPrice('JKT', 'KNO');
+
+    $scope.isDisabled = function() {
+        return $scope.selectedPopularDestination.origin == '' || $scope.selectedPopularDestination.destination == '';
+    }
     //=============== hotel start ======================
     $scope.showPopularDestinations = false;
     hotelSearchSvc.initializeSearchForm($scope);
@@ -472,7 +476,9 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
         dayNamesMin: ["MGG", "SEN", "SEL", "RAB", "KAM", "JUM", "SAB"],
         showOtherMonths: true,
         onChangeMonthYear: function (year, month) {
-            addCustomInformation(month, year);
+            $('.ui-datepicker .ui-datepicker-title').addClass('col-xs-5');
+            editForm(year, month);
+            //addCustomInformation(month, year);
         },
         onSelect: function (date) {
             var x = date.split('/');
@@ -485,6 +491,12 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
             //$(this).find("a").attr('href', url);
         },
     });
+
+    function editForm(year, month) {
+        $scope.selectedPopularDestination.month = month;
+        $scope.selectedPopularDestination.year = year;
+    }
+
     function addCustomInformation(mth, year) {
         var eventDates = {};
         eventDates = getEventDate(mth, year);
@@ -507,7 +519,7 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
                     if (highlight) {
                         var datex = date + ("0" + (month)).slice(-2).toString() + year.toString().slice(-2);
                         var url = $scope.editData() + datex + '-100y';
-                        $('.ui-datepicker .ui-datepicker-title').addClass('col-xs-4');
+                        $('.ui-datepicker .ui-datepicker-title').addClass('col-xs-5');
                         if (highlight != '0rb') {
                             $(this).find("a").attr('data-custom', highlight);
                         }
@@ -888,9 +900,9 @@ jQuery(document).ready(function ($) {
     $('.slider-wrapper').slick({
         autoplay: true,
         autoplaySpeed: 4000,
-        dots: true,
-        prevArrow: '<button type="button" class="slick-prev hidden">Back</button>',
-        nextArrow: '<button type="button" class="slick-next hidden">Next</button>'
+        dots: false,
+        prevArrow: '<button type="button" class="slick-prev"></button>',
+        nextArrow: '<button type="button" class="slick-next"></button>'
     });
 
     // Slider Home Page Mobile
