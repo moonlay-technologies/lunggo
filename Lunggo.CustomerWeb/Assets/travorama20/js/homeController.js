@@ -2,7 +2,7 @@
 app.controller('homeController', ['$scope', '$log', '$http', '$location', '$resource', '$timeout', 'hotelSearchSvc', function ($scope, $log, $http, $location, $resource, $timeout, hotelSearchSvc) {
 
 
-    $(document).ready(function() {
+    $(document).ready(function () {
 
         if (Cookies.get('hotelSearchLocationDisplay')) {
             $scope.hotelSearch.locationDisplay = Cookies.get('hotelSearchLocationDisplay');
@@ -89,7 +89,7 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
             }
         }
     });
-   // ================= FLIGHT ========================
+    // ================= FLIGHT ========================
 
     $scope.departureDate = moment().add(1, 'day').format('DDMMYY');
     $scope.changeTab = function (tab) {
@@ -102,8 +102,8 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
             $('.form-child-age').hide();
         }
     }
-    
-    $scope.showForm= function(tab) {
+
+    $scope.showForm = function (tab) {
         if (tab == 'hotel') {
             $scope.isFlight = false;
         } else if (tab == 'flight') {
@@ -111,7 +111,7 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
         }
     }
 
-    
+
     //=============== hotel start ======================
     $scope.showPopularDestinations = false;
     hotelSearchSvc.initializeSearchForm($scope);
@@ -135,7 +135,7 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
             }
         }
         return [true, ''];
-        
+
     }
     $(function () {
         $(".ui-datepicker").datepicker({
@@ -143,11 +143,11 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
         });
     });
 
-   
+
     $('.hotel-date-picker').datepicker('option', 'beforeShowDay', hotelSearchSvc.highlightDays);
     $scope.hotel = {};
     $scope.view = {
-        showHotelSearch : false
+        showHotelSearch: false
     }
 
     $scope.init = function (model) {
@@ -477,30 +477,30 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
     $scope.getCheapestFlightPrice('JKT', 'KNO');
     $scope.hasSearched = false;
 
-    $("#pc-datepicker").datepicker({
-        changeMonth: true,
-        changeYear: true,
-        dayNamesMin: ["MGG", "SEN", "SEL", "RAB", "KAM", "JUM", "SAB"],
-        showOtherMonths: true,
-        //onChangeMonthYear: function (year, month) {
-        //    $('.ui-datepicker .ui-datepicker-title').addClass('col-xs-5');
-        //    //editForm(year, month);
-        //    //addCustomInformation(month, year);
-        //},
-        onSelect: function (date) {
-            if ($scope.hasSearched) {
-                var x = date.split('/');
-                var day = x[0];
-                var month = x[1];
-                var year = x[2];
-                var datex = ("0" + (day)).slice(-2).toString() + ("0" + (month)).slice(-2).toString() + year.toString().slice(-2);
-                var url = $scope.editData() + datex + '-100y';
-                window.location.href = url;
-            }
-            
-            //$(this).find("a").attr('href', url);
-        },
-    });
+    //$("#pc-datepicker").datepicker({
+    //    changeMonth: true,
+    //    changeYear: true,
+    //    dayNamesMin: ["MGG", "SEN", "SEL", "RAB", "KAM", "JUM", "SAB"],
+    //    showOtherMonths: true,
+    //    //onChangeMonthYear: function (year, month) {
+    //    //    $('.ui-datepicker .ui-datepicker-title').addClass('col-xs-5');
+    //    //    //editForm(year, month);
+    //    //    //addCustomInformation(month, year);
+    //    //},
+    //    onSelect: function (date) {
+    //        if ($scope.hasSearched) {
+    //            var x = date.split('/');
+    //            var day = x[0];
+    //            var month = x[1];
+    //            var year = x[2];
+    //            var datex = ("0" + (day)).slice(-2).toString() + ("0" + (month)).slice(-2).toString() + year.toString().slice(-2);
+    //            var url = $scope.editData() + datex + '-100y';
+    //            window.location.href = url;
+    //        }
+
+    //        //$(this).find("a").attr('href', url);
+    //    },
+    //});
 
     function editForm(year, month) {
         $scope.selectedPopularDestination.month = month;
@@ -512,31 +512,33 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
         eventDates = getEventDate(mth, year);
 
         setTimeout(function () {
-            $(".ui-datepicker-calendar td").filter(function () {
-                var date = $(this).text();
-                
-                if (year) {
-                    var month = mth;
-                    if (month == 0) {
-                        month = 1;
-                    }
-                    if (date < 10) {
-                        date = '0' + date;
-                    }
 
-                    var date_format = year + '/' + '0' + month + '/' + date;
-                    var highlight = eventDates[date_format];
-                    if (highlight) {
-                        var datex = date + ("0" + (month)).slice(-2).toString() + year.toString().slice(-2);
-                        var url = $scope.editData() + datex + '-100y';
-                        if (highlight != '0rb') {
-                            $(this).find("a").attr('data-custom', highlight);
-                        }
-                        $(this).append('<a class="view-price btn btn-yellow sm-btn xs-txt os-bold" href="' + url + '">LIHAT</a>');
-                    }
-                }
-                return date;
-            });
+
+            //$(".ui-datepicker-calendar td").filter(function () {
+            //    var date = $(this).text();
+
+            //    if (year) {
+            //        var month = mth;
+            //        if (month == 0) {
+            //            month = 1;
+            //        }
+            //        if (date < 10) {
+            //            date = '0' + date;
+            //        }
+
+            //        var date_format = year + '/' + '0' + month + '/' + date;
+            //        var highlight = eventDates[date_format];
+            //        if (highlight) {
+            //            var datex = date + ("0" + (month)).slice(-2).toString() + year.toString().slice(-2);
+            //            var url = $scope.editData() + datex + '-100y';
+            //            if (highlight != '0rb') {
+            //                $(this).find("a").attr('data-custom', highlight);
+            //            }
+            //            $(this).append('<a class="view-price btn btn-yellow sm-btn xs-txt os-bold" href="' + url + '">LIHAT</a>');
+            //        }
+            //    }
+            //    return date;
+            //});
         }, 0);
     }
 
@@ -772,31 +774,31 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
     });
 
     //search calendar price
-    $('#submitCalendar').on('click', function () {
-        var bulan = $('#selectMonth').val();
-        var tahun = $('#selectYear').val();
+    //$('#submitCalendar').on('click', function () {
+    //    var bulan = $('#selectMonth').val();
+    //    var tahun = $('#selectYear').val();
 
-        var newDate = new Date(tahun, bulan, '01');
-        $('#pc-datepicker').datepicker('setDate', newDate);
-        
-        if ($scope.selectedPopularDestination.origin != '' && $scope.selectedPopularDestination.destination != '') {
-            $scope.hasSearched = true;
-            $scope.getFlightPrice($scope.selectedPopularDestination.origin, $scope.selectedPopularDestination.destination,
-        parseInt(bulan) + 1, tahun);
-        }
-        
+    //    var newDate = new Date(tahun, bulan, '01');
+    //    $('#pc-datepicker').datepicker('setDate', newDate);
 
-    });
-    setValueMY();
+    //    if ($scope.selectedPopularDestination.origin != '' && $scope.selectedPopularDestination.destination != '') {
+    //        $scope.hasSearched = true;
+    //        $scope.getFlightPrice($scope.selectedPopularDestination.origin, $scope.selectedPopularDestination.destination,
+    //    parseInt(bulan) + 1, tahun);
+    //    }
 
-    function setValueMY() {
-        var d = new Date();
-        var month = d.getMonth();
-        var year = d.getFullYear();
 
-        $('#selectMonth').val(month);
-        $('#selectYear').val(year);
-    }
+    //});
+    //setValueMY();
+
+    //function setValueMY() {
+    //    var d = new Date();
+    //    var month = d.getMonth();
+    //    var year = d.getFullYear();
+
+    //    $('#selectMonth').val(month);
+    //    $('#selectYear').val(year);
+    //}
 }]);
 
 //********************
@@ -950,23 +952,70 @@ jQuery(document).ready(function ($) {
         nextArrow: '<button type="button" class="slick-next hidden">Next</button>'
     });
 
-    //// Price Calendar
-    //$("#pc-datepicker").datepicker({
-    //    dayNamesMin: ["MGG", "SEN", "SEL", "RAB", "KAM", "JUM", "SAB"],
-    //    showOtherMonths: true,
-    //    beforeShow: addCustomInformation,
-    //    beforeShowDay: function (date) {
-    //        return [true, date.getDay() === 5 || date.getDay() === 6 ? "weekend" : "weekday"];
-    //    },
-    //    onChangeMonthYear: addCustomInformation,
-    //    onSelect: addCustomInformation
-    //});
-    //addCustomInformation();
-
     $('.pop-hotel').hover(function () {
         $(this).find('.view-hotel').slideToggle('fast');
     });
 
-    
-});
+    $('#pc-datepicker').fullCalendar({
+        header: {
+            left: '',
+            center: '',
+            right: ''
+        },
+        events: getEvents(),
+        eventRender: function (event, element, view) {
+            if (event.link != '') {
+                var link = "</br></br><input type='button' onclick='location.href=\"" + event.link + "\";' value='Lihat'/>";
+                element.find('.fc-content').append(link);
+            }
+        }
+    });
 
+    function getEvents() {
+        return [
+			{
+			    title: 'Rp. 100.000',
+			    start: '2017-01-30',
+			    end: '2017-01-30',
+			    link: 'http://google.com'
+			},
+            {
+                title: 'Rp. 90.000',
+                start: '2017-01-31',
+                end: '2017-01-31',
+                link: 'http://google.com'
+            },
+            {
+                title: 'Rp. 300.000',
+                start: '2017-02-15',
+                end: '2017-02-15',
+                link: 'http://google.com'
+            }
+        ];
+    }
+
+    function setValueMY() {
+        var d = new Date();
+        var month = d.getMonth();
+        var year = d.getFullYear();
+
+        $('#selectMonth').val(month);
+        $('#selectYear').val(year);
+    }
+    setValueMY();
+    $('#month div').on('click touchstart', function () {
+        var val = $(this).attr('value');
+        $('#selectMonth').val(val);
+    });
+    $('#year div').on('click touchstart', function () {
+        var val = $(this).attr('value');
+        $('#selectYear').val(val);
+    });
+    $('#submitCalendar').on('click', function () {
+        var bulan = $('#selectMonth').val();
+        var tahun = $('#selectYear').val();
+
+        var newDate = new Date(tahun, bulan, '01');
+        $('#pc-datepicker').fullCalendar('gotoDate', newDate);
+    });
+});

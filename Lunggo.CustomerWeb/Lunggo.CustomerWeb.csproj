@@ -1284,6 +1284,7 @@
     <Content Include="Assets\vendor\fancybox\jquery.fancybox.css" />
     <Content Include="Assets\vendor\fancybox\jquery.fancybox.js" />
     <Content Include="Assets\vendor\fancybox\jquery.fancybox.pack.js" />
+    <Content Include="Assets\vendor\fullcalendar\fullcalendar.min.css" />
     <Content Include="Assets\vendor\lightslider\lightslider.css" />
     <Content Include="Assets\vendor\lightslider\lightslider.js" />
     <Content Include="Assets\vendor\slick\slick.css" />
@@ -1464,6 +1465,7 @@
     <Content Include="App_Code\ToTitleCase.cshtml" />
     <Content Include="App_Code\MsToTime.cshtml" />
     <Content Include="Assets\css\travorama-mobileApp.scss" />
+    <Content Include="Assets\vendor\fullcalendar\fullcalendar.min.js" />
     <None Include="Properties\PublishProfiles\prod-cw %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\dv1-cw.pubxml" />
     <None Include="Properties\PublishProfiles\dv2-cw.pubxml" />
