@@ -31,23 +31,23 @@ namespace Lunggo.ApCommon.Hotel.Service
         public void UpdateHotelContentAll()
         {
             /*Update Content From HotelBeds*/
-            //UpdateHotelDetailStorage();
-            //UpdateHotelRateCommentStorage();
-            //UpdateCountryStorage();
-            //UpdateDestinationStorage();
-            //UpdateHotelBoardStorage();
-            //UpdateHotelChainStorage();
-            //UpdateHotelAccomodationStorage();
-            //UpdateHotelCategoryStorage();
-            //UpdateHotelFacilityStorage();
-            //UpdateHotelFacilityGroupStorage();
-            //UpdateHotelSegmentStorage();
-            //UpdateHotelRoomStorage();
+            UpdateHotelDetailStorage();
+            UpdateHotelRateCommentStorage();
+            UpdateCountryStorage();
+            UpdateDestinationStorage();
+            UpdateHotelBoardStorage();
+            UpdateHotelChainStorage();
+            UpdateHotelAccomodationStorage();
+            UpdateHotelCategoryStorage();
+            UpdateHotelFacilityStorage();
+            UpdateHotelFacilityGroupStorage();
+            UpdateHotelSegmentStorage();
+            UpdateHotelRoomStorage();
 
             /*Another Update*/
-            //UpdateLocation();
-            //UpdateHotelListByLocationContent();
-            //SaveHotelDetailByLocation();
+            UpdateLocation();
+            UpdateHotelListByLocationContent();
+            SaveHotelDetailByLocation();
             UpdateAutocomplete();
         }
         public void UpdateAutocomplete()
