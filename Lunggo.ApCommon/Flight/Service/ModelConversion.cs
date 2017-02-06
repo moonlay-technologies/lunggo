@@ -359,14 +359,6 @@ namespace Lunggo.ApCommon.Flight.Service
                 iOri = decimal.Round((decimal)(tOri - aOri * adultCount - cOri * childCount) / infantCount);
                 iNet = decimal.Round((decimal)(tNet - aNet * adultCount - cNet * childCount) / infantCount);
             }
-
-            if (tOri <= tNet)
-            {
-                tOri = decimal.Round(tNet*1.01M);
-                aOri = decimal.Round(aNet.Value*1.01M);
-                cOri = decimal.Round(cNet.Value*1.01M);
-                iOri = decimal.Round(iNet.Value*1.01M);
-            }
         }
 
     }

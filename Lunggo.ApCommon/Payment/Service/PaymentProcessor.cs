@@ -5,6 +5,7 @@ using Lunggo.ApCommon.Campaign.Constant;
 using Lunggo.ApCommon.Campaign.Service;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Service;
+using Lunggo.ApCommon.Hotel.Model;
 using Lunggo.ApCommon.Hotel.Service;
 using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.ApCommon.Payment.Model;
@@ -74,25 +75,26 @@ namespace Lunggo.ApCommon.Payment.Service
                 }
                 if (binDiscount.ReplaceMargin)
                 {
-                    if (reservation.Type == ProductType.Flight)
+                    var orders = reservation.Type == ProductType.Flight
+                        ? (IEnumerable<OrderBase>)(reservation as FlightReservation).Itineraries.ToList()
+                        : (reservation as HotelReservation).HotelDetails.Rooms.SelectMany(ro => ro.Rates).ToList();
+
+                    foreach (var order in orders)
                     {
-                        var rsv = reservation as FlightReservation;
-                        foreach (var itin in rsv.Itineraries)
+                        var newOriginal = order.Price.CalculateOriginalPrice();
+                        order.Price.Margin = new UsedMargin
                         {
-                            itin.Price.Margin = new UsedMargin
-                            {
-                                Name = "Margin Cancel",
-                                Description = "Margin Cancelled by BIN Promo",
-                                Currency = itin.Price.LocalCurrency
-                            };
-                            itin.Price.Local = itin.Price.OriginalIdr/itin.Price.LocalCurrency.Rate;
-                            itin.Price.Rounding = 0;
-                            itin.Price.FinalIdr = itin.Price.OriginalIdr;
-                            itin.Price.MarginNominal = 0;
-                        }
-                        paymentDetails.OriginalPriceIdr = rsv.Itineraries.Sum(i => i.Price.FinalIdr);
-                        paymentDetails.FinalPriceIdr = paymentDetails.OriginalPriceIdr - binDiscount.Amount;
+                            Name = "BIN Promo Margin Modify",
+                            Description = "Margin Modified by BIN Promo",
+                            Currency = order.Price.LocalCurrency,
+                            Constant = newOriginal - order.Price.OriginalIdr
+                        };
+                        order.Price.CalculateFinalAndLocal(order.Price.LocalCurrency);
+                        order.Price.Rounding = 0;
+                        order.Price.MarginNominal = order.Price.Margin.Constant;
                     }
+                    paymentDetails.OriginalPriceIdr = orders.Sum(i => i.Price.FinalIdr);
+                    paymentDetails.FinalPriceIdr = paymentDetails.OriginalPriceIdr - binDiscount.Amount;
                 }
                 else
                 {
@@ -150,7 +152,7 @@ namespace Lunggo.ApCommon.Payment.Service
                     HotelService.GetInstance().SendTransferInstructionToCustomer(rsvNo);
                 }
             }
-                
+
             isUpdated = true;
             return paymentDetails;
         }
@@ -297,7 +299,7 @@ namespace Lunggo.ApCommon.Payment.Service
             {
                 Id = "1",
                 Name = ProductTypeCd.Parse(rsvNo).ToString(),
-                Price = (long) payment.FinalPriceIdr,
+                Price = (long)payment.FinalPriceIdr,
                 Quantity = 1
             });
             //if (payment.Discount != null)

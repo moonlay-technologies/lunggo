@@ -30,7 +30,7 @@ namespace Lunggo.ApCommon.Campaign.Service
                     Amount = 5000,
                     IsAvailable = true,
                     Currency = new Currency("IDR"),
-                    DisplayName = "BTN",
+                    DisplayName = "Diskon BTN",
                     ReplaceMargin = true
                 };
 
@@ -44,7 +44,7 @@ namespace Lunggo.ApCommon.Campaign.Service
             else
             {
                 rsv = HotelService.GetInstance().GetReservation(rsvNo);
-                discAmount = (rsv as HotelReservation).HotelDetails.Rooms.Sum(ro => ro.Rates.Sum(i => i.Price.CalculateOriginalPrice())) * 0.1M;
+                discAmount = (rsv as HotelReservation).HotelDetails.Rooms.Sum(ro => ro.Rates.Sum(i => i.Price.CalculateOriginalPrice()))*0.1M;
             }
 
             // HUT BTN
@@ -77,14 +77,14 @@ namespace Lunggo.ApCommon.Campaign.Service
                         Amount = discAmount,
                         IsAvailable = true,
                         Currency = new Currency("IDR"),
-                        DisplayName = "BTN",
+                        DisplayName = "Diskon BTN",
                         ReplaceMargin = true
                     }
                     : new BinDiscount
                     {
                         Amount = 0,
                         IsAvailable = false,
-                        DisplayName = "BTN"
+                        DisplayName = "Diskon BTN"
                     }
                 : null;
         }
