@@ -45,6 +45,8 @@
     <script src="/Assets/js/bootstrap.min.js"></script>
     <script src="/Assets/js/jquery.ui.touch-punch.min.js"></script>
     <script src="/Assets/js/js.cookie.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCRAmMz6GPXsXi1pZAl5QUsjNTcY0ZfqVA&callback=initMap"
+            async defer></script>
 }
 
 @section PageJS{
@@ -53,16 +55,84 @@
     <script src="/Assets/travorama20/angularDirectory/search/hotelSearch.service.js"></script>
     <script src="/Assets/travorama20/angularDirectory/common/hotelAutocomplete.service.js"></script>
     <script src="/Assets/travorama20/js/hotelSearchController.js"></script>
+    <script>
+        function initMap() {
+            var currentHotel = { lat: -8.710695, lng: 115.178775 };
+            var otherHotel = { lat: -8.711247, lng: 115.181347 };
+
+            var map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 15,
+                center: currentHotel,
+                mapTypeControl: false,
+                streetViewControl: false,
+                fullscreenControl: false
+            });
+
+            var iconBase = '/Assets/images/hotel/markers-';
+            var icons = {
+                hotelBlue: {
+                    icon: iconBase + 'blue.png'
+                }, hotelRed: {
+                    icon: iconBase + 'red.png'
+                }
+            };
+
+            var features = [
+              {
+                  position: currentHotel,
+                  type: 'hotelBlue'
+              }, {
+                  position: otherHotel,
+                  type: 'hotelRed'
+              }
+            ];
+
+            for (var i = 0, feature; feature = features[i]; i++) {
+                addMarker(feature);
+            }
+
+            function addMarker(feature) {
+                var marker = new google.maps.Marker({
+                    position: feature.position,
+                    icon: icons[feature.type].icon,
+                    map: map
+                });
+
+                var infoDesc = '<div class="map-container">' +
+                '<div class="hotel-round"' + 'style="' + 'background-image: url(' + '/Assets/images/hotel/hotel-dummy.jpg' + ')"></div>' +
+                '<div class="map-content normal-txt">' +
+                '<div class="hotel-title bold-txt blue-txt">' + 'Everyday Smart' + '</div>' +
+                '<div class="' + 'star star-5' + '"></div>' +
+                '<small class="orange-txt sm-txt underline-txt">' + '999.999.999' + '</small>' +
+                '<div class="orange-txt bold-txt">' + '999.999.999' + '</div>' +
+                '</div>' +
+                '</div>';
+
+                var infoWindow = new google.maps.InfoWindow({
+                    content: infoDesc
+                });
+
+                infoWindow.open(map, marker);
+
+                marker.addListener('click', function () {
+                    infoWindow.open(map, marker);
+                });
+            }
+        }
+    </script>
+
 }
 
 <div class="travorama-hotel-mobile" ng-init="init(@Newtonsoft.Json.JsonConvert.SerializeObject(Model))">
     <div class="top-content">
         @Html.Partial("/Views/Shared/Mobile/_Summary.cshtml", new HotelLocation
         {
-            Location = loc, IsHotelSearch = false
+            Location = loc,
+            IsHotelSearch = false
         })
         <div class="hotel-sort-filter clearfix">
             <div class="hotel-sort-filter-action">
+                <a ng-click="PageConfig.SetOverlay('hotel-MAP')">PETA</a>
                 <a ng-click="PageConfig.SetOverlay('hotel-filter')">FILTER</a>
                 <a ng-click="PageConfig.SetOverlay('hotel-sort')">SORTIR</a>
             </div>
@@ -73,35 +143,10 @@
             <img class="img-loading" src="/Assets/images/load.gif">
         </div>
         <div class="text-center" ng-show="searchDone && page == 1 && returnedHotelCount == 0"><h3> Hotel tidak ditemukan, silakan ganti filter atau destinasi anda.</h3></div>
-        <ul class="hotel-list-container">
-            <li ng-repeat="hotel in hotels" ng-click="GotoDetailHotel(hotel)">
-                <div class="hotel-list clearfix">
-                    <div class="col-left-hotel"><div class="img-list" alt-image style="background-image: url({{hotel.mainImage}});"></div></div>
-                    <div class="col-right-hotel">
-                        <div class="blue-txt bold-txt lg-txt">{{hotel.hotelName}}</div>
-                        <div class="star" ng-if="hotel.starRating == 1"></div>
-                        <div class="star star-2 " ng-if="hotel.starRating == 2"></div>
-                        <div class="star star-3 " ng-if="hotel.starRating == 3"></div>
-                        <div class="star star-4 " ng-if="hotel.starRating == 4"></div>
-                        <div class="star star-5 " ng-if="hotel.starRating == 5"></div>
-                        <div class="location grey-txt">
-                            {{toTitleCase(hotel.area)}}
-                            <span ng-show="hotel.area == null || hotel.area.length < 1">{{toTitleCase(hotel.address)}} {{toTitleCase(hotel.zone)}} <span ng-show="hotel.postalCd != null || hotel.postalCd.length > 0"> {{hotel.postalCd}}</span></span>
-</div>
-                        <div class="price orange-txt">
-                            <div class="txt-md semibold-txt">Harga per malam mulai dari:</div>
-                            <div class="underline-txt sm-txt">Rp {{hotel.originalCheapestFare | currency:'':0}}</div>
-                            <a ng-click="GotoDetailHotel(hotel)" class="detail"></a>
-                            <div class="lg-txt"><b><sup>Rp</sup> {{hotel.netCheapestFare | currency:'':0}}</b></div>
-                            <span class="xs-txt">(*Termasuk Pajak & Service Charge)</span>
-                        </div>
-                    </div>
-                </div>
-            </li>
-            <div ng-show="bottomPage" class="text-center">
-                <img src="/Assets/images/load.gif" style="width: 30px; height: 30px; margin: 20px 0 30px;">
-            </div>
-        </ul>
+        @Html.Partial("/Views/Shared/Mobile/_HotelListing.cshtml")
+        <div ng-show="bottomPage" class="text-center">
+            <img src="/Assets/images/load.gif" style="width: 30px; height: 30px; margin: 20px 0 30px;">
+        </div>
     </div>
 
     <!-- Overlay Filter -->
@@ -131,7 +176,7 @@
 
                     </div>
                 </div>
-                <div class ="filter-group">
+                <div class="filter-group">
                     <div class="filter-group__header">
                         <h4 class="filter-group__title">Nama Hotel</h4>
                     </div>
@@ -228,6 +273,24 @@
                 <input type="radio" name="optradio" class="check-radio" value="false" />
                 <span class="name">Bintang Hotel Tertinggi</span>
             </label>
+        </section>
+    </div>
+
+    <!-- Overlay Map -->
+    <div class="overlay overlay--hotel-sort overlay--theme--blue" ng-class="{'active' : (PageConfig.ActiveOverlay == 'hotel-MAP')}">
+        <header class="overlay__header">
+            <h3 class="overlay__title">
+                PETA
+                <span class="overlay__close" ng-click="PageConfig.SetOverlay('')">X</span>
+            </h3>
+        </header>
+        <section class="overlay__content">
+            <div class="hotel-map-container">
+                <div id="map"></div>
+                <div class="hm-listing">
+
+                </div>
+            </div>
         </section>
     </div>
 
