@@ -1126,6 +1126,12 @@
                 .ag-list {margin: 0 15px;}
             }
         }
+        &.overlay--hotel-map .overlay__content { 
+            #map {
+                width: 100%;
+                height: 320px;
+            }
+        }
     }
     .rh-table {
         background: #e9e7e8;

@@ -55,71 +55,72 @@
     <script src="/Assets/travorama20/angularDirectory/search/hotelSearch.service.js"></script>
     <script src="/Assets/travorama20/angularDirectory/common/hotelAutocomplete.service.js"></script>
     <script src="/Assets/travorama20/js/hotelSearchController.js"></script>
-    <script>
-        function initMap() {
-            var currentHotel = { lat: -8.710695, lng: 115.178775 };
-            var otherHotel = { lat: -8.711247, lng: 115.181347 };
+    <script src="/Assets/travorama20/js/HotelMap.js"></script>
+    @*<script>
+            function initMap() {
+                var currentHotel = { lat: -8.710695, lng: 115.178775 };
+                var otherHotel = { lat: -8.711247, lng: 115.181347 };
 
-            var map = new google.maps.Map(document.getElementById('map'), {
-                zoom: 15,
-                center: currentHotel,
-                mapTypeControl: false,
-                streetViewControl: false,
-                fullscreenControl: false
-            });
+                var map = new google.maps.Map(document.getElementById('map'), {
+                    zoom: 15,
+                    center: currentHotel,
+                    mapTypeControl: false,
+                    streetViewControl: false,
+                    fullscreenControl: false
+                });
 
-            var iconBase = '/Assets/images/hotel/markers-';
-            var icons = {
-                hotelBlue: {
-                    icon: iconBase + 'blue.png'
-                }, hotelRed: {
-                    icon: iconBase + 'red.png'
+                var iconBase = '/Assets/images/hotel/markers-';
+                var icons = {
+                    hotelBlue: {
+                        icon: iconBase + 'blue.png'
+                    }, hotelRed: {
+                        icon: iconBase + 'red.png'
+                    }
+                };
+
+                var features = [
+                  {
+                      position: currentHotel,
+                      type: 'hotelBlue'
+                  }, {
+                      position: otherHotel,
+                      type: 'hotelRed'
+                  }
+                ];
+
+                for (var i = 0, feature; feature = features[i]; i++) {
+                    addMarker(feature);
                 }
-            };
 
-            var features = [
-              {
-                  position: currentHotel,
-                  type: 'hotelBlue'
-              }, {
-                  position: otherHotel,
-                  type: 'hotelRed'
-              }
-            ];
+                function addMarker(feature) {
+                    var marker = new google.maps.Marker({
+                        position: feature.position,
+                        icon: icons[feature.type].icon,
+                        map: map
+                    });
 
-            for (var i = 0, feature; feature = features[i]; i++) {
-                addMarker(feature);
-            }
+                    var infoDesc = '<div class="map-container">' +
+                    '<div class="hotel-round"' + 'style="' + 'background-image: url(' + '/Assets/images/hotel/hotel-dummy.jpg' + ')"></div>' +
+                    '<div class="map-content normal-txt">' +
+                    '<div class="hotel-title bold-txt blue-txt">' + 'Everyday Smart' + '</div>' +
+                    '<div class="' + 'star star-5' + '"></div>' +
+                    '<small class="orange-txt sm-txt underline-txt">' + '999.999.999' + '</small>' +
+                    '<div class="orange-txt bold-txt">' + '999.999.999' + '</div>' +
+                    '</div>' +
+                    '</div>';
 
-            function addMarker(feature) {
-                var marker = new google.maps.Marker({
-                    position: feature.position,
-                    icon: icons[feature.type].icon,
-                    map: map
-                });
+                    var infoWindow = new google.maps.InfoWindow({
+                        content: infoDesc
+                    });
 
-                var infoDesc = '<div class="map-container">' +
-                '<div class="hotel-round"' + 'style="' + 'background-image: url(' + '/Assets/images/hotel/hotel-dummy.jpg' + ')"></div>' +
-                '<div class="map-content normal-txt">' +
-                '<div class="hotel-title bold-txt blue-txt">' + 'Everyday Smart' + '</div>' +
-                '<div class="' + 'star star-5' + '"></div>' +
-                '<small class="orange-txt sm-txt underline-txt">' + '999.999.999' + '</small>' +
-                '<div class="orange-txt bold-txt">' + '999.999.999' + '</div>' +
-                '</div>' +
-                '</div>';
-
-                var infoWindow = new google.maps.InfoWindow({
-                    content: infoDesc
-                });
-
-                infoWindow.open(map, marker);
-
-                marker.addListener('click', function () {
                     infoWindow.open(map, marker);
-                });
+
+                    marker.addListener('click', function () {
+                        infoWindow.open(map, marker);
+                    });
+                }
             }
-        }
-    </script>
+        </script>*@
 
 }
 
@@ -277,7 +278,7 @@
     </div>
 
     <!-- Overlay Map -->
-    <div class="overlay overlay--hotel-sort overlay--theme--blue" ng-class="{'active' : (PageConfig.ActiveOverlay == 'hotel-MAP')}">
+    <div class="overlay overlay--hotel-map overlay--theme--blue" ng-class="{'active' : (PageConfig.ActiveOverlay == 'hotel-MAP')}">
         <header class="overlay__header">
             <h3 class="overlay__title">
                 PETA
@@ -288,7 +289,35 @@
             <div class="hotel-map-container">
                 <div id="map"></div>
                 <div class="hm-listing">
-
+                    @*@Html.Partial("/Views/Shared/Mobile/_HotelListing.cshtml")*@
+                    <ul class="hotel-list-container">
+                        <li>
+                            <div class="hotel-list clearfix">
+                                <div class="col-left-hotel"><div class="img-list" alt-image style="background-image:;"></div></div>
+                                <div class="col-right-hotel">
+                                    <div class="blue-txt bold-txt lg-txt">Everyday Hotel</div>
+                                    <div class="star star-5"></div>
+                                    @*<div class="star" ng-if="hotel.starRating == 1"></div>
+                                    <div class="star star-2 " ng-if="hotel.starRating == 2"></div>
+                                    <div class="star star-3 " ng-if="hotel.starRating == 3"></div>
+                                    <div class="star star-4 " ng-if="hotel.starRating == 4"></div>
+                                    <div class="star star-5 " ng-if="hotel.starRating == 5"></div>*@
+                                    <div class="location grey-txt">
+                                        Jl. Bangka No. 26
+                                        @*{{toTitleCase(hotel.area)}}*@
+                                        @*<span ng-show="hotel.area == null || hotel.area.length < 1">{{toTitleCase(hotel.address)}} {{toTitleCase(hotel.zone)}} <span ng-show="hotel.postalCd != null || hotel.postalCd.length > 0"> {{hotel.postalCd}}</span></span>*@
+                                    </div>
+                                    <div class="price orange-txt">
+                                        <div class="txt-md semibold-txt">Harga per malam mulai dari:</div>
+                                        <div class="underline-txt sm-txt">Rp 999.999.999</div>
+                                        <a ng-click="GotoDetailHotel(hotel)" class="detail"></a>
+                                        <div class="lg-txt"><b><sup>Rp</sup> 999.999.999</b></div>
+                                        <span class="xs-txt">(*Termasuk Pajak & Service Charge)</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </section>

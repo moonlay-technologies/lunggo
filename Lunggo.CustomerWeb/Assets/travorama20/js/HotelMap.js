@@ -115,9 +115,7 @@ function initMap() {
 
     var iconBase = '/Assets/images/hotel/markers-';
     var icons = {
-        hotelBlue: {
-            icon: iconBase + 'blue.png'
-        }, hotelRed: {
+        hotelRed: {
             icon: iconBase + 'red.png'
         }
     };
@@ -125,7 +123,7 @@ function initMap() {
     var features = [
       {
           position: currentHotel,
-          type: 'hotelBlue'
+          type: 'hotelRed'
       }, {
           position: otherHotel,
           type: 'hotelRed'
@@ -143,7 +141,8 @@ function initMap() {
             map: map
         });
 
-        var infoDesc = '<div class="map-container">' +
+        var infoDesc =
+        '<div class="map-container">' +
         '<div class="hotel-round"' + 'style="' + 'background-image: url(' + '/Assets/images/hotel/hotel-dummy.jpg' + ')"></div>' +
         '<div class="map-content normal-txt">' +
         '<div class="hotel-title bold-txt blue-txt">' + 'Everyday Smart' + '</div>' +
@@ -153,14 +152,23 @@ function initMap() {
         '</div>' +
         '</div>';
 
+
+
+        var infoPrice = '<div class="map-pice orange-txt sm-txt semibold-txt">' + 'Rp ' + '999.999.999' + '</div>';
+
+        var infoOpenPrice = new google.maps.InfoWindow({
+            content: infoPrice
+        });
+
+        infoOpenPrice.open(map, marker);
+
         var infoWindow = new google.maps.InfoWindow({
             content: infoDesc
         });
 
-        infoWindow.open(map, marker);
-
         marker.addListener('click', function () {
             infoWindow.open(map, marker);
+            infoOpenPrice.close();
         });
     }
 }
