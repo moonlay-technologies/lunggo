@@ -22,7 +22,7 @@
         {
             <div class="promo-list">
                 <p>
-                    <a href="@Url.Action("Imlek", "Promo")"><div class="img-promo" style="background-image: url(/Assets/images/campaign/Imlek2017/Imlek2017-promo-mobile.jpg); height: 110px"></div></a>
+                    <a href="@Url.Action("Imlek", "Promo")"><img src="/Assets/images/campaign/Imlek2017/Imlek2017-promo-mobile.jpg" /></a>
                 </p>
                 <p>
                     Rayakan kebersamaan imlek bersama keluarga di hotel terbaik pilihan Anda. Gunakan kode promo untuk mendapatkan secret deal harga kamar hotel. Berlaku tanpa minimum pembelian, untuk hotel domestik dan internasional.
@@ -38,7 +38,7 @@
         {
             <div class="promo-list">
                 <p>
-                    <a href="@Url.Action("BTNTerbanginHemat", "Promo")"><div class="img-promo" style="background-image: url(/Assets/images/campaign/TerbanginHemat/TerbanginHemat-promo-mobile.jpg); height: 110px"></div></a>
+                    <a href="@Url.Action("BTNTerbanginHemat", "Promo")"><img src="/Assets/images/campaign/TerbanginHemat/TerbanginHemat-promo-mobile.jpg" /></a>
                 </p>
                 <p>
                     Spesial untuk pemegang Kartu Debit dan Kartu Kredit BTN, nikmati diskon hingga Rp 300.000 setiap reservasi tiket pesawat dan kamar hotel di seluruh dunia.
@@ -48,6 +48,23 @@
                     Periode booking: <b>1 Februari - 31 Maret 2017</b>
                     <br />
                     <a href="@Url.Action("BTNTerbanginHemat", "Promo")">Selengkapnya</a>
+                </p>
+            </div>
+        }
+        @if (DateTime.UtcNow.AddHours(7).Date <= new DateTime(2017, 02, 10))
+        {
+            <div class="promo-list">
+                <p>
+                    <a href="@Url.Action("HutBTN", "Promo")"><img src="/Assets/images/campaign/HutBTN/HutBTN-promo-mobile.jpg" /></a>
+                </p>
+                <p>
+                    Di Hari Ulang Tahun BTN ke-67, spesial untuk pemegang Kartu Debit dan Kartu Kredit BTN, nikmati diskon regular BTN berupa potongan harga 10% dan tambahan diskon sebesar Rp 67.000 setiap reservasi tiket pesawat dan kamar hotel di seluruh dunia.
+                    Buat perjalanan kamu lebih hemat dengan menggunakan Kartu Debit dan Kartu Kredit BTN.
+                </p>
+                <p>
+                    Periode booking: <b>8 - 10 Februari 2017</b>
+                    <br />
+                    <a href="@Url.Action("HutBTN", "Promo")">Selengkapnya</a>
                 </p>
             </div>
         }

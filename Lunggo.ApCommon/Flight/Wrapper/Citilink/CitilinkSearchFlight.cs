@@ -104,6 +104,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                                     var fareRequest = new RestRequest(url, Method.GET);
                                     fareRequest.AddQueryParameter("flightKeys", FID);
                                     fareRequest.AddQueryParameter("numberOfMarkets", "1");
+                                    fareRequest.AddQueryParameter("defaultSelection", FID);
                                     fareRequest.AddQueryParameter("keyDelimeter", ",");
                                     fareRequest.AddQueryParameter("ssrs", "FLEX");
                                     var fareResponse = client.Execute(fareRequest);
