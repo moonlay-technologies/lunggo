@@ -66,16 +66,16 @@ namespace Lunggo.ApCommon.Autocomplete
             return distinctairlineIds;
         }
 
-        public IEnumerable<long> GetHotelIdsAutocomplete(string prefix)
+        public IEnumerable<string> GetHotelIdsAutocomplete(string prefix)
         {
             var hotelIndex = TrieIndexService.GetInstance().HotelAutocompleteIndex;
             var splittedString = prefix.Split(' ');
-            var hotelIds = new List<long>();
-            hotelIds.AddRange(hotelIndex.GetAllSuggestionIds(splittedString[0]));
+            var hotelIds = new List<string>();
+            hotelIds.AddRange(hotelIndex.GetAllSuggestionIds(splittedString[0]).Select(id => id.ToString()));
             var i = 1;
             while (i < splittedString.Count())
             {
-                hotelIds = hotelIds.Intersect(hotelIndex.GetAllSuggestionIds(splittedString[i])).ToList();
+                hotelIds = hotelIds.Intersect(hotelIndex.GetAllSuggestionIds(splittedString[i]).Select(id => id.ToString())).ToList();
                 i++;
             }
             var distincthotelIds = hotelIds.Distinct();

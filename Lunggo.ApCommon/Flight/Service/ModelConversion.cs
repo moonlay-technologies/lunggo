@@ -329,7 +329,7 @@ namespace Lunggo.ApCommon.Flight.Service
         private void CalculateFare(Price price, int adultCount, int childCount, int infantCount, decimal adultPortion, decimal childPortion, decimal infantPortion, decimal adultNetPortion, decimal childNetPortion, decimal infantNetPortion, out decimal tOri, out decimal? aOri, out decimal? cOri, out decimal? iOri, out decimal tNet, out decimal? aNet, out decimal? cNet, out decimal? iNet, decimal roundingOrder)
         {
             aOri = cOri = iOri = aNet = cNet = iNet = null;
-            tOri = decimal.Round(price.OriginalIdr/price.LocalCurrency.Rate);
+            tOri = price.CalculateOriginalPrice();
             tNet = price.Local;
             if (adultPortion == 0M)
                 return;

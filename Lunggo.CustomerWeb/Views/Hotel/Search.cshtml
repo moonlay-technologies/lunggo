@@ -14,11 +14,9 @@
     <link href="/Assets/css/jquery-ui.min.css" rel="stylesheet" />
 }
 @{
-    long location;
-    var x = long.TryParse(Model.SearchParamObject.Location, out location);
     var loc = "";
     var locFound = false;
-    var k = HotelService.AutoCompletes.Where(c => c.Id == location).ToList();
+    var k = HotelService.AutoCompletes.Where(c => c.Id == Model.SearchParamObject.Location).ToList();
     if (k.Count > 0)
     {
         var foundLocation = k[0];

@@ -673,7 +673,7 @@ function flightFormSearchFunctions() {
         originCity: '',
         destination: '',
         destinationCity: '',
-        type: 'return',
+        type: 'oneway',
         departureDate: '',
         returnDate: '',
         cabin: 'y',

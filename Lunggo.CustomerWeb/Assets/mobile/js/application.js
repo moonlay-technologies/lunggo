@@ -787,15 +787,20 @@ if (typeof (angular) == 'object') {
                 }
 
                 if (Cookies.get('departure')) {
-                    $rootScope.FlightSearchForm.DepartureDate = new Date(Cookies.get('departure'));
+                    if (new Date(Cookies.get('departure')) < new Date())
+                        $rootScope.FlightSearchForm.DepartureDate = new Date();
+                    else
+                        $rootScope.FlightSearchForm.DepartureDate = new Date(Cookies.get('departure'));
                 } else {
                     $rootScope.FlightSearchForm.DepartureDate = new Date();
                 }
 
                 if (Cookies.get('return')) {
-                    $rootScope.FlightSearchForm.ReturnDate = new Date(Cookies.get('return'));
+                    if (new Date(Cookies.get('return')) < new Date())
+                        $rootScope.FlightSearchForm.ReturnDate = moment().locale("id").add(1, 'days');
+                    else
+                        $rootScope.FlightSearchForm.ReturnDate = new Date(Cookies.get('return'));
                 } else {
-
                     $rootScope.FlightSearchForm.ReturnDate = moment().locale("id").add(1, 'days');
                 }
 
@@ -831,7 +836,7 @@ if (typeof (angular) == 'object') {
                 if (Cookies.get('cabin')) {
                     $rootScope.FlightSearchForm.Cabin = Cookies.get('cabin');
                 } else {
-                    $rootScope.FlightSearchForm.Passenger[2] = 'y';
+                    $rootScope.FlightSearchForm.Cabin = 'y';
         }
 
             });

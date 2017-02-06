@@ -108,7 +108,7 @@
         var departureDate = '@(DateTime.Now.AddDays(1).ToString("ddMMyy"))';
     </script>
     <script src="/Assets/travorama20/angularDirectory/search/hotelSearch.service.js"></script>
-    <script src="/Assets/Travorama20/js/homeController.js"></script>
+    <script src="/Assets/travorama20/js/homeController.js"></script>
 }
 
 <section class="section-search normal-txt">
@@ -131,13 +131,13 @@
                         <div class="form-group flight-type">
                             <div class="col-xs-6">
                                 <label>
-                                    <input type="radio" name="flightType" class="form-flight-type" value="return" checked />
+                                    <input type="radio" name="flightType" class="form-flight-type" value="return"/>
                                     <span>Pulang Pergi</span>
                                 </label>
                             </div>
                             <div class="col-xs-6">
                                 <label>
-                                    <input type="radio" name="flightType" class="form-flight-type" value="oneWay" />
+                                    <input type="radio" name="flightType" class="form-flight-type" value="oneWay" checked />
                                     <span>Sekali Jalan</span>
                                 </label>
                             </div>
@@ -165,7 +165,7 @@
                                 </div>
                             </div>
                             <div class="col-xs-6">
-                                <div class="form-flight-return">
+                                <div class="form-flight-return disabled">
                                     <div class="grey-txt xs-txt">Tanggal Pulang</div>
                                     <span class="date">28</span>
                                     <span class="month">Okt</span>

@@ -612,9 +612,9 @@ namespace Lunggo.ApCommon.Hotel.Service
         public void SetDisplayPriceHotelRate(HotelRateForDisplay rateDisplay, HotelRate rate)
         {
             rateDisplay.Breakdowns[0].NetTotalFare = rate.Price.Local;
-            rateDisplay.Breakdowns[0].OriginalTotalFare = Math.Round(rateDisplay.Breakdowns[0].NetTotalFare * 1.01M);
+            rateDisplay.Breakdowns[0].OriginalTotalFare = rate.Price.CalculateOriginalPrice();
             rateDisplay.Breakdowns[0].NetFare = Math.Round((rateDisplay.Breakdowns[0].NetTotalFare / rate.RateCount) / rate.NightCount);
-            rateDisplay.Breakdowns[0].OriginalFare = Math.Round(rateDisplay.Breakdowns[0].NetFare * 1.01M);
+            rateDisplay.Breakdowns[0].OriginalFare = Math.Round((rateDisplay.Breakdowns[0].OriginalTotalFare / rate.RateCount) / rate.NightCount);
 
             if (rateDisplay.Cancellation != null)
             {

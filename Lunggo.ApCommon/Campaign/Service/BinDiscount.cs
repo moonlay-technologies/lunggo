@@ -39,17 +39,37 @@ namespace Lunggo.ApCommon.Campaign.Service
             if (rsvNo.StartsWith("1"))
             {
                 rsv = FlightService.GetInstance().GetReservation(rsvNo);
-                discAmount = (rsv as FlightReservation).Itineraries.Sum(i => i.Price.OriginalIdr)*0.1M;
+                discAmount = (rsv as FlightReservation).Itineraries.Sum(i => i.Price.CalculateOriginalPrice())*0.1M;
             }
             else
             {
                 rsv = HotelService.GetInstance().GetReservation(rsvNo);
-                discAmount = Math.Round((rsv as HotelReservation).HotelDetails.Rooms.Sum(ro => ro.Rates.Sum(i => i.Price.FinalIdr * 1.01M) * 0.1M));
+                discAmount = (rsv as HotelReservation).HotelDetails.Rooms.Sum(ro => ro.Rates.Sum(i => i.Price.CalculateOriginalPrice())) * 0.1M;
             }
-            var isAvailable = IsPanAndEmailEligibleInCache("btn", hashedPan, rsv.Contact.Email);
+
+            // HUT BTN
+
+            var dailyLimit =
+                DateTime.UtcNow.AddHours(7).Date >= new DateTime(2017, 2, 8) &&
+                DateTime.UtcNow.AddHours(7).Date <= new DateTime(2017, 2, 10)
+                    ? 100
+                    : 50;
+
+            // /HUT BTN
+
+            var isAvailable = IsPanAndEmailEligibleInCache("btn", hashedPan, rsv.Contact.Email, dailyLimit);
             var isValid = IsPromoValid(rsv, bin, hashedPan, voucherCode);
             if (discAmount >= 300000)
                 discAmount = 300000;
+
+            // HUT BTN
+
+            if (DateTime.UtcNow.AddHours(7).Date >= new DateTime(2017, 2, 8) &&
+                DateTime.UtcNow.AddHours(7).Date <= new DateTime(2017, 2, 10))
+                discAmount += 67000;
+
+            // /HUT BTN
+
             return isValid
                 ? isAvailable
                     ? new BinDiscount
@@ -75,7 +95,7 @@ namespace Lunggo.ApCommon.Campaign.Service
                 ? bin.Substring(0, 6)
                 : "";
             return IsReservationEligible(rsv) &&
-                    string.IsNullOrEmpty(voucherCode) &&
+                   string.IsNullOrEmpty(voucherCode) &&
                    IsBinGranted(bin6) &&
                    DateValid();
         }
@@ -89,13 +109,13 @@ namespace Lunggo.ApCommon.Campaign.Service
 
         private bool IsReservationEligible(FlightReservation rsv)
         {
-            return rsv.Itineraries.Sum(i => i.Price.OriginalIdr) >= 1500000 &&
+            return rsv.Itineraries.Sum(i => i.Price.CalculateOriginalPrice()) >= 1500000 &&
                 rsv.Itineraries.All(i => i.Supplier != Supplier.Mystifly);
         }
 
         private bool IsReservationEligible(HotelReservation rsv)
         {
-            return rsv.HotelDetails.Rooms.Sum(ro => ro.Rates.Sum(i => i.Price.FinalIdr*1.01M)) >= 1500000;
+            return rsv.HotelDetails.Rooms.Sum(ro => ro.Rates.Sum(i => i.Price.CalculateOriginalPrice())) >= 1500000;
         }
 
         private bool DateValid()

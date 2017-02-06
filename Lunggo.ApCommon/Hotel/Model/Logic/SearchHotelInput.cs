@@ -13,7 +13,7 @@ namespace Lunggo.ApCommon.Hotel.Model.Logic
     {
         public SearchHotelType SearchHotelType { get; set; }
         public string SearchId { get; set; }
-        public long Location { get; set; }
+        public string Location { get; set; }
         public int Nights { get; set; }
         public DateTime CheckIn { get; set; }
         public DateTime Checkout { get; set; }

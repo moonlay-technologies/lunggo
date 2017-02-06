@@ -78,10 +78,10 @@ namespace Lunggo.CustomerWeb.Controllers
                     }
                 }
 
-                var tomorrowDate = DateTime.Today.AddDays(1);
-                var nextDate = tomorrowDate.AddDays(1);
-                var newquery = "info=Location." + locationId + "." + tomorrowDate.Year + "-" +
-                         tomorrowDate.Month.ToString("d2") + "-" + tomorrowDate.Day.ToString("d2")
+                var nextMonthDate = DateTime.Today.AddMonths(1);
+                var nextDate = nextMonthDate.AddDays(1);
+                var newquery = "info=Location." + locationId + "." + nextMonthDate.Year + "-" +
+                         nextMonthDate.Month.ToString("d2") + "-" + nextMonthDate.Day.ToString("d2")
                          + "." + nextDate.Year + "-" + nextDate.Month.ToString("d2") + "-" + 
                          nextDate.Day.ToString("d2") + ".1.1.1~0";
                 var newmodel = new HotelSearchApiRequest(newquery);
@@ -130,9 +130,9 @@ namespace Lunggo.CustomerWeb.Controllers
             });
         }
 
-            var tomorrowDate = DateTime.Today.AddDays(1);
-            var nextDate = tomorrowDate.AddDays(1);
-            var searchParams = "Location." + locationId + "." + tomorrowDate.Year + "-" + tomorrowDate.Month.ToString("d2") + "-" + tomorrowDate.Day.ToString("d2") +
+            var nextMonthDate = DateTime.Today.AddMonths(1);
+            var nextDate = nextMonthDate.AddDays(1);
+            var searchParams = "Location." + locationId + "." + nextMonthDate.Year + "-" + nextMonthDate.Month.ToString("d2") + "-" + nextMonthDate.Day.ToString("d2") +
                                "." + nextDate.Year + "-" + nextDate.Month.ToString("d2") + "-" + nextDate.Day.ToString("d2") + ".1.1.1~0";
                     
             return View(new HotelDetailModel.HotelDetail

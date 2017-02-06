@@ -47,17 +47,27 @@ function ($scope, $log, $window, $http, $resource, $timeout, $interval, hotelSea
         }
 
         if (Cookies.get('hotelSearchCheckInDate')) {
-            $scope.hotelSearch.checkinDate = new Date(Cookies.get('hotelSearchCheckInDate'));
-            $scope.hotelSearch.checkinDateDisplay = moment($scope.hotelSearch.checkinDate).locale("id").format('LL');
-            $('.ui-datepicker.checkindate').datepicker("setDate", new Date($scope.hotelSearch.checkinDateDisplay));
+            if (new Date(Cookies.get('hotelSearchCheckInDate')) < new Date()) {
+                $scope.hotelSearch.checkinDate = moment().locale("id").add(5, 'days');
+                $scope.hotelSearch.checkinDateDisplay = moment($scope.hotelSearch.checkinDate).locale("id").format('LL');
+            } else {
+                $scope.hotelSearch.checkinDate = new Date(Cookies.get('hotelSearchCheckInDate'));
+                $scope.hotelSearch.checkinDateDisplay = moment($scope.hotelSearch.checkinDate).locale("id").format('LL');
+                $('.ui-datepicker.checkindate').datepicker("setDate", new Date($scope.hotelSearch.checkinDateDisplay));
+            }
         } else {
             $scope.hotelSearch.checkinDate = moment().locale("id").add(5, 'days');
             $scope.hotelSearch.checkinDateDisplay = moment($scope.hotelSearch.checkinDate).locale("id").format('LL');
         }
 
         if (Cookies.get('hotelSearchCheckOutDate')) {
-            $scope.hotelSearch.checkoutDate = new Date(Cookies.get('hotelSearchCheckOutDate'));
-            $scope.hotelSearch.checkoutDateDisplay = moment($scope.hotelSearch.checkoutDate).locale("id").format('LL');
+            if (new Date(Cookies.get('hotelSearchCheckOutDate')) < new Date(new Date().getTime() + 24 * 60 * 60 * 1000)) {
+                $scope.hotelSearch.checkoutDate = moment().locale("id").add(7, 'days');
+                $scope.hotelSearch.checkoutDateDisplay = moment($scope.hotelSearch.checkoutDate).locale("id").format('LL');
+            } else {
+                $scope.hotelSearch.checkoutDate = new Date(Cookies.get('hotelSearchCheckOutDate'));
+                $scope.hotelSearch.checkoutDateDisplay = moment($scope.hotelSearch.checkoutDate).locale("id").format('LL');
+            }
         } else {
             $scope.hotelSearch.checkoutDate = moment().locale("id").add(7, 'days');
             $scope.hotelSearch.checkoutDateDisplay = moment($scope.hotelSearch.checkoutDate).locale("id").format('LL');

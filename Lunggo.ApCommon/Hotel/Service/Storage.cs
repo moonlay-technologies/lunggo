@@ -191,7 +191,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                     var newValue = new HotelAutoComplete("hotelAutoComplete", index.ToString());
                     Console.WriteLine("hotel code: " + i);
                     var hotelDetail = GetHotelDetailFromTableStorage(i);
-                    newValue.Id = index;
+                    newValue.Id = index.ToString();
                     newValue.Code = hotelDetail.HotelCode.ToString();
                     newValue.HotelName = hotelDetail.HotelName;
                     newValue.Destination = GetDestinationNameFromDict(hotelDetail.DestinationCode).Name;
@@ -277,7 +277,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                 Code = r["Code"].StringValue,
                 Destination = r["Destination"].StringValue,
                 Zone = r.Properties.ContainsKey("Zone") ? r["Zone"].StringValue : "",
-                Id = r["Id"].Int64Value.GetValueOrDefault(),
+                Id = r["Id"].StringValue,
                 Country = r["Country"].StringValue,
                 HotelCount = r.Properties.ContainsKey("HotelCount") ? r["HotelCount"].Int32Value.GetValueOrDefault() : 0
             }).ToList();
