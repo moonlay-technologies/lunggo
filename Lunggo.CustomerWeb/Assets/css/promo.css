@@ -17,6 +17,8 @@ body.page-promo.promo-btn-mobile-app {
     background-image: url("/Assets/images/campaign/Imlek2017/Imlek2017-page.jpg"); }
   .page-promo.promo-btn .top-section a {
     background-image: url("/Assets/images/campaign/TerbanginHemat/TerbanginHemat-page.jpg"); }
+  .page-promo.promo-hut-btn .top-section a {
+    background-image: url("/Assets/images/campaign/HutBTN/HutBTN-page.jpg"); }
   .page-promo .top-section a {
     display: block;
     width: 100%;

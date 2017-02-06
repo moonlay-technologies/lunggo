@@ -19,7 +19,25 @@
 
         @if (ViewBag.CurrentPage == "home")
         {
-            <a class="promo" href="/id/StaticPage/Promo"><span class="number-promo">1</span></a>
+            <a class="promo" href="/id/StaticPage/Promo">
+                @if (DateTime.UtcNow.AddHours(7).Date >= new DateTime(2017, 02, 08) && DateTime.UtcNow.AddHours(7).Date <= new DateTime(2017, 02, 10))
+                {
+                    <span class="number-promo">3</span>
+                }
+                else if (DateTime.UtcNow.AddHours(7).Date <= new DateTime(2017, 02, 15))
+                {
+                    <span class="number-promo">2</span>
+                }
+                else if (DateTime.UtcNow.AddHours(7).Date <= new DateTime(2017, 03, 31))
+                {
+                    <span class="number-promo">1</span>
+                }
+                else
+                {
+                    <span class="number-promo"></span>
+                }
+              </a> 
+
         }
         @if (ViewBag.FlightSwap == "true")
         {

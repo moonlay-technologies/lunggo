@@ -47,6 +47,12 @@
                 <a href="/id/Promo/BTNTerbanginHemat"><img src="/Assets/images/campaign/TerbanginHemat/TerbanginHemat-slider-mobile.jpg" alt="Terbangin Hemat (Terbang & Nginap Hemat)" /></a>
             </div>
         }
+        @if (DateTime.UtcNow.AddHours(7).Date >= new DateTime(2017, 08, 10) && DateTime.UtcNow.AddHours(7).Date <= new DateTime(2017, 02, 10))
+        {
+            <div class="item">
+                <a href="/id/Promo/HutBTN"><img src="/Assets/images/campaign/HutBTN/HutBTN-slider-mobile.jpg" alt="BTN 67th Anniversary" /></a>
+            </div>
+        }
         <div class="item">
             <a href="http://onelink.to/travoramaapp"><img src="/Assets/images/banner/download-app.jpg" alt="Download Applikasi Travorama!" /></a>
         </div>

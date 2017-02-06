@@ -30,5 +30,13 @@ namespace Lunggo.CustomerWeb.Controllers
         {
             return View();
         }
+        public ActionResult HutBTN()
+        {
+            return View();
+        }
+        public ActionResult HutBTNWebview()
+        {
+            return View();
+        }
     }
 }

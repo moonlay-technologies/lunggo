@@ -128,10 +128,14 @@
             @extend .os-bold; 
             font-weight: 700;
             text-decoration: underline;
+            img {
+                width: 100%;
+                max-height: 110px;
+            }
         }
         .img-promo {
             background-repeat: no-repeat;
-            height: 140px;
+            height: 110px;
             background-size: cover;
             background-position: center;
         }

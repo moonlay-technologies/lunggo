@@ -586,6 +586,11 @@
     <Content Include="Assets\images\Bank-Mandiri-small.jpg" />
     <Content Include="Assets\images\Bank-Mandiri.jpg" />
     <Content Include="Assets\images\Bank-Mandiri.png" />
+    <Content Include="Assets\images\campaign\HutBTN\HutBTN-page-mobile.jpg" />
+    <Content Include="Assets\images\campaign\HutBTN\HutBTN-page.jpg" />
+    <Content Include="Assets\images\campaign\HutBTN\HutBTN-promo-mobile.jpg" />
+    <Content Include="Assets\images\campaign\HutBTN\HutBTN-slider-mobile.jpg" />
+    <Content Include="Assets\images\campaign\HutBTN\HutBTN-slider.jpg" />
     <Content Include="Assets\images\campaign\Imlek2017\Imlek2017-page-mobile.jpg" />
     <Content Include="Assets\images\campaign\Imlek2017\Imlek2017-page.jpg" />
     <Content Include="Assets\images\campaign\Imlek2017\Imlek2017-promo-mobile.jpg" />
@@ -1184,6 +1189,7 @@
     <Content Include="Assets\mobile\js\CheckoutController.js" />
     <Content Include="Assets\mobile\js\HomeController.js" />
     <Content Include="Assets\mobile\js\HotelController.js" />
+    <Content Include="Assets\mobile\js\PromoController.js" />
     <Content Include="Assets\mobile\js\returnFlightController.js" />
     <Content Include="Assets\mobile\js\singleFlightController.js" />
     <Content Include="Assets\mobile\js\StaticController.js" />
@@ -1622,6 +1628,9 @@
     <Content Include="Views\Promo\BTNTerbanginHemat.cshtml" />
     <Content Include="Views\Promo\BTNTerbanginHemat.mobile.cshtml" />
     <Content Include="Views\Promo\BTNTerbanginHematWebview.cshtml" />
+    <Content Include="Views\Promo\HutBTN.cshtml" />
+    <Content Include="Views\Promo\HutBTNWebview.cshtml" />
+    <Content Include="Views\Promo\HutBTN.mobile.cshtml" />
     <None Include="Views\Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
