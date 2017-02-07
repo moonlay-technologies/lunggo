@@ -231,6 +231,7 @@
     <Compile Include="Controllers\B2BFlightController.cs" />
     <Compile Include="Controllers\B2BHotelController.cs" />
     <Compile Include="Controllers\B2BIndexController.cs" />
+    <Compile Include="Controllers\B2BPaymentController.cs" />
     <Compile Include="Controllers\B2BThankYouController.cs" />
     <Compile Include="Controllers\FlightController.cs" />
     <Compile Include="Controllers\HelpSectionController.cs" />
@@ -1650,6 +1651,7 @@
     <Folder Include="Areas\Api\Views\Shared\" />
     <Folder Include="Assets\images\slider\" />
     <Folder Include="Assets\images\_sample\" />
+    <Folder Include="Views\B2BPayment\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

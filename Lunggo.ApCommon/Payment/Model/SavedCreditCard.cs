@@ -8,10 +8,12 @@ namespace Lunggo.ApCommon.Payment.Model
 {
     public class SavedCreditCard
     {
-        public string Email { get; set; }
+        public string CompanyId { get; set; }
         public string MaskedCardNumber { get; set; }
+        public Boolean? IsPrimaryCard { get; set; }
         public string Token { get; set; }
         public string CardHolderName { get; set; }
+        public DateTime CardExpiry { get; set; }
         public DateTime TokenExpiry { get; set; }
     }
 }

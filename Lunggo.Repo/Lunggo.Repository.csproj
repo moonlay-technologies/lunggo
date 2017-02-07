@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TableRecord\CompanyTableRecord.cs" />
     <Compile Include="TableRecord\ContactTableRecord.cs" />
     <Compile Include="TableRecord\CurrencyTableRecord.cs" />
     <Compile Include="TableRecord\DiscountTableRecord.cs" />
@@ -117,6 +118,7 @@
     <Compile Include="TableRecord\UserTableRecord.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="TableRepository\CompanyTableRepository.cs" />
     <Compile Include="TableRepository\ContactRepository.cs" />
     <Compile Include="TableRepository\CurrencyRepository.cs" />
     <Compile Include="TableRepository\DiscountRepository.cs" />

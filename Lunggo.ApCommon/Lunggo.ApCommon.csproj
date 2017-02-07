@@ -657,6 +657,7 @@
     <Compile Include="Payment\Model\TransactionDetails.cs" />
     <Compile Include="Payment\Query\GetPaymentByRsvNoQuery.cs" />
     <Compile Include="Payment\Query\GetPaymentStatusQuery.cs" />
+    <Compile Include="Payment\Query\GetPrimarySavedCreditCardQuery.cs" />
     <Compile Include="Payment\Query\GetRefundQuery.cs" />
     <Compile Include="Payment\Query\GetSavedCreditCardByEmailQuery.cs">
       <SubType>Code</SubType>
@@ -669,6 +670,7 @@
     </Compile>
     <Compile Include="Payment\Query\GetUnpaidQuery.cs" />
     <Compile Include="Payment\Query\UpdatePaymentQuery.cs" />
+    <Compile Include="Payment\Service\B2BPayment.cs" />
     <Compile Include="Payment\Service\Caching.cs" />
     <Compile Include="Payment\Service\Database.cs" />
     <Compile Include="Payment\Service\ModelConversion.cs" />

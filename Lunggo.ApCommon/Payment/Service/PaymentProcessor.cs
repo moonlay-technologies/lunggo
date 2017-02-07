@@ -254,28 +254,28 @@ namespace Lunggo.ApCommon.Payment.Service
 
         public void SaveCreditCard(string email, string maskedCardNumber, string cardHolderName, string token, DateTime tokenExpiry)
         {
-            using (var conn = DbService.GetInstance().GetOpenConnection())
-            {
-                var savedCard = GetSavedCreditCardQuery.GetInstance()
-                    .Execute(conn, new { Email = email, MaskedCardNumber = maskedCardNumber }).SingleOrDefault();
-                if (savedCard == null)
-                    SavedCreditCardTableRepo.GetInstance().Insert(conn, new SavedCreditCardTableRecord
-                    {
-                        Email = email,
-                        MaskedCardNumber = maskedCardNumber,
-                        CardHolderName = cardHolderName,
-                        Token = token,
-                        TokenExpiry = tokenExpiry
-                    });
-                else
-                    SavedCreditCardTableRepo.GetInstance().Update(conn, new SavedCreditCardTableRecord
-                    {
-                        Email = email,
-                        MaskedCardNumber = maskedCardNumber,
-                        Token = token,
-                        TokenExpiry = tokenExpiry
-                    });
-            }
+            //using (var conn = DbService.GetInstance().GetOpenConnection())
+            //{
+            //    var savedCard = GetSavedCreditCardQuery.GetInstance()
+            //        .Execute(conn, new { Email = email, MaskedCardNumber = maskedCardNumber }).SingleOrDefault();
+            //    if (savedCard == null)
+            //        SavedCreditCardTableRepo.GetInstance().Insert(conn, new SavedCreditCardTableRecord
+            //        {
+            //            Email = email,
+            //            MaskedCardNumber = maskedCardNumber,
+            //            CardHolderName = cardHolderName,
+            //            Token = token,
+            //            TokenExpiry = tokenExpiry
+            //        });
+            //    else
+            //        SavedCreditCardTableRepo.GetInstance().Update(conn, new SavedCreditCardTableRecord
+            //        {
+            //            Email = email,
+            //            MaskedCardNumber = maskedCardNumber,
+            //            Token = token,
+            //            TokenExpiry = tokenExpiry
+            //        });
+            //}
         }
 
         private static PaymentDetails SubmitPayment(PaymentDetails payment, TransactionDetails transactionDetails, PaymentMethod method)
