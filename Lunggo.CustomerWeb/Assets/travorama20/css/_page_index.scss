@@ -885,3 +885,82 @@ body.page-index {margin-bottom: 0;}
         
     }
 }
+
+.fc-ltr .fc-basic-view .fc-day-top .fc-day-number {
+    float: none;
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 19px;
+    font-weight: 600;
+}
+
+.fc td, .fc th {
+    border-style: none;
+    border-width: 0;
+    padding: 0;
+    position: relative;   
+    width: 80px;
+}
+.fc td {
+    height: 40px;
+}
+
+.fc-event, .fc-event-dot {
+    background-color: transparent;
+}
+
+tr:first-child>td>.fc-day-grid-event {
+    margin-top: 0;
+}
+
+.fc-day-grid-event {
+    margin: 0;
+    padding: 0;
+}
+
+.fc-event {
+    position: relative;
+    font-size: 12px;
+    line-height: 100%;
+    border-radius: 0;
+    border: 0;
+    color: #000;
+}
+
+.fc-row .fc-content-skeleton {
+    padding-bottom: 0;
+}
+
+.fc-unthemed .fc-content, .fc-unthemed .fc-divider, .fc-unthemed .fc-list-heading td, .fc-unthemed .fc-list-view, .fc-unthemed .fc-popover, .fc-unthemed .fc-row, .fc-unthemed tbody, .fc-unthemed td, .fc-unthemed th, .fc-unthemed thead {
+    border-color: transparent;
+    text-align: center;
+}
+.fc-scroller.fc-day-grid-container {
+    overflow-x: hidden !important;
+    overflow-y: hidden !important;
+    height: 100% !important;
+}
+
+.fc td.fc-today {
+    border-style: none;
+}
+
+.fc-toolbar.fc-header-toolbar {
+    margin-bottom: 0;
+}
+
+.fc td.fc-head-container {
+    height: 0;
+}
+
+.fc-day-grid-event .fc-content {
+    white-space: normal;
+    overflow: inherit;
+}
+
+.fc-event, .fc-event:hover, .ui-widget .fc-event {
+    color: #000;
+    text-decoration: none;
+}

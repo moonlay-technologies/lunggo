@@ -956,6 +956,11 @@ jQuery(document).ready(function ($) {
         $(this).find('.view-hotel').slideToggle('fast');
     });
 
+    $('.fc-content-skeleton').click(function () {
+        $(this).css('border','1px solid red');
+        //$(this).find('.btn-view').removeClass('hidden');
+    });
+
     $('#pc-datepicker').fullCalendar({
         header: {
             left: '',
@@ -964,9 +969,11 @@ jQuery(document).ready(function ($) {
         },
         events: getEvents(),
         eventRender: function (event, element, view) {
-            if (event.link != '') {
-                var link = "</br></br><input type='button' onclick='location.href=\"" + event.link + "\";' value='Lihat'/>";
+            if (event.link != '' && event.title != '') {
+                var link = "<input class='btn btn-yellow sm-btn btn-view hidden' type='button' onclick='location.href=\"" + event.link + "\";' value='LIHAT'/>";
+                var title = '<div class="price-txt">' + '<sup>Rp </sup>' + event.title + 'rb' + '</div>';
                 element.find('.fc-content').append(link);
+                element.find('.fc-title').html(title);
             }
         }
     });
@@ -974,21 +981,33 @@ jQuery(document).ready(function ($) {
     function getEvents() {
         return [
 			{
-			    title: 'Rp. 100.000',
+			    title: '100',
 			    start: '2017-01-30',
-			    end: '2017-01-30',
 			    link: 'http://google.com'
 			},
             {
-                title: 'Rp. 90.000',
+                title: '999',
                 start: '2017-01-31',
-                end: '2017-01-31',
                 link: 'http://google.com'
             },
             {
-                title: 'Rp. 300.000',
+                title: '333',
                 start: '2017-02-15',
-                end: '2017-02-15',
+                link: 'http://google.com'
+            },
+            {
+                title: '999',
+                start: '2017-02-21',
+                link: 'http://google.com'
+            },
+            {
+                title: '333',
+                start: '2017-02-20',
+                link: 'http://google.com'
+            },
+            {
+                title: '333',
+                start: '2017-03-01',
                 link: 'http://google.com'
             }
         ];
@@ -1003,14 +1022,32 @@ jQuery(document).ready(function ($) {
         $('#selectYear').val(year);
     }
     setValueMY();
-    $('#month div').on('click touchstart', function () {
+
+    $('#month div, #year div').hide();
+    $('.select-year').click(function () {
+        $('#year div').show();
+    });
+
+    $('.select-month').click(function () {
+        $('#month div').show();
+    });
+
+    $('#month div').on('click', function () {
         var val = $(this).attr('value');
         $('#selectMonth').val(val);
+
+        var month = $(this).html();
+        $('.selected-month').text(month);
     });
-    $('#year div').on('click touchstart', function () {
+
+    $('#year div').on('click', function () {
         var val = $(this).attr('value');
         $('#selectYear').val(val);
+
+        var year = $(this).html();
+        $('.selected-year').text(year);
     });
+
     $('#submitCalendar').on('click', function () {
         var bulan = $('#selectMonth').val();
         var tahun = $('#selectYear').val();
