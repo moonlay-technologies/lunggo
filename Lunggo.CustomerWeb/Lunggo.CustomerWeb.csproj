@@ -1284,6 +1284,7 @@
     <Content Include="Assets\vendor\fancybox\jquery.fancybox.css" />
     <Content Include="Assets\vendor\fancybox\jquery.fancybox.js" />
     <Content Include="Assets\vendor\fancybox\jquery.fancybox.pack.js" />
+    <Content Include="Assets\vendor\fullcalendar\fullcalendar-id.min.js" />
     <Content Include="Assets\vendor\fullcalendar\fullcalendar.min.css" />
     <Content Include="Assets\vendor\lightslider\lightslider.css" />
     <Content Include="Assets\vendor\lightslider\lightslider.js" />

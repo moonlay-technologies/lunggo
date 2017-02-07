@@ -2888,6 +2888,10 @@ tr:first-child > td > .fc-day-grid-event {
   font-size: 19px;
   font-weight: 600; }
 
+.fc table {
+  width: 560px;
+  margin: 0 auto; }
+
 .fc td {
   height: 40px;
   cursor: pointer; }
@@ -2921,6 +2925,7 @@ tr:first-child > td > .fc-day-grid-event {
 
 .fc-event-container input.btn.btn-yellow.sm-btn.btn-view {
   display: none;
+  font-size: 9px;
   margin: 14px auto 0;
   padding: 0 9px; }
 
@@ -2929,7 +2934,7 @@ tr:first-child > td > .fc-day-grid-event {
 
 .fc-event-container:hover:before {
   content: '';
-  width: 80px;
+  width: 76px;
   height: 76px;
   display: block;
   position: absolute;
@@ -2943,7 +2948,11 @@ tr:first-child > td > .fc-day-grid-event {
   margin-top: -16px;
   left: 50%;
   transform: translateX(-50%);
-  width: 100%; }
+  width: 100%;
+  font-weight: 700; }
+
+.fc-event-container .fc-title {
+  color: #6a6a6a; }
 
 .fc-day-grid-event {
   margin: 0;
