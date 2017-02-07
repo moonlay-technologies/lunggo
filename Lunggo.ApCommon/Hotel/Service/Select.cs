@@ -23,13 +23,15 @@ namespace Lunggo.ApCommon.Hotel.Service
             var hotel = GetHotelDetailFromDb(hotelCd);
             hotel.StarCode = GetSimpleCodeByCategoryCode(hotel.StarRating);
             hotel.Rooms = new List<HotelRoom>();
+
             var cekin = input.RegsIds[0].RegId.Split(',')[2].Split('|')[0];
             var cekout = input.RegsIds[0].RegId.Split(',')[2].Split('|')[1];
             hotel.CheckInDate = new DateTime(Convert.ToInt32(cekin.Substring(0,4)),
                 Convert.ToInt32(cekin.Substring(4, 2)), Convert.ToInt32(cekin.Substring(6, 2)));
-            
             hotel.CheckOutDate = new DateTime(Convert.ToInt32(cekout.Substring(0, 4)),
                 Convert.ToInt32(cekout.Substring(4, 2)), Convert.ToInt32(cekout.Substring(6, 2)));
+            hotel.NightCount = (hotel.CheckOutDate - hotel.CheckInDate).Days;
+
             foreach (var regsId in input.RegsIds)
             {
                 var data = DecryptRegsId(regsId.RegId);
@@ -83,6 +85,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                 newRate.Price.CalculateFinalAndLocal(newRate.Price.LocalCurrency);
 
                 newRate.RateCount = regsId.RateCount;
+                newRate.NightCount = hotel.NightCount;
                 newRate.AdultCount = regsId.AdultCount;
                 newRate.ChildCount = regsId.ChildCount;
                 newRate.ChildrenAges = regsId.ChildrenAges;

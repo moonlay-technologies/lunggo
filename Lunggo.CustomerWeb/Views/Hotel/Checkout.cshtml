@@ -312,21 +312,30 @@
                                                 @ToTitleCase.ConvertToTitleCase(config.BoardDescription) x @night Malam
                                 </dt>
                                 <dd class="dd-price">
-                                                Rp @config.NetTotalFare.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))
+                                                Rp @config.OriginalTotalFare.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))
                                 </dd>
                             </dl>
                                 }
                                 }
 
                             }
-
-                            <dl class="service-room" ng-show="roomService > 0" hidden>
-                                <dt class="dt-title">Pelayanan Kamar </dt>
-                                <dd class="dd-price">Rp {{roomService | number}}</dd>
+                            
+                            @{ 
+                                var oriTotal = Model.HotelDetail.Rooms.Sum(ro => ro.Rates.Sum(ra => ra.Breakdowns.Sum(b => b.OriginalTotalFare)));
+                                var netTotal = Model.HotelDetail.Rooms.Sum(ro => ro.Rates.Sum(ra => ra.Breakdowns.Sum(b => b.NetTotalFare)));
+                            }
+                            
+                            <dl style="border-top: 1px dotted #fd8524; padding-top:5px">
+                                <dt>Harga Subtotal: </dt>
+                                <dd>Rp @oriTotal.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</dd>
                             </dl>
-                            <dl class="total-price">
-                                <dt class="dt-title">Total</dt>
-                                <dd class="dd-price">Rp @Model.HotelDetail.NetTotalFare.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</dd>
+                            <dl style="color: #1daee4">
+                                <dt>Diskon Travorama</dt>
+                                <dd>- Rp @((oriTotal - netTotal).ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID")))</dd>
+                            </dl>
+                            <dl class="total-price" style="border-top: 1px solid #fd8524;">
+                                <dt>Harga Total</dt>
+                                <dd>Rp @netTotal.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</dd>
                             </dl>
                         </div>
                         <footer>

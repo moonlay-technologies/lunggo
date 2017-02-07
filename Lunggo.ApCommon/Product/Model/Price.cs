@@ -191,23 +191,5 @@ namespace Lunggo.ApCommon.Product.Model
                 MarginNominal = FinalIdr - OriginalIdr;
             }
         }
-
-        internal decimal CalculateOriginalPrice()
-        {
-            if (OriginalIdr >= FinalIdr)
-            {
-                var originalLocal = OriginalIdr/LocalCurrency.Rate;
-                var roundedOriginal = Math.Round(originalLocal/LocalCurrency.RoundingOrder)*LocalCurrency.RoundingOrder;
-                return roundedOriginal;
-            }
-            else
-            {
-                var percentage = 1.05M + (FinalIdr % 11M) * 0.01M;
-                var original = FinalIdr*percentage;
-                var originalLocal = original / LocalCurrency.Rate;
-                var roundedOriginal = Math.Round(originalLocal / LocalCurrency.RoundingOrder) * LocalCurrency.RoundingOrder;
-                return roundedOriginal;
-            }
-        }
     }
 }

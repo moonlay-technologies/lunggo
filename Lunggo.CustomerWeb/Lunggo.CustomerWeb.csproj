@@ -275,8 +275,14 @@
     <Content Include="Assets\css\global-error.css">
       <DependentUpon>global-error.scss</DependentUpon>
     </Content>
+    <Content Include="Assets\css\global-error.min.css">
+      <DependentUpon>global-error.css</DependentUpon>
+    </Content>
     <Content Include="Assets\css\help_section.css">
       <DependentUpon>help_section.scss</DependentUpon>
+    </Content>
+    <Content Include="Assets\css\help_section.min.css">
+      <DependentUpon>help_section.css</DependentUpon>
     </Content>
     <Content Include="Assets\css\invoice.css">
       <DependentUpon>invoice.scss</DependentUpon>
@@ -297,6 +303,9 @@
     </Content>
     <Content Include="Assets\css\travorama-mobileApp.css">
       <DependentUpon>travorama-mobileApp.scss</DependentUpon>
+    </Content>
+    <Content Include="Assets\css\travorama-mobileApp.min.css">
+      <DependentUpon>travorama-mobileApp.css</DependentUpon>
     </Content>
     <Content Include="Assets\fonts\bootstrap\glyphicons-halflings-regular.svg" />
     <Content Include="Assets\fonts\DINB-webfont.svg" />
@@ -1483,6 +1492,7 @@
     <None Include="Properties\PublishProfiles\travorama-prod-cw__staging2.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-qa-cw - Web Deploy %283%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-qa-cw - Web Deploy %284%29.pubxml" />
+    <None Include="Properties\PublishProfiles\travorama-qa-cw - Web Deploy %285%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-qa-cw - Web Deploy.pubxml" />
     <None Include="Service References\Mystifly.OnePointService.Flight\OnePoint.disco" />
     <None Include="Service References\Mystifly.OnePointService.Flight\configuration91.svcinfo" />

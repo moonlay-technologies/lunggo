@@ -66,6 +66,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                     Convert.ToInt32(checkin.Substring(6, 2))),
                 Checkout = new DateTime(Convert.ToInt32(checkout.Substring(0, 4)), Convert.ToInt32(checkout.Substring(4, 2)),
                     Convert.ToInt32(checkout.Substring(6, 2))),
+                Nights = bookInfo.NightCount,
                 HotelCode = bookInfo.HotelCode,
                 SearchId = generatedSearchId.ToString()
             };
@@ -227,11 +228,11 @@ namespace Lunggo.ApCommon.Hotel.Service
                 CountryCode = bookInfo.CountryCode,
                 DestinationCode = bookInfo.DestinationCode,
                 NetTotalFare = bookInfo.Rooms.SelectMany(r => r.Rates).Sum(r => r.Price.Local),
-                OriginalTotalFare = bookInfo.Rooms.SelectMany(r => r.Rates).Sum(r => r.Price.CalculateOriginalPrice()),
+                OriginalTotalFare = bookInfo.Rooms.SelectMany(r => r.Rates).Sum(r => r.GetApparentOriginalPrice()),
                 NetCheapestFare = bookInfo.Rooms.SelectMany(r => r.Rates).Min(r => r.Price.Local),
                 NetCheapestTotalFare = bookInfo.Rooms.SelectMany(r => r.Rates).Min(r => r.Price.Local),
-                OriginalCheapestTotalFare = bookInfo.Rooms.SelectMany(r => r.Rates).Min(r => r.Price.CalculateOriginalPrice()),
-                OriginalCheapestFare = bookInfo.Rooms.SelectMany(r => r.Rates).Min(r => r.Price.CalculateOriginalPrice()),
+                OriginalCheapestTotalFare = bookInfo.Rooms.SelectMany(r => r.Rates).Min(r => r.GetApparentOriginalPrice()),
+                OriginalCheapestFare = bookInfo.Rooms.SelectMany(r => r.Rates).Min(r => r.GetApparentOriginalPrice()),
                 TotalAdult = input.Passengers.Count(p => p.Type == PaxType.Adult),
                 TotalChildren = input.Passengers.Count(p => p.Type == PaxType.Child),
                 SpecialRequest = input.SpecialRequest,

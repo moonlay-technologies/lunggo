@@ -39,12 +39,12 @@ namespace Lunggo.ApCommon.Campaign.Service
             if (rsvNo.StartsWith("1"))
             {
                 rsv = FlightService.GetInstance().GetReservation(rsvNo);
-                discAmount = (rsv as FlightReservation).Itineraries.Sum(i => i.Price.CalculateOriginalPrice())*0.1M;
+                discAmount = (rsv as FlightReservation).Itineraries.Sum(i => i.GetApparentOriginalPrice())*0.1M;
             }
             else
             {
                 rsv = HotelService.GetInstance().GetReservation(rsvNo);
-                discAmount = (rsv as HotelReservation).HotelDetails.Rooms.Sum(ro => ro.Rates.Sum(i => i.Price.CalculateOriginalPrice()))*0.1M;
+                discAmount = (rsv as HotelReservation).HotelDetails.Rooms.Sum(ro => ro.Rates.Sum(i => i.GetApparentOriginalPrice()))*0.1M;
             }
 
             // HUT BTN
@@ -109,13 +109,13 @@ namespace Lunggo.ApCommon.Campaign.Service
 
         private bool IsReservationEligible(FlightReservation rsv)
         {
-            return rsv.Itineraries.Sum(i => i.Price.CalculateOriginalPrice()) >= 1500000 &&
+            return rsv.Itineraries.Sum(i => i.GetApparentOriginalPrice()) >= 1500000 &&
                 rsv.Itineraries.All(i => i.Supplier != Supplier.Mystifly);
         }
 
         private bool IsReservationEligible(HotelReservation rsv)
         {
-            return rsv.HotelDetails.Rooms.Sum(ro => ro.Rates.Sum(i => i.Price.CalculateOriginalPrice())) >= 1500000;
+            return rsv.HotelDetails.Rooms.Sum(ro => ro.Rates.Sum(i => i.GetApparentOriginalPrice())) >= 1500000;
         }
 
         private bool DateValid()

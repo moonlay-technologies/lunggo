@@ -461,11 +461,11 @@ namespace Lunggo.ApCommon.Hotel.Service
             {
                 hotel.StarCode = GetSimpleCodeByCategoryCode(hotel.StarRating);
                 hotel.NetTotalFare = hotel.Rooms.SelectMany(r => r.Rates).Sum(r => r.Price.Local);
-                hotel.OriginalTotalFare = hotel.Rooms.SelectMany(r => r.Rates).Sum(r => r.Price.CalculateOriginalPrice());
+                hotel.OriginalTotalFare = hotel.Rooms.SelectMany(r => r.Rates).Sum(r => r.GetApparentOriginalPrice());
                 hotel.NetCheapestFare = hotel.Rooms.SelectMany(r => r.Rates).Min(r => Math.Round(r.Price.Local/r.RateCount/r.NightCount));
-                hotel.OriginalCheapestFare = hotel.Rooms.SelectMany(r => r.Rates).Min(r => Math.Round(r.Price.CalculateOriginalPrice() / r.RateCount / r.NightCount));
+                hotel.OriginalCheapestFare = hotel.Rooms.SelectMany(r => r.Rates).Min(r => Math.Round(r.GetApparentOriginalPrice() / r.RateCount / r.NightCount));
                 hotel.NetCheapestTotalFare = hotel.Rooms.SelectMany(r => r.Rates).Min(r => r.Price.Local);
-                hotel.OriginalCheapestTotalFare = hotel.Rooms.SelectMany(r => r.Rates).Min(r => r.Price.CalculateOriginalPrice());
+                hotel.OriginalCheapestTotalFare = hotel.Rooms.SelectMany(r => r.Rates).Min(r => r.GetApparentOriginalPrice());
 
                 shortlistHotel.Add(hotel);
             }

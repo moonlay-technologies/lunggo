@@ -81,17 +81,18 @@ namespace Lunggo.ApCommon.Payment.Service
 
                     foreach (var order in orders)
                     {
-                        var newOriginal = order.Price.CalculateOriginalPrice();
+                        var newOriginal = order.GetApparentOriginalPrice();
                         order.Price.Margin = new UsedMargin
                         {
                             Name = "BIN Promo Margin Modify",
                             Description = "Margin Modified by BIN Promo",
                             Currency = order.Price.LocalCurrency,
-                            Constant = newOriginal - order.Price.OriginalIdr
+                            Constant = newOriginal - (order.Price.OriginalIdr/order.Price.LocalCurrency.Rate)
                         };
-                        order.Price.CalculateFinalAndLocal(order.Price.LocalCurrency);
+                        order.Price.Local = order.Price.OriginalIdr + (order.Price.Margin.Constant*order.Price.Margin.Currency.Rate);
                         order.Price.Rounding = 0;
-                        order.Price.MarginNominal = order.Price.Margin.Constant;
+                        order.Price.FinalIdr = order.Price.Local * order.Price.LocalCurrency.Rate;
+                        order.Price.MarginNominal = order.Price.FinalIdr - order.Price.OriginalIdr;
                     }
                     paymentDetails.OriginalPriceIdr = orders.Sum(i => i.Price.FinalIdr);
                     paymentDetails.FinalPriceIdr = paymentDetails.OriginalPriceIdr - binDiscount.Amount;
@@ -138,6 +139,11 @@ namespace Lunggo.ApCommon.Payment.Service
                 {
                     var rsv = reservation as FlightReservation;
                     rsv.Itineraries.ForEach(i => i.Price.UpdateToDb());
+                }
+                else
+                {
+                    var rsv = reservation as HotelReservation;
+                    rsv.HotelDetails.Rooms.ForEach(ro => ro.Rates.ForEach(ra => ra.Price.UpdateToDb()));
                 }
                 UpdatePaymentToDb(rsvNo, paymentDetails);
             }
