@@ -514,31 +514,31 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
         setTimeout(function () {
 
 
-            //$(".ui-datepicker-calendar td").filter(function () {
-            //    var date = $(this).text();
+            $(".ui-datepicker-calendar td").filter(function () {
+                var date = $(this).text();
 
-            //    if (year) {
-            //        var month = mth;
-            //        if (month == 0) {
-            //            month = 1;
-            //        }
-            //        if (date < 10) {
-            //            date = '0' + date;
-            //        }
+                if (year) {
+                    var month = mth;
+                    if (month == 0) {
+                        month = 1;
+                    }
+                    if (date < 10) {
+                        date = '0' + date;
+                    }
 
-            //        var date_format = year + '/' + '0' + month + '/' + date;
-            //        var highlight = eventDates[date_format];
-            //        if (highlight) {
-            //            var datex = date + ("0" + (month)).slice(-2).toString() + year.toString().slice(-2);
-            //            var url = $scope.editData() + datex + '-100y';
-            //            if (highlight != '0rb') {
-            //                $(this).find("a").attr('data-custom', highlight);
-            //            }
-            //            $(this).append('<a class="view-price btn btn-yellow sm-btn xs-txt os-bold" href="' + url + '">LIHAT</a>');
-            //        }
-            //    }
-            //    return date;
-            //});
+                    var date_format = year + '/' + '0' + month + '/' + date;
+                    var highlight = eventDates[date_format];
+                    if (highlight) {
+                        var datex = date + ("0" + (month)).slice(-2).toString() + year.toString().slice(-2);
+                        var url = $scope.editData() + datex + '-100y';
+                        if (highlight != '0rb') {
+                            $(this).find("a").attr('data-custom', highlight);
+                        }
+                        $(this).append('<a class="view-price btn btn-yellow sm-btn xs-txt os-bold" href="' + url + '">LIHAT</a>');
+                    }
+                }
+                return date;
+            });
         }, 0);
     }
 
@@ -962,6 +962,7 @@ jQuery(document).ready(function ($) {
     });
 
     $('#pc-datepicker').fullCalendar({
+        lang: 'id',
         header: {
             left: '',
             center: '',
@@ -970,8 +971,8 @@ jQuery(document).ready(function ($) {
         events: getEvents(),
         eventRender: function (event, element, view) {
             if (event.link != '' && event.title != '') {
-                var link = "<input class='btn btn-yellow sm-btn btn-view hidden' type='button' onclick='location.href=\"" + event.link + "\";' value='LIHAT'/>";
-                var title = '<div class="price-txt">' + '<sup>Rp </sup>' + event.title + 'rb' + '</div>';
+                var link = "<input class='btn btn-yellow sm-btn btn-view' type='button' onclick='location.href=\"" + event.link + "\";' value='LIHAT'/>";
+                var title = '<sup>Rp </sup>' + event.title + 'rb';
                 element.find('.fc-content').append(link);
                 element.find('.fc-title').html(title);
             }
@@ -992,7 +993,12 @@ jQuery(document).ready(function ($) {
             },
             {
                 title: '333',
-                start: '2017-02-15',
+                start: '2017-02-05',
+                link: 'http://google.com'
+            },
+            {
+                title: '333',
+                start: '2017-02-19',
                 link: 'http://google.com'
             },
             {
@@ -1025,11 +1031,13 @@ jQuery(document).ready(function ($) {
 
     $('#month div, #year div').hide();
     $('.select-year').click(function () {
-        $('#year div').show();
+        $('#year div').toggle();
+        $('#month div, .search-location').hide();
     });
 
     $('.select-month').click(function () {
-        $('#month div').show();
+        $('#month div').toggle();
+        $('#year div, .search-location').hide();
     });
 
     $('#month div').on('click', function () {
