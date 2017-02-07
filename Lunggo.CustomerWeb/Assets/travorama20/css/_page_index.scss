@@ -361,11 +361,11 @@ body.page-index {margin-bottom: 0;}
             }
             .slick-dots {position:absolute; bottom:20px; text-align:right; width:100%; list-style:none; margin:0; padding:0; padding-right: 5%; 
                 li {list-style:none; display:inline-block;
-                    &+li {margin-left:5px;}
-                    button {background:#fff; color:#fff; border:3px solid $color-main-blue; @include border-radius(25px); outline:none; padding: 0; width: 25px; height: 25px; line-height: 0;}
+                    &+li {margin-left:10px;}
+                    button {background-color: transparent; border:2px solid #fff; @include border-radius(20px); outline:none; padding: 0; width: 20px; height: 20px; line-height: 0; font-size:0;}
                     // if active
                     &.slick-active {
-                        button {background:$color-main-blue; color:$color-main-blue;}
+                        button {background-color:#fff;}
                     }
                 }
             }

@@ -2155,23 +2155,22 @@ body.page-index {
         list-style: none;
         display: inline-block; }
         .page-index .section-search .page-slider .slick-dots li + li {
-          margin-left: 5px; }
+          margin-left: 10px; }
         .page-index .section-search .page-slider .slick-dots li button {
-          background: #fff;
-          color: #fff;
-          border: 3px solid #1daee4;
-          -webkit-border-radius: 25px;
-          -moz-border-radius: 25px;
-          -ms-border-radius: 25px;
-          border-radius: 25px;
+          background-color: transparent;
+          border: 2px solid #fff;
+          -webkit-border-radius: 20px;
+          -moz-border-radius: 20px;
+          -ms-border-radius: 20px;
+          border-radius: 20px;
           outline: none;
           padding: 0;
-          width: 25px;
-          height: 25px;
-          line-height: 0; }
+          width: 20px;
+          height: 20px;
+          line-height: 0;
+          font-size: 0; }
         .page-index .section-search .page-slider .slick-dots li.slick-active button {
-          background: #1daee4;
-          color: #1daee4; }
+          background-color: #fff; }
 
 .page-index .holiday {
   color: red !important; }
