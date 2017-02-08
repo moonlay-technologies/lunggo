@@ -207,7 +207,7 @@ namespace Lunggo.ApCommon.Flight.Service
         {
             var searchParam = searchId.Split('|')[0];
             var searchFlightTimeOut = DateTime.Parse(searchId.Split('|')[1]);
-            var searchExpiry = GetSearchedItinerariesExpiry(searchId, supplierIndex);
+            var searchExpiry = GetSearchedItinerariesExpiry(searchParam, supplierIndex);
             if (searchExpiry == null)
             {
                 var cacheTimeout = int.Parse(ConfigManager.GetInstance().GetConfigValue("flight", "SearchResultCacheTimeout"));
