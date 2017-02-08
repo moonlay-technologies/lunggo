@@ -650,7 +650,7 @@ function staticPageFunctions() {
 // used in Index Page 
 function flightFormSearchFunctions() {
 
-    $(window).bind("pageshow", function (event) {
+    $(window).bind("pageshchange-flight-classow", function (event) {
         if (event.originalEvent.persisted) {
             $('.flight-submit-button').removeProp('disabled');
             window.location.reload();
@@ -1120,9 +1120,9 @@ function flightFormSearchFunctions() {
         if (Cookies.get('type')) {
             var x = Cookies.get('type').toLowerCase();
             if (Cookies.get('type').toLowerCase() == 'return') {
-                $('.form-flight-type[value="return"]').click();
+                $('.form-flight-type[data-value="return"]').click();
             } else {
-                $('.form-flight-type[value="oneway"]').click();
+                $('.form-flight-type[data-value="oneway"]').click();
             }
         }
 
@@ -1132,9 +1132,9 @@ function flightFormSearchFunctions() {
         // flight type
         if (Cookies.get('type')) {
             if (Cookies.get('type').toLowerCase() == 'return') {
-                $('.form-flight-type[value="return"]').click();
+                $('.form-flight-type[data-value="return"]').click();
             } else {
-                $('.form-flight-type[value="oneway"]').click();
+                $('.form-flight-type[data-value="oneway"]').click();
             }
         }
     });
