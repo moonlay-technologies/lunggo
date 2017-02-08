@@ -142,33 +142,85 @@ function initMap() {
         });
 
         var infoDesc =
-        '<div class="map-container">' +
-        '<div class="hotel-round"' + 'style="' + 'background-image: url(' + '/Assets/images/hotel/hotel-dummy.jpg' + ')"></div>' +
-        '<div class="map-content normal-txt">' +
-        '<div class="hotel-title bold-txt blue-txt">' + 'Everyday Smart' + '</div>' +
-        '<div class="' + 'star star-5' + '"></div>' +
-        '<small class="orange-txt sm-txt underline-txt">' + '999.999.999' + '</small>' +
-        '<div class="orange-txt bold-txt">' + '999.999.999' + '</div>' +
-        '</div>' +
-        '</div>';
-
-
-
-        var infoPrice = '<div class="map-pice orange-txt sm-txt semibold-txt">' + 'Rp ' + '999.999.999' + '</div>';
-
-        var infoOpenPrice = new google.maps.InfoWindow({
-            content: infoPrice
-        });
-
-        infoOpenPrice.open(map, marker);
+            '<div class="map-wrapper">' +
+            '<div class="map-container">' +
+            '<div class="hotel-round"' + 'style="' + 'background-image: url(' + '/Assets/images/hotel/hotel-dummy.jpg' + ')"></div>' +
+            '<div class="map-content normal-txt">' +
+            '<div class="hotel-title bold-txt blue-txt">' + 'Everyday Smart' + '</div>' +
+            '<div class="' + 'star star-5' + '"></div>' +
+            '<div class="orange-txt sm-txt underline-txt">Rp ' + '999.999.999' + '</div>' +
+            '<div class="orange-txt bold-txt md-txt"><sup>Rp </sup>' + '999.999.999' + '</div>' +
+            '</div>' +
+            '<div class="map-button">' + '<a class="btn btn-yellow sm-btn"' + 'href="' + 'www.travorama.com' + '"' + '>PESAN</a>' + '</div>' +
+            '</div>' +
+            '<div class="map-price sm-txt semibold-txt">' + 'Rp ' + '999.999.999' + '</div>' +
+            '</div>';
 
         var infoWindow = new google.maps.InfoWindow({
-            content: infoDesc
+            content: infoDesc,
+            maxWidth: 350,
         });
 
-        marker.addListener('click', function () {
-            infoWindow.open(map, marker);
-            infoOpenPrice.close();
+        //var infoPrice = '<div class="map-price sm-txt semibold-txt">' + 'Rp ' + '999.999.999' + '</div>';
+
+        //var infoOpenPrice = new google.maps.InfoWindow({
+        //    content: infoPrice
+        //});
+
+        infoWindow.open(map, marker);
+
+        //infoOpenPrice.addListener('click', function () {
+        //    $('.gm-style-iw').css('border', '1px solid red');
+        //});
+       
+
+        //marker.addListener('click', function () {
+        //    infoWindow.open(map, marker);
+        //    infoOpenPrice.close();
+        //});
+
+        //map.addListener('click', function () {
+        //    infoWindow.close();
+        //});
+
+        
+
+        //infoOpenPrice.addListener('domready', function () {
+        //    var iwOuter = $('.gm-style-iw');
+        //    iwOuter.addClass('gm-price');
+
+        //    var iwBackground = iwOuter.prev();
+        //    iwBackground.children().css({ 'display': 'none' });
+
+        //    var iwCloseBtn = iwOuter.next();
+        //    iwCloseBtn.css({ display: 'none' });
+
+        //    $('.gm-price').click(function () {
+        //        infoWindow.open(map, marker);
+        //        var p = $(this).parent().parent().children(':nth-child(4)').siblings();
+        //        var q = $(this).parent().parent().children(':nth-child(4)');
+        //        p.children('.gm-style-iw').hide();
+        //        //q.children(':nth-child(2)').show();
+        //    });
+        //});
+
+        infoWindow.addListener('domready', function () {
+            var iwOuter = $('.gm-style-iw');
+
+            $('.map-container').hide();
+
+            $('.map-price').click(function() {
+                $(this).parent().find('.map-container').show();
+                var p = $(this).closest('.gm-style').find('.gm-style-iw').parent().parent().css('background', 'red');
+                p.find('.gm-style-iw').siblings().css('background', 'green');
+                $(this).hide();
+            });
+
+            var iwBackground = iwOuter.prev();
+            iwBackground.children().css({ 'display': 'none' });
+
+            var iwCloseBtn = iwOuter.next();
+            iwCloseBtn.css({ display: 'none' });
         });
     }
 }
