@@ -20,11 +20,7 @@
         @if (ViewBag.CurrentPage == "home")
         {
             <a class="promo" href="/id/StaticPage/Promo">
-                @if (DateTime.UtcNow.AddHours(7).Date >= new DateTime(2017, 02, 08) && DateTime.UtcNow.AddHours(7).Date <= new DateTime(2017, 02, 10))
-                {
-                    <span class="number-promo">3</span>
-                }
-                else if (DateTime.UtcNow.AddHours(7).Date <= new DateTime(2017, 02, 15))
+                @if (DateTime.UtcNow.AddHours(7).Date >= new DateTime(2017, 02, 08) && DateTime.UtcNow.AddHours(7).Date <= new DateTime(2017, 02, 15))
                 {
                     <span class="number-promo">2</span>
                 }
