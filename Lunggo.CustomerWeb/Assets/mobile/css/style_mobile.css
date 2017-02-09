@@ -4861,25 +4861,96 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     .page-hotel .travorama-hotel-mobile .filter-group--facility .toggle.active .sh-close, .page-hotel .travorama-hotel-mobile .filter-group--area .toggle.active .sh-close {
       display: block; }
     .page-hotel .travorama-hotel-mobile .map-container .hotel-round {
-      width: 90px;
-      height: 90px;
+      width: 93px;
+      height: 93px;
       position: absolute;
       left: 0;
-      border-radius: 90px;
+      -webkit-border-radius: 93px;
+      -moz-border-radius: 93px;
+      -ms-border-radius: 93px;
+      border-radius: 93px;
       background-size: cover;
       background-position: center;
-      margin-left: -60px;
-      margin-top: -9px;
+      margin-left: -45px;
+      margin-top: 0;
       border: 2px solid #1daee4; }
     .page-hotel .travorama-hotel-mobile .map-container .map-content {
-      width: 160px;
-      height: 70px;
       overflow: hidden;
-      padding-left: 35px; }
+      padding-left: 55px; }
       .page-hotel .travorama-hotel-mobile .map-container .map-content small {
         font-size: 10px; }
-    .page-hotel .travorama-hotel-mobile .gm-style .gm-style-iw {
-      overflow: initial; }
+      .page-hotel .travorama-hotel-mobile .map-container .map-content .hotel-title {
+        max-width: 180px;
+        line-height: 30px; }
+    .page-hotel .travorama-hotel-mobile .map-container .map-button {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      margin-bottom: 10px;
+      margin-right: 10px; }
+    .page-hotel .travorama-hotel-mobile .hotel-title {
+      font-size: 14px;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap; }
+    .page-hotel .travorama-hotel-mobile #map {
+      margin: 0;
+      padding: 0;
+      height: 400px;
+      max-width: none; }
+      .page-hotel .travorama-hotel-mobile #map img {
+        max-width: none !important; }
+    .page-hotel .travorama-hotel-mobile .gm-style-iw.custom {
+      width: auto !important;
+      box-shadow: 3px 5px 6px rgba(178, 178, 178, 0.6);
+      overflow: initial;
+      top: 30px !important;
+      left: 26px !important;
+      background: #fff;
+      -webkit-border-radius: 2px;
+      -moz-border-radius: 2px;
+      -ms-border-radius: 2px;
+      border-radius: 2px; }
+      .page-hotel .travorama-hotel-mobile .gm-style-iw.custom .map-price, .page-hotel .travorama-hotel-mobile .gm-style-iw.custom .map-container {
+        -webkit-border-radius: 2px;
+        -moz-border-radius: 2px;
+        -ms-border-radius: 2px;
+        border-radius: 2px;
+        background-color: #fff; }
+        .page-hotel .travorama-hotel-mobile .gm-style-iw.custom .map-price:after, .page-hotel .travorama-hotel-mobile .gm-style-iw.custom .map-container:after {
+          width: 0px;
+          height: 0px;
+          border-left: 15px solid transparent;
+          border-right: 15px solid transparent;
+          border-top: 15px solid #fff;
+          content: '';
+          display: block;
+          position: absolute;
+          margin-top: 8px;
+          transform: translateX(-50%);
+          left: 50%; }
+      .page-hotel .travorama-hotel-mobile .gm-style-iw.custom .map-container {
+        width: 250px !important;
+        height: 90px; }
+      .page-hotel .travorama-hotel-mobile .gm-style-iw.custom .map-price {
+        width: 100% !important;
+        padding: 10px 15px;
+        color: #ff7200; }
+        .page-hotel .travorama-hotel-mobile .gm-style-iw.custom .map-price:hover {
+          background: #ff7200;
+          color: #fff; }
+          .page-hotel .travorama-hotel-mobile .gm-style-iw.custom .map-price:hover:after {
+            border-top: 15px solid #ff7200; }
+          .page-hotel .travorama-hotel-mobile .gm-style-iw.custom .map-price:hover:before {
+            content: '';
+            display: block;
+            width: 100%;
+            height: 8px;
+            background: #ff7200;
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            border-radius: 2px; }
     .page-hotel .travorama-hotel-mobile .detail-hotel .dh-title {
       padding: 20px 15px;
       border-bottom: 1px solid #e9e9e9; }

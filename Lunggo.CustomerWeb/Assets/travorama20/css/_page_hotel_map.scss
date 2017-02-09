@@ -206,11 +206,11 @@
 
 .map-container {
     .hotel-round {
-        width: 90px;
-        height: 90px;
+        width: 93px;
+        height: 93px;
         position: absolute;
         left: 0;
-        border-radius: 90px;
+        @include border-radius(93px);
         background-size: cover;
         background-position: center;
         margin-left: -45px;
@@ -219,7 +219,7 @@
     }
     .map-content {
         overflow: hidden;
-        padding-left: 50px;
+        padding-left: 55px;
         small {font-size: 10px;}
         .hotel-title {
             max-width: 180px;
@@ -250,13 +250,16 @@
     img {max-width: none !important;}
 }
 
-.gm-style-iw {
+.gm-style-iw.custom {
     width: auto !important;
     box-shadow: 3px 5px 6px rgba(178, 178, 178, 0.6);
     overflow: initial;
-    top: 20px !important;
+    top: 30px !important;
+    left: 26px !important;
+    background: #fff;
     @include border-radius(2px);
     .map-price, .map-container {
+        @include border-radius(2px);
         background-color: #fff;
         &:after {
             width: 0px;
@@ -277,6 +280,7 @@
         height: 90px;
     }
     .map-price {
+        cursor: pointer;
         width: 100% !important;
         padding: 10px 15px;
         color: #ff7200;
@@ -284,6 +288,17 @@
             background: #ff7200;
             color: #fff;
             &:after {border-top: 15px solid #ff7200;}
+            &:before {
+                content: '';
+                display: block;
+                width: 100%;
+                height: 8px;
+                background: #ff7200;
+                position: absolute;
+                left: 0;
+                bottom: 0;
+                border-radius: 2px;
+            }
         }
     }
 }
