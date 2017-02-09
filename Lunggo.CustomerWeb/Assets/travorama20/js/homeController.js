@@ -1,10 +1,10 @@
 ﻿// home controller
+// home controller
 app.controller('homeController', ['$scope', '$log', '$http', '$location', '$resource', '$timeout', 'hotelSearchSvc', function ($scope, $log, $http, $location, $resource, $timeout, hotelSearchSvc) {
 
 
-    $(document).ready(function() {
+    $(document).ready(function () {
 
-        $scope.tes = '';
         if (Cookies.get('hotelSearchLocationDisplay')) {
             $scope.hotelSearch.locationDisplay = Cookies.get('hotelSearchLocationDisplay');
         } else {
@@ -89,6 +89,8 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
                 });
             }
         }
+
+        
     });
    // ================= FLIGHT ========================
 
@@ -104,7 +106,7 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
         }
     }
     
-    $scope.showForm= function(tab) {
+    $scope.showForm = function (tab) {
         if (tab == 'hotel') {
             $scope.isFlight = false;
         } else if (tab == 'flight') {
@@ -148,7 +150,7 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
     $('.hotel-date-picker').datepicker('option', 'beforeShowDay', hotelSearchSvc.highlightDays);
     $scope.hotel = {};
     $scope.view = {
-        showHotelSearch : false
+        showHotelSearch: false
     }
 
     $scope.init = function (model) {
@@ -202,8 +204,40 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
     //=============== hotel end ======================
     //=============== Price Calendar, populate cheapest price for destinations ======================
 
-    $('body input[name="searchFrom"]').val("Denpasar / Bali (DPS)");
-    $('body input[name="searchTo"]').val("Jakarta (JKT)");
+    $scope.returnMonth = function (val) {
+        if (val == '0')
+            return "Jan";
+        else if (val == '1')
+            return "Feb";
+        else if (val == '2')
+            return "Mar";
+        else if (val == '3')
+            return "Apr";
+        else if (val == '4')
+            return "Mei";
+        else if (val == '5')
+            return "Jun";
+        else if (val == '6')
+            return "Jul";
+        else if (val == '7')
+            return "Agu";
+        else if (val == '8')
+            return "Sep";
+        else if (val == '9')
+            return "Okt";
+        else if (val == '10')
+            return "Nov";
+        else if (val == '11')
+            return "Des";
+    }
+    var todayDate = new Date();
+    var bulan = todayDate.getMonth();
+    var tahun = parseInt(todayDate.getFullYear());
+    $('#selectYear').val(tahun);
+    $('.selected-year').text(tahun);
+    $('#selectMonth').val(bulan);
+    $('.selected-month').text($scope.returnMonth(bulan));
+
     $scope.hasSearched = false;
     $scope.priceFlight =
     {
@@ -249,16 +283,22 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
         }
     };
 
-    $scope.selectedPopularDestination = {
-        origin: 'DPS',
-        destination: 'JKT',
-        originCity: 'Denpasar / Bali (DPS)',
-        destinationCity: 'Jakarta (JKT)',
-        cheapestDate: '',
-        cheapestPrice: '',
+    $scope.years = [];
+    for (var i = tahun; i < tahun + 4; i++) {
+            $scope.years.push(i);
     }
 
-    $scope.listCheapestPrice = [];
+    $scope.selectedPopularDestination = {
+        origin: Cookies.get('origin') ? Cookies.get('origin') : 'JKT',
+        destination: Cookies.get('destination') ? Cookies.get('destination') : 'DPS',
+        originCity: Cookies.get('originCity') ? Cookies.get('originCity') : 'Jakarta (JKT)',
+        destinationCity: Cookies.get('destinationCity') ? Cookies.get('destinationCity') : 'Denpasar / Bali (DPS)',
+        month: bulan,
+        year: tahun,
+    }
+
+    $('body input[name="searchFrom"]').val($scope.selectedPopularDestination.originCity + ' (' + $scope.selectedPopularDestination.origin + ')');
+    $('body input[name="searchTo"]').val($scope.selectedPopularDestination.destinationCity + ' (' + $scope.selectedPopularDestination.destination + ')');
     $scope.gotoCheapestDateFlight = function (dest, depdate) {
         //$log.debug('depdate is: ' + depdate);
         if (depdate != '') {
@@ -396,9 +436,9 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
                         $scope.priceFlight.Denpasar.CheapestDate = cheapestDate;
                     }
 
-                    $scope.listCheapestPrice = [];
+                    pricelist = [];
                     for (var x = 0; x < returnData.listDatesAndPrices.length; x++) {
-                        $scope.listCheapestPrice.push(returnData.listDatesAndPrices[x].price);
+                        pricelist.push(returnData.listDatesAndPrices[x].price);
                     }
                     //addCustomInformation(m + 1, y);
                     //return [cheapestPrice, cheapestDate];
@@ -419,7 +459,7 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
     $scope.getCheapestFlightPrice('JKT', 'SUB');
     $scope.getCheapestFlightPrice('JKT', 'KNO');
 
-    $scope.getFlightPrice = function (origin, destination, month, year) {
+    $scope.getFlightPrice = function (month, year) {
         var authAccess = getAuthAccess();
         var date;
         var todayDate = new Date();
@@ -432,7 +472,6 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
         }
         var y = date.getFullYear(); m = date.getMonth();
         var lastDay = new Date(date.getFullYear(), m + 1, 0);
-        //lastDay.setDate(date.getDate() + 1);
         var startDate = ("0" + date.getDate()).slice(-2)
              + ("0" + (date.getMonth() + 1)).slice(-2) + y.toString().substring(2, 4);
         var endDate = ("0" + lastDay.getDate()).slice(-2)
@@ -440,96 +479,35 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
 
         if (authAccess == 1 || authAccess == 2) {
             $.ajax({
-                url: FlightPriceCalendarConfig.Url + '/' + origin + destination + '/' + startDate
+                url: FlightPriceCalendarConfig.Url + '/' + $scope.selectedPopularDestination.origin +
+                    $scope.selectedPopularDestination.destination + '/' + startDate
                 + '/' + endDate + '/IDR',
                 method: 'GET',
                 headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') }
             }).done(function (returnData) {
-                //if (returnData.status == 200) {
-                //var cheapestPrice = returnData.cheapestPrice;
-                //var cheapestDate;
                 if (returnData.cheapestDate != null && returnData.cheapestDate != '') {
-                    //cheapestDate = new Date(returnData.cheapestDate);
                     $scope.listCheapestPrice = [];
-                    for (var x = 0; x < returnData.listDatesAndPrices.length; x++) {
-                        $scope.listCheapestPrice.push(returnData.listDatesAndPrices[x].price);
-                    }
-                    addCustomInformation(m + 1, y);
-                    //return [cheapestPrice, cheapestDate];
-                } else {
-                    //return [-1, ''];
-                }
-
-                //}
-
+                    getEventDate(m + 1, y, returnData.listDatesAndPrices, $scope.selectedPopularDestination);
+                } 
             }).error(function (returnData) {
-                //return [-1, ''];
             });
         }
     }
-
-    $scope.editData = function () {
-        $scope.selectedPopularDestination.originCity = $scope.selectedPopularDestination.originCity.replace(/\s+/g, '-');
-        $scope.selectedPopularDestination.originCity = $scope.selectedPopularDestination.originCity.replace(/[^0-9a-zA-Z-]/gi, '');
-        $scope.selectedPopularDestination.destinationCity = $scope.selectedPopularDestination.destinationCity.replace(/\s+/g, '-');
-        $scope.selectedPopularDestination.destinationCity = $scope.selectedPopularDestination.destinationCity.replace(/[^0-9a-zA-Z-]/gi, '');
-        return '/id/tiket-pesawat/cari/' + $scope.selectedPopularDestination.originCity + '-' + $scope.selectedPopularDestination.destinationCity + '-' +
-            $scope.selectedPopularDestination.origin + '-' + $scope.selectedPopularDestination.destination + '/' + $scope.selectedPopularDestination.origin
-           + $scope.selectedPopularDestination.destination;
-    }
-    
-    $("#pc-datepicker").datepicker({
-        changeMonth: true,
-        changeYear: true,
-        dayNamesMin: ["MGG", "SEN", "SEL", "RAB", "KAM", "JUM", "SAB"],
-        showOtherMonths: true,
-        onSelect: function (date) {
-            if ($scope.hasSearched) {
-                var x = date.split('/');
-                var day = x[0];
-                var month = x[1];
-                var year = x[2];
-                var datex = ("0" + (day)).slice(-2).toString() + ("0" + (month)).slice(-2).toString() + year.toString().slice(-2);
-                var url = $scope.editData() + datex + '-100y';
-                window.location.href = url;
-            }
-        },
-    });
-
-    function addCustomInformation(mth, year) {
-        var eventDates = {};
-        eventDates = getEventDate(mth, year);
-
-        setTimeout(function () {
-            $(".ui-datepicker-calendar td").filter(function () {
-                var date = $(this).text();
-                if (year) {
-                    var month = mth;
-                    if (month == 0) {
-                        month = 1;
-                    }
-                    if (date < 10) {
-                        date = '0' + date;
-                    }
-
-                    var date_format = year + '/' + '0' + month + '/' + date;
-                    var highlight = eventDates[date_format];
-                    if (highlight) {
-                        var datex = date + ("0" + (month)).slice(-2).toString() + year.toString().slice(-2);
-                        var url = $scope.editData() + datex + '-100y';
-                        if (highlight != '0rb') {
-                            $(this).find("a").attr('data-custom', highlight);
-                        }
-                        $(this).append('<a class="view-price btn btn-yellow sm-btn xs-txt os-bold" href="' + url + '">LIHAT</a>');
-                    }
-                }
-                return date;
-            });
-        }, 0);
+    $scope.getFlightPrice(parseInt(bulan) + 1, year);
+    $scope.editData = function (data) {
+        data.originCity = $scope.selectedPopularDestination.originCity.replace(/\s+/g, '-');
+        data.originCity = data.originCity.replace(/[^0-9a-zA-Z-]/gi, '');
+        data.destinationCity = data.destinationCity.replace(/\s+/g, '-');
+        data.destinationCity = data.destinationCity.replace(/[^0-9a-zA-Z-]/gi, '');
+        return '/id/tiket-pesawat/cari/' + data.originCity + '-' + data.destinationCity + '-' +
+            data.origin + '-' + data.destination + '/' + data.origin
+           + data.destination;
     }
 
-    function getEventDate(mth, year) {
-        var eventDates = {};
+    $scope.hasSearched = false;
+
+    function getEventDate(mth, year, pricelist, selectedData) {
+        //var eventDates = [];
         var todayDate = new Date();
         var bulan = todayDate.getMonth() + 1;
         var thn = todayDate.getFullYear();
@@ -540,43 +518,196 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
             date = 1;
         }
 
+        $('#pc-datepicker').fullCalendar('removeEvents');
         if (year % 4 == 0) {
             if (mth == 2) {
                 for (var d = date; d <= 29; d++) {
-                    var x = year.toString() + '/' + ("0" + (mth)).slice(-2).toString() + '/' + ("0" + d.toString()).slice(-2);
-                    eventDates[x] = Math.round(parseInt($scope.listCheapestPrice[d - date]) / 1000).toString() + 'rb';
+                    var x = year.toString() + '-' + ("0" + (mth)).slice(-2).toString() + '-' + ("0" + d.toString()).slice(-2);
+                    var y = ("0" + d.toString()).slice(-2) + ("0" + (mth)).slice(-2).toString() + year.toString().slice(-2);
+                    var price = Math.round(parseInt(pricelist[d - date].price) / 1000).toString();
+                    if (price != '0') {
+                        $scope.listCheapestPrice.push({
+                            title: Math.round(parseInt(pricelist[d - date].price) / 1000).toString(),
+                            start: x,
+                            link: $scope.editData(selectedData) + y + '-100y'
+                        });
+                    }
                 }
             } else if (mth == 1 || mth == 3 || mth == 5 || mth == 7 || mth == 8 || mth == 10 || mth == 12) {
                 for (var d = date; d <= 31; d++) {
-                    var x = year.toString() + '/' + ("0" + (mth)).slice(-2).toString() + '/' + ("0" + d.toString()).slice(-2);
-                    eventDates[x] = Math.round(parseInt($scope.listCheapestPrice[d - date]) / 1000).toString() + 'rb';
+                    var x = year.toString() + '-' + ("0" + (mth)).slice(-2).toString() + '-' + ("0" + d.toString()).slice(-2);
+                    var y = ("0" + d.toString()).slice(-2) + ("0" + (mth)).slice(-2).toString() + year.toString().slice(-2);
+                    var price = Math.round(parseInt(pricelist[d - date].price) / 1000).toString();
+                    if (price != '0') {
+                        $scope.listCheapestPrice.push({
+                            title: Math.round(parseInt(pricelist[d - date].price) / 1000).toString(),
+                            start: x,
+                            link: $scope.editData(selectedData) + y + '-100y'
+                        });
+                    }
                 }
             } else if (mth == 4 || mth == 6 || mth == 9 || mth == 11) {
                 for (var d = date; d <= 30; d++) {
-                    var x = year.toString() + '/' + ("0" + (mth)).slice(-2).toString() + '/' + ("0" + d.toString()).slice(-2);
-                    eventDates[x] = Math.round(parseInt($scope.listCheapestPrice[d - date]) / 1000).toString() + 'rb';
+                    var x = year.toString() + '-' + ("0" + (mth)).slice(-2).toString() + '-' + ("0" + d.toString()).slice(-2);
+                    var y = ("0" + d.toString()).slice(-2) + ("0" + (mth)).slice(-2).toString() + year.toString().slice(-2);
+                    var price = Math.round(parseInt(pricelist[d - date].price) / 1000).toString();
+                    if (price != '0') {
+                        $scope.listCheapestPrice.push({
+                            title: Math.round(parseInt(pricelist[d - date].price) / 1000).toString(),
+                            start: x,
+                            link: $scope.editData(selectedData) + y + '-100y'
+                        });
+                    }
                 }
             }
         } else {
             if (mth == 2) {
                 for (var d = date; d <= 28; d++) {
-                    var x = year.toString() + '/' + ("0" + (mth)).slice(-2).toString() + '/' + ("0" + d.toString()).slice(-2);
-                    eventDates[x] = Math.round(parseInt($scope.listCheapestPrice[d - date]) / 1000).toString() + 'rb';
+                    var x = year.toString() + '-' + ("0" + (mth)).slice(-2).toString() + '-' + ("0" + d.toString()).slice(-2);
+                    var y = ("0" + d.toString()).slice(-2) + ("0" + (mth)).slice(-2).toString() + year.toString().slice(-2);
+                    if (price != '0') {
+                        $scope.listCheapestPrice.push({
+                            title: Math.round(parseInt(pricelist[d - date].price) / 1000).toString(),
+                            start: x,
+                            link: $scope.editData(selectedData) + y + '-100y'
+                        });
+                    }
                 }
             } else if (mth == 1 || mth == 3 || mth == 5 || mth == 7 || mth == 8 || mth == 10 || mth == 12) {
                 for (var d = date; d <= 31; d++) {
-                    var x = year.toString() + '/' + ("0" + (mth)).slice(-2).toString() + '/' + ("0" + d.toString()).slice(-2);
-                    eventDates[x] = Math.round(parseInt($scope.listCheapestPrice[d - date]) / 1000).toString() + 'rb';
+                    var x = year.toString() + '-' + ("0" + (mth)).slice(-2).toString() + '-' + ("0" + d.toString()).slice(-2);
+                    var y = ("0" + d.toString()).slice(-2) + ("0" + (mth)).slice(-2).toString() + year.toString().slice(-2);
+                    var price = Math.round(parseInt(pricelist[d - date].price) / 1000).toString();
+                    if (price != '0') {
+                        $scope.listCheapestPrice.push({
+                            title: Math.round(parseInt(pricelist[d - date].price) / 1000).toString(),
+                            start: x,
+                            link: $scope.editData(selectedData) + y + '-100y'
+                        });
+                    }
                 }
             } else if (mth == 4 || mth == 6 || mth == 9 || mth == 11) {
                 for (var d = date; d <= 30; d++) {
-                    var x = year.toString() + '/' + ("0" + (mth)).slice(-2).toString() + '/' + ("0" + d.toString()).slice(-2);
-                    eventDates[x] = Math.round(parseInt($scope.listCheapestPrice[d - date]) / 1000).toString() + 'rb';
+                    var x = year.toString() + '-' + ("0" + (mth)).slice(-2).toString() + '-' + ("0" + d.toString()).slice(-2);
+                    var y = ("0" + d.toString()).slice(-2) + ("0" + (mth)).slice(-2).toString() + year.toString().slice(-2);
+                    var price = Math.round(parseInt(pricelist[d - date].price) / 1000).toString();
+                    if (price != '0') {
+                        $scope.listCheapestPrice.push({
+                            title: Math.round(parseInt(pricelist[d - date].price) / 1000).toString(),
+                            start: x,
+                            link: $scope.editData(selectedData) + y + '-100y'
+                        });
+                    }
                 }
             }
         }
-        return eventDates;
+
+       $('#pc-datepicker').fullCalendar('renderEvents', $scope.listCheapestPrice);
+   }
+
+    $('.fc-content-skeleton').click(function () {
+        $(this).css('border', '1px solid red');
+    });
+
+    $('#pc-datepicker').fullCalendar({
+        lang: 'id',
+        header: {
+            left: '',
+            center: '',
+            right: ''
+        },
+        events: getEvents(),
+        eventRender: function (event, element) {
+            if (event.link != '' && event.title != '') {
+                var link = "<input class='btn btn-yellow sm-btn btn-view' type='button' onclick='location.href=\"" + event.link + "\";' value='LIHAT'/>";
+                var title = '<sup>Rp </sup>' + event.title + 'rb';
+                element.find('.fc-content').append(link);
+                element.find('.fc-title').html(title);
+            }
+        }
+    });
+
+    function getEvents() {
+        return $scope.listCheapestPrice;
     }
+
+    function setValueMY() {
+        var d = new Date();
+        var month = d.getMonth();
+        var year = d.getFullYear();
+
+        $('#selectMonth').val(month);
+        $('#selectYear').val(year);
+    }
+    setValueMY();
+
+    $('#month div, #year div').hide();
+    $('.select-year').click(function () {
+        $('#year div').toggle();
+        $('#month div, .search-location').hide();
+    });
+
+    $('.select-month').click(function () {
+        $('#month div').toggle();
+        $('#year div, .search-location').hide();
+    });
+
+    $('#month div').on('click', function () {
+        var val = $(this).attr('value');
+        var month = $(this).html();
+        if ($scope.selectedPopularDestination.year > tahun) {
+            $('#selectMonth').val(val);
+            $('.selected-month').text(month);
+            $scope.selectedPopularDestination.month = parseInt(month);
+        }else if ($scope.selectedPopularDestination.year == tahun) {
+            var mth = parseInt(val);
+            if (mth >= $scope.selectedPopularDestination.month) {
+                $('#selectMonth').val(val);
+                $('.selected-month').text(month);
+                $scope.selectedPopularDestination.month = parseInt(month);
+            } else {
+                $('#selectMonth').val(bulan);
+                $('.selected-month').text($scope.returnMonth(bulan));
+                $scope.selectedPopularDestination.month = bulan;
+            }
+        }     
+    });
+
+    $('#year div').on('click', function () {
+        var val = $(this).attr('value');
+        var thn = $(this).html();
+        if (parseInt(val) > tahun) {
+            $('#selectYear').val(val);
+            $('.selected-year').text(thn);
+            $scope.selectedPopularDestination.year = parseInt(val);
+        }else if (parseInt(val) == tahun) {
+            if ($scope.selectedPopularDestination.month >= bulan) {
+                $('#selectYear').val(val);
+                $('.selected-year').text(thn);
+                $scope.selectedPopularDestination.year = parseInt(val);
+            } else {
+                $('#selectYear').val(val);
+                $('.selected-year').text(thn);
+                $scope.selectedPopularDestination.year = parseInt(val);
+                $('#selectMonth').val(bulan);
+                $('.selected-month').text($scope.returnMonth(bulan));
+                $scope.selectedPopularDestination.month = bulan;
+            }
+        }
+        
+    });
+
+    $('#submitCalendar').on('click', function () {
+        var bulan = $('#selectMonth').val();
+        var tahun = $('#selectYear').val();
+
+        var newDate = new Date(tahun, bulan, '01');
+        $('#pc-datepicker').fullCalendar('gotoDate', newDate);
+        if ($scope.selectedPopularDestination.origin != '' && $scope.selectedPopularDestination.destination != '') {
+            $scope.hasSearched = true;
+            $scope.getFlightPrice(parseInt(bulan) + 1, tahun);
+        }
+    });
 
     $('body input[name="searchFrom"]').click(function () {
         $(this).select();
@@ -743,29 +874,31 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
     });
 
     //search calendar price
-    $('#submitCalendar').on('click', function () {
-        var bulan = $('#selectMonth').val();
-        var tahun = $('#selectYear').val();
+    //$('#submitCalendar').on('click', function () {
+    //    var bulan = $('#selectMonth').val();
+    //    var tahun = $('#selectYear').val();
 
-        var newDate = new Date(tahun, bulan, '01');
-        $('#pc-datepicker').datepicker('setDate', newDate);
+    //    var newDate = new Date(tahun, bulan, '01');
+    //    $('#pc-datepicker').datepicker('setDate', newDate);
         
-        if ($scope.selectedPopularDestination.origin != '' && $scope.selectedPopularDestination.destination != '') {
-            $scope.hasSearched = true;
-            $scope.getFlightPrice($scope.selectedPopularDestination.origin, $scope.selectedPopularDestination.destination,
-        parseInt(bulan) + 1, tahun);
-        }
-    });
-    setValueMY();
+    //    if ($scope.selectedPopularDestination.origin != '' && $scope.selectedPopularDestination.destination != '') {
+    //        $scope.hasSearched = true;
+    //        $scope.getFlightPrice($scope.selectedPopularDestination.origin, $scope.selectedPopularDestination.destination,
+    //    parseInt(bulan) + 1, tahun);
+    //    }
 
-    function setValueMY() {
-        var d = new Date();
-        var month = d.getMonth();
-        var year = d.getFullYear();
 
-        $('#selectMonth').val(month);
-        $('#selectYear').val(year);
-    }
+    //});
+    //setValueMY();
+
+    //function setValueMY() {
+    //    var d = new Date();
+    //    var month = d.getMonth();
+    //    var year = d.getFullYear();
+
+    //    $('#selectMonth').val(month);
+    //    $('#selectYear').val(year);
+    //}
 }]);
 
 //********************
@@ -905,7 +1038,7 @@ jQuery(document).ready(function ($) {
     $('.slider-wrapper').slick({
         autoplay: true,
         autoplaySpeed: 4000,
-        dots: false,
+        dots: true,
         prevArrow: '<button type="button" class="slick-prev"></button>',
         nextArrow: '<button type="button" class="slick-next"></button>'
     });
@@ -922,6 +1055,6 @@ jQuery(document).ready(function ($) {
     $('.pop-hotel').hover(function () {
         $(this).find('.view-hotel').slideToggle('fast');
     });
+
     
 });
-
