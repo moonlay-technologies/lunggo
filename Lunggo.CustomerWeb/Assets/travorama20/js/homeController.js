@@ -333,16 +333,16 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
         nextdate.setDate(date.getDate() + 1);
         var datey = nextdate.getFullYear() + '-' + ("0" + (nextdate.getMonth() + 1)).slice(-2) + '-' + ("0" + nextdate.getDate()).slice(-2);
         if (dest == 'JKT')
-            window.location.href = '/id/hotel/cari/Indonesia/Jakarta/?info=Location.-2001512190.' + datex + '.' + datey + '.1.1.2~0';
+            window.location.href = '/id/hotel/cari/Indonesia/Jakarta/?info=Location.1390294.' + datex + '.' + datey + '.1.1.2~0';
 
         else if (dest == 'SUB')
-            window.location.href = '/id/hotel/cari/Indonesia/Surabaya/?info=Location.681103437.' + datex + '.' + datey + '.1.1.2~0';
+            window.location.href = '/id/hotel/cari/Indonesia/Surabaya/?info=Location.1475138.' + datex + '.' + datey + '.1.1.2~0';
         else if (dest == 'JOG')
-            window.location.href = '/id/hotel/cari/Indonesia/Yogyakarta/?info=Location.1439962957.' + datex + '.' + datey + '.1.1.2~0';
+            window.location.href = '/id/hotel/cari/Indonesia/Yogyakarta/?info=Location.1391623.' + datex + '.' + datey + '.1.1.2~0';
         else if (dest == 'BAI')
-            window.location.href = '/id/hotel/cari/Indonesia/Bali/?info=Location.1890170571.' + datex + '.' + datey + '.1.1.2~0';
+            window.location.href = '/id/hotel/cari/Indonesia/Bali/?info=Location.1316553.' + datex + '.' + datey + '.1.1.2~0';
         else if (dest == 'BDO')
-            window.location.href = '/id/hotel/cari/Indonesia/Bandung/?info=Location.1083404909.' + datex + '.' + datey + '.1.1.2~0';
+            window.location.href = '/id/hotel/cari/Indonesia/Bandung/?info=Location.1316847.' + datex + '.' + datey + '.1.1.2~0';
     }
 
     $scope.getCheapestHotelPrice = function (location) {
