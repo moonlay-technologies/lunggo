@@ -4,6 +4,7 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
 
     $(document).ready(function() {
 
+        $scope.tes = '';
         if (Cookies.get('hotelSearchLocationDisplay')) {
             $scope.hotelSearch.locationDisplay = Cookies.get('hotelSearchLocationDisplay');
         } else {
@@ -201,6 +202,9 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
     //=============== hotel end ======================
     //=============== Price Calendar, populate cheapest price for destinations ======================
 
+    $('body input[name="searchFrom"]').val("Denpasar / Bali (DPS)");
+    $('body input[name="searchTo"]').val("Jakarta (JKT)");
+    $scope.hasSearched = false;
     $scope.priceFlight =
     {
         Denpasar: {
@@ -245,6 +249,16 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
         }
     };
 
+    $scope.selectedPopularDestination = {
+        origin: 'DPS',
+        destination: 'JKT',
+        originCity: 'Denpasar / Bali (DPS)',
+        destinationCity: 'Jakarta (JKT)',
+        cheapestDate: '',
+        cheapestPrice: '',
+    }
+
+    $scope.listCheapestPrice = [];
     $scope.gotoCheapestDateFlight = function (dest, depdate) {
         //$log.debug('depdate is: ' + depdate);
         if (depdate != '') {
@@ -272,7 +286,7 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
         }
     }
 
-    $scope.gotoCheapestDateHotel = function (dest, depdate) {
+    $scope.gotoCheapestDateHotel = function (dest) {
         var date = new Date();
         var datex = date.getFullYear() + '-' + ("0" + (date.getMonth() + 1)).slice(-2) + '-' + ("0" + date.getDate()).slice(-2);
         var nextdate = new Date();
@@ -331,9 +345,6 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
                 } else {
                     // return [-1, ''];
                 }
-
-                //}
-
             }).error(function (returnData) {
                 // return [-1, ''];
             });
@@ -403,6 +414,11 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
         }
     }
 
+    $scope.getCheapestFlightPrice('DPS', 'JKT');
+    $scope.getCheapestFlightPrice('JKT', 'DPS');
+    $scope.getCheapestFlightPrice('JKT', 'SUB');
+    $scope.getCheapestFlightPrice('JKT', 'KNO');
+
     $scope.getFlightPrice = function (origin, destination, month, year) {
         var authAccess = getAuthAccess();
         var date;
@@ -461,32 +477,12 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
             $scope.selectedPopularDestination.origin + '-' + $scope.selectedPopularDestination.destination + '/' + $scope.selectedPopularDestination.origin
            + $scope.selectedPopularDestination.destination;
     }
-    $scope.selectedPopularDestination = {
-        origin: '',
-        destination: '',
-        originCity: '',
-        destinationCity: '',
-        cheapestDate: '',
-        cheapestPrice: '',
-    }
-
-    $scope.listCheapestPrice = [];
-    $scope.getCheapestFlightPrice('DPS', 'JKT');
-    $scope.getCheapestFlightPrice('JKT', 'DPS');
-    $scope.getCheapestFlightPrice('JKT', 'SUB');
-    $scope.getCheapestFlightPrice('JKT', 'KNO');
-    $scope.hasSearched = false;
-
+    
     $("#pc-datepicker").datepicker({
         changeMonth: true,
         changeYear: true,
         dayNamesMin: ["MGG", "SEN", "SEL", "RAB", "KAM", "JUM", "SAB"],
         showOtherMonths: true,
-        //onChangeMonthYear: function (year, month) {
-        //    $('.ui-datepicker .ui-datepicker-title').addClass('col-xs-5');
-        //    //editForm(year, month);
-        //    //addCustomInformation(month, year);
-        //},
         onSelect: function (date) {
             if ($scope.hasSearched) {
                 var x = date.split('/');
@@ -497,15 +493,8 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
                 var url = $scope.editData() + datex + '-100y';
                 window.location.href = url;
             }
-            
-            //$(this).find("a").attr('href', url);
         },
     });
-
-    function editForm(year, month) {
-        $scope.selectedPopularDestination.month = month;
-        $scope.selectedPopularDestination.year = year;
-    }
 
     function addCustomInformation(mth, year) {
         var eventDates = {};
@@ -514,7 +503,6 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
         setTimeout(function () {
             $(".ui-datepicker-calendar td").filter(function () {
                 var date = $(this).text();
-                
                 if (year) {
                     var month = mth;
                     if (month == 0) {
@@ -599,8 +587,6 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
         showLocation('tujuan');
     });
 
-    //*****
-    // show and hide search location
     function showLocation(place) {
         place = place || $('.location-choice .search-location').attr('data-place');
         $(' .location-choice .search-location .location-recommend').show();
@@ -649,6 +635,7 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
     });
 
     function getLocation(keyword) {
+        var trial = 0;
         if (trial > 3) {
             trial = 0;
         }
@@ -659,10 +646,6 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
         }).done(function (returnData) {
             $('.location-choice .autocomplete-pre .text-pre').hide();
             $('.location-choice .autocomplete-pre .text-loading').hide();
-            //FlightSearchConfig.autocomplete.loading = false;
-            //FlightSearchConfig.autocomplete.result = returnData.airports;
-            //FlightSearchConfig.autocomplete.cache[keyword] = returnData.airports;
-            //console.log(returnData);
             generateSearchResult(returnData.airports);
             if (returnData.airports.length > 0) {
                 $('.location-choice .autocomplete-no-result').hide();
@@ -673,7 +656,7 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
                 $('.location-choice .autocomplete-result').hide();
                 $('.location-choice .autocomplete-no-result').show();
             }
-        }).error(function (returnData) {
+        }).error(function () {
             trial++;
             if (refreshAuthAccess() && trial < 4) //refresh cookie
             {
@@ -697,22 +680,16 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
                 $scope.selectedPopularDestination.origin = locationCode;
                 $scope.selectedPopularDestination.originCity = locationCity;
                 $('body input[name="searchFrom"]').val(locationCity + ' (' + locationCode + ')');
-                //$('.flight-submit-button').removeClass('disabled');
             } else {
-                $('body input[name="searchFrom"]').val($(this).text() + ' (' + locationCode + ')');
                 alert('Kota Asal dan Tujuan Tidak Boleh Sama');
-                //$('.flight-submit-button').addClass('disabled');
             }
         } else if ($('.location-choice .search-location').attr('data-place') == 'tujuan') {
             if (locationCity != $scope.selectedPopularDestination.originCity) {
                 $scope.selectedPopularDestination.destination = locationCode;
                 $scope.selectedPopularDestination.destinationCity = locationCity;
                 $('body input[name="searchTo"]').val(locationCity + ' (' + locationCode + ')');
-                //$('.flight-submit-button').removeClass('disabled');
             } else {
-                $('.body input[name="searchTo"]').val($(this).text() + ' (' + locationCode + ')');
                 alert('Kota Asal dan Tujuan Tidak Boleh Sama');
-                //$('.flight-submit-button').addClass('disabled');
             }
         }
         hideLocation();
@@ -745,14 +722,12 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
         var locationCity = $(this).text();
         if ($('.location-choice .search-location').attr('data-place') == 'asal') {
             if (locationCity != $scope.selectedPopularDestination.destinationCity) {
+                $scope.tes = locationCode;
                 $scope.selectedPopularDestination.origin = locationCode;
                 $scope.selectedPopularDestination.originCity = locationCity;
                 $('body input[name="searchFrom"]').val($(this).text() + ' (' + locationCode + ')');
-                //$('.flight-submit-button').removeClass('disabled');
             } else {
-                $('body input[name="searchFrom"]').val($(this).text() + ' (' + locationCode + ')');
                 alert('Kota Asal dan Tujuan Tidak Boleh Sama');
-                //$('.flight-submit-button').addClass('disabled');
             }
 
         } else if ($('.location-choice .search-location').attr('data-place') == 'tujuan') {
@@ -760,13 +735,9 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
                 $scope.selectedPopularDestination.destination = locationCode;
                 $scope.selectedPopularDestination.destinationCity = locationCity;
                 $('body input[name="searchTo"]').val($(this).text() + ' (' + locationCode + ')');
-                //$('.flight-submit-button').removeClass('disabled');
             } else {
-                $('body input[name="searchTo"]').val($(this).text() + ' (' + locationCode + ')');
                 alert('Kota Asal dan Tujuan Tidak Boleh Sama');
-                //$('.flight-submit-button').addClass('disabled');
             }
-
         }
         hideLocation();
     });
@@ -784,8 +755,6 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
             $scope.getFlightPrice($scope.selectedPopularDestination.origin, $scope.selectedPopularDestination.destination,
         parseInt(bulan) + 1, tahun);
         }
-        
-
     });
     setValueMY();
 
@@ -950,23 +919,9 @@ jQuery(document).ready(function ($) {
         nextArrow: '<button type="button" class="slick-next hidden">Next</button>'
     });
 
-    //// Price Calendar
-    //$("#pc-datepicker").datepicker({
-    //    dayNamesMin: ["MGG", "SEN", "SEL", "RAB", "KAM", "JUM", "SAB"],
-    //    showOtherMonths: true,
-    //    beforeShow: addCustomInformation,
-    //    beforeShowDay: function (date) {
-    //        return [true, date.getDay() === 5 || date.getDay() === 6 ? "weekend" : "weekday"];
-    //    },
-    //    onChangeMonthYear: addCustomInformation,
-    //    onSelect: addCustomInformation
-    //});
-    //addCustomInformation();
-
     $('.pop-hotel').hover(function () {
         $(this).find('.view-hotel').slideToggle('fast');
     });
-
     
 });
 
