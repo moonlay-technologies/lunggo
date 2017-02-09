@@ -208,6 +208,18 @@ var HotelSelectConfig = {
     Url: '$apiUrl$$hotelSelectPath$'
 };
 
+var GetCreditCardConfig = {
+    Url: '$apiUrl$$getCreditCardPath$'
+};
+
+var AddCreditCardConfig = {
+    Url: '$apiUrl$$addCreditCardPath$'
+};
+
+var SetPrimaryCardConfig = {
+    Url: '$apiUrl$$setPrimaryCardPath$'
+};
+
 var HotelBookConfig = {
     Url: '$apiUrl$$hotelBookPath$',
     working: false

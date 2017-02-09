@@ -1,0 +1,136 @@
+﻿@{
+    Layout = "/Views/Shared/Desktop/_B2BLayoutDesktop.cshtml";
+    ViewBag.BodyClass = "page-account page-account-profile";
+    ViewBag.PageActiveSection = "profile";
+    ViewBag.Title = "My Account";
+
+    //var rsvs = Model.OrderByDescending(rsv => rsv.RsvTime).ToList();
+}
+@{
+
+}
+@section AdditionalJS{
+    <!-- additional Angular JS-->
+    <script src="/Assets/js/bootstrap.min.js"></script>
+}
+
+@section PageJS{
+    <script>
+        var langCode = 'en';
+    </script>
+    <!-- angular controller -->
+    <script src="/Assets/travorama20/js/paymentController.js"></script>
+}
+
+
+<div class="container page-loading" ng-controller="b2BPaymentController" ng-class="{'page-loaded' : pageLoaded}">
+    <div class="row">
+
+        <div class="col-xs-3">
+            @Html.Partial("/Views/Shared/Desktop/_SectionUserMenu.cshtml")
+        </div>
+        <!-- ******************** -->
+
+        <div class="col-xs-9">
+            <section class="account-content">
+
+                <div class="profile-content" ng-show="currentSection == 'profile'">
+                    <header class="content-header">
+                        <h2><b>TAMBAH</b> NOMOR KARTU KREDIT CARD</h2>
+                    </header>
+                    <section class="content-body">
+
+                        <form name="profileForm" class="form form-horizontal" novalidate>
+                            <div class="form-group has-error" ng-show="userProfile.updated">
+                                <div class="col-xs-12">
+                                    <label>Kartu Kredit Anda telah berhasil ditambahkan.</label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-xs-3">
+                                    <p class="control-label">Nomor Kartu</p>
+                                </div>
+                                <div class="col-xs-9">
+                                    <input type="number" name="cardNo" ng-model="addCreditCard.cardNo" class="form-control" ng-disabled="addCreditCard.updating" />
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-xs-3">
+                                    <p class="control-label">Nama Pemegang Kartu</p>
+                                </div>
+                                <div class="col-xs-9">
+                                    <input type="text" name="name" ng-model="addCreditCard.holderName" class="form-control" ng-disabled="userProfile.updating" />
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-xs-3">
+                                    <p class="control-label">Tgl Kadaluarsa Kartu</p>
+                                </div>
+                                <div class="col-xs-9">
+                                    <input type="text" name="expDate" ng-model="addCreditCard.expDate" class="form-control" ng-disabled="userProfile.updating" />
+                                </div>
+                            </div>
+                        </form>
+                        <div class="action">
+                            <a class="btn btn-yellow" ng-click="addCreditCard('ccSave')">{{addCreditCard.updating? 'MENYIMPAN' : 'SIMPAN'}}</a>
+                        </div>
+                    </section>
+                </div><!-- .profile-content -->
+                <!-- ***** -->
+
+                <div class="history-content" ng-show="currentSection == 'order'">
+                    <header class="content-header">
+                        <h2><b>DAFTAR</b> KARTU KREDIT</h2>
+                    </header>
+                    <section class="content-body">
+                        <div ng-show="loading">
+                            <img src="/Assets/images/load.gif" style="width: 50px; height: 50px; margin-left: 45%; margin-top: 5%">
+                        </div>
+                        <div class="tab-content">
+                            <div class="tab-flight-history tab-pane cleafix active" id="flight-history">
+
+                                <h3 ng-if="dataCreditCard.length == 0">Belum ada pemesanan.</h3>
+                                <div ng-if="dataCreditCard.length > 0" ng-repeat="creditCard in dataCreditCard track by $index">
+                                    <div class="order-wrapper">
+                                        <div class="order flight">
+                                            <header>
+                                                <span> Nomor Kartu Kredit : {{creditCard.maskedCardNumber}}</span>
+                                            </header>
+                                            <section class="container">
+                                                <div class="row">
+                                                    <div class="col-xs-9">
+                                                        <div class="detail">
+                                                            <p>Card Holder Name : <b>{{creditCard.cardHolderName}}</b></p>
+                                                            <p>Primary Card     : {{creditCard.isPrimaryCard}}</p>
+                                                            <p>Card Expiry      : {{creditCard.cardExpiry}}</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xs-3">
+                                                        <form action="" method="post" name="submitForm" id="rsvno" class="hidden">
+                                                            <input type="text" name="RsvNo" value="" id="rsvno-input" />
+                                                        </form>
+                                                        <div class="action" ng-if="!creditCard.isPrimaryCard">
+                                                            <a class="btn btn-yellow" ng-click="updatePrimaryCard(creditCard.maskedCardNumber)">SET AS PRIMARY CARD</a>
+                                                        </div>
+                                                        <div class="action" ng-if="creditCard.isPrimaryCard">
+                                                            <a class="btn btn-yellow" ng-href="#">PRIMARY CARD</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </section>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                </div><!-- .history-content -->
+
+            </section><!-- .account-content -->
+        </div>
+
+    </div>
+</div>

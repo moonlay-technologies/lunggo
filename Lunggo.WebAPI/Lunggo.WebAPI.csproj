@@ -222,10 +222,12 @@
     <Compile Include="ApiSrc\Account\Logic\GetTransactionHistoryLogic.cs" />
     <Compile Include="ApiSrc\Account\Logic\GetReservationLogic.cs" />
     <Compile Include="ApiSrc\Account\Logic\ConfirmEmailLogic.cs" />
+    <Compile Include="ApiSrc\Account\Logic\LoginLogic.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="ApiSrc\Account\Logic\ResetPasswordLogic.cs" />
     <Compile Include="ApiSrc\Account\Logic\ResendConfirmationEmailLogic.cs" />
     <Compile Include="ApiSrc\Account\Logic\RegisterLogic.cs" />
-    <Compile Include="ApiSrc\Account\Logic\LoginLogic.cs" />
     <Compile Include="ApiSrc\Account\Model\B2BUpdateReservationRequest.cs" />
     <Compile Include="ApiSrc\Account\Model\B2BUpdateReservationResponse.cs" />
     <Compile Include="ApiSrc\Account\Model\ChangePasswordApiRequest.cs" />
@@ -337,16 +339,22 @@
     <Compile Include="ApiSrc\Notification\Model\DeleteRegistrationApiRequest.cs" />
     <Compile Include="ApiSrc\Notification\Model\UpdateRegistrationApiRequest.cs" />
     <Compile Include="ApiSrc\Notification\NotificationController.cs" />
+    <Compile Include="ApiSrc\Payment\Logic\AddCreditCardLogic.cs" />
     <Compile Include="ApiSrc\Payment\Logic\CheckBinDiscountLogic.cs" />
     <Compile Include="ApiSrc\Payment\Logic\CheckPaymentLogic.cs" />
     <Compile Include="ApiSrc\Payment\Logic\GetPaymentMethodsLogic.cs" />
+    <Compile Include="ApiSrc\Payment\Logic\GetSavedCreditCardLogic.cs" />
     <Compile Include="ApiSrc\Payment\Logic\PayLogic.cs" />
     <Compile Include="ApiSrc\Payment\Logic\GetUniqueCodeLogic.cs" />
+    <Compile Include="ApiSrc\Payment\Logic\SetPrimaryCardLogic.cs" />
+    <Compile Include="ApiSrc\Payment\Model\AddCreditCardRequest.cs" />
     <Compile Include="ApiSrc\Payment\Model\CheckBinDiscountApiRequest.cs" />
     <Compile Include="ApiSrc\Payment\Model\CheckBinDiscountApiResponse.cs" />
     <Compile Include="ApiSrc\Payment\Model\GetMethodsApiResponse.cs" />
+    <Compile Include="ApiSrc\Payment\Model\GetSavedCreditCardResponse.cs" />
     <Compile Include="ApiSrc\Payment\Model\PayApiResponse.cs" />
     <Compile Include="ApiSrc\Payment\Model\PayApiRequest.cs" />
+    <Compile Include="ApiSrc\Payment\Model\SetPrimaryCardRequest.cs" />
     <Compile Include="ApiSrc\Payment\Model\UniqueCodeApiRequest.cs" />
     <Compile Include="ApiSrc\Payment\Model\UniqueCodeApiResponse.cs" />
     <Compile Include="ApiSrc\Payment\PaymentController.cs" />

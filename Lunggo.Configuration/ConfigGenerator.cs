@@ -346,6 +346,9 @@ namespace Lunggo.Configuration
             const string getProfilePath = @"/v1/profile";
             const string registerPath = @"/v1/register";
             const string b2bRegisterPath = @"/v1/b2bregister";
+            const string getCreditCardPath = @"/v1/payment/getcreditcard";
+            const string addCreditCardPath = @"/v1/payment/addcreditcard";
+            const string setPrimaryCardPath = @"/v1/payment/setprimarycard";
             const string resetPasswordPath = @"/v1/resetpassword";
             const string forgotPasswordPath = @"/v1/forgot";
             const string changePasswordPath = @"/v1/changepassword";
@@ -406,6 +409,9 @@ namespace Lunggo.Configuration
             fileTemplate.SetAttribute("hotelAvailableRatesPath", hotelAvailableRatesPath);
             fileTemplate.SetAttribute("holidayListPath", holidayListPath);
             fileTemplate.SetAttribute("mobileUrl", mobileUrl);
+            fileTemplate.SetAttribute("getCreditCardPath", getCreditCardPath);
+            fileTemplate.SetAttribute("addCreditCardPath", addCreditCardPath);
+            fileTemplate.SetAttribute("setPrimaryCardPath", setPrimaryCardPath);
 
             var fileContent = fileTemplate.ToString();
             string[] projectList = { "BackendWeb", "CustomerWeb" };

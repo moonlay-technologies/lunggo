@@ -415,6 +415,7 @@
     <Compile Include="Hotel\Wrapper\HotelBeds\HotelBedsCheckRateHotel.cs" />
     <Compile Include="Hotel\Wrapper\HotelBeds\HotelBedsSearchHotel.cs" />
     <Compile Include="Identity\Query\GetApproverEmailByUserIdQuery.cs" />
+    <Compile Include="Identity\Query\GetCompanyIdByUserQuery.cs" />
     <Compile Include="Identity\Query\GetListApproverEmailQuery.cs" />
     <Compile Include="Identity\Query\GetApproverByUserIdQuery.cs" />
     <Compile Include="Payment\Constant\FailureReason.cs" />

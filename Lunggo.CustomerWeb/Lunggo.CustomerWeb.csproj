@@ -1638,6 +1638,7 @@
     <Content Include="Views\Shared\Desktop\_B2BSiteHeader.cshtml" />
     <Content Include="Views\Shared\Desktop\_B2BLayoutDesktop.cshtml" />
     <Content Include="Views\B2BAccount\ApproverReservationHistory.cshtml" />
+    <Content Include="Views\B2BPayment\Index.cshtml" />
     <None Include="Views\Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -1651,7 +1652,6 @@
     <Folder Include="Areas\Api\Views\Shared\" />
     <Folder Include="Assets\images\slider\" />
     <Folder Include="Assets\images\_sample\" />
-    <Folder Include="Views\B2BPayment\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
