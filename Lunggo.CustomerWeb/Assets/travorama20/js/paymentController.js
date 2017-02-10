@@ -948,6 +948,30 @@ app.controller('b2BPaymentController', [
 
         var hash = (location.hash);
         // variables
+        $scope.CreditCardData = {
+            TwoClickToken: 'false',
+            Name: '',
+            Month: '01',
+            Year: 2016,
+            Cvv: '',
+            Number: ''
+        };
+
+        $scope.months = [
+            { value: 0, name: 'Bulan' },
+            { value: 01, name: 'Januari' },
+            { value: 02, name: 'Februari' },
+            { value: 03, name: 'Maret' },
+            { value: 04, name: 'April' },
+            { value: 05, name: 'Mei' },
+            { value: 06, name: 'Juni' },
+            { value: 07, name: 'Juli' },
+            { value: 08, name: 'Agustus' },
+            { value: 09, name: 'September' },
+            { value: 10, name: 'Oktober' },
+            { value: 11, name: 'November' },
+            { value: 12, name: 'Desember' }
+        ];
 
         //General Variables
         $scope.pageLoaded = true;
@@ -1103,58 +1127,230 @@ app.controller('b2BPaymentController', [
 
         //Change Profile and Password
 
-        $scope.addCreditCard = function (name) {
+        $scope.addCreditCard = {
+            inputValid: true,
+            ccdata: false,
+            getPreToken: function () {
+                if (!$scope.validation()) {
+                    $scope.addCreditCard.inputValid = false;
+                } else {
+                    if ($scope.CreditCardData.Number == null || $scope.CreditCardData.Number.length < 12 || $scope.CreditCardData.Number.length > 19) {
+                        $scope.notifCardLength = true;
+                    } else {
+                        $scope.notifCardLength = false;
+                        Veritrans.url = VeritransTokenConfig.Url;
+                        Veritrans.client_key = VeritransTokenConfig.ClientKey;
+                        var card = function () {
+                            var gross_amount = 15000;
+                            $log.debug("gross_amount = " + gross_amount);
+                            if ($scope.CreditCardData.TwoClickToken == 'false') {
+                                $scope.addCreditCard.ccdata = true;
 
-            if ($scope.trial > 3) {
-                $scope.trial = 0;
+                                return {
+                                    'card_number': $scope.CreditCardData.Number,
+                                    'card_exp_month': $scope.CreditCardData.Month,
+                                    'card_exp_year': $scope.CreditCardData.Year,
+                                    'card_cvv': $scope.CreditCardData.Cvv,
+
+                                    // Set 'secure', 'bank', and 'gross_amount', if the merchant wants transaction to be processed with 3D Secure
+                                    'secure': true,
+                                    'bank': 'mandiri',
+                                    'gross_amount': gross_amount
+                                }
+                            } else {
+                                return {
+                                    'card_cvv': $scope.CreditCardData.Cvv,
+                                    'token_id': $scope.CreditCardData.TwoClickToken,
+
+                                    'two_click': true,
+                                    'secure': true,
+                                    'bank': 'mandiri',
+                                    'gross_amount': gross_amount
+                                }
+                            }
+                        };
+
+                        // run the veritrans function to check credit card
+                        Veritrans.token(card, callback);
+
+                        function callback(response) {
+                            if (response.redirect_url) {
+                                // 3Dsecure transaction. Open 3Dsecure dialog
+                                $log.debug('Open Dialog 3Dsecure');
+                                openDialog(response.redirect_url);
+
+                            } else if (response.status_code == '200') {
+                                // success 3d secure or success normal
+                                //close 3d secure dialog if any
+                                closeDialog();
+
+                                // store token data in input #token_id and then submit form to merchant server
+                                $("#vt-token").val(response.token_id);
+                                $scope.CreditCardData.Token = response.token_id;
+
+                                $scope.addCreditCard.addCC();
+
+                            } else {
+                                // failed request token
+                                //close 3d secure dialog if any
+                                closeDialog();
+                                $('#submit-button').removeAttr('disabled');
+                                // Show status message.
+                                $('#message').text(response.status_message);
+                                $log.debug(JSON.stringify(response));
+                            }
+                        }
+
+                        // Open 3DSecure dialog box
+                        function openDialog(url) {
+                            $.fancybox.open({
+                                href: url,
+                                type: 'iframe',
+                                autoSize: false,
+                                width: 400,
+                                height: 420,
+                                closeBtn: false,
+                                modal: true
+                            });
+                        }
+
+                        // Close 3DSecure dialog box
+                        function closeDialog() {
+                            $.fancybox.close();
+                        }
+                    }
+                }
+                
+            },
+            addCC: function() {
+                if ($scope.trial > 3) {
+                    $scope.trial = 0;
+                }
+                $log.debug('submitting form');
+                $scope.addCreditCard.updating = true;
+                var authAccess = getAuthAccess();
+                if (authAccess == 2) {
+                    //authorized
+                    $http({
+                        url: AddCreditCardConfig.Url,
+                        method: 'POST',
+                        data: {
+                            token: $scope.CreditCardData.Token,
+                            cardHolderName: $scope.CreditCardData.Name,
+                            cardExpirymonth: $scope.CreditCardData.Month,
+                            cardExpiryYear : $scope.CreditCardData.Year
+                        },
+                        headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') }
+                    }).then(function (returnData) {
+                        //$log.debug(returnData);
+                        if (returnData.data.status == '200') {
+                            $log.debug('Success Adding new Credit Card');
+                            $scope.addCreditCard.updating = false;
+                            $scope.addCreditCard.updated = true;
+                        }
+                        else {
+                            $log.debug(returnData.data.error);
+                            $log.debug(returnData);
+                            $scope.addCreditCard.edit = true;
+                            $scope.addCreditCard.updating = false;
+                        }
+                    }).catch(function (returnData) {
+                        $scope.trial++;
+                        if (refreshAuthAccess() && $scope.trial < 4) //refresh cookie
+                        {
+                            $scope.addCreditCard(name);
+                        }
+                        else {
+                            $log.debug('Failed requesting change profile');
+                            $scope.addCreditCard.edit = true;
+                            $scope.addCreditCard.updating = false;
+                        }
+                    });
+                }
+                else { //if not authorized
+                    $scope.addCreditCard.edit = true;
+                    $scope.addCreditCard.updating = false;
+                }
             }
-            $log.debug('submitting form');
-            $scope.addCreditCard.updating = true;
-            var authAccess = getAuthAccess();
-            if (authAccess == 2) {
-                //authorized
-                $http({
-                    url: AddCreditCardConfig.Url,
-                    method: 'POST',
-                    data: {
-                        maskedCardNumber: $scope.addCreditCard.cardNo,
-                        cardHolderName: $scope.addCreditCard.holderName,
-                        cardExpiry: $scope.addCreditCard.expDate
-                    },
-                    headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') }
-                }).then(function (returnData) {
-                    //$log.debug(returnData);
-                    if (returnData.data.status == '200') {
-                        $log.debug('Success Adding new Credit Card');
-                        $scope.addCreditCard.updating = false;
-                        $scope.addCreditCard.updated = true;
-                    }
-                    else {
-                        $log.debug(returnData.data.error);
-                        $log.debug(returnData);
-                        $scope.addCreditCard.edit = true;
-                        $scope.addCreditCard.updating = false;
-                    }
-                }).catch(function (returnData) {
-                    $scope.trial++;
-                    if (refreshAuthAccess() && $scope.trial < 4) //refresh cookie
-                    {
-                        $scope.addCreditCard(name);
-                    }
-                    else {
-                        $log.debug('Failed requesting change profile');
-                        $scope.addCreditCard.edit = true;
-                        $scope.addCreditCard.updating = false;
-                    }
-                });
-            }
-            else { //if not authorized
-                $scope.addCreditCard.edit = true;
-                $scope.addCreditCard.updating = false;
+            
+        }
+
+        $scope.validation = function () {
+            if (!$scope.checkNumber($scope.CreditCardData.Number) || !$scope.checkName($scope.CreditCardData.Name)
+                    || !$scope.checkDate($scope.CreditCardData.Month, $scope.CreditCardData.Year)) {
+                if (!$scope.checkDate($scope.CreditCardData.Month, $scope.CreditCardData.Year)) {
+                    $('.ccDate').addclass('has-error');
+                }
+                return false;
+            } else {
+                return true;
             }
         }
 
-        //Executing Get Profile and Transaction History
+        $scope.generateYear = function () {
+            var now = new Date();
+            var yearNow = now.getFullYear();
+            var years = [];
+
+            function listYear(min, max) {
+                for (var i = min; i <= max; i++) {
+                    years.push(i);
+                }
+            }
+            listYear(yearNow, (yearNow + 20));
+            //years = years.reverse();
+            return ['Tahun'].concat(years);
+        }
+
+        $scope.checkName = function (name) {
+            var re = /^[a-zA-Z ]+$/;
+            if (name == null || name.match(re)) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        $scope.checkNumber = function (number) {
+            var re = /^[0-9]+$/;
+            if (number == "") {
+                return true;
+            }
+
+            if (number == null || number.match(re)) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        $scope.checkDate = function (month, year) {
+            if (month == '0' || year == 'Tahun') {
+                $scope.dateOver = true;
+                return false;
+            }
+
+            var now = new Date();
+            var monthNow = now.getMonth();
+            var yearNow = now.getFullYear();
+
+            if (year > yearNow) {
+                return true;
+            }
+            else if (year == yearNow) {
+                if (month < monthNow + 1) {
+                    $scope.dateOver = true;
+                    return false;
+                } else {
+                    return true;
+                }
+            } else {
+                $scope.dateOver = true;
+                return false;
+            }
+        }
+
+        //Executing Get Credit Card
         $scope.creditCard.getCreditCard();
 
         $scope.changeSection = function (name) {

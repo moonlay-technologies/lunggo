@@ -9,9 +9,19 @@
 @{
 
 }
+@section AdditionalCSS {
+    <link href="/Assets/css/jquery-ui.min.css" rel="stylesheet" />
+    <!-- fancybox CSS-->
+    <link href="/Assets/vendor/fancybox/jquery.fancybox.css" rel="stylesheet" />
+}
 @section AdditionalJS{
     <!-- additional Angular JS-->
     <script src="/Assets/js/bootstrap.min.js"></script>
+    <!-- veritrans JS -->
+    <script src="https://api.sandbox.veritrans.co.id/v2/assets/js/veritrans.min.js"></script>
+    <!-- fancybox -->
+    <script type="text/javascript" src="/Assets/vendor/fancybox/jquery.fancybox.pack.js"></script>
+
 }
 
 @section PageJS{
@@ -39,42 +49,69 @@
                         <h2><b>TAMBAH</b> NOMOR KARTU KREDIT CARD</h2>
                     </header>
                     <section class="content-body">
+                        <form name="creditCardForm" novalidate>
+                            <h3 class="no-spacing lg-txt">DETAIL <b>KARTU KREDIT/DEBIT</b></h3>
 
-                        <form name="profileForm" class="form form-horizontal" novalidate>
-                            <div class="form-group has-error" ng-show="userProfile.updated">
-                                <div class="col-xs-12">
-                                    <label>Kartu Kredit Anda telah berhasil ditambahkan.</label>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-xs-3">
-                                    <p class="control-label">Nomor Kartu</p>
-                                </div>
-                                <div class="col-xs-9">
-                                    <input type="number" name="cardNo" ng-model="addCreditCard.cardNo" class="form-control" ng-disabled="addCreditCard.updating" />
-                                </div>
-                            </div>
+                            <!-- new credit card start -->
+                            <div ng-if="CreditCardData.TwoClickToken == 'false'">
+                                <div class="form-group" ng-class="{'has-error' : !checkNumber(CreditCardData.Number)}">
+                                    <label class="control-label">Nomor Kartu</label>
+                                    <input type="text" value="" class="form-control cc-number" maxlength="19" ng-model="CreditCardData.Number" ng-required="CreditCardData.TwoClick == 'false'" />
 
-                            <div class="form-group">
-                                <div class="col-xs-3">
-                                    <p class="control-label">Nama Pemegang Kartu</p>
+                                    <div ng-show="!checkNumber(CreditCardData.Number)" style="color:red">
+                                        Nomor kartu tidak boleh mengandung karakter selain angka
+                                    </div>
                                 </div>
-                                <div class="col-xs-9">
-                                    <input type="text" name="name" ng-model="addCreditCard.holderName" class="form-control" ng-disabled="userProfile.updating" />
-                                </div>
-                            </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="ccDate" ng-class="{'has-error' : dateOver}">
+                                            <div class="col-sm-4">
+                                                <label class="control-label">Kadaluarsa</label>
+                                                <select class="form-control" ng-model="CreditCardData.Month" ng-init="month = 'Bulan'">
+                                                    <option value="{{month.value}}" ng-repeat="month in months" ng-selected="month.value == 0"
+                                                            ng-click="CreditCardData.Month = month.value">
+                                                        {{month.name}}
+                                                    </option>
+                                                </select>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <label class="control-label">&nbsp;</label>
+                                                <select class="form-control" ng-model="CreditCardData.Year" ng-init="year = 'Tahun'">
+                                                    <option value="{{year}}" ng-repeat="year in generateYear()" ng-selected="year  == 'Tahun'"
+                                                            ng-click="CreditCardData.Year = year">
+                                                        {{year}}
+                                                    </option>
 
-                            <div class="form-group">
-                                <div class="col-xs-3">
-                                    <p class="control-label">Tgl Kadaluarsa Kartu</p>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4" ng-class="{'has-error' : !checkNumber(CreditCardData.Cvv)}">
+                                            <label class="control-label">CVV Kartu</label>
+                                            <input type="password" value="" class="form-control"
+                                                   placeholder=" xxx" maxlength="3" ng-model="CreditCardData.Cvv" />
+
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="col-xs-9">
-                                    <input type="text" name="expDate" ng-model="addCreditCard.expDate" class="form-control" ng-disabled="userProfile.updating" />
+                                <div ng-show="dateOver" style="color:red">
+                                    Tanggal Kadaluarsa harus lebih dari tanggal saat ini.
+                                </div>
+                                <div ng-show="!checkNumber(CreditCardData.Cvv)" style="color:red">
+                                    CVV tidak boleh mengandung karakter selain angka
+                                </div>
+                                <div class="form-group" ng-class="{'has-error' : !checkName(CreditCardData.Name)}">
+                                    <label class="control-label">Nama Pemegang Kartu</label>
+                                    <input type="text" value="" class="form-control" size="16" ng-model="CreditCardData.Name" />
+                                    <div ng-show="!checkName(CreditCardData.Name)" style="color:red">
+                                        Nama tidak boleh mengandung karakter selain alfabet dan spasi
+                                    </div>
                                 </div>
                             </div>
+                            <!-- new credit card end -->
+
                         </form>
                         <div class="action">
-                            <a class="btn btn-yellow" ng-click="addCreditCard('ccSave')">{{addCreditCard.updating? 'MENYIMPAN' : 'SIMPAN'}}</a>
+                            <a class="btn btn-yellow" ng-click="addCreditCard.getPreToken()">SIMPAN</a>
                         </div>
                     </section>
                 </div><!-- .profile-content -->

@@ -14,6 +14,8 @@ namespace Lunggo.ApCommon.Payment.Model
         public string Token { get; set; }
         public string CardHolderName { get; set; }
         public DateTime CardExpiry { get; set; }
+        public int CardExpiryMonth { get; set; }
+        public int CardExpiryYear { get; set; }
         public DateTime TokenExpiry { get; set; }
     }
 }

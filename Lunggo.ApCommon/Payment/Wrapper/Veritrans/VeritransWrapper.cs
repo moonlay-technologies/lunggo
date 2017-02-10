@@ -59,6 +59,46 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
             }
         }
 
+        internal VeritransResponse ProcessFirstB2BPayment(PaymentDetails payment, TransactionDetails transactionDetail, PaymentMethod method)
+        {
+            var authorizationKey = ProcessAuthorizationKey(_serverKey);
+            WebRequest request;
+            WebResponse response;
+            VeritransResponse content;
+            payment.Data.CreditCard.Bank = "mandiri";
+            request = CreateVtDirectRequest(authorizationKey, payment.Data, transactionDetail, method);
+            response = SubmitRequest(request);
+            content = GetResponseContent(response);
+            if (content != null && content.StatusCode.StartsWith("2"))
+            {
+                //ProcessSavedCreditCardToken(payment.Data, content);
+                //payment.Status = PaymentResult(content);
+                //payment.ExternalId = content.TransactionId;
+            }
+            else
+            {
+                var log = LogService.GetInstance();
+                var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
+                log.Post("ADDING CREDIT CARD"+
+                    "```Payment Log```"
+                    + "\n`*Environment :* " + env.ToUpper()
+                    + "\n*PAYMENT DETAILS :*\n"
+                    + payment.Serialize()
+                        + "\n*TRANSAC DETAILS :*\n"
+                        + transactionDetail.Serialize()
+                    //+ "\n*ITEM DETAILS :*\n"
+                    //+ itemDetails.Serialize()
+                        + "\n*REQUEST :*\n"
+                        + _temp
+                    + "\n*RESPONSE :*\n"
+                    + content.Serialize()
+                    + "\n*Platform :* "
+                    + Client.GetPlatformType(HttpContext.Current.User.Identity.GetClientId()),
+                    env == "production" ? "#logging-prod" : "#logging-dev");
+            }
+            return content;
+        }
+
         internal PaymentDetails ProcessPayment(PaymentDetails payment, TransactionDetails transactionDetail, PaymentMethod method)
         {
             var authorizationKey = ProcessAuthorizationKey(_serverKey);

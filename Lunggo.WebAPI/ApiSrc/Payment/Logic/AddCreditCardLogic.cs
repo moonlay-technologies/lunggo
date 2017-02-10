@@ -33,20 +33,17 @@ namespace Lunggo.WebAPI.ApiSrc.Payment.Logic
         {
             return
                 request != null &&
-                request.MaskedCardNumber != null &&
-                request.CardExpiry > DateTime.Now;
+                request.Token != null;
         }
 
         private static SavedCreditCard PreprocessServiceRequest(AddCreditCardRequest request)
         {
             var paymentServiceRequest = new SavedCreditCard
             {
-                MaskedCardNumber = request.MaskedCardNumber,
-                CardExpiry = request.CardExpiry,
-                CardHolderName = request.CardHolderName,
                 Token = request.Token,
-                IsPrimaryCard = request.IsPrimaryCard,
-                TokenExpiry = request.TokenExpiry
+                CardHolderName = request.CardHolderName,
+                CardExpiryMonth = request.CardExpiryMonth,
+                CardExpiryYear = request.CardExpiryYear
             };
             return paymentServiceRequest;
         }
