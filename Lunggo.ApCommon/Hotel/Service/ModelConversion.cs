@@ -233,7 +233,9 @@ namespace Lunggo.ApCommon.Hotel.Service
                     BookingReference = hotelDetail.BookingReference,
                     ClientReference = hotelDetail.ClientReference,
                     PhonesNumbers = hotelDetail.PhonesNumbers,
-                    PostalCode = hotelDetail.PostalCode == "0" ? null : hotelDetail.PostalCode
+                    PostalCode = hotelDetail.PostalCode == "0" ? null : hotelDetail.PostalCode,
+                    Latitude = hotelDetail.Latitude == 0 ? null : hotelDetail.Latitude,
+                    Longitude = hotelDetail.Longitude == 0 ? null: hotelDetail.Longitude
                 };
                 if (!string.IsNullOrEmpty(hotelDetail.ZoneCode))
                 {

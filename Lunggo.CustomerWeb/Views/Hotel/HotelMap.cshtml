@@ -6,8 +6,17 @@
     Layout = "/Views/Shared/Desktop/_LayoutDesktop.cshtml";
     ViewBag.BodyClass = "page-hotel map page-search";
     ViewBag.Title = "Pencarian Hotel Peta";
-    ViewBag.AngularController = "hotelSearchController";
+    ViewBag.AngularController = "hotelMapController";
 
+}
+@{
+   var location = Model.SearchParamObject.Location;
+    var isDestination = false;
+    var x = HotelService.GetInstance().GetLocationById(Convert.ToInt64(location));
+    if (x.Area == null && x.Zone == null)
+    {
+        isDestination = true;
+    }
 }
 @section AdditionalCSS{
     <link href="/Assets/css/jquery-ui.min.css" rel="stylesheet" />
@@ -18,15 +27,18 @@
     <script src="/Assets/js/jquery-ui.min.js"></script>
     <script type="text/javascript" src="/Assets/js/jquery.ui.datepicker-id.js"></script>
     <script src="/Assets/js/bootstrap.min.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCRAmMz6GPXsXi1pZAl5QUsjNTcY0ZfqVA&callback=initMap"
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCRAmMz6GPXsXi1pZAl5QUsjNTcY0ZfqVA"
             async defer></script>
+    @*&callback=initMap*@
 }
 
 @section PageJS{
+    <script src="/Assets/travorama20/angularDirectory/search/hotelSearch.service.js"></script>
     <script src="/Assets/travorama20/js/HotelMap.js"></script>
 }
 
 @*@Html.Partial("/Views/Shared/Desktop/_PageSlider.cshtml")*@
+
 <div class="travorama-hotel hotel-map" ng-init="init(@Model.Serialize())">
     <div class="container">
         <div class="search-list">
@@ -44,8 +56,12 @@
                     <div class="filter-trigger clearfix">
                         <div class="filter-star"><span class="switch-filter os-bold" id="filter-star">Bintang Hotel</span></div>
                         <div class="filter-price"><span class="switch-filter os-bold" id="filter-price">Harga</span></div>
-                        <div class="filter-area"><span class="switch-filter os-bold" id="filter-area">Hotel Area</span></div>
-                        <div class="filter-facility"><span class="switch-filter os-bold" id="filter-facility">Fitur Hotel</span></div>
+                        @if (isDestination)
+                        {
+                            <div class="filter-area"><span class="switch-filter os-bold" id="filter-area">Zona Hotel</span></div>
+                        }
+                        
+                        <div class="filter-facility"><span class="switch-filter os-bold" id="filter-facility">Fasilitas Hotel</span></div>
                     </div>
                     <div class="filter-content">
                         <div class="filter-star-content fc-wrapper">
@@ -53,79 +69,66 @@
                             <div class="fc-title">
                                 <span class="os-bold">Berdasarkan Bintang Hotel</span>
                                 <span class="pull-right">
-                                    <label class="select-all os-regular yellow-txt under-txt">Pilih Semua</label>
-                                    <label class="select-none os-regular yellow-txt under-txt">Nihil</label>
+                                    <label class="select-all os-regular yellow-txt under-txt" ng-click="filter.stars = null">Reset</label>
                                 </span>
                             </div>
                             <div class="tab-detail">
-                                <div class="rating">
-                                    <label class="sqr pointer">
+                                <div class="area">
+                                    <label class="sqr pointer" ng-click="changeFilter('star', 5)" ng-class="{ active: (filter.stars.indexOf(5) > -1) }">
                                         <span class="checkbox"></span>
-                                        <input type="checkbox" name="check" class="check" value="false" />
                                         <span class="star star-5"></span>
                                     </label>
-                                    <label class="sqr pointer">
+                                    <label class="sqr pointer" ng-click="changeFilter('star', 4)" ng-class="{ active: (filter.stars.indexOf(4) > -1) }">
                                         <span class="checkbox"></span>
-                                        <input type="checkbox" name="check" class="check" value="false" />
                                         <span class="star star-4"></span>
                                     </label>
-                                    <label class="sqr pointer">
+                                    <label class="sqr pointer" ng-click="changeFilter('star', 3)" ng-class="{ active: (filter.stars.indexOf(3) > -1) }">
                                         <span class="checkbox"></span>
-                                        <input type="checkbox" name="check" class="check" value="false" />
                                         <span class="star star-3"></span>
                                     </label>
-                                    <label class="sqr pointer">
+                                    <label class="sqr pointer" ng-click="changeFilter('star', 2)" ng-class="{ active: (filter.stars.indexOf(2) > -1) }">
                                         <span class="checkbox"></span>
-                                        <input type="checkbox" name="check" class="check" value="false" />
                                         <span class="star star-2"></span>
                                     </label>
-                                    <label class="sqr pointer">
+                                    <label class="sqr pointer" ng-click="changeFilter('star', 1)" ng-class="{ active: (filter.stars.indexOf(1) > -1) }">
                                         <span class="checkbox"></span>
-                                        <input type="checkbox" name="check" class="check" value="false" />
                                         <span class="star"></span>
                                     </label>
 
                                 </div>
                             </div>
                         </div>
+
                         <div class="filter-price-content fc-wrapper">
                             <div class="close-filter">X</div>
                             <div class="os-bold fc-title">Berdasarkan Harga</div>
-                            <div class="slider departure-price-slider ui-slider ui-corner-all ui-slider-horizontal ui-widget ui-widget-content" id="departure-price-slider"><div class="ui-slider-range ui-corner-all ui-widget-header" style="width: 100%; left: 0%;"></div><span tabindex="0" class="ui-slider-handle ui-corner-all ui-state-default" style="left: 0%;"></span><span tabindex="0" class="ui-slider-handle ui-corner-all ui-state-default" style="left: 100%;"></span></div>
+                            <div class="slider ui-slider ui-corner-all ui-slider-horizontal ui-widget ui-widget-content" id="slider-range">
+                                <div class="ui-slider-range ui-corner-all ui-widget-header" style="width: 100%; left: 0%;"></div>
+                                <span tabindex="0" class="ui-slider-handle ui-corner-all ui-state-default" style="left: 0%;"></span>
+                                <span tabindex="0" class="ui-slider-handle ui-corner-all ui-state-default" style="left: 100%;"></span>
+                            </div>
                             <div class="slider-minmax">
-                                <span class="yellow-txt">Rp 461.300</span>
-                                <span class="pull-right yellow-txt">Rp 612.200</span>
+                                <span class="yellow-txt">{{filter.minPrice | number}}</span>
+                                <span class="pull-right yellow-txt">Rp {{filter.maxPrice | number}}</span>
                             </div>
                             <div class="hidden">
-                                <input type="text" name="priceSliderValueMin" value="" class="departure-price-slider-min ng-pristine ng-untouched ng-valid" ng-model="departureFlightConfig.flightFilter.price.current[0]">
-                                <input type="text" name="priceSliderValueMax" value="" class="departure-price-slider-max ng-pristine ng-untouched ng-valid" ng-model="departureFlightConfig.flightFilter.price.current[1]">
+                                <input type="text" name="priceSliderValueMin" value="" class="slider-range-min" ng-model="filter.minPrice">
+                                <input type="text" name="priceSliderValueMax" value="" class="slider-range-max" ng-model="filter.maxPrice">
                             </div>
                         </div>
                         <div class="filter-area-content fc-wrapper">
                             <div class="close-filter">X</div>
                             <div class="fc-title">
-                                <span class="os-bold">Berdasarkan Hotel Area</span>
+                                <span class="os-bold">Berdasarkan Zona Hotel</span>
                                 <span class="pull-right">
-                                    <label class="select-all os-regular yellow-txt under-txt">Pilih Semua</label>
-                                    <label class="select-none os-regular yellow-txt under-txt">Nihil</label>
+                                    <label class="select-all os-regular yellow-txt under-txt" ng-click="filter.zones = null">Reset</label>
                                 </span>
                             </div>
                             <div class="tab-detail">
-                                <div class="area">
-                                    <label class="sqr pointer">
+                                <div class="area" ng-repeat="zoneFilter in hotelFilterDisplayInfo.zoneFilter ">
+                                    <label class="sqr pointer" ng-click="changeFilter('zone', zoneFilter)" ng-class="{ active: (filter.zones.indexOf(zoneFilter.code) > -1) }">
                                         <span class="checkbox"></span>
-                                        <input type="checkbox" name="check" class="check" value="false" />
-                                        <span class="name">Kota Bandung</span>
-                                    </label>
-                                    <label class="sqr pointer">
-                                        <span class="checkbox"></span>
-                                        <input type="checkbox" name="check" class="check" value="false" />
-                                        <span class="name">Kota Jakarta</span>
-                                    </label>
-                                    <label class="sqr pointer">
-                                        <span class="checkbox"></span>
-                                        <input type="checkbox" name="check" class="check" value="false" />
-                                        <span class="name">Kota Bogor</span>
+                                        <span class="name">{{zoneFilter.name}}</span>
                                     </label>
                                 </div>
                             </div>
@@ -133,30 +136,18 @@
                         <div class="filter-facility-content fc-wrapper">
                             <div class="close-filter">X</div>
                             <div class="fc-title">
-                                <span class="os-bold">Berdasarkan Fitur Hotel</span>
+                                <span class="os-bold">Berdasarkan Fasilitas Hotel</span>
                                 <span class="pull-right">
-                                    <label class="select-all os-regular yellow-txt under-txt">Pilih Semua</label>
-                                    <label class="select-none os-regular yellow-txt under-txt">Nihil</label>
+                                    <label class="select-all os-regular yellow-txt under-txt" ng-click="filter.facilities = null">Reset</label>
                                 </span>
                             </div>
                             <div class="tab-detail">
-                                <div class="area">
-                                    <label class="sqr pointer">
+                               <div class="area" ng-repeat="facilityFilter in hotelFilterDisplayInfo.facilityFilter" ng-hide="facilityFilter.count == 0">
+                                    <label class="sqr pointer" ng-click="changeFilter('facility', facilityFilter)" ng-class="{ active: (filter.facilities.indexOf(facilityFilter.code) > -1) }">
                                         <span class="checkbox"></span>
-                                        <input type="checkbox" name="check" class="check" value="false" />
-                                        <span class="name">Park</span>
+                                        <span class="name">{{facilityFilter.name}}</span>
                                     </label>
-                                    <label class="sqr pointer">
-                                        <span class="checkbox"></span>
-                                        <input type="checkbox" name="check" class="check" value="false" />
-                                        <span class="name">Internet</span>
-                                    </label>
-                                    <label class="sqr pointer">
-                                        <span class="checkbox"></span>
-                                        <input type="checkbox" name="check" class="check" value="false" />
-                                        <span class="name">Restaurant</span>
-                                    </label>
-                                </div>
+                               </div>
                             </div>
                         </div>
                     </div>
@@ -164,7 +155,9 @@
             </div>
             <div class="search-map-result clearfix">
                 <div class="col-6">
-                    <input type="text" name="hotelMapLocation" value="" class="form-hotel-location form-control" placeholder="Kota, Wilayah atau Nama Hotel">
+                    <input type="text" name="hotelMapLocation" value="" class="form-hotel-location form-control"
+                           placeholder="Kota, Wilayah atau Nama Hotel" ng-pattern="/^[a-zA-Z]*$/" 
+                           ng-model="filter.nameFilter" ng-disabled="hotels.length < 1" tra-on-enter="filterHotels()">
                 </div>
                 <div class="col-4 clearfix">
                     <div class="col-2">
@@ -174,8 +167,8 @@
                         <div class="dropdown form-control form-hotel-sort clearfix">
                             <div class="hotel-sort">Harga Terendah</div>
                             <div class="option">
-                                <span>Harga Terendah</span>
-                                <span>Harga Tertinggi</span>
+                                <span ng-click="changeSorting(sortByType.ascendingPrice)">Harga Terendah</span>
+                                <span ng-click="changeSorting(sortByType.descendingPrice)">Harga Tertinggi</span>
                             </div>
                         </div>
                     </div>
@@ -192,12 +185,19 @@
                 </div>
                 <div class="clearfix row-content">
                     <div class="col-half search-list">
-                        <div class="slr-hotel">
+                        <div ng-show="searchDone && returnedHotelCount == 0">
+                            <h4> Hotel tidak ditemukan, silakan ganti filter atau destinasi anda.</h4>
+                        </div>
+
+                        <div ng-show="!searchDone" class="text-center" style="margin-top: 50%;">
+                            <img src="/Assets/images/load.gif" class="img-loading">
+                        </div>
+                        <div class="slr-hotel" ng-show="searchDone">
                             <div class="hotel-list-container">
-                                <a class="hl-wrapper" @*href="{{getUrlHotelDetail(hotel)}}"*@ target="_blank">
+                                <a ng-repeat="hotel in hotels" class="hl-wrapper" href="{{getUrlHotelDetail(hotel)}}" target="_blank" ng-show="searchDone">
                                     <div class="hotel-list clearfix pointer">
                                         <div class="col-2">
-                                            <img class="img-list" hotel-list-image src="http://photos.hotelbeds.com/giata/21/218580/218580a_hb_a_005.jpg" alt="Hotel" />
+                                            <img class="img-list" src="{{hotel.mainImage}}" alt="Hotel" />
                                         </div>
                                         <div class="col-8">
                                             <div class="clearfix">
@@ -207,123 +207,26 @@
                                                     <span class="meal" ng-show="hotel.restaurant"></span>
                                                 </div>
                                             </div>
-                                            <div class="star star-5"></div>
+                                            <div ng-class="{
+                                                 'star': hotel.starRating == 1,
+                                                 'star star-2': hotel.starRating == 2,
+                                                 'star star-3': hotel.starRating == 3,
+                                                 'star star-4': hotel.starRating == 4,
+                                                 'star star-5': hotel.starRating == 5}">
+                                            </div>
                                             <div class="hotel-map-price">
                                                 <div class="price clearfix" id="price-night" style="display: block">
                                                     <div class="txt-md black-txt"><b>Harga per kamar, per malam :</b></div>
-                                                    <div class="underline-txt">Rp 999.999.999</div>
-                                                    <div class="hotel-title"><b><sup>Rp</sup> 999.999.999</b></div>
+                                                    <div class="underline-txt">Rp {{hotel.originalCheapestFare | currency:'':0}}</div>
+                                                    <div class="hotel-title"><b><sup>Rp</sup> {{hotel.netCheapestFare | currency:'':0}}</b></div>
                                                     <div class="xs-txt">*Harga Termasuk Pajak & Service Charge</div>
                                                 </div>
-                                                <button href="#" class="btn btn-yellow sm-btn checkout">PESAN</button>
+                                                <button href="{{getUrlHotelDetail(hotel)}}" class="btn btn-yellow sm-btn checkout">PESAN</button>
                                             </div>
                                         </div>
                                     </div>
                                 </a>
-                                <a class="hl-wrapper" @*href="{{getUrlHotelDetail(hotel)}}"*@ target="_blank">
-                                    <div class="hotel-list clearfix pointer">
-                                        <div class="col-2">
-                                            <img class="img-list" hotel-list-image src="http://photos.hotelbeds.com/giata/21/218580/218580a_hb_a_005.jpg" alt="Hotel" />
-                                        </div>
-                                        <div class="col-8">
-                                            <div class="clearfix">
-                                                <div class="col-8 blue-txt bg hotel-title">{{hotel.hotelName}}</div>
-                                                <div class="col-2 facility">
-                                                    <span class="wifi" ng-show="hotel.isWifiAccessAvailable"></span>
-                                                    <span class="meal" ng-show="hotel.restaurant"></span>
-                                                </div>
-                                            </div>
-                                            <div class="star star-5"></div>
-                                            <div class="hotel-map-price">
-                                                <div class="price clearfix" id="price-night" style="display: block">
-                                                    <div class="txt-md black-txt"><b>Harga per kamar, per malam :</b></div>
-                                                    <div class="underline-txt">Rp 999.999.999</div>
-                                                    <div class="hotel-title"><b><sup>Rp</sup> 999.999.999</b></div>
-                                                    <div class="xs-txt">*Harga Termasuk Pajak & Service Charge</div>
-                                                </div>
-                                                <button href="#" class="btn btn-yellow sm-btn checkout">PESAN</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </a>
-                                <a class="hl-wrapper" @*href="{{getUrlHotelDetail(hotel)}}"*@ target="_blank">
-                                    <div class="hotel-list clearfix pointer">
-                                        <div class="col-2">
-                                            <img class="img-list" hotel-list-image src="http://photos.hotelbeds.com/giata/21/218580/218580a_hb_a_005.jpg" alt="Hotel" />
-                                        </div>
-                                        <div class="col-8">
-                                            <div class="clearfix">
-                                                <div class="col-8 blue-txt bg hotel-title">{{hotel.hotelName}}</div>
-                                                <div class="col-2 facility">
-                                                    <span class="wifi" ng-show="hotel.isWifiAccessAvailable"></span>
-                                                    <span class="meal" ng-show="hotel.restaurant"></span>
-                                                </div>
-                                            </div>
-                                            <div class="star star-5"></div>
-                                            <div class="hotel-map-price">
-                                                <div class="price clearfix" id="price-night" style="display: block">
-                                                    <div class="txt-md black-txt"><b>Harga per kamar, per malam :</b></div>
-                                                    <div class="underline-txt">Rp 999.999.999</div>
-                                                    <div class="hotel-title"><b><sup>Rp</sup> 999.999.999</b></div>
-                                                    <div class="xs-txt">*Harga Termasuk Pajak & Service Charge</div>
-                                                </div>
-                                                <button href="#" class="btn btn-yellow sm-btn checkout">PESAN</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </a>
-                                <a class="hl-wrapper" @*href="{{getUrlHotelDetail(hotel)}}"*@ target="_blank">
-                                    <div class="hotel-list clearfix pointer">
-                                        <div class="col-2">
-                                            <img class="img-list" hotel-list-image src="http://photos.hotelbeds.com/giata/21/218580/218580a_hb_a_005.jpg" alt="Hotel" />
-                                        </div>
-                                        <div class="col-8">
-                                            <div class="clearfix">
-                                                <div class="col-8 blue-txt bg hotel-title">{{hotel.hotelName}}</div>
-                                                <div class="col-2 facility">
-                                                    <span class="wifi" ng-show="hotel.isWifiAccessAvailable"></span>
-                                                    <span class="meal" ng-show="hotel.restaurant"></span>
-                                                </div>
-                                            </div>
-                                            <div class="star star-5"></div>
-                                            <div class="hotel-map-price">
-                                                <div class="price clearfix" id="price-night" style="display: block">
-                                                    <div class="txt-md black-txt"><b>Harga per kamar, per malam :</b></div>
-                                                    <div class="underline-txt">Rp 999.999.999</div>
-                                                    <div class="hotel-title"><b><sup>Rp</sup> 999.999.999</b></div>
-                                                    <div class="xs-txt">*Harga Termasuk Pajak & Service Charge</div>
-                                                </div>
-                                                <button href="#" class="btn btn-yellow sm-btn checkout">PESAN</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </a>
-                                <a class="hl-wrapper" @*href="{{getUrlHotelDetail(hotel)}}"*@ target="_blank">
-                                    <div class="hotel-list clearfix pointer">
-                                        <div class="col-2">
-                                            <img class="img-list" hotel-list-image src="http://photos.hotelbeds.com/giata/21/218580/218580a_hb_a_005.jpg" alt="Hotel" />
-                                        </div>
-                                        <div class="col-8">
-                                            <div class="clearfix">
-                                                <div class="col-8 blue-txt bg hotel-title">{{hotel.hotelName}}</div>
-                                                <div class="col-2 facility">
-                                                    <span class="wifi" ng-show="hotel.isWifiAccessAvailable"></span>
-                                                    <span class="meal" ng-show="hotel.restaurant"></span>
-                                                </div>
-                                            </div>
-                                            <div class="star star-5"></div>
-                                            <div class="hotel-map-price">
-                                                <div class="price clearfix" id="price-night" style="display: block">
-                                                    <div class="txt-md black-txt"><b>Harga per kamar, per malam :</b></div>
-                                                    <div class="underline-txt">Rp 999.999.999</div>
-                                                    <div class="hotel-title"><b><sup>Rp</sup> 999.999.999</b></div>
-                                                    <div class="xs-txt">*Harga Termasuk Pajak & Service Charge</div>
-                                                </div>
-                                                <button href="#" class="btn btn-yellow sm-btn checkout">PESAN</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </a>
+
                             </div>
                         </div>
                     </div>

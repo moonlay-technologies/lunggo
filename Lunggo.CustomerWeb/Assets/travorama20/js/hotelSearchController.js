@@ -334,7 +334,7 @@ function ($scope, $log, $window, $http, $resource, $timeout, $interval, hotelSea
         var destinationName = hotel.destinationName;
         destinationName = destinationName.replace(/\s+/g, '-');
         destinationName = destinationName.replace(/[^0-9a-zA-Z-]/gi, '').toLowerCase();
-        $log.debug('redirect to detail hotel with hotelCd: ' + hotel.hotelCd);
+        //$log.debug('redirect to detail hotel with hotelCd: ' + hotel.hotelCd);
         var url = '/id/hotel/' + hotel.country + '/' + destinationName +
             '/' + hotelName + '-' + hotel.hotelCd + "/?" + $scope.searchParam; 
 
