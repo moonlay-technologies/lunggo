@@ -146,7 +146,7 @@
                     $scope.maxPrice = data.maxPrice;
                     $scope.hotelFilterDisplayInfo = data.hotelFilterDisplayInfo;
                     isFirstload = false;
-                    
+
                 };
                 initiatePriceSlider();
                 //$timeout(function () { customCheckbox(); }, 0);
@@ -177,7 +177,7 @@
                     $scope.changeSearch.searchId = null;
                     $scope.researching = true;
 
-                    $scope.searchHotel();
+                    //$scope.searchHotel();
                     return false;
                 }
             }
@@ -185,8 +185,8 @@
             return true;
         };
         $scope.markers = [];
-        $.each($scope.markers, function(i, marker) {
-            marker.click(function() {
+        $.each($scope.markers, function (i, marker) {
+            marker.click(function () {
                 alert(marker)
             });
         });
@@ -235,20 +235,20 @@
                     netFare: hotels[j].netCheapestFare,
                     country: hotels[j].country,
                     destinationName: hotels[j].destinationName,
-                    hotelCd : hotels[j].hotelCd
+                    hotelCd: hotels[j].hotelCd
                 });
             }
 
             for (var i = 0, feature; feature = features[i]; i++) {
                 if (i == 0) {
-                    addMarker(feature, 'first');
+                    addMarker(feature, i);
                 } else {
-                    addMarker(feature, '');
+                    addMarker(feature, i);
                 }
-                
+
             }
 
-            function addMarker(feature) {
+            function addMarker(feature, order) {
                 var marker = new google.maps.Marker({
                     position: feature.position,
                     icon: icons[feature.type].icon,
@@ -259,7 +259,7 @@
                 var star;
                 if (feature.star == "1") {
                     star = 'star';
-                }else if (feature.star == "2") {
+                } else if (feature.star == "2") {
                     star = 'star star-2';
                 } else if (feature.star == "3") {
                     star = 'star star-3';
@@ -274,7 +274,7 @@
                 var url = $scope.getUrlHotelDetail(feature);
                 var infoDesc =
                     '<div class="map-wrapper">' +
-                    '<div class="map-container">' +
+                    '<div class="map-container" id ="hotel-'+ order +'">' +
                     '<div class="hotel-round"' + 'style="' + 'background-image: url(' + feature.image + ')"></div>' +
                     '<div class="map-content normal-txt">' +
                     '<div class="hotel-title bold-txt blue-txt">' + feature.hotelName + '</div>' +
@@ -283,35 +283,30 @@
                     '<div class="orange-txt bold-txt md-txt"><sup>Rp </sup>' + feature.netFare + '</div>' +
                     '</div>' +
                     '<div class="map-button">' + '<a class="btn btn-yellow sm-btn"' + 'href="' + url + '"' + '>PESAN</a>' + '</div>' +
-                    '</div>' +
-                    '<div class="map-price sm-txt semibold-txt">' + 'Rp ' + feature.netFare + '</div>' +
                     '</div>';
 
+                
                 var infoWindow = new google.maps.InfoWindow({
                     content: infoDesc,
                     maxWidth: 350,
                 });
 
                 //if (type == 'first') {
-                    infoWindow.open(map, marker);
+                //infoWindow.open(map, marker);
                 //}
-                
 
-                infoWindow.addListener('domready', function () {
+                marker.addListener('click', function () {
+                    infoWindow.open(map, marker);
                     var iwOuter = $('.gm-style-iw').addClass('custom');
+                    var p = $(this).closest('.gm-style-iw');
+                    var q = p.siblings();
+                                        //$('.map-container').hide();
+                    $('.map-container').not('#hotel-' + order).hide();
+                    p.find('.map-container').show();
+                    p.find('.map-price').hide();
+                    q.find('.map-container').hide();
+                    q.find('.map-price').show();
 
-                    $('.map-container').hide();
-
-                    $('.map-price').click(function () {
-                        var p = $(this).closest('.gm-style-iw').parent();
-                        var q = p.siblings();
-
-                        p.find('.map-container').show();
-                        p.find('.map-price').hide();
-                        q.find('.map-container').hide();
-                        q.find('.map-price').show();
-                    });
-                    
                     var iwBackground = iwOuter.prev();
                     iwBackground.children().css({ 'display': 'none' });
 
@@ -319,8 +314,34 @@
                     iwCloseBtn.css({ display: 'none' });
                 });
 
-                
+                //infoWindow.addListener('domready', function () {
+                //    var iwOuter = $('.gm-style-iw').addClass('custom');
+
+                //    $('.map-container').hide();
+
+                //    $('.map-price').click(function () {
+                //        var p = $(this).closest('.gm-style-iw').parent();
+                //        var q = p.siblings();
+
+                //        p.find('.map-container').show();
+                //        p.find('.map-price').hide();
+                //        q.find('.map-container').hide();
+                //        q.find('.map-price').show();
+                //    });
+
+                //    var iwBackground = iwOuter.prev();
+                //    iwBackground.children().css({ 'display': 'none' });
+
+                //    var iwCloseBtn = iwOuter.next();
+                //    iwCloseBtn.css({ display: 'none' });
+                //});
+
+
             }
+        }
+
+        $scope.refreshPage = function () {
+            location.reload();
         }
 
         // ************************* FILTER & SORTS ********************************
@@ -338,10 +359,10 @@
                 $scope.filter.maxPrice = $scope.filter.maxPrice;
             } else $scope.filter.maxPrice = $scope.filter.maxPrice + (100000 - $scope.filter.maxPrice % 100000);
             // activate price filter
-            $('.slider-range').slider({
+            $('#slider-range').slider({
                 range: true,
-                min: $scope.filter.minPrice,
-                max: $scope.filter.maxPrice,
+                min: $scope.minPrice,
+                max: $scope.maxPrice,
                 step: 100000,
                 values: [$scope.filter.minPrice, $scope.filter.maxPrice],
                 create: function (event, ui) {
@@ -458,7 +479,7 @@
             });
         }
 
-        $scope.selectAll = function(type) {
+        $scope.selectAll = function (type) {
             if (type == 'zone') {
                 for (var x = 0; x < $scope.hotelFilterDisplayInfo.zoneFilter.length; x++) {
                     if ($scope.filter.zones.indexOf($scope.hotelFilterDisplayInfo.zoneFilter[x].code) <= -1) {
@@ -484,7 +505,7 @@
             }
 
         }
-}]);
+    }]);
 
 jQuery(document).ready(function ($) {
     // Search List Image
@@ -561,16 +582,21 @@ jQuery(document).ready(function ($) {
     });
 
     //Custom checkbox
-    $('body .sqr').on('click', function () {
-        var id = $(this).find('.check');
-        if ($(id).is(':checked')) {
-            id.checked = true;
-            $(this).addClass('active');
-        } else {
-            id.checked = false;
-            $(this).removeClass('active');
-        }
-    });
+    //$('body .sqr').on('click', function () {
+    //    if ($(this).hasClass("active")) {
+    //        $(this).removeClass("active");
+    //    } else {
+    //        $(this).addClass("active");
+    //    }
+    //    //var id = $(this).find('.check');
+    //    //if ($(id).is(':checked')) {
+    //    //    id.checked = true;
+    //    //    $(this).addClass('active');
+    //    //} else {
+    //    //    id.checked = false;
+    //    //    $(this).removeClass('active');
+    //    //}
+    //});
 
     //$('body .select-all').on('click', function () {
     //    var p = $(this).closest('.fc-title').parent().find('.tab-detail');
@@ -593,89 +619,3 @@ jQuery(document).ready(function ($) {
         ('.map-container').hide();
     });
 });
-
-//function initMap() {
-//    var currentHotel = { lat: -8.710695, lng: 115.178775 };
-//    var otherHotel = { lat: -8.711247, lng: 115.181347 };
-
-//    var map = new google.maps.Map(document.getElementById('map'), {
-//        zoom: 17,
-//        center: currentHotel,
-//        mapTypeControl: false,
-//        streetViewControl: false,
-//        fullscreenControl: false
-//    });
-
-//    var iconBase = '/Assets/images/hotel/markers-';
-//    var icons = {
-//        hotelRed: {
-//            icon: iconBase + 'red.png'
-//        }
-//    };
-
-//    var features = [
-//      {
-//          position: currentHotel,
-//          type: 'hotelRed'
-//      }, {
-//          position: otherHotel,
-//          type: 'hotelRed'
-//      }
-//    ];
-
-//    for (var i = 0, feature; feature = features[i]; i++) {
-//        addMarker(feature);
-//    }
-
-//    function addMarker(feature) {
-//        var marker = new google.maps.Marker({
-//            position: feature.position,
-//            icon: icons[feature.type].icon,
-//            map: map
-//        });
-
-//        var infoDesc =
-//            '<div class="map-wrapper">' +
-//            '<div class="map-container">' +
-//            '<div class="hotel-round"' + 'style="' + 'background-image: url(' + '/Assets/images/hotel/hotel-dummy.jpg' + ')"></div>' +
-//            '<div class="map-content normal-txt">' +
-//            '<div class="hotel-title bold-txt blue-txt">' + 'Everyday Smart' + '</div>' +
-//            '<div class="' + 'star star-5' + '"></div>' +
-//            '<div class="orange-txt sm-txt underline-txt">Rp ' + '999.999.999' + '</div>' +
-//            '<div class="orange-txt bold-txt md-txt"><sup>Rp </sup>' + '999.999.999' + '</div>' +
-//            '</div>' +
-//            '<div class="map-button">' + '<a class="btn btn-yellow sm-btn"' + 'href="' + '#' + '"' + '>PESAN</a>' + '</div>' +
-//            '</div>' +
-//            '<div class="map-price sm-txt semibold-txt">' + 'Rp ' + '999.999.999' + '</div>' +
-//            '</div>';
-
-//        var infoWindow = new google.maps.InfoWindow({
-//            content: infoDesc,
-//            maxWidth: 350,
-//        });
-
-//        infoWindow.open(map, marker);
-
-//        infoWindow.addListener('domready', function () {
-//            var iwOuter = $('.gm-style-iw').addClass('custom');
-
-//            $('.map-container').hide();
-
-//            $('.map-price').click(function () {
-//                var p = $(this).closest('.gm-style-iw').parent();
-//                var q = p.siblings();
-
-//                p.find('.map-container').show();
-//                p.find('.map-price').hide();
-//                q.find('.map-container').hide();
-//                q.find('.map-price').show();
-//            });
-
-//            var iwBackground = iwOuter.prev();
-//            iwBackground.children().css({ 'display': 'none' });
-
-//            var iwCloseBtn = iwOuter.next();
-//            iwCloseBtn.css({ display: 'none' });
-//        });
-//    }
-//}

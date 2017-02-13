@@ -140,13 +140,18 @@ function ($scope, $log, $window, $http, $resource, $timeout, $interval, hotelSea
     $scope.view = {
         showHotelSearch : false
     }
-   
+
+    $scope.mapUrl = '';
     // ***************************************END*******************************
 
     // ****************************** INITS ************************************
     $scope.init = function (model) {
+        //$log.debug("href = " + window.location.pathname);
         $scope.model = model;
         $log.debug($scope.model);
+        $scope.mapUrl = window.location.pathname.replace("cari", "map") + '?info=' + model.searchParam;
+        $("#mapUrl").attr("href", $scope.mapUrl);
+        $("#mapUrl").attr("target", "_blank");
         $scope.hotelSearch.location = $scope.model.searchParamObject.location;
         $scope.hotelSearch.checkinDate = $scope.model.searchParamObject.checkinDate;
         $scope.hotelSearch.checkinDateDisplay = moment($scope.hotelSearch.checkinDate).locale("id").format('LL');
@@ -288,7 +293,7 @@ function ($scope, $log, $window, $http, $resource, $timeout, $interval, hotelSea
                 $scope.filter.maxPrice = data.maxPrice;
                 $scope.minPrice = data.minPrice;
                 $scope.maxPrice = data.maxPrice;
-            initiatePriceSlider();
+                initiatePriceSlider();
 
                 $scope.hotelFilterDisplayInfo = data.hotelFilterDisplayInfo;
                 isFirstload = false;
