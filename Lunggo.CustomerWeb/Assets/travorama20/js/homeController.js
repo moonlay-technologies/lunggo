@@ -90,9 +90,9 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
             }
         }
 
-        
+
     });
-   // ================= FLIGHT ========================
+    // ================= FLIGHT ========================
 
     $scope.departureDate = moment().add(1, 'day').format('DDMMYY');
     $scope.changeTab = function (tab) {
@@ -105,7 +105,7 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
             $('.form-child-age').hide();
         }
     }
-    
+
     $scope.showForm = function (tab) {
         if (tab == 'hotel') {
             $scope.isFlight = false;
@@ -114,7 +114,7 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
         }
     }
 
-    
+
     //=============== hotel start ======================
     $scope.showPopularDestinations = false;
     hotelSearchSvc.initializeSearchForm($scope);
@@ -138,7 +138,7 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
             }
         }
         return [true, ''];
-        
+
     }
     $(function () {
         $(".ui-datepicker").datepicker({
@@ -146,7 +146,7 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
         });
     });
 
-   
+
     $('.hotel-date-picker').datepicker('option', 'beforeShowDay', hotelSearchSvc.highlightDays);
     $scope.hotel = {};
     $scope.view = {
@@ -496,7 +496,7 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
                 if (returnData.cheapestDate != null && returnData.cheapestDate != '') {
                     $scope.listCheapestPrice = [];
                     getEventDate(m + 1, y, returnData.listDatesAndPrices, $scope.selectedPopularDestination);
-                } 
+                }
             }).error(function (returnData) {
             });
         }
@@ -611,12 +611,8 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
             }
         }
 
-       $('#pc-datepicker').fullCalendar('renderEvents', $scope.listCheapestPrice);
-   }
-
-    $('.fc-content-skeleton').click(function () {
-        $(this).css('border', '1px solid red');
-    });
+        $('#pc-datepicker').fullCalendar('renderEvents', $scope.listCheapestPrice);
+    }
 
     $('#pc-datepicker').fullCalendar({
         lang: 'id',
@@ -628,7 +624,7 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
         events: getEvents(),
         eventRender: function (event, element) {
             if (event.link != '' && event.title != '') {
-                var link = "<input class='btn btn-yellow sm-btn btn-view' type='button' onclick='location.href=\"" + event.link + "\";' value='LIHAT'/>";
+                var link = "<input class='btn btn-yellow sm-btn btn-view sm-txt' type='button' onclick='location.href=\"" + event.link + "\";' value='LIHAT'/>";
                 var title = '<sup>Rp </sup>' + event.title + 'rb';
                 element.find('.fc-content').append(link);
                 if (event.title != '0') {
@@ -673,7 +669,7 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
             $('#selectMonth').val(val);
             $('.selected-month').text(month);
             $scope.selectedPopularDestination.month = parseInt(val);
-        }else if ($scope.selectedPopularDestination.year == tahun) {
+        } else if ($scope.selectedPopularDestination.year == tahun) {
             var mth = parseInt(val);
             if (mth >= bulan) {
                 $('#selectMonth').val(val);
@@ -684,7 +680,7 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
                 $('.selected-month').text($scope.returnMonth(bulan));
                 $scope.selectedPopularDestination.month = bulan;
             }
-        }     
+        }
     });
 
     $('#year div').on('click', function () {
@@ -694,7 +690,7 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
             $('#selectYear').val(val);
             $('.selected-year').text(thn);
             $scope.selectedPopularDestination.year = parseInt(val);
-        }else if (parseInt(val) == tahun) {
+        } else if (parseInt(val) == tahun) {
             if ($scope.selectedPopularDestination.month >= bulan) {
                 $('#selectYear').val(val);
                 $('.selected-year').text(thn);
@@ -708,7 +704,7 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
                 $scope.selectedPopularDestination.month = bulan;
             }
         }
-        
+
     });
 
     var today = new Date();
@@ -734,10 +730,12 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
     $('body input[name="searchFrom"]').click(function () {
         $(this).select();
         showLocation('asal');
+        $('#month div, #year div').hide();
     });
     $('body input[name="searchTo"]').click(function () {
         $(this).select();
         showLocation('tujuan');
+        $('#month div, #year div').hide();
     });
 
     function showLocation(place) {
@@ -902,7 +900,7 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
 
     //    var newDate = new Date(tahun, bulan, '01');
     //    $('#pc-datepicker').datepicker('setDate', newDate);
-        
+
     //    if ($scope.selectedPopularDestination.origin != '' && $scope.selectedPopularDestination.destination != '') {
     //        $scope.hasSearched = true;
     //        $scope.getFlightPrice($scope.selectedPopularDestination.origin, $scope.selectedPopularDestination.destination,
@@ -1078,5 +1076,5 @@ jQuery(document).ready(function ($) {
         $(this).find('.view-hotel').slideToggle('fast');
     });
 
-    
+
 });
