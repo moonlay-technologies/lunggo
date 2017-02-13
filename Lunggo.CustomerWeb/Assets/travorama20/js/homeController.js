@@ -651,91 +651,114 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
     }
     setValueMY();
 
-    $('#month div, #year div').hide();
-    $('.select-year').click(function () {
-        $('#year div').toggle();
-        $('#month div, .search-location').hide();
+    //$('#month div, #year div').hide();
+    //$('.select-year').click(function () {
+    //    $('#year div').toggle();
+    //    $('#month div, .search-location').hide();
+    //});
+
+    //$('.select-month').click(function () {
+    //    $('#month div').toggle();
+    //    $('#year div, .search-location').hide();
+    //});
+
+    //$('#month div').on('click', function () {
+    //    var val = $(this).attr('value');
+    //    var month = $(this).html();
+    //    if ($scope.selectedPopularDestination.year > tahun) {
+    //        $('#selectMonth').val(val);
+    //        $('.selected-month').text(month);
+    //        $scope.selectedPopularDestination.month = parseInt(val);
+    //    } else if ($scope.selectedPopularDestination.year == tahun) {
+    //        var mth = parseInt(val);
+    //        if (mth >= bulan) {
+    //            $('#selectMonth').val(val);
+    //            $('.selected-month').text(month);
+    //            $scope.selectedPopularDestination.month = parseInt(val);
+    //        } else {
+    //            $('#selectMonth').val(bulan);
+    //            $('.selected-month').text($scope.returnMonth(bulan));
+    //            $scope.selectedPopularDestination.month = bulan;
+    //        }
+    //    }
+    //});
+
+    //$('#year div').on('click', function () {
+    //    var val = $(this).attr('value');
+    //    var thn = $(this).html();
+    //    if (parseInt(val) > tahun) {
+    //        $('#selectYear').val(val);
+    //        $('.selected-year').text(thn);
+    //        $scope.selectedPopularDestination.year = parseInt(val);
+    //    } else if (parseInt(val) == tahun) {
+    //        if ($scope.selectedPopularDestination.month >= bulan) {
+    //            $('#selectYear').val(val);
+    //            $('.selected-year').text(thn);
+    //            $scope.selectedPopularDestination.year = parseInt(val);
+    //        } else {
+    //            $('#selectYear').val(val);
+    //            $('.selected-year').text(thn);
+    //            $scope.selectedPopularDestination.year = parseInt(val);
+    //            $('#selectMonth').val(bulan);
+    //            $('.selected-month').text($scope.returnMonth(bulan));
+    //            $scope.selectedPopularDestination.month = bulan;
+    //        }
+    //    }
+
+    //});
+
+    //var today = new Date();
+    //var currentYear = today.getFullYear();
+    //var nextYear = currentYear + 1;
+    //$("#currentYear").attr("value", currentYear);
+    //$("#nextYear").attr("value", nextYear);
+    //$("#currentYear").text(currentYear);
+    //$("#nextYear").text(nextYear);
+
+    //$('#submitCalendar').on('click', function () {
+    //    var bulan = $('#selectMonth').val();
+    //    var tahun = $('#selectYear').val();
+
+    //    var newDate = new Date(tahun, bulan, '01');
+    //    $('#pc-datepicker').fullCalendar('gotoDate', newDate);
+    //    if ($scope.selectedPopularDestination.origin != '' && $scope.selectedPopularDestination.destination != '') {
+    //        $scope.hasSearched = true;
+    //        $scope.getFlightPrice(parseInt(bulan) + 1, tahun);
+    //    }
+    //});
+
+    $('#month-year div').hide();
+
+    $('.select-my').on('click', function () {
+        $('#month-year div').toggle();
+        $('.search-location').hide();
     });
 
-    $('.select-month').click(function () {
-        $('#month div').toggle();
-        $('#year div, .search-location').hide();
-    });
-
-    $('#month div').on('click', function () {
+    $('#month-year div').on('click', function () {
         var val = $(this).attr('value');
-        var month = $(this).html();
-        if ($scope.selectedPopularDestination.year > tahun) {
-            $('#selectMonth').val(val);
-            $('.selected-month').text(month);
-            $scope.selectedPopularDestination.month = parseInt(val);
-        } else if ($scope.selectedPopularDestination.year == tahun) {
-            var mth = parseInt(val);
-            if (mth >= bulan) {
-                $('#selectMonth').val(val);
-                $('.selected-month').text(month);
-                $scope.selectedPopularDestination.month = parseInt(val);
-            } else {
-                $('#selectMonth').val(bulan);
-                $('.selected-month').text($scope.returnMonth(bulan));
-                $scope.selectedPopularDestination.month = bulan;
-            }
-        }
+        var my = $(this).html();
+        $('#month-year-select').val(val);
+        $('.selected-my').text(my);
     });
-
-    $('#year div').on('click', function () {
-        var val = $(this).attr('value');
-        var thn = $(this).html();
-        if (parseInt(val) > tahun) {
-            $('#selectYear').val(val);
-            $('.selected-year').text(thn);
-            $scope.selectedPopularDestination.year = parseInt(val);
-        } else if (parseInt(val) == tahun) {
-            if ($scope.selectedPopularDestination.month >= bulan) {
-                $('#selectYear').val(val);
-                $('.selected-year').text(thn);
-                $scope.selectedPopularDestination.year = parseInt(val);
-            } else {
-                $('#selectYear').val(val);
-                $('.selected-year').text(thn);
-                $scope.selectedPopularDestination.year = parseInt(val);
-                $('#selectMonth').val(bulan);
-                $('.selected-month').text($scope.returnMonth(bulan));
-                $scope.selectedPopularDestination.month = bulan;
-            }
-        }
-
-    });
-
-    var today = new Date();
-    var currentYear = today.getFullYear();
-    var nextYear = currentYear + 1;
-    $("#currentYear").attr("value", currentYear);
-    $("#nextYear").attr("value", nextYear);
-    $("#currentYear").text(currentYear);
-    $("#nextYear").text(nextYear);
 
     $('#submitCalendar').on('click', function () {
-        var bulan = $('#selectMonth').val();
-        var tahun = $('#selectYear').val();
+        var month_year = $('#month-year-select').val();
+        var arr = month_year.split("-");
 
-        var newDate = new Date(tahun, bulan, '01');
-        $('#pc-datepicker').fullCalendar('gotoDate', newDate);
-        if ($scope.selectedPopularDestination.origin != '' && $scope.selectedPopularDestination.destination != '') {
-            $scope.hasSearched = true;
-            $scope.getFlightPrice(parseInt(bulan) + 1, tahun);
-        }
+        var newDate = new Date(arr[0], arr[1], '01');
+        $('#pc-datepicker').fullCalendar('gotoDate', newDate)
     });
+
 
     $('body input[name="searchFrom"]').click(function () {
         $(this).select();
         showLocation('asal');
-        $('#month div, #year div').hide();
+        $('#month-year div').hide();
     });
     $('body input[name="searchTo"]').click(function () {
         $(this).select();
         showLocation('tujuan');
-        $('#month div, #year div').hide();
+        $('#month-year div').hide();
     });
 
     function showLocation(place) {
