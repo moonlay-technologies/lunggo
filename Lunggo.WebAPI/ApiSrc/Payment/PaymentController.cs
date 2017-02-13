@@ -220,6 +220,7 @@ namespace Lunggo.WebAPI.ApiSrc.Payment
             var role = Role.GetFromDb(userId);
             var b = User.IsInRole("Finance");
             var c = User.IsInRole("Admin");
+            if (User.Identity.IsAuthenticated) c = true;
             return User.Identity.IsAuthenticated && (role.Equals("Finance") || role.Equals("Admin"));
         }
     }

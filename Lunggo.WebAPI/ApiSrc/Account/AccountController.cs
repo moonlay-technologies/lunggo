@@ -277,6 +277,7 @@ namespace Lunggo.WebAPI.ApiSrc.Account
             if (User.Identity.IsAuthenticated)
             {
                 var user = User.Identity;
+                var isInRole = UserManager.IsInRole(HttpContext.Current.User.Identity.GetUser().Id, "Approver");
                 role = UserManager.GetRoles(HttpContext.Current.User.Identity.GetUser().Id).FirstOrDefault();
             }
             try

@@ -194,6 +194,20 @@ namespace Lunggo.ApCommon.Payment.Service
             }
         }
 
+        private void UpdateSavedCreditCard(SavedCreditCard creditCard)
+        {
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                SavedCreditCardTableRepo.GetInstance().Update(conn, new SavedCreditCardTableRecord
+                {
+                    MaskedCardNumber = creditCard.MaskedCardNumber,
+                    CompanyId = creditCard.CompanyId,
+                    Token = creditCard.Token,
+                    TokenExpiry = creditCard.TokenExpiry
+                });
+            }
+        }
+
         private void DeleteSaveCreditCardFromDb(string companyId, string maskedCardNumber)
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())

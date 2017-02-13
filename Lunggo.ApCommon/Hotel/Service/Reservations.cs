@@ -360,8 +360,11 @@ namespace Lunggo.ApCommon.Hotel.Service
             {
                 try
                 {
+                    var isPaid = PaymentService.GetInstance().ProcessB2BPayment(rsvNo);
+                    if (!isPaid)
+                        return false;
                     UpdateRsvStatusDb(rsvNo, RsvStatus.Approved);
-                    HotelService.GetInstance().IssueBooker(rsvNo);
+                    GetInstance().IssueBooker(rsvNo);
                     SendBookerBookingInfo(rsvNo);
                     return true;
                 }

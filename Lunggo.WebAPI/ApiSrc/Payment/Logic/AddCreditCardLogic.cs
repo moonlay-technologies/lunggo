@@ -22,10 +22,17 @@ namespace Lunggo.WebAPI.ApiSrc.Payment.Logic
                 };
             var payment = PaymentService.GetInstance();
             var ccServiceRequest = PreprocessServiceRequest(request);
-            payment.InsertCreditCard(ccServiceRequest);
+            var response = payment.InsertCreditCard(ccServiceRequest);
+            if (response)
+            {
+                return new ApiResponseBase
+                {
+                    StatusCode = HttpStatusCode.OK
+                };
+            }
             return new ApiResponseBase
             {
-                StatusCode = HttpStatusCode.OK
+                StatusCode = HttpStatusCode.InternalServerError
             };
         }
 

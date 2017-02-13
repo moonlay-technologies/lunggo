@@ -23,6 +23,11 @@ namespace Lunggo.ApCommon.Payment.Service
             {
                 return null;
             }
+            return GetCreditCardByCompanyId(companyId);
+        }
+
+        public List<SavedCreditCard> GetCreditCardByCompanyId(string companyId)
+        {
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
                 var savedCard = GetSavedCreditCardQuery.GetInstance()
@@ -31,25 +36,32 @@ namespace Lunggo.ApCommon.Payment.Service
             }
         }
 
-        public void InsertCreditCard(SavedCreditCard model)
+        public bool InsertCreditCard(SavedCreditCard model)
         {
             if (model != null)
             {
                 var userId = HttpContext.Current.User.Identity.GetUser().Id;
                 var companyId = User.GetCompanyIdByUserId(userId);
                 model.CompanyId = companyId;
+                var ccList = GetCreditCardByCompanyId(companyId);
                 var transactionDetails = ConstructFirstTransactionDetails(model.CompanyId);
-                var paymentDetails = ConstructFirstPaymentDetail(model);
+                var paymentDetails = ConstructPaymentDetail(model.CardHolderName, model.Token);
                 var paymentResponse = VeritransWrapper.ProcessFirstB2BPayment(paymentDetails, transactionDetails, PaymentMethod.CreditCard);
-                //Cancel Payment dong
+                if (paymentResponse != null)
+                {
+                    model.IsPrimaryCard = ccList == null;
+                    model.MaskedCardNumber = GenerateMaskedCardNumber(paymentResponse.MaskedCard);
+                    model.TokenExpiry = paymentResponse.TokenIdExpiry;
+                    model.Token = paymentResponse.SavedTokenId;
+                    model.CardExpiry = new DateTime(model.CardExpiryYear, model.CardExpiryMonth, 1);
 
-                model.IsPrimaryCard = model.IsPrimaryCard ?? false;
-                model.MaskedCardNumber = GenerateMaskedCardNumber(paymentResponse.MaskedCard);
-                model.TokenExpiry = paymentResponse.TokenIdExpiry;
-                model.Token = paymentResponse.SavedTokenId;
-                model.CardExpiry = new DateTime(model.CardExpiryYear,model.CardExpiryMonth,1);
-                //InsertSavedCreditCardToDb(model);
+                    var cancelResponse = VeritransWrapper.CancelTransaction(paymentResponse.OrderId,
+                        paymentResponse.TransactionId);
+                    InsertSavedCreditCardToDb(model);
+                    return true;
+                }
             }
+            return false;
         }
 
         public TransactionDetails ConstructFirstTransactionDetails(string companyId)
@@ -62,7 +74,7 @@ namespace Lunggo.ApCommon.Payment.Service
             };
         }
 
-        public PaymentDetails ConstructFirstPaymentDetail(SavedCreditCard model)
+        public PaymentDetails ConstructPaymentDetail(string cardHolderName, string tokenId)
         {
             return new PaymentDetails
             {
@@ -71,12 +83,52 @@ namespace Lunggo.ApCommon.Payment.Service
                 {
                     CreditCard = new CreditCard
                     {
-                        HolderName = model.CardHolderName,
+                        HolderName = cardHolderName,
                         TokenIdSaveEnabled = true,
-                        TokenId = model.Token
+                        TokenId = tokenId
                     }
                 }
             };
+        }
+
+        public bool ProcessB2BPayment(string rsvNo)
+        {
+            var userId = HttpContext.Current.User.Identity.GetUser().Id;
+            var companyId = User.GetCompanyIdByUserId(userId);
+            var primaryCreditCard = new SavedCreditCard();
+            int i = 0;
+            var otherCreditCard = GetCreditCardByCompanyId(companyId).Where(x=>x.IsPrimaryCard == false).ToList();
+            bool isUpdated;
+            bool isSucces = false;
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                primaryCreditCard = GetPrimarySavedCreditCardQuery.GetInstance()
+                    .Execute(conn, new { CompanyId = companyId, IsPrimaryCard = true }).SingleOrDefault();
+            }
+            if (primaryCreditCard != null && primaryCreditCard.Token != null)
+            {
+                var paymentDetails = ConstructPaymentDetail(primaryCreditCard.CardHolderName, primaryCreditCard.Token);
+                var response = SubmitPayment(rsvNo, PaymentMethod.CreditCard, PaymentSubMethod.Mandiri, paymentDetails.Data, null, out isUpdated);
+                if (isUpdated)
+                {
+                    return true;
+                }
+            }
+            do
+            {
+                if (otherCreditCard.ElementAt(i) != null && otherCreditCard.ElementAt(i).Token != null)
+                {
+                    var paymentDetails = ConstructPaymentDetail(otherCreditCard.ElementAt(i).CardHolderName, otherCreditCard.ElementAt(i).Token);
+                    var response = SubmitPayment(rsvNo, PaymentMethod.CreditCard, PaymentSubMethod.Mandiri, paymentDetails.Data, null, out isUpdated);
+                    if (isUpdated)
+                    {
+                        isSucces = true;
+                    }
+                    i++;
+                }
+            } while (!isSucces && i == otherCreditCard.Count());
+            if (isSucces) return true;
+            return false;
         }
 
         public string GenerateOrderId(string companyId)
@@ -102,11 +154,11 @@ namespace Lunggo.ApCommon.Payment.Service
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
                 //Take recent PrimaryCard
-                var primaryMaskCardNumber = GetPrimarySavedCreditCardQuery.GetInstance()
+                var primaryCardNumber = GetPrimarySavedCreditCardQuery.GetInstance()
                     .Execute(conn, new { CompanyId = companyId, IsPrimaryCard = true}).SingleOrDefault();
-                if (!string.IsNullOrEmpty(primaryMaskCardNumber))
+                if (primaryCardNumber != null && primaryCardNumber.MaskedCardNumber != null)
                 {
-                    UpdatePrimaryCardDb(primaryMaskCardNumber, companyId, false);
+                    UpdatePrimaryCardDb(primaryCardNumber.MaskedCardNumber, companyId, false);
                 }
                 UpdatePrimaryCardDb(maskedCardNumber,companyId, true);
             }

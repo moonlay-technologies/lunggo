@@ -8,11 +8,11 @@ using Lunggo.Framework.Database;
 
 namespace Lunggo.ApCommon.Payment.Query
 {
-    internal class GetPrimarySavedCreditCardQuery : DbQueryBase<GetPrimarySavedCreditCardQuery, string>
+    internal class GetPrimarySavedCreditCardQuery : DbQueryBase<GetPrimarySavedCreditCardQuery, SavedCreditCard>
     {
         protected override string GetQuery(dynamic condition = null)
         {
-            return "SELECT MaskedCardNumber FROM SavedCreditCard WHERE CompanyId = @CompanyId AND IsPrimaryCard = @IsPrimaryCard";
+            return "SELECT * FROM SavedCreditCard WHERE CompanyId = @CompanyId AND IsPrimaryCard = @IsPrimaryCard";
         }
     }
 }
