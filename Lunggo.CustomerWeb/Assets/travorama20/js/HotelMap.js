@@ -265,11 +265,14 @@
                     star = 'star star-3';
                 } else if (feature.star == "4") {
                     star = 'star star-2';
-                } else if (feature.star == "4") {
+                } else if (feature.star == "5") {
                     star = 'star star-5';
                 } else {
                     star = 'star';
                 }
+
+                feature.originalFare = feature.originalFare.toFixed(0).toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "1.");
+                feature.netFare = feature.netFare.toFixed(0).toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "1.");
 
                 var url = $scope.getUrlHotelDetail(feature);
                 var infoDesc =
@@ -300,7 +303,8 @@
                     var iwOuter = $('.gm-style-iw').addClass('custom');
                     var p = $(this).closest('.gm-style-iw');
                     var q = p.siblings();
-                                        //$('.map-container').hide();
+                    //$('.map-container').hide();
+                    $('#hotel-' + order).show();
                     $('.map-container').not('#hotel-' + order).hide();
                     p.find('.map-container').show();
                     p.find('.map-price').hide();
@@ -479,6 +483,13 @@
             });
         }
 
+        $scope.resetPrice = function() {
+            $scope.filter.minPrice = $scope.minPrice - ($scope.minPrice % 100000);
+            $scope.filter.maxPrice = $scope.maxPrice + (100000 - $scope.maxPrice % 100000);
+            $('.slider-range').slider({
+                values: [$scope.filter.minPrice, $scope.filter.maxPrice]
+            });
+        }
         $scope.selectAll = function (type) {
             if (type == 'zone') {
                 for (var x = 0; x < $scope.hotelFilterDisplayInfo.zoneFilter.length; x++) {
