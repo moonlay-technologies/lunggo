@@ -57,15 +57,15 @@
         </a>
     </div>
     <div class="pop-flight" style="background: url(/Assets/images/hotel/popular/flight-2.jpg) no-repeat;">
-        <a @*href="{{gotoCheapestDateFlight('SUB', priceFlight.Surabaya.CheapestDate)}}"*@ class=" pf-wrapper">
+        <a href="{{gotoCheapestDateFlight('JOG', priceFlight.Yogyakarta.CheapestDate)}}" class=" pf-wrapper">
             <div class="pf-txt">
                 <div class="top-txt white-txt pull-left">
                     <div class="normal-txt">Tiket Pesawat ke</div>
                     <div class="xlg-txt os-bold">Yogyakarta</div>
                 </div>
-                <div class="bottom-txt pull-right" @*ng-hide="priceFlight.Surabaya.CheapestPrice == null"*@>
+                <div class="bottom-txt pull-right" ng-hide="priceFlight.Yogyakarta.CheapestPrice == null">
                     <span class="normal-txt white-txt">mulai dari</span>
-                    <span class="md-txt os-bold yellow-txt">Rp @*{{priceFlight.Surabaya.CheapestPrice | currency:'':0}}*@</span>
+                    <span class="md-txt os-bold yellow-txt">Rp {{priceFlight.Yogyakarta.CheapestPrice | currency:'':0}}</span>
                 </div>
             </div>
         </a>
