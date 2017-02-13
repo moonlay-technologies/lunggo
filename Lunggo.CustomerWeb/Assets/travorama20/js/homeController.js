@@ -520,7 +520,7 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
                     var x = year.toString() + '-' + ("0" + (mth)).slice(-2).toString() + '-' + ("0" + d.toString()).slice(-2);
                     var y = ("0" + d.toString()).slice(-2) + ("0" + (mth)).slice(-2).toString() + year.toString().slice(-2);
                     var price = Math.round(parseInt(pricelist[d - date].price) / 1000).toString();
-                    if (price != '0') {
+                    if (price != 0) {
                         $scope.listCheapestPrice.push({
                             title: Math.round(parseInt(pricelist[d - date].price) / 1000).toString(),
                             start: x,
@@ -533,7 +533,7 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
                     var x = year.toString() + '-' + ("0" + (mth)).slice(-2).toString() + '-' + ("0" + d.toString()).slice(-2);
                     var y = ("0" + d.toString()).slice(-2) + ("0" + (mth)).slice(-2).toString() + year.toString().slice(-2);
                     var price = Math.round(parseInt(pricelist[d - date].price) / 1000).toString();
-                    if (price != '0') {
+                    if (price != 0) {
                         $scope.listCheapestPrice.push({
                             title: Math.round(parseInt(pricelist[d - date].price) / 1000).toString(),
                             start: x,
@@ -546,7 +546,7 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
                     var x = year.toString() + '-' + ("0" + (mth)).slice(-2).toString() + '-' + ("0" + d.toString()).slice(-2);
                     var y = ("0" + d.toString()).slice(-2) + ("0" + (mth)).slice(-2).toString() + year.toString().slice(-2);
                     var price = Math.round(parseInt(pricelist[d - date].price) / 1000).toString();
-                    if (price != '0') {
+                    if (price != 0) {
                         $scope.listCheapestPrice.push({
                             title: Math.round(parseInt(pricelist[d - date].price) / 1000).toString(),
                             start: x,
@@ -560,7 +560,8 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
                 for (var d = date; d <= 28; d++) {
                     var x = year.toString() + '-' + ("0" + (mth)).slice(-2).toString() + '-' + ("0" + d.toString()).slice(-2);
                     var y = ("0" + d.toString()).slice(-2) + ("0" + (mth)).slice(-2).toString() + year.toString().slice(-2);
-                    if (price != '0') {
+                    var price = Math.round(parseInt(pricelist[d - date].price) / 1000).toString();
+                    if (price != 0) {
                         $scope.listCheapestPrice.push({
                             title: Math.round(parseInt(pricelist[d - date].price) / 1000).toString(),
                             start: x,
@@ -573,7 +574,7 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
                     var x = year.toString() + '-' + ("0" + (mth)).slice(-2).toString() + '-' + ("0" + d.toString()).slice(-2);
                     var y = ("0" + d.toString()).slice(-2) + ("0" + (mth)).slice(-2).toString() + year.toString().slice(-2);
                     var price = Math.round(parseInt(pricelist[d - date].price) / 1000).toString();
-                    if (price != '0') {
+                    if (price != 0) {
                         $scope.listCheapestPrice.push({
                             title: Math.round(parseInt(pricelist[d - date].price) / 1000).toString(),
                             start: x,
@@ -586,7 +587,7 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
                     var x = year.toString() + '-' + ("0" + (mth)).slice(-2).toString() + '-' + ("0" + d.toString()).slice(-2);
                     var y = ("0" + d.toString()).slice(-2) + ("0" + (mth)).slice(-2).toString() + year.toString().slice(-2);
                     var price = Math.round(parseInt(pricelist[d - date].price) / 1000).toString();
-                    if (price != '0') {
+                    if (price != 0) {
                         $scope.listCheapestPrice.push({
                             title: Math.round(parseInt(pricelist[d - date].price) / 1000).toString(),
                             start: x,
