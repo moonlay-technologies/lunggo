@@ -654,13 +654,13 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
         if ($scope.selectedPopularDestination.year > tahun) {
             $('#selectMonth').val(val);
             $('.selected-month').text(month);
-            $scope.selectedPopularDestination.month = parseInt(month);
+            $scope.selectedPopularDestination.month = parseInt(val);
         }else if ($scope.selectedPopularDestination.year == tahun) {
             var mth = parseInt(val);
-            if (mth >= $scope.selectedPopularDestination.month) {
+            if (mth >= bulan) {
                 $('#selectMonth').val(val);
                 $('.selected-month').text(month);
-                $scope.selectedPopularDestination.month = parseInt(month);
+                $scope.selectedPopularDestination.month = parseInt(val);
             } else {
                 $('#selectMonth').val(bulan);
                 $('.selected-month').text($scope.returnMonth(bulan));
