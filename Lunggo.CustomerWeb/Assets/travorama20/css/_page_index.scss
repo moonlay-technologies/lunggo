@@ -663,7 +663,7 @@ body.page-index {margin-bottom: 0;}
     // section calendar price
     .section-calendar-price {
          &>.container {
-            padding: 40px 0 15px;
+            padding: 40px 0;
             max-width: none !important;
             border-bottom: 1px solid #ccc;
         }
@@ -999,39 +999,43 @@ tr:first-child>td>.fc-day-grid-event {margin-top: 0;}
 }
 
 td.fc-event-container {
-    height: 80px;
-    position: absolute;
-    margin-top: -40px;
-    a.fc-day-grid-event {top: 50%;}
-    input.btn.btn-yellow.sm-btn.btn-view {
-        display: none;
-        font-size: 9px;
-        margin: 0 auto;
-        padding: 4px 10px;
-        margin-bottom: 0 !important;
-    }
-    &:hover {
-        input.btn.btn-yellow.sm-btn.btn-view {display: block}
-        &:before {
-            content: '';
-            width: 76px;
-            height: 76px;
-            display: block;
-            position: absolute;
-            border: 2px solid #1daee4;
-            background: #fff;
-            z-index: 1;
+    a.fc-day-grid-event {
+        width: 80px;
+        height: 80px;
+        position: absolute;
+        margin-top: -40px;
+        input.btn.btn-yellow.sm-btn.btn-view {
+            display: none;
+            font-size: 9px;
+            margin: 0 auto;
+            padding: 4px 10px;
+            margin-bottom: 0 !important;
         }
-        .fc-title {
-            position: absolute;
-            margin-top: -20px;
+        .fc-content {
+            position: absolute; 
+            top: 60%;
             left: 50%;
             transform: translateX(-50%);
             width: 100%;
-            font-weight: 700;
+        }
+        &:hover {
+            input.btn.btn-yellow.sm-btn.btn-view {display: block; margin-top: 7px;}
+            .fc-title {font-weight: 700; color: #6a6a6a;}
+            .fc-content {
+                top: 50%;
+                transform: translate(-50%, -50%);
+            }
+            &:before {
+                content: '';
+                width: 76px;
+                height: 76px;
+                display: block;
+                border: 2px solid #1daee4;
+                background: #fff;
+                z-index: 1;
+            }
         }
     }
-    .fc-title {color: #6a6a6a;}
 }
 
 .fc-day-grid-event {

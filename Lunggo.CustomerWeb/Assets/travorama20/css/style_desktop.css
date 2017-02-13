@@ -2624,7 +2624,7 @@ body.page-index {
   display: none !important; }
 
 .page-index .section-calendar-price > .container {
-  padding: 40px 0 15px;
+  padding: 40px 0;
   max-width: none !important;
   border-bottom: 1px solid #ccc; }
 
@@ -2929,38 +2929,40 @@ tr:first-child > td > .fc-day-grid-event {
     color: #000;
     text-decoration: none; }
 
-td.fc-event-container {
+td.fc-event-container a.fc-day-grid-event {
+  width: 80px;
   height: 80px;
   position: absolute;
   margin-top: -40px; }
-  td.fc-event-container a.fc-day-grid-event {
-    top: 50%; }
-  td.fc-event-container input.btn.btn-yellow.sm-btn.btn-view {
+  td.fc-event-container a.fc-day-grid-event input.btn.btn-yellow.sm-btn.btn-view {
     display: none;
     font-size: 9px;
     margin: 0 auto;
     padding: 4px 10px;
     margin-bottom: 0 !important; }
-  td.fc-event-container:hover input.btn.btn-yellow.sm-btn.btn-view {
-    display: block; }
-  td.fc-event-container:hover:before {
+  td.fc-event-container a.fc-day-grid-event .fc-content {
+    position: absolute;
+    top: 60%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%; }
+  td.fc-event-container a.fc-day-grid-event:hover input.btn.btn-yellow.sm-btn.btn-view {
+    display: block;
+    margin-top: 7px; }
+  td.fc-event-container a.fc-day-grid-event:hover .fc-title {
+    font-weight: 700;
+    color: #6a6a6a; }
+  td.fc-event-container a.fc-day-grid-event:hover .fc-content {
+    top: 50%;
+    transform: translate(-50%, -50%); }
+  td.fc-event-container a.fc-day-grid-event:hover:before {
     content: '';
     width: 76px;
     height: 76px;
     display: block;
-    position: absolute;
     border: 2px solid #1daee4;
     background: #fff;
     z-index: 1; }
-  td.fc-event-container:hover .fc-title {
-    position: absolute;
-    margin-top: -20px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 100%;
-    font-weight: 700; }
-  td.fc-event-container .fc-title {
-    color: #6a6a6a; }
 
 .fc-day-grid-event {
   margin: 0;
