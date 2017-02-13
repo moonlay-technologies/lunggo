@@ -520,39 +520,39 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
                     var x = year.toString() + '-' + ("0" + (mth)).slice(-2).toString() + '-' + ("0" + d.toString()).slice(-2);
                     var y = ("0" + d.toString()).slice(-2) + ("0" + (mth)).slice(-2).toString() + year.toString().slice(-2);
                     var price = Math.round(parseInt(pricelist[d - date].price) / 1000).toString();
-                    if (price != 0) {
+                    //if (price != 0) {
                         $scope.listCheapestPrice.push({
                             title: Math.round(parseInt(pricelist[d - date].price) / 1000).toString(),
                             start: x,
                             link: $scope.editData(selectedData) + y + '-100y'
                         });
-                    }
+                    //}
                 }
             } else if (mth == 1 || mth == 3 || mth == 5 || mth == 7 || mth == 8 || mth == 10 || mth == 12) {
                 for (var d = date; d <= 31; d++) {
                     var x = year.toString() + '-' + ("0" + (mth)).slice(-2).toString() + '-' + ("0" + d.toString()).slice(-2);
                     var y = ("0" + d.toString()).slice(-2) + ("0" + (mth)).slice(-2).toString() + year.toString().slice(-2);
                     var price = Math.round(parseInt(pricelist[d - date].price) / 1000).toString();
-                    if (price != 0) {
+                    //if (price != 0) {
                         $scope.listCheapestPrice.push({
                             title: Math.round(parseInt(pricelist[d - date].price) / 1000).toString(),
                             start: x,
                             link: $scope.editData(selectedData) + y + '-100y'
                         });
-                    }
+                    //}
                 }
             } else if (mth == 4 || mth == 6 || mth == 9 || mth == 11) {
                 for (var d = date; d <= 30; d++) {
                     var x = year.toString() + '-' + ("0" + (mth)).slice(-2).toString() + '-' + ("0" + d.toString()).slice(-2);
                     var y = ("0" + d.toString()).slice(-2) + ("0" + (mth)).slice(-2).toString() + year.toString().slice(-2);
                     var price = Math.round(parseInt(pricelist[d - date].price) / 1000).toString();
-                    if (price != 0) {
+                    //if (price != 0) {
                         $scope.listCheapestPrice.push({
                             title: Math.round(parseInt(pricelist[d - date].price) / 1000).toString(),
                             start: x,
                             link: $scope.editData(selectedData) + y + '-100y'
                         });
-                    }
+                    //}
                 }
             }
         } else {
@@ -561,39 +561,39 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
                     var x = year.toString() + '-' + ("0" + (mth)).slice(-2).toString() + '-' + ("0" + d.toString()).slice(-2);
                     var y = ("0" + d.toString()).slice(-2) + ("0" + (mth)).slice(-2).toString() + year.toString().slice(-2);
                     var price = Math.round(parseInt(pricelist[d - date].price) / 1000).toString();
-                    if (price != 0) {
+                    //if (price != 0) {
                         $scope.listCheapestPrice.push({
                             title: Math.round(parseInt(pricelist[d - date].price) / 1000).toString(),
                             start: x,
                             link: $scope.editData(selectedData) + y + '-100y'
                         });
-                    }
+                    //}
                 }
             } else if (mth == 1 || mth == 3 || mth == 5 || mth == 7 || mth == 8 || mth == 10 || mth == 12) {
                 for (var d = date; d <= 31; d++) {
                     var x = year.toString() + '-' + ("0" + (mth)).slice(-2).toString() + '-' + ("0" + d.toString()).slice(-2);
                     var y = ("0" + d.toString()).slice(-2) + ("0" + (mth)).slice(-2).toString() + year.toString().slice(-2);
                     var price = Math.round(parseInt(pricelist[d - date].price) / 1000).toString();
-                    if (price != 0) {
+                    //if (price != 0) {
                         $scope.listCheapestPrice.push({
                             title: Math.round(parseInt(pricelist[d - date].price) / 1000).toString(),
                             start: x,
                             link: $scope.editData(selectedData) + y + '-100y'
                         });
-                    }
+                    //}
                 }
             } else if (mth == 4 || mth == 6 || mth == 9 || mth == 11) {
                 for (var d = date; d <= 30; d++) {
                     var x = year.toString() + '-' + ("0" + (mth)).slice(-2).toString() + '-' + ("0" + d.toString()).slice(-2);
                     var y = ("0" + d.toString()).slice(-2) + ("0" + (mth)).slice(-2).toString() + year.toString().slice(-2);
                     var price = Math.round(parseInt(pricelist[d - date].price) / 1000).toString();
-                    if (price != 0) {
+                    //if (price != 0) {
                         $scope.listCheapestPrice.push({
                             title: Math.round(parseInt(pricelist[d - date].price) / 1000).toString(),
                             start: x,
                             link: $scope.editData(selectedData) + y + '-100y'
                         });
-                    }
+                    //}
                 }
             }
         }
@@ -618,7 +618,12 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
                 var link = "<input class='btn btn-yellow sm-btn btn-view' type='button' onclick='location.href=\"" + event.link + "\";' value='LIHAT'/>";
                 var title = '<sup>Rp </sup>' + event.title + 'rb';
                 element.find('.fc-content').append(link);
-                element.find('.fc-title').html(title);
+                if (event.title != '0') {
+                    element.find('.fc-title').html(title);
+                } else {
+                    element.find('.fc-title').html('');
+                }
+                
             }
         }
     });
@@ -811,7 +816,7 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
         var locationCode = $(this).attr('data-code');
         var locationCity = $(this).attr('data-city');
         if ($('.location-choice .search-location').attr('data-place') == 'asal') {
-            if (locationCity != $scope.selectedPopularDestination.destinationCity) {
+            if (locationCode != $scope.selectedPopularDestination.destination) {
                 $scope.selectedPopularDestination.origin = locationCode;
                 $scope.selectedPopularDestination.originCity = locationCity;
                 $('body input[name="searchFrom"]').val(locationCity + ' (' + locationCode + ')');
@@ -819,7 +824,7 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
                 alert('Kota Asal dan Tujuan Tidak Boleh Sama');
             }
         } else if ($('.location-choice .search-location').attr('data-place') == 'tujuan') {
-            if (locationCity != $scope.selectedPopularDestination.originCity) {
+            if (locationCode != $scope.selectedPopularDestination.origin) {
                 $scope.selectedPopularDestination.destination = locationCode;
                 $scope.selectedPopularDestination.destinationCity = locationCity;
                 $('body input[name="searchTo"]').val(locationCity + ' (' + locationCode + ')');
@@ -856,7 +861,7 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
         var locationCode = $(this).attr('data-code');
         var locationCity = $(this).text();
         if ($('.location-choice .search-location').attr('data-place') == 'asal') {
-            if (locationCity != $scope.selectedPopularDestination.destinationCity) {
+            if (locationCode != $scope.selectedPopularDestination.destination) {
                 $scope.tes = locationCode;
                 $scope.selectedPopularDestination.origin = locationCode;
                 $scope.selectedPopularDestination.originCity = locationCity;
@@ -866,7 +871,7 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
             }
 
         } else if ($('.location-choice .search-location').attr('data-place') == 'tujuan') {
-            if (locationCity != $scope.selectedPopularDestination.originCity) {
+            if (locationCode != $scope.selectedPopularDestination.origin) {
                 $scope.selectedPopularDestination.destination = locationCode;
                 $scope.selectedPopularDestination.destinationCity = locationCity;
                 $('body input[name="searchTo"]').val($(this).text() + ' (' + locationCode + ')');
