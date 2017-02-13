@@ -2947,11 +2947,11 @@ td.fc-event-container a.fc-day-grid-event {
     transform: translateX(-50%);
     width: 100%; }
   td.fc-event-container a.fc-day-grid-event:hover input.btn.btn-yellow.sm-btn.btn-view {
-    display: block;
-    margin-top: 7px; }
+    display: block; }
   td.fc-event-container a.fc-day-grid-event:hover .fc-title {
     font-weight: 700;
-    color: #6a6a6a; }
+    color: #6a6a6a;
+    line-height: 22px; }
   td.fc-event-container a.fc-day-grid-event:hover .fc-content {
     top: 50%;
     transform: translate(-50%, -50%); }

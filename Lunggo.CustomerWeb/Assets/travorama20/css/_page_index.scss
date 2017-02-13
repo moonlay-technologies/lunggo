@@ -1019,8 +1019,12 @@ td.fc-event-container {
             width: 100%;
         }
         &:hover {
-            input.btn.btn-yellow.sm-btn.btn-view {display: block; margin-top: 7px;}
-            .fc-title {font-weight: 700; color: #6a6a6a;}
+            input.btn.btn-yellow.sm-btn.btn-view {display: block;}
+            .fc-title {
+                font-weight: 700;
+                color: #6a6a6a;
+                line-height: 22px;
+            }
             .fc-content {
                 top: 50%;
                 transform: translate(-50%, -50%);
