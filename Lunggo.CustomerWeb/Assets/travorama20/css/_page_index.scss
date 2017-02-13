@@ -997,8 +997,9 @@ tr:first-child>td>.fc-day-grid-event {margin-top: 0;}
     input.btn.btn-yellow.sm-btn.btn-view {
         display: none;
         font-size: 9px;
-        margin: 14px auto 0;
-        padding: 0 9px;
+        margin: 0 auto;
+        padding: 4px 10px;
+        margin-bottom: 0 !important;
     }
     &:hover {
         input.btn.btn-yellow.sm-btn.btn-view {display: block}
@@ -1011,11 +1012,11 @@ tr:first-child>td>.fc-day-grid-event {margin-top: 0;}
             border: 2px solid #1daee4;
             top: -40px;
             background: #fff;
-            z-index: -1;
+            z-index: 1;
         }
         .fc-title {
             position: absolute;
-            margin-top: -16px;
+            margin-top: -20px;
             left: 50%;
             transform: translateX(-50%);
             width: 100%;
@@ -1039,10 +1040,10 @@ tr:first-child>td>.fc-day-grid-event {margin-top: 0;}
         border-color: transparent;
         text-align: center;
     }
-    td.fc-today {background: transparent;}
+    td.fc-today {background: #f0f0f0; z-index: -1;}
 }
 
-.fc-unthemed td.fc-today, td.fc-future {background: #f0f0f0;}
+td.fc-future {background: #f0f0f0;}
 
 .fc-scroller.fc-day-grid-container {
     overflow-x: hidden !important;
