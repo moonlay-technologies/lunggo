@@ -712,10 +712,12 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
     $('body input[name="searchFrom"]').click(function () {
         $(this).select();
         showLocation('asal');
+        $('#month div, #year div').hide();
     });
     $('body input[name="searchTo"]').click(function () {
         $(this).select();
         showLocation('tujuan');
+        $('#month div, #year div').hide();
     });
 
     function showLocation(place) {
