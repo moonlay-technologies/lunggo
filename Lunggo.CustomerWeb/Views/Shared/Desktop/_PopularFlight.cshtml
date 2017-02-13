@@ -7,7 +7,7 @@
                     <div class="normal-txt">Tiket Pesawat ke</div>
                     <div class="xlg-txt os-bold">Denpasar</div>
                 </div>
-                <div class="bottom-txt pull-right" ng-hide="priceFlight.Denpasar.CheapestPrice == ''">
+                <div class="bottom-txt pull-right" ng-hide="priceFlight.Denpasar.CheapestPrice == null">
                     <span class="normal-txt white-txt">mulai dari</span>
                     <span class="md-txt os-bold yellow-txt">Rp {{priceFlight.Denpasar.CheapestPrice | currency:'':0}}</span>
                 </div>
@@ -21,7 +21,7 @@
                     <div class="normal-txt">Tiket Pesawat ke</div>
                     <div class="xlg-txt os-bold">Jakarta</div>
                 </div>
-                <div class="bottom-txt pull-right" ng-hide="priceFlight.Jakarta.CheapestPrice == ''">
+                <div class="bottom-txt pull-right" ng-hide="priceFlight.Jakarta.CheapestPrice == null">
                     <span class="normal-txt white-txt">mulai dari</span>
                     <span class="md-txt os-bold yellow-txt">Rp {{priceFlight.Jakarta.CheapestPrice | currency:'':0}}</span>
                 </div>
@@ -35,7 +35,7 @@
                     <div class="normal-txt">Tiket Pesawat ke</div>
                     <div class="xlg-txt os-bold">Medan</div>
                 </div>
-                <div class="bottom-txt pull-right" ng-hide="priceFlight.Medan.CheapestPrice == ''">
+                <div class="bottom-txt pull-right" ng-hide="priceFlight.Medan.CheapestPrice == null">
                     <span class="normal-txt white-txt">mulai dari</span>
                     <span class="md-txt os-bold yellow-txt">Rp {{priceFlight.Medan.CheapestPrice | currency:'':0}}</span>
                 </div>
@@ -49,7 +49,7 @@
                     <div class="normal-txt">Tiket Pesawat ke</div>
                     <div class="xlg-txt os-bold">Surabaya</div>
                 </div>
-                <div class="bottom-txt pull-right" ng-hide="priceFlight.Surabaya.CheapestPrice == ''">
+                <div class="bottom-txt pull-right" ng-hide="priceFlight.Surabaya.CheapestPrice == null">
                     <span class="normal-txt white-txt">mulai dari</span>
                     <span class="md-txt os-bold yellow-txt">Rp {{priceFlight.Surabaya.CheapestPrice | currency:'':0}}</span>
                 </div>

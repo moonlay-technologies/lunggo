@@ -20,19 +20,15 @@ namespace Lunggo.WebJob.PriceUpdater
             var loginClient = new RestClient(apiUrl);
             var difference = endofmonth - todaydate.Day;
             var baliCode = HotelService.AutoCompletes.First(c => c.Code == "BAI").Id;
+            Console.WriteLine("id for Bali is " + baliCode);
             var jktCode = HotelService.AutoCompletes.First(c => c.Code == "JAV").Id;
+            Console.WriteLine("id for Jakarta is " + jktCode);
             var bdoCd = HotelService.AutoCompletes.First(c => c.Code == "BDO").Id;
+            Console.WriteLine("id for Bandung is " + bdoCd);
             var jogCd = HotelService.AutoCompletes.First(c => c.Code == "JOG").Id;
+            Console.WriteLine("id for Jogja is " + jogCd);
             var subCd = HotelService.AutoCompletes.First(c => c.Code == "SUB").Id;
-            var soloCd = HotelService.AutoCompletes.First(c => c.Code == "SOC").Id;
-            var mdnCd = HotelService.AutoCompletes.First(c => c.Code == "MES").Id;
-            var plmCd = HotelService.AutoCompletes.First(c => c.Code == "ID6").Id;
-            var mlgCd = HotelService.AutoCompletes.First(c => c.Code == "MLG").Id;
-            var bgrCd = HotelService.AutoCompletes.First(c => c.Code == "ID5").Id;
-            var sinCd = HotelService.AutoCompletes.First(c => c.Code == "SIN").Id;
-            var kulCd = HotelService.AutoCompletes.First(c => c.Code == "KUL").Id;
-            var bgkCd = HotelService.AutoCompletes.First(c => c.Code == "BKK").Id;
-            var hgkCd = HotelService.AutoCompletes.First(c => c.Code == "HKG").Id;
+            Console.WriteLine("id for Surabaya is " + subCd);
             var loginResponse = "";
             var accessToken = "";
             while (loginResponse != "200")
@@ -45,28 +41,16 @@ namespace Lunggo.WebJob.PriceUpdater
             Console.WriteLine(@"Succeeded Login!");
             for (var i = 0; i <= difference; i++)
             {
-                FlightPriceUpdater("JKT", "DPS", todaydate.AddDays(i), accessToken, loginClient);
-                FlightPriceUpdater("JKT", "KNO", todaydate.AddDays(i), accessToken, loginClient);
-                //FlightPriceUpdater("JKT", "KUL", todaydate.AddDays(i), accessToken, loginClient);
-                //FlightPriceUpdater("JKT", "SIN", todaydate.AddDays(i), accessToken, loginClient);
-                //FlightPriceUpdater("SUB", "BDO", todaydate.AddDays(i), accessToken, loginClient);
-                //FlightPriceUpdater("JKT", "HKG", todaydate.AddDays(i), accessToken, loginClient);
-                FlightPriceUpdater("JKT", "SUB", todaydate.AddDays(i), accessToken, loginClient);
-                FlightPriceUpdater("DPS", "JKT", todaydate.AddDays(i), accessToken, loginClient);
-                HotelPriceUpdater("Bali", baliCode, todaydate.AddDays(i), accessToken, loginClient);
-                HotelPriceUpdater("Jakarta", jktCode, todaydate.AddDays(i), accessToken, loginClient);
-                HotelPriceUpdater("Bandung", bdoCd, todaydate.AddDays(i), accessToken, loginClient);
-                //HotelPriceUpdater("Solo", soloCd, todaydate.AddDays(i), accessToken, loginClient);
-                HotelPriceUpdater("Yogyakarta", jogCd, todaydate.AddDays(i), accessToken, loginClient);
-                HotelPriceUpdater("Surabaya", subCd, todaydate.AddDays(i), accessToken, loginClient);
-                //HotelPriceUpdater("Medan", mdnCd, todaydate.AddDays(i), accessToken, loginClient);
-                //HotelPriceUpdater("Palembang", plmCd, todaydate.AddDays(i), accessToken, loginClient);
-                //HotelPriceUpdater("Bogor", bgrCd, todaydate.AddDays(i), accessToken, loginClient);
-                //HotelPriceUpdater("Malang", mlgCd, todaydate.AddDays(i), accessToken, loginClient);
-                //HotelPriceUpdater("Kuala Lumpur", kulCd, todaydate.AddDays(i), accessToken, loginClient);
-                //HotelPriceUpdater("Singapore", sinCd, todaydate.AddDays(i), accessToken, loginClient);
-                //HotelPriceUpdater("Bangkok", bgkCd, todaydate.AddDays(i), accessToken, loginClient);
-                //HotelPriceUpdater("Hong Kong", hgkCd, todaydate.AddDays(i), accessToken, loginClient);
+                //FlightPriceUpdater("JKT", "DPS", todaydate.AddDays(i), accessToken, loginClient);
+                //FlightPriceUpdater("JKT", "KNO", todaydate.AddDays(i), accessToken, loginClient);
+                FlightPriceUpdater("JKT", "JOG", todaydate.AddDays(i), accessToken, loginClient);
+                //FlightPriceUpdater("JKT", "SUB", todaydate.AddDays(i), accessToken, loginClient);
+                //FlightPriceUpdater("DPS", "JKT", todaydate.AddDays(i), accessToken, loginClient);
+                //HotelPriceUpdater("Bali", baliCode, todaydate.AddDays(i), accessToken, loginClient);
+                //HotelPriceUpdater("Jakarta", jktCode, todaydate.AddDays(i), accessToken, loginClient);
+                //HotelPriceUpdater("Bandung", bdoCd, todaydate.AddDays(i), accessToken, loginClient);
+                //HotelPriceUpdater("Yogyakarta", jogCd, todaydate.AddDays(i), accessToken, loginClient);
+                //HotelPriceUpdater("Surabaya", subCd, todaydate.AddDays(i), accessToken, loginClient);
             }
         }
 

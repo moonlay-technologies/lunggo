@@ -90,9 +90,9 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
             }
         }
 
-        
+
     });
-   // ================= FLIGHT ========================
+    // ================= FLIGHT ========================
 
     $scope.departureDate = moment().add(1, 'day').format('DDMMYY');
     $scope.changeTab = function (tab) {
@@ -105,7 +105,7 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
             $('.form-child-age').hide();
         }
     }
-    
+
     $scope.showForm = function (tab) {
         if (tab == 'hotel') {
             $scope.isFlight = false;
@@ -114,7 +114,7 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
         }
     }
 
-    
+
     //=============== hotel start ======================
     $scope.showPopularDestinations = false;
     hotelSearchSvc.initializeSearchForm($scope);
@@ -138,7 +138,7 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
             }
         }
         return [true, ''];
-        
+
     }
     $(function () {
         $(".ui-datepicker").datepicker({
@@ -146,7 +146,7 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
         });
     });
 
-   
+
     $('.hotel-date-picker').datepicker('option', 'beforeShowDay', hotelSearchSvc.highlightDays);
     $scope.hotel = {};
     $scope.view = {
@@ -242,51 +242,46 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
     $scope.priceFlight =
     {
         Denpasar: {
-            CheapestDate: '',
-            CheapestPrice: ''
+            CheapestDate: null,
+            CheapestPrice: null
         },
         Surabaya: {
-            CheapestDate: '',
-            CheapestPrice: ''
+            CheapestDate: null,
+            CheapestPrice: null
         },
         Jakarta: {
-            CheapestDate: '',
-            CheapestPrice: ''
+            CheapestDate: null,
+            CheapestPrice: null
         },
         Medan: {
-            CheapestDate: '',
-            CheapestPrice: ''
+            CheapestDate: null,
+            CheapestPrice: null
         }
     };
 
     $scope.priceHotel =
     {
         Bali: {
-            CheapestDate: '',
-            CheapestPrice: ''
+            CheapestDate: null,
+            CheapestPrice: null
         },
         Surabaya: {
-            CheapestDate: '',
-            CheapestPrice: ''
+            CheapestDate: null,
+            CheapestPrice: null
         },
         Jakarta: {
-            CheapestDate: '',
-            CheapestPrice: ''
+            CheapestDate: null,
+            CheapestPrice: null
         },
         Yogyakarta: {
-            CheapestDate: '',
-            CheapestPrice: ''
+            CheapestDate: null,
+            CheapestPrice: null
         },
         Bandung: {
-            CheapestDate: '',
-            CheapestPrice: ''
+            CheapestDate: null,
+            CheapestPrice: null
         }
     };
-
-    $scope.years = [];
-    for (var i = tahun; i < tahun + 4; i++) {
-            $scope.years.push(i);
-    }
 
     $scope.selectedPopularDestination = {
         origin: Cookies.get('origin') ? Cookies.get('origin') : 'JKT',
@@ -466,9 +461,9 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
         var todayMonth = todayDate.getMonth();
         var todayYear = todayDate.getFullYear();
         if (todayMonth == parseInt(month) - 1 && year == todayYear) {
-            var date = new Date();
+            date = new Date();
         } else {
-            var date = new Date(year, month - 1, 1);
+            date = new Date(year, month - 1, 1);
         }
         var y = date.getFullYear(); m = date.getMonth();
         var lastDay = new Date(date.getFullYear(), m + 1, 0);
@@ -488,12 +483,12 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
                 if (returnData.cheapestDate != null && returnData.cheapestDate != '') {
                     $scope.listCheapestPrice = [];
                     getEventDate(m + 1, y, returnData.listDatesAndPrices, $scope.selectedPopularDestination);
-                } 
+                }
             }).error(function (returnData) {
             });
         }
     }
-    $scope.getFlightPrice(parseInt(bulan) + 1, year);
+    $scope.getFlightPrice(parseInt(bulan) + 1, tahun);
     $scope.editData = function (data) {
         data.originCity = $scope.selectedPopularDestination.originCity.replace(/\s+/g, '-');
         data.originCity = data.originCity.replace(/[^0-9a-zA-Z-]/gi, '');
@@ -525,7 +520,7 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
                     var x = year.toString() + '-' + ("0" + (mth)).slice(-2).toString() + '-' + ("0" + d.toString()).slice(-2);
                     var y = ("0" + d.toString()).slice(-2) + ("0" + (mth)).slice(-2).toString() + year.toString().slice(-2);
                     var price = Math.round(parseInt(pricelist[d - date].price) / 1000).toString();
-                    if (price != '0') {
+                    if (price != 0) {
                         $scope.listCheapestPrice.push({
                             title: Math.round(parseInt(pricelist[d - date].price) / 1000).toString(),
                             start: x,
@@ -538,7 +533,7 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
                     var x = year.toString() + '-' + ("0" + (mth)).slice(-2).toString() + '-' + ("0" + d.toString()).slice(-2);
                     var y = ("0" + d.toString()).slice(-2) + ("0" + (mth)).slice(-2).toString() + year.toString().slice(-2);
                     var price = Math.round(parseInt(pricelist[d - date].price) / 1000).toString();
-                    if (price != '0') {
+                    if (price != 0) {
                         $scope.listCheapestPrice.push({
                             title: Math.round(parseInt(pricelist[d - date].price) / 1000).toString(),
                             start: x,
@@ -551,7 +546,7 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
                     var x = year.toString() + '-' + ("0" + (mth)).slice(-2).toString() + '-' + ("0" + d.toString()).slice(-2);
                     var y = ("0" + d.toString()).slice(-2) + ("0" + (mth)).slice(-2).toString() + year.toString().slice(-2);
                     var price = Math.round(parseInt(pricelist[d - date].price) / 1000).toString();
-                    if (price != '0') {
+                    if (price != 0) {
                         $scope.listCheapestPrice.push({
                             title: Math.round(parseInt(pricelist[d - date].price) / 1000).toString(),
                             start: x,
@@ -565,7 +560,8 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
                 for (var d = date; d <= 28; d++) {
                     var x = year.toString() + '-' + ("0" + (mth)).slice(-2).toString() + '-' + ("0" + d.toString()).slice(-2);
                     var y = ("0" + d.toString()).slice(-2) + ("0" + (mth)).slice(-2).toString() + year.toString().slice(-2);
-                    if (price != '0') {
+                    var price = Math.round(parseInt(pricelist[d - date].price) / 1000).toString();
+                    if (price != 0) {
                         $scope.listCheapestPrice.push({
                             title: Math.round(parseInt(pricelist[d - date].price) / 1000).toString(),
                             start: x,
@@ -578,7 +574,7 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
                     var x = year.toString() + '-' + ("0" + (mth)).slice(-2).toString() + '-' + ("0" + d.toString()).slice(-2);
                     var y = ("0" + d.toString()).slice(-2) + ("0" + (mth)).slice(-2).toString() + year.toString().slice(-2);
                     var price = Math.round(parseInt(pricelist[d - date].price) / 1000).toString();
-                    if (price != '0') {
+                    if (price != 0) {
                         $scope.listCheapestPrice.push({
                             title: Math.round(parseInt(pricelist[d - date].price) / 1000).toString(),
                             start: x,
@@ -591,7 +587,7 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
                     var x = year.toString() + '-' + ("0" + (mth)).slice(-2).toString() + '-' + ("0" + d.toString()).slice(-2);
                     var y = ("0" + d.toString()).slice(-2) + ("0" + (mth)).slice(-2).toString() + year.toString().slice(-2);
                     var price = Math.round(parseInt(pricelist[d - date].price) / 1000).toString();
-                    if (price != '0') {
+                    if (price != 0) {
                         $scope.listCheapestPrice.push({
                             title: Math.round(parseInt(pricelist[d - date].price) / 1000).toString(),
                             start: x,
@@ -602,12 +598,8 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
             }
         }
 
-       $('#pc-datepicker').fullCalendar('renderEvents', $scope.listCheapestPrice);
-   }
-
-    $('.fc-content-skeleton').click(function () {
-        $(this).css('border', '1px solid red');
-    });
+        $('#pc-datepicker').fullCalendar('renderEvents', $scope.listCheapestPrice);
+    }
 
     $('#pc-datepicker').fullCalendar({
         lang: 'id',
@@ -619,7 +611,7 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
         events: getEvents(),
         eventRender: function (event, element) {
             if (event.link != '' && event.title != '') {
-                var link = "<input class='btn btn-yellow sm-btn btn-view' type='button' onclick='location.href=\"" + event.link + "\";' value='LIHAT'/>";
+                var link = "<input class='btn btn-yellow sm-btn btn-view sm-txt' type='button' onclick='location.href=\"" + event.link + "\";' value='LIHAT'/>";
                 var title = '<sup>Rp </sup>' + event.title + 'rb';
                 element.find('.fc-content').append(link);
                 element.find('.fc-title').html(title);
@@ -658,19 +650,19 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
         if ($scope.selectedPopularDestination.year > tahun) {
             $('#selectMonth').val(val);
             $('.selected-month').text(month);
-            $scope.selectedPopularDestination.month = parseInt(month);
-        }else if ($scope.selectedPopularDestination.year == tahun) {
+            $scope.selectedPopularDestination.month = parseInt(val);
+        } else if ($scope.selectedPopularDestination.year == tahun) {
             var mth = parseInt(val);
-            if (mth >= $scope.selectedPopularDestination.month) {
+            if (mth >= bulan) {
                 $('#selectMonth').val(val);
                 $('.selected-month').text(month);
-                $scope.selectedPopularDestination.month = parseInt(month);
+                $scope.selectedPopularDestination.month = parseInt(val);
             } else {
                 $('#selectMonth').val(bulan);
                 $('.selected-month').text($scope.returnMonth(bulan));
                 $scope.selectedPopularDestination.month = bulan;
             }
-        }     
+        }
     });
 
     $('#year div').on('click', function () {
@@ -680,7 +672,7 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
             $('#selectYear').val(val);
             $('.selected-year').text(thn);
             $scope.selectedPopularDestination.year = parseInt(val);
-        }else if (parseInt(val) == tahun) {
+        } else if (parseInt(val) == tahun) {
             if ($scope.selectedPopularDestination.month >= bulan) {
                 $('#selectYear').val(val);
                 $('.selected-year').text(thn);
@@ -694,8 +686,16 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
                 $scope.selectedPopularDestination.month = bulan;
             }
         }
-        
+
     });
+
+    var today = new Date();
+    var currentYear = today.getFullYear();
+    var nextYear = currentYear + 1;
+    $("#currentYear").attr("value", currentYear);
+    $("#nextYear").attr("value", nextYear);
+    $("#currentYear").text(currentYear);
+    $("#nextYear").text(nextYear);
 
     $('#submitCalendar').on('click', function () {
         var bulan = $('#selectMonth').val();
@@ -880,7 +880,7 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
 
     //    var newDate = new Date(tahun, bulan, '01');
     //    $('#pc-datepicker').datepicker('setDate', newDate);
-        
+
     //    if ($scope.selectedPopularDestination.origin != '' && $scope.selectedPopularDestination.destination != '') {
     //        $scope.hasSearched = true;
     //        $scope.getFlightPrice($scope.selectedPopularDestination.origin, $scope.selectedPopularDestination.destination,
@@ -1056,5 +1056,5 @@ jQuery(document).ready(function ($) {
         $(this).find('.view-hotel').slideToggle('fast');
     });
 
-    
+
 });
