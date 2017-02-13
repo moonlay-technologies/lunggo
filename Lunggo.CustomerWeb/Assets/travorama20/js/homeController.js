@@ -256,7 +256,11 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
         Medan: {
             CheapestDate: null,
             CheapestPrice: null
-        }
+        },
+        Yogyakarta: {
+            CheapestDate: null,
+            CheapestPrice: null
+        },
     };
 
     $scope.priceHotel =
@@ -307,6 +311,8 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
                 return '/id/tiket-pesawat/cari/Jakarta-Surabaya-JKT-SUB/JKTSUB' + datex + '-100y';
             else if (dest == 'JKT')
                 return '/id/tiket-pesawat/cari/Denpasar-Jakarta-DPS-JKT/DPSJKT' + datex + '-100y';
+            else if (dest == 'JOG')
+                return '/id/tiket-pesawat/cari/Jakarta-Togyakarta-JKT-JOG/JKTJOG' + datex + '-100y';
         } else {
             var date = new Date();
             var datex = ("0" + date.getDate()).slice(-2) + ("0" + (date.getMonth() + 1)).slice(-2) + date.getFullYear().toString().substr(2, 2);
@@ -318,6 +324,8 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
                 return '/id/tiket-pesawat/cari/Jakarta-Surabaya-JKT-SUB/JKTSUB' + datex + '-100y';
             else if (dest == 'JKT')
                 return '/id/tiket-pesawat/cari/Denpasar-Jakarta-DPS-JKT/DPSJKT' + datex + '-100y';
+            else if (dest == 'JOG')
+                return '/id/tiket-pesawat/cari/Jakarta-Yogyakarta-JKT-JOG/JKTJOG' + datex + '-100y';
         }
     }
 
@@ -430,6 +438,10 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
                         $scope.priceFlight.Denpasar.CheapestPrice = cheapestPrice;
                         $scope.priceFlight.Denpasar.CheapestDate = cheapestDate;
                     }
+                    else if (origin == 'JKT' && destination == 'JOG') {
+                        $scope.priceFlight.Yogyakarta.CheapestPrice = cheapestPrice;
+                        $scope.priceFlight.Yogyakarta.CheapestDate = cheapestDate;
+                    }
 
                     pricelist = [];
                     for (var x = 0; x < returnData.listDatesAndPrices.length; x++) {
@@ -453,6 +465,7 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
     $scope.getCheapestFlightPrice('JKT', 'DPS');
     $scope.getCheapestFlightPrice('JKT', 'SUB');
     $scope.getCheapestFlightPrice('JKT', 'KNO');
+    $scope.getCheapestFlightPrice('JKT', 'JOG');
 
     $scope.getFlightPrice = function (month, year) {
         var authAccess = getAuthAccess();
