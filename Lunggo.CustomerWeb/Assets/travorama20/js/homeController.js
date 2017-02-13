@@ -242,51 +242,46 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
     $scope.priceFlight =
     {
         Denpasar: {
-            CheapestDate: '',
-            CheapestPrice: ''
+            CheapestDate: null,
+            CheapestPrice: null
         },
         Surabaya: {
-            CheapestDate: '',
-            CheapestPrice: ''
+            CheapestDate: null,
+            CheapestPrice: null
         },
         Jakarta: {
-            CheapestDate: '',
-            CheapestPrice: ''
+            CheapestDate: null,
+            CheapestPrice: null
         },
         Medan: {
-            CheapestDate: '',
-            CheapestPrice: ''
+            CheapestDate: null,
+            CheapestPrice: null
         }
     };
 
     $scope.priceHotel =
     {
         Bali: {
-            CheapestDate: '',
-            CheapestPrice: ''
+            CheapestDate: null,
+            CheapestPrice: null
         },
         Surabaya: {
-            CheapestDate: '',
-            CheapestPrice: ''
+            CheapestDate: null,
+            CheapestPrice: null
         },
         Jakarta: {
-            CheapestDate: '',
-            CheapestPrice: ''
+            CheapestDate: null,
+            CheapestPrice: null
         },
         Yogyakarta: {
-            CheapestDate: '',
-            CheapestPrice: ''
+            CheapestDate: null,
+            CheapestPrice: null
         },
         Bandung: {
-            CheapestDate: '',
-            CheapestPrice: ''
+            CheapestDate: null,
+            CheapestPrice: null
         }
     };
-
-    $scope.years = [];
-    for (var i = tahun; i < tahun + 4; i++) {
-            $scope.years.push(i);
-    }
 
     $scope.selectedPopularDestination = {
         origin: Cookies.get('origin') ? Cookies.get('origin') : 'JKT',
@@ -466,9 +461,9 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
         var todayMonth = todayDate.getMonth();
         var todayYear = todayDate.getFullYear();
         if (todayMonth == parseInt(month) - 1 && year == todayYear) {
-            var date = new Date();
+            date = new Date();
         } else {
-            var date = new Date(year, month - 1, 1);
+            date = new Date(year, month - 1, 1);
         }
         var y = date.getFullYear(); m = date.getMonth();
         var lastDay = new Date(date.getFullYear(), m + 1, 0);
@@ -493,7 +488,7 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
             });
         }
     }
-    $scope.getFlightPrice(parseInt(bulan) + 1, year);
+    $scope.getFlightPrice(parseInt(bulan) + 1, tahun);
     $scope.editData = function (data) {
         data.originCity = $scope.selectedPopularDestination.originCity.replace(/\s+/g, '-');
         data.originCity = data.originCity.replace(/[^0-9a-zA-Z-]/gi, '');
@@ -696,6 +691,14 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
         }
         
     });
+
+    var today = new Date();
+    var currentYear = today.getFullYear();
+    var nextYear = currentYear + 1;
+    $("#currentYear").attr("value", currentYear);
+    $("#nextYear").attr("value", nextYear);
+    $("#currentYear").text(currentYear);
+    $("#nextYear").text(nextYear);
 
     $('#submitCalendar').on('click', function () {
         var bulan = $('#selectMonth').val();

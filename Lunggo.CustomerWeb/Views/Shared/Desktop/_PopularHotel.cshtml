@@ -6,7 +6,7 @@
                 <div class="pop-inner" >
                     <div class="xlg-txt os-bold white-txt">Jakarta</div>
                     @*<div class="normal-txt white-txt location">Indonesia</div>*@
-                    <div class="bottom-txt" ng-show="priceHotel.Jakarta.cheapestPrice != ''">
+                    <div class="bottom-txt" ng-hide="priceHotel.Jakarta.cheapestPrice == null">
                         <span class="normal-txt white-txt">mulai dari</span>
                         <span class="md-txt os-bold yellow-txt">Rp {{priceHotel.Jakarta.cheapestPrice | currency:'':0}}</span>
                     </div>
@@ -21,7 +21,7 @@
                 <div class="pop-inner">
                     <div class="xlg-txt os-bold white-txt">Yogyakarta</div>
                     @*<div class="normal-txt white-txt location">Indonesia</div>*@
-                    <div class="bottom-txt" ng-show="priceHotel.Yogyakarta.cheapestPrice != '' ">
+                    <div class="bottom-txt" ng-hide="priceHotel.Yogyakarta.cheapestPrice == null">
                         <span class="normal-txt white-txt">mulai dari</span>
                         <span class="md-txt os-bold yellow-txt">Rp {{priceHotel.Yogyakarta.cheapestPrice | currency:'':0}}</span>
                     </div>
@@ -38,7 +38,7 @@
                 <div class="pop-inner">
                     <div class="xlg-txt os-bold white-txt">Surabaya</div>
                     @*<div class="normal-txt white-txt location">Indonesia</div>*@
-                    <div class="bottom-txt" ng-show="priceHotel.Surabaya.cheapestPrice != '' ">
+                    <div class="bottom-txt" ng-hide="priceHotel.Surabaya.cheapestPrice == null">
                         <span class="normal-txt white-txt">mulai dari</span>
                         <span class="md-txt os-bold yellow-txt">Rp {{priceHotel.Surabaya.cheapestPrice | currency:'':0}}</span>
                     </div>
@@ -53,7 +53,7 @@
                 <div class="pop-inner">
                     <div class="xlg-txt os-bold white-txt">Bali</div>
                     @*<div class="normal-txt white-txt location">Indonesia</div>*@
-                    <div class="bottom-txt" ng-show="priceHotel.Bali.cheapestPrice != '' ">
+                    <div class="bottom-txt" ng-hide="priceHotel.Bali.cheapestPrice == null">
                         <span class="normal-txt white-txt">mulai dari</span>
                         <span class="md-txt os-bold yellow-txt">Rp {{priceHotel.Bali.cheapestPrice| currency:'':0}}</span>
                     </div>
@@ -69,7 +69,7 @@
                 <div class="pop-inner">
                     <div class="xlg-txt os-bold white-txt">Bandung</div>
                     @*<div class="normal-txt white-txt location">Indonesia</div>*@
-                    <div class="bottom-txt" ng-show="priceHotel.Bandung.cheapestPrice != '' ">
+                    <div class="bottom-txt" ng-hide="priceHotel.Bandung.cheapestPrice == null">
                         <span class="normal-txt white-txt">mulai dari</span>
                         <span class="md-txt os-bold yellow-txt">Rp {{priceHotel.Bandung.cheapestPrice | currency:'':0}}</span>
                     </div>
