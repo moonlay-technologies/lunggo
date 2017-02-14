@@ -487,20 +487,23 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
     $scope.getFlightPrice = function (month, year) {
         var authAccess = getAuthAccess();
         var date;
+        var lastDay;
         var todayDate = new Date();
         var todayMonth = todayDate.getMonth();
         var todayYear = todayDate.getFullYear();
         if (todayMonth == parseInt(month) - 1 && year == todayYear) {
             date = new Date();
+            lastDay = new Date(date.getFullYear(), date.getMonth() + 2, 0);
         } else {
-            date = new Date(year, month - 1, 1);
+            date = new Date(year, month - 2, 1);
+            lastDay = new Date(date.getFullYear(), date.getMonth() + 3, 0);
         }
         var y = date.getFullYear(); m = date.getMonth();
-        var lastDay = new Date(date.getFullYear(), m + 1, 0);
+
         var startDate = ("0" + date.getDate()).slice(-2)
-             + ("0" + (date.getMonth() + 1)).slice(-2) + y.toString().substring(2, 4);
+             + ("0" + (date.getMonth() + 1)).slice(-2) + date.getFullYear().toString().substring(2, 4);
         var endDate = ("0" + lastDay.getDate()).slice(-2)
-             + ("0" + (lastDay.getMonth() + 1)).slice(-2) + y.toString().substring(2, 4);
+             + ("0" + (lastDay.getMonth() + 1)).slice(-2) + lastDay.getFullYear().toString().substring(2, 4);
 
         if (authAccess == 1 || authAccess == 2) {
             $.ajax({
@@ -544,88 +547,15 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
         }
 
         $('#pc-datepicker').fullCalendar('removeEvents');
-        if (year % 4 == 0) {
-            if (mth == 2) {
-                for (var d = date; d <= 29; d++) {
-                    var x = year.toString() + '-' + ("0" + (mth)).slice(-2).toString() + '-' + ("0" + d.toString()).slice(-2);
-                    var y = ("0" + d.toString()).slice(-2) + ("0" + (mth)).slice(-2).toString() + year.toString().slice(-2);
-                    var price = Math.round(parseInt(pricelist[d - date].price) / 1000).toString();
-                    //if (price != 0) {
-                        $scope.listCheapestPrice.push({
-                            title: Math.round(parseInt(pricelist[d - date].price) / 1000).toString(),
-                            start: x,
-                            link: $scope.editData(selectedData) + y + '-100y'
-                        });
-                    //}
-                }
-            } else if (mth == 1 || mth == 3 || mth == 5 || mth == 7 || mth == 8 || mth == 10 || mth == 12) {
-                for (var d = date; d <= 31; d++) {
-                    var x = year.toString() + '-' + ("0" + (mth)).slice(-2).toString() + '-' + ("0" + d.toString()).slice(-2);
-                    var y = ("0" + d.toString()).slice(-2) + ("0" + (mth)).slice(-2).toString() + year.toString().slice(-2);
-                    var price = Math.round(parseInt(pricelist[d - date].price) / 1000).toString();
-                    //if (price != 0) {
-                        $scope.listCheapestPrice.push({
-                            title: Math.round(parseInt(pricelist[d - date].price) / 1000).toString(),
-                            start: x,
-                            link: $scope.editData(selectedData) + y + '-100y'
-                        });
-                    //}
-                }
-            } else if (mth == 4 || mth == 6 || mth == 9 || mth == 11) {
-                for (var d = date; d <= 30; d++) {
-                    var x = year.toString() + '-' + ("0" + (mth)).slice(-2).toString() + '-' + ("0" + d.toString()).slice(-2);
-                    var y = ("0" + d.toString()).slice(-2) + ("0" + (mth)).slice(-2).toString() + year.toString().slice(-2);
-                    var price = Math.round(parseInt(pricelist[d - date].price) / 1000).toString();
-                    //if (price != 0) {
-                        $scope.listCheapestPrice.push({
-                            title: Math.round(parseInt(pricelist[d - date].price) / 1000).toString(),
-                            start: x,
-                            link: $scope.editData(selectedData) + y + '-100y'
-                        });
-                    //}
-                }
-            }
-        } else {
-            if (mth == 2) {
-                for (var d = date; d <= 28; d++) {
-                    var x = year.toString() + '-' + ("0" + (mth)).slice(-2).toString() + '-' + ("0" + d.toString()).slice(-2);
-                    var y = ("0" + d.toString()).slice(-2) + ("0" + (mth)).slice(-2).toString() + year.toString().slice(-2);
-                    var price = Math.round(parseInt(pricelist[d - date].price) / 1000).toString();
-                    //if (price != 0) {
-                        $scope.listCheapestPrice.push({
-                            title: Math.round(parseInt(pricelist[d - date].price) / 1000).toString(),
-                            start: x,
-                            link: $scope.editData(selectedData) + y + '-100y'
-                        });
-                    //}
-                }
-            } else if (mth == 1 || mth == 3 || mth == 5 || mth == 7 || mth == 8 || mth == 10 || mth == 12) {
-                for (var d = date; d <= 31; d++) {
-                    var x = year.toString() + '-' + ("0" + (mth)).slice(-2).toString() + '-' + ("0" + d.toString()).slice(-2);
-                    var y = ("0" + d.toString()).slice(-2) + ("0" + (mth)).slice(-2).toString() + year.toString().slice(-2);
-                    var price = Math.round(parseInt(pricelist[d - date].price) / 1000).toString();
-                    //if (price != 0) {
-                        $scope.listCheapestPrice.push({
-                            title: Math.round(parseInt(pricelist[d - date].price) / 1000).toString(),
-                            start: x,
-                            link: $scope.editData(selectedData) + y + '-100y'
-                        });
-                    //}
-                }
-            } else if (mth == 4 || mth == 6 || mth == 9 || mth == 11) {
-                for (var d = date; d <= 30; d++) {
-                    var x = year.toString() + '-' + ("0" + (mth)).slice(-2).toString() + '-' + ("0" + d.toString()).slice(-2);
-                    var y = ("0" + d.toString()).slice(-2) + ("0" + (mth)).slice(-2).toString() + year.toString().slice(-2);
-                    var price = Math.round(parseInt(pricelist[d - date].price) / 1000).toString();
-                    //if (price != 0) {
-                        $scope.listCheapestPrice.push({
-                            title: Math.round(parseInt(pricelist[d - date].price) / 1000).toString(),
-                            start: x,
-                            link: $scope.editData(selectedData) + y + '-100y'
-                        });
-                    //}
-                }
-            }
+        for (var x = 0; x < pricelist.length; x++) {
+            var tanggal = pricelist[x].date.replace(/\//g, '-');
+            var harga = Math.round(parseInt(pricelist[x].price) / 1000).toString();
+            var y = tanggal.slice(8, 10) + tanggal.slice(5, 7) + tanggal.slice(2, 4);
+            $scope.listCheapestPrice.push({
+                title: harga,
+                start: tanggal,
+                link: $scope.editData(selectedData) + y + '-100y'
+            });
         }
 
         $('#pc-datepicker').fullCalendar('renderEvents', $scope.listCheapestPrice);
