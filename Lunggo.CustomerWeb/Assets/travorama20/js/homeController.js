@@ -510,10 +510,10 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
                 method: 'GET',
                 headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') }
             }).done(function (returnData) {
-                if (returnData.cheapestDate != null && returnData.cheapestDate != '') {
+                //if (returnData.cheapestDate != null && returnData.cheapestDate != '') {
                     $scope.listCheapestPrice = [];
                     getEventDate(m + 1, y, returnData.listDatesAndPrices, $scope.selectedPopularDestination);
-                }
+               // }
             }).error(function (returnData) {
             });
         }
