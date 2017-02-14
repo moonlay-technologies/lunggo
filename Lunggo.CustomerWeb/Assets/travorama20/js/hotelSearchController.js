@@ -297,10 +297,7 @@ function ($scope, $log, $window, $http, $resource, $timeout, $interval, hotelSea
 
                 $scope.hotelFilterDisplayInfo = data.hotelFilterDisplayInfo;
                 isFirstload = false;
-                if (data.hotels && data.hotels.length > 0) {
-                    gotoMap(data.hotels);
-                }
-            };
+               };
 
             //$timeout(function () { customCheckbox(); }, 0);
             $log.debug(data);
@@ -557,6 +554,5 @@ function ($scope, $log, $window, $http, $resource, $timeout, $interval, hotelSea
         },
     }
 
-    $scope.markers = [];
     // ****************************** END **************************************
 }]);

@@ -204,7 +204,7 @@
                                 <a ng-repeat="hotel in hotels" class="hl-wrapper" href="{{getUrlHotelDetail(hotel)}}" target="_blank" ng-show="searchDone">
                                     <div class="hotel-list clearfix pointer">
                                         <div class="col-2">
-                                            <img class="img-list" hotel-list-image src="{{hotel.mainImage}}" alt="Hotel" />
+                                            <img class="img-list" hotel-list-image ng-src="{{hotel.mainImage}}" alt="Hotel" />
                                         </div>
                                         <div class="col-8">
                                             <div class="clearfix">
