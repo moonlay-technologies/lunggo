@@ -29,12 +29,15 @@
     <script src="/Assets/js/bootstrap.min.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCRAmMz6GPXsXi1pZAl5QUsjNTcY0ZfqVA"
             async defer></script>
+    <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
     @*&callback=initMap*@
 }
 
 @section PageJS{
     <script src="/Assets/travorama20/angularDirectory/search/hotelSearch.service.js"></script>
     <script src="/Assets/travorama20/js/HotelMap.js"></script>
+    <script>var isDestination = @Json.Encode(isDestination);</script>
+   
 }
 
 @*@Html.Partial("/Views/Shared/Desktop/_PageSlider.cshtml")*@

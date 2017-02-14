@@ -7,7 +7,7 @@
         $scope.totalActualHotel = '';
         $scope.hotelFilterDisplayInfo = undefined;
         $scope.totalHotelCount = 0;
-
+        $scope.isDestination = isDestination;
         $scope.filter = {
             nameFilter: "",
             minPrice: 0,
@@ -32,7 +32,12 @@
         }
 
         // Page Load And Display
-
+        if ($scope.isDestination == true) {
+            $(".filter-trigger > div").css("width", "25%");
+        } else {
+            $(".filter-trigger > div").css("width", "33.333333%");
+        }
+        $(".hotel-sort-filter-action > a").css("width", "50%");
         var isFirstload = true;
         $scope.bottomPage = false;
         $scope.searchDone = false;
@@ -187,7 +192,7 @@
         $scope.markers = [];
         $.each($scope.markers, function (i, marker) {
             marker.click(function () {
-                alert(marker)
+                alert(marker);
             });
         });
         $scope.getUrlHotelDetail = function (hotel) {
@@ -205,10 +210,20 @@
             return url;
         }
 
+        $scope.GotoDetailHotel = function (hotel) {
+            var url = $scope.getUrlHotelDetail(hotel);
+            $window.open(url);
+        }
+
+        $scope.toTitleCase = function (str) {
+            return str.replace(/\w\S*/g, function (txt)
+            { return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase(); });
+        }
+
         function gotoMap(hotels) {
 
             var map = new google.maps.Map(document.getElementById('map'), {
-                zoom: 14,
+                zoom: 12,
                 center: { lat: hotels[hotels.length - 1].latitude, lng: hotels[hotels.length - 1].longitude },
                 mapTypeControl: false,
                 streetViewControl: false,
@@ -223,7 +238,7 @@
             };
 
             var features = [];
-
+            var locations = [];
             for (var j = 0; j < hotels.length; j++) {
                 features.push({
                     position: { lat: hotels[j].latitude, lng: hotels[j].longitude },
@@ -237,6 +252,7 @@
                     destinationName: hotels[j].destinationName,
                     hotelCd: hotels[j].hotelCd
                 });
+                locations.push({ lat: hotels[j].latitude, lng: hotels[j].longitude });
             }
 
             for (var i = 0, feature; feature = features[i]; i++) {
@@ -245,9 +261,12 @@
                 } else {
                     addMarker(feature, i);
                 }
-
             }
-
+           
+            // Add a marker clusterer to manage the markers.
+            var markerCluster = new MarkerClusterer(map, $scope.markers,
+                {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
+        
             function addMarker(feature, order) {
                 var marker = new google.maps.Marker({
                     position: feature.position,
@@ -288,15 +307,10 @@
                     '<div class="map-button">' + '<a class="btn btn-yellow sm-btn"' + 'href="' + url + '"' + '>PESAN</a>' + '</div>' +
                     '</div>';
 
-                
                 var infoWindow = new google.maps.InfoWindow({
                     content: infoDesc,
                     maxWidth: 350,
                 });
-
-                //if (type == 'first') {
-                //infoWindow.open(map, marker);
-                //}
 
                 marker.addListener('click', function () {
                     infoWindow.open(map, marker);
@@ -304,8 +318,16 @@
                     var p = $(this).closest('.gm-style-iw');
                     var q = p.siblings();
                     //$('.map-container').hide();
-                    $('#hotel-' + order).show();
+                    if ($('#hotel-' + order).hasClass("showThisHotel")) {
+                        $('#hotel-' + order).removeClass("showThisHotel");
+                        $('#hotel-' + order).hide();
+                    } else {
+                        $('#hotel-' + order).addClass("showThisHotel");
+                        $('#hotel-' + order).show();
+                    }
+                    
                     $('.map-container').not('#hotel-' + order).hide();
+                    $('.map-container').not('#hotel-' + order).removeClass("showThisHotel");
                     p.find('.map-container').show();
                     p.find('.map-price').hide();
                     q.find('.map-container').hide();
@@ -317,30 +339,6 @@
                     var iwCloseBtn = iwOuter.next();
                     iwCloseBtn.css({ display: 'none' });
                 });
-
-                //infoWindow.addListener('domready', function () {
-                //    var iwOuter = $('.gm-style-iw').addClass('custom');
-
-                //    $('.map-container').hide();
-
-                //    $('.map-price').click(function () {
-                //        var p = $(this).closest('.gm-style-iw').parent();
-                //        var q = p.siblings();
-
-                //        p.find('.map-container').show();
-                //        p.find('.map-price').hide();
-                //        q.find('.map-container').hide();
-                //        q.find('.map-price').show();
-                //    });
-
-                //    var iwBackground = iwOuter.prev();
-                //    iwBackground.children().css({ 'display': 'none' });
-
-                //    var iwCloseBtn = iwOuter.next();
-                //    iwCloseBtn.css({ display: 'none' });
-                //});
-
-
             }
         }
 

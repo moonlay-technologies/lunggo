@@ -275,8 +275,14 @@
     <Content Include="Assets\css\global-error.css">
       <DependentUpon>global-error.scss</DependentUpon>
     </Content>
+    <Content Include="Assets\css\global-error.min.css">
+      <DependentUpon>global-error.css</DependentUpon>
+    </Content>
     <Content Include="Assets\css\help_section.css">
       <DependentUpon>help_section.scss</DependentUpon>
+    </Content>
+    <Content Include="Assets\css\help_section.min.css">
+      <DependentUpon>help_section.css</DependentUpon>
     </Content>
     <Content Include="Assets\css\invoice.css">
       <DependentUpon>invoice.scss</DependentUpon>
@@ -297,6 +303,9 @@
     </Content>
     <Content Include="Assets\css\travorama-mobileApp.css">
       <DependentUpon>travorama-mobileApp.scss</DependentUpon>
+    </Content>
+    <Content Include="Assets\css\travorama-mobileApp.min.css">
+      <DependentUpon>travorama-mobileApp.css</DependentUpon>
     </Content>
     <Content Include="Assets\fonts\bootstrap\glyphicons-halflings-regular.svg" />
     <Content Include="Assets\fonts\DINB-webfont.svg" />
@@ -1179,6 +1188,7 @@
     <Content Include="Assets\mobile\js\CheckoutController.js" />
     <Content Include="Assets\mobile\js\HomeController.js" />
     <Content Include="Assets\mobile\js\HotelController.js" />
+    <Content Include="Assets\mobile\js\HotelMapController.js" />
     <Content Include="Assets\mobile\js\returnFlightController.js" />
     <Content Include="Assets\mobile\js\singleFlightController.js" />
     <Content Include="Assets\mobile\js\StaticController.js" />

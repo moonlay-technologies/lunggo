@@ -66,100 +66,106 @@
 }
 
 /*Search Map*/
-
-.map-container {
-    .hotel-round {
-        width: 93px;
-        height: 93px;
-        position: absolute;
-        left: 0;
-        @include border-radius(93px);
-        background-size: cover;
-        background-position: center;
-        margin-left: -45px;
-        margin-top: 0;
-        border: 2px solid #1daee4;
+.hotel-map {
+    .hotel-map-header {
+        background: #2fb4e6;
+        padding: 22px 18px;
+        position: fixed;
+        width: 100%;
+        z-index: 999;
     }
-    .map-content {
-        overflow: hidden;
-        padding-left: 55px;
-        small {font-size: 10px;}
-        .hotel-title {
-            max-width: 180px;
-            line-height: 30px;
-        }
-    }
-    .map-button {
-        position: absolute;
-        right: 0;
-        bottom: 0;
-        margin-bottom: 10px;
-        margin-right: 10px;
-    }
-}
-
-.hotel-title {
-    font-size: 14px;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    white-space: nowrap;
-}
-
-#map {
-    margin: 0;
-    padding: 0;
-    height: 400px;
-    max-width: none;
-    img {max-width: none !important;}
-}
-
-.gm-style-iw.custom {
-    width: auto !important;
-    box-shadow: 3px 5px 6px rgba(178, 178, 178, 0.6);
-    overflow: initial;
-    top: 30px !important;
-    left: 26px !important;
-    background: #fff;
-    @include border-radius(2px);
-    .map-price, .map-container {
-        @include border-radius(2px);
-        background-color: #fff;
-        &:after {
-            width: 0px;
-            height: 0px;
-            border-left: 15px solid transparent;
-            border-right: 15px solid transparent;
-            border-top: 15px solid #fff;
-            content: '';
-            display: block;
-            position: absolute;
-            margin-top: 8px;
-            transform: translateX(-50%);
-            left: 50%;
-        }
-    }
+    .hotel-map-container {}
     .map-container {
-        width: 250px !important;
-        height: 90px;
+        .hotel-round {
+            width: 93px;
+            height: 93px;
+            position: absolute;
+            left: 0;
+            @include border-radius(93px);
+            background-size: cover;
+            background-position: center;
+            margin-left: -45px;
+            margin-top: 0;
+            border: 2px solid #1daee4;
+        }
+        .map-content {
+            overflow: hidden;
+            padding-left: 55px;
+            small {font-size: 10px;}
+            .hotel-title {
+                max-width: 180px;
+                line-height: 30px;
+            }
+        }
+        .map-button {
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            margin-bottom: 10px;
+            margin-right: 10px;
+        }
     }
-    .map-price {
-        width: 100% !important;
-        padding: 10px 15px;
-        color: #ff7200;
-        &:hover {
-            background: #ff7200;
-            color: #fff;
-            &:after {border-top: 15px solid #ff7200;}
-            &:before {
+    .hotel-title {
+        font-size: 14px;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+    }
+    #map {
+        margin: 0;
+        padding: 0;
+        height: 320px;
+        max-width: none;
+        img {max-width: none !important;}
+    }
+    .gm-style-iw.custom {
+        width: auto !important;
+        box-shadow: 3px 5px 6px rgba(178, 178, 178, 0.6);
+        overflow: initial;
+        top: 30px !important;
+        left: 26px !important;
+        background: #fff;
+        @include border-radius(2px);
+        .map-price, .map-container {
+            @include border-radius(2px);
+            background-color: #fff;
+            &:after {
+                width: 0px;
+                height: 0px;
+                border-left: 15px solid transparent;
+                border-right: 15px solid transparent;
+                border-top: 15px solid #fff;
                 content: '';
                 display: block;
-                width: 100%;
-                height: 8px;
-                background: #ff7200;
                 position: absolute;
-                left: 0;
-                bottom: 0;
-                border-radius: 2px;
+                margin-top: 8px;
+                transform: translateX(-50%);
+                left: 50%;
+            }
+        }
+        .map-container {
+            width: 250px !important;
+            height: 90px;
+        }
+        .map-price {
+            width: 100% !important;
+            padding: 10px 15px;
+            color: #ff7200;
+            &:hover {
+                background: #ff7200;
+                color: #fff;
+                &:after {border-top: 15px solid #ff7200;}
+                &:before {
+                    content: '';
+                    display: block;
+                    width: 100%;
+                    height: 8px;
+                    background: #ff7200;
+                    position: absolute;
+                    left: 0;
+                    bottom: 0;
+                    border-radius: 2px;
+                }
             }
         }
     }
