@@ -231,6 +231,7 @@
     <Compile Include="Controllers\B2BFlightController.cs" />
     <Compile Include="Controllers\B2BHotelController.cs" />
     <Compile Include="Controllers\B2BIndexController.cs" />
+    <Compile Include="Controllers\B2BPaymentController.cs" />
     <Compile Include="Controllers\B2BThankYouController.cs" />
     <Compile Include="Controllers\FlightController.cs" />
     <Compile Include="Controllers\HelpSectionController.cs" />
@@ -1637,6 +1638,7 @@
     <Content Include="Views\Shared\Desktop\_B2BSiteHeader.cshtml" />
     <Content Include="Views\Shared\Desktop\_B2BLayoutDesktop.cshtml" />
     <Content Include="Views\B2BAccount\ApproverReservationHistory.cshtml" />
+    <Content Include="Views\B2BPayment\Index.cshtml" />
     <None Include="Views\Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

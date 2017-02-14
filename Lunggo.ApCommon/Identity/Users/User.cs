@@ -59,6 +59,15 @@ namespace Lunggo.ApCommon.Identity.Users
             }
         }
 
+        internal static string GetCompanyIdByUserId(string userId)
+        {
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                var companyId = GetCompanyIdByUserQuery.GetInstance().Execute(conn, new { userId }).FirstOrDefault();
+                return companyId;
+            }
+        }
+
         public List<User> GetAllUserByCompanyId(string userId)
         {
             var test = new List<User>();

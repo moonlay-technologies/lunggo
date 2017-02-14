@@ -11,24 +11,26 @@ namespace Lunggo.Repository.TableRecord
         private static List<ColumnMetadata> _primaryKeys;
         private static String _tableName;
 
-		public String Email
+		public String CompanyId
 		{
-		    get { return _Email; }
+		    get { return _CompanyId; }
 		    set
 		    {
-		        _Email = value;
-		        IncrementLog("Email");
+		        _CompanyId = value;
+		        IncrementLog("CompanyId");
 		    }
 		}
-		public String MaskedCardNumber
-		{
-		    get { return _MaskedCardNumber; }
-		    set
-		    {
-		        _MaskedCardNumber = value;
-		        IncrementLog("MaskedCardNumber");
-		    }
-		}
+
+        public String MaskedCardNumber
+        {
+            get { return _MaskedCardNumber; }
+            set
+            {
+                _MaskedCardNumber = value;
+                IncrementLog("MaskedCardNumber");
+            }
+        }
+
 		public String Token
 		{
 		    get { return _Token; }
@@ -38,6 +40,16 @@ namespace Lunggo.Repository.TableRecord
 		        IncrementLog("Token");
 		    }
 		}
+
+        public Boolean? IsPrimaryCard
+        {
+            get { return _IsPrimaryCard; }
+            set
+            {
+                _IsPrimaryCard = value;
+                IncrementLog("IsPrimaryCard");
+            }
+        }
 		public String CardHolderName
 		{
 		    get { return _CardHolderName; }
@@ -57,12 +69,25 @@ namespace Lunggo.Repository.TableRecord
 		    }
 		}
 
+        public DateTime? CardExpiry
+        {
+            get { return _CardExpiry; }
+            set
+            {
+                _CardExpiry = value;
+                IncrementLog("CardExpiry");
+            }
+        }
+
 		
-		private String _Email;
-		private String _MaskedCardNumber;
+		private String _CompanyId;
+        private String _MaskedCardNumber;
+        private Boolean? _IsPrimaryCard;
 		private String _Token;
 		private String _CardHolderName;
 		private DateTime? _TokenExpiry;
+        private DateTime? _CardExpiry;
+
 
 
 		public static SavedCreditCardTableRecord CreateNewInstance()
@@ -94,12 +119,13 @@ namespace Lunggo.Repository.TableRecord
         {
             _recordMetadata = new List<ColumnMetadata>
             {
-				new ColumnMetadata("Email", true),
-				new ColumnMetadata("MaskedCardNumber", true),
+				new ColumnMetadata("CompanyId", true),
+                new ColumnMetadata("MaskedCardNumber",true),
+				new ColumnMetadata("IsPrimaryCard", false),
 				new ColumnMetadata("Token", false),
 				new ColumnMetadata("CardHolderName", false),
 				new ColumnMetadata("TokenExpiry", false),
-
+                new ColumnMetadata("CardExpiry", false)
             };
         }
 

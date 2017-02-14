@@ -8,7 +8,7 @@ namespace Lunggo.ApCommon.Identity.Roles
 {
     public class Role : IdentityRole<String>
     {
-        internal static String GetFromDb(string userId)
+        public static String GetFromDb(string userId)
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {

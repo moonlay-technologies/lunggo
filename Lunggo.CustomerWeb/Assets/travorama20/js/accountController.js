@@ -801,7 +801,8 @@ app.controller('b2BAccountController', [
 
         $scope.updateReservation = {
             rsvUpdated : false,
-            isConfirm : false,
+            isConfirm: false,
+            isFailed:false,
             rsvNo : "",
             status: "",
             select : function(rsvNo, status) {
@@ -826,13 +827,15 @@ app.controller('b2BAccountController', [
                         //$log.debug(returnData);
                         if (returnData.data.status == '200') {
                             $log.debug('Success updating reservation');
-                            $scope.rsvUpdated = false;
+                            $scope.updateReservation.rsvUpdated = true;
+                            $scope.updateReservation.isFailed = false;
                             window.location.reload();
                         }
                         else {
                             $log.debug(returnData.data.error);
                             $log.debug(returnData);
-                            $scope.rsvUpdated = false;
+                            $scope.updateReservation.rsvUpdated = false;
+                            $scope.updateReservation.isFailed = true;
                             window.location.reload();
                         }
                     }).catch(function (returnData) {
@@ -844,7 +847,8 @@ app.controller('b2BAccountController', [
                         else {
                             $log.debug('Failed Update Reservation');
                             $log.debug(returnData);
-                            $scope.rsvUpdated = false;
+                            $scope.updateReservation.rsvUpdated = false;
+                            $scope.updateReservation.isFailed = true;
                             window.location.reload();
                         }
                     });

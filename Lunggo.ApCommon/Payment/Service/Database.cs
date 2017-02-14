@@ -5,6 +5,7 @@ using System.Dynamic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Query;
 using Lunggo.ApCommon.Payment.Constant;
@@ -159,6 +160,63 @@ namespace Lunggo.ApCommon.Payment.Service
                     FinalPriceIdr = rec.FinalPriceIdr.GetValueOrDefault()
                 });
                 return payments;
+            }
+        }
+
+        private void InsertSavedCreditCardToDb(SavedCreditCard creditCard)
+        {
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                var creditCardRecord = new SavedCreditCardTableRecord
+                {
+                    CompanyId = creditCard.CompanyId,
+                    MaskedCardNumber = creditCard.MaskedCardNumber,
+                    Token =  creditCard.Token,
+                    CardHolderName = creditCard.CardHolderName,
+                    CardExpiry = creditCard.CardExpiry,
+                    TokenExpiry = creditCard.TokenExpiry,
+                    IsPrimaryCard = creditCard.IsPrimaryCard
+                };
+                SavedCreditCardTableRepo.GetInstance().Insert(conn, creditCardRecord);
+            }
+        }
+
+        private void UpdatePrimaryCardDb(string maskedCardNumber, string companyId, bool isPrimaryCard)
+        {
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                SavedCreditCardTableRepo.GetInstance().Update(conn, new SavedCreditCardTableRecord
+                {
+                    MaskedCardNumber = maskedCardNumber,
+                    CompanyId = companyId,
+                    IsPrimaryCard = isPrimaryCard
+                });
+            }
+        }
+
+        private void UpdateSavedCreditCard(SavedCreditCard creditCard)
+        {
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                SavedCreditCardTableRepo.GetInstance().Update(conn, new SavedCreditCardTableRecord
+                {
+                    MaskedCardNumber = creditCard.MaskedCardNumber,
+                    CompanyId = creditCard.CompanyId,
+                    Token = creditCard.Token,
+                    TokenExpiry = creditCard.TokenExpiry
+                });
+            }
+        }
+
+        private void DeleteSaveCreditCardFromDb(string companyId, string maskedCardNumber)
+        {
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                SavedCreditCardTableRepo.GetInstance().Delete(conn, new SavedCreditCardTableRecord
+                {
+                    MaskedCardNumber = maskedCardNumber,
+                    CompanyId = companyId
+                });
             }
         }
     }

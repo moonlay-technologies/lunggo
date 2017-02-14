@@ -208,6 +208,18 @@ var HotelSelectConfig = {
     Url: 'https://api.local.travorama.com/v1/hotel/select'
 };
 
+var GetCreditCardConfig = {
+    Url: 'https://api.local.travorama.com/v1/payment/getcreditcard'
+};
+
+var AddCreditCardConfig = {
+    Url: 'https://api.local.travorama.com/v1/payment/addcreditcard'
+};
+
+var SetPrimaryCardConfig = {
+    Url: 'https://api.local.travorama.com/v1/payment/setprimarycard'
+};
+
 var HotelBookConfig = {
     Url: 'https://api.local.travorama.com/v1/hotel/book',
     working: false
