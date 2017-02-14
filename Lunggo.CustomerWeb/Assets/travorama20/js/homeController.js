@@ -302,7 +302,7 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
             $("#" + id).text($scope.returnMonth(m) + " " + tahun);
 
         }
-        for (var n = 0; n < bulan; n++) {
+        for (var n = 0; n <= bulan; n++) {
             var id = 'month' + (m  - bulan + n).toString();
             $("#" + id).attr('value', (tahun + 1).toString() + "-" + n.toString());
             $("#s" + id).val((tahun + 1).toString() + "-" + n.toString());
@@ -690,7 +690,7 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
         $('#pc-datepicker').fullCalendar('gotoDate', newDate);
         if ($scope.selectedPopularDestination.origin != '' && $scope.selectedPopularDestination.destination != '') {
             $scope.hasSearched = true;
-            $scope.getFlightPrice(parseInt(bulan) + 1, tahun);
+            $scope.getFlightPrice(parseInt(arr[1]) + 1, parseInt(arr[0]));
         }
     });
 
