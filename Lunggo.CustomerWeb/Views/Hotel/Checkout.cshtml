@@ -68,7 +68,7 @@
     <script>
         var langCode = '@OnlineContext.GetActiveLanguageCode()';
         var expirytime = '@Model.ExpiryTime.ToString("o")';
-            var netFare = '@Model.HotelDetail.NetTotalFare'; 
+        var netFare = '@Model.HotelDetail.NetTotalFare'; 
         
         if (getParam('page') == 2) {
             currentPage = getParam('page');
@@ -79,6 +79,7 @@
         var hotelImg = '@hotelMainImage';
     </script>
     <script src="/Assets/travorama20/js/HotelCheckoutController.js"></script>
+    <script> goTop();</script>
 }
 
 <div class="checkout-hotel">
