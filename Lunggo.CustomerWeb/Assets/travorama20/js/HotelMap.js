@@ -627,4 +627,9 @@ jQuery(document).ready(function ($) {
     $('.map-container').click(function () {
         ('.map-container').hide();
     });
+
+    $('.open-txt').click(function () {
+        $(this).toggleClass('active');
+        $(this).parent().find('.short-txt').toggleClass('open');
+    });
 });
