@@ -4027,7 +4027,8 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
   /*Shared Checkout*/
   /*Overlay*/
   /*Page Checkout Hotel*/
-  /*Page Thankyou Hotel*/ }
+  /*Page Thankyou Hotel*/
+  /*Search Map*/ }
   .page-hotel.page-detail {
     overflow-y: scroll; }
   .page-hotel .xlg-txt {
@@ -4800,8 +4801,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     /*--------------------*/
     /* imports */
     /*Hotel Listing*/
-    /*Shorten Text*/
-    /*Search Map*/ }
+    /*Shorten Text*/ }
     .page-hotel .travorama-hotel-mobile .search-list {
       position: relative;
       font-size: 11px; }
@@ -4860,97 +4860,6 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
       display: none; }
     .page-hotel .travorama-hotel-mobile .filter-group--facility .toggle.active .sh-close, .page-hotel .travorama-hotel-mobile .filter-group--area .toggle.active .sh-close {
       display: block; }
-    .page-hotel .travorama-hotel-mobile .map-container .hotel-round {
-      width: 93px;
-      height: 93px;
-      position: absolute;
-      left: 0;
-      -webkit-border-radius: 93px;
-      -moz-border-radius: 93px;
-      -ms-border-radius: 93px;
-      border-radius: 93px;
-      background-size: cover;
-      background-position: center;
-      margin-left: -45px;
-      margin-top: 0;
-      border: 2px solid #1daee4; }
-    .page-hotel .travorama-hotel-mobile .map-container .map-content {
-      overflow: hidden;
-      padding-left: 55px; }
-      .page-hotel .travorama-hotel-mobile .map-container .map-content small {
-        font-size: 10px; }
-      .page-hotel .travorama-hotel-mobile .map-container .map-content .hotel-title {
-        max-width: 180px;
-        line-height: 30px; }
-    .page-hotel .travorama-hotel-mobile .map-container .map-button {
-      position: absolute;
-      right: 0;
-      bottom: 0;
-      margin-bottom: 10px;
-      margin-right: 10px; }
-    .page-hotel .travorama-hotel-mobile .hotel-title {
-      font-size: 14px;
-      text-overflow: ellipsis;
-      overflow: hidden;
-      white-space: nowrap; }
-    .page-hotel .travorama-hotel-mobile #map {
-      margin: 0;
-      padding: 0;
-      height: 400px;
-      max-width: none; }
-      .page-hotel .travorama-hotel-mobile #map img {
-        max-width: none !important; }
-    .page-hotel .travorama-hotel-mobile .gm-style-iw.custom {
-      width: auto !important;
-      box-shadow: 3px 5px 6px rgba(178, 178, 178, 0.6);
-      overflow: initial;
-      top: 30px !important;
-      left: 26px !important;
-      background: #fff;
-      -webkit-border-radius: 2px;
-      -moz-border-radius: 2px;
-      -ms-border-radius: 2px;
-      border-radius: 2px; }
-      .page-hotel .travorama-hotel-mobile .gm-style-iw.custom .map-price, .page-hotel .travorama-hotel-mobile .gm-style-iw.custom .map-container {
-        -webkit-border-radius: 2px;
-        -moz-border-radius: 2px;
-        -ms-border-radius: 2px;
-        border-radius: 2px;
-        background-color: #fff; }
-        .page-hotel .travorama-hotel-mobile .gm-style-iw.custom .map-price:after, .page-hotel .travorama-hotel-mobile .gm-style-iw.custom .map-container:after {
-          width: 0px;
-          height: 0px;
-          border-left: 15px solid transparent;
-          border-right: 15px solid transparent;
-          border-top: 15px solid #fff;
-          content: '';
-          display: block;
-          position: absolute;
-          margin-top: 8px;
-          transform: translateX(-50%);
-          left: 50%; }
-      .page-hotel .travorama-hotel-mobile .gm-style-iw.custom .map-container {
-        width: 250px !important;
-        height: 90px; }
-      .page-hotel .travorama-hotel-mobile .gm-style-iw.custom .map-price {
-        width: 100% !important;
-        padding: 10px 15px;
-        color: #ff7200; }
-        .page-hotel .travorama-hotel-mobile .gm-style-iw.custom .map-price:hover {
-          background: #ff7200;
-          color: #fff; }
-          .page-hotel .travorama-hotel-mobile .gm-style-iw.custom .map-price:hover:after {
-            border-top: 15px solid #ff7200; }
-          .page-hotel .travorama-hotel-mobile .gm-style-iw.custom .map-price:hover:before {
-            content: '';
-            display: block;
-            width: 100%;
-            height: 8px;
-            background: #ff7200;
-            position: absolute;
-            left: 0;
-            bottom: 0;
-            border-radius: 2px; }
     .page-hotel .travorama-hotel-mobile .detail-hotel .dh-title {
       padding: 20px 15px;
       border-bottom: 1px solid #e9e9e9; }
@@ -5846,9 +5755,6 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         padding: 0 15px; }
       .page-hotel .overlay.overlay--hotel-form .overlay__content > .form-wrapper .ag-list {
         margin: 0 15px; }
-  .page-hotel .overlay.overlay--hotel-map .overlay__content #map {
-    width: 100%;
-    height: 320px; }
   .page-hotel .rh-table {
     background: #e9e7e8;
     text-align: center; }
@@ -5858,3 +5764,99 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     .page-hotel .rh-table .cols-value {
       padding: 10px 0;
       height: 60px; }
+  .page-hotel .hotel-map .hotel-map-header {
+    background: #2fb4e6;
+    padding: 22px 18px; }
+  .page-hotel .hotel-map .hm-listing .hotel-list {
+    padding: 15px 10px; }
+  .page-hotel .hotel-map .map-container .hotel-round {
+    width: 93px;
+    height: 93px;
+    position: absolute;
+    left: 0;
+    -webkit-border-radius: 93px;
+    -moz-border-radius: 93px;
+    -ms-border-radius: 93px;
+    border-radius: 93px;
+    background-size: cover;
+    background-position: center;
+    margin-left: -45px;
+    margin-top: 0;
+    border: 2px solid #1daee4; }
+  .page-hotel .hotel-map .map-container .map-content {
+    overflow: hidden;
+    padding-left: 55px; }
+    .page-hotel .hotel-map .map-container .map-content small {
+      font-size: 10px; }
+    .page-hotel .hotel-map .map-container .map-content .hotel-title {
+      max-width: 180px;
+      line-height: 30px; }
+  .page-hotel .hotel-map .map-container .map-button {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    margin-bottom: 10px;
+    margin-right: 10px; }
+  .page-hotel .hotel-map .hotel-title {
+    font-size: 14px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap; }
+  .page-hotel .hotel-map #map {
+    margin: 0;
+    padding: 0;
+    height: 320px;
+    max-width: none; }
+    .page-hotel .hotel-map #map img {
+      max-width: none !important; }
+  .page-hotel .hotel-map .gm-style-iw.custom {
+    width: auto !important;
+    box-shadow: 3px 5px 6px rgba(178, 178, 178, 0.6);
+    overflow: initial;
+    top: 30px !important;
+    left: 26px !important;
+    background: #fff;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    -ms-border-radius: 2px;
+    border-radius: 2px; }
+    .page-hotel .hotel-map .gm-style-iw.custom .map-price, .page-hotel .hotel-map .gm-style-iw.custom .map-container {
+      -webkit-border-radius: 2px;
+      -moz-border-radius: 2px;
+      -ms-border-radius: 2px;
+      border-radius: 2px;
+      background-color: #fff; }
+      .page-hotel .hotel-map .gm-style-iw.custom .map-price:after, .page-hotel .hotel-map .gm-style-iw.custom .map-container:after {
+        width: 0px;
+        height: 0px;
+        border-left: 15px solid transparent;
+        border-right: 15px solid transparent;
+        border-top: 15px solid #fff;
+        content: '';
+        display: block;
+        position: absolute;
+        margin-top: 8px;
+        transform: translateX(-50%);
+        left: 50%; }
+    .page-hotel .hotel-map .gm-style-iw.custom .map-container {
+      width: 250px !important;
+      height: 90px; }
+    .page-hotel .hotel-map .gm-style-iw.custom .map-price {
+      width: 100% !important;
+      padding: 10px 15px;
+      color: #ff7200; }
+      .page-hotel .hotel-map .gm-style-iw.custom .map-price:hover {
+        background: #ff7200;
+        color: #fff; }
+        .page-hotel .hotel-map .gm-style-iw.custom .map-price:hover:after {
+          border-top: 15px solid #ff7200; }
+        .page-hotel .hotel-map .gm-style-iw.custom .map-price:hover:before {
+          content: '';
+          display: block;
+          width: 100%;
+          height: 8px;
+          background: #ff7200;
+          position: absolute;
+          left: 0;
+          bottom: 0;
+          border-radius: 2px; }
