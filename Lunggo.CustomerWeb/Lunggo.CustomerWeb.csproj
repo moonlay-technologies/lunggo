@@ -1617,6 +1617,7 @@
     <Content Include="Views\Shared\Desktop\_HotelListing.cshtml" />
     <Content Include="Views\Hotel\HotelMap.cshtml" />
     <Content Include="Views\Shared\Mobile\_HotelListing.cshtml" />
+    <Content Include="Views\Hotel\HotelMap.mobile.cshtml" />
     <None Include="Views\Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
