@@ -3,10 +3,10 @@
 @model HotelSearchApiRequest
 @{
     Layout = "/Views/Shared/mobile/_LayoutMobile.cshtml";
-    ViewBag.BodyClass = "page-hotel page-search";
+    ViewBag.BodyClass = "page-hotel page-hotel-map";
     ViewBag.Title = "Pencarian Hotel";
     ViewBag.CurrentPage = "search-hotel";
-    ViewBag.AngularController = "hotelSearchController";
+    ViewBag.AngularController = "HotelMapController";
 }
 
 @section AdditionalCSS{
@@ -24,45 +24,47 @@
 
 @section PageJS{
     <script src="/Assets/travorama20/js/HotelMap.js"></script>
+    <script src="/Assets/mobile/js/HotelMapController.js"></script>
 }
 
-<div class="hotel-map">
-    <div class="hotel-map-header white-txt md-txt os-bold center-txt">
-        <span class="">PETA</span>
-        @*<span class="close-map pull-right">X</span>*@
-    </div>
-    <div class="hotel-map-container">
-        <div id="map"></div>
-        <div class="hm-listing">
-            <ul class="hotel-list-container">
-                <li>
-                    <div class="hotel-list clearfix">
-                        <div class="col-left-hotel"><div class="img-list" alt-image style="background-image:url('');"></div></div>
-                        <div class="col-right-hotel">
-                            <div class="blue-txt bold-txt lg-txt">Everyday Hotel</div>
-                            <div class="star star-5"></div>
-                            @*<div class="star" ng-if="hotel.starRating == 1"></div>
+<div class="travorama-hotel-mobile">
+    <div class="hotel-map">
+        <div class="hotel-map-header white-txt md-txt os-bold center-txt">
+            <span class="">PETA</span>
+            @*<span class="close-map pull-right">X</span>*@
+        </div>
+        <div class="hotel-map-container">
+            <div id="map"></div>
+            <div class="hm-listing">
+                <ul class="hotel-list-container">
+                    <li>
+                        <div class="hotel-list clearfix">
+                            <div class="col-left-hotel"><div class="img-list" alt-image style="background-image:url('');"></div></div>
+                            <div class="col-right-hotel">
+                                <div class="blue-txt bold-txt lg-txt">Everyday Hotel</div>
+                                <div class="star star-5"></div>
+                                @*<div class="star" ng-if="hotel.starRating == 1"></div>
                                 <div class="star star-2 " ng-if="hotel.starRating == 2"></div>
                                 <div class="star star-3 " ng-if="hotel.starRating == 3"></div>
                                 <div class="star star-4 " ng-if="hotel.starRating == 4"></div>
                                 <div class="star star-5 " ng-if="hotel.starRating == 5"></div>*@
-                            <div class="location grey-txt">
-                                Jl. Bangka No. 26
-                                @*{{toTitleCase(hotel.area)}}*@
-                                @*<span ng-show="hotel.area == null || hotel.area.length < 1">{{toTitleCase(hotel.address)}} {{toTitleCase(hotel.zone)}} <span ng-show="hotel.postalCd != null || hotel.postalCd.length > 0"> {{hotel.postalCd}}</span></span>*@
-                            </div>
-                            <div class="price orange-txt">
-                                <div class="txt-md semibold-txt">Harga per malam mulai dari:</div>
-                                <div class="underline-txt sm-txt">Rp 999.999.999</div>
-                                <a ng-click="GotoDetailHotel(hotel)" class="detail"></a>
-                                <div class="lg-txt"><b><sup>Rp</sup> 999.999.999</b></div>
-                                <span class="xs-txt">(*Termasuk Pajak & Service Charge)</span>
+                                <div class="location grey-txt">
+                                    Jl. Bangka No. 26
+                                    @*{{toTitleCase(hotel.area)}}*@
+                                    @*<span ng-show="hotel.area == null || hotel.area.length < 1">{{toTitleCase(hotel.address)}} {{toTitleCase(hotel.zone)}} <span ng-show="hotel.postalCd != null || hotel.postalCd.length > 0"> {{hotel.postalCd}}</span></span>*@
+                                </div>
+                                <div class="price orange-txt">
+                                    <div class="txt-md semibold-txt">Harga per malam mulai dari:</div>
+                                    <div class="underline-txt sm-txt">Rp 999.999.999</div>
+                                    <a ng-click="GotoDetailHotel(hotel)" class="detail"></a>
+                                    <div class="lg-txt"><b><sup>Rp</sup> 999.999.999</b></div>
+                                    <span class="xs-txt">(*Termasuk Pajak & Service Charge)</span>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </li>
-            </ul>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
-</div>
 </div>

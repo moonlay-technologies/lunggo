@@ -1179,6 +1179,7 @@
     <Content Include="Assets\mobile\js\CheckoutController.js" />
     <Content Include="Assets\mobile\js\HomeController.js" />
     <Content Include="Assets\mobile\js\HotelController.js" />
+    <Content Include="Assets\mobile\js\HotelMapController.js" />
     <Content Include="Assets\mobile\js\returnFlightController.js" />
     <Content Include="Assets\mobile\js\singleFlightController.js" />
     <Content Include="Assets\mobile\js\StaticController.js" />
