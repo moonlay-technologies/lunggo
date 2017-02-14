@@ -535,17 +535,6 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
     $scope.hasSearched = false;
 
     function getEventDate(mth, year, pricelist, selectedData) {
-        //var eventDates = [];
-        var todayDate = new Date();
-        var bulan = todayDate.getMonth() + 1;
-        var thn = todayDate.getFullYear();
-        var date;
-        if (bulan == mth && year == thn) {
-            date = todayDate.getDate();
-        } else {
-            date = 1;
-        }
-
         $('#pc-datepicker').fullCalendar('removeEvents');
         for (var x = 0; x < pricelist.length; x++) {
             var tanggal = pricelist[x].date.replace(/\//g, '-');
