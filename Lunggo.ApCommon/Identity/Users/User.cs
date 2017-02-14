@@ -58,5 +58,11 @@ namespace Lunggo.ApCommon.Identity.Users
                 return user;
             }
         }
+
+        public List<User> GetAllUserByCompanyId(string userId)
+        {
+            var test = new List<User>();
+            return test;
+        }
     }
 }

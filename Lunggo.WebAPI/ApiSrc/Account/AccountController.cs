@@ -336,5 +336,23 @@ namespace Lunggo.WebAPI.ApiSrc.Account
                 return ApiResponseBase.ExceptionHandling(e);
             }
         }
+
+        [HttpGet]
+        [LunggoCorsPolicy]
+        [Authorize]
+        [Route("v1/getuser")]
+        public ApiResponseBase GetUser()
+        {
+            try
+            {
+                var apiResponse = AccountLogic.GetUser();
+                //return apiResponse;
+                return new ApiResponseBase();
+            }
+            catch (Exception e)
+            {
+                return ApiResponseBase.ExceptionHandling(e);
+            }
+        }
     }
 }

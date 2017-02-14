@@ -222,6 +222,7 @@
     <Compile Include="ApiSrc\Account\Logic\GetTransactionHistoryLogic.cs" />
     <Compile Include="ApiSrc\Account\Logic\GetReservationLogic.cs" />
     <Compile Include="ApiSrc\Account\Logic\ConfirmEmailLogic.cs" />
+    <Compile Include="ApiSrc\Account\Logic\GetUserLogic.cs" />
     <Compile Include="ApiSrc\Account\Logic\ResetPasswordLogic.cs" />
     <Compile Include="ApiSrc\Account\Logic\ResendConfirmationEmailLogic.cs" />
     <Compile Include="ApiSrc\Account\Logic\RegisterLogic.cs" />
