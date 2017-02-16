@@ -1016,55 +1016,264 @@ app.controller('returnFlightController', [
             }
         }
 
-        $scope.listPrices = [];
-        $scope.getPriceCalendar = function () {
+        $scope.listPricesDeparture = [];
+        $scope.listPricesReturn = [];
+        var origin = departureTemp.trips[0].OriginAirport;
+        var destination = departureTemp.trips[0].DestinationAirport;
+        var originCity = FlightData.OriginCity;
+        var destinationCity = FlightData.DestinationCity;
+
+        $scope.getPriceCalendar = function (trip) {
             var todayDate = new Date();
             var startDate = ("0" + todayDate.getDate()).slice(-2)
              + ("0" + (todayDate.getMonth() + 1)).slice(-2) + todayDate.getFullYear().toString().substring(2, 4);
             var endDate = '3112' + todayDate.getFullYear().toString().substring(2, 4);
 
+            var url;
+            if (trip == 'departure') {
+                url = FlightPriceCalendarConfig.Url + '/' + origin + destination + '/' + startDate
+                    + '/' + endDate + '/IDR';
+            } else {
+                url = FlightPriceCalendarConfig.Url + '/' + destination + origin + '/' + startDate
+                    + '/' + endDate + '/IDR';
+            }
             var authAccess = getAuthAccess();
             if (authAccess == 1 || authAccess == 2) {
                 $.ajax({
-                    url: FlightPriceCalendarConfig.Url + '/' + origin +
-                        destination + '/' + startDate
-                    + '/' + endDate + '/IDR',
+                    url: url,
                     method: 'GET',
                     headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') }
                 }).done(function (returnData) {
-                    $scope.listPrices = returnData.listDatesAndPrices;
-                    $scope.initWeek();
+                    if (trip == 'departure') {
+                        $scope.listPricesDeparture = returnData.listDatesAndPrices;
+                        $scope.initWeek('departure');
+                    } else {
+                        $scope.listPricesReturn = returnData.listDatesAndPrices;
+                        $scope.initWeek('return');
+                    }
+                    
                 }).error(function (returnData) {
                 });
             }
         }
 
-        $scope.getPriceCalendar();
-        $scope.weeklyPrice = [];
-        $scope.index = null;
+        $scope.getPriceCalendar('departure');
+        $scope.getPriceCalendar('return');
+        $scope.weeklyPrice = {
+            departureFlight: [],
+            returnFlight: []
+        };
+        $scope.ready = {
+            departure: false,
+            ret: false,
+        }
+        $scope.indexDeparture = null;
+        $scope.indexReturn = null;
 
-        $scope.initWeek = function () {
-            var stringDate = departureDate.getFullYear().toString() + '/' +
-            ("0" + (departureDate.getMonth() + 1)).slice(-2) + '/' + ("0" + departureDate.getDate()).slice(-2);
+        $scope.initWeek = function (trip) {
+            var stringDate;
+            var x;
+            if (trip == 'departure') {
+                stringDate = depDate.getFullYear().toString() + '/' +
+                ("0" + (depDate.getMonth() + 1)).slice(-2) + '/' + ("0" + depDate.getDate()).slice(-2);
+                for (x = 0; x < $scope.listPricesDeparture.length; x++) {
+                    if ($scope.listPricesDeparture[x].date == stringDate) {
+                        $scope.indexDeparture = x;
+                        $scope.selectWeek($scope.indexDeparture, 'departure');
+                        break;
+                    }
+                }
+                $scope.ready.departure = true;
+            } else {
+                stringDate = retDate.getFullYear().toString() + '/' +
+                ("0" + (retDate.getMonth() + 1)).slice(-2) + '/' + ("0" + retDate.getDate()).slice(-2);
+                for (x = 0; x < $scope.listPricesReturn.length; x++) {
+                    if ($scope.listPricesReturn[x].date == stringDate) {
+                        $scope.indexReturn = x;
+                        $scope.selectWeek($scope.indexReturn, 'return');
+                        break;
+                    }
+                }
+                $scope.ready.ret = true;
+            }        
+        }
 
-            for (var x = 0; x < $scope.listPrices.length; x++) {
-                if ($scope.listPrices[x].date == stringDate) {
-                    $scope.index = x;
-                    $scope.selectWeek($scope.index);
-                    break;
+        $scope.selectWeek = function (index, trip) {
+            var date;
+            var tanggal;
+            var x;
+            var selectedList;
+            if (trip == 'departure') {
+                selectedList = $scope.listPricesDeparture;
+                $scope.weeklyPrice.departureFlight = [];
+            } else {
+                selectedList = $scope.listPricesReturn;
+                $scope.weeklyPrice.returnFlight = [];
+            }
+
+            if (index < 3) {
+                for (x = 0; x < 7; x++) {
+                    date = new Date(selectedList[x].date);
+                    tanggal = ("0" + date.getDate()).slice(-2) + ("0" + (date.getMonth() + 1)).slice(-2) + date.getFullYear().toString().slice(-2);
+                    if (trip == 'departure') {
+                        $scope.weeklyPrice.departureFlight.push({
+                            price: selectedList[x].price,
+                            date: selectedList[x].date.split('/')[2] + ' ' + $scope.returnMonth(selectedList[x].date.split('/')[1]),
+                            day: $scope.returnDay(date.getDay()),
+                            url: $scope.editUrl('departure') + tanggal + '-' + $scope.returnFlightConfig.adultCount.toString() + $scope.returnFlightConfig.childCount.toString()
+                                + $scope.returnFlightConfig.infantCount.toString() + cabin
+                        });
+                    } else {
+                        $scope.weeklyPrice.returnFlight.push({
+                            price: selectedList[x].price,
+                            date: selectedList[x].date.split('/')[2] + ' ' + $scope.returnMonth(selectedList[x].date.split('/')[1]),
+                            day: $scope.returnDay(date.getDay()),
+                            url: $scope.editUrl('return') + tanggal + '-' + $scope.returnFlightConfig.adultCount.toString() + $scope.returnFlightConfig.childCount.toString()
+                            + $scope.returnFlightConfig.infantCount.toString() + cabin
+                        });
+                    }
+                    
+                }
+            }
+            else if (index > selectedList.length - 4) {
+                for (x = selectedList.length - 7; x < selectedList.length; x++) {
+                    date = new Date(selectedList[x].date);
+                    tanggal = ("0" + date.getDate()).slice(-2) + ("0" + (date.getMonth() + 1)).slice(-2) + date.getFullYear().toString().slice(-2);
+                    if (trip == 'departure') {
+                        $scope.weeklyPrice.departureFlight.push({
+                            price: selectedList[x].price,
+                            date: selectedList[x].date.split('/')[2] + ' ' + $scope.returnMonth(selectedList[x].date.split('/')[1]),
+                            day: $scope.returnDay(date.getDay()),
+                            url: $scope.editUrl('departure') + tanggal + '-' + $scope.returnFlightConfig.adultCount.toString() + $scope.returnFlightConfig.childCount.toString()
+                                + $scope.returnFlightConfig.infantCount.toString() + cabin
+                        });
+                    } else {
+                        $scope.weeklyPrice.returnFlight.push({
+                            price: selectedList[x].price,
+                            date: selectedList[x].date.split('/')[2] + ' ' + $scope.returnMonth(selectedList[x].date.split('/')[1]),
+                            day: $scope.returnDay(date.getDay()),
+                            url: $scope.editUrl('return') + tanggal + '-' + $scope.returnFlightConfig.adultCount.toString() + $scope.returnFlightConfig.childCount.toString()
+                            + $scope.returnFlightConfig.infantCount.toString() + cabin
+                        });
+                    }
+                }
+            } else {
+                for (x = index - 3; x < index + 4; x++) {
+                    date = new Date(selectedList[x].date);
+                    tanggal = ("0" + date.getDate()).slice(-2) + ("0" + (date.getMonth() + 1)).slice(-2) + date.getFullYear().toString().slice(-2);
+                    if (trip == 'departure') {
+                        $scope.weeklyPrice.departureFlight.push({
+                            price: selectedList[x].price,
+                            date: selectedList[x].date.split('/')[2] + ' ' + $scope.returnMonth(selectedList[x].date.split('/')[1]),
+                            day: $scope.returnDay(date.getDay()),
+                            url: $scope.editUrl('departure') + tanggal + '-' + $scope.returnFlightConfig.adultCount.toString() + $scope.returnFlightConfig.childCount.toString()
+                                + $scope.returnFlightConfig.infantCount.toString() + cabin
+                        });
+                    } else {
+                        $scope.weeklyPrice.returnFlight.push({
+                            price: selectedList[x].price,
+                            date: selectedList[x].date.split('/')[2] + ' ' + $scope.returnMonth(selectedList[x].date.split('/')[1]),
+                            day: $scope.returnDay(date.getDay()),
+                            url: $scope.editUrl('return') + tanggal + '-' + $scope.returnFlightConfig.adultCount.toString() + $scope.returnFlightConfig.childCount.toString()
+                            + $scope.returnFlightConfig.infantCount.toString() + cabin
+                        });
+                    }
                 }
             }
         }
-        $scope.next = function () {
-            $scope.index += 7;
-            $scope.selectWeek($scope.index);
+
+        $scope.returnMonth = function (val) {
+            if (val == '1' || val == '01')
+                return "Jan";
+            else if (val == '2' || val == '02')
+                return "Feb";
+            else if (val == '3' || val == '03')
+                return "Mar";
+            else if (val == '4' || val == '04')
+                return "Apr";
+            else if (val == '5' || val == '05')
+                return "Mei";
+            else if (val == '6' || val == '06')
+                return "Jun";
+            else if (val == '7' || val == '07')
+                return "Jul";
+            else if (val == '8' || val == '08')
+                return "Agu";
+            else if (val == '9' || val == '09')
+                return "Sep";
+            else if (val == '10' || val == '10')
+                return "Okt";
+            else if (val == '11' || val == '11')
+                return "Nov";
+            else if (val == '12' || val == '12')
+                return "Des";
         }
 
-        $scope.prev = function () {
-            $scope.index -= 7;
-            $scope.selectWeek($scope.index);
+        $scope.returnDay = function (d) {
+            if (d == 0) {
+                return 'Minggu';
+            }
+            else if (d == 1) {
+                return 'Senin';
+            }
+            else if (d == 2) {
+                return 'Selasa';
+            }
+            else if (d == 3) {
+                return 'Rabu';
+            }
+            else if (d == 4) {
+                return 'Kamis';
+            }
+            else if (d == 5) {
+                return 'Jumat';
+            }
+            else if (d == 6) {
+                return 'Sabtu';
+            }
         }
-     
+        $scope.editUrl = function (trip) {
+            originCity = originCity.replace(/\s+/g, '-');
+            originCity = originCity.replace(/[^0-9a-zA-Z-]/gi, '');
+            destinationCity = destinationCity.replace(/\s+/g, '-');
+            destinationCity = destinationCity.replace(/[^0-9a-zA-Z-]/gi, '');
+
+            if (trip == 'departure') {
+                return '/id/tiket-pesawat/cari/' + originCity + '-' + destinationCity + '-' +
+                    origin + '-' + destination + '/' + origin
+                    + destination;
+            } else {
+                return '/id/tiket-pesawat/cari/' + destinationCity + '-' + originCity + '-' +
+                destination + '-' + origin + '/' + destination
+               + origin;
+            }
+            
+        }
+        $scope.next = function (trip) {
+            if (trip == 'departure') {
+                $scope.indexDeparture += 7;
+                $scope.selectWeek($scope.indexDeparture, 'departure');
+            } else {
+                $scope.indexReturn += 7;
+                $scope.selectWeek($scope.indexReturn, 'return');
+            }
+            
+        }
+
+        $scope.prev = function (trip) {
+            if (trip == 'departure') {
+                $scope.indexDeparture -= 7;
+                $scope.selectWeek($scope.indexDeparture, 'departure');
+            } else {
+                $scope.indexReturn -= 7;
+                $scope.selectWeek($scope.indexReturn, 'return');
+            }
+        }
+
+        $scope.goto = function (link) {
+            window.location.href = link;
+        }
+
     }
 
 ]);// flight controller

@@ -221,7 +221,7 @@
     <div class="container page-title">
         <h3><b>HASIL</b> PENCARIAN</h3>
     </div>
-    @Html.Partial("/Views/Shared/Desktop/_PriceSlider.cshtml")
+    @Html.Partial("/Views/Shared/Desktop/_PriceSliderReturn.cshtml")
     <div class="container search-result-container">
 
         <div class="search-result-departure" ng-class="{'active': (pageConfig.activeFlightSection == 'departure'), 'inactive': (pageConfig.activeFlightSection != 'departure'), 'selected': (departureFlightConfig.chosenFlight > -1) }" ng-click="setPageActiveSection('departure')">

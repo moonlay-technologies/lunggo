@@ -724,6 +724,8 @@ app.controller('singleFlightController', [
 
 
         $scope.listPrices = [];
+        $scope.ready = false;
+
         $scope.getPriceCalendar = function() {
             var todayDate = new Date();
             var startDate = ("0" + todayDate.getDate()).slice(-2)
@@ -863,7 +865,8 @@ app.controller('singleFlightController', [
                         + $scope.flightRequest.InfantCount.toString() + cabin
                     });
                 }
-            }         
+            }
+            $scope.ready = true;
         }
 
         $scope.next = function() {

@@ -1,6 +1,6 @@
 ﻿<div class="price-slider-flight container">
     <div class="price-slider-title os-bold">PERKIRAAN HARGA (mulai dari):</div>
-    <div id="myCarousel" class="ps-carousel carousel slide" data-interval="false">
+    <div id="myCarousel" class="ps-carousel carousel slide" data-interval="false" ng-show="ready">
         <div class="carousel-inner" role="listbox">
             <div class="item active">
                 <div class="price-slider-container">
@@ -8,7 +8,7 @@
                         <div ng-repeat="harga in weeklyPrice" class="ps-item blue-txt clearfix">
                             <div class="ps-content semibold-txt clearfix"  ng-click="goto(harga.url)">
                                 <div class="ps-date normal-txt">{{harga.date}}</div>
-                                <div class="ps-price normal-txt">
+                                <div class="ps-price normal-txt" ng-show="harga.price != '0'">
                                     <span>Rp</span><br />
                                     <span class="md-txt">{{harga.price | currency:'':0}}</span>
                                 </div>
@@ -24,7 +24,7 @@
                         <div ng-repeat="harga in weeklyPrice" class="ps-item blue-txt clearfix">
                             <div class="ps-content semibold-txt clearfix" ng-click="goto(harga.url)">
                                 <div class="ps-date normal-txt">{{harga.date}}</div>
-                                <div class="ps-price normal-txt">
+                                <div class="ps-price normal-txt" ng-show="harga.price != '0'">
                                     <span>Rp</span><br />
                                     <span class="md-txt">{{harga.price | currency:'':0}}</span>
                                 </div>
