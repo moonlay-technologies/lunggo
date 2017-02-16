@@ -339,7 +339,14 @@
                     var iwCloseBtn = iwOuter.next();
                     iwCloseBtn.css({ display: 'none' });
                 });
+
+                
             }
+
+            //google.maps.event.addListenerOnce(map, 'idle', function () {
+            //    google.maps.event.trigger(map, 'resize');
+            //    map.setCenter(location);
+            //});
         }
 
         $scope.refreshPage = function () {
@@ -544,12 +551,16 @@ jQuery(document).ready(function ($) {
         var point = $(this).closest('.search-list-result').find('.row-content');
         point.children('.search-list').hide();
         point.children('.search-map').removeClass('col-half');
+        google.maps.event.trigger(map, "resize");
+        //$("#map").css("width", "885px");
     });
 
     $('.list-map').click(function () {
         var point = $(this).closest('.search-list-result').find('.row-content');
         point.children('.search-list').show();
         point.children('.search-map').addClass('col-half');
+        google.maps.event.trigger(map, "resize");
+        //$("#map").css("width", "433px");
     });
 
     //Show tab filter
