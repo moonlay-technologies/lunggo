@@ -37,6 +37,8 @@ app.controller('singleFlightController', [
         var departureDate = new Date(FlightSearchConfig.flightForm.departureDate) || '';
         var origin = FlightSearchConfig.flightForm.origin;
         var destination = FlightSearchConfig.flightForm.destination;
+        var originCity = FlightData.OriginCity;
+        var destinationCity = FlightData.DestinationCity;
         var passengerParam = FlightSearchConfig.flightForm.passenger.adult + '' + FlightSearchConfig.flightForm.passenger.child + '' + FlightSearchConfig.flightForm.passenger.infant + '' + cabin;
         var departureParam = (origin + destination) + ((('0' + departureDate.getDate()).slice(-2)) + (('0' + (departureDate.getMonth() + 1)).slice(-2)) + (departureDate.getFullYear().toString().substr(2, 2)));
         $scope.flightFixRequest = departureParam + '-' + passengerParam;
@@ -720,6 +722,166 @@ app.controller('singleFlightController', [
             $log.debug($scope);
         }
 
+
+        $scope.listPrices = [];
+        $scope.ready = false;
+
+        $scope.getPriceCalendar = function() {
+            var todayDate = new Date();
+            var startDate = ("0" + todayDate.getDate()).slice(-2)
+             + ("0" + (todayDate.getMonth() + 1)).slice(-2) + todayDate.getFullYear().toString().substring(2, 4);
+            var endDate = '3112' + todayDate.getFullYear().toString().substring(2, 4);
+
+            var authAccess = getAuthAccess();
+            if (authAccess == 1 || authAccess == 2) {
+                $.ajax({
+                    url: FlightPriceCalendarConfig.Url + '/' + origin +
+                        destination + '/' + startDate
+                    + '/' + endDate + '/IDR',
+                    method: 'GET',
+                    headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') }
+                }).done(function (returnData) {
+                    $scope.listPrices = returnData.listDatesAndPrices;
+                    $scope.initWeek();
+                }).error(function (returnData) {
+                });
+            }
+        }
+        
+        $scope.getPriceCalendar();
+        $scope.weeklyPrice = [];
+        $scope.index = null;
+
+        $scope.initWeek = function() {
+            var stringDate = departureDate.getFullYear().toString() + '/' +
+            ("0" + (departureDate.getMonth() + 1)).slice(-2) + '/' + ("0" + departureDate.getDate()).slice(-2);
+
+            for (var x = 0; x < $scope.listPrices.length; x++) {
+                if ($scope.listPrices[x].date == stringDate) {
+                    $scope.index = x;
+                    $scope.selectWeek($scope.index);
+                    break;
+                }
+            }
+        }
+
+        $scope.returnMonth = function (val) {
+            if (val == '1' || val == '01')
+                return "Jan";
+            else if (val == '2' || val == '02')
+                return "Feb";
+            else if (val == '3' || val == '03')
+                return "Mar";
+            else if (val == '4' || val == '04')
+                return "Apr";
+            else if (val == '5' || val == '05')
+                return "Mei";
+            else if (val == '6' || val == '06')
+                return "Jun";
+            else if (val == '7' || val == '07')
+                return "Jul";
+            else if (val == '8' || val == '08')
+                return "Agu";
+            else if (val == '9' || val == '09')
+                return "Sep";
+            else if (val == '10' || val == '10')
+                return "Okt";
+            else if (val == '11' || val == '11')
+                return "Nov";
+            else if (val == '12' || val == '12')
+                return "Des";
+        }
+
+        $scope.returnDay = function(d) {
+            if (d == 0) {
+                return 'Minggu';
+            }
+            else if (d == 1) {
+                return 'Senin';
+            }
+            else if (d == 2) {
+                return 'Selasa';
+            }
+            else if (d == 3) {
+                return 'Rabu';
+            }
+            else if (d == 4) {
+                return 'Kamis';
+            }
+            else if (d == 5) {
+                return 'Jumat';
+            }
+            else if (d == 6) {
+                return 'Sabtu';
+            }
+        }
+
+        $scope.editUrl = function () {
+            originCity = originCity.replace(/\s+/g, '-');
+            originCity = originCity.replace(/[^0-9a-zA-Z-]/gi, '');
+            destinationCity = destinationCity.replace(/\s+/g, '-');
+            destinationCity = destinationCity.replace(/[^0-9a-zA-Z-]/gi, '');
+            return '/id/tiket-pesawat/cari/' + originCity + '-' + destinationCity + '-' +
+                origin + '-' + destination + '/' + origin
+               + destination;
+        }
+
+        $scope.selectWeek = function (index) {
+            $scope.weeklyPrice = [];
+            if (index < 3) {
+                for (var x = 0; x < 7; x++) {
+                    var date = new Date($scope.listPrices[x].date);
+                    var tanggal = ("0" + date.getDate()).slice(-2) + ("0" + (date.getMonth() + 1)).slice(-2) + date.getFullYear().toString().slice(-2);
+                    $scope.weeklyPrice.push({
+                        price: $scope.listPrices[x].price,
+                        date: $scope.listPrices[x].date.split('/')[2] + ' ' + $scope.returnMonth($scope.listPrices[x].date.split('/')[1]),
+                        day: $scope.returnDay(date.getDay()),
+                        url: $scope.editUrl() + tanggal + '-' + $scope.flightRequest.AdultCount.toString() + $scope.flightRequest.ChildCount.toString()
+                        + $scope.flightRequest.InfantCount.toString() + cabin
+                });
+                }
+            }
+            else if (index > $scope.listPrices.length - 4) {
+                for (var x = $scope.listPrices.length - 7; x < $scope.listPrices.length; x++) {
+                    var date = new Date($scope.listPrices[x].date);
+                    var tanggal = ("0" + date.getDate()).slice(-2) + ("0" + (date.getMonth() + 1)).slice(-2) + date.getFullYear().toString().slice(-2);
+                    $scope.weeklyPrice.push({
+                        price: $scope.listPrices[x].price,
+                        date: $scope.listPrices[x].date.split('/')[2] + ' ' + $scope.returnMonth($scope.listPrices[x].date.split('/')[1]),
+                        day: $scope.returnDay(date.getDay()),
+                        url: $scope.editUrl() + tanggal + '-' + $scope.flightRequest.AdultCount.toString() + $scope.flightRequest.ChildCount.toString()
+                        + $scope.flightRequest.InfantCount.toString() + cabin
+                    });
+                }
+            } else {
+                for (var x = index - 3; x < index + 4; x++) {
+                    var date = new Date($scope.listPrices[x].date);
+                    var tanggal = ("0" + date.getDate() ).slice(-2) + ("0" + (date.getMonth() + 1)).slice(-2) + date.getFullYear().toString().slice(-2);
+                    $scope.weeklyPrice.push({
+                        price: $scope.listPrices[x].price,
+                        date: $scope.listPrices[x].date.split('/')[2] + ' ' + $scope.returnMonth($scope.listPrices[x].date.split('/')[1]),
+                        day: $scope.returnDay(date.getDay()),
+                        url: $scope.editUrl() + tanggal + '-' + $scope.flightRequest.AdultCount.toString() + $scope.flightRequest.ChildCount.toString()
+                        + $scope.flightRequest.InfantCount.toString() + cabin
+                    });
+                }
+            }
+            $scope.ready = true;
+        }
+
+        $scope.next = function() {
+            $scope.index += 7;
+            $scope.selectWeek($scope.index);
+        }
+        
+        $scope.prev = function () {
+            $scope.index -= 7;
+            $scope.selectWeek($scope.index);
+        }
+
+        $scope.goto = function(link) {
+            window.location.href = link;
+        }
     }
 ]);// flight controller
 

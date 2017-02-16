@@ -63,6 +63,7 @@ namespace Lunggo.Configuration
                 "WebJob.EmailQueueHandler", 
                 "WebJob.FlightProcessor",
                 "WebJob.HotelProcessor",
+                "WebJob.PriceUpdater",
                 "WebJob.FlightCrawlScheduler", 
                 "WebJob-FlightSearch.FlightCrawler1",
                 "WebJob-FlightSearch.FlightCrawler2", 
@@ -359,6 +360,8 @@ namespace Lunggo.Configuration
             const string hotelBookPath = @"/v1/hotel/book";
             const string hotelAvailableRatesPath = @"/v1/hotel/availableRate";
             const string holidayListPath = @"/v1/calendar/id";
+            const string flightPriceCalendarPath = @"/v1/flight/pricecalendar";
+            const string hotelPriceCalendarPath = @"/v1/hotel/pricecalendar";
             var veritransTokenPath = _configDictionary["@@.*.veritrans.tokenEndPoint@@"];
             var veritransClientKey = _configDictionary["@@.*.veritrans.clientKey@@"];
 
@@ -399,6 +402,8 @@ namespace Lunggo.Configuration
             fileTemplate.SetAttribute("hotelBookPath", hotelBookPath);
             fileTemplate.SetAttribute("hotelAvailableRatesPath", hotelAvailableRatesPath);
             fileTemplate.SetAttribute("holidayListPath", holidayListPath);
+            fileTemplate.SetAttribute("flightPriceCalendarPath", flightPriceCalendarPath);
+            fileTemplate.SetAttribute("hotelPriceCalendarPath", hotelPriceCalendarPath);
             fileTemplate.SetAttribute("mobileUrl", mobileUrl);
 
             var fileContent = fileTemplate.ToString();
@@ -448,6 +453,7 @@ namespace Lunggo.Configuration
                 "WebJob.MystiflyQueueHandler",
                 "WebJob.FlightProcessor",
                 "WebJob.HotelProcessor",
+                "WebJob.PriceUpdater",
                 "WebJob.FlightCrawlScheduler",
                 "WebJob-FlightSearch.FlightCrawler1", 
                 "WebJob-FlightSearch.FlightCrawler2", 
@@ -475,6 +481,7 @@ namespace Lunggo.Configuration
                 "WebJob.MystiflyQueueHandler",
                 "WebJob.FlightProcessor",
                 "WebJob.HotelProcessor",
+                "WebJob.PriceUpdater",
                 "WebJob.FlightCrawlScheduler",
                 "WebJob-FlightSearch.FlightCrawler1",
                 "WebJob-FlightSearch.FlightCrawler2",

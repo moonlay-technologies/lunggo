@@ -16,40 +16,40 @@ namespace Lunggo.WebJob.FlightProcessor
     {
         // This function will get triggered/executed when a new message is written 
         // on an Azure Queue called queue.
-        public static void FlightSearchTimeout1([QueueTrigger("flightcrawltimeout1")] string searchId)
+        public static void FlightSearchTimeout1([QueueTrigger("flightcrawltimeout1")] string searchIdWithTimeout)
         {
             var flight = FlightService.GetInstance();
-            flight.SetSearchAsEmptyIfNotSet(searchId, 1);
+            flight.SetSearchAsEmptyIfNotSet(searchIdWithTimeout, 1);
         }
 
-        public static void FlightSearchTimeout2([QueueTrigger("flightcrawltimeout2")] string searchId)
+        public static void FlightSearchTimeout2([QueueTrigger("flightcrawltimeout2")] string searchIdWithTimeout)
         {
             var flight = FlightService.GetInstance();
-            flight.SetSearchAsEmptyIfNotSet(searchId, 2);
+            flight.SetSearchAsEmptyIfNotSet(searchIdWithTimeout, 2);
         }
 
-        public static void FlightSearchTimeout3([QueueTrigger("flightcrawltimeout3")] string searchId)
+        public static void FlightSearchTimeout3([QueueTrigger("flightcrawltimeout3")] string searchIdWithTimeout)
         {
             var flight = FlightService.GetInstance();
-            flight.SetSearchAsEmptyIfNotSet(searchId, 3);
+            flight.SetSearchAsEmptyIfNotSet(searchIdWithTimeout, 3);
         }
 
-        public static void FlightSearchTimeout4([QueueTrigger("flightcrawltimeout4")] string searchId)
+        public static void FlightSearchTimeout4([QueueTrigger("flightcrawltimeout4")] string searchIdWithTimeout)
         {
             var flight = FlightService.GetInstance();
-            flight.SetSearchAsEmptyIfNotSet(searchId, 4);
+            flight.SetSearchAsEmptyIfNotSet(searchIdWithTimeout, 4);
         }
 
-        public static void FlightSearchTimeout5([QueueTrigger("flightcrawltimeout5")] string searchId)
+        public static void FlightSearchTimeout5([QueueTrigger("flightcrawltimeout5")] string searchIdWithTimeout)
         {
             var flight = FlightService.GetInstance();
-            flight.SetSearchAsEmptyIfNotSet(searchId, 5);
+            flight.SetSearchAsEmptyIfNotSet(searchIdWithTimeout, 5);
         }
 
-        public static void FlightSearchTimeout6([QueueTrigger("flightcrawltimeout6")] string searchId)
+        public static void FlightSearchTimeout6([QueueTrigger("flightcrawltimeout6")] string searchIdWithTimeout)
         {
             var flight = FlightService.GetInstance();
-            flight.SetSearchAsEmptyIfNotSet(searchId, 6);
+            flight.SetSearchAsEmptyIfNotSet(searchIdWithTimeout, 6);
         }
     }
 }

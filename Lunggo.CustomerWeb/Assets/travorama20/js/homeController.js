@@ -1,8 +1,9 @@
 ﻿// home controller
+// home controller
 app.controller('homeController', ['$scope', '$log', '$http', '$location', '$resource', '$timeout', 'hotelSearchSvc', function ($scope, $log, $http, $location, $resource, $timeout, hotelSearchSvc) {
 
 
-    $(document).ready(function() {
+    $(document).ready(function () {
 
         if (Cookies.get('hotelSearchLocationDisplay')) {
             $scope.hotelSearch.locationDisplay = Cookies.get('hotelSearchLocationDisplay');
@@ -88,8 +89,10 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
                 });
             }
         }
+
+
     });
-   // ================= FLIGHT ========================
+    // ================= FLIGHT ========================
 
     $scope.departureDate = moment().add(1, 'day').format('DDMMYY');
     $scope.changeTab = function (tab) {
@@ -102,8 +105,8 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
             $('.form-child-age').hide();
         }
     }
-    
-    $scope.showForm= function(tab) {
+
+    $scope.showForm = function (tab) {
         if (tab == 'hotel') {
             $scope.isFlight = false;
             $('.search-location').hide();
@@ -115,6 +118,8 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
             $('.form-child-age').hide();
         }
     }
+
+
     //=============== hotel start ======================
     $scope.showPopularDestinations = false;
     hotelSearchSvc.initializeSearchForm($scope);
@@ -138,7 +143,7 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
             }
         }
         return [true, ''];
-        
+
     }
     $(function () {
         $(".ui-datepicker").datepicker({
@@ -146,11 +151,11 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
         });
     });
 
-   
+
     $('.hotel-date-picker').datepicker('option', 'beforeShowDay', hotelSearchSvc.highlightDays);
     $scope.hotel = {};
     $scope.view = {
-        showHotelSearch : false
+        showHotelSearch: false
     }
 
     $scope.init = function (model) {
@@ -202,6 +207,610 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
     }
 
     //=============== hotel end ======================
+    //=============== Price Calendar, populate cheapest price for destinations ======================
+
+    $scope.returnMonth = function (val) {
+        if (val == '0')
+            return "Januari";
+        else if (val == '1')
+            return "Februari";
+        else if (val == '2')
+            return "Maret";
+        else if (val == '3')
+            return "April";
+        else if (val == '4')
+            return "Mei";
+        else if (val == '5')
+            return "Juni";
+        else if (val == '6')
+            return "Juli";
+        else if (val == '7')
+            return "Agustus";
+        else if (val == '8')
+            return "September";
+        else if (val == '9')
+            return "Oktober";
+        else if (val == '10')
+            return "November";
+        else if (val == '11')
+            return "Desember";
+    }
+    var todayDate = new Date();
+    var bulan = todayDate.getMonth();
+    var tahun = parseInt(todayDate.getFullYear());
+    var value = tahun.toString() + '-' + bulan.toString();
+    
+
+    $scope.hasSearched = false;
+    $scope.priceFlight =
+    {
+        Denpasar: {
+            CheapestDate: null,
+            CheapestPrice: null
+        },
+        Surabaya: {
+            CheapestDate: null,
+            CheapestPrice: null
+        },
+        Jakarta: {
+            CheapestDate: null,
+            CheapestPrice: null
+        },
+        Medan: {
+            CheapestDate: null,
+            CheapestPrice: null
+        },
+        Yogyakarta: {
+            CheapestDate: null,
+            CheapestPrice: null
+        },
+    };
+
+    $scope.priceHotel =
+    {
+        Bali: {
+            CheapestDate: null,
+            CheapestPrice: null
+        },
+        Surabaya: {
+            CheapestDate: null,
+            CheapestPrice: null
+        },
+        Jakarta: {
+            CheapestDate: null,
+            CheapestPrice: null
+        },
+        Yogyakarta: {
+            CheapestDate: null,
+            CheapestPrice: null
+        },
+        Bandung: {
+            CheapestDate: null,
+            CheapestPrice: null
+        }
+    };
+
+    $scope.selectedPopularDestination = {
+        origin: Cookies.get('origin') ? Cookies.get('origin') : 'JKT',
+        destination: Cookies.get('destination') ? Cookies.get('destination') : 'DPS',
+        originCity: Cookies.get('originCity') ? Cookies.get('originCity') : 'Jakarta (JKT)',
+        destinationCity: Cookies.get('destinationCity') ? Cookies.get('destinationCity') : 'Denpasar / Bali (DPS)',
+        month: bulan,
+        year: tahun,
+    }
+
+    $scope.initMonthSelection = function() {
+        for (var m = bulan; m <= 11; m++) {
+            var id = 'month' + (m-bulan).toString();
+            $("#" + id).attr('value', tahun.toString() + "-" + m.toString());
+            $("#s" + id).val(tahun.toString() + "-" + m.toString());
+            $("#" + id).text($scope.returnMonth(m) + " " + tahun);
+
+        }
+        for (var n = 0; n <= bulan; n++) {
+            var id = 'month' + (m  - bulan + n).toString();
+            $("#" + id).attr('value', (tahun + 1).toString() + "-" + n.toString());
+            $("#s" + id).val((tahun + 1).toString() + "-" + n.toString());
+            $("#" + id).text($scope.returnMonth(n) + " " + (tahun + 1));
+        }
+        $('#month-year-select').val(value);
+        $('.selected-my').text($scope.returnMonth(bulan) + ' ' + tahun.toString());
+    }
+    $scope.initMonthSelection();
+
+    $('body input[name="searchFrom"]').val($scope.selectedPopularDestination.originCity + ' (' + $scope.selectedPopularDestination.origin + ')');
+    $('body input[name="searchTo"]').val($scope.selectedPopularDestination.destinationCity + ' (' + $scope.selectedPopularDestination.destination + ')');
+    $scope.gotoCheapestDateFlight = function (dest, depdate) {
+        //$log.debug('depdate is: ' + depdate);
+        if (depdate != '') {
+            var date = new Date(depdate);
+            var datex = ("0" + date.getDate()).slice(-2) + ("0" + (date.getMonth() + 1)).slice(-2) + date.getFullYear().toString().substr(2, 2);
+            if (dest == 'DPS')
+                return '/id/tiket-pesawat/cari/Jakarta-Denpasar-JKT-DPS/JKTDPS' + datex + '-100y';
+            else if (dest == 'KNO')
+                return '/id/tiket-pesawat/cari/Jakarta-Medan-JKT-KNO/JKTKNO' + datex + '-100y';
+            else if (dest == 'SUB')
+                return '/id/tiket-pesawat/cari/Jakarta-Surabaya-JKT-SUB/JKTSUB' + datex + '-100y';
+            else if (dest == 'JKT')
+                return '/id/tiket-pesawat/cari/Denpasar-Jakarta-DPS-JKT/DPSJKT' + datex + '-100y';
+            else if (dest == 'JOG')
+                return '/id/tiket-pesawat/cari/Jakarta-Togyakarta-JKT-JOG/JKTJOG' + datex + '-100y';
+        } else {
+            var date = new Date();
+            var datex = ("0" + date.getDate()).slice(-2) + ("0" + (date.getMonth() + 1)).slice(-2) + date.getFullYear().toString().substr(2, 2);
+            if (dest == 'DPS')
+                return '/id/tiket-pesawat/cari/Jakarta-Denpasar-JKT-DPS/JKTDPS' + datex + '-100y';
+            else if (dest == 'KNO')
+                return '/id/tiket-pesawat/cari/Jakarta-Medan-JKT-KNO/JKTKNO' + datex + '-100y';
+            else if (dest == 'SUB')
+                return '/id/tiket-pesawat/cari/Jakarta-Surabaya-JKT-SUB/JKTSUB' + datex + '-100y';
+            else if (dest == 'JKT')
+                return '/id/tiket-pesawat/cari/Denpasar-Jakarta-DPS-JKT/DPSJKT' + datex + '-100y';
+            else if (dest == 'JOG')
+                return '/id/tiket-pesawat/cari/Jakarta-Yogyakarta-JKT-JOG/JKTJOG' + datex + '-100y';
+        }
+    }
+
+    $scope.gotoCheapestDateHotel = function (dest) {
+        var date = new Date();
+        var datex = date.getFullYear() + '-' + ("0" + (date.getMonth() + 1)).slice(-2) + '-' + ("0" + date.getDate()).slice(-2);
+        var nextdate = new Date();
+        nextdate.setDate(date.getDate() + 1);
+        var datey = nextdate.getFullYear() + '-' + ("0" + (nextdate.getMonth() + 1)).slice(-2) + '-' + ("0" + nextdate.getDate()).slice(-2);
+        if (dest == 'JKT')
+            window.location.href = '/id/hotel/cari/Indonesia/Jakarta/?info=Location.1390294.' + datex + '.' + datey + '.1.1.2~0';
+
+        else if (dest == 'SUB')
+            window.location.href = '/id/hotel/cari/Indonesia/Surabaya/?info=Location.1475138.' + datex + '.' + datey + '.1.1.2~0';
+        else if (dest == 'JOG')
+            window.location.href = '/id/hotel/cari/Indonesia/Yogyakarta/?info=Location.1391623.' + datex + '.' + datey + '.1.1.2~0';
+        else if (dest == 'BAI')
+            window.location.href = '/id/hotel/cari/Indonesia/Bali/?info=Location.1316553.' + datex + '.' + datey + '.1.1.2~0';
+        else if (dest == 'BDO')
+            window.location.href = '/id/hotel/cari/Indonesia/Bandung/?info=Location.1316847.' + datex + '.' + datey + '.1.1.2~0';
+    }
+
+    $scope.getCheapestHotelPrice = function (location) {
+        var authAccess = getAuthAccess();
+        var date = new Date(), y = date.getFullYear(), m = date.getMonth();
+        var lastDay = new Date(y, m + 1, 0);
+        var startDate = ("0" + date.getDate()).slice(-2)
+             + ("0" + (date.getMonth() + 1)).slice(-2) + y.toString().substring(2, 4);
+        var endDate = ("0" + lastDay.getDate()).slice(-2)
+             + ("0" + (lastDay.getMonth() + 1)).slice(-2) + y.toString().substring(2, 4);
+        if (authAccess == 1 || authAccess == 2) {
+            $.ajax({
+                url: HotelPriceCalendarConfig.Url + '/' + location + '/' + startDate
+                + '/' + endDate + '/IDR',
+                method: 'GET',
+                headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') }
+            }).done(function (returnData) {
+                var cheapestPrice = returnData.cheapestPrice;
+                var cheapestDate;
+                if (returnData.cheapestDate != null && returnData.cheapestDate != '') {
+                    cheapestDate = new Date(returnData.cheapestDate);
+                    if (location == 'BAI') {
+                        $scope.priceHotel.Bali.cheapestDate = cheapestDate;
+                        $scope.priceHotel.Bali.cheapestPrice = cheapestPrice;
+                    } else if (location == 'BDO') {
+                        $scope.priceHotel.Bandung.cheapestDate = cheapestDate;
+                        $scope.priceHotel.Bandung.cheapestPrice = cheapestPrice;
+                    } else if (location == 'JOG') {
+                        $scope.priceHotel.Yogyakarta.cheapestDate = cheapestDate;
+                        $scope.priceHotel.Yogyakarta.cheapestPrice = cheapestPrice;
+                    }
+                    else if (location == 'JAV') {
+                        $scope.priceHotel.Jakarta.cheapestDate = cheapestDate;
+                        $scope.priceHotel.Jakarta.cheapestPrice = cheapestPrice;
+                    }
+                    else if (location == 'SUB') {
+                        $scope.priceHotel.Surabaya.cheapestDate = cheapestDate;
+                        $scope.priceHotel.Surabaya.cheapestPrice = cheapestPrice;
+                    }
+                } else {
+                    // return [-1, ''];
+                }
+            }).error(function (returnData) {
+                // return [-1, ''];
+            });
+        }
+    }
+
+    $scope.getCheapestHotelPrice('JAV');
+    $scope.getCheapestHotelPrice('BDO');
+    $scope.getCheapestHotelPrice('SUB');
+    $scope.getCheapestHotelPrice('BAI');
+    $scope.getCheapestHotelPrice('JOG');
+
+    $scope.getCheapestFlightPrice = function (origin, destination) {
+        var authAccess = getAuthAccess();
+        var date = new Date(), y = date.getFullYear(); m = date.getMonth();
+        var lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+        //lastDay.setDate(date.getDate() + 1);
+        var startDate = ("0" + date.getDate()).slice(-2)
+             + ("0" + (date.getMonth() + 1)).slice(-2) + y.toString().substring(2, 4);
+        var endDate = ("0" + lastDay.getDate()).slice(-2)
+             + ("0" + (lastDay.getMonth() + 1)).slice(-2) + y.toString().substring(2, 4);
+
+        if (authAccess == 1 || authAccess == 2) {
+            $.ajax({
+                url: FlightPriceCalendarConfig.Url + '/' + origin + destination + '/' + startDate
+                + '/' + endDate + '/IDR',
+                method: 'GET',
+                headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') }
+            }).done(function (returnData) {
+                //if (returnData.status == 200) {
+                var cheapestPrice = returnData.cheapestPrice;
+                var cheapestDate;
+                if (returnData.cheapestDate != null && returnData.cheapestDate != '') {
+                    cheapestDate = new Date(returnData.cheapestDate);
+                    if (origin == 'DPS' && destination == 'JKT') {
+                        $scope.priceFlight.Jakarta.CheapestPrice = cheapestPrice;
+                        $scope.priceFlight.Jakarta.CheapestDate = cheapestDate;
+
+                    } else if (origin == 'JKT' && destination == 'SUB') {
+                        $scope.priceFlight.Surabaya.CheapestPrice = cheapestPrice;
+                        $scope.priceFlight.Surabaya.CheapestDate = cheapestDate;
+                    }
+                    else if (origin == 'JKT' && destination == 'KNO') {
+                        $scope.priceFlight.Medan.CheapestPrice = cheapestPrice;
+                        $scope.priceFlight.Medan.CheapestDate = cheapestDate;
+                    }
+                    else if (origin == 'JKT' && destination == 'DPS') {
+                        $scope.priceFlight.Denpasar.CheapestPrice = cheapestPrice;
+                        $scope.priceFlight.Denpasar.CheapestDate = cheapestDate;
+                    }
+                    else if (origin == 'JKT' && destination == 'JOG') {
+                        $scope.priceFlight.Yogyakarta.CheapestPrice = cheapestPrice;
+                        $scope.priceFlight.Yogyakarta.CheapestDate = cheapestDate;
+                    }
+
+                    pricelist = [];
+                    for (var x = 0; x < returnData.listDatesAndPrices.length; x++) {
+                        pricelist.push(returnData.listDatesAndPrices[x].price);
+                    }
+                    //addCustomInformation(m + 1, y);
+                    //return [cheapestPrice, cheapestDate];
+                } else {
+                    //return [-1, ''];
+                }
+
+                //}
+
+            }).error(function (returnData) {
+                //return [-1, ''];
+            });
+        }
+    }
+
+    $scope.getCheapestFlightPrice('DPS', 'JKT');
+    $scope.getCheapestFlightPrice('JKT', 'DPS');
+    $scope.getCheapestFlightPrice('JKT', 'SUB');
+    $scope.getCheapestFlightPrice('JKT', 'KNO');
+    $scope.getCheapestFlightPrice('JKT', 'JOG');
+
+    $scope.getFlightPrice = function (month, year) {
+        var authAccess = getAuthAccess();
+        var date;
+        var lastDay;
+        var todayDate = new Date();
+        var todayMonth = todayDate.getMonth();
+        var todayYear = todayDate.getFullYear();
+        if (todayMonth == parseInt(month) - 1 && year == todayYear) {
+            date = new Date();
+            lastDay = new Date(date.getFullYear(), date.getMonth() + 2, 0);
+        } else {
+            date = new Date(year, month - 2, 1);
+            lastDay = new Date(date.getFullYear(), date.getMonth() + 3, 0);
+        }
+        var y = date.getFullYear(); m = date.getMonth();
+
+        var startDate = ("0" + date.getDate()).slice(-2)
+             + ("0" + (date.getMonth() + 1)).slice(-2) + date.getFullYear().toString().substring(2, 4);
+        var endDate = ("0" + lastDay.getDate()).slice(-2)
+             + ("0" + (lastDay.getMonth() + 1)).slice(-2) + lastDay.getFullYear().toString().substring(2, 4);
+
+        if (authAccess == 1 || authAccess == 2) {
+            $.ajax({
+                url: FlightPriceCalendarConfig.Url + '/' + $scope.selectedPopularDestination.origin +
+                    $scope.selectedPopularDestination.destination + '/' + startDate
+                + '/' + endDate + '/IDR',
+                method: 'GET',
+                headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') }
+            }).done(function (returnData) {
+                //if (returnData.cheapestDate != null && returnData.cheapestDate != '') {
+                    $scope.listCheapestPrice = [];
+                    getEventDate(m + 1, y, returnData.listDatesAndPrices, $scope.selectedPopularDestination);
+               // }
+            }).error(function (returnData) {
+            });
+        }
+    }
+    $scope.getFlightPrice(parseInt(bulan) + 1, tahun);
+    $scope.editData = function (data) {
+        data.originCity = $scope.selectedPopularDestination.originCity.replace(/\s+/g, '-');
+        data.originCity = data.originCity.replace(/[^0-9a-zA-Z-]/gi, '');
+        data.destinationCity = data.destinationCity.replace(/\s+/g, '-');
+        data.destinationCity = data.destinationCity.replace(/[^0-9a-zA-Z-]/gi, '');
+        return '/id/tiket-pesawat/cari/' + data.originCity + '-' + data.destinationCity + '-' +
+            data.origin + '-' + data.destination + '/' + data.origin
+           + data.destination;
+    }
+
+    $scope.hasSearched = false;
+
+    function getEventDate(mth, year, pricelist, selectedData) {
+        $('#pc-datepicker').fullCalendar('removeEvents');
+        for (var x = 0; x < pricelist.length; x++) {
+            var tanggal = pricelist[x].date.replace(/\//g, '-');
+            var harga = Math.round(parseInt(pricelist[x].price) / 1000).toString();
+            var y = tanggal.slice(8, 10) + tanggal.slice(5, 7) + tanggal.slice(2, 4);
+            $scope.listCheapestPrice.push({
+                title: harga,
+                start: tanggal,
+                link: $scope.editData(selectedData) + y + '-100y'
+            });
+        }
+
+        $('#pc-datepicker').fullCalendar('renderEvents', $scope.listCheapestPrice);
+    }
+
+    $('#pc-datepicker').fullCalendar({
+        lang: 'id',
+        header: {
+            left: '',
+            center: '',
+            right: ''
+        },
+        events: getEvents(),
+        eventRender: function (event, element) {
+            if (event.link != '' && event.title != '') {
+                var link = "<input class='btn btn-yellow sm-btn btn-view sm-txt' type='button' onclick='location.href=\"" + event.link + "\";' value='LIHAT'/>";
+                var title = '<sup>Rp </sup>' + event.title + 'rb';
+                element.find('.fc-content').append(link);
+                if (event.title != '0') {
+                    element.find('.fc-title').html(title);
+                } else {
+                    element.find('.fc-title').html('');
+                }
+                
+            }
+        }
+    });
+
+    function getEvents() {
+        return $scope.listCheapestPrice;
+    }
+
+    function setValueMY() {
+        var d = new Date();
+        var month = d.getMonth();
+        var year = d.getFullYear();
+
+        $('#selectMonth').val(month);
+        $('#selectYear').val(year);
+    }
+    setValueMY();
+    
+    $('#month-year div').hide();
+
+    $('.select-my').on('click', function () {
+        $('#month-year div').toggle();
+        $('.search-location').hide();
+    });
+
+    $('#month-year div').on('click', function () {
+        var val = $(this).attr('value');
+        var my = $(this).html();
+        $('#month-year-select').val(val);
+        $('.selected-my').text(my);
+    });
+
+    $('#submitCalendar').on('click', function () {
+        var month_year = $('#month-year-select').val();
+        var arr = month_year.split("-");
+
+        var newDate = new Date(arr[0], arr[1], '01');
+        $('#pc-datepicker').fullCalendar('gotoDate', newDate);
+        if ($scope.selectedPopularDestination.origin != '' && $scope.selectedPopularDestination.destination != '') {
+            $scope.hasSearched = true;
+            $scope.getFlightPrice(parseInt(arr[1]) + 1, parseInt(arr[0]));
+        }
+    });
+
+
+    $('body input[name="searchFrom"]').click(function () {
+        $(this).select();
+        showLocation('asal');
+        $('#month-year div').hide();
+    });
+    $('body input[name="searchTo"]').click(function () {
+        $(this).select();
+        showLocation('tujuan');
+        $('#month-year div').hide();
+    });
+
+    function showLocation(place) {
+        place = place || $('.location-choice .search-location').attr('data-place');
+        $(' .location-choice .search-location .location-recommend').show();
+        $('.location-choice .search-location .location-search').hide();
+        if (place == 'asal') {
+            $(' .location-choice .search-location .location-header .origin').removeClass('hidden');
+            $('.location-choice .search-location .location-header .destination').addClass('hidden');
+        } else if (place == 'tujuan') {
+            $('.location-choice .search-location .location-header .origin').addClass('hidden');
+            $('.location-choice .search-location .location-header .destination').removeClass('hidden');
+        }
+        $('.location-choice .search-location').attr('data-place', place);
+        $('.location-choice .search-location').attr('id', place);
+        $('.location-choice .search-location').show();
+    }
+
+    function hideLocation() {
+        $('.location-choice .search-location').hide();
+    }
+
+    $('.location-choice .close-location').click(function () { hideLocation(); });
+
+    $('body input[name="searchFrom"],body input[name="searchTo"] ').keyup(function (evt) {
+        //$(this).select();
+        if (evt.keyCode == 27) {
+            hideLocation();
+        } else {
+            if ($(this).val().length >= 3) {
+                $('.search-location .location-recommend').hide();
+                $('.search-location .location-search').show();
+                FlightSearchConfig.autocomplete.keyword = $(this).val();
+                getLocation(FlightSearchConfig.autocomplete.keyword);
+            } else {
+                $('.search-location .location-recommend').hide();
+                $('.search-location .location-search').show();
+                $('.search-location .location-search .autocomplete-pre .text-pre').show();
+                $('.search-location .location-search .autocomplete-result').hide();
+                $('.search-location .location-search .autocomplete-no-result').hide();
+            }
+        }
+    });
+    $('body input[name="searchFrom"]').keydown(function (evt) {
+        if (evt.keyCode == 9 || evt.which == 9) {
+            evt.preventDefault();
+        }
+    });
+
+    function getLocation(keyword) {
+        var trial = 0;
+        if (trial > 3) {
+            trial = 0;
+        }
+
+        $.ajax({
+            url: FlightAutocompleteConfig.Url + keyword,
+            headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') }
+        }).done(function (returnData) {
+            $('.location-choice .autocomplete-pre .text-pre').hide();
+            $('.location-choice .autocomplete-pre .text-loading').hide();
+            generateSearchResult(returnData.airports);
+            if (returnData.airports.length > 0) {
+                $('.location-choice .autocomplete-no-result').hide();
+                $('.location-choice .autocomplete-pre .text-loading').hide();
+                $('.location-choice .autocomplete-result').show();
+            } else {
+                $('.location-choice .autocomplete-pre .text-loading').hide();
+                $('.location-choice .autocomplete-result').hide();
+                $('.location-choice .autocomplete-no-result').show();
+            }
+        }).error(function () {
+            trial++;
+            if (refreshAuthAccess() && trial < 4) //refresh cookie
+            {
+                getLocation(keyword);
+            }
+        });
+    }
+
+    function generateSearchResult(list) {
+        $('.location-choice .autocomplete-result ul').empty();
+        for (var i = 0 ; i < list.length; i++) {
+            $('.location-choice .autocomplete-result ul').append('<li data-code="' + list[i].code + '" data-city="' + list[i].city + '">' + list[i].city + ' (' + list[i].code + '), ' + list[i].name + ', ' + list[i].country + '</li>');
+        }
+    }
+
+    $('.location-choice .autocomplete-result ul').on('click', 'li', function () {
+        var locationCode = $(this).attr('data-code');
+        var locationCity = $(this).attr('data-city');
+        if ($('.location-choice .search-location').attr('data-place') == 'asal') {
+            if (locationCode != $scope.selectedPopularDestination.destination) {
+                $scope.selectedPopularDestination.origin = locationCode;
+                $scope.selectedPopularDestination.originCity = locationCity;
+                $('body input[name="searchFrom"]').val(locationCity + ' (' + locationCode + ')');
+            } else {
+                alert('Kota Asal dan Tujuan Tidak Boleh Sama');
+            }
+        } else if ($('.location-choice .search-location').attr('data-place') == 'tujuan') {
+            if (locationCode != $scope.selectedPopularDestination.origin) {
+                $scope.selectedPopularDestination.destination = locationCode;
+                $scope.selectedPopularDestination.destinationCity = locationCity;
+                $('body input[name="searchTo"]').val(locationCity + ' (' + locationCode + ')');
+            } else {
+                alert('Kota Asal dan Tujuan Tidak Boleh Sama');
+            }
+        }
+        hideLocation();
+        console.log("BERHASIL");
+    });
+
+    // flight recommendation
+    $('.location-choice .search-location .location-recommend .nav-click.prev').click(function (evt) {
+        evt.preventDefault();
+        if (parseInt($('.location-choice .search-location .location-recommend .tab-header nav ul').css('margin-left')) < 0) {
+            $('.location-choice .search-location .location-recommend .tab-header nav ul').css('margin-left', '+=135px');
+        }
+    });
+    $('.location-choice .search-location .location-recommend .nav-click.next').click(function (evt) {
+        evt.preventDefault();
+        if (parseInt($('.location-choice .search-location .location-recommend .tab-header nav ul').css('margin-left')) > -(135 * ($('.search-location .location-recommend .tab-header nav ul li').length - 4))) {
+            $('.location-choice .search-location .location-recommend .tab-header nav ul').css('margin-left', '-=135px');
+        }
+    });
+    $('.location-choice .search-location .location-recommend nav ul li ').click(function () {
+        var showClass = $(this).attr('data-show');
+        $(this).addClass('active');
+        $(this).siblings().removeClass('active');
+        $('.location-choice .search-location .location-recommend .tab-content>div').removeClass('active');
+        $('.location-choice .search-location .location-recommend .tab-content>div.' + showClass).addClass('active');
+    });
+    $('.location-choice .search-location .location-recommend .tab-content a').click(function (evt, sharedProperties) {
+        evt.preventDefault();
+        var locationCode = $(this).attr('data-code');
+        var locationCity = $(this).text();
+        if ($('.location-choice .search-location').attr('data-place') == 'asal') {
+            if (locationCode != $scope.selectedPopularDestination.destination) {
+                $scope.tes = locationCode;
+                $scope.selectedPopularDestination.origin = locationCode;
+                $scope.selectedPopularDestination.originCity = locationCity;
+                $('body input[name="searchFrom"]').val($(this).text() + ' (' + locationCode + ')');
+            } else {
+                alert('Kota Asal dan Tujuan Tidak Boleh Sama');
+            }
+
+        } else if ($('.location-choice .search-location').attr('data-place') == 'tujuan') {
+            if (locationCode != $scope.selectedPopularDestination.origin) {
+                $scope.selectedPopularDestination.destination = locationCode;
+                $scope.selectedPopularDestination.destinationCity = locationCity;
+                $('body input[name="searchTo"]').val($(this).text() + ' (' + locationCode + ')');
+            } else {
+                alert('Kota Asal dan Tujuan Tidak Boleh Sama');
+            }
+        }
+        hideLocation();
+    });
+
+    //search calendar price
+    //$('#submitCalendar').on('click', function () {
+    //    var bulan = $('#selectMonth').val();
+    //    var tahun = $('#selectYear').val();
+
+    //    var newDate = new Date(tahun, bulan, '01');
+    //    $('#pc-datepicker').datepicker('setDate', newDate);
+
+    //    if ($scope.selectedPopularDestination.origin != '' && $scope.selectedPopularDestination.destination != '') {
+    //        $scope.hasSearched = true;
+    //        $scope.getFlightPrice($scope.selectedPopularDestination.origin, $scope.selectedPopularDestination.destination,
+    //    parseInt(bulan) + 1, tahun);
+    //    }
+
+
+    //});
+    //setValueMY();
+
+    //function setValueMY() {
+    //    var d = new Date();
+    //    var month = d.getMonth();
+    //    var year = d.getFullYear();
+
+    //    $('#selectMonth').val(month);
+    //    $('#selectYear').val(year);
+    //}
 }]);
 
 //********************
@@ -342,8 +951,8 @@ jQuery(document).ready(function ($) {
         autoplay: true,
         autoplaySpeed: 4000,
         dots: true,
-        prevArrow: '<button type="button" class="slick-prev hidden">Back</button>',
-        nextArrow: '<button type="button" class="slick-next hidden">Next</button>'
+        prevArrow: '<button type="button" class="slick-prev"></button>',
+        nextArrow: '<button type="button" class="slick-next"></button>'
     });
 
     // Slider Home Page Mobile
@@ -354,4 +963,10 @@ jQuery(document).ready(function ($) {
         prevArrow: '<button type="button" class="slick-prev hidden">Back</button>',
         nextArrow: '<button type="button" class="slick-next hidden">Next</button>'
     });
+
+    $('.pop-hotel').hover(function () {
+        $(this).find('.view-hotel').slideToggle('fast');
+    });
+
+
 });

@@ -60,19 +60,20 @@ namespace Lunggo.ApCommon.Identity.Auth
 
             if (context.Ticket.Identity.Name != "anonymous")
             {
-                result = await new DapperAuthStore().AddOrReplaceRefreshToken(token, ignoreDevice: false);
+                result = await new DapperAuthStore().AddOrReplaceRefreshToken(token);
             }
             else
             {
                 if (!string.IsNullOrEmpty(deviceId))
                 {
-                    result = await new DapperAuthStore().AddOrReplaceRefreshToken(token, ignoreDevice: false);
+                    result = await new DapperAuthStore().AddOrReplaceRefreshToken(token);
                 }
                 else
                 {
-                    refreshTokenId = clientId.Base64Encode().Base64Encode().Base64Encode().Base64Encode();
-                    token.Id = refreshTokenId.Sha512Encode();
-                    result = await new DapperAuthStore().AddOrReplaceRefreshToken(token, ignoreDevice: true);
+                    //refreshTokenId = clientId.Base64Encode().Base64Encode().Base64Encode().Base64Encode();
+                    //token.Id = refreshTokenId.Sha512Encode();
+                    token.DeviceId = Guid.NewGuid().ToString("n");
+                    result = await new DapperAuthStore().AddOrReplaceRefreshToken(token);
                 }
             }
 

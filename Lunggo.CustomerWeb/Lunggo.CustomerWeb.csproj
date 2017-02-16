@@ -275,8 +275,14 @@
     <Content Include="Assets\css\global-error.css">
       <DependentUpon>global-error.scss</DependentUpon>
     </Content>
+    <Content Include="Assets\css\global-error.min.css">
+      <DependentUpon>global-error.css</DependentUpon>
+    </Content>
     <Content Include="Assets\css\help_section.css">
       <DependentUpon>help_section.scss</DependentUpon>
+    </Content>
+    <Content Include="Assets\css\help_section.min.css">
+      <DependentUpon>help_section.css</DependentUpon>
     </Content>
     <Content Include="Assets\css\invoice.css">
       <DependentUpon>invoice.scss</DependentUpon>
@@ -297,6 +303,9 @@
     </Content>
     <Content Include="Assets\css\travorama-mobileApp.css">
       <DependentUpon>travorama-mobileApp.scss</DependentUpon>
+    </Content>
+    <Content Include="Assets\css\travorama-mobileApp.min.css">
+      <DependentUpon>travorama-mobileApp.css</DependentUpon>
     </Content>
     <Content Include="Assets\fonts\bootstrap\glyphicons-halflings-regular.svg" />
     <Content Include="Assets\fonts\DINB-webfont.svg" />
@@ -576,6 +585,7 @@
     <Content Include="Assets\images\airplane-image.jpg" />
     <Content Include="Assets\images\ajax-loader.gif" />
     <Content Include="Assets\images\appStore.png" />
+    <Content Include="Assets\images\arrow-down-grey.png" />
     <Content Include="Assets\images\arrow-down.png" />
     <Content Include="Assets\images\arrow-white.png" />
     <Content Include="Assets\images\asita-logo.png" />
@@ -763,7 +773,17 @@
     <Content Include="Assets\images\hotel-review-header.png" />
     <Content Include="Assets\images\hotel-star-4.jpg" />
     <Content Include="Assets\images\hotel-star-4.png" />
+    <Content Include="Assets\images\hotel\location-white.png" />
     <Content Include="Assets\images\hotel\markers.png" />
+    <Content Include="Assets\images\hotel\popular\bali.jpg" />
+    <Content Include="Assets\images\hotel\popular\flight-1.jpg" />
+    <Content Include="Assets\images\hotel\popular\flight-2.jpg" />
+    <Content Include="Assets\images\hotel\popular\flight-3.jpg" />
+    <Content Include="Assets\images\hotel\popular\flight-4.jpg" />
+    <Content Include="Assets\images\hotel\popular\jakarta.jpg" />
+    <Content Include="Assets\images\hotel\popular\macau.jpg" />
+    <Content Include="Assets\images\hotel\popular\surabaya.jpg" />
+    <Content Include="Assets\images\hotel\popular\yogya.jpg" />
     <Content Include="Assets\images\hourglass.png" />
     <Content Include="Assets\images\hover-menu-arrow.png" />
     <Content Include="Assets\images\howto-bg.jpg" />
@@ -800,6 +820,7 @@
     <Content Include="Assets\images\mandiri-logo.jpg" />
     <Content Include="Assets\images\mandiri.png" />
     <Content Include="Assets\images\map.jpg" />
+    <Content Include="Assets\images\marker-calendar.png" />
     <Content Include="Assets\images\mastercard-logo.jpg" />
     <Content Include="Assets\images\menu-icon-white.png" />
     <Content Include="Assets\images\menu-icon.png" />
@@ -898,6 +919,7 @@
     <Content Include="Assets\images\social-googlePlus.png" />
     <Content Include="Assets\images\social-instagram.png" />
     <Content Include="Assets\images\social-twitter.png" />
+    <Content Include="Assets\images\sprite-arrow.png" />
     <Content Include="Assets\images\ssl-image.png" />
     <Content Include="Assets\images\static-header-sprite.png" />
     <Content Include="Assets\images\stop.png" />
@@ -943,6 +965,9 @@
     <Content Include="Assets\images\voucher\travorama-white.png" />
     <Content Include="Assets\images\warning-image.png" />
     <Content Include="Assets\images\white-bg.png" />
+    <Content Include="Assets\images\why-active.png" />
+    <Content Include="Assets\images\why-flight.png" />
+    <Content Include="Assets\images\why-hotel.png" />
     <Content Include="Assets\images\wifi.png" />
     <Content Include="Assets\images\yellow-stripe-small.png" />
     <Content Include="Assets\images\yellow-stripe.png" />
@@ -1268,6 +1293,8 @@
     <Content Include="Assets\vendor\fancybox\jquery.fancybox.css" />
     <Content Include="Assets\vendor\fancybox\jquery.fancybox.js" />
     <Content Include="Assets\vendor\fancybox\jquery.fancybox.pack.js" />
+    <Content Include="Assets\vendor\fullcalendar\fullcalendar-id.min.js" />
+    <Content Include="Assets\vendor\fullcalendar\fullcalendar.min.css" />
     <Content Include="Assets\vendor\lightslider\lightslider.css" />
     <Content Include="Assets\vendor\lightslider\lightslider.js" />
     <Content Include="Assets\vendor\slick\slick.css" />
@@ -1448,6 +1475,7 @@
     <Content Include="App_Code\ToTitleCase.cshtml" />
     <Content Include="App_Code\MsToTime.cshtml" />
     <Content Include="Assets\css\travorama-mobileApp.scss" />
+    <Content Include="Assets\vendor\fullcalendar\fullcalendar.min.js" />
     <None Include="Properties\PublishProfiles\prod-cw %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\dv1-cw.pubxml" />
     <None Include="Properties\PublishProfiles\dv2-cw.pubxml" />
@@ -1606,6 +1634,10 @@
     <Content Include="Views\Shared\Mobile\_Summary.cshtml" />
     <Content Include="Views\Shared\Desktop\_HotelDetail.cshtml" />
     <Content Include="Views\Shared\_metaTag.cshtml" />
+    <Content Include="Views\Shared\Desktop\_PopularHotel.cshtml" />
+    <Content Include="Views\Shared\Desktop\_PopularFlight.cshtml" />
+    <Content Include="Views\Shared\Desktop\_PriceSlider.cshtml" />
+    <Content Include="Views\Shared\Desktop\_PriceSliderReturn.cshtml" />
     <None Include="Views\Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
