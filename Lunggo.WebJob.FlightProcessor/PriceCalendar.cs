@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using Lunggo.ApCommon.Flight.Model;
-using Lunggo.ApCommon.Flight.Model.Logic;
 using Lunggo.ApCommon.Flight.Service;
 using Lunggo.Framework.Config;
 using Lunggo.Framework.Extension;
@@ -17,7 +16,7 @@ namespace Lunggo.WebJob.FlightProcessor
         // on an Azure Queue called queue.
         public static void FlightPriceCalendar([QueueTrigger("flightpricecalendar")] string searchId)
         {
-            Console.WriteLine(@"Starting Price Calendar...");
+            Console.WriteLine(@"Starting Price Calendar " + searchId);
             const string clientId = "V2toa2VrOXFSWFZOUXpSM1QycEZlRTlIVlhwYWFrVjVUVVJrYlZsVVp6Vk5WRlp0VGtSR2FrOUhSWGhhYWsweFRucGpNRTE2U1RCT2VtTjNXbTFKZDFwcVFUMD0=";
             const string clientSecret = "V2tkS2FFOUVhek5QUjFsNFRucFpNVmt5UlRST2JVWnNXVmRKTTA1dFVtaFBSMDVyV1dwQk5WcEhTWGxPZWtwcVRVUkpNVTFCUFQwPQ==";
             var apiUrl = ConfigManager.GetInstance().GetConfigValue("api", "apiUrl");
@@ -40,11 +39,20 @@ namespace Lunggo.WebJob.FlightProcessor
                     var searchRequest = new RestRequest("/v1/flight/" + searchId + "/0", Method.GET);
                     searchRequest.AddHeader("Authorization", "Bearer " + loginResponse.AccessToken);
                     var searchResponse = loginClient.Execute(searchRequest).Content.Deserialize<SearchResponseFormat>();
+                    var origin = searchId.Substring(0, 3);
+                    var destination = searchId.Substring(3, 3);
                     if (searchResponse.Flights != null)
                     {
                         foreach (var resp in searchResponse.Flights)
                         {
-                            FlightService.GetInstance().SetLowestPriceToCache(resp.Itins);
+                            if (resp != null && resp.Count > 0)
+                            {
+                                FlightService.GetInstance().SetLowestPriceToCache(resp.Itins, origin, destination);
+                            }
+                            else
+                            {
+                                Console.WriteLine(@"No price/itin to save");
+                            }            
                         }
                     }
                     FlightService.GetInstance().InvalidateSearchingStatusInCache(searchId);

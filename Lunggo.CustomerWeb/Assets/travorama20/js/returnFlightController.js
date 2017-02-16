@@ -1015,6 +1015,55 @@ app.controller('returnFlightController', [
                 };
             }
         }
+
+        $scope.listPrices = [];
+        $scope.getPriceCalendar = function () {
+            var todayDate = new Date();
+            var startDate = ("0" + todayDate.getDate()).slice(-2)
+             + ("0" + (todayDate.getMonth() + 1)).slice(-2) + todayDate.getFullYear().toString().substring(2, 4);
+            var endDate = '3112' + todayDate.getFullYear().toString().substring(2, 4);
+
+            var authAccess = getAuthAccess();
+            if (authAccess == 1 || authAccess == 2) {
+                $.ajax({
+                    url: FlightPriceCalendarConfig.Url + '/' + origin +
+                        destination + '/' + startDate
+                    + '/' + endDate + '/IDR',
+                    method: 'GET',
+                    headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') }
+                }).done(function (returnData) {
+                    $scope.listPrices = returnData.listDatesAndPrices;
+                    $scope.initWeek();
+                }).error(function (returnData) {
+                });
+            }
+        }
+
+        $scope.getPriceCalendar();
+        $scope.weeklyPrice = [];
+        $scope.index = null;
+
+        $scope.initWeek = function () {
+            var stringDate = departureDate.getFullYear().toString() + '/' +
+            ("0" + (departureDate.getMonth() + 1)).slice(-2) + '/' + ("0" + departureDate.getDate()).slice(-2);
+
+            for (var x = 0; x < $scope.listPrices.length; x++) {
+                if ($scope.listPrices[x].date == stringDate) {
+                    $scope.index = x;
+                    $scope.selectWeek($scope.index);
+                    break;
+                }
+            }
+        }
+        $scope.next = function () {
+            $scope.index += 7;
+            $scope.selectWeek($scope.index);
+        }
+
+        $scope.prev = function () {
+            $scope.index -= 7;
+            $scope.selectWeek($scope.index);
+        }
      
     }
 

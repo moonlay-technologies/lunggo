@@ -32,7 +32,7 @@ namespace Lunggo.WebAPI.ApiSrc.Flight.Logic
 
         private static bool IsValid(FlightPriceCalendarApiRequest request)
         {
-            return (request.EndDate > request.StartDate);
+            return (request.EndDate >= request.StartDate);
         }
 
         private static FlightPriceCalendarApiResponse AssembleApiResponse(FlightService.LowestPrice priceCalendarServiceResponse, 

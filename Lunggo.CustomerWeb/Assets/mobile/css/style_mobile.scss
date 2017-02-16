@@ -184,6 +184,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
 
 input[type="text"], input[type="password"], input[type="number"], input[type="email"], textarea.form-control, select.form-control {@include border-radius($border-radius-default); box-shadow: none; font-size:12px; height:auto;}
 .form-control {@include border-radius($border-radius-default)}
+*:focus {outline: none;}
 
 .img-loading {
     width: 30px;
