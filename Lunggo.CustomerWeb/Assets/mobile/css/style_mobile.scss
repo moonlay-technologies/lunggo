@@ -1155,7 +1155,26 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
 
 .main-tab {
     .tab-detail.nav-tabs {border: none;
-        &>li {padding: 0;
+        &>li {
+            padding: 0;
+            & > a {
+                color: #626262;
+                cursor: pointer;
+                background: $color-grey-tab;
+            }
+            &.active {
+                & > a {
+                    color: $color-main-blue;
+                    background: #fff;
+                }
+                &.flight > a {
+                    &:before {background: url(/Assets/mobile/images/flight-blue.png);}
+                }
+                &.hotel > a {
+                    &:after {display: none;}
+                    &:before {background: url(/Assets/mobile/images/hotel-blue.png);}
+                }
+            }
             &.active > a, & > a {
                 border-radius: 0;
                 border: none;
@@ -1167,10 +1186,8 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
                 font-weight: 700;
                 padding: 12px;
             }
-            & > a {
-                color: #626262;
-                background: $color-grey-tab;
-                &.tab-flight:before {
+            &.flight > a {
+                &:before {
                     content: '';
                     width: 22px;
                     height: 24px;
@@ -1179,7 +1196,26 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
                     vertical-align: middle;
                     margin-right: 8px;
                 }
-                &.tab-hotel:before {
+            }
+            &.hotel > a {
+                &:after {
+                    position: absolute;
+                    display: block;
+                    content: 'Baru';
+                    padding: 3px 6px;
+                    height: auto;
+                    background: red;
+                    top: 0;
+                    color: #fff;
+                    font-weight: 700;
+                    right: 0;
+                    box-shadow: -2px 2px 4px #333;
+                    font-size: 10px;
+                    line-height: 100%;
+                    display: block;
+                    text-transform: none;
+                }
+                &:before {
                     content: '';
                     width: 21px;
                     height: 21px;
@@ -1189,34 +1225,14 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
                     margin-right: 8px;
                 }
             }
-            &.active > a {
-                color: $color-main-blue;
-                background: $color-white;
-                &.order {background: #f9f9f9;}
-                &.tab-flight:before {
-                    content: '';
-                    width: 22px;
-                    height: 24px;
-                    display: inline-block;
-                    background: url(/Assets/mobile/images/flight-blue.png);
-                    vertical-align: middle;
-                    margin-right: 8px;
-                }
-                &.tab-hotel:before {
-                    content: '';
-                    width: 21px;
-                    height: 21px;
-                    display: inline-block;
-                    background: url(/Assets/mobile/images/hotel-blue.png);
-                    vertical-align: middle;
-                    margin-right: 8px;
-                }
-            }
         }
     }
     & > .tab-content {
         padding: 10px 0;
-        &.tab-order {padding:0;}
+        .tab-pane {
+            display: none;
+            &.active {display: block}
+        }
     }
 }
 

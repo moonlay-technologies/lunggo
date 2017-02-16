@@ -28,7 +28,6 @@
 }
 
 @section PageJS {
-
     <script src="/Assets/travorama20/angularDirectory/search/hotelSearch.service.js"></script>
     <script src="/Assets/travorama20/js/homeController.js"></script>
 }
@@ -59,15 +58,15 @@
     </div>
     <div class="main-tab">
         <ul class="nav nav-tabs tab-detail">
-            <li class="col-xs-6">
-                <a class="tab-flight" data-toggle="tab" ng-click="showForm('flight')">Pesawat</a>
+            <li class="col-xs-6 flight">
+                <a @*data-toggle="tab" ng-click="showForm('flight')"*@>Pesawat</a>
             </li>
-            <li class="col-xs-6 active">
-                <a class="tab-hotel" data-toggle="tab" ng-click="showForm('hotel')">Hotel</a>
+            <li class="col-xs-6 hotel">
+                <a @*data-toggle="tab" ng-click="showForm('hotel')"*@>Hotel</a>
             </li>
         </ul>
         <div class="tab-content">
-            <div id="tab-flight" class="tab-pane tp-flight" ng-class="{'active' : isFlight}">
+            <div class="tab-pane tp-flight" @*ng-class="{'active' : isFlight}"*@>
                 <div class="form-wrapper">
                     <form class="flight-form" name="flight-form" ng-submit="FlightSearchForm.Submit()" novalidate>
                         <div class="top-form row">
@@ -159,7 +158,7 @@
                     </form><!-- .flight-form -->
                 </div><!-- .form-wrapper -->
             </div>
-            <div id="tab-hotel" class="tab-pane tp-hotel page-hotel-mobile active" ng-class="{'active' : !isFlight}">
+            <div class="tab-pane tp-hotel page-hotel-mobile" @*ng-class="{'active' : !isFlight}"*@>
                 <div class="form-wrapper">
                     @Html.Partial("/Views/Shared/Mobile/_SearchHotelForm.cshtml", new HotelLocation
                     {
