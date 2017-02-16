@@ -297,7 +297,7 @@
                 var infoDesc =
                     '<div class="map-wrapper">' +
                     '<div class="map-container" id ="hotel-'+ order +'">' +
-                    '<div class="hotel-round"' + 'style="' + 'background-image: url(' + feature.image + ')"></div>' +
+                    '<div class="hotel-round" hotel-list-image ' + 'style="' + 'background-image: url(' + feature.image + ')"></div>' +
                     '<div class="map-content normal-txt">' +
                     '<div class="hotel-title bold-txt blue-txt">' + feature.hotelName + '</div>' +
                     '<div class="' + star + '"></div>' +
@@ -339,7 +339,14 @@
                     var iwCloseBtn = iwOuter.next();
                     iwCloseBtn.css({ display: 'none' });
                 });
+
+                
             }
+
+            //google.maps.event.addListenerOnce(map, 'idle', function () {
+            //    google.maps.event.trigger(map, 'resize');
+            //    map.setCenter(location);
+            //});
         }
 
         $scope.refreshPage = function () {
@@ -544,12 +551,16 @@ jQuery(document).ready(function ($) {
         var point = $(this).closest('.search-list-result').find('.row-content');
         point.children('.search-list').hide();
         point.children('.search-map').removeClass('col-half');
+        google.maps.event.trigger(map, "resize");
+        //$("#map").css("width", "885px");
     });
 
     $('.list-map').click(function () {
         var point = $(this).closest('.search-list-result').find('.row-content');
         point.children('.search-list').show();
         point.children('.search-map').addClass('col-half');
+        google.maps.event.trigger(map, "resize");
+        //$("#map").css("width", "433px");
     });
 
     //Show tab filter
@@ -590,31 +601,6 @@ jQuery(document).ready(function ($) {
         $('.fc-wrapper').removeClass('active');
     });
 
-    //Custom checkbox
-    //$('body .sqr').on('click', function () {
-    //    if ($(this).hasClass("active")) {
-    //        $(this).removeClass("active");
-    //    } else {
-    //        $(this).addClass("active");
-    //    }
-    //    //var id = $(this).find('.check');
-    //    //if ($(id).is(':checked')) {
-    //    //    id.checked = true;
-    //    //    $(this).addClass('active');
-    //    //} else {
-    //    //    id.checked = false;
-    //    //    $(this).removeClass('active');
-    //    //}
-    //});
-
-    //$('body .select-all').on('click', function () {
-    //    var p = $(this).closest('.fc-title').parent().find('.tab-detail');
-    //    var c = p.find('.sqr');
-    //    var i = c.find('.check');
-
-    //    i.prop('checked', true);
-    //    c.addClass('active');
-    //});
     $('body .select-none').on('click', function () {
         var p = $(this).closest('.fc-title').parent().find('.tab-detail');
         var c = p.find('.sqr');
