@@ -79,8 +79,6 @@
                 break;
         }
     }
-
-
 }
 
 @section AdditionalCSS{
@@ -116,8 +114,6 @@
         jQuery(document).ready(function($) {
             $('.fc-event-container').click(function() {
                 $(this).closest('table').find('.fc-day-top').addClass('active');
-                //$( this ).fadeOut( 100 );
-                //$( this ).fadeIn( 500 );
             });
         })
     </script>
@@ -365,14 +361,6 @@
     {
         <div class="page-slider">
             <div class="slider-wrapper" id="index-wrapper">
-                @if (DateTime.UtcNow.AddHours(7).Date <= new DateTime(2016, 12, 15))
-                {
-                    <div class="slider">
-                        <a href="@Url.Action("MatahariMall", "Promo")">
-                            <img src="/Assets/images/campaign/MatahariMall2016/MatahariMall-slider.jpg" alt="Matahari Mall" />
-                        </a>
-                    </div>
-                }
                 @if (DateTime.UtcNow.AddHours(7).Date <= new DateTime(2016, 12, 31))
                 {
                     <div class="slider">

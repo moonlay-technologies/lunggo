@@ -53,12 +53,10 @@ if (typeof (angular) == 'object') {
     };
 };
 
-//********************
 // variables
 var currentDate = new Date();
 var trial = 0;
 
-//********************
 // site header function
 $('html').click(function () {
     $('.dropdown-content').hide();
@@ -70,7 +68,6 @@ $('[data-trigger="dropdown"]').click(function (evt) {
     $(this).siblings('.dropdown-content').toggle();
 });
 
-//********************
 // general functions
 
 // get parameter
@@ -84,48 +81,22 @@ function getParam(name) {
 // translate month
 function translateMonth(month) {
     switch (month) {
-        case 0:
-            month = 'Jan';
-            break;
-        case 1:
-            month = 'Feb';
-            break;
-        case 2:
-            month = 'Mar';
-            break;
-        case 3:
-            month = 'Apr';
-            break;
-        case 4:
-            month = 'Mei';
-            break;
-        case 5:
-            month = 'Jun';
-            break;
-        case 6:
-            month = 'Jul';
-            break;
-        case 7:
-            month = 'Agu';
-            break;
-        case 8:
-            month = 'Sep';
-            break;
-        case 9:
-            month = 'Okt';
-            break;
-        case 10:
-            month = 'Nov';
-            break;
-        case 11:
-            month = 'Des';
-            break;
+        case 0: month = 'Jan'; break;
+        case 1: month = 'Feb'; break;
+        case 2: month = 'Mar'; break;
+        case 3: month = 'Apr'; break;
+        case 4: month = 'Mei'; break;
+        case 5: month = 'Jun'; break;
+        case 6: month = 'Jul'; break;
+        case 7: month = 'Agu'; break;
+        case 8: month = 'Sep'; break;
+        case 9: month = 'Okt'; break;
+        case 10: month = 'Nov'; break;
+        case 11: month = 'Des'; break;
     }
     return month;
 }
 
-
-//********************
 // subscribe form functions
 function validateEmail(email) {
     var re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
@@ -192,21 +163,15 @@ function subscribeFormFunctions() {
             data: JSON.stringify({ "email": SubscribeConfig.email, "name": SubscribeConfig.name }),
             headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') }
         }).done(function (returnData) {
-
             $('.subscribe-before').hide();
             $('.subscribe-after').show();
-
         }).error(function (returnData) {
             trial++;
             if (refreshAuthAccess() && trial < 4) //refresh cookie
-            {
-                submitForm();
-            }
+                submitForm();          
         });
     }
-
 }
-
 
 function newsletterFormFunctions() {
     console.log('Saving data');
@@ -218,10 +183,8 @@ $(document).ready(function () {
 
     function validateNewsletterForm() {
         $('form.form-newsletter input[type="submit"]').prop('disabled', true);
-        //$('form.form-newsletter input[type="submit"]').val('LOADING');
         email = $('form.form-newsletter input.input-type').val();
         console.log('Masuk Sini');
-        //console.log('email' + NewsletterConfig.email);
 
         if ($('form.form-newsletter input.input-type').val()) {
             var emailValue = $('form.form-newsletter input.input-type').val();
@@ -253,9 +216,6 @@ $(document).ready(function () {
         $('form.form-newsletter .input-type').prop('disabled', true);
         email = $('form.form-newsletter input.input-type').val();
         var div = document.getElementById("thankyou");
-        /*if (div.style.display !== "none") {
-            div.style.display = "none";
-        }*/
         subscriberName = 'subscriber';
         $.ajax({
             url: SubscribeConfig.Url,
@@ -267,14 +227,9 @@ $(document).ready(function () {
             console.log(returnData);
             if (returnData.IsSuccess) {
                 $('.page-newsletter').hide();
-                //$('.thankyou-popup').show();
-                //$('.thankyou-popup').modal('show');
-                //$('#myModal').modal('show');
                 div.style.display = "block";
                 $('.close-popup').click(function (e) {
                     e.preventDefault();
-                    //$('.thankyou-popup').hide();
-                    //$('#myModal').modal('hide');
                     div.style.display = "none";
                 });
             }
@@ -290,12 +245,10 @@ $(document).ready(function () {
                         close.style.display = "none";
                     });
                 }
-                else {
+                else 
                     console.log('failed');
-                }
             }
-
-        }).error(function (returnData) {
+        }).error(function () {
             trial++;
             if (refreshAuthAccess() && trial < 4) //refresh cookie
             {
@@ -320,20 +273,13 @@ function getAnonymousFirstAccess() {
         if (returnData.status == '200') {
             setCookie("accesstoken", returnData.accessToken, returnData.expTime);
             setCookie("refreshtoken", returnData.refreshToken, returnData.expTime);
-            if (getCookie('accesstoken')) {
-                status = 1;
-            }
-            else {
-                status = 0;
-            }
+            if (getCookie('accesstoken')) status = 1;
+            else status = 0;
         }
-        else {
-            status = 0;
-        }
+        else status = 0;
     });
     return status;
 }
-
 
 function getAnonymousAccessByRefreshToken(refreshToken) {
     var status = 0;
@@ -347,20 +293,13 @@ function getAnonymousAccessByRefreshToken(refreshToken) {
         if (returnData.status == '200') {
             setCookie("accesstoken", returnData.accessToken, returnData.expTime);
             setCookie("refreshtoken", returnData.refreshToken, returnData.expTime);
-            if (getCookie('accesstoken')) {
-                status = 1;
-            }
-            else {
-                status = 0;
-            }
+            if (getCookie('accesstoken')) status = 1;
+            else status = 0;
         }
-        else {
-            status = 0;
-        }
+        else status = 0;
     });
     return status;
 }
-
 
 function getLoginAccessByRefreshToken(refreshToken) {
     var status = 0;
@@ -375,16 +314,10 @@ function getLoginAccessByRefreshToken(refreshToken) {
             setCookie("accesstoken", returnData.accessToken, returnData.expTime);
             setCookie("refreshtoken", returnData.refreshToken, returnData.expTime);
             setCookie("authkey", returnData.accessToken, returnData.expTime);
-            if (getCookie('accesstoken')) {
-                status = 2;
-            }
-            else {
-                status = 0;
-            }
+            if (getCookie('accesstoken')) status = 2;
+            else status = 0;
         }
-        else {
-            status = 0;
-        }
+        else status = 0;
     });
     return status;
 }
@@ -396,25 +329,18 @@ function getAuthAccess() {
     var status = 0;
 
     if (authKey) {
-        if (token) {
-            return 2;
-        }
+        if (token) return 2;
         else {
             if (refreshToken) {
                 status = getLoginAccessByRefreshToken(refreshToken);
                 if (status == 0) {
                     status = getAnonymousFirstAccess();
                 }
-            }
-            else {
-                return 0; //harusnya gak pernah masuk sini
-            }
+            } else return 0;
         }
     }
     else {
-        if (token) {
-            return 1;
-        }
+        if (token) return 1;
         else {
             //Get Anonymous Token By Refresh Token
             if (refreshToken) {
@@ -422,8 +348,7 @@ function getAuthAccess() {
                 if (status == 0) {
                     status = getAnonymousFirstAccess();
                 }
-            }
-            else {
+            } else {
                 //For Anynomius at first
                 status = getAnonymousFirstAccess();
             }
@@ -432,11 +357,8 @@ function getAuthAccess() {
     return status;
 }
 
-
 function refreshAuthAccess() {
-    /*
-    * If failed to get Authorization, but accesstoken is still exist
-    */
+    /* If failed to get Authorization, but accesstoken is still exist     */
     var token = getCookie('accesstoken');
     var refreshToken = getCookie('refreshtoken');
     var authKey = getCookie('authkey');
@@ -448,26 +370,15 @@ function refreshAuthAccess() {
                 status = getAnonymousFirstAccess();
                 eraseCookie('authkey');
             }
-
-            if (status == 2) {
-                return true;
-            }
-            else {
-                return false;
-            }
+            if (status == 2) return true;
+            else return false;
         }
         else {
             status = getAnonymousAccessByRefreshToken(refreshToken);
-            if (status == 0) {
-                status = getAnonymousFirstAccess();
-            }
-
-            if (status == 1 || status == 2) {
-                return true;
-            }
-            else {
-                return false;
-            }
+            if (status == 0) status = getAnonymousFirstAccess();
+            
+            if (status == 1 || status == 2) return true;
+            else return false;
         }
     }
     else {
@@ -477,14 +388,12 @@ function refreshAuthAccess() {
 }
 
 
-//********************
 // flight page functions
 // Used in Search Result Flight Page
 function flightPageFunctions() {
 
     //***Select one of this***
-    flightFormSearchFunctions(); // SELECTED
-    //*********END************
+    flightFormSearchFunctions(); 
 
     // toggle search form
     $('.search-result-form-trigger').click(function () {
@@ -496,8 +405,6 @@ function flightPageFunctions() {
     });
     // toggle filter
     $('.search-result-filter .filter-trigger span').click(function () {
-
-        //if (ct % 2 == 0) {
         $(this).parent().siblings().removeClass('active');
         $(this).parent().addClass('active');
         var targetFilter = $(this).attr('data-target');
@@ -509,7 +416,6 @@ function flightPageFunctions() {
             $('.search-result-filter .filter-content>div#' + targetFilter).addClass('active');
             ct += 1;
         }
-
     });
     // close filter
     $('.search-result-filter .close-filter').click(function () {
@@ -603,7 +509,6 @@ function indexPageFunctions() {
             });
         }
     }
-
 }
 
 
@@ -645,7 +550,6 @@ function staticPageFunctions() {
     });
 }
 
-//********************
 // flight form search function
 // used in Index Page 
 function flightFormSearchFunctions() {
@@ -657,9 +561,6 @@ function flightFormSearchFunctions() {
         }
     });
 
-    //getCheapestHotelPrice('BDO');
-    //getCheapestFlightPrice('CGK', 'DPS');
-    //*****
     // index page config
     FlightSearchConfig.autocomplete = {
         loading: false,
@@ -685,22 +586,14 @@ function flightFormSearchFunctions() {
         }
     };
 
-    //*****
     // select flight type
     $('.form-flight-type').click(function () {
         FlightSearchConfig.flightForm.type = $('input[name="flightType"]:checked').val();
-
         $('.change-flight-class .option, .form-flight-passenger .option , .search-location, .search-calendar').hide();
-
-        if (FlightSearchConfig.flightForm.type == 'return') {
-            $('.form-flight-return').removeClass('disabled');
-        } else {
-            $('.form-flight-return').addClass('disabled');
-        }
-
+        if (FlightSearchConfig.flightForm.type == 'return') $('.form-flight-return').removeClass('disabled');
+        else $('.form-flight-return').addClass('disabled');
     });
 
-    //*****
     // on flight origin focus
     $('.form-flight-origin').click(function () {
         $(this).select();
@@ -711,7 +604,6 @@ function flightFormSearchFunctions() {
         showLocation('destination');
     });
 
-    //*****
     // flight recommendation
     $('.section-search .search-location .location-recommend .nav-click.prev').click(function (evt) {
         evt.preventDefault();
@@ -743,11 +635,8 @@ function flightFormSearchFunctions() {
                 $('.form-flight-origin').val($(this).text() + ' (' + locationCode + ')');
                 $('.flight-submit-button').removeClass('disabled');
             } else {
-                //$('.form-flight-origin').val($(this).text() + ' (' + locationCode + ')');
                 alert('Kota Asal dan Tujuan Tidak Boleh Sama');
-                //$('.flight-submit-button').addClass('disabled');
             }
-
         } else {
             if (locationCity != FlightSearchConfig.flightForm.originCity) {
                 FlightSearchConfig.flightForm.destination = locationCode;
@@ -755,16 +644,12 @@ function flightFormSearchFunctions() {
                 $('.form-flight-destination').val($(this).text() + ' (' + locationCode + ')');
                 $('.flight-submit-button').removeClass('disabled');
             } else {
-                //$('.form-flight-destination').val($(this).text() + ' (' + locationCode + ')');
                 alert('Kota Asal dan Tujuan Tidak Boleh Sama');
-                //$('.flight-submit-button').addClass('disabled');
             }
-
         }
         hideLocation();
     });
 
-    //*****
     // on swap target
     $('.switch-destination').click(function () {
         var prevOrigin = $('.form-flight-origin').val();
@@ -790,7 +675,6 @@ function flightFormSearchFunctions() {
         }
     });
 
-    //*****
     // autocomplete function
     function getLocation(keyword) {
         if (trial > 3) {
@@ -860,9 +744,7 @@ function flightFormSearchFunctions() {
                 $('.form-flight-origin').val(locationCity + ' (' + locationCode + ')');
                 $('.flight-submit-button').removeClass('disabled');
             } else {
-                //$('.form-flight-origin').val($(this).text() + ' (' + locationCode + ')');
                 alert('Kota Asal dan Tujuan Tidak Boleh Sama');
-                //$('.flight-submit-button').addClass('disabled');
             }
         } else {
             if (locationCity != FlightSearchConfig.flightForm.originCity) {
@@ -871,9 +753,7 @@ function flightFormSearchFunctions() {
                 $('.form-flight-destination').val(locationCity + ' (' + locationCode + ')');
                 $('.flight-submit-button').removeClass('disabled');
             } else {
-                //$('.form-flight-destination').val($(this).text() + ' (' + locationCode + ')');
                 alert('Kota Asal dan Tujuan Tidak Boleh Sama');
-                //$('.flight-submit-button').addClass('disabled');
             }
         }
         hideLocation();
@@ -911,7 +791,6 @@ function flightFormSearchFunctions() {
         }
     });
 
-    //*****
     // date selector
     $('.form-flight-departure').click(function () {
         showCalendar('departure');
@@ -947,10 +826,7 @@ function flightFormSearchFunctions() {
                     }
                 }
             }
-
-        }).error(function (returnData) {
-
-        });
+        }).error(function (returnData) {});
     }
 
     function highlightDays(date) {
@@ -959,7 +835,6 @@ function flightFormSearchFunctions() {
             var xmonth = x.getMonth();
             var xday = x.getDate();
             var xyear = x.getFullYear();
-
             var y = new Date(holidays[i]);
             var ymonth = y.getMonth();
             var yday = y.getDate();
@@ -1106,7 +981,6 @@ function flightFormSearchFunctions() {
                     $('.form-flight-class>span').text($('.form-flight-class .option .first').text());
                     break;
             }
-            // FlightSearchConfig.flightForm.cabin = Cookies.get('cabin');
         }
 
         // navigation
@@ -1140,7 +1014,6 @@ function flightFormSearchFunctions() {
         }
     });
 
-    //*****
     // select cabin
     $('.form-flight-class').click(function (evt) {
         evt.stopPropagation();
@@ -1153,7 +1026,6 @@ function flightFormSearchFunctions() {
         $('.form-group.flight-class').click();
     });
 
-    //*****
     // show and hide search location
     function showLocation(place) {
         place = place || $('.search-location').attr('data-place');
@@ -1177,7 +1049,6 @@ function flightFormSearchFunctions() {
     }
     $('.section-search .close-location').click(function () { hideLocation(); });
 
-    //*****
     // show and hide search calendar
     function showCalendar(target) {
         target = target || $('.search-calendar').attr('data-date');
@@ -1198,7 +1069,6 @@ function flightFormSearchFunctions() {
     }
     $('.close-calendar').click(function () { hideCalendar(); });
 
-    //*****
     // validate passenger
     $('.form-flight-passenger').click(function (evt) {
         evt.stopPropagation();
@@ -1268,7 +1138,6 @@ function flightFormSearchFunctions() {
         }
     });
 
-    //*****
     // submit validation
     $('.flight-submit-button').on('click', function (evt) {
         $(this).prop('disabled', true);
@@ -1344,7 +1213,6 @@ function flightFormSearchFunctions() {
     }
 }
 
-//********************
 // accordion functions
 function accordionFunctions() {
     //Accordion Help Section by W3School
@@ -1381,6 +1249,5 @@ function backToTop() {
                     scrollTop: 0
                 }, 700);
             });
-        }
-        });
+        }});
 }
