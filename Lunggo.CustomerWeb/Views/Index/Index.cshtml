@@ -85,6 +85,7 @@
 
 @section AdditionalCSS{
     <link rel="stylesheet" type="text/css" href="/Assets/vendor/slick/slick.css" />
+    <link rel="stylesheet" type="text/css" href="/Assets/vendor/fullcalendar/fullcalendar.min.css" />
 }
 
 @section AdditionalJS{
@@ -95,6 +96,8 @@
     <script type="text/javascript" src="/Assets/js/jquery.ui.datepicker-id.js"></script>
     <script src="/Assets/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="/Assets/vendor/slick/slick.min.js"></script>
+    <script type="text/javascript" src="/Assets/vendor/fullcalendar/fullcalendar.min.js"></script>
+    <script type="text/javascript" src="/Assets/vendor/fullcalendar/fullcalendar-id.min.js"></script>
 }
 
 @section PageJS{
@@ -108,7 +111,16 @@
         var departureDate = '@(DateTime.Now.AddDays(1).ToString("ddMMyy"))';
     </script>
     <script src="/Assets/travorama20/angularDirectory/search/hotelSearch.service.js"></script>
-    <script src="/Assets/travorama20/js/homeController.js"></script>
+    <script src="/Assets/Travorama20/js/homeController.js"></script>
+    <script>
+        jQuery(document).ready(function($) {
+            $('.fc-event-container').click(function() {
+                $(this).closest('table').find('.fc-day-top').addClass('active');
+                //$( this ).fadeOut( 100 );
+                //$( this ).fadeIn( 500 );
+            });
+        })
+    </script>
 }
 
 <section class="section-search normal-txt">
@@ -260,67 +272,67 @@
                 </div><!-- .tab-flight -->
                 <div class="tab-hotel tab-pane clearfix active" id="hotel" ng-class="{'active' : !isFlight}">
                     <div>
-                        <h3 class="text-center">Cari <b>Kamar Hotel</b><br /><span class="sub-title">(Domestik &amp; Internasional)</span></h3>
-                        <form class="form form-horizontal form-hotel page-hotel" ng-submit="hotel.searchHotel()" autocomplete="off">
-                            <div class="form-group hotel-location ">
-                                <div class="col-xs-12">
+                    <h3 class="text-center">Cari <b>Kamar Hotel</b><br /><span class="sub-title">(Domestik &amp; Internasional)</span></h3>
+                    <form class="form form-horizontal form-hotel page-hotel" ng-submit="hotel.searchHotel()" autocomplete="off">
+                        <div class="form-group hotel-location ">
+                            <div class="col-xs-12">
                                     <input type="text" name="hotelLocation" value="" id="inputLocationHotel"
                                            class="form-hotel-location form-control" placeholder="Kota, Wilayah atau Nama Hotel"
                                            ng-model="hotelSearch.locationDisplay" ng-click="view.showHotelSearch = true" />
-                                </div>
                             </div>
+                        </div>
 
-                            <div class="form-group hotel-date">
-                                <div class="col-xs-12">
-                                    <div class="form-hotel-checkin text-center">
-                                        <span class="grey-txt">Tanggal Check in</span>
-                                        <div class="date-hotel">{{hotelSearch.checkinDateDisplay}}</div>
+                        <div class="form-group hotel-date">
+                            <div class="col-xs-12">
+                                <div class="form-hotel-checkin text-center">
+                                    <span class="grey-txt">Tanggal Check in</span>
+                                    <div class="date-hotel">{{hotelSearch.checkinDateDisplay}}</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group hotel-room-night">
+                            <div class="col-xs-6 dropdown-container">
+                                <div class="form-control form-hotel-night clearfix">
+                                    <div class="col-4"><span class="grey-txt normal-txt">Malam</span></div>
+                                    <div class="col-6 input-hotel">{{hotelSearch.nightCount}}</div>
+                                    <div class="option" ng-model="hotelSearch.nightCount">
+                                        <span data-value="" ng-repeat="nightCount in hotelSearch.nightrange track by $index"
+                                              ng-click="hotelSearch.nightCount = nightCount">{{nightCount}}</span>
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group hotel-room-night">
-                                <div class="col-xs-6 dropdown-container">
-                                    <div class="form-control form-hotel-night clearfix">
-                                        <div class="col-4"><span class="grey-txt normal-txt">Malam</span></div>
-                                        <div class="col-6 input-hotel">{{hotelSearch.nightCount}}</div>
-                                        <div class="option" ng-model="hotelSearch.nightCount">
-                                            <span data-value="" ng-repeat="nightCount in hotelSearch.nightrange track by $index"
-                                                  ng-click="hotelSearch.nightCount = nightCount">{{nightCount}}</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-xs-6 dropdown-container">
-                                    <div class="form-control form-hotel-room clearfix">
-                                        <div class="col-4"><span class="grey-txt normal-txt">Jumlah Kamar</span></div>
-                                        <div class="col-6 input-hotel">{{hotelSearch.roomCount}}</div>
-                                        <div class="option" ng-model="hotelSearch.roomCount">
-                                            <span data-value="" ng-repeat="roomCount in hotelSearch.roomrange track by $index"
-                                                  ng-click="hotelSearch.roomCount = roomCount">{{roomCount}}</span>
-                                        </div>
+                            <div class="col-xs-6 dropdown-container">
+                                <div class="form-control form-hotel-room clearfix">
+                                    <div class="col-4"><span class="grey-txt normal-txt">Jumlah Kamar</span></div>
+                                    <div class="col-6 input-hotel">{{hotelSearch.roomCount}}</div>
+                                    <div class="option" ng-model="hotelSearch.roomCount">
+                                        <span data-value="" ng-repeat="roomCount in hotelSearch.roomrange track by $index"
+                                              ng-click="hotelSearch.roomCount = roomCount">{{roomCount}}</span>
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group hotel-detail clearfix">
-                                <div class="col-xs-12 white-txt">Rincian Jumlah Tamu</div>
-                                <div class="col-xs-6 white-txt total-adult clearfix">
-                                    <div class="col-half title">Jumlah Dewasa</div>
-                                    <span class="text-right semibold-txt col-half total">{{hotelSearch.totalAdult}}</span>
-                                </div>
-                                <div class="col-xs-6 white-txt total-child clearfix">
-                                    <div class="col-half title">Jumlah Anak</div>
-                                    <span class="text-right semibold-txt col-half total">{{hotelSearch.totalChildren}}</span>
-                                </div>
+                        </div>
+                        <div class="form-group hotel-detail clearfix">
+                            <div class="col-xs-12 white-txt">Rincian Jumlah Tamu</div>
+                            <div class="col-xs-6 white-txt total-adult clearfix">
+                                <div class="col-half title">Jumlah Dewasa</div>
+                                <span class="text-right semibold-txt col-half total">{{hotelSearch.totalAdult}}</span>
                             </div>
-                            <div class="col-xs-12 white-txt" ng-show="hotelSearch.searchinghotel">
-                                Sedang melakukan pencarian...
+                            <div class="col-xs-6 white-txt total-child clearfix">
+                                <div class="col-half title">Jumlah Anak</div>
+                                <span class="text-right semibold-txt col-half total">{{hotelSearch.totalChildren}}</span>
                             </div>
+                        </div>
+                        <div class="col-xs-12 white-txt" ng-show="hotelSearch.searchinghotel">
+                            Sedang melakukan pencarian...
+                        </div>
 
-                            <div class="form-group hotel-submit">
-                                <div class="col-xs-12">
-                                    <input type="submit" name="hotelSubmit" value="CARI" class="btn btn-yellow block form-control md-txt lg-btn" />
-                                </div>
+                        <div class="form-group hotel-submit">
+                            <div class="col-xs-12">
+                                <input type="submit" name="hotelSubmit" value="CARI" class="btn btn-yellow block form-control md-txt lg-btn" />
                             </div>
-                        </form>
+                        </div>
+                    </form>
                     </div>
 
                 </div><!-- .tab-hotel -->
@@ -401,133 +413,113 @@
     }
 
 </section><!-- .section-search -->
-<section class="section-reason">
+<section class="section-calendar-price">
     <div class="container">
-        <img src="/Assets/images/choose-travorama.png" alt="Why choose Travorama" />
+        <div class="row">
+            <div class="col-xs-8">
+                <div class="price-calendar">
+                    <div class="md-txt os-bold">Tiket Pesawat Termurah Setiap Hari</div>
+                    <div class="search-map">
+                        <div class="row normal-txt semibold-txt">
+                            <div class="col-xs-7">
+                                <div class="col-xs-6" id="searchFrom">Dari</div>
+                                <div class="col-xs-6" id="searchTo">Ke</div>
     </div>
-</section>
-@if (ViewBag.DestinationName == null || ViewBag.Destinationname == "")
-{
-    <section class="section-popular">
-        <div class="container">
-            <h2 class="section-title stripe text-center xlg-txt">TUJUAN <span>TERPOPULER</span></h2>
-
+                            <div class="col-xs-5">
+                                <div class="col-xs-12">Bulan</div>
+                            </div>
+                        </div>
             <div class="row">
-                <div class="col-xs-4 popular-left">
-                    <div class="destination small">
-                        <a href="/id/jakarta" data-target="jakarta">
-                            <h3>
-                                <small>Penerbangan ke</small> <b>Jakarta</b>
-                            </h3>
-
-                        </a>
-                        <img src="/Assets/images/pop-jakarta.jpg" alt="Jakarta, Indonesia" />
+                            <div class="search-input col-xs-7">
+                                <div class="col-xs-6 map-input">
+                                    <input type="text" name="searchFrom">
                     </div>
-                    <div class="destination medium yellow">
-                        <a href="/id/bali" data-target="bali">
-                            <h3>
-                                <small>Penerbangan ke</small> <b>Bali</b>
-                            </h3>
-
-                        </a>
-                        <img src="/Assets/images/pop-bali.jpg" alt="Bali, Indonesia" />
+                                <div class="col-xs-6 map-input">
+                                    <input type="text" name="searchTo">
                     </div>
-                    <div class="destination large">
-                        <a href="/id/malaysia" data-target="malaysia">
-                            <h3>
-                                <small>Penerbangan ke</small> <b>Malaysia</b>
-                            </h3>
-
-                        </a>
-                        <img src="/Assets/images/pop-malaysia.jpg" alt="Malaysia" />
                     </div>
+                            <div class="col-xs-5">
+                                <div class="col-xs-8">
+                                    <select id="month-year-select" class="hidden">
+                                        <option value="" id ="smonth0"></option>
+                                        <option value="" id="smonth1"></option>
+                                        <option value="" id="smonth2"></option>
+                                        <option value="" id="smonth3"></option>
+                                        <option value="" id="smonth4"></option>
+                                        <option value="" id ="smonth5"></option>
+                                        <option value="" id="smonth6"></option>
+                                        <option value="" id="smonth7"></option>
+                                        <option value="" id="smonth8"></option>
+                                        <option value="" id="smonth9"></option>
+                                        <option value="" id="smonth10"></option>
+                                        <option value="" id="smonth11"></option>
+                                        <option value="" id="smonth12"></option>
+                                    </select>
+                                    <div class="dropdown form-control clearfix select-my" >
+                                        <div class="selected-my"></div>
+                                        <div class=" option" id="month-year">
+                                            <div  id="month0"></div>
+                                            <div  id="month1"></div>
+                                            <div  id="month2"></div>
+                                            <div  id="month3"></div>
+                                            <div  id="month4"></div>
+                                            <div  id="month5"></div>
+                                            <div  id="month6"></div>
+                                            <div  id="month7"></div>
+                                            <div  id="month8"></div>
+                                            <div  id="month9"></div>
+                                            <div  id="month10"></div>
+                                            <div  id="month11"></div>
+                                            <div id="month12"></div>
                 </div>
-                <div class="col-xs-4 popular-middle">
-                    <div class="destination half yellow">
-                        <a href="/id/yogyakarta" data-target="yogyakarta">
-                            <h3>
-                                <small>Penerbangan ke</small> <b>Yogyakarta</b>
-                            </h3>
+                                    </div>
+                                </div>
+                                <div class="col-xs-4">
+                                    <a class="btn btn-yellow lg-btn md-txt btn-calendar" id="submitCalendar">CARI</a>
+                                </div>
 
-                        </a>
-                        <img src="/Assets/images/pop-yogyakarta.jpg" alt="Yogyakarta, Indonesia" />
                     </div>
-                    <div class="destination half yellow">
-                        <a href="/id/singapore" data-target="singapore">
-                            <h3>
-                                <small>Penerbangan ke</small> <b>Singapura</b>
-                            </h3>
-
-                        </a>
-                        <img src="/Assets/images/pop-singapore.jpg" alt="Singapore" />
                     </div>
+                        <div class="location-choice">
+                            @Html.Partial("/Views/Shared/Desktop/_SearchLocation.cshtml")
                 </div>
-                <div class="col-xs-4 popular-right">
-                    <div class="destination large">
-                        <a href="/id/bandung" data-target="bandung">
-                            <h3>
-                                <small>Penerbangan ke</small> <b>Bandung</b>
-                            </h3>
-
-                        </a>
-                        <img src="/Assets/images/pop-bandung.jpg" alt="Bandung, Indonesia" />
                     </div>
-                    <div class="destination medium yellow">
-                        <a href="/id/surabaya" data-target="surabaya">
-                            <h3>
-                                <small>Penerbangan ke</small> <b>Surabaya</b>
-                            </h3>
-
-                        </a>
-                        <img src="/Assets/images/pop-surabaya.jpg" alt="Surabaya, Indonesia" />
+                    <div id="pc-datepicker"></div>
                     </div>
-                    <div class="destination small">
-                        <a href="/id/hongkong" data-target="hongkong">
-                            <h3>
-                                <small>Penerbangan ke</small> <b>Hongkong</b>
-                            </h3>
-
-                        </a>
-                        <img src="/Assets/images/pop-hongkong.jpg" alt="Hongkong" />
                     </div>
+            <div class="col-xs-4">
+                @Html.Partial("/Views/Shared/Desktop/_PopularFlight.cshtml")
                 </div>
             </div>
-
         </div>
     </section>
-    <!-- .section-popular -->
-}
-else
-{
     <section class="section-popular">
         <div class="container">
-            <h2 class="section-title stripe text-center">RUTE PENERBANGAN <span>TERPOPULER</span></h2>
-
-            <div class="route-wrapper" ng-app="travorama" ng-controller="homeController">
-
+        @Html.Partial("/Views/Shared/Desktop/_PopularHotel.cshtml")
+    </div>
+</section>
+<section class="section-why">
+    <div class="container text-center">
+        <div class="xlg-txt"><span class="os-regular">Mengapa memilih</span> <span class="os-bold blue-txt">Travorama?</span></div>
                 <div class="row">
-
-                    <div class="col-xs-4" ng-repeat="destination in topDestinations">
-                        <div class="route">
-                            <header>
-                                <h5><span>Rute Penerbangan</span></h5>
-                            </header>
-                            <section>
-                                <h4><b>{{destination.name}}</b> ke <b>{{flightDestination.name}}</b></h4>
-                                <p>Harga mulai dari <b>Rp {{destination.price | number}}</b></p>
-                                <a class="btn btn-yellow" href="@Url.Action("Search","Flight")?info={{ destination.origin + '' + flightDestination.code + '' + departureDate  }}-100y">LIHAT SEKARANG</a>
-                            </section>
+            <div class="col-xs-4">
+                <div class="sw-img sw-flight"></div>
+                <div class="blue-txt md-txt">Memiliki <span class="os-bold">9000 <br />Rute Penerbangan</span></div>
+                <div class="normal-txt">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt.</div>
+            </div>
+            <div class="col-xs-4">
+                <div class="sw-img sw-hotel"></div>
+                <div class="blue-txt md-txt">Menyediakan <span class="os-bold">Hotel <br />Domestik & Internasional</span></div>
+                <div class="normal-txt">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt.</div>
                         </div>
+            <div class="col-xs-4">
+                <div class="sw-img sw-active"></div>
+                <div class="blue-txt md-txt">Beragam Pilihan <span class="os-bold">Activity <br />Domestik & Internasional</span></div>
+                <div class="normal-txt">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt.</div>
                     </div>
-
                 </div>
-
-            </div><!-- .destination-wrapper -->
-
         </div>
     </section>
-}
-
 <section class="section-subscribe">
     <div class="container">
 
@@ -572,21 +564,3 @@ else
 
     </div>
 </section><!-- .section-payment -->
-
-<section class="section-feedback">
-    <div class="container">
-
-        <div class="row">
-            <div class="col-xs-6">
-
-                <h2 class="hidden">Pendapat Orang-Orang Mengenai Travorama</h2>
-                <blockquote>
-                    <p>You can never cross the ocean until you have the courage to lose sight of the shore</p>
-                    <footer>Christopher Columbus</footer>
-                </blockquote>
-
-            </div>
-        </div>
-
-    </div>
-</section><!-- .section-feedback -->

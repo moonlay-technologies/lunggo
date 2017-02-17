@@ -93,6 +93,7 @@
     <script>
         var langCode = 'en';
         flightPageFunctions();
+        backToTop();
         FlightSearchConfig.flightForm = {
             departureFlightParam: {
                 TripType: "@TripType.OneWay",
@@ -143,7 +144,13 @@
     <!-- angular controller -->
     <script src="/Assets/travorama20/angularDirectory/priceDetail/priceDetailDir.js"></script>
     <script src="/Assets/travorama20/js/returnFlightController.js"></script>
-    <script>backToTop()</script>
+    <script>
+        jQuery(document).ready(function($) {
+            $('body .carousel-control').click(function() {
+
+            });
+        })
+    </script>
 }
 <section class="page-slider">
     <div class="container">
@@ -188,7 +195,7 @@
             </div>
         </div>
     </div>
-    <div class="container">
+    <div class="container section-search">
         <div class="search-result-form-content">
             @Html.Partial("/Views/Flight/FlightSearchForm.cshtml")
         </div><!-- .search-result-form-content -->
@@ -221,7 +228,7 @@
     <div class="container page-title">
         <h3><b>HASIL</b> PENCARIAN</h3>
     </div>
-
+    @Html.Partial("/Views/Shared/Desktop/_PriceSliderReturn.cshtml")
     <div class="container search-result-container">
 
         <div class="search-result-departure" ng-class="{'active': (pageConfig.activeFlightSection == 'departure'), 'inactive': (pageConfig.activeFlightSection != 'departure'), 'selected': (departureFlightConfig.chosenFlight > -1) }" ng-click="setPageActiveSection('departure')">
