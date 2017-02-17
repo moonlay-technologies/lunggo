@@ -934,17 +934,31 @@ body.page-index {margin-bottom: 0;}
         .sw-img {
             margin: 50px auto 15px;
             height: 54px;
+            background-size: 100%;
+            background-repeat: no-repeat;
             + div + div {margin-top: 5px;}
+            &.sw-disc {
+                background-image: url(/Assets/images/why-disc.png);
+                width: 54px;
+            }
+            &.sw-free {
+                background-image: url(/Assets/images/why-free.png);
+                width: 54px;
+            }
             &.sw-flight {
-                background: url(/Assets/images/why-flight.png) no-repeat;
-                width: 90px;
+                background-image: url(/Assets/images/why-long.png);
+                width: 54px;
+            }
+            &.sw-trust {
+                background-image: url(/Assets/images/why-trust.png);
+                width: 54px;
             }
             &.sw-hotel {
-                background: url(/Assets/images/why-hotel.png) no-repeat;
-                width: 37px;
+                background-image: url(/Assets/images/why-hotel.png);
+                width: 56px;
             }
             &.sw-active {
-                background: url(/Assets/images/why-active.png) no-repeat;
+                background-image: url(/Assets/images/why-active.png);
                 width: 69px;
             }
         }

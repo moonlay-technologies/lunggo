@@ -796,9 +796,6 @@
     <Content Include="Assets\images\howtopay-3.jpg" />
     <Content Include="Assets\images\howtopay-header.jpg" />
     <Content Include="Assets\images\idr-sprite.png" />
-    <Content Include="Assets\images\index\discount.png" />
-    <Content Include="Assets\images\index\Jaminan pembayaran.png" />
-    <Content Include="Assets\images\index\pilihan hotel.png" />
     <Content Include="Assets\images\index\popular-flight-bali.jpg" />
     <Content Include="Assets\images\index\popular-flight-jakarta.jpg" />
     <Content Include="Assets\images\index\popular-flight-medan.jpg" />
@@ -809,8 +806,6 @@
     <Content Include="Assets\images\index\popular-hotel-jakarta.jpg" />
     <Content Include="Assets\images\index\popular-hotel-surabaya.jpg" />
     <Content Include="Assets\images\index\popular-hotel-yogyakarta.jpg" />
-    <Content Include="Assets\images\index\rute penerbangan.png" />
-    <Content Include="Assets\images\index\tanpa biaya tambahan.png" />
     <Content Include="Assets\images\infant-icon.png" />
     <Content Include="Assets\images\instagram-icon.png" />
     <Content Include="Assets\images\list-bg.png" />
@@ -981,8 +976,12 @@
     <Content Include="Assets\images\warning-image.png" />
     <Content Include="Assets\images\white-bg.png" />
     <Content Include="Assets\images\why-active.png" />
+    <Content Include="Assets\images\why-disc.png" />
     <Content Include="Assets\images\why-flight.png" />
+    <Content Include="Assets\images\why-free.png" />
     <Content Include="Assets\images\why-hotel.png" />
+    <Content Include="Assets\images\why-long.png" />
+    <Content Include="Assets\images\why-trust.png" />
     <Content Include="Assets\images\wifi.png" />
     <Content Include="Assets\images\yellow-stripe-small.png" />
     <Content Include="Assets\images\yellow-stripe.png" />
