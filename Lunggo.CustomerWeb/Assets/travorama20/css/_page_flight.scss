@@ -468,24 +468,47 @@ file: /Assets/travorama20/css/_page_flight.scss
         .ps-item {
             width: 14.285714285714286%;
             text-align: center;
-            padding: 0 15px;
+            padding: 0 3px;
             float: left;
             .ps-content {
                 background: #d5e7ef;
                 @include border-radius(2px);
                 border: 2px solid #1daee4;
-                padding: 10px 0;
                 cursor: pointer;
-                height: 110px;
-                .ps-price {margin: 10px 0 20px;}
+                height: 50px;
+                position: relative;
+                .ps-wrapper {
+                    position: absolute;
+                    width: 100%;
+                    line-height: 16px;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%,-50%);
+                }
                 &:hover {
                     background: #1daee4;
                     color: #fff;
                 }
             }
-            .ps-title {line-height: 30px;}
+            .ps-title {margin-top: 3px;}
+            &:first-child { padding-left: 0;}
+            &:last-child { padding-right: 0;}
         }
-        .ps-carousel {margin: 15px 0;}
+        .ps-carousel {margin: 15px 0;
+            .item {
+                max-width: 840px;
+                margin: 0 auto;
+            }
+        }
+        .item-title {margin-bottom: 10px;}
+        .dash {
+            height: 2px;
+            width: 25px;
+            display: inline-block;
+            background: #000;
+            margin: 0 3px;
+            vertical-align: middle;
+        }
         .carousel-control {
             color: #1daee4;
             width: 0;
@@ -495,11 +518,10 @@ file: /Assets/travorama20/css/_page_flight.scss
             .glyphicon-chevron-left, .glyphicon-chevron-right {
                 width: 30px;
                 height: 30px;
-                margin-top: -30px;
                 font-size: 30px;
             }
-            .glyphicon-chevron-left {margin-left: -25px !important;}
-            .glyphicon-chevron-right {margin-right: -25px !important;}
+            .glyphicon-chevron-left {margin-left: 0 !important;}
+            .glyphicon-chevron-right {margin-right: 0 !important;}
         }
     }
 }

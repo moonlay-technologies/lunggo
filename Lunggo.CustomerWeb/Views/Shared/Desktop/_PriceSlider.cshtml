@@ -2,31 +2,18 @@
     <div class="price-slider-title os-bold">PERKIRAAN HARGA (mulai dari):</div>
     <div id="myCarousel" class="ps-carousel carousel slide" data-interval="false" ng-show="ready">
         <div class="carousel-inner" role="listbox">
+            <div class="item-title bold-txt normal-txt">Tujuan: Jakarta<span class="dash"></span>Denpasar</div>
             <div class="item active">
-                <div class="price-slider-container">
+                <div class="price-slider-container clearfix">
                     <div class="clearfix">
-                        <div ng-repeat="harga in weeklyPrice" class="ps-item blue-txt clearfix">
-                            <div class="ps-content semibold-txt clearfix"  ng-click="goto(harga.url)">
-                                <div class="ps-date normal-txt">{{harga.date}}</div>
-                                <div class="ps-price normal-txt" ng-show="harga.price != '0'">
-                                    <span>Rp</span><br />
-                                    <span class="md-txt">{{harga.price | currency:'':0}}</span>
-                                </div>
-                            </div>
-                            <div class="ps-title">{{harga.day}}</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="price-slider-container">
-                    <div class="clearfix">
-                        <div ng-repeat="harga in weeklyPrice" class="ps-item blue-txt clearfix">
-                            <div class="ps-content semibold-txt clearfix" ng-click="goto(harga.url)">
-                                <div class="ps-date normal-txt">{{harga.date}}</div>
-                                <div class="ps-price normal-txt" ng-show="harga.price != '0'">
-                                    <span>Rp</span><br />
-                                    <span class="md-txt">{{harga.price | currency:'':0}}</span>
+                        <div ng-repeat="harga in weeklyPrice" class="ps-item blue-txt normal-txt clearfix">
+                            <div class="ps-content clearfix" ng-click="goto(harga.url)">
+                                <div class="ps-wrapper">
+                                    <div class="ps-date md-txt bold-txt" ng-show="harga.price == '0'">{{harga.date}}</div>
+                                    <div class="ps-date regular-txt" ng-show="harga.price != '0'">{{harga.date}}</div>
+                                    <div class="ps-price bold-txt" ng-show="harga.price != '0'">
+                                        <span class="md-txt"><sup>Rp</sup> {{harga.price | currency:'':0}}</span>
+                                    </div>
                                 </div>
                             </div>
                             <div class="ps-title">{{harga.day}}</div>
@@ -35,7 +22,7 @@
                 </div>
             </div>
         </div>
-        <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev" ng-click ="prev()">
+        <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev" ng-click="prev()">
             <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
             <span class="sr-only">Previous</span>
         </a>
