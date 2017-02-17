@@ -1022,7 +1022,8 @@ app.controller('returnFlightController', [
         var destination = departureTemp.trips[0].DestinationAirport;
         var originCity = FlightData.OriginCity;
         var destinationCity = FlightData.DestinationCity;
-
+        $scope.originCity = FlightData.OriginCity;
+        $scope.destinationCity = FlightData.DestinationCity;
         $scope.getPriceCalendar = function (trip) {
             var todayDate = new Date();
             var startDate = ("0" + todayDate.getDate()).slice(-2)
@@ -1251,22 +1252,40 @@ app.controller('returnFlightController', [
         }
         $scope.next = function (trip) {
             if (trip == 'departure') {
-                $scope.indexDeparture += 7;
-                $scope.selectWeek($scope.indexDeparture, 'departure');
+                if ($scope.indexDeparture + 7 <= $scope.listPricesDeparture.length) {
+                    $scope.indexDeparture += 7;
+                    $scope.selectWeek($scope.indexDeparture, 'departure');
+                } else {
+                    $scope.indexDeparture = $scope.listPricesDeparture.length - 4;
+                    $scope.selectWeek($scope.indexDeparture, 'departure');
+                }
             } else {
-                $scope.indexReturn += 7;
+                if ($scope.indexReturn + 7 <= $scope.listPricesReturn.length) {
+                    $scope.indexReturn += 7;
+                } else {
+                    $scope.indexReturn = $scope.listPricesReturn.length - 4;
+                }
                 $scope.selectWeek($scope.indexReturn, 'return');
-            }
-            
+            }          
         }
 
         $scope.prev = function (trip) {
             if (trip == 'departure') {
-                $scope.indexDeparture -= 7;
-                $scope.selectWeek($scope.indexDeparture, 'departure');
+                if ($scope.indexDeparture - 7 >= 0) {
+                    $scope.indexDeparture -= 7;
+                    $scope.selectWeek($scope.indexDeparture, 'departure');
+                } else {
+                    $scope.indexDeparture = 3;
+                    $scope.selectWeek($scope.indexDeparture, 'departure');
+                }
             } else {
-                $scope.indexReturn -= 7;
-                $scope.selectWeek($scope.indexReturn, 'return');
+                if ($scope.indexReturn - 7 >= 0) {
+                    $scope.indexReturn -= 7;
+                    $scope.selectWeek($scope.indexReturn, 'return');
+                } else {
+                    $scope.indexReturn = 3;
+                    $scope.selectWeek($scope.indexReturn, 'return');
+                }
             }
         }
 

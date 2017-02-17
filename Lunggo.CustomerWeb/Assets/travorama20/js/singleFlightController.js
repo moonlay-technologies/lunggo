@@ -39,6 +39,8 @@ app.controller('singleFlightController', [
         var destination = FlightSearchConfig.flightForm.destination;
         var originCity = FlightData.OriginCity;
         var destinationCity = FlightData.DestinationCity;
+        $scope.originCity = FlightData.OriginCity;
+        $scope.destinationCity = FlightData.DestinationCity;
         var passengerParam = FlightSearchConfig.flightForm.passenger.adult + '' + FlightSearchConfig.flightForm.passenger.child + '' + FlightSearchConfig.flightForm.passenger.infant + '' + cabin;
         var departureParam = (origin + destination) + ((('0' + departureDate.getDate()).slice(-2)) + (('0' + (departureDate.getMonth() + 1)).slice(-2)) + (departureDate.getFullYear().toString().substr(2, 2)));
         $scope.flightFixRequest = departureParam + '-' + passengerParam;
@@ -869,13 +871,21 @@ app.controller('singleFlightController', [
             $scope.ready = true;
         }
 
-        $scope.next = function() {
-            $scope.index += 7;
+        $scope.next = function () {
+            if ($scope.index + 7 <= $scope.listPrices.length) {
+                $scope.index += 7;
+            } else {
+                $scope.index = $scope.listPrices.length - 4;
+            }
             $scope.selectWeek($scope.index);
         }
         
         $scope.prev = function () {
-            $scope.index -= 7;
+            if ($scope.index - 7 >= 0) {
+                $scope.index -= 7;
+            } else {
+                $scope.index = 3;
+            }
             $scope.selectWeek($scope.index);
         }
 

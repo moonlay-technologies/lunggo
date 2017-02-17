@@ -1,8 +1,8 @@
 ﻿<div class="price-slider-flight container">
-    <div class="price-slider-title os-bold">PERKIRAAN HARGA (mulai dari):</div>
+    <div class="price-slider-title os-bold" ng-show="ready.departure || ready.ret">PERKIRAAN HARGA (mulai dari):</div>
     <div id="myCarousel" class="ps-carousel carousel slide" data-interval="false" ng-show="ready.departure">
         <div class="carousel-inner" role="listbox">
-            <div class="item-title bold-txt normal-txt">Tujuan: Jakarta<span class="dash"></span>Denpasar</div>
+            <div class="item-title bold-txt normal-txt">Tujuan: {{originCity}}<span class="dash"></span>{{destinationCity}}</div>
             <div class="item active">
                 <div class="price-slider-container clearfix">
                     <div class="clearfix">
@@ -33,7 +33,7 @@
     </div>
     <div id="myCarousel2" class="ps-carousel carousel slide" data-interval="false" ng-show="ready.ret">
         <div class="carousel-inner" role="listbox">
-            <div class="item-title bold-txt normal-txt">Tujuan: Jakarta<span class="dash"></span>Denpasar</div>
+            <div class="item-title bold-txt normal-txt">Tujuan: {{destinationCity}}<span class="dash"></span>{{originCity}}</div>
             <div class="item active">
                 <div class="price-slider-container clearfix">
                     <div class="clearfix">
