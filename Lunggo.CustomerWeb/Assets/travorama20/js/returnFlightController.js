@@ -1122,7 +1122,8 @@ app.controller('returnFlightController', [
                             date: selectedList[x].date.split('/')[2] + ' ' + $scope.returnMonth(selectedList[x].date.split('/')[1]),
                             day: $scope.returnDay(date.getDay()),
                             url: $scope.editUrl('departure') + tanggal + '-' + $scope.returnFlightConfig.adultCount.toString() + $scope.returnFlightConfig.childCount.toString()
-                                + $scope.returnFlightConfig.infantCount.toString() + cabin
+                                + $scope.returnFlightConfig.infantCount.toString() + cabin,
+                            fulldate: selectedList[x].date
                         });
                     } else {
                         $scope.weeklyPrice.returnFlight.push({
@@ -1130,7 +1131,8 @@ app.controller('returnFlightController', [
                             date: selectedList[x].date.split('/')[2] + ' ' + $scope.returnMonth(selectedList[x].date.split('/')[1]),
                             day: $scope.returnDay(date.getDay()),
                             url: $scope.editUrl('return') + tanggal + '-' + $scope.returnFlightConfig.adultCount.toString() + $scope.returnFlightConfig.childCount.toString()
-                            + $scope.returnFlightConfig.infantCount.toString() + cabin
+                            + $scope.returnFlightConfig.infantCount.toString() + cabin,
+                            fulldate: selectedList[x].date
                         });
                     }
                     
@@ -1146,7 +1148,8 @@ app.controller('returnFlightController', [
                             date: selectedList[x].date.split('/')[2] + ' ' + $scope.returnMonth(selectedList[x].date.split('/')[1]),
                             day: $scope.returnDay(date.getDay()),
                             url: $scope.editUrl('departure') + tanggal + '-' + $scope.returnFlightConfig.adultCount.toString() + $scope.returnFlightConfig.childCount.toString()
-                                + $scope.returnFlightConfig.infantCount.toString() + cabin
+                                + $scope.returnFlightConfig.infantCount.toString() + cabin,
+                            fulldate: selectedList[x].date
                         });
                     } else {
                         $scope.weeklyPrice.returnFlight.push({
@@ -1154,7 +1157,8 @@ app.controller('returnFlightController', [
                             date: selectedList[x].date.split('/')[2] + ' ' + $scope.returnMonth(selectedList[x].date.split('/')[1]),
                             day: $scope.returnDay(date.getDay()),
                             url: $scope.editUrl('return') + tanggal + '-' + $scope.returnFlightConfig.adultCount.toString() + $scope.returnFlightConfig.childCount.toString()
-                            + $scope.returnFlightConfig.infantCount.toString() + cabin
+                            + $scope.returnFlightConfig.infantCount.toString() + cabin,
+                            fulldate: selectedList[x].date
                         });
                     }
                 }
@@ -1168,7 +1172,8 @@ app.controller('returnFlightController', [
                             date: selectedList[x].date.split('/')[2] + ' ' + $scope.returnMonth(selectedList[x].date.split('/')[1]),
                             day: $scope.returnDay(date.getDay()),
                             url: $scope.editUrl('departure') + tanggal + '-' + $scope.returnFlightConfig.adultCount.toString() + $scope.returnFlightConfig.childCount.toString()
-                                + $scope.returnFlightConfig.infantCount.toString() + cabin
+                                + $scope.returnFlightConfig.infantCount.toString() + cabin,
+                            fulldate: selectedList[x].date
                         });
                     } else {
                         $scope.weeklyPrice.returnFlight.push({
@@ -1176,7 +1181,8 @@ app.controller('returnFlightController', [
                             date: selectedList[x].date.split('/')[2] + ' ' + $scope.returnMonth(selectedList[x].date.split('/')[1]),
                             day: $scope.returnDay(date.getDay()),
                             url: $scope.editUrl('return') + tanggal + '-' + $scope.returnFlightConfig.adultCount.toString() + $scope.returnFlightConfig.childCount.toString()
-                            + $scope.returnFlightConfig.infantCount.toString() + cabin
+                            + $scope.returnFlightConfig.infantCount.toString() + cabin,
+                            fulldate: selectedList[x].date
                         });
                     }
                 }
@@ -1289,8 +1295,37 @@ app.controller('returnFlightController', [
             }
         }
 
-        $scope.goto = function (link) {
-            window.location.href = link;
+        $scope.goto = function (trip, date) {
+            var newDate = new Date(date);
+            var tanggal = ("0" + newDate.getDate()).slice(-2) + ("0" + (newDate.getMonth() + 1)).slice(-2) + newDate.getFullYear().toString().slice(-2);
+            var url = '/id/tiket-pesawat/cari/' + originCity + '-' + destinationCity + '-' +
+                origin + '-' + destination + '/';
+            if (trip == 'departure') {
+                if (newDate > retDate) {
+                    alert('Tanggal Keberangkatan harus sebelum Tanggal Pulang');
+                } else {
+                    var tglPulang = ("0" + retDate.getDate()).slice(-2) + ("0" + (retDate.getMonth() + 1)).slice(-2) +
+                    retDate.getFullYear().toString().slice(-2);
+                    url += origin + destination + tanggal + '~' + destination + origin + tglPulang +
+                        '-' + $scope.returnFlightConfig.adultCount.toString() + $scope.returnFlightConfig.childCount.toString()
+                        + $scope.returnFlightConfig.infantCount.toString() + cabin;
+                    window.location.href = url;
+                }
+                
+            } else {
+                if (newDate < depDate) {
+                    alert('Tanggal Keberangkatan arus sebelum Tanggal Pulang');
+                } else {
+                    var tglBerangkat = ("0" + depDate.getDate()).slice(-2) + ("0" + (depDate.getMonth() + 1)).slice(-2) +
+                   depDate.getFullYear().toString().slice(-2);
+                    url += origin + destination + tglBerangkat + '~' + destination + origin + tanggal +
+                        '-' + $scope.returnFlightConfig.adultCount.toString() + $scope.returnFlightConfig.childCount.toString()
+                        + $scope.returnFlightConfig.infantCount.toString() + cabin;
+                    window.location.href = url;
+                }
+               
+            }
+            
         }
 
     }

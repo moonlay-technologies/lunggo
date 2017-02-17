@@ -7,7 +7,7 @@
                 <div class="price-slider-container clearfix">
                     <div class="clearfix">
                         <div ng-repeat="harga in weeklyPrice.departureFlight" class="ps-item blue-txt normal-txt clearfix">
-                            <div class="ps-content clearfix" ng-click="goto(harga.url)">
+                            <div class="ps-content clearfix" ng-click="goto('departure', harga.fulldate)">
                                 <div class="ps-wrapper">
                                     <div class="ps-date md-txt bold-txt" ng-show="harga.price == '0'">{{harga.date}}</div>
                                     <div class="ps-date regular-txt" ng-show="harga.price != '0'">{{harga.date}}</div>
@@ -38,7 +38,7 @@
                 <div class="price-slider-container clearfix">
                     <div class="clearfix">
                         <div ng-repeat="harga in weeklyPrice.returnFlight" class="ps-item blue-txt normal-txt clearfix">
-                            <div class="ps-content clearfix" ng-click="goto(harga.url)">
+                            <div class="ps-content clearfix" ng-click="goto('return', harga.fulldate)">
                                 <div class="ps-wrapper">
                                     <div class="ps-date md-txt bold-txt" ng-show="harga.price == '0'">{{harga.date}}</div>
                                     <div class="ps-date regular-txt" ng-show="harga.price != '0'">{{harga.date}}</div>
