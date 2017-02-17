@@ -509,8 +509,9 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
 // overlay flight filter
 .overlay {
     &.overlay--flight-filter, &.overlay--hotel-filter, &.overlay--flight-sort, &.overlay--hotel-sort {
-    .overlay__content {background:#878787; color:#fff;}
-}
+        .overlay__content {background:#878787; color:#fff;}
+    }
+    &.overlay--hotel-map .overlay__content {background:#fff;}
 }
 
 // overlay airport select
@@ -1002,7 +1003,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     }
 }
 
-.overlay--hotel-sort {
+.overlay--hotel-sort, .overlay--hotel-map {
     .overlay__content {padding:0; font-size: 11px;
         label {padding:20px 15px; display:block; border:0; margin-bottom:0; position:relative; border-top: 1px solid #999;
             .radio {float:left; width:20px; height:20px; content:""; background:#fff; border:3px solid #fff; position:absolute; top:50%; margin-top:-10px; @include border-radius(20px);}

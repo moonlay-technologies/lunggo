@@ -1,37 +1,21 @@
 ﻿@using Lunggo.ApCommon.Hotel.Service
 @using Lunggo.CustomerWeb.Models
+@using Lunggo.Framework.Extension
 @model HotelSearchApiRequest
 @{
     Layout = "/Views/Shared/mobile/_LayoutMobile.cshtml";
-    ViewBag.BodyClass = "page-hotel page-search";
+    ViewBag.BodyClass = "page-hotel page-hotel-map";
     ViewBag.Title = "Pencarian Hotel";
     ViewBag.CurrentPage = "search-hotel";
-    ViewBag.AngularController = "hotelSearchController";
+    ViewBag.AngularController = "hotelMapController";
 }
-
 @{
-    var loc = "";
-    var locFound = false;
-    var foundLocation = HotelService.AutoCompletes.Where(c => c.Id == Model.SearchParamObject.Location).ToList()[0];
-    if (foundLocation != null)
+    var location = Model.SearchParamObject.Location;
+    var isDestination = false;
+    var x = HotelService.GetInstance().GetLocationById(location);
+    if (x.Area == null && x.Zone == null)
     {
-        if (foundLocation.Type == 1)
-        {
-            loc = foundLocation.Destination + ", " + foundLocation.Country;
-        }
-        else if (foundLocation.Type == 2)
-        {
-            loc = foundLocation.Zone + ", " + foundLocation.Destination + ", " + foundLocation.Country;
-        }
-        else if (foundLocation.Type == 3)
-        {
-            loc = foundLocation.Area + ", " + foundLocation.Destination + ", " + foundLocation.Country;
-        }
-        else if (foundLocation.Type == 4)
-        {
-            loc = foundLocation.HotelName + ", " + foundLocation.Destination + ", " + foundLocation.Country;
-        }
-        locFound = true;
+        isDestination = true;
     }
 }
 @section AdditionalCSS{
@@ -43,43 +27,66 @@
     <script src="/Assets/js/bootstrap.min.js"></script>
     <script src="/Assets/js/jquery.ui.touch-punch.min.js"></script>
     <script src="/Assets/js/js.cookie.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCRAmMz6GPXsXi1pZAl5QUsjNTcY0ZfqVA" async defer></script>
+    <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
 }
 
 @section PageJS{
-    <script>var loc = '@loc';  var locFound = @Json.Encode(locFound);</script>
-    <script src="/Assets/mobile/js/HotelController.js"></script>
     <script src="/Assets/travorama20/angularDirectory/search/hotelSearch.service.js"></script>
-    <script src="/Assets/travorama20/angularDirectory/common/hotelAutocomplete.service.js"></script>
-    <script src="/Assets/travorama20/js/hotelSearchController.js"></script>
+    <script src="/Assets/travorama20/js/HotelMap.js"></script>
+    <script>var isDestination = @Json.Encode(isDestination);</script>
 }
 
-<div class="travorama-hotel-mobile" ng-init="init(@Newtonsoft.Json.JsonConvert.SerializeObject(Model))">
-    <div class="top-content">
-        @Html.Partial("/Views/Shared/Mobile/_Summary.cshtml", new HotelLocation
-        {
-            Location = loc,
-            IsHotelSearch = false
-        })
-        <div class="hotel-sort-filter clearfix">
-            <div class="hotel-sort-filter-action">
-                <a id ="mapUrl">PETA</a>
-                <a ng-click="PageConfig.SetOverlay('hotel-filter')">FILTER</a>
-                <a ng-click="PageConfig.SetOverlay('hotel-sort')">SORTIR</a>
+<div class="travorama-hotel-mobile" ng-init="init(@Model.Serialize())">
+    <div class="hotel-map">
+        <div class="top-content">
+            <div class="hotel-sort-filter clearfix">
+                <div class="hotel-sort-filter-action">
+                    <a ng-click="PageConfig.SetOverlay('hotel-filter')">FILTER</a>
+                    <a ng-click="PageConfig.SetOverlay('hotel-sort')">SORTIR</a>
+                </div>
+            </div>
+        </div>
+        <div class="hotel-map-container">
+            <div id="map"></div>
+            <div ng-show="searchDone && returnedHotelCount == 0">
+                <h4> Hotel tidak ditemukan, silakan ganti filter atau destinasi anda.</h4>
+            </div>
+
+            <div ng-show="!searchDone" class="text-center" style="margin-top: 50%;">
+                <img src="/Assets/images/load.gif" class="img-loading">
+            </div>
+            <div class="hm-listing" ng-show="searchDone">
+                <ul class="hotel-list-container">
+                    <li ng-repeat="hotel in hotels" ng-click="GotoDetailHotel(hotel)">
+                        <div class="hotel-list clearfix">
+                            <div class="col-left-hotel"><div class="img-list" alt-image style="background-image:url({{hotel.mainImage}});"></div></div>
+                            <div class="col-right-hotel">
+                                <div class="blue-txt bold-txt lg-txt">{{hotel.hotelName}}</div>
+                                <div class="star" ng-if="hotel.starRating == 1"></div>
+                                <div class="star star-2 " ng-if="hotel.starRating == 2"></div>
+                                <div class="star star-3 " ng-if="hotel.starRating == 3"></div>
+                                <div class="star star-4 " ng-if="hotel.starRating == 4"></div>
+                                <div class="star star-5 " ng-if="hotel.starRating == 5"></div>
+                                <div class="location grey-txt">
+                                    {{toTitleCase(hotel.area)}}
+                                    <span ng-show="hotel.area == null || hotel.area.length < 1">{{toTitleCase(hotel.address)}} {{toTitleCase(hotel.zone)}} <span ng-show="hotel.postalCd != null || hotel.postalCd.length > 0"> {{hotel.postalCd}}</span></span>
+                                </div>
+                                <div class="price orange-txt">
+                                    <div class="txt-md semibold-txt">Harga per malam mulai dari:</div>
+                                    <div class="underline-txt sm-txt">Rp {{hotel.originalCheapestFare | currency:'':0}}</div>
+                                    <a ng-click="GotoDetailHotel(hotel)" class="detail"></a>
+                                    <div class="lg-txt"><b><sup>Rp</sup> {{hotel.netCheapestFare | currency:'':0}}</b></div>
+                                    <span class="xs-txt">(*Termasuk Pajak & Service Charge)</span>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
             </div>
         </div>
     </div>
-    <div class="search-list" search-scroll>
-        <div ng-show="!searchDone" class="text-center" style="height: 30px; padding: 30px;">
-            <img class="img-loading" src="/Assets/images/load.gif">
-        </div>
-        <div class="text-center" ng-show="searchDone && page == 1 && returnedHotelCount == 0"><h3> Hotel tidak ditemukan, silakan ganti filter atau destinasi anda.</h3></div>
-        @Html.Partial("/Views/Shared/Mobile/_HotelListing.cshtml")
-        <div ng-show="bottomPage" class="text-center">
-            <img src="/Assets/images/load.gif" style="width: 30px; height: 30px; margin: 20px 0 30px;">
-        </div>
-    </div>
-
-    <!-- Overlay Filter -->
+    
     <div class="overlay overlay--hotel-filter overlay--theme--blue" ng-class="{'active' : (PageConfig.ActiveOverlay == 'hotel-filter')}">
         <header class="overlay__header">
             <h3 class="overlay__title">
@@ -155,20 +162,23 @@
                     </div>
                     <a class="open-txt"></a>
                 </div>
-                <div class="filter-group filter-group--area" ng-show="hotelFilterDisplayInfo.zoneFilter.length > 0">
-                    <div class="filter-group__header">
-                        <h4 class="filter-group__title">Area</h4>
-                    </div>
-                    <div class="filter-group__content short-txt clearfix">
-                        <div class="col-half" ng-repeat="zoneFilter in hotelFilterDisplayInfo.zoneFilter ">
-                            <label class="checkbox" ng-click="changeFilter('zone', zoneFilter)" ng-class="{ 'active': (filter.zones.indexOf(zoneFilter.code) > -1) }">
-                                <div class="switch"></div>
-                                <span>{{zoneFilter.name}}</span>
-                            </label>
+                @if (isDestination)
+                {
+                    <div class="filter-group filter-group--area" ng-show="hotelFilterDisplayInfo.zoneFilter.length > 0">
+                        <div class="filter-group__header">
+                            <h4 class="filter-group__title">Zona</h4>
                         </div>
+                        <div class="filter-group__content short-txt clearfix">
+                            <div class="col-half" ng-repeat="zoneFilter in hotelFilterDisplayInfo.zoneFilter ">
+                                <label class="checkbox" ng-click="changeFilter('zone', zoneFilter)" ng-class="{ 'active': (filter.zones.indexOf(zoneFilter.code) > -1) }">
+                                    <div class="switch"></div>
+                                    <span>{{zoneFilter.name}}</span>
+                                </label>
+                            </div>
+                        </div>
+                        <a class="open-txt"></a>
                     </div>
-                    <a class="open-txt"></a>
-                </div>
+                }
             </form>
             <div class="reset">
                 <button class="btn btn-reset" id="reset" ng-click="resetButtonFilter()">Reset</button>
@@ -205,13 +215,7 @@
             </label>
         </section>
     </div>
-
-    <!-- overlay hotel selector -->
-    @Html.Partial("/Views/Shared/Mobile/_Autocomplete.cshtml")
-
-    <!-- overlay hotel date -->
-    @Html.Partial("/Views/Shared/Mobile/_SelectCheckInDate.cshtml")
-
+    
     <div class="popup__wrapper" ng-class="{'active': expired}">
         <div class="popup">
             <header class="popup__header">

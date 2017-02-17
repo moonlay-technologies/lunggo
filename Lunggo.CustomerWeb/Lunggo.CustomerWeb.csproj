@@ -787,7 +787,12 @@
     <Content Include="Assets\images\hotel-review-header.png" />
     <Content Include="Assets\images\hotel-star-4.jpg" />
     <Content Include="Assets\images\hotel-star-4.png" />
-    <Content Include="Assets\images\hotel\markers.png" />
+    <Content Include="Assets\images\hotel\filter-hotel-map-white.png" />
+    <Content Include="Assets\images\hotel\filter-hotel-map.png" />
+    <Content Include="Assets\images\hotel\hotel-dummy.jpg" />
+    <Content Include="Assets\images\hotel\markers-blue.png" />
+    <Content Include="Assets\images\hotel\markers-red.png" />
+    <Content Include="Assets\images\hotel\view-map.jpg" />
     <Content Include="Assets\images\hourglass.png" />
     <Content Include="Assets\images\hover-menu-arrow.png" />
     <Content Include="Assets\images\howto-bg.jpg" />
@@ -1199,6 +1204,7 @@
     <Content Include="Assets\mobile\js\HomeController.js" />
     <Content Include="Assets\mobile\js\HotelController.js" />
     <Content Include="Assets\mobile\js\PromoController.js" />
+    <Content Include="Assets\mobile\js\HotelMapController.js" />
     <Content Include="Assets\mobile\js\returnFlightController.js" />
     <Content Include="Assets\mobile\js\singleFlightController.js" />
     <Content Include="Assets\mobile\js\StaticController.js" />
@@ -1266,6 +1272,7 @@
     <Content Include="Assets\travorama20\js\HotelCheckoutController.js" />
     <Content Include="Assets\travorama20\js\HotelController.js" />
     <Content Include="Assets\travorama20\js\hotelDetailController.js" />
+    <Content Include="Assets\travorama20\js\HotelMap.js" />
     <Content Include="Assets\travorama20\js\hotelSearchController.js" />
     <Content Include="Assets\travorama20\js\paymentController.js" />
     <Content Include="Assets\travorama20\js\returnFlightController.js" />
@@ -1473,6 +1480,8 @@
     <Content Include="App_Code\ToTitleCase.cshtml" />
     <Content Include="App_Code\MsToTime.cshtml" />
     <Content Include="Assets\css\travorama-mobileApp.scss" />
+    <Content Include="Assets\travorama20\css\_page_hotel_search_listing.scss" />
+    <Content Include="Assets\travorama20\css\_page_hotel_map.scss" />
     <None Include="Properties\PublishProfiles\prod-cw %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\dv1-cw.pubxml" />
     <None Include="Properties\PublishProfiles\dv2-cw.pubxml" />
@@ -1643,6 +1652,10 @@
     <Content Include="Views\Promo\HutBTN.cshtml" />
     <Content Include="Views\Promo\HutBTNWebview.cshtml" />
     <Content Include="Views\Promo\HutBTN.mobile.cshtml" />
+    <Content Include="Views\Shared\Desktop\_HotelListing.cshtml" />
+    <Content Include="Views\Hotel\HotelMap.cshtml" />
+    <Content Include="Views\Shared\Mobile\_HotelListing.cshtml" />
+    <Content Include="Views\Hotel\HotelMap.mobile.cshtml" />
     <None Include="Views\Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

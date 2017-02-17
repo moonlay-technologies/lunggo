@@ -150,13 +150,18 @@ function ($scope, $log, $window, $http, $resource, $timeout, $interval, hotelSea
     $scope.view = {
         showHotelSearch : false
     }
-   
+
+    $scope.mapUrl = '';
     // ***************************************END*******************************
 
     // ****************************** INITS ************************************
     $scope.init = function (model) {
+        //$log.debug("href = " + window.location.pathname);
         $scope.model = model;
         $log.debug($scope.model);
+        $scope.mapUrl = window.location.pathname.replace("cari", "map") + '?info=' + model.searchParam;
+        $("#mapUrl").attr("href", $scope.mapUrl);
+        $("#mapUrl").attr("target", "_blank");
         $scope.hotelSearch.location = $scope.model.searchParamObject.location;
         $scope.hotelSearch.checkinDate = $scope.model.searchParamObject.checkinDate;
         $scope.hotelSearch.checkinDateDisplay = moment($scope.hotelSearch.checkinDate).locale("id").format('LL');
@@ -298,11 +303,11 @@ function ($scope, $log, $window, $http, $resource, $timeout, $interval, hotelSea
                 $scope.filter.maxPrice = data.maxPrice;
                 $scope.minPrice = data.minPrice;
                 $scope.maxPrice = data.maxPrice;
-            initiatePriceSlider();
+                initiatePriceSlider();
 
                 $scope.hotelFilterDisplayInfo = data.hotelFilterDisplayInfo;
                 isFirstload = false;
-            };
+               };
 
             //$timeout(function () { customCheckbox(); }, 0);
             $log.debug(data);
@@ -344,7 +349,7 @@ function ($scope, $log, $window, $http, $resource, $timeout, $interval, hotelSea
         var destinationName = hotel.destinationName;
         destinationName = destinationName.replace(/\s+/g, '-');
         destinationName = destinationName.replace(/[^0-9a-zA-Z-]/gi, '').toLowerCase();
-        $log.debug('redirect to detail hotel with hotelCd: ' + hotel.hotelCd);
+        //$log.debug('redirect to detail hotel with hotelCd: ' + hotel.hotelCd);
         var url = '/id/hotel/' + hotel.country + '/' + destinationName +
             '/' + hotelName + '-' + hotel.hotelCd + "/?" + $scope.searchParam; 
 
@@ -561,13 +566,3 @@ function ($scope, $log, $window, $http, $resource, $timeout, $interval, hotelSea
 
     // ****************************** END **************************************
 }]);
-
-//$('.overlay .filter-group--facility a').on('click', function () { //click or click touchstart
-//    $('.overlay .filter-group--facility a').toggleClass('active');
-//    $('.overlay .sh-list').toggleClass('opened');
-//});
-
-//$('.overlay .filter-group--area').on('click', function () {
-//    $('.overlay .filter-group--facility a').toggleClass('active');
-//    $('.overlay .sh-list').toggleClass('opened');
-//});
