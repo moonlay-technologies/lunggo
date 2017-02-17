@@ -5,10 +5,12 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using Lunggo.ApCommon.Identity.AuthStore;
-
+using Lunggo.ApCommon.Identity.Roles;
+using Lunggo.ApCommon.Identity.RoleStore;
 using Lunggo.ApCommon.Identity.Users;
 using Lunggo.ApCommon.Identity.UserStore;
 using Lunggo.Framework.Encoder;
+using Lunggo.Framework.Extension;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
@@ -106,6 +108,7 @@ namespace Lunggo.ApCommon.Identity.Auth
             var identity = new ClaimsIdentity(context.Options.AuthenticationType);
             identity.AddClaim(new Claim(ClaimTypes.Authentication, "password"));
             identity.AddClaim(new Claim(ClaimTypes.Name, context.UserName));
+            identity.AddClaim(new Claim(ClaimTypes.Role, string.Join(",", userManager.GetRoles(user.Id))));
             identity.AddClaim(new Claim("Client ID", context.ClientId ?? ""));
             identity.AddClaim(new Claim("Device ID", context.OwinContext.Get<string>("as:deviceId") ?? ""));
 

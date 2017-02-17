@@ -151,6 +151,9 @@
                                                         <div class="action" ng-if="!creditCard.isPrimaryCard">
                                                             <a class="btn btn-yellow" ng-click="updatePrimaryCard(creditCard.maskedCardNumber)">SET AS PRIMARY CARD</a>
                                                         </div>
+                                                        <div class="action" ng-if="!creditCard.isPrimaryCard">
+                                                            <a class="btn btn-yellow" ng-click="deleteCard(creditCard.maskedCardNumber)">DELETE</a>
+                                                        </div>
                                                         <div class="action" ng-if="creditCard.isPrimaryCard">
                                                             <a class="btn btn-yellow" ng-href="#">PRIMARY CARD</a>
                                                         </div>
@@ -170,4 +173,21 @@
         </div>
 
     </div>
+    <div class="payment-popup" ng-show="cardDeleted || primaryUpdated">
+        <div class=" overlay-content">
+            <section style="padding-top:60px; padding-left:225px;">
+                <!-- Ini untuk yg gagal -->
+                <div><img src="/Assets/images/travorama-logo-color.png" height="22px" width="80px"></div>
+                <div style="padding-top:20px;" ng-if="primaryUpdated"><span style="color: #15b1e4; font-size:20px"><b>Primary Card berhasil diganti.</b></span></div>
+                <div style="padding-top:20px;" ng-if="cardDeleted"><span style="color: #15b1e4; font-size:20px"><b>Kartu Kredit berhasil dihapus.</b></span></div>
+                <div><img src="~/Assets/images/popup/paymentyellowstrip.png" /></div>
+                <div style="padding-top:5px;"><span style="font-size:12px"></span></div>
+            </section>
+            <div align="right" style="padding-right:30px;">
+                <a class="btn popup-btn-yellow book-failed" ng-click="closePopUp()"><b>Tutup</b></a>
+
+            </div>
+        </div>
+    </div>
+
 </div>

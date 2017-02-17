@@ -164,10 +164,13 @@ namespace Lunggo.ApCommon.Payment.Service
             }
         }
 
-        public void DeleteSaveCreditCard(string companyId, string maskedNumber)
+        public bool DeleteSaveCreditCard(string maskedNumber)
         {
+            var userId = HttpContext.Current.User.Identity.GetUser().Id;
+            var companyId = User.GetCompanyIdByUserId(userId);
             if(!string.IsNullOrEmpty(companyId) && !string.IsNullOrEmpty(maskedNumber))
             DeleteSaveCreditCardFromDb(companyId,maskedNumber);
+            return true;
         }
 
     }

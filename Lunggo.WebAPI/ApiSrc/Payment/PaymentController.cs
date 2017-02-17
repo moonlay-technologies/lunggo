@@ -139,7 +139,7 @@ namespace Lunggo.WebAPI.ApiSrc.Payment
         {
             try
             {
-                if (IsAuthorized())
+                if (User.Identity.IsInRole("Finance"))
                 {
                     var userId = HttpContext.Current.User.Identity.GetUser().Id;
                     var apiResponse = PaymentLogic.GetSavedCreditCard(userId);
@@ -167,7 +167,7 @@ namespace Lunggo.WebAPI.ApiSrc.Payment
             AddCreditCardRequest request = null;
             try
             {
-                if (IsAuthorized())
+                if (User.Identity.IsInRole("Finance"))
                 {
                     request = ApiRequestBase.DeserializeRequest<AddCreditCardRequest>();
                     var apiResponse = PaymentLogic.AddCreditCard(request);
@@ -195,7 +195,7 @@ namespace Lunggo.WebAPI.ApiSrc.Payment
             SetPrimaryCardRequest request = null;
             try
             {
-                if (IsAuthorized())
+                if (User.Identity.IsInRole("Finance"))
                 {
                     request = ApiRequestBase.DeserializeRequest<SetPrimaryCardRequest>();
                     var apiResponse = PaymentLogic.SetPrimaryCard(request);
@@ -214,14 +214,31 @@ namespace Lunggo.WebAPI.ApiSrc.Payment
             }
         }
 
-        public bool IsAuthorized()
+        [HttpPost]
+        [Authorize]
+        [LunggoCorsPolicy]
+        [Route("v1/payment/deletecard")]
+        public ApiResponseBase DeleteCreditCard()
         {
-            var userId = HttpContext.Current.User.Identity.GetUser().Id;
-            var role = Role.GetFromDb(userId);
-            var b = User.IsInRole("Finance");
-            var c = User.IsInRole("Admin");
-            if (User.Identity.IsAuthenticated) c = true;
-            return User.Identity.IsAuthenticated && (role.Equals("Finance") || role.Equals("Admin"));
+            DeleteCreditCardApiRequest request = null;
+            if (!User.Identity.IsInRole("Finance"))
+            {
+                return new ApiResponseBase
+                {
+                    StatusCode = HttpStatusCode.Unauthorized,
+                    ErrorCode = "ERRDU01"
+                };
+            }
+            try
+            {
+                request = ApiRequestBase.DeserializeRequest<DeleteCreditCardApiRequest>();
+                var apiResponse = PaymentLogic.DeleteCreditCardLogic(request);
+                return apiResponse;
+            }
+            catch (Exception e)
+            {
+                return ApiResponseBase.ExceptionHandling(e, request);
+            }
         }
     }
 }

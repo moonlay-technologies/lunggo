@@ -9,8 +9,6 @@ namespace Lunggo.ApCommon.Identity.Model
 {
     public class UserData
     {
-        [JsonProperty("id", NullValueHandling = NullValueHandling.Ignore)]
-        public string Id { get; set; }
         [JsonProperty("email", NullValueHandling = NullValueHandling.Ignore)]
         public string Email { get; set; }
         [JsonProperty("firstName", NullValueHandling = NullValueHandling.Ignore)]

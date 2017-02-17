@@ -123,6 +123,22 @@ var B2BRegisterConfig = {
     Url: '$apiUrl$$b2bRegisterPath$'
 };
 
+var GetUserConfig = {
+    Url: '$apiUrl$$getUserPath$'
+};
+
+var AddUserConfig = {
+    Url: '$apiUrl$$addUserPath$'
+};
+
+var UpdateRoleConfig = {
+    Url: '$apiUrl$$updateRolePath$'
+};
+
+var DeleteUserConfig = {
+    Url: '$apiUrl$$deleteUserPath$'
+};
+
 var ResetPasswordConfig = {
     Url: '$apiUrl$$resetPasswordPath$'
 };
@@ -214,6 +230,10 @@ var GetCreditCardConfig = {
 
 var AddCreditCardConfig = {
     Url: '$apiUrl$$addCreditCardPath$'
+};
+
+var DeleteCreditCardConfig = {
+    Url: '$apiUrl$$deleteCardPath$'
 };
 
 var SetPrimaryCardConfig = {

@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Collections.Generic;
+using System.Text;
 using Lunggo.ApCommon.Identity.Model;
 using Lunggo.Framework.Database;
 
@@ -17,7 +18,7 @@ namespace Lunggo.ApCommon.Identity.Query
         private static string CreateSelectClause()
         {
             var clauseBuilder = new StringBuilder();
-            clauseBuilder.Append(@"SELECT a.Id, a.Email, a.FirstName, a.LastName, c.Name as RoleName ");
+            clauseBuilder.Append(@"SELECT a.Email, a.FirstName, a.LastName, c.Name as RoleName ");
             clauseBuilder.Append(@"FROM dbo.[User] AS a ");
             clauseBuilder.Append(@"JOIN dbo.[UserRole] as b ON a.Id = b.UserId ");
             clauseBuilder.Append(@"JOIN dbo.[Role] as c ON c.Id = b.RoleId ");

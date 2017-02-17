@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Lunggo.ApCommon.Identity.Model;
 using Lunggo.ApCommon.Identity.Query;
 using Lunggo.Framework.Database;
 using Microsoft.AspNet.Identity;
@@ -59,7 +60,7 @@ namespace Lunggo.ApCommon.Identity.Users
             }
         }
 
-        internal static string GetCompanyIdByUserId(string userId)
+        public static string GetCompanyIdByUserId(string userId)
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
@@ -68,10 +69,24 @@ namespace Lunggo.ApCommon.Identity.Users
             }
         }
 
-        public List<User> GetAllUserByCompanyId(string userId)
+        public static List<UserData> GetAllUserByCompanyId(string userId)
         {
-            var test = new List<User>();
-            return test;
+            var companyId = GetCompanyIdByUserId(userId);
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                var userList = GetAllUserByAdminQuery.GetInstance().Execute(conn, new { CompanyId = companyId }).ToList();
+                return userList;
+            }
+        }
+
+        public static List<string> GetAllRoles()
+        {
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                var roleList = GetListRolesQuery.GetInstance().Execute(conn, new { }).ToList();
+                return roleList;
+            }
+
         }
     }
 }

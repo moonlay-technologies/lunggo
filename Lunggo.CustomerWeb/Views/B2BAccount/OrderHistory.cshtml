@@ -297,7 +297,6 @@
     <div class="payment-popup" ng-show="updateReservation.isConfirm">
         <div class=" overlay-content">
             <section style="padding-top:60px; padding-left:225px;">
-                <!-- Ini untuk yg gagal -->
                 <div><img src="/Assets/images/travorama-logo-color.png" height="22px" width="80px"></div>
                 <div style="padding-top:20px;"><span style="color: #15b1e4; font-size:20px"><b>Apakah anda yakin dengan pilihan Anda?</b></span></div>
                 <div><img src="~/Assets/images/popup/paymentyellowstrip.png" /></div>
@@ -320,23 +319,6 @@
                 <div><img src="~/Assets/images/popup/paymentyellowstrip.png" /></div>
                 <div style="padding-top:5px;"><span style="font-size:12px"></span></div>
             </section>
-        </div>
-    </div>
-    
-    <div class="payment-popup" ng-show="updateReservation.isFailed">
-        <div class=" overlay-content">
-            <section style="padding-top:60px; padding-left:225px;">
-                <!-- Ini untuk yg gagal -->
-                <div><img src="/Assets/images/travorama-logo-color.png" height="22px" width="80px"></div>
-                <div style="padding-top:20px;"><span style="color: #15b1e4; font-size:20px"><b>Pesanan Gagal di Approved</b></span></div>
-                <div><img src="~/Assets/images/popup/paymentyellowstrip.png" /></div>
-                <div style="padding-top:5px;"><span style="font-size:12px"></span></div>
-            </section>
-            <div align="right" style="padding-right:30px;">
-                <a class="btn popup-btn-yellow book-failed" ng-click="updateReservation.update('update')"><b>Ya</b></a>
-                <a class="btn popup-btn-yellow book-failed" ng-click="close()"><b>Tidak</b></a>
-
-            </div>
         </div>
     </div>
 </div>

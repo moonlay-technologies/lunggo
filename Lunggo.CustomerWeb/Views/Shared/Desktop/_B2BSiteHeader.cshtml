@@ -64,6 +64,26 @@
                                         <li class="dropdown-wrapper">
                                             <a href="#" data-trigger="dropdown" ng-show="isLogin && name.length > 0"> {{name}} <span class="caret"></span></a>
                                             <a href="#" data-trigger="dropdown" ng-show="isLogin && name.length == 0"> {{email}} <span class="caret"></span></a>
+                                            @*<div ng-if="isFinance">
+                                                <ul>
+                                                    <li>
+                                                        <a href="@("/id/B2BAccount/Login?returnUrl" + Context.Request.Url.PathAndQuery)">
+                                                            Test
+                                                        </a>
+                                                    </li>
+                                                    <li><a href="/id/B2BAccount/Register">Yoi</a></li>
+                                                </ul>
+                                            </div>*@
+                                            @*<div ng-if="isAdmin">
+                                                <ul>
+                                                    <li>
+                                                        <a href="@("/id/B2BAccount/Login?returnUrl" + Context.Request.Url.PathAndQuery)">
+                                                            Kemon
+                                                        </a>
+                                                    </li>
+                                                    <li><a href="/id/B2BAccount/Register">Sep</a></li>
+                                                </ul>
+                                            </div>*@
                                             <div ng-if="!isLogin">
                                                 <ul>
                                                     <li>
@@ -78,10 +98,13 @@
                                                 <ul>
                                                     <li><a href="/id/B2BAccount/OrderHistory/#profile">Profil Saya</a></li>
                                                     <li><a href="/id/B2BAccount/OrderHistory/#order">Pesanan</a></li>
-                                                    <li><a href="/id/B2BPayment/Index">Finance</a></li>
+                                                    <li ng-if="isFinance"><a href="/id/B2BPayment/Index">Finance</a></li>
+                                                    <li ng-show="isAdmin"><a href="/id/B2BAccount/UserManagement">User Management</a></li>
+                                                    @*<li ng-if="isFinance"><a href="/id/B2BPayment/Index">Finance</a></li>*@
+                                                    @*<div ng-show="isAdmin"><li><a href="/id/B2BPayment/Index">Finance</a></li></div>
+                                                    <li ng-show="isAdmin"><a href="/id/B2BAccount/UserManagement">User Management</a></li>*@
                                                     <li><a href="" ng-click="logout.getLogout()">Keluar</a></li>
                                                 </ul>
-
                                             </div>
                                         </li>
                                     </ul>
