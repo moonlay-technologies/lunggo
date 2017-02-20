@@ -262,8 +262,6 @@ function ($scope, $log, $window, $http, $resource, $timeout, $interval, hotelSea
             }
 
             $scope.expiryDate = new Date(data.expTime);
-            //$scope.expiryDate = new Date();
-            //$scope.expiryDate = $scope.expiryDate.setMinutes($scope.expiryDate.getMinutes() + 1);
             $interval(function () {
                 var nowTime = new Date();
                 if (nowTime > $scope.expiryDate) {
@@ -492,8 +490,13 @@ function ($scope, $log, $window, $http, $resource, $timeout, $interval, hotelSea
 
     };
     
+    //setup before functions
+    var typingTimer;                //timer identifier
+    var doneTypingInterval = 1000;  //time in ms (5 seconds)
+
     $scope.$watch('filter.nameFilter', function (newValue, oldValue, scope) {
-        filterHotels();
+        clearTimeout(typingTimer);
+        typingTimer = setTimeout(filterHotels, doneTypingInterval);
     }, true);
 
     $scope.$watch('filter.minPrice', function (newValue, oldValue, scope) {
