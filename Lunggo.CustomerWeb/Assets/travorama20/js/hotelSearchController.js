@@ -520,7 +520,7 @@ function ($scope, $log, $window, $http, $resource, $timeout, $interval, hotelSea
     
     //setup before functions
     var typingTimer;                //timer identifier
-    var doneTypingInterval = 1000;  //time in ms (5 seconds)
+    var doneTypingInterval = 500;  //time in ms (5 seconds)
 
     $scope.$watch('filter.nameFilter', function (newValue, oldValue, scope) {
         clearTimeout(typingTimer);
