@@ -1,4 +1,6 @@
-﻿@using Lunggo.ApCommon.Hotel.Service
+﻿@using CsQuery.EquationParser.Implementation.Functions
+@using Lunggo.ApCommon.Hotel.Model
+@using Lunggo.ApCommon.Hotel.Service
 @using Lunggo.CustomerWeb.Models
 @using Lunggo.Framework.Extension
 @model Lunggo.CustomerWeb.Models.HotelSearchApiRequest
@@ -16,29 +18,37 @@
 @{
     var loc = "";
     var locFound = false;
+    var foundLocation = new HotelAutoComplete();
     var k = HotelService.AutoCompletes.Where(c => c.Id == Model.SearchParamObject.Location).ToList();
+    var sumAdult = 0;
+    var sumChildren = 0;
+    foreach (var occ in Model.SearchParamObject.Occupancies)
+    {
+        sumAdult += occ.AdultCount;
+        sumChildren += occ.ChildCount;
+    }
     if (k.Count > 0)
     {
-        var foundLocation = k[0];
-    if (foundLocation != null)
-    {
-        if (foundLocation.Type == 1)
+        foundLocation = k[0];
+        if (foundLocation != null)
         {
-            loc = foundLocation.Destination + ", " + foundLocation.Country;
+            if (foundLocation.Type == 1)
+            {
+                loc = foundLocation.Destination + ", " + foundLocation.Country;
+            }
+            else if (foundLocation.Type == 2)
+            {
+                loc = foundLocation.Zone + ", " + foundLocation.Destination + ", " + foundLocation.Country;
+            }
+            else if (foundLocation.Type == 3)
+            {
+                loc = foundLocation.Area + ", " + foundLocation.Destination + ", " + foundLocation.Country;
+            }
+            else if (foundLocation.Type == 4)
+            {
+                loc = foundLocation.HotelName + ", " + foundLocation.Destination + ", " + foundLocation.Country;
+            }
         }
-        else if (foundLocation.Type == 2)
-        {
-            loc = foundLocation.Zone + ", " + foundLocation.Destination + ", " + foundLocation.Country;
-        }
-        else if (foundLocation.Type == 3)
-        {
-            loc = foundLocation.Area + ", " + foundLocation.Destination + ", " + foundLocation.Country;
-        }
-        else if (foundLocation.Type == 4)
-        {
-            loc = foundLocation.HotelName + ", " + foundLocation.Destination + ", " + foundLocation.Country;
-        }
-    }
         locFound = true;
     }
 
@@ -75,6 +85,20 @@
     <script src="/Assets/travorama20/angularDirectory/search/hotelSearch.service.js"></script>
     <script src="/Assets/travorama20/angularDirectory/common/hotelAutocomplete.service.js"></script>
     <script src="/Assets/travorama20/js/hotelSearchController.js"></script>
+    <script>
+        var gtmContentType = 'hotel';
+        var gtmCity = '@foundLocation.Destination';
+        var gtmRegion = '@foundLocation.Area';
+        var gtmCountry = '@foundLocation.Country';
+        var gtmCheckinDate = '@Model.SearchParamObject.CheckinDate.ToString("yyyyMMdd")';
+        var gtmCheckoutDate = '@Model.SearchParamObject.CheckoutDate.ToString("yyyyMMdd")';
+        var gtmNumAdults = @sumAdult;
+        var gtmNumChildren = @sumChildren;
+        var gtmPurchaseCurrency = 'IDR';
+        var gtmPageValue = null;
+       var ddd = @sumChildren;
+    </script>
+
 }
 
 @Html.Partial("/Views/Shared/Desktop/_PageSlider.cshtml", new HotelLocation

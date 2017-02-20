@@ -144,6 +144,21 @@
     <script src="/Assets/travorama20/angularDirectory/priceDetail/priceDetailDir.js"></script>
     <script src="/Assets/travorama20/js/returnFlightController.js"></script>
     <script>backToTop()</script>
+    <script>
+        var gtmContentType = 'flight';
+        var gtmDepartingDepartureDate = '@trips[0].DepartureDate.ToString("yyyyMMdd")';
+        var gtmReturningDepartureDate = null;
+        var gtmOriginAirport = '@trips[0].OriginAirport';
+        var gtmDestinationAirport = '@trips[0].DestinationAirport';
+        var gtmDepartingArrivalDate = '@trips[1].DepartureDate.ToString("yyyyMMdd")';
+        var gtmReturningArrivalDate = null;
+        var gtmNumAdults = @data.AdultCount;
+        var gtmNumChildren = @data.ChildCount;
+        var gtmNumInfants = @data.InfantCount;;
+        var gtmTravelClass = '@data.CabinClass';
+        var gtmPurchaseValue = '';
+        var gtmPurchaseCurrency = 'IDR';
+    </script>
 }
 <section class="page-slider">
     <div class="container">

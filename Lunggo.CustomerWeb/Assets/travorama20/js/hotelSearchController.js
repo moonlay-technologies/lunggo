@@ -101,6 +101,16 @@ function ($scope, $log, $window, $http, $resource, $timeout, $interval, hotelSea
     });
     // **************************GENERAL VARIABLES*****************************
    
+    $scope.gtmContentType = 'hotel';
+    $scope.gtmCity = gtmCity;
+    $scope.gtmRegion = gtmRegion;
+    $scope.gtmCountry = gtmCountry;
+    $scope.gtmCheckinDate = gtmCheckinDate;
+    $scope.gtmCheckoutDate = gtmCheckoutDate;
+    $scope.gtmNumAdults = gtmNumAdults;
+    $scope.gtmNumChildren = gtmNumChildren;
+    $scope.gtmPurchaseCurrency = gtmPurchaseCurrency;
+    $scope.gtmPageValue = null;
     // Hotel Data
     $scope.model = {};
     $scope.hotels = [];
@@ -249,10 +259,12 @@ function ($scope, $log, $window, $http, $resource, $timeout, $interval, hotelSea
         var allContained = true;
         for (var i = 0; i < hotels.length; i++) {
             var hotelName = hotels[i].hotelName.toLowerCase();
-            if (hotelName.indexOf($scope.filter.nameFilter.toLowerCase()) == -1) {
-                allContained = false;
-                break;
-            }
+            if ($scope.filter.nameFilter != null && $scope.filter.nameFilter !== '') {
+                if (hotelName.indexOf($scope.filter.nameFilter.toLowerCase()) == -1) {
+                    allContained = false;
+                    break;
+                }
+            }        
         }
 
         return allContained;
@@ -314,6 +326,42 @@ function ($scope, $log, $window, $http, $resource, $timeout, $interval, hotelSea
                         initiatePriceSlider();
                         $scope.hotelFilterDisplayInfo = data.hotelFilterDisplayInfo;
                         isFirstload = false;
+
+                        var hotelId = [];
+                        if (data.totalHotelCount >= 10) {
+                            for (var i = 0; i < 10; i++) {
+                                hotelId.push(data.hotels[i].hotelCd);
+                            }
+                        }else if (data.totalHotelCount > 0 && data.totalHotelCount < 10) {
+                            for (var i = 0; i < data.totalHotelCount; i++) {
+                                hotelId.push(data.hotels[i].hotelCd);
+                            }
+                        }
+                        
+                        !function (f, b, e, v, n, t, s) {
+                            if (f.fbq) return; n = f.fbq = function () {
+                                n.callMethod ?
+                                n.callMethod.apply(n, arguments) : n.queue.push(arguments)
+                            }; if (!f._fbq) f._fbq = n;
+                            n.push = n; n.loaded = !0; n.version = '2.0'; n.queue = []; t = b.createElement(e); t.async = !0;
+                            t.src = v; s = b.getElementsByTagName(e)[0]; s.parentNode.insertBefore(t, s)
+                        }(window,document, 'script', '//connect.facebook.net/en_US/fbevents.js');
+
+                        fbq('init', '<FB_PIXEL_ID>');
+
+                        fbq('track', 'ViewContent', {
+                            content_type: 'hotel',
+                            content_ids: hotelId,
+                            checkin_date: $scope.gtmCheckinDate,
+                            checkout_date: $scope.gtmCheckoutDate,
+                            city: $scope.gtmCity,
+                            region: $scope.gtmRegion,
+                            country: $scope.gtmCountry,
+                            num_adults: $scope.gtmNumAdults,
+                            num_children: $scope.gtmNumChildren,
+                            purchase_value: data.minPrice,
+                            purchase_currency: $scope.gtmPurchaseCurrency,
+                        });
                     };
                     $scope.searchDone = true;
                     $scope.finishLoad = true;

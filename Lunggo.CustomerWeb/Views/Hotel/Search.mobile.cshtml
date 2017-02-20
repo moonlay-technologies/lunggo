@@ -7,9 +7,17 @@
     ViewBag.Title = "Pencarian Hotel";
     ViewBag.CurrentPage = "search-hotel";
     ViewBag.AngularController = "hotelSearchController";
+    
 }
 
 @{
+    var sumAdult = 0;
+    var sumChildren = 0;
+    foreach (var occ in Model.SearchParamObject.Occupancies)
+    {
+        sumAdult += occ.AdultCount;
+        sumChildren += occ.ChildCount;
+    }
     var loc = "";
     var locFound = false;
     var foundLocation = HotelService.AutoCompletes.Where(c => c.Id == Model.SearchParamObject.Location).ToList()[0];
@@ -51,6 +59,17 @@
     <script src="/Assets/travorama20/angularDirectory/search/hotelSearch.service.js"></script>
     <script src="/Assets/travorama20/angularDirectory/common/hotelAutocomplete.service.js"></script>
     <script src="/Assets/travorama20/js/hotelSearchController.js"></script>
+    <script>
+        var gtmContentType = 'hotel';
+        var gtmCity = '@foundLocation.Destination';
+        var gtmRegion = '@foundLocation.Area';
+        var gtmCountry = '@foundLocation.Country';
+        var gtmCheckinDate = '@Model.SearchParamObject.CheckinDate.ToString("yyyyMMdd")';
+        var gtmCheckoutDate = '@Model.SearchParamObject.CheckoutDate.ToString("yyyyMMdd")';
+        var gtmNumAdults = @sumAdult;
+        var gtmNumChildren = @sumChildren;
+        var gtmPurchaseCurrency = 'IDR';
+    </script>
 }
 
 <div class="travorama-hotel-mobile" ng-init="init(@Newtonsoft.Json.JsonConvert.SerializeObject(Model))">
