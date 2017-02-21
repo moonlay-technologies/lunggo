@@ -1,0 +1,129 @@
+﻿@{
+    Layout = "/Views/Shared/B2BTravorama/_B2BLayout.cshtml";
+    ViewBag.BodyClass = "b2b-search-flight";
+    ViewBag.SiteHeader = "b2b-search-flight";
+    ViewBag.Title = "Search Flight";
+    ViewBag.AngularController = "";
+
+}
+
+@section AdditionalCSS{
+    <link href="/Assets/css/style_b2b.css" rel="stylesheet" type="text/css" />
+}
+
+@section AdditionalJS{
+}
+
+@section PageJS{
+
+}
+
+<div class="search-flight">
+    <div class="panel panel-transparent">
+        <div class="panel-heading ">
+            <div class="panel-title">
+                Cari Tiket Pesawat
+            </div>
+        </div>
+        <div class="panel-body">
+            <form id="form-flight" role="form" autocomplete="off" novalidate="novalidate">
+                <div class="row clearfix radio radio-primary">
+                    <div class="col-sm-6 col-xs-6">
+                        <input type="radio" checked="checked" value="no" name="optionyes" id="no">
+                        <label for="no">Pulang Pergi</label>
+                    </div>
+                    <div class="col-sm-6 col-xs-6">
+                        <input type="radio" value="yes" name="optionyes" id="yes">
+                        <label for="yes">Sekali Jalan</label>
+                    </div>
+                </div>
+                <div class="row clearfix">
+                    <div class="col-sm-6">
+                        <div class="form-group form-group-default">
+                            <label>Dari</label>
+                            <input type="text" class="form-control" name="" required="" aria-required="true">
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group form-group-default">
+                            <label>Ke</label>
+                            <input type="text" class="form-control" name="" required="" aria-required="true">
+                        </div>
+                    </div>
+                </div>
+                <div class="row clearfix">
+                    <div class="col-sm-6">
+                        <div class="form-group form-group-default input-group">
+                            <label>Tanggal Berangkat</label>
+                            <input type="email" class="form-control" placeholder="Pilih tanggal berangkat" id="datepicker-component">
+                            <span class="input-group-addon">
+                                <i class="fa fa-calendar"></i>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group form-group-default input-group">
+                            <label>Tanggal Kembali</label>
+                            <input type="email" class="form-control" placeholder="Pilih tanggal kembali" id="datepicker-component2">
+                            <span class="input-group-addon">
+                                <i class="fa fa-calendar"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row clearfix">
+                    <div class="col-sm-4">
+                        <div class="form-group form-group-default input-custom">
+                            <label class="label-custom">Dewasa</label>
+                            <span class="help m-l-5">(> 12 tahun)</span>
+                            <select class="cs-select cs-skin-slide" data-init-plugin="cs-select">
+                                <option value="">1</option>
+                                <option value="">2</option>
+                                <option value="">3</option>
+                                <option value="">4</option>
+                                <option value="">5</option>
+                                <option value="">6</option>
+                                <option value="">7</option>
+                                <option value="">8</option>
+                                <option value="">9</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group form-group-default">
+                            <label class="label-custom">Anak-anak</label>
+                            <span class="help m-l-5">(2 - 12 tahun)</span>
+                            <select class="cs-select cs-skin-slide" data-init-plugin="cs-select">
+                                <option value="">0</option>
+                                <option value="">1</option>
+                                <option value="">2</option>
+                                <option value="">3</option>
+                                <option value="">4</option>
+                                <option value="">5</option>
+                                <option value="">6</option>
+                                <option value="">7</option>
+                                <option value="">8</option>
+                                <option value="">9</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group form-group-default">
+                            <label class="label-custom">bayi</label>
+                            <span class="help m-l-5">(< 2 tahun)</span>
+                            <select class="cs-select cs-skin-slide" data-init-plugin="cs-select">
+                                <option value="">0</option>
+                                <option value="">2</option>
+                                <option value="">3</option>
+                                <option value="">4</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="clearfix m-t-10">
+                    <button class="btn btn-primary" type="submit">Cari Penerbangan</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
