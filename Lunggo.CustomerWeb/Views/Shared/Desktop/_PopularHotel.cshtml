@@ -11,7 +11,7 @@
                         <span class="md-txt os-bold yellow-txt">Rp {{priceHotel.Jakarta.cheapestPrice | currency:'':0}}</span>
                     </div>
                     <div class="view-hotel">
-                        <button class="btn btn-yellow sm-btn normal-txt os-bold" ng-click="gotoCheapestDateHotel('JKT')" data-target="jakarta">LIHAT HOTEL</button>
+                        <a class="btn btn-yellow sm-btn normal-txt os-bold" href="{{gotoCheapestDateHotel('JKT', priceHotel.Jakarta.CheapestDate)}}" data-target="jakarta">LIHAT HOTEL</a>
                     </div>
                 </div>
             </div>
@@ -26,7 +26,7 @@
                         <span class="md-txt os-bold yellow-txt">Rp {{priceHotel.Yogyakarta.cheapestPrice | currency:'':0}}</span>
                     </div>
                     <div class="view-hotel">
-                        <button class="btn btn-yellow sm-btn normal-txt os-bold" ng-click="gotoCheapestDateHotel('JOG')" data-target="jakarta">LIHAT HOTEL</button>
+                        <a class="btn btn-yellow sm-btn normal-txt os-bold" href="{{gotoCheapestDateHotel('JOG', priceHotel.Yogyakarta.CheapestDate)}}" data-target="jakarta">LIHAT HOTEL</a>
                     </div>
                 </div>
             </div>
@@ -43,7 +43,7 @@
                         <span class="md-txt os-bold yellow-txt">Rp {{priceHotel.Surabaya.cheapestPrice | currency:'':0}}</span>
                     </div>
                     <div class="view-hotel">
-                        <button class="btn btn-yellow sm-btn normal-txt os-bold" ng-click="gotoCheapestDateHotel('SUB')" data-target="jakarta">LIHAT HOTEL</button>
+                        <a class="btn btn-yellow sm-btn normal-txt os-bold" href="{{gotoCheapestDateHotel('SUB', priceHotel.Surabaya.CheapestDate)}}" data-target="jakarta">LIHAT HOTEL</a>
                     </div>
                 </div>
             </div>
@@ -58,8 +58,7 @@
                         <span class="md-txt os-bold yellow-txt">Rp {{priceHotel.Bali.cheapestPrice| currency:'':0}}</span>
                     </div>
                     <div class="view-hotel">
-
-                        <button class="btn btn-yellow sm-btn normal-txt os-bold" ng-click="gotoCheapestDateHotel('BAI')" data-target="jakarta">LIHAT HOTEL</button>
+                        <a class="btn btn-yellow sm-btn normal-txt os-bold" href="{{gotoCheapestDateHotel('BAI', priceHotel.Bali.CheapestDate)}}" data-target="jakarta">LIHAT HOTEL</a>
                     </div>
                 </div>
             </div>
@@ -74,7 +73,7 @@
                         <span class="md-txt os-bold yellow-txt">Rp {{priceHotel.Bandung.cheapestPrice | currency:'':0}}</span>
                     </div>
                     <div class="view-hotel">
-                        <button class="btn btn-yellow sm-btn normal-txt os-bold" ng-click="gotoCheapestDateHotel('BDO')" data-target="jakarta">LIHAT HOTEL</button>
+                        <a class="btn btn-yellow sm-btn normal-txt os-bold" href="{{gotoCheapestDateHotel('BDO', priceHotel.Bandung.CheapestDate)}}" data-target="jakarta">LIHAT HOTEL</a>
                     </div>
                 </div>
             </div>

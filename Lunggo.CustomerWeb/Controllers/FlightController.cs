@@ -65,9 +65,9 @@ namespace Lunggo.CustomerWeb.Controllers
             var parts = searchParam.Split('-').ToList();
             var originAirport = parts[parts.Count -2];
             var destinationAirport = parts[parts.Count - 1];
-            var todaydate = DateTime.Today.AddDays(1);
-            var data = originAirport + destinationAirport + todaydate.Day.ToString("d2") + todaydate.Month.ToString("d2") +
-                             todaydate.Year.ToString().Substring(2, 2) + "-100y";
+            var defaultDate = DateTime.Today.AddMonths(1);
+            var data = originAirport + destinationAirport + defaultDate.Day.ToString("d2") + defaultDate.Month.ToString("d2") +
+                             defaultDate.Year.ToString().Substring(2, 2) + "-100y";
 
             var search = new FlightSearchData
             {
@@ -80,7 +80,7 @@ namespace Lunggo.CustomerWeb.Controllers
                     new FlightTrip{
                         OriginAirport = originAirport,
                         DestinationAirport = destinationAirport,
-                        DepartureDate = todaydate
+                        DepartureDate = defaultDate
                     }
                 };
 
