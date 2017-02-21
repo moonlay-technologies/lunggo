@@ -5,7 +5,7 @@ file : /Assets/travorama20/css/_page_index.scss
 
 body.page-index {margin-bottom: 0;}
 .page-index {
-    @extend .os-regular;
+    @extend .os-regular; 
     .yellow-txt {color: #ffd632;}
     //*****
     // section search 
@@ -16,12 +16,11 @@ body.page-index {margin-bottom: 0;}
         
         // search form
         .search-form {width:320px; height:520px; background:rgba(37,37,37,0.8); position:relative; z-index:3;
-            .tab-header {height:0;
-                &:before, &:after {@include clearfix();}
+            .tab-header {height:auto;
                 nav {
                     ul {margin:0; padding:0;
-                        li {float:left; width: 50%; list-style:none;
-                            a {color:#4f4f4f; background:#d2d2d2; display:block; padding:13px 0px; text-align:center; @extend .os-semibold; font-weight:600; text-decoration:none; font-size:14px; cursor: pointer;
+                        li {float:left; width: 50%; list-style:none; cursor: pointer;
+                            a {color:#4f4f4f; background:#d2d2d2; display:block; padding:13px 0px; text-align:center; @extend .os-semibold; font-weight:600; text-decoration:none; font-size:14px;
                                 &:before {content:""; width:20px; height:20px; display:inline-block; background-image:url(/Assets/images/search-tab-sprite.png); margin-bottom:-5px; margin-right:5px;}
                             }
                             &.active {border-right:0;
@@ -33,7 +32,26 @@ body.page-index {margin-bottom: 0;}
                             }
                             &.hotel {
                                 a:before {background-position:40px 0;}
-                                &.active a:before {background-position:40px 20px;}
+                                &.active {
+                                    a:before {background-position:40px 20px;}
+                                    &:after {display: none;}
+                                }
+                                &:after {
+                                    position: absolute;
+                                    display: block;
+                                    content: 'Baru';
+                                    padding: 4px 8px;
+                                    height: auto;
+                                    background: red;
+                                    top: 0;
+                                    color: #fff;
+                                    font-weight: 700;
+                                    right: 0;
+                                    box-shadow: -2px 2px 4px #333;
+                                    font-size: 11px;
+                                    line-height: 100%;
+                                    display: block;
+                                }
                             }
                             &.activity {
                                 a:before {background-position:20px 0;}
@@ -45,16 +63,17 @@ body.page-index {margin-bottom: 0;}
                 }
             }
             .tab-content {color:#fff; padding:20px 20px 5px; letter-spacing:0.2px;
-                &>div {display:none;}
-                &>div.active {display:block;}
-                &:before, &:after {@include clearfix();}
+                .tab-pane.tab-flight, .tab-pane.tab-hotel {
+                    display: none;
+                    &.active {display: block;}
+                }
                 input {color:#999;}
                 input[type="submit"] {color:#4f3500;}
                 //*****
                 // tab flight
                 .tab-flight {
                     .form-group {margin-bottom:5px;}
-                    h3 {margin:30px 0 15px; font-size:17px;}
+                    h3 {font-size:17px;}
                     .form-flight-type {margin-bottom:5px;}
                     label {font-weight:normal;}
                     .btn.btn-yellow {font-size:14px; letter-spacing:0.1px; padding:10px 0;}
@@ -115,7 +134,7 @@ body.page-index {margin-bottom: 0;}
                 //*****
                 // tab hotel
                 .tab-hotel {
-                    h3 {margin:30px 0 15px; font-size: 17px;
+                    h3 {font-size: 17px;
                         .sub-title {font-size: 14px;}
                     }
                     .form-group {
@@ -327,9 +346,9 @@ body.page-index {margin-bottom: 0;}
                 z-index: 2;
                 position: absolute;
                 outline: none;
-            }
+        }
             &:hover {
-                
+
                 .slick-prev {
                     background-image: -webkit-linear-gradient(left,rgba(0,0,0,.5) 0,rgba(0,0,0,.0003) 100%);
                     background-image: -o-linear-gradient(left,rgba(0,0,0,.5) 0,rgba(0,0,0,.0001) 100%);
@@ -350,7 +369,7 @@ body.page-index {margin-bottom: 0;}
                         left: 50%;
                         transform: translateX(-50%);
                         display: none;
-                    }
+    }
                 }
                 .slick-next {
                     background-image: -webkit-linear-gradient(left,rgba(0,0,0,.0001) 0,rgba(0,0,0,.3) 100%);
@@ -486,7 +505,7 @@ body.page-index {margin-bottom: 0;}
                     height: 250px;
                     display: block;
                     opacity: .2;
-                }
+    }
                 &:hover:before {
                     opacity: .7;
                     @include transition(.4s);
@@ -598,7 +617,7 @@ body.page-index {margin-bottom: 0;}
             overflow: auto;
             height: 330px;
             @extend .custom-scroll;
-        }
+    }
     }
     .search-hotel {
         width: 600px; 

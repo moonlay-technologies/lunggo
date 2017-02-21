@@ -316,7 +316,7 @@ function getLoginAccessByRefreshToken(refreshToken) {
             setCookie("authkey", returnData.accessToken, returnData.expTime);
             if (getCookie('accesstoken')) status = 2;
             else status = 0;
-        }
+            }
         else status = 0;
     });
     return status;
@@ -337,8 +337,8 @@ function getAuthAccess() {
                     status = getAnonymousFirstAccess();
                 }
             } else return 0;
-        }
-    }
+            }
+            }
     else {
         if (token) return 1;
         else {
@@ -372,15 +372,15 @@ function refreshAuthAccess() {
             }
             if (status == 2) return true;
             else return false;
-        }
-        else {
+            }
+            else {
             status = getAnonymousAccessByRefreshToken(refreshToken);
             if (status == 0) status = getAnonymousFirstAccess();
 
             if (status == 1 || status == 2) return true;
             else return false;
-        }
-    }
+            }
+            }
     else {
         getAnonymousFirstAccess();
         return true;
@@ -1250,6 +1250,46 @@ function backToTop() {
                 }, 700);
             });
         }
+    });
+}
+
+function goTop() {
+    $('.go-top').on('click', function () {
+        $('html,body').animate({ scrollTop: 0 }, 700);
+    });
+}
+
+function changeMainTab() {
+    jQuery(document).ready(function ($) {
+        $('body .menu-main li').click(function() {
+            if ($(this).is('#header-flight')) {
+                var itemF = $(this).closest('.site-header').parent();
+
+                itemF.parent().find('.tab-header').find('.flight').addClass('active');
+                itemF.parent().find('.tab-header').find('.flight').siblings().removeClass('active');
+                itemF.parent().find('#plane').addClass('active');
+                itemF.parent().find('#plane').siblings().removeClass('active');
+
+                var linkF = $(this).find('a').attr('id', '#plane');
+
+                linkF.parent().addClass('active');
+                linkF.parent().siblings().removeClass('active');
+
+            } else if ($(this).is('#header-hotel')) {
+                var item = $(this).closest('.site-header').parent();
+
+                item.parent().find('.tab-header').find('.hotel').addClass('active');
+                item.parent().find('.tab-header').find('.hotel').siblings().removeClass('active');
+                item.parent().find('#hotel').addClass('active');
+                item.parent().find('#hotel').siblings().removeClass('active');
+
+                var link = $(this).find('a').attr('id', '#hotel');
+
+                link.parent().addClass('active');
+                link.parent().siblings().removeClass('active');
+
+            }
+        });
     });
 }
 

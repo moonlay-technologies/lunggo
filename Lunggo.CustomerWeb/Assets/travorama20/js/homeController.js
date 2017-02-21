@@ -886,43 +886,44 @@ jQuery(document).ready(function ($) {
     });
 
     //Home Page Search Form Hotel
-    $('body .menu-main li').click(function () {
-        if ($(this).is('#header-flight')) {
-            var itemF = $(this).closest('.site-header').parent();
+    $('body .tab-header li.flight').addClass('active');
+    $('body .tab-flight').addClass('active');
 
-            itemF.parent().find('.tab-header').find('.flight').addClass('active');
-            itemF.parent().find('.tab-header').find('.flight').siblings().removeClass('active');
-            itemF.parent().find('#plane').addClass('active');
-            itemF.parent().find('#plane').siblings().removeClass('active');
-
-            var linkF = $(this).find('a').attr('id', '#plane');
-
-            linkF.parent().addClass('active');
-            linkF.parent().siblings().removeClass('active');
-
-        } else if ($(this).is('#header-hotel')) {
-            var item = $(this).closest('.site-header').parent();
-
-            item.parent().find('.tab-header').find('.hotel').addClass('active');
-            item.parent().find('.tab-header').find('.hotel').siblings().removeClass('active');
-            item.parent().find('#hotel').addClass('active');
-            item.parent().find('#hotel').siblings().removeClass('active');
-
-            var link = $(this).find('a').attr('id', '#hotel');
-
-            link.parent().addClass('active');
-            link.parent().siblings().removeClass('active');
-
-        }
-    });
+    $('body .tab-detail li.flight').addClass('active');
+    $('body .tp-flight').addClass('active');
 
     $('body .tab-header li').click(function () {
         if ($(this).hasClass('flight')) {
             $(this).closest('.site-content').parent().find('.menu-main').find('#header-flight').addClass('active');
             $(this).closest('.site-content').parent().find('.menu-main').find('#header-flight').siblings().removeClass('active');
+
+            $(this).closest('.search-form').find('.tab-content').find('.tab-flight').addClass('active');
+            $(this).closest('.search-form').find('.tab-content').find('.tab-flight').siblings().removeClass('active');
+
         } else if ($(this).hasClass('hotel')) {
             $(this).closest('.site-content').parent().find('.menu-main').find('#header-hotel').addClass('active');
             $(this).closest('.site-content').parent().find('.menu-main').find('#header-hotel').siblings().removeClass('active');
+
+            $(this).closest('.search-form').find('.tab-content').find('.tab-hotel').addClass('active');
+            $(this).closest('.search-form').find('.tab-content').find('.tab-hotel').siblings().removeClass('active');
+
+        }
+    });
+
+    //mobile search
+    $('body .tab-detail li').click(function () {
+        if ($(this).hasClass('flight')) {
+            $(this).addClass('active');
+            $(this).siblings().removeClass('active')
+
+            $(this).closest('.main-tab').find('.tab-content').find('.tp-flight').addClass('active');
+            $(this).closest('.main-tab').find('.tab-content').find('.tp-flight').siblings().removeClass('active');
+        } else if ($(this).hasClass('hotel')) {
+            $(this).addClass('active');
+            $(this).siblings().removeClass('active')
+
+            $(this).closest('.main-tab').find('.tab-content').find('.tp-hotel').addClass('active');
+            $(this).closest('.main-tab').find('.tab-content').find('.tp-hotel').siblings().removeClass('active');
         }
     });
 

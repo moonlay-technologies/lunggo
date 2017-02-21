@@ -107,9 +107,7 @@
         }
 
         //Go to top
-        $(".go-top").on("click", function() {
-            $("body").scrollTop(0);
-        });
+        goTop();
     </script>
     <!-- angular controller -->
     <script src="/Assets/travorama20/js/checkoutController.js"></script>
@@ -149,7 +147,7 @@
                                                 <input type="password" class="form-control" name="Password" ng-model="form.password" id="login-password" value="" placeholder="Password" />
                                             </div>
                                             <div class="col-xs-2">
-                                                <input type="submit" value="MASUK" class="btn btn-yellow form-control" ng-disabled="form.submitting" />
+                                                <input type="submit" value="MASUK" class="btn btn-yellow form-control sm-btn" ng-disabled="form.submitting" />
                                             </div>
                                         </div>
                                         <div class="form-group">
@@ -729,7 +727,7 @@
                         <div><span style="font-size:13px">Silakan klik tombol di bawah untuk kembali ke halaman pencarian.</span></div>
                     </section>
                     <div align="right" style="padding-right:30px;padding-top:30px;">
-                        <a class="btn popup-btn-yellow book-failed" href="{{returnUrl}}"><b>CARI ULANG</b></a>
+                        <a class="btn popup-btn-yellow book-failed sm-btn" href="{{returnUrl}}"><b>CARI ULANG</b></a>
                     </div>
                 </div>
             </div>
@@ -773,7 +771,7 @@
                         <div align="right" style="padding-right:50px"><img src="/Assets/images/popup/smallyellowstrip.png"></div>
                     </section>
                     <div align="right" style="padding-right:30px;padding-top:30px;">
-                        <a class="btn popup-btn-yellow book-failed" href="{{returnUrl}}"><b>CARI LAGI</b></a>
+                        <a class="btn popup-btn-yellow book-failed  sm-btn" href="{{returnUrl}}"><b>CARI LAGI</b></a>
                     </div>
                 </div>
             </div>
@@ -790,13 +788,15 @@
 
                         <footer>
                             <div class="container">
-                                <div class="row">
+                                <div class="clearfix" style="margin-left: -12px;">
                                     <div class="col-sm-6">
-                                        <a class="btn btn-grey btn-block" href="{{returnUrl}}">CARI ULANG</a>
+                                        <a class="btn btn-grey btn-block sm-btn" href="{{returnUrl}}">CARI ULANG</a>
                                     </div>
-                                    <form name="finalForm" id="finalForm" ng-submit="book.send()">
-                                        <input type="submit" class="btn btn-yellow" value="LANJUTKAN" ng-disabled="(checkoutForm.loading)">
-                                    </form>
+                                    <div class="col-sm-6">
+                                        <form name="" id="finalForm" ng-submit="book.send()">
+                                            <input type="submit" class="btn btn-yellow btn-block sm-btn" value="LANJUTKAN" ng-disabled="(checkoutForm.loading)">
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
                         </footer>
