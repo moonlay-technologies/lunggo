@@ -1,4 +1,5 @@
-﻿@using Lunggo.CustomerWeb.Models
+﻿@using Lunggo.ApCommon.Hotel.Service
+@using Lunggo.CustomerWeb.Models
 @using Lunggo.Framework.Extension
 @model HotelDetailModel.HotelDetail
 @{
@@ -15,7 +16,44 @@
     var hotelName = Model.HotelDetailData.HotelName;
     var hotelAddress = Model.HotelDetailData.Address;
     var lat = Model.HotelDetailData.Latitude;
-    var lng = Model.HotelDetailData.Longitude; 
+    var lng = Model.HotelDetailData.Longitude;
+    var sumAdult = 0;
+    var sumChildren = 0;
+
+    var searchParams = Model.SearchParam.Split('.');
+    var locationCode = searchParams[1];
+    var checkInDate = searchParams[2].Replace("-", "");
+    var checkOutDate = searchParams[3].Replace("-", "");
+    var x = HotelService.AutoCompletes.Where(c => c.Id == locationCode).ToList();
+    var region = "";
+    if (x.Count > 0)
+    {
+        var found = x[0];
+        if (found.Type == 1)
+        {
+            region = Model.HotelDetailData.DestinationName;
+        }
+        else if (found.Type == 2)
+        {
+            region = !string.IsNullOrEmpty(Model.HotelDetailData.ZoneName) ? Model.HotelDetailData.ZoneName : Model.HotelDetailData.DestinationName;
+        }
+        else if (found.Type == 3)
+        {
+            region = !string.IsNullOrEmpty(Model.HotelDetailData.AreaName) ? Model.HotelDetailData.AreaName : Model.HotelDetailData.DestinationName;
+        }
+        else
+        {
+            region = Model.HotelDetailData.DestinationName;
+        }
+    }
+
+    var occupancies = searchParams[6].Split('|');
+    foreach (var occ in occupancies)
+    {
+        var splittedOcc = occ.Split('~');
+        sumAdult += Convert.ToInt32(splittedOcc[0]);
+        sumChildren += Convert.ToInt32(splittedOcc[1]);
+    }
 
     if (Model.HotelDetailData.Facilities.Business != null)
     {
@@ -128,6 +166,20 @@
     <script src="/Assets/travorama20/angularDirectory/search/hotelSearch.service.js"></script>
     <script type="text/javascript" src="/Assets/js/jquery.ui.datepicker-id.js"></script>
     <script type="text/javascript" src="https://maps.google.com/maps/api/js?key=AIzaSyCRAmMz6GPXsXi1pZAl5QUsjNTcY0ZfqVA"></script>
+    <script>
+        var gtmContentType = 'hotel';
+        var gtmCity = '@Model.HotelDetailData.City';
+        var gtmHotelIds = '@Model.HotelDetailData.HotelCode';
+        var gtmRegion = '@region';
+        var gtmCountry = '@Model.HotelDetailData.CountryName';
+        var gtmCheckinDate = '@checkInDate';
+        var gtmCheckoutDate = '@checkOutDate';
+        var gtmNumAdults = @sumAdult;
+        var gtmNumChildren = @sumChildren;
+        var gtmPurchaseCurrency = 'IDR';
+        var gtmPageNameValue = 'hotel_detail';
+    </script>
+
 }
 
 <div class="travorama-hotel-mobile" ng-init="init(@Newtonsoft.Json.JsonConvert.SerializeObject(Model))">

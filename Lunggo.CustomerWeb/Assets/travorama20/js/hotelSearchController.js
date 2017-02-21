@@ -330,11 +330,11 @@ function ($scope, $log, $window, $http, $resource, $timeout, $interval, hotelSea
                         var hotelId = [];
                         if (data.totalHotelCount >= 10) {
                             for (var i = 0; i < 10; i++) {
-                                hotelId.push(data.hotels[i].hotelCd);
+                                hotelId.push(data.hotels[i].hotelCd.toString());
                             }
                         }else if (data.totalHotelCount > 0 && data.totalHotelCount < 10) {
                             for (var i = 0; i < data.totalHotelCount; i++) {
-                                hotelId.push(data.hotels[i].hotelCd);
+                                hotelId.push(data.hotels[i].hotelCd.toString());
                             }
                         }
                         
@@ -349,7 +349,7 @@ function ($scope, $log, $window, $http, $resource, $timeout, $interval, hotelSea
 
                         fbq('init', '<FB_PIXEL_ID>');
 
-                        fbq('track', 'ViewContent', {
+                        fbq('track', 'Search', {
                             content_type: 'hotel',
                             content_ids: hotelId,
                             checkin_date: $scope.gtmCheckinDate,
@@ -383,11 +383,6 @@ function ($scope, $log, $window, $http, $resource, $timeout, $interval, hotelSea
         }, function (error) {
             $log.error("error: " + error);
         }).finally(function () {
-            //if ($scope.researching == false) {
-            //    $scope.searchDone = true;
-            //    $scope.finishLoad = true;
-            //}
-            
         });
     };
 

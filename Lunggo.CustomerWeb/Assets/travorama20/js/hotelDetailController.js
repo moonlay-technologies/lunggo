@@ -48,6 +48,18 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
         $scope.showPopularDestinations = true;
     });
 
+    $scope.gtmContentType = gtmContentType;
+    $scope.gtmCity = gtmCity ;
+    $scope.gtmHotelIds = gtmHotelIds;
+    $scope.gtmRegion = gtmRegion;
+    $scope.gtmCountry = gtmCountry;
+    $scope.gtmCheckinDate = gtmCheckinDate;
+    $scope.gtmCheckoutDate = gtmCheckoutDate;
+    $scope.gtmNumAdults = gtmNumAdults;
+    $scope.gtmNumChildren = gtmNumChildren;
+    $scope.gtmPurchaseCurrency = gtmPurchaseCurrency;
+    $scope.gtmPageNameValue = gtmPageNameValue;
+    $scope.isFirstLoad = true;
     $scope.init = function (model) {
         $log.debug(model);
        
@@ -532,11 +544,12 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
         var y = checkIn.format('MM');
         var z = checkIn.format('DD');
         var ci = x + "-" + y + "-" + z;
+        var ci2 = x + y + z;
         var a = checkOut.format('YYYY');
         var b = checkOut.format('MM');
         var c = checkOut.format('DD');
         var co = a+ "-" + b + "-" + c;
-        
+        var co2 = a + b + c;
         var newcheckIn = new Date(ci);
         var newcheckOut = new Date(co);
 
@@ -545,6 +558,12 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
         $scope.lastSearch.nightcount = nightCount;
         $scope.lastSearch.occupancies = occupancies;
         $scope.lastSearch.totalOcc = totalOcc;
+        var sumadult = 0;
+        var sumchild = 0;
+        for (var m = 0; m < totalOcc; m++) {
+            sumadult += parseInt($scope.lastSearch.occupancies[m].adultCount);
+            sumchild += parseInt($scope.lastSearch.occupancies[m].childCount);
+        }
         var authAccess = getAuthAccess();
         if (authAccess == 1 || authAccess == 2) {
         resource.query({}, {
@@ -557,6 +576,7 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
             $scope.searchDone = true;
             $scope.hideRoomDetail = false;
             if (data != null) {
+
                 if (data.rooms != null && data.rooms.length > 0) {
                     $scope.hotel.rooms = data.rooms;
                     $scope.expiryDate = new Date(data.expTime);
@@ -568,7 +588,45 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
                         }
                     }, 1000);
                     $scope.availableRateId = data.id;
+
+                    
                     $scope.singleRoom = setSingleRoom(data.rooms);
+                    //if ($scope.isFirstLoad) {
+
+                    !function (f, b, e, v, n, t, s) {
+                        if (f.fbq) return; n = f.fbq = function () {
+                            n.callMethod ?
+                            n.callMethod.apply(n, arguments) : n.queue.push(arguments)
+                        }; if (!f._fbq) f._fbq = n;
+                        n.push = n; n.loaded = !0; n.version = '2.0'; n.queue = []; t = b.createElement(e); t.async = !0;
+                        t.src = v; s = b.getElementsByTagName(e)[0]; s.parentNode.insertBefore(t, s)
+                    }(window, document, 'script', '//connect.facebook.net/en_US/fbevents.js');
+
+                    fbq('init', '<FB_PIXEL_ID>');
+                    var lowestPrice;
+                    var listPrice = [];
+                    for (var i = 0; i < $scope.singleRoom.length; i++) {
+                        for (var j = 0; j < $scope.singleRoom[i].rate.breakdowns.length; j++) {
+                            listPrice.push(parseInt($scope.singleRoom[i].rate.breakdowns[j].netTotalFare));
+                        }
+                    }
+                    lowestPrice = Math.min.apply(Math, listPrice);
+
+                    fbq('track', 'ViewContent', {
+                        content_type: $scope.gtmContentType,
+                        content_ids: $scope.gtmHotelIds,
+                        checkin_date: ci2,
+                        checkout_date: co2,
+                        city: $scope.gtmCity,
+                        region: $scope.gtmRegion,
+                        country: $scope.gtmCountry,
+                        num_adults: sumadult,
+                        num_children: sumchild,
+                        purchase_value: lowestPrice,
+                        purchase_currency: $scope.gtmPurchaseCurrency,
+                        //page_name : $scope.gtmPageNameValue
+                    });
+                    
                     $log.debug($scope.singleRoom);
                     $.each($scope.hotel.rooms, function(roomKey, room) {
                         $.each(room.roomImages, function(imageKey, roomImage) {
@@ -581,7 +639,6 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
                     $scope.hotel.checkinDate = new Date(parseInt(cekin.substring(0, 4)), parseInt(cekin.substring(4, 6)) - 1, parseInt(cekin.substring(6, 8)));
                     $scope.hotel.checkoutDate = new Date(parseInt(cekout.substring(0, 4)), parseInt(cekout.substring(4, 6)) - 1, parseInt(cekout.substring(6, 8)));
                     $scope.hotel.nightCount = (new Date($scope.hotel.checkoutDate) - new Date($scope.hotel.checkinDate)) / (3600 * 24 * 1000);
-
 
                     $timeout(function() { hotelDetailFunctions(); }, 0);
                     $timeout(function() { accordionFunctions(); }, 0);

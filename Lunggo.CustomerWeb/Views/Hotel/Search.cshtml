@@ -27,6 +27,8 @@
         sumAdult += occ.AdultCount;
         sumChildren += occ.ChildCount;
     }
+
+    var region = "";
     if (k.Count > 0)
     {
         foundLocation = k[0];
@@ -35,18 +37,22 @@
             if (foundLocation.Type == 1)
             {
                 loc = foundLocation.Destination + ", " + foundLocation.Country;
+                region = foundLocation.Destination;
             }
             else if (foundLocation.Type == 2)
             {
                 loc = foundLocation.Zone + ", " + foundLocation.Destination + ", " + foundLocation.Country;
+                region = foundLocation.Zone;
             }
             else if (foundLocation.Type == 3)
             {
                 loc = foundLocation.Area + ", " + foundLocation.Destination + ", " + foundLocation.Country;
+                region = foundLocation.Area;
             }
             else if (foundLocation.Type == 4)
             {
                 loc = foundLocation.HotelName + ", " + foundLocation.Destination + ", " + foundLocation.Country;
+                region = foundLocation.Destination;
             }
         }
         locFound = true;
@@ -88,7 +94,7 @@
     <script>
         var gtmContentType = 'hotel';
         var gtmCity = '@foundLocation.Destination';
-        var gtmRegion = '@foundLocation.Area';
+        var gtmRegion = '@region';
         var gtmCountry = '@foundLocation.Country';
         var gtmCheckinDate = '@Model.SearchParamObject.CheckinDate.ToString("yyyyMMdd")';
         var gtmCheckoutDate = '@Model.SearchParamObject.CheckoutDate.ToString("yyyyMMdd")';
@@ -96,7 +102,6 @@
         var gtmNumChildren = @sumChildren;
         var gtmPurchaseCurrency = 'IDR';
         var gtmPageValue = null;
-       var ddd = @sumChildren;
     </script>
 
 }

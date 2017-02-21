@@ -1,5 +1,6 @@
 ﻿@using System.Globalization
 @using Lunggo.ApCommon.Constant
+@using Lunggo.ApCommon.Flight.Constant
 @using Lunggo.ApCommon.Hotel.Model
 @using Lunggo.ApCommon.Payment.Constant
 @using Lunggo.Framework.Config
@@ -17,7 +18,26 @@
 
 @{
     var timeout = ConfigManager.GetInstance().GetConfigValue("flight", "paymentTimeout");
-    
+    var totalAdult = 0;
+    var totalChild = 0;
+    if (Model is HotelReservationForDisplay)
+    {
+        var rsv = Model as HotelReservationForDisplay;
+        foreach (var room in rsv.HotelDetail.Rooms)
+        {
+            var roomName = room.RoomName;
+            var sum = 0;
+
+            foreach (var rate in room.Rates)
+            {
+                foreach (var config in rate.Breakdowns)
+                {
+                    totalAdult += config.AdultCount;
+                    totalChild += config.ChildCount;
+                }
+            }
+        }
+    }
 }
 
 @section AdditionalCSS {
@@ -27,26 +47,53 @@
 @section PageJS{
     <script>
         var totalRoom = 0;
-        @*var rating = "";
-        var nights = 0;
-        var checkin = "";
-        var checkout = "";
-        var netFare = 0;
-        @if (Model is HotelReservationForDisplay)
-        {
-            var rsvType = "hotel";
-            var hotel = Model as HotelReservationForDisplay;
-            @:var hotelDetails = '@hotel.HotelDetail';
-                    @:var rating = '@hotel.HotelDetail.StarRating'
-                    @:var originalFare = '@hotel.HotelDetail.OriginalTotalFare';
-                    @:var netFare = '@hotel.HotelDetail.NetTotalFare';
-                    @:var totalRoom = '@hotel.HotelDetail.Rooms.SelectMany(r => r.Rates).Sum(p => p.RateCount)';
-                    @:var checkin = '@hotel.HotelDetail.CheckInDate.ToString("D",CultureInfo.CreateSpecificCulture("id-ID"))';
-                    @:var checkout = '@hotel.HotelDetail.CheckOutDate.ToString("D", CultureInfo.CreateSpecificCulture("id-ID"))';
-                    @:var nights = '@((hotel.HotelDetail.CheckOutDate - hotel.HotelDetail.CheckInDate).Days)';
-                }*@
     </script>
     <script src="/Assets/travorama20/js/ThankyouController.js"></script>
+    <script>
+        @if (Model is FlightReservationForDisplay)
+        {
+            var rsv = Model as FlightReservationForDisplay;
+            @:var gtmContentType = 'flight';
+                @:var gtmDepartingDepartureDate = '@rsv.Itinerary.Trips[0].DepartureDate.GetValueOrDefault().ToString("yyyyMMdd")';
+                @:var gtmDepartingArrivalDate = '@rsv.Itinerary.Trips[0].Segments.Last().ArrivalTime.GetValueOrDefault().ToString("yyyyMMdd")';
+                @:var gtmOriginAirport = '@rsv.Itinerary.Trips[0].OriginAirport';
+                @:var gtmDestinationAirport = '@rsv.Itinerary.Trips[0].DestinationAirport';
+                @:var gtmNumAdults = @rsv.Itinerary.AdultCount;
+                @:var gtmNumChildren = @rsv.Itinerary.ChildCount;
+                @:var gtmNumInfants = @rsv.Itinerary.InfantCount;
+                @:var gtmTravelClass = '@rsv.Itinerary.RequestedCabinClass';
+                @:var gtmPurchaseValue = @rsv.Payment.FinalPrice;
+                @:var gtmPurchaseCurrency = 'IDR';
+                @:var gtmCurrency = 'IDR';
+                @:var gtmValue = '';
+                @:var gtmTravoramaReservationId = '@Model.RsvNo';
+                @:var gtmPageNameValue = 'thank_you';
+                if (rsv.Itinerary.TripType.GetValueOrDefault() == TripType.RoundTrip)
+            {
+                @:var gtmReturningDepartureDate = '@rsv.Itinerary.Trips[1].DepartureDate.GetValueOrDefault().ToString("yyyyMMdd")';
+                    @:var gtmReturningArrivalDate = '@rsv.Itinerary.Trips[1].Segments.Last().ArrivalTime.GetValueOrDefault().ToString("yyyyMMdd")'
+                }
+        }
+        else if (Model is HotelReservationForDisplay)
+        {
+            var rsv = Model as HotelReservationForDisplay;
+            @:var gtmContentType = 'hotel';
+                    @:var gtmCity = '@rsv.HotelDetail.City';
+                    @:var gtmHotelIds = '@rsv.HotelDetail.HotelCode';
+                    @:var gtmRegion = '@rsv.HotelDetail.DestinationName';
+                    @:var gtmCountry = '@rsv.HotelDetail.CountryName';
+                    @:var gtmCheckinDate = '@rsv.HotelDetail.CheckInDate';
+                    @:var gtmCheckoutDate = '@rsv.HotelDetail.CheckOutDate';
+                    @:var gtmNumAdults = @totalAdult;
+                    @:var gtmNumChildren = @totalChild;
+                    @:var gtmPurchaseCurrency = 'IDR';
+                    @:var gtmPurchaseValue = @rsv.HotelDetail.NetTotalFare;
+                    @:var gtmPageNameValue = 'thank_you';
+                    @:var gtmCurrency = 'IDR';
+                    @:var gtmValue = '';
+                    @:var gtmTravoramaReservationId = '@Model.RsvNo';
+                }
+</script>
 }
 
 <div ng-app="travorama" ng-controller="ThankyouController">

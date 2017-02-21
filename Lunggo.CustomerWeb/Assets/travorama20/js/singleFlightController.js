@@ -611,10 +611,10 @@ app.controller('singleFlightController', [
                 if ($scope.listPrices.length > 0) {
                     lowestPrice = Math.min.apply(Math, $scope.listPrices);
                 } else {
-                    lowestPrice = null;
+                    lowestPrice = 0;
                 }
 
-                fbq('track', 'ViewContent', {
+                fbq('track', 'Search', {
                     content_type: $scope.gtmContentType,
                     departing_departure_date: $scope.gtmDepartingDepartureDate,
                     returning_departure_date: $scope.gtmReturningDepartureDate,
