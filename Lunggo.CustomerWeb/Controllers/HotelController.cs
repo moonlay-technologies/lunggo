@@ -158,7 +158,7 @@ namespace Lunggo.CustomerWeb.Controllers
                 var nextDate = tomorrowDate.AddDays(1);
                 var newquery = "info=Location." + locationId + "." + tomorrowDate.Year + "-" +
                          tomorrowDate.Month.ToString("d2") + "-" + tomorrowDate.Day.ToString("d2")
-                         + "." + nextDate.Year + "-" + nextDate.Month.ToString("d2") + "-" +
+                         + "." + nextDate.Year + "-" + nextDate.Month.ToString("d2") + "-" + 
                          nextDate.Day.ToString("d2") + ".1.1.1~0";
                 var newmodel = new HotelSearchApiRequest(newquery);
                 return View(newmodel);
