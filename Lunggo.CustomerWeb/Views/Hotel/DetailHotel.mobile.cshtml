@@ -15,42 +15,45 @@
     var hotelName = Model.HotelDetailData.HotelName;
     var hotelAddress = Model.HotelDetailData.Address;
     var lat = Model.HotelDetailData.Latitude;
-    var lng = Model.HotelDetailData.Longitude; 
+    var lng = Model.HotelDetailData.Longitude;
 
-    if (Model.HotelDetailData.Facilities.Business != null)
+    if (Model.HotelDetailData.Facilities != null)
     {
-        hotelFac.Add(SetFacilityForDisplay(Model.HotelDetailData.Facilities.Business, "Bisnis"));
-    }
+        if (Model.HotelDetailData.Facilities.Business != null)
+        {
+            hotelFac.Add(SetFacilityForDisplay(Model.HotelDetailData.Facilities.Business, "Bisnis"));
+        }
 
-    if (Model.HotelDetailData.Facilities.Entertainment != null)
-    {
-        hotelFac.Add(SetFacilityForDisplay(Model.HotelDetailData.Facilities.Entertainment, "Hiburan"));
-    }
+        if (Model.HotelDetailData.Facilities.Entertainment != null)
+        {
+            hotelFac.Add(SetFacilityForDisplay(Model.HotelDetailData.Facilities.Entertainment, "Hiburan"));
+        }
 
-    if (Model.HotelDetailData.Facilities.General != null)
-    {
-        hotelFac.Add(SetFacilityForDisplay(Model.HotelDetailData.Facilities.General, "Umum"));
-    }
+        if (Model.HotelDetailData.Facilities.General != null)
+        {
+            hotelFac.Add(SetFacilityForDisplay(Model.HotelDetailData.Facilities.General, "Umum"));
+        }
 
-    if (Model.HotelDetailData.Facilities.Health != null)
-    {
-        hotelFac.Add(SetFacilityForDisplay(Model.HotelDetailData.Facilities.Health, "Kesehatan"));
-    }
+        if (Model.HotelDetailData.Facilities.Health != null)
+        {
+            hotelFac.Add(SetFacilityForDisplay(Model.HotelDetailData.Facilities.Health, "Kesehatan"));
+        }
 
-    if (Model.HotelDetailData.Facilities.Meal != null)
-    {
-        hotelFac.Add(SetFacilityForDisplay(Model.HotelDetailData.Facilities.Meal, "Makanan"));
-    }
+        if (Model.HotelDetailData.Facilities.Meal != null)
+        {
+            hotelFac.Add(SetFacilityForDisplay(Model.HotelDetailData.Facilities.Meal, "Makanan"));
+        }
 
-    if (Model.HotelDetailData.Facilities.Other != null)
-    {
-        hotelFac.Add(SetFacilityForDisplay(Model.HotelDetailData.Facilities.Other, "Lainnya"));
-    }
+        if (Model.HotelDetailData.Facilities.Other != null)
+        {
+            hotelFac.Add(SetFacilityForDisplay(Model.HotelDetailData.Facilities.Other, "Lainnya"));
+        }
 
-    if (Model.HotelDetailData.Facilities.Sport != null)
-    {
-        hotelFac.Add(SetFacilityForDisplay(Model.HotelDetailData.Facilities.Sport, "Olah Raga"));
-    }    
+        if (Model.HotelDetailData.Facilities.Sport != null)
+        {
+            hotelFac.Add(SetFacilityForDisplay(Model.HotelDetailData.Facilities.Sport, "Olah Raga"));
+        }  
+    }  
 
 }
 

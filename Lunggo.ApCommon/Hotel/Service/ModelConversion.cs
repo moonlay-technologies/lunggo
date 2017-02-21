@@ -90,7 +90,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                 HotelName = hotelDetail.HotelName,
                 Address = hotelDetail.Address,
                 City = hotelDetail.City,
-                ZoneName = hotelDetail.ZoneCode.Split('-').Length == 2 ?
+                ZoneName = hotelDetail.ZoneCode == null ? null : hotelDetail.ZoneCode.Split('-').Length == 2 ?
                     GetZoneNameFromDict(hotelDetail.ZoneCode) : GetZoneNameFromDict(hotelDetail.DestinationCode + "-" + hotelDetail.ZoneCode),
                 StarRating = hotelDetail.StarCode != 0
                       ? hotelDetail.StarCode
@@ -318,6 +318,10 @@ namespace Lunggo.ApCommon.Hotel.Service
         public HotelFacilityForDisplay ConvertFacilityForDisplay(List<HotelFacility> facilities)
         {
             var displayFacilities = new HotelFacilityForDisplay();
+            if (facilities == null)
+            {
+                return null;
+            }
             var selected = facilities.Where(x => x.MustDisplay || x.IsAvailable);
             foreach (var data in selected)
             {
