@@ -65,4 +65,16 @@
             margin-right: 20px;
         }
     }
+
+    .search-location, .search-hotel {
+        .location-header {font-size:14px; height:45px; padding:10px 27px; padding-right:16px;
+            p {padding:4px 0;}
+        }
+        .location-body .location-recommend .tab-header nav ul li span {padding:0 10px; padding-left:17px;}
+    }
+    .search-location {width: 600px;
+        .location-body .location-recommend .tab-header nav {
+            width: 540px;
+        }
+    }
 }

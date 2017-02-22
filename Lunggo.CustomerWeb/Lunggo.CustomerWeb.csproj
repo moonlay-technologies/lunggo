@@ -1253,6 +1253,9 @@
     <Content Include="Assets\css\style_b2b.css">
       <DependentUpon>style_b2b.scss</DependentUpon>
     </Content>
+    <Content Include="Assets\css\style_b2b.min.css">
+      <DependentUpon>style_b2b.css</DependentUpon>
+    </Content>
     <Content Include="Assets\css\travorama-mobileApp.css">
       <DependentUpon>travorama-mobileApp.scss</DependentUpon>
     </Content>

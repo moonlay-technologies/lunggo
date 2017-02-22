@@ -3,7 +3,7 @@
     ViewBag.BodyClass = "b2b-search flight";
     ViewBag.SiteHeader = "b2b-search-flight";
     ViewBag.Title = "Search Flight";
-    ViewBag.AngularController = "";
+    ViewBag.AngularController = "B2BFlightSearchFormController";
 
 }
 
@@ -11,14 +11,17 @@
 }
 
 @section AdditionalJS{
+    <script src="/Assets/js/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="/Assets/js/jquery.ui.datepicker-id.js"></script>
 }
 
 @section PageJS{
-
+    <script src="/Assets/travorama20/js/B2BTravorama20.js"></script>    
+    <script src="/Assets/travorama20/js/B2BHomeController.js"></script>   
 }
 
-<div class="search-flight">
-    <div class="panel panel-transparent">
+<div class="search-flight" ng-app="travoramaB2B" ng-controller="B2BFlightSearchFormController">
+    <div class=" panel panel-transparent">
         <div class="panel-heading ">
             <div class="panel-title">
                 Cari Tiket Pesawat
@@ -28,11 +31,11 @@
             <form id="form-flight" role="form" autocomplete="off" novalidate="novalidate">
                 <div class="row clearfix radio radio-primary">
                     <div class="col-sm-6 col-xs-6">
-                        <input type="radio" checked="checked" value="no" name="optionyes" id="no">
+                        <input type="radio" checked="checked" value="return" name="triptype" id="no">
                         <label for="no">Pulang Pergi</label>
                     </div>
                     <div class="col-sm-6 col-xs-6">
-                        <input type="radio" value="yes" name="optionyes" id="yes">
+                        <input type="radio" value="oneway" name="triptype" id="yes">
                         <label for="yes">Sekali Jalan</label>
                     </div>
                 </div>
@@ -40,15 +43,20 @@
                     <div class="col-sm-6">
                         <div class="form-group form-group-default">
                             <label>Dari</label>
-                            <input type="text" class="form-control" placeholder="Jakarta (CGK)">
+                            <input type="text" class="form-control" placeholder="Jakarta (CGK)" ng-click="showLocation('origin')" 
+                                id="originPlace" ng-model="searchParam.Origin">
                         </div>
                     </div>
                     <div class="col-sm-6">
                         <div class="form-group form-group-default">
                             <label>Ke</label>
-                            <input type="text" class="form-control" placeholder="Denpasar (DPS)">
+                            <input type="text" class="form-control" placeholder="Denpasar (DPS)" id="destinationPlace"
+                                   ng-click="showLocation('destination')" ng-model="searchParam.Destination">
                         </div>
                     </div>
+                    <p>
+                        {{searchParam.OriginAirport}} {{searchParam.DestinationAirport}}
+                    </p>
                 </div>
                 <div class="row clearfix">
                     <div class="col-sm-6">
@@ -75,16 +83,8 @@
                         <div class="form-group form-group-default input-custom">
                             <label class="label-custom">Dewasa</label>
                             <span class="help m-l-5">(> 12 tahun)</span>
-                            <select class="cs-select cs-skin-slide" data-init-plugin="cs-select">
-                                <option value="">1</option>
-                                <option value="">2</option>
-                                <option value="">3</option>
-                                <option value="">4</option>
-                                <option value="">5</option>
-                                <option value="">6</option>
-                                <option value="">7</option>
-                                <option value="">8</option>
-                                <option value="">9</option>
+                            <select class="cs-select cs-skin-slide" data-init-plugin="cs-select" ng-model="Passenger.Adult">
+                                <option value="{{amount}}" ng-repeat="amount in Passenger.PaxAmtAdult">{{amount}}</option>
                             </select>
                         </div>
                     </div>
@@ -92,17 +92,8 @@
                         <div class="form-group form-group-default">
                             <label class="label-custom">Anak-anak</label>
                             <span class="help m-l-5">(2 - 12 tahun)</span>
-                            <select class="cs-select cs-skin-slide" data-init-plugin="cs-select">
-                                <option value="">0</option>
-                                <option value="">1</option>
-                                <option value="">2</option>
-                                <option value="">3</option>
-                                <option value="">4</option>
-                                <option value="">5</option>
-                                <option value="">6</option>
-                                <option value="">7</option>
-                                <option value="">8</option>
-                                <option value="">9</option>
+                            <select class="cs-select cs-skin-slide" data-init-plugin="cs-select" ng-model="Passenger.Child">
+                                <option value="{{amount}}" ng-repeat="amount in Passenger.PaxAmtElse">{{amount}}</option>
                             </select>
                         </div>
                     </div>
@@ -110,11 +101,8 @@
                         <div class="form-group form-group-default">
                             <label class="label-custom">bayi</label>
                             <span class="help m-l-5">(< 2 tahun)</span>
-                            <select class="cs-select cs-skin-slide" data-init-plugin="cs-select">
-                                <option value="">0</option>
-                                <option value="">2</option>
-                                <option value="">3</option>
-                                <option value="">4</option>
+                            <select class="cs-select cs-skin-slide" data-init-plugin="cs-select" ng-model="Passenger.Infant">
+                                <option value="{{amount}}" ng-repeat="amount in Passenger.PaxAmtElse">{{amount}}</option>
                             </select>
                         </div>
                     </div>
@@ -125,4 +113,7 @@
             </form>
         </div>
     </div>
+
+    @Html.Partial("/Views/Shared/Desktop/_SearchLocation.cshtml")
+    
 </div>
