@@ -1,4 +1,4 @@
-﻿.b2b-search-flight {
+﻿.b2b-search {
     .form-group-default label.label-custom {display: inline;}
     .cs-backdrop {border: none;}
     .cs-select > span::after {display: none;}
@@ -16,4 +16,10 @@
         width: 240px;
     }
     .cs-select.cs-active .cs-options {text-align: center;}
+    &.hotel {
+        .room-item {
+            .panel-body {padding-bottom: 0;}
+            &:last-child .panel-body {padding-bottom: 20px;}
+        }
+    }
 }

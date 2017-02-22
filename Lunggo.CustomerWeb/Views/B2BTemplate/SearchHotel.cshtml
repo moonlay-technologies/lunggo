@@ -1,6 +1,6 @@
 ﻿@{
     Layout = "/Views/Shared/B2BTravorama/_B2BLayout.cshtml";
-    ViewBag.BodyClass = "b2b-search-hotel";
+    ViewBag.BodyClass = "b2b-search hotel";
     ViewBag.SiteHeader = "b2b-search-hotel";
     ViewBag.Title = "Search Hotel";
     ViewBag.AngularController = "";
@@ -8,10 +8,124 @@
 }
 
 @section AdditionalCSS{
+    <link href="/Assets/css/style_b2b.css" rel="stylesheet" type="text/css" />
 }
 
 @section AdditionalJS{
+    <script src="/Assets/js/jquery.min.js"></script>
 }
 
 @section PageJS{
+    <script>
+        jQuery(document).ready(function ($) {
+            $('body #room-hotel-detail').hide();
+            var room = $('body #room-hotel').find('.cs-select');
+            $(room).on('click', function() {
+                $('body #room-hotel-detail').fadeIn();
+            });
+        })
+    </script>
 }
+
+<div class="search-hotel">
+    <div class="panel panel-transparent">
+        <div class="panel-heading ">
+            <div class="panel-title">
+                Cari Kamar Hotel
+            </div>
+        </div>
+        <div class="panel-body">
+            <form id="form-flight" role="form" autocomplete="off" novalidate="novalidate">
+                <div class="row clearfix">
+                    <div class="col-sm-6">
+                        <div class="form-group form-group-default">
+                            <label>Tujuan</label>
+                            <input type="text" class="form-control" placeholder="Bali, Indonesia">
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group form-group-default input-group">
+                            <label>Tanggal Check in</label>
+                            <input type="email" class="form-control" placeholder="Pilih tanggal check in" id="datepicker-component">
+                            <span class="input-group-addon">
+                                <i class="fa fa-calendar"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row clearfix">
+                    <div class="col-sm-6">
+                        <div class="form-group form-group-default">
+                            <label class="label-custom">Malam</label>
+                            <select class="cs-select cs-skin-slide" data-init-plugin="cs-select">
+                                <option value="">1</option>
+                                <option value="">2</option>
+                                <option value="">3</option>
+                                <option value="">4</option>
+                                <option value="">5</option>
+                                <option value="">6</option>
+                                <option value="">7</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group form-group-default" id="room-hotel">
+                            <label class="label-custom">Jumlah Kamar</label>
+                            <select class="cs-select cs-skin-slide" data-init-plugin="cs-select">
+                                <option value="">1</option>
+                                <option value="">2</option>
+                                <option value="">3</option>
+                                <option value="">4</option>
+                                <option value="">5</option>
+                                <option value="">6</option>
+                                <option value="">7</option>
+                                <option value="">8</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default" id="room-hotel-detail">
+                    <div class="panel-heading">
+                        <div class="panel-title">Rincian Jumlah Tamu</div>
+                    </div>
+                    <div class="room-item">
+                        <div class="panel-heading">
+                            <div class="panel-title">Kamar 1</div>
+                        </div>
+                        <div class="panel-body">
+                            <div class="row clearfix">
+                                <div class="col-xs-6">
+                                    <div class="form-group form-group-default input-custom">
+                                        <label class="label-custom">Dewasa</label>
+                                        <select class="cs-select cs-skin-slide" data-init-plugin="cs-select">
+                                            <option value="">1</option>
+                                            <option value="">2</option>
+                                            <option value="">3</option>
+                                            <option value="">4</option>
+                                            <option value="">5</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-xs-6">
+                                    <div class="form-group form-group-default">
+                                        <label class="label-custom">Anak-anak</label>
+                                        <select class="cs-select cs-skin-slide" data-init-plugin="cs-select">
+                                            <option value="">0</option>
+                                            <option value="">1</option>
+                                            <option value="">2</option>
+                                            <option value="">3</option>
+                                            <option value="">4</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="clearfix m-t-10">
+                    <button class="btn btn-primary" type="submit">Cari Hotel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

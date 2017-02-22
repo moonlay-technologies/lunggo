@@ -277,6 +277,7 @@
     <Content Include="Areas\Api\Views\web.config" />
     <Content Include="Assets\B2BTravorama\assets\css\style.css" />
     <Content Include="Assets\B2BTravorama\assets\css\style.min.css" />
+    <Content Include="Assets\B2BTravorama\assets\img\demo\new-york-city-buildings-sunrise-morning-hd-wallpaper.jpg" />
     <Content Include="Assets\B2BTravorama\assets\img\logo.png" />
     <Content Include="Assets\B2BTravorama\assets\img\logo_2x.png" />
     <Content Include="Assets\B2BTravorama\assets\img\logo_white.png" />
@@ -1236,7 +1237,6 @@
     <Content Include="Assets\css\invoice.css">
       <DependentUpon>invoice.scss</DependentUpon>
     </Content>
-    <Content Include="Assets\css\invoice.min.css" />
     <Content Include="Assets\css\jquery-ui.min.css" />
     <Content Include="Assets\css\neweticket.css">
       <DependentUpon>neweticket.scss</DependentUpon>
@@ -2788,6 +2788,7 @@
     <Content Include="Views\Shared\B2BTravorama\_B2BFooter.cshtml" />
     <Content Include="Views\B2BTemplate\SearchFlight.cshtml" />
     <Content Include="Views\B2BTemplate\SearchHotel.cshtml" />
+    <Content Include="Views\B2BTemplate\Payment.cshtml" />
     <None Include="Views\Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
