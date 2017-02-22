@@ -5,9 +5,10 @@
     ViewBag.FooterSubscribe = true;
     ViewBag.FooterPayment = true;
     ViewBag.FooterFeedback = false;
-    ViewBag.Title = "Enjoy Your Every Moment";
+    ViewBag.Title = "Diskon untuk semua penerbangan dan hotel domestik dan internasional";
     ViewBag.AngularController = "homeController";
     //ViewBag.Campaign = true;
+    ViewBag.Page = "Index";
 
     // location
     ViewBag.LocationData = new Dictionary<string, string>();
@@ -362,7 +363,7 @@
     {
         <div class="page-slider">
             <div class="slider-wrapper" id="index-wrapper">
-                @if (DateTime.UtcNow.AddHours(7).Date <= new DateTime(2016, 12, 31))
+                @if (DateTime.UtcNow.AddHours(7).Date <= new DateTime(2017, 3, 31))
                 {
                     <div class="slider">
                         <a href="@Url.Action("BTNTerbanginHemat", "Promo")">

@@ -1,12 +1,8 @@
-﻿@using Lunggo.CustomerWeb.Models
+﻿@using System.Globalization
+@using Lunggo.CustomerWeb.Models
 @using Lunggo.Framework.Extension
 @model HotelDetailModel.HotelDetail
-@{
-    Layout = "/Views/Shared/Desktop/_LayoutDesktop.cshtml";
-    ViewBag.BodyClass = "page-hotel page-detail";
-    ViewBag.Title = "Detail Hotel";
-    ViewBag.AngularController = "hotelDetailController";
-}
+           
 @{
     var loc = Html.Raw(Model.HotelDetailData.HotelName) + ", " + Model.HotelDetailData.City;
     var hotelFac = new List<_Page_Views_Hotel_DetailHotel_cshtml.FacilityModel>();
@@ -18,7 +14,7 @@
     if (Model.HotelDetailData.Facilities.Business != null)
     {
         hotelFac.Add(SetFacilityForDisplay(Model.HotelDetailData.Facilities.Business, "Bisnis"));
-}
+    }
 
     if (Model.HotelDetailData.Facilities.Entertainment != null)
     {
@@ -31,25 +27,33 @@
     }
 
     if (Model.HotelDetailData.Facilities.Health != null)
-        {
+    {
         hotelFac.Add(SetFacilityForDisplay(Model.HotelDetailData.Facilities.Health, "Kesehatan"));
     }
 
     if (Model.HotelDetailData.Facilities.Meal != null)
-            {
+    {
         hotelFac.Add(SetFacilityForDisplay(Model.HotelDetailData.Facilities.Meal, "Makanan"));
     }
 
     if (Model.HotelDetailData.Facilities.Other != null)
-                {
+    {
         hotelFac.Add(SetFacilityForDisplay(Model.HotelDetailData.Facilities.Other, "Lainnya"));
     }
 
     if (Model.HotelDetailData.Facilities.Sport != null)
-                    {
+    {
         hotelFac.Add(SetFacilityForDisplay(Model.HotelDetailData.Facilities.Sport, "Olah Raga"));
-                    }
-                }
+    }
+}
+
+@{
+    Layout = "/Views/Shared/Desktop/_LayoutDesktop.cshtml";
+    ViewBag.BodyClass = "page-hotel page-detail";
+    ViewBag.Title = "Kamar Hotel " + hotelName + " di " + loc + " Promo Tanggal " + Model.HotelDetailData.CheckInDate.ToString("d MMMM yyyy", CultureInfo.CreateSpecificCulture("id-ID"));
+    ViewBag.AngularController = "hotelDetailController";
+    ViewBag.Page = "HotelDetail";
+}
 
 @functions{
 

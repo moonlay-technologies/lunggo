@@ -2,11 +2,12 @@
 @using Lunggo.Framework.Config
 @{
     Layout = "/Views/Shared/mobile/_LayoutMobile.cshtml";
-    ViewBag.Title = "Enjoy Your Every Moment";
+    ViewBag.Title = "Diskon untuk semua penerbangan dan hotel domestik dan internasional";
     ViewBag.BodyClass = "page page-home";
     ViewBag.AngularController = "homeController";
     ViewBag.CurrentPage = "home";
     ViewBag.SiteHeader = "mobile-home-page";
+    ViewBag.Page = "Index";
 }
 
 @section AdditionalCSS{
@@ -36,7 +37,7 @@
 
 <div class="page-loading form-container" ng-class="{'page-loaded' : PageConfig.Loaded}" ng-init="getCookies()">
     <div class="carousel-inner" role="listbox">
-        @if (DateTime.UtcNow.AddHours(7).Date <= new DateTime(2016, 12, 31))
+        @if (DateTime.UtcNow.AddHours(7).Date <= new DateTime(2017, 3, 31))
         {
             <div class="item">
                 <a href="/id/Promo/BTNTerbanginHemat"><img src="/Assets/images/campaign/TerbanginHemat/TerbanginHemat-slider-mobile.jpg" alt="Terbangin Hemat (Terbang & Nginap Hemat)" /></a>

@@ -1,13 +1,7 @@
 ﻿@using Lunggo.CustomerWeb.Models
 @using Lunggo.Framework.Extension
 @model HotelDetailModel.HotelDetail
-@{
-    Layout = "/Views/Shared/mobile/_LayoutMobile.cshtml";
-    ViewBag.BodyClass = "page-hotel page-detail";
-    ViewBag.Title = "Detail Hotel";
-    ViewBag.CurrentPage = "detail-hotel";
-    ViewBag.AngularController = "hotelDetailController";
-}
+           
 @{
 
     var loc = Model.HotelDetailData.HotelName + ", " + Model.HotelDetailData.City;
@@ -15,7 +9,7 @@
     var hotelName = Model.HotelDetailData.HotelName;
     var hotelAddress = Model.HotelDetailData.Address;
     var lat = Model.HotelDetailData.Latitude;
-    var lng = Model.HotelDetailData.Longitude; 
+    var lng = Model.HotelDetailData.Longitude;
 
     if (Model.HotelDetailData.Facilities.Business != null)
     {
@@ -50,9 +44,19 @@
     if (Model.HotelDetailData.Facilities.Sport != null)
     {
         hotelFac.Add(SetFacilityForDisplay(Model.HotelDetailData.Facilities.Sport, "Olah Raga"));
-    }    
+    }
 
 }
+
+@{
+    Layout = "/Views/Shared/mobile/_LayoutMobile.cshtml";
+    ViewBag.BodyClass = "page-hotel page-detail";
+    ViewBag.Title = "Kamar Hotel " + hotelName + " di " + loc + " Promo Tanggal " + Model.HotelDetailData.CheckInDate.ToString("d MMMM yyyy", CultureInfo.CreateSpecificCulture("id-ID"));
+    ViewBag.CurrentPage = "detail-hotel";
+    ViewBag.AngularController = "hotelDetailController";
+    ViewBag.Page = "HotelDetail";
+}
+
 
 @functions{
 

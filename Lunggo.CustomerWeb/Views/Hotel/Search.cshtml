@@ -1,18 +1,9 @@
-﻿@using Lunggo.ApCommon.Hotel.Service
+﻿@using System.Globalization
+@using Lunggo.ApCommon.Hotel.Service
 @using Lunggo.CustomerWeb.Models
 @using Lunggo.Framework.Extension
 @model HotelSearchApiRequest
-@{
-    Layout = "/Views/Shared/Desktop/_LayoutDesktop.cshtml";
-    ViewBag.BodyClass = "page-hotel page-search";
-    ViewBag.Title = "Pencarian Hotel";
-    ViewBag.AngularController = "hotelSearchController";
-
-}
-
-@section AdditionalCSS{
-    <link href="/Assets/css/jquery-ui.min.css" rel="stylesheet" />
-}
+           
 @{
     var loc = "";
     var locFound = false;
@@ -41,9 +32,20 @@
         }
         locFound = true;
     }
-
-
 }
+
+@{
+    Layout = "/Views/Shared/Desktop/_LayoutDesktop.cshtml";
+    ViewBag.BodyClass = "page-hotel page-search";
+    ViewBag.Title = "Kamar Hotel Promo di " + loc + " Tanggal " + Model.SearchParamObject.CheckinDate.ToString("d MMMM yyyy", CultureInfo.CreateSpecificCulture("id-ID"));
+    ViewBag.AngularController = "hotelSearchController";
+    ViewBag.Page = "HotelSearch";
+}
+
+@section AdditionalCSS{
+    <link href="/Assets/css/jquery-ui.min.css" rel="stylesheet" />
+}
+
 @section AdditionalJS {
     <script src="/Assets/js/js.cookie.js"></script>
     <script src="/Assets/js/jquery-ui.min.js"></script>

@@ -1,6 +1,4 @@
-﻿@* perubahan nama totalFare menjadi netTotalFare *@
-
-@using System.Globalization
+﻿@using System.Globalization
 @using Lunggo.ApCommon.Flight.Constant
 @using Lunggo.ApCommon.Flight.Model
 @using Lunggo.ApCommon.Flight.Service
@@ -76,7 +74,8 @@
 @{
     Layout = "/Views/Shared/Desktop/_LayoutDesktop.cshtml";
     ViewBag.BodyClass = "page-flight page-flight-return";
-    ViewBag.Title = "Pencarian Penerbangan Pergi Pulang";
+    ViewBag.Title = "Tiket Pesawat Promo dari " + originCityNames.First() + " ke " + destinationCityNames.First() + " Tanggal " + trips.First().DepartureDate.ToString("d MMMM yyyy", CultureInfo.CreateSpecificCulture("id-ID"));
+    ViewBag.Page = "FlightSearchReturn";
 }
 
 @section AdditionalCSS {

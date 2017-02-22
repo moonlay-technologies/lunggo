@@ -75,10 +75,11 @@
 
 @{
     Layout = "/Views/Shared/mobile/_LayoutMobile.cshtml";
-    ViewBag.Title = "Pencarian Penerbangan Pergi Pulang";
+    ViewBag.Title = "Tiket Pesawat Promo dari " + originCityNames.First() + " ke " + destinationCityNames.First() + " Tanggal " + trips.First().DepartureDate.ToString("d MMMM yyyy", CultureInfo.CreateSpecificCulture("id-ID"));
     ViewBag.BodyClass = "page page-flight single-flight";
     ViewBag.AngularController = "ReturnFlightController";
     ViewBag.FlightSwap = "true";
+    ViewBag.Page = "FlightSearchReturn";
 }
 
 @section AdditionalJS {

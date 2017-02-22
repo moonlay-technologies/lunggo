@@ -1,14 +1,8 @@
-﻿@using Lunggo.ApCommon.Hotel.Service
+﻿@using System.Globalization
+@using Lunggo.ApCommon.Hotel.Service
 @using Lunggo.CustomerWeb.Models
 @model HotelSearchApiRequest
-@{
-    Layout = "/Views/Shared/mobile/_LayoutMobile.cshtml";
-    ViewBag.BodyClass = "page-hotel page-search";
-    ViewBag.Title = "Pencarian Hotel";
-    ViewBag.CurrentPage = "search-hotel";
-    ViewBag.AngularController = "hotelSearchController";
-}
-
+           
 @{
     var loc = "";
     var locFound = false;
@@ -34,6 +28,17 @@
         locFound = true;
     }
 }
+
+@{
+    Layout = "/Views/Shared/mobile/_LayoutMobile.cshtml";
+    ViewBag.BodyClass = "page-hotel page-search";
+    ViewBag.Title = "Kamar Hotel Promo di " + loc + " Tanggal " + Model.SearchParamObject.CheckinDate.ToString("d MMMM yyyy", CultureInfo.CreateSpecificCulture("id-ID"));
+    ViewBag.CurrentPage = "search-hotel";
+    ViewBag.AngularController = "hotelSearchController";
+    ViewBag.Page = "HotelSearch";
+}
+
+
 @section AdditionalCSS{
     <link href="/Assets/css/jquery-ui.min.css" rel="stylesheet" />
 }

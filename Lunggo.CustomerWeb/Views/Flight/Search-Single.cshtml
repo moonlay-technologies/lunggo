@@ -69,7 +69,8 @@
 @{
     Layout = "/Views/Shared/Desktop/_LayoutDesktop.cshtml";
     ViewBag.BodyClass = "page-flight page-flight-oneway";
-    ViewBag.Title = "Pencarian Penerbangan Sejalan";
+    ViewBag.Title = "Tiket Pesawat Promo dari " + originCityNames.First() + " ke " + destinationCityNames.First() + " Tanggal " + trips.First().DepartureDate.ToString("d MMMM yyyy", CultureInfo.CreateSpecificCulture("id-ID"));
+    ViewBag.Page = "FlightSearchSingle";
 }
 
 @section AdditionalCSS{

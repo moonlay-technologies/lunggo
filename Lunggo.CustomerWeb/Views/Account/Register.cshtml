@@ -1,9 +1,10 @@
 ﻿@{
     Layout = "/Views/Shared/Desktop/_LayoutDesktop.cshtml";
     ViewBag.BodyClass = "page-account page-account-register";
-    ViewBag.Title = "Registrasi Akun Travorama";
+    ViewBag.Title = "Daftar dan Dapatkan Promo Tiket Pesawat dan Hotel";
     var loginProviders = Context.GetOwinContext().Authentication.GetAuthenticationTypes();
     var facebookProvider = loginProviders.First();
+    ViewBag.Page = "Register";
 }
 
 @section AdditionalJS{
