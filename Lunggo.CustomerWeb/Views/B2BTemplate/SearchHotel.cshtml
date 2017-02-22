@@ -11,7 +11,7 @@
 }
 
 @section AdditionalJS{
-    <script src="/Assets/js/jquery.min.js"></script>
+    <script src="/Assets/B2BTravorama/assets/js/form_elements.js" type="text/javascript"></script>
 }
 
 @section PageJS{
@@ -19,7 +19,7 @@
         jQuery(document).ready(function ($) {
             $('body #room-hotel-detail').hide();
             var room = $('body #room-hotel').find('.cs-select');
-            $(room).on('click', function() {
+            $(room).on('click', function () {
                 $('body #room-hotel-detail').fadeIn();
             });
         })

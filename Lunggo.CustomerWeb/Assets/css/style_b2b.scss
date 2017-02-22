@@ -35,7 +35,6 @@
     }
     &.b2b-payment {
         .payment-item {
-            &.col-sm-6 {padding: 0 10px 0 0;}
             .pi-wrapper {
                 background-color: #fff;
                 position: relative;
@@ -63,6 +62,21 @@
             background-size: 100%;
             background-repeat: no-repeat;
             margin-right: 20px;
+        }
+        .payment-add {
+            .pa-wrapper {
+                height: 129px;
+                border: 3px dashed #3a8fc8;
+                position: relative;
+            }
+            #add-payment {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                cursor: pointer;
+                text-align: center;
+            }
         }
     }
 }
