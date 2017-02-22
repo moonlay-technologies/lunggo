@@ -1,7 +1,12 @@
 ﻿body {
     /*Custom Sidebar Menu*/
     &.mobile .sidebar-menu {overflow: hidden;}
-
+    .bg-pic {
+        background-image: url(/Assets/B2BTravorama/assets/img/demo/new-york-city-buildings-sunrise-morning-hd-wallpaper.jpg);
+        background-repeat: no-repeat; 
+        background-size: cover; 
+        opacity: 0.6;
+    }
     /*Custom Search Form*/
     &.b2b-search {
         .form-group-default label.label-custom {display: inline;}
@@ -26,6 +31,38 @@
                 .panel-body {padding-bottom: 0;}
                 &:last-child .panel-body {padding-bottom: 20px;}
             }
+        }
+    }
+    &.b2b-payment {
+        .payment-item {
+            &.col-sm-6 {padding: 0 10px 0 0;}
+            .pi-wrapper {
+                background-color: #fff;
+                position: relative;
+                border: 1px solid rgba(0, 0, 0, 0.07);
+                border-radius: 2px;
+                overflow: hidden;
+                -webkit-transition: background-color 0.2s ease;
+                transition: background-color 0.2s ease;
+                box-shadow: 0 2px 3px 0 #ccc;
+            }
+            .pi-top, .pi-bottom {
+                padding: 15px 20px;
+                &>div {
+                    display: inline;
+                    float: left;
+                }
+            }
+            .pi-bottom {border-top: 1px solid rgba(0, 0, 0, 0.07);}
+        }
+        .icon-visa {
+            background-image: url(/Assets/images/visa.png);
+            width: 70px;
+            height: 46px;
+            display: block;
+            background-size: 100%;
+            background-repeat: no-repeat;
+            margin-right: 20px;
         }
     }
 }

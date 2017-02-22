@@ -2,7 +2,7 @@
     Layout = "/Views/Shared/B2BTravorama/_B2BLayout.cshtml";
     ViewBag.BodyClass = "b2b-payment";
     ViewBag.SiteHeader = "b2b-payment";
-    ViewBag.Title = "Payment";
+    ViewBag.Title = "Payment Management";
     ViewBag.AngularController = "";
 
 }
@@ -15,3 +15,37 @@
 
 @section PageJS{
 }
+
+<div class="payment-page">
+    <div class="panel panel-transparent">
+        <div class="panel-heading ">
+            <div class="panel-title">
+                Payment Management
+            </div>
+        </div>
+        <div class="panel-body m-t-10">
+            <div class="payment-item col-sm-6">
+                <div class="pi-wrapper clearfix">
+                    <div class="pi-top clearfix">
+                        <div class="">
+                            <div class="icon-visa"></div>
+                        </div>
+                        <div class="clearfix">
+                            <div class="font-montserrat bold">Visa ****0003</div>
+                            <div class="small hint-text">Expires 05/20</div>
+                        </div>
+                    </div>
+                    <div class="pi-bottom clearfix">
+                        <div class="">Primary</div>
+                        <div class="pull-right"><a href="#">Edit</a></div>
+                    </div>
+                </div>
+            </div>
+            <div class="payment-add col-sm-6">
+                <div class="pa-wrapper clearfix">
+                    <div class="font-montserrat bold"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

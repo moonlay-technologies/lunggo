@@ -1895,6 +1895,7 @@
     <Content Include="Assets\images\user-register-bg.jpg" />
     <Content Include="Assets\images\verisign.png" />
     <Content Include="Assets\images\visa-logo.jpg" />
+    <Content Include="Assets\images\visa.png" />
     <Content Include="Assets\images\voucher\email-white.png" />
     <Content Include="Assets\images\voucher\hotel.jpg" />
     <Content Include="Assets\images\voucher\phone-white.png" />
