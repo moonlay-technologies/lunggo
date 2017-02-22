@@ -1,25 +1,31 @@
-﻿.b2b-search {
-    .form-group-default label.label-custom {display: inline;}
-    .cs-backdrop {border: none;}
-    .cs-select > span::after {display: none;}
-    .cs-wrapper { position: relative;
-        &:after {
-            right: 0;
-            position: absolute;
-            content: "\f0d7";
-            font-family: FontAwesome;
-            color: #5e5e5e;
+﻿body {
+    /*Custom Sidebar Menu*/
+    &.mobile .sidebar-menu {overflow: hidden;}
+
+    /*Custom Search Form*/
+    &.b2b-search {
+        .form-group-default label.label-custom {display: inline;}
+        .cs-backdrop {border: none;}
+        .cs-select > span::after {display: none;}
+        .cs-wrapper { position: relative;
+            &:after {
+                right: 0;
+                position: absolute;
+                content: "\f0d7";
+                font-family: FontAwesome;
+                color: #5e5e5e;
+            }
         }
-    }
-    .form-group-default .cs-skin-slide > span {
-        padding: 0; 
-        width: 240px;
-    }
-    .cs-select.cs-active .cs-options {text-align: center;}
-    &.hotel {
-        .room-item {
-            .panel-body {padding-bottom: 0;}
-            &:last-child .panel-body {padding-bottom: 20px;}
+        .form-group-default .cs-skin-slide > span {
+            padding: 0; 
+            width: 240px;
+        }
+        .cs-select.cs-active .cs-options {text-align: center;}
+        &.hotel {
+            .room-item {
+                .panel-body {padding-bottom: 0;}
+                &:last-child .panel-body {padding-bottom: 20px;}
+            }
         }
     }
 }

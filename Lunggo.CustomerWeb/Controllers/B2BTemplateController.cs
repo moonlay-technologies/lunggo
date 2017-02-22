@@ -17,6 +17,14 @@ namespace Lunggo.CustomerWeb.Controllers
         {
             return View();
         }
+        public ActionResult ResetPassword()
+        {
+            return View();
+        }
+        public ActionResult ConfirmPassword()
+        {
+            return View();
+        }
         public ActionResult SearchFlight()
         {
             return View();

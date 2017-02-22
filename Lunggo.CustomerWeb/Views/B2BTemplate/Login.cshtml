@@ -15,40 +15,32 @@
 @section PageJS{
 }
 
-<div class="login-wrapper ">
-    <div class="bg-pic">
-        <img src="/Assets/B2BTravorama/assets/img/demo/new-york-city-buildings-sunrise-morning-hd-wallpaper.jpg" data-src="/Assets/B2BTravorama/assets/img/demo/new-york-city-buildings-sunrise-morning-hd-wallpaper.jpg" data-src-retina="/Assets/B2BTravorama/assets/img/demo/new-york-city-buildings-sunrise-morning-hd-wallpaper.jpg" alt="" class="lazy">
-    </div>
-    <div class="login-container bg-white">
-        <div class="p-l-50 m-l-20 p-r-50 m-r-20 p-t-50 m-t-30 sm-p-l-15 sm-p-r-15 sm-p-t-40">
-            <img src="/Assets/B2BTravorama/assets/img/logo.png" alt="logo" data-src="/Assets/B2BTravorama/assets/img/logo.png" width="78" height="22">
-            <p class="p-t-35">Masuk dengan akun <b>Travorama Serko</b></p>
-            <form id="form-login" class="p-t-15" role="form" action="index.html">
-                <div class="form-group form-group-default">
-                    <label>Username</label>
-                    <div class="controls">
-                        <input type="text" name="username" placeholder="User Name" class="form-control" required>
-                    </div>
-                </div>
-                <div class="form-group form-group-default">
-                    <label>Password</label>
-                    <div class="controls">
-                        <input type="password" class="form-control" name="password" placeholder="Password" required>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6 no-padding">
-                        <div class="checkbox ">
-                            <input type="checkbox" value="1" id="checkbox1">
-                            <label for="checkbox1">Ingat Saya</label>
-                        </div>
-                    </div>
-                    <div class="col-md-6 text-right">
-                        <a href="#" class="text-info small">Lupa password</a>
-                    </div>
-                </div>
-                <button class="btn btn-primary btn-cons m-t-10" type="submit">Login</button>
-            </form>
+<div class="login-form">
+    <p class="p-t-35">Masuk dengan akun <span class="bold">Travorama Serko</span></p>
+    <form id="form-login" class="p-t-15" role="form" action="index.html">
+        <div class="form-group form-group-default">
+            <label>Username</label>
+            <div class="controls">
+                <input type="text" name="username" placeholder="User Name" class="form-control" required>
+            </div>
         </div>
-    </div>
+        <div class="form-group form-group-default">
+            <label>Password</label>
+            <div class="controls">
+                <input type="password" class="form-control" name="password" placeholder="Password" required>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 no-padding">
+                <div class="checkbox ">
+                    <input type="checkbox" value="1" id="checkbox1">
+                    <label for="checkbox1">Ingat Saya</label>
+                </div>
+            </div>
+            <div class="col-md-6 text-right">
+                <a href="/id/B2BTemplate/ResetPassword" class="text-info small bold">Lupa password</a>
+            </div>
+        </div>
+        <button class="btn btn-primary btn-cons m-t-10" type="submit">Login</button>
+    </form>
 </div>

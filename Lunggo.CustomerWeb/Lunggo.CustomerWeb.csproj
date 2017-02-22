@@ -2789,6 +2789,8 @@
     <Content Include="Views\B2BTemplate\SearchFlight.cshtml" />
     <Content Include="Views\B2BTemplate\SearchHotel.cshtml" />
     <Content Include="Views\B2BTemplate\Payment.cshtml" />
+    <Content Include="Views\B2BTemplate\ResetPassword.cshtml" />
+    <Content Include="Views\B2BTemplate\ConfirmPassword.cshtml" />
     <None Include="Views\Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
