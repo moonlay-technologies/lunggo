@@ -138,23 +138,24 @@
     var originalPrice = '';
     var nights = '';
     @if (Model.Reservation is FlightReservationForDisplay)
-        {
-            var reservation = Model.Reservation as FlightReservationForDisplay;
-            @:trips = @Html.Raw(reservation.Itinerary.Trips.Serialize());
-                                                                                @:price = @reservation.Itinerary.NetTotalFare;
-                                                                                @:originalPrice = '@reservation.Itinerary.OriginalTotalFare';
-                                                                            }
-        else
-        {
-            var reservation = Model.Reservation as HotelReservationForDisplay;
-            @:hotelDetails = @Html.Raw(reservation.HotelDetail.Serialize());
-                                            @:price = @reservation.HotelDetail.NetTotalFare;
-                                            @:originalPrice = '@reservation.HotelDetail.OriginalTotalFare';
-                                                                            }
+    {
+        var reservation = Model.Reservation as FlightReservationForDisplay;
+        @:trips = @Html.Raw(reservation.Itinerary.Trips.Serialize());
+        @:price = @reservation.Itinerary.NetTotalFare;
+        @:originalPrice = '@reservation.Itinerary.OriginalTotalFare';
+    }
+    else
+    {
+        var reservation = Model.Reservation as HotelReservationForDisplay;
+        @:hotelDetails = @Html.Raw(reservation.HotelDetail.Serialize());
+        @:price = @reservation.HotelDetail.NetTotalFare;
+        @:originalPrice = '@reservation.HotelDetail.OriginalTotalFare';
+    }
     var redirectionUrl;
     @if (Model.Reservation.Payment.RedirectionUrl != null) {
         @:redirectionUrl = '@Model.Reservation.Payment.RedirectionUrl';
     }
+    
     @if (Model.Reservation is FlightReservationForDisplay)
     {
         @:var departureDate;
@@ -195,12 +196,12 @@
         @:originalPrice = '@hotel.HotelDetail.OriginalTotalFare';
         @:price = '@hotel.HotelDetail.NetTotalFare';
         @:var gtmContentType = 'hotel';
-        @:var gtmCity = '@hotel.HotelDetail.City';
+        @:var gtmCity = '@hotel.HotelDetail.DestinationName';
         @:var gtmHotelIds = '@hotel.HotelDetail.HotelCode';
         @:var gtmRegion = '@hotel.HotelDetail.DestinationName';
         @:var gtmCountry = '@hotel.HotelDetail.CountryName';
-        @:var gtmCheckinDate = '@hotel.HotelDetail.CheckInDate';
-        @:var gtmCheckoutDate = '@hotel.HotelDetail.CheckOutDate';
+        @:var gtmCheckinDate = '@hotel.HotelDetail.CheckInDate.ToString("yyyyMMdd")';
+        @:var gtmCheckoutDate = '@hotel.HotelDetail.CheckOutDate.ToString("yyyyMMdd")';
         @:var gtmNumAdults = @totalAdult;
         @:var gtmNumChildren = @totalChild;
         @:var gtmPurchaseCurrency = 'IDR';

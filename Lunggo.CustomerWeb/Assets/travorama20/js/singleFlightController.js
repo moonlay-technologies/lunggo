@@ -617,9 +617,6 @@ app.controller('singleFlightController', [
                 fbq('track', 'Search', {
                     content_type: $scope.gtmContentType,
                     departing_departure_date: $scope.gtmDepartingDepartureDate,
-                    returning_departure_date: $scope.gtmReturningDepartureDate,
-                    departing_arrival_date: $scope.gtmDepartingArrivalDate,
-                    returning_arrival_date: $scope.gtmReturningArrivalDate,
                     origin_airport: $scope.gtmOriginAirport,
                     destination_airport: $scope.gtmDestinationAirport,
                     num_adults: $scope.gtmNumAdults,

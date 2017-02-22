@@ -77,45 +77,45 @@
         {
             var rsv = Model as FlightReservationForDisplay;
             @:var gtmContentType = 'flight';
-            @:var gtmDepartingDepartureDate = '@rsv.Itinerary.Trips[0].DepartureDate.GetValueOrDefault().ToString("yyyyMMdd")';
-            @:var gtmDepartingArrivalDate = '@rsv.Itinerary.Trips[0].Segments.Last().ArrivalTime.GetValueOrDefault().ToString("yyyyMMdd")';
-            @:var gtmOriginAirport = '@rsv.Itinerary.Trips[0].OriginAirport';
-            @:var gtmDestinationAirport = '@rsv.Itinerary.Trips[0].DestinationAirport';
-            @:var gtmNumAdults = @rsv.Itinerary.AdultCount;
-            @:var gtmNumChildren = @rsv.Itinerary.ChildCount;
-            @:var gtmNumInfants = @rsv.Itinerary.InfantCount;
-            @:var gtmTravelClass = '@rsv.Itinerary.RequestedCabinClass';
-            @:var gtmPurchaseValue = @rsv.Payment.FinalPrice;
-            @:var gtmPurchaseCurrency = 'IDR';
-            @:var gtmCurrency = 'IDR';
-            @:var gtmValue = '';
-            @:var gtmTravoramaReservationId = '@Model.RsvNo';
-            @:var gtmPageNameValue = 'thank_you';
-            if (rsv.Itinerary.TripType.GetValueOrDefault() == TripType.RoundTrip)
+                @:var gtmDepartingDepartureDate = '@rsv.Itinerary.Trips[0].DepartureDate.GetValueOrDefault().ToString("yyyyMMdd")';
+                @:var gtmDepartingArrivalDate = '@rsv.Itinerary.Trips[0].Segments.Last().ArrivalTime.GetValueOrDefault().ToString("yyyyMMdd")';
+                @:var gtmOriginAirport = '@rsv.Itinerary.Trips[0].OriginAirport';
+                @:var gtmDestinationAirport = '@rsv.Itinerary.Trips[0].DestinationAirport';
+                @:var gtmNumAdults = @rsv.Itinerary.AdultCount;
+                @:var gtmNumChildren = @rsv.Itinerary.ChildCount;
+                @:var gtmNumInfants = @rsv.Itinerary.InfantCount;
+                @:var gtmTravelClass = '@rsv.Itinerary.RequestedCabinClass';
+                @:var gtmPurchaseValue = @rsv.Payment.FinalPrice;
+                @:var gtmPurchaseCurrency = 'IDR';
+                @:var gtmCurrency = 'IDR';
+                @:var gtmValue = @rsv.Payment.FinalPrice;
+                @:var gtmTravoramaReservationId = '@Model.RsvNo';
+                @:var gtmPageNameValue = 'thank_you';
+                if (rsv.Itinerary.TripType.GetValueOrDefault() == TripType.RoundTrip)
             {
                 @:var gtmReturningDepartureDate = '@rsv.Itinerary.Trips[1].DepartureDate.GetValueOrDefault().ToString("yyyyMMdd")';
-                @:var gtmReturningArrivalDate = '@rsv.Itinerary.Trips[1].Segments.Last().ArrivalTime.GetValueOrDefault().ToString("yyyyMMdd")'
-            }
+                    @:var gtmReturningArrivalDate = '@rsv.Itinerary.Trips[1].Segments.Last().ArrivalTime.GetValueOrDefault().ToString("yyyyMMdd")'
+                }
         }
         else if (Model is HotelReservationForDisplay)
         {
             var rsv = Model as HotelReservationForDisplay;
             @:var gtmContentType = 'hotel';
-                @:var gtmCity = '@rsv.HotelDetail.City';
-                @:var gtmHotelIds = '@rsv.HotelDetail.HotelCode';
-                @:var gtmRegion = '@rsv.HotelDetail.DestinationName';
-                @:var gtmCountry = '@rsv.HotelDetail.CountryName';
-                @:var gtmCheckinDate = '@rsv.HotelDetail.CheckInDate';
-                @:var gtmCheckoutDate = '@rsv.HotelDetail.CheckOutDate';
-                @:var gtmNumAdults = @totalAdult;
-                @:var gtmNumChildren = @totalChild;
-                @:var gtmPurchaseCurrency = 'IDR';
-                @:var gtmPurchaseValue = @rsv.HotelDetail.NetTotalFare;
-                @:var gtmPageNameValue = 'thank_you';
-                @:var gtmCurrency = 'IDR';
-                @:var gtmValue = '';
-                @:var gtmTravoramaReservationId = '@Model.RsvNo';
-            }
+            @:var gtmCity = '@rsv.HotelDetail.DestinationName';
+            @:var gtmHotelIds = '@rsv.HotelDetail.HotelCode';
+            @:var gtmRegion = '@rsv.HotelDetail.DestinationName';
+            @:var gtmCountry = '@rsv.HotelDetail.CountryName';
+            @:var gtmCheckinDate = '@rsv.HotelDetail.CheckInDate.ToString("yyyyMMdd")';
+            @:var gtmCheckoutDate = '@rsv.HotelDetail.CheckOutDate.ToString("yyyyMMdd")';
+            @:var gtmNumAdults = @totalAdult;
+            @:var gtmNumChildren = @totalChild;
+            @:var gtmPurchaseCurrency = 'IDR';
+            @:var gtmPurchaseValue = @rsv.Payment.FinalPrice;
+            @:var gtmPageNameValue = 'thank_you';
+            @:var gtmCurrency = 'IDR';
+            @:var gtmValue = @rsv.Payment.FinalPrice;
+            @:var gtmTravoramaReservationId = '@Model.RsvNo';
+        }
     </script>
 }
 

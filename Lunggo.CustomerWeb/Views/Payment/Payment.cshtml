@@ -192,12 +192,12 @@
         @:originalPrice = '@hotel.HotelDetail.OriginalTotalFare';
         @:price = '@hotel.HotelDetail.NetTotalFare';
         @:var gtmContentType = 'hotel';
-        @:var gtmCity = '@hotel.HotelDetail.City';
+        @:var gtmCity = '@hotel.HotelDetail.DestinationName';
         @:var gtmHotelIds = '@hotel.HotelDetail.HotelCode';
         @:var gtmRegion = '@hotel.HotelDetail.DestinationName';
         @:var gtmCountry = '@hotel.HotelDetail.CountryName';
-        @:var gtmCheckinDate = '@hotel.HotelDetail.CheckInDate';
-        @:var gtmCheckoutDate = '@hotel.HotelDetail.CheckOutDate';
+        @:var gtmCheckinDate = '@hotel.HotelDetail.CheckInDate.ToString("yyyyMMdd")';
+        @:var gtmCheckoutDate = '@hotel.HotelDetail.CheckOutDate.ToString("yyyyMMdd")';
         @:var gtmNumAdults = @totalAdult;
         @:var gtmNumChildren = @totalChild;
         @:var gtmPurchaseCurrency = 'IDR';
