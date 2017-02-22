@@ -3,6 +3,7 @@
   <WorkerRole name="Lunggo.CloudApp.EticketHandler" vmsize="ExtraSmall">
     <ConfigurationSettings>
       <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" />
+      <Setting name="APPINSIGHTS_INSTRUMENTATIONKEY" />
     </ConfigurationSettings>
   </WorkerRole>
   <WebRole name="Lunggo.CloudApp.CaptchaReader" vmsize="ExtraSmall">
@@ -16,6 +17,7 @@
     <ConfigurationSettings>
       <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" />
       <Setting name="Setting1" />
+      <Setting name="APPINSIGHTS_INSTRUMENTATIONKEY" />
     </ConfigurationSettings>
     <Endpoints>
       <InputEndpoint name="Endpoint1" protocol="http" port="80" />
