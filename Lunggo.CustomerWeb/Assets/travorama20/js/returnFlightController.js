@@ -44,6 +44,19 @@ app.controller('returnFlightController', [
             }
         }
 
+        $scope.gtmContentType = gtmContentType;
+        $scope.gtmDepartingDepartureDate = gtmDepartingDepartureDate;
+        $scope.gtmReturningDepartureDate = gtmReturningDepartureDate;
+        $scope.gtmOriginAirport = gtmOriginAirport;
+        $scope.gtmDestinationAirport = gtmDestinationAirport;
+        $scope.gtmDepartingArrivalDate = gtmDepartingArrivalDate;
+        $scope.gtmReturningArrivalDate = gtmReturningArrivalDate;
+        $scope.gtmNumAdults = gtmNumAdults;
+        $scope.gtmNumChildren = gtmNumChildren;
+        $scope.gtmNumInfants = gtmNumInfants;
+        $scope.gtmTravelClass = gtmTravelClass;
+        $scope.gtmPurchaseCurrency = gtmPurchaseCurrency;
+
         //*****Untuk Request API****
         var departureTemp = FlightSearchConfig.flightForm.departureFlightParam;
         var depDate = new Date(departureTemp.trips[0].DepartureDate) || '';
@@ -750,11 +763,7 @@ app.controller('returnFlightController', [
                     $('.' + targetFlight + '-price-slider-max').trigger('input');
                 }
             });
-
-
-
             targetScope.progress = 100;
-
             $log.debug('Completed setting flight filtering for : ' + targetScope.name);
             $log.debug(targetScope);
         }
@@ -876,6 +885,8 @@ app.controller('returnFlightController', [
         //**********************END***********************
         
         // get flights
+        $scope.listPricesDeparting = [];
+        $scope.listPricesReturning = [];
         $scope.getFlight = function (targetScope) {
 
             if ($scope.trial > 3)
@@ -923,12 +934,18 @@ app.controller('returnFlightController', [
                                 $scope.populateAirlines('departure');
                                 $scope.populatePrice('departure');
                                 $log.debug("Ada data");
+                                for (var x = 0; x < returnData.data.flights[0].options.length; x++) {
+                                    $scope.listPricesDeparting.push(parseInt(returnData.data.flights[0].options[x].netTotalFare));
+                                }
                             }
                             if (returnData.data.flights[1].options.length) {
                                 $scope.arrangeFlightData('return', returnData.data.flights[1].options); // For Return Flight
                                 $scope.populateAirlines('return');
                                 $scope.populatePrice('return');
                                 $log.debug("Ada data");
+                                for (var x = 0; x < returnData.data.flights[1].options.length; x++) {
+                                    $scope.listPricesReturning.push(parseInt(returnData.data.flights[1].options[x].netTotalFare));
+                                }
                             }
                         }
                         
@@ -965,15 +982,59 @@ app.controller('returnFlightController', [
                     targetScope.progress = 100;
                     targetScope.finalProgress = 100;
                     $log.debug('Not Authorized');
-                }
-
-                
+                }               
             } else {
                 $log.debug('complete getting flight for '+targetScope.name);
                 targetScope.loading = false;
                 targetScope.loadingFlight = false;
                 $scope.departureFlightConfig.loading = false;
                 $scope.departureFlightConfig.loadingFlight = false;
+
+                !function (f, b, e, v, n, t, s) {
+                    if (f.fbq) return; n = f.fbq = function () {
+                        n.callMethod ?
+                        n.callMethod.apply(n, arguments) : n.queue.push(arguments)
+                    }; if (!f._fbq) f._fbq = n;
+                    n.push = n; n.loaded = !0; n.version = '2.0'; n.queue = []; t = b.createElement(e); t.async = !0;
+                    t.src = v; s = b.getElementsByTagName(e)[0]; s.parentNode.insertBefore(t, s)
+                }(window, document, 'script', '//connect.facebook.net/en_US/fbevents.js');
+
+                fbq('init', '<FB_PIXEL_ID>');
+                var lowestPriceDep, lowestPriceRet, lowestPrice;
+
+                if ($scope.listPricesDeparting.length > 0) {
+                    lowestPriceDep = Math.min.apply(Math, $scope.listPricesDeparting);
+                } else {
+                    lowestPriceDep = 0;
+                }
+
+                if ($scope.listPricesReturning.length > 0) {
+                    lowestPriceRet = Math.min.apply(Math, $scope.listPricesReturning);
+                } else {
+                    lowestPriceRet = 0;
+                }
+
+                if (lowestPriceDep != 0 && lowestPriceRet != 0) {
+                    lowestPrice = lowestPriceRet + lowestPriceDep;
+                } else {
+                    lowestPrice = 0;
+                }
+
+                fbq('track', 'Search', {
+                    content_type: $scope.gtmContentType,
+                    departing_departure_date: $scope.gtmDepartingDepartureDate,
+                    returning_departure_date: $scope.gtmReturningDepartureDate,
+                    departing_arrival_date: $scope.gtmDepartingArrivalDate,
+                    returning_arrival_date: $scope.gtmReturningArrivalDate,
+                    origin_airport: $scope.gtmOriginAirport,
+                    destination_airport: $scope.gtmDestinationAirport,
+                    num_adults: $scope.gtmNumAdults,
+                    num_children: $scope.gtmNumChildren,
+                    num_infants: $scope.gtmNumInfants,
+                    travel_class: $scope.gtmTravelClass,
+                    purchase_value: lowestPrice,
+                    purchase_currency: $scope.gtmPurchaseCurrency,
+                });
             }
         }
 

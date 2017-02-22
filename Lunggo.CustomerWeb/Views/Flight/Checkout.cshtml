@@ -1,4 +1,5 @@
-﻿@using Lunggo.Framework.Context
+﻿@using Lunggo.ApCommon.Flight.Constant
+@using Lunggo.Framework.Context
 @using Lunggo.Framework.Extension
 @using Lunggo.Framework.Config
 @model Lunggo.CustomerWeb.Models.FlightCheckoutData
@@ -15,8 +16,6 @@
     var token = "";
     var savedPassengers = Model.SavedPassengers;
     var savedCreditCards = Model.SavedCreditCards;
-
-
     try
     {
         adultCount = Model.Itinerary.AdultCount.GetValueOrDefault();
@@ -33,6 +32,14 @@
     {
         ViewBag.Message = "BookExpired";
     }
+
+    var gtmReturningDepartureDate = "";
+    var gtmReturningArrivalDate = "";
+    if (Model.Itinerary.TripType.GetValueOrDefault() == TripType.RoundTrip)
+    {
+        gtmReturningDepartureDate = Model.Itinerary.Trips[1].DepartureDate.GetValueOrDefault().ToString("yyyyMMdd");
+        gtmReturningArrivalDate = Model.Itinerary.Trips[1].Segments.Last().ArrivalTime.GetValueOrDefault().ToString("yyyyMMdd");
+    }
 }
 
 @{
@@ -44,14 +51,10 @@
 }
 @section AdditionalCSS {
     <link href="/Assets/css/jquery-ui.min.css" rel="stylesheet" />
-    <!-- fancybox CSS-->
     <link href="/Assets/vendor/fancybox/jquery.fancybox.css" rel="stylesheet" />
 }
 @section AdditionalJS {
-    <!-- additional Angular JS-->
-    <!-- veritrans JS -->
     <script src="https://api.sandbox.veritrans.co.id/v2/assets/js/veritrans.min.js"></script>
-    <!-- fancybox -->
     <script type="text/javascript" src="/Assets/vendor/fancybox/jquery.fancybox.pack.js"></script>
 }
 @section PageJS{
@@ -59,36 +62,27 @@
         var langCode = '@OnlineContext.GetActiveLanguageCode()';
         var currentPage = 1;
         var transferWindow = ['@ConfigManager.GetInstance().GetConfigValue("general","bankTransferStartTime")', '@ConfigManager.GetInstance().GetConfigValue("general","bankTransferEndTime")'];
-        //var transferWindow = [ '1100', '1124' ];
-        // messages
         var message = '@ViewBag.Message';
-        // flight detail
         var token = @Model.Token;
         var paymentDetail = '';
         var flightDetail = '';
         var expiryDate = '@Model.ExpiryTime.ToString("o")';
         var trips = @Html.Raw(Model.Itinerary.Trips.Serialize());
-
-        // passenger number
         var adultPassenger = @Model.Itinerary.AdultCount;
         var adultFare = @Model.Itinerary.OriginalAdultFare;
         var adultNetFare = @Model.Itinerary.NetAdultFare * adultPassenger;
         var totalAdultFare = adultPassenger * adultFare;
         var adultTypeName = 'Dewasa';
-
         var childPassenger = @Model.Itinerary.ChildCount;
         var childFare = @Model.Itinerary.OriginalChildFare;
         var childNetFare = @Model.Itinerary.NetChildFare * childPassenger;
         var totalChildFare = childPassenger * childFare;
         var childTypeName = 'Anak';
-
         var infantPassenger = @Model.Itinerary.InfantCount;
         var infantFare = @Model.Itinerary.OriginalInfantFare;
         var infantNetFare = @Model.Itinerary.NetInfantFare * infantPassenger;
         var totalInfantFare = infantPassenger * infantFare;
         var infantTypeName = 'Bayi';
-        //var monthNames = ["Januari", "Februari", "Maret","April", "Mei", "Juni", "Juli","Agustus", "September", "Oktober","November", "Desember"];
-        // passport or id requirement
         var passportRequired = @Model.Itinerary.RequirePassport.ToString().ToLower();
         var idRequired = false;
         var nationalityRequired = @Model.Itinerary.RequireNationality.ToString().ToLower();
@@ -98,7 +92,6 @@
         var passportDate = '@Model.Itinerary.Trips.Last().DepartureDate.GetValueOrDefault().AddMonths(6)';
         var originalPrice = '@Model.Itinerary.OriginalTotalFare';
         var price = '@Model.Itinerary.NetTotalFare';
-        //var trips = '@Model.Itinerary.Trips';
         // change current page
         if (getParam('page') == 2) {
             currentPage = getParam('page');
@@ -113,6 +106,26 @@
     </script>
     <!-- angular controller -->
     <script src="/Assets/travorama20/js/checkoutController.js"></script>
+    <script>
+    var gtmContentType = 'flight';
+    var gtmDepartingDepartureDate = '@Model.Itinerary.Trips[0].DepartureDate.GetValueOrDefault().ToString("yyyyMMdd")';
+    var gtmDepartingArrivalDate = '@Model.Itinerary.Trips[0].Segments.Last().ArrivalTime.GetValueOrDefault().ToString("yyyyMMdd")';
+    var gtmOriginAirport = '@Model.Itinerary.Trips[0].OriginAirport';
+    var gtmDestinationAirport = '@Model.Itinerary.Trips[0].DestinationAirport';
+    var gtmNumAdults = @Model.Itinerary.AdultCount;
+    var gtmNumChildren = @Model.Itinerary.ChildCount;
+    var gtmNumInfants = @Model.Itinerary.InfantCount;
+    var gtmTravelClass = '@Model.Itinerary.RequestedCabinClass';
+    var gtmPurchaseValue = @Model.Itinerary.NetTotalFare;
+    var gtmPurchaseCurrency = 'IDR';
+    @if (Model.Itinerary.TripType.GetValueOrDefault() == TripType.RoundTrip)
+    {
+        @:var gtmReturningDepartureDate = '@gtmReturningDepartureDate';
+        @:var gtmReturningArrivalDate = '@gtmReturningArrivalDate';
+    }
+    var gtmPageValue = 'contact_form';
+    </script>
+
 }
 
 @switch ((string)ViewBag.Message)
