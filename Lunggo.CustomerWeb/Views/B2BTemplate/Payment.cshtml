@@ -16,13 +16,20 @@
 @section PageJS{
     <script>
         jQuery(document).ready(function ($) {
+            $('body .remove-payment').hide();
             var cloneIndex = $(".payment-item").length;
 
             function clone() {
-                $(this).closest('.payment-body').find('#payment-item-1').clone(false, false)
-                    .prependTo('.payment-body')
-                    .attr('id', 'payment-item-' + cloneIndex);
                 cloneIndex++;
+                $(this).closest('.payment-body').find('#payment-item-1').clone(false, false)
+                    .insertAfter('#payment-item-1')
+                    .attr('id', "payment-item-" + cloneIndex)
+                    .attr('count', cloneIndex);
+                if (cloneIndex > 1) {
+                    $(this).closest('.payment-body').find('#payment-item-' + cloneIndex + ' .remove-payment').show();
+                    $(this).closest('.payment-body').find('#payment-item-' + cloneIndex + ' .pi-status').find('.current-status').hide();
+                    $(this).closest('.payment-body').find('#payment-item-' + cloneIndex + ' .pi-status').append('<a class="set-status">' + 'Set As Primary' + '</a>');
+                }
             }
 
             function remove() {
@@ -30,7 +37,8 @@
             }
 
             $('body #add-payment').on('click', clone);
-            $('body .remove-payment').on('click', remove);
+
+            $('body').on('click', '.remove-payment', remove);
 
             $('body .btn-edit-payment').click(function () {
                 var size = $('input[name=slideup_toggler]:checked').val();
@@ -72,8 +80,8 @@
                             <i class="pg-trash"></i>
                         </button>
                     </div>
-                    <div class="pi-bottom clearfix">
-                        <div class="">Primary</div>
+                    <div class="pi-bottom clearfix font-montserrat bold small">
+                        <div class="pi-status"><span class="current-status">Primary</span></div>
                         <div class="pull-right"><a href="#" class="btn-edit-payment">Edit</a></div>
                     </div>
                 </div>

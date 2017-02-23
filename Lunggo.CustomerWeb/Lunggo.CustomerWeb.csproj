@@ -2794,6 +2794,7 @@
     <Content Include="Views\B2BTemplate\ConfirmPassword.cshtml" />
     <Content Include="Views\B2BTemplate\OrderListHotel.cshtml" />
     <Content Include="Views\B2BTemplate\OrderListFlight.cshtml" />
+    <Content Include="Views\B2BTemplate\UserManagement.cshtml" />
     <None Include="Views\Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

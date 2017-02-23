@@ -45,6 +45,17 @@ namespace Lunggo.CustomerWeb.Controllers
         {
             return View();
         }
-
+        public ActionResult OrderDetailFlight()
+        {
+            return View();
+        }
+        public ActionResult OrderDetailHotel()
+        {
+            return View();
+        }
+        public ActionResult UserManagement()
+        {
+            return View();
+        }
     }
 }
