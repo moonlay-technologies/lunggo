@@ -425,22 +425,22 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
                 if (returnData.cheapestDate != null && returnData.cheapestDate != '') {
                     cheapestDate = new Date(returnData.cheapestDate);
                     if (location == 'BAI') {
-                        $scope.priceHotel.Bali.cheapestDate = cheapestDate;
-                        $scope.priceHotel.Bali.cheapestPrice = cheapestPrice;
+                        $scope.priceHotel.Bali.CheapestDate = cheapestDate;
+                        $scope.priceHotel.Bali.CheapestPrice = cheapestPrice;
                     } else if (location == 'BDO') {
-                        $scope.priceHotel.Bandung.cheapestDate = cheapestDate;
-                        $scope.priceHotel.Bandung.cheapestPrice = cheapestPrice;
+                        $scope.priceHotel.Bandung.CheapestDate = cheapestDate;
+                        $scope.priceHotel.Bandung.CheapestPrice = cheapestPrice;
                     } else if (location == 'JOG') {
-                        $scope.priceHotel.Yogyakarta.cheapestDate = cheapestDate;
-                        $scope.priceHotel.Yogyakarta.cheapestPrice = cheapestPrice;
+                        $scope.priceHotel.Yogyakarta.CheapestDate = cheapestDate;
+                        $scope.priceHotel.Yogyakarta.CheapestPrice = cheapestPrice;
                     }
                     else if (location == 'JAV') {
-                        $scope.priceHotel.Jakarta.cheapestDate = cheapestDate;
-                        $scope.priceHotel.Jakarta.cheapestPrice = cheapestPrice;
+                        $scope.priceHotel.Jakarta.CheapestDate = cheapestDate;
+                        $scope.priceHotel.Jakarta.CheapestPrice = cheapestPrice;
                     }
                     else if (location == 'SUB') {
-                        $scope.priceHotel.Surabaya.cheapestDate = cheapestDate;
-                        $scope.priceHotel.Surabaya.cheapestPrice = cheapestPrice;
+                        $scope.priceHotel.Surabaya.CheapestDate = cheapestDate;
+                        $scope.priceHotel.Surabaya.CheapestPrice = cheapestPrice;
                     }
                 } else {}
             }).error(function () {});
