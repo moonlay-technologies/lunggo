@@ -84,13 +84,13 @@
                 @:var gtmNumAdults = @rsv.Itinerary.AdultCount;
                 @:var gtmNumChildren = @rsv.Itinerary.ChildCount;
                 @:var gtmNumInfants = @rsv.Itinerary.InfantCount;
-                @:var gtmTravelClass = '@rsv.Itinerary.RequestedCabinClass';
+                @:var gtmTravelClass = '@rsv.Itinerary.RequestedCabinClass.ToString().ToLower()';
                 @:var gtmPurchaseValue = @rsv.Payment.FinalPrice;
                 @:var gtmPurchaseCurrency = 'IDR';
                 @:var gtmCurrency = 'IDR';
                 @:var gtmValue = @rsv.Payment.FinalPrice;
                 @:var gtmTravoramaReservationId = '@Model.RsvNo';
-                @:var gtmPageNameValue = 'thank_you';
+                @:var gtmPageName = 'thank_you';
                 if (rsv.Itinerary.TripType.GetValueOrDefault() == TripType.RoundTrip)
             {
                 @:var gtmReturningDepartureDate = '@rsv.Itinerary.Trips[1].DepartureDate.GetValueOrDefault().ToString("yyyyMMdd")';
@@ -111,7 +111,7 @@
             @:var gtmNumChildren = @totalChild;
             @:var gtmPurchaseCurrency = 'IDR';
             @:var gtmPurchaseValue = @rsv.Payment.FinalPrice;
-            @:var gtmPageNameValue = 'thank_you';
+            @:var gtmPageName = 'thank_you';
             @:var gtmCurrency = 'IDR';
             @:var gtmValue = @rsv.Payment.FinalPrice;
             @:var gtmTravoramaReservationId = '@Model.RsvNo';

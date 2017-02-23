@@ -602,7 +602,7 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
                         t.src = v; s = b.getElementsByTagName(e)[0]; s.parentNode.insertBefore(t, s)
                     }(window, document, 'script', '//connect.facebook.net/en_US/fbevents.js');
 
-                    fbq('init', '<FB_PIXEL_ID>');
+                    //fbq('init', '<FB_PIXEL_ID>');
                     var lowestPrice;
                     var listPrice = [];
                     for (var i = 0; i < $scope.singleRoom.length; i++) {

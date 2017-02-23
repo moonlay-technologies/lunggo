@@ -115,7 +115,7 @@
     var gtmNumAdults = @Model.Itinerary.AdultCount;
     var gtmNumChildren = @Model.Itinerary.ChildCount;
     var gtmNumInfants = @Model.Itinerary.InfantCount;
-    var gtmTravelClass = '@Model.Itinerary.RequestedCabinClass';
+    var gtmTravelClass = '@Model.Itinerary.RequestedCabinClass.ToString().ToLower()';
     var gtmPurchaseValue = @Model.Itinerary.NetTotalFare;
     var gtmPurchaseCurrency = 'IDR';
     @if (Model.Itinerary.TripType.GetValueOrDefault() == TripType.RoundTrip)
@@ -123,7 +123,7 @@
         @:var gtmReturningDepartureDate = '@gtmReturningDepartureDate';
         @:var gtmReturningArrivalDate = '@gtmReturningArrivalDate';
     }
-    var gtmPageValue = 'contact_form';
+    var gtmPageName = 'contact_form';
     </script>
 
 }

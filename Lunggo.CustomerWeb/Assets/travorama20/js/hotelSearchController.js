@@ -347,7 +347,7 @@ function ($scope, $log, $window, $http, $resource, $timeout, $interval, hotelSea
                             t.src = v; s = b.getElementsByTagName(e)[0]; s.parentNode.insertBefore(t, s)
                         }(window,document, 'script', '//connect.facebook.net/en_US/fbevents.js');
 
-                        fbq('init', '<FB_PIXEL_ID>');
+                        //fbq('init', '<FB_PIXEL_ID>');
 
                         fbq('track', 'Search', {
                             content_type: 'hotel',
