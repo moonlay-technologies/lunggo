@@ -11,7 +11,6 @@
 }
 
 @section AdditionalJS{
-    @*<script src="/Assets/B2BTravorama/assets/js/demo.js" type="text/javascript"></script>*@
 }
 
 @section PageJS{
@@ -22,19 +21,24 @@
             function clone() {
                 $(this).closest('.payment-body').find('#payment-item-1').clone(false, false)
                     .prependTo('.payment-body')
-                    .attr('id', "payment-item-" + cloneIndex);
+                    .attr('id', 'payment-item-' + cloneIndex);
                 cloneIndex++;
             }
 
+            function remove() {
+                $(this).parents('.payment-item').remove();
+            }
+
             $('body #add-payment').on('click', clone);
+            $('body .remove-payment').on('click', remove);
 
             $('body .btn-edit-payment').click(function () {
-                var size = $('input[name=slideup_toggler]:checked').val()
+                var size = $('input[name=slideup_toggler]:checked').val();
                 var modalElem = $('.modal-edit-payment');
                 if (size == "mini") {
-                    $('.modal-edit-payment').modal('show')
+                    $('.modal-edit-payment').modal('show');
                 } else {
-                    $('.modal-edit-payment').modal('show')
+                    $('.modal-edit-payment').modal('show');
                     if (size == "default") {
                         modalElem.children('.modal-dialog').removeClass('modal-lg');
                     } else if (size == "full") {
@@ -64,6 +68,9 @@
                             <div class="font-montserrat bold">Visa ****0003</div>
                             <div class="small hint-text">Expires 05/20</div>
                         </div>
+                        <button class="btn remove-payment">
+                            <i class="pg-trash"></i>
+                        </button>
                     </div>
                     <div class="pi-bottom clearfix">
                         <div class="">Primary</div>
@@ -73,7 +80,7 @@
             </div>
             <div class="payment-add col-sm-6 m-b-20">
                 <div class="pa-wrapper clearfix">
-                    <a class="font-montserrat bold" id="add-payment"><i class="fa fa-credit-card m-r-5"></i>ADD PAYMENT METHOD</a>
+                    <a class="font-montserrat bold" id="add-payment"><i class="fa fa-plus-square m-r-5"></i>ADD PAYMENT METHOD</a>
                 </div>
             </div>
         </div>
@@ -138,7 +145,7 @@
                     </form>
                     <div class="row">
                         <div class="col-sm-6 m-t-10 sm-m-t-10">
-                            <button type="button" class="btn btn-primary btn-block m-t-5">Kembali</button>
+                            <button type="button" class="btn btn-default btn-cons btn-block m-t-5" data-dismiss="modal">Kembali</button>
                         </div>
                         <div class="col-sm-6 m-t-10 sm-m-t-10">
                             <button type="button" class="btn btn-primary btn-block m-t-5">Simpan</button>
