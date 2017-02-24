@@ -117,21 +117,21 @@
             <header class="tab-header">
                 <nav>
                     <ul>
-                        <li class="flight"><a data-toggle="tab" id="#plane" ng-click="showForm('flight')">Pesawat</a></li>
-                        <li class="hotel active"><a data-toggle="tab" id="#hotel" ng-click="showForm('hotel')">Hotel</a></li>
+                        <li class="flight @(ViewBag.IndexType == null || ViewBag.IndexType == "flight" ? "active" : "")"><a data-toggle="tab" id="#plane" ng-click="showForm('flight')">Pesawat</a></li>
+                        <li class="hotel @(ViewBag.IndexType != null && ViewBag.IndexType == "hotel" ? "active" : "")"><a data-toggle="tab" id="#hotel" ng-click="showForm('hotel')">Hotel</a></li>
                         @*<li class="activity" data-toggle="tooltip" data-placement="bottom" title="Coming soon!"><a href="#">Activity</a></li>*@
                     </ul>
                 </nav>
             </header>
             <section class="tab-content">
-                <div class="tab-flight tab-pane cleafix" id="plane" ng-class="{'active' : isFlight}">
+                <div class="tab-flight tab-pane clearfix @(ViewBag.IndexType == null || ViewBag.IndexType == "flight" ? "active" : "")" id="plane">
                     <form class="form form-horizontal form-flight" action="id/Flight/" method="GET" autocomplete="off">
                         <h3 class="text-center">Cari <b>Tiket Pesawat</b></h3>
 
                         <div class="form-group flight-type">
                             <div class="col-xs-6">
                                 <label>
-                                    <input type="radio" name="flightType" class="form-flight-type" value="return"/>
+                                    <input type="radio" name="flightType" class="form-flight-type" value="return" />
                                     <span>Pulang Pergi</span>
                                 </label>
                             </div>
@@ -258,7 +258,7 @@
 
                     </form>
                 </div><!-- .tab-flight -->
-                <div class="tab-hotel tab-pane clearfix active" id="hotel" ng-class="{'active' : !isFlight}">
+                <div class="tab-hotel tab-pane clearfix @(ViewBag.IndexType != null && ViewBag.IndexType == "hotel" ? "active" : "")" id="hotel">
                     <div>
                         <h3 class="text-center">Cari <b>Kamar Hotel</b><br /><span class="sub-title">(Domestik &amp; Internasional)</span></h3>
                         <form class="form form-horizontal form-hotel page-hotel" ng-submit="hotel.searchHotel()" autocomplete="off">

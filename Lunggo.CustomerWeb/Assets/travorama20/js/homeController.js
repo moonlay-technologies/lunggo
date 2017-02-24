@@ -115,9 +115,9 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
     
     $scope.showForm= function(tab) {
         if (tab == 'hotel') {
-            $scope.isFlight = false;
+            $('body .menu-main li#header-hotel').click();
         } else if (tab == 'flight') {
-            $scope.isFlight = true;
+            $('body .menu-main li#header-flight').click();
         }
     }
     //=============== hotel start ======================
@@ -304,10 +304,10 @@ jQuery(document).ready(function ($) {
             itemF.parent().find('#plane').addClass('active');
             itemF.parent().find('#plane').siblings().removeClass('active');
 
-            var linkF = $(this).find('a').attr('id', '#plane');
+            //var linkF = $(this).find('a').attr('id', '#plane');
 
-            linkF.parent().addClass('active');
-            linkF.parent().siblings().removeClass('active');
+            //linkF.parent().addClass('active');
+            //linkF.parent().siblings().removeClass('active');
 
         } else if ($(this).is('#header-hotel')) {
             var item = $(this).closest('.site-header').parent();
@@ -317,23 +317,23 @@ jQuery(document).ready(function ($) {
             item.parent().find('#hotel').addClass('active');
             item.parent().find('#hotel').siblings().removeClass('active');
 
-            var link = $(this).find('a').attr('id', '#hotel');
+            //var link = $(this).find('a').attr('id', '#hotel');
 
-            link.parent().addClass('active');
-            link.parent().siblings().removeClass('active');
+            //link.parent().addClass('active');
+            //link.parent().siblings().removeClass('active');
 
         }
     });
 
-    $('body .tab-header li').click(function () {
-        if ($(this).hasClass('flight')) {
-            $(this).closest('.site-content').parent().find('.menu-main').find('#header-flight').addClass('active');
-            $(this).closest('.site-content').parent().find('.menu-main').find('#header-flight').siblings().removeClass('active');
-        } else if ($(this).hasClass('hotel')) {
-            $(this).closest('.site-content').parent().find('.menu-main').find('#header-hotel').addClass('active');
-            $(this).closest('.site-content').parent().find('.menu-main').find('#header-hotel').siblings().removeClass('active');
-        }
-    });
+    //$('body .tab-header li').click(function () {
+    //    if ($(this).hasClass('flight')) {
+    //        $(this).closest('.site-content').parent().find('.menu-main').find('#header-flight').addClass('active');
+    //        $(this).closest('.site-content').parent().find('.menu-main').find('#header-flight').siblings().removeClass('active');
+    //    } else if ($(this).hasClass('hotel')) {
+    //        $(this).closest('.site-content').parent().find('.menu-main').find('#header-hotel').addClass('active');
+    //        $(this).closest('.site-content').parent().find('.menu-main').find('#header-hotel').siblings().removeClass('active');
+    //    }
+    //});
 
     // Slider Home Page Desktop
     $('.page-slider .slider a').each(function () {

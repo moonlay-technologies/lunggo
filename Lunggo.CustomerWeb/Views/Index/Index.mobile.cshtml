@@ -59,15 +59,15 @@
     </div>
     <div class="main-tab">
         <ul class="nav nav-tabs tab-detail">
-            <li class="col-xs-6">
+            <li class="col-xs-6 @(ViewBag.IndexType == null || ViewBag.IndexType == "flight" ? "active" : "")">
                 <a class="tab-flight" data-toggle="tab" ng-click="showForm('flight')">Pesawat</a>
             </li>
-            <li class="col-xs-6 active">
+            <li class="col-xs-6 @(ViewBag.IndexType != null && ViewBag.IndexType == "hotel" ? "active" : "")">
                 <a class="tab-hotel" data-toggle="tab" ng-click="showForm('hotel')">Hotel</a>
             </li>
         </ul>
         <div class="tab-content">
-            <div id="tab-flight" class="tab-pane tp-flight" ng-class="{'active' : isFlight}">
+            <div id="tab-flight" class="tab-pane tp-flight @(ViewBag.IndexType == null || ViewBag.IndexType == "flight" ? "active" : "")">
                 <div class="form-wrapper">
                     <form class="flight-form" name="flight-form" ng-submit="FlightSearchForm.Submit()" novalidate>
                         <div class="top-form row">
@@ -159,7 +159,7 @@
                     </form><!-- .flight-form -->
                 </div><!-- .form-wrapper -->
             </div>
-            <div id="tab-hotel" class="tab-pane tp-hotel page-hotel-mobile active" ng-class="{'active' : !isFlight}">
+            <div id="tab-hotel" class="tab-pane tp-hotel page-hotel-mobile @(ViewBag.IndexType != null && ViewBag.IndexType == "hotel" ? "active" : "")">
                 <div class="form-wrapper">
                     @Html.Partial("/Views/Shared/Mobile/_SearchHotelForm.cshtml", new HotelLocation
                     {
