@@ -7,6 +7,7 @@
 }
 
 @section AdditionalCSS{
+    <link href="/Assets/css/autocomplete.css" rel="stylesheet" />
 }
 
 @section AdditionalJS{
@@ -19,6 +20,8 @@
     <script src="/Assets/js/moment-with-locales.min.js"></script>
     <script src="/Assets/js/xml2json.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.5/angular-resource.js"></script>
+    <script src="/Assets/B2BTravorama/assets/js/form_elements.js" type="text/javascript"></script>
+    
 }
 
 @section PageJS{
@@ -65,22 +68,35 @@
                     <div class="col-sm-6">
                         <div class="form-group form-group-default input-group depDate">
                             <label>Tanggal Berangkat</label>
+                            <input type="email" class="form-control" placeholder="Pilih tanggal berangkat" id="departureDate">
+                            <span class="input-group-addon">
+                                <i class="fa fa-calendar"></i>
+                            </span>
+
+                            @*<label>Tanggal Berangkat</label>
                             <input hidden name="depDate" id="departureDate" />
                             <input type="email" class="form-control" id="valueDepDate" placeholder="Pilih tanggal berangkat" />
                             <span class="input-group-addon">
                                 <i class="fa fa-calendar"></i>
-                            </span>
+                            </span>*@
                         </div>
                     </div>
                     <div class="col-sm-6">
                         <div class="form-group form-group-default input-group retDate">
-                            <label>Tanggal Kembali</label>
+                            
+                            <label>Tanggal Berangkat</label>
+                            <input type="email" class="form-control" placeholder="Pilih tanggal kembali" id="returnDate">
+                            <span class="input-group-addon">
+                                <i class="fa fa-calendar"></i>
+                            </span>
+
+                            @*<label>Tanggal Kembali</label>
                             <input hidden name="retDate" id="returnDate" />
                             <input type="email" class="form-control" placeholder="Pilih tanggal kembali" id="valueRetDate"/>
                             
                             <span class="input-group-addon">
                                 <i class="fa fa-calendar"></i>
-                            </span>
+                            </span>*@
                         </div>
                     </div>
                 </div>
@@ -90,16 +106,35 @@
                             <label class="label-custom">Dewasa</label>
                             <span class="help m-l-5">(> 12 tahun)</span>
                             <select class="cs-select cs-skin-slide adultPax" data-init-plugin="cs-select" ng-model="Passenger.Adult">
-                                <option class="option" value="{{amount}}" ng-repeat="amount in Passenger.PaxAmtAdult">{{amount}}</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
                             </select>
+
                         </div>
                     </div>
                     <div class="col-sm-4">
                         <div class="form-group form-group-default ">
                             <label class="label-custom">Anak-anak</label>
                             <span class="help m-l-5">(2 - 12 tahun)</span>
-                            <select class="cs-select cs-skin-slide childPax" data-init-plugin="cs-select" ng-model="Passenger.Child">
-                                <option class="option" value="{{amount}}" ng-repeat="amount in Passenger.PaxAmtElse">{{amount}}</option>
+                            <select class="cs-select cs-skin-slide childPax" data-init-plugin="cs-select" ng-model="Passenger.Child"
+                                    >
+                                <option value="0">0</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
                             </select>
                         </div>
                     </div>
@@ -108,7 +143,16 @@
                             <label class="label-custom">bayi</label>
                             <span class="help m-l-5">(< 2 tahun)</span>
                             <select class="cs-select cs-skin-slide infantPax" data-init-plugin="cs-select" ng-model="Passenger.Infant">
-                                <option class="option" value="{{amount}}" ng-repeat="amount in Passenger.PaxAmtElse">{{amount}}</option>
+                                <option value="0">0</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
                             </select>
                         </div>
                     </div>
@@ -118,7 +162,9 @@
                         <div class="form-group form-group-default input-custom">
                             <label class="label-custom">Kelas</label>
                             <select class="cs-select cs-skin-slide pax" data-init-plugin="cs-select" ng-model="searchParam.CabinClass">
-                                <option value="{{cabin.value}}" ng-repeat="cabin in cabinClass">{{cabin.name}}</option>
+                                <option value="y">Ekonomi</option>
+                                <option value="c">Bisnis</option>
+                                <option value="f">Utama</option>
                             </select>
                         </div>
                     </div>

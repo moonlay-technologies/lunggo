@@ -346,6 +346,7 @@
             scope.hotelSearch.urlData.zone = location.zone;
             scope.hotelSearch.urlData.area = location.area;
             scope.hotelSearch.urlData.type = location.type;
+            $('.search-hotel').hide();
         }
 
         //autocomplete desktop

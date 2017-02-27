@@ -79,11 +79,6 @@
         </div>
     }
     
-    @if (IsSectionDefined("AdditionalJS"))
-    {
-        @RenderSection("AdditionalJS");
-    }
-    
     <script src="/Assets/B2BTravorama/assets/plugins/pace/pace.min.js" type="text/javascript"></script>
     <script src="/Assets/B2BTravorama/assets/plugins/jquery/jquery-1.11.1.min.js" type="text/javascript"></script>
     <script src="/Assets/B2BTravorama/assets/plugins/modernizr.custom.js" type="text/javascript"></script>
@@ -118,7 +113,12 @@
     <script src="/Assets/B2BTravorama/assets/js/form_elements.js" type="text/javascript"></script>
     <script src="/Assets/B2BTravorama/assets/js/scripts.js" type="text/javascript"></script>
     <script src="/Config/JsConfig.js"></script>
-
+    
+    @if (IsSectionDefined("AdditionalJS"))
+    {
+        @RenderSection("AdditionalJS");
+    }
+    
     @if (IsSectionDefined("PageJS"))
     {
         @RenderSection("PageJS");

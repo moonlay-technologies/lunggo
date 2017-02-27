@@ -1,0 +1,147 @@
+﻿@{
+    Layout = "/Views/Shared/B2BTravorama/_B2BLayout.cshtml";
+    ViewBag.BodyClass = "b2b-order-list flight";
+    ViewBag.SiteHeader = "b2b-order-list";
+    ViewBag.Title = "Order List Flight";
+    ViewBag.AngularController = "";
+
+}
+
+@section AdditionalCSS{
+}
+
+@section AdditionalJS{
+    <script src="/Assets/B2BTravorama/assets/plugins/jquery-datatable/media/js/jquery.dataTables.min.js" type="text/javascript"></script>
+    <script src="/Assets/B2BTravorama/assets/plugins/jquery-datatable/extensions/TableTools/js/dataTables.tableTools.min.js" type="text/javascript"></script>
+    <script src="/Assets/B2BTravorama/assets/plugins/jquery-datatable/media/js/dataTables.bootstrap.js" type="text/javascript"></script>
+    <script src="/Assets/B2BTravorama/assets/plugins/jquery-datatable/extensions/Bootstrap/jquery-datatable-bootstrap.js" type="text/javascript"></script>
+    <script type="text/javascript" src="/Assets/B2BTravorama/assets/plugins/datatables-responsive/js/datatables.responsive.js"></script>
+    <script type="text/javascript" src="/Assets/B2BTravorama/assets/plugins/datatables-responsive/js/lodash.min.js"></script>
+}
+
+@section PageJS{
+    <script src="/Assets/B2BTravorama/assets/js/tables.js" type="text/javascript"></script>
+}
+
+<div class="order-list">
+    <div class="panel panel-transparent">
+        <div class="panel-heading">
+            <div class="panel-title">
+                Order List Tiket Pesawat
+            </div>
+            <div class="btn-group pull-right m-b-10">
+                <button type="button" class="btn btn-default">Add new</button>
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" role="menu">
+                    <li>
+                        <a href="#">Settings</a>
+                    </li>
+                    <li>
+                        <a href="#">Help</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+        <div class="panel-body bg-white">
+            <div class="table-responsive">
+                <table class="table table-hover" id="">
+                    <thead>
+                        <tr>
+                            <th style="width:12.5%">No. Reservasi</th>
+                            <th style="width:12.5%">Rute</th>
+                            <th style="width:12.5%">Tipe Penerbangan</th>
+                            <th style="width:12.5%">Tanggal Pergi</th>
+                            <th style="width:12.5%">Tanggal Pulang</th>
+                            <th style="width:12.5%">Status Pembayaran</th>
+                            <th style="width:12.5%">Waktu Expired</th>
+                            <th style="width:12.5%">Order Detail</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="v-align-middle ">
+                                <p>100026540405</p>
+                            </td>
+                            <td class="v-align-middle">
+                                <p>CGK - MLG</p>
+                            </td>
+                            <td class="v-align-middle">
+                                <p>ONE-WAY</p>
+                            </td>
+                            <td class="v-align-middle">
+                                <p>18 Jan 2017</p>
+                            </td>
+                            <td class="v-align-middle">
+                                <p>-</p>
+                            </td>
+                            <td class="v-align-middle">
+                                <button class="btn btn-complete btn-cons">Complete</button>
+                            </td>
+                            <td class="v-align-middle">
+                                <p>1 Jan 2017 10:48:38</p>
+                            </td>
+                            <td class="v-align-middle">
+                                <button class="btn btn-primary btn-cons"><i class="fa fa-eye m-r-5"></i>View</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="v-align-middle ">
+                                <p>100026540405</p>
+                            </td>
+                            <td class="v-align-middle">
+                                <p>CGK - MLG</p>
+                            </td>
+                            <td class="v-align-middle">
+                                <p>RETURN</p>
+                            </td>
+                            <td class="v-align-middle">
+                                <p>18 Jan 2017</p>
+                            </td>
+                            <td class="v-align-middle">
+                                <p>18 Jan 2017</p>
+                            </td>
+                            <td class="v-align-middle">
+                                <button class="btn btn-danger btn-cons">Expired</button>
+                            </td>
+                            <td class="v-align-middle">
+                                <p>1 Jan 2017 10:48:38</p>
+                            </td>
+                            <td class="v-align-middle">
+                                <button class="btn btn-primary btn-cons"><i class="fa fa-eye m-r-5"></i>View</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="v-align-middle ">
+                                <p>100026540405</p>
+                            </td>
+                            <td class="v-align-middle">
+                                <p>CGK - MLG</p>
+                            </td>
+                            <td class="v-align-middle">
+                                <p>RETURN</p>
+                            </td>
+                            <td class="v-align-middle">
+                                <p>18 Jan 2017</p>
+                            </td>
+                            <td class="v-align-middle">
+                                <p>18 Jan 2017</p>
+                            </td>
+                            <td class="v-align-middle">
+                                <button class="btn btn-default btn-cons">Pending</button>
+                            </td>
+                            <td class="v-align-middle">
+                                <p>1 Jan 2017 10:48:38</p>
+                            </td>
+                            <td class="v-align-middle">
+                                <button class="btn btn-primary btn-cons"><i class="fa fa-eye m-r-5"></i>View</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

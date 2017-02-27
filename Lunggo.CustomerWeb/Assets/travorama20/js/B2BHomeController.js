@@ -47,8 +47,8 @@ app.controller('B2BFlightSearchFormController', ['$scope', '$log', '$http', '$lo
                 $scope.searchParam.DepartureDate.getMonth(), $scope.searchParam.DepartureDate.getFullYear());
         var valRetDate = $scope.setDateWriting($scope.searchParam.ReturnDate.getDate(),
             $scope.searchParam.ReturnDate.getMonth(), $scope.searchParam.ReturnDate.getFullYear());
-        $('#valueDepDate').val(valDepDate);
-        $('#valueRetDate').val(valRetDate);
+        $('#departureDate').val(valDepDate);
+        $('#returnDate').val(valRetDate);
 
         if (Cookies.get('type')) {
             if (Cookies.get('type') == 'OneWay') {
@@ -90,7 +90,10 @@ app.controller('B2BFlightSearchFormController', ['$scope', '$log', '$http', '$lo
             $scope.Passenger.Infant = 0;
         }
 
-        $('.adultPax').val($scope.Passenger.Adult);
+        //$('.adultPax').val("5");
+        $(".adultPax .cs-placeholder").text($scope.Passenger.Adult);
+        $(".childPax .cs-placeholder").text($scope.Passenger.Child);
+        $(".infantPax .cs-placeholder").text($scope.Passenger.Infant);
         $('.childPax').val($scope.Passenger.Child);
         $('.infantPax').val($scope.Passenger.Infant);
         if (Cookies.get('cabin')) {
@@ -99,6 +102,10 @@ app.controller('B2BFlightSearchFormController', ['$scope', '$log', '$http', '$lo
             $scope.searchParam.CabinClass = 'y';
         }
         $('.pax').val($scope.searchParam.CabinClass);
+        var result = $scope.cabinClass.filter(function (obj) {
+            return obj.value == $scope.searchParam.CabinClass;
+        })[0].name;
+        $(".pax .cs-placeholder").text(result);
     });
 
     $scope.Passenger = {
@@ -200,32 +207,15 @@ app.controller('B2BFlightSearchFormController', ['$scope', '$log', '$http', '$lo
     
     $('.search-location').hide();
 
-    $scope.$watch('Passenger.Infant',
-        function (newValue, oldValue) {
-            newValue = parseInt(newValue);
-            oldValue = parseInt(oldValue);
-            if (newValue > $scope.Passenger.Adult) {
-                alert('Jumlah bayi tidak boleh lebih dari penumpang dewasa');
-                $scope.Passenger.Infant = oldValue;
-            } else {
-                $scope.TotalPax = $scope.Passenger.Adult + $scope.Passenger.Child;
-                if (9 - $scope.TotalPax < newValue) {
-                    alert('Jumlah penumpang tidak boleh lebih dari sembilan orang');
-                    $scope.Passenger.Infant = oldValue;
-                } else {
-                    $scope.Passenger.Infant = newValue;
-                }        
-            }
-        });
-
     $scope.$watch('Passenger.Adult',
         function (newValue, oldValue) {
             newValue = parseInt(newValue);
             oldValue = parseInt(oldValue);
-            $scope.TotalPax = $scope.Passenger.Child + $scope.Passenger.Infant;
-            if (9 - $scope.TotalPax < newValue) {
+            var TotalPax = $scope.Passenger.Child + $scope.Passenger.Infant;
+            if (9 - TotalPax < newValue) {
                 alert('Jumlah penumpang tidak boleh lebih dari sembilan orang');
-                $scope.Passenger.Adult = oldValue;
+                $scope.Passenger.Adult = 9 - TotalPax;
+                $('.adultPax').val(9 - TotalPax);
             } else {
                 $scope.Passenger.Adult = newValue;
             }         
@@ -235,15 +225,39 @@ app.controller('B2BFlightSearchFormController', ['$scope', '$log', '$http', '$lo
         function (newValue, oldValue) {
             newValue = parseInt(newValue);
             oldValue = parseInt(oldValue);
-            $scope.TotalPax = $scope.Passenger.Adult + $scope.Passenger.Infant;
-            if (9 - $scope.TotalPax < newValue) {
+            var TotalPax = $scope.Passenger.Adult + $scope.Passenger.Infant;
+            if (9 - TotalPax < newValue) {
                 alert('Jumlah penumpang tidak boleh lebih dari sembilan orang');
-                $scope.Passenger.Child = oldValue;
+                $scope.Passenger.Child = 9 - TotalPax;
+                $('.childPax').val(9 - TotalPax);
             } else {
                 $scope.Passenger.Child = newValue;
             }
         });
 
+    $scope.$watch('Passenger.Infant',
+        function (newValue, oldValue) {
+            newValue = parseInt(newValue);
+            oldValue = parseInt(oldValue);
+            if (newValue > $scope.Passenger.Adult) {
+                alert('Jumlah bayi tidak boleh lebih dari penumpang dewasa');
+                $('.infantPax').val($scope.Passenger.Infant);
+                $scope.Passenger.Infant = $scope.Passenger.Adult;
+            } else {
+                var TotalPax = $scope.Passenger.Adult + $scope.Passenger.Child;
+                if (9 - TotalPax < newValue) {
+                    alert('Jumlah penumpang tidak boleh lebih dari sembilan orang');
+                    $scope.Passenger.Infant = 9 - TotalPax;
+                    $('.infantPax').val(9 - TotalPax);
+                } else {
+                    $scope.Passenger.Infant = newValue;
+                }
+            }
+        });
+
+    $('#originPlace, #destinationPlace').click(function() {
+        $(this).select();
+    });
     $('#originPlace').keyup(function (evt) {
         if (evt.keyCode == 27) {
             hideLocation();
@@ -262,6 +276,7 @@ app.controller('B2BFlightSearchFormController', ['$scope', '$log', '$http', '$lo
         }
     });
     $('#originPlace').keydown(function (evt) {
+        
         if (evt.keyCode == 9 || evt.which == 9) {
             evt.preventDefault();
         }
@@ -271,6 +286,7 @@ app.controller('B2BFlightSearchFormController', ['$scope', '$log', '$http', '$lo
     });
 
     $('#destinationPlace').keyup(function (evt) {
+       
         if (evt.keyCode == 27) {
             hideLocation();
         } else {
@@ -303,6 +319,10 @@ app.controller('B2BFlightSearchFormController', ['$scope', '$log', '$http', '$lo
             $('.autocomplete-result ul').append('<li href="#" data-code="' + list[i].code + '" data-city="' + list[i].city + '">' + list[i].city + ' (' + list[i].code + '), ' + list[i].name + ', ' + list[i].country + '</li>');
         }
     }
+
+    $('.close-location').click(function() {
+        $('.search-location').hide();
+    });
     function getLocation(keyword) {
         if (trial > 3) {
             trial = 0;
@@ -438,6 +458,7 @@ app.controller('B2BFlightSearchFormController', ['$scope', '$log', '$http', '$lo
     $scope.setOptionCalendar = function(target) {
         $scope.selectCalendar = target;
     }
+
     
     $('#departureDate').change(function () {
         //$log.debug($('#departureDate').val());

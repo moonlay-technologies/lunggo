@@ -1227,6 +1227,12 @@
     <Content Include="Assets\B2BTravorama\pages\js\pages.social.min.js" />
     <Content Include="Assets\bootstrap\bootstrap.css" />
     <Content Include="Assets\bootstrap\bootstrap.min.css" />
+    <Content Include="Assets\css\autocomplete.css">
+      <DependentUpon>autocomplete.scss</DependentUpon>
+    </Content>
+    <Content Include="Assets\css\autocomplete.min.css">
+      <DependentUpon>autocomplete.css</DependentUpon>
+    </Content>
     <Content Include="Assets\css\font-awesome.min.css" />
     <Content Include="Assets\css\global-error.css">
       <DependentUpon>global-error.scss</DependentUpon>
@@ -2606,6 +2612,7 @@
     <Content Include="Assets\B2BTravorama\pages\scss\_responsive.scss" />
     <Content Include="Assets\B2BTravorama\pages\scss\_var.scss" />
     <Content Include="Assets\css\style_b2b.scss" />
+    <Content Include="Assets\css\autocomplete.scss" />
     <None Include="Properties\PublishProfiles\prod-cw %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\dv1-cw.pubxml" />
     <None Include="Properties\PublishProfiles\dv2-cw.pubxml" />
@@ -2796,6 +2803,9 @@
     <Content Include="Views\B2BTemplate\ResetPassword.cshtml" />
     <Content Include="Views\B2BTemplate\ConfirmPassword.cshtml" />
     <Content Include="Views\Shared\B2BTravorama\_SearchHotel.cshtml" />
+    <Content Include="Views\B2BTemplate\OrderListHotel.cshtml" />
+    <Content Include="Views\B2BTemplate\OrderListFlight.cshtml" />
+    <Content Include="Views\B2BTemplate\UserManagement.cshtml" />
     <None Include="Views\Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
