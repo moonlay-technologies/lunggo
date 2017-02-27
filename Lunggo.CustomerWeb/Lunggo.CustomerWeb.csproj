@@ -1227,6 +1227,9 @@
     <Content Include="Assets\B2BTravorama\pages\js\pages.social.min.js" />
     <Content Include="Assets\bootstrap\bootstrap.css" />
     <Content Include="Assets\bootstrap\bootstrap.min.css" />
+    <Content Include="Assets\css\autocomplete.css">
+      <DependentUpon>autocomplete.scss</DependentUpon>
+    </Content>
     <Content Include="Assets\css\font-awesome.min.css" />
     <Content Include="Assets\css\global-error.css">
       <DependentUpon>global-error.scss</DependentUpon>
@@ -2603,6 +2606,7 @@
     <Content Include="Assets\B2BTravorama\pages\scss\_responsive.scss" />
     <Content Include="Assets\B2BTravorama\pages\scss\_var.scss" />
     <Content Include="Assets\css\style_b2b.scss" />
+    <Content Include="Assets\css\autocomplete.scss" />
     <None Include="Properties\PublishProfiles\prod-cw %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\dv1-cw.pubxml" />
     <None Include="Properties\PublishProfiles\dv2-cw.pubxml" />
