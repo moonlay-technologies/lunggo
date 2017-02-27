@@ -1,6 +1,8 @@
 ﻿using System.Net;
 using CsQuery;
+using DeathByCaptcha;
 using Lunggo.Framework.Config;
+using Lunggo.Framework.Log;
 using RestSharp;
 
 namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
@@ -140,19 +142,35 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                 var accReq = new RestRequest("/api/LionAirAccount/LogOut?userId=" + username, Method.GET);
                 var accRs = (RestResponse)client.Execute(accReq);
             }
-            private static string ReadCaptcha(byte[] captcha)
+
+            /* USING DEATHBYCAPTCHA */
+
+            private static string ReadCaptcha(byte[] captchaImg)
             {
-                var cloudAppUrl = ConfigManager.GetInstance().GetConfigValue("general", "cloudAppUrl");
-                var client = new RestClient(cloudAppUrl);
-                var captchaRq = new RestRequest("/api/captcha/lionairbreak", Method.POST);
-                captchaRq.AddHeader("Host", "localhost:14938");
-                captchaRq.AddHeader("Accept-Encoding", "gzip, deflate, sdch");
-                captchaRq.AddHeader("Content-Type", "multipart/form-data");
-                captchaRq.AddHeader("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,i  mage/webp,*/*;q=0.8");
-                captchaRq.AddFileBytes("captcha", captcha, "captcha");
-                var captchaRs = client.Execute(captchaRq);
-                return captchaRs.Content.Trim('"');
+                //var username = ConfigManager.GetInstance().GetConfigValue("deathbycaptcha", "userName");
+                //var password = ConfigManager.GetInstance().GetConfigValue("deathbycaptcha", "password");
+                var username = "ramaadhitia_tmi";
+                var password = "Standar1234";
+                var client = (Client)new SocketClient(username, password);
+                var captcha = client.Decode(captchaImg, 15);
+                return captcha != null ? captcha.Text : "";
             }
+
+            /* USING CLOUD APP */
+
+            //private static string ReadCaptcha(byte[] captcha)
+            //{
+            //    var cloudAppUrl = ConfigManager.GetInstance().GetConfigValue("general", "cloudAppUrl");
+            //    var client = new RestClient(cloudAppUrl);
+            //    var captchaRq = new RestRequest("/api/captcha/lionairbreak", Method.POST);
+            //    captchaRq.AddHeader("Host", "localhost:14938");
+            //    captchaRq.AddHeader("Accept-Encoding", "gzip, deflate, sdch");
+            //    captchaRq.AddHeader("Content-Type", "multipart/form-data");
+            //    captchaRq.AddHeader("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,i  mage/webp,*/*;q=0.8");
+            //    captchaRq.AddFileBytes("captcha", captcha, "captcha");
+            //    var captchaRs = client.Execute(captchaRq);
+            //    return captchaRs.Content.Trim('"');
+            //}
 
             //Get Deposit for Lion Air
             private static decimal getDeposit() 

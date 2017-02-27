@@ -43,6 +43,9 @@
     <Reference Include="Dapper">
       <HintPath>..\packages\Dapper.1.22\lib\net45\Dapper.dll</HintPath>
     </Reference>
+    <Reference Include="DeathByCaptcha">
+      <HintPath>..\packages\DeathByCaptcha\DeathByCaptcha.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework">
       <HintPath>..\packages\EntityFramework.6.1.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
