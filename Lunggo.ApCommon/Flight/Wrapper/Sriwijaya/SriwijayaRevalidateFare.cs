@@ -359,6 +359,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                                 IsSuccess = false,
                                 IsValid = false,
                                 Errors = new List<FlightError> { FlightError.FareIdNoLongerValid },
+                                ErrorMessages = new List<string> { "[Sriwijaya] Failed to get Fare ID | "}
                             };
                         }
                         #endregion
@@ -531,6 +532,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                                     IsSuccess = false,
                                     IsValid = false,
                                     Errors = new List<FlightError> { FlightError.FareIdNoLongerValid },
+                                    ErrorMessages = new List<string> { "[Sriwijaya] Failed to get Fare ID || " + htmlRespon }
                                 };
                             }
                             #endregion
@@ -699,6 +701,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                                         IsSuccess = false,
                                         IsValid = false,
                                         Errors = new List<FlightError> { FlightError.FareIdNoLongerValid },
+                                        ErrorMessages = new List<string> { "[Sriwijaya] Failed to get Fare ID || " + htmlRespon }
                                     };
                                 }
                                 #endregion
@@ -712,6 +715,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                                     IsSuccess = false,
                                     IsValid = false,
                                     Errors = new List<FlightError> { FlightError.FareIdNoLongerValid },
+                                    ErrorMessages = new List<string> { "[Sriwijaya] Failed to get Fare ID || " + htmlRespon }
                                 };
                             }
                     Logout(client);

@@ -1,0 +1,69 @@
+﻿@using Lunggo.ApCommon.Flight.Constant
+@model Lunggo.ApCommon.Flight.Model.FlightReservation
+
+@{
+    ViewBag.Title = "Flight Reservation Detail";
+}
+
+@if (Model != null)
+{
+    <br />
+    <div class="alert alert-danger">
+        <b>WARNING!</b>
+        <br/>
+        Only continue this override if and only if you are sure that all the bookings are already been issued through manual means.
+        <br/>
+        This action is irreversible and will override the resevation status as "Issued" and then automatically send the e-ticket e-mail.
+        <br/>
+        Please review the reservation detail below.
+        <br/>
+        <b>For non-Mystifly only! <span style="font-size:10px">because it copies the PNR from the Booking ID</span></b>
+    </div>
+    <form action="@Url.Action("ConfirmOverrideIssue", "Flight", new {rsvNo = Model.RsvNo})" method="POST">
+        <button type="submit" class="btn btn-danger">Confirm Override Issue Status</button>
+    </form>
+
+    <h3>
+        <i class="fa fa-angle-right"></i> Flight Reservation <small> > @Model.RsvNo</small>
+    </h3>
+
+    <div class="row">
+        @{ Html.RenderPartial("RenderReservation", Model); }
+    </div>
+
+    <div class="row">
+        @{
+            var count = 0;
+        }
+        @foreach (var trip in Model.Itineraries.SelectMany(p => p.Trips))
+        {
+            <div class="col-md-8">
+                <div class="showback">
+                    @if (count == 0)
+                    {
+                        <h4><b>Depart Flight</b></h4>
+                    }
+                    else
+                    {
+                        <h4><b>Return Flight</b></h4>
+                    }
+                    @{
+                        count += 1;
+                    }
+                    <hr />
+                    @{ Html.RenderPartial("RenderTrip", trip); }
+                </div>
+             </div>
+        }
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            @{ Html.RenderPartial("RenderPassenger", Model.Pax); }
+        </div>
+    </div>
+}
+else
+{
+    <h3><i class="fa fa-angle-right"></i> Flight Reservation <h1> > NOT FOUND</h1></h3>
+}

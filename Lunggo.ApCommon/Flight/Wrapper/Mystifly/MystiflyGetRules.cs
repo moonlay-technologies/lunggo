@@ -156,7 +156,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Mystifly
                         break;
                     case "FareIdNoLongerValid":
                         if (!result.Errors.Contains(FlightError.FareIdNoLongerValid))
-                            result.Errors.Add(FlightError.FareIdNoLongerValid);
+                            result.AddError(FlightError.FareIdNoLongerValid, "[Mystifly] " + error.Code);
                         break;
                     case "TechnicalError":
                         if (!result.Errors.Contains(FlightError.TechnicalError))

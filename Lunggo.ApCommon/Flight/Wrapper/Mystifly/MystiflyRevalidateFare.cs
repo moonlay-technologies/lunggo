@@ -80,7 +80,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Mystifly
                 result.IsValid = false;
                 result.NewItinerary = null;
                 result.Errors = new List<FlightError> {FlightError.FareIdNoLongerValid};
-                result.ErrorMessages = new List<string>();
+                result.ErrorMessages = new List<string>{"[Mystifly] No itin returned."};
             }
             return result;
         }
@@ -122,7 +122,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Mystifly
                         break;
                     case "FareIdNoLongerValid" :
                         if (!result.Errors.Contains(FlightError.FareIdNoLongerValid))
-                            result.Errors.Add(FlightError.FareIdNoLongerValid);
+                            result.AddError(FlightError.FareIdNoLongerValid, "[Mystifly] " + error.Code);
                         break;
                     case "TechnicalError":
                         if (!result.Errors.Contains(FlightError.TechnicalError))
