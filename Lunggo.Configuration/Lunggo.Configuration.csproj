@@ -98,6 +98,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="Config\BackendWeb\deathbycaptcha.properties">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Config\BackendWeb\api.properties" />
     <None Include="Config\BackendWeb\cw.properties" />
     <None Include="Config\BackendWeb\documentDb.properties">
@@ -200,6 +203,9 @@
     <None Include="Config\CustomerWeb\citilink.properties" />
     <None Include="Config\CustomerWeb\cw.properties" />
     <None Include="Config\CustomerWeb\db.properties" />
+    <None Include="Config\CustomerWeb\deathbycaptcha.properties">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Config\CustomerWeb\domain.properties" />
     <None Include="Config\CustomerWeb\facebook.properties" />
     <None Include="Config\CustomerWeb\flight.properties">
@@ -220,6 +226,9 @@
     <None Include="Config\CustomerWeb\veritrans.properties" />
     <None Include="Config\CustomerWeb\zendesk.properties" />
     <None Include="Config\Driver\azureStorage.properties" />
+    <None Include="Config\WebAPI\deathbycaptcha.properties">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Config\WebAPI\documentDb.properties">
       <SubType>Designer</SubType>
     </None>
@@ -252,6 +261,9 @@
     </None>
     <None Include="Config\WebJob-FlightSearch.FlightCrawler1\Garuda.properties" />
     <None Include="Config\WebJob-FlightSearch.FlightCrawler1\lionAir.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler2\deathbycaptcha.properties">
       <SubType>Designer</SubType>
     </None>
     <None Include="Config\WebJob-FlightSearch.FlightCrawler2\Garuda.properties" />
@@ -316,6 +328,9 @@
     <None Include="Config\WebJob.BankTransferChecking\citilink.properties" />
     <None Include="Config\WebJob.BankTransferChecking\cw.properties" />
     <None Include="Config\WebJob.BankTransferChecking\db.properties" />
+    <None Include="Config\WebJob.BankTransferChecking\deathbycaptcha.properties">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Config\WebJob.BankTransferChecking\domain.properties" />
     <None Include="Config\WebJob.BankTransferChecking\facebook.properties" />
     <None Include="Config\WebJob.BankTransferChecking\flight.properties">
@@ -336,6 +351,9 @@
     <None Include="Config\WebJob.BankTransferChecking\sriwijaya.properties" />
     <None Include="Config\WebJob.BankTransferChecking\veritrans.properties" />
     <None Include="Config\WebJob.BankTransferChecking\zendesk.properties" />
+    <None Include="Config\WebJob.CurrencyCrawler\deathbycaptcha.properties">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Config\WebJob.CurrencyCrawler\sendGrid.properties" />
     <None Include="Config\WebJob.EmailQueueHandler\airAsia.properties">
       <SubType>Designer</SubType>
@@ -529,6 +547,9 @@
     </None>
     <None Include="Config\WebJob.CurrencyCrawler\veritrans.properties" />
     <None Include="Config\WebJob.CurrencyCrawler\zendesk.properties" />
+    <None Include="Config\WebJob.FlightProcessor\deathbycaptcha.properties">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Config\WebJob.PriceUpdater\airAsia.properties">
       <SubType>Designer</SubType>
     </None>

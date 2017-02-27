@@ -10,6 +10,7 @@
 {
     if (ViewBag.Issue != null)
     {
+        <br />
         <div class="alert alert-info alert-dismissable">
             <b>Reservation Issued!</b><br/>
             Please refresh this page after 5 minutes to see if it has successfully been issued.
@@ -18,6 +19,7 @@
 
     if (ViewBag.SendEmail != null)
     {
+        <br />
         <div class="alert alert-info alert-dismissable">
             <b>E-ticket E-mail Sent!</b><br />
             E-ticket E-mail should have been sent.
@@ -26,6 +28,7 @@
 
     if (ViewBag.OverridePayment != null)
     {
+        <br />
         <div class="alert alert-info alert-dismissable">
             <b>Payment Status Overridden!</b><br />
             Please refresh this page if status doesn't change.
@@ -34,6 +37,7 @@
 
     if (ViewBag.OverrideIssue != null)
     {
+        <br />
         <div class="alert alert-info alert-dismissable">
             <b>Issue Status Overridden!</b><br />
             Please refresh this page if status doesn't change. E-ticket E-mail should also been sent.

@@ -10,8 +10,8 @@
 </head>
 <body>
     <p>@(env != "production" ? "THIS IS A TEST EMAIL. PLEASE IGNORE THIS DREADED EMAIL. SORRY FOR THE INCONVENIENCE." : "")</p>
+    <p>This reservation takes too much time to issue (> 5 minutes). Manual checking advised.</p>
     <p>Reservation Number : @Model</p>
-    <p>This reservation is failed to be issued because of timeout. Need to be handled manually</p>
 </body>
 
 </html>

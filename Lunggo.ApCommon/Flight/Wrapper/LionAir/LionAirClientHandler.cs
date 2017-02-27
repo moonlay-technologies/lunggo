@@ -147,13 +147,18 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
 
             private static string ReadCaptcha(byte[] captchaImg)
             {
-                //var username = ConfigManager.GetInstance().GetConfigValue("deathbycaptcha", "userName");
-                //var password = ConfigManager.GetInstance().GetConfigValue("deathbycaptcha", "password");
-                var username = "ramaadhitia_tmi";
-                var password = "Standar1234";
-                var client = (Client)new SocketClient(username, password);
-                var captcha = client.Decode(captchaImg, 15);
-                return captcha != null ? captcha.Text : "";
+                try
+                {
+                    var username = ConfigManager.GetInstance().GetConfigValue("deathbycaptcha", "userName");
+                    var password = ConfigManager.GetInstance().GetConfigValue("deathbycaptcha", "password");
+                    var client = (Client) new SocketClient(username, password);
+                    var captcha = client.Decode(captchaImg, 15);
+                    return captcha != null ? captcha.Text : "";
+                }
+                catch
+                {
+                    return "";
+                }
             }
 
             /* USING CLOUD APP */

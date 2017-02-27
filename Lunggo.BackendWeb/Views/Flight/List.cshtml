@@ -159,8 +159,10 @@
                                     if (rsv.Payment.Status == PaymentStatus.Expired)
                                     {
                                         <span class="label label-danger" style="font-size: 14px">Expired</span>
-                                        <br />
-                                        <span>@rsv.Payment.Method.ToString()</span>
+                                    }
+                                    if (rsv.Payment.Status == PaymentStatus.Settled)
+                                    {
+                                        <span class="label label-success" style="font-size: 14px">Complete</span>
                                     }
                                 }
                             </td>
