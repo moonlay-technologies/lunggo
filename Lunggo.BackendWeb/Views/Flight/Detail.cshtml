@@ -1,4 +1,6 @@
-﻿@model Lunggo.ApCommon.Flight.Model.FlightReservation
+﻿@using Lunggo.ApCommon.Flight.Constant
+@using Lunggo.ApCommon.Payment.Constant
+@model Lunggo.ApCommon.Flight.Model.FlightReservation
 
 @{
     ViewBag.Title = "Flight Reservation Detail";
@@ -6,9 +8,63 @@
 
 @if (Model != null)
 {
+    if (ViewBag.Issue != null)
+    {
+        <div class="alert alert-info alert-dismissable">
+            <b>Reservation Issued!</b><br/>
+            Please refresh this page after 5 minutes to see if it has successfully been issued.
+        </div>
+    }
+
+    if (ViewBag.SendEmail != null)
+    {
+        <div class="alert alert-info alert-dismissable">
+            <b>E-ticket E-mail Sent!</b><br />
+            E-ticket E-mail should have been sent.
+        </div>
+    }
+
+    if (ViewBag.OverridePayment != null)
+    {
+        <div class="alert alert-info alert-dismissable">
+            <b>Payment Status Overridden!</b><br />
+            Please refresh this page if status doesn't change.
+        </div>
+    }
+
+    if (ViewBag.OverrideIssue != null)
+    {
+        <div class="alert alert-info alert-dismissable">
+            <b>Issue Status Overridden!</b><br />
+            Please refresh this page if status doesn't change. E-ticket E-mail should also been sent.
+        </div>
+    }
+
     <h3>
         <i class="fa fa-angle-right"></i> Flight Reservation <small> > @Model.RsvNo</small>
     </h3>
+
+    if (Model.Payment.Status != PaymentStatus.Settled)
+    {
+        <a href="@Url.Action("ConfirmOverridePayment", "Flight", new {rsvNo = Model.RsvNo})" class="btn btn-danger">Override Payment Status</a>
+    }
+    else
+    {
+        if (Model.Itineraries.All(i => i.BookingStatus != BookingStatus.Ticketed))
+        {
+            <form action="@Url.Action("Issue", "Flight", new {rsvNo = Model.RsvNo})" method="POST">
+                <button type="submit" class="btn btn-warning">Issue</button>
+                <a href="@Url.Action("ConfirmOverrideIssue", "Flight", new {rsvNo = Model.RsvNo})" class="btn btn-danger">Override Issue Status</a>
+            </form>
+        }
+        else
+        {
+            <form action="@Url.Action("SendEmail", "Flight", new {rsvNo = Model.RsvNo})" method="POST">
+                <button type="submit" class="btn btn-primary">Resend E-mail</button>
+            </form>
+        }
+    }
+    <div class="row"><br/></div>
 
     <div class="row">
         @{ Html.RenderPartial("RenderReservation", Model); }
@@ -16,27 +72,34 @@
 
     <div class="row">
         @{
-            var count = 0;
+    var count = 0;
         }
-        @foreach (var trip in Model.Itineraries.SelectMany(p => p.Trips))
+        @foreach (var itin in Model.Itineraries)
         {
-            <div class="col-md-8">
-                <div class="showback">
-                    @if (count == 0)
-                    {
-                        <h4><b>Depart Flight</b></h4>
-                    }
-                    else
-                    {
-                        <h4><b>Return Flight</b></h4>
-                    }
-                    @{
-                        count += 1;
-                    }
-                    <hr />
-                    @{ Html.RenderPartial("RenderTrip", trip); }
+            foreach (var trip in itin.Trips)
+            {
+                <div class="col-md-8">
+                    <div class="showback">
+                        @if (count == 0)
+                        {
+                            <h4><b>Depart Flight</b></h4>
+                        }
+                        else
+                        {
+                            <h4><b>Return Flight</b></h4>
+                        }
+                        @{
+                count += 1;
+                        }
+                        <hr />
+                        @{
+                ViewBag.BookingId = itin.BookingId;
+                ViewBag.BookingStatus = itin.BookingStatus;
+                Html.RenderPartial("RenderTrip", trip);
+                        }
+                    </div>
                 </div>
-             </div>
+            }
         }
     </div>
 

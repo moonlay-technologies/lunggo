@@ -204,6 +204,8 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Model\SubscriberCalendar.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Query\GetSegmentIdsQuery.cs" />
+    <Compile Include="Query\GetItineraryIdsQuery.cs" />
     <Compile Include="Query\GetBookingPending.cs" />
     <Compile Include="Query\GetBookingPendingRecord.cs" />
     <Compile Include="Query\GetSearchHotelDetail.cs" />
@@ -527,6 +529,8 @@
     <Content Include="Views\Hotel\RenderPax.cshtml" />
     <Content Include="Views\Hotel\RenderReservation.cshtml" />
     <Content Include="Views\Hotel\RenderHotel.cshtml" />
+    <Content Include="Views\Flight\ConfirmOverrideIssue.cshtml" />
+    <Content Include="Views\Flight\ConfirmOverridePayment.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\CheckPaymentViewModel\" />
