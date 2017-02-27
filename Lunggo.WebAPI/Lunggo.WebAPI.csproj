@@ -303,7 +303,10 @@
     <Compile Include="ApiSrc\Hotel\Logic\GetRateLogic.cs" />
     <Compile Include="ApiSrc\Hotel\Logic\GetRoomDetailLogic.cs" />
     <Compile Include="ApiSrc\Hotel\Logic\GetHotelDetailLogic.cs" />
+    <Compile Include="ApiSrc\Hotel\Logic\PriceCalendarLogic.cs" />
     <Compile Include="ApiSrc\Hotel\Logic\SearchHotelLogic.cs" />
+    <Compile Include="ApiSrc\Hotel\Model\HotelPriceCalendarApiRequest.cs" />
+    <Compile Include="ApiSrc\Hotel\Model\HotelPriceCalendarApiResponse.cs" />
     <Compile Include="ApiSrc\Hotel\Model\HotelAvailableRateApiRequest.cs" />
     <Compile Include="ApiSrc\Hotel\Model\HotelAvailableRateApiResponse.cs" />
     <Compile Include="ApiSrc\Hotel\Model\HotelBookApiRequest.cs" />

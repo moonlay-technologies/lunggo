@@ -272,6 +272,7 @@
     <Compile Include="Flight\Query\UpdateBookingIdQuery.cs" />
     <Compile Include="Hotel\Service\FilterSortPagination.cs" />
     <Compile Include="Hotel\Service\GetRoom.cs" />
+    <Compile Include="Hotel\Service\PriceCalendar.cs" />
     <Compile Include="Hotel\Service\PriceMargin.cs" />
     <Compile Include="Hotel\Query\GetHotelDetailFromSearchResult.cs" />
     <Compile Include="Hotel\Query\GetRoomDetailFromSearchResult.cs" />

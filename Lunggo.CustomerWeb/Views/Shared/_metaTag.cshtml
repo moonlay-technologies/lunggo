@@ -1,2 +1,53 @@
-﻿<meta name="description" content="Ke mana pun Anda ingin bepergian, kami menyediakan pilihan pesawat dan hotel domestik dan internasional" />
-<meta name="keywords" content="Tickets, Flight, Hotel, Booking, Hotel, Travel, Murah, Cheap, Pesawat, Penerbangan, Reservasi" />
+﻿@if (ViewBag.Page != null)
+{
+    if (ViewBag.Page == "Index" ||
+        ViewBag.Page == "FlightSearchSingle" ||
+        ViewBag.Page == "FlightSearchReturn" ||
+        ViewBag.Page == "HotelSearch" ||
+        ViewBag.Page == "HotelDetail" ||
+        ViewBag.Page == "CekPemesanan")
+    {
+        <meta name="description" content="Situs terpercaya pemesanan tiket pesawat dan kamar hotel termurah. Tanpa biaya tambahan, transaksi aman, proses booking instan. Harga promo rute Indonesia dan Luar Negeri. Travel Online 24 Jam." />
+    }
+    if (ViewBag.Page == "Login")
+    {
+        <meta name="description" content="Garansi harga terbaik, penawaran eksklusif member, riwayat pemesanan dan dokumen perjalanan khusus untuk member Travorama." />
+    }
+    if (ViewBag.Page == "Register")
+    {
+        <meta name="description" content="Daftarkan diri Anda dan dapatkan keuntungan informasi harga diskon tiket pesawat dan kamar hotel domestik dan internasional. Special offer untuk member Travorama." />
+    }
+    if (ViewBag.Page == "AppAwareness")
+    {
+        <meta name="description" content="Booking Tiket Mudah & Cepat. Download Travorama App di HP Anda untuk mempercepat pencarian tiket pesawat." />
+    }
+    if (ViewBag.Page == "HowToOrder")
+    {
+        <meta name="description" content="Reservasi online 24/7 tercepat. Cari dan pesan penerbangan serta kamar hotel pilihan." />
+    }
+    if (ViewBag.Page == "HowToPay")
+    {
+        <meta name="description" content="Transaksi online Anda aman, mudah dan cepat. Pembayaran melalui kartu kredit, transfer bank, transfer ATM, virtual account dan direct debit bank di Indonesia." />
+    }
+    if (ViewBag.Page == "ContactUs")
+    {
+        <meta name="description" content="Kirimkan email ke layanan customer cs@travorama.com atau live chat di www.travorama.com. Follow social media di Facebook travorama, Twitter &#64;travoramaID dan Instagram &#64;travorama." />
+    }
+    if (ViewBag.Page == "Terms")
+    {
+        <meta name="description" content="Pemesanan tiket pesawat dan kamar hotel online. Harga dan informasi real time 24/7." />
+    }
+    if (ViewBag.Page == "Privacy")
+    {
+        <meta name="description" content="Situs online penyedia jasa reservasi penerbangan dan hotel. Dioperasikan oleh PT Travel Madezy Internasional." />
+    }
+    if (ViewBag.Page == "Faqs")
+    {
+        <meta name="description" content="Temukan jawaban pertanyaan Anda. Cara refund, ganti jadwal terbang dan jadwal inap di Travorama." />
+    }
+
+}
+else
+{
+    <meta name="description" content="Ke mana pun Anda ingin bepergian, kami menyediakan pilihan pesawat dan hotel domestik dan internasional" />
+}

@@ -69,23 +69,29 @@
 @{
     Layout = "/Views/Shared/Desktop/_LayoutDesktop.cshtml";
     ViewBag.BodyClass = "page-flight page-flight-oneway";
-    ViewBag.Title = "Pencarian Penerbangan Sejalan";
+    ViewBag.Title = "Tiket Pesawat Promo dari " + originCityNames.First() + " ke " + destinationCityNames.First() + " Tanggal " + trips.First().DepartureDate.ToString("d MMMM yyyy", CultureInfo.CreateSpecificCulture("id-ID"));
+    ViewBag.Page = "FlightSearchSingle";
 }
 
 @section AdditionalCSS{
     <link href="/Assets/css/jquery-ui.min.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="/Assets/vendor/slick/slick.css" />
+
 }
 
 @section AdditionalJS{
     <!-- additional Angular JS-->
     <script src="/Assets/js/js.cookie.js"></script>
     <script type="text/javascript" src="/Assets/js/jquery.ui.datepicker-id.js"></script>
+    <script type="text/javascript" src="/Assets/vendor/slick/slick.min.js"></script>
+
 }
 
 @section PageJS{
     <script>
         var langCode = 'en';
         flightPageFunctions();
+        backToTop();
         FlightSearchConfig.flightForm =
         {
             cabin: '@data.CabinClass',
@@ -183,7 +189,7 @@
                 </div>
             </div>
         </div>
-        <div class="container">
+        <div class="container section-search">
             <div class="search-result-form-content">
                 @Html.Partial("/Views/Flight/FlightSearchForm.cshtml")
             </div><!-- .search-result-form-content -->
@@ -241,6 +247,7 @@
                 <h3><b>HASIL</b> PENCARIAN</h3>
 
             </div>
+            @Html.Partial("/Views/Shared/Desktop/_PriceSlider.cshtml")
             <div class="search-result-filter" @*ng-show="Progress == 100"*@>
                 <div class="container">
                     <div class="filter-left">

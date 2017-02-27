@@ -272,41 +272,19 @@
     <Content Include="Assets\bootstrap\bootstrap.css" />
     <Content Include="Assets\bootstrap\bootstrap.min.css" />
     <Content Include="Assets\css\font-awesome.min.css" />
-    <Content Include="Assets\css\global-error.css">
-      <DependentUpon>global-error.scss</DependentUpon>
-    </Content>
-    <Content Include="Assets\css\global-error.min.css">
-      <DependentUpon>global-error.css</DependentUpon>
-    </Content>
-    <Content Include="Assets\css\help_section.css">
-      <DependentUpon>help_section.scss</DependentUpon>
-    </Content>
-    <Content Include="Assets\css\help_section.min.css">
-      <DependentUpon>help_section.css</DependentUpon>
-    </Content>
-    <Content Include="Assets\css\invoice.css">
-      <DependentUpon>invoice.scss</DependentUpon>
-    </Content>
+    <Content Include="Assets\css\global-error.css" />
+    <Content Include="Assets\css\global-error.min.css" />
+    <Content Include="Assets\css\help_section.css" />
+    <Content Include="Assets\css\help_section.min.css" />
+    <Content Include="Assets\css\invoice.css" />
     <Content Include="Assets\css\invoice.min.css" />
     <Content Include="Assets\css\jquery-ui.min.css" />
-    <Content Include="Assets\css\neweticket.css">
-      <DependentUpon>neweticket.scss</DependentUpon>
-    </Content>
-    <Content Include="Assets\css\neweticket.min.css">
-      <DependentUpon>neweticket.css</DependentUpon>
-    </Content>
-    <Content Include="Assets\css\promo.css">
-      <DependentUpon>promo.scss</DependentUpon>
-    </Content>
-    <Content Include="Assets\css\promo.min.css">
-      <DependentUpon>promo.css</DependentUpon>
-    </Content>
-    <Content Include="Assets\css\travorama-mobileApp.css">
-      <DependentUpon>travorama-mobileApp.scss</DependentUpon>
-    </Content>
-    <Content Include="Assets\css\travorama-mobileApp.min.css">
-      <DependentUpon>travorama-mobileApp.css</DependentUpon>
-    </Content>
+    <Content Include="Assets\css\neweticket.css" />
+    <Content Include="Assets\css\neweticket.min.css" />
+    <Content Include="Assets\css\promo.css" />
+    <Content Include="Assets\css\promo.min.css" />
+    <Content Include="Assets\css\travorama-mobileApp.css" />
+    <Content Include="Assets\css\travorama-mobileApp.min.css" />
     <Content Include="Assets\fonts\bootstrap\glyphicons-halflings-regular.svg" />
     <Content Include="Assets\fonts\DINB-webfont.svg" />
     <Content Include="Assets\fonts\DINR-webfont.svg" />
@@ -585,6 +563,7 @@
     <Content Include="Assets\images\airplane-image.jpg" />
     <Content Include="Assets\images\ajax-loader.gif" />
     <Content Include="Assets\images\appStore.png" />
+    <Content Include="Assets\images\arrow-down-grey.png" />
     <Content Include="Assets\images\arrow-down.png" />
     <Content Include="Assets\images\arrow-white.png" />
     <Content Include="Assets\images\asita-logo.png" />
@@ -595,27 +574,6 @@
     <Content Include="Assets\images\Bank-Mandiri-small.jpg" />
     <Content Include="Assets\images\Bank-Mandiri.jpg" />
     <Content Include="Assets\images\Bank-Mandiri.png" />
-    <Content Include="Assets\images\campaign\HutBTN\HutBTN-page-mobile.jpg" />
-    <Content Include="Assets\images\campaign\HutBTN\HutBTN-page.jpg" />
-    <Content Include="Assets\images\campaign\HutBTN\HutBTN-promo-mobile.jpg" />
-    <Content Include="Assets\images\campaign\HutBTN\HutBTN-slider-mobile.jpg" />
-    <Content Include="Assets\images\campaign\HutBTN\HutBTN-slider.jpg" />
-    <Content Include="Assets\images\campaign\Imlek2017\Imlek2017-page-mobile.jpg" />
-    <Content Include="Assets\images\campaign\Imlek2017\Imlek2017-page.jpg" />
-    <Content Include="Assets\images\campaign\Imlek2017\Imlek2017-promo-mobile.jpg" />
-    <Content Include="Assets\images\campaign\Imlek2017\Imlek2017-slider-mobile.jpg" />
-    <Content Include="Assets\images\campaign\Imlek2017\Imlek2017-slider.jpg" />
-    <Content Include="Assets\images\campaign\MobileApp\app-store-cs.png" />
-    <Content Include="Assets\images\campaign\MobileApp\app-store.png" />
-    <Content Include="Assets\images\campaign\MobileApp\background.jpg" />
-    <Content Include="Assets\images\campaign\MobileApp\box-photo.png" />
-    <Content Include="Assets\images\campaign\MobileApp\play-store.png" />
-    <Content Include="Assets\images\campaign\TerbanginHemat\TerbanginHemat-page-mobile.jpg" />
-    <Content Include="Assets\images\campaign\TerbanginHemat\TerbanginHemat-page.jpg" />
-    <Content Include="Assets\images\campaign\TerbanginHemat\TerbanginHemat-promo-mobile.jpg" />
-    <Content Include="Assets\images\campaign\TerbanginHemat\TerbanginHemat-slider-mobile.jpg" />
-    <Content Include="Assets\images\campaign\TerbanginHemat\TerbanginHemat-slider.jpg" />
-    <Content Include="Assets\images\default-banner.jpg" />
     <Content Include="Assets\images\banner\download-app.jpg" />
     <Content Include="Assets\images\banner\standard-web-banner.jpg" />
     <Content Include="Assets\images\bca-logo.jpg" />
@@ -644,6 +602,16 @@
     <Content Include="Assets\images\campaign\hongkong-text.png" />
     <Content Include="Assets\images\campaign\hongkong-thumb.jpg" />
     <Content Include="Assets\images\campaign\hongkong.jpg" />
+    <Content Include="Assets\images\campaign\HutBTN\HutBTN-page-mobile.jpg" />
+    <Content Include="Assets\images\campaign\HutBTN\HutBTN-page.jpg" />
+    <Content Include="Assets\images\campaign\HutBTN\HutBTN-promo-mobile.jpg" />
+    <Content Include="Assets\images\campaign\HutBTN\HutBTN-slider-mobile.jpg" />
+    <Content Include="Assets\images\campaign\HutBTN\HutBTN-slider.jpg" />
+    <Content Include="Assets\images\campaign\Imlek2017\Imlek2017-page-mobile.jpg" />
+    <Content Include="Assets\images\campaign\Imlek2017\Imlek2017-page.jpg" />
+    <Content Include="Assets\images\campaign\Imlek2017\Imlek2017-promo-mobile.jpg" />
+    <Content Include="Assets\images\campaign\Imlek2017\Imlek2017-slider-mobile.jpg" />
+    <Content Include="Assets\images\campaign\Imlek2017\Imlek2017-slider.jpg" />
     <Content Include="Assets\images\campaign\jakarta-text.png" />
     <Content Include="Assets\images\campaign\jakarta-thumb.jpg" />
     <Content Include="Assets\images\campaign\jakarta.jpg" />
@@ -668,6 +636,11 @@
     <Content Include="Assets\images\campaign\surabaya-text.png" />
     <Content Include="Assets\images\campaign\surabaya-thumb.jpg" />
     <Content Include="Assets\images\campaign\surabaya.jpg" />
+    <Content Include="Assets\images\campaign\TerbanginHemat\TerbanginHemat-page-mobile.jpg" />
+    <Content Include="Assets\images\campaign\TerbanginHemat\TerbanginHemat-page.jpg" />
+    <Content Include="Assets\images\campaign\TerbanginHemat\TerbanginHemat-promo-mobile.jpg" />
+    <Content Include="Assets\images\campaign\TerbanginHemat\TerbanginHemat-slider-mobile.jpg" />
+    <Content Include="Assets\images\campaign\TerbanginHemat\TerbanginHemat-slider.jpg" />
     <Content Include="Assets\images\campaign\yogyakarta-text.png" />
     <Content Include="Assets\images\campaign\yogyakarta-thumb.jpg" />
     <Content Include="Assets\images\campaign\yogyakarta.jpg" />
@@ -680,6 +653,7 @@
     <Content Include="Assets\images\contact-sprite.jpg" />
     <Content Include="Assets\images\creditCard.jpg" />
     <Content Include="Assets\images\default-banner-2.jpg" />
+    <Content Include="Assets\images\default-banner.jpg" />
     <Content Include="Assets\images\email-facebook.jpg" />
     <Content Include="Assets\images\email-image.jpg" />
     <Content Include="Assets\images\email-instagram.jpg" />
@@ -787,7 +761,22 @@
     <Content Include="Assets\images\hotel-review-header.png" />
     <Content Include="Assets\images\hotel-star-4.jpg" />
     <Content Include="Assets\images\hotel-star-4.png" />
-    <Content Include="Assets\images\hotel\markers.png" />
+    <Content Include="Assets\images\hotel\filter-hotel-map-white.png" />
+    <Content Include="Assets\images\hotel\filter-hotel-map.png" />
+    <Content Include="Assets\images\hotel\hotel-dummy.jpg" />
+    <Content Include="Assets\images\hotel\location-white.png" />
+    <Content Include="Assets\images\hotel\markers-blue.png" />
+    <Content Include="Assets\images\hotel\markers-red.png" />
+    <Content Include="Assets\images\hotel\popular\bali.jpg" />
+    <Content Include="Assets\images\hotel\popular\flight-1.jpg" />
+    <Content Include="Assets\images\hotel\popular\flight-2.jpg" />
+    <Content Include="Assets\images\hotel\popular\flight-3.jpg" />
+    <Content Include="Assets\images\hotel\popular\flight-4.jpg" />
+    <Content Include="Assets\images\hotel\popular\jakarta.jpg" />
+    <Content Include="Assets\images\hotel\popular\macau.jpg" />
+    <Content Include="Assets\images\hotel\popular\surabaya.jpg" />
+    <Content Include="Assets\images\hotel\popular\yogya.jpg" />
+    <Content Include="Assets\images\hotel\view-map.jpg" />
     <Content Include="Assets\images\hourglass.png" />
     <Content Include="Assets\images\hover-menu-arrow.png" />
     <Content Include="Assets\images\howto-bg.jpg" />
@@ -800,6 +789,16 @@
     <Content Include="Assets\images\howtopay-3.jpg" />
     <Content Include="Assets\images\howtopay-header.jpg" />
     <Content Include="Assets\images\idr-sprite.png" />
+    <Content Include="Assets\images\index\popular-flight-bali.jpg" />
+    <Content Include="Assets\images\index\popular-flight-jakarta.jpg" />
+    <Content Include="Assets\images\index\popular-flight-medan.jpg" />
+    <Content Include="Assets\images\index\popular-flight-surabaya.jpg" />
+    <Content Include="Assets\images\index\popular-flight-yogyakarta.jpg" />
+    <Content Include="Assets\images\index\popular-hotel-bali.jpg" />
+    <Content Include="Assets\images\index\popular-hotel-bandung.jpg" />
+    <Content Include="Assets\images\index\popular-hotel-jakarta.jpg" />
+    <Content Include="Assets\images\index\popular-hotel-surabaya.jpg" />
+    <Content Include="Assets\images\index\popular-hotel-yogyakarta.jpg" />
     <Content Include="Assets\images\infant-icon.png" />
     <Content Include="Assets\images\instagram-icon.png" />
     <Content Include="Assets\images\list-bg.png" />
@@ -824,6 +823,7 @@
     <Content Include="Assets\images\mandiri-logo.jpg" />
     <Content Include="Assets\images\mandiri.png" />
     <Content Include="Assets\images\map.jpg" />
+    <Content Include="Assets\images\marker-calendar.png" />
     <Content Include="Assets\images\mastercard-logo.jpg" />
     <Content Include="Assets\images\menu-icon-white.png" />
     <Content Include="Assets\images\menu-icon.png" />
@@ -922,6 +922,7 @@
     <Content Include="Assets\images\social-googlePlus.png" />
     <Content Include="Assets\images\social-instagram.png" />
     <Content Include="Assets\images\social-twitter.png" />
+    <Content Include="Assets\images\sprite-arrow.png" />
     <Content Include="Assets\images\ssl-image.png" />
     <Content Include="Assets\images\static-header-sprite.png" />
     <Content Include="Assets\images\stop.png" />
@@ -967,6 +968,13 @@
     <Content Include="Assets\images\voucher\travorama-white.png" />
     <Content Include="Assets\images\warning-image.png" />
     <Content Include="Assets\images\white-bg.png" />
+    <Content Include="Assets\images\why-active.png" />
+    <Content Include="Assets\images\why-disc.png" />
+    <Content Include="Assets\images\why-flight.png" />
+    <Content Include="Assets\images\why-free.png" />
+    <Content Include="Assets\images\why-hotel.png" />
+    <Content Include="Assets\images\why-long.png" />
+    <Content Include="Assets\images\why-trust.png" />
     <Content Include="Assets\images\wifi.png" />
     <Content Include="Assets\images\yellow-stripe-small.png" />
     <Content Include="Assets\images\yellow-stripe.png" />
@@ -1078,10 +1086,9 @@
     <Content Include="Assets\js\sampleData\CGKHND201015-100y.js" />
     <Content Include="Assets\js\sampleData\HNDCGK231015-100y.js" />
     <Content Include="Assets\js\xml2json.min.js" />
+    <Content Include="Assets\mobile\css\help_section.min.css" />
     <Content Include="Assets\mobile\css\style_mobile.css" />
-    <Content Include="Assets\mobile\css\style_mobile.min.css">
-      <DependentUpon>style_mobile.css</DependentUpon>
-    </Content>
+    <Content Include="Assets\mobile\css\style_mobile.min.css" />
     <Content Include="Assets\mobile\images\adult.png" />
     <Content Include="Assets\mobile\images\anak-bw.png" />
     <Content Include="Assets\mobile\images\anak.png" />
@@ -1198,6 +1205,7 @@
     <Content Include="Assets\mobile\js\CheckoutController.js" />
     <Content Include="Assets\mobile\js\HomeController.js" />
     <Content Include="Assets\mobile\js\HotelController.js" />
+    <Content Include="Assets\mobile\js\HotelMapController.js" />
     <Content Include="Assets\mobile\js\PromoController.js" />
     <Content Include="Assets\mobile\js\returnFlightController.js" />
     <Content Include="Assets\mobile\js\singleFlightController.js" />
@@ -1207,12 +1215,8 @@
     <Content Include="Assets\travorama20\angularDirectory\priceDetail\priceDetailDirMobile.js" />
     <Content Include="Assets\travorama20\angularDirectory\priceDetail\priceDetailTemplate.html" />
     <Content Include="Assets\travorama20\angularDirectory\search\hotelSearch.service.js" />
-    <Content Include="Assets\travorama20\css\style_desktop.css">
-      <DependentUpon>style_desktop.scss</DependentUpon>
-    </Content>
-    <Content Include="Assets\travorama20\css\style_desktop.min.css">
-      <DependentUpon>style_desktop.css</DependentUpon>
-    </Content>
+    <Content Include="Assets\travorama20\css\style_desktop.css" />
+    <Content Include="Assets\travorama20\css\style_desktop.min.css" />
     <Content Include="Assets\travorama20\images\app-store-bg.png" />
     <Content Include="Assets\travorama20\images\app-store-cs.png" />
     <Content Include="Assets\travorama20\images\Hotel\bed.png" />
@@ -1266,8 +1270,10 @@
     <Content Include="Assets\travorama20\js\HotelCheckoutController.js" />
     <Content Include="Assets\travorama20\js\HotelController.js" />
     <Content Include="Assets\travorama20\js\hotelDetailController.js" />
+    <Content Include="Assets\travorama20\js\HotelMap.js" />
     <Content Include="Assets\travorama20\js\hotelSearchController.js" />
     <Content Include="Assets\travorama20\js\paymentController.js" />
+    <Content Include="Assets\travorama20\js\PromoController.js" />
     <Content Include="Assets\travorama20\js\returnFlightController.js" />
     <Content Include="Assets\travorama20\js\singleFlightController.js" />
     <Content Include="Assets\travorama20\js\ThankyouController.js" />
@@ -1293,6 +1299,9 @@
     <Content Include="Assets\vendor\fancybox\jquery.fancybox.css" />
     <Content Include="Assets\vendor\fancybox\jquery.fancybox.js" />
     <Content Include="Assets\vendor\fancybox\jquery.fancybox.pack.js" />
+    <Content Include="Assets\vendor\fullcalendar\fullcalendar-id.min.js" />
+    <Content Include="Assets\vendor\fullcalendar\fullcalendar.min.css" />
+    <Content Include="Assets\vendor\fullcalendar\fullcalendar.min.js" />
     <Content Include="Assets\vendor\lightslider\lightslider.css" />
     <Content Include="Assets\vendor\lightslider\lightslider.js" />
     <Content Include="Assets\vendor\slick\slick.css" />
@@ -1329,6 +1338,8 @@
     <Content Include="Config\HotelRoomRateType.csv">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="App_Code\ToTitleCase.cshtml" />
+    <Content Include="App_Code\MsToTime.cshtml" />
     <Content Include="Assets\bootstrap\bootstrap.css.map" />
     <Content Include="Assets\bootstrap\bootstrap.scss" />
     <Content Include="Assets\bootstrap\bootstrap\mixins\_alerts.scss" />
@@ -1404,6 +1415,12 @@
     <Content Include="Assets\bootstrap\_bootstrap-compass.scss" />
     <Content Include="Assets\bootstrap\_bootstrap-mincer.scss" />
     <Content Include="Assets\bootstrap\_bootstrap-sprockets.scss" />
+    <Content Include="Assets\css\global-error.scss" />
+    <Content Include="Assets\css\help_section.scss" />
+    <Content Include="Assets\css\invoice.scss" />
+    <Content Include="Assets\css\neweticket.scss" />
+    <Content Include="Assets\css\promo.scss" />
+    <Content Include="Assets\css\travorama-mobileApp.scss" />
     <Content Include="Assets\fonts\bootstrap\glyphicons-halflings-regular.eot" />
     <Content Include="Assets\fonts\bootstrap\glyphicons-halflings-regular.ttf" />
     <Content Include="Assets\fonts\bootstrap\glyphicons-halflings-regular.woff" />
@@ -1429,6 +1446,18 @@
     <Content Include="Assets\fonts\Gotham-Medium.otf" />
     <Content Include="Assets\fonts\Gotham-Medium.ttf" />
     <Content Include="Assets\fonts\Gotham-Medium.woff" />
+    <Content Include="Assets\fonts\OpenSans-Bold.eot" />
+    <Content Include="Assets\fonts\OpenSans-Bold.ttf" />
+    <Content Include="Assets\fonts\OpenSans-Bold.woff" />
+    <Content Include="Assets\fonts\OpenSans-Bold.woff2" />
+    <Content Include="Assets\fonts\OpenSans-Regular.eot" />
+    <Content Include="Assets\fonts\OpenSans-Regular.ttf" />
+    <Content Include="Assets\fonts\OpenSans-Regular.woff" />
+    <Content Include="Assets\fonts\OpenSans-Regular.woff2" />
+    <Content Include="Assets\fonts\OpenSans-Semibold.eot" />
+    <Content Include="Assets\fonts\OpenSans-Semibold.ttf" />
+    <Content Include="Assets\fonts\OpenSans-Semibold.woff" />
+    <Content Include="Assets\fonts\OpenSans-Semibold.woff2" />
     <Content Include="Assets\mobile\css\style_mobile.scss" />
     <Content Include="Assets\mobile\css\_home_page_layout.scss" />
     <Content Include="Assets\mobile\css\_page_account.scss" />
@@ -1447,32 +1476,14 @@
     <Content Include="Assets\travorama20\css\_page_flight.scss" />
     <Content Include="Assets\travorama20\css\_page_hotel.scss" />
     <Content Include="Assets\travorama20\css\_page_hotel_detail.scss" />
+    <Content Include="Assets\travorama20\css\_page_hotel_map.scss" />
     <Content Include="Assets\travorama20\css\_page_hotel_search.scss" />
+    <Content Include="Assets\travorama20\css\_page_hotel_search_listing.scss" />
     <Content Include="Assets\travorama20\css\_page_index.scss" />
     <Content Include="Assets\travorama20\css\_page_password.scss" />
     <Content Include="Assets\travorama20\css\_page_static.scss" />
     <Content Include="Assets\travorama20\css\_screenLarge.scss" />
     <Content Include="Assets\travorama20\css\_screenSmall.scss" />
-    <Content Include="Assets\css\neweticket.scss" />
-    <Content Include="Assets\css\promo.scss" />
-    <Content Include="Assets\css\invoice.scss" />
-    <Content Include="Assets\fonts\OpenSans-Regular.eot" />
-    <Content Include="Assets\fonts\OpenSans-Regular.ttf" />
-    <Content Include="Assets\fonts\OpenSans-Regular.woff" />
-    <Content Include="Assets\fonts\OpenSans-Regular.woff2" />
-    <Content Include="Assets\fonts\OpenSans-Bold.eot" />
-    <Content Include="Assets\fonts\OpenSans-Bold.ttf" />
-    <Content Include="Assets\fonts\OpenSans-Bold.woff" />
-    <Content Include="Assets\fonts\OpenSans-Bold.woff2" />
-    <Content Include="Assets\fonts\OpenSans-Semibold.eot" />
-    <Content Include="Assets\fonts\OpenSans-Semibold.ttf" />
-    <Content Include="Assets\fonts\OpenSans-Semibold.woff" />
-    <Content Include="Assets\fonts\OpenSans-Semibold.woff2" />
-    <Content Include="Assets\css\help_section.scss" />
-    <Content Include="Assets\css\global-error.scss" />
-    <Content Include="App_Code\ToTitleCase.cshtml" />
-    <Content Include="App_Code\MsToTime.cshtml" />
-    <Content Include="Assets\css\travorama-mobileApp.scss" />
     <None Include="Properties\PublishProfiles\prod-cw %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\dv1-cw.pubxml" />
     <None Include="Properties\PublishProfiles\dv2-cw.pubxml" />
@@ -1643,6 +1654,14 @@
     <Content Include="Views\Promo\HutBTN.cshtml" />
     <Content Include="Views\Promo\HutBTNWebview.cshtml" />
     <Content Include="Views\Promo\HutBTN.mobile.cshtml" />
+    <Content Include="Views\Shared\Desktop\_HotelListing.cshtml" />
+    <Content Include="Views\Hotel\HotelMap.cshtml" />
+    <Content Include="Views\Shared\Mobile\_HotelListing.cshtml" />
+    <Content Include="Views\Hotel\HotelMap.mobile.cshtml" />
+    <Content Include="Views\Shared\Desktop\_PopularHotel.cshtml" />
+    <Content Include="Views\Shared\Desktop\_PopularFlight.cshtml" />
+    <Content Include="Views\Shared\Desktop\_PriceSlider.cshtml" />
+    <Content Include="Views\Shared\Desktop\_PriceSliderReturn.cshtml" />
     <None Include="Views\Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -1655,6 +1674,7 @@
     <Folder Include="Areas\Api\Views\Shared\" />
     <Folder Include="Assets\images\slider\" />
     <Folder Include="Assets\images\_sample\" />
+    <Folder Include="Assets\travorama20\fonts\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

@@ -603,6 +603,8 @@
     }
 
     .top-content {
+        .hotel-sort-filter .hotel-sort-filter-action a {width: 33.333333333333336%;}
+        .hotel-detail-menu .hotel-detail-menu-action a {width: 50%;}
         .hotel-sort-filter .hotel-sort-filter-action a,
         .hotel-detail-menu .hotel-detail-menu-action a {
             float: left;
@@ -613,7 +615,7 @@
             padding: 15px 0;
             background: #616161;
             text-decoration:none;
-            width: 50%;
+            
             + a {border-left: 1px solid #8f8f8f;}
             &.detail-menu, &.spec-menu {
                 &.active {background: #878787;}

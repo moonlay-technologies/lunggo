@@ -5,9 +5,10 @@
     ViewBag.FooterSubscribe = true;
     ViewBag.FooterPayment = true;
     ViewBag.FooterFeedback = false;
-    ViewBag.Title = "Enjoy Your Every Moment";
+    ViewBag.Title = "Diskon untuk semua penerbangan dan hotel domestik dan internasional";
     ViewBag.AngularController = "homeController";
     //ViewBag.Campaign = true;
+    ViewBag.Page = "Index";
 
     // location
     ViewBag.LocationData = new Dictionary<string, string>();
@@ -79,12 +80,11 @@
                 break;
         }
     }
-
-
 }
 
 @section AdditionalCSS{
     <link rel="stylesheet" type="text/css" href="/Assets/vendor/slick/slick.css" />
+    <link rel="stylesheet" type="text/css" href="/Assets/vendor/fullcalendar/fullcalendar.min.css" />
 }
 
 @section AdditionalJS{
@@ -95,6 +95,8 @@
     <script type="text/javascript" src="/Assets/js/jquery.ui.datepicker-id.js"></script>
     <script src="/Assets/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="/Assets/vendor/slick/slick.min.js"></script>
+    <script type="text/javascript" src="/Assets/vendor/fullcalendar/fullcalendar.min.js"></script>
+    <script type="text/javascript" src="/Assets/vendor/fullcalendar/fullcalendar-id.min.js"></script>
 }
 
 @section PageJS{
@@ -109,12 +111,21 @@
     </script>
     <script src="/Assets/travorama20/angularDirectory/search/hotelSearch.service.js"></script>
     <script src="/Assets/travorama20/js/homeController.js"></script>
+    <script src="/Assets/travorama20/js/PriceCalendarController.js"></script>    
+    <script>
+        jQuery(document).ready(function($) {
+            $('.fc-event-container').click(function() {
+                $(this).closest('table').find('.fc-day-top').addClass('active');
+            });
+        })
+    </script>
+    <script>changeMainTab();</script>
 }
 
 <section class="section-search normal-txt">
     <div class="container">
         <div class="search-form">
-            <header class="tab-header">
+            <header class="tab-header clearfix">
                 <nav>
                     <ul>
                         <li class="flight @(ViewBag.IndexType == null || ViewBag.IndexType == "flight" ? "active" : "")"><a data-toggle="tab" id="#plane" ng-click="showForm('flight')">Pesawat</a></li>
@@ -324,7 +335,7 @@
                     </div>
 
                 </div><!-- .tab-hotel -->
-                <div class="tab-activity">
+                <div class="tab-activity hidden">
                     <hgroup>
                         <h2>Temukan Banyak<br /><b>Aktifitas Menarik</b><br />Yang Bisa Anda<br />Lakukan</h2>
                         <h4>Ribuan Aktifitas di 20+ Tempat Tujuan<br />(Domestik &amp; Internasional)</h4>
@@ -353,23 +364,7 @@
     {
         <div class="page-slider">
             <div class="slider-wrapper" id="index-wrapper">
-                @if (DateTime.UtcNow.AddHours(7).Date >= new DateTime(2017, 02, 08) && DateTime.UtcNow.AddHours(7).Date <= new DateTime(2017, 02, 10))
-                {
-                    <div class="slider">
-                        <a href="@Url.Action("HutBTN", "Promo")">
-                            <img src="/Assets/images/campaign/HutBTN/HutBTN-slider.jpg" alt="BTN 67th Anniversary" />
-                        </a>
-                    </div>
-                }   
-                @if (DateTime.UtcNow.AddHours(7).Date <= new DateTime(2017, 02, 15))
-                {
-                    <div class="slider">
-                        <a href="@Url.Action("Imlek", "Promo")">
-                            <img src="/Assets/images/campaign/Imlek2017/Imlek2017-slider.jpg" alt="Travorama Imlek 2017" />
-                        </a>
-                    </div>
-                }
-                @if (DateTime.UtcNow.AddHours(7).Date <= new DateTime(2017, 03, 31) && !(DateTime.UtcNow.AddHours(7).Date >= new DateTime(2017, 02, 08) && DateTime.UtcNow.AddHours(7).Date <= new DateTime(2017, 02, 10)))
+                @if (DateTime.UtcNow.AddHours(7).Date <= new DateTime(2017, 3, 31))
                 {
                     <div class="slider">
                         <a href="@Url.Action("BTNTerbanginHemat", "Promo")">
@@ -401,133 +396,130 @@
     }
 
 </section><!-- .section-search -->
-<section class="section-reason">
+<section class="section-calendar-price">
     <div class="container">
-        <img src="/Assets/images/choose-travorama.png" alt="Why choose Travorama" />
+        <div class="row">
+            <div class="col-xs-8">
+                <div class="price-calendar">
+                    <div class="md-txt os-bold">Tiket Pesawat Termurah Setiap Hari</div>
+                    <div class="search-map">
+                        <div class="row normal-txt semibold-txt">
+                            <div class="col-xs-7">
+                                <div class="col-xs-6" id="searchFrom">Dari</div>
+                                <div class="col-xs-6" id="searchTo">Ke</div>
     </div>
-</section>
-@if (ViewBag.DestinationName == null || ViewBag.Destinationname == "")
-{
-    <section class="section-popular">
-        <div class="container">
-            <h2 class="section-title stripe text-center xlg-txt">TUJUAN <span>TERPOPULER</span></h2>
-
+                            <div class="col-xs-5">
+                                <div class="col-xs-12">Bulan</div>
+                            </div>
+                        </div>
             <div class="row">
-                <div class="col-xs-4 popular-left">
-                    <div class="destination small">
-                        <a href="/id/jakarta" data-target="jakarta">
-                            <h3>
-                                <small>Penerbangan ke</small> <b>Jakarta</b>
-                            </h3>
-
-                        </a>
-                        <img src="/Assets/images/pop-jakarta.jpg" alt="Jakarta, Indonesia" />
+                            <div class="search-input col-xs-7">
+                                <div class="col-xs-6 map-input">
+                                    <input type="text" name="searchFrom">
                     </div>
-                    <div class="destination medium yellow">
-                        <a href="/id/bali" data-target="bali">
-                            <h3>
-                                <small>Penerbangan ke</small> <b>Bali</b>
-                            </h3>
-
-                        </a>
-                        <img src="/Assets/images/pop-bali.jpg" alt="Bali, Indonesia" />
+                                <div class="col-xs-6 map-input">
+                                    <input type="text" name="searchTo">
                     </div>
-                    <div class="destination large">
-                        <a href="/id/malaysia" data-target="malaysia">
-                            <h3>
-                                <small>Penerbangan ke</small> <b>Malaysia</b>
-                            </h3>
-
-                        </a>
-                        <img src="/Assets/images/pop-malaysia.jpg" alt="Malaysia" />
                     </div>
+                            <div class="col-xs-5">
+                                <div class="col-xs-8">
+                                    <select id="month-year-select" class="hidden">
+                                        <option value="" id ="smonth0"></option>
+                                        <option value="" id="smonth1"></option>
+                                        <option value="" id="smonth2"></option>
+                                        <option value="" id="smonth3"></option>
+                                        <option value="" id="smonth4"></option>
+                                        <option value="" id ="smonth5"></option>
+                                        <option value="" id="smonth6"></option>
+                                        <option value="" id="smonth7"></option>
+                                        <option value="" id="smonth8"></option>
+                                        <option value="" id="smonth9"></option>
+                                        <option value="" id="smonth10"></option>
+                                        <option value="" id="smonth11"></option>
+                                        <option value="" id="smonth12"></option>
+                                    </select>
+                                    <div class="dropdown form-control clearfix select-my" >
+                                        <div class="selected-my"></div>
+                                        <div class=" option" id="month-year">
+                                            <div  id="month0"></div>
+                                            <div  id="month1"></div>
+                                            <div  id="month2"></div>
+                                            <div  id="month3"></div>
+                                            <div  id="month4"></div>
+                                            <div  id="month5"></div>
+                                            <div  id="month6"></div>
+                                            <div  id="month7"></div>
+                                            <div  id="month8"></div>
+                                            <div  id="month9"></div>
+                                            <div  id="month10"></div>
+                                            <div  id="month11"></div>
+                                            <div id="month12"></div>
                 </div>
-                <div class="col-xs-4 popular-middle">
-                    <div class="destination half yellow">
-                        <a href="/id/yogyakarta" data-target="yogyakarta">
-                            <h3>
-                                <small>Penerbangan ke</small> <b>Yogyakarta</b>
-                            </h3>
-
-                        </a>
-                        <img src="/Assets/images/pop-yogyakarta.jpg" alt="Yogyakarta, Indonesia" />
+                                    </div>
                     </div>
-                    <div class="destination half yellow">
-                        <a href="/id/singapore" data-target="singapore">
-                            <h3>
-                                <small>Penerbangan ke</small> <b>Singapura</b>
-                            </h3>
-
-                        </a>
-                        <img src="/Assets/images/pop-singapore.jpg" alt="Singapore" />
-                    </div>
+                                <div class="col-xs-4">
+                                    <a class="btn btn-yellow lg-btn md-txt btn-calendar" id="submitCalendar">CARI</a>
                 </div>
-                <div class="col-xs-4 popular-right">
-                    <div class="destination large">
-                        <a href="/id/bandung" data-target="bandung">
-                            <h3>
-                                <small>Penerbangan ke</small> <b>Bandung</b>
-                            </h3>
 
-                        </a>
-                        <img src="/Assets/images/pop-bandung.jpg" alt="Bandung, Indonesia" />
                     </div>
-                    <div class="destination medium yellow">
-                        <a href="/id/surabaya" data-target="surabaya">
-                            <h3>
-                                <small>Penerbangan ke</small> <b>Surabaya</b>
-                            </h3>
-
-                        </a>
-                        <img src="/Assets/images/pop-surabaya.jpg" alt="Surabaya, Indonesia" />
                     </div>
-                    <div class="destination small">
-                        <a href="/id/hongkong" data-target="hongkong">
-                            <h3>
-                                <small>Penerbangan ke</small> <b>Hongkong</b>
-                            </h3>
-
-                        </a>
-                        <img src="/Assets/images/pop-hongkong.jpg" alt="Hongkong" />
+                        <div class="location-choice">
+                            @Html.Partial("/Views/Shared/Desktop/_SearchLocation.cshtml")
+                </div>
                     </div>
+                    <div id="pc-datepicker"></div>
+                    </div>
+                    </div>
+            <div class="col-xs-4">
+                @Html.Partial("/Views/Shared/Desktop/_PopularFlight.cshtml")
                 </div>
             </div>
-
         </div>
     </section>
-    <!-- .section-popular -->
-}
-else
-{
     <section class="section-popular">
         <div class="container">
-            <h2 class="section-title stripe text-center">RUTE PENERBANGAN <span>TERPOPULER</span></h2>
-
-            <div class="route-wrapper" ng-app="travorama" ng-controller="homeController">
-
+        @Html.Partial("/Views/Shared/Desktop/_PopularHotel.cshtml")
+    </div>
+</section>
+<section class="section-why">
+    <div class="container text-center">
+        <div class="xlg-txt"><span class="os-regular">Mengapa memilih</span> <span class="os-bold blue-txt">Travorama?</span></div>
+        <div class="row">
+            <div class="col-xs-4">
+                <div class="sw-img sw-disc"></div>
+                <div class="blue-txt md-txt">Harga <span class="os-bold">Diskon<br />Setiap Hari </span></div>
+                <div class="normal-txt">Potongan harga untuk setiap transaksi di Travorama. Temukan harga bersaing dibandingkan Online Travel Agent lain.</div>
+            </div>
+            <div class="col-xs-4">
+                <div class="sw-img sw-active"></div>
+                <div class="blue-txt md-txt">Waktu<br /><span class="os-bold">Pembayaran Panjang</span></div>
+                <div class="normal-txt">Waktu pembayaran tiket pesawat dan kamar hotel lebih panjang dibandingkan Online Travel Agent pada umumnya.</div>
+            </div>
+            <div class="col-xs-4">
+                <div class="sw-img sw-free"></div>
+                <div class="blue-txt md-txt">Tanpa<br /><span class="os-bold">Biaya Tambahan</span></div>
+                <div class="normal-txt">Harga yang tercantum adalah harga final, tanpa biaya tersembunyi.</div>
+            </div>
+        </div>
                 <div class="row">
-
-                    <div class="col-xs-4" ng-repeat="destination in topDestinations">
-                        <div class="route">
-                            <header>
-                                <h5><span>Rute Penerbangan</span></h5>
-                            </header>
-                            <section>
-                                <h4><b>{{destination.name}}</b> ke <b>{{flightDestination.name}}</b></h4>
-                                <p>Harga mulai dari <b>Rp {{destination.price | number}}</b></p>
-                                <a class="btn btn-yellow" href="@Url.Action("Search","Flight")?info={{ destination.origin + '' + flightDestination.code + '' + departureDate  }}-100y">LIHAT SEKARANG</a>
-                            </section>
+            <div class="col-xs-4">
+                <div class="sw-img sw-flight"></div>
+                <div class="blue-txt md-txt">Rute <span class="os-bold">Penerbangan<br />Domestik & Internasional<br /></span></div>
+                <div class="normal-txt">Waktu pembayaran tiket pesawat dan kamar hotel lebih panjang dibandingkan Online Travel Agent pada umumnya.</div>
+            </div>
+            <div class="col-xs-4">
+                <div class="sw-img sw-hotel"></div>
+                <div class="blue-txt md-txt">Pilihan<br /> <span class="os-bold">Hotel Maksimal</span></div>
+                <div class="normal-txt">Terdapat 85.000 listing hotel di seluruh dunia.</div>
                         </div>
+            <div class="col-xs-4">
+                <div class="sw-img sw-trust"></div>
+                <div class="blue-txt md-txt">Jaminan <span class="os-bold">Pembayaran <br />Online Aman & Mudah</span></div>
+                <div class="normal-txt">Enkripsi Rapid SSL menjamin privasi dan keamanan saat melakukan transaksi online.</div>
                     </div>
-
                 </div>
-
-            </div><!-- .destination-wrapper -->
-
         </div>
     </section>
-}
-
 <section class="section-subscribe">
     <div class="container">
 
@@ -572,21 +564,3 @@ else
 
     </div>
 </section><!-- .section-payment -->
-
-<section class="section-feedback">
-    <div class="container">
-
-        <div class="row">
-            <div class="col-xs-6">
-
-                <h2 class="hidden">Pendapat Orang-Orang Mengenai Travorama</h2>
-                <blockquote>
-                    <p>You can never cross the ocean until you have the courage to lose sight of the shore</p>
-                    <footer>Christopher Columbus</footer>
-                </blockquote>
-
-            </div>
-        </div>
-
-    </div>
-</section><!-- .section-feedback -->

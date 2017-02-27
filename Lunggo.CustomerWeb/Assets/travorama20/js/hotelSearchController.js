@@ -13,7 +13,7 @@ function ($scope, $log, $window, $http, $resource, $timeout, $interval, hotelSea
         if (Cookies.get('hotelSearchLocation')) {
             $scope.hotelSearch.location = Cookies.get('hotelSearchLocation');
         } else {
-            $scope.hotelSearch.location = 16173;
+            $scope.hotelSearch.location = 1316553;
         }
 
         if (Cookies.get('urlCountry')) {
@@ -161,12 +161,17 @@ function ($scope, $log, $window, $http, $resource, $timeout, $interval, hotelSea
         showHotelSearch : false
     }
    
+    $scope.mapUrl = '';
     // ***************************************END*******************************
 
     // ****************************** INITS ************************************
     $scope.init = function (model) {
+        //$log.debug("href = " + window.location.pathname);
         $scope.model = model;
         $log.debug($scope.model);
+        $scope.mapUrl = window.location.pathname.replace("cari", "map") + '?info=' + model.searchParam;
+        $("#mapUrl").attr("href", $scope.mapUrl);
+        $("#mapUrl").attr("target", "_blank");
         $scope.hotelSearch.location = $scope.model.searchParamObject.location;
         $scope.hotelSearch.checkinDate = $scope.model.searchParamObject.checkinDate;
         $scope.hotelSearch.checkinDateDisplay = moment($scope.hotelSearch.checkinDate).locale("id").format('LL');
@@ -282,50 +287,50 @@ function ($scope, $log, $window, $http, $resource, $timeout, $interval, hotelSea
             $scope.hotels = [];
             if (data.hotels != null) {
                 if ($scope.checkHotel(data.hotels)) {
-                    if (data.searchId !== undefined) {
+            if (data.searchId !== undefined) {
 
-                        $scope.hotelSearch.searchId = data.searchId;
-                        $scope.changeSearch.searchId = data.searchId;
-                    }
+                $scope.hotelSearch.searchId = data.searchId;
+                $scope.changeSearch.searchId = data.searchId;
+            }
 
-                    $scope.expiryDate = new Date(data.expTime);
+            $scope.expiryDate = new Date(data.expTime);
                     $interval(function() {
-                        var nowTime = new Date();
-                        if (nowTime > $scope.expiryDate) {
-                            $scope.expired = true;
+                var nowTime = new Date();
+                if (nowTime > $scope.expiryDate) {
+                    $scope.expired = true;
+                    
+                }
+            }, 1000);
 
-                        }
-                    }, 1000);
+            $scope.hotelSearch.destinationName = data.destinationName;
+            $scope.hotelSearch.locationDisplay = data.destinationName;
+            if (isMobile) {
+                $scope.hotels.push.apply($scope.hotels, data.hotels);
+                $scope.bottomPage = false;
+            } else {
+                $scope.hotels = data.hotels;
+            }
+            
+            $scope.totalActualHotel = data.returnedHotelCount;
+            $scope.returnedHotelCount = data.returnedHotelCount;
+            $scope.filteredHotelCount = data.filteredHotelCount;
+            
+            if (data.page > $scope.page) {
+                $scope.page = data.page;
+            }
+            
+            $scope.perPage = data.perPage;
+            $scope.pageCount = data.pageCount;
+            $scope.totalHotelCount = data.totalHotelCount;
 
-                    $scope.hotelSearch.destinationName = data.destinationName;
-                    $scope.hotelSearch.locationDisplay = data.destinationName;
-                    if (isMobile) {
-                        $scope.hotels.push.apply($scope.hotels, data.hotels);
-                        $scope.bottomPage = false;
-                    } else {
-                        $scope.hotels = data.hotels;
-                    }
-
-                    $scope.totalActualHotel = data.returnedHotelCount;
-                    $scope.returnedHotelCount = data.returnedHotelCount;
-                    $scope.filteredHotelCount = data.filteredHotelCount;
-
-                    if (data.page > $scope.page) {
-                        $scope.page = data.page;
-                    }
-
-                    $scope.perPage = data.perPage;
-                    $scope.pageCount = data.pageCount;
-                    $scope.totalHotelCount = data.totalHotelCount;
-
-                    if (isFirstload) {
-                        $scope.filter.minPrice = data.minPrice;
-                        $scope.filter.maxPrice = data.maxPrice;
-                        $scope.minPrice = data.minPrice;
-                        $scope.maxPrice = data.maxPrice;
-                        initiatePriceSlider();
-                        $scope.hotelFilterDisplayInfo = data.hotelFilterDisplayInfo;
-                        isFirstload = false;
+            if (isFirstload) {
+                $scope.filter.minPrice = data.minPrice;
+                $scope.filter.maxPrice = data.maxPrice;
+                $scope.minPrice = data.minPrice;
+                $scope.maxPrice = data.maxPrice;
+            initiatePriceSlider();
+                $scope.hotelFilterDisplayInfo = data.hotelFilterDisplayInfo;
+                isFirstload = false;
 
                         var hotelId = [];
                         if (data.totalHotelCount >= 10) {
@@ -362,7 +367,7 @@ function ($scope, $log, $window, $http, $resource, $timeout, $interval, hotelSea
                             purchase_value: data.minPrice,
                             purchase_currency: $scope.gtmPurchaseCurrency,
                         });
-                    };
+            };
                     $scope.searchDone = true;
                     $scope.finishLoad = true;
                 } else {
@@ -635,13 +640,3 @@ function ($scope, $log, $window, $http, $resource, $timeout, $interval, hotelSea
 
     // ****************************** END **************************************
 }]);
-
-//$('.overlay .filter-group--facility a').on('click', function () { //click or click touchstart
-//    $('.overlay .filter-group--facility a').toggleClass('active');
-//    $('.overlay .sh-list').toggleClass('opened');
-//});
-
-//$('.overlay .filter-group--area').on('click', function () {
-//    $('.overlay .filter-group--facility a').toggleClass('active');
-//    $('.overlay .sh-list').toggleClass('opened');
-//});
