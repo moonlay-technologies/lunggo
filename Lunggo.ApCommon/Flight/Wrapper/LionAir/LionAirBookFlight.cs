@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Threading;
@@ -86,6 +87,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                 List<string> errorMessages;
                 CommonInputCheck(bookInfo.Passengers, depdate, out errorMessages);
                 if (errorMessages.Count > 0)
+                {
                     return new BookFlightResult
                     {
                         IsSuccess = false,
@@ -96,6 +98,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                         Errors = new List<FlightError> { FlightError.InvalidInputData },
                         ErrorMessages = errorMessages
                     };
+                }
+                   
                 // [GET] Search Flight
 
                 var client = CreateAgentClient();
@@ -1074,7 +1078,6 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                         {
                             LogOut(cid, client);
                             TurnInUsername(clientx, userName);
-
                             return new BookFlightResult
                             {
                                 IsSuccess = false,
@@ -1207,7 +1210,6 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                 {
                     LogOut(cid, client);
                     TurnInUsername(clientx, userName);
-
                     return new BookFlightResult
                     {
                         IsSuccess = false,

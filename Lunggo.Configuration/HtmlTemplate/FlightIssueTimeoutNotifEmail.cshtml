@@ -1,0 +1,17 @@
+﻿@using System.Globalization
+@using Lunggo.ApCommon.Constant
+@using Lunggo.Framework.Config
+@{ var env = ConfigManager.GetInstance().GetConfigValue("general", "environment"); }
+<html>
+<head>
+    <title>
+        Flight Issue Timeout in Travorama
+    </title>
+</head>
+<body>
+    <p>@(env != "production" ? "THIS IS A TEST EMAIL. PLEASE IGNORE THIS DREADED EMAIL. SORRY FOR THE INCONVENIENCE." : "")</p>
+    <p>Reservation Number : @Model</p>
+    <p>This reservation is failed to be issued because of timeout. Need to be handled manually</p>
+</body>
+
+</html>

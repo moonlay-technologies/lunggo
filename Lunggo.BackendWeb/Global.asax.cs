@@ -8,6 +8,8 @@ using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 using Lunggo.ApCommon.Flight.Constant;
+using Lunggo.ApCommon.Flight.Model.Logic;
+using Lunggo.ApCommon.Flight.Service;
 using Lunggo.ApCommon.Hotel.Constant;
 using Lunggo.ApCommon.Hotel.Model;
 using Lunggo.ApCommon.Hotel.Model.Logic;
@@ -37,6 +39,8 @@ namespace Lunggo.BackendWeb
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
             AppInitializer.Init();
+            //FlightService.GetInstance().SendIssueTimeoutNotifToDeveloper("114336557879");
+            //Console.WriteLine("Done");
             //HotelService.GetInstance().CommenceIssueHotel(new IssueHotelTicketInput
             //{
             //    RsvNo = "296406547890"

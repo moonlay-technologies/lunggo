@@ -154,9 +154,6 @@ namespace Lunggo.ApCommon.Flight.Service
                             itin.SearchId = searchId;
                         }
 
-                    if (searchCancellation.IsCancellationRequested)
-                        return;
-
                     SaveSearchedPartialItinerariesToBufferCache(result.Itineraries, searchId, supplierIndex,
                         conditionsList.IndexOf(partialConditions));
                 });

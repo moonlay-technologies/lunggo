@@ -4,6 +4,7 @@ using Lunggo.Framework.BlobStorage;
 using Lunggo.Framework.Config;
 using Lunggo.Framework.Database;
 using Lunggo.Framework.HtmlTemplate;
+using Lunggo.Framework.Log;
 using Lunggo.Framework.Mail;
 using Lunggo.Framework.Queue;
 using Lunggo.Framework.Redis;
@@ -22,6 +23,7 @@ namespace Lunggo.WebJob.FlightProcessor
             InitHtmlTemplateService();
             InitMailService();
             InitFlightService();
+            InitLogService();
         }
 
         private static void InitConfigurationManager()
@@ -87,6 +89,12 @@ namespace Lunggo.WebJob.FlightProcessor
                 }, 
                  
             });
+        }
+        public static void InitLogService()
+        {
+            var webhookUrl = ConfigManager.GetInstance().GetConfigValue("log", "slack");
+            var log = LogService.GetInstance();
+            log.Init(webhookUrl);
         }
     }
 }
