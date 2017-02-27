@@ -106,16 +106,6 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
     // ================= FLIGHT ========================
 
     $scope.departureDate = moment().add(1, 'day').format('DDMMYY');
-    $scope.changeTab = function (tab) {
-        if (tab == 'hotel') {
-            $('.search-location').hide();
-            $('.search-calendar').hide();
-        } else if (tab == 'flight') {
-            $scope.view.showHotelSearch = false;
-            $('.search-calendar-hotel').hide();
-            $('.form-child-age').hide();
-        }
-    }
 
     $scope.showForm = function (tab) {
         if (tab == 'hotel') {
