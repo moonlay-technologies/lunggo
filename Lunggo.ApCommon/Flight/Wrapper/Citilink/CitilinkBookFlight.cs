@@ -137,6 +137,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                 var searchResponse = client.Execute(searchRequest);
 
                 if (searchResponse.ResponseUri.AbsolutePath != "/ScheduleSelect.aspx")
+                {
                     return new BookFlightResult
                     {
                         IsSuccess = false,
@@ -147,6 +148,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                         Errors = new List<FlightError> { FlightError.TechnicalError },
                         ErrorMessages = new List<string> { "[Citilink] Error in requesting at BookingListTravelAgent.aspx.Unexpected absolute path response or status code || " + searchResponse.Content }
                     };
+                }
 
                 // SELECT
 
@@ -186,6 +188,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                 var selectResponse = client.Execute(selectRequest);
 
                 if (selectResponse.ResponseUri.AbsolutePath != "/Passenger.aspx")
+                {
                     return new BookFlightResult
                     {
                         IsSuccess = false,
@@ -196,6 +199,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                         Errors = new List<FlightError> { FlightError.TechnicalError },
                         ErrorMessages = new List<string> { "[Citilink] Error in requesting at ScheduleSelect.aspx.Unexpected absolute path response or status code || " + selectResponse.Content }
                     };
+                }
 
                 // INPUT DATA (TRAVELER)
 
@@ -293,6 +297,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                 var passResponse = client.Execute(passRequest);
 
                 if (passResponse.ResponseUri.AbsolutePath != "/SeatMap.aspx")
+                {
                     return new BookFlightResult
                     {
                         IsSuccess = false,
@@ -303,6 +308,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                         Errors = new List<FlightError> { FlightError.InvalidInputData },
                         ErrorMessages = new List<string> { "[Citilink] Error while posting passenger data at Passenger.aspx.Unexpected absolute path response or status code || " + passResponse.Content }
                     };
+                }
 
                 // SELECT SEAT (UNITMAP)
 
@@ -337,6 +343,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                 var seatResponse = client.Execute(seatRequest);
 
                 if (seatResponse.ResponseUri.AbsolutePath != "/Payment.aspx")
+                {
                     return new BookFlightResult
                     {
                         IsSuccess = false,
@@ -347,6 +354,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                         Errors = new List<FlightError> { FlightError.TechnicalError },
                         ErrorMessages = new List<string> { "[Citilink] Error in SeatMap.aspx.Unexpected absolute path response or status code || " + seatResponse.Content }
                     };
+                }
 
                 /*Buat dapat Info Itinerary dan Harga*/
                 var getPaymenturl = @"Payment.aspx";
@@ -420,6 +428,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
 
 
                 if (paymentResponse.ResponseUri.AbsolutePath != "/Wait.aspx")
+                {
                     return new BookFlightResult
                     {
                         IsSuccess = false,
@@ -431,6 +440,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                         ErrorMessages = new List<string> { "[Citilink] Error in SeatMap.aspx.Unexpected absolute path response or status code || " + paymentResponse.Content }
                     };
 
+                }
+                    
                 // WAIT
 
                 var waitUrl = "Wait.aspx";

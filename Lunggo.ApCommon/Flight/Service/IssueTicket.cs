@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
@@ -18,12 +19,13 @@ namespace Lunggo.ApCommon.Flight.Service
     {
         internal override void Issue(string rsvNo)
         {
-            IssueTicket(new IssueTicketInput {RsvNo = rsvNo});
+            IssueTicket(new IssueTicketInput { RsvNo = rsvNo });
         }
 
         public IssueTicketOutput IssueTicket(IssueTicketInput input)
         {
             var reservation = GetReservation(input.RsvNo);
+
             var output = new IssueTicketOutput();
 
             if (reservation == null)
@@ -46,7 +48,7 @@ namespace Lunggo.ApCommon.Flight.Service
             else
             {
                 output.IsSuccess = false;
-                output.Errors = new List<FlightError> {FlightError.NotEligibleToIssue};
+                output.Errors = new List<FlightError> { FlightError.NotEligibleToIssue };
                 return output;
             }
         }
@@ -56,20 +58,25 @@ namespace Lunggo.ApCommon.Flight.Service
             var supplier = new List<Supplier>();
             var balance = new List<decimal>();
             var localPrice = new List<decimal>();
-                var reservation = GetReservation(input.RsvNo);
-                var output = new IssueTicketOutput();
+            var reservation = GetReservation(input.RsvNo);
+            var output = new IssueTicketOutput();
 
-                if (reservation == null)
-                {
-                    output.IsSuccess = false;
-                    output.Errors = new List<FlightError> { FlightError.InvalidInputData };
-                    return output;
-                }
-
-                if (reservation.Payment.Method == PaymentMethod.Credit ||
-                    (reservation.Payment.Method != PaymentMethod.Credit && 
-                    reservation.Payment.Status == PaymentStatus.Settled))
-                {
+            if (reservation == null)
+            {
+                output.IsSuccess = false;
+                output.Errors = new List<FlightError> { FlightError.InvalidInputData };
+                return output;
+            }
+            if (reservation.Itineraries.TrueForAll(x => x.BookingStatus == BookingStatus.Ticketed))
+            {
+                output.IsSuccess = false;
+                output.Errors = new List<FlightError> { FlightError.AlreadyBooked };
+                return output;
+            }
+            if (reservation.Payment.Method == PaymentMethod.Credit ||
+                (reservation.Payment.Method != PaymentMethod.Credit &&
+                reservation.Payment.Status == PaymentStatus.Settled))
+            {
                 Parallel.ForEach(reservation.Itineraries, itin =>
                 {
                     var response = IssueTicketInternal(new IssueTicketInfo
@@ -78,6 +85,18 @@ namespace Lunggo.ApCommon.Flight.Service
                         CanHold = itin.CanHold,
                         Supplier = itin.Supplier
                     });
+                    //AutoRetry Issue
+                    var trial = 0;
+                    while (response.Errors != null && trial < 3)
+                    {
+                        response = IssueTicketInternal(new IssueTicketInfo
+                        {
+                            BookingId = itin.BookingId,
+                            CanHold = itin.CanHold,
+                            Supplier = itin.Supplier
+                        });
+                        trial++;
+                    }
                     balance.Add(response.CurrentBalance);
                     supplier.Add(response.SupplierName);
                     localPrice.Add(itin.Price.Supplier);
@@ -127,9 +146,9 @@ namespace Lunggo.ApCommon.Flight.Service
                         SendEticketToCustomer(input.RsvNo);
                     }
                     else
-                        {
-                            SendEticketSlightDelayNotifToCustomer(input.RsvNo);
-                        }
+                    {
+                        SendEticketSlightDelayNotifToCustomer(input.RsvNo);
+                    }
                 }
                 else
                 {
@@ -146,7 +165,7 @@ namespace Lunggo.ApCommon.Flight.Service
                     }
 
                     SendIssueFailedNotifToDeveloper(reservation.RsvNo + "+" + supplierInfoItin);
-                    
+
                     if (output.OrderResults.Any(set => set.IsSuccess))
                     {
                         output.PartiallySucceed();
@@ -156,12 +175,12 @@ namespace Lunggo.ApCommon.Flight.Service
                 }
                 //UpdateIssueStatus(input.RsvNo, output);
                 return output;
-                }
-                else
-                {
-                    output.IsSuccess = false;
-                    output.Errors = new List<FlightError> { FlightError.NotEligibleToIssue };
-                    return output;
+            }
+            else
+            {
+                output.IsSuccess = false;
+                output.Errors = new List<FlightError> { FlightError.NotEligibleToIssue };
+                return output;
             }
         }
 
@@ -191,7 +210,7 @@ namespace Lunggo.ApCommon.Flight.Service
 
         private static string ConcatenateMessage(List<Supplier> supplierName, List<decimal> balance, List<decimal> localPrice)
         {
-       
+
             var balanceAndItinPrice = "";
             for (var i = 0; i < supplierName.Count; i++)
             {
@@ -199,16 +218,16 @@ namespace Lunggo.ApCommon.Flight.Service
                 {
                     balanceAndItinPrice = balanceAndItinPrice + supplierName[i] + ";" + localPrice[i] + ";" + balance[i] + "+";
                 }
-                else 
+                else
                 {
                     balanceAndItinPrice = balanceAndItinPrice + supplierName[i] + ";" + localPrice[i] + ";" + balance[i];
                 }
-                
+
             }
             return balanceAndItinPrice;
         }
 
-        private static int GetCaseType() 
+        private static int GetCaseType()
         {
             var datenow = DateTime.UtcNow.AddHours(+7);
             int casetype;

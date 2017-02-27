@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using CsQuery;
@@ -25,6 +26,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
 
         private partial class SriwijayaClientHandler
         {
+            public static int bookTrial = 0;
             internal BookFlightResult BookFlight(FlightBookingInfo bookInfo)
             {
                 /*Revalidate Flight Before Book*/
@@ -355,6 +357,12 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                     }
                     else
                     {
+                        if (bookTrial < 3)
+                        {
+                            Debug.Print("bookTrial : " + bookTrial);
+                            bookTrial += 1;
+                            Client.BookFlight(bookInfo);
+                        }
                         return new BookFlightResult
                         {
                             IsSuccess = false,
@@ -492,6 +500,12 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                 }
                 else
                 {
+                    if (bookTrial < 3)
+                    {
+                        Debug.Print("bookTrial : " + bookTrial);
+                        bookTrial += 1;
+                        Client.BookFlight(bookInfo);
+                    }
                     return new BookFlightResult
                     {
                         IsSuccess = false,

@@ -529,6 +529,9 @@
     </None>
     <None Include="Config\WebJob.CurrencyCrawler\veritrans.properties" />
     <None Include="Config\WebJob.CurrencyCrawler\zendesk.properties" />
+    <None Include="Config\WebJob.FlightProcessor\log.properties">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Config\WebJob.HotelContentWrapper\airAsia.properties" />
     <None Include="Config\WebJob.HotelContentWrapper\api.properties" />
     <None Include="Config\WebJob.HotelContentWrapper\azureStorage.properties" />
@@ -795,6 +798,7 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="HtmlTemplate\BankTransferInstructionEmailHotel.cshtml" />
+    <None Include="HtmlTemplate\FlightIssueTimeoutNotifEmail.cshtml" />
     <None Include="HtmlTemplate\HotelSaySorryFailedIssueNotifEmail.cshtml" />
     <None Include="HtmlTemplate\HotelVoucherEmail.cshtml" />
     <None Include="HtmlTemplate\HotelInvoice.cshtml" />
