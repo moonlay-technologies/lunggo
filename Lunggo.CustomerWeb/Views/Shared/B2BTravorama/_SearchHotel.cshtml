@@ -1,0 +1,50 @@
+﻿<div class="search-hotel page-hotel">
+    <header class="location-header">
+        <p class="origin">Pilih Hotel Tujuan Anda <span class="close-hotel">X</span></p>
+    </header>
+    <section class="location-body">
+        <section class="location-recommend">
+            <section class="tab-content">
+                <section class="hotel-location-search custom-scroll">
+                    <div class="hotel-autocomplete-pre">
+                        <h3 class="text-center text-pre typing">Masukkan Kata Kunci Anda (Minimal 3 huruf)</h3>
+                        <h3 class="text-center text-loading searching">Mencari lokasi</h3>
+                    </div>
+                    <div class="hotel-autocomplete-result popular">
+                        <ul>
+                            <li class="list-hotel" ng-repeat="destination in PopularDestinations" ng-click="getLocationId(destination)">
+                                <div class="list-row">
+                                    <div class="lr-wrapper clearfix">
+                                        <div class="col-6">
+                                            <div class="location bold-txt">{{destination}}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="hotel-autocomplete-no-result">
+                        <h2 class="text-center">Hasil Tidak Ditemukan</h2>
+                    </div>
+                    <div class="hotel-autocomplete-result api-result">
+                        <ul ng-show="hotelSearch.locationDisplay.length >= 3">
+                            <li class="list-hotel" ng-repeat="location in hotelSearch.hotelAutocomplete track by $index" ng-click="selectLocation(location)">
+                                <div class="list-row">
+                                    <div class="lr-wrapper clearfix">
+                                        <div class="col-6">
+                                            <div class="location bold-txt">{{location.name}}</div>
+                                            <div class="zone">{{location.type}}</div>
+                                        </div>
+                                        <div class="col-4" ng-show="location.type !=  'Hotel'">
+                                            <div class="blue-txt semibold-txt pull-right">{{location.numOfHotels}} Hotel di Daerah Ini</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </section><!-- .location-search -->
+            </section>
+        </section>
+    </section>
+</div>

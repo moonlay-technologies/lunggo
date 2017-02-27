@@ -39,98 +39,98 @@
 
 }
 
-<div ng-app="travoramaB2B" ng-controller="B2BHotelSearchFormController">
-    <div class="panel panel-transparent">
-        <div class="panel-heading ">
-            <div class="panel-title">
-                Cari Kamar Hotel
-            </div>
+<div ng-app="travoramaB2B" ng-controller="B2BHotelSearchFormController" ng-class="{'page-loaded' : pageLoaded}">
+    <div class=" panel panel-transparent">
+    <div class="panel-heading ">
+        <div class="panel-title">
+            Cari Kamar Hotel
         </div>
-        <div class="panel-body">
-            <form id="form-flight" role="form" autocomplete="off" novalidate="novalidate">
-                <div class="row clearfix">
-                    <div class="col-sm-6">
-                        <div class="form-group form-group-default">
-                            <label>Tujuan</label>
-                            <input type="text" class="form-control hotel-location" placeholder="Bali, Indonesia">
-                        </div>
-                    </div>
-                    <div class="col-sm-6">
-                        <div class="form-group form-group-default input-group">
-                            <label>Tanggal Check in</label>
-                            <input hidden name="checkInDate" id="checkInDate" />
-                            <input type="email" class="form-control" placeholder="Pilih tanggal kembali" id="valueCheckInDate" />
-                            <span class="input-group-addon">
-                                <i class="fa fa-calendar"></i>
-                            </span>
-                        </div>
+    </div>
+    <div class="panel-body">
+        <form id="form-flight" role="form" autocomplete="off" novalidate="novalidate">
+            <div class="row clearfix">
+                <div class="col-sm-6">
+                    <div class="form-group form-group-default">
+                        <label>Tujuan</label>
+                        <input type="text" class="form-control hotel-location" placeholder="Bali, Indonesia" ng-model="hotelSearch.locationDisplay">
                     </div>
                 </div>
-                <div class="row clearfix">
-                    <div class="col-sm-6">
-                        <div class="form-group form-group-default">
-                            <label class="label-custom">Malam</label>
-                            <select class="cs-select cs-skin-slide" data-init-plugin="cs-select" ng-model="searchParam.Nights">
-                                <option class="option" value="{{amount}}" ng-repeat="amount in searchParam.NightList">{{amount}}</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-sm-6">
-                        <div class="form-group form-group-default" id="room-hotel">
-                            <label class="label-custom">Jumlah Kamar</label>
-                            <select class="cs-select cs-skin-slide" data-init-plugin="cs-select" ng-model="searchParam.Rooms">
-                                <option class="option" value="{{amount}}" ng-repeat="amount in searchParam.RoomList">{{amount}}</option>
-                            </select>
-                        </div>
+                <div class="col-sm-6">
+                    <div class="form-group form-group-default input-group">
+                        <label>Tanggal Check in</label>
+                        <input hidden name="checkInDate" id="checkInDate" />
+                        <input type="email" class="form-control" placeholder="Pilih tanggal check-in" id="valueCheckInDate" />
+                        <span class="input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                        </span>
                     </div>
                 </div>
-                
-                <div class="panel panel-default" id="room-hotel-detail">
+            </div>
+            <div class="row clearfix">
+                <div class="col-sm-6">
+                    <div class="form-group form-group-default">
+                        <label class="label-custom">Malam</label>
+                        <select class="cs-select cs-skin-slide" data-init-plugin="cs-select" ng-model="hotelSearch.nightCount">
+                            <option class="option" value="{{amount}}" ng-repeat="amount in searchParam.NightList">{{amount}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group form-group-default" id="room-hotel">
+                        <label class="label-custom">Jumlah Kamar</label>
+                        <select class="cs-select cs-skin-slide" data-init-plugin="cs-select" ng-model="hotelSearch.roomCount">
+                            <option class="option" value="{{amount}}" ng-repeat="amount in searchParam.RoomList">{{amount}}</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel panel-default" id="room-hotel-detail">
+                <div class="panel-heading">
+                    <div class="panel-title">Rincian Jumlah Tamu</div>
+                </div>
+                <div class="room-item" ng-repeat="n in [0,1,2,3,4,5,6,7] track by $index" ng-show="$index < hotelSearch.roomCount">
                     <div class="panel-heading">
-                        <div class="panel-title">Rincian Jumlah Tamu</div>
+                        <div class="panel-title">Kamar {{n + 1}}</div>
                     </div>
-                    <div class="room-item" ng-repeat="n in [0,1,2,3,4,5,6,7] track by $index" ng-show="$index < searchParam.Rooms">
-                        <div class="panel-heading">
-                            <div class="panel-title">Kamar {{n + 1}}</div>
-                        </div>
-                        <div class="panel-body">
-                            <div class="row clearfix">
-                                <div class="col-xs-4">
-                                    <div class="form-group form-group-default input-custom">
-                                        <label class="label-custom">Dewasa</label>
-                                        <select class="cs-select cs-skin-slide" data-init-plugin="cs-select" ng-model="searchParam.Occupancies[n].Adult">
-                                            <option class="option" value="{{amount}}" ng-repeat="amount in searchParam.AdultList">{{amount}}</option>
-                                        </select>
-                                    </div>
+                    <div class="panel-body">
+                        <div class="row clearfix">
+                            <div class="col-xs-4">
+                                <div class="form-group form-group-default input-custom">
+                                    <label class="label-custom">Dewasa</label>
+                                    <select class="cs-select cs-skin-slide" data-init-plugin="cs-select" ng-model="hotelSearch.occupancies[n].adultCount">
+                                        <option class="option" value="{{amount}}" ng-repeat="amount in searchParam.AdultList">{{amount}}</option>
+                                    </select>
                                 </div>
-                                <div class="col-xs-4">
-                                    <div class="form-group form-group-default">
-                                        <label class="label-custom">Anak-anak</label>
-                                        <select class="cs-select cs-skin-slide" data-init-plugin="cs-select" ng-model="searchParam.Occupancies[n].Children">
-                                            <option class="option" value="{{amount}}" ng-repeat="amount in searchParam.ChildList">{{amount}}</option>
-                                        </select>
-                                    </div>
+                            </div>
+                            <div class="col-xs-4">
+                                <div class="form-group form-group-default">
+                                    <label class="label-custom">Anak-anak</label>
+                                    <select class="cs-select cs-skin-slide" data-init-plugin="cs-select" ng-model="hotelSearch.occupancies[n].childCount">
+                                        <option class="option" value="{{amount}}" ng-repeat="amount in searchParam.ChildList">{{amount}}</option>
+                                    </select>
                                 </div>
-                                
-                                <div class="col-xs-4" ng-show="searchParam.Occupancies[n].Children > 0">
-                                    <div class="form-group form-group-default" ng-repeat="child in [0,1,2,3] track by $index"
-                                         ng-show="searchParam.Occupancies[n].Children > $index">
-                                        <label class="label-custom">Umur Anak ke-{{$index+1}}</label>
-                                        <select class="cs-select cs-skin-slide" data-init-plugin="cs-select" ng-model="searchParam.Occupancies[n].ChildrenAges[child]">
-                                            <option class="option" value="{{age}}" ng-repeat="age in searchParam.ChildAgeList">{{age}}</option>
-                                        </select>
-                                    </div>
+                            </div>
+
+                            <div class="col-xs-4" ng-show="hotelSearch.occupancies[n].childCount > 0">
+                                <div class="form-group form-group-default" ng-repeat="child in [0,1,2,3] track by $index"
+                                     ng-show="hotelSearch.occupancies[n].childCount > $index">
+                                    <label class="label-custom">Umur Anak ke-{{$index+1}}</label>
+                                    <select class="cs-select cs-skin-slide" data-init-plugin="cs-select" ng-model="hotelSearch.occupancies[n].childrenAges[child]">
+                                        <option class="option" value="{{age}}" ng-repeat="age in searchParam.ChildAgeList">{{age}}</option>
+                                    </select>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="clearfix m-t-10">
-                    <button class="btn btn-primary" type="submit">Cari Hotel</button>
-                </div>
-            </form>
-        </div>
+            </div>
+            <div class="clearfix m-t-10">
+                <button class="btn btn-primary" type="submit" ng-click="hotelSearch.getHotels()">Cari Hotel</button>
+            </div>
+        </form>
     </div>
+</div>
     
     @Html.Partial("/Views/Shared/B2BTravorama/_SearchHotel.cshtml")
 </div>

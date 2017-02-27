@@ -565,8 +565,96 @@ app.controller('B2BHotelSearchFormController', ['$scope', '$log', '$http', '$loc
     $(document).ready(function () {
 
         $.getScript("js.cookie.js", function () { });
+
+        if (Cookies.get('hotelSearchLocationDisplay')) {
+            $scope.hotelSearch.locationDisplay = Cookies.get('hotelSearchLocationDisplay');
+        } else {
+            $scope.hotelSearch.locationDisplay = 'Bali, Indonesia';
+        }
+
+        if (Cookies.get('hotelSearchLocation')) {
+            $scope.hotelSearch.location = Cookies.get('hotelSearchLocation');
+        } else {
+            $scope.hotelSearch.location = 16173;
+        }
+
+        if (Cookies.get('urlCountry')) {
+            $scope.hotelSearch.urlData.country = Cookies.get('urlCountry');
+        } else {
+            $scope.hotelSearch.urlData.country = 'Indonesia';
+        }
+
+        if (Cookies.get('urlDestination')) {
+            $scope.hotelSearch.urlData.destination = Cookies.get('urlDestination');
+        } else {
+            $scope.hotelSearch.urlData.destination = 'Bali';
+        }
+
+        if (Cookies.get('urlZone')) {
+            $scope.hotelSearch.urlData.zone = Cookies.get('urlZone');
+        } else {
+            $scope.hotelSearch.urlData.zone = null;
+        }
+
+        if (Cookies.get('urlArea')) {
+            $scope.hotelSearch.urlData.area = Cookies.get('urlArea');
+        } else {
+            $scope.hotelSearch.urlData.area = null;
+        }
+
+        if (Cookies.get('urlType')) {
+            $scope.hotelSearch.urlData.type = Cookies.get('urlType');
+        } else {
+            $scope.hotelSearch.urlData.type = 'Destination';
+        }
+
+        if (Cookies.get('hotelSearchCheckInDate')) {
+            $scope.hotelSearch.checkinDate = new Date(Cookies.get('hotelSearchCheckInDate'));
+            $scope.hotelSearch.checkinDateDisplay = moment($scope.hotelSearch.checkinDate).locale("id").format('LL');
+            $('.ui-datepicker.checkindate').datepicker("setDate", new Date($scope.hotelSearch.checkinDateDisplay));
+        } else {
+            $scope.hotelSearch.checkinDate = moment().locale("id").add(5, 'days');
+            $scope.hotelSearch.checkinDateDisplay = moment($scope.hotelSearch.checkinDate).locale("id").format('LL');
+        }
+
+        var valCheckInDate = $scope.setDateWriting($scope.hotelSearch.checkinDate.getDate(),
+            $scope.hotelSearch.checkinDate.getMonth(), $scope.hotelSearch.checkinDate.getFullYear());
+        $('#valueCheckInDate').val(valCheckInDate);
+
+        if (Cookies.get('hotelSearchCheckOutDate')) {
+            $scope.hotelSearch.checkoutDate = new Date(Cookies.get('hotelSearchCheckOutDate'));
+            $scope.hotelSearch.checkoutDateDisplay = moment($scope.hotelSearch.checkoutDate).locale("id").format('LL');
+        } else {
+            $scope.hotelSearch.checkoutDate = moment().locale("id").add(7, 'days');
+            $scope.hotelSearch.checkoutDateDisplay = moment($scope.hotelSearch.checkoutDate).locale("id").format('LL');
+        }
+
+        if (Cookies.get('hotelSearchNights')) {
+            $scope.hotelSearch.nightCount = Cookies.get('hotelSearchNights');
+        } else {
+            $scope.hotelSearch.nightCount = 2;
+        }
+
+        if (Cookies.get('hotelSearchRooms')) {
+            $scope.hotelSearch.roomCount = Cookies.get('hotelSearchRooms');
+        } else {
+            $scope.hotelSearch.roomCount = 1;
+        }
+        if (Cookies.getJSON('hotelSearchOccupancies')) {
+            $scope.hotelSearch.occupancies = Cookies.getJSON('hotelSearchOccupancies');
+        } else {
+            $scope.hotelSearch.occupancies = [];
+            for (var i = 0; i <= 7; i++) {
+                $scope.hotelSearch.occupancies.push({
+                    adultCount: 1,
+                    childCount: 0,
+                    childrenAges: [0, 0, 0, 0]
+                });
+            }
+        }
     });
 
+    $scope.pageLoaded = true;
     $scope.setDateWriting = function (day, month, year) {
         return day.toString() + ' ' + $scope.getMonthName(month) + ' ' + year.toString();
     }
@@ -635,13 +723,6 @@ app.controller('B2BHotelSearchFormController', ['$scope', '$log', '$http', '$loc
     var tmrwDate = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
 
     $scope.searchParam = {
-        Location: '',
-        LocationCode: '',
-        CheckInDate: todayDate,
-        CheckOutDate: tmrwDate,
-        Nights: 2,
-        Rooms: 1,
-        Occupancies: [],
         NightList: [1, 2, 3, 4, 5, 6, 7],
         RoomList: [1, 2, 3, 4, 5, 6, 7, 8],
         AdultList: [1, 2, 3, 4, 5],
@@ -652,22 +733,41 @@ app.controller('B2BHotelSearchFormController', ['$scope', '$log', '$http', '$loc
     $scope.view = {
         showHotelSearch : false
     }
-    for (var x = 0; x < 8; x++) {
-        $scope.searchParam.Occupancies.push({
-            Adult: 1,
-            Children: 0,
-            ChildrenAges: [0, 0, 0, 0]
-        });
-    }
+    
+    $('.search-hotel').hide();
     hotelSearchSvc.initializeSearchForm($scope);
-
+        
     $('.hotel-location').click(function (evt) {
+        $(this).select();
         evt.stopPropagation();
         $scope.view.showHotelSearch = true;
         $scope.showPopularDestinations = true;
         $('.search-hotel').show();
+        $('.hotel-autocomplete-pre').hide();
+        $('.hotel-autocomplete-no-result').hide();
     });
 
+    $('.hotel-location').keyup(function (evt) {
+        $scope.showPopularDestinations = false;
+        var value = $('.hotel-location').val();
+        if (value.length > 0 && value.length < 3) {
+            $('.hotel-autocomplete-result.popular').hide();
+            $('.hotel-autocomplete-pre').show();
+            $('.hotel-autocomplete-pre .typing').show();
+            $('.hotel-autocomplete-pre .searching').hide();
+            $('.hotel-autocomplete-result.api-result').show();
+            //masukkan > 3 huruf
+        } else if (value.length >= 3) {
+            $('.hotel-autocomplete-result.popular').hide();
+            $('.hotel-autocomplete-pre').hide();
+            $('.hotel-autocomplete-result.api-result').show();
+            //show hasil
+        } else {
+            $('.hotel-autocomplete-pre').hide();
+            $('.hotel-autocomplete-result.popular').show();
+        }
+        
+    });
     //hideHotel hotel
     function hideHotel() {
         $scope.view.showHotelSearch = false;
@@ -684,25 +784,24 @@ app.controller('B2BHotelSearchFormController', ['$scope', '$log', '$http', '$loc
         $('.search-hotel .location-recommend .tab-content>div').removeClass('active');
         $('.search-hotel .location-recommend .tab-content>div.' + showClass).addClass('active');
     });
-
-
+        
     $scope.selectCalendar = '';
     $scope.setOptionCalendar = function (target) {
         $scope.selectCalendar = target;
     }
+
     $('#checkInDate').change(function () {
-        //$log.debug($('#returnDate').val());
         var date = $('#checkInDate').val().split(' ');
         var day = parseInt(date[0]);
         var month = (date[1]);
         var year = parseInt(date[2]);
         var selectedDate = new Date(year, $scope.getMonthNumber(month), day);
-        $scope.searchParam.CheckInDate = selectedDate;
+        $scope.hotelSearch.checkinDate = selectedDate;
         var checkOutDate= new Date(selectedDate);
-        checkOutDate.setDate(checkOutDate.getDate() + $scope.searchParam.Nights);
+        $scope.hotelSearch.checkoutDate = checkOutDate.setDate(checkOutDate.getDate() + $scope.hotelSearch.nightCount);
 
-        var valCheckInDate = $scope.setDateWriting($scope.searchParam.CheckInDate.getDate(),
-            $scope.searchParam.CheckInDate.getMonth(), $scope.searchParam.CheckInDate.getFullYear());
+        var valCheckInDate = $scope.setDateWriting($scope.hotelSearch.checkinDate.getDate(),
+            $scope.hotelSearch.checkinDate.getMonth(), $scope.hotelSearch.checkinDate.getFullYear());
         $('#valueCheckInDate').val(valCheckInDate);
         $(this).datepicker('hide');
     });
@@ -717,8 +816,4 @@ app.controller('B2BHotelSearchFormController', ['$scope', '$log', '$http', '$loc
         window.location.href = url;
     };
 
-    // set cookie
-    function setCookie() {
-        
-    }
     }]);
