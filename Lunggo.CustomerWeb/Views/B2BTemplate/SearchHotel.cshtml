@@ -39,7 +39,7 @@
 
 }
 
-<div class="search-hotel" ng-app="travoramaB2B" ng-controller="B2BHotelSearchFormController">
+<div ng-app="travoramaB2B" ng-controller="B2BHotelSearchFormController">
     <div class="panel panel-transparent">
         <div class="panel-heading ">
             <div class="panel-title">
@@ -52,7 +52,7 @@
                     <div class="col-sm-6">
                         <div class="form-group form-group-default">
                             <label>Tujuan</label>
-                            <input type="text" class="form-control" placeholder="Bali, Indonesia">
+                            <input type="text" class="form-control hotel-location" placeholder="Bali, Indonesia">
                         </div>
                     </div>
                     <div class="col-sm-6">
@@ -84,17 +84,18 @@
                         </div>
                     </div>
                 </div>
+                
                 <div class="panel panel-default" id="room-hotel-detail">
                     <div class="panel-heading">
                         <div class="panel-title">Rincian Jumlah Tamu</div>
                     </div>
-                    <div class="room-item" ng-repeat="n in [0,1,2,3,4,5,6,7] track by $index" ng-show="searchParam.Rooms >= $index  + 1">
+                    <div class="room-item" ng-repeat="n in [0,1,2,3,4,5,6,7] track by $index" ng-show="$index < searchParam.Rooms">
                         <div class="panel-heading">
                             <div class="panel-title">Kamar {{n + 1}}</div>
                         </div>
                         <div class="panel-body">
                             <div class="row clearfix">
-                                <div class="col-xs-6">
+                                <div class="col-xs-4">
                                     <div class="form-group form-group-default input-custom">
                                         <label class="label-custom">Dewasa</label>
                                         <select class="cs-select cs-skin-slide" data-init-plugin="cs-select" ng-model="searchParam.Occupancies[n].Adult">
@@ -102,11 +103,21 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-xs-6">
+                                <div class="col-xs-4">
                                     <div class="form-group form-group-default">
                                         <label class="label-custom">Anak-anak</label>
                                         <select class="cs-select cs-skin-slide" data-init-plugin="cs-select" ng-model="searchParam.Occupancies[n].Children">
                                             <option class="option" value="{{amount}}" ng-repeat="amount in searchParam.ChildList">{{amount}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-xs-4" ng-show="searchParam.Occupancies[n].Children > 0">
+                                    <div class="form-group form-group-default" ng-repeat="child in [0,1,2,3] track by $index"
+                                         ng-show="searchParam.Occupancies[n].Children > $index">
+                                        <label class="label-custom">Umur Anak ke-{{$index+1}}</label>
+                                        <select class="cs-select cs-skin-slide" data-init-plugin="cs-select" ng-model="searchParam.Occupancies[n].ChildrenAges[child]">
+                                            <option class="option" value="{{age}}" ng-repeat="age in searchParam.ChildAgeList">{{age}}</option>
                                         </select>
                                     </div>
                                 </div>
@@ -120,4 +131,6 @@
             </form>
         </div>
     </div>
+    
+    @Html.Partial("/Views/Shared/B2BTravorama/_SearchHotel.cshtml")
 </div>

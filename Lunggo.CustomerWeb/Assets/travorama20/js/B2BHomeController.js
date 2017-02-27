@@ -560,7 +560,8 @@ app.controller('B2BFlightSearchFormController', ['$scope', '$log', '$http', '$lo
 }]);
 
 // home controller
-app.controller('B2BHotelSearchFormController', ['$scope', '$log', 'hotelSearchSvc', function ($scope, hotelSearchSvc) {
+app.controller('B2BHotelSearchFormController', ['$scope', '$log', '$http', '$location', '$resource', '$timeout', 'hotelSearchSvc',
+    function ($scope, $log, $http, $location, $resource, $timeout, hotelSearchSvc) {
     $(document).ready(function () {
 
         $.getScript("js.cookie.js", function () { });
@@ -628,6 +629,8 @@ app.controller('B2BHotelSearchFormController', ['$scope', '$log', 'hotelSearchSv
         }
     }
 
+    $scope.showPopularDestinations = false;
+    $scope.autocompletePre = false;
     var todayDate = new Date();
     var tmrwDate = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
 
@@ -636,192 +639,52 @@ app.controller('B2BHotelSearchFormController', ['$scope', '$log', 'hotelSearchSv
         LocationCode: '',
         CheckInDate: todayDate,
         CheckOutDate: tmrwDate,
-        Nights: '1',
-        Rooms: '2',
-        Occupancies: [
-        {
-            Adult: 1,
-            Children: 0,
-            ChildrenAges: [0,0,0,0]
-        }],
+        Nights: 2,
+        Rooms: 1,
+        Occupancies: [],
         NightList: [1, 2, 3, 4, 5, 6, 7],
         RoomList: [1, 2, 3, 4, 5, 6, 7, 8],
         AdultList: [1, 2, 3, 4, 5],
         ChildList: [0, 1, 2, 3, 4],
         ChildAgeList: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
     }
-    
-    for (var x = 0; x < 7; x++) {
+
+    $scope.view = {
+        showHotelSearch : false
+    }
+    for (var x = 0; x < 8; x++) {
         $scope.searchParam.Occupancies.push({
             Adult: 1,
             Children: 0,
             ChildrenAges: [0, 0, 0, 0]
         });
     }
-    
-    $('#originPlace').keyup(function (evt) {
-        if (evt.keyCode == 27) {
-            hideLocation();
-        } else {
-            if ($(this).val().length >= 3) {
-                $('.search-location .location-recommend').hide();
-                $('.search-location .location-search').show();
-                getLocation($(this).val());
-            } else {
-                $('.search-location .location-recommend').hide();
-                $('.search-location .location-search').show();
-                $('.search-location .location-search .autocomplete-pre .text-pre').show();
-                $('.search-location .location-search .autocomplete-result').hide();
-                $('.search-location .location-search .autocomplete-no-result').hide();
-            }
-        }
-    });
-    $('#originPlace').keydown(function (evt) {
-        if (evt.keyCode == 9 || evt.which == 9) {
-            evt.preventDefault();
-        }
-    });
-    $('#originPlace').focusout(function () {
-        $(this).val(($scope.searchParam.OriginCity + " (" + $scope.searchParam.OriginAirport + ")"));
+    hotelSearchSvc.initializeSearchForm($scope);
+
+    $('.hotel-location').click(function (evt) {
+        evt.stopPropagation();
+        $scope.view.showHotelSearch = true;
+        $scope.showPopularDestinations = true;
+        $('.search-hotel').show();
     });
 
-    var trial = 0;
-    function generateSearchResult(list) {
-        $('.autocomplete-result ul').empty();
-        for (var i = 0 ; i < list.length; i++) {
-            $('.autocomplete-result ul').append('<li href="#" data-code="' + list[i].code + '" data-city="' + list[i].city + '">' + list[i].city + ' (' + list[i].code + '), ' + list[i].name + ', ' + list[i].country + '</li>');
-        }
-    }
-    function getLocation(keyword) {
-        if (trial > 3) {
-            trial = 0;
-        }
-        $.ajax({
-            url: FlightAutocompleteConfig.Url + keyword,
-            headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') }
-        }).done(function (returnData) {
-            $('.autocomplete-pre .text-pre').hide();
-            $('.autocomplete-pre .text-loading').hide();
-            var result = returnData.airports;
-            console.log(returnData);
-            generateSearchResult(result);
-            if (returnData.airports.length > 0) {
-                $('.autocomplete-no-result').hide();
-                $('.autocomplete-pre .text-loading').hide();
-                $('.autocomplete-result').show();
-            } else {
-                $('.autocomplete-pre .text-loading').hide();
-                $('.autocomplete-result').hide();
-                $('.autocomplete-no-result').show();
-            }
-        }).error(function () {
-            trial++;
-            if (refreshAuthAccess() && trial < 4) //refresh cookie
-            {
-                getLocation(keyword);
-            }
-        });
+    //hideHotel hotel
+    function hideHotel() {
+        $scope.view.showHotelSearch = false;
+        $('.search-hotel').hide();
     }
 
-    $scope.recommendation = '';
-    $scope.showLocation = function (text) {
-        $('.search-location').show();
-        $scope.recommendation = text;
-        showLocation(text);
-    }
+    //close hotel
+    $('.close-hotel').click(function () { hideHotel(); });
 
-    function showLocation(place) {
-        place = place || $('.search-location').attr('data-place');
-        $('.search-location .location-recommend').show();
-        $('.search-location .location-search').hide();
-        if (place == 'origin') {
-            $('.search-location .location-header .origin').removeClass('hidden');
-            $('.search-location .location-header .destination').addClass('hidden');
-        } else {
-            $('.search-location .location-header .origin').addClass('hidden');
-            $('.search-location .location-header .destination').removeClass('hidden');
-        }
-        $('.search-location').attr('data-place', place);
-        $('.search-location').attr('id', place);
-        $('.search-location').show();
-        //hideCalendar();
-    }
-    $('.search-location .location-recommend .nav-click.prev').click(function (evt) {
-        evt.preventDefault();
-        if (parseInt($('.search-location .location-recommend .tab-header nav ul').css('margin-left')) < 0) {
-            $('.search-location .location-recommend .tab-header nav ul').css('margin-left', '+=135px');
-        }
-    });
-    $('.search-location .location-recommend .nav-click.next').click(function (evt) {
-        evt.preventDefault();
-        if (parseInt($('.search-location .location-recommend .tab-header nav ul').css('margin-left')) > -(135 * ($('.search-location .location-recommend .tab-header nav ul li').length - 4))) {
-            $('.search-location .location-recommend .tab-header nav ul').css('margin-left', '-=135px');
-        }
-    });
-    $('.search-location .location-recommend nav ul li ').click(function () {
+    $('.search-hotel .location-recommend nav ul li ').click(function () {
         var showClass = $(this).attr('data-show');
         $(this).addClass('active');
         $(this).siblings().removeClass('active');
-        $('.search-location .location-recommend .tab-content>div').removeClass('active');
-        $('.search-location .location-recommend .tab-content>div.' + showClass).addClass('active');
-    });
-    $('.search-location .location-recommend .tab-content a').click(function (evt, sharedProperties) {
-        evt.preventDefault();
-        var locationCode = $(this).attr('data-code');
-        var locationCity = $(this).text();
-        if ($scope.recommendation == 'origin') {
-            if (locationCity != $scope.searchParam.DestinationCity) {
-                $scope.searchParam.OriginAirport = locationCode;
-                $scope.searchParam.OriginCity = locationCity;
-                $scope.searchParam.Origin = $(this).text() + ' (' + locationCode + ')';
-                $('#originPlace').val($(this).text() + ' (' + locationCode + ')');
-            } else {
-                alert('Kota Asal dan Tujuan Tidak Boleh Sama');
-            }
-
-        } else {
-            if (locationCity != $scope.searchParam.OriginCity) {
-                $scope.searchParam.DestinationAirport = locationCode;
-                $scope.searchParam.DestinationCity = locationCity;
-                $('#destinationPlace').val($(this).text() + ' (' + locationCode + ')');
-                $('.flight-submit-button').removeClass('disabled');
-            } else {
-                alert('Kota Asal dan Tujuan Tidak Boleh Sama');
-            }
-        }
-        hideLocation();
+        $('.search-hotel .location-recommend .tab-content>div').removeClass('active');
+        $('.search-hotel .location-recommend .tab-content>div.' + showClass).addClass('active');
     });
 
-    $('.autocomplete-result ul').on('click', 'li', function () {
-        var locationCode = $(this).attr('data-code');
-        var locationCity = $(this).attr('data-city');
-        if ($scope.recommendation == 'origin') {
-            if (locationCity != $scope.searchParam.DestinationCity) {
-                $scope.searchParam.OriginAirport = locationCode;
-                $scope.searchParam.OriginCity = locationCity;
-                $scope.searchParam.Origin = $(this).text() + ' (' + locationCode + ')';
-                $('#originPlace').val($(this).text());
-            } else {
-                alert('Kota Asal dan Tujuan Tidak Boleh Sama');
-                $('.flight-submit-button').addClass('disabled');
-            }
-
-        } else {
-            if (locationCity != $scope.searchParam.OriginCity) {
-                $scope.searchParam.DestinationAirport = locationCode;
-                $scope.searchParam.DestinationCity = locationCity;
-                $('#destinationPlace').val($(this).text());
-                $('.flight-submit-button').removeClass('disabled');
-            } else {
-                alert('Kota Asal dan Tujuan Tidak Boleh Sama');
-                $('.flight-submit-button').addClass('disabled');
-            }
-        }
-        hideLocation();
-    });
-    function hideLocation() {
-        $('.search-location').hide();
-    }
 
     $scope.selectCalendar = '';
     $scope.setOptionCalendar = function (target) {
@@ -852,11 +715,10 @@ app.controller('B2BHotelSearchFormController', ['$scope', '$log', 'hotelSearchSv
         url += searchParam;
         setCookie();
         window.location.href = url;
-
     };
 
     // set cookie
     function setCookie() {
         
     }
-}]);
+    }]);
