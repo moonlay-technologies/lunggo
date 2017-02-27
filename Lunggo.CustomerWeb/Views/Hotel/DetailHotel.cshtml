@@ -1,13 +1,9 @@
 ﻿@using Lunggo.ApCommon.Hotel.Service
+@using System.Globalization
 @using Lunggo.CustomerWeb.Models
 @using Lunggo.Framework.Extension
 @model HotelDetailModel.HotelDetail
-@{
-    Layout = "/Views/Shared/Desktop/_LayoutDesktop.cshtml";
-    ViewBag.BodyClass = "page-hotel page-detail";
-    ViewBag.Title = "Detail Hotel";
-    ViewBag.AngularController = "hotelDetailController";
-}
+           
 @{
     var loc = Html.Raw(Model.HotelDetailData.HotelName) + ", " + Model.HotelDetailData.City;
     var hotelFac = new List<_Page_Views_Hotel_DetailHotel_cshtml.FacilityModel>();
@@ -59,7 +55,7 @@
     if (Model.HotelDetailData.Facilities.Business != null)
     {
         hotelFac.Add(SetFacilityForDisplay(Model.HotelDetailData.Facilities.Business, "Bisnis"));
-    }
+}
 
     if (Model.HotelDetailData.Facilities.Entertainment != null)
     {
@@ -93,13 +89,21 @@
                 }
 }
 
+@{
+    Layout = "/Views/Shared/Desktop/_LayoutDesktop.cshtml";
+    ViewBag.BodyClass = "page-hotel page-detail";
+    ViewBag.Title = "Kamar Hotel " + hotelName + " di " + loc + " Promo Tanggal " + Model.HotelDetailData.CheckInDate.ToString("d MMMM yyyy", CultureInfo.CreateSpecificCulture("id-ID"));
+    ViewBag.AngularController = "hotelDetailController";
+    ViewBag.Page = "HotelDetail";
+}
+
 @functions{
 
     public class FacilityModel 
-    {
+                {
         public List<List<String>> FacilityList { get; set; }
         public string FacilityGroup { get; set; }
-    }
+                }
 
     public FacilityModel SetFacilityForDisplay(List<string> facilities, string groupName)
     {
@@ -110,7 +114,7 @@
         for (var k = 0; k <= 3; k++)
         {
             facilityModel.FacilityList.Add(new List<string>());
-        }
+            }
 
         facilityModel.FacilityGroup = groupName;
         for (var i = 0; i < facilities.Count; i++)
@@ -118,24 +122,24 @@
             if (i % 4 == 0)
             {
                 facilityModel.FacilityList[0].Add(facilities[i]);
-            }
+        }
             else if (i % 4 == 1)
-            {
-                    facilityModel.FacilityList[1].Add(facilities[i]);
-            }
+        {
+                facilityModel.FacilityList[1].Add(facilities[i]);
+        }
             else if (i % 4 == 2)
             {
                 facilityModel.FacilityList[2].Add(facilities[i]);
-            }
+    }
 
             else if (i % 4 == 3)
-            {
+    {
                 facilityModel.FacilityList[3].Add(facilities[i]);
-            }
+    }
         }
 
         return facilityModel;
-    }
+}
 }
 
 @section AdditionalCSS{

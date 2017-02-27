@@ -94,6 +94,80 @@ namespace Lunggo.CustomerWeb.Controllers
 
         }
 
+        [Route("id/hotel/map/{country}/{destination}")]
+        [Route("id/hotel/map/{country}/{destination}/{zone}")]
+        [Route("id/hotel/map/{country}/{destination}/{zone}/{area}")]
+        public ActionResult HotelMap(string country, string destination, string zone, string area)
+        {
+            try
+            {
+                var source = ConfigManager.GetInstance().GetConfigValue("api", "apiUrl");
+                var query = Request.QueryString;
+                if (query.HasKeys())
+                {
+                    var model = new HotelSearchApiRequest(query[0]);
+                    return View(model);
+                }
+
+                string location;
+                if (zone != null)
+                {
+                    location = area ?? zone;
+                }
+                else
+                {
+                    location = destination;
+                }
+
+                var client = new RestClient(source);
+                string url = @"/v1/autocomplete/hotel//" + location;
+                var searchRequest = new RestRequest(url, Method.GET);
+                var searchResponse = client.Execute(searchRequest);
+                var data = searchResponse.Content.Deserialize<AutocompleteResponse>();
+
+                long locationId = 0;
+                if (zone != null)
+                {
+                    if (area != null)
+                    {
+                        var selected = data.Autocompletes.Where(r => r.Type == "Area" && r.Country == country).ToList();
+                        if (selected.Count > 0)
+                        {
+                            locationId = selected[0].Id;
+                        }
+                    }
+                    else
+                    {
+                        var selected = data.Autocompletes.Where(r => r.Type == "Zone" && r.Country == country).ToList();
+                        if (selected.Count > 0)
+                        {
+                            locationId = selected[0].Id;
+                        }
+                    }
+                }
+                else
+                {
+                    var selected = data.Autocompletes.Where(r => r.Type == "Destination" && r.Country == country).ToList();
+                    if (selected.Count > 0)
+                    {
+                        locationId = selected[0].Id;
+                    }
+                }
+
+                var tomorrowDate = DateTime.Today.AddDays(1);
+                var nextDate = tomorrowDate.AddDays(1);
+                var newquery = "info=Location." + locationId + "." + tomorrowDate.Year + "-" +
+                         tomorrowDate.Month.ToString("d2") + "-" + tomorrowDate.Day.ToString("d2")
+                         + "." + nextDate.Year + "-" + nextDate.Month.ToString("d2") + "-" + 
+                         nextDate.Day.ToString("d2") + ".1.1.1~0";
+                var newmodel = new HotelSearchApiRequest(newquery);
+                return View(newmodel);
+            }
+            catch (Exception ex)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, ex.Message);
+            }
+        }
         [Route("id/hotel/{country}/{destination}/{hotelParam}")]
         public ActionResult DetailHotel(String hotelParam)
         {
@@ -191,7 +265,7 @@ namespace Lunggo.CustomerWeb.Controllers
         public ActionResult CheckoutPost(string rsvNo)
         {
             var regId = GenerateId(rsvNo);
-            return RedirectToAction("Payment", "Payment", new { rsvNo, regId});
+            return RedirectToAction("Payment", "Payment", new { rsvNo, regId });
         }
 
 
@@ -228,6 +302,8 @@ namespace Lunggo.CustomerWeb.Controllers
         {
             return View();
         }
+
+        
 
         #region Helpers
 

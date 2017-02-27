@@ -37,8 +37,8 @@ else
                         <nav>
                             <ul>
                                 <li class="check-order"><a href="@Url.Action("CekPemesanan", "Home")">Cek Pemesanan</a></li>
-                                <li class="currency-select hidden"><a href="#">IDR <span class="caret"></span></a></li>
-                                <li class="language-select dropdown-wrapper hidden">
+                                @*<li class="currency-select"><a href="#">IDR <span class="caret"></span></a></li>
+                                <li class="language-select dropdown-wrapper">
                                     <a href="#" data-trigger="dropdown"><img src="/Assets/images/flag-indonesia.png" alt="Indonesia" /> <span class="caret"></span></a>
                                     <div class="dropdown-content flag-select">
                                         <ul>
@@ -46,7 +46,7 @@ else
                                             <li><a href="@Html.EnLangSwitcherUrl()"><img src="/Assets/images/flag-britain.png" alt="English" /></a></li>
                                         </ul>
                                     </div>
-                                </li>
+                                </li>*@
                             </ul>
                         </nav>
                     </div>
@@ -54,9 +54,9 @@ else
                         <div class="menu-side">
                             <nav>
                                 <ul>
-                                    <li class="hidden"><a href="#">Scratchpad <span class="caret"></span></a></li>
+                                    @*<li><a href="#">Scratchpad <span class="caret"></span></a></li>*@
                                     <li class="dropdown-wrapper">
-                                        @if (@User.Identity.IsAuthenticated)
+                                        @if (User.Identity.IsAuthenticated)
                                         {
                                             <a href="#" data-trigger="dropdown"> @User.Identity.GetEmail() <span class="caret"></span></a>
                                         }
@@ -88,9 +88,9 @@ else
                             <nav>
                                 <ul>
                                     <li><a href="@Url.Action("Index", "Index")">PENERBANGAN</a></li>
-                                    @*<li class="hidden"><a href="#" data-toggle="tooltip" data-placement="bottom" title="Coming soon!">HOTEL</a></li>
-                                    <li class="hidden"><a href="#" data-toggle="tooltip" data-placement="bottom" title="Coming soon!">TOUR &amp; ACTIVITY</a></li>
-                                    <li class="hidden"><a href="#" data-toggle="tooltip" data-placement="bottom" title="Coming soon!">PROMOTION</a></li>*@
+                                    @*<li><a href="#" data-toggle="tooltip" data-placement="bottom" title="Coming soon!">HOTEL</a></li>
+                                    <li><a href="#" data-toggle="tooltip" data-placement="bottom" title="Coming soon!">TOUR &amp; ACTIVITY</a></li>
+                                    <li><a href="#" data-toggle="tooltip" data-placement="bottom" title="Coming soon!">PROMOTION</a></li>*@
                                 </ul>
                             </nav>
                         </div>

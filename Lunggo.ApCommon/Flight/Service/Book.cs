@@ -32,7 +32,8 @@ namespace Lunggo.ApCommon.Flight.Service
                 {
                     IsSuccess = false,
                     IsValid = false,
-                    Errors = new List<FlightError> { FlightError.FareIdNoLongerValid },
+                    Errors = new List<FlightError> {FlightError.FareIdNoLongerValid},
+                    ErrorMessages = new List<string> {"Null itin."}
                 };
 
             var bookResults = BookItineraries(itins, input, output);

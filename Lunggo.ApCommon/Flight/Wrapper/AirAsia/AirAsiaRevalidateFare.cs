@@ -56,7 +56,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                 }
                 catch
                 {
-                    return new RevalidateFareResult {Errors = new List<FlightError> {FlightError.FareIdNoLongerValid}};
+                    return new RevalidateFareResult {Errors = new List<FlightError> {FlightError.FareIdNoLongerValid}, ErrorMessages = new List<string>{"Broken Fare ID."}};
                 }
 
                 // [GET] Search Flight

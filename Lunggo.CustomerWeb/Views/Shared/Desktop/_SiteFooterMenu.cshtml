@@ -1,20 +1,5 @@
-﻿@{
-    var CurrentDate = DateTime.UtcNow.AddDays(1);
-}
+﻿<section class="site-footer-menu">
 
-<script>
-    var preDate = @CurrentDate.ToString("dd");
-    var preMonth = @CurrentDate.ToString("MM") - 1;
-    var preYear = @CurrentDate.ToString("yyyy");
-    var preHour = @CurrentDate.ToString("HH");
-    var preMinute = @CurrentDate.ToString("mm");
-    var todayDate = new Date( Date.UTC( preYear, preMonth, preDate, preHour, preMinute ));
-    console.log(todayDate);
-    todayDate = ((('0' + todayDate.getDate()).slice(-2)) + '' + ('0' + (todayDate.getMonth() + 1)).slice(-2) + '' + ('' + todayDate.getFullYear()).slice(-2));
-</script>
-
-<section class="site-footer-menu">
-    
     <div class="container">
         <div class="row web-banner">
             <div class="col-xs-3 menu-left">
@@ -36,10 +21,8 @@
         <div class="row">
             <div class="col-xs-3 menu-left">
                 <img src="/Assets/images/travorama-logo.png" alt="Travorama" class="footer-logo" />
-                <!--
-                    <a href="#" class="googlePlay"><img src="/Assets/images/googlePlay.png" /></a>
-                    <a href="#" class="appStore"><img src="/Assets/images/appStore.png" /></a>
-                    -->
+                @*<a href="#" class="googlePlay"><img src="/Assets/images/googlePlay.png" /></a>
+                <a href="#" class="appStore"><img src="/Assets/images/appStore.png" /></a>*@
             </div>
             <div class="col-xs-9 menu-right">
                 <div class="row">
@@ -50,15 +33,13 @@
                             <h4><a href="mailto:cs@travorama.com">cs@travorama.com</a></h4>
                         </div>
                     </div>
-                    <!--
-                        <div class="col-xs-4">
-                            <div class="call-center">
-                                <img src="/Assets/images/phone-icon.png" alt="Travorama Call Center" />
-                                <p>Call Center:</p>
-                                <h2>1500 650</h2>
-                            </div>
+                    @*<div class="col-xs-4">
+                        <div class="call-center">
+                            <img src="/Assets/images/phone-icon.png" alt="Travorama Call Center" />
+                            <p>Call Center:</p>
+                            <h2>1500 650</h2>
                         </div>
-                        -->
+                    </div>*@
                     <div class="col-xs-2">
                         <div class="asita">
                             <img src="/Assets/images/asita-logo.png" alt="ASITA" />
@@ -68,47 +49,45 @@
                         <div class="verisign"></div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-xs-4 menu-flight">
-                        <p class="list-title">Tiket Rute Populer</p>
-                        <ul>
-                            <script type="text/javascript">
-                                document.write('<li><a href="/id/Flight/Search?info=CGKDPS' + todayDate + '-100y">Tiket murah Jakarta-Bali</a></li>');
-                                document.write('<li><a href="/id/Flight/Search?info=CGKSUB' + todayDate + '-100y">Tiket murah Jakarta-Surabaya</a></li>');
-                                document.write('<li><a href="/id/Flight/Search?info=CGKSIN' + todayDate + '-100y">Tiket murah Jakarta-Singapura</a></li>');
-                                document.write('<li><a href="/id/Flight/Search?info=CGKMLG' + todayDate + '-100y">Tiket murah Jakarta-Malang</a></li>');
-                                document.write('<li><a href="/id/Flight/Search?info=CGKJOG' + todayDate + '-100y">Tiket murah Jakarta-Yogyakarta</a></li>');
-                            </script>
-                        </ul>
-                    </div>
-                    <div class="col-xs-2 menu-hotel hidden">
-                        <p class="list-title">Hotel Populer</p>
-                        <ul>
-                            <li><a href="#">Hotel di Jakarta</a></li>
-                            <li><a href="#">Hotel di Bandung</a></li>
-                            <li><a href="#">Hotel di Yogyakarta</a></li>
-                            <li><a href="#">Hotel di Bali</a></li>
-                            <li><a href="#">Hotel di Singapura</a></li>
-                        </ul>
-                    </div>
-                    <div class="col-xs-3 menu-about">
-                        <p class="list-title">Tentang Travorama</p>
-                        <ul>
-                            <li><a href="@Url.Action("HowToOrder","StaticPage")">Cara Pesan</a></li>
-                            <li><a href="@Url.Action("HowToPay","StaticPage")">Cara Bayar</a></li>
-                            <li><a href="http://travelmadezy.com" target="_blank">Karir</a></li>
-                            <li><a href="@Url.Action("Contact","StaticPage")">Kontak Kami</a></li>
-                        </ul>
-                    </div>
-                    <div class="col-xs-3 menu-other">
-                        <p class="list-title">Lainnya</p>
-                        <ul>
-                            <li><a href="@Url.Action("Terms","StaticPage")">Syarat &amp; Ketentuan</a></li>
-                            <li><a href="@Url.Action("Privacy","StaticPage")">Kebijakan Privasi</a></li>
-                            <li><a href="@Url.Action("Question","StaticPage")">FAQs</a></li>
-                        </ul>
-                    </div>
-                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-4 menu-flight">
+                <p class="list-title">Tiket Pesawat Populer</p>
+                <ul>
+                    <li><a href="/id/tiket-pesawat/cari/Jakarta-Denpasar--Bali-JKT-DPS">Tiket Pesawat Jakarta-Bali</a></li>
+                    <li><a href="/id/tiket-pesawat/cari/Jakarta-Surabaya-JKT-SUB">Tiket Pesawat Jakarta-Surabaya</a></li>
+                    <li><a href="/id/tiket-pesawat/cari/Jakarta-Singapore-JKT-SIN">Tiket Pesawat Jakarta-Singapura</a></li>
+                    <li><a href="/id/tiket-pesawat/cari/Jakarta-Malang-JKT-MLG">Tiket Pesawat Jakarta-Malang</a></li>
+                    <li><a href="/id/tiket-pesawat/cari/Jakarta-Yogyakarta-JKT-JOG">Tiket Pesawat Jakarta-Yogyakarta</a></li>
+                </ul>
+            </div>
+            <div class="col-xs-3 menu-hotel">
+                <p class="list-title">Hotel Populer</p>
+                <ul>
+                    <li><a href="/id/hotel/cari/Indonesia/Jakarta">Hotel di Jakarta</a></li>
+                    <li><a href="/id/hotel/cari/Indonesia/Bandung">Hotel di Bandung</a></li>
+                    <li><a href="/id/hotel/cari/Indonesia/Yogyakarta">Hotel di Yogyakarta</a></li>
+                    <li><a href="/id/hotel/cari/Indonesia/Bali">Hotel di Bali</a></li>
+                    <li><a href="/id/hotel/cari/Singapura/Singapore">Hotel di Singapura</a></li>
+                </ul>
+            </div>
+            <div class="col-xs-2 menu-about">
+                <p class="list-title">Tentang Travorama</p>
+                <ul>
+                    <li><a href="@Url.Action("HowToOrder","StaticPage")">Cara Pesan</a></li>
+                    <li><a href="@Url.Action("HowToPay","StaticPage")">Cara Bayar</a></li>
+                    <li><a href="http://travelmadezy.com" target="_blank">Karir</a></li>
+                    <li><a href="@Url.Action("Contact","StaticPage")">Kontak Kami</a></li>
+                </ul>
+            </div>
+            <div class="col-xs-3 menu-other">
+                <p class="list-title">Lainnya</p>
+                <ul>
+                    <li><a href="@Url.Action("Terms","StaticPage")">Syarat &amp; Ketentuan</a></li>
+                    <li><a href="@Url.Action("Privacy","StaticPage")">Kebijakan Privasi</a></li>
+                    <li><a href="@Url.Action("Question","StaticPage")">FAQs</a></li>
+                </ul>
             </div>
         </div>
     </div>

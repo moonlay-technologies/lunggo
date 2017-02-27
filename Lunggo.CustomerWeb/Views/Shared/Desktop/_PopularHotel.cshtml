@@ -1,0 +1,82 @@
+﻿<div class="popular-hotel">
+    <h2 class="section-title stripe text-center xlg-txt">TUJUAN HOTEL <span>TERPOPULER</span></h2>
+    <div class="row">
+        <div class="col-xs-6">
+            <div class="pop-hotel bg" style="background-image: url('/Assets/images/index/popular-hotel-jakarta.jpg')">
+                <div class="pop-inner">
+                    <div class="white-txt normal-txt">Hotel di</div>
+                    <div class="xlg-txt os-bold white-txt">Jakarta</div>
+                    <div class="bottom-txt" ng-hide="priceHotel.Jakarta.CheapestPrice == null">
+                        <span class="normal-txt white-txt">mulai dari</span>
+                        <span class="md-txt os-bold yellow-txt">Rp {{priceHotel.Jakarta.CheapestPrice | currency:'':0}}</span>
+                    </div>
+                    <div class="view-hotel">
+                        <a class="btn btn-yellow sm-btn normal-txt os-bold" href="{{gotoCheapestDateHotel('JKT', priceHotel.Jakarta.CheapestDate)}}" data-target="jakarta">LIHAT HOTEL</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-6">
+            <div class="pop-hotel bg" style="background-image: url('/Assets/images/index/popular-hotel-yogyakarta.jpg')">
+                <div class="pop-inner">
+                    <div class="white-txt normal-txt">Hotel di</div>
+                    <div class="xlg-txt os-bold white-txt">Yogyakarta</div>
+                    <div class="bottom-txt" ng-hide="priceHotel.Yogyakarta.CheapestPrice == null">
+                        <span class="normal-txt white-txt">mulai dari</span>
+                        <span class="md-txt os-bold yellow-txt">Rp {{priceHotel.Yogyakarta.CheapestPrice | currency:'':0}}</span>
+                    </div>
+                    <div class="view-hotel">
+                        <a class="btn btn-yellow sm-btn normal-txt os-bold" href="{{gotoCheapestDateHotel('JOG', priceHotel.Yogyakarta.CheapestDate)}}" data-target="jakarta">LIHAT HOTEL</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-4">
+            <div class="pop-hotel" style="background-image: url('/Assets/images/index/popular-hotel-surabaya.jpg')">
+                <div class="pop-inner">
+                    <div class="white-txt normal-txt">Hotel di</div>
+                    <div class="xlg-txt os-bold white-txt">Surabaya</div>
+                    <div class="bottom-txt" ng-hide="priceHotel.Surabaya.CheapestPrice == null">
+                        <span class="normal-txt white-txt">mulai dari</span>
+                        <span class="md-txt os-bold yellow-txt">Rp {{priceHotel.Surabaya.CheapestPrice | currency:'':0}}</span>
+                    </div>
+                    <div class="view-hotel">
+                        <a class="btn btn-yellow sm-btn normal-txt os-bold" href="{{gotoCheapestDateHotel('SUB', priceHotel.Surabaya.CheapestDate)}}" data-target="jakarta">LIHAT HOTEL</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-4">
+            <div class="pop-hotel" style="background-image: url('/Assets/images/index/popular-hotel-bali.jpg')">
+                <div class="pop-inner">
+                    <div class="white-txt normal-txt">Hotel di</div>
+                    <div class="xlg-txt os-bold white-txt">Bali</div>
+                    <div class="bottom-txt" ng-hide="priceHotel.Bali.CheapestPrice == null">
+                        <span class="normal-txt white-txt">mulai dari</span>
+                        <span class="md-txt os-bold yellow-txt">Rp {{priceHotel.Bali.CheapestPrice | currency:'':0}}</span>
+                    </div>
+                    <div class="view-hotel">
+                        <a class="btn btn-yellow sm-btn normal-txt os-bold" href="{{gotoCheapestDateHotel('BAI', priceHotel.Bali.CheapestDate)}}" data-target="jakarta">LIHAT HOTEL</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-4">
+            <div class="pop-hotel" style="background-image: url('/Assets/images/index/popular-hotel-bandung.jpg')">
+                <div class="pop-inner">
+                    <div class="white-txt normal-txt">Hotel di</div>
+                    <div class="xlg-txt os-bold white-txt">Bandung</div>
+                    <div class="bottom-txt" ng-hide="priceHotel.Bandung.CheapestPrice == null">
+                        <span class="normal-txt white-txt">mulai dari</span>
+                        <span class="md-txt os-bold yellow-txt">Rp {{priceHotel.Bandung.CheapestPrice | currency:'':0}}</span>
+                    </div>
+                    <div class="view-hotel">
+                        <a class="btn btn-yellow sm-btn normal-txt os-bold" href="{{gotoCheapestDateHotel('BDO', priceHotel.Bandung.CheapestDate)}}" data-target="jakarta">LIHAT HOTEL</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

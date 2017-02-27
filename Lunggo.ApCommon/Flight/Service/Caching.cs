@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Threading.Tasks;
 using Lunggo.ApCommon.Constant;
 using Lunggo.ApCommon.Flight.Model;
@@ -24,9 +25,9 @@ namespace Lunggo.ApCommon.Flight.Service
             return GetSavedPassengersFromDb(contactEmail);
         }
 
-        public void SetLowestPriceToCache(List<FlightItineraryForDisplay> itins)
+        public void SetLowestPriceToCache(List<FlightItineraryForDisplay> itins, string origin, string destination)
         {
-            var keyRoute = SetRoute(itins);
+            var keyRoute = SetRoute(origin, destination);
             var keyDate = SetDate(itins);
             var lowestvalue = GetLowestPrice(itins);
             Console.WriteLine("Lowest value for route: " + keyRoute + keyDate + " is " + lowestvalue);
@@ -262,7 +263,6 @@ namespace Lunggo.ApCommon.Flight.Service
             {
                 try
                 {
-
                     var redisTransaction = redisDb.CreateTransaction();
                     redisTransaction.AddCondition(Condition.KeyNotExists(redisKey));
                     redisTransaction.StringSetAsync(redisKey, true, TimeSpan.FromMinutes(5));

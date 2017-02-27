@@ -1,40 +1,48 @@
 ﻿@using System.Globalization
 @using Lunggo.ApCommon.Autocomplete
+@using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Sdk.auto.model
 @model IEnumerable<Lunggo.ApCommon.Flight.Model.FlightSegment>
 
 @{
     var dict = AutocompleteManager.GetInstance();
     //var prevArrivalTime = new DateTime();
     //var prevStringDate = new String();
-    
+
 }
 
 @foreach (var segment in Model)
 {
-            <tr>
-                <td class="dep-city">
-                    @segment.DepartureCity<br />
-                    (@segment.DepartureAirport)
-                </td>
-                <td class="dep-time">
-                    @segment.DepartureTime.ToString("d MMM yy", CultureInfo.CreateSpecificCulture("id-ID"))<br />
-                    @segment.DepartureTime.ToString("HH:mm", CultureInfo.CreateSpecificCulture("id-ID"))
-                </td>
-                <td class="airline">
-                    @segment.AirlineName<br />
-                    @segment.AirlineCode@segment.FlightNumber<br />
-                    @if (segment.Pnr != null)
-                    {
-                        <b>PNR : @segment.Pnr</b>
-                    }
-                </td>
-                <td class="arr-time">
-                    @segment.ArrivalTime.ToString("d MMM yy", CultureInfo.CreateSpecificCulture("id-ID"))<br />
-                    @segment.ArrivalTime.ToString("HH:mm", CultureInfo.CreateSpecificCulture("id-ID"))
-                </td>
-                <td class="arr-city">
-                    @segment.ArrivalCity<br />
-                    (@segment.ArrivalAirport)
-                </td>
-            </tr>
+    <tr>
+        <td class="dep-city">
+            @segment.DepartureCity<br />
+            (@segment.DepartureAirport)
+        </td>
+        <td class="dep-time">
+            @segment.DepartureTime.ToString("d MMM yy", CultureInfo.CreateSpecificCulture("id-ID"))<br />
+            @segment.DepartureTime.ToString("HH:mm", CultureInfo.CreateSpecificCulture("id-ID"))
+        </td>
+        <td class="airline">
+            @segment.AirlineName | @segment.AirlineCode@segment.FlightNumber<br />
+            @if (segment.Pnr != null)
+            {
+                <span class="label label-success">Ticketed</span><br/>
+                <b>PNR : @segment.Pnr</b>
+            }
+            else
+            {
+                <span class="label label-primary">Pending</span><br />
+                <span style="font-weight: normal">Booking ID : @ViewBag.BookingId</span>
+                <br />
+                <span style="font-size: 10px; font-weight: normal">(for non-Mystifly only)</span>
+            }
+        </td>
+        <td class="arr-time">
+            @segment.ArrivalTime.ToString("d MMM yy", CultureInfo.CreateSpecificCulture("id-ID"))<br />
+            @segment.ArrivalTime.ToString("HH:mm", CultureInfo.CreateSpecificCulture("id-ID"))
+        </td>
+        <td class="arr-city">
+            @segment.ArrivalCity<br />
+            (@segment.ArrivalAirport)
+        </td>
+    </tr>
 }

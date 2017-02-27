@@ -1,9 +1,10 @@
 ﻿@{
     Layout = "/Views/Shared/Desktop/_LayoutDesktop.cshtml";
-    ViewBag.Title = "Masuk";
+    ViewBag.Title = "Masuk dan Dapatkan Promo Tiket Pesawat dan Hotel";
     ViewBag.BodyClass = "page-account page-account-login";
     var loginProviders = Context.GetOwinContext().Authentication.GetAuthenticationTypes();
     var facebookProvider = loginProviders.First();
+    ViewBag.Page = "Login";
 }
 @section AdditionalJS{
     <!-- additional Angular JS-->

@@ -1,0 +1,73 @@
+﻿<div class="popular-flight">
+    <div class="md-txt os-bold">Tujuan Penerbangan Terpopuler</div>
+    <div class="pop-flight" style="background-image: url(/Assets/images/index/popular-flight-bali.jpg)">
+        <a href="{{gotoCheapestDateFlight('DPS', priceFlight.Denpasar.CheapestDate)}}" class="pf-wrapper">
+            <div class="pf-txt">
+                <div class="top-txt white-txt pull-left">
+                    <div class="normal-txt">Tiket Pesawat ke</div>
+                    <div class="xlg-txt os-bold">Denpasar</div>
+                </div>
+                <div class="bottom-txt pull-right" ng-hide="priceFlight.Denpasar.CheapestPrice == null">
+                    <span class="normal-txt white-txt">mulai dari</span>
+                    <span class="md-txt os-bold yellow-txt">Rp {{priceFlight.Denpasar.CheapestPrice | currency:'':0}}</span>
+                </div>
+            </div>
+        </a>
+    </div>
+    <div class="pop-flight" style="background-image: url(/Assets/images/index/popular-flight-jakarta.jpg)">
+        <a href="{{gotoCheapestDateFlight('JKT', priceFlight.Jakarta.CheapestDate)}}" class="pf-wrapper">
+            <div class="pf-txt">
+                <div class="top-txt white-txt pull-left">
+                    <div class="normal-txt">Tiket Pesawat ke</div>
+                    <div class="xlg-txt os-bold">Jakarta</div>
+                </div>
+                <div class="bottom-txt pull-right" ng-hide="priceFlight.Jakarta.CheapestPrice == null">
+                    <span class="normal-txt white-txt">mulai dari</span>
+                    <span class="md-txt os-bold yellow-txt">Rp {{priceFlight.Jakarta.CheapestPrice | currency:'':0}}</span>
+                </div>
+            </div>
+        </a>
+    </div>
+    <div class="pop-flight" style="background-image: url(/Assets/images/index/popular-flight-medan.jpg)">
+        <a href="{{gotoCheapestDateFlight('KNO', priceFlight.Medan.CheapestDate)}}" class="pf-wrapper">
+            <div class="pf-txt">
+                <div class="top-txt white-txt pull-left">
+                    <div class="normal-txt">Tiket Pesawat ke</div>
+                    <div class="xlg-txt os-bold">Medan</div>
+                </div>
+                <div class="bottom-txt pull-right" ng-hide="priceFlight.Medan.CheapestPrice == null">
+                    <span class="normal-txt white-txt">mulai dari</span>
+                    <span class="md-txt os-bold yellow-txt">Rp {{priceFlight.Medan.CheapestPrice | currency:'':0}}</span>
+                </div>
+            </div>
+        </a>
+    </div>
+    <div class="pop-flight" style="background-image: url(/Assets/images/index/popular-flight-surabaya.jpg)">
+        <a href="{{gotoCheapestDateFlight('SUB', priceFlight.Surabaya.CheapestDate)}}" class="pf-wrapper">
+            <div class="pf-txt">
+                <div class="top-txt white-txt pull-left">
+                    <div class="normal-txt">Tiket Pesawat ke</div>
+                    <div class="xlg-txt os-bold">Surabaya</div>
+                </div>
+                <div class="bottom-txt pull-right" ng-hide="priceFlight.Surabaya.CheapestPrice == null">
+                    <span class="normal-txt white-txt">mulai dari</span>
+                    <span class="md-txt os-bold yellow-txt">Rp {{priceFlight.Surabaya.CheapestPrice | currency:'':0}}</span>
+                </div>
+            </div>
+        </a>
+    </div>
+    <div class="pop-flight" style="background-image: url(/Assets/images/index/popular-flight-yogyakarta.jpg)">
+        <a href="{{gotoCheapestDateFlight('JOG', priceFlight.Yogyakarta.CheapestDate)}}" class=" pf-wrapper">
+            <div class="pf-txt">
+                <div class="top-txt white-txt pull-left">
+                    <div class="normal-txt">Tiket Pesawat ke</div>
+                    <div class="xlg-txt os-bold">Yogyakarta</div>
+                </div>
+                <div class="bottom-txt pull-right" ng-hide="priceFlight.Yogyakarta.CheapestPrice == null">
+                    <span class="normal-txt white-txt">mulai dari</span>
+                    <span class="md-txt os-bold yellow-txt">Rp {{priceFlight.Yogyakarta.CheapestPrice | currency:'':0}}</span>
+                </div>
+            </div>
+        </a>
+    </div>
+</div>

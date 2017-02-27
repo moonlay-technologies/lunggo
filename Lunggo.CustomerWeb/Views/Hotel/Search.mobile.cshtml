@@ -1,4 +1,5 @@
-﻿@using Lunggo.ApCommon.Hotel.Service
+﻿@using System.Globalization
+@using Lunggo.ApCommon.Hotel.Service
 @using Lunggo.CustomerWeb.Models
 @model HotelSearchApiRequest
 @{
@@ -7,7 +8,6 @@
     ViewBag.Title = "Pencarian Hotel";
     ViewBag.CurrentPage = "search-hotel";
     ViewBag.AngularController = "hotelSearchController";
-    
 }
 
 @{
@@ -21,7 +21,7 @@
     var loc = "";
     var locFound = false;
     var region = "";
-    var foundLocation = HotelService.AutoCompletes.Where(c => c.Id == Model.SearchParamObject.Location).ToList()[0];
+    var foundLocation = HotelService.AutoCompletes.FirstOrDefault(c => c.Id == Model.SearchParamObject.Location);
     if (foundLocation != null)
     {
         if (foundLocation.Type == 1)
@@ -47,6 +47,17 @@
         locFound = true;
     }
 }
+
+@{
+    Layout = "/Views/Shared/mobile/_LayoutMobile.cshtml";
+    ViewBag.BodyClass = "page-hotel page-search";
+    ViewBag.Title = "Kamar Hotel Promo di " + loc + " Tanggal " + Model.SearchParamObject.CheckinDate.ToString("d MMMM yyyy", CultureInfo.CreateSpecificCulture("id-ID"));
+    ViewBag.CurrentPage = "search-hotel";
+    ViewBag.AngularController = "hotelSearchController";
+    ViewBag.Page = "HotelSearch";
+}
+
+
 @section AdditionalCSS{
     <link href="/Assets/css/jquery-ui.min.css" rel="stylesheet" />
 }
@@ -81,10 +92,12 @@
     <div class="top-content">
         @Html.Partial("/Views/Shared/Mobile/_Summary.cshtml", new HotelLocation
         {
-            Location = loc, IsHotelSearch = false
+            Location = loc,
+            IsHotelSearch = false
         })
         <div class="hotel-sort-filter clearfix">
             <div class="hotel-sort-filter-action">
+                <a id ="mapUrl">PETA</a>
                 <a ng-click="PageConfig.SetOverlay('hotel-filter')">FILTER</a>
                 <a ng-click="PageConfig.SetOverlay('hotel-sort')">SORTIR</a>
             </div>
@@ -95,35 +108,10 @@
             <img class="img-loading" src="/Assets/images/load.gif">
         </div>
         <div class="text-center" ng-show="searchDone && page == 1 && returnedHotelCount == 0"><h3> Hotel tidak ditemukan, silakan ganti filter atau destinasi anda.</h3></div>
-        <ul class="hotel-list-container">
-            <li ng-repeat="hotel in hotels" ng-click="GotoDetailHotel(hotel)">
-                <div class="hotel-list clearfix">
-                    <div class="col-left-hotel"><div class="img-list" alt-image style="background-image: url({{hotel.mainImage}});"></div></div>
-                    <div class="col-right-hotel">
-                        <div class="blue-txt bold-txt lg-txt">{{hotel.hotelName}}</div>
-                        <div class="star" ng-if="hotel.starRating == 1"></div>
-                        <div class="star star-2 " ng-if="hotel.starRating == 2"></div>
-                        <div class="star star-3 " ng-if="hotel.starRating == 3"></div>
-                        <div class="star star-4 " ng-if="hotel.starRating == 4"></div>
-                        <div class="star star-5 " ng-if="hotel.starRating == 5"></div>
-                        <div class="location grey-txt">
-                            {{toTitleCase(hotel.area)}}
-                            <span ng-show="hotel.area == null || hotel.area.length < 1">{{toTitleCase(hotel.address)}} {{toTitleCase(hotel.zone)}} <span ng-show="hotel.postalCd != null || hotel.postalCd.length > 0"> {{hotel.postalCd}}</span></span>
-</div>
-                        <div class="price orange-txt">
-                            <div class="txt-md semibold-txt">Harga per malam mulai dari:</div>
-                            <div class="underline-txt sm-txt">Rp {{hotel.originalCheapestFare | currency:'':0}}</div>
-                            <a ng-click="GotoDetailHotel(hotel)" class="detail"></a>
-                            <div class="lg-txt"><b><sup>Rp</sup> {{hotel.netCheapestFare | currency:'':0}}</b></div>
-                            <span class="xs-txt">(*Termasuk Pajak & Service Charge)</span>
-                        </div>
-                    </div>
-                </div>
-            </li>
+        @Html.Partial("/Views/Shared/Mobile/_HotelListing.cshtml")
             <div ng-show="bottomPage" class="text-center">
                 <img src="/Assets/images/load.gif" style="width: 30px; height: 30px; margin: 20px 0 30px;">
             </div>
-        </ul>
     </div>
 
     <!-- Overlay Filter -->
@@ -153,7 +141,7 @@
 
                     </div>
                 </div>
-                <div class ="filter-group">
+                <div class="filter-group">
                     <div class="filter-group__header">
                         <h4 class="filter-group__title">Nama Hotel</h4>
                     </div>

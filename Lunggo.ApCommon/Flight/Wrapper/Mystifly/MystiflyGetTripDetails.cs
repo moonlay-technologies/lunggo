@@ -280,7 +280,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Mystifly
                         break;
                     case "BookingIdNoLongerValid":
                         if (!result.Errors.Contains(FlightError.BookingIdNoLongerValid))
-                            result.Errors.Add(FlightError.BookingIdNoLongerValid);
+                            result.AddError(FlightError.BookingIdNoLongerValid, "[Mystifly] " + error.Code);
                         break;
                     case "TechnicalError":
                         if (!result.Errors.Contains(FlightError.TechnicalError))

@@ -2,13 +2,7 @@
 @using Lunggo.CustomerWeb.Models
 @using Lunggo.Framework.Extension
 @model HotelDetailModel.HotelDetail
-@{
-    Layout = "/Views/Shared/mobile/_LayoutMobile.cshtml";
-    ViewBag.BodyClass = "page-hotel page-detail";
-    ViewBag.Title = "Detail Hotel";
-    ViewBag.CurrentPage = "detail-hotel";
-    ViewBag.AngularController = "hotelDetailController";
-}
+           
 @{
 
     var loc = Model.HotelDetailData.HotelName + ", " + Model.HotelDetailData.City;
@@ -57,43 +51,53 @@
 
     if (Model.HotelDetailData.Facilities != null)
     {
-        if (Model.HotelDetailData.Facilities.Business != null)
-        {
-            hotelFac.Add(SetFacilityForDisplay(Model.HotelDetailData.Facilities.Business, "Bisnis"));
-        }
+    if (Model.HotelDetailData.Facilities.Business != null)
+    {
+        hotelFac.Add(SetFacilityForDisplay(Model.HotelDetailData.Facilities.Business, "Bisnis"));
+    }
 
-        if (Model.HotelDetailData.Facilities.Entertainment != null)
-        {
-            hotelFac.Add(SetFacilityForDisplay(Model.HotelDetailData.Facilities.Entertainment, "Hiburan"));
-        }
+    if (Model.HotelDetailData.Facilities.Entertainment != null)
+    {
+        hotelFac.Add(SetFacilityForDisplay(Model.HotelDetailData.Facilities.Entertainment, "Hiburan"));
+    }
 
-        if (Model.HotelDetailData.Facilities.General != null)
-        {
-            hotelFac.Add(SetFacilityForDisplay(Model.HotelDetailData.Facilities.General, "Umum"));
-        }
+    if (Model.HotelDetailData.Facilities.General != null)
+    {
+        hotelFac.Add(SetFacilityForDisplay(Model.HotelDetailData.Facilities.General, "Umum"));
+    }
 
-        if (Model.HotelDetailData.Facilities.Health != null)
-        {
-            hotelFac.Add(SetFacilityForDisplay(Model.HotelDetailData.Facilities.Health, "Kesehatan"));
-        }
+    if (Model.HotelDetailData.Facilities.Health != null)
+    {
+        hotelFac.Add(SetFacilityForDisplay(Model.HotelDetailData.Facilities.Health, "Kesehatan"));
+    }
 
-        if (Model.HotelDetailData.Facilities.Meal != null)
-        {
-            hotelFac.Add(SetFacilityForDisplay(Model.HotelDetailData.Facilities.Meal, "Makanan"));
-        }
+    if (Model.HotelDetailData.Facilities.Meal != null)
+    {
+        hotelFac.Add(SetFacilityForDisplay(Model.HotelDetailData.Facilities.Meal, "Makanan"));
+    }
 
-        if (Model.HotelDetailData.Facilities.Other != null)
-        {
-            hotelFac.Add(SetFacilityForDisplay(Model.HotelDetailData.Facilities.Other, "Lainnya"));
-        }
+    if (Model.HotelDetailData.Facilities.Other != null)
+    {
+        hotelFac.Add(SetFacilityForDisplay(Model.HotelDetailData.Facilities.Other, "Lainnya"));
+    }
 
-        if (Model.HotelDetailData.Facilities.Sport != null)
-        {
-            hotelFac.Add(SetFacilityForDisplay(Model.HotelDetailData.Facilities.Sport, "Olah Raga"));
-        }    
+    if (Model.HotelDetailData.Facilities.Sport != null)
+    {
+        hotelFac.Add(SetFacilityForDisplay(Model.HotelDetailData.Facilities.Sport, "Olah Raga"));
+    }    
     }  
 
 }
+
+@{
+    Layout = "/Views/Shared/mobile/_LayoutMobile.cshtml";
+    ViewBag.BodyClass = "page-hotel page-detail";
+    ViewBag.Title = "Kamar Hotel " + hotelName + " di " + loc + " Promo Tanggal " + Model.HotelDetailData.CheckInDate.ToString("d MMMM yyyy", CultureInfo.CreateSpecificCulture("id-ID"));
+    ViewBag.CurrentPage = "detail-hotel";
+    ViewBag.AngularController = "hotelDetailController";
+    ViewBag.Page = "HotelDetail";
+}
+
 
 @functions{
 
