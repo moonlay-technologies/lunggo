@@ -255,6 +255,7 @@
     <Compile Include="Models\FlightSelectData.cs" />
     <Compile Include="Models\FlightThankyouData.cs" />
     <Compile Include="Models\HotelDetailModel.cs" />
+    <Compile Include="Models\OccupancyModel.cs" />
     <Compile Include="Models\HotelSearchModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -2806,6 +2807,7 @@
     <Content Include="Views\B2BTemplate\OrderListHotel.cshtml" />
     <Content Include="Views\B2BTemplate\OrderListFlight.cshtml" />
     <Content Include="Views\B2BTemplate\UserManagement.cshtml" />
+    <Content Include="Views\Shared\B2BTravorama\Occupancies.cshtml" />
     <None Include="Views\Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -1,4 +1,5 @@
-﻿@{
+﻿@using Lunggo.CustomerWeb.Models
+@{
     Layout = "/Views/Shared/B2BTravorama/_B2BLayout.cshtml";
     ViewBag.BodyClass = "b2b-search hotel";
     ViewBag.SiteHeader = "b2b-search-hotel";
@@ -65,12 +66,6 @@
                                 <i class="fa fa-calendar"></i>
                             </span>
 
-                            @*<label>Tanggal Check in</label>
-                            <input hidden name="checkInDate" id="checkInDate" />
-                            <input type="email" class="form-control" placeholder="Pilih tanggal check-in" id="valueCheckInDate" />
-                            <span class="input-group-addon">
-                                <i class="fa fa-calendar"></i>
-                            </span>*@
                         </div>
                     </div>
                 </div>
@@ -78,63 +73,60 @@
                     <div class="col-sm-6">
                         <div class="form-group form-group-default">
                             <label class="label-custom">Malam</label>
-                        <select class="cs-select cs-skin-slide" data-init-plugin="cs-select" ng-model="hotelSearch.nightCount">
-                            <option class="option" value="{{amount}}" ng-repeat="amount in searchParam.NightList">{{amount}}</option>
-                            </select>
+                        <select class="cs-select cs-skin-slide nightCount" data-init-plugin="cs-select" ng-model="hotelSearch.nightCount">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                        </select>
                         </div>
                     </div>
                     <div class="col-sm-6">
                         <div class="form-group form-group-default" id="room-hotel">
                             <label class="label-custom">Jumlah Kamar</label>
-                        <select class="cs-select cs-skin-slide" data-init-plugin="cs-select" ng-model="hotelSearch.roomCount">
-                            <option class="option" value="{{amount}}" ng-repeat="amount in searchParam.RoomList">{{amount}}</option>
-                            </select>
+                        <select class="cs-select cs-skin-slide roomCount" data-init-plugin="cs-select" ng-model="hotelSearch.roomCount">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                        </select>
                         </div>
                     </div>
                 </div>
-
-                <div class="panel panel-default" id="room-hotel-detail">
-                    <div class="panel-heading">
-                        <div class="panel-title">Rincian Jumlah Tamu</div>
-                    </div>
-                <div class="room-item" ng-repeat="n in [0,1,2,3,4,5,6,7] track by $index" ng-show="$index < hotelSearch.roomCount">
-                        <div class="panel-heading">
-                        <div class="panel-title">Kamar {{n + 1}}</div>
-                        </div>
-                        <div class="panel-body">
-                            <div class="row clearfix">
-                            <div class="col-xs-4">
-                                    <div class="form-group form-group-default input-custom">
-                                        <label class="label-custom">Dewasa</label>
-                                    <select class="cs-select cs-skin-slide" data-init-plugin="cs-select" ng-model="hotelSearch.occupancies[n].adultCount">
-                                        <option class="option" value="{{amount}}" ng-repeat="amount in searchParam.AdultList">{{amount}}</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            <div class="col-xs-4">
-                                    <div class="form-group form-group-default">
-                                        <label class="label-custom">Anak-anak</label>
-                                    <select class="cs-select cs-skin-slide" data-init-plugin="cs-select" ng-model="hotelSearch.occupancies[n].childCount">
-                                        <option class="option" value="{{amount}}" ng-repeat="amount in searchParam.ChildList">{{amount}}</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="col-xs-4" ng-show="hotelSearch.occupancies[n].childCount > 0">
-                                <div class="form-group form-group-default" ng-repeat="child in [0,1,2,3] track by $index"
-                                     ng-show="hotelSearch.occupancies[n].childCount > $index">
-                                    <label class="label-custom">Umur Anak ke-{{$index+1}}</label>
-                                    <select class="cs-select cs-skin-slide" data-init-plugin="cs-select" ng-model="hotelSearch.occupancies[n].childrenAges[child]">
-                                        <option class="option" value="{{age}}" ng-repeat="age in searchParam.ChildAgeList">{{age}}</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                
+                <div ng-show="hotelSearch.roomCount >= 1">
+                    @Html.Partial("/Views/Shared/B2BTravorama/Occupancies.cshtml", new OccupancyModel{Order = 0})
+                </div>
+                <div ng-show="hotelSearch.roomCount >= 2">
+                    @Html.Partial("/Views/Shared/B2BTravorama/Occupancies.cshtml", new OccupancyModel { Order = 1 })
+                </div>
+                <div ng-show="hotelSearch.roomCount >= 3">
+                    @Html.Partial("/Views/Shared/B2BTravorama/Occupancies.cshtml", new OccupancyModel { Order = 2 })
+                </div>
+                <div ng-show="hotelSearch.roomCount >= 4">
+                    @Html.Partial("/Views/Shared/B2BTravorama/Occupancies.cshtml", new OccupancyModel { Order = 3 })
+                </div>
+                <div ng-show="hotelSearch.roomCount >=5">
+                    @Html.Partial("/Views/Shared/B2BTravorama/Occupancies.cshtml", new OccupancyModel { Order = 4 })
+                </div>
+                <div ng-show="hotelSearch.roomCount >= 6">
+                    @Html.Partial("/Views/Shared/B2BTravorama/Occupancies.cshtml", new OccupancyModel { Order = 5 })
+                </div>
+                <div ng-show="hotelSearch.roomCount >= 7">
+                    @Html.Partial("/Views/Shared/B2BTravorama/Occupancies.cshtml", new OccupancyModel { Order = 6 })
+                </div>
+                <div ng-show="hotelSearch.roomCount >= 8">
+                    @Html.Partial("/Views/Shared/B2BTravorama/Occupancies.cshtml", new OccupancyModel { Order = 7 })
                 </div>
                 <div class="clearfix m-t-10">
-                <button class="btn btn-primary" type="submit" ng-click="hotelSearch.getHotels()">Cari Hotel</button>
+                    <button class="btn btn-primary" type="submit" ng-click="hotelSearch.getHotels()">Cari Hotel</button>
                 </div>
             </form>
         </div>

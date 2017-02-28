@@ -90,7 +90,7 @@ app.controller('B2BFlightSearchFormController', ['$scope', '$log', '$http', '$lo
             $scope.Passenger.Infant = 0;
         }
 
-        //$('.adultPax').val("5");
+        $('.adultPax').val($scope.Passenger.Adult);
         $(".adultPax .cs-placeholder").text($scope.Passenger.Adult);
         $(".childPax .cs-placeholder").text($scope.Passenger.Child);
         $(".infantPax .cs-placeholder").text($scope.Passenger.Infant);
@@ -640,7 +640,7 @@ app.controller('B2BHotelSearchFormController', ['$scope', '$log', '$http', '$loc
 
         var valCheckInDate = $scope.setDateWriting($scope.hotelSearch.checkinDate.getDate(),
             $scope.hotelSearch.checkinDate.getMonth(), $scope.hotelSearch.checkinDate.getFullYear());
-        $('#valueCheckInDate').val(valCheckInDate);
+        $('#checkInDate').val(valCheckInDate);
 
         if (Cookies.get('hotelSearchCheckOutDate')) {
             $scope.hotelSearch.checkoutDate = new Date(Cookies.get('hotelSearchCheckOutDate'));
@@ -656,13 +656,28 @@ app.controller('B2BHotelSearchFormController', ['$scope', '$log', '$http', '$loc
             $scope.hotelSearch.nightCount = 2;
         }
 
+        $(".nightCount .cs-placeholder").text($scope.hotelSearch.nightCount);
+        $(".nightCount").val($scope.hotelSearch.nightCount);
         if (Cookies.get('hotelSearchRooms')) {
             $scope.hotelSearch.roomCount = Cookies.get('hotelSearchRooms');
         } else {
             $scope.hotelSearch.roomCount = 1;
         }
+        $(".roomCount .cs-placeholder").text($scope.hotelSearch.roomCount);
+        $(".roomCount").val($scope.hotelSearch.roomCount);
         if (Cookies.getJSON('hotelSearchOccupancies')) {
-            $scope.hotelSearch.occupancies = Cookies.getJSON('hotelSearchOccupancies');
+            var occupancies = Cookies.getJSON('hotelSearchOccupancies');
+            $scope.hotelSearch.occupancies = [];   
+            for (var f = 0; f < occupancies.length; f++) {
+                $scope.hotelSearch.occupancies.push({
+                    adultCount: parseInt(occupancies[f].adultCount),
+                    childCount: parseInt(occupancies[f].childCount),
+                    childrenAges: []
+                });
+                for (var g = 0; g < 4; g++) {
+                    $scope.hotelSearch.occupancies[f].childrenAges.push(parseInt(occupancies[f].childrenAges[g]));
+                }
+            }
         } else {
             $scope.hotelSearch.occupancies = [];
             for (var i = 0; i <= 7; i++) {
@@ -671,6 +686,17 @@ app.controller('B2BHotelSearchFormController', ['$scope', '$log', '$http', '$loc
                     childCount: 0,
                     childrenAges: [0, 0, 0, 0]
                 });
+            }
+        }
+
+        for (var x = 0; x < $scope.hotelSearch.occupancies.length; x++) {
+            $(".occ-adult-" + x + " .cs-placeholder").text($scope.hotelSearch.occupancies[x].adultCount);
+            $(".occ-adult-" + x).val($scope.hotelSearch.occupancies[x].adultCount);
+            $(".occ-child-" + x + " .cs-placeholder").text($scope.hotelSearch.occupancies[x].childCount);
+            $(".occ-child-" + x).val($scope.hotelSearch.occupancies[x].childCount);
+            for (var y = 0; y < 4; y++) {
+                $(".occ-age-" + x + "-" + y + " .cs-placeholder").text($scope.hotelSearch.occupancies[x].childrenAges[y]);
+                $(".occ-age-" + x + "-" + y).val($scope.hotelSearch.occupancies[x].childrenAges[y]);
             }
         }
     });
