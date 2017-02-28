@@ -4,7 +4,6 @@
     ViewBag.BodyClass = "page-account page-account-login";
     var loginProviders = Context.GetOwinContext().Authentication.GetAuthenticationTypes();
     var facebookProvider = loginProviders.First();
-    ViewBag.AngularController = "B2BLoginController";
 }
 @section AdditionalJS{
     <!-- additional Angular JS-->
@@ -15,10 +14,9 @@
         var loginMessage = '@ViewBag.Message';
     </script>
     <!-- angular controller -->
-    <script src="/Assets/travorama20/js/B2BTravorama20.js"></script>
-    <script src="/Assets/travorama20/js/B2BHomeController.js"></script>
+    <script src="/Assets/travorama20/js/accountController.js"></script>
 }
-<section class="form-section page-loading" ng-app="travoramaB2B" ng-controller="B2BLoginController">
+<section class="form-section page-loading" ng-class="{'page-loaded': pageLoaded}" ng-app="travorama" ng-controller="b2bAuthController">
 
     <div class="container normal-txt">
         <div class="login-form">

@@ -846,7 +846,103 @@ app.controller('B2BHotelSearchFormController', ['$scope', '$log', '$http', '$loc
     });
     }]);
 
-app.controller('B2BLoginController', ['$scope', '$log', '$http', '$location', '$resource', '$timeout', 
-    function ($scope, $log, $http, $location, $resource, $timeout) {
-       
-}]);
+app.controller('b2bAuthController', [
+    '$scope', '$log', '$http', '$location', '$resource', '$timeout', function ($scope, $log, $http, $location, $resource, $timeout){
+        $scope.pageLoaded = true;
+        $scope.trial = 0;
+        $scope.errorMessage = '';
+        
+        $scope.form = {
+            email: '',
+            password: '',
+            submitting: false,
+            isLogin: false,
+            submitted: false,
+            success: false
+        };
+        $scope.loginFailed = false;
+        $scope.form.submit = function () {
+            if ($scope.trial > 3) {
+                $scope.trial = 0;
+            }
+            $scope.loginFailed = false;
+            $scope.errorMessage = '';
+            $scope.form.submitting = true;
+            var authAccess = getAuthAccess();
+            if (authAccess == 2 || authAccess == 1) {
+                $http({
+                    method: 'POST',
+                    url: LoginConfig.Url,
+                    data: {
+                        userName: $scope.form.email,
+                        password: $scope.form.password,
+                        clientId: 'V2toa2VrOXFSWFZOUXpSM1QycEZlRTlIVlhwYWFrVjVUVVJrYlZsVVp6Vk5WRlp0VGtSR2FrOUhSWGhhYWsweFRucGpNRTE2U1RCT2VtTjNXbTFKZDFwcVFUMD0=',
+                        clientSecret: 'V2tkS2FFOUVhek5QUjFsNFRucFpNVmt5UlRST2JVWnNXVmRKTTA1dFVtaFBSMDVyV1dwQk5WcEhTWGxPZWtwcVRVUkpNVTFCUFQwPQ=='
+                    },
+                    headers: {
+                        'Authorization': 'Bearer ' + getCookie('accesstoken')
+                    }
+                }).then(function (returnData) {
+                    $scope.form.submitting = false;
+                    $scope.form.submitted = true;
+                    $scope.loginFailed = false;
+                    if (returnData.data.status == '200') {
+                        setCookie("accesstoken", returnData.data.accessToken, returnData.data.expTime);
+                        setCookie("refreshtoken", returnData.data.refreshToken, returnData.data.expTime);
+                        setCookie("authkey", returnData.data.accessToken, returnData.data.expTime);
+                        $scope.form.success = true;
+                        window.location.href = "/id/B2BTemplate/index";
+                    }
+                    else {
+                        $scope.loginFailed = true;
+                        if (returnData.data.error == 'ERALOG01') {
+                            $scope.errorMessage = 'RefreshNeeded';
+                            $scope.errorMessage = 'Login Gagal';
+                        }
+                        else if (returnData.data.error == 'ERALOG02') {
+                            $scope.errorMessage = 'E-mail/Password Tidak Tepat';
+                        }
+                        else if (returnData.data.error == 'ERALOG03') {
+                            $scope.errorMessage = 'E-mail sudah terdaftar tapi belum terkonfirmasi';
+                        }
+                        else if (returnData.data.error == 'ERALOG04') {
+                            $scope.errorMessage = 'Failed';
+                            $scope.errorMessage = 'Login Gagal';
+                        }
+                        else if (returnData.data.error == 'ERALOG05') {
+                            $scope.errorMessage = 'E-mail Anda belum terdaftar';
+
+                        }
+                        else {
+                            $scope.errorMessage = 'Failed';
+                            $scope.errorMessage = 'Login Gagal';
+                        }
+                        $log.debug('Error : ' + returnData.data.error);
+                    }
+                }).catch(function (returnData) {
+                    $scope.trial++;
+                    if (refreshAuthAccess() && $scope.trial < 4) //refresh cookie
+                    {
+                        $scope.form.submit();
+                    }
+                    else {
+                        $scope.overlay = true;
+                        $scope.errorMessage = 'Failed';
+                        $scope.errorMessage = 'Login Gagal';
+                        $log.debug('Failed to Login');
+                        $scope.form.submitting = false;
+                        $scope.form.submitted = false;
+                        $scope.form.isLogin = false;
+                    }
+                });
+            }
+            else {
+                $scope.form.submitting = false;
+                $scope.form.submitted = false;
+                $scope.form.isLogin = false;
+            }
+
+        }
+
+    }
+]);// auth controller end

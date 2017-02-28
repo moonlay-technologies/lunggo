@@ -29,7 +29,7 @@
     <script src="/Assets/travorama20/js/B2BHomeController.js"></script>   
 }
 
-<div class="search-flight" ng-app="travoramaB2B" ng-controller="B2BFlightSearchFormController">
+<div class="search-flight" ng-app="travoramaB2B" ng-controller="B2BFlightSearchFormController" ng-class="{'active' : pageLoaded}">
     <div class=" panel panel-transparent">
         <div class="panel-heading ">
             <div class="panel-title">
@@ -52,7 +52,7 @@
                     <div class="col-sm-6">
                         <div class="form-group form-group-default">
                             <label>Dari</label>
-                            <input type="text" class="form-control" placeholder="Jakarta (CGK)" ng-click="showLocation('origin')" 
+                            <input type="text" class="form-control" placeholder="Jakarta (CGK)" ng-click="showLocation('origin')"
                                    id="originPlace" ng-model="searchParam.Origin">
                         </div>
                     </div>
@@ -74,16 +74,16 @@
                             </span>
 
                             @*<label>Tanggal Berangkat</label>
-                            <input hidden name="depDate" id="departureDate" />
-                            <input type="email" class="form-control" id="valueDepDate" placeholder="Pilih tanggal berangkat" />
-                            <span class="input-group-addon">
-                                <i class="fa fa-calendar"></i>
-                            </span>*@
+                                <input hidden name="depDate" id="departureDate" />
+                                <input type="email" class="form-control" id="valueDepDate" placeholder="Pilih tanggal berangkat" />
+                                <span class="input-group-addon">
+                                    <i class="fa fa-calendar"></i>
+                                </span>*@
                         </div>
                     </div>
                     <div class="col-sm-6">
                         <div class="form-group form-group-default input-group retDate">
-                            
+
                             <label>Tanggal Berangkat</label>
                             <input type="email" class="form-control" placeholder="Pilih tanggal kembali" id="returnDate">
                             <span class="input-group-addon">
@@ -91,12 +91,12 @@
                             </span>
 
                             @*<label>Tanggal Kembali</label>
-                            <input hidden name="retDate" id="returnDate" />
-                            <input type="email" class="form-control" placeholder="Pilih tanggal kembali" id="valueRetDate"/>
-                            
-                            <span class="input-group-addon">
-                                <i class="fa fa-calendar"></i>
-                            </span>*@
+                                <input hidden name="retDate" id="returnDate" />
+                                <input type="email" class="form-control" placeholder="Pilih tanggal kembali" id="valueRetDate"/>
+
+                                <span class="input-group-addon">
+                                    <i class="fa fa-calendar"></i>
+                                </span>*@
                         </div>
                     </div>
                 </div>
@@ -174,8 +174,8 @@
             </form>
         </div>
     </div>
-    
-    
+
+
     @Html.Partial("/Views/Shared/Desktop/_SearchLocation.cshtml")
-    
+
 </div>
