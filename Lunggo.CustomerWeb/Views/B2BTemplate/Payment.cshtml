@@ -39,21 +39,6 @@
             $('body #add-payment').on('click', clone);
 
             $('body').on('click', '.remove-payment', remove);
-
-            $('body .btn-edit-payment').click(function () {
-                var size = $('input[name=slideup_toggler]:checked').val();
-                var modalElem = $('.modal-edit-payment');
-                if (size == "mini") {
-                    $('.modal-edit-payment').modal('show');
-                } else {
-                    $('.modal-edit-payment').modal('show');
-                    if (size == "default") {
-                        modalElem.children('.modal-dialog').removeClass('modal-lg');
-                    } else if (size == "full") {
-                        modalElem.children('.modal-dialog').addClass('modal-lg');
-                    }
-                }
-            });
         })
     </script>
 }
@@ -82,7 +67,7 @@
                     </div>
                     <div class="pi-bottom clearfix font-montserrat bold small">
                         <div class="pi-status"><span class="current-status">Primary</span></div>
-                        <div class="pull-right"><a href="#" class="btn-edit-payment">Edit</a></div>
+                        <div class="pull-right"><a href="#" class="btn-edit-payment" data-toggle="modal" data-target=".modal-edit-payment">Edit</a></div>
                     </div>
                 </div>
             </div>
@@ -151,17 +136,12 @@
                             </div>
                         </div>
                     </form>
-                    <div class="row">
-                        <div class="col-sm-6 m-t-10 sm-m-t-10">
-                            <button type="button" class="btn btn-default btn-cons btn-block m-t-5" data-dismiss="modal">Kembali</button>
-                        </div>
-                        <div class="col-sm-6 m-t-10 sm-m-t-10">
-                            <button type="button" class="btn btn-primary btn-block m-t-5">Simpan</button>
-                        </div>
+                    <div class="clearfix m-t-10">
+                        <button type="button" class="btn btn-primary m-t-5 pull-right" data-dismiss="modal"><i class="fa fa-save m-r-10"></i>Simpan</button>
+                        <button type="button" class="btn btn-default m-t-5 m-r-10 pull-right" data-dismiss="modal"><i class="fa fa-arrow-left m-r-10"></i>Kembali</button>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- /.modal-content -->
     </div>
 </div>

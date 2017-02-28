@@ -32,6 +32,33 @@
                 &:last-child .panel-body {padding-bottom: 20px;}
             }
         }
+        .form-group.input-custom {
+            padding: 5px 0;
+            background-color: #fff;
+            position: relative;
+            border: 1px solid rgba(0, 0, 0, 0.07);
+            border-radius: 2px;
+            label {padding-left: 12px;}
+        }
+
+        .btn-group.btn-input-custom {
+            width: 100%;
+            a.btn.dropdown-toggle {
+                width: 100% !important;
+                padding: 0 12px;
+                border: none;
+                &:hover {background: transparent;}
+            }
+            .dropdown-menu {
+                background: #fff;
+                text-align: center;
+                margin-top: 6px; 
+                padding: 0; 
+                li:hover {cursor: pointer; background: #f0f0f0;}
+            }
+        }
+        .dropdown-default .dropdown-menu:after {display: none;}
+        .dropdown-menu > li:first-child, .dropdown-menu > li:last-child {padding: 0}
     }
     &.b2b-payment {
         .payment-item {
