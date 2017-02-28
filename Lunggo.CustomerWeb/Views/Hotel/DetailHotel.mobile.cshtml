@@ -164,7 +164,20 @@
     <script type="text/javascript" src="/Assets/vendor/slick/slick.min.js"></script>
     <script type="text/javascript" src="/Assets/vendor/dotdotdot/jquery.dotdotdot.min.js"></script>
     <script src="/Assets/vendor/lightslider/lightslider.js"></script>
-    
+    <script>
+        var gtmContentType = 'hotel';
+        var gtmCity = '@Model.HotelDetailData.DestinationName';
+        var gtmHotelIds = '@Model.HotelDetailData.HotelCode';
+        var gtmRegion = '@region';
+        var gtmCountry = '@Model.HotelDetailData.CountryName';
+        var gtmCheckinDate = '@checkInDate';
+        var gtmCheckoutDate = '@checkOutDate';
+        var gtmNumAdults = @sumAdult;
+        var gtmNumChildren = @sumChildren;
+        var gtmPurchaseCurrency = 'IDR';
+        var gtmPageName = 'hotel_detail';
+    </script>
+
 }
 
 @section PageJS{
@@ -184,7 +197,7 @@
         var gtmNumAdults = @sumAdult;
         var gtmNumChildren = @sumChildren;
         var gtmPurchaseCurrency = 'IDR';
-        var gtmPageNameValue = 'hotel_detail';
+        var gtmPageName = 'hotel_detail';
     </script>
 
 }
