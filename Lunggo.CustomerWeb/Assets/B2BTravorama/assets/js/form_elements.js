@@ -26,7 +26,6 @@
             daysOfWeekDisabled: "0,1"
         });
 
-
         //Typehead Sample Code
 
         // Basic Sample using Bloodhound

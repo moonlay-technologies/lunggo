@@ -50,6 +50,10 @@ app.controller('B2BFlightSearchFormController', ['$scope', '$log', '$http', '$lo
         $('#departureDate').val(valDepDate);
         $('#returnDate').val(valRetDate);
 
+        $('#departureDate').datepicker('setStartDate', new Date(todayDate.getFullYear(), todayDate.getMonth(), todayDate.getDate()));
+        $('#returnDate').datepicker('setStartDate', new Date($scope.searchParam.DepartureDate.getFullYear(),
+            $scope.searchParam.DepartureDate.getMonth(), $scope.searchParam.DepartureDate.getDate()));
+
         if (Cookies.get('type')) {
             if (Cookies.get('type') == 'OneWay') {
                 $scope.OneWay = true;
@@ -481,6 +485,9 @@ app.controller('B2BFlightSearchFormController', ['$scope', '$log', '$http', '$lo
         $('#valueDepDate').val(valDepDate);
         $('#valueRetDate').val(valRetDate);
         $(this).datepicker('hide');
+
+        $('#returnDate').datepicker('setStartDate', new Date($scope.searchParam.DepartureDate.getFullYear(),
+            $scope.searchParam.DepartureDate.getMonth(), $scope.searchParam.DepartureDate.getDate()));
     });
 
     $('#returnDate').change(function () {
@@ -503,6 +510,9 @@ app.controller('B2BFlightSearchFormController', ['$scope', '$log', '$http', '$lo
         $('#valueDepDate').val(valDepDate);
         $('#valueRetDate').val(valRetDate);
         $(this).datepicker('hide');
+
+        $('#returnDate').datepicker('setStartDate', new Date($scope.searchParam.DepartureDate.getFullYear(),
+            $scope.searchParam.DepartureDate.getMonth(), $scope.searchParam.DepartureDate.getDate()));
     });
 
     $('#valueDepDate').click(function (){
@@ -576,7 +586,7 @@ app.controller('B2BHotelSearchFormController', ['$scope', '$log', '$http', '$loc
     $(document).ready(function () {
 
         $.getScript("js.cookie.js", function () { });
-
+        
         if (Cookies.get('hotelSearchLocationDisplay')) {
             $scope.hotelSearch.locationDisplay = Cookies.get('hotelSearchLocationDisplay');
         } else {
@@ -631,6 +641,7 @@ app.controller('B2BHotelSearchFormController', ['$scope', '$log', '$http', '$loc
         var valCheckInDate = $scope.setDateWriting($scope.hotelSearch.checkinDate.getDate(),
             $scope.hotelSearch.checkinDate.getMonth(), $scope.hotelSearch.checkinDate.getFullYear());
         $('#checkInDate').val(valCheckInDate);
+        $('#checkInDate').datepicker('setStartDate', new Date(todayDate.getFullYear(), todayDate.getMonth(), todayDate.getDate()));
 
         if (Cookies.get('hotelSearchCheckOutDate')) {
             $scope.hotelSearch.checkoutDate = new Date(Cookies.get('hotelSearchCheckOutDate'));
@@ -691,11 +702,29 @@ app.controller('B2BHotelSearchFormController', ['$scope', '$log', '$http', '$loc
         }
     });
 
+    $.fn.datepicker.defaults.language = 'id';
+    var todayDate = new Date();
     $scope.pageLoaded = true;
     $scope.setDateWriting = function (day, month, year) {
         return day.toString() + ' ' + $scope.getMonthName(month) + ' ' + year.toString();
     }
 
+    $scope.searchParam = {
+        NightList: [1, 2, 3, 4, 5, 6, 7],
+        RoomList: [1, 2, 3, 4, 5, 6, 7, 8],
+        AdultList: [1, 2, 3, 4, 5],
+        ChildList: [0, 1, 2, 3, 4],
+        ChildAgeList: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+    }
+
+    $scope.view = {
+        showHotelSearch: false
+    }
+
+    $scope.showPopularDestinations = false;
+    $scope.autocompletePre = false;
+    $('.search-hotel').hide();
+    hotelSearchSvc.initializeSearchForm($scope);
     $scope.getMonthName = function (month) {
         switch (month) {
             case 0:
@@ -754,26 +783,6 @@ app.controller('B2BHotelSearchFormController', ['$scope', '$log', '$http', '$loc
         }
     }
 
-    $scope.showPopularDestinations = false;
-    $scope.autocompletePre = false;
-    var todayDate = new Date();
-    var tmrwDate = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
-
-    $scope.searchParam = {
-        NightList: [1, 2, 3, 4, 5, 6, 7],
-        RoomList: [1, 2, 3, 4, 5, 6, 7, 8],
-        AdultList: [1, 2, 3, 4, 5],
-        ChildList: [0, 1, 2, 3, 4],
-        ChildAgeList: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
-    }
-
-    $scope.view = {
-        showHotelSearch : false
-    }
-    
-    $('.search-hotel').hide();
-    hotelSearchSvc.initializeSearchForm($scope);
-        
     $('.hotel-location').click(function (evt) {
         $(this).select();
         evt.stopPropagation();
@@ -784,7 +793,7 @@ app.controller('B2BHotelSearchFormController', ['$scope', '$log', '$http', '$loc
         $('.hotel-autocomplete-no-result').hide();
     });
 
-    $('.hotel-location').keyup(function (evt) {
+    $('.hotel-location').keyup(function () {
         $scope.showPopularDestinations = false;
         var value = $('.hotel-location').val();
         if (value.length > 0 && value.length < 3) {
@@ -793,12 +802,10 @@ app.controller('B2BHotelSearchFormController', ['$scope', '$log', '$http', '$loc
             $('.hotel-autocomplete-pre .typing').show();
             $('.hotel-autocomplete-pre .searching').hide();
             $('.hotel-autocomplete-result.api-result').show();
-            //masukkan > 3 huruf
         } else if (value.length >= 3) {
             $('.hotel-autocomplete-result.popular').hide();
             $('.hotel-autocomplete-pre').hide();
             $('.hotel-autocomplete-result.api-result').show();
-            //show hasil
         } else {
             $('.hotel-autocomplete-pre').hide();
             $('.hotel-autocomplete-result.popular').show();
@@ -821,36 +828,20 @@ app.controller('B2BHotelSearchFormController', ['$scope', '$log', '$http', '$loc
         $('.search-hotel .location-recommend .tab-content>div').removeClass('active');
         $('.search-hotel .location-recommend .tab-content>div.' + showClass).addClass('active');
     });
-        
-    $scope.selectCalendar = '';
-    $scope.setOptionCalendar = function (target) {
-        $scope.selectCalendar = target;
-    }
-
+    
+    
     $('#checkInDate').change(function () {
-        var date = $('#checkInDate').val().split(' ');
+        var date = $('#checkInDate').val().split('/');
         var day = parseInt(date[0]);
-        var month = (date[1]);
+        var month = parseInt(date[1]);
         var year = parseInt(date[2]);
-        var selectedDate = new Date(year, $scope.getMonthNumber(month), day);
+        var selectedDate = new Date(year, month, day);
         $scope.hotelSearch.checkinDate = selectedDate;
         var checkOutDate= new Date(selectedDate);
         $scope.hotelSearch.checkoutDate = checkOutDate.setDate(checkOutDate.getDate() + $scope.hotelSearch.nightCount);
-
         var valCheckInDate = $scope.setDateWriting($scope.hotelSearch.checkinDate.getDate(),
             $scope.hotelSearch.checkinDate.getMonth(), $scope.hotelSearch.checkinDate.getFullYear());
         $('#valueCheckInDate').val(valCheckInDate);
         $(this).datepicker('hide');
     });
-
-    $('#valueCheckInDate').click(function () {
-        $('#checkInDate').datepicker('show');
-    });
-
-    $scope.gotoSearchResult = function () {
-        url += searchParam;
-        setCookie();
-        window.location.href = url;
-    };
-
-    }]);
+}]);
