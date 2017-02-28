@@ -75,10 +75,20 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
         } else {
             $scope.hotelSearch.roomCount = 1;
         }
-        var x = Cookies.getJSON('hotelSearchOccupancies');
-       // console.log(x);
+       
         if (Cookies.getJSON('hotelSearchOccupancies')) {
-            $scope.hotelSearch.occupancies = Cookies.getJSON('hotelSearchOccupancies');
+            var occupancies = Cookies.getJSON('hotelSearchOccupancies');
+            $scope.hotelSearch.occupancies = [];
+            for (var f = 0; f < 8; f++) {
+                $scope.hotelSearch.occupancies.push({
+                    adultCount: parseInt(occupancies[f].adultCount),
+                    childCount: parseInt(occupancies[f].childCount),
+                    childrenAges: []
+                });
+                for (var g = 0; g < 4; g++) {
+                    $scope.hotelSearch.occupancies[f].childrenAges.push(parseInt(occupancies[f].childrenAges[g]));
+                }
+            }
         } else {
             $scope.hotelSearch.occupancies = [];
             for (var i = 0; i <= 7; i++) {

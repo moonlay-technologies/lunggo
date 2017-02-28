@@ -56,20 +56,17 @@ app.controller('B2BFlightSearchFormController', ['$scope', '$log', '$http', '$lo
                 $('#yes').prop('checked', true);
                 $('#no').prop('checked', false);
                 $('.retDate').addClass('disabled');
-                //$("input[name=triptype]").attr('value', 'OneWay');
             } else {
                 $scope.OneWay = false;
                 $('#no').prop('checked', true);
                 $('#yes').prop('checked', false);
                 $('.retDate').removeClass('disabled');
-                //$("input[name=triptype]").attr('value', 'Return');
             }
         } else {
             $scope.OneWay = true;
             $('#yes').prop('checked', true);
             $('#no').prop('checked', false);
             $('.retDate').addClass('disabled');
-            //$("input[name=triptype]").attr('value', 'OneWay');
         }
         
         if (Cookies.get('adult')) {
@@ -208,9 +205,8 @@ app.controller('B2BFlightSearchFormController', ['$scope', '$log', '$http', '$lo
     $('.search-location').hide();
 
     $scope.$watch('Passenger.Adult',
-        function (newValue, oldValue) {
+        function (newValue) {
             newValue = parseInt(newValue);
-            oldValue = parseInt(oldValue);
             var TotalPax = $scope.Passenger.Child + $scope.Passenger.Infant;
             if (9 - TotalPax < newValue) {
                 alert('Jumlah penumpang tidak boleh lebih dari sembilan orang');
@@ -222,9 +218,8 @@ app.controller('B2BFlightSearchFormController', ['$scope', '$log', '$http', '$lo
         });
 
     $scope.$watch('Passenger.Child',
-        function (newValue, oldValue) {
+        function (newValue) {
             newValue = parseInt(newValue);
-            oldValue = parseInt(oldValue);
             var TotalPax = $scope.Passenger.Adult + $scope.Passenger.Infant;
             if (9 - TotalPax < newValue) {
                 alert('Jumlah penumpang tidak boleh lebih dari sembilan orang');
@@ -236,9 +231,8 @@ app.controller('B2BFlightSearchFormController', ['$scope', '$log', '$http', '$lo
         });
 
     $scope.$watch('Passenger.Infant',
-        function (newValue, oldValue) {
+        function (newValue) {
             newValue = parseInt(newValue);
-            oldValue = parseInt(oldValue);
             if (newValue > $scope.Passenger.Adult) {
                 alert('Jumlah bayi tidak boleh lebih dari penumpang dewasa');
                 $('.infantPax').val($scope.Passenger.Infant);
@@ -258,6 +252,7 @@ app.controller('B2BFlightSearchFormController', ['$scope', '$log', '$http', '$lo
     $('#originPlace, #destinationPlace').click(function() {
         $(this).select();
     });
+
     $('#originPlace').keyup(function (evt) {
         if (evt.keyCode == 27) {
             hideLocation();
@@ -275,18 +270,18 @@ app.controller('B2BFlightSearchFormController', ['$scope', '$log', '$http', '$lo
             }
         }
     });
+
     $('#originPlace').keydown(function (evt) {
-        
         if (evt.keyCode == 9 || evt.which == 9) {
             evt.preventDefault();
         }
     });
+
     $('#originPlace').focusout(function () {
         $(this).val(($scope.searchParam.OriginCity + " (" + $scope.searchParam.OriginAirport + ")"));
     });
 
     $('#destinationPlace').keyup(function (evt) {
-       
         if (evt.keyCode == 27) {
             hideLocation();
         } else {
@@ -375,7 +370,6 @@ app.controller('B2BFlightSearchFormController', ['$scope', '$log', '$http', '$lo
         $('.search-location').attr('data-place', place);
         $('.search-location').attr('id', place);
         $('.search-location').show();
-        //hideCalendar();
     }
     $('.search-location .location-recommend .nav-click.prev').click(function (evt) {
         evt.preventDefault();
@@ -458,10 +452,8 @@ app.controller('B2BFlightSearchFormController', ['$scope', '$log', '$http', '$lo
     $scope.setOptionCalendar = function(target) {
         $scope.selectCalendar = target;
     }
-
     
     $('#departureDate').change(function () {
-        //$log.debug($('#departureDate').val());
         var date = $('#departureDate').val().split(' ');
         var day = parseInt(date[0]);
         var month = (date[1]);
@@ -492,7 +484,6 @@ app.controller('B2BFlightSearchFormController', ['$scope', '$log', '$http', '$lo
     });
 
     $('#returnDate').change(function () {
-        //$log.debug($('#returnDate').val());
         var date = $('#returnDate').val().split(' ');
         var day = parseInt(date[0]);
         var month = (date[1]);
@@ -555,7 +546,6 @@ app.controller('B2BFlightSearchFormController', ['$scope', '$log', '$http', '$lo
         url += searchParam;
         setCookie();
         window.location.href = url;
-
     };
 
     // set cookie
