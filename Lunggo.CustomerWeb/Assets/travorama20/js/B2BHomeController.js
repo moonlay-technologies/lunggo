@@ -946,3 +946,89 @@ app.controller('b2bAuthController', [
 
     }
 ]);// auth controller end
+
+// Travorama reset controller
+app.controller('b2bForgotPasswordController', [
+    '$http', '$scope', '$log', function ($http, $scope, $log) {
+
+        $scope.pageLoaded = true;
+        $scope.trial = 0;
+        $scope.form = {
+            submitted: false,
+            submitting: false,
+            email: '',
+            found: false,
+            registered: false,
+            emailConfirmed: false
+        };
+
+        $('.email').click(function () {
+            $(this).select();
+        });
+
+        $scope.form.submit = function () {
+            $('.buttonSubmit').attr("disabled", true);
+            if ($scope.trial > 3) {
+                $scope.trial = 0;
+            }
+            $scope.form.submitting = true;
+            $log.debug('submitting form');
+            //Check Authorization
+            var authAccess = getAuthAccess();
+            if (authAccess == 1 || authAccess == 2) {
+                $scope.getFlightHeader = 'Bearer ' + getCookie('accesstoken');
+                // submit form to URL
+                $http({
+                    url: ForgotPasswordConfig.Url,
+                    method: 'POST',
+                    data: {
+                        userName: $scope.form.email
+                    },
+                    headers: { 'Authorization': $scope.getFlightHeader }
+                }).then(function (returnData) {
+                    $('.buttonSubmit').attr("disabled", false);
+                    $scope.form.submitting = false;
+                    $scope.form.submitted = true;
+                    if (returnData.data.status == '200') {
+                        $scope.form.found = true;
+                        $scope.form.emailConfirmed = true;
+                        $('body .reset-password').hide();
+                    }
+                    else {
+                        switch (returnData.data.error) {
+                            case "ERAFPW01":
+                                $scope.form.found = false;
+                                break;
+                            case "ERAFPW02":
+                                $scope.form.found = false;
+                                break;
+                            case "ERAFPW03":
+                                $scope.form.found = true;
+                                $scope.form.emailConfirmed = false;
+                                break;
+                            case "ERRGEN99":
+                                $scope.form.found = false;
+                                break;
+                        }
+                    }
+
+                }).catch(function () {
+                    $('.buttonSubmit').attr("disabled", false);
+                    $scope.trial++;
+                    if (refreshAuthAccess() && $scope.trial < 4) //refresh cookie
+                    {
+                        $scope.form.submit();
+                    }
+                    else {
+                        $log.debug('Failed requesting reset password');
+                        $scope.form.submitting = false;
+                    }
+                });
+            }
+            else {
+                $('.buttonSubmit').attr("disabled", false);
+                $scope.form.submitting = false;
+            }
+        }
+    }
+]);// reset controller end
