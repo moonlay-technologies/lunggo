@@ -702,7 +702,7 @@ app.controller('B2BHotelSearchFormController', ['$scope', '$log', '$http', '$loc
         }
     });
 
-    $.fn.datepicker.defaults.language = 'id';
+    //$.fn.datepicker.defaults.language = 'id';
     var todayDate = new Date();
     $scope.pageLoaded = true;
     $scope.setDateWriting = function (day, month, year) {
@@ -844,4 +844,9 @@ app.controller('B2BHotelSearchFormController', ['$scope', '$log', '$http', '$loc
         $('#valueCheckInDate').val(valCheckInDate);
         $(this).datepicker('hide');
     });
+    }]);
+
+app.controller('B2BLoginController', ['$scope', '$log', '$http', '$location', '$resource', '$timeout', 
+    function ($scope, $log, $http, $location, $resource, $timeout) {
+       
 }]);
