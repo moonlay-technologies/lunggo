@@ -1495,6 +1495,7 @@
     <None Include="Properties\PublishProfiles\travorama-prod-cw - Web Deploy %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-prod-cw - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-prod-cw-staging - Web Deploy %282%29.pubxml" />
+    <None Include="Properties\PublishProfiles\travorama-prod-cw-staging - Web Deploy %283%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-prod-cw-staging - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-prod-cw.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-prod-cw__staging %286%29.pubxml" />
@@ -1505,6 +1506,7 @@
     <None Include="Properties\PublishProfiles\travorama-qa-cw - Web Deploy %283%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-qa-cw - Web Deploy %284%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-qa-cw - Web Deploy %285%29.pubxml" />
+    <None Include="Properties\PublishProfiles\travorama-qa-cw - Web Deploy %286%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-qa-cw - Web Deploy.pubxml" />
     <None Include="Service References\Mystifly.OnePointService.Flight\OnePoint.disco" />
     <None Include="Service References\Mystifly.OnePointService.Flight\configuration91.svcinfo" />

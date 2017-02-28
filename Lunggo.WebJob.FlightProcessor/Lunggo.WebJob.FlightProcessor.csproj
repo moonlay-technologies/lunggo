@@ -206,6 +206,7 @@
     <None Include="Properties\PublishProfiles\travorama-prod-webjob %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-prod-webjob %283%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-prod-webjob %284%29.pubxml" />
+    <None Include="Properties\PublishProfiles\travorama-prod-webjob - Web Deploy %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-prod-webjob - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-prod-webjob.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-qa-webjob %282%29.pubxml" />

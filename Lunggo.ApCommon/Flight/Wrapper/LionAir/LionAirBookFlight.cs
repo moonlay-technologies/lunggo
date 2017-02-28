@@ -106,94 +106,25 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                 var flight = FlightService.GetInstance();
                 var originCountry = flight.GetAirportCountryCode(origin);
                 var destinationCountry = flight.GetAirportCountryCode(dest);
-                var userId = "";
-                var cloudAppUrl = ConfigManager.GetInstance().GetConfigValue("general", "cloudAppUrl");
-                var clientx = new RestClient(cloudAppUrl);
-                var accReq = new RestRequest("/api/LionAirAccount/ChooseUserId", Method.GET);
-                var userName = "";
-                var currentDeposit = "";
-                var reqTime = DateTime.UtcNow;
                 var itin = new FlightItinerary();
-                var msgLogin = "Your login name is inuse";
-                var counter = 0;
-
                 var listDepHr = new List<string>();
                 var listFlightNo = new List<string>();
+                string errorMessage;
+                string userId;
+                string userName;
 
-                while (msgLogin == "Your login name is inuse" || msgLogin == "There was an error logging you in")
+                var succeedLogin = Login(client, out userName, out userId, out errorMessage);
+                if (!succeedLogin)
                 {
-                    while (DateTime.UtcNow <= reqTime.AddMinutes(10) && userName.Length == 0)
-                    {
-                        var accRs = (RestResponse)clientx.Execute(accReq);
-                        userName = accRs.Content.Trim('"');
-                    }
-
-                    if (userName.Length == 0)
-                    {
-                        return new BookFlightResult
-                        {
-                            Errors = new List<FlightError> { FlightError.TechnicalError },
-                            ErrorMessages = new List<string> { "[Lion Air] userName is full" }
-                        };
-                    }
-                    bool successLogin;
-
-
-                    do
-                    {
-                        client.BaseUrl = new Uri("https://agent.lionair.co.id");
-                        const string url0 = @"/lionairagentsportal/default.aspx";
-                        var searchRequest0 = new RestRequest(url0, Method.GET);
-                        var searchResponse0 = client.Execute(searchRequest0);
-                        var html0 = searchResponse0.Content;
-                        CQ searchedHtml = html0;
-                        var viewstate = HttpUtility.UrlEncode(searchedHtml["#__VIEWSTATE"].Attr("value"));
-                        var eventval = HttpUtility.UrlEncode(searchedHtml["#__EVENTVALIDATION"].Attr("value"));
-                        FlightService.GetInstance().ParseCabinClass(CabinClass.Economy);
-                        if (searchResponse0.ResponseUri.AbsolutePath != "/lionairagentsportal/default.aspx" &&
-                            (searchResponse0.StatusCode == HttpStatusCode.OK ||
-                             searchResponse0.StatusCode == HttpStatusCode.Redirect))
-                        {
-                            TurnInUsername(clientx, userName);
-                            return new BookFlightResult
-                            {
-                                Errors = new List<FlightError> { FlightError.InvalidInputData },
-                                Status = new BookingStatusInfo
-                                {
-                                    BookingStatus = BookingStatus.Failed
-                                },
-                                ErrorMessages = new List<string> { "[Lion Air] error entering default page || " + searchResponse0.Content },
-                                IsSuccess = false
-                            };
-                        }
-
-                        Thread.Sleep(1000);
-                        const string url1 = @"/lionairagentsportal/CaptchaGenerator.aspx";
-                        var searchRequest1 = new RestRequest(url1, Method.GET);
-                        var searchResponse1 = client.Execute(searchRequest1);
-                        Thread.Sleep(1000);
-                        successLogin = Login(client, searchResponse1.RawBytes, viewstate, eventval, out userId, userName,
-                            out msgLogin, out currentDeposit);
-                        Thread.Sleep(1000);
-                        counter++;
-                    } while (!successLogin && counter < 31 && (msgLogin != "Your login name is inuse"
-                        && msgLogin != "There was an error logging you in"));
-                }
-
-                if (counter >= 31)
-                {
-                    //throw new Exception("haloooo 23");
-                    TurnInUsername(clientx, userName);
                     return new BookFlightResult
                     {
-
-                        Errors = new List<FlightError> { FlightError.InvalidInputData },
+                        IsSuccess = false,
                         Status = new BookingStatusInfo
                         {
                             BookingStatus = BookingStatus.Failed
                         },
-                        IsSuccess = false,
-                        ErrorMessages = new List<string> { "[Lion Air] Error captcha" }
+                        Errors = new List<FlightError> {FlightError.TechnicalError},
+                        ErrorMessages = new List<string> {errorMessage}
                     };
                 }
 
@@ -708,7 +639,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                         if (isItinChanged)
                         {
                             LogOut(cid, client);
-                            TurnInUsername(clientx, userName);
+                            TurnInUsername(userName);
 
                             return new BookFlightResult
                             {
@@ -995,7 +926,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                                 if (decimal.Parse(newPrice) != bookInfo.Itinerary.Price.Supplier)
                                 {
                                     LogOut(cid, client);
-                                    TurnInUsername(clientx, userName);
+                                    TurnInUsername(userName);
 
                                     var newFareId = origin + "+" + dest + "+" + splittedFareId[2] + "+" + adultCount +
                                                     "+" +
@@ -1056,7 +987,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                                 itin.FareId = newFareId;
 
                                 LogOut(cid, client);
-                                TurnInUsername(clientx, userName);
+                                TurnInUsername(userName);
 
                                 //newPrice itu harga nya null, padahal dicoba untuk parse
                                 return new BookFlightResult
@@ -1077,7 +1008,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                         catch
                         {
                             LogOut(cid, client);
-                            TurnInUsername(clientx, userName);
+                            TurnInUsername(userName);
                             return new BookFlightResult
                             {
                                 IsSuccess = false,
@@ -1174,7 +1105,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                         }
 
                         LogOut(cid, client);
-                        TurnInUsername(clientx, userName);
+                        TurnInUsername(userName);
                     }
 
                     const string format = "dd MMMM', 'yyyy', 'HH:mm";
@@ -1209,7 +1140,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                 catch (Exception e)
                 {
                     LogOut(cid, client);
-                    TurnInUsername(clientx, userName);
+                    TurnInUsername(userName);
                     return new BookFlightResult
                     {
                         IsSuccess = false,
@@ -1250,12 +1181,6 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                     "https://agent.lionair.co.id/LionAirAgentsPortal/Agents/Welcome.aspx?" + accountId);
                 Thread.Sleep(1000);
                 var searchResponse16 = client.Execute(searchRequest16);
-            }
-
-            private void TurnInUsername(RestClient client, string username)
-            {
-                var accReq = new RestRequest("/api/LionAirAccount/LogOut?userId=" + username, Method.GET);
-                var accRs = (RestResponse)client.Execute(accReq);
             }
         }
     }

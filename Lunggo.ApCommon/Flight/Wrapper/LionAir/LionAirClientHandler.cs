@@ -1,9 +1,16 @@
-﻿using System.Net;
+﻿using System;
+using System.Diagnostics;
+using System.Globalization;
+using System.Net;
+using System.Threading;
 using CsQuery;
 using DeathByCaptcha;
 using Lunggo.Framework.Config;
+using Lunggo.Framework.Extension;
 using Lunggo.Framework.Log;
+using Microsoft.WindowsAzure.Storage.Blob.Protocol;
 using RestSharp;
+using RestSharp.Extensions.MonoHttp;
 
 namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
 {
@@ -15,7 +22,6 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
             private bool _isInitialized;
             private static string _userName;
             private static string _password;
-            private static decimal currentDeposit;
 
             private LionAirClientHandler()
             {
@@ -61,12 +67,87 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                 return client;
             }
 
-            private bool Login(RestClient client, byte[] img, string viewstate, string eventval, 
-                out string linkgoto, string userName, out string checkLogin,out string currentDeposit)
+            private bool Login(RestClient client, out string userName, out string userId, int timeoutSeconds = 300)
             {
+                string errorMessage;
+                return Login(client, out userName, out userId, out errorMessage, timeoutSeconds);
+            }
+
+            private bool Login(RestClient client, out string userName, out string userId, out string errorMessage, int timeoutSeconds = 300)
+            {
+                string currentDeposit;
+                return Login(client, out userName, out userId, out errorMessage, out currentDeposit, timeoutSeconds);
+            }
+
+            private bool Login(RestClient client, out string userName, out string userId, out string errorMessage, out string currentDeposit, int timeoutSeconds = 300)
+            {
+                var msgLogin = "Your login name is inuse";
+                userName = "";
+                userId = "";
+                var prevCaptchaId = "";
+                currentDeposit = "";
+                var sw = Stopwatch.StartNew();
+
+                while (msgLogin == "Your login name is inuse" || msgLogin == "There was an error logging you in")
+                {
+                    
+                    bool successLogin;
+                    userName = GetUsername(out errorMessage, timeoutSeconds/5);
+                    if (errorMessage != null)
+                        return false;
+
+                    do
+                    {
+                        string captchaId;
+                        successLogin = LoginInternal(client, userName, out userId, ref msgLogin, out errorMessage, out captchaId, prevCaptchaId, out currentDeposit);
+                        prevCaptchaId = captchaId;
+                        Thread.Sleep(1000);
+                    } while (!successLogin && sw.Elapsed.TotalSeconds <= timeoutSeconds*3/5 && (msgLogin != "Your login name is inuse"
+                        && msgLogin != "There was an error logging you in"));
+                }
+
+                if (sw.Elapsed.TotalSeconds > timeoutSeconds * 3 / 5)
+                {
+                    //throw new Exception("haloooo 23");
+                    TurnInUsername(userName);
+                    errorMessage = "[Lion Air] Captcha takes too long to break";
+                    return false;
+                }
+                errorMessage = null;
+                return true;
+            }
+
+            private bool LoginInternal(RestClient client, string userName, out string userId, ref string msgLogin, out string errorMessage, out string captchaId, string prevCaptchaId, out string currentDeposit)
+            {
+                userId = "";
+                currentDeposit = "";
+                client.BaseUrl = new Uri("https://agent.lionair.co.id");
+                const string url0 = @"/lionairagentsportal/default.aspx";
+                var searchRequest0 = new RestRequest(url0, Method.GET);
+                var searchResponse0 = client.Execute(searchRequest0);
+                var html0 = searchResponse0.Content;
+                CQ homeHtml = html0;
+                var viewstate = HttpUtility.UrlEncode(homeHtml["#__VIEWSTATE"].Attr("value"));
+                var eventval = HttpUtility.UrlEncode(homeHtml["#__EVENTVALIDATION"].Attr("value"));
+                if (searchResponse0.ResponseUri.AbsolutePath != "/lionairagentsportal/default.aspx" &&
+                    (searchResponse0.StatusCode == HttpStatusCode.OK ||
+                     searchResponse0.StatusCode == HttpStatusCode.Redirect))
+                {
+                    TurnInUsername(userName);
+                    msgLogin = "There was an error logging you in";
+                    errorMessage = "[Lion Air] error entering default page || " + searchResponse0.Content;
+                    captchaId = null;
+                    return false;
+                }
+
+                Thread.Sleep(1000);
+                const string captchaUrl = @"/lionairagentsportal/CaptchaGenerator.aspx";
+                var captchaRq = new RestRequest(captchaUrl, Method.GET);
+                var captchaRs = client.Execute(captchaRq);
+                Thread.Sleep(1000);
                 
                 //READ CAPTCHA
-                var captcha = ReadCaptcha(img);
+                var captcha = ReadCaptcha(captchaRs.RawBytes, msgLogin, out captchaId, prevCaptchaId);
                 
                 // POST DEFAULT
                 var url = @"lionairagentsportal/default.aspx";
@@ -102,68 +183,110 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                 requestW.AddHeader("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8"); //client
                 var responseW = client.Execute(requestW);
                 var htmlresp = responseW.Content;
-                var searchedHtml = (CQ)htmlresp;
+                var welcomeHtml = (CQ)htmlresp;
                 try
                 {
                     var numberDeposit =
-                        searchedHtml["#ctl00_ContentPlaceHolder1_lblCreditAvailable"].Text().Trim().Split(' ');
+                        welcomeHtml["#ctl00_ContentPlaceHolder1_lblCreditAvailable"].Text().Trim().Split(' ');
                     var deposit = numberDeposit[1].Trim().Replace(",", "");
                     currentDeposit = deposit;
 
+                    userId = welcomeHtml["#ctl00_tblMenu > tbody > tr:nth-child(5) > td > a"].Attr("href");
 
                     // HANDLING CASE IF CAPTCHA IS FALSE
-                    var ret = new bool();
-                    var test = searchedHtml.Text().Substring(0, 6);
+                    var test = welcomeHtml.Text().Substring(0, 6);
                     if (test != "Object")
                     {
-                        ret = true;
+                        errorMessage = null;
+                        msgLogin = null;
+                        return true;
                     }
-                    checkLogin = searchedHtml["#trLoginError"].Text();
+                    var checkLogin = welcomeHtml["#trLoginError"].Text();
                     if (checkLogin.Length != 0)
-                        ret = false;
-
-                    linkgoto = searchedHtml["#ctl00_tblMenu > tbody > tr:nth-child(5) > td > a"].Attr("href");
-                        //.Children(".menu").ToList()[4].Children().Attr("a");
-                    return ret;
+                    {
+                        errorMessage = null;
+                        msgLogin = checkLogin;
+                        return false;
+                    }
 
                 }
                 catch
                 {
-                    //TurnInId(client, userName);
-                    linkgoto = "";
-                    checkLogin = "";
+                    msgLogin = "";
                     currentDeposit = "";
+                    errorMessage = "[Lion Air] Failed to login";
                     return false;
-                }                   
+                }
+                errorMessage = "[Lion Air] Failed to login";
+                msgLogin = null;
+                return false;
             }
 
-            private void TurnInId(RestClient client, string username)
+            private static string GetUsername(out string errorMessage, int timeoutSeconds)
             {
-                var accReq = new RestRequest("/api/LionAirAccount/LogOut?userId=" + username, Method.GET);
-                var accRs = (RestResponse)client.Execute(accReq);
+                var userUrl = ConfigManager.GetInstance().GetConfigValue("general", "cloudAppUrl");
+                var userClient = new RestClient(userUrl);
+                var userRq = new RestRequest("/api/LionAirAccount/ChooseUserId", Method.GET);
+                var userName = "";
+                errorMessage = null;
+                var sw = Stopwatch.StartNew();
+                while (sw.Elapsed.TotalSeconds <= timeoutSeconds && userName.Length == 0)
+                {
+                    var accRs = (RestResponse)userClient.Execute(userRq);
+                    userName = accRs.Content.Trim('"');
+                }
+
+                if (userName.Length == 0)
+                {
+                    errorMessage = "[Lion Air] userName is full";
+                }
+                sw.Stop();
+                return userName;
+            }
+
+            private static void TurnInUsername(string username)
+            {
+                var userUrl = ConfigManager.GetInstance().GetConfigValue("general", "cloudAppUrl");
+                var userClient = new RestClient(userUrl);
+                var userRq = new RestRequest("/api/LionAirAccount/LogOut?userId=" + username, Method.GET);
+                var userRs = (RestResponse)userClient.Execute(userRq);
             }
 
             /* USING DEATHBYCAPTCHA */
-
-            private static string ReadCaptcha(byte[] captchaImg)
+            private static string ReadCaptcha(byte[] captchaImg, string msgLogin, out string captchaId, string prevCaptchaId = null)
             {
                 try
                 {
                     var username = ConfigManager.GetInstance().GetConfigValue("deathbycaptcha", "userName");
                     var password = ConfigManager.GetInstance().GetConfigValue("deathbycaptcha", "password");
-                    var client = (Client) new SocketClient(username, password);
-                    var captcha = client.Decode(captchaImg, 15);
-                    return captcha != null ? captcha.Text : "";
+                    var client = (Client)new SocketClient(username, password);
+
+                    //Report Incorrect
+                    if (msgLogin == "Invalid Captcha" && prevCaptchaId != null)
+                        client.Report(int.Parse(prevCaptchaId));
+
+                    var captcha = client.Decode(captchaImg, 20);
+                    if (captcha != null)
+                    {
+                        captchaId = captcha.Id.ToString(CultureInfo.InvariantCulture);
+                        return captcha.Text;
+                    }
+                    else
+                    {
+                        captchaId = null;
+                        return "";
+                    }
+                    
                 }
                 catch
                 {
+                    captchaId = null;
                     return "";
                 }
             }
 
             /* USING CLOUD APP */
-
-            //private static string ReadCaptcha(byte[] captcha)
+            //private static string ReadCaptcha(byte[] captchaImg, string msgLogin, out string captchaId, string prevCaptchaId = null)
             //{
             //    var cloudAppUrl = ConfigManager.GetInstance().GetConfigValue("general", "cloudAppUrl");
             //    var client = new RestClient(cloudAppUrl);
@@ -172,16 +295,10 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
             //    captchaRq.AddHeader("Accept-Encoding", "gzip, deflate, sdch");
             //    captchaRq.AddHeader("Content-Type", "multipart/form-data");
             //    captchaRq.AddHeader("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,i  mage/webp,*/*;q=0.8");
-            //    captchaRq.AddFileBytes("captcha", captcha, "captcha");
+            //    captchaRq.AddFileBytes("captcha", captchaImg, "captcha");
             //    var captchaRs = client.Execute(captchaRq);
             //    return captchaRs.Content.Trim('"');
             //}
-
-            //Get Deposit for Lion Air
-            private static decimal getDeposit() 
-            {
-                return currentDeposit;
-            }
         }
     }
 }

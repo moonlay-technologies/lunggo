@@ -22,59 +22,21 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
         {
             public decimal GetCurrentBalance()
             {
-                var clientx = CreateAgentClient();
-                clientx.FollowRedirects = false;
-                CQ searchedHtml;
+                var client = CreateAgentClient();
+                client.FollowRedirects = false;
+                string userName;
                 var userId = "";
+                string errorMessage;
                 decimal balance = 0;
+                string currentDeposit;
 
-                var cloudAppUrl = ConfigManager.GetInstance().GetConfigValue("general", "cloudAppUrl");
-                var clienty = new RestClient(cloudAppUrl);
-                var accReq = new RestRequest("/api/LionAirAccount/ChooseUserId", Method.GET);
-                var userName = "";
-                var currentDeposit = "";
-                RestResponse accRs;
-                var reqTime = DateTime.UtcNow;
-                var msgLogin = "Your login name is inuse";
-
-                while (msgLogin == "Your login name is inuse" || msgLogin == "There was an error logging you in")
+                var succeedLogin = Login(client, out userName, out userId, out errorMessage, out currentDeposit);
+                if (!succeedLogin)
                 {
-                    while (DateTime.UtcNow <= reqTime.AddMinutes(10) && userName.Length == 0)
-                    {
-                        accRs = (RestResponse)clienty.Execute(accReq);
-                        userName = accRs.Content.Trim('"');
-                    }
-
-                    if (userName.Length == 0)
-                        return balance;
-
-                    bool successLogin;
-                    do
-                    {
-                        clientx.BaseUrl = new Uri("https://agent.lionair.co.id");
-                        const string url0 = @"/lionairagentsportal/default.aspx";
-                        var searchRequest0 = new RestRequest(url0, Method.GET);
-                        var searchResponse0 = clientx.Execute(searchRequest0);
-                        var html0 = searchResponse0.Content;
-                        searchedHtml = html0;
-                        var viewstate = HttpUtility.UrlEncode(searchedHtml["#__VIEWSTATE"].Attr("value"));
-                        var eventval = HttpUtility.UrlEncode(searchedHtml["#__EVENTVALIDATION"].Attr("value"));
-                        FlightService.GetInstance().ParseCabinClass(CabinClass.Economy);
-                        if (searchResponse0.ResponseUri.AbsolutePath != "/lionairagentsportal/default.aspx" &&
-                            (searchResponse0.StatusCode == HttpStatusCode.OK ||
-                             searchResponse0.StatusCode == HttpStatusCode.Redirect)) 
-                        {
-                            return balance;
-                        }
-                        const string url1 = @"/lionairagentsportal/CaptchaGenerator.aspx";
-                        var searchRequest1 = new RestRequest(url1, Method.GET);
-                        var searchResponse1 = clientx.Execute(searchRequest1);
-                        successLogin = Login(clientx, searchResponse1.RawBytes, viewstate, eventval, out userId,
-                            userName, out msgLogin, out currentDeposit);
-                    } while (!successLogin && (msgLogin != "Your login name is inuse"
-                        && msgLogin != "There was an error logging you in"));
+                    return balance;
                 }
-                if (currentDeposit != null || currentDeposit != "") 
+
+                if (!string.IsNullOrEmpty(currentDeposit)) 
                 {
                     balance = decimal.Parse(currentDeposit);
                 }
