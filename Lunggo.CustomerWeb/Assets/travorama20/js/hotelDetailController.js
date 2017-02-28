@@ -58,7 +58,7 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
     $scope.gtmNumAdults = gtmNumAdults;
     $scope.gtmNumChildren = gtmNumChildren;
     $scope.gtmPurchaseCurrency = gtmPurchaseCurrency;
-    $scope.gtmPageNameValue = gtmPageNameValue;
+    $scope.gtmPageName = gtmPageName;
     $scope.isFirstLoad = true;
     $scope.init = function (model) {
         $log.debug(model);
@@ -624,7 +624,7 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
                         num_children: sumchild,
                         purchase_value: lowestPrice,
                         purchase_currency: $scope.gtmPurchaseCurrency,
-                        //page_name : $scope.gtmPageNameValue
+                        page_name : $scope.gtmPageName
                     });
                     
                     $log.debug($scope.singleRoom);
