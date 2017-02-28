@@ -185,10 +185,10 @@
         @:var gtmNumAdults = @reservation.Itinerary.AdultCount;
         @:var gtmNumChildren = @reservation.Itinerary.ChildCount;
         @:var gtmNumInfants = @reservation.Itinerary.InfantCount;
-        @:var gtmTravelClass = '@reservation.Itinerary.RequestedCabinClass';
+        @:var gtmTravelClass = '@reservation.Itinerary.RequestedCabinClass.ToString().ToLower()';
         @:var gtmPurchaseValue = @reservation.Itinerary.NetTotalFare;
         @:var gtmPurchaseCurrency = 'IDR';
-        @:var gtmPageValue = 'payment';
+        @:var gtmPageName = 'payment';
     }
     @if (Model.Reservation is HotelReservationForDisplay)
     {
@@ -206,7 +206,7 @@
         @:var gtmNumChildren = @totalChild;
         @:var gtmPurchaseCurrency = 'IDR';
         @:var gtmPurchaseValue = @hotel.HotelDetail.NetTotalFare;
-        @:var gtmPageNameValue = 'payment';
+        @:var gtmPageName = 'payment';
     }
     // change current page
     if (getParam('page') == 4) {

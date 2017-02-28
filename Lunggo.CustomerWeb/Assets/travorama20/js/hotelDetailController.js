@@ -58,7 +58,7 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
     $scope.gtmNumAdults = gtmNumAdults;
     $scope.gtmNumChildren = gtmNumChildren;
     $scope.gtmPurchaseCurrency = gtmPurchaseCurrency;
-    $scope.gtmPageNameValue = gtmPageNameValue;
+    $scope.gtmPageName = gtmPageName;
     $scope.isFirstLoad = true;
     $scope.init = function (model) {
         $log.debug(model);
@@ -602,7 +602,7 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
                         t.src = v; s = b.getElementsByTagName(e)[0]; s.parentNode.insertBefore(t, s)
                     }(window, document, 'script', '//connect.facebook.net/en_US/fbevents.js');
 
-                    fbq('init', '<FB_PIXEL_ID>');
+                    //fbq('init', '<FB_PIXEL_ID>');
                     var lowestPrice;
                     var listPrice = [];
                     for (var i = 0; i < $scope.singleRoom.length; i++) {
@@ -624,7 +624,7 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
                         num_children: sumchild,
                         purchase_value: lowestPrice,
                         purchase_currency: $scope.gtmPurchaseCurrency,
-                        //page_name : $scope.gtmPageNameValue
+                        page_name : $scope.gtmPageName
                     });
                     
                     $log.debug($scope.singleRoom);

@@ -124,11 +124,10 @@
         var gtmNumAdults = @data.AdultCount;
         var gtmNumChildren = @data.ChildCount;
         var gtmNumInfants = @data.InfantCount;;
-        var gtmTravelClass = '@data.CabinClass';
+        var gtmTravelClass = '@data.CabinClass.ToString().ToLower()';
         var gtmPurchaseValue = '';
         var gtmPurchaseCurrency = 'IDR';
     </script>
-
 }
 
 <div class="page-loading" ng-class="{'page-loaded':PageConfig.Loaded}">
