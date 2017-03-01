@@ -45,7 +45,7 @@
             @Html.Partial("/Views/Shared/B2BTravorama/_B2BHeaderMenu.cshtml")
             <div class="page-content-wrapper">
                 <div class="content">
-                    @if (ViewBag.SiteHeader != "b2b-order-list" && ViewBag.SiteHeader != "b2b-user-manage")
+                    @if (ViewBag.SiteHeader != "b2b-order-list" && ViewBag.SiteHeader != "b2b-user-manage" && ViewBag.SiteHeader != "b2b-order-detail")
                     {
                         <div class="container container-fluid">
                             @RenderBody()

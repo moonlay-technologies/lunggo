@@ -105,3 +105,10 @@ body {
     transform: translate(-50%, -50%);
     cursor: pointer;
     text-align: center; }
+  body.b2b-order-detail .flight-reservation .table.table-condensed.table-detailed > tbody > tr > td:first-child:after,
+  body.b2b-order-detail .flight-payment .table.table-condensed.table-detailed > tbody > tr > td:first-child:after,
+  body.b2b-order-detail .flight-departure .table.table-condensed.table-detailed > tbody > tr > td:first-child:after {
+    content: ':';
+    float: right; }
+  body.b2b-order-detail .table.table-condensed.table-detailed > tbody > tr > td:first-child:before {
+    display: none; }

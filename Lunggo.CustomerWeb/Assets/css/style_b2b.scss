@@ -114,4 +114,13 @@
             }
         }
     }
+    &.b2b-order-detail {
+        .flight-reservation .table.table-condensed.table-detailed > tbody > tr > td:first-child:after,
+        .flight-payment .table.table-condensed.table-detailed > tbody > tr > td:first-child:after,
+        .flight-departure .table.table-condensed.table-detailed > tbody > tr > td:first-child:after {
+            content: ':';
+            float: right;
+        }
+        .table.table-condensed.table-detailed > tbody > tr > td:first-child:before {display: none;}
+    }
 }
