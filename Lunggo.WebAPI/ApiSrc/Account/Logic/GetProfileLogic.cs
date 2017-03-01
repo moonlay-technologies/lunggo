@@ -1,14 +1,16 @@
-﻿using System.Net;
+﻿using System.Linq;
+using System.Net;
 using System.Web;
 
 using Lunggo.ApCommon.Identity.Users;
 using Lunggo.WebAPI.ApiSrc.Account.Model;
+using Microsoft.AspNet.Identity;
 
 namespace Lunggo.WebAPI.ApiSrc.Account.Logic
 {
     public static partial class AccountLogic
     {
-        public static GetProfileApiResponse GetProfile()
+        public static GetProfileApiResponse GetProfile(ApplicationUserManager userManager)
         {
             var user = HttpContext.Current.User;
             if (user == null)
@@ -21,6 +23,7 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
             }
             var foundUser = user.Identity.GetUser();
             string name;
+            var userRole = userManager.GetRoles(foundUser.Id).ToList();
             var first = foundUser.FirstName ?? "";
             var last = foundUser.LastName ?? "";
             if (first == last)
@@ -33,6 +36,7 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
                 Name = name,
                 CountryCallingCd = foundUser.CountryCallCd ?? "",
                 PhoneNumber = foundUser.PhoneNumber ?? "",
+                RoleName = userRole,
                 StatusCode = HttpStatusCode.OK
             };
         }

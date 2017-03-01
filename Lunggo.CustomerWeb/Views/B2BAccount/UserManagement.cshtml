@@ -1,0 +1,158 @@
+﻿@{
+    Layout = "/Views/Shared/Desktop/_B2BLayoutDesktop.cshtml";
+    ViewBag.BodyClass = "page-account page-account-profile";
+    ViewBag.PageActiveSection = "profile";
+    ViewBag.Title = "UserManagement";
+
+}
+@{
+
+}
+@section AdditionalCSS {
+    <link href="/Assets/css/jquery-ui.min.css" rel="stylesheet" />
+    <!-- fancybox CSS-->
+    <link href="/Assets/vendor/fancybox/jquery.fancybox.css" rel="stylesheet" />
+}
+@section AdditionalJS{
+    <!-- additional Angular JS-->
+    <script src="/Assets/js/bootstrap.min.js"></script>
+    <!-- veritrans JS -->
+    <script src="https://api.sandbox.veritrans.co.id/v2/assets/js/veritrans.min.js"></script>
+    <!-- fancybox -->
+    <script type="text/javascript" src="/Assets/vendor/fancybox/jquery.fancybox.pack.js"></script>
+
+}
+
+@section PageJS{
+    <script>
+        var langCode = 'en';
+    </script>
+    <!-- angular controller -->
+    <script src="/Assets/travorama20/js/userManagementController.js"></script>
+}
+
+
+<div class="container page-loading" ng-controller="userManagementController" ng-class="{'page-loaded' : pageLoaded}">
+    <div class="row">
+
+        <div class="col-xs-3">
+            @Html.Partial("/Views/Shared/Desktop/_SectionUserMenu.cshtml")
+        </div>
+        <!-- ******************** -->
+
+        <div class="col-xs-9">
+            <section class="account-content">
+
+                <div class="profile-content" ng-show="currentSection == 'profile'">
+                    <header class="content-header">
+                        <h2><b>USER</b> MANAGEMENT</h2>
+                    </header>
+                    <section class="content-body">
+                        <form name="creditCardForm" novalidate>
+                            <h3 class="no-spacing lg-txt">TAMBAH <b>USER</b></h3>
+
+                            <!-- new User start -->
+                            <div>
+                                <div class="form-group">
+                                    <label class="control-label">Email</label>
+                                    <input type="text" value="" class="form-control cc-number" ng-model="userData.email" />
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">Role Member</label>
+                                    <select class="form-control" name="userRole" ng-model="userData.role" ng-init="userData.Role = 'xx'">
+                                        <option ng-repeat="role in roles" ng-selected="role == 'xx'" value="{{role}}">{{role}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <!-- new User end -->
+
+                        </form>
+                        <div class="action">
+                            <a class="btn btn-yellow" ng-click="addUser()">SUBMIT</a>
+                        </div>
+                    </section>
+                </div><!-- .profile-content -->
+                <!-- ***** -->
+
+                <div class="history-content" ng-show="currentSection == 'order'">
+                    <header class="content-header">
+                        <h2><b>DAFTAR</b> USER</h2>
+                    </header>
+                    <section class="content-body">
+                        <div ng-show="loading">
+                            <img src="/Assets/images/load.gif" style="width: 50px; height: 50px; margin-left: 45%; margin-top: 5%">
+                        </div>
+                        <div class="tab-content">
+                            <div class="tab-flight-history tab-pane cleafix active" id="flight-history">
+
+                                <h3 ng-if="users.length == 0">Belum ada user.</h3>
+                                <div ng-if="users.length > 0" ng-repeat="user in users track by $index">
+                                    <div class="order-wrapper">
+                                        <div class="order flight">
+                                            <header>
+                                                <span> Email User : {{user.email}}</span>
+                                            </header>
+                                            <section class="container">
+                                                <div class="row">
+                                                    <div class="col-xs-9">
+                                                        <div class="detail">
+                                                            <p>Nama Depan : <b>{{user.firstName}}</b></p>
+                                                            <p>Nama Belakang     : {{user.lastName}}</p>
+                                                            <p>Role     : {{user.roleName}}</p>
+                                                        </div>
+                                                        <div class="form-group" ng-if="enableEdit">
+                                                            <label class="control-label">Role Member</label>
+                                                            <select class="form-control" name="roleData" ng-model="roleData.role" ng-init="roleData.role = 'xx'">
+                                                                <option ng-repeat="role in roles" ng-selected="role == 'xx'" value="{{role}}">{{role}}</option>
+                                                            </select>
+                                                            <div class="col-xs-12">
+                                                                <div class="action col-xs-6" ng-if="enableEdit">
+                                                                    <a class="btn btn-yellow" ng-click="updateRole(user.email)">Update Role</a>
+                                                                </div>
+                                                                <div class="action col-xs-6" ng-if="enableEdit">
+                                                                    <a class="btn btn-yellow" ng-click="cancelUpdate(user.email)">Cancel</a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xs-3">
+                                                        <div class="action" ng-if="!enableEdit">
+                                                            <a class="btn btn-yellow" ng-click="setUpdateRole()">Update Role</a>
+                                                        </div>
+                                                        <div class="action" ng-if="!enableEdit">
+                                                            <a class="btn btn-yellow" ng-click="deleteUser(user.email)">Delete</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </section>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                </div><!-- .history-content -->
+
+            </section><!-- .account-content -->
+        </div>
+
+    </div>
+    <div class="payment-popup" ng-show="userAdded || userDeleted || roleUpdated">
+        <div class=" overlay-content">
+            <section style="padding-top:60px; padding-left:225px;">
+                <!-- Ini untuk yg gagal -->
+                <div><img src="/Assets/images/travorama-logo-color.png" height="22px" width="80px"></div>
+                <div style="padding-top:20px;" ng-if="userAdded"><span style="color: #15b1e4; font-size:20px"><b>User berhasil ditambahkan</b></span></div>
+                <div style="padding-top:20px;" ng-if="userDeleted"><span style="color: #15b1e4; font-size:20px"><b>User berhasil dihapus dari sistem</b></span></div>
+                <div style="padding-top:20px;" ng-if="roleUpdated"><span style="color: #15b1e4; font-size:20px"><b>Role User berhasil diperbaharui</b></span></div>
+                <div><img src="~/Assets/images/popup/paymentyellowstrip.png" /></div>
+                <div style="padding-top:5px;"><span style="font-size:12px"></span></div>
+            </section>
+            <div align="right" style="padding-right:30px;">
+                <a class="btn popup-btn-yellow book-failed" ng-click="closePopUp()"><b>Tutup</b></a>
+
+            </div>
+        </div>
+    </div>
+</div>

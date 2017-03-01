@@ -18,9 +18,14 @@ namespace Lunggo.BackendWeb.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         [ValidateAntiForgeryToken]
         public ActionResult List(HotelReservationSearch search)
         {
+            if (User.IsInRole("Admin"))
+            {
+                var test = "OK";
+            }
             if (search.RsvDateSelection == HotelReservationSearch.DateSelectionType.MonthYear)
                 return RedirectToAction("List", new { month = search.RsvDateMonth, year = search.RsvDateYear });
             var hotel = HotelService.GetInstance();

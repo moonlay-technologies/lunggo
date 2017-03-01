@@ -231,6 +231,7 @@
     <Compile Include="Controllers\B2BFlightController.cs" />
     <Compile Include="Controllers\B2BHotelController.cs" />
     <Compile Include="Controllers\B2BIndexController.cs" />
+    <Compile Include="Controllers\B2BPaymentController.cs" />
     <Compile Include="Controllers\B2BTemplateController.cs" />
     <Compile Include="Controllers\B2BThankYouController.cs" />
     <Compile Include="Controllers\FlightController.cs" />
@@ -2222,6 +2223,7 @@
     <Content Include="Assets\travorama20\js\singleFlightController.js" />
     <Content Include="Assets\travorama20\js\ThankyouController.js" />
     <Content Include="Assets\travorama20\js\travorama20.js" />
+    <Content Include="Assets\travorama20\js\userManagementController.js" />
     <Content Include="Assets\vendor\datepicker\jquery.datepick.css" />
     <Content Include="Assets\vendor\datepicker\jquery.datepick.min.js" />
     <Content Include="Assets\vendor\datepicker\jquery.plugin.min.js" />
@@ -2793,6 +2795,8 @@
     <Content Include="Views\Shared\Desktop\_B2BSiteHeader.cshtml" />
     <Content Include="Views\Shared\Desktop\_B2BLayoutDesktop.cshtml" />
     <Content Include="Views\B2BAccount\ApproverReservationHistory.cshtml" />
+    <Content Include="Views\B2BPayment\Index.cshtml" />
+    <Content Include="Views\B2BAccount\UserManagement.cshtml" />
     <Content Include="Views\B2BTemplate\Index.cshtml" />
     <Content Include="Views\Shared\B2BTravorama\_B2BHeaderMenu.cshtml" />
     <Content Include="Views\Shared\B2BTravorama\_B2BLayout.cshtml" />

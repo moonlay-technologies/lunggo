@@ -155,6 +155,136 @@ namespace Lunggo.ApCommon.Payment.Service
             return paymentDetails;
         }
 
+
+        public PaymentDetails SubmitB2BPayment(string rsvNo, PaymentMethod method, PaymentSubMethod submethod,
+            PaymentData paymentData, string discountCode, out string token, out DateTime tokenExpiry)
+        {
+            token = null;
+            tokenExpiry = new DateTime();
+            ReservationBase reservation;
+            if (rsvNo.StartsWith("1"))
+                reservation = FlightService.GetInstance().GetReservation(rsvNo);
+            else
+                reservation = HotelService.GetInstance().GetReservation(rsvNo);
+            var paymentDetails = reservation.Payment;
+
+            if (paymentDetails == null)
+                return null;
+
+            paymentDetails.Data = paymentData;
+            paymentDetails.Method = method;
+            paymentDetails.Medium = GetPaymentMedium(method);
+            paymentDetails.FinalPriceIdr = paymentDetails.OriginalPriceIdr;
+            paymentDetails.SubMethod = submethod;
+
+            if (!string.IsNullOrEmpty(discountCode))
+            {
+                var campaign = CampaignService.GetInstance().UseVoucherRequest(rsvNo, discountCode);
+                if (campaign.VoucherStatus != VoucherStatus.Success || campaign.Discount == null)
+                {
+                    paymentDetails.Status = PaymentStatus.Failed;
+                    paymentDetails.FailureReason = FailureReason.VoucherNoLongerEligible;
+                    return paymentDetails;
+                }
+                paymentDetails.FinalPriceIdr = campaign.DiscountedPrice;
+                paymentDetails.Discount = campaign.Discount;
+                paymentDetails.DiscountCode = campaign.VoucherCode;
+                paymentDetails.DiscountNominal = campaign.TotalDiscount;
+            }
+
+            if (paymentDetails.Method == PaymentMethod.CreditCard && paymentDetails.Data.CreditCard.RequestBinDiscount)
+            {
+                var binDiscount = CampaignService.GetInstance()
+                    .CheckBinDiscount(rsvNo, paymentData.CreditCard.TokenId, paymentData.CreditCard.HashedPan,
+                        discountCode);
+                if (binDiscount == null)
+                {
+                    paymentDetails.Status = PaymentStatus.Failed;
+                    paymentDetails.FailureReason = FailureReason.BinPromoNoLongerEligible;
+                    return paymentDetails;
+                }
+                if (binDiscount.ReplaceMargin)
+                {
+                    if (reservation.Type == ProductType.Flight)
+                    {
+                        var rsv = reservation as FlightReservation;
+                        foreach (var itin in rsv.Itineraries)
+                        {
+                            itin.Price.Margin = new UsedMargin
+                            {
+                                Name = "Margin Cancel",
+                                Description = "Margin Cancelled by BIN Promo",
+                                Currency = itin.Price.LocalCurrency
+                            };
+                            itin.Price.Local = itin.Price.OriginalIdr / itin.Price.LocalCurrency.Rate;
+                            itin.Price.Rounding = 0;
+                            itin.Price.FinalIdr = itin.Price.OriginalIdr;
+                            itin.Price.MarginNominal = 0;
+                        }
+                        paymentDetails.OriginalPriceIdr = rsv.Itineraries.Sum(i => i.Price.FinalIdr);
+                        paymentDetails.FinalPriceIdr = paymentDetails.OriginalPriceIdr - binDiscount.Amount;
+                    }
+                }
+                else
+                {
+                    paymentDetails.FinalPriceIdr -= binDiscount.Amount;
+
+                }
+                if (paymentDetails.Discount == null)
+                    paymentDetails.Discount = new UsedDiscount
+                    {
+                        DisplayName = binDiscount.DisplayName,
+                        Name = binDiscount.DisplayName,
+                        Constant = binDiscount.Amount,
+                        Percentage = 0M,
+                        Currency = new Currency("IDR"),
+                        Description = "BIN Promo",
+                        IsFlat = false
+                    };
+                else
+                    paymentDetails.Discount.Constant += binDiscount.Amount;
+                paymentDetails.DiscountNominal += binDiscount.Amount;
+                var contact = reservation.Contact;
+                if (contact == null)
+                    return null;
+                CampaignService.GetInstance().SavePanAndEmailInCache("btn", paymentData.CreditCard.HashedPan, contact.Email);
+            }
+
+            var transferFee = GetTransferFeeFromCache(rsvNo);
+            if (transferFee == 0M)
+                return paymentDetails;
+
+            paymentDetails.UniqueCode = transferFee;
+            paymentDetails.FinalPriceIdr += paymentDetails.UniqueCode;
+
+            paymentDetails.LocalFinalPrice = paymentDetails.FinalPriceIdr * paymentDetails.LocalCurrency.Rate;
+            var transactionDetails = ConstructTransactionDetails(rsvNo, paymentDetails);
+            ProcessPayment(paymentDetails, transactionDetails, method);
+            if (paymentDetails.Status != PaymentStatus.Failed && paymentDetails.Status != PaymentStatus.Denied)
+            {
+                if (reservation.Type == ProductType.Flight)
+                {
+                    var rsv = reservation as FlightReservation;
+                    rsv.Itineraries.ForEach(i => i.Price.UpdateToDb());
+                }
+                UpdatePaymentToDb(rsvNo, paymentDetails);
+            }
+            if (method == PaymentMethod.BankTransfer || method == PaymentMethod.VirtualAccount)
+            {
+                if (reservation.Type == ProductType.Flight)
+                {
+                    FlightService.GetInstance().SendTransferInstructionToCustomer(rsvNo);
+                }
+                else
+                {
+                    HotelService.GetInstance().SendTransferInstructionToCustomer(rsvNo);
+                }
+            }
+            return paymentDetails;
+        }
+
+
+
         public void UpdateBookerPaymentData(string rsvNo)
         {
             ReservationBase reservation;
@@ -254,28 +384,28 @@ namespace Lunggo.ApCommon.Payment.Service
 
         public void SaveCreditCard(string email, string maskedCardNumber, string cardHolderName, string token, DateTime tokenExpiry)
         {
-            using (var conn = DbService.GetInstance().GetOpenConnection())
-            {
-                var savedCard = GetSavedCreditCardQuery.GetInstance()
-                    .Execute(conn, new { Email = email, MaskedCardNumber = maskedCardNumber }).SingleOrDefault();
-                if (savedCard == null)
-                    SavedCreditCardTableRepo.GetInstance().Insert(conn, new SavedCreditCardTableRecord
-                    {
-                        Email = email,
-                        MaskedCardNumber = maskedCardNumber,
-                        CardHolderName = cardHolderName,
-                        Token = token,
-                        TokenExpiry = tokenExpiry
-                    });
-                else
-                    SavedCreditCardTableRepo.GetInstance().Update(conn, new SavedCreditCardTableRecord
-                    {
-                        Email = email,
-                        MaskedCardNumber = maskedCardNumber,
-                        Token = token,
-                        TokenExpiry = tokenExpiry
-                    });
-            }
+            //using (var conn = DbService.GetInstance().GetOpenConnection())
+            //{
+            //    var savedCard = GetSavedCreditCardQuery.GetInstance()
+            //        .Execute(conn, new { Email = email, MaskedCardNumber = maskedCardNumber }).SingleOrDefault();
+            //    if (savedCard == null)
+            //        SavedCreditCardTableRepo.GetInstance().Insert(conn, new SavedCreditCardTableRecord
+            //        {
+            //            Email = email,
+            //            MaskedCardNumber = maskedCardNumber,
+            //            CardHolderName = cardHolderName,
+            //            Token = token,
+            //            TokenExpiry = tokenExpiry
+            //        });
+            //    else
+            //        SavedCreditCardTableRepo.GetInstance().Update(conn, new SavedCreditCardTableRecord
+            //        {
+            //            Email = email,
+            //            MaskedCardNumber = maskedCardNumber,
+            //            Token = token,
+            //            TokenExpiry = tokenExpiry
+            //        });
+            //}
         }
 
         private static PaymentDetails SubmitPayment(PaymentDetails payment, TransactionDetails transactionDetails, PaymentMethod method)
@@ -339,6 +469,61 @@ namespace Lunggo.ApCommon.Payment.Service
                 OrderTime = DateTime.UtcNow,
                 Amount = (long)payment.FinalPriceIdr
             };
+        }
+
+        public decimal GenerateUniqueCode(string rsvNo, PaymentDetails payment)
+        {
+            decimal uniqueCode, finalPrice;
+            finalPrice = payment.OriginalPriceIdr;
+            if (finalPrice <= 999 && finalPrice >= 0)
+            {
+                uniqueCode = -finalPrice;
+            }
+            else
+            {
+                bool isExist;
+                decimal candidatePrice;
+                var rnd = new Random();
+                uniqueCode = GetTransferFeeFromCache(rsvNo);
+                if (uniqueCode != 0M)
+                {
+                    candidatePrice = finalPrice + uniqueCode;
+                    var rsvNoHavingTransferValue = GetRsvNoHavingTransferValue(candidatePrice);
+                    isExist = rsvNoHavingTransferValue != null && rsvNoHavingTransferValue != rsvNo;
+                    if (isExist)
+                    {
+                        var cap = -1;
+                        do
+                        {
+                            if (cap < 999)
+                                cap += 50;
+                            uniqueCode = -rnd.Next(1, cap);
+                            candidatePrice = finalPrice + uniqueCode;
+                            rsvNoHavingTransferValue = GetRsvNoHavingTransferValue(candidatePrice);
+                            isExist = rsvNoHavingTransferValue != null && rsvNoHavingTransferValue != rsvNo;
+                        } while (isExist);
+                    }
+                    SaveTransferValue(candidatePrice, rsvNo);
+
+                    SaveTransferFeeinCache(rsvNo, uniqueCode);
+                }
+                else
+                {
+                    var cap = -1;
+                    do
+                    {
+                        if (cap < 999)
+                            cap += 50;
+                        uniqueCode = -rnd.Next(1, cap);
+                        candidatePrice = finalPrice + uniqueCode;
+                        var rsvNoHavingTransferValue = GetRsvNoHavingTransferValue(candidatePrice);
+                        isExist = rsvNoHavingTransferValue != null && rsvNoHavingTransferValue != rsvNo;
+                    } while (isExist);
+                    SaveTransferValue(candidatePrice, rsvNo);
+                    SaveTransferFeeinCache(rsvNo, uniqueCode);
+                }
+            }
+            return uniqueCode;
         }
 
         public decimal GetUniqueCode(string rsvNo, string bin, string discountCode)

@@ -846,189 +846,392 @@ app.controller('B2BHotelSearchFormController', ['$scope', '$log', '$http', '$loc
     });
     }]);
 
-app.controller('b2bAuthController', [
-    '$scope', '$log', '$http', '$location', '$resource', '$timeout', function ($scope, $log, $http, $location, $resource, $timeout){
-        $scope.pageLoaded = true;
-        $scope.trial = 0;
-        $scope.errorMessage = '';
-        
-        $scope.form = {
-            email: '',
-            password: '',
-            submitting: false,
-            isLogin: false,
-            submitted: false,
-            success: false
-        };
-        $scope.loginFailed = false;
-        $scope.form.submit = function () {
+app.controller('B2BPaymentMgmtFormController', ['$scope', '$log', '$http', function ($scope, $log, $http) {
+
+    $scope.creditCards = [];
+    $scope.ccType = function(digit) {
+        if (digit.slice(0,1) == '4') {
+            return 'Visa';
+        }else if (digit.slice(0,1) == '5') {
+            return 'MasterCard';
+        } else if (digit.slice(0, 2) == '34' || digit.slice(0, 2) == '37') {
+            return 'American Express';
+        }else {
+            return '';
+        }
+    }
+
+    $scope.getSavedCc = function() {
+        $http({
+            method: 'GET',
+            url: GetCreditCardConfig.Url,
+            headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') },
+            async: false
+        }).then(function (returnData) {
+            if (returnData != null) {
+                if (returnData.data != null) {
+                    $scope.creditCards = returnData.data.creditCards;
+                    if ($scope.creditCards != null && $scope.creditCards.length > 0) {
+                        for (var i = 0; i < $scope.creditCards.length; i++) {
+                            $scope.creditCards[i].cardExpiry = new Date($scope.creditCards[i].cardExpiry);
+                            $scope.creditCards[i].type = $scope.ccType($scope.creditCards[i].maskedCardNumber);
+                        }
+                    }
+                } else {
+                    //show blank
+                }
+            } else {
+                //show blank
+            }
+
+        }).catch(function () {
+        });
+    }
+
+    $scope.getSavedCc();
+
+    $('body .remove-payment').hide();
+    var cloneIndex = $(".payment-item").length;
+
+    function clone() {
+        cloneIndex = $(".payment-item").length;
+        cloneIndex++;
+        $(this).closest('.payment-body').find('#payment-item-1').clone(false, false)
+            .insertAfter($('[id^="payment-item-1"]').last())
+            .attr('id', "payment-item-" + cloneIndex)
+            .attr('count', cloneIndex).addClass("newCc");
+        if (cloneIndex > 1) {
+            $(this).closest('.payment-body').find('#payment-item-' + cloneIndex + ' .remove-payment').show();
+            $(this).closest('.payment-body').find('#payment-item-' + cloneIndex + ' .pi-status').find('.current-status').hide();
+            //$(this).closest('.payment-body').find('#payment-item-' + cloneIndex + ' .pi-status').append('<a class="set-status">' + 'Set As Primary' + '</a>');
+        }
+
+        $('.newCc .btn-edit-payment').click(function () {
+            $scope.currentEdit.cc = '';
+            $scope.currentEdit.cvc = '';
+            $scope.currentEdit.cardHolderName = '';
+            $scope.currentEdit.month = '';
+            $scope.currentEdit.year = '';
+
+            var size = $('input[name=slideup_toggler]:checked').val();
+            var modalElem = $('.modal-edit-payment.form-add-cc');
+            if (size == "mini") {
+                $('.modal-edit-payment.form-add-cc').modal('show');
+            } else {
+                $('.modal-edit-payment.form-add-cc').modal('show');
+                if (size == "default") {
+                    modalElem.children('.modal-dialog').removeClass('modal-lg');
+                } else if (size == "full") {
+                    modalElem.children('.modal-dialog').addClass('modal-lg');
+                }
+            }
+        });
+
+        $('.saveNewCc').click(function() {
+            $scope.addCreditCard.getPreToken();
+        });
+    }
+
+    $scope.validation = function () {
+        if (!$scope.checkNumber($scope.currentEdit.cc) || !$scope.checkName($scope.currentEdit.cardHolderName)
+                || !$scope.checkDate(parseInt($scope.currentEdit.month), parseInt($scope.currentEdit.year))) {
+            if (!$scope.checkDate($scope.currentEdit.month, $scope.currentEdit.year)) {
+                alert('error');
+            }
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    $scope.checkName = function (name) {
+        var re = /^[a-zA-Z ]+$/;
+        if (name == null || name.match(re)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    $scope.checkNumber = function (number) {
+        var re = /^[0-9]+$/;
+        if (number == "") {
+            return true;
+        }
+
+        if (number == null || number.match(re)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    $scope.checkDate = function (month, year) {
+        if (month == '0' || year == 'Tahun') {
+            $scope.dateOver = true;
+            return false;
+        }
+
+        var now = new Date();
+        var monthNow = now.getMonth();
+        var yearNow = now.getFullYear();
+
+        if (year > yearNow) {
+            return true;
+        }
+        else if (year == yearNow) {
+            if (month < monthNow + 1) {
+                $scope.dateOver = true;
+                return false;
+            } else {
+                return true;
+            }
+        } else {
+            $scope.dateOver = true;
+            return false;
+        }
+    }
+    $scope.trial = 0;
+    $scope.notifCardLength = false;
+    $scope.addCreditCard = {
+        inputValid: true,
+        ccdata: false,
+        getPreToken: function () {
+            if (!$scope.validation()) {
+                $scope.addCreditCard.inputValid = false;
+            } else {
+                if ($scope.currentEdit.cc == null || $scope.currentEdit.cc.length < 12 || $scope.currentEdit.cc.length > 19) {
+                    $scope.notifCardLength = true;
+                } else {
+                    $scope.notifCardLength = false;
+                    Veritrans.url = VeritransTokenConfig.Url;
+                    Veritrans.client_key = VeritransTokenConfig.ClientKey;
+                    var card = function () {
+                        var gross_amount = 15000;
+                        if ($scope.currentEdit.TwoClickToken == 'false') {
+                            $scope.addCreditCard.ccdata = true;
+                            return {
+                                'card_number': $scope.currentEdit.cc,
+                                'card_exp_month': $scope.currentEdit.month,
+                                'card_exp_year': $scope.currentEdit.year,
+                                'card_cvv': $scope.currentEdit.cvc,
+                                'secure': true,
+                                'bank': 'mandiri',
+                                'gross_amount': gross_amount
+                            }
+                        } else {
+                            return {
+                                'card_cvv': $scope.currentEdit.cvc,
+                                'token_id': $scope.currentEdit.TwoClickToken,
+                                'two_click': true,
+                                'secure': true,
+                                'bank': 'mandiri',
+                                'gross_amount': gross_amount
+                            }
+                        }
+                    };
+
+                    // run the veritrans function to check credit card
+                    Veritrans.token(card, callback);
+
+                    function callback(response) {
+                        if (response.redirect_url) {
+                            // 3Dsecure transaction. Open 3Dsecure dialog
+                            $log.debug('Open Dialog 3Dsecure');
+                            openDialog(response.redirect_url);
+
+                        } else if (response.status_code == '200') {
+                            // success 3d secure or success normal
+                            //close 3d secure dialog if any
+                            closeDialog();
+                            // store token data in input #token_id and then submit form to merchant server
+                            $("#vt-token").val(response.token_id);
+                            $scope.currentEdit.Token = response.token_id;
+
+                            $scope.addCreditCard.addCC();
+
+                        } else {
+                            // failed request token
+                            //close 3d secure dialog if any
+                            closeDialog();
+                            //$('#submit-button').removeAttr('disabled');
+                            // Show status message.
+                            //$('#message').text(response.status_message);
+                            $log.debug(JSON.stringify(response));
+                        }
+                    }
+
+                    // Open 3DSecure dialog box
+                    function openDialog(url) {
+                        $.fancybox.open({
+                            href: url,
+                            type: 'iframe',
+                            autoSize: false,
+                            width: 400,
+                            height: 420,
+                            closeBtn: false,
+                            modal: true
+                        });
+                    }
+
+                    // Close 3DSecure dialog box
+                    function closeDialog() {
+                        $.fancybox.close();
+                    }
+                }
+            }
+
+        },
+        addCC: function () {
             if ($scope.trial > 3) {
                 $scope.trial = 0;
             }
-            $scope.loginFailed = false;
-            $scope.errorMessage = '';
-            $scope.form.submitting = true;
+            $log.debug('submitting form');
+            $scope.addCreditCard.updating = true;
             var authAccess = getAuthAccess();
-            if (authAccess == 2 || authAccess == 1) {
+            if (authAccess == 2) {
+                //authorized
                 $http({
+                    url: AddCreditCardConfig.Url,
                     method: 'POST',
-                    url: LoginConfig.Url,
                     data: {
-                        userName: $scope.form.email,
-                        password: $scope.form.password,
-                        clientId: 'V2toa2VrOXFSWFZOUXpSM1QycEZlRTlIVlhwYWFrVjVUVVJrYlZsVVp6Vk5WRlp0VGtSR2FrOUhSWGhhYWsweFRucGpNRTE2U1RCT2VtTjNXbTFKZDFwcVFUMD0=',
-                        clientSecret: 'V2tkS2FFOUVhek5QUjFsNFRucFpNVmt5UlRST2JVWnNXVmRKTTA1dFVtaFBSMDVyV1dwQk5WcEhTWGxPZWtwcVRVUkpNVTFCUFQwPQ=='
+                        token: $scope.currentEdit.Token,
+                        cardHolderName: $scope.currentEdit.cardHolderName,
+                        cardExpirymonth: parseInt($scope.currentEdit.month),
+                        cardExpiryYear: parseInt($scope.currentEdit.year)
                     },
-                    headers: {
-                        'Authorization': 'Bearer ' + getCookie('accesstoken')
-                    }
+                    headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') }
                 }).then(function (returnData) {
-                    $scope.form.submitting = false;
-                    $scope.form.submitted = true;
-                    $scope.loginFailed = false;
+                    //$log.debug(returnData);
                     if (returnData.data.status == '200') {
-                        setCookie("accesstoken", returnData.data.accessToken, returnData.data.expTime);
-                        setCookie("refreshtoken", returnData.data.refreshToken, returnData.data.expTime);
-                        setCookie("authkey", returnData.data.accessToken, returnData.data.expTime);
-                        $scope.form.success = true;
-                        window.location.href = "/id/B2BTemplate/index";
+                        $log.debug('Success Adding new Credit Card');
+                        $scope.addCreditCard.updating = false;
+                        $scope.addCreditCard.updated = true;
                     }
                     else {
-                        $scope.loginFailed = true;
-                        if (returnData.data.error == 'ERALOG01') {
-                            $scope.errorMessage = 'RefreshNeeded';
-                            $scope.errorMessage = 'Login Gagal';
-                        }
-                        else if (returnData.data.error == 'ERALOG02') {
-                            $scope.errorMessage = 'E-mail/Password Tidak Tepat';
-                        }
-                        else if (returnData.data.error == 'ERALOG03') {
-                            $scope.errorMessage = 'E-mail sudah terdaftar tapi belum terkonfirmasi';
-                        }
-                        else if (returnData.data.error == 'ERALOG04') {
-                            $scope.errorMessage = 'Failed';
-                            $scope.errorMessage = 'Login Gagal';
-                        }
-                        else if (returnData.data.error == 'ERALOG05') {
-                            $scope.errorMessage = 'E-mail Anda belum terdaftar';
-
-                        }
-                        else {
-                            $scope.errorMessage = 'Failed';
-                            $scope.errorMessage = 'Login Gagal';
-                        }
-                        $log.debug('Error : ' + returnData.data.error);
+                        $log.debug(returnData.data.error);
+                        $log.debug(returnData);
+                        $scope.addCreditCard.edit = true;
+                        $scope.addCreditCard.updating = false;
                     }
                 }).catch(function (returnData) {
                     $scope.trial++;
                     if (refreshAuthAccess() && $scope.trial < 4) //refresh cookie
                     {
-                        $scope.form.submit();
+                        $scope.addCreditCard(name);
                     }
                     else {
-                        $scope.overlay = true;
-                        $scope.errorMessage = 'Failed';
-                        $scope.errorMessage = 'Login Gagal';
-                        $log.debug('Failed to Login');
-                        $scope.form.submitting = false;
-                        $scope.form.submitted = false;
-                        $scope.form.isLogin = false;
+                        $log.debug('Failed requesting change profile');
+                        $scope.addCreditCard.edit = true;
+                        $scope.addCreditCard.updating = false;
                     }
                 });
             }
-            else {
-                $scope.form.submitting = false;
-                $scope.form.submitted = false;
-                $scope.form.isLogin = false;
+            else { //if not authorized
+                $scope.addCreditCard.edit = true;
+                $scope.addCreditCard.updating = false;
             }
-
         }
 
     }
-]);// auth controller end
 
-// Travorama reset controller
-app.controller('b2bForgotPasswordController', [
-    '$http', '$scope', '$log', function ($http, $scope, $log) {
+    $scope.editNewCc = false;
+    function remove() {
+        $(this).parents('.payment-item').remove();
+    }
 
-        $scope.pageLoaded = true;
+    $('body #add-payment').on('click', clone);
+    $('body').on('click', '.remove-payment', remove);
+
+    //$('.btn-edit-payment').click(function () {
+    //    var size = $('input[name=slideup_toggler]:checked').val();
+    //    var modalElem = $('.modal-edit-payment');
+    //    if (size == "mini") {
+    //        $('.modal-edit-payment').modal('show');
+    //    } else {
+    //        $('.modal-edit-payment').modal('show');
+    //        if (size == "default") {
+    //            modalElem.children('.modal-dialog').removeClass('modal-lg');
+    //        } else if (size == "full") {
+    //            modalElem.children('.modal-dialog').addClass('modal-lg');
+    //        }
+    //    }
+    //});
+
+    $scope.currentEdit = {
+        cc: '',
+        type: '',
+        month: '',
+        year: '',
+        cardHolderName: '',
+        address: '',
+        cvc: '',
+        TwoClickToken: false,
+        Token: ''
+    };
+
+    $scope.showEditForm = function (cc) {
+        var size = $('input[name=slideup_toggler]:checked').val();
+        var modalElem = $('.modal-edit-payment');
+        if (size == "mini") {
+            $('.modal-edit-payment').modal('show');
+        } else {
+            $('.modal-edit-payment').modal('show');
+            if (size == "default") {
+                modalElem.children('.modal-dialog').removeClass('modal-lg');
+            } else if (size == "full") {
+                modalElem.children('.modal-dialog').addClass('modal-lg');
+            }
+        }
+
+        if (cc != null) {
+            $scope.currentEdit.cc = cc.maskedCardNumber;
+            $scope.currentEdit.type = $scope.ccType(cc.maskedCardNumber);
+            $scope.currentEdit.month = cc.cardExpiry.getMonth() + 1;
+            $scope.currentEdit.year = cc.cardExpiry.getFullYear();
+            $scope.currentEdit.cardHolderName = cc.cardHolderName;
+        }     
+    }
+    
+    $scope.successSetPrimary = false;
+    $scope.message = '';
+    $scope.trial = 0;
+    $scope.setPrimary = function (cc) {
         $scope.trial = 0;
-        $scope.form = {
-            submitted: false,
-            submitting: false,
-            email: '',
-            found: false,
-            registered: false,
-            emailConfirmed: false
-        };
-
-        $('.email').click(function () {
-            $(this).select();
-        });
-
-        $scope.form.submit = function () {
-            $('.buttonSubmit').attr("disabled", true);
-            if ($scope.trial > 3) {
-                $scope.trial = 0;
-            }
-            $scope.form.submitting = true;
-            $log.debug('submitting form');
-            //Check Authorization
-            var authAccess = getAuthAccess();
-            if (authAccess == 1 || authAccess == 2) {
-                $scope.getFlightHeader = 'Bearer ' + getCookie('accesstoken');
-                // submit form to URL
-                $http({
-                    url: ForgotPasswordConfig.Url,
-                    method: 'POST',
-                    data: {
-                        userName: $scope.form.email
-                    },
-                    headers: { 'Authorization': $scope.getFlightHeader }
-                }).then(function (returnData) {
-                    $('.buttonSubmit').attr("disabled", false);
-                    $scope.form.submitting = false;
-                    $scope.form.submitted = true;
-                    if (returnData.data.status == '200') {
-                        $scope.form.found = true;
-                        $scope.form.emailConfirmed = true;
-                        $('body .reset-password').hide();
-                    }
-                    else {
-                        switch (returnData.data.error) {
-                            case "ERAFPW01":
-                                $scope.form.found = false;
-                                break;
-                            case "ERAFPW02":
-                                $scope.form.found = false;
-                                break;
-                            case "ERAFPW03":
-                                $scope.form.found = true;
-                                $scope.form.emailConfirmed = false;
-                                break;
-                            case "ERRGEN99":
-                                $scope.form.found = false;
-                                break;
-                        }
-                    }
-
-                }).catch(function () {
-                    $('.buttonSubmit').attr("disabled", false);
-                    $scope.trial++;
-                    if (refreshAuthAccess() && $scope.trial < 4) //refresh cookie
-                    {
-                        $scope.form.submit();
-                    }
-                    else {
-                        $log.debug('Failed requesting reset password');
-                        $scope.form.submitting = false;
-                    }
-                });
-            }
-            else {
-                $('.buttonSubmit').attr("disabled", false);
-                $scope.form.submitting = false;
-            }
+        var authAccess = getAuthAccess();
+        if (authAccess == 2) {
+            $http({
+                url: SetPrimaryCardConfig.Url,
+                method: 'POST',
+                data: {
+                    maskedCardNumber: cc
+                },
+                headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') }
+            }).then(function (returnData) {
+                if (returnData.data.status == 200) {
+                    $scope.message = 'Setting Primary Card is Successful';
+                    $scope.successSetPrimary = true;
+                }
+                else {
+                    $scope.successSetPrimary = false;
+                    $log.debug(returnData.data.error);
+                }
+            }).catch(function (returnData) {
+                $scope.trial++;
+                if (refreshAuthAccess() && $scope.trial < 4) //refresh cookie
+                {
+                    $scope.setPrimary(cc);
+                }
+                else {
+                    $scope.successSetPrimary = false;
+                    $log.debug('Failed Update Reservation');
+                    $log.debug(returnData);
+                    $scope.rsvUpdated = false;
+                }
+            });
         }
+
+            
     }
-]);// reset controller end
+        
+}]);

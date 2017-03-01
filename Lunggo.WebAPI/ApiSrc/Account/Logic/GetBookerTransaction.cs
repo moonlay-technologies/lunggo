@@ -16,14 +16,14 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
     //GetBookerTransaction
     public static partial class AccountLogic
     {
-        public static TransactionHistoryApiResponse GetBookerTransaction(string filter, string sort, int? page, int? itemsPerPage, string roleId)
+        public static TransactionHistoryApiResponse GetBookerTransaction(string filter, string sort, int? page, int? itemsPerPage, List<string> roles)
         {
             var identity = HttpContext.Current.User.Identity as ClaimsIdentity ?? new ClaimsIdentity();
             var flight = FlightService.GetInstance();
             var hotel = HotelService.GetInstance();
             var rsvs = new List<FlightReservationForDisplay>();
             var rsvsHotel = new List<HotelReservationForDisplay>();
-            if (roleId.Equals("Approver") || roleId.Equals("Admin"))
+            if (roles.Contains("Approver") || roles.Contains("Admin"))
             {
                 rsvs = identity.IsUserAuthorized()
                     ? flight.GetOverviewReservationsByApprover(filter, sort, page, itemsPerPage)
@@ -52,7 +52,7 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
             {
                 FlightReservations = rsvs,
                 HotelReservations = rsvsHotel,
-                Signature = roleId.Equals("Approver") ? signature.ToString() : null,
+                Signature = roles.Contains("Approver") ? signature.ToString() : null,
                 StatusCode = HttpStatusCode.OK
             };
         }

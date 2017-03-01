@@ -123,6 +123,22 @@ var B2BRegisterConfig = {
     Url: 'https://api.local.travorama.com/v1/b2bregister'
 };
 
+var GetUserConfig = {
+    Url: 'https://api.local.travorama.com/v1/getuser'
+};
+
+var AddUserConfig = {
+    Url: 'https://api.local.travorama.com/v1/adduser'
+};
+
+var UpdateRoleConfig = {
+    Url: 'https://api.local.travorama.com/v1/updaterole'
+};
+
+var DeleteUserConfig = {
+    Url: 'https://api.local.travorama.com/v1/deleteuser'
+};
+
 var ResetPasswordConfig = {
     Url: 'https://api.local.travorama.com/v1/resetpassword'
 };
@@ -206,6 +222,22 @@ var HotelDetailsConfig = {
 
 var HotelSelectConfig = {
     Url: 'https://api.local.travorama.com/v1/hotel/select'
+};
+
+var GetCreditCardConfig = {
+    Url: 'https://api.local.travorama.com/v1/payment/getcreditcard'
+};
+
+var AddCreditCardConfig = {
+    Url: 'https://api.local.travorama.com/v1/payment/addcreditcard'
+};
+
+var DeleteCreditCardConfig = {
+    Url: 'https://api.local.travorama.com/v1/payment/deletecard'
+};
+
+var SetPrimaryCardConfig = {
+    Url: 'https://api.local.travorama.com/v1/payment/setprimarycard'
 };
 
 var HotelBookConfig = {

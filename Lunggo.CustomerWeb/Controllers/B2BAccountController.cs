@@ -825,6 +825,13 @@ namespace Lunggo.CustomerWeb.Controllers
             return Redirect("https://lunggostorageqa.blob.core.windows.net/eticket/" + rsvNo + ".pdf");
         }
 
+        [HttpGet]
+        [AllowAnonymous]
+        public ActionResult UserManagement()
+        {
+            return View();
+        }
+
         #region Helpers
 
         public string GenerateId(string key)
