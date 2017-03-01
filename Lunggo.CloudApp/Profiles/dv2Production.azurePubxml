@@ -1,23 +1,23 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <AzureCredentials>{"ServiceManagementEndpoint":"https:\/\/management.core.windows.net\/","ResourceManagementEndpoint":"https:\/\/management.azure.com\/","SubscriptionId":"e5ab7f6d-8dd6-4372-9213-b917b32d5933"}</AzureCredentials>
+    <AzureCredentials>{"ServiceManagementEndpoint":"https:\/\/management.core.windows.net\/","ResourceManagementEndpoint":"https:\/\/management.azure.com\/","SubscriptionId":"7080681c-a5d8-4155-bdd8-04f42677931b"}</AzureCredentials>
     <AzureDeleteDeploymentOnFailure>False</AzureDeleteDeploymentOnFailure>
-    <AzureDeploymentLabel>local</AzureDeploymentLabel>
+    <AzureDeploymentLabel>Release</AzureDeploymentLabel>
     <AzureDeploymentReplacementMethod>AutomaticUpgrade</AzureDeploymentReplacementMethod>
     <AzureSlot>Production</AzureSlot>
     <AzureEnableRemoteDesktop>True</AzureEnableRemoteDesktop>
     <AzureEnableWebDeploy>False</AzureEnableWebDeploy>
     <AzureFallbackToDeleteAndRecreateIfUpgradeFails>True</AzureFallbackToDeleteAndRecreateIfUpgradeFails>
-    <AzureHostedServiceLabel>travorama-development</AzureHostedServiceLabel>
-    <AzureHostedServiceName>travorama-development</AzureHostedServiceName>
+    <AzureHostedServiceLabel>travorama-prod</AzureHostedServiceLabel>
+    <AzureHostedServiceName>travorama-prod</AzureHostedServiceName>
     <AzureEnableIntelliTrace>False</AzureEnableIntelliTrace>
     <AzureEnableProfiling>False</AzureEnableProfiling>
     <AzureServiceConfiguration>Cloud</AzureServiceConfiguration>
     <AzureSolutionConfiguration>Release</AzureSolutionConfiguration>
-    <AzureStorageAccountLabel>travoramalocal</AzureStorageAccountLabel>
-    <AzureStorageAccountName>travoramalocal</AzureStorageAccountName>
+    <AzureStorageAccountLabel>travoramacloudstorage</AzureStorageAccountLabel>
+    <AzureStorageAccountName>travoramacloudstorage</AzureStorageAccountName>
     <AzureAppendTimestampToDeploymentLabel>True</AzureAppendTimestampToDeploymentLabel>
-    <AzureHostedServiceResourceGroup>travorama_development_rg</AzureHostedServiceResourceGroup>
+    <AzureHostedServiceResourceGroup>travorama_prod_rg</AzureHostedServiceResourceGroup>
   </PropertyGroup>
 </Project>

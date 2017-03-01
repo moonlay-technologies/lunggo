@@ -87,6 +87,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                 var prevCaptchaId = "";
                 currentDeposit = "";
                 var sw = Stopwatch.StartNew();
+                var retryCounter = 0;
 
                 while (msgLogin == "Your login name is inuse" || msgLogin == "There was an error logging you in")
                 {
@@ -101,6 +102,9 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                         string captchaId;
                         successLogin = LoginInternal(client, userName, out userId, ref msgLogin, out errorMessage, out captchaId, prevCaptchaId, out currentDeposit);
                         prevCaptchaId = captchaId;
+                        retryCounter++;
+                        if (retryCounter > 10)
+                            LogService.GetInstance().Post("[Lion Air] Login Retry #" + retryCounter + ": User Name = " + userName + ", Login Message = " + msgLogin);
                         Thread.Sleep(1000);
                     } while (!successLogin && sw.Elapsed.TotalSeconds <= timeoutSeconds*3/5 && (msgLogin != "Your login name is inuse"
                         && msgLogin != "There was an error logging you in"));
@@ -253,52 +257,53 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
             }
 
             /* USING DEATHBYCAPTCHA */
-            private static string ReadCaptcha(byte[] captchaImg, string msgLogin, out string captchaId, string prevCaptchaId = null)
-            {
-                try
-                {
-                    var username = ConfigManager.GetInstance().GetConfigValue("deathbycaptcha", "userName");
-                    var password = ConfigManager.GetInstance().GetConfigValue("deathbycaptcha", "password");
-                    var client = (Client)new SocketClient(username, password);
-
-                    //Report Incorrect
-                    if (msgLogin == "Invalid Captcha" && prevCaptchaId != null)
-                        client.Report(int.Parse(prevCaptchaId));
-
-                    var captcha = client.Decode(captchaImg, 20);
-                    if (captcha != null)
-                    {
-                        captchaId = captcha.Id.ToString(CultureInfo.InvariantCulture);
-                        return captcha.Text;
-                    }
-                    else
-                    {
-                        captchaId = null;
-                        return "";
-                    }
-                    
-                }
-                catch
-                {
-                    captchaId = null;
-                    return "";
-                }
-            }
-
-            /* USING CLOUD APP */
             //private static string ReadCaptcha(byte[] captchaImg, string msgLogin, out string captchaId, string prevCaptchaId = null)
             //{
-            //    var cloudAppUrl = ConfigManager.GetInstance().GetConfigValue("general", "cloudAppUrl");
-            //    var client = new RestClient(cloudAppUrl);
-            //    var captchaRq = new RestRequest("/api/captcha/lionairbreak", Method.POST);
-            //    captchaRq.AddHeader("Host", "localhost:14938");
-            //    captchaRq.AddHeader("Accept-Encoding", "gzip, deflate, sdch");
-            //    captchaRq.AddHeader("Content-Type", "multipart/form-data");
-            //    captchaRq.AddHeader("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,i  mage/webp,*/*;q=0.8");
-            //    captchaRq.AddFileBytes("captcha", captchaImg, "captcha");
-            //    var captchaRs = client.Execute(captchaRq);
-            //    return captchaRs.Content.Trim('"');
+            //    try
+            //    {
+            //        var username = ConfigManager.GetInstance().GetConfigValue("deathbycaptcha", "userName");
+            //        var password = ConfigManager.GetInstance().GetConfigValue("deathbycaptcha", "password");
+            //        var client = (Client)new SocketClient(username, password);
+
+            //        //Report Incorrect
+            //        if (msgLogin == "Invalid Captcha" && prevCaptchaId != null)
+            //            client.Report(int.Parse(prevCaptchaId));
+
+            //        var captcha = client.Decode(captchaImg, 20);
+            //        if (captcha != null)
+            //        {
+            //            captchaId = captcha.Id.ToString(CultureInfo.InvariantCulture);
+            //            return captcha.Text;
+            //        }
+            //        else
+            //        {
+            //            captchaId = null;
+            //            return "";
+            //        }
+                    
+            //    }
+            //    catch
+            //    {
+            //        captchaId = null;
+            //        return "";
+            //    }
             //}
+
+            /* USING CLOUD APP */
+            private static string ReadCaptcha(byte[] captchaImg, string msgLogin, out string captchaId, string prevCaptchaId = null)
+            {
+                var cloudAppUrl = ConfigManager.GetInstance().GetConfigValue("general", "cloudAppUrl");
+                var client = new RestClient(cloudAppUrl);
+                var captchaRq = new RestRequest("/api/captcha/lionairbreak", Method.POST);
+                captchaRq.AddHeader("Host", "localhost:14938");
+                captchaRq.AddHeader("Accept-Encoding", "gzip, deflate, sdch");
+                captchaRq.AddHeader("Content-Type", "multipart/form-data");
+                captchaRq.AddHeader("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,i  mage/webp,*/*;q=0.8");
+                captchaRq.AddFileBytes("captcha", captchaImg, "captcha");
+                var captchaRs = client.Execute(captchaRq);
+                captchaId = null;
+                return captchaRs.Content.Trim('"');
+            }
         }
     }
 }

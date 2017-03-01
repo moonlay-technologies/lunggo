@@ -319,7 +319,6 @@
     <Content Include="Config\i18n_message.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Config\JsConfig - Copy.js" />
     <Content Include="Config\JsConfig.js" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
@@ -414,6 +413,7 @@
     <None Include="Properties\PublishProfiles\travorama-prod-backend %285%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-prod-backend %286%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-prod-backend %287%29.pubxml" />
+    <None Include="Properties\PublishProfiles\travorama-prod-backend - Web Deploy %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-prod-backend - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-prod-backend.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-qa-tap.pubxml" />
