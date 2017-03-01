@@ -8,8 +8,11 @@ using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Service;
 using Lunggo.ApCommon.Payment.Service;
+using Lunggo.CustomerWeb.Filter;
 using Lunggo.CustomerWeb.Models;
+using Lunggo.Framework.Config;
 using Lunggo.Framework.Filter;
+using RestSharp;
 
 namespace Lunggo.CustomerWeb.Controllers
 {
@@ -19,10 +22,14 @@ namespace Lunggo.CustomerWeb.Controllers
         [Route("id/tiket-pesawat/cari/{searchParam}/{searchId}")]
         public ActionResult Search(string searchId, string searchParam)
         {
+            if(!IsB2BAuthorized())
+                return RedirectToAction("Index", "Index");
+            ViewBag.Domain = IsB2BDomain() ? "B2B" : "B2C";
             var search = new FlightSearchData
             {
                 info = searchId
             };
+            
             try
             {
                 var parts = searchId.Split('-');
@@ -62,13 +69,14 @@ namespace Lunggo.CustomerWeb.Controllers
         [Route("id/tiket-pesawat/cari/{searchParam}")]
         public ActionResult Search(string searchParam)
         {
+            if (!IsB2BAuthorized())
+                return RedirectToAction("Index", "Index");
             var parts = searchParam.Split('-').ToList();
             var originAirport = parts[parts.Count -2];
             var destinationAirport = parts[parts.Count - 1];
             var todaydate = DateTime.Today.AddDays(1);
             var data = originAirport + destinationAirport + todaydate.Day.ToString("d2") + todaydate.Month.ToString("d2") +
                              todaydate.Year.ToString().Substring(2, 2) + "-100y";
-
             var search = new FlightSearchData
             {
                 info = data
@@ -98,14 +106,20 @@ namespace Lunggo.CustomerWeb.Controllers
         [HttpPost]
         public ActionResult Select(string token)
         {
+            if (!IsB2BAuthorized())
+                return RedirectToAction("Index", "Index");
             var tokens = token;
+            ViewBag.Domain = IsB2BDomain() ? "B2B" : "B2C";
             return RedirectToAction("Checkout", "Flight", new { token = tokens});
         }
 
         [RequireHttps]
         public ActionResult Checkout(string token)
         {
+            if (!IsB2BAuthorized())
+                return RedirectToAction("Index", "Index");
             var itin = FlightService.GetInstance().GetItineraryForDisplay(token);
+            ViewBag.Domain = IsB2BDomain() ? "B2B" : "B2C";
             if (itin != null)
             {
                 if (TempData["FlightCheckoutOrBookingError"] != null)
@@ -160,12 +174,18 @@ namespace Lunggo.CustomerWeb.Controllers
         [ActionName("Checkout")]
         public ActionResult CheckoutPost(string rsvNo)
         {
+            if (!IsB2BAuthorized())
+                return RedirectToAction("Index", "Index");
+            ViewBag.Domain = IsB2BDomain() ? "B2B" : "B2C";
             var regId = GenerateId(rsvNo);
             return RedirectToAction("Payment", "Payment", new { rsvNo, regId });
         }
         
         public ActionResult TopDestinations()
         {
+            if (!IsB2BAuthorized())
+                return RedirectToAction("Index", "Index");
+            ViewBag.Domain = IsB2BDomain() ? "B2B" : "B2C";
             var flightService = FlightService.GetInstance();
             var topDestinations = flightService.GetTopDestination();
             return View(topDestinations);
@@ -189,6 +209,21 @@ namespace Lunggo.CustomerWeb.Controllers
             return result;
         }
 
+        public bool IsB2BDomain()
+        {
+            var httpRequest = Request;
+            if (httpRequest.Url != null)
+            {
+                var host = httpRequest.Url.Host;
+                if (host.Contains("b2b"))
+                {
+                    return true;
+                }
+                return false;
+            }
+            return false;
+        }
+
         public static string RsvNoHash(string rsvNo)
         {
             var rsa = RSA.Create();
@@ -201,6 +236,45 @@ namespace Lunggo.CustomerWeb.Controllers
             var rsa = RSA.Create();
             var rsvNo = rsa.DecryptValue(Encoding.UTF8.GetBytes(encryptedRsvNo));
             return Encoding.UTF8.GetString(rsvNo);
+        }
+
+        private bool IsAuthoirize()
+        {
+            var baseUrl = ConfigManager.GetInstance().GetConfigValue("api", "rootUrl");
+            var client = new RestClient(baseUrl);
+
+            var request = new RestRequest("/v1/profile", Method.GET);
+            // easily add HTTP Headers
+            var key = Request.Cookies["authkey"];
+            if (key == null)
+                return false;
+
+            request.AddHeader("Authorization", "Bearer "+key);
+
+            // execute the request
+            IRestResponse response = client.Execute(request);
+            var content = response.Content;
+            return true;
+        }
+
+        private bool IsB2BAuthorized()
+        {
+            if (!IsB2BDomain())
+                return true;
+            var baseUrl = ConfigManager.GetInstance().GetConfigValue("api", "apiUrl");
+            var client = new RestClient(baseUrl);
+
+            var request = new RestRequest("/v1/profile", Method.GET);
+            var key = Request.Cookies["authkey"];
+            if (key == null)
+                return false;
+
+            request.AddHeader("Authorization", "Bearer " + key.Value);
+
+            // execute the request
+            IRestResponse response = client.Execute(request);
+            var content = response.Content;
+            return true;
         }
 
         #endregion
