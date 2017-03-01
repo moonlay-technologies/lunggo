@@ -38,5 +38,11 @@ namespace Lunggo.CustomerWeb.Controllers
         {
             return View();
         }
+
+        [Route("{langCode}/promo/*")]
+        public ActionResult Default()
+        {
+            return RedirectToAction("Index", "Index");
+        }
     }
 }

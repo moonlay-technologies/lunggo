@@ -16,7 +16,7 @@
 @{
     var rooms = new List<HotelRoomForDisplay>();
     var token = "";
-    Model.HotelDetail.MainImage = "http://photos.hotelbeds.com/giata/" + Model.HotelDetail.MainImage;
+    Model.HotelDetail.MainImage = "https://photos.hotelbeds.com/giata/" + Model.HotelDetail.MainImage;
     var night = (Model.HotelDetail.CheckOutDate - Model.HotelDetail.CheckInDate).Days;
     var roomImage = "";
     var sumAdult = 0;
@@ -24,14 +24,14 @@
     var textInfo = new CultureInfo("en-US", false).TextInfo;
     var orderedRooms = new List<Tuple<string, int>>();
     var listAges = new List<int>();
-    var hotelMainImage = "http://photos.hotelbeds.com/giata/" + Model.HotelDetail.MainImage;
+    var hotelMainImage = "https://photos.hotelbeds.com/giata/" + Model.HotelDetail.MainImage;
     var totalRoom = 0;
     try
     {
 
         if (Model.HotelDetail.ImageUrl != null && Model.HotelDetail.ImageUrl.Count != 0)
         {
-            roomImage = "http://photos.hotelbeds.com/giata/" + Model.HotelDetail.ImageUrl.FirstOrDefault();
+            roomImage = "https://photos.hotelbeds.com/giata/" + Model.HotelDetail.ImageUrl.FirstOrDefault();
         }
         rooms = Model.HotelDetail.Rooms;
         token = Model.Token;

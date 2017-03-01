@@ -125,7 +125,7 @@ app.directive('altImage', function($http, $log, $q) {
 
 
                 var backgroundImage = style.substring(style.indexOf("background-image"));
-                //"background-image:url(http://photos.hotelbeds.com/giata/14/145936/145936a_hb_a_010.jpg);"
+                //"background-image:url(https://photos.hotelbeds.com/giata/14/145936/145936a_hb_a_010.jpg);"
 
                 backgroundImage = backgroundImage.substring(backgroundImage.indexOf("(") + 1, backgroundImage.indexOf(")"));
 

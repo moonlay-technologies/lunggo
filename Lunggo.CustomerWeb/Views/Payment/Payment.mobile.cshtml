@@ -37,14 +37,14 @@
             {
                 hotelImg = images == null
                     ? null
-                    : "http://photos.hotelbeds.com/giata/" + orDefault.Path;
+                    : "https://photos.hotelbeds.com/giata/" + orDefault.Path;
             }
             var firstOrDefault = images.Where(i => i.Type == "HAB").ToList().FirstOrDefault();
             if (firstOrDefault != null)
             {
                 roomImg = images == null
                     ? null
-                    : "http://photos.hotelbeds.com/giata/" + firstOrDefault.Path;
+                    : "https://photos.hotelbeds.com/giata/" + firstOrDefault.Path;
             }
             var rooms = rsv.HotelDetail.Rooms;
             rsvNo = Model.RsvNo;
@@ -102,7 +102,7 @@
     <script src="/Assets/js/CryptoJS/rollups/sha512.js"></script>
     <script src="/Assets/js/CryptoJS/components/enc-base64-min.js"></script>
     <!-- veritrans JS -->
-    <script src="https://api.sandbox.veritrans.co.id/v2/assets/js/veritrans.min.js"></script>
+    <script src=@(ConfigManager.GetInstance().GetConfigValue("veritrans", "endPoint") + "/v2/assets/js/midtrans.min.js")></script>
     <!-- fancybox -->
     <script type="text/javascript" src="/Assets/vendor/fancybox/jquery.fancybox.pack.js"></script>
 }

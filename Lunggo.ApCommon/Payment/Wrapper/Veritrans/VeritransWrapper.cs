@@ -27,7 +27,7 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
         private static readonly VeritransWrapper Instance = new VeritransWrapper();
         private bool _isInitialized;
 
-        private static string _endPoint;
+        private static string _chargeEndPoint;
         private static string _serverKey;
         private static string _rootUrl;
         private static string _cancelEndPoint;
@@ -55,7 +55,7 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
         {
             if (!_isInitialized)
             {
-                _endPoint = ConfigManager.GetInstance().GetConfigValue("veritrans", "endPoint");
+                _chargeEndPoint = ConfigManager.GetInstance().GetConfigValue("veritrans", "chargeEndPoint");
                 _serverKey = ConfigManager.GetInstance().GetConfigValue("veritrans", "serverKey") + ":";
                 _cancelEndPoint = ConfigManager.GetInstance().GetConfigValue("veritrans", "cancelEndPoint");
                 _approveEndPoint = ConfigManager.GetInstance().GetConfigValue("veritrans", "approveEndPoint");
@@ -375,7 +375,7 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
 
         private static WebRequest CreateVtDirectRequest(string authorizationKey, PaymentData data, TransactionDetails transactionDetail, PaymentMethod method)
         {
-            var request = (HttpWebRequest)WebRequest.Create(_endPoint);
+            var request = (HttpWebRequest)WebRequest.Create(_chargeEndPoint);
             request.Method = "POST";
             request.Headers.Add("Authorization", "Basic " + authorizationKey);
             request.ContentType = "application/json";
@@ -397,7 +397,7 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
 
         private static WebRequest CreateVtWebRequest(string authorizationKey, TransactionDetails transactionDetail, List<ItemDetails> itemDetails, PaymentMethod method)
         {
-            var request = (HttpWebRequest)WebRequest.Create(_endPoint);
+            var request = (HttpWebRequest)WebRequest.Create(_chargeEndPoint);
             request.Method = "POST";
             request.Headers.Add("Authorization", "Basic " + authorizationKey);
             request.ContentType = "application/json";

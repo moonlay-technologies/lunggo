@@ -218,7 +218,7 @@ app.controller('accountController', [
         }
 
         $scope.getPhotoUrl = function(url) {
-            return 'http://photos.hotelbeds.com/giata/small/' + url;
+            return 'https://photos.hotelbeds.com/giata/small/' + url;
         }
 
         //Get Profile

@@ -218,7 +218,6 @@ namespace Lunggo.CustomerWeb.Controllers
             });
         }
 
-        [RequireHttps]
         public ActionResult Checkout(string token)
         {
             var hotelDetail = HotelService.GetInstance().GetSelectionFromCache(token);
@@ -259,7 +258,6 @@ namespace Lunggo.CustomerWeb.Controllers
                 return RedirectToAction("Index", "Index");
         }
 
-        [RequireHttps]
         [HttpPost]
         [ActionName("Checkout")]
         public ActionResult CheckoutPost(string rsvNo)

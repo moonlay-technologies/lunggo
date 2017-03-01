@@ -20,7 +20,6 @@ namespace Lunggo.CustomerWeb.Controllers
 {
     public class PaymentController : Controller
     {
-        [RequireHttps]
         public ActionResult Payment(string rsvNo, string regId)
         {
             try
@@ -60,7 +59,6 @@ namespace Lunggo.CustomerWeb.Controllers
 
         }
 
-        [RequireHttps]
         [HttpPost]
         [ActionName("Payment")]
         public ActionResult PaymentPost(string rsvNo, string paymentUrl)

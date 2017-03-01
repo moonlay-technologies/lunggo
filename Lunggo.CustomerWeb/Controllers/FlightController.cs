@@ -102,7 +102,6 @@ namespace Lunggo.CustomerWeb.Controllers
             return RedirectToAction("Checkout", "Flight", new { token = tokens});
         }
 
-        [RequireHttps]
         public ActionResult Checkout(string token)
         {
             var itin = FlightService.GetInstance().GetItineraryForDisplay(token);
@@ -155,7 +154,6 @@ namespace Lunggo.CustomerWeb.Controllers
         }
 
         //Buat ngelempar ke halaman payment
-        [RequireHttps]
         [HttpPost]
         [ActionName("Checkout")]
         public ActionResult CheckoutPost(string rsvNo)
