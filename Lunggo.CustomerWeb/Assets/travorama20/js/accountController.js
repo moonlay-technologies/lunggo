@@ -4,6 +4,9 @@ app.controller('siteHeaderController', ['$http', '$scope', '$log', function ($ht
     $scope.email = '';
     $scope.name = '';
     $scope.trial = 0;
+    $scope.roles = [];
+    $scope.isAdmin = false;
+    $scope.isFinance = false;
     $scope.returnUrl = document.referrer;
     $scope.authProfile = {} //tbd
     $scope.windowlocation = window.location.pathname;
@@ -25,16 +28,17 @@ app.controller('siteHeaderController', ['$http', '$scope', '$log', function ($ht
                 url: GetProfileConfig.Url,
                 headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') },
                 async: false
-            }).then(function (returnData) {
+            }).then(function(returnData) {
                 if (returnData.data.status == "200") {
                     $scope.pageLoaded = true;
                     $scope.isLogin = true;
                     $log.debug('Success getting Profile');
                     $scope.email = returnData.data.email;
                     $scope.name = returnData.data.name;
+                    $scope.roles = returnData.data.roles;
+                    $scope.getRole();
                     $scope.profileloaded = true;
-                }
-                else {
+                } else {
                     $log.debug('There is an error');
                     $log.debug('Error : ' + returnData.data.error);
                     $scope.pageLoaded = true;
@@ -42,21 +46,33 @@ app.controller('siteHeaderController', ['$http', '$scope', '$log', function ($ht
                     $scope.profileloaded = true;
                     $log.debug(returnData);
                 }
-            }).catch(function () {
+            }).catch(function() {
                 $scope.trial++;
                 if (refreshAuthAccess() && $scope.trial < 4) //refresh cookie
                 {
                     $scope.ProfileConfig.getProfile();
-                }
-                else {
+                } else {
                     $log.debug('Failed to Login');
                     $scope.pageLoaded = true;
                     $scope.isLogin = false;
                     $scope.profileloaded = true;
                 }
-            })
+            });
         }
     }
+    
+    $scope.getRole = function () {
+        for (var i = 0; i < $scope.roles.length; i++) {
+            if ($scope.roles[i]=== "Admin") {
+                $scope.isAdmin = true;
+                
+            }
+            if ($scope.roles[i] === "Finance") {
+                $scope.isFinance = true;
+            }
+        }
+    };
+
     //Check Authorization to get Profile
     $scope.authAccess = getAuthAccess();
     if ($scope.authAccess == 2) {
@@ -801,7 +817,8 @@ app.controller('b2BAccountController', [
 
         $scope.updateReservation = {
             rsvUpdated : false,
-            isConfirm : false,
+            isConfirm: false,
+            isFailed:false,
             rsvNo : "",
             status: "",
             select : function(rsvNo, status) {
@@ -826,25 +843,28 @@ app.controller('b2BAccountController', [
                         //$log.debug(returnData);
                         if (returnData.data.status == '200') {
                             $log.debug('Success updating reservation');
-                            $scope.rsvUpdated = false;
+                            $scope.updateReservation.rsvUpdated = true;
+                            $scope.updateReservation.isFailed = false;
                             window.location.reload();
                         }
                         else {
                             $log.debug(returnData.data.error);
                             $log.debug(returnData);
-                            $scope.rsvUpdated = false;
+                            $scope.updateReservation.rsvUpdated = false;
+                            $scope.updateReservation.isFailed = true;
                             window.location.reload();
                         }
                     }).catch(function (returnData) {
                         $scope.trial++;
                         if (refreshAuthAccess() && $scope.trial < 4) //refresh cookie
                         {
-                            $scope.updateReservation.update();
+                            $scope.updateReservation.update(type);
                         }
                         else {
                             $log.debug('Failed Update Reservation');
                             $log.debug(returnData);
-                            $scope.rsvUpdated = false;
+                            $scope.updateReservation.rsvUpdated = false;
+                            $scope.updateReservation.isFailed = true;
                             window.location.reload();
                         }
                     });

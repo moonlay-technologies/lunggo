@@ -59,6 +59,12 @@ namespace Lunggo.ApCommon.Identity.Users
         public string LastName { get; set; }
 
         /// <summary>
+        /// LastName of the user
+        /// 
+        /// </summary>
+        public string CompanyId { get; set; }
+
+        /// <summary>
         /// Address of the user
         /// 
         /// </summary>

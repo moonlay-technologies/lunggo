@@ -414,9 +414,13 @@
     <Compile Include="Hotel\Model\SearchHotelResult.cs" />
     <Compile Include="Hotel\Wrapper\HotelBeds\HotelBedsCheckRateHotel.cs" />
     <Compile Include="Hotel\Wrapper\HotelBeds\HotelBedsSearchHotel.cs" />
+    <Compile Include="Identity\Model\UserData.cs" />
+    <Compile Include="Identity\Query\GetAllUserByAdminQuery.cs" />
     <Compile Include="Identity\Query\GetApproverEmailByUserIdQuery.cs" />
+    <Compile Include="Identity\Query\GetCompanyIdByUserQuery.cs" />
     <Compile Include="Identity\Query\GetListApproverEmailQuery.cs" />
     <Compile Include="Identity\Query\GetApproverByUserIdQuery.cs" />
+    <Compile Include="Identity\Query\GetListRolesQuery.cs" />
     <Compile Include="Payment\Constant\FailureReason.cs" />
     <Compile Include="Flight\Model\FlightSlightDelay.cs" />
     <Compile Include="Flight\Model\FlightStop.cs" />
@@ -657,6 +661,7 @@
     <Compile Include="Payment\Model\TransactionDetails.cs" />
     <Compile Include="Payment\Query\GetPaymentByRsvNoQuery.cs" />
     <Compile Include="Payment\Query\GetPaymentStatusQuery.cs" />
+    <Compile Include="Payment\Query\GetPrimarySavedCreditCardQuery.cs" />
     <Compile Include="Payment\Query\GetRefundQuery.cs" />
     <Compile Include="Payment\Query\GetSavedCreditCardByEmailQuery.cs">
       <SubType>Code</SubType>
@@ -669,6 +674,7 @@
     </Compile>
     <Compile Include="Payment\Query\GetUnpaidQuery.cs" />
     <Compile Include="Payment\Query\UpdatePaymentQuery.cs" />
+    <Compile Include="Payment\Service\B2BPayment.cs" />
     <Compile Include="Payment\Service\Caching.cs" />
     <Compile Include="Payment\Service\Database.cs" />
     <Compile Include="Payment\Service\ModelConversion.cs" />

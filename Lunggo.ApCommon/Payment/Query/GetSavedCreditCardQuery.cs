@@ -12,7 +12,7 @@ namespace Lunggo.ApCommon.Payment.Query
     {
         protected override string GetQuery(dynamic condition = null)
         {
-            return "SELECT * FROM SavedCreditCard WHERE Email = @Email AND MaskedCardNumber = @MaskedCardNumber";
+            return "SELECT * FROM SavedCreditCard WHERE CompanyId = @CompanyId";
         }
     }
 }

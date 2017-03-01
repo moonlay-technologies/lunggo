@@ -1,4 +1,5 @@
-﻿using Lunggo.WebAPI.ApiSrc.Common.Model;
+﻿using System.Collections.Generic;
+using Lunggo.WebAPI.ApiSrc.Common.Model;
 using Newtonsoft.Json;
 
 namespace Lunggo.WebAPI.ApiSrc.Account.Model
@@ -13,5 +14,7 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Model
         public string CountryCallingCd { get; set; }
         [JsonProperty("phone", NullValueHandling = NullValueHandling.Ignore)]
         public string PhoneNumber { get; set; }
+        [JsonProperty("roles", NullValueHandling = NullValueHandling.Ignore)]
+        public List<string> RoleName { get; set; }
     }
 }

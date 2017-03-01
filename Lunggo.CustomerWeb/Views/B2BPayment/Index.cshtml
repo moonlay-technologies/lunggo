@@ -1,0 +1,193 @@
+﻿@{
+    Layout = "/Views/Shared/Desktop/_B2BLayoutDesktop.cshtml";
+    ViewBag.BodyClass = "page-account page-account-profile";
+    ViewBag.PageActiveSection = "profile";
+    ViewBag.Title = "My Account";
+
+    //var rsvs = Model.OrderByDescending(rsv => rsv.RsvTime).ToList();
+}
+@{
+
+}
+@section AdditionalCSS {
+    <link href="/Assets/css/jquery-ui.min.css" rel="stylesheet" />
+    <!-- fancybox CSS-->
+    <link href="/Assets/vendor/fancybox/jquery.fancybox.css" rel="stylesheet" />
+}
+@section AdditionalJS{
+    <!-- additional Angular JS-->
+    <script src="/Assets/js/bootstrap.min.js"></script>
+    <!-- veritrans JS -->
+    <script src="https://api.sandbox.veritrans.co.id/v2/assets/js/veritrans.min.js"></script>
+    <!-- fancybox -->
+    <script type="text/javascript" src="/Assets/vendor/fancybox/jquery.fancybox.pack.js"></script>
+
+}
+
+@section PageJS{
+    <script>
+        var langCode = 'en';
+    </script>
+    <!-- angular controller -->
+    <script src="/Assets/travorama20/js/paymentController.js"></script>
+}
+
+
+<div class="container page-loading" ng-controller="b2BPaymentController" ng-class="{'page-loaded' : pageLoaded}">
+    <div class="row">
+
+        <div class="col-xs-3">
+            @Html.Partial("/Views/Shared/Desktop/_SectionUserMenu.cshtml")
+        </div>
+        <!-- ******************** -->
+
+        <div class="col-xs-9">
+            <section class="account-content">
+
+                <div class="profile-content" ng-show="currentSection == 'profile'">
+                    <header class="content-header">
+                        <h2><b>TAMBAH</b> NOMOR KARTU KREDIT CARD</h2>
+                    </header>
+                    <section class="content-body">
+                        <form name="creditCardForm" novalidate>
+                            <h3 class="no-spacing lg-txt">DETAIL <b>KARTU KREDIT/DEBIT</b></h3>
+
+                            <!-- new credit card start -->
+                            <div ng-if="CreditCardData.TwoClickToken == 'false'">
+                                <div class="form-group" ng-class="{'has-error' : !checkNumber(CreditCardData.Number)}">
+                                    <label class="control-label">Nomor Kartu</label>
+                                    <input type="text" value="" class="form-control cc-number" maxlength="19" ng-model="CreditCardData.Number" ng-required="CreditCardData.TwoClick == 'false'" />
+
+                                    <div ng-show="!checkNumber(CreditCardData.Number)" style="color:red">
+                                        Nomor kartu tidak boleh mengandung karakter selain angka
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="ccDate" ng-class="{'has-error' : dateOver}">
+                                            <div class="col-sm-4">
+                                                <label class="control-label">Kadaluarsa</label>
+                                                <select class="form-control" ng-model="CreditCardData.Month" ng-init="month = 'Bulan'">
+                                                    <option value="{{month.value}}" ng-repeat="month in months" ng-selected="month.value == 0"
+                                                            ng-click="CreditCardData.Month = month.value">
+                                                        {{month.name}}
+                                                    </option>
+                                                </select>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <label class="control-label">&nbsp;</label>
+                                                <select class="form-control" ng-model="CreditCardData.Year" ng-init="year = 'Tahun'">
+                                                    <option value="{{year}}" ng-repeat="year in generateYear()" ng-selected="year  == 'Tahun'"
+                                                            ng-click="CreditCardData.Year = year">
+                                                        {{year}}
+                                                    </option>
+
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4" ng-class="{'has-error' : !checkNumber(CreditCardData.Cvv)}">
+                                            <label class="control-label">CVV Kartu</label>
+                                            <input type="password" value="" class="form-control"
+                                                   placeholder=" xxx" maxlength="3" ng-model="CreditCardData.Cvv" />
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div ng-show="dateOver" style="color:red">
+                                    Tanggal Kadaluarsa harus lebih dari tanggal saat ini.
+                                </div>
+                                <div ng-show="!checkNumber(CreditCardData.Cvv)" style="color:red">
+                                    CVV tidak boleh mengandung karakter selain angka
+                                </div>
+                                <div class="form-group" ng-class="{'has-error' : !checkName(CreditCardData.Name)}">
+                                    <label class="control-label">Nama Pemegang Kartu</label>
+                                    <input type="text" value="" class="form-control" size="16" ng-model="CreditCardData.Name" />
+                                    <div ng-show="!checkName(CreditCardData.Name)" style="color:red">
+                                        Nama tidak boleh mengandung karakter selain alfabet dan spasi
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- new credit card end -->
+
+                        </form>
+                        <div class="action">
+                            <a class="btn btn-yellow" ng-click="addCreditCard.getPreToken()">SIMPAN</a>
+                        </div>
+                    </section>
+                </div><!-- .profile-content -->
+                <!-- ***** -->
+
+                <div class="history-content" ng-show="currentSection == 'order'">
+                    <header class="content-header">
+                        <h2><b>DAFTAR</b> KARTU KREDIT</h2>
+                    </header>
+                    <section class="content-body">
+                        <div ng-show="loading">
+                            <img src="/Assets/images/load.gif" style="width: 50px; height: 50px; margin-left: 45%; margin-top: 5%">
+                        </div>
+                        <div class="tab-content">
+                            <div class="tab-flight-history tab-pane cleafix active" id="flight-history">
+
+                                <h3 ng-if="dataCreditCard.length == 0">Belum ada pemesanan.</h3>
+                                <div ng-if="dataCreditCard.length > 0" ng-repeat="creditCard in dataCreditCard track by $index">
+                                    <div class="order-wrapper">
+                                        <div class="order flight">
+                                            <header>
+                                                <span> Nomor Kartu Kredit : {{creditCard.maskedCardNumber}}</span>
+                                            </header>
+                                            <section class="container">
+                                                <div class="row">
+                                                    <div class="col-xs-9">
+                                                        <div class="detail">
+                                                            <p>Card Holder Name : <b>{{creditCard.cardHolderName}}</b></p>
+                                                            <p>Primary Card     : {{creditCard.isPrimaryCard}}</p>
+                                                            <p>Card Expiry      : {{creditCard.cardExpiry}}</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xs-3">
+                                                        <form action="" method="post" name="submitForm" id="rsvno" class="hidden">
+                                                            <input type="text" name="RsvNo" value="" id="rsvno-input" />
+                                                        </form>
+                                                        <div class="action" ng-if="!creditCard.isPrimaryCard">
+                                                            <a class="btn btn-yellow" ng-click="updatePrimaryCard(creditCard.maskedCardNumber)">SET AS PRIMARY CARD</a>
+                                                        </div>
+                                                        <div class="action" ng-if="!creditCard.isPrimaryCard">
+                                                            <a class="btn btn-yellow" ng-click="deleteCard(creditCard.maskedCardNumber)">DELETE</a>
+                                                        </div>
+                                                        <div class="action" ng-if="creditCard.isPrimaryCard">
+                                                            <a class="btn btn-yellow" ng-href="#">PRIMARY CARD</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </section>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                </div><!-- .history-content -->
+
+            </section><!-- .account-content -->
+        </div>
+
+    </div>
+    <div class="payment-popup" ng-show="cardDeleted || primaryUpdated">
+        <div class=" overlay-content">
+            <section style="padding-top:60px; padding-left:225px;">
+                <!-- Ini untuk yg gagal -->
+                <div><img src="/Assets/images/travorama-logo-color.png" height="22px" width="80px"></div>
+                <div style="padding-top:20px;" ng-if="primaryUpdated"><span style="color: #15b1e4; font-size:20px"><b>Primary Card berhasil diganti.</b></span></div>
+                <div style="padding-top:20px;" ng-if="cardDeleted"><span style="color: #15b1e4; font-size:20px"><b>Kartu Kredit berhasil dihapus.</b></span></div>
+                <div><img src="~/Assets/images/popup/paymentyellowstrip.png" /></div>
+                <div style="padding-top:5px;"><span style="font-size:12px"></span></div>
+            </section>
+            <div align="right" style="padding-right:30px;">
+                <a class="btn popup-btn-yellow book-failed" ng-click="closePopUp()"><b>Tutup</b></a>
+
+            </div>
+        </div>
+    </div>
+
+</div>

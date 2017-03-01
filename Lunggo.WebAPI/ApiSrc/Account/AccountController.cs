@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -177,7 +178,7 @@ namespace Lunggo.WebAPI.ApiSrc.Account
         {
             try
             {
-                var apiResponse = AccountLogic.GetProfile();
+                var apiResponse = AccountLogic.GetProfile(UserManager);
                 return apiResponse;
             }
             catch (Exception e)
@@ -253,6 +254,7 @@ namespace Lunggo.WebAPI.ApiSrc.Account
             if (User.Identity.IsAuthenticated)
             {
                 var user = User.Identity;
+                var a = User.IsInRole("Finance");
                 role = UserManager.GetRoles(HttpContext.Current.User.Identity.GetUser().Id).FirstOrDefault();
             }
             try
@@ -272,15 +274,16 @@ namespace Lunggo.WebAPI.ApiSrc.Account
         [Route("v1/bookertrxhistory")]
         public ApiResponseBase GetBookerTransactionHistory(string filter = null, string sort = null, int? page = null, int? itemsPerPage = null)
         {
-            string role = "";
+            var roles = new List<string>();
             if (User.Identity.IsAuthenticated)
             {
-                var user = User.Identity;
-                role = UserManager.GetRoles(HttpContext.Current.User.Identity.GetUser().Id).FirstOrDefault();
+                var userId = User.Identity.GetUser().Id;
+                roles = UserManager.GetRoles(userId).ToList();
+                //role = UserManager.GetRoles(HttpContext.Current.User.Identity.GetUser().Id).FirstOrDefault();
             }
             try
             {
-                var apiResponse = AccountLogic.GetBookerTransaction(filter, sort, page, itemsPerPage,role);
+                var apiResponse = AccountLogic.GetBookerTransaction(filter, sort, page, itemsPerPage,roles);
                 return apiResponse;
             }
             catch (Exception e)
@@ -298,8 +301,10 @@ namespace Lunggo.WebAPI.ApiSrc.Account
             B2BUpdateReservationRequest request = null;
             if (User.Identity.IsAuthenticated)
             {
-                var role = UserManager.GetRoles(HttpContext.Current.User.Identity.GetUser().Id).FirstOrDefault();
-                if (role == null || !role.Equals("Approver"))
+                //var role = UserManager.GetRoles(HttpContext.Current.User.Identity.GetUser().Id).FirstOrDefault();
+                //if (role == null || !role.Equals("Approver"))
+
+                if (!User.Identity.IsInRole("Approver"))
                 {
                     return new ApiResponseBase
                     {
@@ -334,6 +339,114 @@ namespace Lunggo.WebAPI.ApiSrc.Account
             catch (Exception e)
             {
                 return ApiResponseBase.ExceptionHandling(e);
+            }
+        }
+
+        /* User Management */
+        [HttpGet]
+        [LunggoCorsPolicy]
+        [Authorize]
+        [Route("v1/getuser")]
+        public ApiResponseBase GetUser()
+        {
+            if (!User.Identity.IsInRole("Admin"))
+            {
+                return new ApiResponseBase
+                {
+                    StatusCode = HttpStatusCode.Unauthorized,
+                    ErrorCode = "ERRGU01"
+                };
+            }
+            try
+            {
+                var apiResponse = AccountLogic.GetUser();
+                return apiResponse;
+            }
+            catch (Exception e)
+            {
+                return ApiResponseBase.ExceptionHandling(e);
+            }
+        }
+
+        [HttpPost]
+        [LunggoCorsPolicy]
+        [Authorize]
+        [Route("v1/adduser")]
+        public ApiResponseBase AddUser()
+        {
+            AddUserApiRequest request = null;
+            if (!User.Identity.IsInRole("Admin"))
+            {
+                return new ApiResponseBase
+                {
+                    StatusCode = HttpStatusCode.Unauthorized,
+                    ErrorCode = "ERRAU01"
+                };
+            }
+            try
+            {
+                request = ApiRequestBase.DeserializeRequest<AddUserApiRequest>();
+                var apiResponse = AccountLogic.AddUser(request,UserManager);
+                return apiResponse;
+            }
+            catch (Exception e)
+            {
+                return ApiResponseBase.ExceptionHandling(e, request);
+            }
+        }
+
+
+        [HttpPost]
+        [Authorize]
+        [LunggoCorsPolicy]
+        [Route("v1/updaterole")]
+        public ApiResponseBase UpdateRole()
+        {
+            UpdateRoleRequest request = null;
+            if (!User.Identity.IsInRole("Admin"))
+            {
+                return new ApiResponseBase
+                {
+                    StatusCode = HttpStatusCode.Unauthorized,
+                    ErrorCode = "ERRUR01"
+                };
+            }
+            try
+            {
+                request = ApiRequestBase.DeserializeRequest<UpdateRoleRequest>();
+                var apiResponse = AccountLogic.UpdateRoleLogic(request, UserManager);
+                return apiResponse;
+            }
+            catch (Exception e)
+            {
+                return ApiResponseBase.ExceptionHandling(e, request);
+            }
+        }
+
+        [HttpPost]
+        [Authorize]
+        [LunggoCorsPolicy]
+        [Route("v1/deleteuser")]
+        public ApiResponseBase DeleteUser()
+        {
+            DeleteUserApiRequest request = null;
+            if (!User.Identity.IsInRole("Admin"))
+            {
+                return new ApiResponseBase
+                {
+                    StatusCode = HttpStatusCode.Unauthorized,
+                    ErrorCode = "ERRDU01"
+                };
+            }
+            try
+            {
+                request = ApiRequestBase.DeserializeRequest<DeleteUserApiRequest>();
+                var apiResponse = AccountLogic.DeleteUserLogic(request, UserManager);
+                return apiResponse;
+            }
+            catch (Exception e)
+            {
+                return ApiResponseBase.ExceptionHandling(e, request);
             }
         }
     }

@@ -163,7 +163,10 @@ namespace Lunggo.ApCommon.Flight.Service
             {
                 try
                 {
-                    UpdateRsvStatusDb(rsvNo, RsvStatus.Approved);
+                    var isPaid = PaymentService.GetInstance().ProcessB2BPayment(rsvNo);
+                    if (!isPaid)
+                        return false;
+                    UpdateRsvStatusDb(rsvNo, RsvStatus.Approved); 
                     IssueBooker(rsvNo);
                     SendBookerBookingInfo(rsvNo);
                     return true;

@@ -9,6 +9,18 @@ namespace Lunggo.ApCommon.Identity.Users
 {
     public static class UserExtension
     {
+        public static bool IsInRole(this IIdentity identity, string role)
+        {
+            var claimsIdentity = (identity as ClaimsIdentity) ?? new ClaimsIdentity();
+            var claim = claimsIdentity.Claims.SingleOrDefault(x=>x.Type == ClaimTypes.Role);
+            if (claim == null)
+                return false;
+            var splitClaim = claim.Value.Split(',');
+            if (splitClaim.Contains(role))
+                return true;
+            return false;
+        }
+
         public static bool IsUserAuthorized(this IIdentity identity)
         {
             var claimsIdentity = (identity as ClaimsIdentity) ?? new ClaimsIdentity();
@@ -147,6 +159,7 @@ namespace Lunggo.ApCommon.Identity.Users
                 Email = userRecord.Email,
                 FirstName = userRecord.FirstName,
                 LastName = userRecord.LastName,
+                CompanyId = userRecord.CompanyId,
                 Id = userRecord.Id,
                 PasswordHash = userRecord.PasswordHash,
                 UserName = userRecord.UserName,

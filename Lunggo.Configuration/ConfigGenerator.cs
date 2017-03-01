@@ -346,6 +346,14 @@ namespace Lunggo.Configuration
             const string getProfilePath = @"/v1/profile";
             const string registerPath = @"/v1/register";
             const string b2bRegisterPath = @"/v1/b2bregister";
+            const string getUserPath = @"/v1/getuser";
+            const string addUserPath = @"/v1/adduser";
+            const string updateRolePath = @"/v1/updaterole";
+            const string deleteUserPath = @"/v1/deleteuser";
+            const string getCreditCardPath = @"/v1/payment/getcreditcard";
+            const string addCreditCardPath = @"/v1/payment/addcreditcard";
+            const string deleteCardPath = @"/v1/payment/deletecard";
+            const string setPrimaryCardPath = @"/v1/payment/setprimarycard";
             const string resetPasswordPath = @"/v1/resetpassword";
             const string forgotPasswordPath = @"/v1/forgot";
             const string changePasswordPath = @"/v1/changepassword";
@@ -391,6 +399,11 @@ namespace Lunggo.Configuration
             fileTemplate.SetAttribute("getProfilePath", getProfilePath);
             fileTemplate.SetAttribute("registerPath", registerPath);
             fileTemplate.SetAttribute("b2bRegisterPath",b2bRegisterPath);
+            fileTemplate.SetAttribute("getUserPath", getUserPath);
+            fileTemplate.SetAttribute("addUserPath", addUserPath);
+            fileTemplate.SetAttribute("deleteCardPath", deleteCardPath);
+            fileTemplate.SetAttribute("updateRolePath", updateRolePath);
+            fileTemplate.SetAttribute("deleteUserPath", deleteUserPath);
             fileTemplate.SetAttribute("resetPasswordPath", resetPasswordPath);
             fileTemplate.SetAttribute("forgotPasswordPath", forgotPasswordPath);
             fileTemplate.SetAttribute("changePasswordPath", changePasswordPath);
@@ -406,6 +419,9 @@ namespace Lunggo.Configuration
             fileTemplate.SetAttribute("hotelAvailableRatesPath", hotelAvailableRatesPath);
             fileTemplate.SetAttribute("holidayListPath", holidayListPath);
             fileTemplate.SetAttribute("mobileUrl", mobileUrl);
+            fileTemplate.SetAttribute("getCreditCardPath", getCreditCardPath);
+            fileTemplate.SetAttribute("addCreditCardPath", addCreditCardPath);
+            fileTemplate.SetAttribute("setPrimaryCardPath", setPrimaryCardPath);
 
             var fileContent = fileTemplate.ToString();
             string[] projectList = { "BackendWeb", "CustomerWeb" };

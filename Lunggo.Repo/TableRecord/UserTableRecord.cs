@@ -7,175 +7,188 @@ namespace Lunggo.Repository.TableRecord
 {
     public class UserTableRecord : Lunggo.Framework.Database.TableRecord
     {
-		private static List<ColumnMetadata> _recordMetadata;
+        private static List<ColumnMetadata> _recordMetadata;
         private static List<ColumnMetadata> _primaryKeys;
         private static String _tableName;
 
-		public String Id
-		{
-		    get { return _Id; }
-		    set
-		    {
-		        _Id = value;
-		        IncrementLog("Id");
-		    }
-		}
-		public String Email
-		{
-		    get { return _Email; }
-		    set
-		    {
-		        _Email = value;
-		        IncrementLog("Email");
-		    }
-		}
-		public Boolean? EmailConfirmed
-		{
-		    get { return _EmailConfirmed; }
-		    set
-		    {
-		        _EmailConfirmed = value;
-		        IncrementLog("EmailConfirmed");
-		    }
-		}
-		public String PasswordHash
-		{
-		    get { return _PasswordHash; }
-		    set
-		    {
-		        _PasswordHash = value;
-		        IncrementLog("PasswordHash");
-		    }
-		}
-		public String SecurityStamp
-		{
-		    get { return _SecurityStamp; }
-		    set
-		    {
-		        _SecurityStamp = value;
-		        IncrementLog("SecurityStamp");
-		    }
-		}
-		public String CountryCallCd
-		{
-		    get { return _CountryCallCd; }
-		    set
-		    {
-		        _CountryCallCd = value;
-		        IncrementLog("CountryCallCd");
-		    }
-		}
-		public String PhoneNumber
-		{
-		    get { return _PhoneNumber; }
-		    set
-		    {
-		        _PhoneNumber = value;
-		        IncrementLog("PhoneNumber");
-		    }
-		}
-		public Boolean? PhoneNumberConfirmed
-		{
-		    get { return _PhoneNumberConfirmed; }
-		    set
-		    {
-		        _PhoneNumberConfirmed = value;
-		        IncrementLog("PhoneNumberConfirmed");
-		    }
-		}
-		public Boolean? TwoFactorEnabled
-		{
-		    get { return _TwoFactorEnabled; }
-		    set
-		    {
-		        _TwoFactorEnabled = value;
-		        IncrementLog("TwoFactorEnabled");
-		    }
-		}
-		public DateTime? LockoutEndDateUtc
-		{
-		    get { return _LockoutEndDateUtc; }
-		    set
-		    {
-		        _LockoutEndDateUtc = value;
-		        IncrementLog("LockoutEndDateUtc");
-		    }
-		}
-		public Boolean? LockoutEnabled
-		{
-		    get { return _LockoutEnabled; }
-		    set
-		    {
-		        _LockoutEnabled = value;
-		        IncrementLog("LockoutEnabled");
-		    }
-		}
-		public int? AccessFailedCount
-		{
-		    get { return _AccessFailedCount; }
-		    set
-		    {
-		        _AccessFailedCount = value;
-		        IncrementLog("AccessFailedCount");
-		    }
-		}
-		public String UserName
-		{
-		    get { return _UserName; }
-		    set
-		    {
-		        _UserName = value;
-		        IncrementLog("UserName");
-		    }
-		}
-		public String FirstName
-		{
-		    get { return _FirstName; }
-		    set
-		    {
-		        _FirstName = value;
-		        IncrementLog("FirstName");
-		    }
-		}
-		public String LastName
-		{
-		    get { return _LastName; }
-		    set
-		    {
-		        _LastName = value;
-		        IncrementLog("LastName");
-		    }
-		}
-		public String Address
-		{
-		    get { return _Address; }
-		    set
-		    {
-		        _Address = value;
-		        IncrementLog("Address");
-		    }
-		}
+        public String Id
+        {
+            get { return _Id; }
+            set
+            {
+                _Id = value;
+                IncrementLog("Id");
+            }
+        }
 
-		
-		private String _Id;
-		private String _Email;
-		private Boolean? _EmailConfirmed;
-		private String _PasswordHash;
-		private String _SecurityStamp;
-		private String _CountryCallCd;
-		private String _PhoneNumber;
-		private Boolean? _PhoneNumberConfirmed;
-		private Boolean? _TwoFactorEnabled;
-		private DateTime? _LockoutEndDateUtc;
-		private Boolean? _LockoutEnabled;
-		private int? _AccessFailedCount;
-		private String _UserName;
-		private String _FirstName;
-		private String _LastName;
-		private String _Address;
+        public String CompanyId
+        {
+            get { return _CompanyId; }
+            set
+            {
+                _CompanyId = value;
+                IncrementLog("CompanyId");
+            }
+        }
+
+        public String Email
+        {
+            get { return _Email; }
+            set
+            {
+                _Email = value;
+                IncrementLog("Email");
+            }
+        }
+
+        public Boolean? EmailConfirmed
+        {
+            get { return _EmailConfirmed; }
+            set
+            {
+                _EmailConfirmed = value;
+                IncrementLog("EmailConfirmed");
+            }
+        }
+        public String PasswordHash
+        {
+            get { return _PasswordHash; }
+            set
+            {
+                _PasswordHash = value;
+                IncrementLog("PasswordHash");
+            }
+        }
+        public String SecurityStamp
+        {
+            get { return _SecurityStamp; }
+            set
+            {
+                _SecurityStamp = value;
+                IncrementLog("SecurityStamp");
+            }
+        }
+        public String CountryCallCd
+        {
+            get { return _CountryCallCd; }
+            set
+            {
+                _CountryCallCd = value;
+                IncrementLog("CountryCallCd");
+            }
+        }
+        public String PhoneNumber
+        {
+            get { return _PhoneNumber; }
+            set
+            {
+                _PhoneNumber = value;
+                IncrementLog("PhoneNumber");
+            }
+        }
+        public Boolean? PhoneNumberConfirmed
+        {
+            get { return _PhoneNumberConfirmed; }
+            set
+            {
+                _PhoneNumberConfirmed = value;
+                IncrementLog("PhoneNumberConfirmed");
+            }
+        }
+        public Boolean? TwoFactorEnabled
+        {
+            get { return _TwoFactorEnabled; }
+            set
+            {
+                _TwoFactorEnabled = value;
+                IncrementLog("TwoFactorEnabled");
+            }
+        }
+        public DateTime? LockoutEndDateUtc
+        {
+            get { return _LockoutEndDateUtc; }
+            set
+            {
+                _LockoutEndDateUtc = value;
+                IncrementLog("LockoutEndDateUtc");
+            }
+        }
+        public Boolean? LockoutEnabled
+        {
+            get { return _LockoutEnabled; }
+            set
+            {
+                _LockoutEnabled = value;
+                IncrementLog("LockoutEnabled");
+            }
+        }
+        public int? AccessFailedCount
+        {
+            get { return _AccessFailedCount; }
+            set
+            {
+                _AccessFailedCount = value;
+                IncrementLog("AccessFailedCount");
+            }
+        }
+        public String UserName
+        {
+            get { return _UserName; }
+            set
+            {
+                _UserName = value;
+                IncrementLog("UserName");
+            }
+        }
+        public String FirstName
+        {
+            get { return _FirstName; }
+            set
+            {
+                _FirstName = value;
+                IncrementLog("FirstName");
+            }
+        }
+        public String LastName
+        {
+            get { return _LastName; }
+            set
+            {
+                _LastName = value;
+                IncrementLog("LastName");
+            }
+        }
+        public String Address
+        {
+            get { return _Address; }
+            set
+            {
+                _Address = value;
+                IncrementLog("Address");
+            }
+        }
 
 
-		public static UserTableRecord CreateNewInstance()
+        private String _Id;
+        private String _CompanyId;
+        private String _Email;
+        private Boolean? _EmailConfirmed;
+        private String _PasswordHash;
+        private String _SecurityStamp;
+        private String _CountryCallCd;
+        private String _PhoneNumber;
+        private Boolean? _PhoneNumberConfirmed;
+        private Boolean? _TwoFactorEnabled;
+        private DateTime? _LockoutEndDateUtc;
+        private Boolean? _LockoutEnabled;
+        private int? _AccessFailedCount;
+        private String _UserName;
+        private String _FirstName;
+        private String _LastName;
+        private String _Address;
+
+
+        public static UserTableRecord CreateNewInstance()
         {
             var record = new UserTableRecord();
             var iRecord = record.AsInterface();
@@ -183,7 +196,7 @@ namespace Lunggo.Repository.TableRecord
             return record;
         }
 
-		public UserTableRecord()
+        public UserTableRecord()
         {
             ;
         }
@@ -205,6 +218,7 @@ namespace Lunggo.Repository.TableRecord
             _recordMetadata = new List<ColumnMetadata>
             {
 				new ColumnMetadata("Id", true),
+                new ColumnMetadata("CompanyId", false),
 				new ColumnMetadata("Email", false),
 				new ColumnMetadata("EmailConfirmed", false),
 				new ColumnMetadata("PasswordHash", false),
@@ -229,7 +243,7 @@ namespace Lunggo.Repository.TableRecord
             _primaryKeys = _recordMetadata.Where(p => p.IsPrimaryKey).ToList();
         }
 
-		public override List<ColumnMetadata> GetMetadata()
+        public override List<ColumnMetadata> GetMetadata()
         {
             return _recordMetadata;
         }
