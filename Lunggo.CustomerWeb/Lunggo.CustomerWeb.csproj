@@ -2202,6 +2202,7 @@
     <Content Include="Assets\travorama20\images\play-store-bg.png" />
     <Content Include="Assets\travorama20\js\accountController.js" />
     <Content Include="Assets\travorama20\js\app.config.js" />
+    <Content Include="Assets\travorama20\js\B2BAccountController.js" />
     <Content Include="Assets\travorama20\js\B2BHomeController.js" />
     <Content Include="Assets\travorama20\js\B2BHotelDetailController.js" />
     <Content Include="Assets\travorama20\js\B2BHotelSearchController.js" />
