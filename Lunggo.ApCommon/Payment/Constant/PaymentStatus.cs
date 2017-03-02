@@ -10,8 +10,7 @@
         Expired = 5,
         Verifying = 6,
         Challenged = 7,
-        Failed = 8,
-        Refund = 9
+        Failed = 8
     }
 
     internal class PaymentStatusCd
@@ -36,8 +35,6 @@
                     return "CHA";
                 case PaymentStatus.Failed:
                     return "FAI";
-                case PaymentStatus.Refund:
-                    return "REF";
                 default:
                     return null;
             }
@@ -62,8 +59,6 @@
                     return PaymentStatus.Challenged;
                 case "FAI":
                     return PaymentStatus.Failed;
-                case "REF":
-                    return PaymentStatus.Refund;
                 default:
                     return PaymentStatus.Undefined;
             }

@@ -80,7 +80,7 @@
                                 @if (rsv.Payment.DiscountNominal != 0)
                                 {
                                     <br/>
-                                    <span class="label label-default" style="font-size: 10px" title="@rsv.Payment.DiscountName">V</span><span style="font-size: 10px">@rsv.Payment.DiscountNominal.ToString("Rp 0,0", CultureInfo.CreateSpecificCulture("id-ID"))</span>
+                                    <span class="badge bg-info" style="font-size: 10px" title="@rsv.Payment.DiscountName">V</span><span style="font-size: 10px">@rsv.Payment.DiscountNominal.ToString("Rp 0,0", CultureInfo.CreateSpecificCulture("id-ID"))</span>
                                 }
                             </td>
                             <td>
@@ -89,7 +89,7 @@
                                     switch (rsv.Payment.Status)
                                     {
                                         case PaymentStatus.Pending:
-                                            <span class="label label-default" style="font-size: 14px">Pending</span>
+                                            <span class="label label-primary" style="font-size: 14px">Pending</span>
                                             <br />
                                             <span>@rsv.Payment.Method.ToString()</span>
                                             break;
@@ -124,7 +124,7 @@
                                         <span>@rsv.Payment.Method.ToString()</span>
                                             break;
                                         case PaymentStatus.Expired:
-                                        <span class="label label-danger" style="font-size: 14px">Expired</span>
+                                        <span class="label label-default" style="font-size: 14px">Expired</span>
                                         <br />
                                         <span>@rsv.Payment.Method.ToString()</span>
                                             break;
@@ -134,7 +134,7 @@
                                 {
                                     if (rsv.Payment.Status == PaymentStatus.Expired)
                                     {
-                                        <span class="label label-danger" style="font-size: 14px">Expired</span>
+                                        <span class="label label-default" style="font-size: 14px">Expired</span>
                                     }
                                     if (rsv.Payment.Status == PaymentStatus.Settled)
                                     {

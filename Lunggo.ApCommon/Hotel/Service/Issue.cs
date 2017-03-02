@@ -208,7 +208,7 @@ namespace Lunggo.ApCommon.Hotel.Service
             {
                 UpdateRsvDetail(rsvData.RsvNo, "FAIL", rsvData.HotelDetails);
                 PaymentService.GetInstance()
-                    .UpdatePayment(input.RsvNo, new PaymentDetails {Status = PaymentStatus.Refund});
+                    .UpdatePayment(input.RsvNo, new PaymentDetails {Status = PaymentStatus.Cancelled});
                 SendFailedIssueNotifToCustomerAndInternal(rsvData.RsvNo);
                 Console.WriteLine("Price is changed");
                 return new IssueHotelTicketOutput
@@ -238,7 +238,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                 Console.WriteLine(e);
                 UpdateRsvDetail(rsvData.RsvNo, "FAIL", rsvData.HotelDetails);
                 PaymentService.GetInstance()
-                    .UpdatePayment(input.RsvNo, new PaymentDetails { Status = PaymentStatus.Refund });
+                    .UpdatePayment(input.RsvNo, new PaymentDetails { Status = PaymentStatus.Cancelled });
                 SendFailedIssueNotifToCustomerAndInternal(rsvData.RsvNo);
                 Console.WriteLine("Something wrong when issuing");
                 return new IssueHotelTicketOutput
@@ -252,7 +252,7 @@ namespace Lunggo.ApCommon.Hotel.Service
             {
                 UpdateRsvDetail(rsvData.RsvNo, "FAIL", rsvData.HotelDetails);
                 PaymentService.GetInstance()
-                    .UpdatePayment(input.RsvNo, new PaymentDetails { Status = PaymentStatus.Refund });
+                    .UpdatePayment(input.RsvNo, new PaymentDetails { Status = PaymentStatus.Cancelled });
                 SendFailedIssueNotifToCustomerAndInternal(rsvData.RsvNo);
                 Console.WriteLine("Issuing is failed");
                 return new IssueHotelTicketOutput
