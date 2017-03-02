@@ -32,6 +32,7 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
                 name = first + " " + last;
             return new GetProfileApiResponse
             {
+                UserName = foundUser.UserName ?? "",
                 Email = foundUser.Email ?? "",
                 Name = name,
                 CountryCallingCd = foundUser.CountryCallCd ?? "",

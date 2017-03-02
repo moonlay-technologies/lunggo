@@ -343,6 +343,7 @@ namespace Lunggo.Configuration
             const string checkBinDiscountPath = @"/v1/payment/checkbindiscount";
             const string subscribePath = @"/v1/newsletter/subscribe";
             const string loginPath = @"/v1/login";
+            const string b2bLoginPath = @"/v1/b2blogin";
             const string getProfilePath = @"/v1/profile";
             const string registerPath = @"/v1/register";
             const string b2bRegisterPath = @"/v1/b2bregister";
@@ -396,6 +397,7 @@ namespace Lunggo.Configuration
             fileTemplate.SetAttribute("getReservationPath", getReservationPath);
             fileTemplate.SetAttribute("updateReservationPath", updateReservationPath);
             fileTemplate.SetAttribute("loginPath", loginPath);
+            fileTemplate.SetAttribute("b2bLoginPath", b2bLoginPath);
             fileTemplate.SetAttribute("getProfilePath", getProfilePath);
             fileTemplate.SetAttribute("registerPath", registerPath);
             fileTemplate.SetAttribute("b2bRegisterPath",b2bRegisterPath);

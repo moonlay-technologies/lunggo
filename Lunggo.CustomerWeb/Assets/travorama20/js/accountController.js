@@ -62,13 +62,14 @@ app.controller('siteHeaderController', ['$http', '$scope', '$log', function ($ht
     }
     
     $scope.getRole = function () {
-        for (var i = 0; i < $scope.roles.length; i++) {
-            if ($scope.roles[i]=== "Admin") {
-                $scope.isAdmin = true;
-                
-            }
-            if ($scope.roles[i] === "Finance") {
-                $scope.isFinance = true;
+        if ($scope.roles != null && $scope.roles.length != 0) {
+            for (var i = 0; i < $scope.roles.length; i++) {
+                if ($scope.roles[i] === "Admin") {
+                    $scope.isAdmin = true;
+                }
+                if ($scope.roles[i] === "Finance") {
+                    $scope.isFinance = true;
+                }
             }
         }
     };
@@ -1559,7 +1560,7 @@ app.controller('b2bAuthController', [
             if (authAccess == 2 || authAccess == 1) {
                 $http({
                     method: 'POST',
-                    url: LoginConfig.Url,
+                    url: B2BLoginPathConfig.Url,
                     data: {
                         userName: $scope.form.email,
                         password: $scope.form.password,

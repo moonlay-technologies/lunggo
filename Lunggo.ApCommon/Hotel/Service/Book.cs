@@ -198,8 +198,9 @@ namespace Lunggo.ApCommon.Hotel.Service
             {
                 //For Booker Only
                 var userId = HttpContext.Current.User.Identity.GetUser().Id;
-                var role = Role.GetFromDb(userId);
-                if (role.Contains("Booker"))
+                var user = User.GetFromDb(userId);
+                //var role = Role.GetFromDb(userId);
+                if (user.UserName.Contains("b2b:"))
                 {
                     PaymentService.GetInstance().UpdateBookerPaymentData(rsvDetail.RsvNo);
                     //Get Approver Email
@@ -310,8 +311,9 @@ namespace Lunggo.ApCommon.Hotel.Service
             if (rsvDetail.User != null)
             {
                 var userId = HttpContext.Current.User.Identity.GetUser().Id;
-                var role = Role.GetFromDb(userId);
-                if (role.Contains("Booker"))
+                var user = User.GetFromDb(userId);
+                //var role = Role.GetFromDb(userId);
+                if (user.UserName.Contains("b2b:"))
                 {
                     rsvDetail.RsvType = "AGENT";
                 }

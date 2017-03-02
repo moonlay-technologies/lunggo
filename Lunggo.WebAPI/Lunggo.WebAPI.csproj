@@ -213,6 +213,7 @@
   <ItemGroup>
     <Compile Include="ApiSrc\Account\AccountController.cs" />
     <Compile Include="ApiSrc\Account\Logic\AddUserLogic.cs" />
+    <Compile Include="ApiSrc\Account\Logic\B2BLoginLogic.cs" />
     <Compile Include="ApiSrc\Account\Logic\B2BRegisterLogic.cs" />
     <Compile Include="ApiSrc\Account\Logic\B2BUpdateReservationLogic.cs" />
     <Compile Include="ApiSrc\Account\Logic\ChangePasswordLogic.cs" />

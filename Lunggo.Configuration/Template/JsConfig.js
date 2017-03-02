@@ -111,6 +111,10 @@ var LoginConfig = {
     Url: '$apiUrl$$loginPath$'
 };
 
+var B2BLoginPathConfig = {
+    Url: '$apiUrl$$b2bLoginPath$'
+};
+
 var GetProfileConfig = {
     Url: '$apiUrl$$getProfilePath$'
 };
