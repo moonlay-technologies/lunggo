@@ -23,7 +23,7 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
                     ErrorCode = "ERRAU01"
                 };
             }
-            var foundUser = userManager.FindByEmail(request.Email);
+            var foundUser = userManager.FindByName("b2b"+request.Email);
             if (foundUser != null)
             {
                 return new ApiResponseBase
@@ -38,7 +38,7 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
             var companyId = User.GetCompanyIdByUserId(recentUser);
             var user = new User
             {
-                UserName = request.Email,
+                UserName = "b2b"+ request.Email,
                 Email = request.Email,
                 CompanyId = companyId
             };

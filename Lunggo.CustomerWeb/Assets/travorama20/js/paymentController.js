@@ -95,6 +95,7 @@ app.controller('paymentController', [
             receive: false,
             checked: false,
             checking: false,
+            checking: false,
             text: '',
             tohex: function (str) {
 

@@ -8,7 +8,7 @@ using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Service;
 using Lunggo.ApCommon.Payment.Service;
-using Lunggo.CustomerWeb.Filter;
+//using Lunggo.CustomerWeb.Filter;
 using Lunggo.CustomerWeb.Models;
 using Lunggo.Framework.Config;
 using Lunggo.Framework.Filter;
@@ -274,6 +274,7 @@ namespace Lunggo.CustomerWeb.Controllers
             // execute the request
             IRestResponse response = client.Execute(request);
             var content = response.Content;
+            //Check User Name Here
             return true;
         }
 
