@@ -948,6 +948,13 @@ app.controller('B2BPaymentMgmtFormController', ['$scope', '$log', '$http', funct
             //$('.newCc .expiry').text($scope.currentEdit.month + '/' + $scope.currentEdit.year.slice(-2));
             //var maskedCc = $scope.currentEdit.cc.slice(0, 1) + '************' + $scope.currentEdit.cc.slice(-4);
             //$('.newCc .cc-no').attr('cc', maskedCc);
+            if ($scope.creditCards == null && $scope.creditCards.length > 0) {
+                $('.newCc .current-status').removeClass('ng-hide');
+                $('.newCc .current-status').show();
+                $('.newCc .set-status').hide();
+                $('.newCc .remove-payment').prop("disabled", true);
+                $('.newCc .remove-payment').addClass("disableDel");
+            }
         });
 
         $('.newCc .set-status').click(function () {
@@ -1136,7 +1143,6 @@ app.controller('B2BPaymentMgmtFormController', ['$scope', '$log', '$http', funct
                         $('.newCc .expiry').text($scope.currentEdit.month + '/' + $scope.currentEdit.year.slice(-2));
                         var maskedCc = $scope.currentEdit.cc.slice(0, 1) + '************' + $scope.currentEdit.cc.slice(-4);
                         $('.newCc .cc-no').attr('cc', maskedCc);
-                        $scope.setPrimary($scope.currentEdit.cc, 0);
                     }
                     else {
                         $log.debug(returnData.data.error);
