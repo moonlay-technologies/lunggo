@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
-using Lunggo.ApCommon.Flight.Service;
+using Lunggo.ApCommon.Hotel.Service;
 using Lunggo.Framework.Config;
 using Lunggo.Framework.Mail;
 using Microsoft.Azure.WebJobs;
@@ -9,18 +9,18 @@ namespace Lunggo.WebJob.EmailQueueHandler.Function
 {
     public partial class ProcessEmailQueue
     {
-        public static void FlightSaySorryFailedIssueNotifEmail([QueueTrigger("flightsaysorryfailedissuenotifemail")] string rsvNo)
+        public static void HotelInternalFailedIssueNotifEmail([QueueTrigger("Hotelinternalfailedissuenotifemail")] string rsvNo)
         {
             var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
             var envPrefix = env != "production" ? "[" + env.ToUpper() + "] " : "";
 
-            var flightService = FlightService.GetInstance();
+            var hotelService = HotelService.GetInstance();
             var sw = new Stopwatch();
-            Console.WriteLine("Processing Flight Say Sorry Failed Issue Notif Email for RsvNo " + rsvNo + "...");
+            Console.WriteLine("Processing Hotel Internal Failed Issue Notif Email for RsvNo " + rsvNo + "...");
 
             Console.WriteLine("Getting Required Data...");
             sw.Start();
-            var reservation = flightService.GetReservationForDisplay(rsvNo);
+            var reservation = hotelService.GetReservationForDisplay(rsvNo);
             sw.Stop();
             Console.WriteLine("Done Getting Required Data. (" + sw.Elapsed.TotalSeconds + "s)");
             sw.Reset();
@@ -28,16 +28,15 @@ namespace Lunggo.WebJob.EmailQueueHandler.Function
             var mailService = MailService.GetInstance();
             var mailModel = new MailModel
             {
-                RecipientList = new[] { reservation.Contact.Email },
-                BccList = new[] { "maillog.travorama@gmail.com" },
-                Subject = envPrefix + "[Travorama] Pemesanan Gagal - No. Pemesanan " + reservation.RsvNo,
+                RecipientList = new[] { "cs@travorama.com" },
+                Subject = envPrefix + "[Travorama] Hotel Issue Failed - RsvNo : " + reservation.RsvNo,
                 FromMail = "booking@travorama.com",
                 FromName = "Travorama"
             };
             Console.WriteLine("Sending Notification Email...");
-            mailService.SendEmail(reservation, mailModel, "FlightSaySorryFailedIssueNotifEmail");
+            mailService.SendEmail(reservation, mailModel, "HotelInternalFailedIssueNotifEmail");
 
-            Console.WriteLine("Done Processing Flight Say Sorry Failed Issue Notif Email for RsvNo " + rsvNo);
+            Console.WriteLine("Done Processing Hotel Internal Failed Issue Notif Email for RsvNo " + rsvNo);
         }
     }
 }

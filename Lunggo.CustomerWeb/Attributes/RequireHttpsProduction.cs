@@ -24,7 +24,7 @@ namespace Lunggo.CustomerWeb.Attributes
         protected virtual void HandleNonHttpsRequest(AuthorizationContext filterContext)
         {
             if (!string.Equals(filterContext.HttpContext.Request.HttpMethod, "GET", StringComparison.OrdinalIgnoreCase))
-                throw new InvalidOperationException();
+                return;
             var url = "https://" + filterContext.HttpContext.Request.Url.Host +
                          filterContext.HttpContext.Request.RawUrl;
             filterContext.Result = new RedirectResult(url);
@@ -33,7 +33,7 @@ namespace Lunggo.CustomerWeb.Attributes
         protected virtual void HandleNonHttpRequest(AuthorizationContext filterContext)
         {
             if (!string.Equals(filterContext.HttpContext.Request.HttpMethod, "GET", StringComparison.OrdinalIgnoreCase))
-                throw new InvalidOperationException();
+                return;
             var url = "http://" + filterContext.HttpContext.Request.Url.Host +
                          filterContext.HttpContext.Request.RawUrl;
             filterContext.Result = new RedirectResult(url);

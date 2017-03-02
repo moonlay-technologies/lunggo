@@ -21,6 +21,7 @@ namespace Lunggo.WebJob.EmailQueueHandler.Function
             var mailModel = new MailModel
             {
                 RecipientList = new[] {address},
+                BccList = new[] { "maillog.travorama@gmail.com" },
                 FromMail = "no-reply@travorama.com",
                 FromName = "Travorama",
                 Subject = "Selamat! Voucher Diskon Hingga Rp 500.000 untuk Anda"

@@ -24,6 +24,7 @@ namespace Lunggo.WebJob.EmailQueueHandler.Function
         //    var mailModel = new MailModel
         //    {
         //        RecipientList = new[] {address},
+        //        BccList = new[] {"maillog.travorama@gmail.com"},
         //        FromMail = "no-reply@travorama.com",
         //        FromName = "Travorama.com",
         //        Subject = envPrefix + "[Travorama] Terima Kasih Telah Berlangganan Newsletter Travorama"

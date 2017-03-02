@@ -40,11 +40,13 @@ namespace Lunggo.ApCommon.Hotel.Service
 
         
         /*Jika Issue Exception tidak bisa di handle manual*/
-        public void SendSaySorryFailedIssueNotifToCustomer(string rsvNo)
+        public void SendFailedIssueNotifToCustomerAndInternal(string rsvNo)
         {
             var queueService = QueueService.GetInstance();
             var queue = queueService.GetQueueByReference("HotelSaySorryFailedIssueNotifEmail");
             queue.AddMessage(new CloudQueueMessage(rsvNo));
+            var queue2 = queueService.GetQueueByReference("HotelInternalFailedIssueNotifEmail");
+            queue2.AddMessage(new CloudQueueMessage(rsvNo));
         }
     }
 }
