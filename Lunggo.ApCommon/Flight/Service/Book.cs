@@ -61,8 +61,9 @@ namespace Lunggo.ApCommon.Flight.Service
                     //For Booker Only
                     var userId = HttpContext.Current.User.Identity.GetUser().Id;
                     var user = User.GetFromDb(userId);
-                    //var role = Role.GetFromDb(userId);
+                    var role = Role.GetFromDb(userId);
                     if (user.UserName.Contains("b2b:"))
+                    //if (role.Contains("booker"))
                     {
                         //Get Approver Email
                         PaymentService.GetInstance().UpdateBookerPaymentData(reservation.RsvNo);
@@ -137,8 +138,9 @@ namespace Lunggo.ApCommon.Flight.Service
             {
                 var userId = HttpContext.Current.User.Identity.GetUser().Id;
                 var user = User.GetFromDb(userId);
-                //var role = Role.GetFromDb(userId);
+                var role = Role.GetFromDb(userId);
                 if (user.UserName.Contains("b2b:"))
+                //if (role.Contains("booker"))
                 {
                     reservation.RsvType = "AGENT";
                 }

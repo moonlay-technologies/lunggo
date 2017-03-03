@@ -223,6 +223,7 @@
     <Compile Include="Flight\Model\BookingStatusInfo.cs" />
     <Compile Include="Flight\Model\Combo.cs" />
     <Compile Include="Flight\Model\Conditions.cs" />
+    <Compile Include="Flight\Model\FlightBookingNotif.cs" />
     <Compile Include="Flight\Model\FlightIssueData.cs" />
     <Compile Include="Flight\Model\FlightNotifDeveloper.cs" />
     <Compile Include="Flight\Model\FlightItineraryRule.cs" />
@@ -239,6 +240,7 @@
     <Compile Include="Hotel\Constant\SearchHotelType.cs" />
     <Compile Include="Hotel\Constant\AutocompleteType.cs" />
     <Compile Include="Hotel\Constant\SortingType.cs" />
+    <Compile Include="Hotel\Model\HotelBookingNotif.cs" />
     <Compile Include="Hotel\Model\HotelCancelBookingResult.cs" />
     <Compile Include="Hotel\Model\HotelRateComment.cs" />
     <Compile Include="Hotel\Model\HotelFilter.cs" />

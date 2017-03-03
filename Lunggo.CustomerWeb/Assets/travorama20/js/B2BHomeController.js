@@ -831,9 +831,9 @@ app.controller('B2BHotelSearchFormController', ['$scope', '$log', '$http', '$loc
     
     
     $('#checkInDate').change(function () {
-        var date = $('#checkInDate').val().split('/');
+        var date = $('#checkInDate').val().split(' ');
         var day = parseInt(date[0]);
-        var month = parseInt(date[1]);
+        var month = parseInt($scope.getMonthNumber(date[1]));
         var year = parseInt(date[2]);
         var selectedDate = new Date(year, month, day);
         $scope.hotelSearch.checkinDate = selectedDate;

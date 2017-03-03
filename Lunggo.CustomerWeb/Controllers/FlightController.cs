@@ -179,6 +179,9 @@ namespace Lunggo.CustomerWeb.Controllers
                 return RedirectToAction("Index", "Index");
             ViewBag.Domain = IsB2BDomain() ? "B2B" : "B2C";
             var regId = GenerateId(rsvNo);
+            if(ViewBag.Domain.Equals("B2B"))
+                return RedirectToAction("Thankyou", "B2BThankYou", new { rsvNo, regId });
+
             return RedirectToAction("Payment", "Payment", new { rsvNo, regId });
         }
         
@@ -210,7 +213,7 @@ namespace Lunggo.CustomerWeb.Controllers
             var temp = response2.Content;
             if (response.Data == null || response.Data.UserName == null) return false;
             if (response.Data.UserName.Contains("b2b:"))
-                return true;
+            return true;
             return false;
         }
 
