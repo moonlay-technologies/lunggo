@@ -111,6 +111,10 @@ var LoginConfig = {
     Url: 'https://api.local.travorama.com/v1/login'
 };
 
+var B2BLoginPathConfig = {
+    Url: 'https://api.local.travorama.com/v1/b2blogin'
+};
+
 var GetProfileConfig = {
     Url: 'https://api.local.travorama.com/v1/profile'
 };

@@ -9,7 +9,10 @@ using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Service;
 using Lunggo.ApCommon.Payment.Service;
 using Lunggo.CustomerWeb.Models;
+using Lunggo.Framework.Config;
 using Lunggo.Framework.Filter;
+using Newtonsoft.Json;
+using RestSharp;
 
 namespace Lunggo.CustomerWeb.Controllers
 {
@@ -19,6 +22,9 @@ namespace Lunggo.CustomerWeb.Controllers
         [Route("id/tiket-pesawat/cari/{searchParam}/{searchId}")]
         public ActionResult Search(string searchId, string searchParam)
         {
+            if (!IsB2BAuthorized())
+                return RedirectToAction("Index", "Index");
+            ViewBag.Domain = IsB2BDomain() ? "B2B" : "B2C";
             var search = new FlightSearchData
             {
                 info = searchId
@@ -62,6 +68,9 @@ namespace Lunggo.CustomerWeb.Controllers
         [Route("id/tiket-pesawat/cari/{searchParam}")]
         public ActionResult Search(string searchParam)
         {
+            if (!IsB2BAuthorized())
+                return RedirectToAction("Index", "Index");
+            ViewBag.Domain = IsB2BDomain() ? "B2B" : "B2C";
             var parts = searchParam.Split('-').ToList();
             var originAirport = parts[parts.Count -2];
             var destinationAirport = parts[parts.Count - 1];
@@ -98,6 +107,9 @@ namespace Lunggo.CustomerWeb.Controllers
         [HttpPost]
         public ActionResult Select(string token)
         {
+            if (!IsB2BAuthorized())
+                return RedirectToAction("Index", "Index");
+            ViewBag.Domain = IsB2BDomain() ? "B2B" : "B2C";
             var tokens = token;
             return RedirectToAction("Checkout", "Flight", new { token = tokens});
         }
@@ -105,6 +117,9 @@ namespace Lunggo.CustomerWeb.Controllers
         [RequireHttps]
         public ActionResult Checkout(string token)
         {
+            if (!IsB2BAuthorized())
+                return RedirectToAction("Index", "Index");
+            ViewBag.Domain = IsB2BDomain() ? "B2B" : "B2C";
             var itin = FlightService.GetInstance().GetItineraryForDisplay(token);
             if (itin != null)
             {
@@ -160,7 +175,13 @@ namespace Lunggo.CustomerWeb.Controllers
         [ActionName("Checkout")]
         public ActionResult CheckoutPost(string rsvNo)
         {
+            if (!IsB2BAuthorized())
+                return RedirectToAction("Index", "Index");
+            ViewBag.Domain = IsB2BDomain() ? "B2B" : "B2C";
             var regId = GenerateId(rsvNo);
+            if(ViewBag.Domain.Equals("B2B"))
+                return RedirectToAction("Thankyou", "Payment", new { rsvNo, regId });
+
             return RedirectToAction("Payment", "Payment", new { rsvNo, regId });
         }
         
@@ -172,6 +193,44 @@ namespace Lunggo.CustomerWeb.Controllers
         }
 
         #region Helpers
+
+        private bool IsB2BAuthorized()
+        {
+            if (!IsB2BDomain())
+                return true;
+            var baseUrl = ConfigManager.GetInstance().GetConfigValue("api", "apiUrl");
+            var client = new RestClient(baseUrl);
+
+            var request = new RestRequest("/v1/profile", Method.GET);
+            var key = Request.Cookies["authkey"];
+            if (key == null)
+                return false;
+
+            request.AddHeader("Authorization", "Bearer " + key.Value);
+            // execute the request
+            IRestResponse<GetProfileModel> response = client.Execute<GetProfileModel>(request);
+            IRestResponse response2 = client.Execute(request);
+            var temp = response2.Content;
+            if (response.Data == null || response.Data.UserName == null) return false;
+            if (response.Data.UserName.Contains("b2b:"))
+            return true;
+            return false;
+        }
+
+        public bool IsB2BDomain()
+        {
+            var httpRequest = Request;
+            if (httpRequest.Url != null)
+            {
+                var host = httpRequest.Url.Host;
+                if (host.Contains("b2b"))
+                {
+                    return true;
+                }
+                return false;
+            }
+            return false;
+        }
 
         public string GenerateId(string key)
         {

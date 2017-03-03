@@ -24,7 +24,8 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
                 };
             }
 
-            var foundUser = userManager.FindByEmail(request.Email);
+            //var foundUser = userManager.FindByName(request.Email);
+            var foundUser = userManager.FindByName("b2b:" + request.Email);
             if (foundUser != null)
             {
                 return new ApiResponseBase
@@ -36,15 +37,22 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
                 };
             }
 
+            //var user = new User
+            //{
+            //    UserName = request.Email,
+            //    Email = request.Email
+            //};
             var user = new User
             {
-                UserName = request.Email,
-                Email = request.Email
+                UserName = "b2b:" + request.Email,
+                Email = request.Email,
+                CompanyId = "7001"
             };
             var result = userManager.Create(user);
             if (result.Succeeded)
             {
                 //Add default User to Role Admin   
+                userManager.AddToRole(user.Id, "Admin"); 
                 var code = HttpUtility.UrlEncode(userManager.GenerateEmailConfirmationToken(user.Id));
                 var host = ConfigManager.GetInstance().GetConfigValue("general", "rootUrl");
                 var apiUrl = HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority);

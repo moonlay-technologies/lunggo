@@ -60,12 +60,15 @@ namespace Lunggo.ApCommon.Flight.Service
                 {
                     //For Booker Only
                     var userId = HttpContext.Current.User.Identity.GetUser().Id;
+                    var user = User.GetFromDb(userId);
                     var role = Role.GetFromDb(userId);
-                    if (role.Contains("Booker"))
+                    if (user.UserName.Contains("b2b:"))
+                    //if (role.Contains("booker"))
                     {
                         //Get Approver Email
                         PaymentService.GetInstance().UpdateBookerPaymentData(reservation.RsvNo);
                         var approver = User.GetApproverEmailByUserId(userId);
+                        if(approver != null)
                         SendNewBookingInfo(PreProcessBookerEmailNotif(reservation.RsvNo, approver));
                     }
                 }
@@ -134,8 +137,10 @@ namespace Lunggo.ApCommon.Flight.Service
             if (reservation.User != null)
             {
                 var userId = HttpContext.Current.User.Identity.GetUser().Id;
+                var user = User.GetFromDb(userId);
                 var role = Role.GetFromDb(userId);
-                if (role.Contains("Booker"))
+                if (user.UserName.Contains("b2b:"))
+                //if (role.Contains("booker"))
                 {
                     reservation.RsvType = "AGENT";
                 }

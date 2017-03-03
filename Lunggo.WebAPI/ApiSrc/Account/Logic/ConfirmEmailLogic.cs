@@ -46,11 +46,11 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
             var result = userManager.ConfirmEmail(request.UserId, request.Code);
             if (result.Succeeded)
             {
-                var roles = userManager.GetRoles(user.Id);
-                if (roles == null)
-                {
-                    userManager.AddToRole(request.UserId, "Customer");   
-                }
+                //var roles = userManager.GetRoles(user.Id);
+                //if (roles == null)
+                //{
+                //    userManager.AddToRole(request.UserId, "Customer");   
+                //}
                 return new ConfirmEmailApiResponse
                 {
                     StatusCode = HttpStatusCode.OK

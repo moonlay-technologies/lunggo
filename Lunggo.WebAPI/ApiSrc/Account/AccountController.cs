@@ -76,6 +76,25 @@ namespace Lunggo.WebAPI.ApiSrc.Account
         }
 
         [HttpPost]
+        [AllowAnonymous]
+        [LunggoCorsPolicy]
+        [Route("v1/b2blogin")]
+        public ApiResponseBase B2BLogin()
+        {
+            LoginApiRequest request = null;
+            try
+            {
+                request = ApiRequestBase.DeserializeRequest<LoginApiRequest>();
+                var apiResponse = AccountLogic.B2BLogin(request);
+                return apiResponse;
+            }
+            catch (Exception e)
+            {
+                return ApiResponseBase.ExceptionHandling(e, request);
+            }
+        }
+
+        [HttpPost]
         [LunggoCorsPolicy]
         [Authorize]
         [Route("v1/register")]
