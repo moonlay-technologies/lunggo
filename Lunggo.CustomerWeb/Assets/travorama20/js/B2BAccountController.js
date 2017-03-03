@@ -24,7 +24,7 @@
             if (authAccess == 2 || authAccess == 1) {
                 $http({
                     method: 'POST',
-                    url: LoginConfig.Url,
+                    url: B2BLoginPathConfig.Url,
                     data: {
                         userName: $scope.form.email,
                         password: $scope.form.password,

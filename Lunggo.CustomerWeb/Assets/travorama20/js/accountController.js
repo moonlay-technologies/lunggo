@@ -1525,109 +1525,109 @@ app.controller('authController', [
 ]);// auth controller end
 
 
-app.controller('b2bAuthController', [
-    '$scope', '$http', '$log', function ($scope, $http, $log) {
+//app.controller('b2bAuthController', [
+//    '$scope', '$http', '$log', function ($scope, $http, $log) {
 
-        $scope.pageLoaded = true;
-        $scope.trial = 0;
-        var url = location.href +"";
-        $scope.message = loginMessage;
-        $scope.returnUrl = url.split('id')[0];
-        $scope.errorMessage = '';
-        if ($scope.message) {
-            $scope.overlay = true;
-        } else {
-            $scope.overlay = false;
-        }
-        $scope.closeOverlay = function () {
-            $scope.overlay = false;
-        }
-        $scope.form = {
-            email: '',
-            password: '',
-            submitting: false,
-            isLogin: false,
-            submitted: false,
-            success: false
-        };
+//        $scope.pageLoaded = true;
+//        $scope.trial = 0;
+//        var url = location.href +"";
+//        $scope.message = loginMessage;
+//        $scope.returnUrl = url.split('id')[0];
+//        $scope.errorMessage = '';
+//        if ($scope.message) {
+//            $scope.overlay = true;
+//        } else {
+//            $scope.overlay = false;
+//        }
+//        $scope.closeOverlay = function () {
+//            $scope.overlay = false;
+//        }
+//        $scope.form = {
+//            email: '',
+//            password: '',
+//            submitting: false,
+//            isLogin: false,
+//            submitted: false,
+//            success: false
+//        };
 
-        $scope.form.submit = function () {
-            if ($scope.trial > 3) {
-                $scope.trial = 0;
-            }
-            $scope.form.submitting = true;
-            var authAccess = getAuthAccess();
-            if (authAccess == 2 || authAccess == 1) {
-                $http({
-                    method: 'POST',
-                    url: B2BLoginPathConfig.Url,
-                    data: {
-                        userName: $scope.form.email,
-                        password: $scope.form.password,
-                        clientId: 'V2toa2VrOXFSWFZOUXpSM1QycEZlRTlIVlhwYWFrVjVUVVJrYlZsVVp6Vk5WRlp0VGtSR2FrOUhSWGhhYWsweFRucGpNRTE2U1RCT2VtTjNXbTFKZDFwcVFUMD0=',
-                        clientSecret: 'V2tkS2FFOUVhek5QUjFsNFRucFpNVmt5UlRST2JVWnNXVmRKTTA1dFVtaFBSMDVyV1dwQk5WcEhTWGxPZWtwcVRVUkpNVTFCUFQwPQ=='
-                    },
-                    headers: {
-                        'Authorization': 'Bearer ' + getCookie('accesstoken')
-                    }
-                }).then(function (returnData) {
-                    $scope.form.submitting = false;
-                    $scope.form.submitted = true;
-                    if (returnData.data.status == '200') {
-                        setCookie("accesstoken", returnData.data.accessToken, returnData.data.expTime);
-                        setCookie("refreshtoken", returnData.data.refreshToken, returnData.data.expTime);
-                        setCookie("authkey", returnData.data.accessToken, returnData.data.expTime);
-                        $scope.form.success = true;
-                        window.location.href = $scope.returnUrl + "id/B2BIndex/index";
-                    }
-                    else {
-                        $scope.overlay = true;
-                        if (returnData.data.error == 'ERALOG01') {
-                            $scope.errorMessage = 'RefreshNeeded';
-                        }
-                        else if (returnData.data.error == 'ERALOG02') {
-                            $scope.errorMessage = 'InvalidInputData';
-                        }
-                        else if (returnData.data.error == 'ERALOG03') {
-                            $scope.errorMessage = 'AlreadyRegisteredButUnconfirmed';
-                        }
-                        else if (returnData.data.error == 'ERALOG04') {
-                            $scope.errorMessage = 'Failed';
-                        }
-                        else if (returnData.data.error == 'ERALOG05') {
-                            $scope.errorMessage = 'NotRegistered';
-                        }
-                        else {
-                            $scope.errorMessage = 'Failed';
-                        }
-                        $log.debug('Error : ' + returnData.data.error);
-                    }
-                }).catch(function (returnData) {
-                    $scope.trial++;
-                    if (refreshAuthAccess() && $scope.trial < 4) //refresh cookie
-                    {
-                        $scope.form.submit();
-                    }
-                    else {
-                        $scope.overlay = true;
-                        $scope.errorMessage = 'Failed';
-                        $log.debug('Failed to Login');
-                        $scope.form.submitting = false;
-                        $scope.form.submitted = false;
-                        $scope.form.isLogin = false;
-                    }
-                });
-            }
-            else {
-                $scope.form.submitting = false;
-                $scope.form.submitted = false;
-                $scope.form.isLogin = false;
-            }
+//        $scope.form.submit = function () {
+//            if ($scope.trial > 3) {
+//                $scope.trial = 0;
+//            }
+//            $scope.form.submitting = true;
+//            var authAccess = getAuthAccess();
+//            if (authAccess == 2 || authAccess == 1) {
+//                $http({
+//                    method: 'POST',
+//                    url: B2BLoginPathConfig.Url,
+//                    data: {
+//                        userName: $scope.form.email,
+//                        password: $scope.form.password,
+//                        clientId: 'V2toa2VrOXFSWFZOUXpSM1QycEZlRTlIVlhwYWFrVjVUVVJrYlZsVVp6Vk5WRlp0VGtSR2FrOUhSWGhhYWsweFRucGpNRTE2U1RCT2VtTjNXbTFKZDFwcVFUMD0=',
+//                        clientSecret: 'V2tkS2FFOUVhek5QUjFsNFRucFpNVmt5UlRST2JVWnNXVmRKTTA1dFVtaFBSMDVyV1dwQk5WcEhTWGxPZWtwcVRVUkpNVTFCUFQwPQ=='
+//                    },
+//                    headers: {
+//                        'Authorization': 'Bearer ' + getCookie('accesstoken')
+//                    }
+//                }).then(function (returnData) {
+//                    $scope.form.submitting = false;
+//                    $scope.form.submitted = true;
+//                    if (returnData.data.status == '200') {
+//                        setCookie("accesstoken", returnData.data.accessToken, returnData.data.expTime);
+//                        setCookie("refreshtoken", returnData.data.refreshToken, returnData.data.expTime);
+//                        setCookie("authkey", returnData.data.accessToken, returnData.data.expTime);
+//                        $scope.form.success = true;
+//                        window.location.href = $scope.returnUrl + "id/B2BIndex/index";
+//                    }
+//                    else {
+//                        $scope.overlay = true;
+//                        if (returnData.data.error == 'ERALOG01') {
+//                            $scope.errorMessage = 'RefreshNeeded';
+//                        }
+//                        else if (returnData.data.error == 'ERALOG02') {
+//                            $scope.errorMessage = 'InvalidInputData';
+//                        }
+//                        else if (returnData.data.error == 'ERALOG03') {
+//                            $scope.errorMessage = 'AlreadyRegisteredButUnconfirmed';
+//                        }
+//                        else if (returnData.data.error == 'ERALOG04') {
+//                            $scope.errorMessage = 'Failed';
+//                        }
+//                        else if (returnData.data.error == 'ERALOG05') {
+//                            $scope.errorMessage = 'NotRegistered';
+//                        }
+//                        else {
+//                            $scope.errorMessage = 'Failed';
+//                        }
+//                        $log.debug('Error : ' + returnData.data.error);
+//                    }
+//                }).catch(function (returnData) {
+//                    $scope.trial++;
+//                    if (refreshAuthAccess() && $scope.trial < 4) //refresh cookie
+//                    {
+//                        $scope.form.submit();
+//                    }
+//                    else {
+//                        $scope.overlay = true;
+//                        $scope.errorMessage = 'Failed';
+//                        $log.debug('Failed to Login');
+//                        $scope.form.submitting = false;
+//                        $scope.form.submitted = false;
+//                        $scope.form.isLogin = false;
+//                    }
+//                });
+//            }
+//            else {
+//                $scope.form.submitting = false;
+//                $scope.form.submitted = false;
+//                $scope.form.isLogin = false;
+//            }
 
-        }
+//        }
 
-    }
-]);// auth controller end
+//    }
+//]);// auth controller end
 
 // Travorama Register Controller
 app.controller('registerController', [
