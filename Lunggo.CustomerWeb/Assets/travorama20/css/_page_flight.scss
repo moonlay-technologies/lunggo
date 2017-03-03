@@ -219,7 +219,7 @@ file: /Assets/travorama20/css/_page_flight.scss
     }
     // *****
     // search result
-    .search-result { width: 920px; margin: 0 auto; min-height:500px; padding-top:20px; letter-spacing:0;}
+    .search-result { width: 920px; margin: 0 auto; min-height:500px; padding:20px 0; letter-spacing:0;}
     // *****
     // flight
     .flight {border:$border-default; @include border-radius($border-radius-default); color:#525252; background:#fff; margin-bottom:15px; position:relative;
@@ -304,7 +304,21 @@ file: /Assets/travorama20/css/_page_flight.scss
                     }
                 }
             }
-            .flight-summary-right {color:$color-main-orange; padding:10px; float:left; width:27%; padding-left:20px;
+            .flight-summary-right {
+                color:$color-main-orange; 
+                float:left; 
+                width:27%;
+                position: relative;
+                height: 150px;
+                padding: 0;
+                .fsr-price {
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%,-50%);
+                    width: 100%;
+                    padding: 0 20px;
+                }
                 &:before, &:after {@include clearfix();}
                 .original-price {text-decoration:line-through; text-decoration-color: $color-main-orange; }
                 h4 {font-size:25px; @extend .os-bold; margin:0; margin-bottom:3px; margin-top:5px;}
@@ -580,9 +594,6 @@ file: /Assets/travorama20/css/_page_flight.scss
     }
     .summary-top-right-top {padding: 24px 0;}
     .flight-summary .flight-summary-left .summary-top .summary-top-right {padding-top:0; border-left: 1px solid #ccc;}
-    .flight .flight-summary .flight-summary-right {
-        padding: 20px 15px;
-    }
 
     // flight
     .flight {
@@ -958,11 +969,23 @@ file: /Assets/travorama20/css/_page_flight.scss
                         }
                     }
                 }
-                .flight-summary-right {width:27.5%; padding:16px 5px;
-                    h4 {font-size:18px; padding-left:10px;
+                .flight-summary-right {
+                    width: 27.5%;
+                    position: relative;
+                    height: 155px;
+                    padding: 0;
+                    .fsr-price {
+                        position: absolute;
+                        top: 50%;
+                        left: 50%;
+                        transform: translate(-50%,-50%);
+                        width: 100%;
+                        padding: 0 10px;
+                    }
+                    h4 {font-size:18px;
                         sup {top:-5px;}
                     }
-                    small {font-size:8px; letter-spacing:-0.1px; padding-left:10px;}
+                    small {font-size:8px; letter-spacing:-0.1px;}
                     a {margin-left:auto; margin-right:auto; width:100px; display:block; margin-top:10px;}
                 }
             }

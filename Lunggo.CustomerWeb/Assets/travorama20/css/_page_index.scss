@@ -321,7 +321,7 @@ body.page-index {margin-bottom: 0;}
                     img {height:100%; width:auto; display:none;}
                 }
             }
-            .slick-dots {position:absolute; bottom:20px; text-align:right; width:100%; list-style:none; margin:0; padding:0; padding-right: 5%; 
+            .slick-dots {position:absolute; bottom:20px; text-align:right; width:100%; list-style:none; margin:0; padding:0; padding-right: 5%; z-index: 998;
                 li {list-style:none; display:inline-block;
                     &+li {margin-left:10px;}
                     button {background-color: transparent; border:2px solid #fff; @include border-radius(20px); outline:none; padding: 0; width: 20px; height: 20px; line-height: 0; font-size:0;}
@@ -689,6 +689,9 @@ body.page-index {margin-bottom: 0;}
             padding: 40px 0;
             max-width: none !important;
             border-bottom: 1px solid #ccc;
+            .price-calendar, .popular-flight {
+                &>div:first-child {margin-bottom: 15px}
+            }
         }
         .popular-flight {
             .pop-flight {
@@ -940,9 +943,6 @@ body.page-index {margin-bottom: 0;}
                     }
                 }
             }
-        }
-        .price-calendar, .popular-flight {
-            .os-bold.md-txt {margin-bottom: 15px;}
         }
     }
 

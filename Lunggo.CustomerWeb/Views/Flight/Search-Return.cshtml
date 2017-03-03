@@ -186,19 +186,19 @@
                         <b>@data.Trips[0].DepartureDate.ToString("dddd, dd MMMM yyyy", new CultureInfo("id-ID")) - @data.Trips[1].DepartureDate.ToString("dddd, dd MMMM yyyy", new CultureInfo("id-ID"))</b> | <b>@(data.AdultCount + data.ChildCount + data.InfantCount) Orang</b>
                         @if (data.ChildCount != 0 && data.InfantCount != 0)
                         {
-                        <span>(@data.AdultCount Dewasa , @data.ChildCount Anak, @data.InfantCount Bayi)</span>
+                            <span>(@data.AdultCount Dewasa , @data.ChildCount Anak, @data.InfantCount Bayi)</span>
                         }
                         else if (data.ChildCount != 0 && data.InfantCount == 0)
                         {
-                        <span>(@data.AdultCount Dewasa , @data.ChildCount Anak)</span>
+                            <span>(@data.AdultCount Dewasa , @data.ChildCount Anak)</span>
                         }
                         else if (data.ChildCount == 0 && data.InfantCount != 0)
                         {
-                        <span>(@data.AdultCount Dewasa , @data.InfantCount Bayi)</span>
+                            <span>(@data.AdultCount Dewasa , @data.InfantCount Bayi)</span>
                         }
                         else if (data.ChildCount == 0 && data.InfantCount == 0)
                         {
-                        <span>(@data.AdultCount Dewasa)</span>
+                            <span>(@data.AdultCount Dewasa)</span>
                         }
                     </h4>
                 </div>
@@ -549,11 +549,12 @@
                                 </div><!-- .summar-bottom -->
                             </div>
                             <div class="flight-summary-right">
-
-                                <span class="original-price"> Rp {{flight.originalAdultFare | number}} </span>
-                                <h4 class="flight-price"><sup>Rp</sup> {{flight.netAdultFare | number}}</h4>
-                                <small>*Termasuk Pajak &amp; Service Charge</small>
-                                <a class="btn btn-yellow sm-btn" ng-click="setChosenFlight('departure',flight.IndexNo)">PESAN</a>
+                                <div class="fsr-price">
+                                    <span class="original-price"> Rp {{flight.originalAdultFare | number}} </span>
+                                    <h4 class="flight-price"><sup>Rp</sup> {{flight.netAdultFare | number}}<span class="sm-txt"> /pax</span></h4>
+                                    <small>*Termasuk Pajak &amp; Service Charge</small>
+                                    <a class="btn btn-yellow sm-btn" ng-click="setChosenFlight('departure',flight.IndexNo)">PESAN</a>
+                                </div>
                             </div>
                         </div><!-- .flight-summary -->
                         <div class="flight-detail" ng-show="departureFlightConfig.activeFlight == flight.IndexNo">
@@ -908,10 +909,12 @@
                             </div>
 
                             <div class="flight-summary-right">
-                                <span class="original-price"> Rp {{flight.originalAdultFare | number}} </span>
-                                <h4 class="flight-price"><sup>Rp</sup> {{flight.netAdultFare | number}}</h4>
-                                <small>*Termasuk Pajak &amp; Service Charge</small>
-                                <a class="btn btn-yellow sm-btn" ng-click="setChosenFlight('return',flight.IndexNo)">PESAN</a>
+                                <div class="fsr-price">
+                                    <span class="original-price"> Rp {{flight.originalAdultFare | number}} </span>
+                                    <h4 class="flight-price"><sup>Rp</sup> {{flight.netAdultFare | number}}<span class="sm-txt"> /pax</span></h4>
+                                    <small>*Termasuk Pajak &amp; Service Charge</small>
+                                    <a class="btn btn-yellow sm-btn" ng-click="setChosenFlight('return',flight.IndexNo)">PESAN</a>
+                                </div>
                             </div>
                         </div><!-- .flight-summary -->
                         <div class="flight-detail" ng-show="returnFlightConfig.activeFlight == flight.IndexNo">
