@@ -6,6 +6,71 @@ if (typeof (angular) == 'object') {
     // root scope
     app.run(function ($rootScope) {
         $rootScope.travoramaModuleName = 'travoramaB2B';
+        $rootScope.profileloaded = false;
+        $rootScope.email = '';
+        $rootScope.name = '';
+        $rootScope.trial = 0;
+        $rootScope.roles = [];
+        $rootScope.isAdmin = false;
+        $rootScope.isFinance = false;
+        $rootScope.returnUrl = document.referrer;
+        $rootScope.authProfile = {} //tbd
+        $rootScope.windowlocation = window.location.pathname;
+
+        $rootScope.trial = 0;
+        $rootScope.getProfile = function() {
+            
+            if ($rootScope.trial > 3) {
+                $rootScope.trial = 0;
+            }
+            $.ajax({
+                method: 'GET',
+                url: GetProfileConfig.Url,
+                headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') },
+                async: false
+            }).done(function (returnData) {
+                if (returnData.data.status == "200") {
+                    $rootScope.pageLoaded = true;
+                    $rootScope.isLogin = true;
+                    //$log.debug('Success getting Profile');
+                    $rootScope.email = returnData.data.email;
+                    $rootScope.name = returnData.data.name;
+                    $rootScope.roles = returnData.data.roles;
+                    $rootScope.getRole();
+                    $rootScope.profileloaded = true;
+                } else {
+                    //$log.debug('There is an error');
+                    //$log.debug('Error : ' + returnData.data.error);
+                    $rootScope.pageLoaded = true;
+                    $rootScope.isLogin = false;
+                    $rootScope.profileloaded = true;
+                    //$log.debug(returnData);
+                }
+            }).error(function () {
+                $rootScope.trial++;
+                if (refreshAuthAccess() && $rootScope.trial < 4) //refresh cookie
+                {
+                    $rootScope.getProfile();
+                } else {
+                    //$log.debug('Failed to Login');
+                    $rootScope.pageLoaded = true;
+                    $rootScope.isLogin = false;
+                    $rootScope.profileloaded = true;
+                }
+            });
+        }
+        //$rootScope.getProfile();
+        $rootScope.getRole = function () {
+            for (var i = 0; i < $rootScope.roles.length; i++) {
+                if ($rootScope.roles[i] === "Admin") {
+                    $rootScope.isAdmin = true;
+                    $('.paymentmgmt').hide();
+                }
+                if ($rootScope.roles[i] === "Finance") {
+                    $rootScope.isFinance = true;
+                }
+            }
+        };
     });//app.run
 }
 

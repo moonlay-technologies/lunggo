@@ -17,14 +17,10 @@
     <script src="/Assets/js/angular.min.js"></script>
     <script src="/Assets/js/angular-route.min.js"></script>
     <script src="/Assets/js/angular-animate.min.js"></script>
-
-    <script src="/Assets/js/moment.min.js"></script>
-    <script src="/Assets/js/moment-with-locales.min.js"></script>
-    <script src="/Assets/js/xml2json.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.5/angular-resource.js"></script>
     <script src="/Assets/B2BTravorama/assets/js/form_elements.js" type="text/javascript"></script>
     <!-- additional Angular JS-->
-    <script src="/Assets/js/bootstrap.min.js"></script>
+    @*<script src="/Assets/js/bootstrap.min.js"></script>*@
     <!-- veritrans JS -->
     @*<script src="https://api.sandbox.veritrans.co.id/v2/assets/js/veritrans.min.js"></script>*@
     <script src="https://api.sandbox.midtrans.com/v2/assets/js/midtrans.min.js" type="text/javascript"></script>
@@ -35,11 +31,8 @@
 @section PageJS{
     <script src="/Assets/travorama20/js/B2BTravorama20.js"></script>
     <script src="/Assets/travorama20/js/B2BHomeController.js"></script> 
-    <script>
-        
-    </script>
 }
-<div ng-app="travoramaB2B" ng-controller="B2BPaymentMgmtFormController">
+<div ng-app="travoramaB2B" ng-controller="B2BPaymentMgmtFormController" ng-class="{ 'active': pageLoaded }">
     <div class="payment-page">
         <div class="panel panel-transparent">
             <div class="panel-heading ">
@@ -59,19 +52,50 @@
                                     <div class="font-montserrat bold cc-no">{{cc.type}} ****{{cc.maskedCardNumber.slice(-4)}}</div>
                                     <div class="small hint-text expiry">Expires {{("0" + (cc.cardExpiry.getMonth() + 1)).slice(-2)}}/{{cc.cardExpiry.getFullYear().toString().slice(-2)}}</div>
                                 </div>
-                                <button class="btn remove-payment" ng-class="{ 'disableDel': cc.isPrimaryCard }" ng-click="deleteCard(cc.maskedCardNumber)" ng-disabled="cc.isPrimaryCard">
+                                <button class="btn remove-payment" ng-class="{ 'disableDel': cc.isPrimaryCard }"
+                                        data-toggle="modal" data-target=".deleteCc"
+                                        data-backdrop="static" data-keyboard="false" ng-click="deleteCardData.set(cc.maskedCardNumber, $index)" ng-disabled="cc.isPrimaryCard">
                                     <i class="pg-trash"></i>
                                 </button>
                             </div>
                             <div class="pi-bottom clearfix font-montserrat bold small">
                                 <div class="pi-status"><span class="current-status" ng-show="cc.isPrimaryCard">Primary</span></div>
-                                <div class="pi-status"><a class="set-status" ng-show="!cc.isPrimaryCard" ng-click="setPrimary(cc.maskedCardNumber, $index)">Set As Primary Card</a></div>
-                                <div class="pull-right"><a href="#" class="btn-edit-payment" ng-click="showEditForm(cc)">Edit</a></div>
+                                <div class="pi-status">
+                                    <a class="set-status" ng-show="!cc.isPrimaryCard" data-toggle="modal" data-target=".setPrimary"
+                                       data-backdrop="static" data-keyboard="false" ng-click="setPrimaryData(cc.maskedCardNumber, $index)">Set As Primary Card</a>
+                                </div>
+                                <div class="pull-right"><a href="#" class="btn-edit-payment hide" ng-click="showEditForm(cc)">Edit</a></div>
                             </div>
                         </div>
                     </div>
                 </div>
-                
+
+                <div ng-if="emptyCc">
+                    <div class="payment-item col-sm-6 m-b-20 emptyCc hide" id=" payment-item-1" count="0">
+                        <div class="pi-wrapper clearfix">
+                            <div class="pi-top clearfix">
+                                <div class="">
+                                    <div class="icon-visa"></div>
+                                </div>
+                                <div class="clearfix">
+                                    <div class="font-montserrat bold cc-no">New Credit Card</div>
+                                    <div class="small hint-text expiry">Expires mm/yy</div>
+                                </div>
+                                <button class="btn remove-payment" data-toggle="modal" data-target=".deleteCc" data-backdrop="static" data-keyboard="false">
+                                    <i class="pg-trash"></i>
+                                </button>
+                            </div>
+                            <div class="pi-bottom clearfix font-montserrat bold small">
+                                <div class="pi-status"><span class="current-status" ng-show="cc.isPrimaryCard">Primary</span></div>
+                                <div class="pi-status">
+                                    <a class="set-status" ng-show="!cc.isPrimaryCard" data-toggle="modal" data-target=".setPrimary"
+                                       data-backdrop="static" data-keyboard="false">Set As Primary Card</a>
+                                </div>
+                                <div class="pull-right"><a href="#" class="btn-edit-payment hide">Edit</a></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div class="payment-add col-sm-6 m-b-20" ng-click="addCc()">
                     <div class="pa-wrapper clearfix">
                         <a class="font-montserrat bold" id="add-payment"><i class="fa fa-plus-square m-r-5"></i>ADD PAYMENT METHOD</a>
@@ -137,21 +161,16 @@
                                 </div>
                             </div>
                         </form>
-                        <div class="row">
-                            <div class="col-sm-6 m-t-10 sm-m-t-10">
-                                <button type="button" class="btn btn-default btn-cons btn-block m-t-5" data-dismiss="modal">Kembali</button>
-                            </div>
-                            <div class="col-sm-6 m-t-10 sm-m-t-10">
-                                <button type="button" class="btn btn-primary btn-block m-t-5">Simpan</button>
-                            </div>
+                        <div class="clearfix m-t-10">
+                            <button type="button" class="btn btn-primary m-t-5 pull-right" data-dismiss="modal"><i class="fa fa-save m-r-10"></i>Simpan</button>
+                            <button type="button" class="btn btn-default m-t-5 m-r-10 pull-right" data-dismiss="modal"><i class="fa fa-arrow-left m-r-10"></i>Kembali</button>
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- /.modal-content -->
         </div>
     </div>
-    
+
     <div class="modal fade slide-up disable-scroll modal-edit-payment form-add-cc" tabindex="-1" role="dialog" aria-hidden="false">
         <div class="modal-dialog ">
             <div class="modal-content-wrapper">
@@ -217,54 +236,214 @@
             <!-- /.modal-content -->
         </div>
     </div>
-    
-    @*<div class="payment-popup setPrimary" ng-show="setPrimaryPopUp">
-        <div class=" overlay-content">
-            <section style="padding-top:40px; padding-left:225px;">
-                <div><img src="/Assets/images/travorama-logo-color.png" height="22px" width="80px"></div>
-                <div><img src="~/Assets/images/popup/paymentyellowstrip.png" /></div>
-                <div style="padding-top:5px; padding-right:30px;"><span style="font-size:12px">Apakah Anda yakin?</span></div>
-            </section>
-            <div align="right" style="padding-right:30px;padding-top:10px;">
-                <a class="btn popup-btn-yellow book-failed sm-btn answer" id="yes"> <b>Ya</b></a>
-                <a class="btn popup-btn-yellow book-failed sm-btn answer" id="no"><b>Tidak</b></a>
+
+    <div class="modal fade slide-up disable-scroll modal-sm-double setPrimary" tabindex="-1" role="dialog" aria-hidden="false">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content-wrapper">
+                <div class="modal-content">
+                    <div class="modal-header clearfix">
+                        <h4 class="text-center no-margin"></h4>
+                    </div>
+                    <div class="modal-body m-t-10">
+                        <div class="modal-notif-content m-b-20 text-left">
+                            Apakah Anda yakin?
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <button type="button" class="btn btn-default btn-block answer" id="yes" data-dismiss="modal" ng-click="setPrimary(ccToSetPrimary, primaryIndex)">Ya</button>
+                            </div>
+                            <div class="col-xs-6">
+                                <button type="button" class="btn btn-primary btn-block answer" id="no" data-dismiss="modal">Tidak</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-    
-    <div class="payment-popup" ng-show="waitSetPrimary">
-        <div class=" overlay-content">
-            <section style="padding-top:40px; padding-left:225px;">
-                <div><img src="/Assets/images/travorama-logo-color.png" height="22px" width="80px"></div>
-                <div><img src="~/Assets/images/popup/paymentyellowstrip.png" /></div>
-                <div style="padding-top:5px; padding-right:30px;"><span style="font-size:12px">Silakan Menunggu</span></div>
-            </section>
-        </div>
-    </div>
-    
-    <div class="payment-popup setPrimarySucceed" ng-show="successSetPrimary">
-        <div class=" overlay-content">
-            <section style="padding-top:40px; padding-left:225px;">
-                <div><img src="/Assets/images/travorama-logo-color.png" height="22px" width="80px"></div>
-                <div><img src="~/Assets/images/popup/paymentyellowstrip.png" /></div>
-                <div style="padding-top:5px; padding-right:30px;"><span style="font-size:12px">Set Primary Card is Successful</span></div>
-            </section>
-            <div align="right" style="padding-right:30px;padding-top:10px;">
-                <a class="btn popup-btn-yellow book-failed sm-btn answer" id="close"> <b>Tutup</b></a>
+
+    <div class="modal fade slide-up disable-scroll modal-sm-default wait" tabindex="-1" role="dialog" aria-hidden="false" ng-show="waitSetPrimary">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content-wrapper">
+                <div class="modal-content">
+                    <div class="modal-header clearfix">
+                        <h4 class="text-center no-margin"></h4>
+                    </div>
+                    <div class="modal-body m-t-10">
+                        <div class="modal-notif-content m-b-20">
+                            Mohon Tunggu
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-    
-    <div class="payment-popup setPrimaryFailed" ng-show="!successSetPrimary && finishSetPrimary">
-        <div class=" overlay-content">
-            <section style="padding-top:40px; padding-left:225px;">
-                <div><img src="/Assets/images/travorama-logo-color.png" height="22px" width="80px"></div>
-                <div><img src="~/Assets/images/popup/paymentyellowstrip.png" /></div>
-                <div style="padding-top:5px; padding-right:30px;"><span style="font-size:12px">Set Primary Card is Failed</span></div>
-            </section>
-            <div align="right" style="padding-right:30px;padding-top:10px;">
-                <a class="btn popup-btn-yellow book-failed sm-btn answer" id="close"> <b>Tutup</b></a>
+
+    <div class="modal fade slide-up disable-scroll modal-sm-single setPrimarySucceed" tabindex="-1" role="dialog" aria-hidden="false" ng-show="successSetPrimary">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content-wrapper">
+                <div class="modal-content">
+                    <div class="modal-header clearfix">
+                        <h4 class="text-center no-margin"></h4>
+                    </div>
+                    <div class="modal-body m-t-10 text-center">
+                        <div class="modal-notif-content m-b-20 text-left">
+                            Set Primary Card is Successful.
+                        </div>
+                        <button type="button" class="btn btn-primary btn-cons answer" id="close" data-dismiss="modal">Tutup</button>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>*@
+    </div>
+
+    <div class="modal fade slide-up disable-scroll modal-sm-single setPrimaryFailed" tabindex="-1" role="dialog" aria-hidden="false"
+         ng-show="!successSetPrimary && finishSetPrimary">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content-wrapper">
+                <div class="modal-content">
+                    <div class="modal-header clearfix">
+                        <h4 class="text-center no-margin"></h4>
+                    </div>
+                    <div class="modal-body m-t-10 text-center">
+                        <div class="modal-notif-content m-b-20 text-left">
+                            Set Primary Card is Failed
+                        </div>
+                        <button type="button" class="btn btn-primary btn-cons answer" id="close" data-dismiss="modal">Tutup</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade slide-up disable-scroll modal-sm-double deleteCc" tabindex="-1" role="dialog" aria-hidden="false">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content-wrapper">
+                <div class="modal-content">
+                    <div class="modal-header clearfix">
+                        <h4 class="text-center no-margin"></h4>
+                    </div>
+                    <div class="modal-body m-t-10">
+                        <div class="modal-notif-content m-b-20 text-left">
+                            Apakah Anda yakin?
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <button type="button" class="btn btn-default btn-block answer" id="yes" data-dismiss="modal" ng-click="deleteCard(deleteCardData.cc, deleteCardData.index)">Ya</button>
+                            </div>
+                            <div class="col-xs-6">
+                                <button type="button" class="btn btn-primary btn-block answer" id="no" data-dismiss="modal" ng-click="deleteCardData.cc =''">Tidak</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade slide-up disable-scroll modal-sm-default deleteCcwait" tabindex="-1" role="dialog" aria-hidden="false">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content-wrapper">
+                <div class="modal-content">
+                    <div class="modal-header clearfix">
+                        <h4 class="text-center no-margin"></h4>
+                    </div>
+                    <div class="modal-body m-t-10">
+                        <div class="modal-notif-content m-b-20">
+                            Mohon Tunggu
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade slide-up disable-scroll modal-sm-single deleteCcSucceed" tabindex="-1" role="dialog" aria-hidden="false">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content-wrapper">
+                <div class="modal-content">
+                    <div class="modal-header clearfix">
+                        <h4 class="text-center no-margin"></h4>
+                    </div>
+                    <div class="modal-body m-t-10 text-center">
+                        <div class="modal-notif-content m-b-20 text-left">
+                            Kartu Kredit Anda berhasil dihapus.
+                        </div>
+                        <button type="button" class="btn btn-primary btn-cons answer" id="close" data-dismiss="modal">Tutup</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade slide-up disable-scroll modal-sm-single deleteCcFailed" tabindex="-1" role="dialog" aria-hidden="false">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content-wrapper">
+                <div class="modal-content">
+                    <div class="modal-header clearfix">
+                        <h4 class="text-center no-margin"></h4>
+                    </div>
+                    <div class="modal-body m-t-10 text-center">
+                        <div class="modal-notif-content m-b-20 text-left">
+                            Kartu Kredit Anda gagal dihapus
+                        </div>
+                        <button type="button" class="btn btn-primary btn-cons answer" id="close" data-dismiss="modal">Tutup</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade slide-up disable-scroll modal-sm-default addCcwait" tabindex="-1" role="dialog" aria-hidden="false">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content-wrapper">
+                <div class="modal-content">
+                    <div class="modal-header clearfix">
+                        <h4 class="text-center no-margin"></h4>
+                    </div>
+                    <div class="modal-body m-t-10">
+                        <div class="modal-notif-content m-b-20">
+                            Mohon Tunggu
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade slide-up disable-scroll modal-sm-single addCcSucceed" tabindex="-1" role="dialog" aria-hidden="false">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content-wrapper">
+                <div class="modal-content">
+                    <div class="modal-header clearfix">
+                        <h4 class="text-center no-margin"></h4>
+                    </div>
+                    <div class="modal-body m-t-10 text-center">
+                        <div class="modal-notif-content m-b-20 text-left">
+                            Kartu Kredit Anda berhasil disimpan.
+                        </div>
+                        <button type="button" class="btn btn-primary btn-cons answer" id="close" data-dismiss="modal">Tutup</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade slide-up disable-scroll modal-sm-single addCcFailed" tabindex="-1" role="dialog" aria-hidden="false">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content-wrapper">
+                <div class="modal-content">
+                    <div class="modal-header clearfix">
+                        <h4 class="text-center no-margin"></h4>
+                    </div>
+                    <div class="modal-body m-t-10 text-center">
+                        <div class="modal-notif-content m-b-20 text-left">
+                            Kartu Kredit Anda gagal disimpan
+                        </div>
+                        <button type="button" class="btn btn-primary btn-cons answer" id="close" data-dismiss="modal">Tutup</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

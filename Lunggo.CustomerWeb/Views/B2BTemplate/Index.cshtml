@@ -4,14 +4,131 @@
     ViewBag.SiteHeader = "b2b-index";
     ViewBag.Title = "Dashboard";
     ViewBag.AngularController = "";
-    
+
 }
 
 @section AdditionalCSS{
 }
 
 @section AdditionalJS{
+    <script src="/Assets/js/angular.min.js"></script>
+    <script src="/Assets/js/angular-route.min.js"></script>
+    <script src="/Assets/js/angular-animate.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.5/angular-resource.js"></script>
+    <script src="/Assets/B2BTravorama/assets/js/form_elements.js" type="text/javascript"></script>
 }
 
 @section PageJS{
+    <script src="/Assets/travorama20/js/B2BTravorama20.js"></script>
 }
+
+<div class="page-dashboard">
+    <div class="page-modal">
+        <div class="panel panel-transparent">
+            <div class="panel-heading">
+                <div class="panel-title">
+                    Modal Box Notification Example
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <div class="panel-body">
+                <div class="">
+                    <button class="btn btn-primary btn-cons btn-modal" data-toggle="modal" data-target=".modal-sm-double" data-backdrop="static" data-keyboard="false">Modal 2 Btn</button>
+                    <span class="m-r-20"></span>
+                    <button class="btn btn-primary btn-cons btn-modal" data-toggle="modal" data-target=".modal-sm-single" data-backdrop="static" data-keyboard="false">Modal 1 Btn</button>
+                </div>
+                <div class="m-t-20">
+                    <button class="btn btn-primary btn-cons btn-modal" data-toggle="modal" data-target=".modal-sm-default">Modal No-Btn</button>
+                    <span class="m-r-20"></span>
+                    <button class="btn btn-primary btn-cons btn-modal" data-toggle="modal" data-target=".modal-sm-default-close" data-backdrop="static" data-keyboard="false">Modal No-Btn Close</button>
+                </div>
+
+            </div>
+        </div>
+        <!-- Example Modal Box -->
+
+    </div>
+    <!-- With 2 buttons -->
+    <div class="modal fade slide-up disable-scroll modal-sm-double" tabindex="-1" role="dialog" aria-hidden="false">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content-wrapper">
+                <div class="modal-content">
+                    <div class="modal-header clearfix">
+                        <h4 class="text-center no-margin">Title</h4>
+                    </div>
+                    <div class="modal-body m-t-10">
+                        <div class="modal-notif-content m-b-20 text-left">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Haec et tu ita posuisti, et verba vestra sunt. Quod autem ratione actum est, id officium appellamus.
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <button type="button" class="btn btn-default btn-block" data-dismiss="modal">Cancel</button>
+                            </div>
+                            <div class="col-sm-6">
+                                <button type="button" class="btn btn-primary btn-block" data-dismiss="modal">Ok</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- With single buttons -->
+    <div class="modal fade slide-up disable-scroll modal-sm-single" tabindex="-1" role="dialog" aria-hidden="false">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content-wrapper">
+                <div class="modal-content">
+                    <div class="modal-header clearfix">
+                        <h4 class="text-center no-margin">Title</h4>
+                    </div>
+                    <div class="modal-body m-t-10 text-center">
+                        <div class="modal-notif-content m-b-20 text-left">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Haec et tu ita posuisti, et verba vestra sunt. Quod autem ratione actum est, id officium appellamus.
+                        </div>
+                        <button type="button" class="btn btn-primary btn-cons" data-dismiss="modal">Ok</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- With no buttons -->
+    <div class="modal fade slide-up disable-scroll modal-sm-default" tabindex="-1" role="dialog" aria-hidden="false">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content-wrapper">
+                <div class="modal-content">
+                    <div class="modal-header clearfix">
+                        <h4 class="text-center no-margin">Title</h4>
+                    </div>
+                    <div class="modal-body m-t-10">
+                        <div class="modal-notif-content m-b-20">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Haec et tu ita posuisti, et verba vestra sunt. Quod autem ratione actum est, id officium appellamus.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- With no buttons with close -->
+    <div class="modal fade slide-up disable-scroll modal-sm-default-close" tabindex="-1" role="dialog" aria-hidden="false">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content-wrapper">
+                <div class="modal-content">
+                    <div class="modal-header clearfix">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            <i class="pg-close fs-14"></i>
+                        </button>
+                        <h4 class="text-center no-margin">Title</h4>
+                    </div>
+                    <div class="modal-body m-t-10">
+                        <div class="modal-notif-content m-b-20">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Haec et tu ita posuisti, et verba vestra sunt. Quod autem ratione actum est, id officium appellamus.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

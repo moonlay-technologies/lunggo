@@ -2812,6 +2812,8 @@
     <Content Include="Views\B2BTemplate\OrderListHotel.cshtml" />
     <Content Include="Views\B2BTemplate\OrderListFlight.cshtml" />
     <Content Include="Views\B2BTemplate\UserManagement.cshtml" />
+    <Content Include="Views\B2BTemplate\OrderDetailFlight.cshtml" />
+    <Content Include="Views\B2BTemplate\OrderDetailHotel.cshtml" />
     <Content Include="Views\Shared\B2BTravorama\Occupancies.cshtml" />
     <None Include="Views\Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

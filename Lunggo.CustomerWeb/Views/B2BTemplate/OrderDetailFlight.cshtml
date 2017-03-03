@@ -1,0 +1,197 @@
+﻿@{
+    Layout = "/Views/Shared/B2BTravorama/_B2BLayout.cshtml";
+    ViewBag.BodyClass = "b2b-order-detail flight";
+    ViewBag.SiteHeader = "b2b-order-detail";
+    ViewBag.Title = "Order Detail Flight";
+    ViewBag.AngularController = "";
+
+}
+
+@section AdditionalCSS{
+}
+
+@section AdditionalJS{
+}
+
+@section PageJS{
+}
+
+<div class="order-detail">
+    <div class="panel panel-transparent">
+        <div class="panel-heading">
+            <div class="panel-title">
+                Order Detail Tiket Pesawat
+            </div>
+            <div class="clearfix"></div>
+        </div>
+        <div class="panel-body bg-white">
+            <div class="od-tabs">
+                <ul id="tabs-nvd3" class="nav nav-tabs nav-tabs-linetriangle text-center">
+                    <li class="active col-sm-6">
+                        <a data-toggle="tab" href="#tab-detail-reservation"><span class="bold">Detail Resrevasi</span></a>
+                    </li>
+                    <li class="col-sm-6">
+                        <a data-toggle="tab" href="#tab-detail-flight"><span class="bold">Detail Penerbangan</span></a>
+                    </li>
+                </ul>
+                <div class="tab-content no-padding">
+                    <div class="tab-pane active" id="tab-detail-reservation">
+                        <div class="col-sm-6">
+                            <div class="flight-reservation">
+                                <div class="table-responsive">
+                                    <div class="font-montserrat bold p-t-15 p-b-15 p-l-20 p-r-20" style="border-bottom: 2px solid #ccc;">RINCIAN RESERVASI</div>
+                                    <div id="detailedTable_wrapper" class="dataTables_wrapper form-inline no-footer">
+                                        <table class="table table-hover table-condensed table-detailed dataTable no-footer" id="detailedTable" role="grid">
+                                            <tbody>
+                                                <tr role="row" class="odd">
+                                                    <td class="v-align-middle semi-bold">Nomor Reservasi</td>
+                                                    <td class="v-align-middle">111222333444</td>
+                                                </tr>
+                                                <tr role="row" class="odd">
+                                                    <td class="v-align-middle semi-bold">Tanggal Reservasi</td>
+                                                    <td class="v-align-middle">Rabu, 1 Maret 2017</td>
+                                                </tr>
+                                                <tr role="row" class="even">
+                                                    <td class="v-align-middle semi-bold">Nama</td>
+                                                    <td class="v-align-middle">John Doe</td>
+                                                </tr>
+                                                <tr role="row" class="even">
+                                                    <td class="v-align-middle semi-bold">Email</td>
+                                                    <td class="v-align-middle">example@domain.com</td>
+                                                </tr>
+                                                <tr role="row" class="even">
+                                                    <td class="v-align-middle semi-bold">Telepon</td>
+                                                    <td class="v-align-middle">089999999999</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="flight-payment">
+                                <div class="table-responsive">
+                                    <div class="font-montserrat bold p-t-15 p-b-15 p-l-20 p-r-20" style="border-bottom: 2px solid #ccc;">DETAIL PEMBAYARAN</div>
+                                    <div id="detailedTable_wrapper" class="dataTables_wrapper form-inline no-footer">
+                                        <table class="table table-hover table-condensed table-detailed dataTable no-footer" id="detailedTable" role="grid">
+                                            <tbody>
+                                                <tr role="row" class="odd">
+                                                    <td class="v-align-middle semi-bold">Harga total</td>
+                                                    <td class="v-align-middle">Jakarta (CGK)</td>
+                                                </tr>
+                                                <tr role="row" class="even">
+                                                    <td class="v-align-middle semi-bold">Nama Diskon</td>
+                                                    <td class="v-align-middle">Diskon BTN</td>
+                                                </tr>
+                                                <tr role="row" class="odd">
+                                                    <td class="v-align-middle semi-bold">Nominal Voucher</td>
+                                                    <td class="v-align-middle">Rp 999.999</td>
+                                                </tr>
+                                                <tr role="row" class="even">
+                                                    <td class="v-align-middle semi-bold">Harga Sebelum Diskon</td>
+                                                    <td class="v-align-middle">Rp 9.999.999</td>
+                                                </tr>
+                                                <tr role="row" class="even">
+                                                    <td class="v-align-middle semi-bold">Metode Pembayaran</td>
+                                                    <td class="v-align-middle">Credit Card</td>
+                                                </tr>
+                                                <tr role="row" class="even">
+                                                    <td class="v-align-middle semi-bold">Harga Sebelum Diskon</td>
+                                                    <td class="v-align-middle">Rp 99.999.999</td>
+                                                </tr>
+                                                <tr role="row" class="even">
+                                                    <td class="v-align-middle semi-bold">Status Pembayaran</td>
+                                                    <td class="v-align-middle"><span class="btn btn-complete">Complete</span></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="tab-detail-flight">
+                        <div class="flight-departure">
+                            <div class="table-responsive">
+                                <div class="font-montserrat bold p-t-15 p-b-15 p-l-20 p-r-20" style="border-bottom: 2px solid #ccc;">KEBERANGKATAN PENERBANGAN</div>
+                                <div id="detailedTable_wrapper" class="dataTables_wrapper form-inline no-footer">
+                                    <table class="table table-hover table-condensed table-detailed dataTable no-footer" id="detailedTable" role="grid">
+                                        <tbody>
+                                            <tr role="row" class="odd">
+                                                <td class="v-align-middle semi-bold">Asal</td>
+                                                <td class="v-align-middle">Jakarta (CGK)</td>
+                                            </tr>
+                                            <tr role="row" class="even">
+                                                <td class="v-align-middle semi-bold">Tujuan</td>
+                                                <td class="v-align-middle">Denpasar (DPS)</td>
+                                            </tr>
+                                            <tr role="row" class="odd">
+                                                <td class="v-align-middle semi-bold">Tanggal Keberangkatan</td>
+                                                <td class="v-align-middle">Rabu, 1 Maret 2017</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flight-detail">
+                            <div class="table-responsive">
+                                <div class="font-montserrat bold p-t-15 p-b-15 p-l-20 p-r-20" style="border-bottom: 2px solid #ccc;">DETAIL PEMESANAN</div>
+                                <div id="detailedTable_wrapper" class="dataTables_wrapper form-inline no-footer">
+                                    <table class="table table-hover table-condensed table-detailed dataTable no-footer" id="detailedTable" role="grid">
+                                        <tbody>
+                                            <tr role="row" class="odd">
+                                                <td class="v-align-middle">Jakarta (CGK)</td>
+                                                <td class="v-align-middle">1 Mar 2017 12:50</td>
+                                                <td class="v-align-middle">LION AIR | JT201</td>
+                                                <td class="v-align-middle">PNR : ABCDEF</td>
+                                                <td class="v-align-middle">1 Mar 2017 15:50</td>
+                                                <td class="v-align-middle">Denpasar (DPS)</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="passenger-list">
+                            <div class="table-responsive">
+                                <div class="font-montserrat bold p-t-15 p-b-15 p-l-20 p-r-20" style="border-bottom: 2px solid #ccc;">DAFTAR PENUMPANG</div>
+                                <div id="detailedTable_wrapper" class="dataTables_wrapper form-inline no-footer">
+                                    <table class="table table-hover table-condensed table-detailed dataTable no-footer" id="detailedTable" role="grid">
+                                        <thead>
+                                            <tr role="row">
+                                                <th style="width: 60px;" class="sorting_disabled" rowspan="1" colspan="1">No</th>
+                                                <th style="width: 100px;" class="sorting_disabled" rowspan="1" colspan="1">Gelar</th>
+                                                <th style="width: 120px;" class="sorting_disabled" rowspan="1" colspan="1">Nama</th>
+                                                <th style="width: 100px;" class="sorting_disabled" rowspan="1" colspan="1">Tipe</th>
+                                                <th style="width: 150px;" class="sorting_disabled" rowspan="1" colspan="1">Tanggal Lahir</th>
+                                                <th style="width: 150px;" class="sorting_disabled" rowspan="1" colspan="1">Kebangsaan</th>
+                                                <th style="width: 150px;" class="sorting_disabled" rowspan="1" colspan="1">Nomor Paspor</th>
+                                                <th style="width: 220px;" class="sorting_disabled" rowspan="1" colspan="1">Tanggal Kadarluarsa Paspor</th>
+                                                <th style="width: 220px;" class="sorting_disabled" rowspan="1" colspan="1">Negara Penerbit Paspor</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr role="row" class="even">
+                                                <td class="v-align-middle">1</td>
+                                                <td class="v-align-middle">Mistrees</td>
+                                                <td class="v-align-middle">Jane Doe</td>
+                                                <td class="v-align-middle">Dewasa</td>
+                                                <td class="v-align-middle">1 Des 1999</td>
+                                                <td class="v-align-middle">Indonesia</td>
+                                                <td class="v-align-middle">111222333444</td>
+                                                <td class="v-align-middle">1 April 2014</td>
+                                                <td class="v-align-middle">Indonesia</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
