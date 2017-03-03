@@ -1,0 +1,180 @@
+﻿/*
+TRAVORAMA 2.0
+file : /Assets/travorama20/css/travorama20.scss
+*/
+
+/*--------------------*/
+/* variables */
+$color-main-blue:#1daee4;
+$color-main-orange:#ff7200;
+$border-default:1px solid #ccc;
+$border-radius-default:2px;
+$transition-default:all 0.5s;
+
+/*--------------------*/
+/* icon */
+$app-store-bg: '../images/app-store-bg.png';
+$app-store-cs: '../images/app-store-cs.png';
+$play-store-bg: '../images/play-store-bg.png';
+$mobile-app: '../images/mobile-app.png';
+
+
+/*--------------------*/
+/* mixins */
+@mixin letter-spacing($value){
+    letter-spacing:$value;
+}
+
+@mixin border-radius($radius){
+    -webkit-border-radius:$radius;
+    -moz-border-radius:$radius;
+    border-radius:$radius;
+}
+
+@mixin box-shadow($properties){
+    -webkit-box-shadow:$properties;
+    -moz-box-shadow:$properties;
+    box-shadow:$properties;
+}
+
+@mixin skew-x($value){
+    -ms-transform: skewX($value); /* IE 9 */
+    -webkit-transform: skewX($value); /* Safari */
+    transform: skewX($value); /* Standard syntax */
+}
+
+@mixin transition($value){
+    -webkit-transition: $value;
+    -moz-transition: $value;
+    -o-transition: $value;
+    transition: $value;
+}
+
+@mixin clearfix(){
+    display:block; width:100%; content:""; clear:both;
+}
+
+/*--------------------*/
+/* mixins */
+@mixin letter-spacing($value){
+    letter-spacing:$value;
+}
+
+@mixin border-radius($radius){
+    -webkit-border-radius: $radius;
+    -moz-border-radius: $radius;
+    -ms-border-radius: $radius;
+    border-radius: $radius;
+}
+
+@mixin box-shadow($properties){
+    -webkit-border-radius: $properties;
+    -moz-border-radius: $properties;
+    -ms-border-radius: $properties;
+    box-shadow: $properties;
+}
+
+
+@mixin size($width, $height) {
+    width: $width;
+    height: $height;
+}
+
+@mixin translate($x, $y) {
+    -webkit-transform: translate($x, $y);
+    -ms-transform: translate($x, $y);
+    -o-transform: translate($x, $y);
+    transform: translate($x, $y);
+}
+
+.search-location, .search-hotel {width:1070px; min-height:520px; background:#fff; position:absolute; top:0; left:380px; z-index:3; display:none; border: 1px solid #ccc;
+    .location-header {height:40px; background:#4e4e4e; color:#fff; @extend .os-semibold; font-weight:600; font-size:17px; padding:10px 15px; line-height: 100%;
+        .close-location, .close-hotel {float:right; cursor:pointer;}
+    }
+    .location-body {color:#333; height: 400px;
+        .location-recommend {
+            .tab-header {background:#eaeaea; width:100%; padding:0 30px; position:relative;
+                a.nav-click {width:30px; height:60px; display:block; background-color:#999999; position:absolute; background-image:url(/Assets/images/nav-sprite.png); background-repeat:no-repeat;
+                    &.prev {left:0; top:0;}
+                    &.next {right:0; top:0; background-position:-30px 0;}
+                }
+                &:before, &:after {@include clearfix();}
+                nav {height:60px; overflow:hidden;
+                    ul {margin:0; padding:0; display:block;
+                        &:before, &:after {@include clearfix();}
+                        li {display:table; float:left; border-right:$border-default; cursor:pointer;
+                            span {display:block; color:#626262; background:#eaeaea; font-size:14px; @extend .os-bold; height:60px; padding:0 20px; display:table-cell; vertical-align:middle; line-height:120%;}
+                            &.active {border-right-color:#fff;
+                                span {color:#21afe5; background:#fff;}
+                            }
+                            &:last-child {border-right:none;}
+                        }
+                    }
+                }
+            }
+            .tab-content {
+                .col-xs-3 {padding:0 12px;}
+                &>div {display:none;
+                    &.active {display:block;}
+                    h3 {color:$color-main-blue; font-size:14px; @extend .os-bold; margin-top:10px; margin-bottom:6px;}
+                    ul {margin:0; padding:0; list-style:none; margin-bottom:23px;
+                        li {margin-bottom:0px;
+                            a {color:#2f2f2f; @extend .os-semibold; font-weight:600; font-size:13px;
+                                &:hover {text-decoration:none;
+                                    &:before {content:url(/Assets/images/recommend-selector.png); position:absolute; left:0px;}
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    .location-search {padding:10px; height:475px; overflow:auto;
+            .autocomplete-pre {
+                .text-pre {display:none;}
+                .text-loading {display:none;}
+            }
+            .autocomplete-no-result {display:none;}
+            .autocomplete-result {
+                ul {margin:0; padding:0;
+                    li {padding:10px; list-style:none; cursor:pointer;
+                        &:hover {background:$color-main-blue;}
+                    }
+                    li+li {border-top:$border-default;}
+                }
+            }
+        }
+    .hotel-location-search {height:475px; overflow:auto;
+        .hotel-autocomplete-pre {
+            .text-pre {display:block;}
+            .text-loading {display:block;}
+        }
+        .hotel-autocomplete-no-result {}
+        .hotel-autocomplete-result {
+            ul {margin:0; padding:0;
+                li {padding:10px; list-style:none; cursor:pointer;
+                    &:hover {background:$color-main-blue;}
+                }
+                li+li {border-top:$border-default;}
+            }
+        }
+    }
+    .location-search {display:none;}
+    nav {width:790px;
+        ul {width:945px;
+            li {width:135px; padding: 0;}
+        }
+    }
+    .tab-content {padding:0 30px; padding-bottom:15px; padding-top:30px;}
+    div.active {
+        overflow-y: auto;
+        overflow-x: hidden;
+        height: 330px;
+    }
+}
+
+.b2b-search {
+    &.flight .search-location {top: 220px; left: 100px}
+    &.hotel .search-hotel {top: 220px; left: 100px}
+}

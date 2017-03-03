@@ -164,7 +164,6 @@
                     }
                 }
             }
-
         }).error(function (returnData) {
 
         });
@@ -347,11 +346,13 @@
             scope.hotelSearch.urlData.zone = location.zone;
             scope.hotelSearch.urlData.area = location.area;
             scope.hotelSearch.urlData.type = location.type;
+            $('.search-hotel').hide();
         }
 
         //autocomplete desktop
         scope.$watch('hotelSearch.locationDisplay', function (newValue) {
             var authAccess = getAuthAccess();
+            $('.hotel-autocomplete-pre .searching').show();
             if (authAccess == 1 || authAccess == 2) {
                 if (newValue != null && newValue.length >= 3) {
                     scope.autocompletePre = false;
@@ -360,11 +361,15 @@
                     scope.hotelSearch.autocompleteResource.get({ prefix: newValue }).$promise.then(function(data) {
                         $timeout(function() {
                             scope.autocompleteLoading = false;
+                            $('.hotel-autocomplete-pre .searching').hide();
                             if (data.hotelAutocomplete != null) {
                                 scope.showPopularDestinations = false;
                                 scope.autocompleteNoResult = false;
+                                $('.hotel-autocomplete-no-result').hide();
+
                             } else {
                                 scope.autocompleteNoResult = true;
+                                $('.hotel-autocomplete-no-result').show();
                             }
 
                             scope.hotelSearch.hotelAutocomplete = data.hotelAutocomplete;
@@ -373,6 +378,7 @@
                         }, 0);
                     });
                 } else {
+                    $('.hotel-autocomplete-no-result').hide();
                     if (newValue == null || newValue.length == 0) {
                         scope.autocompletePre = false;
                         scope.showPopularDestinations = true;
@@ -608,16 +614,6 @@
                 
             });
         }
-
-        //scope.$watchCollection(['hotelSearch.roomCount', 'hotelSearch.occupancies'] , function (newVal, oldVal) {
-        //    scope.hotelSearch.totalAdult = 0;
-        //    scope.hotelSearch.totalChildren = 0;
-        //    for (i = 0; i < newVal[0]; i++) {
-        //        scope.hotelSearch.totalAdult += newVal[1][i].adultCount;
-        //        scope.hotelSearch.totalChildren += newVal[1][i].childCount;
-        //    }
-
-        //});
         
         scope.initChildrenAges = function (n) {
 

@@ -63,14 +63,14 @@ app.controller('siteHeaderController', ['$http', '$scope', '$log', function ($ht
     
     $scope.getRole = function () {
         if ($scope.roles != null && $scope.roles.length != 0) {
-            for (var i = 0; i < $scope.roles.length; i++) {
+        for (var i = 0; i < $scope.roles.length; i++) {
                 if ($scope.roles[i] === "Admin") {
-                    $scope.isAdmin = true;
-                }
-                if ($scope.roles[i] === "Finance") {
-                    $scope.isFinance = true;
-                }
+                $scope.isAdmin = true;
             }
+            if ($scope.roles[i] === "Finance") {
+                $scope.isFinance = true;
+            }
+        }
         }
     };
 
