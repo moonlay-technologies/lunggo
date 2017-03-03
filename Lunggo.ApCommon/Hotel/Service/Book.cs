@@ -205,6 +205,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                     PaymentService.GetInstance().UpdateBookerPaymentData(rsvDetail.RsvNo);
                     //Get Approver Email
                     var approver = User.GetApproverEmailByUserId(userId);
+                    if (approver != null)
                     SendNewBookingInfo(PreProcessBookerEmailNotif(rsvDetail.RsvNo, approver));
                 }
             }
