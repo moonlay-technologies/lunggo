@@ -204,7 +204,7 @@ namespace Lunggo.CustomerWeb.Controllers
             ViewBag.Domain = IsB2BDomain() ? "B2B" : "B2C";
             var regId = GenerateId(rsvNo);
             if (ViewBag.Domain.Equals("B2B"))
-                return RedirectToAction("Thankyou", "B2BThankYou", new { rsvNo, regId });
+                return RedirectToAction("Thankyou", "Payment", new { rsvNo, regId });
             return RedirectToAction("Payment", "Payment", new { rsvNo, regId});
         }
 
