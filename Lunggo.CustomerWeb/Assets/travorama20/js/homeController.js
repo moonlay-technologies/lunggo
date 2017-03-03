@@ -107,13 +107,13 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
 
     $scope.departureDate = moment().add(1, 'day').format('DDMMYY');
     
-    $scope.showForm = function (tab) {
-        if (tab == 'hotel') {
-            $('body .menu-main li#header-hotel').click();
-        } else if (tab == 'flight') {
-            $('body .menu-main li#header-flight').click();
-        }
-    }
+    //$scope.showForm = function (tab) {
+    //    if (tab == 'hotel') {
+    //        $('body .tab-header li.hotel').click();
+    //    } else if (tab == 'flight') {
+    //        $('body .tab-header li.flight').click();
+    //    }
+    //}
     
     //=============== hotel start ======================
     $scope.showPopularDestinations = false;
@@ -871,9 +871,9 @@ jQuery(document).ready(function ($) {
     });
 
     //Home Page Search Form Hotel
-    $('body .menu-main li').click(function () {
-        if ($(this).is('#header-flight')) {
-            var itemF = $(this).closest('.site-header').parent();
+    $('body .tab-header li').click(function () {
+        if ($(this).hasClass('flight')) {
+            var itemF = $('.site-header').parent();
 
             itemF.parent().find('.tab-header').find('.flight').addClass('active');
             itemF.parent().find('.tab-header').find('.flight').siblings().removeClass('active');
@@ -889,8 +889,8 @@ jQuery(document).ready(function ($) {
             //linkF.parent().addClass('active');
             //linkF.parent().siblings().removeClass('active');
 
-        } else if ($(this).is('#header-hotel')) {
-            var item = $(this).closest('.site-header').parent();
+        } else if ($(this).hasClass('hotel')) {
+            var item = $('.site-header').parent();
 
             item.parent().find('.tab-header').find('.hotel').addClass('active');
             item.parent().find('.tab-header').find('.hotel').siblings().removeClass('active');

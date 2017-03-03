@@ -229,9 +229,12 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                         {
                             var x = breakdownPrice[0].LastElementChild;
                             var y = x.InnerText.Trim();
+                            var iIdx = conditions.ChildCount > 0 ? 2 : 1;
                             adultPrice = decimal.Parse(breakdownPrice[0].LastElementChild.InnerText.Trim().Split(' ')[2]);
-                            childPrice = decimal.Parse(breakdownPrice[1].LastElementChild.InnerText.Trim().Split(' ')[2]);
-                            infantPrice = decimal.Parse(breakdownPrice[2].LastElementChild.InnerText.Trim().Split(' ')[2]);
+                            if (conditions.ChildCount > 0)
+                                childPrice = decimal.Parse(breakdownPrice[1].LastElementChild.InnerText.Trim().Split(' ')[2]);
+                            if (conditions.InfantCount > 0)
+                                infantPrice = decimal.Parse(breakdownPrice[iIdx].LastElementChild.InnerText.Trim().Split(' ')[2]);
                         }
                         catch { }
                         var currency = itinHtml[".section-total-display-currency>span>strong"].Text().Substring(0,3);

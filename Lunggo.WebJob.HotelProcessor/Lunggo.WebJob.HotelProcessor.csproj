@@ -127,6 +127,7 @@
     <None Include="packages.config" />
     <None Include="Properties\PublishProfiles\travorama-local-webjob %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-local-webjob.pubxml" />
+    <None Include="Properties\PublishProfiles\travorama-prod-webjob - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-prod-webjob.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-qa-webjob - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-qa-webjob.pubxml" />

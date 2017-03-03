@@ -1,17 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Hotel.Constant;
 using Lunggo.ApCommon.Hotel.Model;
 using Lunggo.ApCommon.Hotel.Model.Logic;
 using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds;
+using Lunggo.ApCommon.Identity.Auth;
+using Lunggo.ApCommon.Identity.Users;
 using Lunggo.ApCommon.Payment.Model;
 using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Sdk.auto.model;
 using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.ApCommon.Payment.Service;
 using Lunggo.ApCommon.Product.Constant;
+using Lunggo.Framework.Config;
 using Lunggo.Framework.Database;
+using Lunggo.Framework.Log;
 using Lunggo.Framework.Queue;
 using Lunggo.Repository.TableRecord;
 using Lunggo.Repository.TableRepository;
@@ -210,7 +215,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                 PaymentService.GetInstance()
                     .UpdatePayment(input.RsvNo, new PaymentDetails {Status = PaymentStatus.Cancelled});
                 SendFailedIssueNotifToCustomerAndInternal(rsvData.RsvNo);
-                Console.WriteLine("Price is changed");
+                LogIssuanceFailure(rsvData.RsvNo, "Price Changed (" + oldPrice + " -> " + newPrice + ")");
                 return new IssueHotelTicketOutput
                 {
                     IsSuccess = false,
@@ -240,7 +245,12 @@ namespace Lunggo.ApCommon.Hotel.Service
                 PaymentService.GetInstance()
                     .UpdatePayment(input.RsvNo, new PaymentDetails { Status = PaymentStatus.Cancelled });
                 SendFailedIssueNotifToCustomerAndInternal(rsvData.RsvNo);
-                Console.WriteLine("Something wrong when issuing");
+                while (e.InnerException != null)
+                    e = e.InnerException;
+                LogIssuanceFailure(rsvData.RsvNo, "\n*Exception :* "
+                    + e.Message
+                    + "\n*Stack Trace :* \n"
+                    + e.StackTrace);
                 return new IssueHotelTicketOutput
                 {
                     IsSuccess = false,
@@ -254,7 +264,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                 PaymentService.GetInstance()
                     .UpdatePayment(input.RsvNo, new PaymentDetails { Status = PaymentStatus.Cancelled });
                 SendFailedIssueNotifToCustomerAndInternal(rsvData.RsvNo);
-                Console.WriteLine("Issuing is failed");
+                LogIssuanceFailure(rsvData.RsvNo, "Status : " + issueResult.Status);
                 return new IssueHotelTicketOutput
                 {
                     IsSuccess = false,
@@ -279,6 +289,20 @@ namespace Lunggo.ApCommon.Hotel.Service
                 IsSuccess = true,
                 OrderResults = order
             };
+        }
+
+        private static void LogIssuanceFailure(string rsvNo, string message)
+        {
+            var log = LogService.GetInstance();
+            var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
+            log.Post(
+                "```Hotel Issuance Failure```"
+                + "\n*Environment :* " + env.ToUpper()
+                + "\n*Reservation :* \n"
+                + rsvNo
+                + "\n*Message :* \n"
+                + message,
+                env == "production" ? "#logging-prod" : "#logging-dev");
         }
     }
 }

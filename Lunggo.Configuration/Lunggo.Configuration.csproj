@@ -550,6 +550,9 @@
     <None Include="Config\WebJob.FlightProcessor\deathbycaptcha.properties">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Config\WebJob.HotelProcessor\log.properties">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Config\WebJob.PriceUpdater\airAsia.properties">
       <SubType>Designer</SubType>
     </None>

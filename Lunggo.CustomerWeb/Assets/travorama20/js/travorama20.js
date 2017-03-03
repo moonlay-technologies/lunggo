@@ -1259,39 +1259,39 @@ function goTop() {
     });
 }
 
-function changeMainTab() {
-    jQuery(document).ready(function ($) {
-        $('body .menu-main li').click(function() {
-            if ($(this).is('#header-flight')) {
-                var itemF = $(this).closest('.site-header').parent();
+//function changeMainTab() {
+//    jQuery(document).ready(function ($) {
+//        $('body .menu-main li').click(function() {
+//            if ($(this).is('#header-flight')) {
+//                var itemF = $(this).closest('.site-header').parent();
 
-                itemF.parent().find('.tab-header').find('.flight').addClass('active');
-                itemF.parent().find('.tab-header').find('.flight').siblings().removeClass('active');
-                itemF.parent().find('#plane').addClass('active');
-                itemF.parent().find('#plane').siblings().removeClass('active');
+//                itemF.parent().find('.tab-header').find('.flight').addClass('active');
+//                itemF.parent().find('.tab-header').find('.flight').siblings().removeClass('active');
+//                itemF.parent().find('#plane').addClass('active');
+//                itemF.parent().find('#plane').siblings().removeClass('active');
 
-                var linkF = $(this).find('a').attr('id', '#plane');
+//                var linkF = $(this).find('a').attr('id', '#plane');
 
-                linkF.parent().addClass('active');
-                linkF.parent().siblings().removeClass('active');
+//                linkF.parent().addClass('active');
+//                linkF.parent().siblings().removeClass('active');
 
-            } else if ($(this).is('#header-hotel')) {
-                var item = $(this).closest('.site-header').parent();
+//            } else if ($(this).is('#header-hotel')) {
+//                var item = $(this).closest('.site-header').parent();
 
-                item.parent().find('.tab-header').find('.hotel').addClass('active');
-                item.parent().find('.tab-header').find('.hotel').siblings().removeClass('active');
-                item.parent().find('#hotel').addClass('active');
-                item.parent().find('#hotel').siblings().removeClass('active');
+//                item.parent().find('.tab-header').find('.hotel').addClass('active');
+//                item.parent().find('.tab-header').find('.hotel').siblings().removeClass('active');
+//                item.parent().find('#hotel').addClass('active');
+//                item.parent().find('#hotel').siblings().removeClass('active');
 
-                var link = $(this).find('a').attr('id', '#hotel');
+//                var link = $(this).find('a').attr('id', '#hotel');
 
-                link.parent().addClass('active');
-                link.parent().siblings().removeClass('active');
+//                link.parent().addClass('active');
+//                link.parent().siblings().removeClass('active');
 
-            }
-        });
-    });
-}
+//            }
+//        });
+//    });
+//}
 
 function priceSilder() {
     jQuery(document).ready(function ($) {
