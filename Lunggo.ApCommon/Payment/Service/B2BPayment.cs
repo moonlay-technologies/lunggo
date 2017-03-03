@@ -64,6 +64,34 @@ namespace Lunggo.ApCommon.Payment.Service
             return false;
         }
 
+        public bool EditCreditCard(SavedCreditCard model)
+        {
+            if (model != null)
+            {
+                var userId = HttpContext.Current.User.Identity.GetUser().Id;
+                var companyId = User.GetCompanyIdByUserId(userId);
+                model.CompanyId = companyId;
+                var ccList = GetCreditCardByCompanyId(companyId);
+                var transactionDetails = ConstructFirstTransactionDetails(model.CompanyId);
+                var paymentDetails = ConstructPaymentDetail(model.CardHolderName, model.Token);
+                var paymentResponse = VeritransWrapper.ProcessFirstB2BPayment(paymentDetails, transactionDetails, PaymentMethod.CreditCard);
+                if (paymentResponse != null)
+                {
+                    model.IsPrimaryCard = ccList == null;
+                    model.MaskedCardNumber = GenerateMaskedCardNumber(paymentResponse.MaskedCard);
+                    model.TokenExpiry = paymentResponse.TokenIdExpiry;
+                    model.Token = paymentResponse.SavedTokenId;
+                    model.CardExpiry = new DateTime(model.CardExpiryYear, model.CardExpiryMonth, 1);
+
+                    var cancelResponse = VeritransWrapper.CancelTransaction(paymentResponse.OrderId,
+                        paymentResponse.TransactionId);
+                    InsertSavedCreditCardToDb(model);
+                    return true;
+                }
+            }
+            return false;
+        }
+
         public TransactionDetails ConstructFirstTransactionDetails(string companyId)
         {
             return new TransactionDetails

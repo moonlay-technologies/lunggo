@@ -345,6 +345,7 @@
     <Compile Include="ApiSrc\Notification\Model\DeleteRegistrationApiRequest.cs" />
     <Compile Include="ApiSrc\Notification\Model\UpdateRegistrationApiRequest.cs" />
     <Compile Include="ApiSrc\Notification\NotificationController.cs" />
+    <Compile Include="ApiSrc\Payment\Logic\EditCreditCardLogic.cs" />
     <Compile Include="ApiSrc\Payment\Logic\AddCreditCardLogic.cs" />
     <Compile Include="ApiSrc\Payment\Logic\CheckBinDiscountLogic.cs" />
     <Compile Include="ApiSrc\Payment\Logic\CheckPaymentLogic.cs" />
@@ -357,6 +358,7 @@
     <Compile Include="ApiSrc\Payment\Model\AddCreditCardRequest.cs" />
     <Compile Include="ApiSrc\Payment\Model\CheckBinDiscountApiRequest.cs" />
     <Compile Include="ApiSrc\Payment\Model\CheckBinDiscountApiResponse.cs" />
+    <Compile Include="ApiSrc\Payment\Model\EditCreditCardApiRequest.cs" />
     <Compile Include="ApiSrc\Payment\Model\DeleteCreditCardApiRequest.cs" />
     <Compile Include="ApiSrc\Payment\Model\GetMethodsApiResponse.cs" />
     <Compile Include="ApiSrc\Payment\Model\GetSavedCreditCardResponse.cs" />

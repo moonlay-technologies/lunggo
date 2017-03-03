@@ -240,5 +240,32 @@ namespace Lunggo.WebAPI.ApiSrc.Payment
                 return ApiResponseBase.ExceptionHandling(e, request);
             }
         }
+
+        [HttpPost]
+        [Authorize]
+        [LunggoCorsPolicy]
+        [Route("v1/payment/editcard")]
+        public ApiResponseBase EditCreditCard()
+        {
+            EditCreditCardApiRequest request = null;
+            if (!User.Identity.IsInRole("Finance"))
+            {
+                return new ApiResponseBase
+                {
+                    StatusCode = HttpStatusCode.Unauthorized,
+                    ErrorCode = "ERRPEC01"
+                };
+            }
+            try
+            {
+                request = ApiRequestBase.DeserializeRequest<EditCreditCardApiRequest>();
+                var apiResponse = PaymentLogic.EditCreditCardLogic(request);
+                return apiResponse;
+            }
+            catch (Exception e)
+            {
+                return ApiResponseBase.ExceptionHandling(e, request);
+            }
+        }
     }
 }

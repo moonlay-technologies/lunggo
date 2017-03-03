@@ -964,6 +964,7 @@ app.controller('B2BPaymentMgmtFormController', ['$scope', '$log', '$http', funct
         });
     }
 
+    $scope.setPrimaryPopUp = false;
     $scope.validation = function () {
         if (!$scope.checkNumber($scope.currentEdit.cc) || !$scope.checkName($scope.currentEdit.cardHolderName)
                 || !$scope.checkDate(parseInt($scope.currentEdit.month), parseInt($scope.currentEdit.year))) {
@@ -1063,32 +1064,22 @@ app.controller('B2BPaymentMgmtFormController', ['$scope', '$log', '$http', funct
                         }
                     };
 
-                    // run the veritrans function to check credit card
                     Veritrans.token(card, callback);
 
                     function callback(response) {
                         if (response.redirect_url) {
-                            // 3Dsecure transaction. Open 3Dsecure dialog
                             $log.debug('Open Dialog 3Dsecure');
                             openDialog(response.redirect_url);
 
                         } else if (response.status_code == '200') {
-                            // success 3d secure or success normal
-                            //close 3d secure dialog if any
                             closeDialog();
-                            // store token data in input #token_id and then submit form to merchant server
                             $("#vt-token").val(response.token_id);
                             $scope.currentEdit.Token = response.token_id;
 
                             $scope.addCreditCard.addCC();
 
                         } else {
-                            // failed request token
-                            //close 3d secure dialog if any
                             closeDialog();
-                            //$('#submit-button').removeAttr('disabled');
-                            // Show status message.
-                            //$('#message').text(response.status_message);
                             $log.debug(JSON.stringify(response));
                         }
                     }
@@ -1221,52 +1212,63 @@ app.controller('B2BPaymentMgmtFormController', ['$scope', '$log', '$http', funct
     $scope.message = '';
     $scope.trial = 0;
     $scope.currentPrimary = '';
+    $scope.waitSetPrimary = false;
+    $scope.finishSetPrimary = false;
     $scope.setPrimary = function (cc, index) {
-        $scope.trial = 0;
-        var authAccess = getAuthAccess();
-        if (authAccess == 2) {
-            $http({
-                url: SetPrimaryCardConfig.Url,
-                method: 'POST',
-                data: {
-                    maskedCardNumber: cc
-                },
-                headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') }
-            }).then(function (returnData) {
-                if (returnData.data.status == 200) {
-                    //$('.payment-item[count=' + index + ']');
-                    $('.payment-item[count=' + $scope.currentPrimary + '] .current-status').hide();
-                    $('.payment-item[count=' + $scope.currentPrimary + '] .set-status').show();
-                    $('.payment-item[count=' + $scope.currentPrimary + '] .set-status').removeClass('ng-hide');
-                    $('.disableDel').prop("disabled", false);
-                    $('.disableDel').removeClass('disableDel');
-                    $('.payment-item[count=' + index + '] .current-status').removeClass('ng-hide');
-                    $('.payment-item[count=' + index + '] .current-status').show();
-                    $('.payment-item[count=' + index + '] .set-status').hide();
-                    $('.payment-item[count=' + index + '] .remove-payment').prop("disabled", true);
-                    $('.payment-item[count=' + index + '] .remove-payment').addClass("disableDel");
-                    $scope.message = 'Setting Primary Card is Successful';
-                    $scope.successSetPrimary = true;
-                    $scope.currentPrimary = index;
+        $scope.setPrimaryPopUp = true;
+        $(".setPrimary .answer").click(function () {
+            $scope.setPrimaryPopUp = false;
+            if ($(this).attr("id") == 'yes') {
+                $scope.waitSetPrimary = true;
+                $scope.trial = 0;
+                var authAccess = getAuthAccess();
+                if (authAccess == 2) {
+                    $http({
+                        url: SetPrimaryCardConfig.Url,
+                        method: 'POST',
+                        data: {
+                            maskedCardNumber: cc
+                        },
+                        headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') }
+                    }).then(function (returnData) {
+                        $scope.waitSetPrimary = false;
+                        $scope.finishSetPrimary = true;
+                        if (returnData.data.status == 200) {
+                            //$('.payment-item[count=' + index + ']');
+                            $('.payment-item[count=' + $scope.currentPrimary + '] .current-status').hide();
+                            $('.payment-item[count=' + $scope.currentPrimary + '] .set-status').show();
+                            $('.payment-item[count=' + $scope.currentPrimary + '] .set-status').removeClass('ng-hide');
+                            $('.disableDel').prop("disabled", false);
+                            $('.disableDel').removeClass('disableDel');
+                            $('.payment-item[count=' + index + '] .current-status').removeClass('ng-hide');
+                            $('.payment-item[count=' + index + '] .current-status').show();
+                            $('.payment-item[count=' + index + '] .set-status').hide();
+                            $('.payment-item[count=' + index + '] .remove-payment').prop("disabled", true);
+                            $('.payment-item[count=' + index + '] .remove-payment').addClass("disableDel");
+                            $scope.message = 'Setting Primary Card is Successful';
+                            $scope.successSetPrimary = true;
+                            $scope.currentPrimary = index;
+                        }
+                        else {
+                            $scope.successSetPrimary = false;
+                            $log.debug(returnData.data.error);
+                        }
+                    }).catch(function (returnData) {
+                        $scope.trial++;
+                        if (refreshAuthAccess() && $scope.trial < 4) //refresh cookie
+                        {
+                            $scope.setPrimary(cc);
+                        }
+                        else {
+                            $scope.successSetPrimary = false;
+                            $log.debug('Failed Update Reservation');
+                            $log.debug(returnData);
+                            $scope.rsvUpdated = false;
+                        }
+                    });
                 }
-                else {
-                    $scope.successSetPrimary = false;
-                    $log.debug(returnData.data.error);
-                }
-            }).catch(function (returnData) {
-                $scope.trial++;
-                if (refreshAuthAccess() && $scope.trial < 4) //refresh cookie
-                {
-                    $scope.setPrimary(cc);
-                }
-                else {
-                    $scope.successSetPrimary = false;
-                    $log.debug('Failed Update Reservation');
-                    $log.debug(returnData);
-                    $scope.rsvUpdated = false;
-                }
-            });
-        }       
+            }
+        });          
     }
 
     $scope.cardDeleted = false;
