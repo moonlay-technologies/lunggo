@@ -98,6 +98,34 @@
             background-repeat: no-repeat;
             margin-right: 20px;
         }
+        .icon-mastercard {
+            background-image: url(/Assets/images/mastercard.png);
+            width: 70px;
+            height: 46px;
+            display: block;
+            background-size: 100%;
+            background-repeat: no-repeat;
+            margin-right: 20px;
+        }
+        .icon-jcb {
+            background-image: url(/Assets/images/jcb.png);
+            width: 60px;
+            height: 46px;
+            display: block;
+            background-size: 100%;
+            background-repeat: no-repeat;
+            margin-right: 20px;
+        }
+        .icon-amex {
+            background-image: url(/Assets/images/amex.png);
+            width: 60px;
+            height: 46px;
+            display: block;
+            background-size: 100%;
+            background-repeat: no-repeat;
+            margin-right: 20px;
+            background-position: center;
+        }
         .payment-add {
             .pa-wrapper {
                 height: 129px;

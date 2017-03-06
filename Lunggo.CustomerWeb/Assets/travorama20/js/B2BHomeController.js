@@ -854,8 +854,11 @@ app.controller('B2BPaymentMgmtFormController', ['$scope', '$log', '$http', funct
         }else if (digit.slice(0,1) == '5') {
             return 'MasterCard';
         } else if (digit.slice(0, 2) == '34' || digit.slice(0, 2) == '37') {
-            return 'American Express';
-        }else {
+            return 'Amex';
+        }else if (digit.slice(0, 2) == '35') {
+            return 'JCB';
+        }
+        else {
             return '';
         }
     }
@@ -881,12 +884,13 @@ app.controller('B2BPaymentMgmtFormController', ['$scope', '$log', '$http', funct
                         if ($scope.creditCards != null && $scope.creditCards.length > 0) {
                             for (var i = 0; i < $scope.creditCards.length; i++) {
                                 $scope.creditCards[i].cardExpiry = new Date($scope.creditCards[i].cardExpiry);
-                                $scope.creditCards[i].type = $scope.ccType($scope.creditCards[i].maskedCardNumber);
+                                var type = $scope.ccType($scope.creditCards[i].maskedCardNumber);
+                                $scope.creditCards[i].type = type;
                                 if ($scope.creditCards[i].isPrimaryCard) {
                                     $scope.currentPrimary = i;
                                 }
                             }
-
+                            $log.debug($scope.creditCards);
                         } else {
                             $scope.emptyCc = true;
                         }
@@ -984,8 +988,7 @@ app.controller('B2BPaymentMgmtFormController', ['$scope', '$log', '$http', funct
             });
         }      
     }
-
-
+    
     $scope.validation = function () {
         if (!$scope.checkNumber($scope.currentEdit.cc) || !$scope.checkName($scope.currentEdit.cardHolderName)
                 || !$scope.checkDate(parseInt($scope.currentEdit.month), parseInt($scope.currentEdit.year))) {
