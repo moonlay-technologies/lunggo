@@ -275,6 +275,8 @@ function ($scope, $log, $window, $http, $resource, $timeout, $interval, hotelSea
         return allContained;
     }
     $scope.searchHotel = function (filter, sort, isMobile) {
+        $('#perRoom').addClass("active");
+        $('#total').removeClass("active");
         $scope.searchDone = false;
         $scope.pageCount = 0;
 

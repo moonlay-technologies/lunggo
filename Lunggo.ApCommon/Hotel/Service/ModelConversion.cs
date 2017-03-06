@@ -407,7 +407,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                 new HotelRoomForDisplay
                 {
                     RoomCode = room.RoomCode,
-                    RoomName = room.RoomName ?? GetHotelRoomDescId(room.RoomCode),
+                    RoomName = GetHotelRoomDescEn(room.RoomCode),
                     Type = room.Type,
                     PaxCapacity = GetPaxCapacity(room.RoomCode),
                     CharacteristicCode = room.characteristicCd,
@@ -426,13 +426,13 @@ namespace Lunggo.ApCommon.Hotel.Service
             return new HotelRoomForDisplay
                 {
                     RoomCode = roomDetail.RoomCode,
-                    RoomName = roomDetail.RoomName,
+                    RoomName = string.IsNullOrEmpty(roomDetail.RoomName) ? GetHotelRoomDescEn(roomDetail.RoomCode) : roomDetail.RoomName,
                     Type = roomDetail.Type,
                     TypeName = dictionary.GetHotelRoomRateTypeId(roomDetail.Type),
                     CharacteristicCode = roomDetail.characteristicCd,
                     CharacteristicName = dictionary.GetHotelRoomRateTypeId(roomDetail.characteristicCd),
                     Images = roomDetail.Images != null ? ConcateRoomImageUrl(roomDetail.Images) : null,
-                    Facilities = roomDetail.Facilities != null ? roomDetail.Facilities : null,
+                    Facilities = roomDetail.Facilities ?? null,
                     Rates = ConvertToRatesForDisplay(roomDetail.Rates),
                     SingleRate = ConvertToSingleRateForDisplay(roomDetail.SingleRate)
                 };
