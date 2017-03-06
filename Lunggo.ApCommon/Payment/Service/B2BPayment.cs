@@ -32,7 +32,10 @@ namespace Lunggo.ApCommon.Payment.Service
             {
                 var savedCard = GetSavedCreditCardQuery.GetInstance()
                     .Execute(conn, new { CompanyId = companyId }).ToList();
-                return savedCard;
+                var sortedCard = from d in savedCard
+                    orderby d.IsPrimaryCard descending 
+                    select d;
+                return sortedCard.ToList();
             }
         }
 

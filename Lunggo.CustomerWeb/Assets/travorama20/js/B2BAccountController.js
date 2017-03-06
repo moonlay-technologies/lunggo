@@ -79,10 +79,15 @@
                         'Authorization': 'Bearer ' + getCookie('accesstoken')
                     }
                 }).then(function (returnData) {
+                    $('.modal.wait').modal('hide');
                     $scope.form.submitting = false;
                     $scope.form.submitted = true;
                     $scope.loginFailed = false;
                     if (returnData.data.status == '200') {
+                        $('.loginSucceed').modal({
+                            backdrop: 'static',
+                            keyboard: false
+                        });
                         setCookie("accesstoken", returnData.data.accessToken, returnData.data.expTime);
                         setCookie("refreshtoken", returnData.data.refreshToken, returnData.data.expTime);
                         setCookie("authkey", returnData.data.accessToken, returnData.data.expTime);
@@ -122,6 +127,7 @@
                         $scope.form.submit();
                     }
                     else {
+                        $('.modal.wait').modal('hide');
                         $scope.overlay = true;
                         $scope.errorMessage = 'Failed';
                         $scope.errorMessage = 'Login Gagal';

@@ -860,6 +860,10 @@ app.controller('B2BPaymentMgmtFormController', ['$scope', '$log', '$http', funct
         }
     }
 
+    //$('.waitLoaded').modal({
+    //    backdrop: 'static',
+    //    keyboard: false
+    //});
     $scope.emptyCc = false;
     $scope.getSavedCc = function () {
         var authAccess = getAuthAccess();
@@ -869,7 +873,8 @@ app.controller('B2BPaymentMgmtFormController', ['$scope', '$log', '$http', funct
                 url: GetCreditCardConfig.Url,
                 headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') },
                 async: false
-            }).then(function(returnData) {
+            }).then(function (returnData) {
+                $('.waitLoaded').modal('hide');
                 if (returnData != null) {
                     if (returnData.data != null) {
                         $scope.creditCards = returnData.data.creditCards;
@@ -881,6 +886,7 @@ app.controller('B2BPaymentMgmtFormController', ['$scope', '$log', '$http', funct
                                     $scope.currentPrimary = i;
                                 }
                             }
+
                         } else {
                             $scope.emptyCc = true;
                         }
@@ -891,7 +897,8 @@ app.controller('B2BPaymentMgmtFormController', ['$scope', '$log', '$http', funct
                     //show blank
                 }
 
-            }).catch(function() {
+            }).catch(function () {
+                 $('.waitLoaded').modal('hide');
             });
         }
     }
@@ -1215,12 +1222,11 @@ app.controller('B2BPaymentMgmtFormController', ['$scope', '$log', '$http', funct
                 $scope.addCreditCard.updating = false;
             }
         }
-
     }
 
-    function remove() {
-        $(this).parents('.payment-item').remove();
-    }
+    //function remove() {
+    //    $(this).parents('.payment-item').remove();
+    //}
 
     $('body #add-payment').on('click', clone);
 

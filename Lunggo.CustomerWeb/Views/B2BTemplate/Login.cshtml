@@ -41,16 +41,56 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-6 no-padding hidden">
+            @*<div class="col-md-6 no-padding hidden">
                 <div class="checkbox ">
                     <input type="checkbox" value="1" id="checkbox1">
                     <label for="checkbox1">Ingat Saya</label>
                 </div>
-            </div>
+            </div>*@
             <div class="col-md-6 text-right">
                 <a href="/id/B2BTemplate/ResetPassword" class="text-info small bold">Lupa password</a>
             </div>
         </div>
-        <button class="btn btn-primary btn-cons m-t-10" type="submit" ng-click="form.submit()">Login</button>
+        <button class="btn btn-primary btn-cons m-t-10" type="submit" ng-click="form.submit()"
+                data-toggle="modal" data-target=".wait"
+                data-backdrop="static" data-keyboard="false">
+            Login
+        </button>
     </form>
+    
+    <div class="modal fade slide-up disable-scroll modal-sm-default wait" tabindex="-1" role="dialog" aria-hidden="false">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content-wrapper">
+                <div class="modal-content">
+                    <div class="modal-header clearfix">
+                        <h4 class="text-center no-margin"></h4>
+                    </div>
+                    <div class="modal-body m-t-10">
+                        <div class="modal-notif-content m-b-20">
+                            Mohon Tunggu
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade slide-up disable-scroll modal-sm-single loginSucceed" tabindex="-1" role="dialog" aria-hidden="false">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content-wrapper">
+                <div class="modal-content">
+                    <div class="modal-content">
+                        <div class="modal-header clearfix">
+                            <h4 class="text-center no-margin"></h4>
+                        </div>
+                        <div class="modal-body m-t-10">
+                            <div class="modal-notif-content m-b-20">
+                               Log-In berhasil. Anda akan dialihkan ke halaman utama.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
