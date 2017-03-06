@@ -221,7 +221,7 @@
         }
 
         function gotoMap(hotels) {
-
+            $scope.markers = [];
             var map = new google.maps.Map(document.getElementById('map'), {
                 zoom: 12,
                 center: { lat: hotels[hotels.length - 1].latitude, lng: hotels[hotels.length - 1].longitude },
@@ -342,7 +342,7 @@
 
                 
             }
-
+            google.maps.event.trigger(map, 'resize');
             //google.maps.event.addListenerOnce(map, 'idle', function () {
             //    google.maps.event.trigger(map, 'resize');
             //    map.setCenter(location);
