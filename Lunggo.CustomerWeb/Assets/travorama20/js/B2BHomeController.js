@@ -846,7 +846,7 @@ app.controller('B2BHotelSearchFormController', ['$scope', '$log', '$http', '$loc
 }]);
 
 app.controller('B2BPaymentMgmtFormController', ['$scope', '$log', '$http', function ($scope, $log, $http) {
-    $scope.pageLoaded = true;
+    $scope.pageLoaded = false;
     $scope.creditCards = [];
     $scope.ccType = function(digit) {
         if (digit.slice(0,1) == '4') {
@@ -854,7 +854,7 @@ app.controller('B2BPaymentMgmtFormController', ['$scope', '$log', '$http', funct
         }else if (digit.slice(0,1) == '5') {
             return 'MasterCard';
         } else if (digit.slice(0, 2) == '34' || digit.slice(0, 2) == '37') {
-            return 'Amex';
+            return 'American Express';
         }else if (digit.slice(0, 2) == '35') {
             return 'JCB';
         }
@@ -863,10 +863,6 @@ app.controller('B2BPaymentMgmtFormController', ['$scope', '$log', '$http', funct
         }
     }
 
-    //$('.waitLoaded').modal({
-    //    backdrop: 'static',
-    //    keyboard: false
-    //});
     $scope.emptyCc = false;
     $scope.getSavedCc = function () {
         var authAccess = getAuthAccess();
@@ -877,19 +873,25 @@ app.controller('B2BPaymentMgmtFormController', ['$scope', '$log', '$http', funct
                 headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') },
                 async: false
             }).then(function (returnData) {
+                $scope.pageLoaded = true;
                 $('.waitLoaded').modal('hide');
                 if (returnData != null) {
                     if (returnData.data != null) {
-                        $scope.creditCards = returnData.data.creditCards;
-                        if ($scope.creditCards != null && $scope.creditCards.length > 0) {
-                            for (var i = 0; i < $scope.creditCards.length; i++) {
-                                $scope.creditCards[i].cardExpiry = new Date($scope.creditCards[i].cardExpiry);
-                                var type = $scope.ccType($scope.creditCards[i].maskedCardNumber);
-                                $scope.creditCards[i].type = type;
-                                if ($scope.creditCards[i].isPrimaryCard) {
+                        $scope.creditCards = [];
+                        if (returnData.data.creditCards != null && returnData.data.creditCards.length > 0) {
+                            for (var i = 0; i < returnData.data.creditCards.length; i++) {
+                                $scope.creditCards.push({
+                                    cardExpiry: new Date(returnData.data.creditCards[i].cardExpiry),
+                                    cardHolderName: returnData.data.creditCards[i].cardHolderName,
+                                    isPrimaryCard: returnData.data.creditCards[i].isPrimaryCard,
+                                    maskedCardNumber: returnData.data.creditCards[i].maskedCardNumber,
+                                    type: $scope.ccType(returnData.data.creditCards[i].maskedCardNumber)
+                                });
+                                if (returnData.data.creditCards[i].isPrimaryCard) {
                                     $scope.currentPrimary = i;
                                 }
                             }
+                            $scope.cloneIndex = $scope.creditCards.length;
                             $log.debug($scope.creditCards);
                         } else {
                             $scope.emptyCc = true;
@@ -902,6 +904,7 @@ app.controller('B2BPaymentMgmtFormController', ['$scope', '$log', '$http', funct
                 }
 
             }).catch(function () {
+                $scope.pageLoaded = true;
                  $('.waitLoaded').modal('hide');
             });
         }
@@ -910,22 +913,20 @@ app.controller('B2BPaymentMgmtFormController', ['$scope', '$log', '$http', funct
     $scope.getSavedCc();
 
     $('body .remove-payment').hide();
-    var cloneIndex = $(".payment-item").length;
-
+    $scope.cloneIndex = 0;
     function clone() {
         $(".newCc").removeClass("newCc");
-        cloneIndex = $(".payment-item").length;
-        if (cloneIndex == 1) {
+        if ($scope.cloneIndex == 1) {
             var isEmpty = $('#payment-item-1').hasClass("emptyCc") == true;
             if (isEmpty) {
                 $("#payment-item-1").removeClass("hide");
             }
         } else {
-            cloneIndex++;
-            $(this).closest('.payment-body').find('#payment-item-1').clone(false, false)
-                .insertAfter($('[id^="payment-item-1"]').last())
-                .attr('id', "payment-item-" + cloneIndex)
-                .attr('count', cloneIndex - 1).addClass("newCc");
+           $(this).closest('.payment-body').find('#payment-item-0').clone(false, false)
+                .insertAfter( $( ".payment-item" ).last())
+                .attr('id', "payment-item-" + $scope.cloneIndex)
+                .attr('count', $scope.cloneIndex ).addClass("newCc");
+            $scope.cloneIndex++;
             $('.newCc .cc-no').text('New Card Number');
             $('.newCc .btn-edit-payment').removeClass("hide");
             $('.newCc .expiry').text('Expires mm/yy');
@@ -933,9 +934,14 @@ app.controller('B2BPaymentMgmtFormController', ['$scope', '$log', '$http', funct
             $('.newCc .current-status').hide();
             $('.newCc .remove-payment').prop("disabled", false);
             $('.newCc').addClass('notSaved');
-            if (cloneIndex > 1) {
-                $(this).closest('.payment-body').find('#payment-item-' + cloneIndex + ' .remove-payment').show();
-                $(this).closest('.payment-body').find('#payment-item-' + cloneIndex + ' .pi-status').find('.current-status').hide();
+            $('.newCc .logoCard').append('<div class="iconCc" style="font-size: 45px;line-height: 100%;height: 46px"><span><i class="fa fa-credit-card m-r-20"></i></span></div>');
+            $('.newCc .logoCard .icon-visa').hide();
+            $('.newCc .logoCard .icon-jcb').hide();
+            $('.newCc .logoCard .icon-amex').hide();
+            $('.newCc .logoCard .icon-mastercard').hide();
+            if ($scope.cloneIndex > 1) {
+                $(this).closest('.payment-body').find('#payment-item-' + $scope.cloneIndex + ' .remove-payment').show();
+                $(this).closest('.payment-body').find('#payment-item-' + $scope.cloneIndex + ' .pi-status').find('.current-status').hide();
             }
 
             $('.newCc .btn-edit-payment').click(function () {
@@ -944,7 +950,10 @@ app.controller('B2BPaymentMgmtFormController', ['$scope', '$log', '$http', funct
                 $scope.currentEdit.cardHolderName = '';
                 $scope.currentEdit.month = '';
                 $scope.currentEdit.year = '';
-
+                
+                var index = $(this).closest('.payment-item').attr("count");
+                $scope.addCreditCard.index = index;
+                    
                 var size = $('input[name=slideup_toggler]:checked').val();
                 var modalElem = $('.modal-edit-payment.form-add-cc');
                 if (size == "mini") {
@@ -957,12 +966,15 @@ app.controller('B2BPaymentMgmtFormController', ['$scope', '$log', '$http', funct
                         modalElem.children('.modal-dialog').addClass('modal-lg');
                     }
                 }
+                $('.modal-edit-payment .form-control').val('');
+                //$('.creditCardNo').val('');
             });
 
             $('.newCc .remove-payment').click(function () {
-                if ($('.newCc').hasClass('notSaved')) {
-                    $('.newCc .remove-payment').attr("data-target", ".none");
-                    $('.newCc').remove();
+                var parent = $(this).closest('.payment-item');
+                if (parent.hasClass('notSaved')) {
+                    parent.find(".remove-payment").attr("data-target", ".none");
+                    parent.remove();
                 } else {
                     var maskedCc = $(".newCc .cc-no").attr("cc");
                     $scope.deleteCardData.cc = maskedCc;
@@ -988,7 +1000,7 @@ app.controller('B2BPaymentMgmtFormController', ['$scope', '$log', '$http', funct
             });
         }      
     }
-    
+
     $scope.validation = function () {
         if (!$scope.checkNumber($scope.currentEdit.cc) || !$scope.checkName($scope.currentEdit.cardHolderName)
                 || !$scope.checkDate(parseInt($scope.currentEdit.month), parseInt($scope.currentEdit.year))) {
@@ -1049,10 +1061,10 @@ app.controller('B2BPaymentMgmtFormController', ['$scope', '$log', '$http', funct
         }
     }
     $scope.trial = 0;
-    $scope.hasBeenSaved = false;
+
     $scope.addCreditCard = {
-        inputValid: true,
-        ccdata: false,
+        index: '',
+        ccNo : '',
         getPreToken: function () {
             if (!$scope.validation()) {
                 $scope.addCreditCard.inputValid = false;
@@ -1064,7 +1076,7 @@ app.controller('B2BPaymentMgmtFormController', ['$scope', '$log', '$http', funct
                     Veritrans.url = VeritransTokenConfig.Url;
                     Veritrans.client_key = VeritransTokenConfig.ClientKey;
                     var card = function () {
-                        var gross_amount = 15000;
+                        var gross_amount = 10000;
                         if ($scope.currentEdit.TwoClickToken == 'false') {
                             $scope.addCreditCard.ccdata = true;
                             return {
@@ -1159,32 +1171,75 @@ app.controller('B2BPaymentMgmtFormController', ['$scope', '$log', '$http', funct
                         $('.addCcSucceed').modal({
                             backdrop: 'static',
                         });
-                        $scope.hasBeenSaved = true;
                         $log.debug('Success Adding new Credit Card');
                         $scope.addCreditCard.updating = false;
                         $scope.addCreditCard.updated = true;
                         $('.modal-edit-payment.form-add-cc').modal('hide');
-                        $('.newCc .cc-no').text($scope.ccType($scope.currentEdit.cc) + ' ****' + $scope.currentEdit.cc.slice(-4));
-                        $('.newCc .expiry').text("Expires " + $scope.currentEdit.month + '/' + $scope.currentEdit.year.slice(-2));
+                        //$('.newCc .cc-no').text($scope.ccType($scope.currentEdit.cc) + ' ****' + $scope.currentEdit.cc.slice(-4));
+                        //$('.newCc .expiry').text("Expires " + $scope.currentEdit.month + '/' + $scope.currentEdit.year.slice(-2));
+
+                        $('.payment-item[count=' + $scope.addCreditCard.index + '] .cc-no').text($scope.ccType($scope.currentEdit.cc) + ' ****' + $scope.currentEdit.cc.slice(-4));
+                        $('.payment-item[count=' + $scope.addCreditCard.index + '] .expiry').text("Expires " + $scope.currentEdit.month + '/' + $scope.currentEdit.year.slice(-2));
                         var maskedCc = $scope.currentEdit.cc.slice(0, 1) + '************' + $scope.currentEdit.cc.slice(-4);
-                        $('.newCc .cc-no').attr('cc', maskedCc);
-                        $('.newCc').removeClass('notSaved');
-                        $('.newCc .btn-edit-payment').hide();
-                        if ($scope.creditCards == null || $scope.creditCards.length == 0) {
-                            $('.newCc .current-status').removeClass('ng-hide');
-                            $('.newCc .current-status').show();
-                            $('.newCc .set-status').hide();
-                            $('.newCc .remove-payment').prop("disabled", true);
-                            $('.newCc .remove-payment').addClass("disableDel");
-                        } else {
-                            $('.newCc .set-status').removeClass('ng-hide');
-                            $('.newCc .current-status').hide();
-                            $('.newCc .set-status').show();
-                            $('.newCc .remove-payment').prop("disabled", false);
+                        //$('.newCc .cc-no').attr('cc', maskedCc);
+                        //$('.newCc').removeClass('notSaved');
+                        //$('.newCc .btn-edit-payment').hide();
+                        //$('.newCc .logoCard .iconCc').hide();
+                        
+                        $('.payment-item[count=' + $scope.addCreditCard.index + '] .cc-no').attr('cc', maskedCc);
+                        $('.payment-item[count=' + $scope.addCreditCard.index + ']').removeClass('notSaved');
+                        $('.payment-item[count=' + $scope.addCreditCard.index + '] .btn-edit-payment').hide();
+                        $('.payment-item[count=' + $scope.addCreditCard.index + '] .logoCard .iconCc').hide();
+                        
+                        if ($scope.ccType($scope.currentEdit.cc) == 'Visa') {
+                            //$('.newCc .logoCard .icon-visa').removeClass("ng-hide");
+                            //$('.newCc .logoCard .icon-visa').show();
+                            $('.payment-item[count=' + $scope.addCreditCard.index + '] .logoCard .icon-visa').removeClass('ng-hide');
+                            $('.payment-item[count=' + $scope.addCreditCard.index + '] .logoCard .icon-visa').show();
+                        } else if ($scope.ccType($scope.currentEdit.cc) == 'MasterCard') {
+                            //$('.newCc .logoCard .icon-mastercard').removeClass("ng-hide");
+                            //$('.newCc .logoCard .icon-mastercard').show();
+                            $('.payment-item[count=' + $scope.addCreditCard.index + '] .logoCard .icon-mastercard').removeClass('ng-hide');
+                            $('.payment-item[count=' + $scope.addCreditCard.index + '] .logoCard .icon-mastercard').show();
+                        } else if ($scope.ccType($scope.currentEdit.cc) == 'JCB') {
+                            //$('.newCc .logoCard .icon-jcb').removeClass("ng-hide");
+                            //$('.newCc .logoCard .icon-jcb').show();
+                            $('.payment-item[count=' + $scope.addCreditCard.index + '] .logoCard .icon-jcb').removeClass('ng-hide');
+                            $('.payment-item[count=' + $scope.addCreditCard.index + '] .logoCard .icon-jcb').show();
                         }
-                        $scope.hasBeenSaved = true;
+                        else if ($scope.ccType($scope.currentEdit.cc) == 'Amex') {
+                            //$('.newCc .logoCard .icon-amex').removeClass("ng-hide");
+                            //$('.newCc .logoCard .icon-amex').show();
+                            $('.payment-item[count=' + $scope.addCreditCard.index + '] .logoCard .icon-amex').removeClass('ng-hide');
+                            $('.payment-item[count=' + $scope.addCreditCard.index + '] .logoCard .icon-amex').show();
+                        }
+
+                        if ($scope.creditCards == null || $scope.creditCards.length == 0) {
+                            //$('.newCc .current-status').removeClass('ng-hide');
+                            //$('.newCc .current-status').show();
+                            //$('.newCc .set-status').hide();
+                            //$('.newCc .remove-payment').prop("disabled", true);
+                            //$('.newCc .remove-payment').addClass("disableDel");
+
+                            $('.payment-item[count=' + $scope.addCreditCard.index + '] .current-status').removeClass('ng-hide');
+                            $('.payment-item[count=' + $scope.addCreditCard.index + '] .current-status').show();
+                            $('.payment-item[count=' + $scope.addCreditCard.index + '] .set-status').hide();
+                            $('.payment-item[count=' + $scope.addCreditCard.index + '] .remove-payment').prop("disabled", true);
+                            $('.payment-item[count=' + $scope.addCreditCard.index + '] .remove-payment').addClass("disableDel");
+                        } else {
+                            //$('.newCc .set-status').removeClass('ng-hide');
+                            //$('.newCc .current-status').hide();
+                            //$('.newCc .set-status').show();
+                            //$('.newCc .remove-payment').prop("disabled", false);
+
+                            $('.payment-item[count=' + $scope.addCreditCard.index + '] .set-status').removeClass('ng-hide');
+                            $('.payment-item[count=' + $scope.addCreditCard.index + '] .current-status').hide();
+                            $('.payment-item[count=' + $scope.addCreditCard.index + '] .set-status').show();
+                            $('.payment-item[count=' + $scope.addCreditCard.index + '] .remove-payment').prop("disabled", false);
+                        }
                     }
                     else {
+                        $('.addCcwait').modal("hide");
                         $('.addCcFailed').modal({
                             backdrop: 'static',
                         });
@@ -1193,9 +1248,6 @@ app.controller('B2BPaymentMgmtFormController', ['$scope', '$log', '$http', funct
                         });
                         $log.debug(returnData.data.error);
                         $log.debug(returnData);
-                        $scope.addCreditCard.edit = true;
-                        $scope.addCreditCard.updating = false;
-                        $scope.hasBeenSaved = false;
                     }
                     $('.newCc .btn-payment-edit').hide();
                 }).catch(function () {
@@ -1206,6 +1258,7 @@ app.controller('B2BPaymentMgmtFormController', ['$scope', '$log', '$http', funct
                         $scope.addCreditCard(name);
                     }
                     else {
+                        $('.addCcwait').modal("hide");
                         $('.addCcFailed').modal({
                             backdrop: 'static',
                         });
@@ -1213,24 +1266,18 @@ app.controller('B2BPaymentMgmtFormController', ['$scope', '$log', '$http', funct
                             $('.addCcFailed').modal("hide");
                         });
                         $log.debug('Failed requesting change profile');
-                        $scope.addCreditCard.edit = true;
-                        $scope.addCreditCard.updating = false;
-                        $scope.hasBeenSaved = false;
                     }
                 });
             }
             else { //if not authorized
+                $('.addCcwait').modal("hide");
                 $('.newCc .btn-payment-edit').hide();
-                $scope.addCreditCard.edit = true;
-                $scope.addCreditCard.updating = false;
+                $('.addCcFailed').modal({
+                    backdrop: 'static',
+                });
             }
         }
     }
-
-    //function remove() {
-    //    $(this).parents('.payment-item').remove();
-    //}
-
     $('body #add-payment').on('click', clone);
 
     $scope.currentEdit = {
@@ -1245,28 +1292,6 @@ app.controller('B2BPaymentMgmtFormController', ['$scope', '$log', '$http', funct
         Token: ''
     };
 
-    $scope.showEditForm = function (cc) {
-        var size = $('input[name=slideup_toggler]:checked').val();
-        var modalElem = $('.firstCc.modal-edit-payment');
-        if (size == "mini") {
-            $('.firstCc.modal-edit-payment').modal('show');
-        } else {
-            $('.firstCc.modal-edit-payment').modal('show');
-            if (size == "default") {
-                modalElem.children('.modal-dialog').removeClass('modal-lg');
-            } else if (size == "full") {
-                modalElem.children('.modal-dialog').addClass('modal-lg');
-            }
-        }
-
-        if (cc != null) {
-            $scope.currentEdit.cc = cc.maskedCardNumber;
-            $scope.currentEdit.type = $scope.ccType(cc.maskedCardNumber);
-            $scope.currentEdit.month = cc.cardExpiry.getMonth() + 1;
-            $scope.currentEdit.year = cc.cardExpiry.getFullYear();
-            $scope.currentEdit.cardHolderName = cc.cardHolderName;
-        }     
-    }
     $scope.message = '';
     $scope.trial = 0;
     $scope.currentPrimary = '';
@@ -1299,7 +1324,6 @@ app.controller('B2BPaymentMgmtFormController', ['$scope', '$log', '$http', funct
                         backdrop: 'static',
                         keyboard: false
                     });
-                    //$('.payment-item[count=' + index + ']');
                     $('.payment-item[count=' + $scope.currentPrimary + '] .current-status').hide();
                     $('.payment-item[count=' + $scope.currentPrimary + '] .set-status').show();
                     $('.payment-item[count=' + $scope.currentPrimary + '] .set-status').removeClass('ng-hide');
@@ -1343,7 +1367,6 @@ app.controller('B2BPaymentMgmtFormController', ['$scope', '$log', '$http', funct
         }          
     }
 
-    $scope.cardDeleted = false;
     $scope.deleteCardData= {
         cc: '',
         set: function(no, index) {
@@ -1358,7 +1381,6 @@ app.controller('B2BPaymentMgmtFormController', ['$scope', '$log', '$http', funct
             backdrop: 'static',
             keyboard: false
         });
-        $scope.cardDeleted = false;
         var authAccess = getAuthAccess();
         if (authAccess == 2) {
             //authorized
@@ -1373,7 +1395,6 @@ app.controller('B2BPaymentMgmtFormController', ['$scope', '$log', '$http', funct
                 $('.deleteCcwait').modal("hide");
                 if (returnData.data.status == '200') {
                     $log.debug('Success Delete CC');
-                    $scope.cardDeleted = true;
                     $('.deleteCcSucceed').modal({
                         backdrop: 'static',
                     });
@@ -1381,7 +1402,6 @@ app.controller('B2BPaymentMgmtFormController', ['$scope', '$log', '$http', funct
                 } else {
                     $log.debug(returnData.data.error);
                     $log.debug(returnData);
-                    $scope.cardDeleted = false;
                     $('.deleteCcFailed').modal({
                         backdrop: 'static',
                     });
@@ -1401,11 +1421,12 @@ app.controller('B2BPaymentMgmtFormController', ['$scope', '$log', '$http', funct
                     });
                     $log.debug('Failed Add User');
                     $log.debug(returnData);
-                    $scope.cardDeleted = false;
                 }
             });
         } else { //if not authorized
-            $scope.cardDeleted = false;
+            $('.deleteCcFailed').modal({
+                backdrop: 'static',
+            });
         }
     }   
 }]);

@@ -99,7 +99,7 @@ namespace Lunggo.ApCommon.Payment.Service
         {
             return new TransactionDetails
             {
-                Amount = 15000,
+                Amount = 10000,
                 OrderId = GenerateOrderId(companyId),
                 OrderTime = DateTime.Now
             };
