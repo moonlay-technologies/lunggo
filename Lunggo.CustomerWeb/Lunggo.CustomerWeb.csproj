@@ -1536,6 +1536,7 @@
     <Content Include="Assets\images\airlines\ZL.png" />
     <Content Include="Assets\images\airplane-image.jpg" />
     <Content Include="Assets\images\ajax-loader.gif" />
+    <Content Include="Assets\images\amex.png" />
     <Content Include="Assets\images\appStore.png" />
     <Content Include="Assets\images\arrow-down.png" />
     <Content Include="Assets\images\arrow-white.png" />
@@ -1739,6 +1740,7 @@
     <Content Include="Assets\images\idr-sprite.png" />
     <Content Include="Assets\images\infant-icon.png" />
     <Content Include="Assets\images\instagram-icon.png" />
+    <Content Include="Assets\images\jcb.png" />
     <Content Include="Assets\images\list-bg.png" />
     <Content Include="Assets\images\list-detail-close.png" />
     <Content Include="Assets\images\load.gif" />
@@ -1762,6 +1764,7 @@
     <Content Include="Assets\images\mandiri.png" />
     <Content Include="Assets\images\map.jpg" />
     <Content Include="Assets\images\mastercard-logo.jpg" />
+    <Content Include="Assets\images\mastercard.png" />
     <Content Include="Assets\images\menu-icon-white.png" />
     <Content Include="Assets\images\menu-icon.png" />
     <Content Include="Assets\images\mobile-sprite.png" />
