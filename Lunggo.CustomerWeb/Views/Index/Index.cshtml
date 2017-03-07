@@ -9,77 +9,6 @@
     ViewBag.AngularController = "homeController";
     //ViewBag.Campaign = true;
     ViewBag.Page = "Index";
-
-    // location
-    ViewBag.LocationData = new Dictionary<string, string>();
-    ViewBag.LocationData["Jakarta"] = "[{'name' : 'Surabaya','origin' : 'SUB','price' : '500000'},{'name' : 'Medan','origin' : 'KNO',	'price' : '700000'},{'name' : 'Denpasar','origin' : 'DPS','price' : '500000'},{'name' : 'Semarang','origin' : 'SRG','price' : '300000'},{'name' : 'Singapore','origin' : 'SIN','price' : '200000'},{'name' : 'Yogyakarta','origin' : 'JOG','price' : '300000'},{'name' : 'Balikpapan','origin' : 'BPN','price' : '600000'},{'name' : 'Makassar','origin' : 'UPG','price' : '600000'},{'name' : 'Batam','origin' : 'BTH','price' : '500000'}]";
-    ViewBag.LocationData["Bali"] = "[{'name' : 'Jakarta','origin' : 'CGK','price' : '500000'},{'name' : 'Medan','origin' : 'KNO','price' : '1000000'},{'name' : 'Surabaya','origin' : 'SUB','price' : '300000'},{'name' : 'Bandung','origin' : 'BDO','price' : '400000'},{'name' : 'Semarang','origin' : 'SRG','price' : '600000'},{'name' : 'Kuala Lumpur','origin' : 'KUL','price' : '300000'},{'name' : 'Yogyakarta','origin' : 'JOG','price' : '400000'},{'name' : 'Balikpapan','origin' : 'BPN','price' : '800000'},{'name' : 'Mataram','origin' : 'AMI','price' : '200000'}]";
-    ViewBag.LocationData["Malaysia"] = "[{'name' : 'Jakarta','origin' : 'CGK','price' : '400000'},{'name' : 'Medan','origin' : 'KNO','price' : '300000'},{'name' : 'Surabaya','origin' : 'SUB','price' : '300000'},{'name' : 'Singapore','origin' : 'SIN','price' : '200000'},{'name' : 'Bandung','origin' : 'BDO','price' : '500000'},{'name' : 'Yogyakarta','origin' : 'JOG','price' : '400000'},{'name' : 'Bali','origin' : 'DPS','price' : '300000'},{'name' : 'Padang','origin' : 'DPG','price' : '300000'},{'name' : 'Pekanbaru','origin' : 'PKU','price' : '300000'}]";
-    ViewBag.LocationData["Yogyakarta"] = "[{'name' : 'Jakarta','origin' : 'CGK','price' : '300000'},{'name' : 'Bali','origin' : 'DPS','price' : '400000'},{'name' : 'Medan','origin' : 'KNO','price' : '900000'},{'name' : 'Surabaya','origin' : 'SUB','price' : '300000'},{'name' : 'Makassar','origin' : 'UPG','price' : '700000'},{'name' : 'Balikpapan','origin' : 'BPN','price' : '500000'},{'name' : 'Batam','origin' : 'BTH','price' : '900000'},{'name' : 'Banjarmasin','origin' : 'BDJ','price' : '600000'},{'name' : 'Palembang','origin' : 'PLM','price' : '700000'}]";
-    ViewBag.LocationData["Singapore"] = "[{'name' : 'Jakarta','origin' : 'CGK','price' : '200000'},{'name' : 'Surabaya','origin' : 'SUB','price' : '400000'},{'name' : 'Bali','origin' : 'DPS','price' : '500000'},{'name' : 'Medan','origin' : 'KNO','price' : '500000'},{'name' : 'Yogyakarta','origin' : 'JOG','price' : '600000'},{'name' : 'Semarang','origin' : 'SRG','price' : '400000'},{'name' : 'Kuala Lumpur','origin' : 'KUL','price' : '200000'},{'name' : 'Bandung','origin' : 'BDO','price' : '500000'},{'name' : 'Hong Kong','origin' : 'HKG','price' : '800000'}]";
-    ViewBag.LocationData["Bandung"] = "[{'name' : 'Surabaya','origin' : 'SUB','price' : '400000'},{'name' : 'Kuala Lumpur','origin' : 'KUL','price' : '500000'},{'name' : 'Palembang','origin' : 'PLM','price' : '700000'},{'name' : 'Medan','origin' : 'KNO','price' : '600000'},{'name' : 'Bali','origin' : 'DPS','price' : '500000'},{'name' : 'Mataram','origin' : 'AMI','price' : '700000'},{'name' : 'Batam','origin' : 'BTH','price' : '500000'},{'name' : 'Yogyakarta','origin' : 'JOG','price' : '400000'},{'name' : 'Singapore','origin' : 'SIN','price' : '500000'}]";
-    ViewBag.LocationData["Surabaya"] = "[{'name' : 'Jakarta','origin' : 'CGK','price' : '400000'},{'name' : 'Makassar','origin' : 'UPG','price' : '500000'},{'name' : 'Bandung','origin' : 'BDO','price' : '400000'},{'name' : 'Balikpapan','origin' : 'BPN','price' : '500000'},{'name' : 'Medan','origin' : 'KNO','price' : '800000'},{'name' : 'Bali','origin' : 'DPS','price' : '300000'},{'name' : 'Singapore','origin' : 'SIN','price' : '400000'},{'name' : 'Mataram','origin' : 'AMI','price' : '300000'},{'name' : 'Kuala Lumpur','origin' : 'KUL','price' : '300000'}]";
-    ViewBag.LocationData["Hongkong"] = "[{'name' : 'Jakarta','origin' : 'CGK','price' : '1000000'},{'name' : 'Surabaya','origin' : 'SUB','price' : '1000000'},{'name' : 'Bali','origin' : 'DPS','price' : '1000000'},{'name' : 'Medan','origin' : 'KNO','price' : '1000000'},{'name' : 'Singapore','origin' : 'SIN','price' : '900000'},{'name' : 'Kuala Lumpur','origin' : 'KUL','price' : '900000'},{'name' : 'Shanghai','origin' : 'PVG','price' : '1000000'},{'name' : 'Bangkok','origin' : 'BKK','price' : '1000000'},{'name' : 'Bandung','origin' : 'BDO','price' : '1000000'}]";
-
-    ViewBag.LocationList = "''";
-    ViewBag.DestinationCode = "";
-    ViewBag.DestinationName = "";
-
-    if (ViewBag.Destination != null)
-    {
-
-        string destination = ViewBag.Destination;
-
-        // switch location
-        switch (destination.ToLower())
-        {
-            case "jakarta":
-                ViewBag.DestinationName = "Jakarta";
-                ViewBag.DestinationCode = "CGK";
-                ViewBag.LocationList = ViewBag.LocationData["Jakarta"];
-                break;
-            case "bali":
-                ViewBag.DestinationName = "Bali";
-                ViewBag.DestinationCode = "DPS";
-                ViewBag.LocationList = ViewBag.LocationData["Bali"];
-                break;
-            case "malaysia":
-                ViewBag.DestinationName = "Malaysia";
-                ViewBag.DestinationCode = "KUL";
-                ViewBag.LocationList = ViewBag.LocationData["Jakarta"];
-                break;
-            case "yogyakarta":
-                ViewBag.DestinationName = "Yogyakarta";
-                ViewBag.DestinationCode = "JOG";
-                ViewBag.LocationList = ViewBag.LocationData["Yogyakarta"];
-                break;
-            case "singapore":
-                ViewBag.DestinationName = "Singapore";
-                ViewBag.DestinationCode = "SIN";
-                ViewBag.LocationList = ViewBag.LocationData["Singapore"];
-                break;
-            case "bandung":
-                ViewBag.DestinationName = "Bandung";
-                ViewBag.DestinationCode = "BDO";
-                ViewBag.LocationList = ViewBag.LocationData["Bandung"];
-                break;
-            case "surabaya":
-                ViewBag.DestinationName = "Surabaya";
-                ViewBag.DestinationCode = "SUB";
-                ViewBag.LocationList = ViewBag.LocationData["Surabaya"];
-                break;
-            case "hongkong":
-                ViewBag.DestinationName = "Hong Kong";
-                ViewBag.DestinationCode = "HKG";
-                ViewBag.LocationList = ViewBag.LocationData["Hongkong"];
-                break;
-            default:
-                ViewBag.DestinationName = "";
-                ViewBag.DestinationCode = "";
-                ViewBag.LocationList = "''";
-                break;
-        }
-    }
 }
 
 @section AdditionalCSS{
@@ -564,3 +493,74 @@
 
     </div>
 </section><!-- .section-payment -->
+
+@*// location
+    ViewBag.LocationData = new Dictionary<string, string>
+    ();
+    ViewBag.LocationData["Jakarta"] = "[{'name' : 'Surabaya','origin' : 'SUB','price' : '500000'},{'name' : 'Medan','origin' : 'KNO',	'price' : '700000'},{'name' : 'Denpasar','origin' : 'DPS','price' : '500000'},{'name' : 'Semarang','origin' : 'SRG','price' : '300000'},{'name' : 'Singapore','origin' : 'SIN','price' : '200000'},{'name' : 'Yogyakarta','origin' : 'JOG','price' : '300000'},{'name' : 'Balikpapan','origin' : 'BPN','price' : '600000'},{'name' : 'Makassar','origin' : 'UPG','price' : '600000'},{'name' : 'Batam','origin' : 'BTH','price' : '500000'}]";
+    ViewBag.LocationData["Bali"] = "[{'name' : 'Jakarta','origin' : 'CGK','price' : '500000'},{'name' : 'Medan','origin' : 'KNO','price' : '1000000'},{'name' : 'Surabaya','origin' : 'SUB','price' : '300000'},{'name' : 'Bandung','origin' : 'BDO','price' : '400000'},{'name' : 'Semarang','origin' : 'SRG','price' : '600000'},{'name' : 'Kuala Lumpur','origin' : 'KUL','price' : '300000'},{'name' : 'Yogyakarta','origin' : 'JOG','price' : '400000'},{'name' : 'Balikpapan','origin' : 'BPN','price' : '800000'},{'name' : 'Mataram','origin' : 'AMI','price' : '200000'}]";
+    ViewBag.LocationData["Malaysia"] = "[{'name' : 'Jakarta','origin' : 'CGK','price' : '400000'},{'name' : 'Medan','origin' : 'KNO','price' : '300000'},{'name' : 'Surabaya','origin' : 'SUB','price' : '300000'},{'name' : 'Singapore','origin' : 'SIN','price' : '200000'},{'name' : 'Bandung','origin' : 'BDO','price' : '500000'},{'name' : 'Yogyakarta','origin' : 'JOG','price' : '400000'},{'name' : 'Bali','origin' : 'DPS','price' : '300000'},{'name' : 'Padang','origin' : 'DPG','price' : '300000'},{'name' : 'Pekanbaru','origin' : 'PKU','price' : '300000'}]";
+    ViewBag.LocationData["Yogyakarta"] = "[{'name' : 'Jakarta','origin' : 'CGK','price' : '300000'},{'name' : 'Bali','origin' : 'DPS','price' : '400000'},{'name' : 'Medan','origin' : 'KNO','price' : '900000'},{'name' : 'Surabaya','origin' : 'SUB','price' : '300000'},{'name' : 'Makassar','origin' : 'UPG','price' : '700000'},{'name' : 'Balikpapan','origin' : 'BPN','price' : '500000'},{'name' : 'Batam','origin' : 'BTH','price' : '900000'},{'name' : 'Banjarmasin','origin' : 'BDJ','price' : '600000'},{'name' : 'Palembang','origin' : 'PLM','price' : '700000'}]";
+    ViewBag.LocationData["Singapore"] = "[{'name' : 'Jakarta','origin' : 'CGK','price' : '200000'},{'name' : 'Surabaya','origin' : 'SUB','price' : '400000'},{'name' : 'Bali','origin' : 'DPS','price' : '500000'},{'name' : 'Medan','origin' : 'KNO','price' : '500000'},{'name' : 'Yogyakarta','origin' : 'JOG','price' : '600000'},{'name' : 'Semarang','origin' : 'SRG','price' : '400000'},{'name' : 'Kuala Lumpur','origin' : 'KUL','price' : '200000'},{'name' : 'Bandung','origin' : 'BDO','price' : '500000'},{'name' : 'Hong Kong','origin' : 'HKG','price' : '800000'}]";
+    ViewBag.LocationData["Bandung"] = "[{'name' : 'Surabaya','origin' : 'SUB','price' : '400000'},{'name' : 'Kuala Lumpur','origin' : 'KUL','price' : '500000'},{'name' : 'Palembang','origin' : 'PLM','price' : '700000'},{'name' : 'Medan','origin' : 'KNO','price' : '600000'},{'name' : 'Bali','origin' : 'DPS','price' : '500000'},{'name' : 'Mataram','origin' : 'AMI','price' : '700000'},{'name' : 'Batam','origin' : 'BTH','price' : '500000'},{'name' : 'Yogyakarta','origin' : 'JOG','price' : '400000'},{'name' : 'Singapore','origin' : 'SIN','price' : '500000'}]";
+    ViewBag.LocationData["Surabaya"] = "[{'name' : 'Jakarta','origin' : 'CGK','price' : '400000'},{'name' : 'Makassar','origin' : 'UPG','price' : '500000'},{'name' : 'Bandung','origin' : 'BDO','price' : '400000'},{'name' : 'Balikpapan','origin' : 'BPN','price' : '500000'},{'name' : 'Medan','origin' : 'KNO','price' : '800000'},{'name' : 'Bali','origin' : 'DPS','price' : '300000'},{'name' : 'Singapore','origin' : 'SIN','price' : '400000'},{'name' : 'Mataram','origin' : 'AMI','price' : '300000'},{'name' : 'Kuala Lumpur','origin' : 'KUL','price' : '300000'}]";
+    ViewBag.LocationData["Hongkong"] = "[{'name' : 'Jakarta','origin' : 'CGK','price' : '1000000'},{'name' : 'Surabaya','origin' : 'SUB','price' : '1000000'},{'name' : 'Bali','origin' : 'DPS','price' : '1000000'},{'name' : 'Medan','origin' : 'KNO','price' : '1000000'},{'name' : 'Singapore','origin' : 'SIN','price' : '900000'},{'name' : 'Kuala Lumpur','origin' : 'KUL','price' : '900000'},{'name' : 'Shanghai','origin' : 'PVG','price' : '1000000'},{'name' : 'Bangkok','origin' : 'BKK','price' : '1000000'},{'name' : 'Bandung','origin' : 'BDO','price' : '1000000'}]";
+
+    ViewBag.LocationList = "''";
+    ViewBag.DestinationCode = "";
+    ViewBag.DestinationName = "";
+
+    if (ViewBag.Destination != null)
+    {
+
+    string destination = ViewBag.Destination;
+
+    // switch location
+    switch (destination.ToLower())
+    {
+    case "jakarta":
+    ViewBag.DestinationName = "Jakarta";
+    ViewBag.DestinationCode = "CGK";
+    ViewBag.LocationList = ViewBag.LocationData["Jakarta"];
+    break;
+    case "bali":
+    ViewBag.DestinationName = "Bali";
+    ViewBag.DestinationCode = "DPS";
+    ViewBag.LocationList = ViewBag.LocationData["Bali"];
+    break;
+    case "malaysia":
+    ViewBag.DestinationName = "Malaysia";
+    ViewBag.DestinationCode = "KUL";
+    ViewBag.LocationList = ViewBag.LocationData["Jakarta"];
+    break;
+    case "yogyakarta":
+    ViewBag.DestinationName = "Yogyakarta";
+    ViewBag.DestinationCode = "JOG";
+    ViewBag.LocationList = ViewBag.LocationData["Yogyakarta"];
+    break;
+    case "singapore":
+    ViewBag.DestinationName = "Singapore";
+    ViewBag.DestinationCode = "SIN";
+    ViewBag.LocationList = ViewBag.LocationData["Singapore"];
+    break;
+    case "bandung":
+    ViewBag.DestinationName = "Bandung";
+    ViewBag.DestinationCode = "BDO";
+    ViewBag.LocationList = ViewBag.LocationData["Bandung"];
+    break;
+    case "surabaya":
+    ViewBag.DestinationName = "Surabaya";
+    ViewBag.DestinationCode = "SUB";
+    ViewBag.LocationList = ViewBag.LocationData["Surabaya"];
+    break;
+    case "hongkong":
+    ViewBag.DestinationName = "Hong Kong";
+    ViewBag.DestinationCode = "HKG";
+    ViewBag.LocationList = ViewBag.LocationData["Hongkong"];
+    break;
+    default:
+    ViewBag.DestinationName = "";
+    ViewBag.DestinationCode = "";
+    ViewBag.LocationList = "''";
+    break;
+    }*@

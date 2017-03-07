@@ -432,8 +432,8 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
         }
     }
 
-    $scope.getCheapestHotelPrice('JAV'); $scope.getCheapestHotelPrice('BDO'); $scope.getCheapestHotelPrice('SUB');
-    $scope.getCheapestHotelPrice('BAI'); $scope.getCheapestHotelPrice('JOG');
+    //$scope.getCheapestHotelPrice('JAV'); $scope.getCheapestHotelPrice('BDO'); $scope.getCheapestHotelPrice('SUB');
+    //$scope.getCheapestHotelPrice('BAI'); $scope.getCheapestHotelPrice('JOG');
 
     $scope.getCheapestFlightPrice = function (origin, destination) {
         var authAccess = getAuthAccess();
@@ -485,8 +485,8 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
         }
     }
 
-    $scope.getCheapestFlightPrice('DPS', 'JKT'); $scope.getCheapestFlightPrice('JKT', 'DPS'); $scope.getCheapestFlightPrice('JKT', 'SUB');
-    $scope.getCheapestFlightPrice('JKT', 'KNO'); $scope.getCheapestFlightPrice('JKT', 'JOG');
+    //$scope.getCheapestFlightPrice('DPS', 'JKT'); $scope.getCheapestFlightPrice('JKT', 'DPS'); $scope.getCheapestFlightPrice('JKT', 'SUB');
+    //$scope.getCheapestFlightPrice('JKT', 'KNO'); $scope.getCheapestFlightPrice('JKT', 'JOG');
 
     $scope.getFlightPrice = function (month, year) {
         var authAccess = getAuthAccess();
