@@ -19,8 +19,7 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
     $scope.maxRoomCount = 100;
     $scope.pageLoaded = true;
     $scope.searchDone = false;
-   
-    $scope.hotelImages = hotelImages;
+    Images = hotelImages;
     $scope.selectedRoom = '';
     $scope.selectFailed = false;
     $scope.booking = false;
@@ -48,6 +47,7 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
         $scope.showPopularDestinations = true;
     });
 
+    var timeout;
     $scope.gtmContentType = gtmContentType;
     $scope.gtmCity = gtmCity ;
     $scope.gtmHotelIds = gtmHotelIds;
@@ -119,33 +119,6 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
         $scope.hotelSearch.destinationCheckinDate = moment(cekin, "YYYY-MM-DD").locale("id").format('dddd, DD MMMM YYYY');
         $scope.hotelSearch.destinationCheckoutDate = moment(cekout, "YYYY-MM-DD").locale("id").format('dddd, DD MMMM YYYY');
 
-        var loadedImages = 0;
-        var maxImages = 6;
-        var tempHotelImages = [];
-
-        //Remove broken images
-        //$scope.hotelImages = JSON.parse($scope.hotelImages);
-        //    var imageCount = $scope.hotelImages.length;
-        //    var imageIndex = 0;
-        //    var finishedSlider = 0;
-        //    $.each($scope.hotelImages, function (key, value) {
-        //        imageSvc.isImage(value).then(function () {
-        //            if (loadedImages < maxImages) {
-        //                loadedImages++;
-        //                tempHotelImages.push(value);
-        //                $scope.hotelImages = tempHotelImages;
-        //            }
-        //            else return false;
-        //        }, function () {
-        //            return; //equivalent of continue
-        //        }).finally(function () {
-        //            imageIndex++;
-        //            if (!finishedSlider && loadedImages == 1 || (imageIndex + 1 == imageCount && loadedImages < maxImages)) {
-        //                $timeout(function () {}, 0);
-        //                finishedSlider = true;
-        //            }
-        //        });
-        //    });
         $timeout(function () { initiateMap(); }, 0);
         $timeout(function () {
             // **********
@@ -170,8 +143,6 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
                 $('body .sh-txt').toggleClass('opened');
             });
 
-           
-
                 //**********
                 //Slick Slider Detail Hotel
             $('.dh-slider').slick({
@@ -181,40 +152,20 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
             });
 
 
-                $('.mh-list a').click(function () {
-                    $(window).on("scroll", function () {
-                        if ($(window).scrollTop() > 1800) {
-                            $('.site-header').fadeOut();
-                        } else {
-                            $('.site-header').fadeIn();
-                        }
-                    });
-                    var val = $(this).data('value');
-                    $('html, body').animate({
-                        scrollTop: $("#" + val).offset().top
-                    }, 700);
-                    });
-                //Hotel Detail
-                //$('.mh-list a').click(function () {
-                //    var link = $(this).attr('id');
-                //    var header;
-                //    if (link == '#menu-facility') {
-                //        $('html, body').animate({
-                //            scrollTop: $(".info-hotel").offset().top
-                //        }, 1000);
-                //            }
-                //    else if (link == '#menu-desc') {
-                //        $('html, body').animate({
-                //            scrollTop: $("#menu-desc").offset().top - 80
-                //        },1000);
-
-                //    } else if (link == '#menu-tnc') {
-                //        $('html, body').animate({
-                //            scrollTop: $("#menu-tnc").offset().top - 80
-                //        }, 1000);
-                //    }
-                //        });
-
+            $('.mh-list a').click(function () {
+                $(window).on("scroll", function () {
+                    if ($(window).scrollTop() > 1800) {
+                        $('.site-header').fadeOut();
+                    } else {
+                        $('.site-header').fadeIn();
+                    }
+                });
+                var val = $(this).data('value');
+                $('html, body').animate({
+                    scrollTop: $("#" + val).offset().top
+                }, 700);
+            });
+            
             // Hotel Detail Slider
             $('#image-gallery').lightSlider({
                 gallery: true,
@@ -229,10 +180,9 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
             });
         }, 0);
 
-        $timeout(function() {
-            $scope.availableRates(nightcount, $scope.searchParamObject.checkinDate, $scope.searchParamObject.checkoutDate,
+        $scope.availableRates(nightcount, $scope.searchParamObject.checkinDate, $scope.searchParamObject.checkoutDate,
                 $scope.searchParamObject.occupancies, totalOcc);
-        }, 0);
+       
         $scope.hotelSearch.location = $scope.getLocationCode();
     }
 
@@ -318,6 +268,7 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
 
     var hotelDetailFunctions = function () {
         // Open Room Details
+        $timeout.cancel(timeout);
         $('body .room-rl').on('click', function () {
             var parent1 = $(this).closest('.room-list').find('.room-left');
             var parent2 = parent1.closest('.room-list-container li').find('.hotel-detail');
@@ -344,9 +295,7 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
             list.siblings().find('.room-list').removeClass('active');
 
             list.toggleClass('active');
-            list.siblings().removeClass('active');
-
-           
+            list.siblings().removeClass('active');           
         });
 
         $("body .change-room").click(function () {
@@ -517,25 +466,26 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
         },
     }
 
-    var accordionFunctions = function () {
-        //Accordion Help Section by W3School
-        $timeout(function () {
-            var acc = document.getElementsByClassName("accordion");
-            var i;
+    //var accordionFunctions = function () {
+    //    //Accordion Help Section by W3School
+    //    $timeout(function () {
+    //        var acc = document.getElementsByClassName("accordion");
+    //        var i;
 
-            for (i = 0; i < acc.length; i++) {
-                acc[i].onclick = function () {
-                    this.classList.toggle("active");
-                    this.nextElementSibling.classList.toggle("show");
-                }
-            }
-        }, 0);
-    }
+    //        for (i = 0; i < acc.length; i++) {
+    //            acc[i].onclick = function () {
+    //                this.classList.toggle("active");
+    //                this.nextElementSibling.classList.toggle("show");
+    //            }
+    //        }
+    //    }, 0);
+    //}
 
     $('.change-hotel.form-control').click(function () {
         $(this).select();
     });
 
+    
     $scope.availableRates = function (nightCount, checkIn, checkOut, occupancies, totalOcc) {
         $scope.hideRoomDetail = true;
         $scope.searchDone = false;
@@ -640,22 +590,27 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
                     $scope.hotel.checkoutDate = new Date(parseInt(cekout.substring(0, 4)), parseInt(cekout.substring(4, 6)) - 1, parseInt(cekout.substring(6, 8)));
                     $scope.hotel.nightCount = (new Date($scope.hotel.checkoutDate) - new Date($scope.hotel.checkinDate)) / (3600 * 24 * 1000);
 
-                    $timeout(function() { hotelDetailFunctions(); }, 0);
-                    $timeout(function() { accordionFunctions(); }, 0);
+                    if ($scope.isFirstLoad) {
+                        $scope.isFirstLoad = false;
+                        $timeout(function () { hotelDetailFunctions(); }, 0);
+                        $timeout(function() {
+                            $('body .dh-list').on('click', function() {
+                                var id = $(this).parent();
+
+                                id.toggleClass('active');
+                                id.siblings().removeClass('active');
+
+                                id.find('.dh-list-detail').toggleClass('active');
+                                id.siblings().find('.dh-list-detail').removeClass('active');
+                            });
+                        }, 0);
+                    }
+
+                    accordionFunctions();
+                    //$timeout(function() { accordionFunctions(); }, 0);
                     //**********
                     //Open Detail Room in Mobile
-                    $timeout(function() {
-                        $('body .dh-list').on('click', function() {
-                            var id = $(this).parent();
-
-                            id.toggleClass('active');
-                            id.siblings().removeClass('active');
-
-                            id.find('.dh-list-detail').toggleClass('active');
-                            id.siblings().find('.dh-list-detail').removeClass('active');
-                        });
-                    }, 0);
-
+                    
                     $scope.singleRoom.sort(function(a, b) {
                         return a.rate.breakdowns[0].netFare - b.rate.breakdowns[0].netFare;
                     });
@@ -672,7 +627,6 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
             $scope.searchDone = true;
         }
     }
-
     $scope.refreshPage = function () {
         $interval.cancel(promise);
         $scope.expired = false;
