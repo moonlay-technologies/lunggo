@@ -2800,10 +2800,18 @@
     <Content Include="Views\B2BTemplate\ResetPassword.cshtml" />
     <Content Include="Views\B2BTemplate\ConfirmPassword.cshtml" />
     <Content Include="Views\B2BTemplate\UserManagement.cshtml" />
-    <Content Include="Views\B2BTemplate\OrderDetailFlight.cshtml" />
-    <Content Include="Views\B2BTemplate\OrderDetailHotel.cshtml" />
-    <Content Include="Views\B2BTemplate\OrderListFlight.cshtml" />
-    <Content Include="Views\B2BTemplate\OrderListHotel.cshtml" />
+    <Content Include="Views\B2BTemplate\OrderListFlightBooker.cshtml" />
+    <Content Include="Views\B2BTemplate\OrderListFlightApprover.cshtml" />
+    <Content Include="Views\B2BTemplate\OrderListFlightFinance.cshtml" />
+    <Content Include="Views\B2BTemplate\OrderListHotelBooker.cshtml" />
+    <Content Include="Views\B2BTemplate\OrderListHotelApprover.cshtml" />
+    <Content Include="Views\B2BTemplate\OrderListHotelFinance.cshtml" />
+    <Content Include="Views\B2BTemplate\OrderDetailFlightBooker.cshtml" />
+    <Content Include="Views\B2BTemplate\OrderDetailFlightApprover.cshtml" />
+    <Content Include="Views\B2BTemplate\OrderDetailHotelBooker.cshtml" />
+    <Content Include="Views\B2BTemplate\OrderDetailHotelApprover.cshtml" />
+    <Content Include="Views\B2BTemplate\OrderDetailHotelFinance.cshtml" />
+    <Content Include="Views\B2BTemplate\OrderDetailFlightFinance.cshtml" />
     <None Include="Views\Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

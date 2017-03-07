@@ -1,0 +1,118 @@
+﻿@{
+    Layout = "/Views/Shared/B2BTravorama/_B2BLayout.cshtml";
+    ViewBag.BodyClass = "b2b-order-detail hotel";
+    ViewBag.SiteHeader = "b2b-order-detail";
+    ViewBag.Title = "Order Detail Hotel (Booker)";
+    ViewBag.AngularController = "";
+
+}
+
+@section AdditionalCSS{
+}
+
+@section AdditionalJS{
+}
+
+@section PageJS{
+}
+
+<div class="order-detail">
+    <div class="panel panel-transparent">
+        <div class="panel-heading">
+            <div class="panel-title">
+                Order Detail Hotel
+            </div>
+            <div class="clearfix"></div>
+        </div>
+        <div class="panel-body bg-white">
+            <div class="od-tabs">
+                <ul id="tabs-nvd3" class="nav nav-tabs nav-tabs-linetriangle text-center">
+                    <li class="active col-sm-6">
+                        <a data-toggle="tab" href="#hotel-reservation"><span class="bold">Detail Resrevasi</span></a>
+                    </li>
+                    <li class="col-sm-6">
+                        <a data-toggle="tab" href="#detail-hotel"><span class="bold">Detail Hotel</span></a>
+                    </li>
+                </ul>
+                <div class="tab-content no-padding">
+                    <div class="tab-pane active" id="hotel-reservation">
+                        <div class="flight-reservation">
+                            <div class="table-responsive">
+                                <div class="font-montserrat bold p-t-15 p-b-15 p-l-20 p-r-20" style="border-bottom:  2px solid #ccc;">RINCIAN RESERVASI</div>
+                                <div id="detailedTable_wrapper" class="dataTables_wrapper form-inline no-footer">
+                                    <table class="table table-hover table-condensed table-detailed dataTable no-footer" id="detailedTable" role="grid">
+                                        <tbody>
+                                            <tr role="row" class="odd">
+                                                <td class="v-align-middle semi-bold">Booking Reference</td>
+                                                <td class="v-align-middle">111-2333444</td>
+                                            </tr>
+                                            <tr role="row" class="odd">
+                                                <td class="v-align-middle semi-bold">Nama Hotel</td>
+                                                <td class="v-align-middle">Fave Hotel Bekasi</td>
+                                            </tr>
+                                            <tr role="row" class="odd">
+                                                <td class="v-align-middle semi-bold">Alamat</td>
+                                                <td class="v-align-middle">Jl. Raya Pekayon No.1 Bekasi</td>
+                                            </tr>
+                                            <tr role="row" class="odd">
+                                                <td class="v-align-middle semi-bold">Lokasi</td>
+                                                <td class="v-align-middle">Kota Bekasi, Jakarta, Indonesia</td>
+                                            </tr>
+                                            <tr role="row" class="odd">
+                                                <td class="v-align-middle semi-bold">Tanggal Check In</td>
+                                                <td class="v-align-middle">Rabu, 1 Maret 2017</td>
+                                            </tr>
+                                            <tr role="row" class="odd">
+                                                <td class="v-align-middle semi-bold">Tanggal Check Out</td>
+                                                <td class="v-align-middle">Kamis, 2 Maret 2017</td>
+                                            </tr>
+                                            <tr role="row" class="even">
+                                                <td class="v-align-middle semi-bold">Jumlah Kamar</td>
+                                                <td class="v-align-middle">1 Kamar</td>
+                                            </tr>
+                                            <tr role="row" class="even">
+                                                <td class="v-align-middle semi-bold">Jumlah Pax</td>
+                                                <td class="v-align-middle">1 Orang</td>
+                                            </tr>
+                                            <tr role="row" class="even">
+                                                <td class="v-align-middle semi-bold">Rincian Pax</td>
+                                                <td class="v-align-middle">1 Dewasa</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="detail-hotel">
+                        <div class="passenger-list">
+                            <div class="table-responsive">
+                                <div class="font-montserrat bold p-t-15 p-b-15 p-l-20 p-r-20" style="border-bottom:  2px solid #ccc;">DAFTAR TAMU</div>
+                                <div id="detailedTable_wrapper" class="dataTables_wrapper form-inline no-footer">
+                                    <table class="table table-hover table-condensed table-detailed dataTable no-footer" id="detailedTable" role="grid">
+                                        <thead>
+                                            <tr role="row">
+                                                <th style="width: 60px;" class="sorting_disabled" rowspan="1" colspan="1">No</th>
+                                                <th style="width: 100px;" class="sorting_disabled" rowspan="1" colspan="1">Gelar</th>
+                                                <th style="width: 120px;" class="sorting_disabled" rowspan="1" colspan="1">Nama</th>
+                                                <th style="width: 100px;" class="sorting_disabled" rowspan="1" colspan="1">Tipe</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr role="row" class="even">
+                                                <td class="v-align-middle">1</td>
+                                                <td class="v-align-middle">Mistrees</td>
+                                                <td class="v-align-middle">Jane Doe</td>
+                                                <td class="v-align-middle">Dewasa</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
