@@ -4,14 +4,14 @@ function ($scope, $log, $window, $http, $resource, $timeout, $interval, hotelSea
 
     $(document).ready(function () {
 
-        if (Cookies.get('hotelSearchLocationDisplay')) {
-            $scope.hotelSearch.locationDisplay = Cookies.get('hotelSearchLocationDisplay');
+        if (Cookies.get('hotelLocationDisplay')) {
+            $scope.hotelSearch.locationDisplay = Cookies.get('hotelLocationDisplay');
         } else {
             $scope.hotelSearch.locationDisplay = 'Bali, Indonesia';
         }
 
-        if (Cookies.get('hotelSearchLocation')) {
-            $scope.hotelSearch.location = Cookies.get('hotelSearchLocation');
+        if (Cookies.get('hotelLocation')) {
+            $scope.hotelSearch.location = Cookies.get('hotelLocation');
         } else {
             $scope.hotelSearch.location = 1316553;
         }
