@@ -760,9 +760,7 @@
             Cookies.set('urlZone', scope.hotelSearch.urlData.zone, { expires: 9999 });
             Cookies.set('urlArea', scope.hotelSearch.urlData.area, { expires: 9999 });
             Cookies.set('urlType', scope.hotelSearch.urlData.type, { expires: 9999 });
-
-        }
-        
+        }        
     }
 
     var searchParam = function (hotelSearch) {

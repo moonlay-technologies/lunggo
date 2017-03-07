@@ -8,43 +8,43 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
         
         if (Cookies.get('hotelLocationDisplay')) {
             $scope.hotelSearch.locationDisplay = Cookies.get('hotelLocationDisplay');
+            if (Cookies.get('hotelLocation')) {
+                $scope.hotelSearch.location = Cookies.get('hotelLocation');
+            } else {
+                $scope.hotelSearch.location = 1316553;
+            }
+            if (Cookies.get('urlCountry')) {
+                $scope.hotelSearch.urlData.country = Cookies.get('urlCountry');
+            } else {
+                $scope.hotelSearch.urlData.country = 'Indonesia';
+            }
+            if (Cookies.get('urlDestination')) {
+                $scope.hotelSearch.urlData.destination = Cookies.get('urlDestination');
+            } else {
+                $scope.hotelSearch.urlData.destination = 'Bali';
+            }
+            if (Cookies.get('urlZone')) {
+                $scope.hotelSearch.urlData.zone = Cookies.get('urlZone');
+            } else {
+                $scope.hotelSearch.urlData.zone = null;
+            }
+            if (Cookies.get('urlArea')) {
+                $scope.hotelSearch.urlData.area = Cookies.get('urlArea');
+            } else {
+                $scope.hotelSearch.urlData.area = null;
+            }
+
+            if (Cookies.get('urlType')) {
+                $scope.hotelSearch.urlData.type = Cookies.get('urlType');
+            } else {
+                $scope.hotelSearch.urlData.type = 'Destination';
+            }
         } else {
             $scope.hotelSearch.locationDisplay = 'Bali, Indonesia';
-        }
-
-        if (Cookies.get('hotelLocation')) {
-            $scope.hotelSearch.location = Cookies.get('hotelLocation');
-        } else {
-            $scope.hotelSearch.location = 1316553;
-        }
-
-        if (Cookies.get('urlCountry')) {
-            $scope.hotelSearch.urlData.country = Cookies.get('urlCountry');
-        } else {
             $scope.hotelSearch.urlData.country = 'Indonesia';
-        }
-
-        if (Cookies.get('urlDestination')) {
-            $scope.hotelSearch.urlData.destination = Cookies.get('urlDestination');
-        } else {
             $scope.hotelSearch.urlData.destination = 'Bali';
-        }
-
-        if (Cookies.get('urlZone')) {
-            $scope.hotelSearch.urlData.zone = Cookies.get('urlZone');
-        } else {
             $scope.hotelSearch.urlData.zone = null;
-        }
-
-        if (Cookies.get('urlArea')) {
-            $scope.hotelSearch.urlData.area = Cookies.get('urlArea');
-        } else {
             $scope.hotelSearch.urlData.area = null;
-        }
-
-        if (Cookies.get('urlType')) {
-            $scope.hotelSearch.urlData.type = Cookies.get('urlType');
-        } else {
             $scope.hotelSearch.urlData.type = 'Destination';
         }
 
