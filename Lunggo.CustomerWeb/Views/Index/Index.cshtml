@@ -33,14 +33,14 @@
         newsletterFormFunctions();
         indexPageFunctions();
         subscribeFormFunctions();
+        
         var indexPageDestination = '@ViewBag.DestinationName' || '';
         var indexPageDestinationsCode = '@ViewBag.DestinationCode' || '';
-        var topDestinations = @Html.Raw(ViewBag.LocationList);
+        //var topDestinations = @Html.Raw(ViewBag.LocationList);
         var departureDate = '@(DateTime.Now.AddDays(1).ToString("ddMMyy"))';
     </script>
     <script src="/Assets/travorama20/angularDirectory/search/hotelSearch.service.js"></script>
     <script src="/Assets/travorama20/js/homeController.js"></script>
-    <script src="/Assets/travorama20/js/PriceCalendarController.js"></script>    
     <script>
         jQuery(document).ready(function($) {
             $('.fc-event-container').click(function() {
@@ -48,7 +48,7 @@
             });
         })
     </script>
-    <script>changeMainTab();</script>
+    @*<script> changeMainTab();</script>*@
 }
 
 <section class="section-search normal-txt">
