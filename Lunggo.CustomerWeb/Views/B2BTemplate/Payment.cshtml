@@ -4,7 +4,6 @@
     ViewBag.SiteHeader = "b2b-payment";
     ViewBag.Title = "Payment Management";
     ViewBag.AngularController = "B2BPaymentMgmtFormController";
-
 }
 
 @section AdditionalCSS{
@@ -19,10 +18,7 @@
     <script src="/Assets/js/angular-animate.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.5/angular-resource.js"></script>
     <script src="/Assets/B2BTravorama/assets/js/form_elements.js" type="text/javascript"></script>
-    <!-- additional Angular JS-->
-    @*<script src="/Assets/js/bootstrap.min.js"></script>*@
     <!-- veritrans JS -->
-    @*<script src="https://api.sandbox.veritrans.co.id/v2/assets/js/veritrans.min.js"></script>*@
     <script src="https://api.sandbox.midtrans.com/v2/assets/js/midtrans.min.js" type="text/javascript"></script>
     <!-- fancybox -->
     <script type="text/javascript" src="/Assets/vendor/fancybox/jquery.fancybox.pack.js"></script>
@@ -30,8 +26,8 @@
 
 @section PageJS{
     <script src="/Assets/travorama20/js/B2BTravorama20.js"></script>
-    <script src="/Assets/travorama20/js/B2BHomeController.js"></script> 
-                }
+    <script src="/Assets/travorama20/js/B2BPaymentMgmtController.js"></script> 
+}
 <div ng-app="travoramaB2B" ng-controller="B2BPaymentMgmtFormController" ng-class="{ 'active': pageLoaded }">
     <div class="payment-page">
         <div class="panel panel-transparent">
@@ -73,33 +69,36 @@
                         </div>
                     </div>
                 </div>
-
-                <div ng-if="emptyCc">
-                    <div class="payment-item col-sm-6 m-b-20 emptyCc hide" id=" payment-item-1" count="0">
-                        <div class="pi-wrapper clearfix">
-                            <div class="pi-top clearfix">
-                                <div class="">
-                                    <div class="icon-visa"></div>
-                                </div>
-                                <div class="clearfix">
-                                    <div class="font-montserrat bold cc-no">New Credit Card</div>
-                                    <div class="small hint-text expiry">Expires mm/yy</div>
-                                </div>
-                                <button class="btn remove-payment" data-toggle="modal" data-target=".deleteCc" data-backdrop="static" data-keyboard="false">
-                                    <i class="pg-trash"></i>
-                                </button>
+                
+                <div class="payment-item col-sm-6 m-b-20 emptyCc" id="payment-item-0" count="0" hidden>
+                    <div class="pi-wrapper clearfix">
+                        <div class="pi-top clearfix">
+                            <div class="logoCard">
+                                <div class="iconCc hide" style="font-size: 45px;line-height: 100%;height: 46px"><span><i class="fa fa-credit-card m-r-20"></i></span></div>
+                                <div class="icon-visa hide"></div>
+                                <div class="icon-jcb hide" ></div>
+                                <div class="icon-amex hide"></div>
+                                <div class="icon-mastercard hide"></div>
                             </div>
-                            <div class="pi-bottom clearfix font-montserrat bold small">
-                                <div class="pi-status"><span class="current-status" ng-show="cc.isPrimaryCard">Primary</span></div>
-                                <div class="pi-status">
-                                    <a class="set-status" ng-show="!cc.isPrimaryCard" data-toggle="modal" data-target=".setPrimary"
-                                        data-backdrop="static" data-keyboard="false">Set As Primary Card</a>
-                                </div>
-                                <div class="pull-right"><a href="#" class="btn-edit-payment hide">Edit</a></div>
+                            <div class="clearfix">
+                                <div class="font-montserrat bold cc-no">New Credit Card</div>
+                                <div class="small hint-text expiry">Expires mm/yy</div>
                             </div>
+                            <button class="btn remove-payment" data-toggle="modal" data-target=".deleteCc" data-backdrop="static" data-keyboard="false">
+                                <i class="pg-trash"></i>
+                            </button>
+                        </div>
+                        <div class="pi-bottom clearfix font-montserrat bold small">
+                            <div class="pi-status"><span class="current-status" ng-show="cc.isPrimaryCard">Primary</span></div>
+                            <div class="pi-status">
+                                <a class="set-status" ng-show="!cc.isPrimaryCard" data-toggle="modal" data-target=".setPrimary"
+                                    data-backdrop="static" data-keyboard="false">Set As Primary Card</a>
+                            </div>
+                            <div class="pull-right"><a href="#" class="btn-edit-payment hide">Edit</a></div>
                         </div>
                     </div>
                 </div>
+               
                 <div class="payment-add col-sm-6 m-b-20" ng-click="addCc()">
                     <div class="pa-wrapper clearfix">
                         <a class="font-montserrat bold" id="add-payment"><i class="fa fa-plus-square m-r-5"></i>ADD PAYMENT METHOD</a>
@@ -235,7 +234,7 @@
                         </form>
                         <div class="row">
                             <div class="col-sm-12">
-                                <p>Anda akan dikenakan biaya Rp 10s.000 untuk setiap penyimpanan kartu kredit baru.</p>
+                                <p>Anda akan dikenakan biaya Rp 10.000 yang akan dikembalikan untuk setiap penyimpanan kartu kredit baru.</p>
                             </div>
                         </div>
                         <div class="row">

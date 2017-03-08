@@ -52,7 +52,7 @@ namespace Lunggo.ApCommon.Payment.Service
                 var paymentResponse = VeritransWrapper.ProcessFirstB2BPayment(paymentDetails, transactionDetails, PaymentMethod.CreditCard);
                 if (paymentResponse != null)
                 {
-                    model.IsPrimaryCard = ccList == null;
+                    model.IsPrimaryCard = (ccList == null || ccList.Count == 0);
                     model.MaskedCardNumber = GenerateMaskedCardNumber(paymentResponse.MaskedCard);
                     model.TokenExpiry = paymentResponse.TokenIdExpiry;
                     model.Token = paymentResponse.SavedTokenId;
