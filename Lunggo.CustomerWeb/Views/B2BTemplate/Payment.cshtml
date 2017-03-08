@@ -47,7 +47,6 @@
                             <div class="pi-top clearfix">
                                 <div class="logoCard">
                                     <div class="iconCc" style="font-size: 45px;line-height: 100%;height: 46px" ng-show="cc.type== ''"><span><i class="fa fa-credit-card m-r-20"></i></span></div>
-                                    @*<div class="icon-default m-r-20" style="font-size: 50px;"><span><i class="fa fa-credit-card m-r-10"></i></span></div>*@
                                     <div class="icon-visa" ng-show="cc.type == 'Visa'"></div>
                                     <div class="icon-jcb" ng-show="cc.type=='JCB'"></div>
                                     <div class="icon-amex" ng-show="cc.type == 'American Express'"></div>
@@ -57,7 +56,7 @@
                                     <div class="font-montserrat bold cc-no">{{cc.type}} ****{{cc.maskedCardNumber.slice(-4)}}</div>
                                     <div class="small hint-text expiry">Expires {{("0" + (cc.cardExpiry.getMonth() + 1)).slice(-2)}}/{{cc.cardExpiry.getFullYear().toString().slice(-2)}}</div>
                                 </div>
-                                <button class="btn remove-payment" ng-class="{ 'disableDel': cc.isPrimaryCard }"
+                                <button class="btn remove-payment" ng-class="{ 'disableDel': cc.isPrimaryCard }" ng-hide="cc.isPrimaryCard"
                                                 data-toggle="modal" data-target=".deleteCc"
                                                 data-backdrop="static" data-keyboard="false" ng-click="deleteCardData.set(cc.maskedCardNumber, $index)" ng-disabled="cc.isPrimaryCard">
                                 <i class="pg-trash"></i>

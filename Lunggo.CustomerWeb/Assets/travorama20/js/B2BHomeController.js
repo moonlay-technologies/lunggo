@@ -848,7 +848,7 @@ app.controller('B2BHotelSearchFormController', ['$scope', '$log', '$http', '$loc
 app.controller('B2BPaymentMgmtFormController', ['$scope', '$log', '$http', function ($scope, $log, $http) {
     $scope.pageLoaded = false;
     $scope.creditCards = [];
-    $scope.ccType = function(digit) {
+    $scope.ccType = function(digit) { //untuk nunjukin tipeCc
         if (digit.slice(0,1) == '4') {
             return 'Visa';
         }else if (digit.slice(0,1) == '5') {
@@ -916,10 +916,10 @@ app.controller('B2BPaymentMgmtFormController', ['$scope', '$log', '$http', funct
     $scope.cloneIndex = 0;
     function clone() {
         $(".newCc").removeClass("newCc");
-        if ($scope.cloneIndex == 1) {
-            var isEmpty = $('#payment-item-1').hasClass("emptyCc") == true;
+        if ($scope.cloneIndex == 0) {
+            var isEmpty = $('#payment-item-0').hasClass("emptyCc") == true;
             if (isEmpty) {
-                $("#payment-item-1").removeClass("hide");
+                $("#payment-item-0").removeClass("hide");
             }
         } else {
            $(this).closest('.payment-body').find('#payment-item-0').clone(false, false)
@@ -939,6 +939,9 @@ app.controller('B2BPaymentMgmtFormController', ['$scope', '$log', '$http', funct
             $('.newCc .logoCard .icon-jcb').hide();
             $('.newCc .logoCard .icon-amex').hide();
             $('.newCc .logoCard .icon-mastercard').hide();
+            $('.newCc .remove-payment').removeClass('disableDel');
+            $('.newCc .remove-payment').removeClass('ng-hide');
+            $('.newCc .remove-payment').show();
             if ($scope.cloneIndex > 1) {
                 $(this).closest('.payment-body').find('#payment-item-' + $scope.cloneIndex + ' .remove-payment').show();
                 $(this).closest('.payment-body').find('#payment-item-' + $scope.cloneIndex + ' .pi-status').find('.current-status').hide();
@@ -967,7 +970,6 @@ app.controller('B2BPaymentMgmtFormController', ['$scope', '$log', '$http', funct
                     }
                 }
                 $('.modal-edit-payment .form-control').val('');
-                //$('.creditCardNo').val('');
             });
 
             $('.newCc .remove-payment').click(function () {
@@ -985,11 +987,6 @@ app.controller('B2BPaymentMgmtFormController', ['$scope', '$log', '$http', funct
 
             $('.saveNewCc').click(function () {
                 $scope.addCreditCard.getPreToken();
-                //$('.modal-edit-payment.form-add-cc').modal('hide');
-                //$('.newCc .cc-no').text($scope.ccType($scope.currentEdit.cc) + ' ****' + $scope.currentEdit.cc.slice(-4));
-                //$('.newCc .expiry').text($scope.currentEdit.month + '/' + $scope.currentEdit.year.slice(-2));
-                //var maskedCc = $scope.currentEdit.cc.slice(0, 1) + '************' + $scope.currentEdit.cc.slice(-4);
-                //$('.newCc .cc-no').attr('cc', maskedCc);
             });
 
             $('.newCc .set-status').click(function () {
@@ -1328,12 +1325,15 @@ app.controller('B2BPaymentMgmtFormController', ['$scope', '$log', '$http', funct
                     $('.payment-item[count=' + $scope.currentPrimary + '] .set-status').show();
                     $('.payment-item[count=' + $scope.currentPrimary + '] .set-status').removeClass('ng-hide');
                     $('.disableDel').prop("disabled", false);
+                    $('.disableDel').removeClass("ng-hide");
+                    $('.disableDel').show();
                     $('.disableDel').removeClass('disableDel');
                     $('.payment-item[count=' + index + '] .current-status').removeClass('ng-hide');
                     $('.payment-item[count=' + index + '] .current-status').show();
                     $('.payment-item[count=' + index + '] .set-status').hide();
                     $('.payment-item[count=' + index + '] .remove-payment').prop("disabled", true);
                     $('.payment-item[count=' + index + '] .remove-payment').addClass("disableDel");
+                    $('.payment-item[count=' + index + '] .remove-payment').hide();
                     $scope.message = 'Setting Primary Card is Successful';
                     $scope.currentPrimary = index;
                 } else {
