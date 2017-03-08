@@ -118,5 +118,9 @@ namespace Lunggo.CustomerWeb.Controllers
         {
             return View();
         }
+        public ActionResult B2BStaticPage()
+        {
+            return View();
+        }
     }
 }

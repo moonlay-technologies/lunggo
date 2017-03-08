@@ -2812,6 +2812,8 @@
     <Content Include="Views\B2BTemplate\OrderDetailHotelApprover.cshtml" />
     <Content Include="Views\B2BTemplate\OrderDetailHotelFinance.cshtml" />
     <Content Include="Views\B2BTemplate\OrderDetailFlightFinance.cshtml" />
+    <Content Include="Views\StaticPage\B2BStaticPage.cshtml" />
+    <Content Include="Views\StaticPage\B2BStaticPage.mobile.cshtml" />
     <None Include="Views\Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
