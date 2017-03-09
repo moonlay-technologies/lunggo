@@ -2814,6 +2814,14 @@
     <Content Include="Views\B2BTemplate\OrderDetailFlightFinance.cshtml" />
     <Content Include="Views\StaticPage\B2BStaticPage.cshtml" />
     <Content Include="Views\StaticPage\B2BStaticPage.mobile.cshtml" />
+    <Content Include="Views\B2BTemplate\InitialRegister.cshtml" />
+    <Content Include="Views\B2BTemplate\WelcomeEmail.cshtml" />
+    <Content Include="Views\B2BTemplate\PasswordReset.cshtml" />
+    <Content Include="Views\B2BTemplate\InvitationEmail.cshtml" />
+    <Content Include="Views\B2BTemplate\B2BInitialRegister.cshtml" />
+    <Content Include="Views\B2BTemplate\B2BWelcomeEmail.cshtml" />
+    <Content Include="Views\B2BTemplate\B2BPasswordReset.cshtml" />
+    <Content Include="Views\B2BTemplate\B2BInvitationEmail.cshtml" />
     <None Include="Views\Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

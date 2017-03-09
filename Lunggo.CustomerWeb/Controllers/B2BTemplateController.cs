@@ -89,5 +89,70 @@ namespace Lunggo.CustomerWeb.Controllers
         {
             return View();
         }
+        //Email Template
+        public ActionResult B2BInitialRegister()
+        {
+            return View();
+        }
+        public ActionResult B2BWelcomeEmail()
+        {
+            return View();
+        }
+        public ActionResult B2BPasswordReset()
+        {
+            return View();
+        }
+        public ActionResult B2BPendingApproval()
+        {
+            return View();
+        }
+        public ActionResult B2BIssuanceSuccessful()
+        {
+            return View();
+        }
+        public ActionResult B2BIssuanceDelay()
+        {
+            return View();
+        }
+        public ActionResult B2BRejectionEmail()
+        {
+            return View();
+        }
+        public ActionResult B2BCancellationConfirmed()
+        {
+            return View();
+        }
+        public ActionResult B2BInvitationEmail()
+        {
+            return View();
+        }
+        public ActionResult B2BApproverAssignment()
+        {
+            return View();
+        }
+        public ActionResult B2BSuspensionEmail()
+        {
+            return View();
+        }
+        public ActionResult B2BUnsuspensionEmail()
+        {
+            return View();
+        }
+        public ActionResult B2BHotelPriceIncrease()
+        {
+            return View();
+        }
+        public ActionResult B2BIssuanceFailed()
+        {
+            return View();
+        }
+        public ActionResult B2BBookingCannotMade()
+        {
+            return View();
+        }
+        public ActionResult B2BPaymentFailed()
+        {
+            return View();
+        }
     }
 }
