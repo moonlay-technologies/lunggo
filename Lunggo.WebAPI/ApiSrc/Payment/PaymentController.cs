@@ -119,5 +119,24 @@ namespace Lunggo.WebAPI.ApiSrc.Payment
                 return ApiResponseBase.ExceptionHandling(e, request);
             }
         }
+
+        [HttpPost]
+        [LunggoCorsPolicy]
+        [Authorize]
+        [Route("v1/payment/checkpaydaymadness")]
+        public ApiResponseBase CheckPaydayMadness()
+        {
+            CheckPaydayMadnessApiRequest request = null;
+            try
+            {
+                request = ApiRequestBase.DeserializeRequest<CheckPaydayMadnessApiRequest>();
+                var apiResponse = PaymentLogic.CheckPaydayMadness(request);
+                return apiResponse;
+            }
+            catch (Exception e)
+            {
+                return ApiResponseBase.ExceptionHandling(e, request);
+            }
+        }
     }
 }

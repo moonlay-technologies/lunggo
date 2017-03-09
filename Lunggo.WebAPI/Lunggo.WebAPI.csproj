@@ -334,12 +334,15 @@
     <Compile Include="ApiSrc\Notification\Model\DeleteRegistrationApiRequest.cs" />
     <Compile Include="ApiSrc\Notification\Model\UpdateRegistrationApiRequest.cs" />
     <Compile Include="ApiSrc\Notification\NotificationController.cs" />
+    <Compile Include="ApiSrc\Payment\Logic\CheckPaydayMadnessLogic.cs" />
     <Compile Include="ApiSrc\Payment\Logic\CheckBinDiscountLogic.cs" />
     <Compile Include="ApiSrc\Payment\Logic\CheckPaymentLogic.cs" />
     <Compile Include="ApiSrc\Payment\Logic\GetPaymentMethodsLogic.cs" />
     <Compile Include="ApiSrc\Payment\Logic\PayLogic.cs" />
     <Compile Include="ApiSrc\Payment\Logic\GetUniqueCodeLogic.cs" />
     <Compile Include="ApiSrc\Payment\Model\CheckBinDiscountApiRequest.cs" />
+    <Compile Include="ApiSrc\Payment\Model\CheckPaydayMadnessApiRequest.cs" />
+    <Compile Include="ApiSrc\Payment\Model\CheckPaydayMadnessApiResponse.cs" />
     <Compile Include="ApiSrc\Payment\Model\CheckBinDiscountApiResponse.cs" />
     <Compile Include="ApiSrc\Payment\Model\GetMethodsApiResponse.cs" />
     <Compile Include="ApiSrc\Payment\Model\PayApiResponse.cs" />

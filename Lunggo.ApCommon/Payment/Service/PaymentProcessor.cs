@@ -122,6 +122,67 @@ namespace Lunggo.ApCommon.Payment.Service
                 CampaignService.GetInstance().SavePanAndEmailInCache("btn", paymentData.CreditCard.HashedPan, contact.Email);
             }
 
+            if (paymentDetails.Method == PaymentMethod.VirtualAccount && rsvNo.StartsWith("2"))
+            {
+                var binDiscount = CampaignService.GetInstance().CheckPaydayMadness(rsvNo, discountCode);
+                if (binDiscount == null)
+                {
+                    paymentDetails.Status = PaymentStatus.Failed;
+                    paymentDetails.FailureReason = FailureReason.PaydayMadnessNoLongerEligible;
+                    return paymentDetails;
+                }
+                if (binDiscount.ReplaceMargin)
+                {
+                    var orders = (reservation as HotelReservation).HotelDetails.Rooms.SelectMany(ro => ro.Rates).ToList();
+
+                    foreach (var order in orders)
+                    {
+                        var newOriginal = order.GetApparentOriginalPrice();
+                        order.Price.Margin = new UsedMargin
+                        {
+                            Name = "Payday Madness Margin Modify",
+                            Description = "Margin Modified by Payday Madness Promo",
+                            Currency = order.Price.LocalCurrency,
+                            Constant = newOriginal - (order.Price.OriginalIdr / order.Price.LocalCurrency.Rate)
+                        };
+                        order.Price.Local = order.Price.OriginalIdr + (order.Price.Margin.Constant * order.Price.Margin.Currency.Rate);
+                        order.Price.Rounding = 0;
+                        order.Price.FinalIdr = order.Price.Local * order.Price.LocalCurrency.Rate;
+                        order.Price.MarginNominal = order.Price.FinalIdr - order.Price.OriginalIdr;
+                    }
+                    paymentDetails.OriginalPriceIdr = orders.Sum(i => i.Price.FinalIdr);
+                    paymentDetails.FinalPriceIdr = paymentDetails.OriginalPriceIdr - binDiscount.Amount;
+                }
+                else
+                {
+                    paymentDetails.FinalPriceIdr -= binDiscount.Amount;
+                }
+                if (paymentDetails.Discount == null)
+                    paymentDetails.Discount = new UsedDiscount
+                    {
+                        DisplayName = binDiscount.DisplayName,
+                        Name = binDiscount.DisplayName,
+                        Constant = binDiscount.Amount,
+                        Percentage = 0M,
+                        Currency = new Currency("IDR"),
+                        Description = "Payday Madness Bank Permata",
+                        IsFlat = false
+                    };
+                else
+                    paymentDetails.Discount.Constant += binDiscount.Amount;
+                paymentDetails.DiscountNominal += binDiscount.Amount;
+                var contact = reservation.Contact;
+                if (contact == null)
+                    return null;
+                var todayDate = new DateTime(2017, 3, 25);
+                //var todayDate = DateTime.Today;
+                if (todayDate >= new DateTime(2017, 3, 25) && todayDate <= new DateTime(2017, 8, 27) &&
+                    (todayDate.Day >= 25 && todayDate.Day <= 27) && binDiscount.IsAvailable)
+                {
+                    CampaignService.GetInstance().SaveEmailInCache("paydayMadness", contact.Email);
+                }              
+            }
+
             var transferFee = GetTransferFeeFromCache(rsvNo);
             if (transferFee == 0M)
                 return paymentDetails;

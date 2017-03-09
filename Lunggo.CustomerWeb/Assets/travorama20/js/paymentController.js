@@ -141,6 +141,7 @@ app.controller('paymentController', [
                                 if ($scope.binDiscount.amount != 0) {
                                     $scope.binDiscount.text = 'Anda menggunakan promo ' + $scope.binDiscount.displayName + '.';
                                 }
+                                $scope.paydayMadness.replaceDiscount = false;
                                 $scope.binDiscount.replaceDiscount = true;
                                 $scope.UniqueCodePaymentConfig.GetUniqueCode($scope.rsvNo, '', $scope.CreditCard.Number.substring(0, 6));
                             } else {
@@ -181,6 +182,107 @@ app.controller('paymentController', [
                     $scope.binDiscount.checking = false;
                 }
             }
+        }
+
+        $scope.paydayMadness = {
+            amount: 0,
+            displayName: '',
+            status: '',
+            reset: function (method) {
+                if (method == 'VA') {
+                    if ($scope.paydayMadness.amount != 0) {
+                        $scope.paydayMadness.replaceDiscount = true;
+                    }
+                } else {
+                    $scope.paydayMadness.replaceDiscount = false;
+                }
+                $scope.currentchoice = method;
+            },
+            replaceDiscount: false,
+            receive: false,
+            checked: false,
+            checking: false,
+            text: '',
+            first: true,
+            check: function () {
+                //if ($scope.paydayMadness.first) {
+                $scope.currentchoice = 'VA';
+                    if ($scope.trial > 3) {
+                        $scope.trial = 0;
+                    }
+                    //Check Authorization
+                    var authAccess = getAuthAccess();
+                    $scope.paydayMadness.checking = true;
+                    var vouchercode;
+                    if ($scope.voucher.receive) {
+                        vouchercode = $scope.voucher.code;
+                    } else {
+                        vouchercode = '';
+                    }
+                    if (authAccess == 1 || authAccess == 2) {
+                        $http({
+                            method: 'POST',
+                            url: CheckPaydayMadnessConfig.Url,
+                            data: {
+                                rsvno: $scope.rsvNo,
+                                voucherCode: vouchercode
+                            },
+                            headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') }
+                        }).then(function (returnData) {
+                            //$log.debug(returnData);
+                            $scope.paydayMadness.first = false;
+                            if (returnData.data.status == 200) {
+                                if (returnData.data.isAvailable) {
+                                    $scope.paydayMadness.amount = returnData.data.amount;
+                                    $scope.paydayMadness.displayName = returnData.data.name;
+                                    // get unique code for transfer payment
+                                    $scope.paydayMadness.status = 'Success';
+                                    if ($scope.paydayMadness.amount != 0) {
+                                        $scope.paydayMadness.text = 'Anda menggunakan promo ' + $scope.paydayMadness.displayName + '.';
+                                    }
+                                    $scope.paydayMadness.replaceDiscount = true;
+                                    $scope.binDiscount.replaceDiscount = false;
+                                    $scope.UniqueCodePaymentConfig.GetUniqueCode($scope.rsvNo, '', $scope.CreditCard.Number.substring(0, 6));
+                                } else {
+                                    $scope.paydayMadness.amount = 0;
+                                    $scope.paydayMadness.checked = true;
+                                    $scope.paydayMadness.status = returnData.data.error;
+                                    if (returnData.data.name != null) {
+                                        $scope.paydayMadness.text = 'Maaf, kuota promo ' + returnData.data.name + ' hari ini telah habis.';
+                                    } else {
+                                        $scope.paydayMadness.text = null;
+                                    }
+                                    $scope.paydayMadness.replaceDiscount = false;
+                                }
+                            }
+                            else {
+                                $scope.paydayMadness.amount = 0;
+                                $scope.paydayMadness.checked = true;
+                                $scope.paydayMadness.status = returnData.data.error;
+                                $scope.paydayMadness.text = '';
+                            }
+                        }).catch(function () {
+                            $scope.trial++;
+                            if (refreshAuthAccess() && $scope.trial < 4) //refresh cookie
+                            {
+                                $scope.paydayMadness.check();
+                            }
+                            else {
+                                $scope.paydayMadness.first = false;
+                                $scope.paydayMadness.amount = 0;
+                                $scope.paydayMadness.checked = true;
+                                $scope.paydayMadness.checking = false;
+                                $scope.paydayMadness.text = '';
+                            }
+                        });
+                    }
+                    else {
+                        $log.debug('Not Authorized');
+                        $scope.paydayMadness.amount = 0;
+                        $scope.paydayMadness.checking = false;
+                    }
+                }               
+            //}
         }
 
         $scope.CreditCardPromo = {
@@ -327,11 +429,9 @@ app.controller('paymentController', [
             checking: false,
             checked: false,
             check: function () {
-
                 if ($scope.trial > 3) {
                     $scope.trial = 0;
                 }
-
                 //Check Authorization
                 var authAccess = getAuthAccess();
                 $scope.voucher.checking = true;
@@ -353,9 +453,11 @@ app.controller('paymentController', [
                             $scope.voucher.confirmedCode = $scope.voucher.code;
                             $scope.voucher.displayName = returnData.data.name;
                             $scope.binDiscount.replaceDiscount = false;
+                            $scope.paydayMadness.replaceDiscount = false;
                             // get unique code for transfer payment
                             $scope.voucher.status = 'Success';
                             $scope.binDiscount.text = '';
+                            $scope.paydayMadness.text = '';
                             $scope.UniqueCodePaymentConfig.GetUniqueCode($scope.rsvNo, $scope.voucher.code);
                             $scope.voucher.receive = true;
                         }
@@ -390,7 +492,9 @@ app.controller('paymentController', [
                 if ($scope.currentchoice == 'cc') {
                     $scope.binDiscount.check();
                 }
-
+                else if ($scope.currentchoice == 'VA') {
+                    $scope.paydayMadness.check();
+                }
                 // get unique code for transfer payment
                 $scope.UniqueCodePaymentConfig.GetUniqueCode($scope.rsvNo, $scope.voucher.code);
             }

@@ -89,6 +89,41 @@ namespace Lunggo.ApCommon.Campaign.Service
                 : null;
         }
 
+        public BinDiscount CheckPaydayMadness(string rsvNo, string voucherCode)
+        {
+            if (rsvNo.StartsWith("2"))
+            {
+                ReservationBase rsv = HotelService.GetInstance().GetReservation(rsvNo);
+                var discAmount = (rsv as HotelReservation).HotelDetails.Rooms.Sum(ro => ro.Rates.Sum(i => i.GetApparentOriginalPrice())) * 0.1M;
+
+                if (discAmount > 150000)
+                {
+                    discAmount = 150000;
+                }
+
+                var isAvailable = IsEmailEligibleInCache("paydayMadness", rsv.Contact.Email, 20);
+                var isValid = IsPromoValid(voucherCode);
+
+                return isValid ? 
+                    isAvailable
+                    ? new BinDiscount
+                    {
+                        Amount = discAmount,
+                        IsAvailable = true,
+                        Currency = new Currency("IDR"),
+                        DisplayName = "Payday Madness",
+                        ReplaceMargin = true
+                    }
+                    : new BinDiscount
+                    {
+                        Amount = 0,
+                        IsAvailable = false,
+                        DisplayName = "Payday Madness"
+                    }
+                : null;
+            }
+            return null;
+        }
         private bool IsPromoValid(ReservationBase rsv, string bin, string hashedPan, string voucherCode)
         {
             var bin6 = (bin != null && bin.Length >= 6)
@@ -100,6 +135,11 @@ namespace Lunggo.ApCommon.Campaign.Service
                    DateValid();
         }
 
+        private bool IsPromoValid(string voucherCode)
+        {
+            return string.IsNullOrEmpty(voucherCode) &&
+                   PaydayMadnessDateValid();
+        }
         private bool IsReservationEligible(ReservationBase rsv)
         {
             return rsv.RsvNo.StartsWith("1") 
@@ -124,6 +164,14 @@ namespace Lunggo.ApCommon.Campaign.Service
             var dateNow = DateTime.UtcNow.AddHours(7).Date;
             return env != "production" || (dateNow >= new DateTime(2017, 2, 1) &&
                                            dateNow <= new DateTime(2017, 3, 31));
+        }
+
+        private bool PaydayMadnessDateValid()
+        {
+            var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
+            var dateNow = DateTime.UtcNow.AddHours(7).Date;
+            return env != "production" || (dateNow >= new DateTime(2017, 3, 25) &&
+                                           dateNow <= new DateTime(2017, 8, 27) && dateNow.Day >= 25 && dateNow.Day <=27);
         }
 
         private bool IsBinGranted(string bin6)

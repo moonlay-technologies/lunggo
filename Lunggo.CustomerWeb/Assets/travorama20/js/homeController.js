@@ -1,11 +1,7 @@
 ﻿// home controller
 // home controller
 app.controller('homeController', ['$scope', '$log', '$http', '$location', '$resource', '$timeout', 'hotelSearchSvc', function ($scope, $log, $http, $location, $resource, $timeout, hotelSearchSvc) {
-
-
     $(document).ready(function () {
-
-        
         if (Cookies.get('hotelLocationDisplay')) {
             $scope.hotelSearch.locationDisplay = Cookies.get('hotelLocationDisplay');
             if (Cookies.get('hotelLocation')) {
@@ -105,15 +101,7 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
    // ================= FLIGHT ========================
 
     $scope.departureDate = moment().add(1, 'day').format('DDMMYY');
-    
-    //$scope.showForm = function (tab) {
-    //    if (tab == 'hotel') {
-    //        $('body .tab-header li.hotel').click();
-    //    } else if (tab == 'flight') {
-    //        $('body .tab-header li.flight').click();
-    //    }
-    //}
-    
+  
     //=============== hotel start ======================
     $scope.showPopularDestinations = false;
     hotelSearchSvc.initializeSearchForm($scope);
@@ -330,65 +318,7 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
 
     $('body input[name="searchFrom"]').val($scope.selectedPopularDestination.originCity + ' (' + $scope.selectedPopularDestination.origin + ')');
     $('body input[name="searchTo"]').val($scope.selectedPopularDestination.destinationCity + ' (' + $scope.selectedPopularDestination.destination + ')');
-    $scope.gotoCheapestDateFlight = function (dest, depdate) {
-        if (depdate != null) {
-            var date = new Date(depdate);
-            var datex = ("0" + date.getDate()).slice(-2) + ("0" + (date.getMonth() + 1)).slice(-2) + date.getFullYear().toString().substr(2, 2);
-            if (dest == 'DPS')
-                return '/id/tiket-pesawat/cari/Jakarta-Denpasar-JKT-DPS/JKTDPS' + datex + '-100y';
-            else if (dest == 'KNO')
-                return '/id/tiket-pesawat/cari/Jakarta-Medan-JKT-KNO/JKTKNO' + datex + '-100y';
-            else if (dest == 'SUB')
-                return '/id/tiket-pesawat/cari/Jakarta-Surabaya-JKT-SUB/JKTSUB' + datex + '-100y';
-            else if (dest == 'JKT')
-                return '/id/tiket-pesawat/cari/Denpasar-Jakarta-DPS-JKT/DPSJKT' + datex + '-100y';
-            else if (dest == 'JOG')
-                return '/id/tiket-pesawat/cari/Jakarta-Yogyakarta-JKT-JOG/JKTJOG' + datex + '-100y';
-        } else {
-            if (dest == 'DPS')
-                return '/id/tiket-pesawat/cari/Jakarta-Denpasar-JKT-DPS';
-            else if (dest == 'KNO')
-                return '/id/tiket-pesawat/cari/Jakarta-Medan-JKT-KNO';
-            else if (dest == 'SUB')
-                return '/id/tiket-pesawat/cari/Jakarta-Surabaya-JKT-SUB';
-            else if (dest == 'JKT')
-                return '/id/tiket-pesawat/cari/Denpasar-Jakarta-DPS-JKT';
-            else if (dest == 'JOG')
-                return '/id/tiket-pesawat/cari/Jakarta-Yogyakarta-JKT-JOG';
-        }
-    }
-
-    $scope.gotoCheapestDateHotel = function (dest, cheapDate) {
-        if (cheapDate != null) {
-            var date = new Date(cheapDate);
-            var datex = date.getFullYear() + '-' + ("0" + (date.getMonth() + 1)).slice(-2) + '-' + ("0" + date.getDate()).slice(-2);
-            var nextdate = new Date();
-            nextdate.setDate(date.getDate() + 1);
-            var datey = nextdate.getFullYear() + '-' + ("0" + (nextdate.getMonth() + 1)).slice(-2) + '-' + ("0" + nextdate.getDate()).slice(-2);
-            if (dest == 'JKT')
-                return '/id/hotel/cari/Indonesia/Jakarta/?info=Location.1390294.' + datex + '.' + datey + '.1.1.2~0';
-            else if (dest == 'SUB')
-                return '/id/hotel/cari/Indonesia/Surabaya/?info=Location.1475138.' + datex + '.' + datey + '.1.1.2~0';
-            else if (dest == 'JOG')
-                return '/id/hotel/cari/Indonesia/Yogyakarta/?info=Location.1391623.' + datex + '.' + datey + '.1.1.2~0';
-            else if (dest == 'BAI')
-                return '/id/hotel/cari/Indonesia/Bali/?info=Location.1316553.' + datex + '.' + datey + '.1.1.2~0';
-            else if (dest == 'BDO')
-                return '/id/hotel/cari/Indonesia/Bandung/?info=Location.1316847.' + datex + '.' + datey + '.1.1.2~0';
-        } else {
-            if (dest == 'JKT')
-                return '/id/hotel/cari/Indonesia/Jakarta';
-            else if (dest == 'SUB')
-                return '/id/hotel/cari/Indonesia/Surabaya';
-            else if (dest == 'JOG')
-                return '/id/hotel/cari/Indonesia/Yogyakarta';
-            else if (dest == 'BAI')
-                return '/id/hotel/cari/Indonesia/Bali';
-            else if (dest == 'BDO')
-                return '/id/hotel/cari/Indonesia/Bandung';
-        }
-    }
-
+    
     $scope.getCheapestHotelPrice = function (location) {
         var authAccess = getAuthAccess();
         var date = new Date(), y = date.getFullYear(), m = date.getMonth();
@@ -430,10 +360,7 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
             }).error(function () {});
         }
     }
-
-    //$scope.getCheapestHotelPrice('JAV'); $scope.getCheapestHotelPrice('BDO'); $scope.getCheapestHotelPrice('SUB');
-    //$scope.getCheapestHotelPrice('BAI'); $scope.getCheapestHotelPrice('JOG');
-
+    
     $scope.getCheapestFlightPrice = function (origin, destination) {
         var authAccess = getAuthAccess();
         var date = new Date(), y = date.getFullYear(); m = date.getMonth();
@@ -483,9 +410,6 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
             }).error(function (returnData) {});
         }
     }
-
-    //$scope.getCheapestFlightPrice('DPS', 'JKT'); $scope.getCheapestFlightPrice('JKT', 'DPS'); $scope.getCheapestFlightPrice('JKT', 'SUB');
-    //$scope.getCheapestFlightPrice('JKT', 'KNO'); $scope.getCheapestFlightPrice('JKT', 'JOG');
 
     $scope.getFlightPrice = function (month, year) {
         var authAccess = getAuthAccess();
@@ -619,8 +543,7 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
             $scope.getFlightPrice(parseInt(arr[1]) + 1, parseInt(arr[0]));
         }
     });
-
-
+    
     $('body input[name="searchFrom"]').click(function () {
         $(this).select();
         showLocation('asal');
