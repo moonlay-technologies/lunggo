@@ -1,5 +1,42 @@
 ﻿body {
+    .col-xs-15,
+    .col-sm-15,
+    .col-md-15,
+    .col-lg-15 {
+        position: relative;
+        min-height: 1px;
+        padding-right: 10px;
+        padding-left: 10px;
+    }
+
+    .col-xs-15 {
+        width: 20%;
+        float: left;
+        }
+
+    @media (min-width: 768px) {
+    .col-sm-15 {
+            width: 20%;
+            float: left;
+        }
+    }
+
+    @media (min-width: 992px) {
+        .col-md-15 {
+            width: 20%;
+            float: left;
+        }
+    }
+
+    @media (min-width: 1200px) {
+        .col-lg-15 {
+            width: 20%;
+            float: left;
+        }
+    }
+
     /*Custom Sidebar Menu*/
+    .page-sidebar .sidebar-menu .menu-items > li > a > .title {width: 90%}
     &.mobile .sidebar-menu {overflow: hidden;}
     .bg-pic {
         background-image: url(/Assets/B2BTravorama/assets/img/demo/new-york-city-buildings-sunrise-morning-hd-wallpaper.jpg);
@@ -7,6 +44,35 @@
         background-size: cover; 
         opacity: 0.6;
     }
+
+    .form-group.input-custom {
+        padding: 5px 0;
+        background-color: #fff;
+        position: relative;
+        border: 1px solid rgba(0, 0, 0, 0.07);
+        border-radius: 2px;
+        label {padding-left: 12px;}
+    }
+
+    .btn-group.btn-input-custom {
+        width: 100%;
+        a.btn.dropdown-toggle {
+            width: 100% !important;
+            padding: 0 12px;
+            border: none;
+            &:hover {background: transparent;}
+        }
+        .dropdown-menu {
+            background: #fff;
+            text-align: center;
+            margin-top: 6px; 
+            padding: 0; 
+            li:hover {cursor: pointer; background: #f0f0f0;}
+        }
+    }
+    .dropdown-default .dropdown-menu:after {display: none;}
+    .dropdown-menu > li:first-child, .dropdown-menu > li:last-child {padding: 0}
+
     /*Custom Search Form*/
     &.b2b-search {
         .form-group-default label.label-custom {display: inline;}
@@ -32,33 +98,6 @@
                 &:last-child .panel-body {padding-bottom: 20px;}
             }
         }
-        .form-group.input-custom {
-            padding: 5px 0;
-            background-color: #fff;
-            position: relative;
-            border: 1px solid rgba(0, 0, 0, 0.07);
-            border-radius: 2px;
-            label {padding-left: 12px;}
-        }
-
-        .btn-group.btn-input-custom {
-            width: 100%;
-            a.btn.dropdown-toggle {
-                width: 100% !important;
-                padding: 0 12px;
-                border: none;
-                &:hover {background: transparent;}
-            }
-            .dropdown-menu {
-                background: #fff;
-                text-align: center;
-                margin-top: 6px; 
-                padding: 0; 
-                li:hover {cursor: pointer; background: #f0f0f0;}
-            }
-        }
-        .dropdown-default .dropdown-menu:after {display: none;}
-        .dropdown-menu > li:first-child, .dropdown-menu > li:last-child {padding: 0}
     }
     &.b2b-payment {
         .payment-item {
@@ -97,6 +136,34 @@
             background-size: 100%;
             background-repeat: no-repeat;
             margin-right: 20px;
+        }
+        .icon-mastercard {
+            background-image: url(/Assets/images/mastercard.png);
+            width: 70px;
+            height: 46px;
+            display: block;
+            background-size: 100%;
+            background-repeat: no-repeat;
+            margin-right: 20px;
+        }
+        .icon-jcb {
+            background-image: url(/Assets/images/jcb.png);
+            width: 60px;
+            height: 46px;
+            display: block;
+            background-size: 100%;
+            background-repeat: no-repeat;
+            margin-right: 20px;
+        }
+        .icon-amex {
+            background-image: url(/Assets/images/amex.png);
+            width: 60px;
+            height: 46px;
+            display: block;
+            background-size: 100%;
+            background-repeat: no-repeat;
+            margin-right: 20px;
+            background-position: center;
         }
         .payment-add {
             .pa-wrapper {

@@ -31,42 +31,46 @@
 @section PageJS{
     <script src="/Assets/travorama20/js/B2BTravorama20.js"></script>
     <script src="/Assets/travorama20/js/B2BHomeController.js"></script> 
-}
+                }
 <div ng-app="travoramaB2B" ng-controller="B2BPaymentMgmtFormController" ng-class="{ 'active': pageLoaded }">
-    <div class="payment-page">
-        <div class="panel panel-transparent">
-            <div class="panel-heading ">
-                <div class="panel-title">
-                    Payment Management
-                </div>
+<div class="payment-page">
+    <div class="panel panel-transparent">
+        <div class="panel-heading ">
+            <div class="panel-title">
+                Payment Management
             </div>
-            <div class="panel-body m-t-10 payment-body">
+        </div>
+        <div class="panel-body m-t-10 payment-body">
                 <div ng-show="creditCards.length > 0" id="payment-list">
                     <div class="payment-item col-sm-6 m-b-20" id="payment-item-1" ng-repeat="cc in creditCards track by $index" count="{{$index}}">
-                        <div class="pi-wrapper clearfix">
-                            <div class="pi-top clearfix">
-                                <div class="">
-                                    <div class="icon-visa"></div>
-                                </div>
-                                <div class="clearfix">
+                <div class="pi-wrapper clearfix">
+                    <div class="pi-top clearfix">
+                        <div class="">
+                            <div class="icon-default"><span><i class="fa fa-credit-card m-r-10"></i></span></div>
+                            @*<div class="icon-visa"></div>
+                            <div class="icon-jcb"></div>
+                            <div class="icon-amex"></div>
+                            <div class="icon-mastercard"></div>*@
+                        </div>
+                        <div class="clearfix">
                                     <div class="font-montserrat bold cc-no">{{cc.type}} ****{{cc.maskedCardNumber.slice(-4)}}</div>
                                     <div class="small hint-text expiry">Expires {{("0" + (cc.cardExpiry.getMonth() + 1)).slice(-2)}}/{{cc.cardExpiry.getFullYear().toString().slice(-2)}}</div>
-                                </div>
+                        </div>
                                 <button class="btn remove-payment" ng-class="{ 'disableDel': cc.isPrimaryCard }"
                                         data-toggle="modal" data-target=".deleteCc"
                                         data-backdrop="static" data-keyboard="false" ng-click="deleteCardData.set(cc.maskedCardNumber, $index)" ng-disabled="cc.isPrimaryCard">
-                                    <i class="pg-trash"></i>
-                                </button>
-                            </div>
-                            <div class="pi-bottom clearfix font-montserrat bold small">
+                            <i class="pg-trash"></i>
+                        </button>
+                    </div>
+                    <div class="pi-bottom clearfix font-montserrat bold small">
                                 <div class="pi-status"><span class="current-status" ng-show="cc.isPrimaryCard">Primary</span></div>
                                 <div class="pi-status">
                                     <a class="set-status" ng-show="!cc.isPrimaryCard" data-toggle="modal" data-target=".setPrimary"
                                        data-backdrop="static" data-keyboard="false" ng-click="setPrimaryData(cc.maskedCardNumber, $index)">Set As Primary Card</a>
-                                </div>
+                    </div>
                                 <div class="pull-right"><a href="#" class="btn-edit-payment hide" ng-click="showEditForm(cc)">Edit</a></div>
-                            </div>
-                        </div>
+                </div>
+            </div>
                     </div>
                 </div>
 
@@ -97,79 +101,79 @@
                     </div>
                 </div>
                 <div class="payment-add col-sm-6 m-b-20" ng-click="addCc()">
-                    <div class="pa-wrapper clearfix">
-                        <a class="font-montserrat bold" id="add-payment"><i class="fa fa-plus-square m-r-5"></i>ADD PAYMENT METHOD</a>
-                    </div>
+                <div class="pa-wrapper clearfix">
+                    <a class="font-montserrat bold" id="add-payment"><i class="fa fa-plus-square m-r-5"></i>ADD PAYMENT METHOD</a>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
     <div class="modal fade slide-up disable-scroll firstCc modal-edit-payment" tabindex="-1" role="dialog" aria-hidden="false">
-        <div class="modal-dialog ">
-            <div class="modal-content-wrapper">
-                <div class="modal-content">
-                    <div class="modal-header clearfix text-left">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                            <i class="pg-close fs-14"></i>
-                        </button>
-                        <h5 class="p-b-10">Update your <span class="semi-bold">Payment Method</span></h5>
-                    </div>
-                    <div class="modal-body">
-                        <form role="form">
-                            <div class="form-group-attached">
-                                <div class="row">
-                                    <div class="col-sm-12 clearfix m-b-10">
+    <div class="modal-dialog ">
+        <div class="modal-content-wrapper">
+            <div class="modal-content">
+                <div class="modal-header clearfix text-left">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        <i class="pg-close fs-14"></i>
+                    </button>
+                    <h5 class="p-b-10">Update your <span class="semi-bold">Payment Method</span></h5>
+                </div>
+                <div class="modal-body">
+                    <form role="form">
+                        <div class="form-group-attached">
+                            <div class="row">
+                                <div class="col-sm-12 clearfix m-b-10">
                                         <div class="font-montserrat bold"><i class="fa fa-credit-card m-r-10"></i>{{currentEdit.type}} ****{{currentEdit.cc.slice(-4)}}</div>
-                                    </div>
                                 </div>
-                                <div class="row">
-                                    <div class="col-sm-4">
-                                        <div class="form-group form-group-default">
-                                            <label>MM</label>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <div class="form-group form-group-default">
+                                        <label>MM</label>
                                             <input type="text" class="form-control" ng-model="currentEdit.month">
-                                        </div>
                                     </div>
-                                    <div class="col-sm-4">
-                                        <div class="form-group form-group-default">
-                                            <label>YY</label>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group form-group-default">
+                                        <label>YY</label>
                                             <input type="text" class="form-control" ng-model="currentEdit.year">
-                                        </div>
                                     </div>
-                                    <div class="col-sm-4">
-                                        <div class="form-group form-group-default">
-                                            <label>CVC</label>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group form-group-default">
+                                        <label>CVC</label>
                                             <input type="text" class="form-control" ng-model="currentEdit.cvc">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-12">
-                                        <div class="form-group form-group-default">
-                                            <label>Nama Pengguna</label>
-                                            <input type="text" class="form-control" ng-model="currentEdit.cardHolderName">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row ccnonew hidden">
-                                    <div class="col-sm-12">
-                                        <div class="form-group form-group-default">
-                                            <label>Alamat</label>
-                                            <textarea type="text" class="form-control"></textarea>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </form>
-                        <div class="clearfix m-t-10">
-                            <button type="button" class="btn btn-primary m-t-5 pull-right" data-dismiss="modal"><i class="fa fa-save m-r-10"></i>Simpan</button>
-                            <button type="button" class="btn btn-default m-t-5 m-r-10 pull-right" data-dismiss="modal"><i class="fa fa-arrow-left m-r-10"></i>Kembali</button>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="form-group form-group-default">
+                                        <label>Nama Pengguna</label>
+                                            <input type="text" class="form-control" ng-model="currentEdit.cardHolderName">
+                                    </div>
+                                </div>
+                            </div>
+                                <div class="row ccnonew hidden">
+                                <div class="col-sm-12">
+                                    <div class="form-group form-group-default">
+                                        <label>Alamat</label>
+                                        <textarea type="text" class="form-control"></textarea>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
+                    </form>
+                    <div class="clearfix m-t-10">
+                        <button type="button" class="btn btn-primary m-t-5 pull-right" data-dismiss="modal"><i class="fa fa-save m-r-10"></i>Simpan</button>
+                        <button type="button" class="btn btn-default m-t-5 m-r-10 pull-right" data-dismiss="modal"><i class="fa fa-arrow-left m-r-10"></i>Kembali</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
     <div class="modal fade slide-up disable-scroll modal-edit-payment form-add-cc" tabindex="-1" role="dialog" aria-hidden="false">
         <div class="modal-dialog ">

@@ -2,6 +2,31 @@
 body {
   /*Custom Sidebar Menu*/
   /*Custom Search Form*/ }
+  body .col-xs-15,
+  body .col-sm-15,
+  body .col-md-15,
+  body .col-lg-15 {
+    position: relative;
+    min-height: 1px;
+    padding-right: 10px;
+    padding-left: 10px; }
+  body .col-xs-15 {
+    width: 20%;
+    float: left; }
+  @media (min-width: 768px) {
+    body .col-sm-15 {
+      width: 20%;
+      float: left; } }
+  @media (min-width: 992px) {
+    body .col-md-15 {
+      width: 20%;
+      float: left; } }
+  @media (min-width: 1200px) {
+    body .col-lg-15 {
+      width: 20%;
+      float: left; } }
+  body .page-sidebar .sidebar-menu .menu-items > li > a > .title {
+    width: 90%; }
   body.mobile .sidebar-menu {
     overflow: hidden; }
   body .bg-pic {
@@ -9,6 +34,34 @@ body {
     background-repeat: no-repeat;
     background-size: cover;
     opacity: 0.6; }
+  body .form-group.input-custom {
+    padding: 5px 0;
+    background-color: #fff;
+    position: relative;
+    border: 1px solid rgba(0, 0, 0, 0.07);
+    border-radius: 2px; }
+    body .form-group.input-custom label {
+      padding-left: 12px; }
+  body .btn-group.btn-input-custom {
+    width: 100%; }
+    body .btn-group.btn-input-custom a.btn.dropdown-toggle {
+      width: 100% !important;
+      padding: 0 12px;
+      border: none; }
+      body .btn-group.btn-input-custom a.btn.dropdown-toggle:hover {
+        background: transparent; }
+    body .btn-group.btn-input-custom .dropdown-menu {
+      background: #fff;
+      text-align: center;
+      margin-top: 6px;
+      padding: 0; }
+      body .btn-group.btn-input-custom .dropdown-menu li:hover {
+        cursor: pointer;
+        background: #f0f0f0; }
+  body .dropdown-default .dropdown-menu:after {
+    display: none; }
+  body .dropdown-menu > li:first-child, body .dropdown-menu > li:last-child {
+    padding: 0; }
   body.b2b-search .form-group-default label.label-custom {
     display: inline; }
   body.b2b-search .cs-backdrop {
@@ -32,34 +85,6 @@ body {
     padding-bottom: 0; }
   body.b2b-search.hotel .room-item:last-child .panel-body {
     padding-bottom: 20px; }
-  body.b2b-search .form-group.input-custom {
-    padding: 5px 0;
-    background-color: #fff;
-    position: relative;
-    border: 1px solid rgba(0, 0, 0, 0.07);
-    border-radius: 2px; }
-    body.b2b-search .form-group.input-custom label {
-      padding-left: 12px; }
-  body.b2b-search .btn-group.btn-input-custom {
-    width: 100%; }
-    body.b2b-search .btn-group.btn-input-custom a.btn.dropdown-toggle {
-      width: 100% !important;
-      padding: 0 12px;
-      border: none; }
-      body.b2b-search .btn-group.btn-input-custom a.btn.dropdown-toggle:hover {
-        background: transparent; }
-    body.b2b-search .btn-group.btn-input-custom .dropdown-menu {
-      background: #fff;
-      text-align: center;
-      margin-top: 6px;
-      padding: 0; }
-      body.b2b-search .btn-group.btn-input-custom .dropdown-menu li:hover {
-        cursor: pointer;
-        background: #f0f0f0; }
-  body.b2b-search .dropdown-default .dropdown-menu:after {
-    display: none; }
-  body.b2b-search .dropdown-menu > li:first-child, body.b2b-search .dropdown-menu > li:last-child {
-    padding: 0; }
   body.b2b-payment .payment-item .pi-wrapper {
     background-color: #fff;
     position: relative;
@@ -94,6 +119,31 @@ body {
     background-size: 100%;
     background-repeat: no-repeat;
     margin-right: 20px; }
+  body.b2b-payment .icon-mastercard {
+    background-image: url(/Assets/images/mastercard.png);
+    width: 70px;
+    height: 46px;
+    display: block;
+    background-size: 100%;
+    background-repeat: no-repeat;
+    margin-right: 20px; }
+  body.b2b-payment .icon-jcb {
+    background-image: url(/Assets/images/jcb.png);
+    width: 60px;
+    height: 46px;
+    display: block;
+    background-size: 100%;
+    background-repeat: no-repeat;
+    margin-right: 20px; }
+  body.b2b-payment .icon-amex {
+    background-image: url(/Assets/images/amex.png);
+    width: 60px;
+    height: 46px;
+    display: block;
+    background-size: 100%;
+    background-repeat: no-repeat;
+    margin-right: 20px;
+    background-position: center; }
   body.b2b-payment .payment-add .pa-wrapper {
     height: 129px;
     border: 3px dashed #3a8fc8;

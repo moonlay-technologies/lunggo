@@ -2,7 +2,7 @@
     Layout = "/Views/Shared/B2BTravorama/_B2BLayout.cshtml";
     ViewBag.BodyClass = "b2b-order-detail hotel";
     ViewBag.SiteHeader = "b2b-order-detail";
-    ViewBag.Title = "Order Detail Hotel";
+    ViewBag.Title = "Order Detail Hotel (Approver)";
     ViewBag.AngularController = "";
 
 }
@@ -25,6 +25,12 @@
             <div class="clearfix"></div>
         </div>
         <div class="panel-body bg-white">
+            <div class="clearfix m-b-15">
+                <div class="pull-right">
+                    <button type="button" class="btn btn-success btn-cons" id="btn-approve">Approved</button>
+                    <button type="button" class="btn btn-danger btn-cons" id="btn-reject" data-toggle="modal" data-target=".modal-reject">Rejected</button>
+                </div>
+            </div>
             <div class="od-tabs">
                 <ul id="tabs-nvd3" class="nav nav-tabs nav-tabs-linetriangle text-center">
                     <li class="active col-sm-6">
@@ -108,6 +114,28 @@
                                         </tbody>
                                     </table>
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade slide-up disable-scroll modal-reject" tabindex="-1" role="dialog" aria-hidden="false">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content-wrapper">
+                <div class="modal-content">
+                    <div class="modal-header clearfix">
+                        <h4 class="text-center no-margin">Keterangan</h4>
+                    </div>
+                    <div class="modal-body m-t-10">
+                        <textarea class="m-b-15" style="border: 1px solid #f0f0f0; width: 100%; height: 100px; padding: 10px; border-radius: 2px;" placeholder="Tulis keterangan Anda"></textarea>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <button type="button" class="btn btn-default btn-block" data-dismiss="modal">Kembali</button>
+                            </div>
+                            <div class="col-sm-6">
+                                <button type="button" class="btn btn-primary btn-block" data-dismiss="modal">Ok</button>
                             </div>
                         </div>
                     </div>
