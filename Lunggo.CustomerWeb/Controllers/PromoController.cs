@@ -27,6 +27,10 @@ namespace Lunggo.CustomerWeb.Controllers
                     return View("HutBTN");
                 case "HutBTNWebview":
                     return View("HutBTNWebview");
+                case "Harbolnas2016":
+                    return View("Harbolnas2016");
+                case "MatahariMall":
+                    return View("MatahariMall");
                 default:
                     return RedirectToAction("Index", "Index");
             }
