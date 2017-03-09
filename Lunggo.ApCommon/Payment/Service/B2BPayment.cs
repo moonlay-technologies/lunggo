@@ -119,10 +119,13 @@ namespace Lunggo.ApCommon.Payment.Service
             };
         }
 
-        public bool ProcessB2BPayment(string rsvNo)
+        public bool ProcessB2BPayment(string rsvNo, string companyId)
         {
-            var userId = HttpContext.Current.User.Identity.GetUser().Id;
-            var companyId = User.GetCompanyIdByUserId(userId);
+            //if (string.IsNullOrEmpty(companyId))
+            //{
+            //    var userId = HttpContext.Current.User.Identity.GetUser().Id;
+            //    companyId = User.GetCompanyIdByUserId(userId);
+            //}
             var primaryCreditCard = new SavedCreditCard();
             int i = 0;
             var otherCreditCard = GetCreditCardByCompanyId(companyId).Where(x=>x.IsPrimaryCard == false).ToList();

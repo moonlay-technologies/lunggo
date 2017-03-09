@@ -40,8 +40,11 @@ namespace Lunggo.ApCommon.Hotel.Service
                     Payment = PaymentDetails.GetFromDb(rsvNo),
                     State = ReservationState.GetFromDb(rsvNo),
                     HotelDetails = new HotelDetail(),
+                    User = reservationRecord.UserId == null ? null : User.GetFromDb(reservationRecord.UserId),
                     RsvTime = reservationRecord.RsvTime.GetValueOrDefault(),
-                    RsvStatus = RsvStatusCd.Mnemonic(reservationRecord.RsvStatusCd)
+                    RsvStatus = RsvStatusCd.Mnemonic(reservationRecord.RsvStatusCd),
+                    BookerMessage = reservationRecord.BookerMessage,
+                    RejectionMessage = reservationRecord.RejectionMessage
                 };
                 if (hotelReservation.Contact == null || hotelReservation.Payment == null)
                     return null;
@@ -237,6 +240,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                     RsvStatusCd = RsvStatusCd.Mnemonic(reservation.RsvStatus),
                     CancellationTypeCd = null,
                     UserId = reservation.User != null ? reservation.User.Id : null,
+                    BookerMessage = reservation.BookerMessage ?? null,
                     InsertBy = "LunggoSystem",
                     InsertDate = DateTime.UtcNow,
                     InsertPgId = "0"
@@ -443,7 +447,21 @@ namespace Lunggo.ApCommon.Hotel.Service
                 ReservationTableRepo.GetInstance().Update(conn, new ReservationTableRecord
                 {
                     RsvNo = rsvNo,
-                    RsvStatusCd = RsvStatusCd.Mnemonic(status)
+                    RsvStatusCd = RsvStatusCd.Mnemonic(status),
+                });
+            }
+
+        }
+
+        private void UpdateBookingRsvStatusDb(string rsvNo, RsvStatus status, string message)
+        {
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                ReservationTableRepo.GetInstance().Update(conn, new ReservationTableRecord
+                {
+                    RsvNo = rsvNo,
+                    RsvStatusCd = RsvStatusCd.Mnemonic(status),
+                    RejectionMessage = message
                 });
             }
 

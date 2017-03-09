@@ -184,7 +184,7 @@ namespace Lunggo.CustomerWeb.Controllers
             {
                 return RedirectToAction("Index", "B2BIndex");
             }
-            var isUpdated = FlightService.GetInstance().UpdateReservation(rsvNo, status);
+            var isUpdated = FlightService.GetInstance().UpdateReservation(rsvNo, status,null);
             if (isUpdated)
             {
                 //Gak tau masih dia pergi kemana

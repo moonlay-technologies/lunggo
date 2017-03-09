@@ -3,6 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Lunggo.ApCommon.Flight.Model;
+using Lunggo.ApCommon.Flight.Service;
+using Lunggo.ApCommon.Hotel.Model;
+using Lunggo.ApCommon.Hotel.Service;
+using Lunggo.ApCommon.Util;
 
 namespace Lunggo.CustomerWeb.Controllers
 {
@@ -56,6 +61,30 @@ namespace Lunggo.CustomerWeb.Controllers
         public ActionResult UserManagement()
         {
             return View();
+        }
+
+        public ActionResult TestEmail()
+        {
+            var hotelService = HotelService.GetInstance();
+            var reservation = hotelService.GetReservationForDisplay("217306558579");
+            var mailData = new HotelBookingNotif
+            {
+                Token = GenerateTokenUtil.GenerateTokenByRsvNo("217306558579"),
+                Reservation = reservation
+            };
+            return View(mailData);
+        }
+
+        public ActionResult TestEmailFlight()
+        {
+            var flightService = FlightService.GetInstance();
+            var reservation = flightService.GetReservationForDisplay("116496559679");
+            var mailData = new FlightBookingNotif
+            {
+                Token = GenerateTokenUtil.GenerateTokenByRsvNo("116496559679"),
+                Reservation = reservation
+            };
+            return View(mailData);
         }
     }
 }

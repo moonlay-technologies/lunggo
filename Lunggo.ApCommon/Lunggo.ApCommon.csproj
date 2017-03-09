@@ -757,6 +757,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="Util\GenerateTokenUtil.cs" />
     <Compile Include="Util\HotelFacilityUtil.cs" />
     <Compile Include="Util\UrlUtil.cs" />
     <Compile Include="Voucher\Query\GetVoucherRecordQuery.cs" />

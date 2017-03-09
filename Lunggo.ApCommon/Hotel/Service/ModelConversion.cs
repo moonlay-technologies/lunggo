@@ -31,7 +31,9 @@ namespace Lunggo.ApCommon.Hotel.Service
                 Payment = PaymentService.GetInstance().ConvertToPaymentDetailsForDisplay(hotelReservation.Payment),
                 RsvTime = hotelReservation.RsvTime,
                 RsvType = hotelReservation.RsvType ?? null,
-                RsvDisplayStatus = MapReservationStatus(hotelReservation)
+                RsvDisplayStatus = MapReservationStatus(hotelReservation),
+                BookerMessage = hotelReservation.BookerMessage,
+                RejectionMessage = hotelReservation.RejectionMessage
             };
 
             return convertedRsv;
@@ -53,7 +55,9 @@ namespace Lunggo.ApCommon.Hotel.Service
                 Payment = PaymentService.GetInstance().ConvertToPaymentDetailsForDisplay(hotelReservation.Payment),
                 RsvTime = hotelReservation.RsvTime,
                 RsvType = hotelReservation.RsvType ?? null,
-                RsvDisplayStatus = MapReservationStatus(hotelReservation.RsvStatus)
+                RsvDisplayStatus = MapReservationStatus(hotelReservation.RsvStatus),
+                BookerMessage = hotelReservation.BookerMessage,
+                RejectionMessage =  hotelReservation.RejectionMessage
             };
 
             return convertedRsv;

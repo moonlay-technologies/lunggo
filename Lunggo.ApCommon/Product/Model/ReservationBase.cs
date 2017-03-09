@@ -18,6 +18,11 @@ namespace Lunggo.ApCommon.Product.Model
         public DateTime RsvTime { get; set; }
         [JsonProperty("rsvType", NullValueHandling = NullValueHandling.Ignore)]
         public string RsvType { get; set; }
+        [JsonProperty("bookerMessage", NullValueHandling = NullValueHandling.Ignore)]
+        public string BookerMessage { get; set; }
+        [JsonProperty("rejectionMessage", NullValueHandling = NullValueHandling.Ignore)]
+        public string RejectionMessage { get; set; }
+
         [JsonProperty("rsvStatus", NullValueHandling = NullValueHandling.Ignore)]
         public RsvDisplayStatus RsvDisplayStatus { get; set; }
         [JsonProperty("cancelType", NullValueHandling = NullValueHandling.Ignore)]
@@ -50,6 +55,8 @@ namespace Lunggo.ApCommon.Product.Model
         public User User { get; set; }
         public ReservationState State { get; set; }
         public List<Pax> Pax { get; set; }
+        public string BookerMessage { get; set; }
+        public string RejectionMessage { get; set; }
 
         public abstract decimal GetTotalSupplierPrice();
     }

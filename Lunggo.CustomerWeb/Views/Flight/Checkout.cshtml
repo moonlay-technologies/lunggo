@@ -224,6 +224,16 @@
                                         <input type="email" class="form-control" value=buyerInfo.email id="buyer-email" placeholder="Ex: name@domain.com" name="email" ng-model="buyerInfo.email" required />
                                     </div>
                                 </div>
+                                @if (ViewBag.Domain == "B2B")
+                                {
+                                    <div class="form-group">
+                                        <label class="control-label">Booker Message</label>
+                                        <div>
+                                            <textarea class="form-control" name="special-request" ng-model="buyerInfo.bookerMessage"></textarea>
+                                        </div>
+                                    </div>
+                                }
+                                
 
                             </form><!-- #buyer-form -->
 
@@ -357,7 +367,7 @@
                                                     <option ng-repeat="country in countries" value="{{country.code}}" ng-selected="country.code == 'ID'">{{country.name}}</option>
                                                 </select>
                                             </div>
-
+                                           
                                         </div>
                                     </div><!-- .passenger-form -->
 
@@ -578,6 +588,11 @@
                                         <input type="text" name="Contact.CountryCode" value="" ng-model="buyerInfo.countryCode" />
                                         <input type="text" name="Contact.Phone" value="" ng-model="buyerInfo.phone" />
                                         <input type="text" name="Contact.Email" value="" ng-model="buyerInfo.email" />
+                                        @if (ViewBag.Domain == "B2B")
+                                        {
+                                            <input type="text" name="Contact.BookerMessage" value="" ng-model="buyerInfo.bookerMessage" />
+                                        }
+                                        
 
                                         <p>Passenger Info</p>
                                         <div ng-repeat="passenger in passengers track by $index">
@@ -605,7 +620,10 @@
                                         <p>Payment Method</p>
                                         <input type="text" name="Payment.Method" value="" ng-model="paymentMethod" />
                                     </div>
-
+                                    @if (ViewBag.Domain == "B2B")
+                                    {
+                                        <p><b>*Pesanan Anda akan di issue setelah mendapatkan Approval dari perusahaan Anda</b></p>
+                                    }
                                     <a class="btn btn-grey md-txt lg-btn" ng-click="changePage(2)" ng-disabled="checkoutForm.loading">KEMBALI</a>
                                     <input type="submit" ng-disabled="finalForm.$invalid" class="btn btn-yellow go-top md-txt lg-btn" value="{{ !checkoutForm.loading? 'PESAN' : 'MEMPROSES' }}">
 

@@ -31,7 +31,7 @@ namespace Lunggo.WebJob.FlightProcessor
             //Console.WriteLine(loginResponse.StatusDescription);
             var loginResponse = loginClient.Execute(loginRequest).Content.Deserialize<LoginFormat>();
             Console.WriteLine(@"login succeeded");
-            Console.WriteLine(@"Login status = " + loginResponse.Status);
+            //Console.WriteLine(@"Login status = " + loginResponse.Status);
             try
             {
                 if (loginResponse.Status == "200")

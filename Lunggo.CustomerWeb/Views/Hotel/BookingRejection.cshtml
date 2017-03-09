@@ -1,0 +1,37 @@
+﻿@model Lunggo.CustomerWeb.Models.RejectionModel
+@{
+    Layout = "/Views/Shared/Desktop/_LayoutDesktop.cshtml";
+    ViewBag.Title = "Penolakan Pesanan";
+    ViewBag.BodyClass = "page-password page-reject";
+}
+
+@section PageJS{
+    <script>
+        var langCode = 'en';
+    </script>
+    <script src="/Assets/travorama20/js/accountController.js"></script>
+}
+
+
+<section class="form-section page-loading" ng-app="travorama" ng-controller="checkController" ng-class="{'page-loaded': pageLoaded}">
+    <h1 class="text-center section-title stripe xlg-txt">KETERANGAN <span>PENOLAKAN</span></h1>
+    <div class="container form-container normal-txt">
+        <h3 class="md-txt">Silahkan isi alasan mengapa Anda menolak pesanan.</h3>
+        <div class="form-wrapper">
+            <section class="form-content">
+                @using (Html.BeginForm("BookingRejection", "Hotel", FormMethod.Post, new { @class = "form form-horizontal", role = "form", name = "checkForm" }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.HiddenFor(x => Model.RsvNo)
+                    @Html.HiddenFor(x => Model.Token)
+                    @Html.HiddenFor(x => Model.Status)
+                    @*@Html.TextAreaFor(x=>Model.Message)*@
+                    <textarea style="height: 120px; margin-bottom: 15px;" type="text" name= "Message" value= "Message" class="form-control" placeholder="Tulis keterangan Anda"></textarea>
+                    <div style="margin: 0 auto; width: 200px;">
+                        <button type="submit" value="" class="btn btn-yellow form-control md-txt lg-btn">SIMPAN</button>
+                    </div>
+                }
+            </section>
+        </div>
+    </div>
+</section>

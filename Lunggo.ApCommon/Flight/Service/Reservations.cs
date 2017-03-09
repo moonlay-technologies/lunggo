@@ -152,7 +152,7 @@ namespace Lunggo.ApCommon.Flight.Service
             UpdateExpireReservationsToDb();
         }
 
-        public bool UpdateReservation(string rsvNo, string status)
+        public bool UpdateReservation(string rsvNo, string status, string rejectionMessage)
         {
             var rsv = GetReservation(rsvNo);
             if (rsv.RsvStatus != RsvStatus.InProcess)
@@ -163,10 +163,10 @@ namespace Lunggo.ApCommon.Flight.Service
             {
                 try
                 {
-                    var isPaid = PaymentService.GetInstance().ProcessB2BPayment(rsvNo);
+                    var isPaid = PaymentService.GetInstance().ProcessB2BPayment(rsvNo, rsv.User.CompanyId);
                     if (!isPaid)
                         return false;
-                    UpdateRsvStatusDb(rsvNo, RsvStatus.Approved); 
+                    UpdateBookingRsvStatusDb(rsvNo, RsvStatus.Approved, rejectionMessage); 
                     IssueBooker(rsvNo);
                     SendBookerBookingInfo(rsvNo);
                     return true;
@@ -180,7 +180,7 @@ namespace Lunggo.ApCommon.Flight.Service
             {
                 try
                 {
-                    UpdateRsvStatusDb(rsvNo, RsvStatus.Rejected);
+                    UpdateBookingRsvStatusDb(rsvNo, RsvStatus.Rejected, rejectionMessage);
                     SendBookerBookingInfo(rsvNo);
                     return true;
                 }

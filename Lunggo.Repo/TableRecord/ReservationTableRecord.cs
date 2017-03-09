@@ -85,6 +85,25 @@ namespace Lunggo.Repository.TableRecord
                 IncrementLog("RsvType");
             }
         }
+
+        public String BookerMessage
+        {
+            get { return _BookerMessage; }
+            set
+            {
+                _BookerMessage = value;
+                IncrementLog("BookerMessage");
+            }
+        }
+        public String RejectionMessage
+        {
+            get { return _RejectionMessage; }
+            set
+            {
+                _RejectionMessage = value;
+                IncrementLog("RejectionMessage");
+            }
+        }
 		public String InsertBy
 		{
 		    get { return _InsertBy; }
@@ -149,6 +168,8 @@ namespace Lunggo.Repository.TableRecord
         private String _CancellationReference;
 		private String _UserId;
         private String _RsvType;
+        private String _RejectionMessage;
+        private String _BookerMessage;
 		private String _InsertBy;
 		private DateTime? _InsertDate;
 		private String _InsertPgId;
@@ -193,7 +214,9 @@ namespace Lunggo.Repository.TableRecord
 				new ColumnMetadata("CancellationTime", false),
                 new ColumnMetadata("CancellationReference", false),
 				new ColumnMetadata("UserId", false),
-                new ColumnMetadata("RsvType", false), 
+                new ColumnMetadata("RsvType", false),
+                new ColumnMetadata("BookerMessage", false),
+                new ColumnMetadata("RejectionMessage", false),
 				new ColumnMetadata("InsertBy", false),
 				new ColumnMetadata("InsertDate", false),
 				new ColumnMetadata("InsertPgId", false),

@@ -131,6 +131,7 @@ namespace Lunggo.ApCommon.Flight.Service
             reservation.Itineraries = itins;
             reservation.Contact = input.Contact;
             reservation.Pax = input.Passengers;
+            reservation.BookerMessage = input.BookerMessage;
             reservation.User = HttpContext.Current.User.Identity.IsUserAuthorized()
                 ? HttpContext.Current.User.Identity.GetUser()
                 : null;

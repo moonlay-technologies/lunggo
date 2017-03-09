@@ -31,7 +31,9 @@ namespace Lunggo.ApCommon.Flight.Service
                 Pax = ConvertToPaxForDisplay(reservation.Pax),
                 Payment = PaymentService.GetInstance().ConvertToPaymentDetailsForDisplay(reservation.Payment),
                 UserId = reservation.User != null ? reservation.User.Id : null,
-                DeviceId = reservation.State != null ? reservation.State.DeviceId : null
+                DeviceId = reservation.State != null ? reservation.State.DeviceId : null,
+                BookerMessage = reservation.BookerMessage,
+                RejectionMessage =  reservation.RejectionMessage
             };
         }
 
@@ -53,7 +55,9 @@ namespace Lunggo.ApCommon.Flight.Service
                 Pax = ConvertToPaxForDisplay(reservation.Pax),
                 Payment = PaymentService.GetInstance().ConvertToPaymentDetailsForDisplay(reservation.Payment),
                 UserId = reservation.User != null ? reservation.User.Id : null,
-                DeviceId = reservation.State != null ? reservation.State.DeviceId : null
+                DeviceId = reservation.State != null ? reservation.State.DeviceId : null,
+                RejectionMessage = reservation.RejectionMessage,
+                BookerMessage = reservation.BookerMessage
             };
         }
 

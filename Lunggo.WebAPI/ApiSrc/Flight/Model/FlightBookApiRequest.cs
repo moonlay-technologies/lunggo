@@ -19,5 +19,7 @@ namespace Lunggo.WebAPI.ApiSrc.Flight.Model
         public string LanguageCode { get; set; }
         [JsonProperty("test")]
         public bool Test { get; set; }
+        [JsonProperty("bookerMessage")]
+        public string BookerMessage { get; set; }
     }
 }

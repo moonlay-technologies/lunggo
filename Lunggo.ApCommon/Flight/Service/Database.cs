@@ -362,7 +362,9 @@ namespace Lunggo.ApCommon.Flight.Service
                                 Itineraries = new List<FlightItinerary>(),
                                 Pax = new List<Pax>(),
                                 State = ReservationState.GetFromDb(rsvNo),
-                                User = User.GetFromDb(reservationRecord.UserId)
+                                User = User.GetFromDb(reservationRecord.UserId),
+                                BookerMessage = reservationRecord.BookerMessage,
+                                RejectionMessage = reservationRecord.RejectionMessage
                             };
                         }
                         FlightItinerary itinerary;
@@ -575,6 +577,7 @@ namespace Lunggo.ApCommon.Flight.Service
                     RsvStatusCd = RsvStatusCd.Mnemonic(reservation.RsvStatus),
                     CancellationTypeCd = null,
                     UserId = reservation.User != null ? reservation.User.Id : null,
+                    BookerMessage = reservation.BookerMessage ?? null,
                     InsertBy = "LunggoSystem",
                     InsertDate = DateTime.UtcNow,
                     InsertPgId = "0"
@@ -955,7 +958,21 @@ namespace Lunggo.ApCommon.Flight.Service
                 ReservationTableRepo.GetInstance().Update(conn, new ReservationTableRecord
                 {
                     RsvNo = rsvNo,
-                    RsvStatusCd = RsvStatusCd.Mnemonic(status)
+                    RsvStatusCd = RsvStatusCd.Mnemonic(status),
+                });
+            }
+
+        }
+
+        private void UpdateBookingRsvStatusDb(string rsvNo, RsvStatus status, string rejectionMessage)
+        {
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                ReservationTableRepo.GetInstance().Update(conn, new ReservationTableRecord
+                {
+                    RsvNo = rsvNo,
+                    RsvStatusCd = RsvStatusCd.Mnemonic(status),
+                    RejectionMessage = rejectionMessage
                 });
             }
 

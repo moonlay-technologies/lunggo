@@ -6,6 +6,7 @@ using Lunggo.ApCommon.Hotel.Constant;
 using Lunggo.ApCommon.Hotel.Model;
 using Lunggo.ApCommon.Hotel.Model.Logic;
 using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds;
+using Lunggo.ApCommon.Identity.Users;
 using Lunggo.ApCommon.Payment.Model;
 using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Sdk.auto.model;
 using Lunggo.ApCommon.Payment.Constant;
@@ -263,7 +264,17 @@ namespace Lunggo.ApCommon.Hotel.Service
             {
                 Console.WriteLine(e);
                 UpdateRsvDetail(rsvData.RsvNo, "FAIL", rsvData.HotelDetails);
-                SendSaySorryFailedIssueNotifToCustomer(rsvData.RsvNo);
+                if (rsvData.User.UserName.Contains("b2b"))
+                {
+                    SendSaySorryFailedIssueNotifToBooker(rsvData.RsvNo);
+                    var approver = User.GetApproverEmailByUserId(rsvData.User.Id);
+                    if (approver != null)
+                        SendSaySorryFailedIssueNotifToApprover(rsvData.RsvNo + ":" + approver);
+                }
+                else
+                {
+                    SendSaySorryFailedIssueNotifToCustomer(rsvData.RsvNo);   
+                }
                 Console.WriteLine("Something wrong when issuing");
                 return new IssueHotelTicketOutput
                 {
@@ -275,7 +286,17 @@ namespace Lunggo.ApCommon.Hotel.Service
             if (issueResult.IsSuccess == false)
             {
                 UpdateRsvDetail(rsvData.RsvNo, "FAIL", rsvData.HotelDetails);
-                SendSaySorryFailedIssueNotifToCustomer(rsvData.RsvNo);
+                if (rsvData.User.UserName.Contains("b2b"))
+                {
+                    SendSaySorryFailedIssueNotifToBooker(rsvData.RsvNo);
+                    var approver = User.GetApproverEmailByUserId(rsvData.User.Id);
+                    if (approver != null)
+                        SendSaySorryFailedIssueNotifToApprover(rsvData.RsvNo + ":" + approver);
+                }
+                else
+                {
+                    SendSaySorryFailedIssueNotifToCustomer(rsvData.RsvNo);   
+                }
                 Console.WriteLine("Issuing is failed");
                 return new IssueHotelTicketOutput
                 {
