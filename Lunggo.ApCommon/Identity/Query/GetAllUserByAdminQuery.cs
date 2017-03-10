@@ -18,10 +18,10 @@ namespace Lunggo.ApCommon.Identity.Query
         private static string CreateSelectClause()
         {
             var clauseBuilder = new StringBuilder();
-            clauseBuilder.Append(@"SELECT a.Email, a.FirstName, a.LastName, c.Name as RoleName ");
+            clauseBuilder.Append(@"SELECT a.Id as UserId, a.UserName, a.Email, a.FirstName, a.LastName, a.CountryCallCd, a.PhoneNumber, a.Position, a.Branch, a.Department, a.ApproverId ");
             clauseBuilder.Append(@"FROM dbo.[User] AS a ");
-            clauseBuilder.Append(@"JOIN dbo.[UserRole] as b ON a.Id = b.UserId ");
-            clauseBuilder.Append(@"JOIN dbo.[Role] as c ON c.Id = b.RoleId ");
+            //clauseBuilder.Append(@"JOIN dbo.[UserRole] as b ON a.Id = b.UserId ");
+            //clauseBuilder.Append(@"JOIN dbo.[Role] as c ON c.Id = b.RoleId ");
             return clauseBuilder.ToString();
         }
 

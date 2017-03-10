@@ -61,7 +61,6 @@ namespace Lunggo.ApCommon.Flight.Service
                     //For Booker Only
                     var userId = HttpContext.Current.User.Identity.GetUser().Id;
                     var user = User.GetFromDb(userId);
-                    var role = Role.GetFromDb(userId);
                     if (user.UserName.Contains("b2b:"))
                     //if (role.Contains("booker"))
                     {
@@ -139,7 +138,6 @@ namespace Lunggo.ApCommon.Flight.Service
             {
                 var userId = HttpContext.Current.User.Identity.GetUser().Id;
                 var user = User.GetFromDb(userId);
-                var role = Role.GetFromDb(userId);
                 if (user.UserName.Contains("b2b:"))
                 //if (role.Contains("booker"))
                 {

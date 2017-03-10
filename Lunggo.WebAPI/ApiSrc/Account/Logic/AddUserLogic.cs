@@ -39,14 +39,24 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
             var user = new User
             {
                 UserName = "b2b:" + request.Email,
+                CompanyId = companyId,
+                FirstName = request.Name,
                 Email = request.Email,
-                CompanyId = companyId
+                CountryCallCd = request.CountryCallCd,
+                PhoneNumber = request.Phone,
+                Position = request.Position,
+                Department = request.Department,
+                Branch = request.Branch
+                //Nama Approval
             };
             var result = userManager.Create(user);
             if (result.Succeeded)
             {
-                //Add default User to Role Admin   
-                userManager.AddToRole(user.Id, request.Role);
+                //Add Role
+                if (request.Role != null)
+                {
+                    userManager.AddToRolesAsync(user.Id, request.Role.ToArray());
+                }
                 var code = HttpUtility.UrlEncode(userManager.GenerateEmailConfirmationToken(user.Id));
                 var host = ConfigManager.GetInstance().GetConfigValue("general", "rootUrl");
                 var apiUrl = HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority);
@@ -70,7 +80,7 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
 
         private static bool IsValid(AddUserApiRequest request)
         {
-            return !string.IsNullOrEmpty(request.Email) && !string.IsNullOrEmpty(request.Role);
+            return !string.IsNullOrEmpty(request.Email);
         }
     }
 }

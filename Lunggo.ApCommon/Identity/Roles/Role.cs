@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Lunggo.ApCommon.Identity.Query;
 using Lunggo.ApCommon.Identity.Users;
@@ -8,15 +9,11 @@ namespace Lunggo.ApCommon.Identity.Roles
 {
     public class Role : IdentityRole<String>
     {
-        public static String GetFromDb(string userId)
+        public static List<string> GetFromDb(string userId)
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
-                var role = GetListRoleByUserIdQuery.GetInstance().Execute(conn, new { UserId = userId }).SingleOrDefault();
-
-                if (role == null)
-                    return null;
-
+                var role = GetListRoleByUserIdQuery.GetInstance().Execute(conn, new { UserId = userId }).ToList();
                 return role;
             }
         }

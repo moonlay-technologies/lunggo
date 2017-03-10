@@ -21,6 +21,16 @@ namespace Lunggo.Repository.TableRecord
             }
         }
 
+        public String ApproverId
+        {
+            get { return _ApproverId; }
+            set
+            {
+                _ApproverId = value;
+                IncrementLog("ApproverId");
+            }
+        }
+
         public String CompanyId
         {
             get { return _CompanyId; }
@@ -168,6 +178,36 @@ namespace Lunggo.Repository.TableRecord
             }
         }
 
+        public String Position
+        {
+            get { return _Position; }
+            set
+            {
+                _Position = value;
+                IncrementLog("Position");
+            }
+        }
+
+        public String Branch
+        {
+            get { return _Branch; }
+            set
+            {
+                _Branch = value;
+                IncrementLog("Branch");
+            }
+        }
+
+        public String Department
+        {
+            get { return _Department; }
+            set
+            {
+                _Department = value;
+                IncrementLog("Department");
+            }
+        }
+
 
         private String _Id;
         private String _CompanyId;
@@ -186,6 +226,10 @@ namespace Lunggo.Repository.TableRecord
         private String _FirstName;
         private String _LastName;
         private String _Address;
+        private String _Position;
+        private String _Department;
+        private String _Branch;
+        private String _ApproverId;
 
 
         public static UserTableRecord CreateNewInstance()
@@ -234,7 +278,10 @@ namespace Lunggo.Repository.TableRecord
 				new ColumnMetadata("FirstName", false),
 				new ColumnMetadata("LastName", false),
 				new ColumnMetadata("Address", false),
-
+                new ColumnMetadata("Position", false),
+                new ColumnMetadata("Branch", false),
+                new ColumnMetadata("Department", false),
+                new ColumnMetadata("ApproverId", false)
             };
         }
 

@@ -51,11 +51,20 @@ namespace Lunggo.ApCommon.Identity.Users
             }
         }
 
+        public static List<ApproverData> GetAvailableApprover()
+        {
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                var userList = GetAvailableApproverQuery.GetInstance().Execute(conn, new {}).ToList();
+                return userList;
+            }
+        }
+
         internal static string GetApproverEmailByUserId(string userId)
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
-                var user = GetApproverEmailByUserIdQuery.GetInstance().Execute(conn, new {userId }).FirstOrDefault();
+                var user = GetApproverEmailByUserIdQuery.GetInstance().Execute(conn, new {userId}).FirstOrDefault();
                 return user;
             }
         }
@@ -87,6 +96,15 @@ namespace Lunggo.ApCommon.Identity.Users
                 return roleList;
             }
 
+        }
+
+        public static string GetNameByUserId(string userId)
+        {
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                var name = GetNameByUserIdQuery.GetInstance().Execute(conn, new { userId }).FirstOrDefault();
+                return name;
+            }
         }
     }
 }

@@ -111,7 +111,11 @@ namespace Lunggo.ApCommon.Identity.UserStore
                 UserName = user.UserName,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
-                Address = user.Address
+                Address = user.Address,
+                Position = user.Position,
+                Branch = user.Branch,
+                Department = user.Department,
+                ApproverId = user.ApproverId
             };
             return record;
         }
@@ -203,7 +207,11 @@ namespace Lunggo.ApCommon.Identity.UserStore
                 PhoneNumber = record.PhoneNumber,
                 PhoneNumberConfirmed = record.PhoneNumberConfirmed,
                 SecurityStamp = record.SecurityStamp,
-                TwoFactorEnabled = record.TwoFactorEnabled
+                TwoFactorEnabled = record.TwoFactorEnabled,
+                Position = record.Position,
+                Branch = record.Branch,
+                Department = record.Department,
+                ApproverId = record.ApproverId
             };
             return user;
         }
@@ -569,6 +577,42 @@ namespace Lunggo.ApCommon.Identity.UserStore
                 var repo = UserRoleTableRepo.GetInstance();
                 var toUserRolesTableRecord = ToUserRolesTableRecord(roleEntity.Id, user.Id);
                 repo.Insert(connection, toUserRolesTableRecord);
+            }
+            return Task.FromResult(0);
+        }
+
+        public Task AddToRolesAsync(TUser user, List<string>rolesNameList )
+        {
+            ThrowIfDisposed();
+            if (user == null)
+            {
+                throw new ArgumentNullException("user");
+            }
+            if (rolesNameList == null)
+            {
+                throw new Exception("Role must not null or empty");
+                //input Role null
+            }
+            foreach (var role in rolesNameList)
+            {
+                dynamic roleEntity;
+                using (var connection = DbService.GetInstance().GetOpenConnection())
+                {
+                    var query = GetRoleByNameQuery.GetInstance();
+                    roleEntity = query.Execute(connection, new { Name = role }).SingleOrDefault();
+                }
+                if (roleEntity == null)
+                {
+                    throw new Exception("Role name not found");
+                    //Role not found
+                }
+                using (var connection = DbService.GetInstance().GetOpenConnection())
+                {
+                    var repo = UserRoleTableRepo.GetInstance();
+                    var toUserRolesTableRecord = ToUserRolesTableRecord(roleEntity.Id, user.Id);
+                    repo.Insert(connection, toUserRolesTableRecord);
+                }
+                
             }
             return Task.FromResult(0);
         }
