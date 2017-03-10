@@ -102,7 +102,11 @@ namespace Lunggo.CustomerWeb.Controllers
         {
             return View();
         }
-        public ActionResult B2BPendingApproval()
+        public ActionResult B2BPendingApprovalFlight()
+        {
+            return View();
+        }
+        public ActionResult B2BPendingApprovalHotel()
         {
             return View();
         }
@@ -118,7 +122,11 @@ namespace Lunggo.CustomerWeb.Controllers
         {
             return View();
         }
-        public ActionResult B2BCancellationConfirmed()
+        public ActionResult B2BCancellationConfirmedFlight()
+        {
+            return View();
+        }
+        public ActionResult B2BCancellationConfirmedHotel()
         {
             return View();
         }

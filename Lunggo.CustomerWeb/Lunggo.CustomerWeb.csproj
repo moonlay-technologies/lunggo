@@ -2822,6 +2822,14 @@
     <Content Include="Views\B2BTemplate\B2BWelcomeEmail.cshtml" />
     <Content Include="Views\B2BTemplate\B2BPasswordReset.cshtml" />
     <Content Include="Views\B2BTemplate\B2BInvitationEmail.cshtml" />
+    <Content Include="Views\B2BTemplate\B2BIssuanceSuccessful.cshtml" />
+    <Content Include="Views\B2BTemplate\B2BIssuanceDelay.cshtml" />
+    <Content Include="Views\B2BTemplate\B2BRejectionEmail.cshtml" />
+    <Content Include="Views\B2BTemplate\B2BPendingApprovalFlight.cshtml" />
+    <Content Include="Views\B2BTemplate\B2BPendingApprovalHotel.cshtml" />
+    <Content Include="Views\B2BTemplate\B2BCancellationConfirmedFlight.cshtml" />
+    <Content Include="Views\B2BTemplate\B2BCancellationConfirmedHotel.cshtml" />
+    <Content Include="Views\B2BTemplate\B2BHotelPriceIncrease.cshtml" />
     <None Include="Views\Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
