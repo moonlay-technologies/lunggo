@@ -350,6 +350,7 @@ namespace Lunggo.Configuration
             const string getUserPath = @"/v1/getuser";
             const string addUserPath = @"/v1/adduser";
             const string updateRolePath = @"/v1/updaterole";
+            const string updateUserPath = @"/v1/updateuser";
             const string deleteUserPath = @"/v1/deleteuser";
             const string getCreditCardPath = @"/v1/payment/getcreditcard";
             const string addCreditCardPath = @"/v1/payment/addcreditcard";
@@ -405,6 +406,7 @@ namespace Lunggo.Configuration
             fileTemplate.SetAttribute("addUserPath", addUserPath);
             fileTemplate.SetAttribute("deleteCardPath", deleteCardPath);
             fileTemplate.SetAttribute("updateRolePath", updateRolePath);
+            fileTemplate.SetAttribute("updateUserPath", updateUserPath);
             fileTemplate.SetAttribute("deleteUserPath", deleteUserPath);
             fileTemplate.SetAttribute("resetPasswordPath", resetPasswordPath);
             fileTemplate.SetAttribute("forgotPasswordPath", forgotPasswordPath);

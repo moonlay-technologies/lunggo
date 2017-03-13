@@ -139,6 +139,10 @@ var UpdateRoleConfig = {
     Url: '$apiUrl$$updateRolePath$'
 };
 
+var UpdateUserConfig = {
+    Url: '$apiUrl$$updateUserPath$'
+};
+
 var DeleteUserConfig = {
     Url: '$apiUrl$$deleteUserPath$'
 };

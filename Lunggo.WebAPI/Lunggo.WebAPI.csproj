@@ -231,6 +231,7 @@
     <Compile Include="ApiSrc\Account\Logic\RegisterLogic.cs" />
     <Compile Include="ApiSrc\Account\Logic\LoginLogic.cs" />
     <Compile Include="ApiSrc\Account\Logic\UpdateRoleLogic.cs" />
+    <Compile Include="ApiSrc\Account\Logic\UpdateUserLogic.cs" />
     <Compile Include="ApiSrc\Account\Model\AddUserApiRequest.cs" />
     <Compile Include="ApiSrc\Account\Model\B2BUpdateReservationRequest.cs" />
     <Compile Include="ApiSrc\Account\Model\B2BUpdateReservationResponse.cs" />

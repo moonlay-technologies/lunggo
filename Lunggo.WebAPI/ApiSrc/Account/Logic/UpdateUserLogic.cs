@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Web;
+using Lunggo.ApCommon.Identity.Roles;
 using Lunggo.ApCommon.Identity.Users;
 using Lunggo.Framework.Config;
 using Lunggo.WebAPI.ApiSrc.Account.Model;
@@ -13,33 +14,30 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
 {
     public static partial class AccountLogic
     {
-        public static ApiResponseBase AddUser(AddUserApiRequest request, ApplicationUserManager userManager)
+        public static ApiResponseBase UpdateUser(AddUserApiRequest request, ApplicationUserManager userManager)
         {
             if (!IsValid(request))
             {
                 return new ApiResponseBase
                 {
                     StatusCode = HttpStatusCode.BadRequest,
-                    ErrorCode = "ERRAU01"
+                    ErrorCode = "ERRUPS01"
                 };
             }
             var foundUser = userManager.FindByName("b2b:" + request.Email);
-            if (foundUser != null)
+            if (foundUser == null)
             {
                 return new ApiResponseBase
                 {
                     StatusCode = HttpStatusCode.Accepted,
-                    ErrorCode = foundUser.EmailConfirmed
-                        ? "ERRAU02"
-                        : "ERRAU03"
+                    ErrorCode = "ERRUPS02"
                 };
             }
-
             string first, last;
             if (request.Name == null)
             {
-                first = "";
-                last = "";
+                first = foundUser.FirstName;
+                last = foundUser.LastName;
             }
             else
             {
@@ -55,15 +53,14 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
                     last = splittedName[splittedName.Length - 1];
                 }
             }
+            foundUser.FirstName = first;
+            foundUser.LastName = last;
 
-            var recentUser = HttpContext.Current.User.Identity.GetUser().Id;
-            var companyId = User.GetCompanyIdByUserId(recentUser);
             var user = new User
             {
-                UserName = "b2b:" + request.Email,
-                CompanyId = companyId,
-                FirstName = first,
-                LastName = last,
+                Id = foundUser.Id,
+                FirstName = foundUser.FirstName,
+                LastName = foundUser.LastName,
                 Email = request.Email,
                 CountryCallCd = request.CountryCallCd,
                 PhoneNumber = request.Phone,
@@ -72,20 +69,22 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
                 Branch = request.Branch,
                 ApproverId = request.ApproverId
             };
-            var result = userManager.Create(user);
-            if (result.Succeeded)
+            var isUpdated = User.UpdateUser(user);
+            if (isUpdated)
             {
-                //Add Role
                 if (request.Role != null)
                 {
-                    request.Role = request.Role.Where(x => !string.IsNullOrEmpty(x)).ToList();
+                    request.Role = request.Role.Where(x=> !string.IsNullOrEmpty(x)).ToList();
+                    var prevUserRole = Role.GetFromDb(user.Id);
+                    if (prevUserRole != null)
+                    {
+                        foreach (var prevRole in prevUserRole)
+                        {
+                            userManager.RemoveFromRole(user.Id, prevRole);
+                        }
+                    }
                     userManager.AddToRolesAsync(user.Id, request.Role.ToArray());
                 }
-                var code = HttpUtility.UrlEncode(userManager.GenerateEmailConfirmationToken(user.Id));
-                var host = ConfigManager.GetInstance().GetConfigValue("general", "rootUrl");
-                var apiUrl = HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority);
-                var callbackUrl = host + "/id/B2BAccount/ConfirmEmail?userId=" + user.Id + "&code=" + code + "&apiUrl=" + apiUrl;
-                userManager.SendEmailAsync(user.Id, "UserConfirmationEmail", callbackUrl).Wait();
 
                 return new ApiResponseBase
                 {
@@ -100,11 +99,6 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
                     ErrorCode = "ERRGEN99"
                 };
             }
-        }
-
-        private static bool IsValid(AddUserApiRequest request)
-        {
-            return !string.IsNullOrEmpty(request.Email);
         }
     }
 }

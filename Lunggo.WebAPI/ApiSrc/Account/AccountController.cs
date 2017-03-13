@@ -414,6 +414,32 @@ namespace Lunggo.WebAPI.ApiSrc.Account
             }
         }
 
+        [LunggoCorsPolicy]
+        [Authorize]
+        [Route("v1/updateuser")]
+        public ApiResponseBase UpdateUser()
+        {
+            AddUserApiRequest request = null;
+            if (!User.Identity.IsInRole("Admin"))
+            {
+                return new ApiResponseBase
+                {
+                    StatusCode = HttpStatusCode.Unauthorized,
+                    ErrorCode = "ERRAU01"
+                };
+            }
+            try
+            {
+                request = ApiRequestBase.DeserializeRequest<AddUserApiRequest>();
+                var apiResponse = AccountLogic.UpdateUser(request, UserManager);
+                return apiResponse;
+            }
+            catch (Exception e)
+            {
+                return ApiResponseBase.ExceptionHandling(e, request);
+            }
+        }
+
 
         [HttpPost]
         [Authorize]

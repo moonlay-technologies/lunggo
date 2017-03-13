@@ -1,10 +1,14 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Lunggo.ApCommon.Identity.Model;
 using Lunggo.ApCommon.Identity.Query;
+using Lunggo.ApCommon.Product.Constant;
 using Lunggo.Framework.Database;
+using Lunggo.Repository.TableRecord;
+using Lunggo.Repository.TableRepository;
 using Microsoft.AspNet.Identity;
 
 namespace Lunggo.ApCommon.Identity.Users
@@ -104,6 +108,34 @@ namespace Lunggo.ApCommon.Identity.Users
             {
                 var name = GetNameByUserIdQuery.GetInstance().Execute(conn, new { userId }).FirstOrDefault();
                 return name;
+            }
+        }
+
+        public static bool UpdateUser(User user)
+        {
+            try
+            {
+                using (var conn = DbService.GetInstance().GetOpenConnection())
+                {
+                    UserTableRepo.GetInstance().Update(conn, new UserTableRecord
+                    {
+                        Id = user.Id,
+                        FirstName = user.FirstName,
+                        LastName = user.LastName,
+                        Email = user.Email,
+                        CountryCallCd = user.CountryCallCd,
+                        PhoneNumber = user.PhoneNumber,
+                        Position = user.Position,
+                        Department = user.Department,
+                        Branch = user.Branch,
+                        ApproverId = user.ApproverId
+                    });
+                }
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
             }
         }
     }

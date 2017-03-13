@@ -13,6 +13,8 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Model
         [EmailAddress]
         [JsonProperty("email")]
         public string Email { get; set; }
+        [JsonProperty("userId")]
+        public string UserId { get; set; }
         [JsonProperty("name")]
         public string Name { get; set; }
         [JsonProperty("countryCallCd")]
@@ -25,6 +27,8 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Model
         public string Department { get; set; }
         [JsonProperty("branch")]
         public string Branch { get; set; }
+        [JsonProperty("approverId")]
+        public string ApproverId { get; set; }
         [JsonProperty("roles")]
         public List<string> Role { get; set; }
     }

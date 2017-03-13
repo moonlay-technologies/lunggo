@@ -138,6 +138,9 @@ var AddUserConfig = {
 var UpdateRoleConfig = {
     Url: 'https://api.local.travorama.com/v1/updaterole'
 };
+var UpdateUserConfig = {
+    Url: 'https://api.local.travorama.com/v1/updateuser'
+};
 
 var DeleteUserConfig = {
     Url: 'https://api.local.travorama.com/v1/deleteuser'
