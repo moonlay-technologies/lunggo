@@ -2830,6 +2830,17 @@
     <Content Include="Views\B2BTemplate\B2BCancellationConfirmedFlight.cshtml" />
     <Content Include="Views\B2BTemplate\B2BCancellationConfirmedHotel.cshtml" />
     <Content Include="Views\B2BTemplate\B2BHotelPriceIncrease.cshtml" />
+    <Content Include="Views\B2BTemplate\B2BIssuanceSuccessfulFlight.cshtml" />
+    <Content Include="Views\B2BTemplate\B2BIssuanceSuccessfulHotel.cshtml" />
+    <Content Include="Views\B2BTemplate\B2BIssuanceDelayFlight.cshtml" />
+    <Content Include="Views\B2BTemplate\B2BIssuanceDelayHotel.cshtml" />
+    <Content Include="Views\B2BTemplate\B2BRejectionEmailFlight.cshtml" />
+    <Content Include="Views\B2BTemplate\B2BRejectionEmailHotel.cshtml" />
+    <Content Include="Views\B2BTemplate\B2BIssuanceFailedFlight.cshtml" />
+    <Content Include="Views\B2BTemplate\B2BIssuanceFailedHotel.cshtml" />
+    <Content Include="Views\B2BTemplate\B2BApproverAssignment.cshtml" />
+    <Content Include="Views\B2BTemplate\B2BSuspensionEmail.cshtml" />
+    <Content Include="Views\B2BTemplate\B2BUnsuspensionEmail.cshtml" />
     <None Include="Views\Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

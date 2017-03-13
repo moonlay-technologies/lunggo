@@ -155,6 +155,11 @@ body {
     transform: translate(-50%, -50%);
     cursor: pointer;
     text-align: center; }
+  body.b2b-user-manage .user-management #add-user form, body.b2b-user-manage .user-management #edit-user form {
+    max-height: 420px;
+    overflow-y: auto;
+    padding-right: 20px;
+    margin-bottom: 20px; }
   body.b2b-order-detail .flight-reservation .table.table-condensed.table-detailed > tbody > tr > td:first-child:after,
   body.b2b-order-detail .flight-payment .table.table-condensed.table-detailed > tbody > tr > td:first-child:after,
   body.b2b-order-detail .flight-departure .table.table-condensed.table-detailed > tbody > tr > td:first-child:after {
