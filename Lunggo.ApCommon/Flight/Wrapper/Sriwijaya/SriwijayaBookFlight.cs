@@ -73,6 +73,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                 //Untuk 2 Segment
                 if ((ParseFID1.Count > 1) && (ParseFID1.Count <= 3))
                 {
+                    //var Fare =
+                    //    "SJ.017.SJ.272.IN.9662.KNO.WGP?2015-11-11|1.0.0|2346000.0.97174,3853813,1953461:X,M,T:S:KNO:WGP:U2s5VlVrNUZXUT09";
                     FIDsegment1 = ParseFID1[0];
                     FIDsegment2 = ParseFID1[1].Substring(0, (ParseFID1[1].Length - 2));
                     FIDsegment3 = null;
