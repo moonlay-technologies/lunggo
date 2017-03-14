@@ -11,25 +11,25 @@ namespace Lunggo.CustomerWeb.Controllers
         [Route("{langCode}/Promo/{name}")]
         public ActionResult Promo(string name)
         {
-            switch (name)
+            switch (name.ToLower())
             {
-                case "OnlineRevolution":
+                case "onlinerevolution":
                     return View("OnlineRevolution");
-                case "OnlineRevolutionWebview":
+                case "onlinerevolutionwebview":
                     return View("OnlineRevolutionWebview");
-                case "Imlek":
+                case "imlek":
                     return View("Imlek");
-                case "BTNTerbanginHemat":
+                case "btnterbanginhemat":
                     return View("BTNTerbanginHemat");
-                case "BTNTerbanginHematWebview":
+                case "btnterbanginhematwebview":
                     return View("BTNTerbanginHematWebview");
-                case "HutBTN":
+                case "hutbtn":
                     return View("HutBTN");
-                case "HutBTNWebview":
+                case "hutbtnwebview":
                     return View("HutBTNWebview");
-                case "Harbolnas2016":
+                case "harbolnas2016":
                     return View("Harbolnas2016");
-                case "MatahariMall":
+                case "mataharimall":
                     return View("MatahariMall");
                 default:
                     return RedirectToAction("Index", "Index");

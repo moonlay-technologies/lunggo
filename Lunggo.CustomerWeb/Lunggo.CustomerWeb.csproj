@@ -600,6 +600,8 @@
     <Content Include="Assets\images\campaign\bandung-text.png" />
     <Content Include="Assets\images\campaign\bandung-thumb.jpg" />
     <Content Include="Assets\images\campaign\bandung.jpg" />
+    <Content Include="Assets\images\campaign\Harbolnas2016\Harbolnas_landingpage.jpg" />
+    <Content Include="Assets\images\campaign\Harbolnas2016\Harbolnas_landingpage_mobile.jpg" />
     <Content Include="Assets\images\campaign\hongkong-text.png" />
     <Content Include="Assets\images\campaign\hongkong-thumb.jpg" />
     <Content Include="Assets\images\campaign\hongkong.jpg" />
@@ -619,6 +621,8 @@
     <Content Include="Assets\images\campaign\malaysia-text.png" />
     <Content Include="Assets\images\campaign\malaysia-thumb.jpg" />
     <Content Include="Assets\images\campaign\malaysia.jpg" />
+    <Content Include="Assets\images\campaign\MatahariMall2016\MatahariMall-page-mobile.jpg" />
+    <Content Include="Assets\images\campaign\MatahariMall2016\MatahariMall-page.jpg" />
     <Content Include="Assets\images\campaign\MobileApp\app-store-cs.png" />
     <Content Include="Assets\images\campaign\MobileApp\app-store.png" />
     <Content Include="Assets\images\campaign\MobileApp\background.jpg" />
