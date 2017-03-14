@@ -228,6 +228,14 @@ var HotelSelectConfig = {
     Url: '$apiUrl$$hotelSelectPath$'
 };
 
+var CheckPaymentDisabilityStatusConfig = {
+    Url: '$apiUrl$$checkPaymentDisabilityStatusPath$'
+};
+
+var SetPaymentDisabilityStatusConfig = {
+    Url: '$apiUrl$$setPaymentDisabilityStatusPath$'
+};
+
 var GetCreditCardConfig = {
     Url: '$apiUrl$$getCreditCardPath$'
 };

@@ -346,6 +346,8 @@
     <Compile Include="ApiSrc\Notification\Model\DeleteRegistrationApiRequest.cs" />
     <Compile Include="ApiSrc\Notification\Model\UpdateRegistrationApiRequest.cs" />
     <Compile Include="ApiSrc\Notification\NotificationController.cs" />
+    <Compile Include="ApiSrc\Payment\Logic\SetPaymentDisabilityStatus.cs" />
+    <Compile Include="ApiSrc\Payment\Logic\CheckPaymentDisabilityStatus.cs" />
     <Compile Include="ApiSrc\Payment\Logic\EditCreditCardLogic.cs" />
     <Compile Include="ApiSrc\Payment\Logic\AddCreditCardLogic.cs" />
     <Compile Include="ApiSrc\Payment\Logic\CheckBinDiscountLogic.cs" />
@@ -357,8 +359,10 @@
     <Compile Include="ApiSrc\Payment\Logic\GetUniqueCodeLogic.cs" />
     <Compile Include="ApiSrc\Payment\Logic\SetPrimaryCardLogic.cs" />
     <Compile Include="ApiSrc\Payment\Model\AddCreditCardRequest.cs" />
+    <Compile Include="ApiSrc\Payment\Model\SetPaymentDisabilityStatusRequest.cs" />
     <Compile Include="ApiSrc\Payment\Model\CheckBinDiscountApiRequest.cs" />
     <Compile Include="ApiSrc\Payment\Model\CheckBinDiscountApiResponse.cs" />
+    <Compile Include="ApiSrc\Payment\Model\CheckPaymentDisabilityStatusResponse.cs" />
     <Compile Include="ApiSrc\Payment\Model\EditCreditCardApiRequest.cs" />
     <Compile Include="ApiSrc\Payment\Model\DeleteCreditCardApiRequest.cs" />
     <Compile Include="ApiSrc\Payment\Model\GetMethodsApiResponse.cs" />

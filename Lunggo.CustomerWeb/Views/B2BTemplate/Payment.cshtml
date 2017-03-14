@@ -27,15 +27,25 @@
 @section PageJS{
     <script src="/Assets/travorama20/js/B2BTravorama20.js"></script>
     <script src="/Assets/travorama20/js/B2BPaymentMgmtController.js"></script> 
+   
 }
 <div ng-app="travoramaB2B" ng-controller="B2BPaymentMgmtFormController" ng-class="{ 'active': pageLoaded }">
     <div class="payment-page">
         <div class="panel panel-transparent">
-            <div class="panel-heading ">
+            <div class="panel-heading">
                 <div class="panel-title">
                     Payment Management
                 </div>
             </div>
+            <div class="panel-heading">
+                <div class="panel-title">
+                    <p ng-show="PaymentStatus.disabled == false">Booking is Enabled </p>
+                    <p ng-show="PaymentStatus.disabled == true">Booking is Disabled </p>
+                    <input class="js-switch" id="paymentStatus" type="checkbox" data-init-plugin="switchery" 
+                           data-size="small" data-color="primary" data-switchery="true"/>
+                </div>
+            </div>
+            
             <div class="panel-body m-t-10 payment-body">
                 <div ng-show="creditCards.length > 0" id="payment-list">
                     <div class="payment-item col-sm-6 m-b-20" id="payment-item-{{$index}}" ng-repeat="cc in creditCards track by $index" count="{{$index}}">
@@ -53,9 +63,9 @@
                                     <div class="small hint-text expiry">Expires {{("0" + (cc.cardExpiry.getMonth() + 1)).slice(-2)}}/{{cc.cardExpiry.getFullYear().toString().slice(-2)}}</div>
                                 </div>
                                 <button class="btn remove-payment" ng-class="{ 'disableDel': cc.isPrimaryCard }" ng-hide="cc.isPrimaryCard"
-                                                data-toggle="modal" data-target=".deleteCc"
-                                                data-backdrop="static" data-keyboard="false" ng-click="deleteCardData.set(cc.maskedCardNumber, $index)" ng-disabled="cc.isPrimaryCard">
-                                <i class="pg-trash"></i>
+                                        data-toggle="modal" data-target=".deleteCc"
+                                        data-backdrop="static" data-keyboard="false" ng-click="deleteCardData.set(cc.maskedCardNumber, $index)" ng-disabled="cc.isPrimaryCard">
+                                    <i class="pg-trash"></i>
                                 </button>
                             </div>
                             <div class="pi-bottom clearfix font-montserrat bold small">
@@ -64,19 +74,19 @@
                                     <a class="set-status" ng-show="!cc.isPrimaryCard" data-toggle="modal" data-target=".setPrimary"
                                         data-backdrop="static" data-keyboard="false" ng-click="setPrimaryData(cc.maskedCardNumber, $index)">Set As Primary Card</a>
                                 </div>
-                                <div class="pull-right"><a href="#" class="btn-edit-payment hide"sh>Edit</a></div>
+                                <div class="pull-right"><a href="#" class="btn-edit-payment hide">Edit</a></div>
                             </div>
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="payment-item col-sm-6 m-b-20 emptyCc" id="payment-item-0" count="0" hidden>
                     <div class="pi-wrapper clearfix">
                         <div class="pi-top clearfix">
                             <div class="logoCard">
                                 <div class="iconCc hide" style="font-size: 45px;line-height: 100%;height: 46px"><span><i class="fa fa-credit-card m-r-20"></i></span></div>
                                 <div class="icon-visa hide"></div>
-                                <div class="icon-jcb hide" ></div>
+                                <div class="icon-jcb hide"></div>
                                 <div class="icon-amex hide"></div>
                                 <div class="icon-mastercard hide"></div>
                             </div>
@@ -98,14 +108,14 @@
                         </div>
                     </div>
                 </div>
-               
+
                 <div class="payment-add col-sm-6 m-b-20" ng-click="addCc()">
                     <div class="pa-wrapper clearfix">
                         <a class="font-montserrat bold" id="add-payment"><i class="fa fa-plus-square m-r-5"></i>ADD PAYMENT METHOD</a>
                     </div>
                 </div>
             </div>
-        </div>
+            </div>
     </div>
 
     <div class="modal fade slide-up disable-scroll firstCc modal-edit-payment" tabindex="-1" role="dialog" aria-hidden="false">
@@ -356,23 +366,6 @@
         </div>
     </div>
 
-    <div class="modal fade slide-up disable-scroll modal-sm-default deleteCcwait" tabindex="-1" role="dialog" aria-hidden="false">
-        <div class="modal-dialog modal-sm">
-            <div class="modal-content-wrapper">
-                <div class="modal-content">
-                    <div class="modal-header clearfix">
-                        <h4 class="text-center no-margin"></h4>
-                    </div>
-                    <div class="modal-body m-t-10">
-                        <div class="modal-notif-content m-b-20">
-                            Mohon Tunggu
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <div class="modal fade slide-up disable-scroll modal-sm-single deleteCcSucceed" tabindex="-1" role="dialog" aria-hidden="false">
         <div class="modal-dialog modal-sm">
             <div class="modal-content-wrapper">
@@ -408,24 +401,7 @@
             </div>
         </div>
     </div>
-
-    <div class="modal fade slide-up disable-scroll modal-sm-default addCcwait" tabindex="-1" role="dialog" aria-hidden="false">
-        <div class="modal-dialog modal-sm">
-            <div class="modal-content-wrapper">
-                <div class="modal-content">
-                    <div class="modal-header clearfix">
-                        <h4 class="text-center no-margin"></h4>
-                    </div>
-                    <div class="modal-body m-t-10">
-                        <div class="modal-notif-content m-b-20">
-                            Mohon Tunggu
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
+    
     <div class="modal fade slide-up disable-scroll modal-sm-single addCcSucceed" tabindex="-1" role="dialog" aria-hidden="false">
         <div class="modal-dialog modal-sm">
             <div class="modal-content-wrapper">
@@ -462,7 +438,46 @@
         </div>
     </div>
     
-    <div class="modal fade slide-up disable-scroll modal-sm-default waitLoaded" tabindex="-1" role="dialog" aria-hidden="false">
+    <div class="modal fade slide-up disable-scroll modal-sm-single setPaymentStatusSucceed" tabindex="-1" role="dialog" aria-hidden="false">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content-wrapper">
+                <div class="modal-content">
+                    <div class="modal-header clearfix">
+                        <h4 class="text-center no-margin"></h4>
+                    </div>
+                    <div class="modal-body m-t-10 text-center">
+                        <div class="modal-notif-content m-b-20 text-left" ng-if="PaymentStatus.disabled == true">
+                            Booking system is successfully disabled.
+                        </div>
+                        <div class="modal-notif-content m-b-20 text-left" ng-if="PaymentStatus.disabled == false">
+                            Booking system is successfully enabled.
+                        </div>
+                        <button type="button" class="btn btn-primary btn-cons answer" id="close" data-dismiss="modal">Tutup</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade slide-up disable-scroll modal-sm-single setPaymentStatusFailed" tabindex="-1" role="dialog" aria-hidden="false">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content-wrapper">
+                <div class="modal-content">
+                    <div class="modal-header clearfix">
+                        <h4 class="text-center no-margin"></h4>
+                    </div>
+                    <div class="modal-body m-t-10 text-center">
+                        <div class="modal-notif-content m-b-20 text-left">
+                            Updating booking system is failed
+                        </div>
+                        <button type="button" class="btn btn-primary btn-cons answer" id="close" data-dismiss="modal">Tutup</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="modal fade slide-up disable-scroll modal-sm-double setPaymentStatus" tabindex="-1" role="dialog" aria-hidden="false">
         <div class="modal-dialog modal-sm">
             <div class="modal-content-wrapper">
                 <div class="modal-content">
@@ -470,12 +485,21 @@
                         <h4 class="text-center no-margin"></h4>
                     </div>
                     <div class="modal-body m-t-10">
-                        <div class="modal-notif-content m-b-20">
-                            Mohon Tunggu
+                        <div class="modal-notif-content m-b-20 text-left">
+                            Apakah Anda yakin?
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <button type="button" class="btn btn-default btn-block answer" id="yes" data-dismiss="modal" ng-click="PaymentStatus.set(PaymentStatus.state)">Ya</button>
+                            </div>
+                            <div class="col-xs-6">
+                                <button type="button" class="btn btn-primary btn-block answer" id="no" data-dismiss="modal">Tidak</button>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
 </div>

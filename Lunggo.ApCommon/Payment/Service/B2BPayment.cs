@@ -26,6 +26,31 @@ namespace Lunggo.ApCommon.Payment.Service
             return GetCreditCardByCompanyId(companyId);
         }
 
+        public bool? CheckPaymentDisabilityStatus(string userId)
+        {
+            var companyId = User.GetCompanyIdByUserId(userId);
+            if (string.IsNullOrEmpty(companyId))
+            {
+                return null;
+            }
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                var disabilityStatus= GetPaymentDisabilityStatusQuery.GetInstance()
+                    .Execute(conn, new { CompanyId = companyId }).ToList();
+                return disabilityStatus[0];
+            }
+        }
+
+        public void SetPaymentDisabilityStatus(string userId, bool status)
+        {
+            var companyId = User.GetCompanyIdByUserId(userId);
+            if (string.IsNullOrEmpty(companyId)) return;
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                SetPaymentDisabilityStatusQuery.GetInstance().Execute(conn, new { CompanyId = companyId, Status = status });
+            }
+        }
+
         public List<SavedCreditCard> GetCreditCardByCompanyId(string companyId)
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())

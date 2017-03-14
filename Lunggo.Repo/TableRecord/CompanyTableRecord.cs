@@ -59,13 +59,21 @@ namespace Lunggo.Repository.TableRecord
             }
         }
 
-
+        public bool IsPaymentDisabled
+        {
+            get { return _IsPaymentDisabled; }
+            set
+            {
+                _IsPaymentDisabled = value;
+                IncrementLog("IsPaymentDisabled");
+            }
+        }
         private String _Id;
         private String _CountryCallCd;
         private String _PhoneNumber;
         private String _Name;
         private String _Address;
-
+        private bool _IsPaymentDisabled;
 
         public static CompanyTableRecord CreateNewInstance()
         {
@@ -101,7 +109,8 @@ namespace Lunggo.Repository.TableRecord
 				new ColumnMetadata("CountryCallCd", false),
 				new ColumnMetadata("PhoneNumber", false),
 				new ColumnMetadata("Name", false),
-				new ColumnMetadata("Address", false)
+				new ColumnMetadata("Address", false),
+                new ColumnMetadata("IsPaymentDisabled", false)
             };
         }
 

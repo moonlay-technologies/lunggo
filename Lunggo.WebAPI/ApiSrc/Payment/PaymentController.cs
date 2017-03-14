@@ -158,6 +158,61 @@ namespace Lunggo.WebAPI.ApiSrc.Payment
             }
         }
 
+        [HttpGet]
+        [LunggoCorsPolicy]
+        [Authorize]
+        [Route("v1/payment/checkpaymentdisabilitystatus")]
+        public ApiResponseBase CheckPaymentDisabilityStatus()
+        {
+            try
+            {
+                if (User.Identity.IsInRole("Finance"))
+                {
+                    var userId = HttpContext.Current.User.Identity.GetUser().Id;
+                    var apiResponse = PaymentLogic.CheckPaymentDisabilityStatus(userId);
+                    return apiResponse;
+                }
+                return new ApiResponseBase
+                {
+                    StatusCode = HttpStatusCode.NonAuthoritativeInformation,
+                    ErrorCode = "PDS-01"
+                };
+
+            }
+            catch (Exception e)
+            {
+                return ApiResponseBase.ExceptionHandling(e);
+            }
+        }
+
+        [HttpPost]
+        [LunggoCorsPolicy]
+        [Authorize]
+        [Route("v1/payment/setpaymentdisabilitystatus")]
+        public ApiResponseBase SetPaymentDisabilityStatus()
+        {
+            try
+            {
+                if (User.Identity.IsInRole("Finance"))
+                {
+                    var request = ApiRequestBase.DeserializeRequest<SetPaymentDisabilityStatusApiRequest>();
+                    var userId = HttpContext.Current.User.Identity.GetUser().Id;
+                    var apiResponse = PaymentLogic.SetPaymentDisabilityStatus(userId, request.Status);
+                    return apiResponse;
+                }
+                return new ApiResponseBase
+                {
+                    StatusCode = HttpStatusCode.NonAuthoritativeInformation,
+                    ErrorCode = "SPD-01"
+                };
+
+            }
+            catch (Exception e)
+            {
+                return ApiResponseBase.ExceptionHandling(e);
+            }
+        }
+
         [HttpPost]
         [LunggoCorsPolicy]
         [Authorize]

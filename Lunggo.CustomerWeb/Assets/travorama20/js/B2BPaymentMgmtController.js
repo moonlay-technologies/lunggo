@@ -27,7 +27,7 @@
                 async: false
             }).then(function (returnData) {
                 $scope.pageLoaded = true;
-                $('.waitLoaded').modal('hide');
+                $('.wait').modal('hide');
                 if (returnData != null) {
                     if (returnData.data != null) {
                         $scope.creditCards = [];
@@ -59,12 +59,111 @@
 
             }).catch(function () {
                 $scope.pageLoaded = true;
-                 $('.waitLoaded').modal('hide');
+                 $('.wait').modal('hide');
             });
         }
     }
 
     $scope.getSavedCc();
+
+    $scope.PaymentStatus = {
+        firstload: true,
+        check : function() {
+            var authAccess = getAuthAccess();
+            if (authAccess == 2) {
+                $http({
+                    method: 'GET',
+                    url: CheckPaymentDisabilityStatusConfig.Url,
+                    headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') },
+                    async: false
+                }).then(function (returnData) {
+                    if (returnData.status == 200) {
+                        if (returnData.data.isPaymentDisabled == null) {
+                            $scope.PaymentStatus.disabled = true;
+                            $scope.PaymentStatus.firstload = false;
+                        } else {
+                            $scope.PaymentStatus.disabled = returnData.data.isPaymentDisabled;
+                            if (!returnData.data.isPaymentDisabled) {
+                                $('.switchery').click();
+                            } else {
+                                $scope.PaymentStatus.firstload = false;
+                            }
+                        }
+                        
+                    } else {
+                        
+                    }
+                }).catch(function () {
+                });
+            }
+        },
+        disabled: false,
+        state: false,
+        set: function (status) {
+            $('.wait').modal({
+                backdrop: 'static',
+                keyboard: false
+            });
+            var authAccess = getAuthAccess();
+            if (authAccess == 2) {
+                $http({
+                    method: 'POST',
+                    url: SetPaymentDisabilityStatusConfig.Url,
+                    headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') },
+                    async: false,
+                    data: {
+                        status: status
+                    }
+                }).then(function (returnData) {
+                    $('.wait').modal('hide');
+                    if (returnData.data.status == 200) {
+                        if (status == true) {
+                            $scope.PaymentStatus.disabled = true;
+                        } else {
+                            $scope.PaymentStatus.disabled = false;
+                        }
+                        $('.setPaymentStatusSucceed').modal({
+                            backdrop: 'static',
+                            keyboard: false
+                        });
+                        $scope.PaymentStatus.reset();
+                    } else {
+                        $('.setPaymentStatusFailed').modal({
+                            backdrop: 'static',
+                            keyboard: false
+                        });
+                    }
+                }).catch(function () {
+                    $('.wait').modal('hide');
+                    $('.setPaymentStatusFailed').modal({
+                        backdrop: 'static',
+                        keyboard: false
+                    });
+                });
+            }
+        },
+        reset: function () {
+            $scope.PaymentStatus.firstload = true;
+            $('.switchery').click();
+        },
+        yes : false
+    }
+
+    $scope.PaymentStatus.check();
+
+    $('#paymentStatus').on('change', function () {
+        if ($scope.PaymentStatus.firstload) {
+            $scope.PaymentStatus.firstload = false;
+        } else {
+            $scope.PaymentStatus.reset();
+            $scope.PaymentStatus.state = this.checked;
+            $('.setPaymentStatus').modal({
+                backdrop: 'static',
+                keyboard: false
+            });
+        }
+        
+    });
 
     $('body .remove-payment').hide();
     $scope.cloneIndex = 0;
@@ -293,7 +392,7 @@
         },
         addCC: function () {
             $('.modal-edit-payment.form-add-cc').modal('hide');
-            $('.addCcwait').modal({
+            $('.wait').modal({
                 backdrop: 'static',
                 keyboard: false
             });
@@ -316,7 +415,7 @@
                     },
                     headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') }
                 }).then(function (returnData) {
-                    $('.addCcwait').modal("hide");
+                    $('.wait').modal("hide");
                     if (returnData.data.status == '200') {
                         $('.addCcSucceed').modal({
                             backdrop: 'static',
@@ -379,7 +478,7 @@
                         }
                     }
                     else {
-                        $('.addCcwait').modal("hide");
+                        $('.wait').modal("hide");
                         $('.addCcFailed').modal({
                             backdrop: 'static',
                         });
@@ -398,7 +497,7 @@
                         $scope.addCreditCard(name);
                     }
                     else {
-                        $('.addCcwait').modal("hide");
+                        $('.wait').modal("hide");
                         $('.addCcFailed').modal({
                             backdrop: 'static',
                         });
@@ -410,7 +509,7 @@
                 });
             }
             else { //if not authorized
-                $('.addCcwait').modal("hide");
+                $('.wait').modal("hide");
                 $('.newCc .btn-payment-edit').hide();
                 $('.addCcFailed').modal({
                     backdrop: 'static',
@@ -537,7 +636,7 @@
     }
 
     $scope.deleteCard = function (maskedCardNo, index) {
-        $('.deleteCcwait').modal({
+        $('.wait').modal({
             backdrop: 'static',
             keyboard: false
         });
@@ -552,7 +651,7 @@
                 },
                 headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') }
             }).then(function(returnData) {
-                $('.deleteCcwait').modal("hide");
+                $('.wait').modal("hide");
                 if (returnData.data.status == '200') {
                     $log.debug('Success Delete CC');
                     $('.deleteCcSucceed').modal({

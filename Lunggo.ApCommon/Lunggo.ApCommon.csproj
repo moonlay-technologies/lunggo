@@ -662,12 +662,14 @@
     <Compile Include="Payment\Model\TransferConfirmationReport.cs" />
     <Compile Include="Payment\Model\TransactionDetails.cs" />
     <Compile Include="Payment\Query\GetPaymentByRsvNoQuery.cs" />
+    <Compile Include="Payment\Query\SetPaymentDisabilityStatusQuery.cs" />
     <Compile Include="Payment\Query\GetPaymentStatusQuery.cs" />
     <Compile Include="Payment\Query\GetPrimarySavedCreditCardQuery.cs" />
     <Compile Include="Payment\Query\GetRefundQuery.cs" />
     <Compile Include="Payment\Query\GetSavedCreditCardByEmailQuery.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Payment\Query\GetPaymentDisabilityStatusQuery.cs" />
     <Compile Include="Payment\Query\GetSavedCreditCardQuery.cs">
       <SubType>Code</SubType>
     </Compile>

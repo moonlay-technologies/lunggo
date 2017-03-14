@@ -102,10 +102,10 @@
                 </div>
                 <div class="row clearfix passenger">
                     <div class="col-sm-4">
-                        <div class="form-group input-custom">
-                            <label class="m-b-0">Dewasa</label>
+                        <div class="form-group form-group-default">
+                            <label class="label-custom">Dewasa</label>
                             <span class="help m-l-5">(> 12 tahun)</span>
-                            <select class="cs-select cs-skin-slide" data-init-plugin="cs-select">
+                            <select class="cs-select cs-skin-slide adultPax" data-init-plugin="cs-select" ng-model="Passenger.Adult">
                                 <option value="">1</option>
                                 <option value="">2</option>
                                 <option value="">3</option>
@@ -118,9 +118,9 @@
                             </select>
                         </div>
                     </div>
-                    </div>
+                   
                     <div class="col-sm-4">
-                        <div class="form-group form-group-default ">
+                        <div class="form-group form-group-default">
                             <label class="label-custom">Anak-anak</label>
                             <span class="help m-l-5">(2 - 12 tahun)</span>
                             <select class="cs-select cs-skin-slide childPax" data-init-plugin="cs-select" ng-model="Passenger.Child">
@@ -138,8 +138,8 @@
                         </div>
                     </div>
                     <div class="col-sm-4">
-                        <div class="form-group input-custom">
-                            <label class="m-b-0">bayi</label>
+                        <div class="form-group form-group-default">
+                            <label class="label-custom">Bayi</label>
                             <span class="help m-l-5">(< 2 tahun)</span>
                             <select class="cs-select cs-skin-slide infantPax" data-init-plugin="cs-select" ng-model="Passenger.Infant">
                                 <option value="0">0</option>
@@ -158,7 +158,7 @@
                 </div>
                 <div class="row clearfix">
                     <div class="col-sm-4">
-                        <div class="form-group form-group-default input-custom">
+                        <div class="form-group form-group-default">
                             <label class="label-custom">Kelas</label>
                             <select class="cs-select cs-skin-slide pax" data-init-plugin="cs-select" ng-model="searchParam.CabinClass">
                                 <option value="y">Ekonomi</option>
