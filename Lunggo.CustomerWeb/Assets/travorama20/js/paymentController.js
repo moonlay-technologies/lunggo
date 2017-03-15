@@ -242,7 +242,12 @@ app.controller('paymentController', [
                                     if ($scope.methodDiscount.amount != 0) {
                                         $scope.methodDiscount.text = 'Anda menggunakan promo ' + $scope.methodDiscount.displayName + '.';
                                     }
-                                    $scope.methodDiscount.replaceDiscount = true;
+                                    if ($scope.paymentMethod == 'VirtualAccount') {
+                                        $scope.methodDiscount.replaceDiscount = true;
+                                    } else {
+                                        $scope.methodDiscount.replaceDiscount = false;
+                                    }
+                                    
                                     $scope.binDiscount.replaceDiscount = false;
                                     $scope.UniqueCodePaymentConfig.GetUniqueCode($scope.rsvNo, '', $scope.CreditCard.Number.substring(0, 6));
                                 } else {
