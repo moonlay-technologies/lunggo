@@ -26,7 +26,7 @@ namespace Lunggo.ApCommon.Payment.Service
             return GetCreditCardByCompanyId(companyId);
         }
 
-        public bool? CheckPaymentDisabilityStatus(string userId)
+        public bool? CheckBookingDisabilityStatus(string userId)
         {
             var companyId = User.GetCompanyIdByUserId(userId);
             if (string.IsNullOrEmpty(companyId))
@@ -35,19 +35,19 @@ namespace Lunggo.ApCommon.Payment.Service
             }
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
-                var disabilityStatus= GetPaymentDisabilityStatusQuery.GetInstance()
+                var disabilityStatus= GetBookingDisabilityStatusQuery.GetInstance()
                     .Execute(conn, new { CompanyId = companyId }).ToList();
                 return disabilityStatus[0];
             }
         }
 
-        public void SetPaymentDisabilityStatus(string userId, bool status)
+        public void SetBookingDisabilityStatus(string userId, bool status)
         {
             var companyId = User.GetCompanyIdByUserId(userId);
             if (string.IsNullOrEmpty(companyId)) return;
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
-                SetPaymentDisabilityStatusQuery.GetInstance().Execute(conn, new { CompanyId = companyId, Status = status });
+                SetBookingDisabilityStatusQuery.GetInstance().Execute(conn, new { CompanyId = companyId, Status = status });
             }
         }
 

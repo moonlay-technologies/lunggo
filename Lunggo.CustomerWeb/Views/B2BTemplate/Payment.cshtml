@@ -29,7 +29,7 @@
     <script src="/Assets/travorama20/js/B2BPaymentMgmtController.js"></script> 
    
 }
-<div ng-app="travoramaB2B" ng-controller="B2BPaymentMgmtFormController" ng-class="{ 'active': pageLoaded }">
+<div ng-app="travoramaB2B" ng-controller="B2BPaymentMgmtFormController" ng-class="{ 'active': pageLoaded }" ng-cloak>
     <div class="payment-page">
         <div class="panel panel-transparent">
             <div class="panel-heading">
@@ -39,13 +39,13 @@
             </div>
             <div class="panel-heading">
                 <div class="panel-title">
-                    <p ng-show="PaymentStatus.disabled == false">Booking is Enabled </p>
-                    <p ng-show="PaymentStatus.disabled == true">Booking is Disabled </p>
-                    <input class="js-switch" id="paymentStatus" type="checkbox" data-init-plugin="switchery" 
-                           data-size="small" data-color="primary" data-switchery="true"/>
+                    <p ng-show="BookingStatus.disabled == false">Booking is Enabled </p>
+                    <p ng-show="BookingStatus.disabled == true">Booking is Disabled </p>
+                    <input class="js-switch" id="BookingStatus" type="checkbox" data-init-plugin="switchery"
+                           data-size="small" data-color="primary" data-switchery="true" />
                 </div>
             </div>
-            
+
             <div class="panel-body m-t-10 payment-body">
                 <div ng-show="creditCards.length > 0" id="payment-list">
                     <div class="payment-item col-sm-6 m-b-20" id="payment-item-{{$index}}" ng-repeat="cc in creditCards track by $index" count="{{$index}}">
@@ -72,7 +72,7 @@
                                 <div class="pi-status"><span class="current-status" ng-show="cc.isPrimaryCard">Primary</span></div>
                                 <div class="pi-status">
                                     <a class="set-status" ng-show="!cc.isPrimaryCard" data-toggle="modal" data-target=".setPrimary"
-                                        data-backdrop="static" data-keyboard="false" ng-click="setPrimaryData(cc.maskedCardNumber, $index)">Set As Primary Card</a>
+                                       data-backdrop="static" data-keyboard="false" ng-click="setPrimaryData(cc.maskedCardNumber, $index)">Set As Primary Card</a>
                                 </div>
                                 <div class="pull-right"><a href="#" class="btn-edit-payment hide">Edit</a></div>
                             </div>
@@ -102,7 +102,7 @@
                             <div class="pi-status"><span class="current-status" ng-show="cc.isPrimaryCard">Primary</span></div>
                             <div class="pi-status">
                                 <a class="set-status" ng-show="!cc.isPrimaryCard" data-toggle="modal" data-target=".setPrimary"
-                                    data-backdrop="static" data-keyboard="false">Set As Primary Card</a>
+                                   data-backdrop="static" data-keyboard="false">Set As Primary Card</a>
                             </div>
                             <div class="pull-right"><a href="#" class="btn-edit-payment hide">Edit</a></div>
                         </div>
@@ -115,7 +115,7 @@
                     </div>
                 </div>
             </div>
-            </div>
+        </div>
     </div>
 
     <div class="modal fade slide-up disable-scroll firstCc modal-edit-payment" tabindex="-1" role="dialog" aria-hidden="false">
@@ -189,7 +189,7 @@
                 </div>
             </div>
         </div>
-</div>
+    </div>
 
     <div class="modal fade slide-up disable-scroll modal-edit-payment form-add-cc" tabindex="-1" role="dialog" aria-hidden="false">
         <div class="modal-dialog ">
@@ -216,7 +216,7 @@
                                     <div class="col-sm-4">
                                         <div class="form-group form-group-default">
                                             <label>MM</label>
-                                            <input type="text" class="form-control creditCardMonth" ng-model="currentEdit.month" placeholder="01" maxlength ="2">
+                                            <input type="text" class="form-control creditCardMonth" ng-model="currentEdit.month" placeholder="01" maxlength="2">
                                         </div>
                                     </div>
                                     <div class="col-sm-4">
@@ -401,7 +401,7 @@
             </div>
         </div>
     </div>
-    
+
     <div class="modal fade slide-up disable-scroll modal-sm-single addCcSucceed" tabindex="-1" role="dialog" aria-hidden="false">
         <div class="modal-dialog modal-sm">
             <div class="modal-content-wrapper">
@@ -437,8 +437,8 @@
             </div>
         </div>
     </div>
-    
-    <div class="modal fade slide-up disable-scroll modal-sm-single setPaymentStatusSucceed" tabindex="-1" role="dialog" aria-hidden="false">
+
+    <div class="modal fade slide-up disable-scroll modal-sm-single setBookingStatusSucceed" tabindex="-1" role="dialog" aria-hidden="false">
         <div class="modal-dialog modal-sm">
             <div class="modal-content-wrapper">
                 <div class="modal-content">
@@ -446,10 +446,10 @@
                         <h4 class="text-center no-margin"></h4>
                     </div>
                     <div class="modal-body m-t-10 text-center">
-                        <div class="modal-notif-content m-b-20 text-left" ng-if="PaymentStatus.disabled == true">
+                        <div class="modal-notif-content m-b-20 text-left" ng-if="BookingStatus.disabled == true">
                             Booking system is successfully disabled.
                         </div>
-                        <div class="modal-notif-content m-b-20 text-left" ng-if="PaymentStatus.disabled == false">
+                        <div class="modal-notif-content m-b-20 text-left" ng-if="BookingStatus.disabled == false">
                             Booking system is successfully enabled.
                         </div>
                         <button type="button" class="btn btn-primary btn-cons answer" id="close" data-dismiss="modal">Tutup</button>
@@ -459,7 +459,7 @@
         </div>
     </div>
 
-    <div class="modal fade slide-up disable-scroll modal-sm-single setPaymentStatusFailed" tabindex="-1" role="dialog" aria-hidden="false">
+    <div class="modal fade slide-up disable-scroll modal-sm-single setBookingStatusFailed" tabindex="-1" role="dialog" aria-hidden="false">
         <div class="modal-dialog modal-sm">
             <div class="modal-content-wrapper">
                 <div class="modal-content">
@@ -476,8 +476,8 @@
             </div>
         </div>
     </div>
-    
-    <div class="modal fade slide-up disable-scroll modal-sm-double setPaymentStatus" tabindex="-1" role="dialog" aria-hidden="false">
+
+    <div class="modal fade slide-up disable-scroll modal-sm-double setBookingStatus" tabindex="-1" role="dialog" aria-hidden="false">
         <div class="modal-dialog modal-sm">
             <div class="modal-content-wrapper">
                 <div class="modal-content">
@@ -490,7 +490,7 @@
                         </div>
                         <div class="row">
                             <div class="col-xs-6">
-                                <button type="button" class="btn btn-default btn-block answer" id="yes" data-dismiss="modal" ng-click="PaymentStatus.set(PaymentStatus.state)">Ya</button>
+                                <button type="button" class="btn btn-default btn-block answer" id="yes" data-dismiss="modal" ng-click="BookingStatus.set(BookingStatus.state)">Ya</button>
                             </div>
                             <div class="col-xs-6">
                                 <button type="button" class="btn btn-primary btn-block answer" id="no" data-dismiss="modal">Tidak</button>

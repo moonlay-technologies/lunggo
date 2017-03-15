@@ -371,8 +371,8 @@ namespace Lunggo.Configuration
             const string hotelBookPath = @"/v1/hotel/book";
             const string hotelAvailableRatesPath = @"/v1/hotel/availableRate";
             const string holidayListPath = @"/v1/calendar/id";
-            const string checkPaymentDisabilityStatusPath = @"/v1/payment/checkpaymentdisabilitystatus";
-            const string setPaymentDisabilityStatusPath = @"/v1/payment/setpaymentdisabilitystatus";
+            const string getBookingDisabilityStatusPath = @"/v1/payment/getbookingdisabilitystatus";
+            const string setBookingDisabilityStatusPath = @"/v1/payment/setbookingdisabilitystatus";
             var veritransTokenPath = _configDictionary["@@.*.veritrans.tokenEndPoint@@"];
             var veritransClientKey = _configDictionary["@@.*.veritrans.clientKey@@"];
 
@@ -426,8 +426,8 @@ namespace Lunggo.Configuration
             fileTemplate.SetAttribute("getCreditCardPath", getCreditCardPath);
             fileTemplate.SetAttribute("addCreditCardPath", addCreditCardPath);
             fileTemplate.SetAttribute("setPrimaryCardPath", setPrimaryCardPath);
-            fileTemplate.SetAttribute("checkPaymentDisabilityStatusPath", checkPaymentDisabilityStatusPath);
-            fileTemplate.SetAttribute("setPaymentDisabilityStatusPath", setPaymentDisabilityStatusPath);
+            fileTemplate.SetAttribute("getBookingDisabilityStatusPath", getBookingDisabilityStatusPath);
+            fileTemplate.SetAttribute("setBookingDisabilityStatusPath", setBookingDisabilityStatusPath);
 
             var fileContent = fileTemplate.ToString();
             string[] projectList = { "BackendWeb", "CustomerWeb" };

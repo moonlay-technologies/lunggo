@@ -161,15 +161,15 @@ namespace Lunggo.WebAPI.ApiSrc.Payment
         [HttpGet]
         [LunggoCorsPolicy]
         [Authorize]
-        [Route("v1/payment/checkpaymentdisabilitystatus")]
-        public ApiResponseBase CheckPaymentDisabilityStatus()
+        [Route("v1/payment/getbookingdisabilitystatus")]
+        public ApiResponseBase GetBookingDisabilityStatus()
         {
             try
             {
                 if (User.Identity.IsInRole("Finance"))
                 {
                     var userId = HttpContext.Current.User.Identity.GetUser().Id;
-                    var apiResponse = PaymentLogic.CheckPaymentDisabilityStatus(userId);
+                    var apiResponse = PaymentLogic.GetBookingDisabilityStatus(userId);
                     return apiResponse;
                 }
                 return new ApiResponseBase
@@ -188,16 +188,16 @@ namespace Lunggo.WebAPI.ApiSrc.Payment
         [HttpPost]
         [LunggoCorsPolicy]
         [Authorize]
-        [Route("v1/payment/setpaymentdisabilitystatus")]
-        public ApiResponseBase SetPaymentDisabilityStatus()
+        [Route("v1/payment/setbookingdisabilitystatus")]
+        public ApiResponseBase SetBookingDisabilityStatus()
         {
             try
             {
                 if (User.Identity.IsInRole("Finance"))
                 {
-                    var request = ApiRequestBase.DeserializeRequest<SetPaymentDisabilityStatusApiRequest>();
+                    var request = ApiRequestBase.DeserializeRequest<SetBookingDisabilityStatusApiRequest>();
                     var userId = HttpContext.Current.User.Identity.GetUser().Id;
-                    var apiResponse = PaymentLogic.SetPaymentDisabilityStatus(userId, request.Status);
+                    var apiResponse = PaymentLogic.SetBookingDisabilityStatus(userId, request.Status);
                     return apiResponse;
                 }
                 return new ApiResponseBase

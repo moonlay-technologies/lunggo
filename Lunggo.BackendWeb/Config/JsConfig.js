@@ -228,12 +228,12 @@ var HotelSelectConfig = {
     Url: 'https://api.local.travorama.com/v1/hotel/select'
 };
 
-var CheckPaymentDisabilityStatusConfig = {
-    Url: 'https://api.local.travorama.com/v1/payment/checkpaymentdisabilitystatus'
+var GetBookingDisabilityStatusConfig = {
+    Url: 'https://api.local.travorama.com/v1/payment/getbookingdisabilitystatus'
 };
 
-var SetPaymentDisabilityStatusConfig = {
-    Url: 'https://api.local.travorama.com/v1/payment/setpaymentdisabilitystatus'
+var SetBookingDisabilityStatusConfig = {
+    Url: 'https://api.local.travorama.com/v1/payment/setbookingdisabilitystatus'
 };
 
 var GetCreditCardConfig = {

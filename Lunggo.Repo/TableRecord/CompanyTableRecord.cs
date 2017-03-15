@@ -59,13 +59,13 @@ namespace Lunggo.Repository.TableRecord
             }
         }
 
-        public bool IsPaymentDisabled
+        public bool IsBookingDisabled
         {
-            get { return _IsPaymentDisabled; }
+            get { return _IsBookingDisabled; }
             set
             {
-                _IsPaymentDisabled = value;
-                IncrementLog("IsPaymentDisabled");
+                _IsBookingDisabled = value;
+                IncrementLog("IsBookingDisabled");
             }
         }
         private String _Id;
@@ -73,7 +73,7 @@ namespace Lunggo.Repository.TableRecord
         private String _PhoneNumber;
         private String _Name;
         private String _Address;
-        private bool _IsPaymentDisabled;
+        private bool _IsBookingDisabled;
 
         public static CompanyTableRecord CreateNewInstance()
         {

@@ -66,27 +66,27 @@
 
     $scope.getSavedCc();
 
-    $scope.PaymentStatus = {
+    $scope.BookingStatus = {
         firstload: true,
         check : function() {
             var authAccess = getAuthAccess();
             if (authAccess == 2) {
                 $http({
                     method: 'GET',
-                    url: CheckPaymentDisabilityStatusConfig.Url,
+                    url: GetBookingDisabilityStatusConfig.Url,
                     headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') },
                     async: false
                 }).then(function (returnData) {
                     if (returnData.status == 200) {
                         if (returnData.data.isPaymentDisabled == null) {
-                            $scope.PaymentStatus.disabled = true;
-                            $scope.PaymentStatus.firstload = false;
+                            $scope.BookingStatus.disabled = true;
+                            $scope.BookingStatus.firstload = false;
                         } else {
-                            $scope.PaymentStatus.disabled = returnData.data.isPaymentDisabled;
+                            $scope.BookingStatus.disabled = returnData.data.isPaymentDisabled;
                             if (!returnData.data.isPaymentDisabled) {
                                 $('.switchery').click();
                             } else {
-                                $scope.PaymentStatus.firstload = false;
+                                $scope.BookingStatus.firstload = false;
                             }
                         }
                         
@@ -108,7 +108,7 @@
             if (authAccess == 2) {
                 $http({
                     method: 'POST',
-                    url: SetPaymentDisabilityStatusConfig.Url,
+                    url: SetBookingDisabilityStatusConfig.Url,
                     headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') },
                     async: false,
                     data: {
@@ -118,24 +118,24 @@
                     $('.wait').modal('hide');
                     if (returnData.data.status == 200) {
                         if (status == true) {
-                            $scope.PaymentStatus.disabled = true;
+                            $scope.BookingStatus.disabled = true;
                         } else {
-                            $scope.PaymentStatus.disabled = false;
+                            $scope.BookingStatus.disabled = false;
                         }
-                        $('.setPaymentStatusSucceed').modal({
+                        $('.setBookingStatusSucceed').modal({
                             backdrop: 'static',
                             keyboard: false
                         });
-                        $scope.PaymentStatus.reset();
+                        $scope.BookingStatus.reset();
                     } else {
-                        $('.setPaymentStatusFailed').modal({
+                        $('.setBookingStatusFailed').modal({
                             backdrop: 'static',
                             keyboard: false
                         });
                     }
                 }).catch(function () {
                     $('.wait').modal('hide');
-                    $('.setPaymentStatusFailed').modal({
+                    $('.setBookingStatusFailed').modal({
                         backdrop: 'static',
                         keyboard: false
                     });
@@ -143,21 +143,21 @@
             }
         },
         reset: function () {
-            $scope.PaymentStatus.firstload = true;
+            $scope.BookingStatus.firstload = true;
             $('.switchery').click();
         },
         yes : false
     }
 
-    $scope.PaymentStatus.check();
+    $scope.BookingStatus.check();
 
-    $('#paymentStatus').on('change', function () {
-        if ($scope.PaymentStatus.firstload) {
-            $scope.PaymentStatus.firstload = false;
+    $('#BookingStatus').on('change', function () {
+        if ($scope.BookingStatus.firstload) {
+            $scope.BookingStatus.firstload = false;
         } else {
-            $scope.PaymentStatus.reset();
-            $scope.PaymentStatus.state = this.checked;
-            $('.setPaymentStatus').modal({
+            $scope.BookingStatus.reset();
+            $scope.BookingStatus.state = this.checked;
+            $('.setBookingStatus').modal({
                 backdrop: 'static',
                 keyboard: false
             });

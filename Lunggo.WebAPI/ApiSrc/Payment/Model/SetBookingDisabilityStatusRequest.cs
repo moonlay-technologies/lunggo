@@ -2,7 +2,7 @@
 
 namespace Lunggo.WebAPI.ApiSrc.Payment.Model
 {
-    public class SetPaymentDisabilityStatusApiRequest
+    public class SetBookingDisabilityStatusApiRequest
     {
         [JsonProperty("status")]
         public bool Status { get; set; }
