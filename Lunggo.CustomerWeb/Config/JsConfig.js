@@ -103,8 +103,8 @@ var CheckBinDiscountConfig = {
     Url: 'https://api.local.travorama.com/v1/payment/checkbindiscount'
 };
 
-var CheckPaydayMadnessConfig = {
-    Url: 'https://api.local.travorama.com/v1/payment/checkpaydaymadness'
+var CheckMethodDiscountConfig = {
+    Url: 'https://api.local.travorama.com/v1/payment/checkmethoddiscount'
 };
 
 var SubscribeConfig = {

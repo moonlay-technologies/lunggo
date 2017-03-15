@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 
 namespace Lunggo.WebAPI.ApiSrc.Payment.Model
 {
-    public class CheckPaydayMadnessResponse : ApiResponseBase
+    public class CheckMethodDiscountApiResponse : ApiResponseBase
     {
         [JsonProperty("amount", NullValueHandling = NullValueHandling.Ignore)]
         public decimal? DiscountAmount { get; set; }

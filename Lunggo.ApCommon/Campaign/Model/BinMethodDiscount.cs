@@ -7,7 +7,7 @@ using Lunggo.ApCommon.Payment.Model;
 
 namespace Lunggo.ApCommon.Campaign.Model
 {
-    public class BinDiscount
+    public class BinMethodDiscount
     {
         public decimal Amount { get; set; }
         public Currency Currency { get; set; }

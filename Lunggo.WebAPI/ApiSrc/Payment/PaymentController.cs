@@ -123,14 +123,14 @@ namespace Lunggo.WebAPI.ApiSrc.Payment
         [HttpPost]
         [LunggoCorsPolicy]
         [Authorize]
-        [Route("v1/payment/checkpaydaymadness")]
-        public ApiResponseBase CheckPaydayMadness()
+        [Route("v1/payment/checkmethoddiscount")]
+        public ApiResponseBase CheckMethodDiscount()
         {
-            CheckPaydayMadnessApiRequest request = null;
+            CheckMethodDiscountApiRequest request = null;
             try
             {
-                request = ApiRequestBase.DeserializeRequest<CheckPaydayMadnessApiRequest>();
-                var apiResponse = PaymentLogic.CheckPaydayMadness(request);
+                request = ApiRequestBase.DeserializeRequest<CheckMethodDiscountApiRequest>();
+                var apiResponse = PaymentLogic.CheckMethodDiscount(request);
                 return apiResponse;
             }
             catch (Exception e)

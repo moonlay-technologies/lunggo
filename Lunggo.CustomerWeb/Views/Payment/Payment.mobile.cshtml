@@ -256,8 +256,8 @@
                             </dl>
                             <dl>
                                 <dt>Diskon Travorama</dt>
-                                <dd ng-if="!((binDiscount.replaceDiscount || paydayMadness.replaceDiscount) && !voucher.confirmedCode)">- <sup>Rp</sup> {{originalPrice - totalPrice| number}}</dd>
-                                <dd ng-if="(binDiscount.replaceDiscount || paydayMadness.replaceDiscount) && !voucher.confirmedCode"> <sup>Rp</sup>- 0</dd>
+                                <dd ng-if="!((binDiscount.replaceDiscount || methodDiscount.replaceDiscount) && !voucher.confirmedCode)">- <sup>Rp</sup> {{originalPrice - totalPrice| number}}</dd>
+                                <dd ng-if="(binDiscount.replaceDiscount || methodDiscount.replaceDiscount) && !voucher.confirmedCode"> <sup>Rp</sup>- 0</dd>
                             </dl>
                             <dl ng-show="voucher.confirmedCode">
                                 <dt>{{voucher.displayName}}</dt>
@@ -267,9 +267,9 @@
                                 <dt>{{binDiscount.displayName}}</dt>
                                 <dd><sup>Rp</sup>- {{binDiscount.amount | number}}</dd>
                             </dl>
-                            <dl ng-show="paydayMadness.replaceDiscount && !voucher.confirmedCode">
-                                <dt>{{paydayMadness.displayName}}</dt>
-                                <dd><sup>Rp</sup>- {{paydayMadness.amount | number}}</dd>
+                            <dl ng-show="methodDiscount.replaceDiscount && !voucher.confirmedCode">
+                                <dt>{{methodDiscount.displayName}}</dt>
+                                <dd><sup>Rp</sup>- {{methodDiscount.amount | number}}</dd>
                             </dl>
                             <dl>
                                 <dt>Kode Unik Pembayaran</dt>
@@ -279,8 +279,8 @@
                                 <dt>Total</dt>
                                 @*<dd><sup>Rp</sup> {{totalPrice - voucher.amount - CreditCardPromo.Amount + UniqueCodePaymentConfig.UniqueCode - binDiscount.amount| number}}</dd>*@
                                 <dd ng-if="binDiscount.replaceDiscount && !voucher.confirmedCode"><sup>Rp</sup> {{originalPrice - CreditCardPromo.Amount + UniqueCodePaymentConfig.UniqueCode - binDiscount.amount| number}}</dd>
-                                <dd ng-if="paydayMadness.replaceDiscount && !voucher.confirmedCode"><sup>Rp</sup> {{originalPrice - CreditCardPromo.Amount + UniqueCodePaymentConfig.UniqueCode - paydayMadness.amount| number}}</dd>
-                                <dd ng-if="!((binDiscount.replaceDiscount || paydayMadness.replaceDiscount) && !voucher.confirmedCode)"><sup>Rp</sup> {{totalPrice - voucher.amount - CreditCardPromo.Amount + UniqueCodePaymentConfig.UniqueCode| number}}</dd>
+                                <dd ng-if="methodDiscount.replaceDiscount && !voucher.confirmedCode"><sup>Rp</sup> {{originalPrice - CreditCardPromo.Amount + UniqueCodePaymentConfig.UniqueCode - methodDiscount.amount| number}}</dd>
+                                <dd ng-if="!((binDiscount.replaceDiscount || methodDiscount.replaceDiscount) && !voucher.confirmedCode)"><sup>Rp</sup> {{totalPrice - voucher.amount - CreditCardPromo.Amount + UniqueCodePaymentConfig.UniqueCode| number}}</dd>
                             </dl>
                         </div><!-- .summary__body -->
                     </div><!-- .summar--price -->
@@ -321,7 +321,7 @@
                         <h3 class="summary__title"><b>METODE</b> PEMBAYARAN</h3>
                         <div class="summary__body">
                             <form name="paymentMethodForm">
-                                <label ng-click="binDiscount.reset('ncc'); paydayMadness.reset('nVA')">
+                                <label ng-click="binDiscount.reset('ncc'); methodDiscount.reset('nVA')">
                                     <header>
                                         <div class="input-wrapper">
                                             <input type="radio" name="paymentMethod" value="@PaymentMethod.BankTransfer" ng-model="paymentMethod" />
@@ -332,7 +332,7 @@
                                         <img src="/Assets/images/payment-atm.jpg" alt="Bank Transfer" />
                                     </section>
                                 </label>
-                                <label ng-click="binDiscount.reset('cc'); paydayMadness.reset('nVA')">
+                                <label ng-click="binDiscount.reset('cc'); methodDiscount.reset('nVA')">
                                     <header>
                                         <div class="input-wrapper">
                                             <input type="radio" name="paymentMethod" value="@PaymentMethod.CreditCard" ng-model="paymentMethod" ng-change="CreditCardPromo.Check(CreditCard.Number)" />
@@ -344,9 +344,12 @@
                                     </section>
                                 </label>
                                 
-                                @if (Model.Reservation is HotelReservationForDisplay && todayDate.Year == 2017 && todayDate.Month >= 3 && todayDate.Month <= 8 && todayDate.Day >= 25 && todayDate.Day <= 27)
+                                @{
+                                var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
+                                }
+                                @if (env != "production" || (Model.Reservation is HotelReservationForDisplay && todayDate.Year == 2017 && todayDate.Month >= 3 && todayDate.Month <= 8 && todayDate.Day >= 25 && todayDate.Day <= 27))
                                 {
-                                    <label ng-click=" bindiscount.reset('ncc'); paydayMadness.check()">
+                                    <label ng-click=" bindiscount.reset('ncc'); methodDiscount.check()">
                                         <header>
                                             <div class="input-wrapper">
                                                 <input type="radio" name="paymentMethod" value="@PaymentMethod.VirtualAccount" ng-model="paymentMethod" />
@@ -375,7 +378,7 @@
                                         
                                 }
                                  
-                                <label ng-click="binDiscount.reset('ncc'); paydayMadness.reset('nVA')">
+                                <label ng-click="binDiscount.reset('ncc'); methodDiscount.reset('nVA')">
                                     <header>
                                         <div class="input-wrapper">
                                             <input type="radio" name="paymentMethod" value="@PaymentMethod.MandiriClickPay" ng-model="paymentMethod" />
@@ -386,7 +389,7 @@
                                         <img src="/Assets/images/payment-mandiri.jpg" alt="Mandiri Clickpay" />
                                     </section>
                                 </label>
-                                <label ng-click="binDiscount.reset('ncc'); paydayMadness.reset('nVA')">
+                                <label ng-click="binDiscount.reset('ncc'); methodDiscount.reset('nVA')">
                                     <header>
                                         <div class="input-wrapper">
                                             <input type="radio" name="paymentMethod" value="@PaymentMethod.CimbClicks" ng-model="paymentMethod" />

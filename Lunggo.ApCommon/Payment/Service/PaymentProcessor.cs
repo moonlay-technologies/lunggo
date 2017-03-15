@@ -124,11 +124,11 @@ namespace Lunggo.ApCommon.Payment.Service
 
             if (paymentDetails.Method == PaymentMethod.VirtualAccount && rsvNo.StartsWith("2"))
             {
-                var binDiscount = CampaignService.GetInstance().CheckPaydayMadness(rsvNo, discountCode);
+                var binDiscount = CampaignService.GetInstance().CheckMethodDiscount(rsvNo, discountCode);
                 if (binDiscount == null)
                 {
                     paymentDetails.Status = PaymentStatus.Failed;
-                    paymentDetails.FailureReason = FailureReason.PaydayMadnessNoLongerEligible;
+                    paymentDetails.FailureReason = FailureReason.MethodDiscountNoLongerEligible;
                     return paymentDetails;
                 }
                 if (binDiscount.ReplaceMargin)

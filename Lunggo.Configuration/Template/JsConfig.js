@@ -103,8 +103,8 @@ var CheckBinDiscountConfig = {
     Url: '$apiUrl$$checkBinDiscountPath$'
 };
 
-var CheckPaydayMadnessConfig = {
-    Url: '$apiUrl$$checkPaydayMadnessPath$'
+var CheckMethodDiscountConfig = {
+    Url: '$apiUrl$$checkMethodDiscountPath$'
 };
 
 var SubscribeConfig = {
