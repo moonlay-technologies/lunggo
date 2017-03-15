@@ -37,6 +37,9 @@ namespace Lunggo.BackendWeb
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
             AppInitializer.Init();
+            
+            var result = HotelService.GetInstance().UpdateReservation("216496558379", "Approved");
+            var x = 3;
             //HotelService.GetInstance().CommenceIssueHotel(new IssueHotelTicketInput
             //{
             //    RsvNo = "296406547890"

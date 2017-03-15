@@ -27,18 +27,18 @@ namespace Lunggo.CustomerWeb.Controllers
         public ActionResult SearchFlight()
         {
             var result = GetBookingDisabilityStatus();
-            if (result.IsPaymentDisabled == null)
+            if (result.IsBookingDisabled == null)
             {
-                result.IsPaymentDisabled = true;
+                result.IsBookingDisabled = true;
             }
             return View(result);
         }
         public ActionResult SearchHotel()
         {
             var result = GetBookingDisabilityStatus();
-            if (result.IsPaymentDisabled == null)
+            if (result.IsBookingDisabled == null)
             {
-                result.IsPaymentDisabled = true;
+                result.IsBookingDisabled = true;
             }
             return View(result);
         }
@@ -89,7 +89,7 @@ namespace Lunggo.CustomerWeb.Controllers
             {
                 return new GetBookingDisabilityStatusResponse
                 {
-                    IsPaymentDisabled = true
+                    IsBookingDisabled = true
                 };
             }
             

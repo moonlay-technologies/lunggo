@@ -4,8 +4,8 @@ namespace Lunggo.CustomerWeb.Models
 {
     public class GetBookingDisabilityStatusResponse
     {
-        [JsonProperty("isPaymentDisabled")]
-        public bool? IsPaymentDisabled { get; set; }
+        [JsonProperty("isBookingDisabled")]
+        public bool? IsBookingDisabled { get; set; }
     }
 
 

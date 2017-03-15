@@ -155,6 +155,13 @@ namespace Lunggo.ApCommon.Flight.Service
         public bool UpdateReservation(string rsvNo, string status)
         {
             var rsv = GetReservation(rsvNo);
+            var userId = rsv.User.Id;
+            var isDisabled = PaymentService.GetInstance().CheckBookingDisabilityStatus(userId);
+            if (isDisabled == null || isDisabled == true)
+            {
+                return false;
+            }
+
             if (rsv.RsvStatus != RsvStatus.InProcess)
             {
                 return false;

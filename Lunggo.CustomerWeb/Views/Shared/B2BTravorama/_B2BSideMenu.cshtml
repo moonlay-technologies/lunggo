@@ -1,4 +1,27 @@
-﻿<div class="page-sidebar" data-pages="sidebar">
+﻿@using Lunggo.CustomerWeb.Models
+@using Lunggo.Framework.Config
+@using RestSharp
+@{
+    var baseUrl = ConfigManager.GetInstance().GetConfigValue("api", "apiUrl");
+    var client = new RestClient(baseUrl);
+    try
+    {
+        var request = new RestRequest("/v1/profile", Method.GET);
+        var key = Request.Cookies["authkey"];
+
+        request.AddHeader("Authorization", "Bearer " + key.Value);
+        // execute the request
+        IRestResponse<GetProfileModel> response = client.Execute<GetProfileModel>(request);
+
+        var roles = response.Data.RoleName;
+    }
+    catch
+    {
+        
+    }
+    
+}
+<div class="page-sidebar" data-pages="sidebar">
     <div class="sidebar-header">
         <img src="/Assets/B2BTravorama/assets/img/logo_white.png" alt="logo" class="brand" data-src="/Assets/B2BTravorama/assets/img/logo_white.png" data-src-retina="/Assets/B2BTravorama/assets/img/logo_white_2x.png" width="78" height="22">
         <div class="sidebar-header-controls">

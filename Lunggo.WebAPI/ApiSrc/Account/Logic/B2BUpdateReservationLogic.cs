@@ -7,6 +7,7 @@ using System.Security.Claims;
 using System.Web;
 using Lunggo.ApCommon.Flight.Service;
 using Lunggo.ApCommon.Hotel.Service;
+using Lunggo.ApCommon.Identity.Users;
 using Lunggo.Framework.Http;
 using Lunggo.WebAPI.ApiSrc.Account.Model;
 using Lunggo.WebAPI.ApiSrc.Common.Model;
