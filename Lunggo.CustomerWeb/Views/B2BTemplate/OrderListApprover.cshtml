@@ -1,8 +1,8 @@
 ﻿@{
     Layout = "/Views/Shared/B2BTravorama/_B2BLayout.cshtml";
-    ViewBag.BodyClass = "b2b-order-list flight";
+    ViewBag.BodyClass = "b2b-order-list";
     ViewBag.SiteHeader = "b2b-order-list";
-    ViewBag.Title = "Order List Flight (Approver)";
+    ViewBag.Title = "Order List Approver";
     ViewBag.AngularController = "";
 
 }
@@ -38,13 +38,138 @@
     <div class="panel panel-transparent">
         <div class="panel-heading">
             <div class="panel-title">
-                Order List Tiket Pesawat
+                Order List Approver
             </div>
         </div>
         <div class="panel-body bg-white">
-            <div class="ol-list clearfix">
+            <div class="ol-list clearfix m-b-30">
                 <div class="ol-border ol-header fs-12 bold font-montserrat  padding-15 clearfix">
-                    <div class="olh-name col-sm-3 no-padding">Anonymous</div>
+                    <div class="olh-name col-sm-3 no-padding">David Nest</div>
+                    <div class="olh-title col-sm-9 no-padding">Kunjungan dinas Bali <span class="label label-primary m-l-10 fs-11 text-capitalize" style="cursor: pointer;" data-toggle="modal" data-target=".info-order"><i class="fa fa-info-circle m-r-5"></i>Info</span></div>
+                </div>
+                <div class="ol-body">
+                    <div class="ol-flight clearfix">
+                        <div class="ol-item ol-border bg-white clearfix">
+                            <div class="col-sm-8 no-padding clearfix">
+                                <div class="col-sm-8 no-padding">
+                                    <div class="clearfix">
+                                        <div class="col-sm-5 no-padding p-l-60 m-t-20 m-b-20">
+                                            <div class="bold font-montserrat fs-12">Jakarta</div>
+                                            <div class="">18 Maret 2017</div>
+                                            <div class="">06.00</div>
+                                        </div>
+                                        <div class="col-sm-2 no-padding p-l-20 p-r-20 m-t-50 m-b-20"><span class="dash"></span></div>
+                                        <div class="col-sm-5 no-padding p-l-60 m-t-20 m-b-20">
+                                            <div class="bold font-montserrat fs-12">Denpasar</div>
+                                            <div class="">18 Maret 2017</div>
+                                            <div class="">06.00</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4 no-padding clearfix">
+                                    <div class="col-sm-5 no-padding text-center m-t-20">
+                                        <div class=" m-t-20">3 Orang</div>
+                                    </div>
+                                    <div class="col-sm-7 no-padding text-center m-t-20">
+                                        <div class=" m-t-20">Rp 4.000.000</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4 no-padding m-t-15 m-b-20">
+                                <div class="text-center">
+                                    <button class="btn btn-success btn-cons m-t-15">Approve</button>
+                                    <button class="btn btn-danger btn-cons m-t-15" data-toggle="modal" data-target=".req-reject">Reject</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ol-item-hide ol-border clearfix">
+                            <div class="plane-type col-sm-2 no-padding">
+                                <div class="panel-heading bold font-montserrat fs-12">Rincian Penerbangan</div>
+                                <div class="panel-body">
+                                    <div class="airline-lion">
+                                        <span class=" m-r-5">
+                                            <img src="https://www.travorama.com/Assets/Images/Airlines/JT.png" alt="LION AIR" class="flight-airline-image" width="50" height="50">
+                                        </span>
+                                        <span class="bold font-montserrat fs-12 text-uppercase">Lion Air</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="plane-pax col-sm-10 no-padding">
+                                <div class="panel-heading bold font-montserrat fs-12">Rincian Penumpang</div>
+                                <div class="panel-body">
+                                    <ol class="pax-list p-l-15">
+                                        <li>
+                                            <div class="pl-row clearfix">
+                                                <div class="col-sm-4 no-padding">Mr. Anonymous</div>
+                                                <div class="col-sm-1 no-padding p-r-40"><span class="dash m-t-10"></span></div>
+                                                <div class="col-sm-6 no-padding">Dewasa</div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="pl-row clearfix">
+                                                <div class="col-sm-4 no-padding">Mrs. Anonymous</div>
+                                                <div class="col-sm-1 no-padding p-r-40"><span class="dash m-t-10"></span></div>
+                                                <div class="col-sm-6 no-padding">Dewasa</div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="pl-row clearfix">
+                                                <div class="col-sm-4 no-padding">Ms. Anonymous</div>
+                                                <div class="col-sm-1 no-padding p-r-40"><span class="dash m-t-10"></span></div>
+                                                <div class="col-sm-6 no-padding">Anak-anak</div>
+                                            </div>
+                                        </li>
+                                    </ol>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ol-hotel clearfix">
+                        <div class="ol-item ol-border bg-white clearfix">
+                            <div class="col-sm-8 no-padding clearfix">
+                                <div class="col-sm-5 no-padding clearfix">
+                                    <div class="p-l-60 m-t-20 m-b-20">
+                                        <div class="bold font-montserrat fs-12">The Grand Ubud Bali Hotel</div>
+                                        <div class="">Ubud, Bali</div>
+                                        <div class="">18 Maret - 31 Maret 2017</div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-7 no-padding clearfix">
+                                    <div class="col-sm-6 no-padding p-l-60 m-t-30">
+                                        <ul class="p-l-20">
+                                            <li>3 Orang</li>
+                                            <li>2 Kamar</li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-sm-6 no-padding text-center m-t-20">
+                                        <div class=" m-t-20">Rp 4.000.000</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4 no-padding m-t-15 m-b-20">
+                                <div class="text-center">
+                                    <button class="btn btn-success btn-cons m-t-15">Approve</button>
+                                    <button class="btn btn-danger btn-cons m-t-15" data-toggle="modal" data-target=".req-reject">Reject</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ol-item-hide ol-border clearfix">
+                            <div class="plane-type">
+                                <div class="panel-heading bold font-montserrat fs-12">Tipe Kamar</div>
+                                <div class="panel-body">
+                                    <ul class="p-l-20">
+                                        <li>1x Superior (Kamar saja)</li>
+                                        <li>1x Deluxe (Kamar dan sarapan)</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="ol-list clearfix m-b-30">
+                <div class="ol-border ol-header fs-12 bold font-montserrat  padding-15 clearfix">
+                    <div class="olh-name col-sm-3 no-padding">David Nest</div>
                     <div class="olh-title col-sm-9 no-padding">Kunjungan dinas Bali <span class="label label-primary m-l-10 fs-11 text-capitalize" style="cursor: pointer;" data-toggle="modal" data-target=".info-order"><i class="fa fa-info-circle m-r-5"></i>Info</span></div>
                 </div>
                 <div class="ol-body">
@@ -170,8 +295,8 @@
             </div>
         </div>
     </div>
-    <div class="modal fade slide-up disable-scroll info-order" tabindex="-1" role="dialog" aria-hidden="false">
-        <div class="modal-dialog">
+    <div class="modal fade stick-up in info-order" tabindex="-1" role="dialog" aria-hidden="false">
+        <div class="modal-dialog p-t-80">
             <div class="modal-content-wrapper">
                 <div class="modal-content">
                     <div class="modal-header clearfix">
@@ -200,8 +325,8 @@
             </div>
         </div>
     </div>
-    <div class="modal fade slide-up disable-scroll req-reject" tabindex="-1" role="dialog" aria-hidden="false">
-        <div class="modal-dialog modal-sm">
+    <div class="modal fade stick-up in req-reject" tabindex="-1" role="dialog" aria-hidden="false">
+        <div class="modal-dialog modal-sm p-t-80">
             <div class="modal-content-wrapper">
                 <div class="modal-content">
                     <div class="modal-header clearfix">
