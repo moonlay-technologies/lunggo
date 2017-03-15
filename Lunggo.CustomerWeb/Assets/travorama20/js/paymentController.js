@@ -188,6 +188,7 @@ app.controller('paymentController', [
             amount: 0,
             displayName: '',
             status: '',
+            firstRequest : true,
             reset: function (method) {
                 if (method == 'VA') {
                     if ($scope.paydayMadness.amount != 0) {
@@ -205,8 +206,9 @@ app.controller('paymentController', [
             text: '',
             first: true,
             check: function () {
-                //if ($scope.paydayMadness.first) {
                 $scope.currentchoice = 'VA';
+                if ($scope.paydayMadness.firstRequest) {
+                    
                     if ($scope.trial > 3) {
                         $scope.trial = 0;
                     }
@@ -229,7 +231,7 @@ app.controller('paymentController', [
                             },
                             headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') }
                         }).then(function (returnData) {
-                            //$log.debug(returnData);
+                            $scope.paydayMadness.firstRequest = false;
                             $scope.paydayMadness.first = false;
                             if (returnData.data.status == 200) {
                                 if (returnData.data.isAvailable) {
@@ -273,6 +275,7 @@ app.controller('paymentController', [
                                 $scope.paydayMadness.checked = true;
                                 $scope.paydayMadness.checking = false;
                                 $scope.paydayMadness.text = '';
+                                $scope.paydayMadness.firstRequest = false;
                             }
                         });
                     }
@@ -280,9 +283,10 @@ app.controller('paymentController', [
                         $log.debug('Not Authorized');
                         $scope.paydayMadness.amount = 0;
                         $scope.paydayMadness.checking = false;
+                        $scope.paydayMadness.firstRequest = false;
                     }
                 }               
-            //}
+            }      
         }
 
         $scope.CreditCardPromo = {

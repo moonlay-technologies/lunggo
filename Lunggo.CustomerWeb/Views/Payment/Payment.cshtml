@@ -534,7 +534,7 @@
 
                                         <p>*Dengan klik tombol ‘Bayar’, Anda telah setuju dengan <a href="@Url.Action("Terms","StaticPage")" target="_blank">syarat &amp; ketentuan</a> dan <a href="@Url.Action("Privacy","StaticPage")" target="_blank">kebijakan privasi</a></p>
 
-                                        <input type="submit" class="btn btn-yellow md-txt lg-btn" value="{{ !checkoutForm.loading? 'BAYAR' : 'MEMPROSES' }}" ng-disabled="(checkoutForm.loading || !paymentMethod) || !creditCardForm.$valid">
+                                        <input type="submit" class="btn btn-yellow md-txt lg-btn" id="payButton" value="{{ !checkoutForm.loading? 'BAYAR' : 'MEMPROSES' }}" ng-disabled="(checkoutForm.loading || !paymentMethod) || !creditCardForm.$valid || (paymentMethod == 'VirtualAccount' && paydayMadness.firstRequest)">
 
                                     </form>
 
