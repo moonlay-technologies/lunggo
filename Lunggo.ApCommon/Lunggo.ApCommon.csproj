@@ -203,11 +203,12 @@
     <Compile Include="Campaign\Database\Query\VoucherDecrementQuery.cs" />
     <Compile Include="Campaign\Database\Query\VoucherIncrementQuery.cs" />
     <Compile Include="Campaign\Model\CampaignVoucher.cs" />
-    <Compile Include="Campaign\Model\BinDiscount.cs" />
+    <Compile Include="Campaign\Model\BinMethodDiscount.cs" />
     <Compile Include="Campaign\Model\VoucherResponse.cs" />
     <Compile Include="Campaign\Service\Caching.cs" />
-    <Compile Include="Campaign\Service\BinDiscount.cs" />
+    <Compile Include="Campaign\Service\BinMethodDiscount.cs" />
     <Compile Include="Campaign\Service\CampaignVoucher.cs" />
+    <Compile Include="Campaign\Service\MethodDiscount.cs" />
     <Compile Include="Campaign\Service\ServiceSingleton.cs" />
     <Compile Include="Constant\ApConstant.cs" />
     <Compile Include="Constant\EnumDisplay.cs" />

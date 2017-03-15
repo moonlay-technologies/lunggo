@@ -2,7 +2,7 @@
 
 namespace Lunggo.WebAPI.ApiSrc.Payment.Model
 {
-    public class CheckPaydayMadnessApiRequest
+    public class CheckMethodDiscountApiRequest
     {
         [JsonProperty("voucherCode")]
         public string VoucherCode { get; set; }

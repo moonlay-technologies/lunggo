@@ -175,7 +175,6 @@ function ($scope, $log, $window, $http, $resource, $timeout, $interval, hotelSea
         $log.debug($scope.model);
         $scope.mapUrl = window.location.pathname.replace("cari", "map") + '?info=' + model.searchParam;
         $("#mapUrl").attr("href", $scope.mapUrl);
-        $("#mapUrl").attr("target", "_blank");
         $scope.hotelSearch.location = $scope.model.searchParamObject.location;
         $scope.hotelSearch.checkinDate = $scope.model.searchParamObject.checkinDate;
         $scope.hotelSearch.checkinDateDisplay = moment($scope.hotelSearch.checkinDate).locale("id").format('LL');

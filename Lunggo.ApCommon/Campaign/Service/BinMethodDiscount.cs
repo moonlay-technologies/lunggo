@@ -21,19 +21,8 @@ namespace Lunggo.ApCommon.Campaign.Service
 {
     public partial class CampaignService
     {
-        public BinDiscount CheckBinDiscount(string rsvNo, string bin, string hashedPan, string voucherCode)
+        public BinMethodDiscount CheckBinDiscount(string rsvNo, string bin, string hashedPan, string voucherCode)
         {
-            if (hashedPan ==
-                "469E98418E7DD068E0DE3D74E2E53CA44B54F6CEACDDA75A4BE99137E5C5121619CF1A3A32399B76E957D4FFD5370679949A0E14447A703DA190345C63C339D0")
-                return new BinDiscount
-                {
-                    Amount = 5000,
-                    IsAvailable = true,
-                    Currency = new Currency("IDR"),
-                    DisplayName = "Diskon BTN",
-                    ReplaceMargin = true
-                };
-
             ReservationBase rsv;
             decimal discAmount;
             if (rsvNo.StartsWith("1"))
@@ -47,32 +36,15 @@ namespace Lunggo.ApCommon.Campaign.Service
                 discAmount = (rsv as HotelReservation).HotelDetails.Rooms.Sum(ro => ro.Rates.Sum(i => i.GetApparentOriginalPrice()))*0.1M;
             }
 
-            // HUT BTN
-
-            var dailyLimit =
-                DateTime.UtcNow.AddHours(7).Date >= new DateTime(2017, 2, 8) &&
-                DateTime.UtcNow.AddHours(7).Date <= new DateTime(2017, 2, 10)
-                    ? 100
-                    : 50;
-
-            // /HUT BTN
-
+            var dailyLimit = 50;
             var isAvailable = IsPanAndEmailEligibleInCache("btn", hashedPan, rsv.Contact.Email, dailyLimit);
-            var isValid = IsPromoValid(rsv, bin, hashedPan, voucherCode);
+            var isValid = IsBinPromoValid(rsv, bin, hashedPan, voucherCode, "btn");
             if (discAmount >= 300000)
                 discAmount = 300000;
 
-            // HUT BTN
-
-            if (DateTime.UtcNow.AddHours(7).Date >= new DateTime(2017, 2, 8) &&
-                DateTime.UtcNow.AddHours(7).Date <= new DateTime(2017, 2, 10))
-                discAmount += 67000;
-
-            // /HUT BTN
-
             return isValid
                 ? isAvailable
-                    ? new BinDiscount
+                    ? new BinMethodDiscount
                     {
                         Amount = discAmount,
                         IsAvailable = true,
@@ -80,7 +52,7 @@ namespace Lunggo.ApCommon.Campaign.Service
                         DisplayName = "Diskon BTN",
                         ReplaceMargin = true
                     }
-                    : new BinDiscount
+                    : new BinMethodDiscount
                     {
                         Amount = 0,
                         IsAvailable = false,
@@ -89,12 +61,12 @@ namespace Lunggo.ApCommon.Campaign.Service
                 : null;
         }
 
-        public BinDiscount CheckPaydayMadness(string rsvNo, string voucherCode)
+        public BinMethodDiscount CheckMethodDiscount(string rsvNo, string voucherCode)
         {
             if (rsvNo.StartsWith("2"))
             {
-                ReservationBase rsv = HotelService.GetInstance().GetReservation(rsvNo);
-                var discAmount = (rsv as HotelReservation).HotelDetails.Rooms.Sum(ro => ro.Rates.Sum(i => i.GetApparentOriginalPrice())) * 0.1M;
+                var rsv = HotelService.GetInstance().GetReservation(rsvNo);
+                var discAmount = rsv.HotelDetails.Rooms.Sum(ro => ro.Rates.Sum(i => i.GetApparentOriginalPrice())) * 0.1M;
 
                 if (discAmount > 150000)
                 {
@@ -102,11 +74,11 @@ namespace Lunggo.ApCommon.Campaign.Service
                 }
 
                 var isAvailable = IsEmailEligibleInCache("paydayMadness", rsv.Contact.Email, 20);
-                var isValid = IsPromoValid(voucherCode);
+                var isValid = IsMethodPromoValid(rsv, voucherCode, "paydayMadness");
 
-                return isValid ? 
+                return isValid ?
                     isAvailable
-                    ? new BinDiscount
+                    ? new BinMethodDiscount
                     {
                         Amount = discAmount,
                         IsAvailable = true,
@@ -114,76 +86,100 @@ namespace Lunggo.ApCommon.Campaign.Service
                         DisplayName = "Payday Madness",
                         ReplaceMargin = true
                     }
-                    : new BinDiscount
+                    : new BinMethodDiscount
                     {
                         Amount = 0,
                         IsAvailable = false,
-                        DisplayName = "Payday Madness"
+                        DisplayName = "Diskon"
                     }
                 : null;
             }
             return null;
         }
-        private bool IsPromoValid(ReservationBase rsv, string bin, string hashedPan, string voucherCode)
+
+        private bool IsBinPromoValid(ReservationBase rsv, string bin, string hashedPan, string voucherCode, string promoType)
         {
             var bin6 = (bin != null && bin.Length >= 6)
                 ? bin.Substring(0, 6)
                 : "";
-            return IsReservationEligible(rsv) &&
+            return IsReservationEligible(rsv, promoType) &&
                    string.IsNullOrEmpty(voucherCode) &&
-                   IsBinGranted(bin6) &&
-                   DateValid();
+                   IsBinGranted(bin6, promoType) &&
+                   IsDateValid(promoType);
         }
 
-        private bool IsPromoValid(string voucherCode)
+        private bool IsMethodPromoValid(ReservationBase rsv, string voucherCode, string promoType)
         {
-            return string.IsNullOrEmpty(voucherCode) &&
-                   PaydayMadnessDateValid();
+            return IsReservationEligible(rsv, promoType) &&
+                   string.IsNullOrEmpty(voucherCode) &&
+                   IsDateValid(promoType);
         }
-        private bool IsReservationEligible(ReservationBase rsv)
+        private bool IsReservationEligible(ReservationBase rsv, string promoType)
         {
             return rsv.RsvNo.StartsWith("1") 
-                ? IsReservationEligible(rsv as FlightReservation) 
-                : IsReservationEligible(rsv as HotelReservation);
+                ? IsReservationEligible(rsv as FlightReservation, promoType) 
+                : IsReservationEligible(rsv as HotelReservation, promoType);
         }
 
-        private bool IsReservationEligible(FlightReservation rsv)
+        private bool IsReservationEligible(FlightReservation rsv, string promoType)
         {
-            return rsv.Itineraries.Sum(i => i.GetApparentOriginalPrice()) >= 1500000 &&
-                rsv.Itineraries.All(i => i.Supplier != Supplier.Mystifly);
+            switch (promoType)
+            {
+                case "btn":
+                    return rsv.Itineraries.Sum(i => i.GetApparentOriginalPrice()) >= 1500000 &&
+                           rsv.Itineraries.All(i => i.Supplier != Supplier.Mystifly);
+                case "paydayMadness":
+                    return false;
+                default:
+                    return false;
+            }
         }
 
-        private bool IsReservationEligible(HotelReservation rsv)
+        private bool IsReservationEligible(HotelReservation rsv, string promoType)
         {
-            return rsv.HotelDetails.Rooms.Sum(ro => ro.Rates.Sum(i => i.GetApparentOriginalPrice())) >= 1500000;
+            switch (promoType)
+            {
+                case "btn":
+                    return rsv.HotelDetails.Rooms.Sum(ro => ro.Rates.Sum(i => i.GetApparentOriginalPrice())) >= 1500000;
+                case "paydayMadness":
+                    return true;
+                default:
+                    return false;
+            }
         }
 
-        private bool DateValid()
+        private bool IsDateValid(string promoType)
         {
             var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
             var dateNow = DateTime.UtcNow.AddHours(7).Date;
-            return env != "production" || (dateNow >= new DateTime(2017, 2, 1) &&
-                                           dateNow <= new DateTime(2017, 3, 31));
+            switch (promoType)
+            {
+                case "btn":
+                    return env != "production" || (dateNow >= new DateTime(2017, 2, 1) &&
+                                                   dateNow <= new DateTime(2017, 3, 31));
+                case "paydayMadness":
+                    return env != "production" || (dateNow >= new DateTime(2017, 3, 25) &&
+                                                   dateNow <= new DateTime(2017, 8, 27) &&
+                                                   dateNow.Day >= 25 && dateNow.Day <= 27);
+                default:
+                    return false;
+            }
         }
 
-        private bool PaydayMadnessDateValid()
+        private bool IsBinGranted(string bin6, string promoType)
         {
-            var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
-            var dateNow = DateTime.UtcNow.AddHours(7).Date;
-            return env != "production" || (dateNow >= new DateTime(2017, 3, 25) &&
-                                           dateNow <= new DateTime(2017, 8, 27) && dateNow.Day >= 25 && dateNow.Day <=27);
-        }
-
-        private bool IsBinGranted(string bin6)
-        {
-            return (bin6 == "421570" ||
-                    bin6 == "485447" ||
-                    bin6 == "469345" ||
-                    bin6 == "462436" ||
-                    bin6 == "437527" ||
-                    bin6 == "437528" ||
-                    bin6 == "437529" ||
-                    IsBinGrantedDevelopment(bin6));
+            if (promoType == "btn")
+            {
+                return (bin6 == "421570" ||
+                        bin6 == "485447" ||
+                        bin6 == "469345" ||
+                        bin6 == "462436" ||
+                        bin6 == "437527" ||
+                        bin6 == "437528" ||
+                        bin6 == "437529" ||
+                        IsBinGrantedDevelopment(bin6));
+            }
+            return false;
         }
 
         private bool IsBinGrantedDevelopment(string bin6)
