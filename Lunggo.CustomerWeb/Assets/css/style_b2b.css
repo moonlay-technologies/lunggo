@@ -207,7 +207,7 @@ body {
       font-size: 12px;
       right: 0;
       top: 50%;
-      margin-right: 40px;
+      margin-right: 20px;
       transform: translateY(-50%); }
   body.b2b-order-list .ol-list .ol-item-hide ol.pax-list li {
     padding-left: 5px; }
@@ -231,3 +231,7 @@ body {
     transform: translateY(-50%);
     font-size: 24px;
     margin-left: 20px; }
+  body.b2b-order-list .modal.info-order .col-sm-3:after {
+    content: ':';
+    float: right;
+    padding-right: 5px; }

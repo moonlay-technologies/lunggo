@@ -37,11 +37,11 @@ namespace Lunggo.CustomerWeb.Controllers
         {
             return View();
         }
-        public ActionResult OrderListFlightBooker()
+        public ActionResult OrderListBooker()
         {
             return View();
         }
-        public ActionResult OrderListFlightApprover()
+        public ActionResult OrderListApprover()
         {
             return View();
         }
@@ -49,38 +49,17 @@ namespace Lunggo.CustomerWeb.Controllers
         {
             return View();
         }
-        public ActionResult OrderListHotelBooker()
-        {
-            return View();
-        }
-        public ActionResult OrderListHotelApprover()
-        {
-            return View();
-        }
+
         public ActionResult OrderListHotelFinance()
         {
             return View();
         }
-        public ActionResult OrderDetailFlightBooker()
-        {
-            return View();
-        }
-        public ActionResult OrderDetailFlightApprover()
-        {
-            return View();
-        }
+
         public ActionResult OrderDetailFlightFinance()
         {
             return View();
         }
-        public ActionResult OrderDetailHotelBooker()
-        {
-            return View();
-        }
-        public ActionResult OrderDetailHotelApprover()
-        {
-            return View();
-        }
+
         public ActionResult OrderDetailHotelFinance()
         {
             return View();

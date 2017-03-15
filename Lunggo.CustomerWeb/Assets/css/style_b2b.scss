@@ -246,7 +246,7 @@
                     font-size: 12px;
                     right: 0;
                     top: 50%;
-                    margin-right: 40px;
+                    margin-right: 20px;
                     transform: translateY(-50%);
                 }
             }
@@ -279,6 +279,13 @@
                     font-size: 24px;
                     margin-left: 20px;
                 }
+            }
+        }
+        .modal.info-order {
+            .col-sm-3:after {
+                content: ':';
+                float: right;
+                padding-right: 5px;
             }
         }
     }

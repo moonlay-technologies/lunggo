@@ -24,7 +24,7 @@
     <script>
         jQuery(document).ready(function ($) {
             $('body .ol-item-hide').hide();
-            $('body .ol-item').click(function() {
+            $('body .ol-item').click(function () {
                 $(this).parent().find('.ol-item-hide').toggle();
                 $(this).parent().find('.ol-item').toggleClass('show');
                 $(this).parent().siblings().find('.ol-item-hide').hide();
@@ -45,12 +45,12 @@
             <div class="ol-list clearfix">
                 <div class="ol-border ol-header fs-12 bold font-montserrat  padding-15 clearfix">
                     <div class="olh-name col-sm-3 no-padding">Anonymous</div>
-                    <div class="olh-title col-sm-9 no-padding">Kunjungan dinas Bali <span class="label label-primary m-l-10 fs-11 text-capitalize" style="cursor: pointer;"><i class="fa fa-info-circle m-r-5"></i>Info</span></div>
+                    <div class="olh-title col-sm-9 no-padding">Kunjungan dinas Bali <span class="label label-primary m-l-10 fs-11 text-capitalize" style="cursor: pointer;" data-toggle="modal" data-target=".info-order"><i class="fa fa-info-circle m-r-5"></i>Info</span></div>
                 </div>
                 <div class="ol-body">
                     <div class="ol-flight clearfix">
                         <div class="ol-item ol-border bg-white clearfix">
-                            <div class="col-sm-9 no-padding clearfix">
+                            <div class="col-sm-8 no-padding clearfix">
                                 <div class="col-sm-8 no-padding">
                                     <div class="clearfix">
                                         <div class="col-sm-5 no-padding p-l-60 m-t-20 m-b-20">
@@ -74,12 +74,12 @@
                                         <div class=" m-t-20">Rp 4.000.000</div>
                                     </div>
                                 </div>
-
                             </div>
-                            <div class="col-sm-3 no-padding m-t-15 m-b-20">
+                            <div class="col-sm-4 no-padding m-t-15 m-b-20">
                                 <div class="text-center">
                                     <button class="btn btn-success btn-cons m-t-15">Approve</button>
-                                    <button class="btn btn-danger btn-cons m-t-15">Reject</button>
+                                    <button class="btn btn-danger btn-cons m-t-15" data-toggle="modal" data-target=".req-reject">Reject</button>
+
                                 </div>
                             </div>
                         </div>
@@ -127,7 +127,7 @@
                     </div>
                     <div class="ol-hotel clearfix">
                         <div class="ol-item ol-border bg-white clearfix">
-                            <div class="col-sm-9 no-padding clearfix">
+                            <div class="col-sm-8 no-padding clearfix">
                                 <div class="col-sm-5 no-padding">
                                     <div class="p-l-60 m-t-20 m-b-20">
                                         <div class="bold font-montserrat fs-12">The Grand Ubud Bali Hotel</div>
@@ -147,10 +147,10 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm-3 no-padding m-t-15 m-b-20">
+                            <div class="col-sm-4 no-padding m-t-15 m-b-20">
                                 <div class="text-center">
                                     <button class="btn btn-success btn-cons m-t-15">Approve</button>
-                                    <button class="btn btn-danger btn-cons m-t-15">Reject</button>
+                                    <button class="btn btn-danger btn-cons m-t-15" data-toggle="modal" data-target=".req-reject">Reject</button>
                                 </div>
                             </div>
                         </div>
@@ -163,6 +163,58 @@
                                         <li>1x Deluxe (Kamar dan sarapan)</li>
                                     </ul>
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade slide-up disable-scroll info-order" tabindex="-1" role="dialog" aria-hidden="false">
+        <div class="modal-dialog">
+            <div class="modal-content-wrapper">
+                <div class="modal-content">
+                    <div class="modal-header clearfix">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            <i class="pg-close fs-14"></i>
+                        </button>
+                        @*<h4 class="text-center no-margin">Info Deskripsi</h4>*@
+                    </div>
+                    <div class="modal-body m-t-10">
+                        <div class="clearfix m-b-10">
+                            <div class="col-sm-3 no-padding bold">Nama</div>
+                            <div class="col-sm-9 no-padding">David Nest</div>
+                        </div>
+                        <div class="clearfix m-b-10">
+                            <div class="col-sm-3 no-padding bold">Title</div>
+                            <div class="col-sm-9 no-padding">Kunjungan dinas Bali</div>
+                        </div>
+                        <div class="clearfix m-b-10">
+                            <div class="col-sm-3 no-padding bold">Deskripsi</div>
+                            <div class="col-sm-9 no-padding">
+                                Lorem ipsum sit dolot amet. Lorem ipsum sit dolot amet. Lorem ipsum sit dolot amet.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade slide-up disable-scroll req-reject" tabindex="-1" role="dialog" aria-hidden="false">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content-wrapper">
+                <div class="modal-content">
+                    <div class="modal-header clearfix">
+                        <h4 class="text-center no-margin">Keterangan</h4>
+                    </div>
+                    <div class="modal-body m-t-10">
+                        <textarea class="m-b-15" style="border: 1px solid #f0f0f0; width: 100%; height: 100px; padding: 10px; border-radius: 2px;" placeholder="Tulis keterangan Anda"></textarea>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <button type="button" class="btn btn-default btn-block" data-dismiss="modal">Kembali</button>
+                            </div>
+                            <div class="col-sm-6">
+                                <button type="button" class="btn btn-primary btn-block" data-dismiss="modal">Simpan</button>
                             </div>
                         </div>
                     </div>
