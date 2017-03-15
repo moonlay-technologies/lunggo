@@ -143,6 +143,10 @@ function ($scope, $log, $window, $http, $resource, $timeout, $interval, hotelSea
         location: location,
     }
 
+    $scope.statePrice = 'perRoom';
+    $scope.changeStatePrice = function(value) {
+        $scope.statePrice = value;
+    }
     // Page Load And Display
 
     var isFirstload = true;
@@ -218,6 +222,15 @@ function ($scope, $log, $window, $http, $resource, $timeout, $interval, hotelSea
         $scope.searchParam = model.searchParam;
         if ($scope.locFound) {
             $scope.searchHotel();
+            if ($scope.statePrice == 'perRoom') {
+                $('#perRoom').addClass("active");
+                $('#total').removeClass("active");
+                $("#price-night").show();
+            } else {
+                $('#total').addClass("active");
+                $('#perRoom').removeClass("active");
+                $("#price-total").show();
+            }
         } else {
             $scope.searchDone = true;
             $scope.returnedHotelCount = 0;
@@ -274,8 +287,7 @@ function ($scope, $log, $window, $http, $resource, $timeout, $interval, hotelSea
         return allContained;
     }
     $scope.searchHotel = function (filter, sort, isMobile) {
-        $('#perRoom').addClass("active");
-        $('#total').removeClass("active");
+        
         $scope.searchDone = false;
         $scope.pageCount = 0;
 
@@ -323,13 +335,14 @@ function ($scope, $log, $window, $http, $resource, $timeout, $interval, hotelSea
             $scope.perPage = data.perPage;
             $scope.pageCount = data.pageCount;
             $scope.totalHotelCount = data.totalHotelCount;
+            
 
             if (isFirstload) {
                 $scope.filter.minPrice = data.minPrice;
                 $scope.filter.maxPrice = data.maxPrice;
                 $scope.minPrice = data.minPrice;
                 $scope.maxPrice = data.maxPrice;
-            initiatePriceSlider();
+                initiatePriceSlider();
                 $scope.hotelFilterDisplayInfo = data.hotelFilterDisplayInfo;
                 isFirstload = false;
 
@@ -371,6 +384,15 @@ function ($scope, $log, $window, $http, $resource, $timeout, $interval, hotelSea
             };
                     $scope.searchDone = true;
                     $scope.finishLoad = true;
+                    if ($scope.statePrice == 'perRoom') {
+                        $('#perRoom').click();
+                        $("#price-total").hide();
+                        $("#price-night").show();
+                    } else {
+                        $('#total').click();
+                        $("#price-night").hide();
+                        $("#price-total").show();
+                    }
                 } else {
                     $scope.searchDone = false;
                 }
