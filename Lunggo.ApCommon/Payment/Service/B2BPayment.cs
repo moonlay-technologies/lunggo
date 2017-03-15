@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
@@ -11,6 +12,8 @@ using Lunggo.ApCommon.Payment.Model.Data;
 using Lunggo.ApCommon.Payment.Query;
 using Lunggo.Framework.Config;
 using Lunggo.Framework.Database;
+using Lunggo.Framework.Queue;
+using Microsoft.WindowsAzure.Storage.Queue;
 
 namespace Lunggo.ApCommon.Payment.Service
 {
@@ -49,6 +52,27 @@ namespace Lunggo.ApCommon.Payment.Service
             {
                 SetBookingDisabilityStatusQuery.GetInstance().Execute(conn, new { CompanyId = companyId, Status = status });
             }
+
+            SendNotificationToCustomer(companyId, status);
+        }
+
+        public void SendNotificationToCustomer(string companyId, bool status)
+        {
+            var approverEmailList = User.GetListApproverEmailByCompanyId(companyId);
+            var bookerEmailList = User.GetListBookerEmailByCompanyId(companyId);
+
+            var emailList = approverEmailList.Aggregate("", (current, email) => current + (email + "|"));
+
+            if (bookerEmailList.Count > 0)
+            {
+                emailList = bookerEmailList.Aggregate(emailList, (current, email) => current + (email + "|"));
+            }
+           
+            emailList = emailList.Substring(0, emailList.Length - 1);
+            var stringStatus = status ? "true" : "false";
+            var queueService = QueueService.GetInstance();
+            var queue = queueService.GetQueueByReference("BookingDisabilityNotifEmail");
+            queue.AddMessage(new CloudQueueMessage(emailList + "&" + stringStatus));
         }
 
         public List<SavedCreditCard> GetCreditCardByCompanyId(string companyId)

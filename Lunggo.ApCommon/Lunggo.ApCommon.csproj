@@ -420,6 +420,9 @@
     <Compile Include="Identity\Query\GetAllUserByAdminQuery.cs" />
     <Compile Include="Identity\Query\GetApproverEmailByUserIdQuery.cs" />
     <Compile Include="Identity\Query\GetCompanyIdByUserQuery.cs" />
+    <Compile Include="Identity\Query\GetListApproverEmailByCompanyIdQuery.cs" />
+    <Compile Include="Identity\Query\GetListBookerEmailByCompanyIdQuery.cs" />
+    <Compile Include="Identity\Query\GetListBookerEmailQuery.cs" />
     <Compile Include="Identity\Query\GetListApproverEmailQuery.cs" />
     <Compile Include="Identity\Query\GetApproverByUserIdQuery.cs" />
     <Compile Include="Identity\Query\GetListRolesQuery.cs" />

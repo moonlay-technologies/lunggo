@@ -250,6 +250,7 @@
     <Compile Include="Models\AdminViewModel.cs" />
     <Compile Include="Models\CalendarRecipientData.cs" />
     <Compile Include="Models\GetProfileModel.cs" />
+    <Compile Include="Models\B2BBookingDisability.cs" />
     <Compile Include="Models\HotelCheckoutData.cs" />
     <Compile Include="Models\FlightCheckoutData.cs" />
     <Compile Include="Models\FlightPaymentConfirmationData.cs" />

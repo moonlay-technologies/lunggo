@@ -1,4 +1,6 @@
 ﻿@using Lunggo.CustomerWeb.Models
+@model GetBookingDisabilityStatusResponse
+
 @{
     Layout = "/Views/Shared/B2BTravorama/_B2BLayout.cshtml";
     ViewBag.BodyClass = "b2b-search hotel";
@@ -49,94 +51,107 @@
 }
 
 <div ng-app="travoramaB2B" ng-controller="B2BHotelSearchFormController" ng-class="{'active' : pageLoaded}">
-    <div class=" panel panel-transparent">
-        <div class="panel-heading ">
-            <div class="panel-title">
-                Cari Kamar Hotel
+    @if (Model.IsPaymentDisabled == true)
+    {
+        <div class=" panel panel-transparent">
+            <div class="panel-heading ">
+                <div class="panel-title">
+                    Booking system is disabled
+                </div>
             </div>
         </div>
-        <div class="panel-body m-t-10">
-            <form id="form-flight" role="form" autocomplete="off" novalidate="novalidate">
-                <div class="row clearfix">
-                    <div class="col-sm-6">
-                        <div class="form-group form-group-default">
-                            <label>Tujuan</label>
-                        <input type="text" class="form-control hotel-location" placeholder="Bali, Indonesia" ng-model="hotelSearch.locationDisplay">
+    }
+    else
+    {
+        <div class=" panel panel-transparent">
+            <div class="panel-heading ">
+                <div class="panel-title">
+                    Cari Kamar Hotel
+                </div>
+            </div>
+            <div class="panel-body m-t-10">
+                <form id="form-flight" role="form" autocomplete="off" novalidate="novalidate">
+                    <div class="row clearfix">
+                        <div class="col-sm-6">
+                            <div class="form-group form-group-default">
+                                <label>Tujuan</label>
+                                <input type="text" class="form-control hotel-location" placeholder="Bali, Indonesia" ng-model="hotelSearch.locationDisplay">
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-sm-6">
-                        <div class="form-group form-group-default input-group">
-                            <label>Tanggal Check In</label>
-                            <input type="email" class="form-control" placeholder="Pilih tanggal Check In" id="checkInDate">
-                            <span class="input-group-addon">
-                                <i class="fa fa-calendar"></i>
-                            </span>
+                        <div class="col-sm-6">
+                            <div class="form-group form-group-default input-group">
+                                <label>Tanggal Check In</label>
+                                <input type="email" class="form-control" placeholder="Pilih tanggal Check In" id="checkInDate">
+                                <span class="input-group-addon">
+                                    <i class="fa fa-calendar"></i>
+                                </span>
 
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="row clearfix">
-                    <div class="col-sm-6">
-                        <div class="form-group form-group-default">
-                            <label class="label-custom">Malam</label>
-                        <select class="cs-select cs-skin-slide nightCount" data-init-plugin="cs-select" ng-model="hotelSearch.nightCount">
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                            <option value="6">6</option>
-                            <option value="7">7</option>
-                        </select>
+                    <div class="row clearfix">
+                        <div class="col-sm-6">
+                            <div class="form-group form-group-default">
+                                <label class="label-custom">Malam</label>
+                                <select class="cs-select cs-skin-slide nightCount" data-init-plugin="cs-select" ng-model="hotelSearch.nightCount">
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                    <option value="7">7</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group form-group-default" id="room-hotel">
+                                <label class="label-custom">Jumlah Kamar</label>
+                                <select class="cs-select cs-skin-slide roomCount" data-init-plugin="cs-select" ng-model="hotelSearch.roomCount">
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                    <option value="7">7</option>
+                                    <option value="8">8</option>
+                                </select>
+                            </div>
                         </div>
                     </div>
-                    <div class="col-sm-6">
-                        <div class="form-group form-group-default" id="room-hotel">
-                            <label class="label-custom">Jumlah Kamar</label>
-                        <select class="cs-select cs-skin-slide roomCount" data-init-plugin="cs-select" ng-model="hotelSearch.roomCount">
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                            <option value="6">6</option>
-                            <option value="7">7</option>
-                            <option value="8">8</option>
-                        </select>
-                        </div>
+
+                    <div ng-show="hotelSearch.roomCount >= 1">
+                        @Html.Partial("/Views/Shared/B2BTravorama/Occupancies.cshtml", new OccupancyModel { Order = 0 })
                     </div>
-                </div>
-                
-                <div ng-show="hotelSearch.roomCount >= 1">
-                    @Html.Partial("/Views/Shared/B2BTravorama/Occupancies.cshtml", new OccupancyModel{Order = 0})
-                </div>
-                <div ng-show="hotelSearch.roomCount >= 2">
-                    @Html.Partial("/Views/Shared/B2BTravorama/Occupancies.cshtml", new OccupancyModel { Order = 1 })
-                </div>
-                <div ng-show="hotelSearch.roomCount >= 3">
-                    @Html.Partial("/Views/Shared/B2BTravorama/Occupancies.cshtml", new OccupancyModel { Order = 2 })
-                </div>
-                <div ng-show="hotelSearch.roomCount >= 4">
-                    @Html.Partial("/Views/Shared/B2BTravorama/Occupancies.cshtml", new OccupancyModel { Order = 3 })
-                </div>
-                <div ng-show="hotelSearch.roomCount >=5">
-                    @Html.Partial("/Views/Shared/B2BTravorama/Occupancies.cshtml", new OccupancyModel { Order = 4 })
-                </div>
-                <div ng-show="hotelSearch.roomCount >= 6">
-                    @Html.Partial("/Views/Shared/B2BTravorama/Occupancies.cshtml", new OccupancyModel { Order = 5 })
-                </div>
-                <div ng-show="hotelSearch.roomCount >= 7">
-                    @Html.Partial("/Views/Shared/B2BTravorama/Occupancies.cshtml", new OccupancyModel { Order = 6 })
-                </div>
-                <div ng-show="hotelSearch.roomCount >= 8">
-                    @Html.Partial("/Views/Shared/B2BTravorama/Occupancies.cshtml", new OccupancyModel { Order = 7 })
-                </div>
-                <div class="clearfix m-t-10">
-                    <button class="btn btn-primary" type="submit" ng-click="hotelSearch.getHotels()">Cari Hotel</button>
-                </div>
-            </form>
+                    <div ng-show="hotelSearch.roomCount >= 2">
+                        @Html.Partial("/Views/Shared/B2BTravorama/Occupancies.cshtml", new OccupancyModel { Order = 1 })
+                    </div>
+                    <div ng-show="hotelSearch.roomCount >= 3">
+                        @Html.Partial("/Views/Shared/B2BTravorama/Occupancies.cshtml", new OccupancyModel { Order = 2 })
+                    </div>
+                    <div ng-show="hotelSearch.roomCount >= 4">
+                        @Html.Partial("/Views/Shared/B2BTravorama/Occupancies.cshtml", new OccupancyModel { Order = 3 })
+                    </div>
+                    <div ng-show="hotelSearch.roomCount >=5">
+                        @Html.Partial("/Views/Shared/B2BTravorama/Occupancies.cshtml", new OccupancyModel { Order = 4 })
+                    </div>
+                    <div ng-show="hotelSearch.roomCount >= 6">
+                        @Html.Partial("/Views/Shared/B2BTravorama/Occupancies.cshtml", new OccupancyModel { Order = 5 })
+                    </div>
+                    <div ng-show="hotelSearch.roomCount >= 7">
+                        @Html.Partial("/Views/Shared/B2BTravorama/Occupancies.cshtml", new OccupancyModel { Order = 6 })
+                    </div>
+                    <div ng-show="hotelSearch.roomCount >= 8">
+                        @Html.Partial("/Views/Shared/B2BTravorama/Occupancies.cshtml", new OccupancyModel { Order = 7 })
+                    </div>
+                    <div class="clearfix m-t-10">
+                        <button class="btn btn-primary" type="submit" ng-click="hotelSearch.getHotels()">Cari Hotel</button>
+                    </div>
+                </form>
+            </div>
         </div>
-    </div>
+    }
     
     @Html.Partial("/Views/Shared/B2BTravorama/_SearchHotel.cshtml")
 </div>

@@ -799,6 +799,7 @@
     <None Include="HtmlTemplate\FlightBookingNotifEmail.cshtml" />
     <None Include="HtmlTemplate\HotelBookerNotifEmail.cshtml" />
     <None Include="HtmlTemplate\HotelBookingNotifEmail.cshtml" />
+    <None Include="HtmlTemplate\BookingDisabilityStatusNotifEmail.cshtml" />
     <None Include="HtmlTemplate\HotelSaySorryFailedIssueNotifEmail.cshtml" />
     <None Include="HtmlTemplate\HotelVoucherEmail.cshtml" />
     <None Include="HtmlTemplate\HotelInvoice.cshtml" />

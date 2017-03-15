@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
+using Lunggo.CustomerWeb.Models;
+using Lunggo.Framework.Config;
+using RestSharp;
 
 namespace Lunggo.CustomerWeb.Controllers
 {
@@ -27,11 +26,21 @@ namespace Lunggo.CustomerWeb.Controllers
         }
         public ActionResult SearchFlight()
         {
-            return View();
+            var result = GetBookingDisabilityStatus();
+            if (result.IsPaymentDisabled == null)
+            {
+                result.IsPaymentDisabled = true;
+            }
+            return View(result);
         }
         public ActionResult SearchHotel()
         {
-            return View();
+            var result = GetBookingDisabilityStatus();
+            if (result.IsPaymentDisabled == null)
+            {
+                result.IsPaymentDisabled = true;
+            }
+            return View(result);
         }
         public ActionResult Payment()
         {
@@ -57,5 +66,35 @@ namespace Lunggo.CustomerWeb.Controllers
         {
             return View();
         }
+
+        public GetBookingDisabilityStatusResponse GetBookingDisabilityStatus()
+        {
+            var baseUrl = ConfigManager.GetInstance().GetConfigValue("api", "apiUrl");
+            var client = new RestClient(baseUrl);
+            
+            try
+            {
+                var request = new RestRequest("/v1/payment/getbookingdisabilitystatus", Method.GET);
+                var key = Request.Cookies["authkey"];
+                if (key == null)
+                    return null;
+
+                // execute the request
+                request.AddHeader("Authorization", "Bearer " + key.Value);
+                IRestResponse<GetBookingDisabilityStatusResponse> response =
+                    client.Execute<GetBookingDisabilityStatusResponse>(request);
+                return response.Data;
+            }
+            catch
+            {
+                return new GetBookingDisabilityStatusResponse
+                {
+                    IsPaymentDisabled = true
+                };
+            }
+            
+        }
+
+        
     }
 }
