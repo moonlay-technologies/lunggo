@@ -68,6 +68,10 @@ namespace Lunggo.CustomerWeb.Controllers
         {
             return View();
         }
+        public ActionResult SavePassenger()
+        {
+            return View();
+        }
         //Email Template
         public ActionResult B2BInitialRegister()
         {

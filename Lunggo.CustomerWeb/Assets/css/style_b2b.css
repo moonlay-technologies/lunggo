@@ -167,46 +167,46 @@ body {
     float: right; }
   body.b2b-order-detail .table.table-condensed.table-detailed > tbody > tr > td:first-child:before {
     display: none; }
-  body.b2b-order-list .dash {
+  body.b2b-order-list .dash, body.b2b-save-pax .dash {
     display: block;
     height: 2px;
     background: #626262; }
-  body.b2b-order-list .icon-arrival {
+  body.b2b-order-list .icon-arrival, body.b2b-save-pax .icon-arrival {
     -moz-transform: scaleY(-1);
     -o-transform: scaleY(-1);
     -webkit-transform: scaleY(-1);
     transform: scaleY(-1);
     filter: FlipV;
     -ms-filter: "FlipV"; }
-  body.b2b-order-list .ol-list .ol-border {
+  body.b2b-order-list .ol-list .ol-border, body.b2b-save-pax .ol-list .ol-border {
     border-bottom: 1px solid rgba(230, 230, 230, 0.7); }
-  body.b2b-order-list .ol-list .text-middle {
+  body.b2b-order-list .ol-list .text-middle, body.b2b-save-pax .ol-list .text-middle {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%); }
-  body.b2b-order-list .ol-list .float-left {
+  body.b2b-order-list .ol-list .float-left, body.b2b-save-pax .ol-list .float-left {
     float: left;
     padding: 0 20px;
     margin: 12px 0;
     line-height: 20px; }
-  body.b2b-order-list .ol-list .olh-name:after {
+  body.b2b-order-list .ol-list .olh-name:after, body.b2b-save-pax .ol-list .olh-name:after {
     content: ':';
     display: block;
     float: right;
     font-size: 16px;
     margin-right: 10px;
     line-height: 100%; }
-  body.b2b-order-list .ol-list .ol-item {
+  body.b2b-order-list .ol-list .ol-item, body.b2b-save-pax .ol-list .ol-item {
     position: relative; }
-    body.b2b-order-list .ol-list .ol-item:hover {
+    body.b2b-order-list .ol-list .ol-item:hover, body.b2b-save-pax .ol-list .ol-item:hover {
       background: #daeffd !important;
       cursor: pointer; }
-    body.b2b-order-list .ol-list .ol-item.show {
+    body.b2b-order-list .ol-list .ol-item.show, body.b2b-save-pax .ol-list .ol-item.show {
       background: #fef6dd; }
-      body.b2b-order-list .ol-list .ol-item.show:before {
+      body.b2b-order-list .ol-list .ol-item.show:before, body.b2b-save-pax .ol-list .ol-item.show:before {
         content: "\f077"; }
-    body.b2b-order-list .ol-list .ol-item:before {
+    body.b2b-order-list .ol-list .ol-item:before, body.b2b-save-pax .ol-list .ol-item:before {
       content: "\f078";
       display: inline-block;
       font-family: 'FontAwesome';
@@ -216,17 +216,17 @@ body {
       top: 50%;
       margin-right: 20px;
       transform: translateY(-50%); }
-    body.b2b-order-list .ol-list .ol-item.mob {
+    body.b2b-order-list .ol-list .ol-item.mob, body.b2b-save-pax .ol-list .ol-item.mob {
       position: relative; }
-      body.b2b-order-list .ol-list .ol-item.mob:before {
+      body.b2b-order-list .ol-list .ol-item.mob:before, body.b2b-save-pax .ol-list .ol-item.mob:before {
         top: auto;
         margin-right: 20px;
         transform: none; }
-  body.b2b-order-list .ol-list .ol-item-hide ol.pax-list li {
+  body.b2b-order-list .ol-list .ol-item-hide ol.pax-list li, body.b2b-save-pax .ol-list .ol-item-hide ol.pax-list li {
     padding-left: 5px; }
-  body.b2b-order-list .ol-list .ol-item-hide ol.pax-list .pl-row {
+  body.b2b-order-list .ol-list .ol-item-hide ol.pax-list .pl-row, body.b2b-save-pax .ol-list .ol-item-hide ol.pax-list .pl-row {
     margin-top: -23px; }
-  body.b2b-order-list .ol-list .ol-flight .ol-item .flight-icon:before {
+  body.b2b-order-list .ol-list .ol-flight .ol-item .flight-icon:before, body.b2b-save-pax .ol-list .ol-flight .ol-item .flight-icon:before {
     content: "\f072";
     display: inline-block;
     font-family: 'FontAwesome';
@@ -235,7 +235,7 @@ body {
     transform: translateY(-50%);
     font-size: 24px;
     margin-left: 20px; }
-  body.b2b-order-list .ol-list .ol-hotel .ol-item .hotel-icon:before {
+  body.b2b-order-list .ol-list .ol-hotel .ol-item .hotel-icon:before, body.b2b-save-pax .ol-list .ol-hotel .ol-item .hotel-icon:before {
     content: "\f1ad";
     display: inline-block;
     font-family: 'FontAwesome';
@@ -244,7 +244,17 @@ body {
     transform: translateY(-50%);
     font-size: 24px;
     margin-left: 20px; }
-  body.b2b-order-list .modal.info-order .col-sm-3:after {
+  body.b2b-order-list .ol-list.ol-pax .ol-item .user-icon:before, body.b2b-save-pax .ol-list.ol-pax .ol-item .user-icon:before {
+    content: "\f007";
+    display: inline-block;
+    font-family: 'FontAwesome';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    font-size: 24px;
+    margin-left: 20px; }
+  body.b2b-order-list .modal.info-order .col-sm-3:after, body.b2b-save-pax .modal.info-order .col-sm-3:after {
     content: ':';
     float: right;
     padding-right: 5px; }

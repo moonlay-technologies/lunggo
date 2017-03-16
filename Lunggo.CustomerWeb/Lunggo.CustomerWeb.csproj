@@ -2837,6 +2837,7 @@
     <Content Include="Views\B2BTemplate\OrderListApprover.cshtml" />
     <Content Include="Views\B2BTemplate\OrderListApprover.mobile.cshtml" />
     <Content Include="Views\B2BTemplate\OrderListBooker.mobile.cshtml" />
+    <Content Include="Views\B2BTemplate\SavePassenger.cshtml" />
     <None Include="Views\Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

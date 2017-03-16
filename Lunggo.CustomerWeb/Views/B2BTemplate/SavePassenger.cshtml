@@ -1,0 +1,150 @@
+﻿@{
+    Layout = "/Views/Shared/B2BTravorama/_B2BLayout.cshtml";
+    ViewBag.BodyClass = "b2b-save-pax";
+    ViewBag.SiteHeader = "b2b-order-list";
+    ViewBag.Title = "Save Passenger";
+    ViewBag.AngularController = "";
+
+}
+
+@section AdditionalCSS{
+}
+
+@section AdditionalJS{
+}
+
+@section PageJS{
+    <script src="/Assets/B2BTravorama/assets/js/tables.js" type="text/javascript"></script>
+    <script>
+        jQuery(document).ready(function ($) {
+            $('body .ol-item-hide').hide();
+            $('body .ol-item').click(function () {
+                $(this).parent().find('.ol-item-hide').toggle();
+                $(this).parent().find('.ol-item').toggleClass('show');
+                $(this).parent().siblings().find('.ol-item-hide').hide();
+                $(this).parent().siblings().find('.ol-item').removeClass('show');
+            });
+        });
+    </script>
+}
+
+<div class="save-pax">
+    <div class="panel panel-transparent">
+        <div class="panel-heading">
+            <div class="panel-title">
+                Simpan Penumpang
+            </div>
+            <div class="pull-right">
+                <button type="button" class="btn btn-default btn-cons" data-toggle="modal" data-target=".add-pax"><i class="fa fa-plus m-r-10"></i>Add</button>
+            </div>
+        </div>
+        <div class="panel-body bg-white">
+            <div class="ol-body m-t-30" style="border-top: 1px solid rgba(230, 230, 230, 0.7);">
+                <div class="ol-list ol-pax clearfix ">
+                    <div class="ol-item ol-border bg-white padding-20">
+                        <div class="clearfix user-icon p-l-40">
+                            <div class="clearfix">
+                                <div class="col-sm-2 no-padding bold">Nama</div>
+                                <div class="col-sm-10 no-padding">David Nest</div>
+                            </div>
+                            <div class="clearfix">
+                                <div class="col-sm-2 no-padding bold">Jabatan</div>
+                                <div class="col-sm-10 no-padding">Software Engineer</div>
+                            </div>
+                            <div class="clearfix">
+                                <div class="col-sm-2 no-padding bold">Departemen</div>
+                                <div class="col-sm-10 no-padding">IT</div>
+                            </div>
+                            <div class="clearfix">
+                                <div class="col-sm-2 no-padding bold">Cabang</div>
+                                <div class="col-sm-10 no-padding">Jakarta</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ol-item-hide ol-border clearfix">
+                        <div class="sp-detail clearfix padding-20">
+                            <div class="col-sm-8 no-padding">
+                                <div class="clearfix">
+                                    <div class="col-sm-4 no-padding bold">Title</div>
+                                    <div class="col-sm-8 no-padding">Kunjungan dinas Bali</div>
+                                </div>
+                                <div class="clearfix">
+                                    <div class="col-sm-4 no-padding bold">Nama</div>
+                                    <div class="col-sm-8 no-padding">David Nest</div>
+                                </div>
+                                <div class="clearfix">
+                                    <div class="col-sm-4 no-padding bold">Tanggal Lahir</div>
+                                    <div class="col-sm-8 no-padding">24 Juni 1988</div>
+                                </div>
+                                <div class="clearfix">
+                                    <div class="col-sm-4 no-padding bold">Kewarganegaraan</div>
+                                    <div class="col-sm-8 no-padding">Australia</div>
+                                </div>
+                                <div class="clearfix">
+                                    <div class="col-sm-4 no-padding bold">No. Paspor</div>
+                                    <div class="col-sm-8 no-padding">9999999999999</div>
+                                </div>
+                                <div class="clearfix">
+                                    <div class="col-sm-4 no-padding bold">Tanggal Kadarluarsa Paspor</div>
+                                    <div class="col-sm-8 no-padding">24 Juni 2020</div>
+                                </div>
+                                <div class="clearfix">
+                                    <div class="col-sm-4 no-padding bold">Negara Penerbit Paspor</div>
+                                    <div class="col-sm-8 no-padding">Indonesia</div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4 no-padding">
+                                <div class="pull-right">
+                                    <button class="btn btn-info btn-cons"><i class="fa fa-edit m-r-5"></i>Edit</button>
+                                    <button class="btn btn-danger btn-cons"><i class="fa fa-remove m-r-5"></i>Remove</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade stick-up in add-pax" tabindex="-1" role="dialog" aria-hidden="false">
+        <div class="modal-dialog p-t-100">
+            <div class="modal-content-wrapper">
+                <div class="modal-content">
+                    <div class="modal-header clearfix">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            <i class="pg-close fs-14"></i>
+                        </button>
+                        <h4 class="text-center no-margin">Tambah Data Penumpang</h4>
+                    </div>
+                    <div class="modal-body m-t-10">
+                        <form role="form">
+                            <div class="form-group">
+                                <label>Nama</label>
+                                <input type="text" class="form-control" required="">
+                            </div>
+                            <div class="form-group">
+                                <label>Tanggal Lahir</label>
+                                <input type="text" class="form-control" required="">
+                            </div>
+                            <div class="form-group">
+                                <label>Kewarganegaraan</label>
+                                <input type="text" class="form-control" required="">
+                            </div>
+                            <div class="form-group">
+                                <label>No. Paspor</label>
+                                <input type="text" class="form-control" required="">
+                            </div>
+                            <div class="form-group">
+                                <label>Tanggal Kadarluarsa Paspor</label>
+                                <input type="text" class="form-control" required="">
+                            </div>
+                            <div class="form-group">
+                                <label>Negara Penerbit Paspor</label>
+                                <input type="text" class="form-control" required="">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

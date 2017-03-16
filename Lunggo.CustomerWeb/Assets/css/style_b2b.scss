@@ -202,7 +202,7 @@
         }
         .table.table-condensed.table-detailed > tbody > tr > td:first-child:before {display: none;}
     }
-    &.b2b-order-list {
+    &.b2b-order-list, &.b2b-save-pax {
         .dash {
             display: block;
             height: 2px;
@@ -264,7 +264,7 @@
                         margin-right: 20px;
                         transform: none;
                     }
-                } 
+                }
             }
             .ol-item-hide {
                 ol.pax-list {
@@ -295,6 +295,19 @@
                     font-size: 24px;
                     margin-left: 20px;
                 }
+            }
+            &.ol-pax .ol-item {
+                .user-icon:before {
+                    content: "\f007";
+                    display: inline-block;
+                    font-family: 'FontAwesome';
+                    position: absolute;
+                    top: 50%;
+                    left: 0;
+                    transform: translateY(-50%);
+                    font-size: 24px;
+                    margin-left: 20px;
+                } 
             }
         }
         .modal.info-order {
