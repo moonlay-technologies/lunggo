@@ -202,8 +202,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                     StarRating = hotelDetail.StarCode != 0
                         ? hotelDetail.StarCode
                         : (hotelDetail.StarRating != null
-                            ? Convert.ToInt32(hotelDetail.StarRating.Substring(0, 1))
-                            : 0),
+                            ? GetSimpleCodeByCategoryCode(hotelDetail.StarRating) : 0),
                     //ChainName = GetHotelChainDesc(hotelDetail.Chain),
                     //AccomodationName = GetHotelAccomodationDescId(hotelDetail.AccomodationType),
                     MainImage =
