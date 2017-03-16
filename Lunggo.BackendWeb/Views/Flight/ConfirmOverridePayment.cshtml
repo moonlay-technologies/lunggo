@@ -16,6 +16,15 @@
         This action is irreversible and will automatically issue the reservation and then automatically send the e-ticket e-mail.
         <br/>
         Please review the reservation detail below.
+        <br />
+        <br />
+        <b>
+            ONLY USE THIS WHEN PAYMENT IS DONE NOT BY SYSTEM BUT RATHER BY MANUAL MEANS
+            <br />
+            e.g., when customer pay by transfer not to online account and/or needs human/manual verification.
+            <br/>
+            AND DON'T FORGET TO ISSUE AFTERWARDS
+        </b>
     </div>
     <form action="@Url.Action("ConfirmOverridePayment", "Flight", new {rsvNo = Model.RsvNo})" method="POST">
         <button type="submit" class="btn btn-danger">Confirm Override Payment Status</button>
