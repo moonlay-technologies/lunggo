@@ -155,6 +155,11 @@ body {
     transform: translate(-50%, -50%);
     cursor: pointer;
     text-align: center; }
+  body.b2b-user-manage .user-management #add-user form, body.b2b-user-manage .user-management #edit-user form {
+    max-height: 420px;
+    overflow-y: auto;
+    padding-right: 20px;
+    margin-bottom: 20px; }
   body.b2b-order-detail .flight-reservation .table.table-condensed.table-detailed > tbody > tr > td:first-child:after,
   body.b2b-order-detail .flight-payment .table.table-condensed.table-detailed > tbody > tr > td:first-child:after,
   body.b2b-order-detail .flight-departure .table.table-condensed.table-detailed > tbody > tr > td:first-child:after {
@@ -162,3 +167,84 @@ body {
     float: right; }
   body.b2b-order-detail .table.table-condensed.table-detailed > tbody > tr > td:first-child:before {
     display: none; }
+  body.b2b-order-list .dash {
+    display: block;
+    height: 2px;
+    background: #626262; }
+  body.b2b-order-list .icon-arrival {
+    -moz-transform: scaleY(-1);
+    -o-transform: scaleY(-1);
+    -webkit-transform: scaleY(-1);
+    transform: scaleY(-1);
+    filter: FlipV;
+    -ms-filter: "FlipV"; }
+  body.b2b-order-list .ol-list .ol-border {
+    border-bottom: 1px solid rgba(230, 230, 230, 0.7); }
+  body.b2b-order-list .ol-list .text-middle {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); }
+  body.b2b-order-list .ol-list .float-left {
+    float: left;
+    padding: 0 20px;
+    margin: 12px 0;
+    line-height: 20px; }
+  body.b2b-order-list .ol-list .olh-name:after {
+    content: ':';
+    display: block;
+    float: right;
+    font-size: 16px;
+    margin-right: 10px;
+    line-height: 100%; }
+  body.b2b-order-list .ol-list .ol-item {
+    position: relative; }
+    body.b2b-order-list .ol-list .ol-item:hover {
+      background: #daeffd !important;
+      cursor: pointer; }
+    body.b2b-order-list .ol-list .ol-item.show {
+      background: #fef6dd; }
+      body.b2b-order-list .ol-list .ol-item.show:before {
+        content: "\f077"; }
+    body.b2b-order-list .ol-list .ol-item:before {
+      content: "\f078";
+      display: inline-block;
+      font-family: 'FontAwesome';
+      position: absolute;
+      font-size: 12px;
+      right: 0;
+      top: 50%;
+      margin-right: 20px;
+      transform: translateY(-50%); }
+    body.b2b-order-list .ol-list .ol-item.mob {
+      position: relative; }
+      body.b2b-order-list .ol-list .ol-item.mob:before {
+        top: auto;
+        margin-right: 20px;
+        transform: none; }
+  body.b2b-order-list .ol-list .ol-item-hide ol.pax-list li {
+    padding-left: 5px; }
+  body.b2b-order-list .ol-list .ol-item-hide ol.pax-list .pl-row {
+    margin-top: -23px; }
+  body.b2b-order-list .ol-list .ol-flight .ol-item .flight-icon:before {
+    content: "\f072";
+    display: inline-block;
+    font-family: 'FontAwesome';
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 24px;
+    margin-left: 20px; }
+  body.b2b-order-list .ol-list .ol-hotel .ol-item .hotel-icon:before {
+    content: "\f1ad";
+    display: inline-block;
+    font-family: 'FontAwesome';
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 24px;
+    margin-left: 20px; }
+  body.b2b-order-list .modal.info-order .col-sm-3:after {
+    content: ':';
+    float: right;
+    padding-right: 5px; }

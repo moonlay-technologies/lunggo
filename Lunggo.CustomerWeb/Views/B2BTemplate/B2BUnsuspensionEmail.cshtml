@@ -1,0 +1,52 @@
+﻿@using System.Globalization
+@using Lunggo.ApCommon.Constant
+@using Lunggo.Framework.Config
+@{
+    ViewBag.SiteHeader = "header-email";
+}
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width" />
+</head>
+<body style="background-color:#F4F4F4; color:#535353; font-family:arial, helvetica, sans-serif; font-size:13px;">
+
+
+    <table style="margin-left:auto; margin-right:auto; width:100%; max-width:700px; display:block; background:#ffffff;">
+        <thead width="100%">
+            <tr width="100%">
+                <th width="5%"></th>
+                <th width="90%" style="padding-top:30px;">
+                    <p style="text-align:right;">
+                        <a href="http://travorama.com" style="text-decoration:none;">
+                            <img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/travorama-logo-color.png")" alt="Travorama" />
+                        </a>
+                        <br />
+                    </p>
+                </th>
+                <th width="5%"></th>
+            </tr>
+        </thead>
+        <tbody width="100%">
+            <tr width="100%">
+                <td width="5%"></td>
+                <td width="90%" colspan="2">
+                    <!-- CONTENT  -->
+                    <p style="font-size:16px;"><b>Dear <span style="color: #15b1e4;"> @Model.Contact.Name </span></b></p>
+
+                    <p style="font-size:12px;">
+                        Akun Anda di Travorama for Business untuk perusahaan Anda telah diaktifkan kembali.
+                    </p>
+                    <p style="font-size:12px;">
+                        Silakan klik tombol di bawah ini untuk masuk ke Travorama for Business:
+                    </p>
+                    <a style="background-color: #ffd632; border: #e9d14d; display: inline-block; margin-left:20%; text-decoration: none; font-family:arial, helvetica, sans-serif; width: 60%; padding-top: 17px; padding-bottom: 17px; text-align: center; margin-top: 18px; margin-bottom: 40px; font-size: 11px; color: #333333;" href="#" target="_blank"><b>SIGN IN</b></a>
+                </td>
+                <td width="5%"></td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>
