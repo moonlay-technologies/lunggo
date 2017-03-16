@@ -204,11 +204,11 @@ app.controller('paymentController', [
             checked: false,
             checking: false,
             text: '',
-            first: true,
+            wait: false,
             check: function () {
                 $scope.currentchoice = 'VA';
                 if ($scope.methodDiscount.firstRequest) {
-                    
+                    $scope.methodDiscount.wait = true;
                     if ($scope.trial > 3) {
                         $scope.trial = 0;
                     }
@@ -231,8 +231,8 @@ app.controller('paymentController', [
                             },
                             headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') }
                         }).then(function (returnData) {
+                            $scope.methodDiscount.wait = false;
                             $scope.methodDiscount.firstRequest = false;
-                            $scope.methodDiscount.first = false;
                             if (returnData.data.status == 200) {
                                 if (returnData.data.isAvailable) {
                                     $scope.methodDiscount.amount = returnData.data.amount;
@@ -242,7 +242,12 @@ app.controller('paymentController', [
                                     if ($scope.methodDiscount.amount != 0) {
                                         $scope.methodDiscount.text = 'Anda menggunakan promo ' + $scope.methodDiscount.displayName + '.';
                                     }
-                                    $scope.methodDiscount.replaceDiscount = true;
+                                    if ($scope.paymentMethod == 'VirtualAccount') {
+                                        $scope.methodDiscount.replaceDiscount = true;
+                                    } else {
+                                        $scope.methodDiscount.replaceDiscount = false;
+                                    }
+                                    
                                     $scope.binDiscount.replaceDiscount = false;
                                     $scope.UniqueCodePaymentConfig.GetUniqueCode($scope.rsvNo, '', $scope.CreditCard.Number.substring(0, 6));
                                 } else {
@@ -270,7 +275,7 @@ app.controller('paymentController', [
                                 $scope.methodDiscount.check();
                             }
                             else {
-                                $scope.methodDiscount.first = false;
+                                $scope.methodDiscount.wait = false;
                                 $scope.methodDiscount.amount = 0;
                                 $scope.methodDiscount.checked = true;
                                 $scope.methodDiscount.checking = false;
@@ -1074,6 +1079,6 @@ jQuery(document).ready(function ($) {
             scrollTop: $("#" + val).offset().top
         }, 700);
 
-        $('input[value="' + val + '"]').attr('chekcked', true);
+        $('input[value="' + val + '"]').attr('checked', true);
     });
 })

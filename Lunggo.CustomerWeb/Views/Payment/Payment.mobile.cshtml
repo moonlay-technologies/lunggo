@@ -349,7 +349,7 @@
                                 }
                                 @if (env != "production" || (Model.Reservation is HotelReservationForDisplay && todayDate.Year == 2017 && todayDate.Month >= 3 && todayDate.Month <= 8 && todayDate.Day >= 25 && todayDate.Day <= 27))
                                 {
-                                    <label ng-click=" bindiscount.reset('ncc'); methodDiscount.check()">
+                                    <label ng-click=" bindiscount.reset('ncc'); methodDiscount.check();  methodDiscount.reset('VA')" id="selectVA">
                                         <header>
                                             <div class="input-wrapper">
                                                 <input type="radio" name="paymentMethod" value="@PaymentMethod.VirtualAccount" ng-model="paymentMethod" />
@@ -610,7 +610,11 @@
 
                             <p>*Dengan klik tombol ‘Bayar’, Anda telah setuju dengan <a href="@Url.Action("Terms","staticpage")" target="_blank">syarat &amp; ketentuan</a> dan <a href="@Url.Action("Privacy","staticpage")" target="_blank">kebijakan privasi</a></p>
                             <div class="form-group">
-                                <button type="submit" class="btn btn-yellow form-control" ng-disabled="(checkoutForm.loading || !paymentMethod) || !creditCardForm.$valid">BAYAR</button>
+                                <div class="col-xs-12" ng-show="methodDiscount.wait">
+                                    <img src="/Assets/images/load.gif" style="width: 8%;margin-left: 45%;margin-bottom: 8%;">
+                                </div>
+                                <button type="submit" class="btn btn-yellow form-control" ng-disabled="(checkoutForm.loading || !paymentMethod) || !creditCardForm.$valid || (paymentMethod == 'VirtualAccount' && methodDiscount.firstRequest)">BAYAR</button>
+                                
                             </div>
 
                         </form>
