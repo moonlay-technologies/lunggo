@@ -51,6 +51,15 @@ namespace Lunggo.ApCommon.Identity.Users
             }
         }
 
+        internal static List<string> GetListFinanceEmailByCompanyId(string companyId)
+        {
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                var user = GetListFinanceEmailByCompanyIdQuery.GetInstance().Execute(conn, new { CompanyId = companyId }).ToList();
+                return user;
+            }
+        }
+
         internal static List<string> GetListBookerEmail(string userId)
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())

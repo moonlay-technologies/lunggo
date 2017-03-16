@@ -38,7 +38,7 @@ namespace Lunggo.BackendWeb
 
             AppInitializer.Init();
             
-            var result = HotelService.GetInstance().UpdateReservation("216496558379", "Approved");
+            var result = HotelService.GetInstance().UpdateReservation("216496558379", "approved");
             var x = 3;
             //HotelService.GetInstance().CommenceIssueHotel(new IssueHotelTicketInput
             //{

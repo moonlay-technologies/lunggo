@@ -353,6 +353,7 @@ namespace Lunggo.ApCommon.Hotel.Service
         {
             var rsv = GetReservation(rsvNo);
             var userId = rsv.User.Id;
+            var userEmail = rsv.User.Email;
             var isDisabled = PaymentService.GetInstance().CheckBookingDisabilityStatus(userId);
             if (isDisabled == null || isDisabled == true)
             {
@@ -369,7 +370,15 @@ namespace Lunggo.ApCommon.Hotel.Service
                 {
                     var isPaid = PaymentService.GetInstance().ProcessB2BPayment(rsvNo);
                     if (!isPaid)
+                    {
+                        PaymentService.GetInstance().SetBookingDisabilityStatus(userId, true);
+                        var approverEmail = User.GetApproverEmailByUserId(userId);
+                        var companyId = rsv.User.CompanyId;
+                        var financeEmails = User.GetListFinanceEmailByCompanyId(companyId);
+                        NotifyFailedPayment(rsvNo, approverEmail, userEmail, financeEmails);
                         return false;
+                    }
+                        
                     UpdateRsvStatusDb(rsvNo, RsvStatus.Approved);
                     GetInstance().IssueBooker(rsvNo);
                     SendBookerBookingInfo(rsvNo);
@@ -394,5 +403,15 @@ namespace Lunggo.ApCommon.Hotel.Service
                 }
             }
         }
+
+        public void NotifyFailedPayment(string rsvNo, string approverEmail, string userEmail, List<string> financeEmails)
+        {
+            var queueService = QueueService.GetInstance();
+            var queue = queueService.GetQueueByReference("FailedPaymentNotifEmail");
+            var list = financeEmails.Aggregate("", (current, email) => current + (email + "|"));
+            list = list.Substring(0, list.Length - 1);
+            queue.AddMessage(new CloudQueueMessage(rsvNo + "&" + approverEmail + "&" + userEmail + "&" + list));
+        }
+
     }
 }

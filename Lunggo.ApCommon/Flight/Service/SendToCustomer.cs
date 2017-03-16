@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Lunggo.ApCommon.Identity.Users;
 using Lunggo.Framework.Config;
 using Lunggo.Framework.Queue;
 using Microsoft.WindowsAzure.Storage.Queue;
@@ -43,8 +44,7 @@ namespace Lunggo.ApCommon.Flight.Service
             queue.AddMessage(new CloudQueueMessage(rsvNo));
         }
 
-
-
+        
         //public void SendInstantPaymentConfirmedNotifToCustomer(string rsvNo)
         //{
         //    var queueService = QueueService.GetInstance();

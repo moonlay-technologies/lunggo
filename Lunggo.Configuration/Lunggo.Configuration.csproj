@@ -795,6 +795,7 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="HtmlTemplate\BankTransferInstructionEmailHotel.cshtml" />
+    <None Include="HtmlTemplate\FailedPaymentNotifEmail.cshtml" />
     <None Include="HtmlTemplate\FlightBookerNotifEmail.cshtml" />
     <None Include="HtmlTemplate\FlightBookingNotifEmail.cshtml" />
     <None Include="HtmlTemplate\HotelBookerNotifEmail.cshtml" />
