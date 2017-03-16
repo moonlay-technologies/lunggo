@@ -2835,6 +2835,8 @@
     <Content Include="Views\B2BTemplate\B2BUnsuspensionEmail.cshtml" />
     <Content Include="Views\B2BTemplate\OrderListBooker.cshtml" />
     <Content Include="Views\B2BTemplate\OrderListApprover.cshtml" />
+    <Content Include="Views\B2BTemplate\OrderListApprover.mobile.cshtml" />
+    <Content Include="Views\B2BTemplate\OrderListBooker.mobile.cshtml" />
     <None Include="Views\Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

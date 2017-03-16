@@ -208,6 +208,14 @@
             height: 2px;
             background: #626262;
         }
+        .icon-arrival {
+            -moz-transform: scaleY(-1);
+            -o-transform: scaleY(-1);
+            -webkit-transform: scaleY(-1);
+            transform: scaleY(-1);
+            filter: FlipV;
+            -ms-filter: "FlipV";
+        }
         .ol-list {
             .ol-border {
                 border-bottom: 1px solid rgba(230, 230, 230, 0.7);
@@ -236,7 +244,7 @@
                 &:hover {background: #daeffd !important; cursor: pointer;}
                 &.show {background: #fef6dd;
                     &:before {content: "\f077";}
-                }
+                }               
                 position: relative;
                 &:before {
                     content: "\f078";
@@ -249,6 +257,14 @@
                     margin-right: 20px;
                     transform: translateY(-50%);
                 }
+                &.mob {
+                    position: relative;
+                    &:before {
+                        top: auto;
+                        margin-right: 20px;
+                        transform: none;
+                    }
+                } 
             }
             .ol-item-hide {
                 ol.pax-list {
@@ -257,7 +273,7 @@
                 }
             }
             .ol-flight .ol-item {
-                &>div:first-child:before {
+                .flight-icon:before {
                     content: "\f072";
                     display: inline-block;
                     font-family: 'FontAwesome';
@@ -269,7 +285,7 @@
                 }
             }
             .ol-hotel .ol-item {
-                &>div:first-child:before {
+                .hotel-icon:before {
                     content: "\f1ad";
                     display: inline-block;
                     font-family: 'FontAwesome';
