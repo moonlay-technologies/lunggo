@@ -26,6 +26,7 @@
                     @Html.HiddenFor(x => Model.Token)
                     @Html.HiddenFor(x => Model.Status)
                     @*@Html.TextAreaFor(x=>Model.Message)*@
+    <input type="text" name=@Model.Title value=@Model.Title class="form-control" placeholder="Tujuan Keberangkatan">
                     <textarea style="height: 120px; margin-bottom: 15px;" type="text" name= "Message" value= "Message" class="form-control" placeholder="Tulis keterangan Anda"></textarea>
                     <div style="margin: 0 auto; width: 200px;">
                         <button type="submit" value="" class="btn btn-yellow form-control md-txt lg-btn">SIMPAN</button>

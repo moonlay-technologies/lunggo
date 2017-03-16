@@ -2,6 +2,7 @@
 @using Lunggo.ApCommon.Constant
 @using Lunggo.ApCommon.Product.Constant
 @using Lunggo.Framework.Config
+@using Microsoft.Office.Interop.Excel
 @model Lunggo.ApCommon.Flight.Model.FlightReservationForDisplay
 
 
@@ -63,7 +64,8 @@
                     else
                     {
                         <p style="font-size: 12px">Mohon maaf, pesanan anda ditolak oleh pihak Perusahaan Anda <br /> Terima kasih telah mempercayai <b>Travorama</b> dalam pemesanan tiket pesawat Anda.</p>
-    <p style="font-size: 12px">Alasan Penolakan : @Model.RejectionMessage</p>
+                        <p style="font-size: 12px">Alasan Penolakan : @Model.RejectionTitle</p>
+                        <p style="font-size: 12px">Deskripsi : @Model.RejectionDescription</p>
 
                         <a style="background-color: #ffd632; border: #e9d14d; display: inline-block; margin-left:15%; text-decoration: none; font-family:arial, helvetica, sans-serif;width: 70%; padding-top: 17px; padding-bottom: 17px; text-align: center; font-size: 11px; color: #333333; margin-top: 10px;"><b>REJECTED</b></a>
                     }    

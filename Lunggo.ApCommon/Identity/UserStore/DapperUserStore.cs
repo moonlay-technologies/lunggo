@@ -808,6 +808,26 @@ namespace Lunggo.ApCommon.Identity.UserStore
             return Task.FromResult(user.LockoutEnabled);
         }
 
+        public Task<bool> IsLockedOut(string userId)
+        {
+            //ThrowIfDisposed();
+            //if (userId == null)
+            //{
+            //    throw new ArgumentNullException("user");
+            //}
+
+            //using (var connection = DbService.GetInstance().GetOpenConnection())
+            //{
+            //    var userData = false;
+            //    var user = User.GetFromDb(userId);
+            //    if (user == null)
+            //        userData = false;
+            //    else
+            //        any = true;
+            //}
+            return Task.FromResult(true);
+        }
+    
         public Task SetLockoutEnabledAsync(TUser user, bool enabled)
         {
             ThrowIfDisposed();
@@ -816,6 +836,14 @@ namespace Lunggo.ApCommon.Identity.UserStore
                 throw new ArgumentNullException("user");
             }
             user.LockoutEnabled = enabled;
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                UserTableRepo.GetInstance().Update(conn, new UserTableRecord
+                {
+                    Id = user.Id,
+                    LockoutEnabled = true
+                });
+            }
             return Task.FromResult(0);
         }
 

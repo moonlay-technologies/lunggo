@@ -1484,6 +1484,54 @@ app.controller('B2BUserManagementController', [
             
         }
 
+        $scope.UpdateUserLock = function(userId, status) {
+            if (status == "LOCK") {
+                $scope.lockUser = true;
+            } else {
+                $scope.lockUser = false;
+            }
+            $scope.lockUpdated = false;
+            var authAccess = getAuthAccess();
+            if (authAccess == 2) {
+                //authorized
+                $http({
+                    url: UpdateUserLockConfig.Url,
+                    method: 'POST',
+                    data: {
+                        userId: userId,
+                        IsLocked: $scope.lockUser
+                    },
+                    headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') }
+                }).then(function (returnData) {
+                    //$log.debug(returnData);
+                    if (returnData.data.status == '200') {
+                        $log.debug('Success updating user Lock');
+                        $scope.lockUpdated = true;
+
+                    }
+                    else {
+                        $log.debug(returnData.data.error);
+                        $log.debug(returnData);
+                        $scope.lockUpdated = false;
+                    }
+                }).catch(function (returnData) {
+                    $scope.trial++;
+                    if (refreshAuthAccess() && $scope.trial < 4) //refresh cookie
+                    {
+                        $scope.UpdateUserLock(userId, status);
+                    }
+                    else {
+                        $log.debug('Failed Update User Lock');
+                        $log.debug(returnData);
+                        $scope.lockUpdated = false;
+                    }
+                });
+            }
+            else { //if not authorized
+                $scope.lockUpdated = false;
+            }
+        }
+
         //Get User
         $scope.User = {
             GetUser: function () {
@@ -1493,7 +1541,7 @@ app.controller('B2BUserManagementController', [
                 var authAccess = getAuthAccess();
                 if (authAccess == 2) {
                     $http({
-                        method: 'GET',
+                        method: 'POST',
                         url: GetUserConfig.Url,
                         async: false,
                         headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') }
@@ -1675,7 +1723,7 @@ app.controller('B2BUserManagementController', [
                     $scope.trial++;
                     if (refreshAuthAccess() && $scope.trial < 4) //refresh cookie
                     {
-                        $scope.addUser();
+                        $scope.updateUser();
                     }
                     else {
                         $log.debug('Failed Update User');

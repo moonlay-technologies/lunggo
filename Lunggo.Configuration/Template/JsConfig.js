@@ -142,6 +142,9 @@ var UpdateRoleConfig = {
 var UpdateUserConfig = {
     Url: '$apiUrl$$updateUserPath$'
 };
+var UpdateUserLockConfig = {
+    Url: '$apiUrl$$updateUserLockPath$'
+};
 
 var DeleteUserConfig = {
     Url: '$apiUrl$$deleteUserPath$'
@@ -169,6 +172,9 @@ var TrxHistoryConfig = {
 
 var BookerTrxHistoryConfig = {
     Url: '$apiUrl$$bookerTrxHistoryPath$'
+};
+var ApproverOrderListPathConfig = {
+    Url: '$apiUrl$$approverorderlistPath$'
 };
 
 var UpdateReservationConfig = {

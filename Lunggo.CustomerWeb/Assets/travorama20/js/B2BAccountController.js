@@ -323,7 +323,7 @@ app.controller('b2bResetPasswordController', [
     }
 ]);// reset controller end
 
-app.controller('b2BAccountController', [
+app.controller('b2BApproverController', [
     '$http', '$scope', '$log', function ($http, $scope, $log) {
 
         var hash = (location.hash);
@@ -514,7 +514,7 @@ app.controller('b2BAccountController', [
         //Get Transaction History
 
         $scope.trxHistory = {
-            getTrxHistory: function () {
+            getTrxHistory: function (filter) {
                 if ($scope.trial > 3) {
                     $scope.trial = 0;
                 }
@@ -522,16 +522,17 @@ app.controller('b2BAccountController', [
                 $scope.loading = true;
                 if (authAccess == 2) {
                     $http({
-                        method: 'GET',
-                        url: BookerTrxHistoryConfig.Url,
-                        headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') }
+                        method: 'POST',
+                        url: ApproverOrderListPathConfig.Url,
+                        headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') },
+                        data: {
+                            filter: filter
+                        }
                     }).then(function (returnData) {
                         $scope.loading = false;
                         if (returnData.data.status == "200") {
                             $log.debug('Success getting Transaction');
-                            $scope.flightlist = returnData.data.flights;
-                            $scope.hotellist = returnData.data.hotels;
-                            $scope.signature = returnData.data.signature;
+                            $scope.orderList = returnData.data.reservations;
                         }
                         else {
                             $log.debug('There is an error');
@@ -542,7 +543,7 @@ app.controller('b2BAccountController', [
                         $scope.trial++;
                         if (refreshAuthAccess() && $scope.trial < 4) //refresh cookie
                         {
-                            $scope.trxHistory.getTrxHistory();
+                            $scope.trxHistory.getTrxHistory(filter);
                         }
                         else {
                             $log.debug('Failed to Get Transaction History');
@@ -615,185 +616,9 @@ app.controller('b2BAccountController', [
             }
         }
 
-        //Change Profile and Password
-
-        $scope.editForm = function (name) {
-
-            if ($scope.trial > 3) {
-                $scope.trial = 0;
-            }
-            // edit profile form
-            if (name == 'profile') {
-                $scope.userProfile.edit = !($scope.userProfile.edit);
-                $scope.userProfile.updated = false;
-            }
-            else if (name == 'profileSave') {
-                $log.debug('submitting form');
-                $scope.userProfile.updating = true;
-                var authAccess = getAuthAccess();
-                if (authAccess == 2) {
-                    //authorized
-                    $http({
-                        url: ChangeProfileConfig.Url,
-                        method: 'PATCH',
-                        data: {
-                            name: $scope.editProfile.name,
-                            phone: $scope.editProfile.phone,
-                            countryCallCd: $scope.editProfile.countryCallCd
-                        },
-                        headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') }
-                    }).then(function (returnData) {
-                        //$log.debug(returnData);
-                        if (returnData.data.status == '200') {
-                            $log.debug('Success requesting change profile');
-                            $scope.userProfile.name = $scope.editProfile.name;
-                            $scope.userProfile.phone = $scope.editProfile.phone;
-                            $scope.userProfile.country = $scope.editProfile.countryCallCd;
-                            $scope.userProfile.edit = false;
-                            $scope.userProfile.updating = false;
-                            $scope.userProfile.updated = true;
-                        }
-                        else {
-                            $log.debug(returnData.data.error);
-                            $log.debug(returnData);
-                            $scope.userProfile.edit = true;
-                            $scope.userProfile.updating = false;
-                        }
-                    }).catch(function (returnData) {
-                        $scope.trial++;
-                        if (refreshAuthAccess() && $scope.trial < 4) //refresh cookie
-                        {
-                            $scope.editForm(name);
-                        }
-                        else {
-                            $log.debug('Failed requesting change profile');
-                            $scope.profileForm.edit = true;
-                            $scope.userProfile.updating = false;
-                        }
-                    });
-                }
-                else { //if not authorized
-                    $scope.userProfile.edit = true;
-                    $scope.userProfile.updating = false;
-                }
-            }
-
-            if (name == 'password') {
-                $scope.password.edit = !($scope.password.edit);
-                $scope.password.failed = false;
-            }
-            else if (name == 'passwordSave') {
-                $scope.password.updating = true;
-                $scope.password.failed = false;
-
-                $log.debug('submitting form');
-                // submit form to URL
-                if ($scope.passwordForm.newPassword != $scope.passwordForm.confirmationPassword) {
-                    $scope.passwordValid = false;
-                    $scope.password.failed = true;
-                    $scope.password.updating = false;
-                }
-                else {
-                    $scope.passwordValid = true;
-                    $scope.password.failed = false;
-                    //Check Authorization
-                    var authAccess = getAuthAccess();
-                    if (authAccess == 2) { //authorized
-                        $http({
-                            url: ChangePasswordConfig.Url,
-                            method: 'POST',
-                            data: {
-                                newPassword: $scope.passwordForm.newPassword,
-                                oldPassword: $scope.passwordForm.currentPassword,
-                            },
-                            headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') }
-                        }).then(function (returnData) {
-                            $scope.passwordForm.newPassword = '';
-                            $scope.passwordForm.currentPassword = '';
-                            $scope.passwordForm.confirmationPassword = '';
-                            if (returnData.data.status == '200') {
-                                $log.debug('Success requesting reset password');
-                                $scope.password.edit = false;
-                                $scope.password.updating = false;
-                            }
-                            else {
-                                $log.debug(returnData.data.error);
-                                $log.debug(returnData);
-                                $scope.password.updating = false;
-                                $scope.password.failed = true;
-                            }
-                        }).catch(function (returnData) {
-                            $scope.trial++;
-                            if (refreshAuthAccess() && $scope.trial < 4) //refresh cookie
-                            {
-                                $scope.editForm(name);
-                            }
-                            else {
-                                $log.debug('Failed requesting change profile');
-                                $log.debug(returnData);
-                                $scope.profileForm.edit = true;
-                                $scope.userProfile.updating = false;
-                            }
-                        });
-                    }
-                    else { // not authorized
-                        $scope.password.edit = true;
-                        $scope.password.updating = false;
-                    }
-
-                }
-            }
-        }
-
-        $scope.passwordForm.submit = function () {
-            if ($scope.trial > 3) {
-                $scope.trial = 0;
-            }
-            $scope.passwordForm.submitting = true;
-            $log.debug('submitting form');
-            //Check Authorization
-            var authAccess = getAuthAccess();
-            if (authAccess == 2) {
-                // submit form to URL
-                $http({
-                    url: ChangePasswordConfig.Url,
-                    method: 'POST',
-                    data: {
-                        password: $scope.passwordForm.newPassword
-                    },
-                    headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') }
-                }).then(function (returnData) {
-                    if (returnData.data.Status == 'Success') {
-                        $log.debug('Success requesting reset password');
-                        //$log.debug(returnData);
-                        $scope.passwordForm.submitting = false;
-                        $scope.passwordForm.submitted = true;
-                    }
-                    else {
-                        $log.debug(returnData);
-                        $scope.passwordForm.submitting = false;
-                    }
-                }).catch(function (returnData) {
-                    $scope.trial++;
-                    if (refreshAuthAccess() && $scope.trial < 4) //refresh cookie
-                    {
-                        $scope.passwordForm.submit();
-                    }
-                    else {
-                        $log.debug('Failed requesting reset password');
-                        $log.debug(returnData);
-                        $scope.passwordForm.submitting = false;
-                    }
-                });
-            }
-            else {
-                $scope.passwordForm.submitting = false;
-            }
-        }
-
         //Executing Get Profile and Transaction History
         $scope.TakeProfileConfig.TakeProfile();
-        $scope.trxHistory.getTrxHistory();
+        $scope.trxHistory.getTrxHistory('pending');
 
         $scope.changeSection = function (name) {
             $scope.currentSection = name;

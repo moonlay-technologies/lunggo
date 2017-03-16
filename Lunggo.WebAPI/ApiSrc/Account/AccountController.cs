@@ -85,7 +85,7 @@ namespace Lunggo.WebAPI.ApiSrc.Account
             try
             {
                 request = ApiRequestBase.DeserializeRequest<LoginApiRequest>();
-                var apiResponse = AccountLogic.B2BLogin(request);
+                var apiResponse = AccountLogic.B2BLogin(request, UserManager);
                 return apiResponse;
             }
             catch (Exception e)
@@ -287,6 +287,37 @@ namespace Lunggo.WebAPI.ApiSrc.Account
             }
         }
 
+        [HttpPost]
+        [LunggoCorsPolicy]
+        [Authorize]
+        [Route("v1/approverorderlist")]
+        public ApiResponseBase ApproverOrderList()
+        {
+            ReservationOrderListRequest request = null;
+            if (User.Identity.IsAuthenticated)
+            {
+                if (!User.Identity.IsInRole("Approver"))
+                {
+                    return new ApiResponseBase
+                    {
+                        StatusCode = HttpStatusCode.Unauthorized,
+                        ErrorCode = "ERRAPOL1"
+                    };
+                }
+            }
+            try
+            {
+                request = ApiRequestBase.DeserializeRequest<ReservationOrderListRequest>();
+                var apiResponse = AccountLogic.GetApproverOrderList(request);
+                return apiResponse;
+            }
+            catch (Exception e)
+            {
+                return ApiResponseBase.ExceptionHandling(e, request);
+            }
+        }
+
+
         [HttpGet]
         [LunggoCorsPolicy]
         [Authorize]
@@ -362,7 +393,7 @@ namespace Lunggo.WebAPI.ApiSrc.Account
         }
 
         /* User Management */
-        [HttpGet]
+        [HttpPost]
         [LunggoCorsPolicy]
         [Authorize]
         [Route("v1/getuser")]
@@ -376,14 +407,16 @@ namespace Lunggo.WebAPI.ApiSrc.Account
                     ErrorCode = "ERRGU01"
                 };
             }
+           GetUserRequest request = null;
             try
             {
-                var apiResponse = AccountLogic.GetUser();
+                request = ApiRequestBase.DeserializeRequest<GetUserRequest>();
+                var apiResponse = AccountLogic.GetUser(request);
                 return apiResponse;
             }
             catch (Exception e)
             {
-                return ApiResponseBase.ExceptionHandling(e);
+                return ApiResponseBase.ExceptionHandling(e, request);
             }
         }
 
@@ -460,6 +493,33 @@ namespace Lunggo.WebAPI.ApiSrc.Account
             {
                 request = ApiRequestBase.DeserializeRequest<UpdateRoleRequest>();
                 var apiResponse = AccountLogic.UpdateRoleLogic(request, UserManager);
+                return apiResponse;
+            }
+            catch (Exception e)
+            {
+                return ApiResponseBase.ExceptionHandling(e, request);
+            }
+        }
+
+        [HttpPost]
+        [Authorize]
+        [LunggoCorsPolicy]
+        [Route("v1/updateuserlock")]
+        public ApiResponseBase UpdateUserLock()
+        {
+            UpdateUserLockRequest request = null;
+            if (!User.Identity.IsInRole("Admin"))
+            {
+                return new ApiResponseBase
+                {
+                    StatusCode = HttpStatusCode.Unauthorized,
+                    ErrorCode = "ERRUR01"
+                };
+            }
+            try
+            {
+                request = ApiRequestBase.DeserializeRequest<UpdateUserLockRequest>();
+                var apiResponse = AccountLogic.UpdateUserLockLogic(request, UserManager);
                 return apiResponse;
             }
             catch (Exception e)

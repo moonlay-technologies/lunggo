@@ -10,6 +10,7 @@ namespace Lunggo.CustomerWeb.Models
         public string RsvNo { get; set; }
         public string Token { get; set; }
         public string Status { get; set; }
+        public string Title { get; set; }
         public string Message { get; set; }
     }
 }

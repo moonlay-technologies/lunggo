@@ -246,7 +246,8 @@
                                 <button class="btn remove-payment m-r-10" ng-click="EditUserProfile($index)" @*data-toggle="modal" data-target="#edit-user"*@>
                                     <i class="fa fa-pencil"></i>
                                 </button>
-                                <button class="btn btn-danger btn-cons" style="">Deactivate</button>
+                                <button ng-if="!user.isLocked" ng-click="UpdateUserLock(user.userId, 'LOCK')" class="btn btn-danger btn-cons" style="">Deactivate</button>
+                                <button ng-if="user.isLocked" ng-click="UpdateUserLock(user.userId, 'UNLOCK')" class="btn btn-green btn-cons" style="">Activate</button>
                             </td>
                         </tr>
                     </tbody>

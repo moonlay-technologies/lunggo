@@ -289,7 +289,8 @@ namespace Lunggo.ApCommon.Hotel.Service
                 Contact = input.Contact,
                 HotelDetails = hotelInfo,
                 Pax = input.Passengers,
-                BookerMessage = input.BookerMessage,
+                BookerMessageTitle = input.BookerMessageTitle,
+                BookerMessageDescription = input.BookerMessageDescription,
                 Payment = new PaymentDetails
                 {
                     Status = PaymentStatus.Pending,

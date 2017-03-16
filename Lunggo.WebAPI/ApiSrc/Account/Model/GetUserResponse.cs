@@ -15,6 +15,9 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Model
         [JsonProperty("roles", NullValueHandling = NullValueHandling.Ignore)]
         public List<string> Roles { get; set; }
         [JsonProperty("approvers", NullValueHandling = NullValueHandling.Ignore)]
-        public List<ApproverData> Approvers { get; set; } 
+        public List<ApproverData> Approvers { get; set; }
+
     }
+
+    
 }

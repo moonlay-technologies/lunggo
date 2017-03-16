@@ -35,5 +35,7 @@ namespace Lunggo.ApCommon.Identity.Model
         public string ApproverId { get; set; }
         [JsonProperty("approverName", NullValueHandling = NullValueHandling.Ignore)]
         public string ApproverName { get; set; }
+        [JsonProperty("isLocked", NullValueHandling = NullValueHandling.Ignore)]
+        public bool IsLocked { get; set; }
     }
 }

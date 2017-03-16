@@ -351,6 +351,7 @@ namespace Lunggo.Configuration
             const string addUserPath = @"/v1/adduser";
             const string updateRolePath = @"/v1/updaterole";
             const string updateUserPath = @"/v1/updateuser";
+            const string updateUserLockPath = @"/v1/updateuserlock";
             const string deleteUserPath = @"/v1/deleteuser";
             const string getCreditCardPath = @"/v1/payment/getcreditcard";
             const string addCreditCardPath = @"/v1/payment/addcreditcard";
@@ -361,6 +362,7 @@ namespace Lunggo.Configuration
             const string changePasswordPath = @"/v1/changepassword";
             const string changeProfilePath = @"/v1/profile";
             const string trxHistoryPath = @"/v1/trxhistory";
+            const string approverorderlistPath = @"/v1/approverorderlist";
             const string bookerTrxHistoryPath = @"/v1/bookertrxhistory";
             const string updateReservationPath = @"/v1/updatereservation";
             const string getReservationPath = @"/v1/rsv/";
@@ -395,6 +397,7 @@ namespace Lunggo.Configuration
             fileTemplate.SetAttribute("subscribePath", subscribePath);
             fileTemplate.SetAttribute("trxHistoryPath", trxHistoryPath);
             fileTemplate.SetAttribute("bookerTrxHistoryPath", bookerTrxHistoryPath);
+            fileTemplate.SetAttribute("approverorderlistPath", approverorderlistPath);
             fileTemplate.SetAttribute("getReservationPath", getReservationPath);
             fileTemplate.SetAttribute("updateReservationPath", updateReservationPath);
             fileTemplate.SetAttribute("loginPath", loginPath);
@@ -403,6 +406,7 @@ namespace Lunggo.Configuration
             fileTemplate.SetAttribute("registerPath", registerPath);
             fileTemplate.SetAttribute("b2bRegisterPath",b2bRegisterPath);
             fileTemplate.SetAttribute("getUserPath", getUserPath);
+            fileTemplate.SetAttribute("updateUserLockPath", updateUserLockPath);
             fileTemplate.SetAttribute("addUserPath", addUserPath);
             fileTemplate.SetAttribute("deleteCardPath", deleteCardPath);
             fileTemplate.SetAttribute("updateRolePath", updateRolePath);

@@ -18,10 +18,14 @@ namespace Lunggo.ApCommon.Product.Model
         public DateTime RsvTime { get; set; }
         [JsonProperty("rsvType", NullValueHandling = NullValueHandling.Ignore)]
         public string RsvType { get; set; }
-        [JsonProperty("bookerMessage", NullValueHandling = NullValueHandling.Ignore)]
-        public string BookerMessage { get; set; }
-        [JsonProperty("rejectionMessage", NullValueHandling = NullValueHandling.Ignore)]
-        public string RejectionMessage { get; set; }
+        [JsonProperty("bookerMessageTitle", NullValueHandling = NullValueHandling.Ignore)]
+        public string BookerMessageTitle { get; set; }
+        [JsonProperty("bookerMessageDescription", NullValueHandling = NullValueHandling.Ignore)]
+        public string BookerMessageDescription { get; set; }
+        [JsonProperty("rejectionTitle", NullValueHandling = NullValueHandling.Ignore)]
+        public string RejectionTitle { get; set; }
+        [JsonProperty("rejectionDescription", NullValueHandling = NullValueHandling.Ignore)]
+        public string RejectionDescription { get; set; }
 
         [JsonProperty("rsvStatus", NullValueHandling = NullValueHandling.Ignore)]
         public RsvDisplayStatus RsvDisplayStatus { get; set; }
@@ -35,8 +39,10 @@ namespace Lunggo.ApCommon.Product.Model
         public Contact Contact { get; set; }
         [JsonProperty("pax", NullValueHandling = NullValueHandling.Ignore)]
         public List<PaxForDisplay> Pax { get; set; }
-        [JsonIgnore]
+        [JsonProperty("userId", NullValueHandling = NullValueHandling.Ignore)]
         public string UserId { get; set; }
+        [JsonProperty("bookerName", NullValueHandling = NullValueHandling.Ignore)]
+        public string BookerName { get; set; }
         [JsonIgnore]
         public string DeviceId { get; set; }
     }
@@ -55,8 +61,10 @@ namespace Lunggo.ApCommon.Product.Model
         public User User { get; set; }
         public ReservationState State { get; set; }
         public List<Pax> Pax { get; set; }
-        public string BookerMessage { get; set; }
-        public string RejectionMessage { get; set; }
+        public string BookerMessageTitle { get; set; }
+        public string BookerMessageDescription { get; set; }
+        public string RejectionTitle { get; set; }
+        public string RejectionDescription { get; set; }
 
         public abstract decimal GetTotalSupplierPrice();
     }

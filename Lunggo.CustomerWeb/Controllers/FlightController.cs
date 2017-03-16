@@ -206,7 +206,7 @@ namespace Lunggo.CustomerWeb.Controllers
             }
             else
             {
-                var isUpdated = FlightService.GetInstance().UpdateReservation(rsvNo, status, null);
+                var isUpdated = FlightService.GetInstance().UpdateReservation(rsvNo, status, null,null);
                 if (isUpdated)
                 {
                     //Gak tau masih dia pergi kemana
@@ -240,7 +240,7 @@ namespace Lunggo.CustomerWeb.Controllers
         {
             if (rejectionData == null)
                 return null;
-            var isUpdated = FlightService.GetInstance().UpdateReservation(rejectionData.RsvNo, rejectionData.Status, rejectionData.Message);
+            var isUpdated = FlightService.GetInstance().UpdateReservation(rejectionData.RsvNo, rejectionData.Status,rejectionData.Title, rejectionData.Message);
             if (isUpdated)
             {
                 //Gak tau masih dia pergi kemana

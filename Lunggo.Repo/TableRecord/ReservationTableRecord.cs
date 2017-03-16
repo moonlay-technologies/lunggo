@@ -86,22 +86,40 @@ namespace Lunggo.Repository.TableRecord
             }
         }
 
-        public String BookerMessage
+        public String BookerMessageTitle
         {
-            get { return _BookerMessage; }
+            get { return _BookerMessageTitle; }
             set
             {
-                _BookerMessage = value;
-                IncrementLog("BookerMessage");
+                _BookerMessageTitle = value;
+                IncrementLog("BookerMessageTitle");
             }
         }
-        public String RejectionMessage
+        public String BookerMessageDescription
         {
-            get { return _RejectionMessage; }
+            get { return _BookerMessageDescription; }
             set
             {
-                _RejectionMessage = value;
-                IncrementLog("RejectionMessage");
+                _BookerMessageDescription = value;
+                IncrementLog("BookerMessageDescription");
+            }
+        }
+        public String RejectionTitle
+        {
+            get { return _RejectionTitle; }
+            set
+            {
+                _RejectionTitle = value;
+                IncrementLog("RejectionTitle");
+            }
+        }
+        public String RejectionDescription
+        {
+            get { return _RejectionDescription; }
+            set
+            {
+                _RejectionDescription = value;
+                IncrementLog("RejectionDescription");
             }
         }
 		public String InsertBy
@@ -168,8 +186,10 @@ namespace Lunggo.Repository.TableRecord
         private String _CancellationReference;
 		private String _UserId;
         private String _RsvType;
-        private String _RejectionMessage;
-        private String _BookerMessage;
+        private String _RejectionTitle;
+        private String _RejectionDescription;
+        private String _BookerMessageTitle;
+        private String _BookerMessageDescription;
 		private String _InsertBy;
 		private DateTime? _InsertDate;
 		private String _InsertPgId;
@@ -215,8 +235,10 @@ namespace Lunggo.Repository.TableRecord
                 new ColumnMetadata("CancellationReference", false),
 				new ColumnMetadata("UserId", false),
                 new ColumnMetadata("RsvType", false),
-                new ColumnMetadata("BookerMessage", false),
-                new ColumnMetadata("RejectionMessage", false),
+                new ColumnMetadata("BookerMessageTitle", false),
+                new ColumnMetadata("BookerMessageDescription", false),
+                new ColumnMetadata("RejectionTitle", false),
+                new ColumnMetadata("RejectionDescription", false),
 				new ColumnMetadata("InsertBy", false),
 				new ColumnMetadata("InsertDate", false),
 				new ColumnMetadata("InsertPgId", false),

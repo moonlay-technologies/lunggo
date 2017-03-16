@@ -13,6 +13,7 @@ namespace Lunggo.ApCommon.Hotel.Model.Logic
         public List<Pax> Passengers { get; set; }
         public Contact Contact { get; set; }
         public string SpecialRequest { get; set; }
-        public string BookerMessage { get; set; }
+        public string BookerMessageTitle { get; set; }
+        public string BookerMessageDescription { get; set; }
     }
 }

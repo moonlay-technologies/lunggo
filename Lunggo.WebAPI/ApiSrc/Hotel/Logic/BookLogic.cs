@@ -77,7 +77,8 @@ namespace Lunggo.WebAPI.ApiSrc.Hotel.Logic
                 Contact = request.Contact,
                 Token = request.Token,
                 SpecialRequest = request.SpecialRequest,
-                BookerMessage = request.BookerMessage
+                BookerMessageTitle = request.BookerMessageTitle,
+                BookerMessageDescription = request.BookerMessageDescription
             };
             return selectServiceRequest;
         }

@@ -8,13 +8,14 @@ using Lunggo.Framework.Config;
 using Lunggo.Framework.Extension;
 using Lunggo.Framework.Log;
 using Lunggo.WebAPI.ApiSrc.Account.Model;
+using Microsoft.AspNet.Identity;
 using RestSharp;
 
 namespace Lunggo.WebAPI.ApiSrc.Account.Logic
 {
     public static partial class AccountLogic
     {
-        public static LoginApiResponse B2BLogin(LoginApiRequest request)
+        public static LoginApiResponse B2BLogin(LoginApiRequest request, ApplicationUserManager userManager)
         {
             if (request.RefreshToken != null && (request.UserName != null || request.Password != null))
                 return new LoginApiResponse
@@ -79,6 +80,18 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
                         StatusCode = HttpStatusCode.BadRequest,
                         ErrorCode = "ERALOG05"
                     };
+
+                var foundUser = userManager.FindByName(request.UserName);
+                if (foundUser != null)
+                {
+                    if (foundUser.LockoutEnabled)
+                        return new LoginApiResponse
+                        {
+                            StatusCode = HttpStatusCode.BadRequest,
+                            ErrorCode = "ERALOG02"
+                        };
+                }
+                
                 return new LoginApiResponse
                 {
                     AccessToken = tokenData.AccessToken,

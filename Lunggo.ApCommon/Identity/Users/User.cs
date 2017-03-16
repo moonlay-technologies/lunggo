@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Sdk.auto.model;
 using Lunggo.ApCommon.Identity.Model;
 using Lunggo.ApCommon.Identity.Query;
+using Lunggo.ApCommon.Identity.Roles;
 using Lunggo.ApCommon.Product.Constant;
 using Lunggo.Framework.Database;
 using Lunggo.Repository.TableRecord;
@@ -15,7 +17,7 @@ namespace Lunggo.ApCommon.Identity.Users
 {
     public class User : UserBase<string>
     {
-        public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<User,string> manager)
+        public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<User, string> manager)
         {
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType
             var userIdentity = await manager.CreateIdentityAsync(this, DefaultAuthenticationTypes.ApplicationCookie);
@@ -27,7 +29,7 @@ namespace Lunggo.ApCommon.Identity.Users
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
-                var record = GetUserByIdQuery.GetInstance().Execute(conn, new {Id = userId}).SingleOrDefault();
+                var record = GetUserByIdQuery.GetInstance().Execute(conn, new { Id = userId }).SingleOrDefault();
 
                 if (record == null)
                     return null;
@@ -50,7 +52,7 @@ namespace Lunggo.ApCommon.Identity.Users
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
-                var user = GetApproverByUserIdQuery.GetInstance().Execute(conn, new {userId }).FirstOrDefault();
+                var user = GetApproverByUserIdQuery.GetInstance().Execute(conn, new { userId }).FirstOrDefault();
                 return user;
             }
         }
@@ -59,7 +61,7 @@ namespace Lunggo.ApCommon.Identity.Users
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
-                var userList = GetAvailableApproverQuery.GetInstance().Execute(conn, new {}).ToList();
+                var userList = GetAvailableApproverQuery.GetInstance().Execute(conn, new { }).ToList();
                 return userList;
             }
         }
@@ -68,7 +70,7 @@ namespace Lunggo.ApCommon.Identity.Users
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
-                var user = GetApproverEmailByUserIdQuery.GetInstance().Execute(conn, new {userId}).FirstOrDefault();
+                var user = GetApproverEmailByUserIdQuery.GetInstance().Execute(conn, new { userId }).FirstOrDefault();
                 return user;
             }
         }
@@ -82,15 +84,114 @@ namespace Lunggo.ApCommon.Identity.Users
             }
         }
 
-        public static List<UserData> GetAllUserByCompanyId(string userId)
+        public static List<UserData> GetAllUserByCompanyId(string userId, FilterSortingModel model)
         {
             var companyId = GetCompanyIdByUserId(userId);
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
                 var userList = GetAllUserByAdminQuery.GetInstance().Execute(conn, new { CompanyId = companyId }).ToList();
+                foreach (var user in userList)
+                {
+                    user.RoleName = Role.GetFromDb(user.UserId);
+                    if(!string.IsNullOrEmpty(user.ApproverId))
+                        user.ApproverName = GetNameByUserId(user.ApproverId);
+                }
+                if (model != null)
+                {
+                    //By Name
+                    if (!string.IsNullOrEmpty(model.Name))
+                    {
+                        userList = userList.Where(x => x.FirstName != null).ToList();
+                        userList = userList.Where(x => x.FirstName.ToLower().Equals(model.Name)).ToList();
+                    }
+                    
+                    //By Email
+                    if (!string.IsNullOrEmpty(model.Email))
+                    {
+                        userList = userList.Where(x => x.Email != null).ToList();
+                        userList = userList.Where(x => x.Email.ToLower().Equals(model.Email)).ToList();
+                    }
+                    
+                    //By Position
+                    if (!string.IsNullOrEmpty(model.Position))
+                    {
+                        userList = userList.Where(x => x.Position != null).ToList();
+                        userList = userList.Where(x => x.Position.ToLower().Equals(model.Position)).ToList();
+                    }
+                   
+                    
+                    //By Department
+                    if (!string.IsNullOrEmpty(model.Department))
+                    {
+                        userList = userList.Where(x => x.Department != null).ToList();
+                        userList = userList.Where(x => x.Department.ToLower().Equals(model.Department)).ToList();
+                    }
+                    
+                    
+                    //By Branch
+                    if (!string.IsNullOrEmpty(model.Branch))
+                    {
+                        userList = userList.Where(x => x.Branch != null).ToList();
+                        userList = userList.Where(x => x.Branch.ToLower().Equals(model.Branch)).ToList(); 
+                    }
+                    
+                    //By Role
+                    if (model.Roles != null)
+                    {
+                        userList = userList.Where(x =>x.RoleName.Intersect(model.Roles).Any()).ToList();
+                    }
+                    
+                    if (model.Sorting != null)
+                    {
+                        userList = SortUser(userList, model.Sorting);
+                    }
+                }
                 return userList;
             }
         }
+
+        public  static List<UserData> SortUser(List<UserData> hotels, string param)
+        {
+            var sortedUser = new List<UserData>();
+            switch (UserSortingTypeCd.Mnemonic(param))
+            {
+                case UserSortingType.AscendingName:
+                    sortedUser = hotels.OrderBy(p => p.FirstName).ToList();
+                    break;
+                case UserSortingType.DescendingName:
+                    sortedUser = hotels.OrderByDescending(p => p.FirstName).ToList();
+                    break;
+                case UserSortingType.AscendingPosition:
+                    sortedUser = hotels.OrderBy(p => p.Position).ToList();
+                    break;
+                case UserSortingType.DescendingPosition:
+                    sortedUser = hotels.OrderByDescending(p => p.Position).ToList();
+                    break;
+                case UserSortingType.AscendingDepartment:
+                    sortedUser = hotels.OrderBy(p => p.Department).ToList();
+                    break;
+                case UserSortingType.DescendingDepartment:
+                    sortedUser = hotels.OrderByDescending(p => p.Department).ToList();
+                    break;
+                case UserSortingType.AscendingBranch:
+                    sortedUser = hotels.OrderBy(p => p.Branch).ToList();
+                    break;
+                case UserSortingType.DescendingBranch:
+                    sortedUser = hotels.OrderByDescending(p => p.Branch).ToList();
+                    break;
+                case UserSortingType.AscendingEmail:
+                    sortedUser = hotels.OrderBy(p => p.Email).ToList();
+                    break;
+                case UserSortingType.DescendingEmail:
+                    sortedUser = hotels.OrderByDescending(p => p.Email).ToList();
+                    break;
+                default:
+                    sortedUser = hotels.OrderBy(p => p.Email).ToList();
+                    break;
+            }
+            return sortedUser;
+        }
+
 
         public static List<string> GetAllRoles()
         {
@@ -129,6 +230,26 @@ namespace Lunggo.ApCommon.Identity.Users
                         Department = user.Department,
                         Branch = user.Branch,
                         ApproverId = user.ApproverId
+                    });
+                }
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        public static bool UpdateUserLock(string userId, bool isLocked)
+        {
+            try
+            {
+                using (var conn = DbService.GetInstance().GetOpenConnection())
+                {
+                    UserTableRepo.GetInstance().Update(conn, new UserTableRecord
+                    {
+                        Id = userId,
+                        LockoutEnabled = isLocked
                     });
                 }
                 return true;
