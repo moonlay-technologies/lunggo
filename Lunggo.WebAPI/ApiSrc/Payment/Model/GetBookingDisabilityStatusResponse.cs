@@ -5,7 +5,7 @@ namespace Lunggo.WebAPI.ApiSrc.Payment.Model
 {
     public class GetBookingDisabilityStatusResponse : ApiResponseBase
     {
-        [JsonProperty("isPaymentDisabled")]
-        public bool? IsPaymentDisabled { get; set; }
+        [JsonProperty("isBookingDisabled")]
+        public bool? IsBookingDisabled { get; set; }
     }
 }

@@ -1,0 +1,30 @@
+﻿﻿@{
+    Layout = "/Views/Shared/mobile/_LayoutMobile.cshtml";
+    ViewBag.Title = "Penolakan Pesanan";
+    ViewBag.BodyClass = "page page-reject";
+    ViewBag.AngularController = "CheckOrderController";
+}
+@section AdditionalJS {
+}
+@section PageJS{
+    <script>
+        var LoginMessage = '@ViewBag.Message';
+    </script>
+    <script src="/Assets/mobile/js/AccountController.js"></script>
+}
+<div class="container-page page-cekpesanan">
+    <header class="page__header">
+        <h1 class="text-center section-title stripe">Keterangan <span>Penolakan</span></h1>
+    </header>
+    <div class="page__body">
+        <div class="desc">Silahkan isi alasan mengapa Anda menolak pesanan.</div>
+        <div class="form-content">
+            <div class="form-group">
+                <textarea style="height: 120px; margin-top:10px" type="text" name="rejectDetail" value="" class="form-control" placeholder="Tulis keterangan Anda."></textarea>
+            </div>
+            <div class="form-group">
+                <button type="submit" value="" class="btn btn-yellow btn-block">SIMPAN</button>
+            </div>
+        </div>
+    </div>
+</div>

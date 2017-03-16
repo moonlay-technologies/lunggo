@@ -13,7 +13,7 @@ namespace Lunggo.WebAPI.ApiSrc.Payment.Logic
 
             return new GetBookingDisabilityStatusResponse
             {
-                IsPaymentDisabled = status,
+                IsBookingDisabled = status,
                 StatusCode = HttpStatusCode.OK,
             };
         }

@@ -1,5 +1,42 @@
 ﻿body {
+    .col-xs-15,
+    .col-sm-15,
+    .col-md-15,
+    .col-lg-15 {
+        position: relative;
+        min-height: 1px;
+        padding-right: 10px;
+        padding-left: 10px;
+    }
+
+    .col-xs-15 {
+        width: 20%;
+        float: left;
+        }
+
+    @media (min-width: 768px) {
+    .col-sm-15 {
+            width: 20%;
+            float: left;
+        }
+    }
+
+    @media (min-width: 992px) {
+        .col-md-15 {
+            width: 20%;
+            float: left;
+        }
+    }
+
+    @media (min-width: 1200px) {
+        .col-lg-15 {
+            width: 20%;
+            float: left;
+        }
+    }
+
     /*Custom Sidebar Menu*/
+    .page-sidebar .sidebar-menu .menu-items > li > a > .title {width: 90%}
     &.mobile .sidebar-menu {overflow: hidden;}
     .bg-pic {
         background-image: url(/Assets/B2BTravorama/assets/img/demo/new-york-city-buildings-sunrise-morning-hd-wallpaper.jpg);
@@ -7,31 +44,7 @@
         background-size: cover; 
         opacity: 0.6;
     }
-    /*Custom Search Form*/
-    &.b2b-search {
-        .form-group-default label.label-custom {display: inline;}
-        .cs-backdrop {border: none;}
-        .cs-select > span::after {display: none;}
-        .cs-wrapper { position: relative;
-            &:after {
-                right: 0;
-                position: absolute;
-                content: "\f0d7";
-                font-family: FontAwesome;
-                color: #5e5e5e;
-            }
-        }
-        .form-group-default .cs-skin-slide > span {
-            padding: 0; 
-            width: 240px;
-        }
-        .cs-select.cs-active .cs-options {text-align: center;}
-        &.hotel {
-            .room-item {
-                .panel-body {padding-bottom: 0;}
-                &:last-child .panel-body {padding-bottom: 20px;}
-            }
-        }
+
         .form-group.input-custom {
             padding: 5px 0;
             background-color: #fff;
@@ -59,6 +72,32 @@
         }
         .dropdown-default .dropdown-menu:after {display: none;}
         .dropdown-menu > li:first-child, .dropdown-menu > li:last-child {padding: 0}
+
+    /*Custom Search Form*/
+    &.b2b-search {
+        .form-group-default label.label-custom {display: inline;}
+        .cs-backdrop {border: none;}
+        .cs-select > span::after {display: none;}
+        .cs-wrapper { position: relative;
+            &:after {
+                right: 0;
+                position: absolute;
+                content: "\f0d7";
+                font-family: FontAwesome;
+                color: #5e5e5e;
+    }
+        }
+        .form-group-default .cs-skin-slide > span {
+            padding: 0; 
+            width: 240px;
+        }
+        .cs-select.cs-active .cs-options {text-align: center;}
+        &.hotel {
+            .room-item {
+                .panel-body {padding-bottom: 0;}
+                &:last-child .panel-body {padding-bottom: 20px;}
+            }
+        }
     }
     &.b2b-payment {
         .payment-item {
@@ -151,6 +190,18 @@
             }
         }
     }
+    &.b2b-user-manage {
+        .user-management {
+            #add-user, #edit-user {
+                form {
+                    max-height: 420px;
+                    overflow-y: auto;
+                    padding-right: 20px;
+                    margin-bottom: 20px;
+                }
+            }
+        }
+    }
     &.b2b-order-detail {
         .flight-reservation .table.table-condensed.table-detailed > tbody > tr > td:first-child:after,
         .flight-payment .table.table-condensed.table-detailed > tbody > tr > td:first-child:after,
@@ -159,6 +210,109 @@
             float: right;
         }
         .table.table-condensed.table-detailed > tbody > tr > td:first-child:before {display: none;}
+    }
+    &.b2b-order-list {
+        .dash {
+            display: block;
+            height: 2px;
+            background: #626262;
+        }
+        .icon-arrival {
+            -moz-transform: scaleY(-1);
+            -o-transform: scaleY(-1);
+            -webkit-transform: scaleY(-1);
+            transform: scaleY(-1);
+            filter: FlipV;
+            -ms-filter: "FlipV";
+        }
+        .ol-list {
+            .ol-border {
+                border-bottom: 1px solid rgba(230, 230, 230, 0.7);
+            }
+            .text-middle {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%,-50%);
+            }
+            .float-left {
+                float: left;
+                padding: 0 20px;
+                margin: 12px 0;
+                line-height: 20px;
+            }
+            .olh-name:after {
+                content: ':';
+                display: block;
+                float: right;
+                font-size: 16px;
+                margin-right: 10px;
+                line-height: 100%;
+            }
+            .ol-item {
+                &:hover {background: #daeffd !important; cursor: pointer;}
+                &.show {background: #fef6dd;
+                    &:before {content: "\f077";}
+                }               
+                position: relative;
+                &:before {
+                    content: "\f078";
+                    display: inline-block;
+                    font-family: 'FontAwesome';
+                    position: absolute;
+                    font-size: 12px;
+                    right: 0;
+                    top: 50%;
+                    margin-right: 20px;
+                    transform: translateY(-50%);
+                }
+                &.mob {
+                    position: relative;
+                    &:before {
+                        top: auto;
+                        margin-right: 20px;
+                        transform: none;
+                    }
+                } 
+            }
+            .ol-item-hide {
+                ol.pax-list {
+                    li {padding-left: 5px;}
+                    .pl-row {margin-top: -23px;}
+                }
+            }
+            .ol-flight .ol-item {
+                .flight-icon:before {
+                    content: "\f072";
+                    display: inline-block;
+                    font-family: 'FontAwesome';
+                    position: absolute;
+                    top: 50%;
+                    transform: translateY(-50%);
+                    font-size: 24px;
+                    margin-left: 20px;
+                }
+            }
+            .ol-hotel .ol-item {
+                .hotel-icon:before {
+                    content: "\f1ad";
+                    display: inline-block;
+                    font-family: 'FontAwesome';
+                    position: absolute;
+                    top: 50%;
+                    transform: translateY(-50%);
+                    font-size: 24px;
+                    margin-left: 20px;
+                }
+            }
+        }
+        .modal.info-order {
+            .col-sm-3:after {
+                content: ':';
+                float: right;
+                padding-right: 5px;
+            }
+        }
     }
 
     .search-location, .search-hotel {
