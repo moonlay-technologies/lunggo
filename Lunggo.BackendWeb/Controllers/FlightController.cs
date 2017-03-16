@@ -134,7 +134,7 @@ namespace Lunggo.BackendWeb.Controllers
                 var queue = QueueService.GetInstance().GetQueueByReference("FlightEticket");
                 queue.AddMessage(new CloudQueueMessage(rsvNo));
                 TempData["OverrideIssue"] = true;
-                return Issue(rsvNo);
+                return RedirectToAction("Detail", null, new { rsvNo });
             }
         }
     }
