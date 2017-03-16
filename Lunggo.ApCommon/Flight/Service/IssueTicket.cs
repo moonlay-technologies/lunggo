@@ -5,6 +5,7 @@ using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Model.Logic;
 using Lunggo.ApCommon.Flight.Query;
+using Lunggo.ApCommon.Identity.Users;
 using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.ApCommon.Product.Constant;
 using Lunggo.Framework.Database;
@@ -170,15 +171,30 @@ namespace Lunggo.ApCommon.Flight.Service
                 {
                     int casetype = GetCaseType();
                     var supplierInfoItin = ConcatenateMessage(supplier, balance, localPrice);
-                    if (casetype != 0)
+                    if (reservation.User.UserName.Contains("b2b"))
                     {
-                        SendIssueSlightDelayNotifToCustomer(reservation.RsvNo + "+" + casetype);
-
+                        //Sending Email to Booker
+                        SendIssueSlightDelayNotifToBooker(reservation.RsvNo + "+" + casetype);
+                        var approver = User.GetApproverEmailByUserId(reservation.User.Id);
+                        if (approver != null)
+                        {
+                            // Sending Email to Approver
+                            SendIssueSlightDelayNotifToApprover(reservation.RsvNo + ":" + casetype + ":" + approver);
+                        }
                     }
                     else
                     {
-                        SendSaySorryFailedIssueNotifToCustomer(reservation.RsvNo);
+                        if (casetype != 0)
+                        {
+                            SendIssueSlightDelayNotifToCustomer(reservation.RsvNo + "+" + casetype);
+
+                        }
+                        else
+                        {
+                            SendSaySorryFailedIssueNotifToCustomer(reservation.RsvNo);
+                        }    
                     }
+                    
 
                     SendIssueFailedNotifToDeveloper(reservation.RsvNo + "+" + supplierInfoItin);
                     

@@ -30,12 +30,12 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
             if (request.RsvNo.StartsWith("1"))
             {
                 //FLIGHT
-                isUpdated = FlightService.GetInstance().UpdateReservation(request.RsvNo, request.Status);
+                isUpdated = FlightService.GetInstance().UpdateReservation(request.RsvNo, request.Status,null,null);
             }
             else
             {
                 //HOTEL
-                isUpdated  = HotelService.GetInstance().UpdateReservation(request.RsvNo, request.Status);
+                isUpdated  = HotelService.GetInstance().UpdateReservation(request.RsvNo, request.Status,null,null);
              }
             if (isUpdated)
             {

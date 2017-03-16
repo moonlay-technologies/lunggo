@@ -6,7 +6,9 @@ using System.Text;
 using System.Threading.Tasks;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Service;
+using Lunggo.ApCommon.Hotel.Model;
 using Lunggo.ApCommon.Hotel.Service;
+using Lunggo.ApCommon.Util;
 using Lunggo.Framework.Config;
 using Lunggo.Framework.Mail;
 using Microsoft.Azure.WebJobs;
@@ -39,6 +41,11 @@ namespace Lunggo.WebJob.EmailQueueHandler.Function
             sw.Stop();
             Console.WriteLine("Done Getting Required Data. (" + sw.Elapsed.TotalSeconds + "s)");
             sw.Reset();
+            var mailData = new HotelBookingNotif
+            {
+                Token = GenerateTokenUtil.GenerateTokenByRsvNo(rsvNo),
+                Reservation = reservation
+            };
             var mailService = MailService.GetInstance();
             var mailModel = new MailModel
             {
@@ -48,7 +55,7 @@ namespace Lunggo.WebJob.EmailQueueHandler.Function
                 FromName = "Travorama"
             };
             Console.WriteLine("Sending Notification Email...");
-            mailService.SendEmail(reservation, mailModel, "HotelBookingNotifEmail");
+            mailService.SendEmail(mailData, mailModel, "HotelBookingNotifEmail");
 
             Console.WriteLine("Done Processing Hotel Booking Notif Email for RsvNo " + rsvNo);
         }

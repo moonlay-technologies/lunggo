@@ -2,7 +2,7 @@
 @using Lunggo.ApCommon.Constant
 @using Lunggo.ApCommon.Hotel.Service
 @using Lunggo.Framework.Config
-@model Lunggo.ApCommon.Hotel.Model.HotelReservationForDisplay
+@*@model Lunggo.ApCommon.Hotel.Model.HotelBookingNotif*@
 @{
     var roomlist = "";
 }
@@ -45,13 +45,18 @@
                 
                 <td width="5%"></td>
                 <td width="40%" style="text-align: center;">
-                    <a style="background: #ffd632; padding: 8px 25px; color: #4f3500; font-weight: 700; border-radius: 3px; border: 2px solid #ebb600; text-decoration: none;" href="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/id/B2BHotel/UpdateReservation?rsvNo="+Model.RsvNo + "&status=approved" )">APPROVE</a>
+                    <a style="background: #ffd632; padding: 8px 25px; color: #4f3500; font-weight: 700; border-radius: 3px; border: 2px solid #ebb600; text-decoration: none;" href="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/id/Hotel/UpdateReservation?token=" + Model.Token + "&rsvNo=" + Model.Reservation.RsvNo + "&status=approved")">APPROVE</a>
                 </td>
                 <td width="40%" style="text-align: center;">
-                    <a style="background: #ffd632; padding: 8px 25px; color: #4f3500; font-weight: 700; border-radius: 3px; border: 2px solid #ebb600; text-decoration: none;" href="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/id/B2BHotel/UpdateReservation?rsvNo=" + Model.RsvNo + "&status=rejected")">REJECT</a>
+                    <a style="background: #ffd632; padding: 8px 25px; color: #4f3500; font-weight: 700; border-radius: 3px; border: 2px solid #ebb600; text-decoration: none;" href="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/id/Hotel/UpdateReservation?token=" + Model.Token + "&rsvNo=" + Model.Reservation.RsvNo + "&status=rejected")">REJECT</a>
                 </td>
                 <td width="5%"></td>
             </tr>
+            <p style="font-size: 12px">Nama Pemesan : @Model.Reservation.BookerMessageTitle.Name</p>
+            <p style="font-size: 12px">Nama Pemesan : @Model.Reservation.BookerMessageTitle.Name</p>
+            <p style="font-size: 12px">Email Pemesan : @Model.Reservation.Contact.Email</p>
+            <p style="font-size: 12px">Booking Message : @Model.Reservation.BookerMessageTitle</p>
+            <p style="font-size: 12px">Deskripsi Message : @Model.Reservation.BookerMessageDescription</p>
             <tr width="100%" height="50px">
                 <td width="5%"></td>
                 <td colspan="2" width="90%">
@@ -61,34 +66,34 @@
                             <td width="70%" height="10px"></td>
                         </tr>
                         <tr>
-                            <td width="30%"><img style="width: 100%;" src="@Model.HotelDetail.MainImage" max-width="716" max-height="162" /></td>
+                            <td width="30%"><img style="width: 100%;" src="@Model.Reservation.HotelDetail.MainImage" max-width="716" max-height="162" /></td>
                             <td width="70%" style="padding-left: 10px;">
-                                <p style="font-size: 15px; text-transform: uppercase; font-weight: 700; color: #15b1e4;">@Model.HotelDetail.HotelName</p>
-                                @if (Model.HotelDetail.StarRating == 0 || Model.HotelDetail.StarRating == 1)
+                                <p style="font-size: 15px; text-transform: uppercase; font-weight: 700; color: #15b1e4;">@Model.Reservation.HotelDetail.HotelName</p>
+                                @if (Model.Reservation.HotelDetail.StarRating == 0 || Model.Reservation.HotelDetail.StarRating == 1)
                                 {
                                     <p class="star"></p>
                                 }
-                                @if (Model.HotelDetail.StarRating == 2)
+                                @if (Model.Reservation.HotelDetail.StarRating == 2)
                                 {
                                     <p class="star star-2"></p>
                                 }
-                                @if (Model.HotelDetail.StarRating == 3)
+                                @if (Model.Reservation.HotelDetail.StarRating == 3)
                                 {
                                     <p class="star star-3"></p>
                                 }
-                                @if (Model.HotelDetail.StarRating == 4)
+                                @if (Model.Reservation.HotelDetail.StarRating == 4)
                                 {
                                     <p class="star star-4"></p>
                                 }
-                                @if (Model.HotelDetail.StarRating == 5)
+                                @if (Model.Reservation.HotelDetail.StarRating == 5)
                                 {
                                     <p class="star star-5"></p>
                                 }
                                 <p>
-                                    <img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/location.png")" />@Model.HotelDetail.Address
-                                    @Model.HotelDetail.DestinationName, @Model.HotelDetail.PostalCode, @Model.HotelDetail.CountryName
+                                    <img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/location.png")" />@Model.Reservation.HotelDetail.Address
+                                    @Model.Reservation.HotelDetail.DestinationName, @Model.Reservation.HotelDetail.PostalCode, @Model.Reservation.HotelDetail.CountryName
                                 </p>
-                                <p><img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/phone.png")" /> @Model.HotelDetail.PhonesNumbers[0] </p>
+                                <p><img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/phone.png")" /> @Model.Reservation.HotelDetail.PhonesNumbers[0] </p>
                             </td>
                         </tr>
                         <tr>
@@ -106,29 +111,29 @@
                         <tr style="border-bottom: 1px dashed #ccc; height: 30px;">
                             <td width="30%" style="color:#999;">Rincian Pesanan</td>
                             <td width="70%" style="font-weight: 700; text-align: right;">
-                                @((Model.HotelDetail.CheckOutDate - Model.HotelDetail.CheckInDate).Days) Malam,
-                            @Model.HotelDetail.Rooms.SelectMany(r => r.Rates).SelectMany(f => f.Breakdowns).Sum(c => c.RateCount) Kamar
+                                @((Model.Reservation.HotelDetail.CheckOutDate - Model.Reservation.HotelDetail.CheckInDate).Days) Malam,
+                            @*@Model.Reservation.HotelDetail.Rooms.SelectMany(r => r.Rates).SelectMany(f => f.Breakdowns).Sum(c => c.RateCount) KamarIEnumerable*@
                         </td>
                     </tr>
                     <tr style="border-bottom: 1px dashed #ccc; height: 30px;">
                         <td width="30%" style="color:#999;">Check in</td>
-                        <td width="70%" style="font-weight: 700; text-align: right;">@Model.HotelDetail.CheckInDate.ToString("D", CultureInfo.CreateSpecificCulture("id-ID")) - mulai jam 14.00</td>
+                        <td width="70%" style="font-weight: 700; text-align: right;">@Model.Reservation.HotelDetail.CheckInDate.ToString("D", CultureInfo.CreateSpecificCulture("id-ID")) - mulai jam 14.00</td>
                     </tr>
                     <tr style="border-bottom: 1px dashed #ccc; height: 30px;">
                         <td width="30%" style="color:#999;">Check out</td>
-                        <td width="70%" style="font-weight: 700; text-align: right;">@Model.HotelDetail.CheckOutDate.ToString("D", CultureInfo.CreateSpecificCulture("id-ID")) - sampai jam 12.00</td>
+                        <td width="70%" style="font-weight: 700; text-align: right;">@Model.Reservation.HotelDetail.CheckOutDate.ToString("D", CultureInfo.CreateSpecificCulture("id-ID")) - sampai jam 12.00</td>
                     </tr>
                     <tr style="border-bottom: 1px dashed #ccc; height: 30px;">
                         <td width="30%" style="color:#999;">Client Reference</td>
-                        <td width="70%" style="font-weight: 700; text-align: right;">@Model.HotelDetail.ClientReference</td>
+                        <td width="70%" style="font-weight: 700; text-align: right;">@Model.Reservation.HotelDetail.ClientReference</td>
                     </tr>
                     <tr style="border-bottom: 1px dashed #ccc; height: 30px;">
                         <td width="30%" style="color:#999;">Booking Reference</td>
-                        <td width="70%" style="font-weight: 700; text-align: right;">@Model.HotelDetail.BookingReference</td>
+                        <td width="70%" style="font-weight: 700; text-align: right;">@Model.Reservation.HotelDetail.BookingReference</td>
                     </tr>
                     <tr style="border-bottom: 1px solid #000; height: 50px; vertical-align: text-top;">
                         <td width="30%" style="color:#999; padding-top: 5px;">Dipesan oleh</td>
-                        <td width="70%" style="padding-top: 5px; font-weight: 700; text-align: right;">@EnumDisplay.Title(Model.Contact.Title) @Model.Contact.Name</td>
+                        <td width="70%" style="padding-top: 5px; font-weight: 700; text-align: right;">@EnumDisplay.Title(Model.Reservation.Contact.Title) @Model.Reservation.Contact.Name</td>
                     </tr>
                 </table>
             </td>
@@ -138,38 +143,38 @@
             <td width="5%"></td>
             <td colspan="2" width="90%" style="padding-bottom: 30px;">
 
-                @for (var n = 0; n < Model.HotelDetail.Rooms.Count; n++)
+                @*@for (var n = 0; n < Model.Reservation.HotelDetail.Rooms.Count; n++)
                 {
-                    if (n != Model.HotelDetail.Rooms.Count - 1)
+                    if (n != Model.Reservation.HotelDetail.Rooms.Count - 1)
                     {
-                        roomlist += Model.HotelDetail.Rooms[n].Rates.SelectMany(r => r.Breakdowns).Sum(f => f.RateCount) + " "
-                                    + Model.HotelDetail.Rooms[n].RoomName + ", ";
+                        roomlist += Model.Reservation.HotelDetail.Rooms[n].Rates.SelectMany(r => r.Breakdowns).Sum(f => f.RateCount) + " "
+                                    + Model.Reservation.HotelDetail.Rooms[n].RoomName + ", ";
 
                     }
                     else
                     {
-                        roomlist += Model.HotelDetail.Rooms[n].Rates.SelectMany(r => r.Breakdowns).Sum(f => f.RateCount) + " "
-                                    + Model.HotelDetail.Rooms[n].RoomName;
+                        roomlist += Model.Reservation.HotelDetail.Rooms[n].Rates.SelectMany(r => r.Breakdowns).Sum(f => f.RateCount) + " "
+                                    + Model.Reservation.HotelDetail.Rooms[n].RoomName;
                     }
                 }
-                <p style="font-weight: 700; color: #15b1e4;">@roomlist</p>
+                <p style="font-weight: 700; color: #15b1e4;">@roomlist</p>*@
                 <p style="color: #15b1e4;">sudah termasuk 10% Pajak.</p>
                 <p style="color: #15b1e4;">sudah termasuk 10% Biaya layanan.</p>
                 <p style="font-style: italic; font-size: 10px">
-                    &quot;Payable through @Model.HotelDetail.SupplierName, acting as agent for the service operating
+                    &quot;Payable through @Model.Reservation.HotelDetail.SupplierName, acting as agent for the service operating
 
-                    company, details of which can be provided upon request&quot;. VAT: @Model.HotelDetail.SupplierVat
+                    company, details of which can be provided upon request&quot;. VAT: @Model.Reservation.HotelDetail.SupplierVat
 
-                    Reference: @Model.HotelDetail.BookingReference
+                    Reference: @Model.Reservation.HotelDetail.BookingReference
                 </p>
                 <span style="color: #ff7200; font-size: 15px; font-weight: 700;">Harga Total</span>
-                @if (Model.Payment.FinalPrice == 0)
+                @if (Model.Reservation.Payment.FinalPrice == 0)
                 {
-                    <span style="color: #ff7200; font-size: 15px; font-weight: 700; float: right;">Rp @Model.Payment.OriginalPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</span>
+                    <span style="color: #ff7200; font-size: 15px; font-weight: 700; float: right;">Rp @Model.Reservation.Payment.OriginalPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</span>
                 }
                 else
                 {
-                    <span style="color: #ff7200; font-size: 15px; font-weight: 700; float: right;">Rp @Model.Payment.FinalPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</span>
+                    <span style="color: #ff7200; font-size: 15px; font-weight: 700; float: right;">Rp @Model.Reservation.Payment.FinalPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</span>
                 }
                 
 
@@ -179,7 +184,7 @@
         <tr>
             <td width="5%"></td>
             <td colspan="2" width="90%">
-                <p style="font-size: 10px; opacity: 0.5; font-style: italic;margin-top: 1px; margin-bottom: 0;">Jika pembayaran dilakukan lewat dari tanggal yang telah ditentukan, booking Anda akan dibatalkan otomatis oleh sistem kami. Untuk booking yang sama, Anda harus melakukan pemesanan ulang dan kemungkinan besar harga akan naik.</p>
+                @*<p style="font-size: 10px; opacity: 0.5; font-style: italic;margin-top: 1px; margin-bottom: 0;">Jika pembayaran dilakukan lewat dari tanggal yang telah ditentukan, booking Anda akan dibatalkan otomatis oleh sistem kami. Untuk booking yang sama, Anda harus melakukan pemesanan ulang dan kemungkinan besar harga akan naik.</p>*@
             </td>
             <td width="5%"></td>
         </tr>

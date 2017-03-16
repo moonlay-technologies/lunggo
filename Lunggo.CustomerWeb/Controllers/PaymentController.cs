@@ -134,6 +134,25 @@ namespace Lunggo.CustomerWeb.Controllers
             return RedirectToAction("Index", "Index");
         }
 
+        public ActionResult B2BThankyou(string rsvNo, string regId)
+        {
+            if (string.IsNullOrEmpty(regId))
+            {
+                return RedirectToAction("Index", "Index");
+            }
+            var signature = GenerateId(rsvNo);
+            if (regId.Equals(signature))
+            {
+                ReservationForDisplayBase rsv;
+                if (rsvNo[0] == '1')
+                    rsv = FlightService.GetInstance().GetReservationForDisplay(rsvNo);
+                else
+                    rsv = HotelService.GetInstance().GetReservationForDisplay(rsvNo);
+                return View(rsv);
+            }
+            return RedirectToAction("Index", "Index");
+        }
+
         [HttpPost]
         [ActionName("Thankyou")]
         public ActionResult ThankyouPost(string rsvNo)

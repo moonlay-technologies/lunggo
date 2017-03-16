@@ -1,9 +1,11 @@
 ﻿using System.Linq;
 using System.Web;
+using System.Web.Http;
 using Lunggo.ApCommon.Hotel.Model.Logic;
 using Lunggo.ApCommon.Hotel.Service;
 using System.Security.Cryptography;
 using System.Text;
+using Lunggo.ApCommon.Util;
 using Lunggo.CustomerWeb.Models;
 using System;
 using System.Collections.Specialized;
@@ -18,9 +20,9 @@ namespace Lunggo.CustomerWeb.Controllers
     public class HotelController : Controller
     {
         // GET: Hotel
-        [Route("id/hotel/cari/{country}/{destination}")]
-        [Route("id/hotel/cari/{country}/{destination}/{zone}")]
-        [Route("id/hotel/cari/{country}/{destination}/{zone}/{area}")]
+        [System.Web.Mvc.Route("id/hotel/cari/{country}/{destination}")]
+        [System.Web.Mvc.Route("id/hotel/cari/{country}/{destination}/{zone}")]
+        [System.Web.Mvc.Route("id/hotel/cari/{country}/{destination}/{zone}/{area}")]
         public ActionResult Search(string country, string destination, string zone, string area)
         {
             if (!IsB2BAuthorized())
@@ -97,7 +99,7 @@ namespace Lunggo.CustomerWeb.Controllers
 
         }
 
-        [Route("id/hotel/{country}/{destination}/{hotelParam}")]
+        [System.Web.Mvc.Route("id/hotel/{country}/{destination}/{hotelParam}")]
         public ActionResult DetailHotel(String hotelParam)
         {
             if (!IsB2BAuthorized())
@@ -195,8 +197,8 @@ namespace Lunggo.CustomerWeb.Controllers
         }
 
         [RequireHttps]
-        [HttpPost]
-        [ActionName("Checkout")]
+        [System.Web.Mvc.HttpPost]
+        [System.Web.Mvc.ActionName("Checkout")]
         public ActionResult CheckoutPost(string rsvNo)
         {
             if (!IsB2BAuthorized())
@@ -204,7 +206,7 @@ namespace Lunggo.CustomerWeb.Controllers
             ViewBag.Domain = IsB2BDomain() ? "B2B" : "B2C";
             var regId = GenerateId(rsvNo);
             if (ViewBag.Domain.Equals("B2B"))
-                return RedirectToAction("Thankyou", "Payment", new { rsvNo, regId });
+                return RedirectToAction("B2BThankyou", "Payment", new { rsvNo, regId });
             return RedirectToAction("Payment", "Payment", new { rsvNo, regId});
         }
 
@@ -244,6 +246,74 @@ namespace Lunggo.CustomerWeb.Controllers
         public ActionResult SorryEmailHotel()
         {
             return View();
+        }
+
+        [System.Web.Mvc.AllowAnonymous]
+        public ActionResult UpdateReservation(string token, string rsvNo, string status)
+        {
+            if (rsvNo == null || status == null || token == null)
+            {
+                return RedirectToAction("Index", "Index");
+            }
+
+            var regId = GenerateTokenUtil.GenerateTokenByRsvNo(rsvNo);
+            if (!regId.Equals(token))
+                return RedirectToAction("Index", "Index");
+
+            if (status.Equals("rejected"))
+            {
+                return RedirectToAction("BookingRejection", "Hotel", new {token,rsvNo,status});
+            }
+            else
+            {
+                var isUpdated = HotelService.GetInstance().UpdateReservation(rsvNo, status, null,null);
+                if (isUpdated)
+                {
+                    //TODO Go To semacam halamn thank you
+                    return RedirectToAction("Index", "Index");
+                }
+                else
+                {
+                    //Gak tau masih dia pergi kemana
+                    return RedirectToAction("Index", "Index");
+                }    
+            }
+            return RedirectToAction("Index", "Index");
+        }
+
+        [System.Web.Mvc.AllowAnonymous]
+        [System.Web.Mvc.HttpGet]
+        public ActionResult BookingRejection(string token, string rsvNo, string status)
+        {
+            var regId = GenerateTokenUtil.GenerateTokenByRsvNo(rsvNo);
+            if (!regId.Equals(token))
+                return RedirectToAction("Index", "Index");
+            var rejectionData = new RejectionModel
+            {
+                Token = token,
+                Status = status,
+                RsvNo = rsvNo
+            };
+            return View(rejectionData);
+        }
+
+        [System.Web.Mvc.HttpPost]
+        public ActionResult BookingRejection(RejectionModel rejectionData)
+        {
+            if (rejectionData == null)
+                return null;
+            var isUpdated = HotelService.GetInstance().UpdateReservation(rejectionData.RsvNo, rejectionData.Status,rejectionData.Title, rejectionData.Message);
+            if (isUpdated)
+            {
+                //Gak tau masih dia pergi kemana
+                return RedirectToAction("Index", "Index");
+            }
+            else
+            {
+                //Gak tau masih dia pergi kemana
+                return RedirectToAction("Index", "Index");
+            }
+
         }
 
         #region Helpers

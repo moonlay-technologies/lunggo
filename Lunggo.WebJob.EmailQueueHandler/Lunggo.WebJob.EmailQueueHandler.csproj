@@ -114,8 +114,12 @@
     <Compile Include="Function\FailedPaymentNotifEmail.cs" />
     <Compile Include="Function\FlightBookerNotifEmail.cs" />
     <Compile Include="Function\FlightBookingNotifEmail.cs" />
+    <Compile Include="Function\FlightIssueDelayApproverNotifEmail.cs" />
+    <Compile Include="Function\FlightIssueDelayBookerNotifEmail.cs" />
     <Compile Include="Function\HotelBookerNotifEmail.cs" />
     <Compile Include="Function\HotelBookingNotifEmail.cs" />
+    <Compile Include="Function\HotelSaySorryFailedIssueApproverNotifEmail.cs" />
+    <Compile Include="Function\HotelSaySorryFailedIssueBookerNotifEmail.cs" />
     <Compile Include="Function\BookingDisabilityNotifEmail.cs" />
     <Compile Include="Function\HotelSaySorryFailedIssueNotifEmail.cs" />
     <Compile Include="Function\HotelVoucherEmail.cs" />
@@ -200,6 +204,8 @@
     <None Include="Properties\PublishProfiles\travorama-dv2-webjob.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-local-webjob %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-local-webjob %283%29.pubxml" />
+    <None Include="Properties\PublishProfiles\travorama-local-webjob - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\travorama-local-webjob - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-local-webjob.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-qa-webjob %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-qa-webjob.pubxml" />

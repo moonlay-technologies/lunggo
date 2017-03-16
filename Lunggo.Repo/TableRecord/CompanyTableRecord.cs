@@ -110,7 +110,7 @@ namespace Lunggo.Repository.TableRecord
 				new ColumnMetadata("PhoneNumber", false),
 				new ColumnMetadata("Name", false),
 				new ColumnMetadata("Address", false),
-                new ColumnMetadata("IsPaymentDisabled", false)
+                new ColumnMetadata("IsBookingDisabled", false)
             };
         }
 

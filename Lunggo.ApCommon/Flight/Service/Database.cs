@@ -45,13 +45,13 @@ namespace Lunggo.ApCommon.Flight.Service
             }
         }
 
-        private List<FlightReservation> GetOverviewReservationsByApprover(string approverId,string[] filters, string sort, int? page, int? itemsPerPage)
+        private List<FlightReservation> GetOverviewReservationsByApprover(string approverId,List<string> filters, string sort, int? page, int? itemsPerPage)
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
                 var rsvNos =
                     GetRsvNosByApprover.GetInstance()
-                        .Execute(conn, new { ApproverId = approverId ,Filters = filters, Sort = sort, Page = page, ItemsPerPage = itemsPerPage })
+                        .Execute(conn, new { ApproverId = approverId ,Filters = filters, Sort = sort, Page = page, ItemsPerPage = itemsPerPage }, new { Filters = filters } )
                         .Distinct().ToList();
                 if (!rsvNos.Any())
                     return null;
@@ -110,6 +110,10 @@ namespace Lunggo.ApCommon.Flight.Service
                     Payment = PaymentDetails.GetFromDb(rsvNo),
                     State = ReservationState.GetFromDb(rsvNo),
                     User = User.GetFromDb(reservationRecord.UserId),
+                    BookerMessageTitle = reservationRecord.BookerMessageTitle,
+                    BookerMessageDescription = reservationRecord.BookerMessageDescription,
+                    RejectionTitle = reservationRecord.RejectionTitle,
+                    RejectionDescription = reservationRecord.RejectionDescription
                 };
 
                 if (reservation.Contact == null || reservation.Payment == null || reservation.State == null)
@@ -362,7 +366,11 @@ namespace Lunggo.ApCommon.Flight.Service
                                 Itineraries = new List<FlightItinerary>(),
                                 Pax = new List<Pax>(),
                                 State = ReservationState.GetFromDb(rsvNo),
-                                User = User.GetFromDb(reservationRecord.UserId)
+                                User = User.GetFromDb(reservationRecord.UserId),
+                                BookerMessageTitle = reservationRecord.BookerMessageTitle,
+                                BookerMessageDescription = reservationRecord.BookerMessageDescription,
+                                RejectionTitle = reservationRecord.RejectionTitle,
+                                RejectionDescription = reservationRecord.RejectionDescription
                             };
                         }
                         FlightItinerary itinerary;
@@ -575,6 +583,8 @@ namespace Lunggo.ApCommon.Flight.Service
                     RsvStatusCd = RsvStatusCd.Mnemonic(reservation.RsvStatus),
                     CancellationTypeCd = null,
                     UserId = reservation.User != null ? reservation.User.Id : null,
+                    BookerMessageTitle = reservation.BookerMessageTitle ?? null,
+                    BookerMessageDescription = reservation.BookerMessageDescription ?? null,
                     InsertBy = "LunggoSystem",
                     InsertDate = DateTime.UtcNow,
                     InsertPgId = "0"
@@ -955,7 +965,22 @@ namespace Lunggo.ApCommon.Flight.Service
                 ReservationTableRepo.GetInstance().Update(conn, new ReservationTableRecord
                 {
                     RsvNo = rsvNo,
-                    RsvStatusCd = RsvStatusCd.Mnemonic(status)
+                    RsvStatusCd = RsvStatusCd.Mnemonic(status),
+                });
+            }
+
+        }
+
+        private void UpdateBookingRsvStatusDb(string rsvNo, RsvStatus status, string title, string rejectionMessage)
+        {
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                ReservationTableRepo.GetInstance().Update(conn, new ReservationTableRecord
+                {
+                    RsvNo = rsvNo,
+                    RsvStatusCd = RsvStatusCd.Mnemonic(status),
+                    RejectionDescription = rejectionMessage,
+                    RejectionTitle = title
                 });
             }
 

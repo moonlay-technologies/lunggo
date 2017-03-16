@@ -34,19 +34,53 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
                         : "ERRAU03"
                 };
             }
+
+            string first, last;
+            if (request.Name == null)
+            {
+                first = "";
+                last = "";
+            }
+            else
+            {
+                var splittedName = request.Name.Split(' ');
+                if (splittedName.Length == 1)
+                {
+                    first = request.Name;
+                    last = request.Name;
+                }
+                else
+                {
+                    first = request.Name.Substring(0, request.Name.LastIndexOf(' '));
+                    last = splittedName[splittedName.Length - 1];
+                }
+            }
+
             var recentUser = HttpContext.Current.User.Identity.GetUser().Id;
             var companyId = User.GetCompanyIdByUserId(recentUser);
             var user = new User
             {
                 UserName = "b2b:" + request.Email,
+                CompanyId = companyId,
+                FirstName = first,
+                LastName = last,
                 Email = request.Email,
-                CompanyId = companyId
+                CountryCallCd = request.CountryCallCd,
+                PhoneNumber = request.Phone,
+                Position = request.Position,
+                Department = request.Department,
+                Branch = request.Branch,
+                ApproverId = request.ApproverId
             };
             var result = userManager.Create(user);
             if (result.Succeeded)
             {
-                //Add default User to Role Admin   
-                userManager.AddToRole(user.Id, request.Role);
+                //Add Role
+                if (request.Role != null)
+                {
+                    request.Role = request.Role.Where(x => !string.IsNullOrEmpty(x)).ToList();
+                    userManager.AddToRolesAsync(user.Id, request.Role.ToArray());
+                }
                 var code = HttpUtility.UrlEncode(userManager.GenerateEmailConfirmationToken(user.Id));
                 var host = ConfigManager.GetInstance().GetConfigValue("general", "rootUrl");
                 var apiUrl = HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority);
@@ -70,7 +104,7 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
 
         private static bool IsValid(AddUserApiRequest request)
         {
-            return !string.IsNullOrEmpty(request.Email) && !string.IsNullOrEmpty(request.Role);
+            return !string.IsNullOrEmpty(request.Email);
         }
     }
 }

@@ -59,16 +59,41 @@ namespace Lunggo.ApCommon.Identity.Users
         public string LastName { get; set; }
 
         /// <summary>
-        /// LastName of the user
+        /// Company of the user
         /// 
         /// </summary>
         public string CompanyId { get; set; }
 
         /// <summary>
-        /// Address of the user
+        /// Company of the user
+        /// 
+        /// </summary>
+        public string Position { get; set; }
+
+        /// <summary>
+        /// Position of the user
+        /// 
+        /// </summary>
+        public string Branch { get; set; }
+
+        /// <summary>
+        /// Branch of the user
+        /// 
+        /// </summary>
+        public string Department { get; set; }
+
+
+        /// <summary>
+        /// Department of the user
         /// 
         /// </summary>
         public string Address { get; set; }
+
+        /// <summary>
+        /// Approver of the user
+        /// 
+        /// </summary>
+        public string ApproverId { get; set; }
 
         /// <summary>
         /// Is two factor enabled for the user

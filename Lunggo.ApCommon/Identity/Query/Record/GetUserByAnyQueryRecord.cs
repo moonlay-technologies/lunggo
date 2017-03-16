@@ -34,5 +34,9 @@ namespace Lunggo.ApCommon.Identity.Query.Record
         public string LastName { get; set; }
         public string Address { get; set; }
         public string CompanyId { get; set; }
+        public string Position { get; set; }
+        public string Branch { get; set; }
+        public string Department { get; set; }
+        public string ApproverId { get; set; }
     }
 }

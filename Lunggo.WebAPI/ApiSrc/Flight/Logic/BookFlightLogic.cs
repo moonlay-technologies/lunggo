@@ -154,7 +154,9 @@ namespace Lunggo.WebAPI.ApiSrc.Flight.Logic
             {
                 Token = request.Token,
                 Contact = request.Contact,
-                Passengers = FlightService.GetInstance().ConvertToPax(request.Passengers)
+                Passengers = FlightService.GetInstance().ConvertToPax(request.Passengers),
+                BookerMessageTitle = request.BookerMessageTitle,
+                BookerMessageDescription = request.BookerMessageDescription
             };
             return bookServiceRequest;
         }

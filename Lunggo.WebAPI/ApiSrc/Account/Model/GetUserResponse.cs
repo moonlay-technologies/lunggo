@@ -13,6 +13,11 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Model
         [JsonProperty("users", NullValueHandling = NullValueHandling.Ignore)]
         public List<UserData> Users { get; set; }
         [JsonProperty("roles", NullValueHandling = NullValueHandling.Ignore)]
-        public List<string> Roles { get; set; } 
+        public List<string> Roles { get; set; }
+        [JsonProperty("approvers", NullValueHandling = NullValueHandling.Ignore)]
+        public List<ApproverData> Approvers { get; set; }
+
     }
+
+    
 }

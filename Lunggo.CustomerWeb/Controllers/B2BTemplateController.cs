@@ -1,4 +1,9 @@
 ﻿using System.Web.Mvc;
+using Lunggo.ApCommon.Flight.Model;
+using Lunggo.ApCommon.Flight.Service;
+using Lunggo.ApCommon.Hotel.Model;
+using Lunggo.ApCommon.Hotel.Service;
+using Lunggo.ApCommon.Util;
 using Lunggo.CustomerWeb.Models;
 using Lunggo.Framework.Config;
 using RestSharp;
@@ -30,7 +35,7 @@ namespace Lunggo.CustomerWeb.Controllers
             if (result.IsBookingDisabled == null)
             {
                 result.IsBookingDisabled = true;
-            }
+        }
             return View(result);
         }
         public ActionResult SearchHotel()
@@ -165,6 +170,30 @@ namespace Lunggo.CustomerWeb.Controllers
         public ActionResult B2BPaymentFailed()
         {
             return View();
+        }
+
+        public ActionResult TestEmail()
+        {
+            var hotelService = HotelService.GetInstance();
+            var reservation = hotelService.GetReservationForDisplay("217306558579");
+            var mailData = new HotelBookingNotif
+            {
+                Token = GenerateTokenUtil.GenerateTokenByRsvNo("217306558579"),
+                Reservation = reservation
+            };
+            return View(mailData);
+        }
+
+        public ActionResult TestEmailFlight()
+        {
+            var flightService = FlightService.GetInstance();
+            var reservation = flightService.GetReservationForDisplay("116496559679");
+            var mailData = new FlightBookingNotif
+            {
+                Token = GenerateTokenUtil.GenerateTokenByRsvNo("116496559679"),
+                Reservation = reservation
+            };
+            return View(mailData);
         }
 
         public GetBookingDisabilityStatusResponse GetBookingDisabilityStatus()

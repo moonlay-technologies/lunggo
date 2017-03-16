@@ -401,10 +401,17 @@ app.controller('hotelcheckoutController', [
                 $scope.book.postData = ' "token":"' + $scope.token + '",  "contact" :' + $scope.contactData + ',"lang":"' + $scope.language + '"';
                 $scope.paxData = $scope.paxData + '{ "type":"1", "title":"' + $scope.guestInfo.title + '" , "name":"' + $scope.guestInfo.name + '" }]';
                 if ($scope.buyerInfo.message == null || $scope.buyerInfo.message.length == 0) {
-                    $scope.book.postData = '{' + $scope.book.postData + ',' + $scope.paxData + '}';
+                    $scope.book.postData = '{' + $scope.book.postData + ',' + $scope.paxData;
                 } else {
                     $scope.specialReq = '"specialRequest":"' + $scope.buyerInfo.message + '"';
-                    $scope.book.postData = '{' + $scope.book.postData + ',' + $scope.paxData + ',' + $scope.specialReq + '}';
+                    $scope.book.postData = '{' + $scope.book.postData + ',' + $scope.paxData + ',' + $scope.specialReq;
+                }
+
+                if ($scope.buyerInfo.bookerMessage == null || $scope.buyerInfo.bookerMessage.length == 0) {
+                    $scope.book.postData = $scope.book.postData +'}';
+                } else {
+                    $scope.bookerReq = '"bookerMessage":"' + $scope.buyerInfo.bookerMessage + '"';
+                    $scope.book.postData = $scope.book.postData + ',' + $scope.bookerReq + '}';
                 }
                 
                 $log.debug($scope.book.postData);

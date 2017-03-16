@@ -1,0 +1,333 @@
+﻿@using System.Globalization
+@using Lunggo.ApCommon.Constant
+@using Lunggo.ApCommon.Hotel.Model
+@using Lunggo.ApCommon.Hotel.Service
+@using Lunggo.ApCommon.Payment.Constant
+@using Lunggo.ApCommon.Product.Constant
+@using Lunggo.Framework.Config
+@using Lunggo.ApCommon.Flight.Model
+@model Lunggo.ApCommon.Product.Model.ReservationForDisplayBase
+
+@{
+    Layout = "/Views/Shared/Desktop/_LayoutDesktop.cshtml";
+    ViewBag.BodyClass = "page-thankyou";
+    ViewBag.Title = "Terima Kasih";
+    ViewBag.BookingFailed = false;
+}
+
+@{
+    var payment = Model.Payment.Status;
+    var timeout = ConfigManager.GetInstance().GetConfigValue("flight", "paymentTimeout");
+    //Model.Payment.Status = PaymentStatus.Settled;
+
+    var night = 0;
+    if (Model is HotelReservationForDisplay)
+    {
+        var rsv = Model as HotelReservationForDisplay;
+        night = (rsv.HotelDetail.CheckOutDate - rsv.HotelDetail.CheckInDate).Days;
+    }
+}
+@section AdditionalJS {
+    <!-- additional Angular JS-->
+    <script src="/Assets/js/jquery.countdown.min.js"></script>
+}
+
+@section PageJS{
+    <script>
+    var langCode = 'en';
+    var printTimeout = '';
+    var page = 'Flight';
+    // development only start
+    printTimeout = new Date(); // please change this print time out to actual time
+    printTimeout.setSeconds(printTimeout.getSeconds() + 7200);
+    // development only end
+
+    // countdown timer
+    $('.timer').countdown(printTimeout, function (event) {
+        $('.timer .hour h5').text(event.strftime('%H'));
+        $('.timer .minute h5').text(event.strftime('%M'));
+        $('.timer .second h5').text(event.strftime('%S'));
+    }).on('finish.countdown', function () {
+        $('.print .btn').removeClass('disabled');
+    });
+
+    </script>
+    <!-- angular controller -->
+    <script src="/Assets/travorama20/js/ThankYouController.js"></script>
+}
+
+<div ng-app="travorama" ng-controller="ThankyouController" class="page-loading" ng-class="{'page-loaded' : pageLoaded}">
+    <div>
+        <h2 class="section-title stripe text-center">TERIMA <span>KASIH</span></h2>
+
+        <div class="container">
+            @if (Model is FlightReservationForDisplay)
+            {
+                <p>Terima kasih telah memesan penerbangan di Travorama.com. Silahkan tunggu persetujuan dari <b>pihak Approval Perusahaan Anda</b>. Setelah itu, Anda dapat mencetak e-tiket Anda melalui tombol berikut atau mengunduhnya di e-mail Anda:<b> @Model.Contact.Email</b> .</p>
+
+            }
+            @if (Model is HotelReservationForDisplay)
+            {
+                <p>Terima kasih telah memesan penerbangan di Travorama.com. Silahkan tunggu persetujuan dari <b>pihak Approval Perusahaan Anda</b>. Setelah itu, Anda dapat mencetak e-tiket Anda melalui tombol berikut atau mengunduhnya di e-mail Anda:<b> @Model.Contact.Email</b> .</p>
+
+            }
+
+            <section class="countdown">
+                @*<div class="row">
+                    <div class="col-sm-4 col-sm-offset-4">
+                        <div class="print">
+                            <a href="@Url.Action("Eticket", "B2BThankYou", new { Model.RsvNo })" class="btn btn-yellow block">
+                                @if (Model is FlightReservationForDisplay)
+                                {
+                                    <span>CEK E-TIKET</span>
+                                }
+                                @if (Model is HotelReservationForDisplay)
+                                {
+                                    <span>CEK VOUCHER</span>
+                                }
+                            </a>
+                        </div>
+                    </div>
+                </div>*@
+                @if (Model is FlightReservationForDisplay)
+                {
+                    <p>Anda dapat menutup halaman ini dan mengecek status penerbitan e-tiket di menu cek pemesanan setiap saat.</p>
+                }
+                @if (Model is HotelReservationForDisplay)
+                {
+                    <p>Anda dapat menutup halaman ini dan mengecek status penerbitan voucher di menu cek pemesanan setiap saat.</p>
+                }
+
+
+            </section><!-- .section -->
+
+            <section class="order-detail">
+                <header>
+                    <h4><b>Detail Pesanan</b> <span class="pull-right">Nomor Pesanan: <b>@Model.RsvNo</b></span></h4>
+                </header>
+                <section>
+
+                    <div class="container">
+                        <div class="row">
+                            <div class="order-detail-left col-xs-8">
+                                <div class="va-passenger col-xs-12">
+                                    <div class="passenger col-xs-8">
+                                        @if (Model is FlightReservationForDisplay)
+                                        {
+                                            <h4><b>INFO PENUMPANG</b></h4>
+                                        }
+                                        @if (Model is HotelReservationForDisplay)
+                                        {
+                                            <h4><b>INFO TAMU</b></h4>
+                                        }
+                                        <ol>
+                                            @foreach (var passenger in Model.Pax)
+                                            {
+                                                <li><p>@EnumDisplay.PassengerType(passenger.Type.GetValueOrDefault()) : @EnumDisplay.Title(passenger.Title.GetValueOrDefault()) @passenger.Name</p></li>
+                                            }
+                                        </ol>
+                                    </div>
+                                    @if (Model.Payment.Method == PaymentMethod.VirtualAccount)
+                                    {
+                                        <div class="virtual-account col-xs-4">
+                                            <h4 class="va-text" style="font-size:11px;padding-bottom:2px;margin-bottom:8px;"><b>NO VIRTUAL ACCOUNT</b></h4>
+                                            <h4 class="va-number" style="font-size : 18px; color: #ff6900; padding:0;"><b>@Model.Payment.TransferAccount</b></h4>
+                                        </div>
+                                    }
+                                </div>
+
+                                @if (Model is FlightReservationForDisplay)
+                                {
+                                    var reservation = Model as FlightReservationForDisplay;
+                                    FlightSegmentForDisplay prevSegment = null;
+                                    <div class="order">
+                                        <h4>DETAIL PENERBANGAN</h4>
+                                        <div class="flight departure">
+                                            <p>Berangkat : </p>
+                                            <div class="row">
+                                                @foreach (var segment in reservation.Itinerary.Trips[0].Segments)
+                                                {
+                                                    if (segment != reservation.Itinerary.Trips[0].Segments.First())
+                                                    {
+                                                        var transitDuration = segment.DepartureTime - prevSegment.ArrivalTime;
+                                                        <div class="col-xs-12" style="padding-top: 5px;">
+                                                            <p style="width: 100%; text-align: center; border-bottom: 1px dashed #15b1e4; line-height: 0.3em; margin: 10px 0 20px;">
+                                                                <span style="background: #f4f4f4; padding: 0 10px; color: #15b1e4;">Transit di @segment.DepartureCity (@segment.DepartureAirport) selama @transitDuration.ToString()</span>
+                                                            </p>
+                                                        </div>
+                                                            <!-- .transit -->
+                                                    }
+                                                    <div class="col-xs-2">
+                                                        <p><img src="@(segment.AirlineLogoUrl)" alt="@segment.AirlineName" class="flight-airline" /></p>
+                                                        <p><span>@segment.AirlineName</span></p>
+                                                    </div>
+                                                    <div class="col-xs-10">
+                                                        <div class="col-xs-12">
+                                                            <div class="col-xs-4">
+                                                                <p style="text-align: left; padding: 0px; margin: 0px;">@segment.DepartureTime.GetValueOrDefault().ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID"))</p>
+                                                                <p style="font-size: 12px; text-align: left; padding: 0px; margin: 0px;"><b>@segment.DepartureTime.GetValueOrDefault().ToString("HH:mm")</b></p>
+                                                                <p style="font-size: 12px; text-align: left; padding: 0px; margin: 0px;"><b>@segment.DepartureCity (@segment.DepartureAirport)</b></p>
+                                                                <p style="text-align: left; padding: 0px; margin: 0px;">@segment.DepartureAirportName</p>
+                                                            </div>
+                                                            <div class="col-xs-4" style="align-content: center;">
+                                                                <p></p>
+                                                                <p style="border-bottom: 3px solid #15b1e4; padding-bottom: 5px; text-align: center;"><b>Durasi:</b> {{msToTime(@segment.Duration)}}</p>
+                                                                <p></p>
+                                                            </div>
+                                                            <div class="col-xs-4">
+                                                                <p style="text-align: left; padding: 0px; margin: 0px;">@segment.ArrivalTime.GetValueOrDefault().ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID"))</p>
+                                                                <p style="font-size: 12px; text-align: left; padding: 0px; margin: 0px;"><b>@segment.ArrivalTime.GetValueOrDefault().ToString("HH:mm")</b></p>
+                                                                <p style="font-size: 12px; text-align: left; padding: 0px; margin: 0px;"><b>@segment.ArrivalCity (@segment.ArrivalAirport)</b></p>
+                                                                <p style="text-align: left; padding: 0px; margin: 0px;">@segment.ArrivalAirportName</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    prevSegment = segment;
+                                                }
+                                            </div>
+                                        </div>
+                                        @if (reservation.Itinerary.Trips.Count > 1)
+                                        {
+                                            <div class="flight return">
+                                                <p>Kembali : </p>
+                                                <div class="row">
+                                                    @foreach (var segment in reservation.Itinerary.Trips[1].Segments)
+                                                    {
+                                                        if (segment != reservation.Itinerary.Trips[1].Segments.First())
+                                                        {
+                                                            var transitDuration = segment.DepartureTime - prevSegment.ArrivalTime;
+                                                            <div class="col-xs-12" style="padding-top: 5px;">
+                                                                <p style="width: 100%; text-align: center; border-bottom: 1px dashed #15b1e4; line-height: 0.3em; margin: 10px 0 20px;">
+                                                                    <span style="background: #f4f4f4; padding: 0 10px; color: #15b1e4;">Transit di @segment.DepartureCity (@segment.DepartureAirport) selama @transitDuration.ToString()</span>
+                                                                </p>
+                                                            </div>
+                                                                <!-- .transit -->
+                                                        }
+                                                        <div class="col-xs-2">
+                                                            <p><img src="@(segment.AirlineLogoUrl)" alt="@segment.AirlineName" class="flight-airline" /></p>
+                                                            <p><span>@segment.AirlineName</span></p>
+                                                        </div>
+                                                        <div class="col-xs-10">
+                                                            <div class="col-xs-12">
+                                                                <div class="col-xs-4">
+                                                                    <p style="text-align: left; padding: 0px; margin: 0px;">@segment.DepartureTime.GetValueOrDefault().ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID"))</p>
+                                                                    <p style="font-size: 13px; text-align: left; padding: 0px; margin: 0px;"><b>@segment.DepartureTime.GetValueOrDefault().ToString("HH:mm")</b></p>
+                                                                    <p style="font-size: 13px; text-align: left; padding: 0px; margin: 0px;"><b>@segment.DepartureCity (@segment.DepartureAirport)</b></p>
+                                                                    <p style="text-align: left; padding: 0px; margin: 0px;">@segment.DepartureAirportName</p>
+                                                                </div>
+                                                                <div class="col-xs-4" style="align-content: center;">
+                                                                    <p></p>
+                                                                    <p style="border-bottom: 3px solid #15b1e4; padding-bottom: 5px; text-align: center;"><b>Durasi:</b> {{msToTime(@segment.Duration)}}</p>
+                                                                    <p></p>
+                                                                </div>
+                                                                <div class="col-xs-4">
+                                                                    <p style="text-align: left; padding: 0px; margin: 0px;">@segment.ArrivalTime.GetValueOrDefault().ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID"))</p>
+                                                                    <p style="font-size: 13px; text-align: left; padding: 0px; margin: 0px;"><b>@segment.ArrivalTime.GetValueOrDefault().ToString("HH:mm")</b></p>
+                                                                    <p style="font-size: 13px; text-align: left; padding: 0px; margin: 0px;"><b>@segment.ArrivalCity (@segment.ArrivalAirport)</b></p>
+                                                                    <p style="text-align: left; padding: 0px; margin: 0px;">@segment.ArrivalAirportName</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        prevSegment = segment;
+                                                    }
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+                                }
+
+                                @if (Model is HotelReservationForDisplay)
+                                {
+                                    var reservation = Model as HotelReservationForDisplay;
+
+                                    <div class="review-hotel page-hotel">
+                                        <h4><b>DETAIL HOTEL</b></h4>
+                                        <div class="rh-container">
+                                            @Html.Partial("/Views/Shared/Desktop/_HotelDetail.cshtml", reservation.HotelDetail)
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                            <div class="order-detail-right col-xs-4">
+                                <div class="price-detail">
+                                    <h4>RINCIAN HARGA</h4>
+                                    @if (Model is FlightReservationForDisplay)
+                                    {
+                                        if (Model.Payment.FinalPrice == 0)
+                                        {
+                                            <dl>
+                                                <dt>Tiket Pesawat <span>(@Model.Pax.Count Penumpang)</span></dt>
+                                                <dd>Rp @((Model.Payment.OriginalPrice).ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID")))</dd>
+                                            </dl>
+                                        }
+                                        else
+                                        {
+                                            <dl>
+                                                <dt>Tiket Pesawat <span>(@Model.Pax.Count Penumpang)</span></dt>
+                                                <dd>Rp @((Model.Payment.OriginalPrice).ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID")))</dd>
+                                            </dl>
+                                            <dl class="total-price">
+                                                <dt>Total</dt>
+                                                <dd>Rp @Model.Payment.FinalPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</dd>
+                                            </dl>
+                                        }
+                                    }
+                                    @if (Model is HotelReservationForDisplay)
+                                    {
+                                        var rsv = Model as HotelReservationForDisplay;
+                                        foreach (var room in rsv.HotelDetail.Rooms)
+                                        {
+                                            foreach (var rate in room.Rates)
+                                            {
+                                                foreach (var config in rate.Breakdowns)
+                                                {
+                                                    <dl class="total-room">
+                                                        <dt class="dt-title">
+                                                            @config.RateCount @ToTitleCase.ConvertToTitleCase(room.RoomName) @ToTitleCase.ConvertToTitleCase(config.BoardDescription) x @night Malam
+                                                        </dt>
+                                                        <dd class="dd-price">
+                                                            Rp @config.NetTotalFare.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))
+                                                        </dd>
+                                                    </dl>
+                                                }
+                                            }
+                                        }
+
+                                        <dl class="service-room" ng-show="roomService > 0">
+                                            <dt class="dt-title">Pelayanan Kamar :</dt>
+                                            <dd class="dd-price">Rp {{roomService | number}}</dd>
+                                        </dl>
+                                        if (Model.Payment.FinalPrice == 0)
+                                        {
+                                            <dl>
+                                                <dt>Tiket Pesawat <span>(@Model.Pax.Count Penumpang)</span></dt>
+                                                <dd>Rp @((Model.Payment.OriginalPrice).ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID")))</dd>
+                                            </dl>
+                                        }
+                                        else
+                                        {
+                                            <dl>
+                                                <dt>Tiket Pesawat <span>(@Model.Pax.Count Penumpang)</span></dt>
+                                                <dd>Rp @((Model.Payment.OriginalPrice).ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID")))</dd>
+                                            </dl>
+                                            <dl class="total-price">
+                                                <dt>Total</dt>
+                                                <dd>Rp @Model.Payment.FinalPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</dd>
+                                            </dl>
+                                        }
+                                    }
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </section>
+            </section><!-- .order-detail -->
+
+        </div>
+
+    </div>
+
+</div>

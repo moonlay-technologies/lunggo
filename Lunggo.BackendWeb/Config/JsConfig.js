@@ -139,6 +139,13 @@ var UpdateRoleConfig = {
     Url: 'https://api.local.travorama.com/v1/updaterole'
 };
 
+var UpdateUserConfig = {
+    Url: 'https://api.local.travorama.com/v1/updateuser'
+};
+var UpdateUserLockConfig = {
+    Url: 'https://api.local.travorama.com/v1/updateuserlock'
+};
+
 var DeleteUserConfig = {
     Url: 'https://api.local.travorama.com/v1/deleteuser'
 };
@@ -165,6 +172,9 @@ var TrxHistoryConfig = {
 
 var BookerTrxHistoryConfig = {
     Url: 'https://api.local.travorama.com/v1/bookertrxhistory'
+};
+var ApproverOrderListPathConfig = {
+    Url: 'https://api.local.travorama.com/v1/approverorderlist'
 };
 
 var UpdateReservationConfig = {

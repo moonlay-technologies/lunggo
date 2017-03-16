@@ -3,11 +3,12 @@
     ViewBag.BodyClass = "b2b-user-manage";
     ViewBag.SiteHeader = "b2b-user-manage";
     ViewBag.Title = "User Management";
-    ViewBag.AngularController = "";
+    ViewBag.AngularController = "B2BUserManagementController";
 
 }
 
 @section AdditionalCSS{
+<link href="/Assets/css/jquery-ui.min.css" rel="stylesheet" />
 }
 
 @section AdditionalJS{
@@ -19,58 +20,65 @@
     <script type="text/javascript" src="/Assets/B2BTravorama/assets/plugins/datatables-responsive/js/lodash.min.js"></script>
     <script src="/Assets/B2BTravorama/assets/plugins/bootstrap-typehead/typeahead.bundle.min.js"></script>
     <script src="/Assets/B2BTravorama/assets/plugins/bootstrap-typehead/typeahead.jquery.min.js"></script>
+    <script src="/Assets/js/angular.min.js"></script>
+    <script src="/Assets/js/angular-route.min.js"></script>
+    <script src="/Assets/js/angular-animate.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.5/angular-resource.js"></script>
+    <script src="/Assets/B2BTravorama/assets/js/form_elements.js" type="text/javascript"></script>
 }
 
 @section PageJS{
-    <script src="/Assets/B2BTravorama/assets/js/tables.js" type="text/javascript"></script>
-    <script>
-        jQuery(document).ready(function ($) {
-            var cloneIndex = $(".um-item").length;
+    <script src="/Assets/travorama20/js/B2BTravorama20.js"></script>
+    <script src="/Assets/travorama20/js/B2BHomeController.js"></script>
+<script src="/Assets/B2BTravorama/assets/js/tables.js" type="text/javascript"></script>
+<script>
+    jQuery(document).ready(function ($) {
+        var cloneIndex = $(".um-item").length;
 
-            function clone() {
-                cloneIndex++;
-                $(this).closest('.user-management').find('#um-item-1').clone(false, false)
-                    .insertAfter('#um-item-1')
-                    .attr('id', "um-item-" + cloneIndex)
-                    .attr('count', cloneIndex);
-                //if (cloneIndex > 1) {
-                //    $(this).closest('.um-body').find('#um-item-' + cloneIndex + ' .remove-um').show();
-                //    $(this).closest('.um-body').find('#um-item-' + cloneIndex + ' .pi-status').find('.current-status').hide();
-                //    $(this).closest('.um-body').find('#um-item-' + cloneIndex + ' .pi-status').append('<a class="set-status">' + 'Set As Primary' + '</a>');
-                //}
-            }
-
-            //function remove() {
-            //    $(this).parents('.payment-item').remove();
+        function clone() {
+            cloneIndex++;
+            $(this).closest('.user-management').find('#um-item-1').clone(false, false)
+                .insertAfter('#um-item-1')
+                .attr('id', "um-item-" + cloneIndex)
+                .attr('count', cloneIndex);
+            //if (cloneIndex > 1) {
+            //    $(this).closest('.um-body').find('#um-item-' + cloneIndex + ' .remove-um').show();
+            //    $(this).closest('.um-body').find('#um-item-' + cloneIndex + ' .pi-status').find('.current-status').hide();
+            //    $(this).closest('.um-body').find('#um-item-' + cloneIndex + ' .pi-status').append('<a class="set-status">' + 'Set As Primary' + '</a>');
             //}
+        }
 
-            $('body .modal #add-user').on('click', clone);
+        //function remove() {
+        //    $(this).parents('.payment-item').remove();
+        //}
 
-            $('.sort-content, .filter-content').hide();
+        $('body .modal #add-user').on('click', clone);
 
-            $('#btn-um-filter').click(function () {
-                $('.filter-content').show();
-                $(this).css('background', '#eee');
-                $('#btn-um-sort').css('background', '#fff');
-                $('.sort-content').hide();
-            });
+        $('.sort-content, .filter-content').hide();
 
-            $('#btn-um-sort').click(function () {
-                $('.sort-content').show();
-                $(this).css('background', '#eee');
-                $('#btn-um-filter').css('background', '#fff');
-                $('.filter-content').hide();
-            });
-
-            $('#btn-um-add').click(function () {
-                $('#btn-um-filter, #btn-um-sort').css('background', '#fff');
-                $('.sort-content, .filter-content').hide();
-            });
+        $('#btn-um-filter').click(function () {
+            $('.filter-content').show();
+            $(this).css('background', '#eee');
+            $('#btn-um-sort').css('background', '#fff');
+            $('.sort-content').hide();
         });
-    </script>
-}
 
-<div class="user-management">
+        $('#btn-um-sort').click(function () {
+            $('.sort-content').show();
+            $(this).css('background', '#eee');
+            $('#btn-um-filter').css('background', '#fff');
+            $('.filter-content').hide();
+        });
+
+        $('#btn-um-add').click(function () {
+            $('#btn-um-filter, #btn-um-sort').css('background', '#fff');
+            $('.sort-content, .filter-content').hide();
+        });
+    });
+</script>
+
+}
+<div class="page-loading" ng-app="travoramaB2B" ng-controller="B2BUserManagementController" ng-class="{ 'active': pageLoaded }">
     <div class="panel panel-transparent">
         <div class="panel-heading">
             <div class="panel-title">
@@ -208,36 +216,38 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr class="um-item" id="um-item-1">
+                        <tr class="um-item" id="um-item-1" ng-repeat="user in users track by $index">
                             <td class="v-align-middle p-l-10 p-r-10">
-                                <div class="m-t-5">Anonymous</div>
+                                <div class="m-t-5">{{user.firstName}} {{user.lastName}}</div>
                             </td>
                             <td class="v-align-middle p-l-10 p-r-10">
-                                <div>travel@example.com</div>
+                                <div>{{user.email}}</div>
                             </td>
                             <td class="v-align-middle p-l-10 p-r-10">
-                                <div>CEO</div>
+                                <div>{{user.position}}</div>
                             </td>
                             <td class="v-align-middle p-l-10 p-r-10">
-                                <div>Product</div>
+                                <div>{{user.department}}</div>
                             </td>
                             <td class="v-align-middle p-l-10 p-r-10">
-                                <div>Jakarta Pusat</div>
+                                <div>{{user.branch}}</div>
                             </td>
                             <td class="v-align-middle p-l-10 p-r-10">
-                                <div class="m-t-5">Mr. Anonymous</div>
+                                <div class="m-t-5">{{user.approverName}}</div>
                             </td>
                             <td class="v-align-middle p-l-10 p-r-10">
                                 <ul class="no-padding no-margin p-l-15">
-                                    <li>BOOKER</li>
-                                    <li>APPROVER</li>
+                                    <li ng-repeat="role in user.roleName track by $index">
+                                        {{role}}
+                                    </li>
                                 </ul>
                             </td>
                             <td class="v-align-middle p-l-10 p-r-10">
-                                <button class="btn remove-payment m-r-10" data-toggle="modal" data-target="#edit-user">
+                                <button class="btn remove-payment m-r-10" ng-click="EditUserProfile($index)" @*data-toggle="modal" data-target="#edit-user"*@>
                                     <i class="fa fa-pencil"></i>
                                 </button>
-                                <button class="btn btn-danger btn-cons" style="">Deactivate</button>
+                                <button ng-if="!user.isLocked" ng-click="UpdateUserLock(user.userId, 'LOCK')" class="btn btn-danger btn-cons" style="">Deactivate</button>
+                                <button ng-if="user.isLocked" ng-click="UpdateUserLock(user.userId, 'UNLOCK')" class="btn btn-green btn-cons" style="">Activate</button>
                             </td>
                         </tr>
                     </tbody>
@@ -245,97 +255,8 @@
             </div>
         </div>
     </div>
-    <div class="modal fade slide-up disable-scroll" tabindex="-1" role="dialog" aria-hidden="false" id="add-user">
-        <div class="modal-dialog">
-            <div class="modal-content-wrapper">
-                <div class="modal-content">
-                    <div class="modal-header clearfix text-left">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                            <i class="pg-close fs-14"></i>
-                        </button>
-                        <h5 class="p-b-10">Tambah <span class="semi-bold">User Baru</span></h5>
-                    </div>
-                    <div class="modal-body">
-                        <form class="" role="form">
-                            <div class="form-group form-group-default">
-                                <label>Nama</label>
-                                <input type="text" class="form-control" placeholder="">
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-4">
-                                    <div class="form-group input-custom">
-                                        <label>Country Code</label>
-                                        <div class="btn-group dropdown-default required btn-input-custom">
-                                            <a class="btn dropdown-toggle" data-toggle="dropdown" href="#"><span class="dropdown-selected">+62</span> <span class="caret"></span> </a>
-                                            <ul class="dropdown-menu">
-                                                <li>1</li>
-                                                <li>2</li>
-                                                <li>3</li>
-                                                <li>4</li>
-                                                <li>5</li>
-                                                <li>6</li>
-                                                <li>7</li>
-                                                <li>8</li>
-                                                <li>9</li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-8">
-                                    <div class="form-group form-group-default">
-                                        <label>Telepon</label>
-                                        <input type="text" class="form-control" placeholder="">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group form-group-default">
-                                <label>Alamat Email</label>
-                                <input type="email" class="form-control" placeholder="example@domain.com">
-                            </div>
-
-                            <div class="form-group form-group-default">
-                                <label>Departemen</label>
-                                <input type="text" class="form-control" placeholder="">
-                            </div>
-                            <div class="form-group form-group-default">
-                                <label>Cabang</label>
-                                <input type="text" class="form-control" placeholder="">
-                            </div>
-                            <div class="form-group form-group-default">
-                                <label>Nama Approval</label>
-                                <input type="text" class="form-control" placeholder="">
-                            </div>
-                            <div class="form-group">
-                                <label>Role</label>
-                                <div>
-                                    <div class="checkbox check-primary">
-                                        <input type="checkbox" value="1" id="check-booker">
-                                        <label for="check-booker">Booker</label>
-                                    </div>
-                                    <div class="checkbox check-primary">
-                                        <input type="checkbox" value="1" id="check-approver">
-                                        <label for="check-approver">Approver</label>
-                                    </div>
-                                    <div class="checkbox check-primary">
-                                        <input type="checkbox" value="1" id="check-finance">
-                                        <label for="check-finance">Finance</label>
-                                    </div>
-                                    <div class="checkbox check-primary">
-                                        <input type="checkbox" value="1" id="check-sa">
-                                        <label for="check-sa">Super Admin</label>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                        <div class="clearfix">
-                            <button type="button" class="btn btn-primary m-t-5 pull-right" data-dismiss="modal" id="add-user"><i class="fa fa-save m-r-10"></i>Simpan</button>
-                            <button type="button" class="btn btn-default m-t-5 m-r-10 pull-right" data-dismiss="modal"><i class="fa fa-arrow-left m-r-10"></i>Kembali</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    
+    <!--Edit User-->
     <div class="modal fade slide-up disable-scroll" tabindex="-1" role="dialog" aria-hidden="false" id="edit-user">
         <div class="modal-dialog">
             <div class="modal-content-wrapper">
@@ -350,13 +271,16 @@
                         <form class="" role="form">
                             <div class="form-group form-group-default">
                                 <label>Nama</label>
-                                <input type="text" class="form-control" placeholder="">
+                                <input type="text" class="form-control" placeholder="" ng-model="editUser.name">
                             </div>
                             <div class="row">
                                 <div class="col-sm-4">
                                     <div class="form-group input-custom">
                                         <label>Country Code</label>
-                                        <div class="btn-group dropdown-default required btn-input-custom">
+                                        <select class="form-control" ng-model="editUser.countryCallCd">
+                                            <option ng-repeat="country in countries" value="{{country.dial_code}}" ng-selected="country.dial_code == userProfile.country">{{country.name}} {{country.dial_code}}</option>
+                                        </select> 
+                                        @*<div class="btn-group dropdown-default required btn-input-custom">
                                             <a class="btn dropdown-toggle" data-toggle="dropdown" href="#"><span class="dropdown-selected">+62</span> <span class="caret"></span> </a>
                                             <ul class="dropdown-menu">
                                                 <li>1</li>
@@ -369,52 +293,124 @@
                                                 <li>8</li>
                                                 <li>9</li>
                                             </ul>
-                                        </div>
+                                        </div>*@
                                     </div>
                                 </div>
                                 <div class="col-sm-8">
                                     <div class="form-group form-group-default">
                                         <label>Telepon</label>
-                                        <input type="text" class="form-control" placeholder="">
+                                        <input type="text" class="form-control" placeholder="" ng-model="editUser.phone">
                                     </div>
                                 </div>
                             </div>
                             <div class="form-group form-group-default">
                                 <label>Departemen</label>
-                                <input type="text" class="form-control" placeholder="">
+                                <input type="text" class="form-control" placeholder="" ng-model="editUser.position">
+                            </div>
+                            <div class="form-group form-group-default">
+                                <label>Departemen</label>
+                                <input type="text" class="form-control" placeholder="" ng-model="editUser.department">
                             </div>
                             <div class="form-group form-group-default">
                                 <label>Cabang</label>
-                                <input type="text" class="form-control" placeholder="">
+                                <input type="text" class="form-control" placeholder="" ng-model="editUser.branch">
                             </div>
                             <div class="form-group form-group-default">
                                 <label>Nama Approval</label>
-                                <input type="text" class="form-control" placeholder="">
+                                <select class="form-control" ng-model="editUser.approverId">
+                                    <option ng-repeat="approver in approvers" value="{{approver.userId}}" ng ng-selected="approver.userId == editUser.approverId">{{approver.name}}</option>
+                                </select>
                             </div>
                             <div class="form-group">
                                 <label>Role</label>
                                 <div>
-                                    <div class="checkbox check-primary">
-                                        <input type="checkbox" value="1" id="check-booker-1">
-                                        <label for="check-booker-1">Booker</label>
-                                    </div>
-                                    <div class="checkbox check-primary">
-                                        <input type="checkbox" value="1" id="check-approver-1">
-                                        <label for="check-approver-1">Approver</label>
-                                    </div>
-                                    <div class="checkbox check-primary">
-                                        <input type="checkbox" value="1" id="check-finance-1">
-                                        <label for="check-finance-1">Finance</label>
-                                    </div>
-                                    <div class="checkbox check-primary">
-                                        <input type="checkbox" value="1" id="check-sa-1">
-                                        <label for="check-sa-1">Super Admin</label>
+                                    <div class="checkbox check-primary" ng-repeat="role in roles track by $index">
+                                        <input type="checkbox" ng-attr-id="{{role}}" ng-model="selectedRole[$index]" ng-true-value="'{{role}}'" ng-false-value="'{{undefined}}'">
+                                        <label ng-attr-for="{{role}}">{{role}}</label>
                                     </div>
                                 </div>
                             </div>
                         </form>
                         <div class="clearfix">
-                            <button type="button" class="btn btn-primary m-t-5 pull-right" data-dismiss="modal" id="add-user"><i class="fa fa-save m-r-10"></i>Simpan</button>
+                            <button type="button" class="btn btn-primary m-t-5 pull-right" ng-click="updateUser()" id="edit-user"><i class="fa fa-save m-r-10"></i>Simpan</button>
+                            <button type="button" class="btn btn-default m-t-5 m-r-10 pull-right" data-dismiss="modal"><i class="fa fa-arrow-left m-r-10"></i>Kembali</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Add User-->
+    <div class="modal fade slide-up disable-scroll" tabindex="-1" role="dialog" aria-hidden="false" id="add-user">
+        <div class="modal-dialog">
+            <div class="modal-content-wrapper">
+                <div class="modal-content">
+                    <div class="modal-header clearfix text-left">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            <i class="pg-close fs-14"></i>
+                        </button>
+                        <h5 class="p-b-10">Tambah <span class="semi-bold">User Baru</span></h5>
+                    </div>
+                    <div class="modal-body">
+                        <form class="" role="form">
+                            <div class="form-group form-group-default">
+                                <label>Nama</label>
+                                <input type="text" class="form-control" placeholder="" ng-model="userData.name">
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <div class="form-group input-custom">
+                                        <label>Country Code</label>
+                                        <select class="form-control" ng-model="userData.countryCallCd">
+                                            <option ng-repeat="country in countries" value="{{country.dial_code}}" ng-selected="country.dial_code == 'Pilih Kode Negara'">{{country.name}} {{country.dial_code}}</option>
+                                        </select> 
+                                    </div>
+                                </div>
+                                <div class="col-sm-8">
+                                    <div class="form-group form-group-default">
+                                        <label>Telepon</label>
+                                        <input type="text" class="form-control" placeholder="" ng-model="userData.phone">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group form-group-default">
+                                <label>Alamat Email</label>
+                                <input type="email" class="form-control" placeholder="example@domain.com" ng-model="userData.email">
+                            </div>
+                            
+                            <div class="form-group form-group-default">
+                                <label>Jabatan</label>
+                                <input type="text" class="form-control" placeholder="example@domain.com" ng-model="userData.position">
+                            </div>
+
+                            <div class="form-group form-group-default">
+                                <label>Departemen</label>
+                                <input type="text" class="form-control" placeholder="" ng-model="userData.department">
+                            </div>
+
+                            <div class="form-group form-group-default">
+                                <label>Cabang</label>
+                                <input type="text" class="form-control" placeholder="" ng-model="userData.branch">
+                            </div>
+                            <div class="form-group form-group-default">
+                                <label>Nama Approval</label>
+                                <select class="form-control" ng-model="userData.approverId">
+                                    <option ng-repeat="approver in approvers" value="{{approver.userId}}" ng ng-selected="approver.userId == userData.approverId">{{approver.name}}</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Role</label>
+                                <div>
+                                    <div class="checkbox check-primary" ng-repeat="role in roles track by $index">
+                                        <input type="checkbox" ng-attr-id="{{role}}" ng-model="selectedRole[$index]" ng-true-value="'{{role}}'" ng-false-value="'{{undefined}}'">
+                                        <label ng-attr-for="{{role}}">{{role}}</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="clearfix">
+                            <button type="button" class="btn btn-primary m-t-5 pull-right" data-dismiss="modal" ng-click="addUser()" id="add-user"><i class="fa fa-save m-r-10"></i>Simpan</button>
                             <button type="button" class="btn btn-default m-t-5 m-r-10 pull-right" data-dismiss="modal"><i class="fa fa-arrow-left m-r-10"></i>Kembali</button>
                         </div>
                     </div>

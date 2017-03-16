@@ -757,7 +757,13 @@ app.controller('checkoutController', [
                 }
                 
                 $scope.paxData = $scope.paxData + ']';
-                $scope.book.postData = '{' + $scope.book.postData + ',' + $scope.paxData + '}';
+                $scope.book.postData = '{' + $scope.book.postData + ',' + $scope.paxData;
+                if ($scope.buyerInfo.bookerMessage == null || $scope.buyerInfo.bookerMessage.length == 0) {
+                    $scope.book.postData = $scope.book.postData + '}';
+                } else {
+                    $scope.bookerReq = '"bookerMessage":"' + $scope.buyerInfo.bookerMessage + '"';
+                    $scope.book.postData = $scope.book.postData + ',' + $scope.bookerReq + '}';
+                }
                 $log.debug($scope.book.postData);
                 $scope.book.postData = JSON.parse($scope.book.postData);
 

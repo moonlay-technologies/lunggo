@@ -78,6 +78,20 @@ namespace Lunggo.ApCommon.Flight.Service
             queue.AddMessage(new CloudQueueMessage(message));
         }
 
+        public void SendIssueSlightDelayNotifToBooker(string message)
+        {
+            var queueService = QueueService.GetInstance();
+            var queue = queueService.GetQueueByReference("FlightIssueDelayBookerNotifEmail");
+            queue.AddMessage(new CloudQueueMessage(message));
+        }
+
+        public void SendIssueSlightDelayNotifToApprover(string message)
+        {
+            var queueService = QueueService.GetInstance();
+            var queue = queueService.GetQueueByReference("FlightIssueDelayApproverNotifEmail");
+            queue.AddMessage(new CloudQueueMessage(message));
+        }
+
         /*Send Issue Failed into Developer*/
         public void SendIssueFailedNotifToDeveloper(string message)
         {

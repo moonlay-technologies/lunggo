@@ -85,6 +85,43 @@ namespace Lunggo.Repository.TableRecord
                 IncrementLog("RsvType");
             }
         }
+
+        public String BookerMessageTitle
+        {
+            get { return _BookerMessageTitle; }
+            set
+            {
+                _BookerMessageTitle = value;
+                IncrementLog("BookerMessageTitle");
+            }
+        }
+        public String BookerMessageDescription
+        {
+            get { return _BookerMessageDescription; }
+            set
+            {
+                _BookerMessageDescription = value;
+                IncrementLog("BookerMessageDescription");
+            }
+        }
+        public String RejectionTitle
+        {
+            get { return _RejectionTitle; }
+            set
+            {
+                _RejectionTitle = value;
+                IncrementLog("RejectionTitle");
+            }
+        }
+        public String RejectionDescription
+        {
+            get { return _RejectionDescription; }
+            set
+            {
+                _RejectionDescription = value;
+                IncrementLog("RejectionDescription");
+            }
+        }
 		public String InsertBy
 		{
 		    get { return _InsertBy; }
@@ -149,6 +186,10 @@ namespace Lunggo.Repository.TableRecord
         private String _CancellationReference;
 		private String _UserId;
         private String _RsvType;
+        private String _RejectionTitle;
+        private String _RejectionDescription;
+        private String _BookerMessageTitle;
+        private String _BookerMessageDescription;
 		private String _InsertBy;
 		private DateTime? _InsertDate;
 		private String _InsertPgId;
@@ -193,7 +234,11 @@ namespace Lunggo.Repository.TableRecord
 				new ColumnMetadata("CancellationTime", false),
                 new ColumnMetadata("CancellationReference", false),
 				new ColumnMetadata("UserId", false),
-                new ColumnMetadata("RsvType", false), 
+                new ColumnMetadata("RsvType", false),
+                new ColumnMetadata("BookerMessageTitle", false),
+                new ColumnMetadata("BookerMessageDescription", false),
+                new ColumnMetadata("RejectionTitle", false),
+                new ColumnMetadata("RejectionDescription", false),
 				new ColumnMetadata("InsertBy", false),
 				new ColumnMetadata("InsertDate", false),
 				new ColumnMetadata("InsertPgId", false),

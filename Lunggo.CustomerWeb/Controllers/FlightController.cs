@@ -4,13 +4,16 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Web.Mvc;
+using System.Web.Routing;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Service;
 using Lunggo.ApCommon.Payment.Service;
+using Lunggo.ApCommon.Util;
 using Lunggo.CustomerWeb.Models;
 using Lunggo.Framework.Config;
 using Lunggo.Framework.Filter;
+using Lunggo.Framework.Http;
 using Newtonsoft.Json;
 using RestSharp;
 
@@ -180,9 +183,75 @@ namespace Lunggo.CustomerWeb.Controllers
             ViewBag.Domain = IsB2BDomain() ? "B2B" : "B2C";
             var regId = GenerateId(rsvNo);
             if(ViewBag.Domain.Equals("B2B"))
-                return RedirectToAction("Thankyou", "Payment", new { rsvNo, regId });
+                return RedirectToAction("B2BThankyou", "Payment", new { rsvNo, regId });
 
             return RedirectToAction("Payment", "Payment", new { rsvNo, regId });
+        }
+        
+        [System.Web.Mvc.AllowAnonymous]
+        public ActionResult UpdateReservation(string token, string rsvNo, string status)
+        {
+            if (rsvNo == null || status == null || token == null)
+            {
+                return RedirectToAction("Index", "Index");
+            }
+            
+            var regId = GenerateTokenUtil.GenerateTokenByRsvNo(rsvNo);
+            if (!regId.Equals(token))
+                return RedirectToAction("Index", "Index");
+
+            if (status.Equals("rejected"))
+            {
+               return  RedirectToAction("BookingRejection", "Flight", new {token, rsvNo, status});
+            }
+            else
+            {
+                var isUpdated = FlightService.GetInstance().UpdateReservation(rsvNo, status, null,null);
+                if (isUpdated)
+                {
+                    //Gak tau masih dia pergi kemana
+                    return RedirectToAction("Index", "Index");
+                }
+                else
+                {
+                    //Gak tau masih dia pergi kemana
+                    return RedirectToAction("Index", "Index");
+                }
+            }
+            return RedirectToAction("Index", "Index");
+        }
+
+        public ActionResult BookingRejection(string token, string rsvNo, string status)
+        {
+            var regId = GenerateTokenUtil.GenerateTokenByRsvNo(rsvNo);
+            if (! regId.Equals(token))
+                return RedirectToAction("Index", "Index");
+            var rejectionData = new RejectionModel
+            {
+                Token = token,
+                Status = status,
+                RsvNo = rsvNo
+            };
+            return View(rejectionData);
+        }
+
+        [HttpPost]
+        public ActionResult BookingRejection(RejectionModel rejectionData)
+        {
+            if (rejectionData == null)
+                return null;
+            var isUpdated = FlightService.GetInstance().UpdateReservation(rejectionData.RsvNo, rejectionData.Status,rejectionData.Title, rejectionData.Message);
+            if (isUpdated)
+            {
+                //Gak tau masih dia pergi kemana
+                return RedirectToAction("Index", "Index");
+            }
+            else
+            {
+                //Gak tau masih dia pergi kemana
+                return RedirectToAction("Index", "Index");
+            }
+            
         }
         
         public ActionResult TopDestinations()

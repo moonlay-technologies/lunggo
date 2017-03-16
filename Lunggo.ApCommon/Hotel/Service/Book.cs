@@ -199,9 +199,9 @@ namespace Lunggo.ApCommon.Hotel.Service
                 //For Booker Only
                 var userId = HttpContext.Current.User.Identity.GetUser().Id;
                 var user = User.GetFromDb(userId);
-                var role = Role.GetFromDb(userId);
-                //if (user.UserName.Contains("b2b:"))
-                if (role.Contains("booker"))
+                //var role = Role.GetFromDb(userId);
+                if (user.UserName.Contains("b2b:"))
+                //if (role.Contains("booker"))
                 {
                     PaymentService.GetInstance().UpdateBookerPaymentData(rsvDetail.RsvNo);
                     //Get Approver Email
@@ -289,6 +289,8 @@ namespace Lunggo.ApCommon.Hotel.Service
                 Contact = input.Contact,
                 HotelDetails = hotelInfo,
                 Pax = input.Passengers,
+                BookerMessageTitle = input.BookerMessageTitle,
+                BookerMessageDescription = input.BookerMessageDescription,
                 Payment = new PaymentDetails
                 {
                     Status = PaymentStatus.Pending,

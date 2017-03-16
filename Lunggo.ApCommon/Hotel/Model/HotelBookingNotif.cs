@@ -5,11 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 using Lunggo.ApCommon.Hotel.Model;
 
-namespace Lunggo.ApCommon.Flight.Model
+namespace Lunggo.ApCommon.Hotel.Model
 {
     public class HotelBookingNotif
     {
-        public string CompanyId { get; set; }
-        public List<HotelReservationForDisplay> Reservation { get; set; }
+        public string Token { get; set; }
+        public HotelReservationForDisplay Reservation { get; set; }
     }
 }

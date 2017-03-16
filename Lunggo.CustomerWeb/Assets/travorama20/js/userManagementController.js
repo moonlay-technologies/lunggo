@@ -1,5 +1,5 @@
 ﻿app.controller('userManagementController', [
-    '$http', '$scope', '$log', function ($http, $scope, $log) {
+    '$http', '$log', '$scope', function ($http, $log, $scope) {
 
         var hash = (location.hash);
         // variables
@@ -41,6 +41,7 @@
                             $log.debug('Success getting All Users');
                             $scope.roles = returnData.data.roles;
                             $scope.users = returnData.data.users;
+                            $scope.approvers = returnData.data.approvers;
                         }
                         else {
                             $log.debug('There is an error');

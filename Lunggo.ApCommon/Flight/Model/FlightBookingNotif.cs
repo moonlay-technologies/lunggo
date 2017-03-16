@@ -8,7 +8,7 @@ namespace Lunggo.ApCommon.Flight.Model
 {
     public class FlightBookingNotif
     {
-        public string CompanyId { get; set; }
-        public List<FlightReservationForDisplay> Reservation { get; set; }
+        public string Token { get; set; }
+        public FlightReservationForDisplay Reservation { get; set; }
     }
 }

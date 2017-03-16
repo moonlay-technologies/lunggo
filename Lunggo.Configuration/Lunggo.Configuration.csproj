@@ -94,6 +94,8 @@
   <ItemGroup>
     <Compile Include="ConfigGenerator.cs" />
     <Compile Include="HtmlTemplateGenerator.cs" />
+    <None Include="HtmlTemplate\HotelSaySorryFailedIssueApproverNotifEmail.cshtml" />
+    <None Include="HtmlTemplate\HotelSaySorryFailedIssueBookerNotifEmail.cshtml" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -798,6 +800,8 @@
     <None Include="HtmlTemplate\FailedPaymentNotifEmail.cshtml" />
     <None Include="HtmlTemplate\FlightBookerNotifEmail.cshtml" />
     <None Include="HtmlTemplate\FlightBookingNotifEmail.cshtml" />
+    <None Include="HtmlTemplate\FlightIssueDelayApproverNotifEmail.cshtml" />
+    <None Include="HtmlTemplate\FlightIssueDelayBookerNotifEmail.cshtml" />
     <None Include="HtmlTemplate\HotelBookerNotifEmail.cshtml" />
     <None Include="HtmlTemplate\HotelBookingNotifEmail.cshtml" />
     <None Include="HtmlTemplate\BookingDisabilityStatusNotifEmail.cshtml" />

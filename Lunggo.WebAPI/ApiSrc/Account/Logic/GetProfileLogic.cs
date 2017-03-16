@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Web;
 
@@ -23,7 +24,7 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
             }
             var foundUser = user.Identity.GetUser();
             string name;
-            var userRole = userManager.GetRoles(foundUser.Id).ToList();
+            List<string> userRole = userManager.GetRoles(foundUser.Id).ToList();
             var first = foundUser.FirstName ?? "";
             var last = foundUser.LastName ?? "";
             if (first == last)

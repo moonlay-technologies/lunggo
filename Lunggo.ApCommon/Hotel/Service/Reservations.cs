@@ -148,21 +148,30 @@ namespace Lunggo.ApCommon.Hotel.Service
 
         public List<HotelReservationForDisplay> GetOverviewReservationByApprover(string filter, string sort, int? page, int? itemsPerPage)
         {
-            var filters = filter != null ? filter.Split(',') : null;
+            List<string> filters = new List<string>();
+            if (!string.IsNullOrEmpty(filter))
+            {
+                var filtersSplit = filter.Split(',');
+                filters.AddRange(filtersSplit);
+            }
+            else
+            {
+                filters.Add("pending");
+            }
             var approverId = HttpContext.Current.User.Identity.GetUser().Id;
             if (string.IsNullOrEmpty(approverId))
                 return null;
-            var rsvs = GetOverviewReservationByApproverFromDb(approverId,filters, sort, page, itemsPerPage) ?? new List<HotelReservation>();
+            var rsvs = GetOverviewReservationByApproverFromDb(approverId, filters, sort, page, itemsPerPage) ?? new List<HotelReservation>();
             return rsvs.Select(ConvertToBookerReservationForDisplay).ToList();
         }
 
-        private List<HotelReservation> GetOverviewReservationByApproverFromDb(string approverId,string []filters, string sort, int? page, int? itemsPerPage)
+        private List<HotelReservation> GetOverviewReservationByApproverFromDb(string approverId,List<string>filters, string sort, int? page, int? itemsPerPage)
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
                 var rsvNos =
                     GetReservationByApproverIdQuery.GetInstance()
-                        .Execute(conn, new {ApproverId = approverId,Filters = filters, Sort = sort, Page = page, ItemsPerPage = itemsPerPage })
+                        .Execute(conn, new {ApproverId = approverId,Filters = filters, Sort = sort, Page = page, ItemsPerPage = itemsPerPage }, new { Filters = filters } )
                         .Distinct().ToList();
                 if (!rsvNos.Any())
                     return null;
@@ -194,7 +203,11 @@ namespace Lunggo.ApCommon.Hotel.Service
                     HotelDetails = new HotelDetail(),
                     Payment = PaymentDetails.GetFromDb(rsvNo),
                     State = ReservationState.GetFromDb(rsvNo),
-                    User = User.GetFromDb(reservationRecord.UserId)
+                    User = User.GetFromDb(reservationRecord.UserId),
+                    BookerMessageTitle = reservationRecord.BookerMessageTitle,
+                    BookerMessageDescription = reservationRecord.BookerMessageDescription,
+                    RejectionTitle = reservationRecord.RejectionTitle,
+                    RejectionDescription = reservationRecord.RejectionDescription
                 };
 
                 if (reservation.Contact == null || reservation.Payment == null || reservation.State == null)
@@ -349,10 +362,11 @@ namespace Lunggo.ApCommon.Hotel.Service
             return rsvs.Select(ConvertToReservationForDisplay).ToList();
         }
 
-        public bool UpdateReservation(string rsvNo, string status)
+        public bool UpdateReservation(string rsvNo, string status, string title, string message)
         {
             var rsv = GetReservation(rsvNo);
             var userId = rsv.User.Id;
+            var companyId = rsv.User.CompanyId;
             var userEmail = rsv.User.Email;
             var isDisabled = PaymentService.GetInstance().CheckBookingDisabilityStatus(userId);
             if (isDisabled == null || isDisabled == true)
@@ -368,18 +382,18 @@ namespace Lunggo.ApCommon.Hotel.Service
             {
                 try
                 {
-                    var isPaid = PaymentService.GetInstance().ProcessB2BPayment(rsvNo);
+                    var isPaid = PaymentService.GetInstance().ProcessB2BPayment(rsvNo, companyId);
                     if (!isPaid)
                     {
                         PaymentService.GetInstance().SetBookingDisabilityStatus(userId, true);
                         var approverEmail = User.GetApproverEmailByUserId(userId);
-                        var companyId = rsv.User.CompanyId;
+                        
                         var financeEmails = User.GetListFinanceEmailByCompanyId(companyId);
                         NotifyFailedPayment(rsvNo, approverEmail, userEmail, financeEmails);
                         return false;
                     }
                         
-                    UpdateRsvStatusDb(rsvNo, RsvStatus.Approved);
+                    UpdateBookingRsvStatusDb(rsvNo, RsvStatus.Approved, title, message);
                     GetInstance().IssueBooker(rsvNo);
                     SendBookerBookingInfo(rsvNo);
                     return true;
@@ -393,7 +407,7 @@ namespace Lunggo.ApCommon.Hotel.Service
             {
                 try
                 {
-                    UpdateRsvStatusDb(rsvNo, RsvStatus.Rejected);
+                    UpdateBookingRsvStatusDb(rsvNo, RsvStatus.Rejected,title, message);
                     SendBookerBookingInfo(rsvNo);
                     return true;
                 }

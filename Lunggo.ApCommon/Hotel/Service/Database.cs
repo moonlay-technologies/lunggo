@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Hotel.Constant;
 using Lunggo.ApCommon.Hotel.Model;
@@ -40,9 +41,13 @@ namespace Lunggo.ApCommon.Hotel.Service
                     Payment = PaymentDetails.GetFromDb(rsvNo),
                     State = ReservationState.GetFromDb(rsvNo),
                     HotelDetails = new HotelDetail(),
+                    User = reservationRecord.UserId == null ? null : User.GetFromDb(reservationRecord.UserId),
                     RsvTime = reservationRecord.RsvTime.GetValueOrDefault(),
                     RsvStatus = RsvStatusCd.Mnemonic(reservationRecord.RsvStatusCd),
-                    User = User.GetFromDb(reservationRecord.UserId)
+                    BookerMessageTitle = reservationRecord.BookerMessageTitle,
+                    BookerMessageDescription = reservationRecord.BookerMessageDescription,
+                    RejectionTitle = reservationRecord.RejectionTitle,
+                    RejectionDescription = reservationRecord.RejectionDescription
                 };
                 if (hotelReservation.Contact == null || hotelReservation.Payment == null)
                     return null;
@@ -238,6 +243,8 @@ namespace Lunggo.ApCommon.Hotel.Service
                     RsvStatusCd = RsvStatusCd.Mnemonic(reservation.RsvStatus),
                     CancellationTypeCd = null,
                     UserId = reservation.User != null ? reservation.User.Id : null,
+                    BookerMessageTitle = reservation.BookerMessageTitle ?? null,
+                    BookerMessageDescription = reservation.BookerMessageDescription ?? null,
                     InsertBy = "LunggoSystem",
                     InsertDate = DateTime.UtcNow,
                     InsertPgId = "0"
@@ -444,7 +451,22 @@ namespace Lunggo.ApCommon.Hotel.Service
                 ReservationTableRepo.GetInstance().Update(conn, new ReservationTableRecord
                 {
                     RsvNo = rsvNo,
-                    RsvStatusCd = RsvStatusCd.Mnemonic(status)
+                    RsvStatusCd = RsvStatusCd.Mnemonic(status),
+                });
+            }
+
+        }
+
+        private void UpdateBookingRsvStatusDb(string rsvNo, RsvStatus status, string title, string description)
+        {
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                ReservationTableRepo.GetInstance().Update(conn, new ReservationTableRecord
+                {
+                    RsvNo = rsvNo,
+                    RsvStatusCd = RsvStatusCd.Mnemonic(status),
+                    RejectionTitle = title,
+                    RejectionDescription = description
                 });
             }
 

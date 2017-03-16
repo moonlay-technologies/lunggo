@@ -101,11 +101,21 @@ namespace Lunggo.ApCommon.Flight.Service
 
         public List<FlightReservationForDisplay> GetOverviewReservationsByApprover(string filter, string sort, int? page, int? itemsPerPage)
         {
-            var filters = filter != null ? filter.Split(',') : null;
+            List<string> filters = new List<string>();
+            if (!string.IsNullOrEmpty(filter))
+            {
+                var filtersSplit = filter.Split(',');
+                filters.AddRange(filtersSplit);
+            }
+            else
+            {
+                filters.Add("pending");
+            }
+
             var approverId = HttpContext.Current.User.Identity.GetUser().Id;
             if (string.IsNullOrEmpty(approverId))
                 return null;
-            var rsvs = GetOverviewReservationsByApprover(approverId,filters, sort, page, itemsPerPage) ?? new List<FlightReservation>();
+            var rsvs = GetOverviewReservationsByApprover(approverId, filters, sort, page, itemsPerPage) ?? new List<FlightReservation>();
             return rsvs.Select(ConvertToBookerReservationForDisplay).ToList();
         }
 
@@ -152,10 +162,11 @@ namespace Lunggo.ApCommon.Flight.Service
             UpdateExpireReservationsToDb();
         }
 
-        public bool UpdateReservation(string rsvNo, string status)
+        public bool UpdateReservation(string rsvNo, string status, string rejectionTitle, string rejectionMessage)
         {
             var rsv = GetReservation(rsvNo);
             var userId = rsv.User.Id;
+            var companyId = rsv.User.CompanyId;
             var userEmail = rsv.User.Email;
             var isDisabled = PaymentService.GetInstance().CheckBookingDisabilityStatus(userId);
             if (isDisabled == null || isDisabled == true)
@@ -171,18 +182,17 @@ namespace Lunggo.ApCommon.Flight.Service
             {
                 try
                 {
-                    var isPaid = PaymentService.GetInstance().ProcessB2BPayment(rsvNo);
+                    var isPaid = PaymentService.GetInstance().ProcessB2BPayment(rsvNo, companyId);
                     if (!isPaid)
                     {
                         PaymentService.GetInstance().SetBookingDisabilityStatus(userId, true);
                         var approverEmail = User.GetApproverEmailByUserId(userId);
-                        var companyId = rsv.User.CompanyId;
                         var financeEmails = User.GetListFinanceEmailByCompanyId(companyId);
                         NotifyFailedPayment(rsvNo, approverEmail, userEmail, financeEmails);
                         return false;
                     }
-                        
-                    UpdateRsvStatusDb(rsvNo, RsvStatus.Approved); 
+
+                    UpdateBookingRsvStatusDb(rsvNo, RsvStatus.Approved, rejectionTitle, rejectionMessage); 
                     IssueBooker(rsvNo);
                     SendBookerBookingInfo(rsvNo);
                     return true;
@@ -196,7 +206,7 @@ namespace Lunggo.ApCommon.Flight.Service
             {
                 try
                 {
-                    UpdateRsvStatusDb(rsvNo, RsvStatus.Rejected);
+                    UpdateBookingRsvStatusDb(rsvNo, RsvStatus.Rejected, rejectionTitle, rejectionMessage);
                     SendBookerBookingInfo(rsvNo);
                     return true;
                 }

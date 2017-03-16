@@ -41,14 +41,14 @@ namespace Lunggo.ApCommon.Hotel.Query
 
         private static string CreateConditionClause(dynamic condition)
         {
-            string[] filters = null;
+            List<string> filters = null;
             int? page = null;
             int itemsPerPage = 10;
             if (condition != null)
             {
-                page = condition.Page;
+                //page = condition.Page;
                 filters = condition.Filters;
-                itemsPerPage = condition.ItemsPerPage;
+                //itemsPerPage = condition.ItemsPerPage;
             }
             var clauseBuilder = new StringBuilder();
             if (filters != null)
@@ -59,6 +59,12 @@ namespace Lunggo.ApCommon.Hotel.Query
                     clauseBuilder.Append(" AND (r.RsvTime < DATEADD(day,-1,GETUTCDATE()) AND r.RsvStatusCd != 'PROC' AND (r.RsvStatusCd != 'COMP' OR i.CheckInDate < DATEADD(day,-1,GETUTCDATE())))");
                 if (filters.Contains("issued"))
                     clauseBuilder.Append(" AND b.RateStatus = 'TKTD'");
+                if (filters.Contains("pending"))
+                    clauseBuilder.Append(" AND r.RsvStatusCd = 'PROC'");
+                if (filters.Contains("approved"))
+                    clauseBuilder.Append(" AND r.RsvStatusCd = 'APRV'");
+                if (filters.Contains("rejected"))
+                    clauseBuilder.Append(" AND r.RsvStatusCd = 'REJE'");
             }
             if (page != null)
             {

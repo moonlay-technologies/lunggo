@@ -60,5 +60,19 @@ namespace Lunggo.ApCommon.Hotel.Service
             var queue = queueService.GetQueueByReference("HotelSaySorryFailedIssueNotifEmail");
             queue.AddMessage(new CloudQueueMessage(rsvNo));
         }
+
+        public void SendSaySorryFailedIssueNotifToBooker(string rsvNo)
+        {
+            var queueService = QueueService.GetInstance();
+            var queue = queueService.GetQueueByReference("HotelSaySorryFailedIssueBookerNotifEmail");
+            queue.AddMessage(new CloudQueueMessage(rsvNo));
+        }
+
+        public void SendSaySorryFailedIssueNotifToApprover(string message)
+        {
+            var queueService = QueueService.GetInstance();
+            var queue = queueService.GetQueueByReference("HotelSaySorryFailedIssueApproverNotifEmail");
+            queue.AddMessage(new CloudQueueMessage(message));
+        }
     }
 }

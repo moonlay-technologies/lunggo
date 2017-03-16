@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
@@ -29,52 +28,6 @@ namespace Lunggo.ApCommon.Payment.Service
             return GetCreditCardByCompanyId(companyId);
         }
 
-        public bool? CheckBookingDisabilityStatus(string userId)
-        {
-            var companyId = User.GetCompanyIdByUserId(userId);
-            if (string.IsNullOrEmpty(companyId))
-            {
-                return null;
-            }
-            using (var conn = DbService.GetInstance().GetOpenConnection())
-            {
-                var disabilityStatus= GetBookingDisabilityStatusQuery.GetInstance()
-                    .Execute(conn, new { CompanyId = companyId }).ToList();
-                return disabilityStatus[0];
-            }
-        }
-
-        public void SetBookingDisabilityStatus(string userId, bool status)
-        {
-            var companyId = User.GetCompanyIdByUserId(userId);
-            if (string.IsNullOrEmpty(companyId)) return;
-            using (var conn = DbService.GetInstance().GetOpenConnection())
-            {
-                SetBookingDisabilityStatusQuery.GetInstance().Execute(conn, new { CompanyId = companyId, Status = status });
-            }
-
-            SendNotificationToCustomer(companyId, status);
-        }
-
-        public void SendNotificationToCustomer(string companyId, bool status)
-        {
-            var approverEmailList = User.GetListApproverEmailByCompanyId(companyId);
-            var bookerEmailList = User.GetListBookerEmailByCompanyId(companyId);
-
-            var emailList = approverEmailList.Aggregate("", (current, email) => current + (email + "|"));
-
-            if (bookerEmailList.Count > 0)
-            {
-                emailList = bookerEmailList.Aggregate(emailList, (current, email) => current + (email + "|"));
-            }
-           
-            emailList = emailList.Substring(0, emailList.Length - 1);
-            var stringStatus = status ? "true" : "false";
-            var queueService = QueueService.GetInstance();
-            var queue = queueService.GetQueueByReference("BookingDisabilityNotifEmail");
-            queue.AddMessage(new CloudQueueMessage(emailList + "&" + stringStatus));
-        }
-
         public List<SavedCreditCard> GetCreditCardByCompanyId(string companyId)
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
@@ -82,8 +35,8 @@ namespace Lunggo.ApCommon.Payment.Service
                 var savedCard = GetSavedCreditCardQuery.GetInstance()
                     .Execute(conn, new { CompanyId = companyId }).ToList();
                 var sortedCard = from d in savedCard
-                    orderby d.IsPrimaryCard descending 
-                    select d;
+                                 orderby d.IsPrimaryCard descending
+                                 select d;
                 return sortedCard.ToList();
             }
         }
@@ -171,15 +124,18 @@ namespace Lunggo.ApCommon.Payment.Service
             };
         }
 
-        public bool ProcessB2BPayment(string rsvNo)
+        public bool ProcessB2BPayment(string rsvNo, string companyId)
         {
-            var userId = HttpContext.Current.User.Identity.GetUser().Id;
-            var companyId = User.GetCompanyIdByUserId(userId);
+            //if (string.IsNullOrEmpty(companyId))
+            //{
+            //    var userId = HttpContext.Current.User.Identity.GetUser().Id;
+            //    companyId = User.GetCompanyIdByUserId(userId);
+            //}
             var primaryCreditCard = new SavedCreditCard();
             int i = 0;
             var otherCreditCard = GetCreditCardByCompanyId(companyId).Where(x=>x.IsPrimaryCard == false).ToList();
             bool isUpdated;
-            bool isSuccess = false;
+            bool isSucces = false;
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
                 primaryCreditCard = GetPrimarySavedCreditCardQuery.GetInstance()
@@ -202,13 +158,12 @@ namespace Lunggo.ApCommon.Payment.Service
                     var response = SubmitPayment(rsvNo, PaymentMethod.CreditCard, PaymentSubMethod.Mandiri, paymentDetails.Data, null, out isUpdated);
                     if (isUpdated)
                     {
-                        isSuccess = true;
+                        isSucces = true;
                     }
                     i++;
                 }
-            } while (!isSuccess && i == otherCreditCard.Count());
-            if (isSuccess) return true;
-
+            } while (!isSucces && i == otherCreditCard.Count());
+            if (isSucces) return true;
             return false;
         }
 
@@ -254,5 +209,50 @@ namespace Lunggo.ApCommon.Payment.Service
             return true;
         }
 
+        public bool? CheckBookingDisabilityStatus(string userId)
+        {
+            var companyId = User.GetCompanyIdByUserId(userId);
+            if (string.IsNullOrEmpty(companyId))
+            {
+                return null;
+            }
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                var disabilityStatus = GetBookingDisabilityStatusQuery.GetInstance()
+                    .Execute(conn, new { CompanyId = companyId }).ToList();
+                return disabilityStatus[0];
+            }
+        }
+
+        public void SetBookingDisabilityStatus(string userId, bool status)
+        {
+            var companyId = User.GetCompanyIdByUserId(userId);
+            if (string.IsNullOrEmpty(companyId)) return;
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                SetBookingDisabilityStatusQuery.GetInstance().Execute(conn, new { CompanyId = companyId, Status = status });
+            }
+
+            SendNotificationToCustomer(companyId, status);
+        }
+
+        public void SendNotificationToCustomer(string companyId, bool status)
+        {
+            var approverEmailList = User.GetListApproverEmailByCompanyId(companyId);
+            var bookerEmailList = User.GetListBookerEmailByCompanyId(companyId);
+
+            var emailList = approverEmailList.Aggregate("", (current, email) => current + (email + "|"));
+
+            if (bookerEmailList.Count > 0)
+            {
+                emailList = bookerEmailList.Aggregate(emailList, (current, email) => current + (email + "|"));
+            }
+
+            emailList = emailList.Substring(0, emailList.Length - 1);
+            var stringStatus = status ? "true" : "false";
+            var queueService = QueueService.GetInstance();
+            var queue = queueService.GetQueueByReference("BookingDisabilityNotifEmail");
+            queue.AddMessage(new CloudQueueMessage(emailList + "&" + stringStatus));
+        }
     }
 }
