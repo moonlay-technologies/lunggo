@@ -78,12 +78,12 @@
                     async: false
                 }).then(function (returnData) {
                     if (returnData.status == 200) {
-                        if (returnData.data.isPaymentDisabled == null) {
+                        if (returnData.data.isBookingDisabled == null) {
                             $scope.BookingStatus.disabled = true;
                             $scope.BookingStatus.firstload = false;
                         } else {
-                            $scope.BookingStatus.disabled = returnData.data.isPaymentDisabled;
-                            if (!returnData.data.isPaymentDisabled) {
+                            $scope.BookingStatus.disabled = returnData.data.isBookingDisabled;
+                            if (!returnData.data.isBookingDisabled) {
                                 $('.switchery').click();
                             } else {
                                 $scope.BookingStatus.firstload = false;

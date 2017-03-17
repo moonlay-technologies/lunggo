@@ -337,6 +337,12 @@
                     $(".wait").modal("hide");
                     if (returnData.data.status == '200') {
                         $log.debug('Success Add User');
+                        var roles = [];
+                        if ($scope.userData.role.length > 0) {
+                            for (var i = 0; i < $scope.userData.role.length; i++) {
+                                roles.push($scope.userData.role[i]);
+                            }
+                        }
                         var splittedName = $scope.userData.name.split(' ');
                         $scope.userAdded = true;
                         $scope.users.push({
@@ -346,7 +352,7 @@
                             branch: $scope.userData.branch,
                             position: $scope.userData.position,
                             approverId: $scope.userData.approverId,
-                            roleName: $scope.userData.role,
+                            roleName:roles,
                             department: $scope.userData.department,
                             approverName: $.grep($scope.approvers, function (e) { return e.userId == $scope.userData.approverId; })[0].name
                         });
