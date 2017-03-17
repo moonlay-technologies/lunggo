@@ -182,7 +182,7 @@ namespace Lunggo.ApCommon.Identity.Users
                     }
                     
                     //By Role
-                    if (model.Roles != null)
+                    if (model.Roles != null && model.Roles.Count > 0)
                     {
                         userList = userList.Where(x =>x.RoleName.Intersect(model.Roles).Any()).ToList();
                     }

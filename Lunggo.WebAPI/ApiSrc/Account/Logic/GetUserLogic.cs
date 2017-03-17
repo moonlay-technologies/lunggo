@@ -29,11 +29,17 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
             
             var roles = User.GetAllRoles();
             //var approvers = User.GetAvailableApprover();
-            var approvers = response.Select(x => new ApproverData
-            {
-                UserId = x.UserId,
-                Name = x.FirstName + " " + x.LastName
-            }).ToList();
+            var approvers = (from user in response
+                where user.RoleName.Contains("Approver")
+                select new ApproverData
+                {
+                    UserId = user.UserId, Name = user.FirstName + " " + user.LastName
+                }).ToList();
+            //var approvers = response.Select(x => new ApproverData
+            //{
+            //    UserId = x.UserId,
+            //    Name = x.FirstName + " " + x.LastName
+            //}).ToList();
             return new GetUserResponse
             { 
                 StatusCode = HttpStatusCode.OK,

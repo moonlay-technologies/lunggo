@@ -2210,6 +2210,7 @@
     <Content Include="Assets\travorama20\js\accountController.js" />
     <Content Include="Assets\travorama20\js\app.config.js" />
     <Content Include="Assets\travorama20\js\B2BAccountController.js" />
+    <Content Include="Assets\travorama20\js\B2BUserManagementController.js" />
     <Content Include="Assets\travorama20\js\B2BPaymentMgmtController.js" />
     <Content Include="Assets\travorama20\js\B2BHomeController.js" />
     <Content Include="Assets\travorama20\js\B2BHotelDetailController.js" />
@@ -2859,7 +2860,7 @@
     <Content Include="Views\B2BTemplate\OrderDetailFlight.cshtml" />
     <Content Include="Views\B2BTemplate\OrderDetailHotel.cshtml" />
     <Content Include="Views\Shared\B2BTravorama\Occupancies.cshtml" />
-	<Content Include="Views\B2BTemplate\TestEmailFlight.cshtml" />
+    <Content Include="Views\B2BTemplate\TestEmailFlight.cshtml" />
     <Content Include="Views\Payment\B2BThankyou.cshtml" />
     <Content Include="Views\Flight\BookingRejection.cshtml" />
     <Content Include="Views\Hotel\BookingRejection.cshtml" />

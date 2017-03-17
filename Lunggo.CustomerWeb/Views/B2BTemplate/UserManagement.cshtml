@@ -29,9 +29,9 @@
 
 @section PageJS{
     <script src="/Assets/travorama20/js/B2BTravorama20.js"></script>
-    <script src="/Assets/travorama20/js/B2BHomeController.js"></script>
-<script src="/Assets/B2BTravorama/assets/js/tables.js" type="text/javascript"></script>
-<script>
+    <script src="/Assets/travorama20/js/B2BUserManagementController.js"></script>
+    <script src="/Assets/B2BTravorama/assets/js/tables.js" type="text/javascript"></script>
+    <script>
     jQuery(document).ready(function ($) {
         var cloneIndex = $(".um-item").length;
 
@@ -118,25 +118,25 @@
                 <div class="bg-white" style="border: 1px solid rgba(230, 230, 230, 0.7); border-top: none" id="sf-container">
                     <div class="sort-content">
                         <div class="panel-heading">
-                            <span class="fs-11 bold font-montserrat text-uppercase">Urutkan Berdasarkan</span>
+                            <span class="fs-11 bold font-montserrat text-uppercase">Urut Berdasarkan</span>
                         </div>
                         <div class="panel-body m-t-10">
                             <div class="btn-group dropdown-default">
-                                <a class="btn dropdown-toggle" data-toggle="dropdown" href="#" style="width: 140px;" aria-expanded="false"> Nama <span class="caret"></span> </a>
-                                <ul class="dropdown-menu " style="width: 140px;">
-                                    <li>
+                                <a class="btn dropdown-toggle" data-toggle="dropdown" href="#" style="width: 140px;" aria-expanded="false" id="selectedSort"> Nama <span class="caret"></span> </a>
+                                <ul class="dropdown-menu" style="width: 140px;">
+                                    <li id="sort-name">
                                         <a href="#">Nama</a>
                                     </li>
-                                    <li>
-                                        <a href="#">Alamt Email</a>
+                                    <li id ="sort-email">
+                                        <a href="#">Alamat Email</a>
                                     </li>
-                                    <li>
+                                    <li id ="sort-position">
                                         <a href="#">Jabatan</a>
                                     </li>
-                                    <li>
+                                    <li id="sort-department">
                                         <a href="#">Departemen</a>
                                     </li>
-                                    <li>
+                                    <li id="sort-branch">
                                         <a href="#">Cabang</a>
                                     </li>
                                 </ul>
@@ -161,7 +161,7 @@
                                                 <input type="checkbox" value="1" id="checkbox-approver">
                                                 <label for="checkbox-approver">Approver</label>
                                             </div>
-                                            <div class="checkbox check-primary">
+                                            <div class="checkbox check-primary" >
                                                 <input type="checkbox" value="1" id="checkbox-finance">
                                                 <label for="checkbox-finance">Finance</label>
                                             </div>
@@ -175,29 +175,35 @@
                                 <div class="col-sm-15">
                                     <div class="form-group typehead" id="sample-three">
                                         <label>Nama</label>
-                                        <input class="typeahead form-control sample-typehead" type="text" placeholder="Cari Berdasarkan Nama">
+                                        <input class="typeahead form-control sample-typehead" type="text" placeholder="Cari Berdasarkan Nama" 
+                                               ng-model ="userFilter.name">
                                     </div>
                                 </div>
                                 <div class="col-sm-15">
                                     <div class="form-group typehead" id="sample-three">
                                         <label>Jabatan</label>
-                                        <input class="typeahead form-control sample-typehead" type="text" placeholder="Cari Berdasarkan Jabatan">
+                                        <input class="typeahead form-control sample-typehead" type="text" placeholder="Cari Berdasarkan Jabatan"
+                                               ng-model="userFilter.position">
                                     </div>
                                 </div>
                                 <div class="col-sm-15">
                                     <div class="form-group typehead" id="sample-three">
                                         <label>Departemen</label>
-                                        <input class="typeahead form-control sample-typehead" type="text" placeholder="Cari Berdasarkan Departemen">
+                                        <input class="typeahead form-control sample-typehead" type="text" placeholder="Cari Berdasarkan Departemen"
+                                               ng-model="userFilter.department">
                                     </div>
                                 </div>
                                 <div class="col-sm-15">
                                     <div class="form-group typehead" id="sample-three">
                                         <label>Cabang</label>
-                                        <input class="typeahead form-control sample-typehead" type="text" placeholder="Cari Berdasarkan Cabang">
+                                        <input class="typeahead form-control sample-typehead" type="text" placeholder="Cari Berdasarkan Cabang"
+                                               ng-model="userFilter.branch">
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        
+                        <button class="btn btn-green btn-cons" ng-click="User.GetUser()">Filter</button>
                     </div>
                 </div>
             </div>
@@ -246,8 +252,8 @@
                                 <button class="btn remove-payment m-r-10" ng-click="EditUserProfile($index)" @*data-toggle="modal" data-target="#edit-user"*@>
                                     <i class="fa fa-pencil"></i>
                                 </button>
-                                <button ng-if="!user.isLocked" ng-click="UpdateUserLock(user.userId, 'LOCK')" class="btn btn-danger btn-cons" style="">Deactivate</button>
-                                <button ng-if="user.isLocked" ng-click="UpdateUserLock(user.userId, 'UNLOCK')" class="btn btn-green btn-cons" style="">Activate</button>
+                                <button ng-if="!user.isLocked" ng-click="UpdateUserLock(user.userId, 'LOCK', $index)" class="btn btn-danger btn-cons" style="">Deactivate</button>
+                                <button ng-if="user.isLocked" ng-click="UpdateUserLock(user.userId, 'UNLOCK', $index)" class="btn btn-green btn-cons" style="">Activate</button>
                             </td>
                         </tr>
                     </tbody>
@@ -276,7 +282,7 @@
                             <div class="row">
                                 <div class="col-sm-4">
                                     <div class="form-group input-custom">
-                                        <label>Country Code</label>
+                                        <label>Kode Negara</label>
                                         <select class="form-control" ng-model="editUser.countryCallCd">
                                             <option ng-repeat="country in countries" value="{{country.dial_code}}" ng-selected="country.dial_code == userProfile.country">{{country.name}} {{country.dial_code}}</option>
                                         </select> 
@@ -304,7 +310,7 @@
                                 </div>
                             </div>
                             <div class="form-group form-group-default">
-                                <label>Departemen</label>
+                                <label>Jabatan</label>
                                 <input type="text" class="form-control" placeholder="" ng-model="editUser.position">
                             </div>
                             <div class="form-group form-group-default">
@@ -316,17 +322,34 @@
                                 <input type="text" class="form-control" placeholder="" ng-model="editUser.branch">
                             </div>
                             <div class="form-group form-group-default">
-                                <label>Nama Approval</label>
+                                <label>Nama Approver</label>
                                 <select class="form-control" ng-model="editUser.approverId">
                                     <option ng-repeat="approver in approvers" value="{{approver.userId}}" ng ng-selected="approver.userId == editUser.approverId">{{approver.name}}</option>
                                 </select>
                             </div>
                             <div class="form-group">
                                 <label>Role</label>
-                                <div>
-                                    <div class="checkbox check-primary" ng-repeat="role in roles track by $index">
-                                        <input type="checkbox" ng-attr-id="{{role}}" ng-model="selectedRole[$index]" ng-true-value="'{{role}}'" ng-false-value="'{{undefined}}'">
-                                        <label ng-attr-for="{{role}}">{{role}}</label>
+                                <div class="col-xs-12">
+                                    <div ng-if="roles.length % 2 == 0">
+                                        <div class="checkbox check-primary col-xs-6" ng-repeat="role in roles.slice(0, roles.length/2) track by $index">
+                                            <input type="checkbox" ng-attr-id="edit-{{role}}" ng-click ="selectRoleUpdate(role)" ng-true-value="'{{role}}'" ng-false-value="'{{undefined}}'">
+                                            <label ng-attr-for="edit-{{role}}">{{role}}</label>
+                                        </div>
+                                        <div class="checkbox check-primary col-xs-6" ng-repeat="role in roles.slice(roles.length/2, roles.length) track by $index">
+                                            <input type="checkbox" ng-attr-id="edit-{{role}}" ng-click="selectRoleUpdate(role)" ng-true-value="'{{role}}'" ng-false-value="'{{undefined}}'">
+                                            <label ng-attr-for="edit-{{role}}">{{role}}</label>
+                                        </div>
+                                    </div>
+                                    
+                                    <div ng-if="roles.length % 2 == 1">
+                                        <div class="checkbox check-primary col-xs-6" ng-repeat="role in roles.slice(0, roles.length/2 + 1) track by $index">
+                                            <input type="checkbox" ng-attr-id="edit-{{role}}" ng-click="selectRoleUpdate(role)" ng-true-value="'{{role}}'" ng-false-value="'{{undefined}}'">
+                                            <label ng-attr-for="edit-{{role}}">{{role}}</label>
+                                        </div>
+                                        <div class="checkbox check-primary col-xs-6" ng-repeat="role in roles.slice(roles.length/2 + 1, roles.length) track by $index">
+                                            <input type="checkbox" ng-attr-id="edit-{{role}}" ng-click ="selectRoleUpdate(role)" ng-true-value="'{{role}}'" ng-false-value="'{{undefined}}'">
+                                            <label ng-attr-for="edit-{{role}}">{{role}}</label>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -394,17 +417,41 @@
                                 <input type="text" class="form-control" placeholder="" ng-model="userData.branch">
                             </div>
                             <div class="form-group form-group-default">
-                                <label>Nama Approval</label>
+                                <label>Nama Approver</label>
                                 <select class="form-control" ng-model="userData.approverId">
                                     <option ng-repeat="approver in approvers" value="{{approver.userId}}" ng ng-selected="approver.userId == userData.approverId">{{approver.name}}</option>
                                 </select>
                             </div>
                             <div class="form-group">
                                 <label>Role</label>
-                                <div>
+                                @*<div>
                                     <div class="checkbox check-primary" ng-repeat="role in roles track by $index">
                                         <input type="checkbox" ng-attr-id="{{role}}" ng-model="selectedRole[$index]" ng-true-value="'{{role}}'" ng-false-value="'{{undefined}}'">
                                         <label ng-attr-for="{{role}}">{{role}}</label>
+                                    </div>
+                                </div>*@
+                                
+                                <div class="col-xs-12">
+                                    <div ng-if="roles.length % 2 == 0">
+                                        <div class="checkbox check-primary col-xs-6" ng-repeat="role in roles.slice(0, roles.length/2) track by $index">
+                                            <input type="checkbox" ng-attr-id="{{role}}" ng-click="selectRoleAdd(role)" ng-true-value="'{{role}}'" ng-false-value="'{{undefined}}'">
+                                            <label ng-attr-for="{{role}}">{{role}}</label>
+                                        </div>
+                                        <div class="checkbox check-primary col-xs-6" ng-repeat="role in roles.slice(roles.length/2, roles.length) track by $index">
+                                            <input type="checkbox" ng-attr-id="{{role}}" ng-click="selectRoleAdd(role)" ng-true-value="'{{role}}'" ng-false-value="'{{undefined}}'">
+                                            <label ng-attr-for="{{role}}">{{role}}</label>
+                                        </div>
+                                    </div>
+
+                                    <div ng-if="roles.length % 2 == 1">
+                                        <div class="checkbox check-primary col-xs-6" ng-repeat="role in roles.slice(0, roles.length/2 + 1) track by $index">
+                                            <input type="checkbox" ng-attr-id="{{role}}" ng-click="selectRoleAdd(role)" ng-true-value="'{{role}}'" ng-false-value="'{{undefined}}'">
+                                            <label ng-attr-for="{{role}}">{{role}}</label>
+                                        </div>
+                                        <div class="checkbox check-primary col-xs-6" ng-repeat="role in roles.slice(roles.length/2 + 1, roles.length) track by $index">
+                                            <input type="checkbox" ng-attr-id="{{role}}" ng-click="selectRoleAdd(role)" ng-true-value="'{{role}}'" ng-false-value="'{{undefined}}'">
+                                            <label ng-attr-for="{{role}}">{{role}}</label>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -418,4 +465,137 @@
             </div>
         </div>
     </div>
+    
+    <div class="modal fade slide-up disable-scroll modal-sm-default wait" tabindex="-1" role="dialog" aria-hidden="false">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content-wrapper">
+                <div class="modal-content">
+                    <div class="modal-header clearfix">
+                        <h4 class="text-center no-margin"></h4>
+                    </div>
+                    <div class="modal-body m-t-10">
+                        <div class="modal-notif-content m-b-20">
+                            Mohon Tunggu
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="modal fade slide-up disable-scroll modal-sm-single lockSucceed" tabindex="-1" role="dialog" aria-hidden="false">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content-wrapper">
+                <div class="modal-content">
+                    <div class="modal-header clearfix">
+                        <h4 class="text-center no-margin"></h4>
+                    </div>
+                    <div class="modal-body m-t-10 text-center">
+                        <div class="modal-notif-content m-b-20 text-left" ng-show="lockUpdated && lockUser">
+                            Akun berhasil dinonaktifkan
+                        </div>
+                        <div class="modal-notif-content m-b-20 text-left" ng-show="lockUpdated && !lockUser">
+                            Akun berhasil diaktifkan
+                        </div>
+                        <button type="button" class="btn btn-primary btn-cons answer" id="close" data-dismiss="modal">Tutup</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade slide-up disable-scroll modal-sm-single lockFailed" tabindex="-1" role="dialog" aria-hidden="false">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content-wrapper">
+                <div class="modal-content">
+                    <div class="modal-header clearfix">
+                        <h4 class="text-center no-margin"></h4>
+                    </div>
+                    <div class="modal-body m-t-10 text-center">
+                        <div class="modal-notif-content m-b-20 text-left" ng-show="!lockUpdated && lockUser">
+                            Akun gagal dinonaktifkan
+                        </div>
+                        <div class="modal-notif-content m-b-20 text-left" ng-show="!lockUpdated && !lockUser">
+                            Akun gagal diaktifkan
+                        </div>
+                        <button type="button" class="btn btn-primary btn-cons answer" id="close" data-dismiss="modal">Tutup</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="modal fade slide-up disable-scroll modal-sm-single updateSucceed" tabindex="-1" role="dialog" aria-hidden="false">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content-wrapper">
+                <div class="modal-content">
+                    <div class="modal-header clearfix">
+                        <h4 class="text-center no-margin"></h4>
+                    </div>
+                    <div class="modal-body m-t-10 text-center">
+                        <div class="modal-notif-content m-b-20 text-left">
+                            Akun berhasil diupdate
+                        </div>
+                        <button type="button" class="btn btn-primary btn-cons answer" id="close" data-dismiss="modal">Tutup</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade slide-up disable-scroll modal-sm-single updateFailed" tabindex="-1" role="dialog" aria-hidden="false">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content-wrapper">
+                <div class="modal-content">
+                    <div class="modal-header clearfix">
+                        <h4 class="text-center no-margin"></h4>
+                    </div>
+                    <div class="modal-body m-t-10 text-center">
+                        <div class="modal-notif-content m-b-20 text-left">
+                            Akun gagal diupdate
+                        </div>
+                        <button type="button" class="btn btn-primary btn-cons answer" id="close" data-dismiss="modal">Tutup</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="modal fade slide-up disable-scroll modal-sm-single addSucceed" tabindex="-1" role="dialog" aria-hidden="false">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content-wrapper">
+                <div class="modal-content">
+                    <div class="modal-header clearfix">
+                        <h4 class="text-center no-margin"></h4>
+                    </div>
+                    <div class="modal-body m-t-10 text-center">
+                        <div class="modal-notif-content m-b-20 text-left">
+                            Akun berhasil ditambahkan
+                        </div>
+                        <button type="button" class="btn btn-primary btn-cons answer" id="close" data-dismiss="modal">Tutup</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade slide-up disable-scroll modal-sm-single addFailed" tabindex="-1" role="dialog" aria-hidden="false">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content-wrapper">
+                <div class="modal-content">
+                    <div class="modal-header clearfix">
+                        <h4 class="text-center no-margin"></h4>
+                    </div>
+                    <div class="modal-body m-t-10 text-center">
+                        <div class="modal-notif-content m-b-20 text-left">
+                            Akun gagal ditambahkan
+                        </div>
+                        <button type="button" class="btn btn-primary btn-cons answer" id="close" data-dismiss="modal">Tutup</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
 </div>

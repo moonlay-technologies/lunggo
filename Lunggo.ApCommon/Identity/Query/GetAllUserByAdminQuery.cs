@@ -20,7 +20,7 @@ namespace Lunggo.ApCommon.Identity.Query
         {
             var clauseBuilder = new StringBuilder();
             clauseBuilder.Append(@"SELECT a.Id as UserId, a.UserName, a.Email, a.FirstName, a.LastName, a.CountryCallCd, a.PhoneNumber, a.Position, a.Branch, a.Department, a.ApproverId, a.LockoutEnabled as IsLocked ");
-            clauseBuilder.Append(@"FROM dbo.[User] AS a ");
+            clauseBuilder.Append(@"FROM dbo.[User] AS a WHERE a.CompanyId = @CompanyId");
             return clauseBuilder.ToString();
         }
 
