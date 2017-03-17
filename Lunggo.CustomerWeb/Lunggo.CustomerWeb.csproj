@@ -631,6 +631,11 @@
     <Content Include="Assets\images\campaign\OnlineRevolution2016\OnlineRevolution-page.jpg" />
     <Content Include="Assets\images\campaign\OnlineRevolution2016\OnlineRevolution-slider-mobile.jpg" />
     <Content Include="Assets\images\campaign\OnlineRevolution2016\OnlineRevolution-slider.jpg" />
+    <Content Include="Assets\images\campaign\PaydayMadness\PaydayMadness-page-mobile.jpg" />
+    <Content Include="Assets\images\campaign\PaydayMadness\PaydayMadness-page.jpg" />
+    <Content Include="Assets\images\campaign\PaydayMadness\PaydayMadness-promo-mobile.jpg" />
+    <Content Include="Assets\images\campaign\PaydayMadness\PaydayMadness-slider-mobile.jpg" />
+    <Content Include="Assets\images\campaign\PaydayMadness\PaydayMadness-slider.jpg" />
     <Content Include="Assets\images\campaign\singapore-text.png" />
     <Content Include="Assets\images\campaign\singapore-thumb.jpg" />
     <Content Include="Assets\images\campaign\singapore.jpg" />
@@ -1666,6 +1671,8 @@
     <Content Include="Views\Shared\Desktop\_PopularFlight.cshtml" />
     <Content Include="Views\Shared\Desktop\_PriceSlider.cshtml" />
     <Content Include="Views\Shared\Desktop\_PriceSliderReturn.cshtml" />
+    <Content Include="Views\Promo\PaydayMadnessPermataBank.cshtml" />
+    <Content Include="Views\Promo\PaydayMadnessPermataBank.mobile.cshtml" />
     <None Include="Views\Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

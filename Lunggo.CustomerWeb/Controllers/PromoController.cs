@@ -27,6 +27,8 @@ namespace Lunggo.CustomerWeb.Controllers
                     return View("HutBTN");
                 case "HutBTNWebview":
                     return View("HutBTNWebview");
+                case "PaydayMadnessPermataBank":
+                    return View("PaydayMadnessPermataBank");
                 default:
                     return RedirectToAction("Index", "Index");
             }
