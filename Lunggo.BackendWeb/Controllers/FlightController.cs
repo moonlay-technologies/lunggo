@@ -131,8 +131,10 @@ namespace Lunggo.BackendWeb.Controllers
                             .Update(conn, new FlightSegmentTableRecord { Id = segId, Pnr = itin.BookingId });
                     }
                 }
+                var queue = QueueService.GetInstance().GetQueueByReference("FlightEticket");
+                queue.AddMessage(new CloudQueueMessage(rsvNo));
                 TempData["OverrideIssue"] = true;
-                return Issue(rsvNo);
+                return RedirectToAction("Detail", null, new { rsvNo });
             }
         }
     }
