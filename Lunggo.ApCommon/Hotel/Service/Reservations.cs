@@ -58,10 +58,10 @@ namespace Lunggo.ApCommon.Hotel.Service
                             Convert.ToInt32(cod.Substring(4, 2)), Convert.ToInt32(cod.Substring(6, 2)));
                         rate.NightCount = Convert.ToInt32((checkOutDate - checkInDate).TotalDays);
                         rate.TermAndCondition = GetRateCommentFromTableStorage(rate.RateCommentsId,
-                        checkInDate).Select(x => x.Description).ToList();
+                            checkInDate).Select(x => x.Description).ToList();
                     }
                 }
-                
+
                 var rsvfordisplay = ConvertToReservationForDisplay(rsv);
                 return rsvfordisplay;
             }
@@ -89,7 +89,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                             Convert.ToInt32(cod.Substring(4, 2)), Convert.ToInt32(cod.Substring(6, 2)));
                         rate.NightCount = Convert.ToInt32((checkOutDate - checkInDate).TotalDays);
                         rate.TermAndCondition = GetRateCommentFromTableStorage(rate.RateCommentsId,
-                        checkInDate).Select(x => x.Description).ToList();
+                            checkInDate).Select(x => x.Description).ToList();
                     }
                 }
 
@@ -115,14 +115,21 @@ namespace Lunggo.ApCommon.Hotel.Service
             }
         }
 
-        public List<HotelReservationForDisplay> GetOverviewReservationsByUserIdOrEmail(string userId, string email, string filter, string sort, int? page, int? itemsPerPage)
+        public List<HotelReservationForDisplay> GetOverviewReservationsByUserIdOrEmail(string userId, string email,
+            string filter, string sort, int? page, int? itemsPerPage)
         {
             var filters = filter != null ? filter.Split(',') : null;
-            var rsvs = GetOverviewReservationsByUserIdOrEmailFromDb(userId, email, filters, sort, page, itemsPerPage) ?? new List<HotelReservation>();
-            return rsvs.Select(ConvertToReservationForDisplay).Where(r => r.RsvDisplayStatus != RsvDisplayStatus.Expired).ToList().ToList();
+            var rsvs = GetOverviewReservationsByUserIdOrEmailFromDb(userId, email, filters, sort, page, itemsPerPage) ??
+                       new List<HotelReservation>();
+            return
+                rsvs.Select(ConvertToReservationForDisplay)
+                    .Where(r => r.RsvDisplayStatus != RsvDisplayStatus.Expired)
+                    .ToList()
+                    .ToList();
         }
 
-        public List<HotelReservationForDisplay> GetBookerOverviewReservationsByUserIdOrEmail(string userId, string email, string filter, string sort, int? page, int? itemsPerPage)
+        public List<HotelReservationForDisplay> GetBookerOverviewReservationsByUserIdOrEmail(string userId, string email,
+            string filter, string sort, int? page, int? itemsPerPage)
         {
             List<string> filters = new List<string>();
             if (!string.IsNullOrEmpty(filter))
@@ -134,17 +141,21 @@ namespace Lunggo.ApCommon.Hotel.Service
             {
                 filters.Add("pending");
             }
-            var rsvs = GetOverviewReservationsByBookerIdOrEmailFromDb(userId, email, filters, sort, page, itemsPerPage) ?? new List<HotelReservation>();
+            var rsvs =
+                GetOverviewReservationsByBookerIdOrEmailFromDb(userId, email, filters, sort, page, itemsPerPage) ??
+                new List<HotelReservation>();
             return rsvs.Select(ConvertToBookerReservationForDisplay).ToList();
         }
 
-        private List<HotelReservation> GetOverviewReservationsByUserIdOrEmailFromDb(string userId, string email, string[] filters, string sort, int? page, int? itemsPerPage)
+        private List<HotelReservation> GetOverviewReservationsByUserIdOrEmailFromDb(string userId, string email,
+            string[] filters, string sort, int? page, int? itemsPerPage)
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
                 var rsvNos =
                     GetRsvNosByUserIdQuery.GetInstance()
-                        .Execute(conn, new { UserId = userId, ContactEmail = email }, new { Filters = filters, Sort = sort, Page = page, ItemsPerPage = itemsPerPage })
+                        .Execute(conn, new {UserId = userId, ContactEmail = email},
+                            new {Filters = filters, Sort = sort, Page = page, ItemsPerPage = itemsPerPage})
                         .Distinct().ToList();
                 if (!rsvNos.Any())
                     return null;
@@ -155,13 +166,15 @@ namespace Lunggo.ApCommon.Hotel.Service
             }
         }
 
-        private List<HotelReservation> GetOverviewReservationsByBookerIdOrEmailFromDb(string userId, string email, List<string> filters, string sort, int? page, int? itemsPerPage)
+        private List<HotelReservation> GetOverviewReservationsByBookerIdOrEmailFromDb(string userId, string email,
+            List<string> filters, string sort, int? page, int? itemsPerPage)
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
                 var rsvNos =
                     GetRsvNosByBookerIdQuery.GetInstance()
-                        .Execute(conn, new { UserId = userId, ContactEmail = email }, new { Filters = filters, Sort = sort, Page = page, ItemsPerPage = itemsPerPage })
+                        .Execute(conn, new {UserId = userId, ContactEmail = email},
+                            new {Filters = filters, Sort = sort, Page = page, ItemsPerPage = itemsPerPage})
                         .Distinct().ToList();
                 if (!rsvNos.Any())
                     return null;
@@ -172,7 +185,8 @@ namespace Lunggo.ApCommon.Hotel.Service
             }
         }
 
-        public List<HotelReservationForDisplay> GetOverviewReservationByApprover(string filter, string sort, int? page, int? itemsPerPage)
+        public List<HotelReservationForDisplay> GetOverviewReservationByApprover(string filter, string sort, int? page,
+            int? itemsPerPage)
         {
             List<string> filters = new List<string>();
             if (!string.IsNullOrEmpty(filter))
@@ -187,17 +201,27 @@ namespace Lunggo.ApCommon.Hotel.Service
             var approverId = HttpContext.Current.User.Identity.GetUser().Id;
             if (string.IsNullOrEmpty(approverId))
                 return null;
-            var rsvs = GetOverviewReservationByApproverFromDb(approverId, filters, sort, page, itemsPerPage) ?? new List<HotelReservation>();
+            var rsvs = GetOverviewReservationByApproverFromDb(approverId, filters, sort, page, itemsPerPage) ??
+                       new List<HotelReservation>();
             return rsvs.Select(ConvertToBookerReservationForDisplay).ToList();
         }
 
-        private List<HotelReservation> GetOverviewReservationByApproverFromDb(string approverId,List<string>filters, string sort, int? page, int? itemsPerPage)
+        private List<HotelReservation> GetOverviewReservationByApproverFromDb(string approverId, List<string> filters,
+            string sort, int? page, int? itemsPerPage)
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
                 var rsvNos =
                     GetReservationByApproverIdQuery.GetInstance()
-                        .Execute(conn, new {ApproverId = approverId,Filters = filters, Sort = sort, Page = page, ItemsPerPage = itemsPerPage }, new { Filters = filters } )
+                        .Execute(conn,
+                            new
+                            {
+                                ApproverId = approverId,
+                                Filters = filters,
+                                Sort = sort,
+                                Page = page,
+                                ItemsPerPage = itemsPerPage
+                            }, new {Filters = filters})
                         .Distinct().ToList();
                 if (!rsvNos.Any())
                     return null;
@@ -213,7 +237,7 @@ namespace Lunggo.ApCommon.Hotel.Service
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
                 var reservationRecord = ReservationTableRepo.GetInstance()
-                    .Find1(conn, new ReservationTableRecord { RsvNo = rsvNo });
+                    .Find1(conn, new ReservationTableRecord {RsvNo = rsvNo});
 
                 if (reservationRecord == null)
                     return null;
@@ -239,7 +263,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                     return null;
 
                 var hotelDetailRecord = HotelReservationDetailsTableRepo.GetInstance().Find(conn,
-                    new HotelReservationDetailsTableRecord { RsvNo = rsvNo }).ToList();
+                    new HotelReservationDetailsTableRecord {RsvNo = rsvNo}).ToList();
 
                 if (hotelDetailRecord.Count == 0)
                     return null;
@@ -262,7 +286,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                 };
 
                 var roomRecords = HotelRoomTableRepo.GetInstance().
-                    Find(conn, new HotelRoomTableRecord { DetailsId = hotelDetailRecord[0].Id }).ToList();
+                    Find(conn, new HotelRoomTableRecord {DetailsId = hotelDetailRecord[0].Id}).ToList();
 
                 if (roomRecords.Count == 0)
                     return null;
@@ -276,7 +300,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                     };
 
                     var rateRecords = HotelRateTableRepo.GetInstance().
-                        Find(conn, new HotelRateTableRecord { RoomId = roomRecord.Id }).ToList();
+                        Find(conn, new HotelRateTableRecord {RoomId = roomRecord.Id}).ToList();
 
                     if (rateRecords.Count == 0)
                     {
@@ -301,7 +325,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                 reservation.HotelDetails = hotelDetail;
 
                 var paxRecords = PaxTableRepo.GetInstance()
-                    .Find(conn, new PaxTableRecord { RsvNo = rsvNo }).ToList();
+                    .Find(conn, new PaxTableRecord {RsvNo = rsvNo}).ToList();
 
                 if (paxRecords.Count == 0)
                     return null;
@@ -323,30 +347,40 @@ namespace Lunggo.ApCommon.Hotel.Service
             }
         }
 
-        public List<HotelReservationForDisplay> GetOverviewReservationsByDeviceId(string deviceId, string filter, string sort, int? page, int? itemsPerPage)
+        public List<HotelReservationForDisplay> GetOverviewReservationsByDeviceId(string deviceId, string filter,
+            string sort, int? page, int? itemsPerPage)
         {
             var filters = filter != null ? filter.Split(',') : null;
-            var rsvs = GetOverviewReservationsByDeviceIdFromDb(deviceId, filters, sort, page, itemsPerPage) ?? new List<HotelReservation>();
-            return rsvs.Select(ConvertToReservationForDisplay).Where(r => r.RsvDisplayStatus != RsvDisplayStatus.Expired).ToList();
+            var rsvs = GetOverviewReservationsByDeviceIdFromDb(deviceId, filters, sort, page, itemsPerPage) ??
+                       new List<HotelReservation>();
+            return
+                rsvs.Select(ConvertToReservationForDisplay)
+                    .Where(r => r.RsvDisplayStatus != RsvDisplayStatus.Expired)
+                    .ToList();
         }
 
-        private List<HotelReservation> GetOverviewReservationsByDeviceIdFromDb(string deviceId, string[] filters, string sort, int? page, int? itemsPerPage)
+        private List<HotelReservation> GetOverviewReservationsByDeviceIdFromDb(string deviceId, string[] filters,
+            string sort, int? page, int? itemsPerPage)
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
                 var rsvNos =
                     GetRsvNosByDeviceIdQuery.GetInstance()
-                        .Execute(conn, new { DeviceId = deviceId }, new { Filters = filters, Sort = sort, Page = page, ItemsPerPage = itemsPerPage })
+                        .Execute(conn, new {DeviceId = deviceId},
+                            new {Filters = filters, Sort = sort, Page = page, ItemsPerPage = itemsPerPage})
                         .ToList();
                 if (!rsvNos.Any())
                     return null;
                 else
                 {
-                    return rsvNos.Select(GetOverviewReservationFromDb).Where(rsv => rsv != null && rsv.User == null).ToList();
+                    return
+                        rsvNos.Select(GetOverviewReservationFromDb)
+                            .Where(rsv => rsv != null && rsv.User == null)
+                            .ToList();
                 }
             }
         }
-        
+
         public void ExpireReservationWhenTimeout(string rsvNo, DateTime timeLimit)
         {
             var queue = QueueService.GetInstance().GetQueueByReference("HotelExpireReservation");
@@ -364,7 +398,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                 PaymentService.GetInstance().UpdatePayment(rsvNo, payment);
             }
         }
-        
+
         public byte[] GetEticket(string rsvNo)
         {
             var azureConnString = ConfigManager.GetInstance().GetConfigValue("azureStorage", "connectionString");
@@ -387,7 +421,7 @@ namespace Lunggo.ApCommon.Hotel.Service
             return rsvs.Select(ConvertToReservationForDisplay).ToList();
         }
 
-        public bool UpdateReservation(string rsvNo, string status,string message)
+        public bool UpdateReservation(string rsvNo, string status, string message)
         {
             var rsv = GetReservation(rsvNo);
             var userId = rsv.User.Id;
@@ -412,34 +446,40 @@ namespace Lunggo.ApCommon.Hotel.Service
                     {
                         PaymentService.GetInstance().SetBookingDisabilityStatus(userId, true);
                         var approverEmail = User.GetApproverEmailByUserId(userId);
-                        
+
                         var financeEmails = User.GetListFinanceEmailByCompanyId(companyId);
                         NotifyFailedPayment(rsvNo, approverEmail, userEmail, financeEmails);
                         return false;
-                    UpdateBookingRsvStatusDb(rsvNo, RsvStatus.Approved, message);
-                    GetInstance().IssueBooker(rsvNo);
-                    SendBookerBookingInfo(rsvNo);
-                    return true;
+                    }
+                    
+                    {
+                        UpdateBookingRsvStatusDb(rsvNo, RsvStatus.Approved, message);
+                        GetInstance().IssueBooker(rsvNo);
+                        SendBookerBookingInfo(rsvNo);
+                        return true;
+
+                    }
                 }
                 catch
                 {
                     return false;
-                }       
+                }
             }
             else
-            {
-                try
                 {
-                    UpdateBookingRsvStatusDb(rsvNo, RsvStatus.Rejected,message);
-                    SendBookerBookingInfo(rsvNo);
-                    return true;
-                }
-                catch
-                {
-                    return false;
+                    try
+                    {
+                        UpdateBookingRsvStatusDb(rsvNo, RsvStatus.Rejected, message);
+                        SendBookerBookingInfo(rsvNo);
+                        return true;
+                    }
+                    catch
+                    {
+                        return false;
+                    }
                 }
             }
-        }
+        
 
         public void NotifyFailedPayment(string rsvNo, string approverEmail, string userEmail, List<string> financeEmails)
         {
@@ -449,6 +489,5 @@ namespace Lunggo.ApCommon.Hotel.Service
             list = list.Substring(0, list.Length - 1);
             queue.AddMessage(new CloudQueueMessage(rsvNo + "&" + approverEmail + "&" + userEmail + "&" + list));
         }
-
     }
 }
