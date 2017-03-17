@@ -54,9 +54,11 @@
         }
 
         $scope.selectedRole = [];
-
-        $scope.EditUserProfile = function(index) {
+        $scope.currentEditIndex = 0;
+        $scope.EditUserProfile = function (index) {
+            $scope.currentEditIndex = index;
             $scope.editUser.email = $scope.users[index].email;
+            
             //$scope.editUser.userId = $scope.users[index].userId;
             if ($scope.users[index].firstName == null) {
                 $scope.users[index].firstName = "";
@@ -333,10 +335,23 @@
                     headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') }
                 }).then(function (returnData) {
                     $(".wait").modal("hide");
-                        if (returnData.data.status == '200') {
+                    if (returnData.data.status == '200') {
                         $log.debug('Success Add User');
+                        var splittedName = $scope.userData.name.split(' ');
                         $scope.userAdded = true;
-                        window.location.reload();
+                        $scope.users.push({
+                            email: $scope.userData.email,
+                            firstName: splittedName[0],
+                            lastName: splittedName.slice(1, splittedName.length).join(' '),
+                            branch: $scope.userData.branch,
+                            position: $scope.userData.position,
+                            approverId: $scope.userData.approverId,
+                            roleName: $scope.userData.role,
+                            department: $scope.userData.department,
+                            approverName: $.grep($scope.approvers, function (e) { return e.userId == $scope.userData.approverId; })[0].name
+                        });
+
+                    //window.location.reload();
                         $(".addSucceed").modal({
                             backdrop: 'static',
                         });
@@ -407,10 +422,27 @@
                     if (returnData.data.status == '200') {
                         $log.debug('Success Update User');
                         $scope.updatingUser = true;
-                        window.location.reload();
+                        //window.location.reload();
                         $(".updateSucceed").modal({
                             backdrop: 'static',
                         });
+
+                        var splittedName = $scope.editUser.name.split(' ');
+                        $scope.users[$scope.currentEditIndex].email = $scope.editUser.email;
+                        $scope.users[$scope.currentEditIndex].firstName = splittedName[0];
+                        $scope.users[$scope.currentEditIndex].lastName = splittedName.slice(1, splittedName.length).join(' ');
+                        $scope.users[$scope.currentEditIndex].branch = $scope.editUser.branch;
+                        $scope.users[$scope.currentEditIndex].position = $scope.editUser.position;
+                        $scope.users[$scope.currentEditIndex].department = $scope.editUser.department;
+
+                        if ($scope.editUser.role != null && $scope.editUser.role.length > 0) {
+                            $scope.users[$scope.currentEditIndex].roleName = $scope.editUser.role;
+                        }
+                        
+                        $scope.users[$scope.currentEditIndex].approverId = $scope.editUser.branch;
+                        //$.grep(myArray, function(e){ return e.id == id; });
+                        $scope.users[$scope.currentEditIndex].approverName =
+                            $.grep($scope.approvers, function (e) { return e.userId == $scope.editUser.approverId; })[0].name;
                     }
                     else {
                         $log.debug(returnData.data.error);
