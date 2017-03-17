@@ -223,13 +223,13 @@ function ($scope, $log, $window, $http, $resource, $timeout, $interval, hotelSea
         if ($scope.locFound) {
             $scope.searchHotel();
             if ($scope.statePrice == 'perRoom') {
-                $('#perRoom').addClass("active");
-                $('#total').removeClass("active");
-                $("#price-night").show();
+                $('body #perRoom').addClass("active");
+                $('body #total').removeClass("active");
+                $("body #price-night").show();
             } else {
-                $('#total').addClass("active");
-                $('#perRoom').removeClass("active");
-                $("#price-total").show();
+                $('body #total').addClass("active");
+                $('body #perRoom').removeClass("active");
+                $("body #price-total").show();
             }
         } else {
             $scope.searchDone = true;
@@ -385,13 +385,13 @@ function ($scope, $log, $window, $http, $resource, $timeout, $interval, hotelSea
                     $scope.searchDone = true;
                     $scope.finishLoad = true;
                     if ($scope.statePrice == 'perRoom') {
-                        $('#perRoom').click();
-                        $("#price-total").hide();
-                        $("#price-night").show();
+                        $('body #perRoom').click();
+                        $("body #price-total").hide();
+                        $("body #price-night").show();
                     } else {
-                        $('#total').click();
-                        $("#price-night").hide();
-                        $("#price-total").show();
+                        $('body #total').click();
+                        $("body #price-night").hide();
+                        $("body #price-total").show();
                     }
                 } else {
                     $scope.searchDone = false;
