@@ -167,6 +167,10 @@ body {
     float: right; }
   body.b2b-order-detail .table.table-condensed.table-detailed > tbody > tr > td:first-child:before {
     display: none; }
+  body.b2b-order-list .select2-container, body.b2b-save-pax .select2-container {
+    z-index: 9999; }
+  body.b2b-order-list .select2-search--dropdown, body.b2b-save-pax .select2-search--dropdown {
+    display: none; }
   body.b2b-order-list .dash, body.b2b-save-pax .dash {
     display: block;
     height: 2px;
@@ -244,16 +248,22 @@ body {
     transform: translateY(-50%);
     font-size: 24px;
     margin-left: 20px; }
-  body.b2b-order-list .ol-list.ol-pax .ol-item .user-icon:before, body.b2b-save-pax .ol-list.ol-pax .ol-item .user-icon:before {
-    content: "\f007";
-    display: inline-block;
-    font-family: 'FontAwesome';
-    position: absolute;
-    top: 50%;
+  body.b2b-order-list .ol-list.ol-pax .ol-item:before, body.b2b-save-pax .ol-list.ol-pax .ol-item:before {
+    top: 0;
     left: 0;
-    transform: translateY(-50%);
-    font-size: 24px;
+    transform: none;
+    margin-top: 20px;
     margin-left: 20px; }
+  body.b2b-order-list .ol-list.ol-pax .ol-item .col-sm-2:before, body.b2b-save-pax .ol-list.ol-pax .ol-item .col-sm-2:before {
+    content: ':';
+    display: block;
+    padding-right: 5px;
+    float: right; }
+  body.b2b-order-list .ol-list.ol-pax .ol-item-hide .col-sm-3:before, body.b2b-save-pax .ol-list.ol-pax .ol-item-hide .col-sm-3:before {
+    content: ':';
+    display: block;
+    padding-right: 5px;
+    float: right; }
   body.b2b-order-list .modal.info-order .col-sm-3:after, body.b2b-save-pax .modal.info-order .col-sm-3:after {
     content: ':';
     float: right;

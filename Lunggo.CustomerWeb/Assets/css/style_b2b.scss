@@ -203,6 +203,8 @@
         .table.table-condensed.table-detailed > tbody > tr > td:first-child:before {display: none;}
     }
     &.b2b-order-list, &.b2b-save-pax {
+        .select2-container {z-index: 9999;}
+        .select2-search--dropdown {display: none;}
         .dash {
             display: block;
             height: 2px;
@@ -296,18 +298,30 @@
                     margin-left: 20px;
                 }
             }
-            &.ol-pax .ol-item {
-                .user-icon:before {
-                    content: "\f007";
-                    display: inline-block;
-                    font-family: 'FontAwesome';
-                    position: absolute;
-                    top: 50%;
-                    left: 0;
-                    transform: translateY(-50%);
-                    font-size: 24px;
-                    margin-left: 20px;
-                } 
+            &.ol-pax {
+                .ol-item {
+                    &:before {
+                        top: 0;
+                        left: 0;
+                        transform: none;
+                        margin-top: 20px;
+                        margin-left: 20px;
+                    } 
+                    .col-sm-2:before {
+                        content: ':';
+                        display: block;
+                        padding-right: 5px;
+                        float: right;
+                    }
+                }
+                .ol-item-hide {
+                    .col-sm-3:before {
+                        content: ':';
+                        display: block;
+                        padding-right: 5px;
+                        float: right;
+                    }
+                }
             }
         }
         .modal.info-order {
