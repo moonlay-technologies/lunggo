@@ -217,6 +217,7 @@
     <Compile Include="ApiSrc\Account\Logic\B2BLoginLogic.cs" />
     <Compile Include="ApiSrc\Account\Logic\B2BRegisterLogic.cs" />
     <Compile Include="ApiSrc\Account\Logic\B2BUpdateReservationLogic.cs" />
+    <Compile Include="ApiSrc\Account\Logic\BookerOrderListLogic.cs" />
     <Compile Include="ApiSrc\Account\Logic\ChangePasswordLogic.cs" />
     <Compile Include="ApiSrc\Account\Logic\UpdateUserLockLogic.cs" />
     <Compile Include="ApiSrc\Account\Logic\DeleteUserLogic.cs" />

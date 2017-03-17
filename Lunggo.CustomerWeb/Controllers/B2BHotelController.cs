@@ -208,7 +208,7 @@ namespace Lunggo.CustomerWeb.Controllers
             {
                 return View("Index", "B2BIndex");
             }
-            var isUpdated = HotelService.GetInstance().UpdateReservation(rsvNo, status, null,null);
+            var isUpdated = HotelService.GetInstance().UpdateReservation(rsvNo, status,null);
             if (isUpdated)
             {
                 //Gak tau masih dia pergi kemana

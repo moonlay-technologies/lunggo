@@ -1,10 +1,11 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using Lunggo.Framework.Database;
 
 namespace Lunggo.ApCommon.Hotel.Query
 {
-    public class GetRsvNosByUserIdQuery : DbQueryBase<GetRsvNosByUserIdQuery, string>
+    public class GetRsvNosByBookerIdQuery : DbQueryBase<GetRsvNosByBookerIdQuery, string>
     {
         protected override string GetQuery(dynamic condition = null)
         {
@@ -37,9 +38,15 @@ namespace Lunggo.ApCommon.Hotel.Query
 
         private static string CreateConditionClause(dynamic condition)
         {
-            string[] filters = condition.Filters;
-            int? page = condition.Page;
-            int itemsPerPage = condition.ItemsPerPage ?? 10;
+            List<string> filters = null;
+            int? page = null;
+            int itemsPerPage = 10;
+            if (condition != null)
+            {
+                //page = condition.Page;
+                filters = condition.Filters;
+                //itemsPerPage = condition.ItemsPerPage;
+            }
             var clauseBuilder = new StringBuilder();
             if (filters != null)
             {
@@ -49,10 +56,16 @@ namespace Lunggo.ApCommon.Hotel.Query
                     clauseBuilder.Append(" AND (r.RsvTime < DATEADD(day,-1,GETUTCDATE()) AND r.RsvStatusCd != 'PROC' AND (r.RsvStatusCd != 'COMP' OR i.CheckInDate < DATEADD(day,-1,GETUTCDATE())))");
                 if (filters.Contains("issued"))
                     clauseBuilder.Append(" AND b.RateStatus = 'TKTD'");
+                if (filters.Contains("pending"))
+                    clauseBuilder.Append(" AND r.RsvStatusCd = 'PROC'");
+                if (filters.Contains("approved"))
+                    clauseBuilder.Append(" AND r.RsvStatusCd = 'APRV'");
+                if (filters.Contains("rejected"))
+                    clauseBuilder.Append(" AND r.RsvStatusCd = 'REJE'");
             }
             if (page != null)
             {
-                clauseBuilder.Append(" ORDER BY r.RsvTime OFFSET " + page*itemsPerPage + " ROWS FETCH NEXT " + itemsPerPage + " ROWS ONLY");
+                clauseBuilder.Append(" ORDER BY r.RsvTime OFFSET " + page * itemsPerPage + " ROWS FETCH NEXT " + itemsPerPage + " ROWS ONLY");
             }
             return clauseBuilder.ToString();
         }

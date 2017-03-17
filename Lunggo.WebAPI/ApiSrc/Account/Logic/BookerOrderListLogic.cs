@@ -16,7 +16,7 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
 {
     public static partial class AccountLogic
     {
-        public static ReservationOrderListResponse GetApproverOrderList(ReservationOrderListRequest request)
+        public static ReservationOrderListResponse GetBookerOrderListLogic(ReservationOrderListRequest request)
         {
             var identity = HttpContext.Current.User.Identity as ClaimsIdentity ?? new ClaimsIdentity();
             var flight = FlightService.GetInstance();
@@ -27,13 +27,16 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
             {
                 var filterParam = request.Filter ?? null;
                 rsvs = identity.IsUserAuthorized()
-                    ? flight.GetOverviewReservationsByApprover(filterParam, null, null, null)
+                    ? flight.GetBookerOverviewReservationsByUserIdOrEmail(identity.GetUser().Id, identity.GetEmail(),
+                        request.Filter, request.Sorting, request.Page, request.ItemPerPage)
                     : null;
 
                 rsvsHotel = identity.IsUserAuthorized()
-                    ? hotel.GetOverviewReservationByApprover(filterParam, null, null, null)
+                    ? hotel.GetBookerOverviewReservationsByUserIdOrEmail(identity.GetUser().Id, identity.GetEmail(),
+                        request.Filter, request.Sorting, request.Page, request.ItemPerPage)
                     : null;
-                var response = ProcessReservation(rsvs, rsvsHotel);
+
+                var response = ProcessBookerReservation(rsvs, rsvsHotel);
 
                 return new ReservationOrderListResponse
                 {
@@ -49,20 +52,18 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
                     ErrorCode = "ERRGEN50"
                 };
             }
-            
         }
 
-        public static List<ReservationListModel> ProcessReservation(List<FlightReservationForDisplay> rsvFlights,
+        public static List<ReservationListModel> ProcessBookerReservation(List<FlightReservationForDisplay> rsvFlights,
             List<HotelReservationForDisplay> rsvHotels)
         {
             var orderList = new List<ReservationListModel>();
             if (rsvFlights != null)
             {
                 var flightList =
-                    rsvFlights.GroupBy(u => new { u.BookerName, u.UserId, u.BookerMessageTitle, u.BookerMessageDescription })
+                    rsvFlights.GroupBy(u => new {u.BookerName, u.BookerMessageTitle, u.BookerMessageDescription })
                         .Select(grp => new ReservationListModel
                         {
-                            BookerId = grp.Key.UserId,
                             BookerName = grp.Key.BookerName,
                             BookerMessageTitle = grp.Key.BookerMessageTitle,
                             BookerMessageDescription = grp.Key.BookerMessageDescription,
@@ -76,9 +77,8 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
 
                 if (rsvHotels != null)
                 {
-                    var hotelList = rsvHotels.GroupBy(u => new { u.BookerName, u.UserId, u.BookerMessageTitle, u.BookerMessageDescription }).Select(grp => new ReservationListModel
+                    var hotelList = rsvHotels.GroupBy(u => new {u.BookerName, u.BookerMessageTitle, u.BookerMessageDescription }).Select(grp => new ReservationListModel
                     {
-                        BookerId = grp.Key.UserId,
                         BookerName = grp.Key.BookerName,
                         BookerMessageTitle = grp.Key.BookerMessageTitle,
                         BookerMessageDescription = grp.Key.BookerMessageDescription,
@@ -106,9 +106,8 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
             {
                 if (rsvHotels != null)
                 {
-                    var hotelList = rsvHotels.GroupBy(u => new { u.BookerName, u.UserId, u.BookerMessageTitle, u.BookerMessageDescription }).Select(grp => new ReservationListModel
+                    var hotelList = rsvHotels.GroupBy(u => new { u.BookerName, u.BookerMessageTitle, u.BookerMessageDescription }).Select(grp => new ReservationListModel
                     {
-                        BookerId = grp.Key.UserId,
                         BookerName = grp.Key.BookerName,
                         BookerMessageTitle = grp.Key.BookerMessageTitle,
                         BookerMessageDescription = grp.Key.BookerMessageDescription,
@@ -120,19 +119,8 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
                     orderList.AddRange(hotelList);
                 }
             }
-
-            if (orderList.Count != 0)
-            {
-                orderList =
-                orderList.OrderBy(x =>
-                {
-                    var minFLight = x.ReservationList.Flights == null ? DateTime.MaxValue : x.ReservationList.Flights.Min(y => y.Payment.TimeLimit);
-                    var minHotel = x.ReservationList.Hotels == null ? DateTime.MaxValue : x.ReservationList.Hotels.Min(y => y.Payment.TimeLimit);
-                    var minFix = minFLight <= minHotel ? minFLight : minHotel;
-                    return minFix;
-                }).ToList();
-            }
             return orderList;
         }
     }
+
 }

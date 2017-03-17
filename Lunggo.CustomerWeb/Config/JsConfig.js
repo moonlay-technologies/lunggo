@@ -177,6 +177,10 @@ var ApproverOrderListPathConfig = {
     Url: 'https://api.local.travorama.com/v1/approverorderlist'
 };
 
+var BookerOrderListPathConfig = {
+    Url: 'https://api.local.travorama.com/v1/bookerorderlist'
+};
+
 var UpdateReservationConfig = {
     Url: 'https://api.local.travorama.com/v1/updatereservation'
 };

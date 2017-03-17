@@ -231,6 +231,7 @@
     <Compile Include="Flight\Model\FlightReservation.cs" />
     <Compile Include="Flight\Model\FlightReservationSearch.cs" />
     <Compile Include="Flight\Model\FlightRsvRule.cs" />
+    <Compile Include="Flight\Query\GetRsvNoByBookerId.cs" />
     <Compile Include="Flight\Query\GetRsvNosByApproverQuery.cs" />
     <Compile Include="Hotel\Constant\AccomodationType.cs" />
     <Compile Include="Hotel\Constant\HotelApiType.cs" />
@@ -266,6 +267,7 @@
     <Compile Include="Hotel\Query\GetRateIdQuery.cs" />
     <Compile Include="Hotel\Query\GetReservationByApproverIdQuery.cs" />
     <Compile Include="Hotel\Query\GetRoomIdQuery.cs" />
+    <Compile Include="Hotel\Query\GetRsvNoByBookerIdQuery.cs" />
     <Compile Include="Hotel\Query\GetRsvNosByDeviceIdQuery.cs" />
     <Compile Include="Hotel\Query\GetRsvNosByUserIdQuery.cs" />
     <Compile Include="Hotel\Query\SearchReservationQuery.cs" />

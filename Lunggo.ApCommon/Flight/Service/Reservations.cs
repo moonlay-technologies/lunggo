@@ -94,8 +94,17 @@ namespace Lunggo.ApCommon.Flight.Service
 
         public List<FlightReservationForDisplay> GetBookerOverviewReservationsByUserIdOrEmail(string userId, string email, string filter, string sort, int? page, int? itemsPerPage)
         {
-            var filters = filter != null ? filter.Split(',') : null;
-            var rsvs = GetOverviewReservationsByUserIdOrEmailFromDb(userId, email, filters, sort, page, itemsPerPage) ?? new List<FlightReservation>();
+            List<string> filters = new List<string>();
+            if (!string.IsNullOrEmpty(filter))
+            {
+                var filtersSplit = filter.Split(',');
+                filters.AddRange(filtersSplit);
+            }
+            else
+            {
+                filters.Add("pending");
+            }
+            var rsvs = GetOverviewReservationsByBookerIdOrEmailFromDb(userId, email, filters, sort, page, itemsPerPage) ?? new List<FlightReservation>();
             return rsvs.Select(ConvertToBookerReservationForDisplay).ToList();
         }
 
@@ -162,7 +171,7 @@ namespace Lunggo.ApCommon.Flight.Service
             UpdateExpireReservationsToDb();
         }
 
-        public bool UpdateReservation(string rsvNo, string status, string rejectionTitle, string rejectionMessage)
+        public bool UpdateReservation(string rsvNo, string status,string rejectionMessage)
         {
             var rsv = GetReservation(rsvNo);
             if (rsv.RsvStatus != RsvStatus.InProcess)
@@ -176,7 +185,7 @@ namespace Lunggo.ApCommon.Flight.Service
                     var isPaid = PaymentService.GetInstance().ProcessB2BPayment(rsvNo, rsv.User.CompanyId);
                     if (!isPaid)
                         return false;
-                    UpdateBookingRsvStatusDb(rsvNo, RsvStatus.Approved, rejectionTitle, rejectionMessage); 
+                    UpdateBookingRsvStatusDb(rsvNo, RsvStatus.Approved, rejectionMessage); 
                     IssueBooker(rsvNo);
                     SendBookerBookingInfo(rsvNo);
                     return true;
@@ -190,7 +199,7 @@ namespace Lunggo.ApCommon.Flight.Service
             {
                 try
                 {
-                    UpdateBookingRsvStatusDb(rsvNo, RsvStatus.Rejected, rejectionTitle, rejectionMessage);
+                    UpdateBookingRsvStatusDb(rsvNo, RsvStatus.Rejected, rejectionMessage);
                     SendBookerBookingInfo(rsvNo);
                     return true;
                 }

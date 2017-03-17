@@ -363,6 +363,7 @@ namespace Lunggo.Configuration
             const string changeProfilePath = @"/v1/profile";
             const string trxHistoryPath = @"/v1/trxhistory";
             const string approverorderlistPath = @"/v1/approverorderlist";
+            const string bookerorderlistPath = @"/v1/bookerorderlist";
             const string bookerTrxHistoryPath = @"/v1/bookertrxhistory";
             const string updateReservationPath = @"/v1/updatereservation";
             const string getReservationPath = @"/v1/rsv/";
@@ -398,6 +399,7 @@ namespace Lunggo.Configuration
             fileTemplate.SetAttribute("trxHistoryPath", trxHistoryPath);
             fileTemplate.SetAttribute("bookerTrxHistoryPath", bookerTrxHistoryPath);
             fileTemplate.SetAttribute("approverorderlistPath", approverorderlistPath);
+            fileTemplate.SetAttribute("bookerorderlistPath", bookerorderlistPath);
             fileTemplate.SetAttribute("getReservationPath", getReservationPath);
             fileTemplate.SetAttribute("updateReservationPath", updateReservationPath);
             fileTemplate.SetAttribute("loginPath", loginPath);

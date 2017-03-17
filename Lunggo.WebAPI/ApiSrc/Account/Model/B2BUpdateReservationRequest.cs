@@ -12,5 +12,7 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Model
         public string RsvNo { get; set; }
         [JsonProperty("status", NullValueHandling = NullValueHandling.Ignore)]
         public string Status { get; set; }
+        [JsonProperty("message", NullValueHandling = NullValueHandling.Ignore)]
+        public string Message { get; set; }
     }
 }

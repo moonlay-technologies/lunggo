@@ -227,13 +227,19 @@
                                 @if (ViewBag.Domain == "B2B")
                                 {
                                     <div class="form-group">
-                                        <label class="control-label">Booker Message</label>
+                                        <label class="control-label">Judul Pesan</label>
                                         <div>
-                                            <textarea class="form-control" name="special-request" ng-model="buyerInfo.bookerMessage"></textarea>
+                                            <input type="text" class="form-control" value=buyerInfo.bookerMessageDescription id="buyer-title" name="title" ng-model="buyerInfo.bookerMessageTitle" required />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label">Deskripsi</label>
+                                        <div>
+                                            <textarea class="form-control" name="special-request" ng-model="buyerInfo.bookerMessageDescription" required></textarea>
                                         </div>
                                     </div>
                                 }
-                                
+
 
                             </form><!-- #buyer-form -->
 
@@ -367,7 +373,7 @@
                                                     <option ng-repeat="country in countries" value="{{country.code}}" ng-selected="country.code == 'ID'">{{country.name}}</option>
                                                 </select>
                                             </div>
-                                           
+
                                         </div>
                                     </div><!-- .passenger-form -->
 
@@ -592,7 +598,7 @@
                                         {
                                             <input type="text" name="Contact.BookerMessage" value="" ng-model="buyerInfo.bookerMessage" />
                                         }
-                                        
+
 
                                         <p>Passenger Info</p>
                                         <div ng-repeat="passenger in passengers track by $index">
@@ -824,7 +830,7 @@
         </div>
         @*</div>*@
         <!-- checkout end here -->
-        break;
+                                    break;
     case "BookExpired":
     @:[Ini ceritanya page booking expired]
         break;

@@ -29,12 +29,12 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
             if (request.RsvNo.StartsWith("1"))
             {
                 //FLIGHT
-                isUpdated = FlightService.GetInstance().UpdateReservation(request.RsvNo, request.Status,null,null);
+                isUpdated = FlightService.GetInstance().UpdateReservation(request.RsvNo, request.Status,request.Message);
             }
             else
             {
                 //HOTEL
-                isUpdated  = HotelService.GetInstance().UpdateReservation(request.RsvNo, request.Status,null,null);
+                isUpdated  = HotelService.GetInstance().UpdateReservation(request.RsvNo, request.Status,request.Message);
              }
             if (isUpdated)
             {

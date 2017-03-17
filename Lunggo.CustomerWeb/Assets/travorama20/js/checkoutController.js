@@ -758,10 +758,10 @@ app.controller('checkoutController', [
                 
                 $scope.paxData = $scope.paxData + ']';
                 $scope.book.postData = '{' + $scope.book.postData + ',' + $scope.paxData;
-                if ($scope.buyerInfo.bookerMessage == null || $scope.buyerInfo.bookerMessage.length == 0) {
+                if ($scope.buyerInfo.bookerMessageTitle == null || $scope.buyerInfo.bookerMessageTitle.length == 0) {
                     $scope.book.postData = $scope.book.postData + '}';
                 } else {
-                    $scope.bookerReq = '"bookerMessage":"' + $scope.buyerInfo.bookerMessage + '"';
+                    $scope.bookerReq = ' "bookerMessageTitle":"' + $scope.buyerInfo.bookerMessageTitle + '" ,"bookerMessageDescription":"' + $scope.buyerInfo.bookerMessageDescription + '"';
                     $scope.book.postData = $scope.book.postData + ',' + $scope.bookerReq + '}';
                 }
                 $log.debug($scope.book.postData);

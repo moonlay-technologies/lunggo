@@ -18,10 +18,10 @@ namespace Lunggo.ApCommon.Identity.Query
         protected override string GetQuery(dynamic condition = null)
         {
             var queryBuilder = new StringBuilder();
-            queryBuilder.Append("SELECT [User].Email " +
-                                "FROM [User] " +
-                                "LEFT JOIN [UserApprover] ON [User].Id = UserApprover.ApproverId " +
-                                "WHERE [UserApprover].UserId = @userId");
+            queryBuilder.Append("SELECT a.Email " +
+                                "FROM [User] as a " +
+                                "LEFT JOIN [User] as b ON a.Id = b.ApproverId " +
+                                "WHERE b.Id = @userId");
             return queryBuilder.ToString();
         }
     }

@@ -13,8 +13,8 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Model
         [JsonProperty("sorting")]
         public string Sorting { get; set; }
         [JsonProperty("page")]
-        public string Page { get; set; }
+        public int? Page { get; set; }
         [JsonProperty("itemPerPage")]
-        public string ItemPerPage { get; set; }
+        public int? ItemPerPage { get; set; }
     }
 }
