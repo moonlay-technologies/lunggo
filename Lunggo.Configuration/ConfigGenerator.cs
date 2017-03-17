@@ -342,6 +342,7 @@ namespace Lunggo.Configuration
             const string autocompleteAirlinePath = @"/v1/autocomplete/airlines/";
             const string checkVoucherPath = @"/v1/payment/checkvoucher";
             const string checkBinDiscountPath = @"/v1/payment/checkbindiscount";
+            const string checkMethodDiscountPath = @"/v1/payment/checkmethoddiscount";
             const string subscribePath = @"/v1/newsletter/subscribe";
             const string loginPath = @"/v1/login";
             const string getProfilePath = @"/v1/profile";
@@ -382,6 +383,7 @@ namespace Lunggo.Configuration
             fileTemplate.SetAttribute("autocompleteAirlinePath", autocompleteAirlinePath);
             fileTemplate.SetAttribute("checkVoucherPath", checkVoucherPath);
             fileTemplate.SetAttribute("checkBinDiscountPath", checkBinDiscountPath);
+            fileTemplate.SetAttribute("checkMethodDiscountPath", checkMethodDiscountPath);
             fileTemplate.SetAttribute("subscribePath", subscribePath);
             fileTemplate.SetAttribute("trxHistoryPath", trxHistoryPath);
             fileTemplate.SetAttribute("getReservationPath", getReservationPath);

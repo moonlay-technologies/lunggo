@@ -600,6 +600,8 @@
     <Content Include="Assets\images\campaign\bandung-text.png" />
     <Content Include="Assets\images\campaign\bandung-thumb.jpg" />
     <Content Include="Assets\images\campaign\bandung.jpg" />
+    <Content Include="Assets\images\campaign\Harbolnas2016\Harbolnas_landingpage.jpg" />
+    <Content Include="Assets\images\campaign\Harbolnas2016\Harbolnas_landingpage_mobile.jpg" />
     <Content Include="Assets\images\campaign\hongkong-text.png" />
     <Content Include="Assets\images\campaign\hongkong-thumb.jpg" />
     <Content Include="Assets\images\campaign\hongkong.jpg" />
@@ -619,6 +621,8 @@
     <Content Include="Assets\images\campaign\malaysia-text.png" />
     <Content Include="Assets\images\campaign\malaysia-thumb.jpg" />
     <Content Include="Assets\images\campaign\malaysia.jpg" />
+    <Content Include="Assets\images\campaign\MatahariMall2016\MatahariMall-page-mobile.jpg" />
+    <Content Include="Assets\images\campaign\MatahariMall2016\MatahariMall-page.jpg" />
     <Content Include="Assets\images\campaign\MobileApp\app-store-cs.png" />
     <Content Include="Assets\images\campaign\MobileApp\app-store.png" />
     <Content Include="Assets\images\campaign\MobileApp\background.jpg" />
@@ -1307,6 +1311,18 @@
     <Content Include="Assets\vendor\lightslider\lightslider.js" />
     <Content Include="Assets\vendor\slick\slick.css" />
     <Content Include="Assets\vendor\slick\slick.min.js" />
+    <Content Include="Campaign\Harbolnas2016\css\promo-harbolnas.css">
+      <DependentUpon>promo-harbolnas.scss</DependentUpon>
+    </Content>
+    <Content Include="Campaign\Harbolnas2016\css\promo-harbolnas.min.css">
+      <DependentUpon>promo-harbolnas.css</DependentUpon>
+    </Content>
+    <Content Include="Campaign\MatahariMall2016\css\promo-mataharimall.css">
+      <DependentUpon>promo-mataharimall.scss</DependentUpon>
+    </Content>
+    <Content Include="Campaign\MatahariMall2016\css\promo-mataharimall.min.css">
+      <DependentUpon>promo-mataharimall.css</DependentUpon>
+    </Content>
     <Content Include="Config\Airline.csv" />
     <Content Include="Config\GeoCodingAPI.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -1485,6 +1501,8 @@
     <Content Include="Assets\travorama20\css\_page_static.scss" />
     <Content Include="Assets\travorama20\css\_screenLarge.scss" />
     <Content Include="Assets\travorama20\css\_screenSmall.scss" />
+    <Content Include="Campaign\Harbolnas2016\css\promo-harbolnas.scss" />
+    <Content Include="Campaign\MatahariMall2016\css\promo-mataharimall.scss" />
     <None Include="Properties\PublishProfiles\prod-cw %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\dv1-cw.pubxml" />
     <None Include="Properties\PublishProfiles\dv2-cw.pubxml" />
@@ -1666,6 +1684,12 @@
     <Content Include="Views\Shared\Desktop\_PopularFlight.cshtml" />
     <Content Include="Views\Shared\Desktop\_PriceSlider.cshtml" />
     <Content Include="Views\Shared\Desktop\_PriceSliderReturn.cshtml" />
+    <Content Include="Views\Promo\Harbolnas2016.cshtml" />
+    <Content Include="Views\Promo\Harbolnas2016.mobile.cshtml" />
+    <Content Include="Views\Promo\Harbolnas2016WebView.cshtml" />
+    <Content Include="Views\Promo\MatahariMall.cshtml" />
+    <Content Include="Views\Promo\MatahariMall.mobile.cshtml" />
+    <Content Include="Views\Promo\MatahariMallWebview.cshtml" />
     <None Include="Views\Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

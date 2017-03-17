@@ -748,8 +748,8 @@
 
         //COOKIES
         scope.setCookie = function () {
-            Cookies.set('hotelSearchLocationDisplay', scope.hotelSearch.locationDisplay, { expires: 9999 });
-            Cookies.set('hotelSearchLocation', scope.hotelSearch.location, { expires: 9999 });
+            Cookies.set('hotelLocationDisplay', scope.hotelSearch.locationDisplay, { expires: 9999 });
+            Cookies.set('hotelLocation', scope.hotelSearch.location, { expires: 9999 });
             Cookies.set('hotelSearchCheckInDate', scope.hotelSearch.checkinDate, { expires: 9999 });
             Cookies.set('hotelSearchCheckOutDate', scope.hotelSearch.checkoutDate, { expires: 9999 });
             Cookies.set('hotelSearchNights', scope.hotelSearch.nightCount, { expires: 9999 });
@@ -760,9 +760,7 @@
             Cookies.set('urlZone', scope.hotelSearch.urlData.zone, { expires: 9999 });
             Cookies.set('urlArea', scope.hotelSearch.urlData.area, { expires: 9999 });
             Cookies.set('urlType', scope.hotelSearch.urlData.type, { expires: 9999 });
-
-        }
-        
+        }        
     }
 
     var searchParam = function (hotelSearch) {

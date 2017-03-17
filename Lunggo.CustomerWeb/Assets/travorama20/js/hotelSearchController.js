@@ -4,45 +4,45 @@ function ($scope, $log, $window, $http, $resource, $timeout, $interval, hotelSea
 
     $(document).ready(function () {
 
-        if (Cookies.get('hotelSearchLocationDisplay')) {
-            $scope.hotelSearch.locationDisplay = Cookies.get('hotelSearchLocationDisplay');
+        if (Cookies.get('hotelLocationDisplay')) {
+            $scope.hotelSearch.locationDisplay = Cookies.get('hotelLocationDisplay');
+            if (Cookies.get('hotelLocation')) {
+                $scope.hotelSearch.location = Cookies.get('hotelLocation');
+            } else {
+                $scope.hotelSearch.location = 1316553;
+            }
+            if (Cookies.get('urlCountry')) {
+                $scope.hotelSearch.urlData.country = Cookies.get('urlCountry');
+            } else {
+                $scope.hotelSearch.urlData.country = 'Indonesia';
+            }
+            if (Cookies.get('urlDestination')) {
+                $scope.hotelSearch.urlData.destination = Cookies.get('urlDestination');
+            } else {
+                $scope.hotelSearch.urlData.destination = 'Bali';
+            }
+            if (Cookies.get('urlZone')) {
+                $scope.hotelSearch.urlData.zone = Cookies.get('urlZone');
+            } else {
+                $scope.hotelSearch.urlData.zone = null;
+            }
+            if (Cookies.get('urlArea')) {
+                $scope.hotelSearch.urlData.area = Cookies.get('urlArea');
+            } else {
+                $scope.hotelSearch.urlData.area = null;
+            }
+
+            if (Cookies.get('urlType')) {
+                $scope.hotelSearch.urlData.type = Cookies.get('urlType');
+            } else {
+                $scope.hotelSearch.urlData.type = 'Destination';
+            }
         } else {
             $scope.hotelSearch.locationDisplay = 'Bali, Indonesia';
-        }
-
-        if (Cookies.get('hotelSearchLocation')) {
-            $scope.hotelSearch.location = Cookies.get('hotelSearchLocation');
-        } else {
-            $scope.hotelSearch.location = 1316553;
-        }
-
-        if (Cookies.get('urlCountry')) {
-            $scope.hotelSearch.urlData.country = Cookies.get('urlCountry');
-        } else {
             $scope.hotelSearch.urlData.country = 'Indonesia';
-        }
-
-        if (Cookies.get('urlDestination')) {
-            $scope.hotelSearch.urlData.destination = Cookies.get('urlDestination');
-        } else {
             $scope.hotelSearch.urlData.destination = 'Bali';
-        }
-
-        if (Cookies.get('urlZone')) {
-            $scope.hotelSearch.urlData.zone = Cookies.get('urlZone');
-        } else {
             $scope.hotelSearch.urlData.zone = null;
-        }
-
-        if (Cookies.get('urlArea')) {
-            $scope.hotelSearch.urlData.area = Cookies.get('urlArea');
-        } else {
             $scope.hotelSearch.urlData.area = null;
-        }
-
-        if (Cookies.get('urlType')) {
-            $scope.hotelSearch.urlData.type = Cookies.get('urlType');
-        } else {
             $scope.hotelSearch.urlData.type = 'Destination';
         }
 
@@ -143,6 +143,10 @@ function ($scope, $log, $window, $http, $resource, $timeout, $interval, hotelSea
         location: location,
     }
 
+    $scope.statePrice = 'perRoom';
+    $scope.changeStatePrice = function(value) {
+        $scope.statePrice = value;
+    }
     // Page Load And Display
 
     var isFirstload = true;
@@ -171,7 +175,6 @@ function ($scope, $log, $window, $http, $resource, $timeout, $interval, hotelSea
         $log.debug($scope.model);
         $scope.mapUrl = window.location.pathname.replace("cari", "map") + '?info=' + model.searchParam;
         $("#mapUrl").attr("href", $scope.mapUrl);
-        $("#mapUrl").attr("target", "_blank");
         $scope.hotelSearch.location = $scope.model.searchParamObject.location;
         $scope.hotelSearch.checkinDate = $scope.model.searchParamObject.checkinDate;
         $scope.hotelSearch.checkinDateDisplay = moment($scope.hotelSearch.checkinDate).locale("id").format('LL');
@@ -219,6 +222,15 @@ function ($scope, $log, $window, $http, $resource, $timeout, $interval, hotelSea
         $scope.searchParam = model.searchParam;
         if ($scope.locFound) {
             $scope.searchHotel();
+            if ($scope.statePrice == 'perRoom') {
+                $('body #perRoom').addClass("active");
+                $('body #total').removeClass("active");
+                $("body #price-night").show();
+            } else {
+                $('body #total').addClass("active");
+                $('body #perRoom').removeClass("active");
+                $("body #price-total").show();
+            }
         } else {
             $scope.searchDone = true;
             $scope.returnedHotelCount = 0;
@@ -275,6 +287,7 @@ function ($scope, $log, $window, $http, $resource, $timeout, $interval, hotelSea
         return allContained;
     }
     $scope.searchHotel = function (filter, sort, isMobile) {
+        
         $scope.searchDone = false;
         $scope.pageCount = 0;
 
@@ -322,13 +335,14 @@ function ($scope, $log, $window, $http, $resource, $timeout, $interval, hotelSea
             $scope.perPage = data.perPage;
             $scope.pageCount = data.pageCount;
             $scope.totalHotelCount = data.totalHotelCount;
+            
 
             if (isFirstload) {
                 $scope.filter.minPrice = data.minPrice;
                 $scope.filter.maxPrice = data.maxPrice;
                 $scope.minPrice = data.minPrice;
                 $scope.maxPrice = data.maxPrice;
-            initiatePriceSlider();
+                initiatePriceSlider();
                 $scope.hotelFilterDisplayInfo = data.hotelFilterDisplayInfo;
                 isFirstload = false;
 
@@ -370,6 +384,15 @@ function ($scope, $log, $window, $http, $resource, $timeout, $interval, hotelSea
             };
                     $scope.searchDone = true;
                     $scope.finishLoad = true;
+                    if ($scope.statePrice == 'perRoom') {
+                        $('body #perRoom').click();
+                        $("body #price-total").hide();
+                        $("body #price-night").show();
+                    } else {
+                        $('body #total').click();
+                        $("body #price-night").hide();
+                        $("body #price-total").show();
+                    }
                 } else {
                     $scope.searchDone = false;
                 }

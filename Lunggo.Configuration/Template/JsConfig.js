@@ -103,6 +103,10 @@ var CheckBinDiscountConfig = {
     Url: '$apiUrl$$checkBinDiscountPath$'
 };
 
+var CheckMethodDiscountConfig = {
+    Url: '$apiUrl$$checkMethodDiscountPath$'
+};
+
 var SubscribeConfig = {
     Url: '$apiUrl$$subscribePath$'
 };

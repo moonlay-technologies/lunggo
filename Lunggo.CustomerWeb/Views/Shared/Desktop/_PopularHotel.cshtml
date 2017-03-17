@@ -1,4 +1,88 @@
-﻿<div class="popular-hotel">
+﻿@using System.Globalization
+@using Lunggo.ApCommon.Hotel.Service
+@{
+    string dpsUrl;
+    string jktUrl;
+    string jogUrl;
+    string subUrl;
+    string bdgUrl;
+    var today = DateTime.Today;
+    var days = DateTime.DaysInMonth(today.Year, today.Month);
+    var lastDay = new DateTime(today.Year, today.Month, days);
+    
+    var denpasar = HotelService.GetInstance().PairsOfDateAndPrice("BAI", today, lastDay);
+    var jakarta = HotelService.GetInstance().PairsOfDateAndPrice("JAV", today, lastDay);
+    var bandung = HotelService.GetInstance().PairsOfDateAndPrice("BDO", today, lastDay);
+    var surabaya = HotelService.GetInstance().PairsOfDateAndPrice( "SUB", today, lastDay);
+    var yogya = HotelService.GetInstance().PairsOfDateAndPrice("JOG", today, lastDay);
+
+    if (denpasar.CheapestPrice > 0)
+    {
+        var splittedDate = denpasar.CheapestDate.Split('/');
+        var cheapestDate = new DateTime(Convert.ToInt32(splittedDate[0].Substring(2, 2)), Convert.ToInt32(splittedDate[1]), Convert.ToInt32(splittedDate[2]));
+        var nextday = cheapestDate.AddDays(1);
+        dpsUrl = "/id/hotel/cari/Indonesia/Bali/?info=Location.1316553." + splittedDate[0] + "-" + splittedDate[1] + "-"
+                 + splittedDate[2] + "." + nextday.ToString("yyyy") + "-" + nextday.ToString("MM") + "-" + nextday.ToString("dd") + ".1.1.2~0";
+    }
+    else
+    {
+        dpsUrl = "/id/hotel/cari/Indonesia/Bali";
+    }
+
+    if (jakarta.CheapestPrice > 0)
+    {
+        var splittedDate = jakarta.CheapestDate.Split('/');
+        var cheapestDate = new DateTime(Convert.ToInt32(splittedDate[0].Substring(2, 2)), Convert.ToInt32(splittedDate[1]), Convert.ToInt32(splittedDate[2]));
+        var nextday = cheapestDate.AddDays(1);
+        jktUrl = "/id/hotel/cari/Indonesia/Jakarta/?info=Location.1390294." + splittedDate[0] + "-" + splittedDate[1] + "-"
+                 + splittedDate[2] + "." + nextday.ToString("yyyy") + "-" + nextday.ToString("MM") + "-" + nextday.ToString("dd") + ".1.1.2~0";
+    }
+    else
+    {
+        jktUrl = "/id/hotel/cari/Indonesia/Jakarta";
+    }
+
+    if (bandung.CheapestPrice > 0)
+    {
+        var splittedDate = bandung.CheapestDate.Split('/');
+        var cheapestDate = new DateTime(Convert.ToInt32(splittedDate[0].Substring(2, 2)), Convert.ToInt32(splittedDate[1]), Convert.ToInt32(splittedDate[2]));
+        var nextday = cheapestDate.AddDays(1);
+        bdgUrl = "/id/hotel/cari/Indonesia/Bandung/?info=Location.1316847." + splittedDate[0] + "-" + splittedDate[1] + "-"
+                 + splittedDate[2] + "." + nextday.ToString("yyyy") + "-" + nextday.ToString("MM") + "-" + nextday.ToString("dd") + ".1.1.2~0";
+    }
+    else
+    {
+        bdgUrl = "/id/hotel/cari/Indonesia/Bandung";
+    }
+
+    if (surabaya.CheapestPrice > 0)
+    {
+        var splittedDate = surabaya.CheapestDate.Split('/');
+        var cheapestDate = new DateTime(Convert.ToInt32(splittedDate[0].Substring(2, 2)), Convert.ToInt32(splittedDate[1]), Convert.ToInt32(splittedDate[2]));
+        var nextday = cheapestDate.AddDays(1);
+        subUrl = "/id/hotel/cari/Indonesia/Surabaya/?info=Location.1475138." + splittedDate[0] + "-" + splittedDate[1] + "-"
+                 + splittedDate[2] + "." + nextday.ToString("yyyy") + "-" + nextday.ToString("MM") + "-" + nextday.ToString("dd") + ".1.1.2~0";
+    }
+    else
+    {
+        subUrl = "/id/hotel/cari/Indonesia/Surabaya";
+    }
+
+    if (yogya.CheapestPrice > 0)
+    {
+        var splittedDate = yogya.CheapestDate.Split('/');
+        var cheapestDate = new DateTime(Convert.ToInt32(splittedDate[0].Substring(2, 2)), Convert.ToInt32(splittedDate[1]), Convert.ToInt32(splittedDate[2]));
+        var nextday = cheapestDate.AddDays(1);
+        jogUrl = "/id/hotel/cari/Indonesia/Yogyakarta/?info=Location.1391623." + splittedDate[0] + "-" + splittedDate[1] + "-"
+                 + splittedDate[2] + "." + nextday.ToString("yyyy") + "-" + nextday.ToString("MM") + "-" + nextday.ToString("dd") + ".1.1.2~0";
+    }
+    else
+    {
+        jogUrl = "/id/hotel/cari/Indonesia/Yogyakarta";
+        
+    }
+}
+<div class="popular-hotel">
     <h2 class="section-title stripe text-center xlg-txt">TUJUAN HOTEL <span>TERPOPULER</span></h2>
     <div class="row">
         <div class="col-xs-6">
@@ -6,12 +90,16 @@
                 <div class="pop-inner">
                     <div class="white-txt normal-txt">Hotel di</div>
                     <div class="xlg-txt os-bold white-txt">Jakarta</div>
-                    <div class="bottom-txt" ng-hide="priceHotel.Jakarta.CheapestPrice == null">
-                        <span class="normal-txt white-txt">mulai dari</span>
-                        <span class="md-txt os-bold yellow-txt">Rp {{priceHotel.Jakarta.CheapestPrice | currency:'':0}}</span>
-                    </div>
+                    @if (jakarta.CheapestPrice > 0)
+                    {
+                        <div class="bottom-txt">
+                            <span class="normal-txt white-txt">mulai dari</span>
+                            <span class="md-txt os-bold yellow-txt">Rp @jakarta.CheapestPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</span>
+                        </div>
+                    }
+                    
                     <div class="view-hotel">
-                        <a class="btn btn-yellow sm-btn normal-txt os-bold" href="{{gotoCheapestDateHotel('JKT', priceHotel.Jakarta.CheapestDate)}}" data-target="jakarta">LIHAT HOTEL</a>
+                        <a class="btn btn-yellow sm-btn normal-txt os-bold" href="@jktUrl" data-target="jakarta">LIHAT HOTEL</a>
                     </div>
                 </div>
             </div>
@@ -21,12 +109,15 @@
                 <div class="pop-inner">
                     <div class="white-txt normal-txt">Hotel di</div>
                     <div class="xlg-txt os-bold white-txt">Yogyakarta</div>
-                    <div class="bottom-txt" ng-hide="priceHotel.Yogyakarta.CheapestPrice == null">
-                        <span class="normal-txt white-txt">mulai dari</span>
-                        <span class="md-txt os-bold yellow-txt">Rp {{priceHotel.Yogyakarta.CheapestPrice | currency:'':0}}</span>
-                    </div>
+                    @if (yogya.CheapestPrice > 0)
+                    {
+                        <div class="bottom-txt">
+                            <span class="normal-txt white-txt">mulai dari</span>
+                            <span class="md-txt os-bold yellow-txt">Rp @yogya.CheapestPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</span>
+                        </div>
+                    }
                     <div class="view-hotel">
-                        <a class="btn btn-yellow sm-btn normal-txt os-bold" href="{{gotoCheapestDateHotel('JOG', priceHotel.Yogyakarta.CheapestDate)}}" data-target="jakarta">LIHAT HOTEL</a>
+                        <a class="btn btn-yellow sm-btn normal-txt os-bold" href="@jogUrl" data-target="jakarta">LIHAT HOTEL</a>
                     </div>
                 </div>
             </div>
@@ -38,12 +129,16 @@
                 <div class="pop-inner">
                     <div class="white-txt normal-txt">Hotel di</div>
                     <div class="xlg-txt os-bold white-txt">Surabaya</div>
-                    <div class="bottom-txt" ng-hide="priceHotel.Surabaya.CheapestPrice == null">
-                        <span class="normal-txt white-txt">mulai dari</span>
-                        <span class="md-txt os-bold yellow-txt">Rp {{priceHotel.Surabaya.CheapestPrice | currency:'':0}}</span>
-                    </div>
+                    @if (surabaya.CheapestPrice > 0)
+                    {
+                        <div class="bottom-txt">
+                            <span class="normal-txt white-txt">mulai dari</span>
+                            <span class="md-txt os-bold yellow-txt">Rp @surabaya.CheapestPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</span>
+                        </div>
+                    }
+                    
                     <div class="view-hotel">
-                        <a class="btn btn-yellow sm-btn normal-txt os-bold" href="{{gotoCheapestDateHotel('SUB', priceHotel.Surabaya.CheapestDate)}}" data-target="jakarta">LIHAT HOTEL</a>
+                        <a class="btn btn-yellow sm-btn normal-txt os-bold" href="@subUrl" data-target="jakarta">LIHAT HOTEL</a>
                     </div>
                 </div>
             </div>
@@ -53,12 +148,15 @@
                 <div class="pop-inner">
                     <div class="white-txt normal-txt">Hotel di</div>
                     <div class="xlg-txt os-bold white-txt">Bali</div>
-                    <div class="bottom-txt" ng-hide="priceHotel.Bali.CheapestPrice == null">
-                        <span class="normal-txt white-txt">mulai dari</span>
-                        <span class="md-txt os-bold yellow-txt">Rp {{priceHotel.Bali.CheapestPrice | currency:'':0}}</span>
-                    </div>
+                    @if (denpasar.CheapestPrice > 0)
+                    {
+                        <div class="bottom-txt">
+                            <span class="normal-txt white-txt">mulai dari</span>
+                            <span class="md-txt os-bold yellow-txt">Rp @denpasar.CheapestPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</span>
+                        </div>
+                    }
                     <div class="view-hotel">
-                        <a class="btn btn-yellow sm-btn normal-txt os-bold" href="{{gotoCheapestDateHotel('BAI', priceHotel.Bali.CheapestDate)}}" data-target="jakarta">LIHAT HOTEL</a>
+                        <a class="btn btn-yellow sm-btn normal-txt os-bold" href="@dpsUrl" data-target="jakarta">LIHAT HOTEL</a>
                     </div>
                 </div>
             </div>
@@ -68,12 +166,16 @@
                 <div class="pop-inner">
                     <div class="white-txt normal-txt">Hotel di</div>
                     <div class="xlg-txt os-bold white-txt">Bandung</div>
-                    <div class="bottom-txt" ng-hide="priceHotel.Bandung.CheapestPrice == null">
-                        <span class="normal-txt white-txt">mulai dari</span>
-                        <span class="md-txt os-bold yellow-txt">Rp {{priceHotel.Bandung.CheapestPrice | currency:'':0}}</span>
-                    </div>
+                    @if (bandung.CheapestPrice > 0)
+                    {
+                        <div class="bottom-txt">
+                            <span class="normal-txt white-txt">mulai dari</span>
+                            <span class="md-txt os-bold yellow-txt">Rp @bandung.CheapestPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</span>
+                        </div>
+                    }
+                    
                     <div class="view-hotel">
-                        <a class="btn btn-yellow sm-btn normal-txt os-bold" href="{{gotoCheapestDateHotel('BDO', priceHotel.Bandung.CheapestDate)}}" data-target="jakarta">LIHAT HOTEL</a>
+                        <a class="btn btn-yellow sm-btn normal-txt os-bold" href="@bdgUrl" data-target="jakarta">LIHAT HOTEL</a>
                     </div>
                 </div>
             </div>

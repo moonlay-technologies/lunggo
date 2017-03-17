@@ -43,6 +43,25 @@ namespace Lunggo.ApCommon.Campaign.Service
             redis.KeyExpire(emailRedisKey, timeout);
         }
 
+        public void SaveEmailInCache(string promoType, string email)
+        {
+            var redis = RedisService.GetInstance().GetDatabase(ApConstant.MasterDataCacheName);
+            var emailRedisKey = "paydayMadnessPromo:email:" + promoType;
+            redis.SetAdd(emailRedisKey, email);
+            var timeout = DateTime.UtcNow.AddHours(31).Date - DateTime.UtcNow.AddHours(7);
+            redis.KeyExpire(emailRedisKey, timeout);
+        }
+
+        private bool IsEmailEligibleInCache(string promoType, string email, int limit)
+        {
+            var redis = RedisService.GetInstance().GetDatabase(ApConstant.MasterDataCacheName);
+            var emailRedisKey = "paydayMadnessPromo:email:" + promoType;
+            var isEmailExist = redis.SetContains(emailRedisKey, email);
+            var fullyUsed = redis.SetLength(emailRedisKey) > limit;
+            var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
+            return  (!isEmailExist && !fullyUsed);
+            //env != "production" ||
+        }
         private bool IsPhoneAndEmailEligibleInCache(string voucherCode, string phone, string email)
         {
             var redis = RedisService.GetInstance().GetDatabase(ApConstant.MasterDataCacheName);

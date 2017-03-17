@@ -12,6 +12,7 @@ namespace Lunggo.ApCommon.Payment.Constant
         PaymentFailure,
         VoucherNoLongerEligible,
         BinPromoNoLongerEligible,
+        MethodDiscountNoLongerEligible,
         MethodNotAvailable
     }
 }

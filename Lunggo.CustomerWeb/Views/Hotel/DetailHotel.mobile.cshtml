@@ -219,46 +219,49 @@
     <div class="detail-hotel-container">
         <div class="detail-tab detail-hotel" id="detail-menu">
             <div class="dh-slider">
-                @if (Model.HotelDetailData.ImageUrl.Count >= 1)
+                @if (Model.HotelDetailData.ImageUrl != null)
                 {
-                    <div class="item" @*ng-if="hotelImages.length >= 1"*@>
-                        <div class="dh-img" style="background-image: url(@Model.HotelDetailData.ImageUrl[0]);"></div>
-                    </div>
-                }
-                
-                @if (Model.HotelDetailData.ImageUrl.Count >= 2)
-                {
-                    <div class="item" @*ng-if="hotelImages.length >= 2"*@>
-                        <div class="dh-img" style="background-image: url(@Model.HotelDetailData.ImageUrl[1]);"></div>
-                    </div>
-                }
-                
-                @if (Model.HotelDetailData.ImageUrl.Count >= 3)
-                {
-                    <div class="item" @*ng-if="hotelImages.length >= 3"*@>
-                        <div class="dh-img" style="background-image: url(@Model.HotelDetailData.ImageUrl[2]);"></div>
-                    </div>
-                }
-                
-                @if (Model.HotelDetailData.ImageUrl.Count >= 4)
-                {
-                    <div class="item" @*ng-if="hotelImages.length >= 4"*@>
-                        <div class="dh-img" style="background-image: url(@Model.HotelDetailData.ImageUrl[3]);"></div>
-                    </div>
-                }
-                
-                @if (Model.HotelDetailData.ImageUrl.Count >= 5)
-                {
-                    <div class="item" @*ng-if="hotelImages.length >= 5"*@>
-                        <div class="dh-img" style="background-image: url(@Model.HotelDetailData.ImageUrl[4]);"></div>
-                    </div>
-                }
-                
-                @if (Model.HotelDetailData.ImageUrl.Count >= 6)
-                {
-                    <div class="item" @*ng-if="hotelImages.length >= 6"*@>
-                        <div class="dh-img" style="background-image: url(@Model.HotelDetailData.ImageUrl[5]);"></div>
-                    </div>
+                    if (Model.HotelDetailData.ImageUrl.Count >= 1)
+                     {
+                         <div class="item" @*ng-if="hotelImages.length >= 1"*@>
+                             <div class="dh-img" style="background-image: url(@Model.HotelDetailData.ImageUrl[0]);"></div>
+                         </div>
+                     }
+
+                    if (Model.HotelDetailData.ImageUrl.Count >= 2)
+                     {
+                         <div class="item" @*ng-if="hotelImages.length >= 2"*@>
+                             <div class="dh-img" style="background-image: url(@Model.HotelDetailData.ImageUrl[1]);"></div>
+                         </div>
+                     }
+
+                    if (Model.HotelDetailData.ImageUrl.Count >= 3)
+                     {
+                         <div class="item" @*ng-if="hotelImages.length >= 3"*@>
+                             <div class="dh-img" style="background-image: url(@Model.HotelDetailData.ImageUrl[2]);"></div>
+                         </div>
+                     }
+
+                    if (Model.HotelDetailData.ImageUrl.Count >= 4)
+                     {
+                         <div class="item" @*ng-if="hotelImages.length >= 4"*@>
+                             <div class="dh-img" style="background-image: url(@Model.HotelDetailData.ImageUrl[3]);"></div>
+                         </div>
+                     }
+
+                    if (Model.HotelDetailData.ImageUrl.Count >= 5)
+                     {
+                         <div class="item" @*ng-if="hotelImages.length >= 5"*@>
+                             <div class="dh-img" style="background-image: url(@Model.HotelDetailData.ImageUrl[4]);"></div>
+                         </div>
+                     }
+
+                    if (Model.HotelDetailData.ImageUrl.Count >= 6)
+                     {
+                         <div class="item" @*ng-if="hotelImages.length >= 6"*@>
+                             <div class="dh-img" style="background-image: url(@Model.HotelDetailData.ImageUrl[5]);"></div>
+                         </div>
+                     }
                 }
                 
             </div>
@@ -312,7 +315,10 @@
                 <ul class="dh-list-container">
                     <li ng-show="$index+1 <= roomCount" ng-repeat="room in singleRoom track by $index">
                         <div class="dh-list clearfix">
-                            <div class="col-left-hotel">
+                            <div class="col-left-hotel" ng-show="room.roomImages === undefined || room.roomImages.length <= 0">
+                                <div class="dh-img-sm" style="background-image: url('/Assets/travorama20/images/Hotel/no-hotel.png');"></div>
+                            </div>
+                            <div class="col-left-hotel" ng-show="room.roomImages !== undefined && room.roomImages.length > 0">
                                 <div class="dh-img-sm" style="background-image: url({{room.roomImages[0]}});"></div>
                             </div>
                             <div class="col-right-hotel">

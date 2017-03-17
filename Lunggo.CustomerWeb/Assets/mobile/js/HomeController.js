@@ -1,50 +1,46 @@
 ﻿// home controller
 // home controller
 app.controller('homeController', ['$scope', '$log', '$http', '$location', '$resource', '$timeout', 'hotelSearchSvc', function ($scope, $log, $http, $location, $resource, $timeout, hotelSearchSvc) {
-
-
     $(document).ready(function () {
+        if (Cookies.get('hotelLocationDisplay')) {
+            $scope.hotelSearch.locationDisplay = Cookies.get('hotelLocationDisplay');
+            if (Cookies.get('hotelLocation')) {
+                $scope.hotelSearch.location = Cookies.get('hotelLocation');
+            } else {
+                $scope.hotelSearch.location = 1316553;
+            }
+            if (Cookies.get('urlCountry')) {
+                $scope.hotelSearch.urlData.country = Cookies.get('urlCountry');
+            } else {
+                $scope.hotelSearch.urlData.country = 'Indonesia';
+            }
+            if (Cookies.get('urlDestination')) {
+                $scope.hotelSearch.urlData.destination = Cookies.get('urlDestination');
+            } else {
+                $scope.hotelSearch.urlData.destination = 'Bali';
+            }
+            if (Cookies.get('urlZone')) {
+                $scope.hotelSearch.urlData.zone = Cookies.get('urlZone');
+            } else {
+                $scope.hotelSearch.urlData.zone = null;
+            }
+            if (Cookies.get('urlArea')) {
+                $scope.hotelSearch.urlData.area = Cookies.get('urlArea');
+            } else {
+                $scope.hotelSearch.urlData.area = null;
+            }
 
-
-        if (Cookies.get('hotelSearchLocationDisplay')) {
-            $scope.hotelSearch.locationDisplay = Cookies.get('hotelSearchLocationDisplay');
+            if (Cookies.get('urlType')) {
+                $scope.hotelSearch.urlData.type = Cookies.get('urlType');
+            } else {
+                $scope.hotelSearch.urlData.type = 'Destination';
+            }
         } else {
             $scope.hotelSearch.locationDisplay = 'Bali, Indonesia';
-        }
-
-        if (Cookies.get('hotelSearchLocation')) {
-            $scope.hotelSearch.location = Cookies.get('hotelSearchLocation');
-        } else {
-            $scope.hotelSearch.location = 1316553;
-        }
-
-        if (Cookies.get('urlCountry')) {
-            $scope.hotelSearch.urlData.country = Cookies.get('urlCountry');
-        } else {
             $scope.hotelSearch.urlData.country = 'Indonesia';
-        }
-
-        if (Cookies.get('urlDestination')) {
-            $scope.hotelSearch.urlData.destination = Cookies.get('urlDestination');
-        } else {
             $scope.hotelSearch.urlData.destination = 'Bali';
-        }
-
-        if (Cookies.get('urlZone')) {
-            $scope.hotelSearch.urlData.zone = Cookies.get('urlZone');
-        } else {
             $scope.hotelSearch.urlData.zone = null;
-        }
-
-        if (Cookies.get('urlArea')) {
-            $scope.hotelSearch.urlData.area = Cookies.get('urlArea');
-        } else {
             $scope.hotelSearch.urlData.area = null;
-        }
-
-        if (Cookies.get('urlType')) {
-            $scope.hotelSearch.urlData.type = Cookies.get('urlType');
-        } else {
             $scope.hotelSearch.urlData.type = 'Destination';
         }
 
@@ -208,8 +204,8 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
     });
 
     function setCookie() {
-        Cookies.set('hotelSearchLocationDisplay', $scope.hotelSearch.locationDisplay, { expires: 9999 });
-        Cookies.set('hotelSearchLocation', $scope.hotelSearch.location, { expires: 9999 });
+        Cookies.set('hotelLocationDisplay', $scope.hotelSearch.locationDisplay, { expires: 9999 });
+        Cookies.set('hotelLocation', $scope.hotelSearch.location, { expires: 9999 });
         Cookies.set('hotelSearchCheckInDate', $scope.hotelSearch.checkinDate, { expires: 9999 });
         Cookies.set('hotelSearchCheckOutDate', $scope.hotelSearch.checkoutDate, { expires: 9999 });
         Cookies.set('hotelSearchNights', $scope.hotelSearch.nightCount, { expires: 9999 });

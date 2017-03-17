@@ -262,8 +262,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                                 tampungFareString = string.Join(";", tampungFare.ToArray());
                                 segments.Add(new FlightSegment
                                 {
-                                    AirlineCode = ParseFare[0].Split(';')[i * 2],
-                                    FlightNumber = ParseFare[0].Split(';')[i * 2 + 1],
+                                    AirlineCode = ParseFare[i * 2],
+                                    FlightNumber = ParseFare[i * 2 + 1],
                                     CabinClass = (CabinClass)int.Parse(ParseFare[fareCabin]),
                                     AirlineType = AirlineType.Lcc,
                                     Rbd = Rbd.Count > i ? Rbd[i] : Rbd[0],
@@ -271,7 +271,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                                     DepartureTime = DateTime.SpecifyKind(departureDate, DateTimeKind.Utc),
                                     ArrivalAirport = bandara[1],
                                     ArrivalTime = DateTime.SpecifyKind(arrivalDate, DateTimeKind.Utc),
-                                    OperatingAirlineCode = ParseFare[0].Split(';')[i * 2],
+                                    OperatingAirlineCode = ParseFare[i * 2],
                                     Duration = arrtime - deptime,
                                     StopQuantity = 0,
                                     IsMealIncluded = true,
@@ -436,8 +436,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                                     tampungFareString = string.Join(";", tampungFare.ToArray());
                                     segments.Add(new FlightSegment
                                     {
-                                        AirlineCode = ParseFare[0].Split(';')[i * 2],
-                                        FlightNumber = ParseFare[0].Split(';')[i * 2 + 1],
+                                        AirlineCode = ParseFare[i * 2],
+                                        FlightNumber = ParseFare[i * 2 + 1],
                                         CabinClass = (CabinClass)int.Parse(ParseFare[fareCabin]),
                                         AirlineType = AirlineType.Lcc,
                                         Rbd = Rbd.Count > i ? Rbd[i] : Rbd[0],
@@ -445,7 +445,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                                         DepartureTime = DateTime.SpecifyKind(departureDate, DateTimeKind.Utc),
                                         ArrivalAirport = bandara[1],
                                         ArrivalTime = DateTime.SpecifyKind(arrivalDate, DateTimeKind.Utc),
-                                        OperatingAirlineCode = ParseFare[0].Split(';')[i * 2],
+                                        OperatingAirlineCode = ParseFare[i * 2],
                                         Duration = arrtime - deptime,
                                         StopQuantity = 0,
                                         IsMealIncluded = true,
@@ -606,8 +606,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                                         tampungFareString = string.Join(";", tampungFare.ToArray());
                                         segments.Add(new FlightSegment
                                         {
-                                            AirlineCode = ParseFare[0].Split(';')[i * 2],
-                                            FlightNumber = ParseFare[0].Split(';')[i * 2 + 1],
+                                            AirlineCode = ParseFare[i * 2],
+                                            FlightNumber = ParseFare[i * 2 + 1],
                                             CabinClass = (CabinClass)int.Parse(ParseFare[fareCabin]),
                                             AirlineType = AirlineType.Lcc,
                                             Rbd = Rbd.Count > i ? Rbd[i] : Rbd[0],
@@ -615,7 +615,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                                             DepartureTime = DateTime.SpecifyKind(departureDate, DateTimeKind.Utc),
                                             ArrivalAirport = bandara[1],
                                             ArrivalTime = DateTime.SpecifyKind(arrivalDate, DateTimeKind.Utc),
-                                            OperatingAirlineCode = ParseFare[0].Split(';')[i * 2],
+                                            OperatingAirlineCode = ParseFare[i * 2],
                                             Duration = arrtime - deptime,
                                             StopQuantity = 0,
                                             IsMealIncluded = true,
