@@ -45,7 +45,8 @@ namespace Lunggo.WebJob.EmailQueueHandler.Function
                 RecipientList = new[] { reservation.Contact.Email },
                 Subject = envPrefix + "[Travorama] Keterlambatan Pengiriman Etiket - No. Pemesanan " + reservation.RsvNo,
                 FromMail = "booking@travorama.com",
-                FromName = "Travorama"
+                FromName = "Travorama",
+                BccList = new[] { "maillog.travorama@gmail.com" }
             };
             Console.WriteLine("Sending Notification Email...");
             mailService.SendEmail(EmailData, mailModel, "FlightIssueDelayBookerNotifEmail");

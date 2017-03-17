@@ -37,7 +37,8 @@ namespace Lunggo.WebJob.EmailQueueHandler.Function
                 RecipientList = new[] { approverEmail },
                 Subject = envPrefix + "[Travorama] Pemesanan Gagal - No. Pemesanan " + reservation.RsvNo,
                 FromMail = "booking@travorama.com",
-                FromName = "Travorama"
+                FromName = "Travorama",
+                BccList = new[] { "maillog.travorama@gmail.com" }
             };
             Console.WriteLine("Sending Notification Email...");
             mailService.SendEmail(reservation, mailModel, "HotelSaySorryFailedIssueApproverNotifEmail");

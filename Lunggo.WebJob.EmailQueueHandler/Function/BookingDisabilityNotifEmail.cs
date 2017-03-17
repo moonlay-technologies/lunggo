@@ -36,7 +36,8 @@ namespace Lunggo.WebJob.EmailQueueHandler.Function
                 RecipientList = listEmail,
                 Subject = envPrefix + "[Travorama] Booking System is Changed",
                 FromMail = "booking@travorama.com",
-                FromName = "Travorama"
+                FromName = "Travorama",
+                BccList = new[] { "maillog.travorama@gmail.com" }
             };
             Console.WriteLine("Sending Notification Email...");
             mailService.SendEmail(status, mailModel, "BookingDisabilityStatusNotifEmail");
