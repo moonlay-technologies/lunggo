@@ -22,8 +22,6 @@ namespace Lunggo.ApCommon.Product.Model
         public string BookerMessageTitle { get; set; }
         [JsonProperty("bookerMessageDescription", NullValueHandling = NullValueHandling.Ignore)]
         public string BookerMessageDescription { get; set; }
-        [JsonProperty("rejectionTitle", NullValueHandling = NullValueHandling.Ignore)]
-        public string RejectionTitle { get; set; }
         [JsonProperty("rejectionDescription", NullValueHandling = NullValueHandling.Ignore)]
         public string RejectionDescription { get; set; }
 
@@ -63,7 +61,6 @@ namespace Lunggo.ApCommon.Product.Model
         public List<Pax> Pax { get; set; }
         public string BookerMessageTitle { get; set; }
         public string BookerMessageDescription { get; set; }
-        public string RejectionTitle { get; set; }
         public string RejectionDescription { get; set; }
 
         public abstract decimal GetTotalSupplierPrice();

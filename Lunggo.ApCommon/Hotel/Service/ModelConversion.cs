@@ -34,7 +34,6 @@ namespace Lunggo.ApCommon.Hotel.Service
                 RsvDisplayStatus = MapReservationStatus(hotelReservation),
                 BookerMessageTitle = hotelReservation.BookerMessageTitle,
                 BookerMessageDescription = hotelReservation.BookerMessageDescription,
-                RejectionTitle = hotelReservation.RejectionTitle,
                 RejectionDescription = hotelReservation.RejectionDescription
             };
 
@@ -62,7 +61,6 @@ namespace Lunggo.ApCommon.Hotel.Service
                 RsvDisplayStatus = MapReservationStatus(hotelReservation.RsvStatus),
                 BookerMessageTitle = hotelReservation.BookerMessageTitle,
                 BookerMessageDescription = hotelReservation.BookerMessageDescription,
-                RejectionTitle = hotelReservation.RejectionTitle,
                 RejectionDescription = hotelReservation.RejectionDescription
             };
 

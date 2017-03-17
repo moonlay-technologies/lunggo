@@ -104,15 +104,6 @@ namespace Lunggo.Repository.TableRecord
                 IncrementLog("BookerMessageDescription");
             }
         }
-        public String RejectionTitle
-        {
-            get { return _RejectionTitle; }
-            set
-            {
-                _RejectionTitle = value;
-                IncrementLog("RejectionTitle");
-            }
-        }
         public String RejectionDescription
         {
             get { return _RejectionDescription; }
@@ -186,7 +177,6 @@ namespace Lunggo.Repository.TableRecord
         private String _CancellationReference;
 		private String _UserId;
         private String _RsvType;
-        private String _RejectionTitle;
         private String _RejectionDescription;
         private String _BookerMessageTitle;
         private String _BookerMessageDescription;
@@ -237,7 +227,6 @@ namespace Lunggo.Repository.TableRecord
                 new ColumnMetadata("RsvType", false),
                 new ColumnMetadata("BookerMessageTitle", false),
                 new ColumnMetadata("BookerMessageDescription", false),
-                new ColumnMetadata("RejectionTitle", false),
                 new ColumnMetadata("RejectionDescription", false),
 				new ColumnMetadata("InsertBy", false),
 				new ColumnMetadata("InsertDate", false),

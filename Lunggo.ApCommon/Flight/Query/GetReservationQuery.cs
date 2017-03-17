@@ -18,7 +18,7 @@ namespace Lunggo.ApCommon.Flight.Query
         private static string CreateSelectClause()
         {
             var clauseBuilder = new StringBuilder();
-            clauseBuilder.Append(@"SELECT r.RsvNo, r.RsvTime, r.RsvStatusCd, r.BookerMessage, r.RejectionMessage, r.CancellationTypeCd, r.CancellationTime, ");
+            clauseBuilder.Append(@"SELECT r.RsvNo, r.RsvTime, r.RsvStatusCd, r.BookerMessageTitle,r.BookerMessageDescription, r.RejectionDescription, r.CancellationTypeCd, r.CancellationTime, ");
             clauseBuilder.Append(@"r.UserId, ");
             clauseBuilder.Append(@"i.Id, i.PriceId, i.BookingId, i.BookingStatusCd, i.TicketTimeLimit, i.AdultCount, ");
             clauseBuilder.Append(@"i.ChildCount, i.InfantCount, i.AdultPricePortion, i.ChildPricePortion, ");

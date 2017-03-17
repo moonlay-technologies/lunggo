@@ -10,9 +10,9 @@ using Newtonsoft.Json;
 
 namespace Lunggo.WebAPI.ApiSrc.Account.Model
 {
-    public class ApproverOrderListResponse : ApiResponseBase
+    public class ReservationOrderListResponse : ApiResponseBase
     {
         [JsonProperty("reservations")]
-        public List<ApproverReservationListModel> Reservations { get; set; }
+        public List<ReservationListModel> Reservations { get; set; }
     } 
 }

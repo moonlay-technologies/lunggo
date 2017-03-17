@@ -41,20 +41,20 @@ namespace Lunggo.BackendWeb
             AppInitializer.Init();
             var flight = FlightService.GetInstance();
             var hotelService = HotelService.GetInstance();
-            var orderList = new List<ApproverReservationListModel>();
-            var rsvs = flight.GetOverviewReservationsByApprover(null, null, null, null);
-            var rsvsHotel = hotelService.GetOverviewReservationByApprover(null, null, null, null);
+            var orderList = new List<ReservationListModel>();
+            var rsvs = flight.GetBookerOverviewReservationsByUserIdOrEmail("3903", "suherimanuturi@gmail.com", null, null,null,null);
+            var rsvsHotel = hotelService.GetBookerOverviewReservationsByUserIdOrEmail("3903", "suherimanuturi@gmail.com", null, null,null,null);
+            var tempFlight = rsvs;
+            var tempHotel = rsvsHotel;
             if (rsvs != null)
             {
                 var flightList =
-                    rsvs.GroupBy(u => new { u.BookerName, u.UserId, u.BookerMessageTitle, u.BookerMessageDescription })
-                        .Select(grp => new ApproverReservationListModel
+                    rsvs.GroupBy(u => new {u.BookerMessageTitle, u.BookerMessageDescription })
+                        .Select(grp => new ReservationListModel
                         {
-                            BookerId = grp.Key.UserId,
-                            BookerName = grp.Key.BookerName,
                             BookerMessageTitle = grp.Key.BookerMessageTitle,
                             BookerMessageDescription = grp.Key.BookerMessageDescription,
-                            ReservationList = new ApproverReservationList
+                            ReservationList = new ReservationList
                             {
                                 Flights = grp.ToList()
                             }
@@ -64,13 +64,11 @@ namespace Lunggo.BackendWeb
 
                 if (rsvsHotel != null)
                 {
-                    var hotelList = rsvsHotel.GroupBy(u => new { u.BookerName, u.UserId, u.BookerMessageTitle, u.BookerMessageDescription }).Select(grp => new ApproverReservationListModel
+                    var hotelList = rsvsHotel.GroupBy(u => new {u.BookerMessageTitle, u.BookerMessageDescription }).Select(grp => new ReservationListModel
                     {
-                        BookerId = grp.Key.UserId,
-                        BookerName = grp.Key.BookerName,
                         BookerMessageTitle = grp.Key.BookerMessageTitle,
                         BookerMessageDescription = grp.Key.BookerMessageDescription,
-                        ReservationList = new ApproverReservationList
+                        ReservationList = new ReservationList
                         {
                             Hotels = grp.ToList()
                         }
@@ -94,13 +92,11 @@ namespace Lunggo.BackendWeb
             {
                 if (rsvsHotel != null)
                 {
-                    var hotelList = rsvsHotel.GroupBy(u => new { u.BookerName, u.UserId, u.BookerMessageTitle, u.BookerMessageDescription }).Select(grp => new ApproverReservationListModel
+                    var hotelList = rsvsHotel.GroupBy(u => new { u.BookerMessageTitle, u.BookerMessageDescription }).Select(grp => new ReservationListModel
                     {
-                        BookerId = grp.Key.UserId,
-                        BookerName = grp.Key.BookerName,
                         BookerMessageTitle = grp.Key.BookerMessageTitle,
                         BookerMessageDescription = grp.Key.BookerMessageDescription,
-                        ReservationList = new ApproverReservationList
+                        ReservationList = new ReservationList
                         {
                             Hotels = grp.ToList()
                         }
@@ -112,16 +108,6 @@ namespace Lunggo.BackendWeb
             var flightNull = rsvs.Where(x => x.Payment.TimeLimit == null).ToList();
             var hotelNull = rsvsHotel.Where(x => x.Payment.TimeLimit == null).ToList();
 
-            var findLagi =
-                orderList.OrderBy(x =>
-                {
-                    var minFLight = x.ReservationList.Flights == null ? DateTime.MaxValue : x.ReservationList.Flights.Min(y => y.Payment.TimeLimit);
-                    var minHotel = x.ReservationList.Hotels == null ? DateTime.MaxValue : x.ReservationList.Hotels.Min(y => y.Payment.TimeLimit);
-                    var minFix = minFLight <= minHotel ? minFLight : minHotel;
-                    return minFix;
-                }).ToList();
-
-            var test = findLagi;
             var testHotel = flightNull;
             var test2Hotel = hotelNull;
 

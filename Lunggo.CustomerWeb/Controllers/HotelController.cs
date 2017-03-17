@@ -266,7 +266,7 @@ namespace Lunggo.CustomerWeb.Controllers
             }
             else
             {
-                var isUpdated = HotelService.GetInstance().UpdateReservation(rsvNo, status, null,null);
+                var isUpdated = HotelService.GetInstance().UpdateReservation(rsvNo, status,null);
                 if (isUpdated)
                 {
                     //TODO Go To semacam halamn thank you
@@ -302,7 +302,7 @@ namespace Lunggo.CustomerWeb.Controllers
         {
             if (rejectionData == null)
                 return null;
-            var isUpdated = HotelService.GetInstance().UpdateReservation(rejectionData.RsvNo, rejectionData.Status,rejectionData.Title, rejectionData.Message);
+            var isUpdated = HotelService.GetInstance().UpdateReservation(rejectionData.RsvNo, rejectionData.Status,rejectionData.Message);
             if (isUpdated)
             {
                 //Gak tau masih dia pergi kemana

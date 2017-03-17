@@ -45,6 +45,23 @@ namespace Lunggo.ApCommon.Flight.Service
             }
         }
 
+        private List<FlightReservation> GetOverviewReservationsByBookerIdOrEmailFromDb(string userId, string email, List<string> filters, string sort, int? page, int? itemsPerPage)
+        {
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                var rsvNos =
+                    GetRsvNosByBookerId.GetInstance()
+                        .Execute(conn, new { UserId = userId, ContactEmail = email }, new { Filters = filters, Sort = sort, Page = page, ItemsPerPage = itemsPerPage })
+                        .Distinct().ToList();
+                if (!rsvNos.Any())
+                    return null;
+                else
+                {
+                    return rsvNos.Select(GetOverviewReservationFromDb).Where(rsv => rsv != null).ToList();
+                }
+            }
+        }
+
         private List<FlightReservation> GetOverviewReservationsByApprover(string approverId,List<string> filters, string sort, int? page, int? itemsPerPage)
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
@@ -112,7 +129,6 @@ namespace Lunggo.ApCommon.Flight.Service
                     User = User.GetFromDb(reservationRecord.UserId),
                     BookerMessageTitle = reservationRecord.BookerMessageTitle,
                     BookerMessageDescription = reservationRecord.BookerMessageDescription,
-                    RejectionTitle = reservationRecord.RejectionTitle,
                     RejectionDescription = reservationRecord.RejectionDescription
                 };
 
@@ -369,7 +385,6 @@ namespace Lunggo.ApCommon.Flight.Service
                                 User = User.GetFromDb(reservationRecord.UserId),
                                 BookerMessageTitle = reservationRecord.BookerMessageTitle,
                                 BookerMessageDescription = reservationRecord.BookerMessageDescription,
-                                RejectionTitle = reservationRecord.RejectionTitle,
                                 RejectionDescription = reservationRecord.RejectionDescription
                             };
                         }
@@ -971,7 +986,7 @@ namespace Lunggo.ApCommon.Flight.Service
 
         }
 
-        private void UpdateBookingRsvStatusDb(string rsvNo, RsvStatus status, string title, string rejectionMessage)
+        private void UpdateBookingRsvStatusDb(string rsvNo, RsvStatus status, string rejectionMessage)
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
@@ -980,7 +995,6 @@ namespace Lunggo.ApCommon.Flight.Service
                     RsvNo = rsvNo,
                     RsvStatusCd = RsvStatusCd.Mnemonic(status),
                     RejectionDescription = rejectionMessage,
-                    RejectionTitle = title
                 });
             }
 

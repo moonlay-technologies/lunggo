@@ -46,7 +46,6 @@ namespace Lunggo.ApCommon.Hotel.Service
                     RsvStatus = RsvStatusCd.Mnemonic(reservationRecord.RsvStatusCd),
                     BookerMessageTitle = reservationRecord.BookerMessageTitle,
                     BookerMessageDescription = reservationRecord.BookerMessageDescription,
-                    RejectionTitle = reservationRecord.RejectionTitle,
                     RejectionDescription = reservationRecord.RejectionDescription
                 };
                 if (hotelReservation.Contact == null || hotelReservation.Payment == null)
@@ -457,7 +456,7 @@ namespace Lunggo.ApCommon.Hotel.Service
 
         }
 
-        private void UpdateBookingRsvStatusDb(string rsvNo, RsvStatus status, string title, string description)
+        private void UpdateBookingRsvStatusDb(string rsvNo, RsvStatus status, string message)
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
@@ -465,8 +464,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                 {
                     RsvNo = rsvNo,
                     RsvStatusCd = RsvStatusCd.Mnemonic(status),
-                    RejectionTitle = title,
-                    RejectionDescription = description
+                    RejectionDescription = message
                 });
             }
 

@@ -177,6 +177,10 @@ var ApproverOrderListPathConfig = {
     Url: '$apiUrl$$approverorderlistPath$'
 };
 
+var BookerOrderListPathConfig = {
+    Url: '$apiUrl$$bookerorderlistPath$'
+};
+
 var UpdateReservationConfig = {
     Url: '$apiUrl$$updateReservationPath$'
 };

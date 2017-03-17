@@ -124,8 +124,17 @@ namespace Lunggo.ApCommon.Hotel.Service
 
         public List<HotelReservationForDisplay> GetBookerOverviewReservationsByUserIdOrEmail(string userId, string email, string filter, string sort, int? page, int? itemsPerPage)
         {
-            var filters = filter != null ? filter.Split(',') : null;
-            var rsvs = GetOverviewReservationsByUserIdOrEmailFromDb(userId, email, filters, sort, page, itemsPerPage) ?? new List<HotelReservation>();
+            List<string> filters = new List<string>();
+            if (!string.IsNullOrEmpty(filter))
+            {
+                var filtersSplit = filter.Split(',');
+                filters.AddRange(filtersSplit);
+            }
+            else
+            {
+                filters.Add("pending");
+            }
+            var rsvs = GetOverviewReservationsByBookerIdOrEmailFromDb(userId, email, filters, sort, page, itemsPerPage) ?? new List<HotelReservation>();
             return rsvs.Select(ConvertToBookerReservationForDisplay).ToList();
         }
 
@@ -135,6 +144,23 @@ namespace Lunggo.ApCommon.Hotel.Service
             {
                 var rsvNos =
                     GetRsvNosByUserIdQuery.GetInstance()
+                        .Execute(conn, new { UserId = userId, ContactEmail = email }, new { Filters = filters, Sort = sort, Page = page, ItemsPerPage = itemsPerPage })
+                        .Distinct().ToList();
+                if (!rsvNos.Any())
+                    return null;
+                else
+                {
+                    return rsvNos.Select(GetOverviewReservationFromDb).Where(rsv => rsv != null).ToList();
+                }
+            }
+        }
+
+        private List<HotelReservation> GetOverviewReservationsByBookerIdOrEmailFromDb(string userId, string email, List<string> filters, string sort, int? page, int? itemsPerPage)
+        {
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                var rsvNos =
+                    GetRsvNosByBookerIdQuery.GetInstance()
                         .Execute(conn, new { UserId = userId, ContactEmail = email }, new { Filters = filters, Sort = sort, Page = page, ItemsPerPage = itemsPerPage })
                         .Distinct().ToList();
                 if (!rsvNos.Any())
@@ -206,7 +232,6 @@ namespace Lunggo.ApCommon.Hotel.Service
                     User = User.GetFromDb(reservationRecord.UserId),
                     BookerMessageTitle = reservationRecord.BookerMessageTitle,
                     BookerMessageDescription = reservationRecord.BookerMessageDescription,
-                    RejectionTitle = reservationRecord.RejectionTitle,
                     RejectionDescription = reservationRecord.RejectionDescription
                 };
 
@@ -362,7 +387,7 @@ namespace Lunggo.ApCommon.Hotel.Service
             return rsvs.Select(ConvertToReservationForDisplay).ToList();
         }
 
-        public bool UpdateReservation(string rsvNo, string status, string title, string message)
+        public bool UpdateReservation(string rsvNo, string status,string message)
         {
             var rsv = GetReservation(rsvNo);
             var userId = rsv.User.Id;
@@ -391,9 +416,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                         var financeEmails = User.GetListFinanceEmailByCompanyId(companyId);
                         NotifyFailedPayment(rsvNo, approverEmail, userEmail, financeEmails);
                         return false;
-                    }
-                        
-                    UpdateBookingRsvStatusDb(rsvNo, RsvStatus.Approved, title, message);
+                    UpdateBookingRsvStatusDb(rsvNo, RsvStatus.Approved, message);
                     GetInstance().IssueBooker(rsvNo);
                     SendBookerBookingInfo(rsvNo);
                     return true;
@@ -407,7 +430,7 @@ namespace Lunggo.ApCommon.Hotel.Service
             {
                 try
                 {
-                    UpdateBookingRsvStatusDb(rsvNo, RsvStatus.Rejected,title, message);
+                    UpdateBookingRsvStatusDb(rsvNo, RsvStatus.Rejected,message);
                     SendBookerBookingInfo(rsvNo);
                     return true;
                 }

@@ -317,6 +317,36 @@ namespace Lunggo.WebAPI.ApiSrc.Account
             }
         }
 
+        [HttpPost]
+        [LunggoCorsPolicy]
+        [Authorize]
+        [Route("v1/bookerorderlist")]
+        public ApiResponseBase BookerOrderList()
+        {
+            ReservationOrderListRequest request = null;
+            if (User.Identity.IsAuthenticated)
+            {
+                if (!User.Identity.IsInRole("Booker"))
+                {
+                    return new ApiResponseBase
+                    {
+                        StatusCode = HttpStatusCode.Unauthorized,
+                        ErrorCode = "ERRAPOL1"
+                    };
+                }
+            }
+            try
+            {
+                request = ApiRequestBase.DeserializeRequest<ReservationOrderListRequest>();
+                var apiResponse = AccountLogic.GetBookerOrderListLogic(request);
+                return apiResponse;
+            }
+            catch (Exception e)
+            {
+                return ApiResponseBase.ExceptionHandling(e, request);
+            }
+        }
+
 
         [HttpGet]
         [LunggoCorsPolicy]

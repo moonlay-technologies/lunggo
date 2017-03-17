@@ -9,7 +9,7 @@ using Newtonsoft.Json;
 
 namespace Lunggo.ApCommon.Model
 {
-    public class ApproverReservationListModel
+    public class ReservationListModel
     {
         [JsonProperty("bookerId")]
         public string BookerId { get; set; }
@@ -20,10 +20,10 @@ namespace Lunggo.ApCommon.Model
         [JsonProperty("bookerMessageDescription")]
         public string BookerMessageDescription { get; set; }
         [JsonProperty("reservationList")]
-        public ApproverReservationList ReservationList { get; set; }
+        public ReservationList ReservationList { get; set; }
     }
 
-    public class ApproverReservationList
+    public class ReservationList
     {
         [JsonProperty("flights")]
         public List<FlightReservationForDisplay> Flights { get; set; }

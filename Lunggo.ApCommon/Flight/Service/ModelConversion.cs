@@ -34,7 +34,6 @@ namespace Lunggo.ApCommon.Flight.Service
                 DeviceId = reservation.State != null ? reservation.State.DeviceId : null,
                 BookerMessageTitle = reservation.BookerMessageTitle,
                 BookerMessageDescription = reservation.BookerMessageDescription,
-                RejectionTitle = reservation.RejectionTitle,
                 RejectionDescription = reservation.RejectionDescription
             };
         }
@@ -61,7 +60,6 @@ namespace Lunggo.ApCommon.Flight.Service
                 DeviceId = reservation.State != null ? reservation.State.DeviceId : null,
                 BookerMessageTitle = reservation.BookerMessageTitle,
                 BookerMessageDescription = reservation.BookerMessageDescription,
-                RejectionTitle = reservation.RejectionTitle,
                 RejectionDescription = reservation.RejectionDescription
             };
         }
