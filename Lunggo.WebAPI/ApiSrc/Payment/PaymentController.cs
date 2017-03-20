@@ -166,12 +166,12 @@ namespace Lunggo.WebAPI.ApiSrc.Payment
         {
             try
             {
-                if (User.Identity.IsInRole("Finance"))
-                {
+                //if (User.Identity.IsInRole("Finance"))
+                //{
                     var userId = HttpContext.Current.User.Identity.GetUser().Id;
                     var apiResponse = PaymentLogic.GetBookingDisabilityStatus(userId);
                     return apiResponse;
-                }
+                //}
                 return new ApiResponseBase
                 {
                     StatusCode = HttpStatusCode.NonAuthoritativeInformation,

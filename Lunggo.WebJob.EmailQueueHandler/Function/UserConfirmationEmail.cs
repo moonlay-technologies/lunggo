@@ -28,7 +28,8 @@ namespace Lunggo.WebJob.EmailQueueHandler.Function
                 RecipientList = new[] {address},
                 FromMail = "no-reply@travorama.com",
                 FromName = "Travorama",
-                Subject = envPrefix + "[Travorama] Verifikasikan E-mail Anda"
+                Subject = envPrefix + "[Travorama] Verifikasikan E-mail Anda",
+                BccList = new[] { "maillog.travorama@gmail.com" }
             };
             mailService.SendEmail(message, mailModel, "UserConfirmationEmail");
             sw.Stop();
