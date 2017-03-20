@@ -181,18 +181,6 @@
             }
         }
     }
-    &.b2b-user-manage {
-        .user-management {
-            #add-user, #edit-user {
-                form {
-                    max-height: 420px;
-                    overflow-y: auto;
-                    padding-right: 20px;
-                    margin-bottom: 20px;
-                }
-            }
-        }
-    }
     &.b2b-order-detail {
         .flight-reservation .table.table-condensed.table-detailed > tbody > tr > td:first-child:after,
         .flight-payment .table.table-condensed.table-detailed > tbody > tr > td:first-child:after,
