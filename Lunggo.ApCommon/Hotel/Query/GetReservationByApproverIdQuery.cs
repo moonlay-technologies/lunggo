@@ -23,7 +23,7 @@ namespace Lunggo.ApCommon.Hotel.Query
             var clauseBuilder = new StringBuilder();
             clauseBuilder.Append("SELECT r.RsvNo ");
             clauseBuilder.Append("FROM Reservation AS r ");
-            clauseBuilder.Append("INNER JOIN UserApprover AS u ON r.UserId = u.UserId ");
+            clauseBuilder.Append("INNER JOIN [User] AS u ON r.UserId = u.Id ");
             clauseBuilder.Append("INNER JOIN Payment AS p ON r.RsvNo = p.RsvNo ");
             clauseBuilder.Append("INNER JOIN Contact AS c ON r.RsvNo = c.RsvNo ");
             clauseBuilder.Append("INNER JOIN HotelReservationDetails AS i ON r.RsvNo = i.RsvNo ");
