@@ -31,6 +31,8 @@ namespace Lunggo.CustomerWeb.Controllers
                     return View("Harbolnas2016");
                 case "mataharimall":
                     return View("MatahariMall");
+                case "paydaymadnesspermatabank":
+                    return View("PaydayMadnessPermataBank");
                 default:
                     return RedirectToAction("Index", "Index");
             }
