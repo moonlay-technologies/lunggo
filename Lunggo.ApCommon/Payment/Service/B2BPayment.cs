@@ -135,7 +135,7 @@ namespace Lunggo.ApCommon.Payment.Service
             int i = 0;
             var otherCreditCard = GetCreditCardByCompanyId(companyId).Where(x=>x.IsPrimaryCard == false).ToList();
             bool isUpdated;
-            bool isSucces = false;
+            bool isSuccess = false;
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
                 primaryCreditCard = GetPrimarySavedCreditCardQuery.GetInstance()
@@ -158,12 +158,12 @@ namespace Lunggo.ApCommon.Payment.Service
                     var response = SubmitPayment(rsvNo, PaymentMethod.CreditCard, PaymentSubMethod.Mandiri, paymentDetails.Data, null, out isUpdated);
                     if (isUpdated)
                     {
-                        isSucces = true;
+                        isSuccess = true;
                     }
                     i++;
                 }
-            } while (!isSucces && i == otherCreditCard.Count());
-            if (isSucces) return true;
+            } while (!isSuccess && i < otherCreditCard.Count());
+            if (isSuccess) return true;
             return false;
         }
 

@@ -386,13 +386,13 @@ app.controller('b2BApproverController', [
         }
 
         $scope.rejectReservation = function (rsvNo, status) {
+            $scope.updateData.message = '';
             $scope.updateData.rsvNo = rsvNo;
             $scope.updateData.status = status;
+            $('.req-reject textarea').val('');
             $('.req-reject').modal('show');
         }
-
-
-
+        
         $scope.bookingstatus = function (types) {
             if (types == 12)
                 return 'Approved';
@@ -576,6 +576,10 @@ app.controller('b2BApproverController', [
         $scope.trxHistory = {
             firstload: true,
             getTrxHistory: function (filter) {
+                $('.wait').modal({
+                    backdrop: 'static',
+                    keyboard: false
+                });
                 if ($scope.trial > 3) {
                     $scope.trial = 0;
                 }
@@ -590,6 +594,7 @@ app.controller('b2BApproverController', [
                             filter: filter
                         }
                     }).then(function (returnData) {
+                        $('.wait').modal("hide");
                         $scope.loading = false;
                         if (returnData.data.status == "200") {
                             $log.debug('Success getting Transaction');
@@ -641,7 +646,22 @@ app.controller('b2BApproverController', [
                 $scope.updateData.status = status;
                 $scope.updateData.isConfirm = true;
             },
+            rsvNoToUpdate: '',
+            statusToUpdate: '',
+            setUpdate: function (rsvno, status) {
+                $('.approve').modal({
+                    backdrop: 'static',
+                    keyboard: false
+                });
+                $scope.updateReservation.rsvNoToUpdate = rsvno;
+                $scope.updateReservation.statusToUpdate = status;
+            },
             update: function (rsvNo, status) {
+                $('.approve').modal("hide");
+                $('.wait').modal({
+                    backdrop: 'static',
+                    keyboard: false
+                });
                 $scope.updateData.rsvNo = rsvNo;
                 $scope.updateData.status = status;
                 $scope.updateData.isConfirm = false;
@@ -659,13 +679,50 @@ app.controller('b2BApproverController', [
                         headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') }
                     }).then(function (returnData) {
                         //$log.debug(returnData);
+                        $('.wait').modal("hide");
                         if (returnData.data.status == '200') {
+                            $('.approveSucceed').modal({
+                                backdrop: 'static',
+                                keyboard: false
+                            });
                             $log.debug('Success updating reservation');
                             $scope.updateReservation.rsvUpdated = true;
                             $scope.updateReservation.isFailed = false;
-                            window.location.reload();
+                            for (var i = 0; i < $scope.orderList.length; i++) {
+                                if (rsvNo.substring(0, 1) == "1") {
+                                    if ($scope.orderList[i].reservationList.flights != null) {
+                                        for (var j = $scope.orderList[i].reservationList.flights.length - 1; j >= 0; j--) {
+                                            if ($scope.orderList[i].reservationList.flights[j].rsvNo == rsvNo) {
+                                                $scope.orderList[i].reservationList.flights.splice(j, 1);
+                                                if ($scope.orderList[i].reservationList.flights.length == 0 &&
+                                                ($scope.orderList[i].reservationList.hotels == null || $scope.orderList[i].reservationList.hotels.length == 0)) {
+                                                    $scope.orderList.splice(i, 1);
+                                                }
+                                            }
+                                        }
+                                    }
+                                } else {
+                                    if ($scope.orderList[i].reservationList.hotels != null) {
+                                        for (var j = $scope.orderList[i].reservationList.hotels.length - 1; j >= 0; j--) {
+                                            if ($scope.orderList[i].reservationList.hotels[j].rsvNo == rsvNo) {
+                                                $scope.orderList[i].reservationList.hotels.splice(j, 1);
+                                                if ($scope.orderList[i].reservationList.hotels.length == 0 &&
+                                                ($scope.orderList[i].reservationList.flights == null || $scope.orderList[i].reservationList.flights.length == 0)) {
+                                                    $scope.orderList.splice(i, 1);
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                                
+                            }
+                            //window.location.reload();
                         }
                         else {
+                            $('.approveFailed').modal({
+                                backdrop: 'static',
+                                keyboard: false
+                            });
                             $log.debug(returnData.data.error);
                             $log.debug(returnData);
                             $scope.updateReservation.rsvUpdated = false;
@@ -679,6 +736,10 @@ app.controller('b2BApproverController', [
                             $scope.updateReservation.update(type);
                         }
                         else {
+                            $('.approveFailed').modal({
+                                backdrop: 'static',
+                                keyboard: false
+                            });
                             $log.debug('Failed Update Reservation');
                             $log.debug(returnData);
                             $scope.updateReservation.rsvUpdated = false;
@@ -688,6 +749,10 @@ app.controller('b2BApproverController', [
                     });
                 }
                 else { //if not authorized
+                    $('.approveFailed').modal({
+                        backdrop: 'static',
+                        keyboard: false
+                    });
                     $scope.rsvUpdated = false;
                 }
             }
