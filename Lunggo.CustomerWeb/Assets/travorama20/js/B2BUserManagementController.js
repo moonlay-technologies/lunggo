@@ -83,7 +83,15 @@
             $scope.editUser.approver = $scope.users[index].approverName;
             $scope.editUser.role = $scope.users[index].roleName;
             $scope.selectedRole = [];
+            for (var k = 0; k < $scope.users[index].roleName.length; k++) {
+                $scope.selectedRole.push($scope.users[index].roleName[k]);
+                //$scope.selectRoleUpdate($scope.users[index].roleName[i]);
+            }
             $('#edit-user input').prop("checked", false);
+            for (var i = 0; i < $scope.users[index].roleName.length; i++) {
+                $('#edit-user input#edit-' + $scope.users[index].roleName[i]).prop("checked", true);
+                //$scope.selectRoleUpdate($scope.users[index].roleName[i]);
+            }
             $('#edit-user').modal('show');
             
         }
@@ -307,6 +315,21 @@
             window.location.reload();
         }
 
+        $(".modal#add-user").on('show.bs.modal', function () {
+            $scope.userData.email = '';
+            $scope.userData.name = '';
+            $scope.userData.countryCallCd = '';
+            $scope.userData.phone = '';
+            $scope.userData.position = '';
+            $scope.userData.department = '';
+            $scope.userData.branch = '';
+            $scope.userData.approverId = '';
+            $scope.userData.roles = '';
+            $(".modal#add-user input").prop("checked", false);
+            $(".modal#add-user input").val('');
+            $('.modal#add-user select').val('');
+        });
+
         //Add User
         $scope.addUser = function () {
             $('.wait').modal({
@@ -341,6 +364,12 @@
                         if ($scope.userData.role.length > 0) {
                             for (var i = 0; i < $scope.userData.role.length; i++) {
                                 roles.push($scope.userData.role[i]);
+                                if ($scope.userData.role[i] == 'Approver') {
+                                    $scope.approvers.push({
+                                        userId: returnData.data.userId,
+                                        name: returnData.data.name
+                                    });
+                                }
                             }
                         }
                         var splittedName = $scope.userData.name.split(' ');
@@ -390,11 +419,6 @@
                 $scope.userAdded = false;
             }
         }
-
-        $("input[name=selectRole]").click(function() {
-            var role = $(this).attr("ng-attr-id");
-            var x = 3;
-        });
 
         $scope.updateUser = function () {
             $(".modal#edit-user").modal("hide");
