@@ -145,11 +145,7 @@ namespace Lunggo.CustomerWeb.Controllers
         {
             return View();
         }
-        public ActionResult B2BIssuanceFailedFlight()
-        {
-            return View();
-        }
-        public ActionResult B2BIssuanceFailedHotel()
+        public ActionResult B2BIssuanceFailedNotif()
         {
             return View();
         }
@@ -161,5 +157,10 @@ namespace Lunggo.CustomerWeb.Controllers
         {
             return View();
         }
+        public ActionResult B2BBookingCanNowBeMade()
+        {
+            return View();
+        }
+
     }
 }
