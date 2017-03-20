@@ -77,7 +77,7 @@ if (typeof (angular) == 'object') {
 function getAnonymousFirstAccess() {
     var status = 0;
     $.ajax({
-        url: LoginConfig.Url,
+        url: B2BLoginPathConfig.Url,
         method: 'POST',
         async: false,
         data: JSON.stringify(
@@ -107,7 +107,7 @@ function getAnonymousFirstAccess() {
 function getAnonymousAccessByRefreshToken(refreshToken) {
     var status = 0;
     $.ajax({
-        url: LoginConfig.Url,
+        url: B2BLoginPathConfig.Url,
         method: 'POST',
         async: false,
         data: JSON.stringify({ "refreshtoken": refreshToken, "clientId": "Jajal", "clientSecret": "Standar" }),
@@ -134,7 +134,7 @@ function getAnonymousAccessByRefreshToken(refreshToken) {
 function getLoginAccessByRefreshToken(refreshToken) {
     var status = 0;
     $.ajax({
-        url: LoginConfig.Url,
+        url: B2BLoginPathConfig.Url,
         method: 'POST',
         async: false,
         data: JSON.stringify({ "refreshtoken": refreshToken, "clientId": "Jajal", "clientSecret": "Standar" }),

@@ -97,11 +97,38 @@ namespace Lunggo.CustomerWeb.Controllers
         }
         public ActionResult B2BPendingApprovalFlight()
         {
-            return View();
+            var flightService = FlightService.GetInstance();
+            var reservation = flightService.GetReservationForDisplay("118116559879");
+            var flightBookingNotif = new FlightBookingNotif
+            {
+                Token = GenerateTokenUtil.GenerateTokenByRsvNo(reservation.RsvNo),
+                Reservation = reservation
+            };
+            return View(flightBookingNotif);
         }
         public ActionResult B2BPendingApprovalHotel()
         {
-            return View();
+            var hotelService = HotelService.GetInstance();
+            var reservation = hotelService.GetReservationForDisplay("220276560279");
+            var hotelBookingNotif = new HotelBookingNotif
+            {
+                Token = GenerateTokenUtil.GenerateTokenByRsvNo(reservation.RsvNo),
+                Reservation = reservation
+            };
+            return View(hotelBookingNotif);
+        }
+
+        public ActionResult B2BRejectionEmailFlight()
+        {
+            var flightService = FlightService.GetInstance();
+            var reservation = flightService.GetReservationForDisplay("108936556581");
+            return View(reservation);
+        }
+        public ActionResult B2BRejectionEmailHotel()
+        {
+            var hotelService = HotelService.GetInstance();
+            var reservation = hotelService.GetReservationForDisplay("220276560181");
+            return View(reservation);
         }
         public ActionResult B2BIssuanceSuccessfulFlight()
         {
@@ -119,14 +146,7 @@ namespace Lunggo.CustomerWeb.Controllers
         {
             return View();
         }
-        public ActionResult B2BRejectionEmailFlight()
-        {
-            return View();
-        }
-        public ActionResult B2BRejectionEmailHotel()
-        {
-            return View();
-        }
+        
         public ActionResult B2BCancellationConfirmedFlight()
         {
             return View();

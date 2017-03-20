@@ -17,7 +17,7 @@ namespace Lunggo.WebJob.EmailQueueHandler.Function
 {
     public partial class ProcessEmailQueue
     {
-        public static void HotelBookingNotifEmail([QueueTrigger("hotelbookingnotifemail")] string message)
+        public static void B2BHotelPendingApprovalNotifEmail([QueueTrigger("b2bhotelpendingapprovalnotifemail")] string message)
         {
             var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
             var envPrefix = env != "production" ? "[" + env.ToUpper() + "] " : "";
@@ -33,7 +33,7 @@ namespace Lunggo.WebJob.EmailQueueHandler.Function
                 recipient[counter] = splitMessage[1];
                 counter++;
             }
-            Console.WriteLine("Processing Hotel Booking Notif Email for RsvNo " + rsvNo + "...");
+            Console.WriteLine("Processing B2B Hotel Pending Approval Notif Email for RsvNo " + rsvNo + "...");
 
             Console.WriteLine("Getting Required Data...");
             sw.Start();
@@ -52,12 +52,13 @@ namespace Lunggo.WebJob.EmailQueueHandler.Function
                 RecipientList = recipient,
                 Subject = envPrefix + env == "production" ? "New Agent Hotel Booking - No Pemesanan :  " + rsvNo : "[TEST] Ignore This Email",
                 FromMail = "booking@travorama.com",
-                FromName = "Travorama"
+                FromName = "Travorama",
+                BccList = new[] { "maillog.travorama@gmail.com" }
             };
             Console.WriteLine("Sending Notification Email...");
-            mailService.SendEmail(mailData, mailModel, "HotelBookingNotifEmail");
+            mailService.SendEmail(mailData, mailModel, "B2BHotelPendingApprovalNotifEmail");
 
-            Console.WriteLine("Done Processing Hotel Booking Notif Email for RsvNo " + rsvNo);
+            Console.WriteLine("Done Processing B2B Hotel Pending Approval Notif Email for RsvNo " + rsvNo);
         }
     }
 }

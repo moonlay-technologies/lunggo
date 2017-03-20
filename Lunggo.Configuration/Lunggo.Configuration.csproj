@@ -798,12 +798,12 @@
     </None>
     <None Include="HtmlTemplate\BankTransferInstructionEmailHotel.cshtml" />
     <None Include="HtmlTemplate\FailedPaymentNotifEmail.cshtml" />
-    <None Include="HtmlTemplate\FlightBookerNotifEmail.cshtml" />
-    <None Include="HtmlTemplate\FlightBookingNotifEmail.cshtml" />
+    <None Include="HtmlTemplate\B2BFlightRejectionEmail.cshtml" />
+    <None Include="HtmlTemplate\B2BFlightPendingApprovalNotifEmail.cshtml" />
     <None Include="HtmlTemplate\FlightIssueDelayApproverNotifEmail.cshtml" />
     <None Include="HtmlTemplate\FlightIssueDelayBookerNotifEmail.cshtml" />
-    <None Include="HtmlTemplate\HotelBookerNotifEmail.cshtml" />
-    <None Include="HtmlTemplate\HotelBookingNotifEmail.cshtml" />
+    <None Include="HtmlTemplate\B2BHotelRejectionEmail.cshtml" />
+    <None Include="HtmlTemplate\B2BHotelPendingApprovalNotifEmail.cshtml" />
     <None Include="HtmlTemplate\BookingDisabilityStatusNotifEmail.cshtml" />
     <None Include="HtmlTemplate\HotelSaySorryFailedIssueNotifEmail.cshtml" />
     <None Include="HtmlTemplate\HotelVoucherEmail.cshtml" />

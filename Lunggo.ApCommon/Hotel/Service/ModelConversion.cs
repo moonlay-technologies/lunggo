@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using Lunggo.ApCommon.Hotel.Model;
+using Lunggo.ApCommon.Identity.Users;
 using Lunggo.ApCommon.Mystifly.OnePointService.Flight;
 using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.ApCommon.Payment.Service;
@@ -32,6 +33,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                 RsvTime = hotelReservation.RsvTime,
                 RsvType = hotelReservation.RsvType ?? null,
                 RsvDisplayStatus = MapReservationStatus(hotelReservation),
+                Booker = User.ConvertUserForDisplay(hotelReservation.User),
                 BookerMessageTitle = hotelReservation.BookerMessageTitle,
                 BookerMessageDescription = hotelReservation.BookerMessageDescription,
                 RejectionDescription = hotelReservation.RejectionDescription

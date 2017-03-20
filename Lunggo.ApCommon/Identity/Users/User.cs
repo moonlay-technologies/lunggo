@@ -286,6 +286,23 @@ namespace Lunggo.ApCommon.Identity.Users
             }
         }
 
+        public static UserForDisplay ConvertUserForDisplay(User user)
+        {
+            if (user == null)
+                return null;
+            var displayUser = new UserForDisplay
+            {
+                UserId = user.Id,
+                Name = user.FirstName + " " + user.LastName,
+                Email = user.Email,
+                Position = user.Position,
+                Branch = user.Branch,
+                Department = user.Department,
+                ApproverName = GetNameByUserId(user.ApproverId)
+            };
+            return displayUser;
+        }
+
         public static bool UpdateUserLock(string userId, bool isLocked)
         {
             try

@@ -728,6 +728,7 @@
     <Compile Include="Product\Model\ReservationState.cs" />
     <Compile Include="Product\Model\RsvRuleBase.cs" />
     <Compile Include="Product\Model\UsedMargin.cs" />
+    <Compile Include="Identity\Model\UserReservation.cs" />
     <Compile Include="Product\Query\GetAllOrderMarginsQuery.cs" />
     <Compile Include="Product\Service\ProductServiceBase.cs" />
     <Compile Include="Query\ContactUs.cs" />

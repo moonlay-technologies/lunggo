@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
+using Lunggo.ApCommon.Identity.Model;
+using Lunggo.ApCommon.Identity.Users;
 using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.ApCommon.Payment.Service;
 using Lunggo.ApCommon.Product.Constant;
@@ -32,6 +34,7 @@ namespace Lunggo.ApCommon.Flight.Service
                 Payment = PaymentService.GetInstance().ConvertToPaymentDetailsForDisplay(reservation.Payment),
                 UserId = reservation.User != null ? reservation.User.Id : null,
                 DeviceId = reservation.State != null ? reservation.State.DeviceId : null,
+                Booker = User.ConvertUserForDisplay(reservation.User),
                 BookerMessageTitle = reservation.BookerMessageTitle,
                 BookerMessageDescription = reservation.BookerMessageDescription,
                 RejectionDescription = reservation.RejectionDescription
@@ -56,6 +59,7 @@ namespace Lunggo.ApCommon.Flight.Service
                 Pax = ConvertToPaxForDisplay(reservation.Pax),
                 Payment = PaymentService.GetInstance().ConvertToPaymentDetailsForDisplay(reservation.Payment),
                 UserId = reservation.User != null ? reservation.User.Id : null,
+                Booker = User.ConvertUserForDisplay(reservation.User),
                 BookerName = reservation.User != null ? reservation.User.FirstName + " "+ reservation.User.LastName : null,
                 DeviceId = reservation.State != null ? reservation.State.DeviceId : null,
                 BookerMessageTitle = reservation.BookerMessageTitle,
