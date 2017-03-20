@@ -321,7 +321,7 @@
                                 <label>Cabang</label>
                                 <input type="text" class="form-control" placeholder="" ng-model="editUser.branch">
                             </div>
-                            <div class="form-group form-group-default">
+                            <div class="form-group form-group-default" ng-show="showListApproverEdit">
                                 <label>Nama Approver</label>
                                 <select class="form-control" ng-model="editUser.approverId">
                                     <option ng-repeat="approver in approvers" value="{{approver.userId}}" ng ng-selected="approver.userId == editUser.approverId">{{approver.name}}</option>
@@ -416,7 +416,7 @@
                                 <label>Cabang</label>
                                 <input type="text" class="form-control" placeholder="" ng-model="userData.branch">
                             </div>
-                            <div class="form-group form-group-default">
+                            <div class="form-group form-group-default" id="approverAdd" ng-show="showListApproverAdd">
                                 <label>Nama Approver</label>
                                 <select class="form-control" ng-model="userData.approverId">
                                     <option ng-repeat="approver in approvers" value="{{approver.userId}}" ng ng-selected="approver.userId == userData.approverId">{{approver.name}}</option>
