@@ -27,7 +27,7 @@
     <script src="/Assets/vendor/slick/slick.min.js"></script>
     <script src="/Assets/js/js.cookie.js"></script>
     @*<script type="text/javascript" src="/Assets/vendor/fullcalendar/fullcalendar.min.js"></script>
-    <script type="text/javascript" src="/Assets/vendor/fullcalendar/fullcalendar-id.min.js"></script>*@
+        <script type="text/javascript" src="/Assets/vendor/fullcalendar/fullcalendar-id.min.js"></script>*@
 }
 
 @section PageJS {
@@ -49,7 +49,12 @@
                 <a href="/id/Promo/PaydayMadnessPermataBank"><img src="/Assets/images/campaign/PaydayMadness/PaydayMadness-slider-mobile.jpg" alt="JOINT PROMO VIRTUAL ACCOUNT PERMATA BANK" /></a>
             </div>
         }
-        <div class="item">
+        @if (DateTime.UtcNow.AddHours(7).Date >= new DateTime(2017, 03, 24) && DateTime.UtcNow.AddHours(7).Date <= new DateTime(2017, 04, 02))
+        {
+            <div class="item">
+                <a href="/id/Promo/PaydayMegaDeals"><img src="/Assets/images/campaign/PaydayMegaDeals/PaydayMegaDeals-slider-mobile.jpg" alt="Payday Madness Permata Bank" /></a>
+            </div>
+        }<div class="item">
             <a href="http://onelink.to/travoramaapp"><img src="/Assets/images/banner/download-app.jpg" alt="Download Applikasi Travorama!" /></a>
         </div>
     </div>

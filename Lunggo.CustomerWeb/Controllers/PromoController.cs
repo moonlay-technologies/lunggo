@@ -33,6 +33,8 @@ namespace Lunggo.CustomerWeb.Controllers
                     return View("MatahariMall");
                 case "paydaymadnesspermatabank":
                     return View("PaydayMadnessPermataBank");
+                case "paydaymegadeals":
+                    return View("PaydayMegaDeals");
                 default:
                     return RedirectToAction("Index", "Index");
             }

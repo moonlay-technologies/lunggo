@@ -640,6 +640,11 @@
     <Content Include="Assets\images\campaign\PaydayMadness\PaydayMadness-promo-mobile.jpg" />
     <Content Include="Assets\images\campaign\PaydayMadness\PaydayMadness-slider-mobile.jpg" />
     <Content Include="Assets\images\campaign\PaydayMadness\PaydayMadness-slider.jpg" />
+    <Content Include="Assets\images\campaign\PaydayMegaDeals\PaydayMegaDeals-page-mobile.jpg" />
+    <Content Include="Assets\images\campaign\PaydayMegaDeals\PaydayMegaDeals-page.jpg" />
+    <Content Include="Assets\images\campaign\PaydayMegaDeals\PaydayMegaDeals-promo-mobile.jpg" />
+    <Content Include="Assets\images\campaign\PaydayMegaDeals\PaydayMegaDeals-slider-mobile.jpg" />
+    <Content Include="Assets\images\campaign\PaydayMegaDeals\PaydayMegaDeals-slider.jpg" />
     <Content Include="Assets\images\campaign\singapore-text.png" />
     <Content Include="Assets\images\campaign\singapore-thumb.jpg" />
     <Content Include="Assets\images\campaign\singapore.jpg" />
@@ -1697,6 +1702,8 @@
     <Content Include="Views\Promo\MatahariMallWebview.cshtml" />
     <Content Include="Views\Promo\PaydayMadnessPermataBank.cshtml" />
     <Content Include="Views\Promo\PaydayMadnessPermataBank.mobile.cshtml" />
+    <Content Include="Views\Promo\PaydayMegaDeals.cshtml" />
+    <Content Include="Views\Promo\PaydayMegaDeals.mobile.cshtml" />
     <None Include="Views\Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

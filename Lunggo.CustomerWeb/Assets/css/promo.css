@@ -21,6 +21,8 @@ body.page-promo.promo-btn-mobile-app {
     background-image: url("/Assets/images/campaign/HutBTN/HutBTN-page.jpg"); }
   .page-promo.promo-permata .top-section a {
     background-image: url("/Assets/images/campaign/PaydayMadness/PaydayMadness-page.jpg"); }
+  .page-promo.promo-bankmega .top-section a {
+    background-image: url("/Assets/images/campaign/PaydayMegaDeals/PaydayMegaDeals-page.jpg"); }
   .page-promo .top-section a {
     display: block;
     width: 100%;

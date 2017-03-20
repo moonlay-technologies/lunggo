@@ -9,7 +9,7 @@
     ViewBag.AngularController = "homeController";
     //ViewBag.Campaign = true;
     ViewBag.Page = "Index";
-        }
+}
 
 @section AdditionalCSS{
     <link rel="stylesheet" type="text/css" href="/Assets/vendor/slick/slick.css" />
@@ -33,7 +33,7 @@
         newsletterFormFunctions();
         indexPageFunctions();
         subscribeFormFunctions();
-        
+
         var indexPageDestination = '@ViewBag.DestinationName' || '';
         var indexPageDestinationsCode = '@ViewBag.DestinationCode' || '';
         //var topDestinations = @Html.Raw(ViewBag.LocationList);
@@ -42,8 +42,8 @@
     <script src="/Assets/travorama20/angularDirectory/search/hotelSearch.service.js"></script>
     <script src="/Assets/travorama20/js/homeController.js"></script>
     <script>
-        jQuery(document).ready(function($) {
-            $('.fc-event-container').click(function() {
+        jQuery(document).ready(function ($) {
+            $('.fc-event-container').click(function () {
                 $(this).closest('table').find('.fc-day-top').addClass('active');
             });
         })
@@ -303,9 +303,17 @@
                 }
                 @if (DateTime.UtcNow.AddHours(7).Date >= new DateTime(2017, 03, 25) && DateTime.UtcNow.AddHours(7).Date <= new DateTime(2017, 08, 27))
                 {
-                <div class="slider">
+                    <div class="slider">
                         <a href="@Url.Action("PaydayMadnessPermataBank", "Promo")">
                             <img src="/Assets/images/campaign/PaydayMadness/PaydayMadness-slider.jpg" alt="JOINT PROMO VIRTUAL ACCOUNT PERMATA BANK" />
+                        </a>
+                    </div>
+                }
+                @if (DateTime.UtcNow.AddHours(7).Date >= new DateTime(2017, 03, 24) && DateTime.UtcNow.AddHours(7).Date <= new DateTime(2017, 04, 02))
+                {
+                    <div class="slider">
+                        <a href="@Url.Action("PaydayMadnessPermataBank", "Promo")">
+                            <img src="/Assets/images/campaign/PaydayMegaDeals/PaydayMegaDeals-slider.jpg" alt="Payday Madness Permata Bank" />
                         </a>
                     </div>
                 }
@@ -344,20 +352,20 @@
                             <div class="col-xs-7">
                                 <div class="col-xs-6" id="searchFrom">Dari</div>
                                 <div class="col-xs-6" id="searchTo">Ke</div>
-    </div>
+                            </div>
                             <div class="col-xs-5">
                                 <div class="col-xs-12">Bulan</div>
                             </div>
                         </div>
-            <div class="row">
+                        <div class="row">
                             <div class="search-input col-xs-7">
                                 <div class="col-xs-6 map-input">
                                     <input type="text" name="searchFrom">
-                    </div>
+                                </div>
                                 <div class="col-xs-6 map-input">
                                     <input type="text" name="searchTo">
-                    </div>
-                    </div>
+                                </div>
+                            </div>
                             <div class="col-xs-5">
                                 <div class="col-xs-8">
                                     <select id="month-year-select" class="hidden">
@@ -391,30 +399,30 @@
                                             <div id="month10"></div>
                                             <div id="month11"></div>
                                             <div id="month12"></div>
-                </div>
+                                        </div>
                                     </div>
-                    </div>
+                                </div>
                                 <div class="col-xs-4">
                                     <a class="btn btn-yellow lg-btn md-txt btn-calendar" id="submitCalendar">CARI</a>
-                </div>
+                                </div>
 
-                    </div>
-                    </div>
+                            </div>
+                        </div>
                         <div class="location-choice">
                             @Html.Partial("/Views/Shared/Desktop/_SearchLocation.cshtml")
-                </div>
+                        </div>
                     </div>
                     <div id="pc-datepicker"></div>
-                    </div>
-                    </div>
-            <div class="col-xs-4">
-                @Html.Partial("/Views/Shared/Desktop/_PopularFlight.cshtml")
                 </div>
             </div>
+            <div class="col-xs-4">
+                @Html.Partial("/Views/Shared/Desktop/_PopularFlight.cshtml")
+            </div>
         </div>
-    </section>
-    <section class="section-popular">
-        <div class="container">
+    </div>
+</section>
+<section class="section-popular">
+    <div class="container">
         @Html.Partial("/Views/Shared/Desktop/_PopularHotel.cshtml")
     </div>
 </section>
@@ -438,7 +446,7 @@
                 <div class="normal-txt">Harga yang tercantum adalah harga final, tanpa biaya tersembunyi.</div>
             </div>
         </div>
-                <div class="row">
+        <div class="row">
             <div class="col-xs-4">
                 <div class="sw-img sw-flight"></div>
                 <div class="blue-txt md-txt">Rute <span class="os-bold">Penerbangan<br />Domestik & Internasional<br /></span></div>
@@ -448,15 +456,15 @@
                 <div class="sw-img sw-hotel"></div>
                 <div class="blue-txt md-txt">Pilihan<br /> <span class="os-bold">Hotel Maksimal</span></div>
                 <div class="normal-txt">Terdapat 85.000 listing hotel di seluruh dunia.</div>
-                        </div>
+            </div>
             <div class="col-xs-4">
                 <div class="sw-img sw-trust"></div>
                 <div class="blue-txt md-txt">Jaminan <span class="os-bold">Pembayaran <br />Online Aman & Mudah</span></div>
                 <div class="normal-txt">Enkripsi Rapid SSL menjamin privasi dan keamanan saat melakukan transaksi online.</div>
-                    </div>
-                </div>
+            </div>
         </div>
-    </section>
+    </div>
+</section>
 <section class="section-subscribe">
     <div class="container">
 
@@ -501,7 +509,6 @@
 
     </div>
 </section><!-- .section-payment -->
-
 @*// location
     ViewBag.LocationData = new Dictionary<string, string>
     ();
