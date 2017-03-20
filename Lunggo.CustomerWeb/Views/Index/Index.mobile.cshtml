@@ -43,9 +43,12 @@
                 <a href="/id/Promo/BTNTerbanginHemat"><img src="/Assets/images/campaign/TerbanginHemat/TerbanginHemat-slider-mobile.jpg" alt="Terbangin Hemat (Terbang & Nginap Hemat)" /></a>
             </div>
         }
-        <div class="item">
-            <a href="/id/Promo/PaydayMadnessPermataBank"><img src="/Assets/images/campaign/PaydayMadness/PaydayMadness-slider-mobile.jpg" alt="JOINT PROMO VIRTUAL ACCOUNT PERMATA BANK" /></a>
-        </div>
+        @if (DateTime.UtcNow.AddHours(7).Date >= new DateTime(2017, 03, 25) && DateTime.UtcNow.AddHours(7).Date <= new DateTime(2017, 08, 27))
+        {
+            <div class="item">
+                <a href="/id/Promo/PaydayMadnessPermataBank"><img src="/Assets/images/campaign/PaydayMadness/PaydayMadness-slider-mobile.jpg" alt="JOINT PROMO VIRTUAL ACCOUNT PERMATA BANK" /></a>
+            </div>
+        }
         <div class="item">
             <a href="http://onelink.to/travoramaapp"><img src="/Assets/images/banner/download-app.jpg" alt="Download Applikasi Travorama!" /></a>
         </div>
