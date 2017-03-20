@@ -239,6 +239,7 @@
     <Compile Include="ApiSrc\Account\Model\ApproverOrderListResponse.cs" />
     <Compile Include="ApiSrc\Account\Model\B2BUpdateReservationRequest.cs" />
     <Compile Include="ApiSrc\Account\Model\B2BUpdateReservationResponse.cs" />
+    <Compile Include="ApiSrc\Account\Model\AddUserApiResponse.cs" />
     <Compile Include="ApiSrc\Account\Model\ChangePasswordApiRequest.cs" />
     <Compile Include="ApiSrc\Account\Model\ChangeProfileApiResponse.cs" />
     <Compile Include="ApiSrc\Account\Model\ChangeProfileApiRequest.cs" />

@@ -5,6 +5,7 @@ using System.Net;
 using System.Web;
 using Lunggo.ApCommon.Identity.Users;
 using Lunggo.Framework.Config;
+using Lunggo.Framework.Http;
 using Lunggo.WebAPI.ApiSrc.Account.Model;
 using Lunggo.WebAPI.ApiSrc.Common.Model;
 using Microsoft.AspNet.Identity;
@@ -87,9 +88,11 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
                 var callbackUrl = host + "/id/B2BAccount/ConfirmEmail?userId=" + user.Id + "&code=" + code + "&apiUrl=" + apiUrl;
                 userManager.SendEmailAsync(user.Id, "UserConfirmationEmail", callbackUrl).Wait();
 
-                return new ApiResponseBase
+                return new AddUserApiResponse
                 {
-                    StatusCode = HttpStatusCode.OK
+                    StatusCode = HttpStatusCode.OK,
+                    UserId = user.Id,
+                    Name = first + " " + last,
                 };
             }
             else

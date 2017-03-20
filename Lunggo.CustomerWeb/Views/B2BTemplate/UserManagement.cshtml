@@ -78,7 +78,7 @@
 </script>
 
 }
-<div class="page-loading" ng-app="travoramaB2B" ng-controller="B2BUserManagementController" ng-class="{ 'active': pageLoaded }">
+<div class="page-loading" ng-app="travoramaB2B" ng-controller="B2BUserManagementController" ng-class="{ 'active': pageLoaded }" ng-cloak>
     <div class="panel panel-transparent">
         <div class="panel-heading">
             <div class="panel-title">
@@ -305,7 +305,7 @@
                                 <div class="col-sm-8">
                                     <div class="form-group form-group-default">
                                         <label>Telepon</label>
-                                        <input type="text" class="form-control" placeholder="" ng-model="editUser.phone">
+                                        <input type="number" class="form-control" placeholder="" ng-model="editUser.phone">
                                     </div>
                                 </div>
                             </div>
@@ -384,8 +384,8 @@
                             <div class="row">
                                 <div class="col-sm-4">
                                     <div class="form-group input-custom">
-                                        <label>Country Code</label>
-                                        <select class="form-control" ng-model="userData.countryCallCd">
+                                        <label>Kode Negara</label>
+                                        <select class="form-control" ng-model="userData.countryCallCd" id="countryCode">
                                             <option ng-repeat="country in countries" value="{{country.dial_code}}" ng-selected="country.dial_code == 'Pilih Kode Negara'">{{country.name}} {{country.dial_code}}</option>
                                         </select> 
                                     </div>
@@ -393,7 +393,7 @@
                                 <div class="col-sm-8">
                                     <div class="form-group form-group-default">
                                         <label>Telepon</label>
-                                        <input type="text" class="form-control" placeholder="" ng-model="userData.phone">
+                                        <input type="number" class="form-control" placeholder="" ng-model="userData.phone">
                                     </div>
                                 </div>
                             </div>
