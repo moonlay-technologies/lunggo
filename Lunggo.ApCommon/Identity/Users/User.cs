@@ -148,21 +148,21 @@ namespace Lunggo.ApCommon.Identity.Users
                     if (!string.IsNullOrEmpty(model.Name))
                     {
                         userList = userList.Where(x => x.FirstName != null).ToList();
-                        userList = userList.Where(x => x.FirstName.ToLower().Equals(model.Name)).ToList();
+                        userList = userList.Where(x => (x.FirstName.ToLower()+ " " + x.LastName.ToLower()).Contains(model.Name)).ToList();
                     }
                     
                     //By Email
                     if (!string.IsNullOrEmpty(model.Email))
                     {
                         userList = userList.Where(x => x.Email != null).ToList();
-                        userList = userList.Where(x => x.Email.ToLower().Equals(model.Email)).ToList();
+                        userList = userList.Where(x => x.Email.ToLower().Contains(model.Email)).ToList();
                     }
                     
                     //By Position
                     if (!string.IsNullOrEmpty(model.Position))
                     {
                         userList = userList.Where(x => x.Position != null).ToList();
-                        userList = userList.Where(x => x.Position.ToLower().Equals(model.Position)).ToList();
+                        userList = userList.Where(x => x.Position.ToLower().Contains(model.Position)).ToList();
                     }
                    
                     
@@ -170,7 +170,7 @@ namespace Lunggo.ApCommon.Identity.Users
                     if (!string.IsNullOrEmpty(model.Department))
                     {
                         userList = userList.Where(x => x.Department != null).ToList();
-                        userList = userList.Where(x => x.Department.ToLower().Equals(model.Department)).ToList();
+                        userList = userList.Where(x => x.Department.ToLower().Contains(model.Department)).ToList();
                     }
                     
                     
@@ -178,7 +178,7 @@ namespace Lunggo.ApCommon.Identity.Users
                     if (!string.IsNullOrEmpty(model.Branch))
                     {
                         userList = userList.Where(x => x.Branch != null).ToList();
-                        userList = userList.Where(x => x.Branch.ToLower().Equals(model.Branch)).ToList(); 
+                        userList = userList.Where(x => x.Branch.ToLower().Contains(model.Branch)).ToList(); 
                     }
                     
                     //By Role

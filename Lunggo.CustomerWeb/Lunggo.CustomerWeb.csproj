@@ -249,6 +249,7 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AdminViewModel.cs" />
     <Compile Include="Models\CalendarRecipientData.cs" />
+    <Compile Include="Models\GetUserModel.cs" />
     <Compile Include="Models\GetProfileModel.cs" />
     <Compile Include="Models\B2BBookingDisability.cs" />
     <Compile Include="Models\HotelCheckoutData.cs" />
@@ -2816,7 +2817,7 @@
     <Content Include="Views\B2BTemplate\Payment.cshtml" />
     <Content Include="Views\B2BTemplate\ResetPassword.cshtml" />
     <Content Include="Views\B2BTemplate\ConfirmPassword.cshtml" />
-	<Content Include="Views\Shared\B2BTravorama\_SearchHotel.cshtml" />
+    <Content Include="Views\Shared\B2BTravorama\_SearchHotel.cshtml" />
     <Content Include="Views\B2BTemplate\OrderListHotel.cshtml" />
     <Content Include="Views\B2BTemplate\OrderListFlight.cshtml" />
     <Content Include="Views\B2BTemplate\UserManagement.cshtml" />
