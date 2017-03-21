@@ -27,7 +27,7 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
                     };
 
                 if (user.IsInRole("Admin") ||
-                    (user.Identity.IsUserAuthorized() && user.Identity.GetUser().Id == rsv.UserId) ||
+                    (user.Identity.IsUserAuthorized() && user.Identity.GetUser().Id == rsv.Booker.Id) ||
                     user.Identity.GetDeviceId() == rsv.DeviceId)
                     return new GetReservationApiResponse
                     {
@@ -55,7 +55,7 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
                     };
 
                 if (user.IsInRole("Admin") ||
-                    (user.Identity.IsUserAuthorized() && user.Identity.GetUser().Id == rsv.UserId) ||
+                    (user.Identity.IsUserAuthorized() && user.Identity.GetUser().Id == rsv.Booker.Id) ||
                     user.Identity.GetDeviceId() == rsv.DeviceId)
                     return new GetReservationApiResponse
                     {

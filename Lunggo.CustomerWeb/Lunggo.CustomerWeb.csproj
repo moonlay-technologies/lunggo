@@ -277,6 +277,7 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
     <Compile Include="Startup.cs" />
+    <Compile Include="Utils\B2BUtil.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\Api\Views\web.config" />
@@ -2816,7 +2817,7 @@
     <Content Include="Views\B2BTemplate\Payment.cshtml" />
     <Content Include="Views\B2BTemplate\ResetPassword.cshtml" />
     <Content Include="Views\B2BTemplate\ConfirmPassword.cshtml" />
-	<Content Include="Views\Shared\B2BTravorama\_SearchHotel.cshtml" />
+    <Content Include="Views\Shared\B2BTravorama\_SearchHotel.cshtml" />
     <Content Include="Views\B2BTemplate\OrderListHotel.cshtml" />
     <Content Include="Views\B2BTemplate\OrderListFlight.cshtml" />
     <Content Include="Views\B2BTemplate\UserManagement.cshtml" />

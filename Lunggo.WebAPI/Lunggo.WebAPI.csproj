@@ -219,6 +219,7 @@
     <Compile Include="ApiSrc\Account\Logic\B2BUpdateReservationLogic.cs" />
     <Compile Include="ApiSrc\Account\Logic\BookerOrderListLogic.cs" />
     <Compile Include="ApiSrc\Account\Logic\ChangePasswordLogic.cs" />
+    <Compile Include="ApiSrc\Account\Logic\GetUserIdLogic.cs" />
     <Compile Include="ApiSrc\Account\Logic\UpdateUserLockLogic.cs" />
     <Compile Include="ApiSrc\Account\Logic\DeleteUserLogic.cs" />
     <Compile Include="ApiSrc\Account\Logic\GetBookerTransaction.cs" />
@@ -247,6 +248,7 @@
     <Compile Include="ApiSrc\Account\Model\DeleteUserApiRequest.cs" />
     <Compile Include="ApiSrc\Account\Model\ForgotPasswordApiRequest.cs" />
     <Compile Include="ApiSrc\Account\Model\BookerTransactionApiResponse.cs" />
+    <Compile Include="ApiSrc\Account\Model\GetUserIdApiResponse.cs" />
     <Compile Include="ApiSrc\Account\Model\GetProfileApiResponse.cs" />
     <Compile Include="ApiSrc\Account\Model\ConfirmEmailApiRequest.cs" />
     <Compile Include="ApiSrc\Account\Model\GetUserRequest.cs" />

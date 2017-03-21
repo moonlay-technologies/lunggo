@@ -25,7 +25,7 @@ namespace Lunggo.ApCommon.Identity.Users
             return userIdentity;
         }
 
-        internal static User GetFromDb(string userId)
+        public static User GetFromDb(string userId)
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
@@ -275,7 +275,7 @@ namespace Lunggo.ApCommon.Identity.Users
                         Position = user.Position,
                         Department = user.Department,
                         Branch = user.Branch,
-                        ApproverId = user.ApproverId
+                        ApproverId = user.Approver.Id
                     });
                 }
                 return true;
@@ -292,13 +292,15 @@ namespace Lunggo.ApCommon.Identity.Users
                 return null;
             var displayUser = new UserForDisplay
             {
-                UserId = user.Id,
-                Name = user.FirstName + " " + user.LastName,
+                Id = user.Id,
+                Name = user.FirstName == user.LastName ? user.FirstName : user.FirstName + " " + user.LastName,
                 Email = user.Email,
+                CountryCallCd = user.CountryCallCd,
+                PhoneNumber = user.PhoneNumber,
                 Position = user.Position,
                 Branch = user.Branch,
                 Department = user.Department,
-                ApproverName = GetNameByUserId(user.ApproverId)
+                ApproverName = GetNameByUserId(user.Approver.Id)
             };
             return displayUser;
         }
