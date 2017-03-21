@@ -424,6 +424,8 @@ namespace Lunggo.ApCommon.Hotel.Service
         public bool UpdateReservation(string rsvNo, string status, string message)
         {
             var rsv = GetReservation(rsvNo);
+            if (rsv == null || rsv.User == null)
+                return false;
             var userId = rsv.User.Id;
             var companyId = rsv.User.CompanyId;
             var userEmail = rsv.User.Email;

@@ -1011,6 +1011,10 @@ app.controller('b2BBookerController', [
         $scope.trxHistory = {
             firstload: true,
             getTrxHistory: function (filter) {
+                $('.wait').modal({
+                    backdrop: 'static',
+                    keyboard: false
+                });
                 if ($scope.trial > 3) {
                     $scope.trial = 0;
                 }
@@ -1025,6 +1029,7 @@ app.controller('b2BBookerController', [
                             filter: filter
                         }
                     }).then(function (returnData) {
+                        $('.wait').modal("hide");
                         $scope.loading = false;
                         if (returnData.data.status == "200") {
                             $log.debug('Success getting Transaction');

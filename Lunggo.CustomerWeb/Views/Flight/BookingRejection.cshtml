@@ -19,13 +19,13 @@
         <h3 class="md-txt">Silahkan isi alasan mengapa Anda menolak pesanan.</h3>
         <div class="form-wrapper">
             <section class="form-content">
-                @using (Html.BeginForm("BookingRejection", "Hotel", FormMethod.Post, new { @class = "form form-horizontal", role = "form", name = "checkForm" }))
+                @using (Html.BeginForm("BookingRejection", "Flight", FormMethod.Post, new { @class = "form form-horizontal", role = "form", name = "checkForm" }))
                 {
                     @Html.AntiForgeryToken()
                     @Html.HiddenFor(x => Model.RsvNo)
                     @Html.HiddenFor(x => Model.Token)
                     @Html.HiddenFor(x => Model.Status)
-                    <textarea style="height: 120px; margin-bottom: 15px;" type="text" name=@Model.Message value=@Model.Message class="form-control" placeholder="Tulis keterangan Anda"></textarea>
+                    <textarea style="height: 120px; margin-bottom: 15px;" type="text" name=Message value=Message class="form-control" placeholder="Tulis keterangan Anda"></textarea>
                     <div style="margin: 0 auto; width: 200px;">
                         <button type="submit" value="" class="btn btn-yellow form-control md-txt lg-btn">SIMPAN</button>
                     </div>

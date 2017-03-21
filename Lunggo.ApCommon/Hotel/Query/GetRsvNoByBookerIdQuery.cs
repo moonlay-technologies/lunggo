@@ -32,7 +32,7 @@ namespace Lunggo.ApCommon.Hotel.Query
         private static string CreateWhereClause()
         {
             var clauseBuilder = new StringBuilder();
-            clauseBuilder.Append("WHERE (r.UserId = @UserId AND c.Email = @ContactEmail)");
+            clauseBuilder.Append("WHERE (r.UserId = @UserId)");
             return clauseBuilder.ToString();
         }
 
