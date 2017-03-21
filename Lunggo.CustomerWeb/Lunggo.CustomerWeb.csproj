@@ -2834,8 +2834,6 @@
     <Content Include="Views\B2BTemplate\B2BWelcomeEmail.cshtml" />
     <Content Include="Views\B2BTemplate\B2BPasswordReset.cshtml" />
     <Content Include="Views\B2BTemplate\B2BInvitationEmail.cshtml" />
-    <Content Include="Views\B2BTemplate\B2BIssuanceSuccessful.cshtml" />
-    <Content Include="Views\B2BTemplate\B2BIssuanceDelay.cshtml" />
     <Content Include="Views\B2BTemplate\B2BRejectionEmail.cshtml" />
     <Content Include="Views\B2BTemplate\B2BPendingApprovalFlight.cshtml" />
     <Content Include="Views\B2BTemplate\B2BPendingApprovalHotel.cshtml" />
@@ -2844,12 +2842,9 @@
     <Content Include="Views\B2BTemplate\B2BHotelPriceIncrease.cshtml" />
     <Content Include="Views\B2BTemplate\B2BIssuanceSuccessfulFlight.cshtml" />
     <Content Include="Views\B2BTemplate\B2BIssuanceSuccessfulHotel.cshtml" />
-    <Content Include="Views\B2BTemplate\B2BIssuanceDelayFlight.cshtml" />
     <Content Include="Views\B2BTemplate\B2BIssuanceDelayHotel.cshtml" />
     <Content Include="Views\B2BTemplate\B2BRejectionEmailFlight.cshtml" />
     <Content Include="Views\B2BTemplate\B2BRejectionEmailHotel.cshtml" />
-    <Content Include="Views\B2BTemplate\B2BIssuanceFailedFlight.cshtml" />
-    <Content Include="Views\B2BTemplate\B2BIssuanceFailedHotel.cshtml" />
     <Content Include="Views\B2BTemplate\B2BApproverAssignment.cshtml" />
     <Content Include="Views\B2BTemplate\B2BSuspensionEmail.cshtml" />
     <Content Include="Views\B2BTemplate\B2BUnsuspensionEmail.cshtml" />
@@ -2857,8 +2852,12 @@
     <Content Include="Views\B2BTemplate\OrderListApprover.cshtml" />
     <Content Include="Views\B2BTemplate\OrderListApprover.mobile.cshtml" />
     <Content Include="Views\B2BTemplate\OrderListBooker.mobile.cshtml" />
-    <Content Include="Views\B2BTemplate\OrderDetailFlight.cshtml" />
-    <Content Include="Views\B2BTemplate\OrderDetailHotel.cshtml" />
+    <Content Include="Views\B2BTemplate\SavePassenger.cshtml" />
+    <Content Include="Views\B2BTemplate\SavePassenger.mobile.cshtml" />
+    <Content Include="Views\B2BTemplate\B2BBookingCannotMade.cshtml" />
+    <Content Include="Views\B2BTemplate\B2BPaymentFailed.cshtml" />
+    <Content Include="Views\B2BTemplate\B2BBookingCanNowBeMade.cshtml" />
+    <Content Include="Views\B2BTemplate\B2BIssuanceFailedNotif.cshtml" />
     <Content Include="Views\Shared\B2BTravorama\Occupancies.cshtml" />
     <Content Include="Views\B2BTemplate\TestEmailFlight.cshtml" />
     <Content Include="Views\Payment\B2BThankyou.cshtml" />

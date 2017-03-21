@@ -52,7 +52,8 @@
             edit: false,
             updating: false
         }
-
+        $scope.showListApproverAdd = false;
+        $scope.showListApproverEdit = false;
         $scope.selectedRole = [];
         $scope.currentEditIndex = 0;
         $scope.EditUserProfile = function (index) {
@@ -83,7 +84,21 @@
             $scope.editUser.approver = $scope.users[index].approverName;
             $scope.editUser.role = $scope.users[index].roleName;
             $scope.selectedRole = [];
+            for (var k = 0; k < $scope.users[index].roleName.length; k++) {
+                $scope.selectedRole.push($scope.users[index].roleName[k]);
+                //$scope.selectRoleUpdate($scope.users[index].roleName[i]);
+            }
             $('#edit-user input').prop("checked", false);
+            for (var i = 0; i < $scope.users[index].roleName.length; i++) {
+                $('#edit-user input#edit-' + $scope.users[index].roleName[i]).prop("checked", true);
+                
+            }
+
+            if ($scope.users[index].roleName.indexOf('Booker') < 0) {
+                $scope.showListApproverEdit = false;
+            } else {
+                $scope.showListApproverEdit = true;
+            }
             $('#edit-user').modal('show');
             
         }
@@ -307,6 +322,24 @@
             window.location.reload();
         }
 
+        $(".modal#add-user").on('show.bs.modal', function () {
+            $scope.showListApproverAdd = false;
+            $scope.userData.email = '';
+            $scope.userData.name = '';
+            $scope.userData.countryCallCd = '';
+            $scope.userData.phone = '';
+            $scope.userData.position = '';
+            $scope.userData.department = '';
+            $scope.userData.branch = '';
+            $scope.userData.approverId = '';
+            $scope.userData.role = [];
+            $(".modal#add-user input").prop("checked", false);
+            $(".modal#add-user input").val('');
+            $('.modal#add-user select').val('');
+            $('#approverAdd').hide();
+
+        });
+
         //Add User
         $scope.addUser = function () {
             $('.wait').modal({
@@ -341,9 +374,26 @@
                         if ($scope.userData.role.length > 0) {
                             for (var i = 0; i < $scope.userData.role.length; i++) {
                                 roles.push($scope.userData.role[i]);
+                                if ($scope.userData.role[i] == 'Approver') {
+                                    $scope.approvers.push({
+                                        userId: returnData.data.userId,
+                                        name: returnData.data.name
+                                    });
+                                }
                             }
                         }
                         var splittedName = $scope.userData.name.split(' ');
+                        var approverName;
+                        if (roles.indexOf("Approver") == -1) {
+                            approverName = "";
+                        } else {
+                            var approvers = $.grep($scope.approvers, function(e) { return e.userId == $scope.userData.approverId; });
+                            if (approvers == null || approvers.length == 0) {
+                                approverName = "";
+                            } else {
+                                approverName = approvers[0].name;
+                            }
+                        }
                         $scope.userAdded = true;
                         $scope.users.push({
                             email: $scope.userData.email,
@@ -354,7 +404,7 @@
                             approverId: $scope.userData.approverId,
                             roleName:roles,
                             department: $scope.userData.department,
-                            approverName: $.grep($scope.approvers, function (e) { return e.userId == $scope.userData.approverId; })[0].name
+                            approverName: approverName
                         });
 
                     //window.location.reload();
@@ -390,11 +440,6 @@
                 $scope.userAdded = false;
             }
         }
-
-        $("input[name=selectRole]").click(function() {
-            var role = $(this).attr("ng-attr-id");
-            var x = 3;
-        });
 
         $scope.updateUser = function () {
             $(".modal#edit-user").modal("hide");
@@ -551,13 +596,24 @@
         $scope.selectRoleUpdate = function (value) {
             if ($scope.selectedRole == null || $scope.selectedRole.length == 0) {
                 $scope.selectedRole = [value];
+                if (value == 'Booker') {
+                    $scope.showListApproverEdit = true;
+                } else {
+                    $scope.showListApproverEdit = false;
+                }
             }
             else {
                 var roleFilterIndex = $scope.selectedRole.indexOf(value);
                 if (roleFilterIndex < 0) {
                     $scope.selectedRole.push(value);
+                    if (value == 'Booker') {
+                        $scope.showListApproverEdit = true;
+                    }
                 }
                 else {
+                    if (value == 'Booker') {
+                        $scope.showListApproverEdit = false;
+                    }
                     $scope.selectedRole.splice(roleFilterIndex, 1);
                 }
             }
@@ -566,13 +622,26 @@
         $scope.selectRoleAdd = function (value) {
             if ($scope.userData.role == null || $scope.userData.role.length == 0) {
                 $scope.userData.role = [value];
+                if (value == 'Booker') {
+                    $scope.showListApproverAdd = true;
+                    $('#approverAdd').show();
+                } else {
+                    $scope.showListApproverAdd = false;
+                }
             }
             else {
                 var roleFilterIndex = $scope.userData.role.indexOf(value);
                 if (roleFilterIndex < 0) {
                     $scope.userData.role.push(value);
+                    if (value == 'Booker') {
+                        $scope.showListApproverAdd = true;
+                        $('#approverAdd').show();
+                    }
                 }
                 else {
+                    if (value == 'Booker') {
+                        $scope.showListApproverAdd = false;
+                    }
                     $scope.userData.role.splice(roleFilterIndex, 1);
                 }
             }

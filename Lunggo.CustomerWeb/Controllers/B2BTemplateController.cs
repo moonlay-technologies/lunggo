@@ -44,7 +44,7 @@ namespace Lunggo.CustomerWeb.Controllers
             if (result.IsBookingDisabled == null)
             {
                 result.IsBookingDisabled = true;
-            }
+        }
             return View(result);
         }
         public ActionResult Payment()
@@ -79,6 +79,10 @@ namespace Lunggo.CustomerWeb.Controllers
             return View();
         }
         public ActionResult UserManagement()
+        {
+            return View();
+        }
+        public ActionResult SavePassenger()
         {
             return View();
         }
@@ -175,11 +179,7 @@ namespace Lunggo.CustomerWeb.Controllers
         {
             return View();
         }
-        public ActionResult B2BIssuanceFailedFlight()
-        {
-            return View();
-        }
-        public ActionResult B2BIssuanceFailedHotel()
+        public ActionResult B2BIssuanceFailedNotif()
         {
             return View();
         }
@@ -188,6 +188,10 @@ namespace Lunggo.CustomerWeb.Controllers
             return View();
         }
         public ActionResult B2BPaymentFailed()
+        {
+            return View();
+        }
+        public ActionResult B2BBookingCanNowBeMade()
         {
             return View();
         }

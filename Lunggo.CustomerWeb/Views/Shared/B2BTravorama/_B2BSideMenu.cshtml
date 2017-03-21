@@ -4,6 +4,7 @@
 @{
     var baseUrl = ConfigManager.GetInstance().GetConfigValue("api", "apiUrl");
     var client = new RestClient(baseUrl);
+    var roles = new List<String>();
     try
     {
         var request = new RestRequest("/v1/profile", Method.GET);
@@ -13,7 +14,8 @@
         // execute the request
         IRestResponse<GetProfileModel> response = client.Execute<GetProfileModel>(request);
 
-        var roles = response.Data.RoleName;
+        var contentDeserialize = Lunggo.Framework.Extension.JsonExtension.Deserialize<GetProfileModel>(response.Content);
+        roles = contentDeserialize.RoleName;
     }
     catch
     {
@@ -38,6 +40,8 @@
                 </a>
                 <span class="icon-thumbnail "><i class="pg-home"></i></span>
             </li>
+            @if (roles != null && roles.Count > 0 && roles.Contains("Booker"))
+            {
             <li class="">
                 <a href="javascript:;">
                     <span class="title">Booking</span>
@@ -55,47 +59,76 @@
                     </li>
                 </ul>
             </li>
-            <li class="paymentmgmt">
+            }
+            @if (roles != null && roles.Count > 0 && roles.Contains("Booker"))
+            {
+                <li class="">
+                    <a href="/id/B2BTemplate/SavePassenger">
+                        <span class="title">Save Passenger</span>
+                    </a>
+                    <span class="icon-thumbnail "><i class="fa fa-users"></i></span>
+                </li>
+            }
+           
+            @if (roles != null && roles.Count > 0 && roles.Contains("Finance"))
+            {
+                <li class="paymentmgmt">
                 <a href="/id/B2BTemplate/Payment">
                     <span class="title">Payment Management</span>
                 </a>
                 <span class="icon-thumbnail "><i class="pg-credit_card"></i></span>
             </li>
+            }
+            @if (roles != null && roles.Count > 0 && roles.Contains("Admin"))
+            {
             <li class="">
                 <a href="/id/B2BTemplate/UserManagement">
                     <span class="title">User Management</span>
                 </a>
                 <span class="icon-thumbnail "><i class="fa fa-user"></i></span>
             </li>
+            }
+
+            @if (roles != null && roles.Count > 0 && roles.Contains("Approver"))
+            {
             <li class="">
                 <a href="/id/B2BTemplate/OrderListApprover">
                     <span class="title">Order List Approver</span>
                 </a>
                 <span class="icon-thumbnail">A</span>
             </li>
+            }
+
+            @if (roles != null && roles.Count > 0 && roles.Contains("Booker"))
+            {
             <li class="">
                 <a href="/id/B2BTemplate/OrderListBooker">
                     <span class="title">Order List Booker</span>
                 </a>
                 <span class="icon-thumbnail">B</span>
             </li>
-            <li class="">
-                <a href="javascript:;">
-                    <span class="title">Order List Finance</span>
-                    <span class=" arrow"></span>
-                </a>
-                <span class="icon-thumbnail">F</span>
-                <ul class="sub-menu">
-                    <li class="">
-                        <a href="/id/B2BTemplate/OrderListFlightFinance">Pesawat</a>
-                        <span class="icon-thumbnail"><i class="fa fa-plane"></i></span>
-                    </li>
-                    <li class="">
-                        <a href="/id/B2BTemplate/OrderListHotelFinance">Hotel</a>
-                        <span class="icon-thumbnail"><i class="fa fa-building"></i></span>
-                    </li>
-                </ul>
-            </li>
+            }
+            @if (roles != null && roles.Count > 0 && roles.Contains("Finance"))
+            {
+                <li class="">
+                    <a href="javascript:;">
+                        <span class="title">Order List Finance</span>
+                        <span class=" arrow"></span>
+                    </a>
+                    <span class="icon-thumbnail">F</span>
+                    <ul class="sub-menu">
+                        <li class="">
+                            <a href="/id/B2BTemplate/OrderListFlightFinance">Pesawat</a>
+                            <span class="icon-thumbnail"><i class="fa fa-plane"></i></span>
+                        </li>
+                        <li class="">
+                            <a href="/id/B2BTemplate/OrderListHotelFinance">Hotel</a>
+                            <span class="icon-thumbnail"><i class="fa fa-building"></i></span>
+                        </li>
+                    </ul>
+                </li>
+            }
+
             <li class="">
                 <a href="/id/B2BTemplate/Login">
                     <span class="title">Logout</span>

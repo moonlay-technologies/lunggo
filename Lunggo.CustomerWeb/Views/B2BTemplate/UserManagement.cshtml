@@ -78,7 +78,7 @@
 </script>
 
 }
-<div class="page-loading" ng-app="travoramaB2B" ng-controller="B2BUserManagementController" ng-class="{ 'active': pageLoaded }">
+<div class="page-loading" ng-app="travoramaB2B" ng-controller="B2BUserManagementController" ng-class="{ 'active': pageLoaded }" ng-cloak>
     <div class="panel panel-transparent">
         <div class="panel-heading">
             <div class="panel-title">
@@ -263,7 +263,7 @@
     </div>
     
     <!--Edit User-->
-    <div class="modal fade slide-up disable-scroll" tabindex="-1" role="dialog" aria-hidden="false" id="edit-user">
+    <div class="modal fade slide-up" tabindex="-1" role="dialog" aria-hidden="false" id="edit-user">
         <div class="modal-dialog">
             <div class="modal-content-wrapper">
                 <div class="modal-content">
@@ -305,7 +305,7 @@
                                 <div class="col-sm-8">
                                     <div class="form-group form-group-default">
                                         <label>Telepon</label>
-                                        <input type="text" class="form-control" placeholder="" ng-model="editUser.phone">
+                                        <input type="number" class="form-control" placeholder="" ng-model="editUser.phone">
                                     </div>
                                 </div>
                             </div>
@@ -321,7 +321,7 @@
                                 <label>Cabang</label>
                                 <input type="text" class="form-control" placeholder="" ng-model="editUser.branch">
                             </div>
-                            <div class="form-group form-group-default">
+                            <div class="form-group form-group-default" ng-show="showListApproverEdit">
                                 <label>Nama Approver</label>
                                 <select class="form-control" ng-model="editUser.approverId">
                                     <option ng-repeat="approver in approvers" value="{{approver.userId}}" ng ng-selected="approver.userId == editUser.approverId">{{approver.name}}</option>
@@ -365,7 +365,7 @@
     </div>
 
     <!--Add User-->
-    <div class="modal fade slide-up disable-scroll" tabindex="-1" role="dialog" aria-hidden="false" id="add-user">
+    <div class="modal fade slide-up" tabindex="-1" role="dialog" aria-hidden="false" id="add-user">
         <div class="modal-dialog">
             <div class="modal-content-wrapper">
                 <div class="modal-content">
@@ -384,8 +384,8 @@
                             <div class="row">
                                 <div class="col-sm-4">
                                     <div class="form-group input-custom">
-                                        <label>Country Code</label>
-                                        <select class="form-control" ng-model="userData.countryCallCd">
+                                        <label>Kode Negara</label>
+                                        <select class="form-control" ng-model="userData.countryCallCd" id="countryCode">
                                             <option ng-repeat="country in countries" value="{{country.dial_code}}" ng-selected="country.dial_code == 'Pilih Kode Negara'">{{country.name}} {{country.dial_code}}</option>
                                         </select> 
                                     </div>
@@ -393,7 +393,7 @@
                                 <div class="col-sm-8">
                                     <div class="form-group form-group-default">
                                         <label>Telepon</label>
-                                        <input type="text" class="form-control" placeholder="" ng-model="userData.phone">
+                                        <input type="number" class="form-control" placeholder="" ng-model="userData.phone">
                                     </div>
                                 </div>
                             </div>
@@ -416,7 +416,7 @@
                                 <label>Cabang</label>
                                 <input type="text" class="form-control" placeholder="" ng-model="userData.branch">
                             </div>
-                            <div class="form-group form-group-default">
+                            <div class="form-group form-group-default" id="approverAdd" ng-show="showListApproverAdd">
                                 <label>Nama Approver</label>
                                 <select class="form-control" ng-model="userData.approverId">
                                     <option ng-repeat="approver in approvers" value="{{approver.userId}}" ng ng-selected="approver.userId == userData.approverId">{{approver.name}}</option>
