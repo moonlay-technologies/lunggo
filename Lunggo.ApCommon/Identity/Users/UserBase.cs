@@ -93,7 +93,7 @@ namespace Lunggo.ApCommon.Identity.Users
         /// Approver of the user
         /// 
         /// </summary>
-        public string ApproverId { get; set; }
+        public User Approver { get; set; }
 
         /// <summary>
         /// Is two factor enabled for the user
@@ -118,5 +118,7 @@ namespace Lunggo.ApCommon.Identity.Users
         /// 
         /// </summary>
         public virtual int AccessFailedCount { get; set; }
+
+
     }
 }

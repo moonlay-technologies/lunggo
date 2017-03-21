@@ -71,7 +71,7 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
                 Position = request.Position,
                 Department = request.Department,
                 Branch = request.Branch,
-                ApproverId = request.ApproverId
+                Approver = new User {Id = request.ApproverId}
             };
             var result = userManager.Create(user);
             if (result.Succeeded)
@@ -85,7 +85,7 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
                 var code = HttpUtility.UrlEncode(userManager.GenerateEmailConfirmationToken(user.Id));
                 var host = ConfigManager.GetInstance().GetConfigValue("general", "rootUrl");
                 var apiUrl = HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority);
-                var callbackUrl = host + "/id/B2BAccount/ConfirmEmail?userId=" + user.Id + "&code=" + code + "&apiUrl=" + apiUrl;
+                var callbackUrl = host + "/id/Account/ConfirmEmail?userId=" + user.Id + "&code=" + code + "&isAgentType=true" + "&apiUrl=" + apiUrl;
                 userManager.SendEmailAsync(user.Id, "UserConfirmationEmail", callbackUrl).Wait();
 
                 return new AddUserApiResponse

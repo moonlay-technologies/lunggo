@@ -115,7 +115,7 @@ namespace Lunggo.ApCommon.Identity.UserStore
                 Position = user.Position,
                 Branch = user.Branch,
                 Department = user.Department,
-                ApproverId = user.ApproverId
+                ApproverId = user.Approver.Id
             };
             return record;
         }
@@ -211,7 +211,7 @@ namespace Lunggo.ApCommon.Identity.UserStore
                 Position = record.Position,
                 Branch = record.Branch,
                 Department = record.Department,
-                ApproverId = record.ApproverId
+                Approver = User.GetFromDb(record.ApproverId)
             };
             return user;
         }

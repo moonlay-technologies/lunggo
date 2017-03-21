@@ -25,7 +25,7 @@ namespace Lunggo.ApCommon.Identity.Users
             return userIdentity;
         }
 
-        internal static User GetFromDb(string userId)
+        public static User GetFromDb(string userId)
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
@@ -275,7 +275,7 @@ namespace Lunggo.ApCommon.Identity.Users
                         Position = user.Position,
                         Department = user.Department,
                         Branch = user.Branch,
-                        ApproverId = user.ApproverId
+                        ApproverId = user.Approver.Id
                     });
                 }
                 return true;
@@ -284,6 +284,25 @@ namespace Lunggo.ApCommon.Identity.Users
             {
                 return false;
             }
+        }
+
+        public static UserForDisplay ConvertUserForDisplay(User user)
+        {
+            if (user == null)
+                return null;
+            var displayUser = new UserForDisplay
+            {
+                Id = user.Id,
+                Name = user.FirstName == user.LastName ? user.FirstName : user.FirstName + " " + user.LastName,
+                Email = user.Email,
+                CountryCallCd = user.CountryCallCd,
+                PhoneNumber = user.PhoneNumber,
+                Position = user.Position,
+                Branch = user.Branch,
+                Department = user.Department,
+                ApproverName = GetNameByUserId(user.Approver.Id)
+            };
+            return displayUser;
         }
 
         public static bool UpdateUserLock(string userId, bool isLocked)

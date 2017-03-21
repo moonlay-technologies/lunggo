@@ -67,7 +67,7 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
                 Position = request.Position,
                 Department = request.Department,
                 Branch = request.Branch,
-                ApproverId = request.ApproverId
+                Approver = User.GetFromDb(request.ApproverId)
             };
             var isUpdated = User.UpdateUser(user);
             if (isUpdated)

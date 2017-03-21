@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-
+using Lunggo.ApCommon.Identity.Model;
 using Lunggo.ApCommon.Identity.Users;
 using Lunggo.ApCommon.Payment.Model;
 using Lunggo.ApCommon.Product.Constant;
@@ -37,10 +37,10 @@ namespace Lunggo.ApCommon.Product.Model
         public Contact Contact { get; set; }
         [JsonProperty("pax", NullValueHandling = NullValueHandling.Ignore)]
         public List<PaxForDisplay> Pax { get; set; }
-        [JsonProperty("userId", NullValueHandling = NullValueHandling.Ignore)]
-        public string UserId { get; set; }
-        [JsonProperty("bookerName", NullValueHandling = NullValueHandling.Ignore)]
-        public string BookerName { get; set; }
+        [JsonProperty("booker", NullValueHandling = NullValueHandling.Ignore)]
+        public UserForDisplay Booker { get; set; }
+        [JsonProperty("approver", NullValueHandling = NullValueHandling.Ignore)]
+        public UserForDisplay Approver { get; set; }
         [JsonIgnore]
         public string DeviceId { get; set; }
     }

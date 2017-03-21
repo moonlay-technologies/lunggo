@@ -15,18 +15,18 @@ namespace Lunggo.WebJob.EmailQueueHandler.Function
 {
     public partial class ProcessEmailQueue
     {
-        public static void FlightBookerNotifEmail([QueueTrigger("flightbookernotifemail")] string rsvNo)
+        public static void B2BHotelRejectionEmail([QueueTrigger("b2bhotelrejectionemail")] string rsvNo)
         {
             var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
             var envPrefix = env != "production" ? "[" + env.ToUpper() + "] " : "";
-            var flightService = FlightService.GetInstance();
+            var hotelService = HotelService.GetInstance();
             var sw = new Stopwatch();
             var counter = 0;
-            Console.WriteLine("Processing Flight Booker Notif Email for RsvNo " + rsvNo + "...");
+            Console.WriteLine("Processing B2B Hotel Rejection Email for RsvNo " + rsvNo + "...");
 
             Console.WriteLine("Getting Required Data...");
             sw.Start();
-            var reservation = flightService.GetBookerReservationForDisplay(rsvNo);
+            var reservation = hotelService.GetBookerReservationForDisplay(rsvNo);
             sw.Stop();
             Console.WriteLine("Done Getting Required Data. (" + sw.Elapsed.TotalSeconds + "s)");
             sw.Reset();
@@ -34,15 +34,15 @@ namespace Lunggo.WebJob.EmailQueueHandler.Function
             var mailModel = new MailModel
             {
                 RecipientList = new[] { reservation.Contact.Email },
-                Subject = envPrefix + env == "production" ? "Booking Info - No Pemesanan :  " + rsvNo : "[TEST] Ignore This Email",
+                Subject = envPrefix + env == "production" ? "Hotel Booking Info - No Pemesanan :  " + rsvNo : "[TEST] Ignore This Email",
                 FromMail = "booking@travorama.com",
                 FromName = "Travorama",
                 BccList = new[] { "maillog.travorama@gmail.com" }
             };
             Console.WriteLine("Sending Notification Email...");
-            mailService.SendEmail(reservation, mailModel, "FlightBookerNotifEmail");
+            mailService.SendEmail(reservation, mailModel, "B2BHotelRejectionEmail");
 
-            Console.WriteLine("Done Processing Flight Booker Notif Email for RsvNo " + rsvNo);
+            Console.WriteLine("Done Processing B2B Hotel Rejection Email for RsvNo " + rsvNo);
         }
     }
 }

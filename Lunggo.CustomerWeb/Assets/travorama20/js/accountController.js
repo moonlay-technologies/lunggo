@@ -1285,6 +1285,7 @@ app.controller('resetController', [
             isSuccess: false,
             userEmail: userEmail,
             code: code,
+            isAgentType: isAgentType,
             resubmitting: false,
             reconfirm: false,
         };
@@ -1301,6 +1302,9 @@ app.controller('resetController', [
             //Check Authorization
             var authAccess = getAuthAccess();
             if (authAccess == 2 || authAccess == 1) {
+                if ($scope.form.isAgentType == "True") {
+                    $scope.form.userEmail = "b2b:" + $scope.form.userEmail;
+                }
                 $http({
                     url: ResetPasswordConfig.Url,
                     method: 'POST',

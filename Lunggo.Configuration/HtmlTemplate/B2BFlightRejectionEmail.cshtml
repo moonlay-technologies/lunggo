@@ -2,9 +2,7 @@
 @using Lunggo.ApCommon.Constant
 @using Lunggo.Framework.Config
 @model Lunggo.ApCommon.Flight.Model.FlightReservationForDisplay
-@{
-    ViewBag.SiteHeader = "header-email";
-}
+
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -36,7 +34,7 @@
                 <td width="90%">
 
                     <!-- CONTENT  -->
-                    <p style="font-size:16px;"><b>Dear <span style="color: #15b1e4;"> @Model.Booker.Name </span></b></p>
+                    <p style="font-size:16px;"><b>Dear <span style="color: #15b1e4;"> @Model.BookerName </span></b></p>
                     <p style="font-size: 12px">Atasan Anda telah <b>menolak</b> reservasi dengan detail terlampir di bagian bawah e-mail ini.</p>
                     <p style="margin-bottom:10px; color: red;"><b>Alasan Penolakan:</b></p>
                     <p style="margin-bottom:4%;">@Model.RejectionDescription</p>

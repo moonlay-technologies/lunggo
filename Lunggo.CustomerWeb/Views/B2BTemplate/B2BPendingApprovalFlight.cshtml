@@ -1,6 +1,7 @@
 ﻿@using System.Globalization
 @using Lunggo.ApCommon.Constant
 @using Lunggo.Framework.Config
+@model Lunggo.ApCommon.Flight.Model.FlightBookingNotif
 @{
     ViewBag.SiteHeader = "header-email";
 }
@@ -42,7 +43,7 @@
 
                     <!-- CONTENT  -->
 
-                    <p style="font-size: 12px">Dear <span style="color: #15b1e4">@Model.Contact.Name,</span></p>
+                    <p style="font-size: 12px">Dear <span style="color: #15b1e4">@Model.Reservation.Booker.ApproverName,</span></p>
                     <p style="font-size: 12px">Persetujuan Anda dibutuhkan untuk pegawai Anda melakukan reservasi tiket pesawat/hotel pegawai Anda dengan identitas berikut:</p>
 
                     <table width="100%" style="margin-bottom: 10px;" cellpadding="0" cellspacing="0">
@@ -52,7 +53,7 @@
                             </td>
                             <td width="1%"><p>:</p></td>
                             <td width="30%">
-                                <p style="">Nama</p>
+                                <p style="">@Model.Reservation.Booker.Name</p>
                             </td>
                         </tr>
                         <tr>
@@ -61,7 +62,7 @@
                             </td>
                             <td width="1%"><p>:</p></td>
                             <td width="30%">
-                                <p style="">CTO</p>
+                                <p style="">@Model.Reservation.Booker.Position</p>
                             </td>
                         </tr>
                         <tr>
@@ -70,7 +71,7 @@
                             </td>
                             <td width="1%"><p>:</p></td>
                             <td width="30%">
-                                <p style="">Production</p>
+                                <p style="">@Model.Reservation.Booker.Department</p>
                             </td>
                         </tr>
                         <tr>
@@ -79,7 +80,7 @@
                             </td>
                             <td width="1%"><p>:</p></td>
                             <td width="30%">
-                                <p style="">Tangsel</p>
+                                <p style="">@Model.Reservation.Booker.Branch</p>
                             </td>
                         </tr>
                         <tr>
@@ -88,7 +89,7 @@
                             </td>
                             <td width="1%"><p>:</p></td>
                             <td width="30%">
-                                <p style="">email@domain.com</p>
+                                <p style="">@Model.Reservation.Booker.Email</p>
                             </td>
                         </tr>
                         <tr>
@@ -97,7 +98,16 @@
                             </td>
                             <td width="1%"><p>:</p></td>
                             <td width="30%">
-                                <p style="">Lorem ipsum</p>
+                                <p style="">@Model.Reservation.BookerMessageTitle</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="10%">
+                                <p style="">Deskripsi</p>
+                            </td>
+                            <td width="1%"><p>:</p></td>
+                            <td width="30%">
+                                <p style="">@Model.Reservation.BookerMessageDescription</p>
                             </td>
                         </tr>
                     </table>
@@ -116,16 +126,28 @@
                         <tr>
                             <td width="20%">
                                 <p style="opacity: 0.5">Maskapai</p>
-                                <p style=""><b>LLLL</b></p>
-                                <p style=""><b>LLLL</b></p>
-                                <p style=""><b>LLLL</b></p>
+                                @if (Model.Reservation.Itinerary.Trips.Count > 1)
+                                {
+                                    <p style=""><b>@Model.Reservation.Itinerary.Trips[0].Segments[0].AirlineName (@Model.Reservation.Itinerary.Trips[0].Segments[0].AirlineCode-@Model.Reservation.Itinerary.Trips[0].Segments[0].FlightNumber)</b></p>
+                                    <p style=""><b>@Model.Reservation.Itinerary.Trips[1].Segments[0].AirlineName (@Model.Reservation.Itinerary.Trips[1].Segments[0].AirlineCode-@Model.Reservation.Itinerary.Trips[1].Segments[0].FlightNumber)</b></p>
+                                }
+                                else
+                                {
+                                    <p style=""><b>@Model.Reservation.Itinerary.Trips[0].Segments[0].AirlineName (@Model.Reservation.Itinerary.Trips[0].Segments[0].AirlineCode-@Model.Reservation.Itinerary.Trips[0].Segments[0].FlightNumber)</b></p>
+                                }
                             </td>
                             <td width="5%"></td>
                             <td width="20%">
                                 <p style="opacity: 0.5">Rute</p>
-                                <p style=""><b>LLLL</b></p>
-                                <p style=""><b>LLLL</b></p>
-                                <p style=""><b>LLLL</b></p>
+                                @if (Model.Reservation.Itinerary.Trips.Count > 1)
+                                {
+                                    <p style=""><b>@Model.Reservation.Itinerary.Trips[0].OriginAirport - @Model.Reservation.Itinerary.Trips[0].DestinationAirport</b></p>
+                                    <p style=""><b>@Model.Reservation.Itinerary.Trips[1].OriginAirport - @Model.Reservation.Itinerary.Trips[1].DestinationAirport</b></p>
+                                }
+                                else
+                                {
+                                    <p style=""><b>@Model.Reservation.Itinerary.Trips[0].OriginAirport - @Model.Reservation.Itinerary.Trips[0].DestinationAirport</b></p>
+                                }
                             </td>
                         </tr>
                     </table>
@@ -142,16 +164,32 @@
                         <tr>
                             <td width="20%">
                                 <p style="opacity: 0.5">Waktu Penerbangan</p>
-                                <p style=""><b>LLLL</b></p>
-                                <p style=""><b>LLLL</b></p>
-                                <p style=""><b>LLLL</b></p>
+                                @if (Model.Reservation.Itinerary.Trips.Count > 1)
+                                {
+                                    var jamBerangkat = Model.Reservation.Itinerary.Trips[0].Segments[0].DepartureTime;
+                                    var jamKembali = Model.Reservation.Itinerary.Trips[1].Segments[0].DepartureTime;
+                                    <p style=""><b>@Model.Reservation.Itinerary.Trips[0].DepartureDate.ToString("dddd", CultureInfo.CreateSpecificCulture("id-ID")), @Model.Reservation.Itinerary.Trips[0].DepartureDate.ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID")) - Pk @jamBerangkat.ToString("HH:mm")</b></p>
+                                    <p style=""><b>@Model.Reservation.Itinerary.Trips[1].DepartureDate.ToString("dddd", CultureInfo.CreateSpecificCulture("id-ID")), @Model.Reservation.Itinerary.Trips[1].DepartureDate.ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID")) - Pk @jamKembali.ToString("HH:mm")</b></p>
+                                }
+                                else
+                                {
+                                    var jamBerangkat = Model.Reservation.Itinerary.Trips[0].Segments[0].DepartureTime;
+                                    <p style=""><b>@Model.Reservation.Itinerary.Trips[0].DepartureDate.ToString("dddd", CultureInfo.CreateSpecificCulture("id-ID")), @Model.Reservation.Itinerary.Trips[0].DepartureDate.ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID")) - Pk @jamBerangkat.ToString("HH:mm")</b></p>
+                                    
+                                }
                             </td>
                             <td width="5%"></td>
                             <td width="20%">
                                 <p style="opacity: 0.5">Kode Booking Maskpai (PNR)</p>
-                                <p style=""><b>LLLL</b></p>
-                                <p style=""><b>LLLL</b></p>
-                                <p style=""><b>LLLL</b></p>
+                                @if (Model.Reservation.Itinerary.Trips.Count > 1)
+                                {
+                                    <p style=""><b>@Model.Reservation.Itinerary.Trips[0].Segments[0].Pnr</b></p>
+                                    <p style=""><b>@Model.Reservation.Itinerary.Trips[1].Segments[0].Pnr</b></p>
+                                }
+                                else
+                                {
+                                    <p style=""><b>@Model.Reservation.Itinerary.Trips[0].Segments[0].Pnr</b></p>
+                                }
                             </td>
                         </tr>
                     </table>
@@ -163,24 +201,44 @@
                                 </th>
                             </tr>
                         </thead>
+                        @{ var i = Model.Reservation.Pax.Count; }
+                        @{ var j = 1; }
                         <tr>
-                            <td width="18.2%" rowspan="1">
+                            <td width="18.2%" rowspan="@i">
                                 <p style="color: #15b1e4; text-align: right;">Penumpang</p>
                             </td>
                             <td width="11%">
                                 <p style="color: #15b1e4; text-align: center;">:</p>
                             </td>
                             <td>
-                                <p style="color: #15b1e4; text-align: left;">1. Name</p>
+                                <p style="color: #15b1e4; text-align: left;">1. @Model.Reservation.Pax[0].Name</p>
                             </td>
                             <td width="20%"></td>
                             <td width="5%" style="padding-right: 1%;">
                                 <hr style="border-color:#15b1e4;" />
                             </td>
                             <td width="7%">
-                                LLLL
+                                @EnumDisplay.PassengerType(Model.Reservation.Pax[0].Type)
                             </td>
                         </tr>
+                        @for (int k = 1; k < i; k++)
+                        {
+                            <tr>
+                                <td width="11%">
+                                    <p style="color: #15b1e4; text-align: center;">:</p>
+                                </td>
+                                <td>
+                                    <p style="color: #15b1e4; text-align: left;">@(k + 1). @Model.Reservation.Pax[k].Name</p>
+                                </td>
+                                <td width="20%"></td>
+                                <td width="5%" style="padding-right: 1%;">
+                                    <hr style="border-color:#15b1e4;" />
+                                </td>
+                                <td width="7%">
+                                    @EnumDisplay.PassengerType(Model.Reservation.Pax[k].Type)
+                                </td>
+                            </tr>
+                        }
                     </table>
                     <hr style="border-color: #15b1e4; border-style: dotted; margin-bottom: 3%;" width="100%" />
 
@@ -189,11 +247,11 @@
                         <tr>
                             <td width="50%">
                                 <a style="background-color: #ffd632; border: #e9d14d; display: inline-block; margin-left:45%; text-decoration: none; font-family:arial, helvetica, sans-serif; width: 50%; padding-top: 11px; padding-bottom: 11px; text-align: center; font-size: 11px; color: #333333; margin-top: 10px;"
-                                   href="#" target="_blank"><b>APPROVE</b></a>
+                                   href="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/id/Flight/UpdateReservation?token=" + Model.Token +"&rsvNo=" + Model.Reservation.RsvNo + "&status=approved")" target="_blank"><b>APPROVE</b></a>
                             </td>
                             <td width="50%">
                                 <a style="background-color: #ffd632; border: #e9d14d; display: inline-block; text-decoration: none; font-family:arial, helvetica, sans-serif; width: 50%; padding-top: 11px; padding-bottom: 11px; text-align: center; font-size: 11px; color: #333333; margin-top: 10px;"
-                                   href="#" target="_blank"><b>REJECT</b></a>
+                                   href="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/id/Flight/UpdateReservation?token=" + Model.Token + "&rsvNo=" + Model.Reservation.RsvNo + "&status=rejected")" target="_blank"><b>REJECT</b></a>
                             </td>
                         </tr>
                     </table>

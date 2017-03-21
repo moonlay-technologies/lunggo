@@ -126,7 +126,8 @@
     <None Include="Config\BackendWeb\domain.properties" />
     <None Include="Config\BackendWeb\freshdesk.properties" />
     <None Include="Config\BackendWeb\general.properties">
-      <SubType>Designer</SubType>
+      <SubType>
+      </SubType>
     </None>
     <None Include="Config\BackendWeb\hotel.properties">
       <SubType>Designer</SubType>
@@ -155,7 +156,8 @@
     </None>
     <None Include="Config\CloudApp.CaptchaReader\Garuda.properties" />
     <None Include="Config\CloudApp.CaptchaReader\general.properties">
-      <SubType>Designer</SubType>
+      <SubType>
+      </SubType>
     </None>
     <None Include="Config\CloudApp.CaptchaReader\lionAir.properties">
       <SubType>Designer</SubType>
@@ -352,7 +354,8 @@
     </None>
     <None Include="Config\WebJob.EmailQueueHandler\Garuda.properties" />
     <None Include="Config\WebJob.EmailQueueHandler\general.properties">
-      <SubType>Designer</SubType>
+      <SubType>
+      </SubType>
     </None>
     <None Include="Config\WebJob.EmailQueueHandler\hotel.properties">
       <SubType>Designer</SubType>
@@ -575,7 +578,8 @@
     <None Include="Config\WebJob.HotelProcessor\freshdesk.properties" />
     <None Include="Config\WebJob.HotelProcessor\Garuda.properties" />
     <None Include="Config\WebJob.HotelProcessor\general.properties">
-      <SubType>Designer</SubType>
+      <SubType>
+      </SubType>
     </None>
     <None Include="Config\WebJob.HotelProcessor\hotel.properties">
       <SubType>Designer</SubType>
@@ -617,7 +621,8 @@
     <None Include="Config\WebJob.FlightProcessor\freshdesk.properties" />
     <None Include="Config\WebJob.FlightProcessor\Garuda.properties" />
     <None Include="Config\WebJob.FlightProcessor\general.properties">
-      <SubType>Designer</SubType>
+      <SubType>
+      </SubType>
     </None>
     <None Include="Config\WebJob.FlightProcessor\hotel.properties">
       <SubType>Designer</SubType>
@@ -720,7 +725,8 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Config\CloudApp.EticketHandler\general.properties">
-      <SubType>Designer</SubType>
+      <SubType>
+      </SubType>
     </None>
     <None Include="Config\CloudApp.EticketHandler\lionAir.properties">
       <SubType>Designer</SubType>
@@ -767,7 +773,8 @@
     <None Include="Config\WebAPI\db.properties" />
     <None Include="Config\WebAPI\freshdesk.properties" />
     <None Include="Config\WebAPI\general.properties">
-      <SubType>Designer</SubType>
+      <SubType>
+      </SubType>
     </None>
     <None Include="Config\WebAPI\redis.properties">
       <SubType>Designer</SubType>
@@ -798,12 +805,12 @@
     </None>
     <None Include="HtmlTemplate\BankTransferInstructionEmailHotel.cshtml" />
     <None Include="HtmlTemplate\FailedPaymentNotifEmail.cshtml" />
-    <None Include="HtmlTemplate\FlightBookerNotifEmail.cshtml" />
-    <None Include="HtmlTemplate\FlightBookingNotifEmail.cshtml" />
+    <None Include="HtmlTemplate\B2BFlightRejectionEmail.cshtml" />
+    <None Include="HtmlTemplate\B2BFlightPendingApprovalNotifEmail.cshtml" />
     <None Include="HtmlTemplate\FlightIssueDelayApproverNotifEmail.cshtml" />
     <None Include="HtmlTemplate\FlightIssueDelayBookerNotifEmail.cshtml" />
-    <None Include="HtmlTemplate\HotelBookerNotifEmail.cshtml" />
-    <None Include="HtmlTemplate\HotelBookingNotifEmail.cshtml" />
+    <None Include="HtmlTemplate\B2BHotelRejectionEmail.cshtml" />
+    <None Include="HtmlTemplate\B2BHotelPendingApprovalNotifEmail.cshtml" />
     <None Include="HtmlTemplate\BookingDisabilityStatusNotifEmail.cshtml" />
     <None Include="HtmlTemplate\HotelSaySorryFailedIssueNotifEmail.cshtml" />
     <None Include="HtmlTemplate\HotelVoucherEmail.cshtml" />

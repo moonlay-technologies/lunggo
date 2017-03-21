@@ -59,11 +59,11 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
             if (rsvFlights != null)
             {
                 var flightList =
-                    rsvFlights.GroupBy(u => new { u.BookerName, u.UserId, u.BookerMessageTitle, u.BookerMessageDescription })
+                    rsvFlights.GroupBy(u => new { u.Booker.Name, u.Booker.Id, u.BookerMessageTitle, u.BookerMessageDescription })
                         .Select(grp => new ReservationListModel
                         {
-                            BookerId = grp.Key.UserId,
-                            BookerName = grp.Key.BookerName,
+                            BookerId = grp.Key.Id,
+                            BookerName = grp.Key.Name,
                             BookerMessageTitle = grp.Key.BookerMessageTitle,
                             BookerMessageDescription = grp.Key.BookerMessageDescription,
                             ReservationList = new ReservationList
@@ -76,10 +76,10 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
 
                 if (rsvHotels != null)
                 {
-                    var hotelList = rsvHotels.GroupBy(u => new { u.BookerName, u.UserId, u.BookerMessageTitle, u.BookerMessageDescription }).Select(grp => new ReservationListModel
+                    var hotelList = rsvHotels.GroupBy(u => new { u.Booker.Name, u.Booker.Id, u.BookerMessageTitle, u.BookerMessageDescription }).Select(grp => new ReservationListModel
                     {
-                        BookerId = grp.Key.UserId,
-                        BookerName = grp.Key.BookerName,
+                        BookerId = grp.Key.Id,
+                        BookerName = grp.Key.Name,
                         BookerMessageTitle = grp.Key.BookerMessageTitle,
                         BookerMessageDescription = grp.Key.BookerMessageDescription,
                         ReservationList = new ReservationList
@@ -106,10 +106,10 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
             {
                 if (rsvHotels != null)
                 {
-                    var hotelList = rsvHotels.GroupBy(u => new { u.BookerName, u.UserId, u.BookerMessageTitle, u.BookerMessageDescription }).Select(grp => new ReservationListModel
+                    var hotelList = rsvHotels.GroupBy(u => new { u.Booker.Name, u.Booker.Id, u.BookerMessageTitle, u.BookerMessageDescription }).Select(grp => new ReservationListModel
                     {
-                        BookerId = grp.Key.UserId,
-                        BookerName = grp.Key.BookerName,
+                        BookerId = grp.Key.Id,
+                        BookerName = grp.Key.Name,
                         BookerMessageTitle = grp.Key.BookerMessageTitle,
                         BookerMessageDescription = grp.Key.BookerMessageDescription,
                         ReservationList = new ReservationList

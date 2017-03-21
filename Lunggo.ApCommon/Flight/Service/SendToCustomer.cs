@@ -33,14 +33,14 @@ namespace Lunggo.ApCommon.Flight.Service
         public void SendNewBookingInfo(string message )
         {
             var queueService = QueueService.GetInstance();
-            var queue = queueService.GetQueueByReference("FlightBookingNotifEmail");
+            var queue = queueService.GetQueueByReference("B2BFlightPendingApprovalNotifEmail");
             queue.AddMessage(new CloudQueueMessage(message));
         }
 
         public void SendBookerBookingInfo(string rsvNo)
         {
             var queueService = QueueService.GetInstance();
-            var queue = queueService.GetQueueByReference("FlightBookerNotifEmail");
+            var queue = queueService.GetQueueByReference("B2BFlightRejectionEmail");
             queue.AddMessage(new CloudQueueMessage(rsvNo));
         }
 

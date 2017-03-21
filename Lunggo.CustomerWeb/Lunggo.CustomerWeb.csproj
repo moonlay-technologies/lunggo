@@ -278,6 +278,7 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
     <Compile Include="Startup.cs" />
+    <Compile Include="Utils\B2BUtil.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\Api\Views\web.config" />

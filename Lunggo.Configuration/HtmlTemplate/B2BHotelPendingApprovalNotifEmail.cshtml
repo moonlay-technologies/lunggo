@@ -1,10 +1,7 @@
 ﻿@using System.Globalization
 @using Lunggo.ApCommon.Constant
 @using Lunggo.Framework.Config
-@model Lunggo.ApCommon.Hotel.Model.HotelBookingNotif
-@{
-    ViewBag.SiteHeader = "header-email";
-}
+
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -189,9 +186,9 @@
                                 <p style="font-style: italic; font-size: 10px">
                                     &quot;Payable through @Model.Reservation.HotelDetail.SupplierName, acting as agent for the service operating
 
-                                        company, details of which can be provided upon request&quot;. VAT: @Model.Reservation.HotelDetail.SupplierVat
+                                    company, details of which can be provided upon request&quot;. VAT: @Model.Reservation.HotelDetail.SupplierVat
 
-                                        Reference: @Model.Reservation.HotelDetail.BookingReference
+                                    Reference: @Model.Reservation.HotelDetail.BookingReference
                                 </p>
                                 <span style="color: #ff7200; font-size: 15px; font-weight: 700;">Harga Total</span>
                                 <span style="color: #ff7200; font-size: 15px; font-weight: 700; float: right;">Rp @Model.Reservation.Payment.OriginalPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</span>

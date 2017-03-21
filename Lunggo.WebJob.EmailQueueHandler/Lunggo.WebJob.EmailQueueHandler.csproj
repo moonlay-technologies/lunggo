@@ -112,12 +112,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Function\FailedPaymentNotifEmail.cs" />
-    <Compile Include="Function\FlightBookerNotifEmail.cs" />
-    <Compile Include="Function\FlightBookingNotifEmail.cs" />
+    <Compile Include="Function\B2BFlightRejectionEmail.cs" />
+    <Compile Include="Function\B2BFlightPendingApprovalNotifEmail.cs" />
     <Compile Include="Function\FlightIssueDelayApproverNotifEmail.cs" />
     <Compile Include="Function\FlightIssueDelayBookerNotifEmail.cs" />
-    <Compile Include="Function\HotelBookerNotifEmail.cs" />
-    <Compile Include="Function\HotelBookingNotifEmail.cs" />
+    <Compile Include="Function\B2BHotelRejectionEmail.cs" />
+    <Compile Include="Function\B2BHotelPendingApprovalNotifEmail.cs" />
     <Compile Include="Function\HotelSaySorryFailedIssueApproverNotifEmail.cs" />
     <Compile Include="Function\HotelSaySorryFailedIssueBookerNotifEmail.cs" />
     <Compile Include="Function\BookingDisabilityNotifEmail.cs" />

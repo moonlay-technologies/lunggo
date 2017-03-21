@@ -1,9 +1,6 @@
 ﻿@using System.Globalization
 @using Lunggo.ApCommon.Constant
 @using Lunggo.Framework.Config
-@using Microsoft.Office.Interop.Excel
-@*@Model Lunggo.ApCommon.Flight.Model.FlightBookingNotif*@
-
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -12,8 +9,6 @@
     <meta name="viewport" content="width=device-width" />
 </head>
 <body style="background-color:#F4F4F4; color:#535353; font-family:arial, helvetica, sans-serif; font-size:12px;">
-
-
     <table style="margin-left:auto; margin-right:auto; width:100%; max-width:700px; display:block; background:#ffffff;">
         <thead width="100%">
             <tr width="100%">
@@ -45,24 +40,76 @@
 
                     <!-- CONTENT  -->
 
-                    <p style="font-size: 12px">Nama Pemesan : @Model.Reservation.Contact.Name</p>
-                    <p style="font-size: 12px">Email Pemesan : @Model.Reservation.Contact.Email</p>
-                    <p style="font-size: 12px">Booking Message : @Model.Reservation.BookerMessageTitle</p>
-                    <p style="font-size: 12px">Deskripsi : @Model.Reservation.BookerMessageDescription</p>
-                    <table width="50%" align="center">c
-                        <tr width="100%" height="50px">
-                            <td width="5%"></td>
-                            <td width="40%" style="text-align: center;">
-                                <a style="background: #ffd632; padding: 8px 25px; color: #4f3500; font-weight: 700; border-radius: 3px; border: 2px solid #ebb600; text-decoration: none;" href="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/id/Flight/UpdateReservation?token=" + Model.Token +"&rsvNo=" + Model.Reservation.RsvNo + "&status=approved")">APPROVE</a>
+                    <p style="font-size: 12px">Dear <span style="color: #15b1e4">@Model.Reservation.Booker.ApproverName,</span></p>
+                    <p style="font-size: 12px">Persetujuan Anda dibutuhkan untuk pegawai Anda melakukan reservasi tiket pesawat/hotel pegawai Anda dengan identitas berikut:</p>
+
+                    <table width="100%" style="margin-bottom: 10px;" cellpadding="0" cellspacing="0">
+                        <tr>
+                            <td width="10%">
+                                <p style="">Nama</p>
                             </td>
-                            <td width="40%" style="text-align: center;">
-                                <a style="background: #ffd632; padding: 8px 25px; color: #4f3500; font-weight: 700; border-radius: 3px; border: 2px solid #ebb600; text-decoration: none;" href="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/id/Flight/UpdateReservation?token=" + Model.Token + "&rsvNo=" + Model.Reservation.RsvNo + "&status=rejected")">REJECT</a>
+                            <td width="1%"><p>:</p></td>
+                            <td width="30%">
+                                <p style="">@Model.Reservation.Booker.Name</p>
                             </td>
-                            <td width="5%"></td>
+                        </tr>
+                        <tr>
+                            <td width="10%">
+                                <p style="">Jabatan</p>
+                            </td>
+                            <td width="1%"><p>:</p></td>
+                            <td width="30%">
+                                <p style="">@Model.Reservation.Booker.Position</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="10%">
+                                <p style="">Departemen</p>
+                            </td>
+                            <td width="1%"><p>:</p></td>
+                            <td width="30%">
+                                <p style="">@Model.Reservation.Booker.Department</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="10%">
+                                <p style="">Cabang</p>
+                            </td>
+                            <td width="1%"><p>:</p></td>
+                            <td width="30%">
+                                <p style="">@Model.Reservation.Booker.Branch</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="10%">
+                                <p style="">E-mail</p>
+                            </td>
+                            <td width="1%"><p>:</p></td>
+                            <td width="30%">
+                                <p style="">@Model.Reservation.Booker.Email</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="10%">
+                                <p style="">Keperluan</p>
+                            </td>
+                            <td width="1%"><p>:</p></td>
+                            <td width="30%">
+                                <p style="">@Model.Reservation.BookerMessageTitle</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="10%">
+                                <p style="">Deskripsi</p>
+                            </td>
+                            <td width="1%"><p>:</p></td>
+                            <td width="30%">
+                                <p style="">@Model.Reservation.BookerMessageDescription</p>
+                            </td>
                         </tr>
                     </table>
- 
-                    <p style="font-size: 12px;">Ringkasan pesanan Anda sebagai berikut :</p>
+
+                    <p style="font-size: 12px">Telah melakukan reservasi tiket pesawat/hotel dengan detail sebagai berikut:</p>
                     <table width="100%" style="margin-bottom: 10px;" cellpadding="0" cellspacing="0">
                         <tr>
                             <td>
@@ -86,7 +133,7 @@
                                     <p style=""><b>@Model.Reservation.Itinerary.Trips[0].Segments[0].AirlineName (@Model.Reservation.Itinerary.Trips[0].Segments[0].AirlineCode-@Model.Reservation.Itinerary.Trips[0].Segments[0].FlightNumber)</b></p>
                                 }
                             </td>
-                            <td width="5%"></td>a
+                            <td width="5%"></td>
                             <td width="20%">
                                 <p style="opacity: 0.5">Rute</p>
                                 @if (Model.Reservation.Itinerary.Trips.Count > 1)
@@ -98,7 +145,6 @@
                                 {
                                     <p style=""><b>@Model.Reservation.Itinerary.Trips[0].OriginAirport - @Model.Reservation.Itinerary.Trips[0].DestinationAirport</b></p>
                                 }
-
                             </td>
                         </tr>
                     </table>
@@ -126,8 +172,8 @@
                                 {
                                     var jamBerangkat = Model.Reservation.Itinerary.Trips[0].Segments[0].DepartureTime;
                                     <p style=""><b>@Model.Reservation.Itinerary.Trips[0].DepartureDate.ToString("dddd", CultureInfo.CreateSpecificCulture("id-ID")), @Model.Reservation.Itinerary.Trips[0].DepartureDate.ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID")) - Pk @jamBerangkat.ToString("HH:mm")</b></p>
+                                    
                                 }
-
                             </td>
                             <td width="5%"></td>
                             <td width="20%">
@@ -141,7 +187,6 @@
                                 {
                                     <p style=""><b>@Model.Reservation.Itinerary.Trips[0].Segments[0].Pnr</b></p>
                                 }
-
                             </td>
                         </tr>
                     </table>
@@ -192,11 +237,24 @@
                             </tr>
                         }
                     </table>
-                    <p style="color: #15b1e4; font-size: 10px; font-style: italic;">*Sertakan juga dokumen yang diperlukan, seperti kartu identitas Anda berupa KTP/SIM (rute domestik), Paspor (rute Internasional).</p>
-                    <p style="color: #15b1e4; font-size: 10px; margin-bottom: 20px; font-style: italic;">*Harap tiba di bandara 1 jam sebelum waktu keberangkatan. Waktu yang tertera adalah waktu lokal bandara setempat.</p>
                     <hr style="border-color: #15b1e4; border-style: dotted; margin-bottom: 3%;" width="100%" />
-                    <p style="font-size: 10px; font-style: italic; margin-bottom: 30px;">Email ini ditujukan hanya untuk @Model.Reservation.Contact.Name karena Anda telah melakukan pemesanan melalui Travorama</p>
 
+                    <p style="font-size: 12px;">Anda dapat menyetujui atau menolak reservasi tersebut dengan mengeklik tombol di bawah ini:</p>
+                    <table width="100%" style="margin-bottom: 10px;" cellpadding="0" cellspacing="0">
+                        <tr>
+                            <td width="50%">
+                                <a style="background-color: #ffd632; border: #e9d14d; display: inline-block; margin-left:45%; text-decoration: none; font-family:arial, helvetica, sans-serif; width: 50%; padding-top: 11px; padding-bottom: 11px; text-align: center; font-size: 11px; color: #333333; margin-top: 10px;"
+                                   href="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/id/Flight/UpdateReservation?token=" + Model.Token +"&rsvNo=" + Model.Reservation.RsvNo + "&status=approved")" target="_blank"><b>APPROVE</b></a>
+                            </td>
+                            <td width="50%">
+                                <a style="background-color: #ffd632; border: #e9d14d; display: inline-block; text-decoration: none; font-family:arial, helvetica, sans-serif; width: 50%; padding-top: 11px; padding-bottom: 11px; text-align: center; font-size: 11px; color: #333333; margin-top: 10px;"
+                                   href="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/id/Flight/UpdateReservation?token=" + Model.Token + "&rsvNo=" + Model.Reservation.RsvNo + "&status=rejected")" target="_blank"><b>REJECT</b></a>
+                            </td>
+                        </tr>
+                    </table>
+                    <p style="font-size: 12px; margin-top: 20px">Atau Anda dapat melihat reservasi tersebut dengan lebih detail melalui tombol di bawah ini:</p>
+                    <a style="background-color: #ffd632; border: #e9d14d; display: inline-block; margin-left:35%; text-decoration: none; font-family:arial, helvetica, sans-serif;
+                            width: 30%; padding-top: 11px; padding-bottom: 11px; text-align: center; font-size: 11px; color: #333333; margin-top: 10px;" href="#" target="_blank"><b>ORDER DETAIL</b></a>
                 </td>
                 <td width="5%"></td>
             </tr>
@@ -204,29 +262,19 @@
         <tfoot width="100%">
             <tr>
                 <td></td>
-                <td style="width: 60%;"><img style="width: 100%;" src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/email/plane-email-bg.jpg")" /></td>
+                <td style="width: 60%;"><img style="width: 100%;" src="/Assets/images/email/plane-email-bg.jpg" /></td>
                 <td style="padding-bottom:40px;">
-
                     <address style="font-style:normal; float:right; width:240px; margin-right:0; margin-left:auto; font-size:12px;">
-
                         <h4 style="color:#1daee5; margin-bottom:5px;">PT. Travel Madezy Internasional</h4>
                         <p style="margin-top:0; margin-bottom:5px;">
                             <span style="color:#1daee5;">A.</span> Equity Tower 25th Floor, SCBD lot 9<br />Jl. Jenderal Sudirman Kav.52-53<br />Jakarta 12190
                         </p>
-                        <p style="margin-top:0;">
-                            <!--<span style="color:#1daee5;">T.</span> 021 724 808 48-->
-                        </p>
-
                     </address>
-
                 </td>
-
                 <td></td>
                 <td></td>
             </tr>
         </tfoot>
     </table>
-
-
 </body>
 </html>

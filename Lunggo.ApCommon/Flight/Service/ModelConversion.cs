@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
+using Lunggo.ApCommon.Identity.Model;
+using Lunggo.ApCommon.Identity.Users;
 using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.ApCommon.Payment.Service;
 using Lunggo.ApCommon.Product.Constant;
@@ -30,8 +32,9 @@ namespace Lunggo.ApCommon.Flight.Service
                 Contact = reservation.Contact,
                 Pax = ConvertToPaxForDisplay(reservation.Pax),
                 Payment = PaymentService.GetInstance().ConvertToPaymentDetailsForDisplay(reservation.Payment),
-                UserId = reservation.User != null ? reservation.User.Id : null,
                 DeviceId = reservation.State != null ? reservation.State.DeviceId : null,
+                Booker = User.ConvertUserForDisplay(reservation.User),
+                Approver = User.ConvertUserForDisplay(reservation.User.Approver),
                 BookerMessageTitle = reservation.BookerMessageTitle,
                 BookerMessageDescription = reservation.BookerMessageDescription,
                 RejectionDescription = reservation.RejectionDescription
@@ -42,6 +45,7 @@ namespace Lunggo.ApCommon.Flight.Service
         {
             if (reservation == null)
                 return null;
+
 
             return new FlightReservationForDisplay
             {
@@ -55,8 +59,8 @@ namespace Lunggo.ApCommon.Flight.Service
                 Contact = reservation.Contact,
                 Pax = ConvertToPaxForDisplay(reservation.Pax),
                 Payment = PaymentService.GetInstance().ConvertToPaymentDetailsForDisplay(reservation.Payment),
-                UserId = reservation.User != null ? reservation.User.Id : null,
-                BookerName = reservation.User != null ? reservation.User.FirstName + " "+ reservation.User.LastName : null,
+                Booker = User.ConvertUserForDisplay(reservation.User),
+                Approver = reservation.User.Approver != null ? User.ConvertUserForDisplay(reservation.User.Approver) : null,
                 DeviceId = reservation.State != null ? reservation.State.DeviceId : null,
                 BookerMessageTitle = reservation.BookerMessageTitle,
                 BookerMessageDescription = reservation.BookerMessageDescription,

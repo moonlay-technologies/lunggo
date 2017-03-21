@@ -239,7 +239,7 @@ namespace Lunggo.CustomerWeb.Controllers
         //
         // GET: /Account/ConfirmEmail
         [System.Web.Mvc.AllowAnonymous]
-        public async Task<ActionResult> ConfirmEmail(string userId, string code)
+        public async Task<ActionResult> ConfirmEmail(string userId, string code, bool isAgentType)
         {
             if (userId == null || code == null)
             {
@@ -264,7 +264,7 @@ namespace Lunggo.CustomerWeb.Controllers
                 else
                 {
                     var email = UserManager.GetEmail(userId);
-                    return RedirectToAction("ResetPassword", new { email });
+                    return RedirectToAction("ResetPassword", new { email, isAgentType });
                 }
             }
 
@@ -339,9 +339,9 @@ namespace Lunggo.CustomerWeb.Controllers
         //
         // GET: /Account/ResetPassword
         [System.Web.Mvc.AllowAnonymous]
-        public ActionResult ResetPassword(string code, string email)
+        public ActionResult ResetPassword(string code, string email, bool isAgentType)
         {
-            var model = new ResetPasswordViewModel { Email = email, Code = code };
+            var model = new ResetPasswordViewModel { Email = email, Code = code, IsAgentType = isAgentType};
             if (email == null)
             {
                 ViewBag.NotRegistered = true;
@@ -383,6 +383,9 @@ namespace Lunggo.CustomerWeb.Controllers
                 ViewBag.Message = "InvalidInputData";
                 return View(model);
             }
+
+            if (model.IsAgentType)
+                model.Email = "b2b:" + model.Email;
 
             var user = await UserManager.FindByNameAsync(model.Email);
             if (user == null)
