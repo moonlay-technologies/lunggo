@@ -160,7 +160,7 @@ namespace Lunggo.ApCommon.Identity.Users
                 FirstName = userRecord.FirstName,
                 LastName = userRecord.LastName,
                 CompanyId = userRecord.CompanyId,
-                ApproverId = userRecord.ApproverId,
+                Approver = User.GetFromDb(userRecord.ApproverId),
                 Position = userRecord.Position,
                 Department = userRecord.Department,
                 Branch = userRecord.Branch,

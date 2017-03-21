@@ -52,6 +52,102 @@
             edit: false,
             updating: false
         }
+
+        $scope.roles = roles;
+        $scope.users = users;
+        $scope.approvers = approvers;
+        $scope.branches = branches;
+        $scope.departments = departments;
+        $scope.positions = positions;
+        $scope.userNames = names;
+
+        var substringMatcher = function (strs) {
+            return function findMatches(q, cb) {
+                var matches, substrRegex;
+
+                // an array that will be populated with substring matches
+                matches = [];
+
+                // regex used to determine if a string contains the substring `q`
+                substrRegex = new RegExp(q, 'i');
+                $.each(strs, function (i, str) {
+                    if (substrRegex.test(str)) {
+                        matches.push(str);
+                    }
+                });
+
+                cb(matches);
+            };
+        };
+     
+        //$('#searchName').typeahead({
+        //    hint: true,
+        //    highlight: true,
+        //    minLength: 1
+        //}, {
+        //    name: 'userNames',
+        //    source: substringMatcher($scope.userNames),
+        //});
+
+        //$("#searchName").select2({
+        //    //placeholder: "Select a type",
+        //    data: [{
+        //        id: 0,
+        //        text: 'enhancement'
+        //    }, {
+        //        id: 1,
+        //        text: ''
+        //    }, {
+        //        id: 2,
+        //        text: 'duplicate'
+        //    }]
+        //});
+
+        //$('#searchName').on('typeahead:selected', function(evt, item) {
+        //    $scope.userFilter.name = item;
+        //});
+
+        //$('#searchPosition').typeahead({
+        //    hint: true,
+        //    highlight: true,
+        //    minLength: 1
+        //}, {
+        //    name: 'positions',
+        //    source: substringMatcher($scope.positions)
+        //});
+
+        //$('#searchPosition').on('typeahead:selected', function (evt, item) {
+        //    $scope.userFilter.position = item;
+        //});
+
+        //$('#searchBranch').typeahead({
+        //    hint: true,
+        //    highlight: true,
+        //    minLength: 1
+        //}, {
+        //    name: 'branches',
+        //    source: substringMatcher($scope.branches)
+        //});
+
+        //$('#searchBranch').on('typeahead:selected', function (evt, item) {
+        //    $scope.userFilter.branch = item;
+        //});
+
+        //$('#searchDepartment').typeahead({
+        //    hint: true,
+        //    highlight: true,
+        //    minLength: 1
+        //}, {
+        //    name: 'departments',
+        //    source: substringMatcher($scope.departments)
+        //});
+
+        //$('#searchDepartment').on('typeahead:selected', function (evt, item) {
+        //    $scope.userFilter.department = item;
+        //});
+
+        $scope.userNames = [];
+        $scope.userPositions = [];
         $scope.showListApproverAdd = false;
         $scope.showListApproverEdit = false;
         $scope.selectedRole = [];
@@ -191,11 +287,31 @@
         $scope.userSorting = $scope.sortByType.ascendingName;
         //Get User
         $scope.User = {
+            Reset: function() {
+                $scope.userFilter.roles = [];
+                $scope.userFilter.name = '';
+                $scope.userFilter.email = '';
+                $scope.userFilter.department = '';
+                $scope.userFilter.branch = '';
+                $scope.userFilter.position = '';
+                $("#searchName").val('');
+                $("#searchPosition").val('');
+                $("#searchBranch").val('');
+                $("#searchDepartment").val('');
+                $scope.User.GetUser();
+            },
             GetUser: function () {
+                $('#searchName').val($scope.userFilter.name);
+                $('#searchPosition').val($scope.userFilter.position);
+                $('#searchBranch').val($scope.userFilter.branch);
+                $('#searchDepartment').val($scope.userFilter.department);
+
                 $('.wait').modal({
                     backdrop: 'static',
                     keyboard: false
                 });
+
+                
                 if ($scope.trial > 3) {
                     $scope.trial = 0;
                 }
@@ -221,9 +337,9 @@
                         $(".wait").modal("hide");
                         if (returnData.status == "200") {
                             $log.debug('Success getting All Users');
-                            $scope.roles = returnData.data.roles;
+                            //$scope.roles = returnData.data.roles;
                             $scope.users = returnData.data.users;
-                            $scope.approvers = returnData.data.approvers;
+                            //$scope.approvers = returnData.data.approvers;
                         }
                         else {
                             $log.debug('There is an error');
@@ -406,8 +522,45 @@
                             department: $scope.userData.department,
                             approverName: approverName
                         });
+                        $scope.userNames.push($scope.userData.name);
 
-                    //window.location.reload();
+                        var foundPosition = false;
+                        var foundBranch = false;
+                        var foundDepartment = false;
+                        
+                        for (var i = 0; i < $scope.positions.length; i++) {
+                            if ($scope.positions[i].toLowerCase() == $scope.userData.position.toLowerCase()) {
+                                foundPosition = true;
+                                break;
+                            }
+                        }
+
+                        if (foundPosition) {
+                            $scope.positions.push($scope.userData.position);
+                        }
+
+                        for (var i = 0; i < $scope.branches.length; i++) {
+                            if ($scope.branches[i].toLowerCase() == $scope.userData.branch.toLowerCase()) {
+                                foundBranch = true;
+                                break;
+                            }
+                        }
+
+                        if (foundBranch) {
+                            $scope.branches.push($scope.userData.branch);
+                        }
+
+                        for (var i = 0; i < $scope.departments.length; i++) {
+                            if ($scope.departments[i].toLowerCase() == $scope.userData.department.toLowerCase()) {
+                                foundDepartment = true;
+                                break;
+                            }
+                        }
+
+                        if (foundDepartment) {
+                            $scope.departments.push($scope.userData.department);
+                        }
+                        
                         $(".addSucceed").modal({
                             backdrop: 'static',
                         });
@@ -565,7 +718,7 @@
         }
 
         //Executing Get User
-        $scope.User.GetUser();
+        //$scope.User.GetUser();
 
         $scope.changeSection = function (name) {
             $scope.currentSection = name;

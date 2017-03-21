@@ -71,7 +71,7 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
                 Position = request.Position,
                 Department = request.Department,
                 Branch = request.Branch,
-                ApproverId = request.ApproverId
+                Approver = new User {Id = request.ApproverId}
             };
             var result = userManager.Create(user);
             if (result.Succeeded)

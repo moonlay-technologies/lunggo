@@ -32,9 +32,9 @@ namespace Lunggo.ApCommon.Flight.Service
                 Contact = reservation.Contact,
                 Pax = ConvertToPaxForDisplay(reservation.Pax),
                 Payment = PaymentService.GetInstance().ConvertToPaymentDetailsForDisplay(reservation.Payment),
-                UserId = reservation.User != null ? reservation.User.Id : null,
                 DeviceId = reservation.State != null ? reservation.State.DeviceId : null,
                 Booker = User.ConvertUserForDisplay(reservation.User),
+                Approver = User.ConvertUserForDisplay(reservation.User.Approver),
                 BookerMessageTitle = reservation.BookerMessageTitle,
                 BookerMessageDescription = reservation.BookerMessageDescription,
                 RejectionDescription = reservation.RejectionDescription
@@ -45,6 +45,7 @@ namespace Lunggo.ApCommon.Flight.Service
         {
             if (reservation == null)
                 return null;
+
 
             return new FlightReservationForDisplay
             {
@@ -58,9 +59,8 @@ namespace Lunggo.ApCommon.Flight.Service
                 Contact = reservation.Contact,
                 Pax = ConvertToPaxForDisplay(reservation.Pax),
                 Payment = PaymentService.GetInstance().ConvertToPaymentDetailsForDisplay(reservation.Payment),
-                UserId = reservation.User != null ? reservation.User.Id : null,
                 Booker = User.ConvertUserForDisplay(reservation.User),
-                BookerName = reservation.User != null ? reservation.User.FirstName + " "+ reservation.User.LastName : null,
+                Approver = reservation.User.Approver != null ? User.ConvertUserForDisplay(reservation.User.Approver) : null,
                 DeviceId = reservation.State != null ? reservation.State.DeviceId : null,
                 BookerMessageTitle = reservation.BookerMessageTitle,
                 BookerMessageDescription = reservation.BookerMessageDescription,

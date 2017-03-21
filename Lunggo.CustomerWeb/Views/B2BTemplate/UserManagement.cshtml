@@ -1,4 +1,8 @@
-﻿@{
+﻿@using Lunggo.CustomerWeb.Models
+@using Lunggo.Framework.Config
+@using Lunggo.Framework.Extension
+@using RestSharp
+@{
     Layout = "/Views/Shared/B2BTravorama/_B2BLayout.cshtml";
     ViewBag.BodyClass = "b2b-user-manage";
     ViewBag.SiteHeader = "b2b-user-manage";
@@ -7,6 +11,48 @@
 
 }
 
+@{
+    var baseUrl = ConfigManager.GetInstance().GetConfigValue("api", "apiUrl");
+    var client = new RestClient(baseUrl);
+    var roles = new List<String>();
+    var approvers = new List<ApproverDataModel>();
+    var users = new List<UserData>();
+    var positions = new List<string>();
+    var departments = new List<string>();
+    var branches = new List<string>();
+    var names = new List<string>();
+    try
+    {
+        var request = new RestRequest("/v1/getuser", Method.POST);
+        var key = Request.Cookies["authkey"];
+
+        request.AddHeader("Authorization", "Bearer " + key.Value);
+        // execute the request
+        IRestResponse<GetUserModel> response = client.Execute<GetUserModel>(request);
+
+        var contentDeserialize = Lunggo.Framework.Extension.JsonExtension.Deserialize<GetUserModel>(response.Content);
+        roles = contentDeserialize.Roles;
+        approvers = contentDeserialize.Approvers;
+        users = contentDeserialize.Users;
+
+        positions.AddRange(users.Select(user => user.Position));
+        positions = positions.Distinct(StringComparer.CurrentCultureIgnoreCase).ToList();
+
+        departments.AddRange(users.Select(user => user.Department));
+        departments = departments.Distinct(StringComparer.CurrentCultureIgnoreCase).ToList();
+
+        branches.AddRange(users.Select(user => user.Branch));
+        branches = branches.Distinct(StringComparer.CurrentCultureIgnoreCase).ToList();
+
+        names.AddRange(users.Select(user => user.FirstName + " " + user.LastName));
+        names = names.Distinct(StringComparer.CurrentCultureIgnoreCase).ToList();
+    }
+    catch
+    {
+
+    }
+    
+}
 @section AdditionalCSS{
 <link href="/Assets/css/jquery-ui.min.css" rel="stylesheet" />
 }
@@ -17,14 +63,17 @@
     <script src="/Assets/B2BTravorama/assets/plugins/jquery-datatable/media/js/dataTables.bootstrap.js" type="text/javascript"></script>
     <script src="/Assets/B2BTravorama/assets/plugins/jquery-datatable/extensions/Bootstrap/jquery-datatable-bootstrap.js" type="text/javascript"></script>
     <script type="text/javascript" src="/Assets/B2BTravorama/assets/plugins/datatables-responsive/js/datatables.responsive.js"></script>
+
+<script src="/Assets/B2BTravorama/assets/plugins/bootstrap-typehead/typeahead.bundle.min.js"></script>
+<script src="/Assets/B2BTravorama/assets/plugins/bootstrap-typehead/typeahead.jquery.min.js"></script>
     <script type="text/javascript" src="/Assets/B2BTravorama/assets/plugins/datatables-responsive/js/lodash.min.js"></script>
-    <script src="/Assets/B2BTravorama/assets/plugins/bootstrap-typehead/typeahead.bundle.min.js"></script>
-    <script src="/Assets/B2BTravorama/assets/plugins/bootstrap-typehead/typeahead.jquery.min.js"></script>
+   <script src="/Assets/B2BTravorama/assets/plugins/bootstrap-select2/select2.min.js" type="text/javascript"></script>
     <script src="/Assets/js/angular.min.js"></script>
     <script src="/Assets/js/angular-route.min.js"></script>
     <script src="/Assets/js/angular-animate.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.5/angular-resource.js"></script>
     <script src="/Assets/B2BTravorama/assets/js/form_elements.js" type="text/javascript"></script>
+    
 }
 
 @section PageJS{
@@ -32,50 +81,59 @@
     <script src="/Assets/travorama20/js/B2BUserManagementController.js"></script>
     <script src="/Assets/B2BTravorama/assets/js/tables.js" type="text/javascript"></script>
     <script>
-    jQuery(document).ready(function ($) {
-        var cloneIndex = $(".um-item").length;
+        jQuery(document).ready(function ($) {
+            var cloneIndex = $(".um-item").length;
 
-        function clone() {
-            cloneIndex++;
-            $(this).closest('.user-management').find('#um-item-1').clone(false, false)
-                .insertAfter('#um-item-1')
-                .attr('id', "um-item-" + cloneIndex)
-                .attr('count', cloneIndex);
-            //if (cloneIndex > 1) {
-            //    $(this).closest('.um-body').find('#um-item-' + cloneIndex + ' .remove-um').show();
-            //    $(this).closest('.um-body').find('#um-item-' + cloneIndex + ' .pi-status').find('.current-status').hide();
-            //    $(this).closest('.um-body').find('#um-item-' + cloneIndex + ' .pi-status').append('<a class="set-status">' + 'Set As Primary' + '</a>');
+            function clone() {
+                cloneIndex++;
+                $(this).closest('.user-management').find('#um-item-1').clone(false, false)
+                    .insertAfter('#um-item-1')
+                    .attr('id', "um-item-" + cloneIndex)
+                    .attr('count', cloneIndex);
+                //if (cloneIndex > 1) {
+                //    $(this).closest('.um-body').find('#um-item-' + cloneIndex + ' .remove-um').show();
+                //    $(this).closest('.um-body').find('#um-item-' + cloneIndex + ' .pi-status').find('.current-status').hide();
+                //    $(this).closest('.um-body').find('#um-item-' + cloneIndex + ' .pi-status').append('<a class="set-status">' + 'Set As Primary' + '</a>');
+                //}
+            }
+
+            //function remove() {
+            //    $(this).parents('.payment-item').remove();
             //}
-        }
 
-        //function remove() {
-        //    $(this).parents('.payment-item').remove();
-        //}
+            $('body .modal #add-user').on('click', clone);
 
-        $('body .modal #add-user').on('click', clone);
-
-        $('.sort-content, .filter-content').hide();
-
-        $('#btn-um-filter').click(function () {
-            $('.filter-content').show();
-            $(this).css('background', '#eee');
-            $('#btn-um-sort').css('background', '#fff');
-            $('.sort-content').hide();
-        });
-
-        $('#btn-um-sort').click(function () {
-            $('.sort-content').show();
-            $(this).css('background', '#eee');
-            $('#btn-um-filter').css('background', '#fff');
-            $('.filter-content').hide();
-        });
-
-        $('#btn-um-add').click(function () {
-            $('#btn-um-filter, #btn-um-sort').css('background', '#fff');
             $('.sort-content, .filter-content').hide();
+
+            $('#btn-um-filter').click(function () {
+                $('.filter-content').show();
+                $(this).css('background', '#eee');
+                $('#btn-um-sort').css('background', '#fff');
+                $('.sort-content').hide();
+            });
+
+            $('#btn-um-sort').click(function () {
+                $('.sort-content').show();
+                $(this).css('background', '#eee');
+                $('#btn-um-filter').css('background', '#fff');
+                $('.filter-content').hide();
+            });
+
+            $('#btn-um-add').click(function () {
+                $('#btn-um-filter, #btn-um-sort').css('background', '#fff');
+                $('.sort-content, .filter-content').hide();
+            });
         });
-    });
-</script>
+    </script>
+    <script>
+        var approvers = @Html.Raw(approvers.Serialize());
+        var roles = @Html.Raw(roles.Serialize());
+        var users = @Html.Raw(users.Serialize());
+        var positions = @Html.Raw(positions.Serialize());
+        var branches = @Html.Raw(branches.Serialize());
+        var departments = @Html.Raw(departments.Serialize());
+        var names = @Html.Raw(names.Serialize());
+    </script>
 
 }
 <div class="page-loading" ng-app="travoramaB2B" ng-controller="B2BUserManagementController" ng-class="{ 'active': pageLoaded }" ng-cloak>
@@ -175,35 +233,36 @@
                                 <div class="col-sm-15">
                                     <div class="form-group typehead" id="sample-three">
                                         <label>Nama</label>
-                                        <input class="typeahead form-control sample-typehead" type="text" placeholder="Cari Berdasarkan Nama" 
-                                               ng-model ="userFilter.name">
+                                        <input class="typeahead form-control sample-typehead" type="text" placeholder="Cari Berdasarkan Nama"
+                                               ng-model="userFilter.name" id="searchName">
                                     </div>
                                 </div>
                                 <div class="col-sm-15">
                                     <div class="form-group typehead" id="sample-three">
                                         <label>Jabatan</label>
                                         <input class="typeahead form-control sample-typehead" type="text" placeholder="Cari Berdasarkan Jabatan"
-                                               ng-model="userFilter.position">
+                                               ng-model="userFilter.position" id="searchPosition">
                                     </div>
                                 </div>
                                 <div class="col-sm-15">
                                     <div class="form-group typehead" id="sample-three">
                                         <label>Departemen</label>
                                         <input class="typeahead form-control sample-typehead" type="text" placeholder="Cari Berdasarkan Departemen"
-                                               ng-model="userFilter.department">
+                                               ng-model="userFilter.department" id="searchDepartment">
                                     </div>
                                 </div>
                                 <div class="col-sm-15">
                                     <div class="form-group typehead" id="sample-three">
                                         <label>Cabang</label>
                                         <input class="typeahead form-control sample-typehead" type="text" placeholder="Cari Berdasarkan Cabang"
-                                               ng-model="userFilter.branch">
+                                               ng-model="userFilter.branch" id="searchBranch">
                                     </div>
                                 </div>
                             </div>
                         </div>
                         
                         <button class="btn btn-green btn-cons" ng-click="User.GetUser()">Filter</button>
+                        <button class="btn btn-green btn-cons" ng-click="User.Reset()">Reset</button>
                     </div>
                 </div>
             </div>

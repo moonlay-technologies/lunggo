@@ -58,9 +58,11 @@ namespace Lunggo.ApCommon.Hotel.Service
                 Payment = PaymentService.GetInstance().ConvertToPaymentDetailsForDisplay(hotelReservation.Payment),
                 RsvTime = hotelReservation.RsvTime,
                 RsvType = hotelReservation.RsvType ?? null,
-                UserId = hotelReservation.User != null ? hotelReservation.User.Id : null,
-                BookerName = hotelReservation.User != null ? hotelReservation.User.FirstName + " " + hotelReservation.User.LastName : null,
                 RsvDisplayStatus = MapReservationStatus(hotelReservation.RsvStatus),
+                Booker = User.ConvertUserForDisplay(hotelReservation.User),
+                Approver = hotelReservation.User.Approver != null
+                    ? User.ConvertUserForDisplay(hotelReservation.User.Approver)
+                    : null,
                 BookerMessageTitle = hotelReservation.BookerMessageTitle,
                 BookerMessageDescription = hotelReservation.BookerMessageDescription,
                 RejectionDescription = hotelReservation.RejectionDescription
