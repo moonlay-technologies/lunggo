@@ -1285,6 +1285,7 @@ app.controller('resetController', [
             isSuccess: false,
             userEmail: userEmail,
             code: code,
+            isAgentType: isAgentType,
             resubmitting: false,
             reconfirm: false,
         };

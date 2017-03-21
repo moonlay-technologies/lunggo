@@ -84,7 +84,7 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
                 var code = HttpUtility.UrlEncode(userManager.GenerateEmailConfirmationToken(user.Id));
                 var host = ConfigManager.GetInstance().GetConfigValue("general", "rootUrl");
                 var apiUrl = HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority);
-                var callbackUrl = host + "/id/B2BAccount/ConfirmEmail?userId=" + user.Id + "&code=" + code + "&apiUrl=" + apiUrl;
+                var callbackUrl = host + "/id/Account/ConfirmEmail?userId=" + user.Id + "&code=" + code + "&isAgentType=true" + "&apiUrl=" + apiUrl;
                 userManager.SendEmailAsync(user.Id, "UserConfirmationEmail", callbackUrl).Wait();
 
                 return new ApiResponseBase

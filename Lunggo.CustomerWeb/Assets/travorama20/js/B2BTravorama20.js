@@ -77,7 +77,7 @@ if (typeof (angular) == 'object') {
 function getAnonymousFirstAccess() {
     var status = 0;
     $.ajax({
-        url: B2BLoginPathConfig.Url,
+        url: LoginConfig.Url,
         method: 'POST',
         async: false,
         data: JSON.stringify(
@@ -107,10 +107,13 @@ function getAnonymousFirstAccess() {
 function getAnonymousAccessByRefreshToken(refreshToken) {
     var status = 0;
     $.ajax({
-        url: B2BLoginPathConfig.Url,
+        url: LoginConfig.Url,
         method: 'POST',
         async: false,
-        data: JSON.stringify({ "refreshtoken": refreshToken, "clientId": "Jajal", "clientSecret": "Standar" }),
+        data: JSON.stringify({
+            "refreshtoken": refreshToken, "clientId": "WWxoa2VrOXFSWFZOUXpSM1QycEpORTB5U1RWT1IxcHNXVlJOTTFsWFZYaE5hbVJwVFVSSk5FOUVTbWxOUkVVMFRrUlNhVmxxVlhwT01sbDNUbXBvYkUxNlJUMD0=",
+            "clientSecret": "VFVSTk1sbHFiR3hhVjAweFdXMUdhbHBYVVhwYVIxRXpUWHBCTlUxRVRtdGFhbHBvV1ZSU2FFMUhSbXhOUkdob1dtcEpkMDVSUFQwPQ=="
+        }),
         contentType: 'application/json',
     }).done(function (returnData) {
         if (returnData.status == '200') {
@@ -134,10 +137,13 @@ function getAnonymousAccessByRefreshToken(refreshToken) {
 function getLoginAccessByRefreshToken(refreshToken) {
     var status = 0;
     $.ajax({
-        url: B2BLoginPathConfig.Url,
+        url: LoginConfig.Url,
         method: 'POST',
         async: false,
-        data: JSON.stringify({ "refreshtoken": refreshToken, "clientId": "Jajal", "clientSecret": "Standar" }),
+        data: JSON.stringify({
+            "refreshtoken": refreshToken, "clientId": "WWxoa2VrOXFSWFZOUXpSM1QycEpORTB5U1RWT1IxcHNXVlJOTTFsWFZYaE5hbVJwVFVSSk5FOUVTbWxOUkVVMFRrUlNhVmxxVlhwT01sbDNUbXBvYkUxNlJUMD0=",
+            "clientSecret": "VFVSTk1sbHFiR3hhVjAweFdXMUdhbHBYVVhwYVIxRXpUWHBCTlUxRVRtdGFhbHBvV1ZSU2FFMUhSbXhOUkdob1dtcEpkMDVSUFQwPQ=="
+        }),
         contentType: 'application/json',
     }).done(function (returnData) {
         if (returnData.status == '200') {
