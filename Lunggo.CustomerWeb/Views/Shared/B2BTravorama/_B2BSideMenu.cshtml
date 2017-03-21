@@ -42,61 +42,71 @@
             </li>
             @if (roles != null && roles.Count > 0 && roles.Contains("Booker"))
             {
+            <li class="">
+                <a href="javascript:;">
+                    <span class="title">Booking</span>
+                    <span class=" arrow"></span>
+                </a>
+                <span class="icon-thumbnail"><i class="fa fa-check-square"></i></span>
+                <ul class="sub-menu">
+                    <li class="">
+                        <a href="/id/B2BTemplate/SearchFlight">Tiket Pesawat</a>
+                        <span class="icon-thumbnail"><i class="fa fa-plane"></i></span>
+                    </li>
+                    <li class="">
+                        <a href="/id/B2BTemplate/SearchHotel">Tiket Hotel</a>
+                        <span class="icon-thumbnail"><i class="fa fa-building"></i></span>
+                    </li>
+                </ul>
+            </li>
+            }
+            @if (roles != null && roles.Count > 0 && roles.Contains("Booker"))
+            {
                 <li class="">
-                    <a href="javascript:;">
-                        <span class="title">Booking</span>
-                        <span class=" arrow"></span>
+                    <a href="/id/B2BTemplate/SavePassenger">
+                        <span class="title">Save Passenger</span>
                     </a>
-                    <span class="icon-thumbnail"><i class="fa fa-check-square"></i></span>
-                    <ul class="sub-menu">
-                        <li class="">
-                            <a href="/id/B2BTemplate/SearchFlight">Tiket Pesawat</a>
-                            <span class="icon-thumbnail"><i class="fa fa-plane"></i></span>
-                        </li>
-                        <li class="">
-                            <a href="/id/B2BTemplate/SearchHotel">Tiket Hotel</a>
-                            <span class="icon-thumbnail"><i class="fa fa-building"></i></span>
-                        </li>
-                    </ul>
+                    <span class="icon-thumbnail "><i class="fa fa-users"></i></span>
                 </li>
             }
+           
             @if (roles != null && roles.Count > 0 && roles.Contains("Finance"))
             {
                 <li class="paymentmgmt">
-                    <a href="/id/B2BTemplate/Payment">
-                        <span class="title">Payment Management</span>
-                    </a>
-                    <span class="icon-thumbnail "><i class="pg-credit_card"></i></span>
-                </li>
+                <a href="/id/B2BTemplate/Payment">
+                    <span class="title">Payment Management</span>
+                </a>
+                <span class="icon-thumbnail "><i class="pg-credit_card"></i></span>
+            </li>
             }
             @if (roles != null && roles.Count > 0 && roles.Contains("Admin"))
             {
-                <li class="">
-                    <a href="/id/B2BTemplate/UserManagement">
-                        <span class="title">User Management</span>
-                    </a>
-                    <span class="icon-thumbnail "><i class="fa fa-user"></i></span>
-                </li>
+            <li class="">
+                <a href="/id/B2BTemplate/UserManagement">
+                    <span class="title">User Management</span>
+                </a>
+                <span class="icon-thumbnail "><i class="fa fa-user"></i></span>
+            </li>
             }
 
             @if (roles != null && roles.Count > 0 && roles.Contains("Approver"))
             {
-                <li class="">
-                    <a href="/id/B2BTemplate/OrderListApprover">
-                        <span class="title">Order List Approver</span>
-                    </a>
-                    <span class="icon-thumbnail">A</span>
-                </li>
+            <li class="">
+                <a href="/id/B2BTemplate/OrderListApprover">
+                    <span class="title">Order List Approver</span>
+                </a>
+                <span class="icon-thumbnail">A</span>
+            </li>
             }
 
             @if (roles != null && roles.Count > 0 && roles.Contains("Booker"))
             {
-                <li class="">
-                    <a href="/id/B2BTemplate/OrderListBooker">
-                        <span class="title">Order List Booker</span>
-                    </a>
-                    <span class="icon-thumbnail">B</span>
-                </li>
+            <li class="">
+                <a href="/id/B2BTemplate/OrderListBooker">
+                    <span class="title">Order List Booker</span>
+                </a>
+                <span class="icon-thumbnail">B</span>
+            </li>
             }
             @if (roles != null && roles.Count > 0 && roles.Contains("Finance"))
             {
