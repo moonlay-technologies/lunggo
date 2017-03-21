@@ -455,7 +455,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                     {
                         UpdateBookingRsvStatusDb(rsvNo, RsvStatus.Approved, message);
                         GetInstance().IssueBooker(rsvNo);
-                        SendBookerBookingInfo(rsvNo);
+                        //SendBookerBookingInfo(rsvNo);
                         return true;
 
                     }

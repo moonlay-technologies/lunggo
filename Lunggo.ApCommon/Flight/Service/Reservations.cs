@@ -202,7 +202,7 @@ namespace Lunggo.ApCommon.Flight.Service
                     }
                     UpdateBookingRsvStatusDb(rsvNo, RsvStatus.Approved, rejectionMessage);
                     IssueBooker(rsvNo);
-                    SendBookerBookingInfo(rsvNo);
+                    //SendBookerBookingInfo(rsvNo);
                     return true;
                 }
                 catch
