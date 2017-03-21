@@ -12,10 +12,8 @@ namespace Lunggo.CustomerWeb.Models
         public string Email { get; set; }
         [JsonProperty("name", NullValueHandling = NullValueHandling.Ignore)]
         public string Name { get; set; }
-
         [JsonProperty("userName", NullValueHandling = NullValueHandling.Ignore)]
         public string UserName { get; set; }
-
         [JsonProperty("countryCallCd", NullValueHandling = NullValueHandling.Ignore)]
         public string CountryCallingCd { get; set; }
         [JsonProperty("phone", NullValueHandling = NullValueHandling.Ignore)]
