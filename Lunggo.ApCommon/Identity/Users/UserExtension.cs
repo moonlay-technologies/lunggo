@@ -152,7 +152,7 @@ namespace Lunggo.ApCommon.Identity.Users
             }
         }
 
-        internal static User ToCustomUser(GetUserByAnyQueryRecord userRecord)
+        internal static User ToCustomUser(this GetUserByAnyQueryRecord userRecord)
         {
             return new User
             {
@@ -160,7 +160,7 @@ namespace Lunggo.ApCommon.Identity.Users
                 FirstName = userRecord.FirstName,
                 LastName = userRecord.LastName,
                 CompanyId = userRecord.CompanyId,
-                Approver = User.GetFromDb(userRecord.ApproverId),
+                Approver = userRecord.ApproverId != null ? User.GetFromDb(userRecord.ApproverId) : null,
                 Position = userRecord.Position,
                 Department = userRecord.Department,
                 Branch = userRecord.Branch,
@@ -176,7 +176,7 @@ namespace Lunggo.ApCommon.Identity.Users
                 LockoutEndDateUtc = userRecord.LockoutEndDateUtc,
                 PhoneNumberConfirmed = userRecord.PhoneNumberConfirmed,
                 SecurityStamp = userRecord.SecurityStamp,
-                TwoFactorEnabled = userRecord.TwoFactorEnabled
+                TwoFactorEnabled = userRecord.TwoFactorEnabled,
             };
         }
     }

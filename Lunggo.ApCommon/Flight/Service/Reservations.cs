@@ -135,6 +135,12 @@ namespace Lunggo.ApCommon.Flight.Service
             return rsvs.Select(ConvertToReservationForDisplay).ToList();
         }
 
+        public List<FlightReservationForDisplay> GetReservationsByCompany(string companyId, string branchFilter, string departmentFilter, string positionFilter, DateTime fromDate, DateTime toDate)
+        {
+            var rsvs = GetReservationsByCompanyFromDb(companyId, branchFilter, departmentFilter, positionFilter, fromDate, toDate) ?? new List<FlightReservation>();
+            return rsvs.Select(ConvertToReservationForDisplay).ToList();
+        }
+
         public List<FlightReservationForDisplay> GetOverviewReservationsByDeviceId(string deviceId, string filter, string sort, int? page, int? itemsPerPage)
         {
             var filters = filter != null ? filter.Split(',') : null;

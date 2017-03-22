@@ -232,6 +232,7 @@
     <Compile Include="Flight\Model\FlightReservationSearch.cs" />
     <Compile Include="Flight\Model\FlightRsvRule.cs" />
     <Compile Include="Flight\Query\GetRsvNoByBookerId.cs" />
+    <Compile Include="Flight\Query\GetRsvNosByCompanyQuery.cs" />
     <Compile Include="Flight\Query\GetRsvNosByApproverQuery.cs" />
     <Compile Include="Hotel\Constant\AccomodationType.cs" />
     <Compile Include="Hotel\Constant\HotelApiType.cs" />

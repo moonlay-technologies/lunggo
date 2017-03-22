@@ -30,11 +30,12 @@ namespace Lunggo.ApCommon.Identity.Users
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
                 var record = GetUserByIdQuery.GetInstance().Execute(conn, new { Id = userId }).SingleOrDefault();
-
                 if (record == null)
                     return null;
 
-                var user = UserExtension.ToCustomUser(record);
+                var user = record.ToCustomUser();
+                user.Roles = Role.GetFromDb(userId);
+
                 return user;
             }
         }
@@ -299,8 +300,7 @@ namespace Lunggo.ApCommon.Identity.Users
                 PhoneNumber = user.PhoneNumber,
                 Position = user.Position,
                 Branch = user.Branch,
-                Department = user.Department,
-                ApproverName = GetNameByUserId(user.Approver.Id)
+                Department = user.Department
             };
             return displayUser;
         }
