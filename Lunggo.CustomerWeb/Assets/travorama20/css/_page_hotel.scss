@@ -130,6 +130,15 @@
         width: 12px;
         height: 17px;
         vertical-align: middle;
+        &.bg {
+            background: url(/Assets/images/Hotel/location-grey.png) no-repeat;
+            width: 26px;
+            height: 40px;
+            background-size: 100%;
+            left: 50%;
+            position: absolute;
+            transform: translateX(-50%);
+        }
     }
     .hotel-icon {
         content: '';
@@ -138,6 +147,15 @@
         width: 15px;
         height: 22px;
         vertical-align: middle;
+        &.bg {
+            background: url(/Assets/images/Hotel/hotel-blue.png) no-repeat;
+            width: 36px;
+            height: 40px;
+            background-size: 100%;
+            left: 50%;
+            position: absolute;
+            transform: translateX(-50%);
+        }
     }
     .plane-icon {
         content: '';
@@ -791,6 +809,27 @@
             .option {
                 top: 49px;
                 left: 0;
+            }
+        }
+    }
+    &.page-hotel-seo {
+        .seo-list-result {
+            .seo-list-row {margin-bottom: 25px;
+                &.top-title:last-child {border-bottom: none;}
+                .col-3 {padding: 0 6px;
+                    &:first-child {padding-left:0}
+                    &:last-child {padding-right:0}
+                }
+                .seo-list {
+                    width: 100%;
+                    background: #ffffff;
+                    border: 1px solid #ccc;
+                    margin-bottom: 25px;
+                    padding: 20px 0;
+                    border-radius: 2px;
+                    &.no-col {padding: 10px 15px;}
+                    .col-7 {padding-right: 15px;}
+                }
             }
         }
     }

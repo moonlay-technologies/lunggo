@@ -1,0 +1,290 @@
+﻿@{
+    Layout = "/Views/Shared/Desktop/_LayoutDesktop.cshtml";
+    ViewBag.BodyClass = "page-hotel page-hotel-seo";
+    ViewBag.Title = "Hotel SEO";
+}
+
+@section AdditionalCSS{
+}
+
+@section AdditionalJS{
+}
+
+@section PageJS{
+    <script type="text/javascript" src="/Assets/travorama20/js/HotelController.js"></script>
+}
+
+<div class="page-slider">
+    <div class="container">
+        <div class="main-title header-title">Feel The <br /> <b>Excitement!</b><br></div>
+    </div>
+</div>
+<div class="search-result-form">
+    <div class="container clearfix">
+        <div class="col-8">
+            <div class="result-form-left">
+                @*<span class="md-txt">Hasil Pencarian Hotel di <b>@ToTitleCase.ConvertToTitleCase(Model.Location)</b></span>*@<br />
+                @*<span class="">{{hotelSearch.destinationNightCount}} Malam <b>({{hotelSearch.destinationCheckinDate | date : 'EEEE, dd MMM yyyy'}} - {{hotelSearch.destinationCheckoutDate | date : 'EEEE, dd MMM yyyy'}})</b></span>*@
+                @*<span class="md-txt">Hasil Pencarian Kamar di <b>@ToTitleCase.ConvertToTitleCase(Model.Location)</b></span>*@<br />
+
+            </div>
+        </div>
+        <div class="col-2">
+            <div class="result-form-right pull-right">
+                <a class="btn btn-yellow search-result-form-trigger md-txt lg-btn">UBAH PENCARIAN</a>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="search-result-form-content">
+            @*@Html.Partial("/Views/Shared/Desktop/_SearchHotelForm.cshtml", new HotelLocation
+                {
+                    IsHotelSearch = Model.IsHotelSearch
+                })*@
+        </div>
+        @Html.Partial("/Views/Shared/Desktop/_SearchHotel.cshtml")
+        @Html.Partial("/Views/Shared/Desktop/_SearchCalendarHotel.cshtml")
+    </div>
+</div>
+<div class="travorama-hotel">
+    <div class="container">
+        <div class="search-list">
+            <a href="#" id="back-to-top" title="Back to top"></a>
+            <div class="seo-list-result clearfix">
+                <div class="seo-list-row top-title clearfix">
+                    <div class="bg-title bold-txt text-uppercase">Provinsi</div>
+                    <div class="clearfix">
+                        <div class="col-3">
+                            <div class="seo-list clearfix">
+                                <div class="col-sp-3">
+                                    <span class="maps-icon bg"></span>
+                                </div>
+                                <div class="col-7 normal-txt">
+                                    <div class="blue-txt bold-txt">Bali, Indonesia</div>
+                                    <span class="lg-txt orange-txt bold-txt">9999</span>
+                                    <span style="margin-left: 5px">Hotel</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-3"></div>
+                        <div class="col-3"></div>
+                    </div>
+                </div>
+                <div class="seo-list-row top-title clearfix">
+                    <div class="bg-title bold-txt text-uppercase">Area</div>
+                    <div class="clearfix">
+                        <div class="col-3">
+                            <div class="seo-list no-col clearfix">
+                                <div class="normal-txt">
+                                    <div class="blue-txt bold-txt" style="margin-bottom:15px">
+                                        Balikpapan Selatan, Balikpapan,
+                                        Kalimantan Timur, Indonesia
+                                    </div>
+                                    <span class="lg-txt orange-txt bold-txt">9999</span>
+                                    <span style="margin-left: 5px">Hotel</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="seo-list no-col clearfix">
+                                <div class="normal-txt">
+                                    <div class="blue-txt bold-txt" style="margin-bottom:15px">
+                                        Balikpapan Selatan, Balikpapan,
+                                        Kalimantan Timur, Indonesia
+                                    </div>
+                                    <span class="lg-txt orange-txt bold-txt">9999</span>
+                                    <span style="margin-left: 5px">Hotel</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="seo-list no-col clearfix">
+                                <div class="normal-txt">
+                                    <div class="blue-txt bold-txt" style="margin-bottom:15px">
+                                        Balikpapan Selatan, Balikpapan,
+                                        Kalimantan Timur, Indonesia
+                                    </div>
+                                    <span class="lg-txt orange-txt bold-txt">9999</span>
+                                    <span style="margin-left: 5px">Hotel</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clearfix">
+                        <div class="col-3">
+                            <div class="seo-list no-col clearfix">
+                                <div class="normal-txt">
+                                    <div class="blue-txt bold-txt" style="margin-bottom:15px">
+                                        Balikpapan Selatan, Balikpapan,
+                                        Kalimantan Timur, Indonesia
+                                    </div>
+                                    <span class="lg-txt orange-txt bold-txt">9999</span>
+                                    <span style="margin-left: 5px">Hotel</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="seo-list no-col clearfix">
+                                <div class="normal-txt">
+                                    <div class="blue-txt bold-txt" style="margin-bottom:15px">
+                                        Balikpapan Selatan, Balikpapan,
+                                        Kalimantan Timur, Indonesia
+                                    </div>
+                                    <span class="lg-txt orange-txt bold-txt">9999</span>
+                                    <span style="margin-left: 5px">Hotel</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="seo-list no-col clearfix">
+                                <div class="normal-txt">
+                                    <div class="blue-txt bold-txt" style="margin-bottom:15px">
+                                        Balikpapan Selatan, Balikpapan,
+                                        Kalimantan Timur, Indonesia
+                                    </div>
+                                    <span class="lg-txt orange-txt bold-txt">9999</span>
+                                    <span style="margin-left: 5px">Hotel</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="seo-list-row top-title clearfix">
+                    <div class="bg-title bold-txt text-uppercase">Hotel</div>
+                    <div class="clearfix">
+                        <div class="col-3">
+                            <div class="seo-list clearfix">
+                                <div class="col-sp-3">
+                                    <span class="hotel-icon bg"></span>
+                                </div>
+                                <div class="col-7 normal-txt">
+                                    <div class="blue-txt bold-txt">
+                                        Plataran Canggu Resort
+                                        and Spa, Canggu, Bali,
+                                        Indonesia
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="seo-list clearfix">
+                                <div class="col-sp-3">
+                                    <span class="hotel-icon bg"></span>
+                                </div>
+                                <div class="col-7 normal-txt">
+                                    <div class="blue-txt bold-txt">
+                                        Plataran Canggu Resort
+                                        and Spa, Canggu, Bali,
+                                        Indonesia
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="seo-list clearfix">
+                                <div class="col-sp-3">
+                                    <span class="hotel-icon bg"></span>
+                                </div>
+                                <div class="col-7 normal-txt">
+                                    <div class="blue-txt bold-txt">
+                                        Plataran Canggu Resort
+                                        and Spa, Canggu, Bali,
+                                        Indonesia
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clearfix">
+                        <div class="col-3">
+                            <div class="seo-list clearfix">
+                                <div class="col-sp-3">
+                                    <span class="hotel-icon bg"></span>
+                                </div>
+                                <div class="col-7 normal-txt">
+                                    <div class="blue-txt bold-txt">
+                                        Plataran Canggu Resort
+                                        and Spa, Canggu, Bali,
+                                        Indonesia
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="seo-list clearfix">
+                                <div class="col-sp-3">
+                                    <span class="hotel-icon bg"></span>
+                                </div>
+                                <div class="col-7 normal-txt">
+                                    <div class="blue-txt bold-txt">
+                                        Plataran Canggu Resort
+                                        and Spa, Canggu, Bali,
+                                        Indonesia
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="seo-list clearfix">
+                                <div class="col-sp-3">
+                                    <span class="hotel-icon bg"></span>
+                                </div>
+                                <div class="col-7 normal-txt">
+                                    <div class="blue-txt bold-txt">
+                                        Plataran Canggu Resort
+                                        and Spa, Canggu, Bali,
+                                        Indonesia
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clearfix">
+                        <div class="col-3">
+                            <div class="seo-list clearfix">
+                                <div class="col-sp-3">
+                                    <span class="hotel-icon bg"></span>
+                                </div>
+                                <div class="col-7 normal-txt">
+                                    <div class="blue-txt bold-txt">
+                                        Plataran Canggu Resort
+                                        and Spa, Canggu, Bali,
+                                        Indonesia
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="seo-list clearfix">
+                                <div class="col-sp-3">
+                                    <span class="hotel-icon bg"></span>
+                                </div>
+                                <div class="col-7 normal-txt">
+                                    <div class="blue-txt bold-txt">
+                                        Plataran Canggu Resort
+                                        and Spa, Canggu, Bali,
+                                        Indonesia
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="seo-list clearfix">
+                                <div class="col-sp-3">
+                                    <span class="hotel-icon bg"></span>
+                                </div>
+                                <div class="col-7 normal-txt">
+                                    <div class="blue-txt bold-txt">
+                                        Plataran Canggu Resort
+                                        and Spa, Canggu, Bali,
+                                        Indonesia
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -236,6 +236,7 @@
     <Compile Include="Controllers\PaymentController.cs" />
     <Compile Include="Controllers\PromoController.cs" />
     <Compile Include="Controllers\StaticPageController.cs" />
+    <Compile Include="Controllers\TravoramaSEOController.cs" />
     <Compile Include="Controllers\VeritransController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -1697,6 +1698,12 @@
     <Content Include="Views\Promo\MatahariMallWebview.cshtml" />
     <Content Include="Views\Promo\PaydayMadnessPermataBank.cshtml" />
     <Content Include="Views\Promo\PaydayMadnessPermataBank.mobile.cshtml" />
+    <Content Include="Views\TravoramaSEO\HotelSEO.cshtml" />
+    <Content Include="Views\TravoramaSEO\FlightToSEO.cshtml" />
+    <Content Include="Views\TravoramaSEO\AirlineSEO.cshtml" />
+    <Content Include="Views\Shared\Desktop\_FlightToDestination.cshtml" />
+    <Content Include="Views\Shared\Desktop\_AirlineMenu.cshtml" />
+    <Content Include="Views\Shared\Desktop\_AirlinePage.cshtml" />
     <None Include="Views\Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

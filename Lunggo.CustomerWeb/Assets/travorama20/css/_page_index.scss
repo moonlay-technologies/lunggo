@@ -944,6 +944,21 @@ body.page-index {margin-bottom: 0;}
                 }
             }
         }
+        .airline-menu {
+            a {
+                text-decoration: none;
+                color: #000;
+            }
+            .am-container {margin: 15px 0;}
+            .am-content {
+                padding: 10px 0;
+                border-bottom: 2px solid #0c8fbf;
+            }
+            .am-address {
+                background: #0c8fbf;
+                padding: 10px 15px;
+            }
+        }
     }
 
     // section why
@@ -981,7 +996,28 @@ body.page-index {margin-bottom: 0;}
                 width: 69px;
             }
         }
-        
+    }
+    .section-flight-to {
+        margin: 40px 0;
+        &>.container {max-width: none !important;}
+        .row {margin-bottom: 12px;
+            &:last-child {margin-bottom: 0;}
+        }
+        .ft-title {
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #ccc;
+        }
+        .flight-to-content {
+            .ft-top {
+                background: #1daee4;
+                padding: 5px 10px;
+            }
+            .ft-bottom {
+                background: #f0f0f0;
+                padding: 10px;
+            }
+        }
     }
 }
 
