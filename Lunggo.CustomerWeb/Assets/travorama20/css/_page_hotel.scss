@@ -757,9 +757,21 @@
             .form-visit-selection{
                 color: #1f99c7;
                 font-weight: bold;
+                &.active{
+                 background-color: #1f99c7;
+                    color: white;
+             }
+
             }   &:hover{
                 cursor: pointer;
-            }
+            }   
+            /*.select{
+                p:.active{
+                    background-color: #1f99c7;
+                    color: white;
+                }
+            }*/
+            
         } 
         .review-hotel {
             .col-right-hotel {margin: 20px 0;}

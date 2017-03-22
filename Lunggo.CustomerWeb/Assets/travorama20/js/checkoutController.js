@@ -932,7 +932,6 @@ app.controller('checkoutController', [
             $scope.transferWindowOpen = false;
         }
 
-
         $scope.listVisits = [
         {
             id: 1,
@@ -953,10 +952,22 @@ app.controller('checkoutController', [
         $scope.selectListVisit = false;
         $scope.setVisitForm = function (val) {
             $scope.selectListVisit = val;
-            //if (val == false) {
+            if (val == false) {
                 $scope.buyerInfo.bookerMessageTitle = '';
                 $scope.buyerInfo.bookerMessageDescription = '';
-            //}
+                $scope.disableDescription = false;
+                $("#addVisit").addClass("active");
+                $("#chooseVisit").removeClass("active");
+            } else {
+                var result = $scope.listVisits.filter(function (o) { return o.id == $scope.currentSelection; });
+                if (result != null && result.length > 0) {
+                    $scope.buyerInfo.bookerMessageTitle = result[0].title;
+                    $scope.buyerInfo.bookerMessageDescription = result[0].description;
+                }
+                $("#chooseVisit").addClass("active");
+                $("#addVisit").removeClass("active");
+                $scope.disableDescription = true;
+            }
         }
 
         $scope.setVisitPurpose = function (item) {
