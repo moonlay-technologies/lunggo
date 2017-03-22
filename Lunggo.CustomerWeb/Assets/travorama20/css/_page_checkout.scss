@@ -98,6 +98,13 @@ label.control-label {
     }
     &>.container {max-width: none;}
     .selected-bank {display: none;}
+
+    .form-visit-selection{
+                color: #1f99c7;
+                font-weight: bold;
+            }   &:hover{
+                cursor: pointer;
+            }
 }
 
 //Form

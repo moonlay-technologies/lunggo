@@ -529,6 +529,12 @@
     <Content Include="Assets\B2BTravorama\assets\plugins\font-awesome\css\font-awesome.css" />
     <Content Include="Assets\B2BTravorama\assets\plugins\font-awesome\css\font-awesome.min.css" />
     <Content Include="Assets\B2BTravorama\assets\plugins\font-awesome\fonts\fontawesome-webfont.svg" />
+    <Content Include="Assets\B2BTravorama\assets\plugins\font-awesome\scss\font-awesome.css">
+      <DependentUpon>font-awesome.scss</DependentUpon>
+    </Content>
+    <Content Include="Assets\B2BTravorama\assets\plugins\font-awesome\scss\font-awesome.min.css">
+      <DependentUpon>font-awesome.css</DependentUpon>
+    </Content>
     <Content Include="Assets\B2BTravorama\assets\plugins\hammer.min.js" />
     <Content Include="Assets\B2BTravorama\assets\plugins\handlebars\handlebars-v4.0.5.js" />
     <Content Include="Assets\B2BTravorama\assets\plugins\highlight\highlight.pack.js" />
@@ -701,6 +707,9 @@
     <Content Include="Assets\B2BTravorama\assets\plugins\jquery-datatable\extensions\KeyTable\js\dataTables.keyTable.min.js" />
     <Content Include="Assets\B2BTravorama\assets\plugins\jquery-datatable\extensions\KeyTable\Readme.txt" />
     <Content Include="Assets\B2BTravorama\assets\plugins\jquery-datatable\extensions\Responsive\css\dataTables.responsive.css" />
+    <Content Include="Assets\B2BTravorama\assets\plugins\jquery-datatable\extensions\Responsive\css\dataTables.responsive.min.css">
+      <DependentUpon>dataTables.responsive.css</DependentUpon>
+    </Content>
     <Content Include="Assets\B2BTravorama\assets\plugins\jquery-datatable\extensions\Responsive\examples\child-rows\column-control.html" />
     <Content Include="Assets\B2BTravorama\assets\plugins\jquery-datatable\extensions\Responsive\examples\child-rows\custom-renderer.html" />
     <Content Include="Assets\B2BTravorama\assets\plugins\jquery-datatable\extensions\Responsive\examples\child-rows\disable-child-rows.html" />
@@ -1232,6 +1241,12 @@
     <Content Include="Assets\B2BTravorama\pages\js\pages.min.js" />
     <Content Include="Assets\B2BTravorama\pages\js\pages.social.js" />
     <Content Include="Assets\B2BTravorama\pages\js\pages.social.min.js" />
+    <Content Include="Assets\B2BTravorama\pages\scss\pages.css">
+      <DependentUpon>pages.scss</DependentUpon>
+    </Content>
+    <Content Include="Assets\B2BTravorama\pages\scss\pages.min.css">
+      <DependentUpon>pages.css</DependentUpon>
+    </Content>
     <Content Include="Assets\bootstrap\bootstrap.css" />
     <Content Include="Assets\bootstrap\bootstrap.min.css" />
     <Content Include="Assets\css\autocomplete.css">
@@ -1244,11 +1259,20 @@
     <Content Include="Assets\css\global-error.css">
       <DependentUpon>global-error.scss</DependentUpon>
     </Content>
+    <Content Include="Assets\css\global-error.min.css">
+      <DependentUpon>global-error.css</DependentUpon>
+    </Content>
     <Content Include="Assets\css\help_section.css">
       <DependentUpon>help_section.scss</DependentUpon>
     </Content>
+    <Content Include="Assets\css\help_section.min.css">
+      <DependentUpon>help_section.css</DependentUpon>
+    </Content>
     <Content Include="Assets\css\invoice.css">
       <DependentUpon>invoice.scss</DependentUpon>
+    </Content>
+    <Content Include="Assets\css\invoice.min.css">
+      <DependentUpon>invoice.css</DependentUpon>
     </Content>
     <Content Include="Assets\css\jquery-ui.min.css" />
     <Content Include="Assets\css\neweticket.css">
@@ -1271,6 +1295,9 @@
     </Content>
     <Content Include="Assets\css\travorama-mobileApp.css">
       <DependentUpon>travorama-mobileApp.scss</DependentUpon>
+    </Content>
+    <Content Include="Assets\css\travorama-mobileApp.min.css">
+      <DependentUpon>travorama-mobileApp.css</DependentUpon>
     </Content>
     <Content Include="Assets\fonts\bootstrap\glyphicons-halflings-regular.svg" />
     <Content Include="Assets\fonts\DINB-webfont.svg" />

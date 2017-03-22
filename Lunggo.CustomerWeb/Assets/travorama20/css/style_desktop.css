@@ -6371,6 +6371,11 @@ file: /Assets/travorama20/css/_page_flight.scss
     -moz-border-radius: 2px;
     -ms-border-radius: 2px;
     border-radius: 2px; }
+  .page-hotel.page-checkout-hotel .checkout-hotel .form-visit-selection {
+    color: #1f99c7;
+    font-weight: bold; }
+  .page-hotel.page-checkout-hotel .checkout-hotel:hover {
+    cursor: pointer; }
   .page-hotel.page-checkout-hotel .review-hotel .col-right-hotel {
     margin: 20px 0; }
 
@@ -6484,6 +6489,11 @@ label.control-label {
     max-width: none; }
   .checkout-content .selected-bank, .confirmation-content .selected-bank {
     display: none; }
+  .checkout-content .form-visit-selection, .confirmation-content .form-visit-selection {
+    color: #1f99c7;
+    font-weight: bold; }
+  .checkout-content:hover, .confirmation-content:hover {
+    cursor: pointer; }
 
 .passenger-detail .passenger-form, .content-step .flight-detail, .buyer-review, .passenger-review {
   margin-bottom: 25px; }
