@@ -753,6 +753,13 @@
                 height: 80px;
                 @include border-radius(2px);
             }
+
+            .form-visit-selection{
+                color: #1f99c7;
+                font-weight: bold;
+            }   &:hover{
+                cursor: pointer;
+            }
         } 
         .review-hotel {
             .col-right-hotel {margin: 20px 0;}

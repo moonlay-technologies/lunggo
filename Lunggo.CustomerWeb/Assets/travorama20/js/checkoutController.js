@@ -932,6 +932,50 @@ app.controller('checkoutController', [
             $scope.transferWindowOpen = false;
         }
 
+
+        $scope.listVisits = [
+        {
+            id: 1,
+            title: "Kunjungan ke Bandung",
+            description: "studi banding"
+        },
+        {
+            id: 2,
+            title: "Kunjungan ke Jakarta",
+            description: "Rapat Direksi Utama"
+        },
+        {
+            id: 3,
+            title: "Kunjungan ke Singapura",
+            description: "Team Bonding"
+        }];
+
+        $scope.selectListVisit = false;
+        $scope.setVisitForm = function (val) {
+            $scope.selectListVisit = val;
+            //if (val == false) {
+                $scope.buyerInfo.bookerMessageTitle = '';
+                $scope.buyerInfo.bookerMessageDescription = '';
+            //}
+        }
+
+        $scope.setVisitPurpose = function (item) {
+            $scope.buyerInfo.bookerMessageTitle = item.title;
+            $scope.buyerInfo.bookerMessageDescription = item.description;
+        }
+
+        $scope.currentSelection = 0;
+
+        $scope.$watch('currentSelection',
+        function (newValue) {
+            newValue = parseInt(newValue);
+            var result = $scope.listVisits.filter(function (o) { return o.id == newValue; });
+            if (result != null && result.length > 0) {
+                $scope.buyerInfo.bookerMessageTitle = result[0].title;
+                $scope.buyerInfo.bookerMessageDescription = result[0].description;
+            }
+        });
+
         //************************* END ******************************
     }
 ]);// checkout controller
