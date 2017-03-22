@@ -2259,7 +2259,8 @@ body.page-index {
 .page-index .section-popular {
   padding-top: 10px; }
   .page-index .section-popular > .container {
-    max-width: none; }
+    max-width: none;
+    border-top: 1px solid #ccc; }
   .page-index .section-popular .popular-left {
     padding-right: 7.5px; }
   .page-index .section-popular .popular-middle {
@@ -2507,6 +2508,49 @@ body.page-index {
   .page-index .section-feedback > .container {
     max-width: none; }
 
+.page-index .section-airline > .container {
+  max-width: none;
+  border-top: 2px solid #0c8fbf;
+  padding: 15px 0 30px; }
+
+.page-index .section-airline .airline-info {
+  background: #1360ad;
+  padding: 15px 0; }
+  .page-index .section-airline .airline-info .col-xs-2 {
+    text-align: center; }
+
+.page-index .section-airline .airline-box {
+  border: 2px solid #fff;
+  padding: 10px; }
+
+.page-index .section-airline .icon-bagage {
+  background: url(/Assets/images/bagage-white.png) no-repeat;
+  width: 70px;
+  height: 70px;
+  background-size: 100%;
+  margin: 0 auto 5px; }
+
+.page-index .section-airline .icon-lugage {
+  background: url(/Assets/images/lugage-white.png) no-repeat;
+  width: 70px;
+  height: 70px;
+  background-size: 100%;
+  margin: 0 auto 5px; }
+
+.page-index .section-airline .icon-checkin {
+  background: url(/Assets/images/checkin-white.png) no-repeat;
+  width: 45px;
+  height: 70px;
+  background-size: 100%;
+  margin: 0 auto 5px; }
+
+.page-index .section-airline .icon-disc {
+  background: url(/Assets/images/disc-white.png) no-repeat;
+  width: 70px;
+  height: 70px;
+  background-size: 100%;
+  margin: 0 auto 5px; }
+
 .page-index .search-calendar .calendar-header, .page-index .search-calendar-hotel .calendar-header {
   height: 45px;
   padding: 10px 27px;
@@ -2640,8 +2684,7 @@ body.page-index {
 
 .page-index .section-calendar-price > .container {
   padding: 40px 0;
-  max-width: none !important;
-  border-bottom: 1px solid #ccc; }
+  max-width: none !important; }
   .page-index .section-calendar-price > .container .price-calendar > div:first-child, .page-index .section-calendar-price > .container .popular-flight > div:first-child {
     margin-bottom: 15px; }
 

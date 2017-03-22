@@ -572,6 +572,7 @@
     <Content Include="Assets\images\at-icon.png" />
     <Content Include="Assets\images\atm-bersama.jpg" />
     <Content Include="Assets\images\backtotop.jpg" />
+    <Content Include="Assets\images\bagage-white.png" />
     <Content Include="Assets\images\bank-bca.png" />
     <Content Include="Assets\images\Bank-Mandiri-small.jpg" />
     <Content Include="Assets\images\Bank-Mandiri.jpg" />
@@ -657,6 +658,7 @@
     <Content Include="Assets\images\campaign\yogyakarta.jpg" />
     <Content Include="Assets\images\catatan.jpg" />
     <Content Include="Assets\images\check.png" />
+    <Content Include="Assets\images\checkin-white.png" />
     <Content Include="Assets\images\child-icon.png" />
     <Content Include="Assets\images\choose-travorama.png" />
     <Content Include="Assets\images\cimb-clicks-transparan.png" />
@@ -665,6 +667,7 @@
     <Content Include="Assets\images\creditCard.jpg" />
     <Content Include="Assets\images\default-banner-2.jpg" />
     <Content Include="Assets\images\default-banner.jpg" />
+    <Content Include="Assets\images\disc-white.png" />
     <Content Include="Assets\images\email-facebook.jpg" />
     <Content Include="Assets\images\email-image.jpg" />
     <Content Include="Assets\images\email-instagram.jpg" />
@@ -774,7 +777,10 @@
     <Content Include="Assets\images\hotel-star-4.png" />
     <Content Include="Assets\images\hotel\filter-hotel-map-white.png" />
     <Content Include="Assets\images\hotel\filter-hotel-map.png" />
+    <Content Include="Assets\images\hotel\hotel-blue.png" />
     <Content Include="Assets\images\hotel\hotel-dummy.jpg" />
+    <Content Include="Assets\images\hotel\location-grey.png" />
+    <Content Include="Assets\images\hotel\location-white.png" />
     <Content Include="Assets\images\hotel\location-white.png" />
     <Content Include="Assets\images\hotel\markers-blue.png" />
     <Content Include="Assets\images\hotel\markers-red.png" />
@@ -830,6 +836,7 @@
     <Content Include="Assets\images\logo-travorama-sm.png" />
     <Content Include="Assets\images\logo-travorama.png" />
     <Content Include="Assets\images\logo.png" />
+    <Content Include="Assets\images\lugage-white.png" />
     <Content Include="Assets\images\main-menu-arrow.png" />
     <Content Include="Assets\images\mandiri-logo.jpg" />
     <Content Include="Assets\images\mandiri.png" />

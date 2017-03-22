@@ -440,7 +440,7 @@ body.page-index {margin-bottom: 0;}
     //*****
     // section popular
     .section-popular {padding-top:10px;
-        &>.container {max-width: none;}
+        &>.container {max-width: none; border-top: 1px solid #ccc;}
         .popular-left {padding-right:7.5px;}
         .popular-middle {padding-left:7.5px; padding-right:7.5px;}
         .popular-right {padding-left:7.5px;}
@@ -585,6 +585,54 @@ body.page-index {margin-bottom: 0;}
         &>.container {max-width: none;}
     }
 
+    //*****
+    // section airline
+    .section-airline {
+        &>.container {
+            max-width: none; 
+            border-top: 2px solid #0c8fbf;
+            padding: 15px 0 30px;
+        }
+        .airline-info {
+            background: #1360ad;
+            padding: 15px 0;
+            .col-xs-2 {text-align: center;}
+        }
+        .airline-box {
+            border: 2px solid #fff;
+            padding: 10px;
+        }
+        
+        .icon-bagage {
+            background: url(/Assets/images/bagage-white.png) no-repeat;
+            width: 70px;
+            height: 70px;
+            background-size: 100%;
+            margin: 0 auto 5px;
+        }
+        .icon-lugage {
+            background: url(/Assets/images/lugage-white.png) no-repeat;
+            width: 70px;
+            height: 70px;
+            background-size: 100%;
+            margin: 0 auto 5px;
+        }
+        .icon-checkin {
+            background: url(/Assets/images/checkin-white.png) no-repeat;
+            width: 45px;
+            height: 70px;
+            background-size: 100%;
+            margin: 0 auto 5px;
+        }
+        .icon-disc {
+            background: url(/Assets/images/disc-white.png) no-repeat;
+            width: 70px;
+            height: 70px;
+            background-size: 100%;
+            margin: 0 auto 5px;
+        }
+    }
+
     //**********
     // flight date
     .search-calendar, .search-calendar-hotel {
@@ -688,7 +736,6 @@ body.page-index {margin-bottom: 0;}
          &>.container {
             padding: 40px 0;
             max-width: none !important;
-            border-bottom: 1px solid #ccc;
             .price-calendar, .popular-flight {
                 &>div:first-child {margin-bottom: 15px}
             }
