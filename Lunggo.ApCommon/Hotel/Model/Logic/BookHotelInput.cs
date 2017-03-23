@@ -15,5 +15,7 @@ namespace Lunggo.ApCommon.Hotel.Model.Logic
         public string SpecialRequest { get; set; }
         public string BookerMessageTitle { get; set; }
         public string BookerMessageDescription { get; set; }
+        public bool IsBookingNoteNew { get; set; }
+        public string UserId { get; set; }
     }
 }

@@ -29,12 +29,13 @@ namespace Lunggo.CustomerWeb
             var httpRequest = Request;
             var configManager = ConfigManager.GetInstance();
             var mobileUrl = configManager.GetConfigValue("general", "mobileUrl");
+            var b2bmobileUrl = configManager.GetConfigValue("general", "b2bMobileUrl");
             var host = httpRequest.Url.Host;
             var path = httpRequest.Url.PathAndQuery;
             var userAgent = httpRequest.UserAgent;
             var browserDetectionService = BrowserDetectionService.GetInstance();
             var isSmartphone = browserDetectionService.IsRequestFromSmartphone(userAgent);
-            var isOnMobilePage = host == mobileUrl;
+            var isOnMobilePage = host == mobileUrl || host == b2bmobileUrl;
             if (!isOnMobilePage && isSmartphone)
             {
                 string redirectTo = "http://" + mobileUrl + path;

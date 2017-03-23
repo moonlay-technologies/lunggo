@@ -93,6 +93,7 @@
     <Compile Include="TableRecord\UsedDiscountTableRecord.cs" />
     <Compile Include="TableRecord\UsedMarginTableRecord.cs" />
     <Compile Include="TableRecord\UserApproverTableRecord.cs" />
+    <Compile Include="TableRecord\UserBookingNotesTableRecord.cs" />
     <Compile Include="TableRecord\VoucherRecipientsTableRecord.cs" />
     <Compile Include="TableRecord\VoucherTableRecord.cs" />
     <Compile Include="TableRecord\MemberTableRecord.cs" />
@@ -165,6 +166,7 @@
     <Compile Include="TableRepository\UsedDiscountRepository.cs" />
     <Compile Include="TableRepository\UsedMarginRepository.cs" />
     <Compile Include="TableRepository\UserApproverRepository.cs" />
+    <Compile Include="TableRepository\UserBookingNotesRepository.cs" />
     <Compile Include="TableRepository\VoucherRecipientsRepository.cs" />
     <Compile Include="TableRepository\VoucherRepository.cs" />
     <Compile Include="TableRepository\MemberRepository.cs" />

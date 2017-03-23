@@ -219,7 +219,9 @@
     <Compile Include="ApiSrc\Account\Logic\B2BUpdateReservationLogic.cs" />
     <Compile Include="ApiSrc\Account\Logic\BookerOrderListLogic.cs" />
     <Compile Include="ApiSrc\Account\Logic\ChangePasswordLogic.cs" />
+    <Compile Include="ApiSrc\Account\Logic\SaveBookingNotesLogic.cs" />
     <Compile Include="ApiSrc\Account\Logic\GetUserIdLogic.cs" />
+    <Compile Include="ApiSrc\Account\Logic\GetBookingNotesLogic.cs" />
     <Compile Include="ApiSrc\Account\Logic\UpdateUserLockLogic.cs" />
     <Compile Include="ApiSrc\Account\Logic\DeleteUserLogic.cs" />
     <Compile Include="ApiSrc\Account\Logic\GetBookerTransaction.cs" />
@@ -244,6 +246,8 @@
     <Compile Include="ApiSrc\Account\Model\ChangePasswordApiRequest.cs" />
     <Compile Include="ApiSrc\Account\Model\ChangeProfileApiResponse.cs" />
     <Compile Include="ApiSrc\Account\Model\ChangeProfileApiRequest.cs" />
+    <Compile Include="ApiSrc\Account\Model\SaveBookingNotesApiRequest.cs" />
+    <Compile Include="ApiSrc\Account\Model\GetBookingNotesApiResponse.cs" />
     <Compile Include="ApiSrc\Account\Model\ConfirmEmailApiResponse.cs" />
     <Compile Include="ApiSrc\Account\Model\DeleteUserApiRequest.cs" />
     <Compile Include="ApiSrc\Account\Model\ForgotPasswordApiRequest.cs" />
@@ -445,6 +449,7 @@
     <None Include="Properties\PublishProfiles\travorama-qa-api %283%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-qa-api %284%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-qa-api %285%29.pubxml" />
+    <None Include="Properties\PublishProfiles\travorama-qa-api - Web Deploy %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-qa-api - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-qa-api.pubxml" />
     <None Include="Web.Debug.config">

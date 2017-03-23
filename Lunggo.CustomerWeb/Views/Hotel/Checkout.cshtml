@@ -1,7 +1,9 @@
 ﻿@using System.Globalization
-@using Lunggo.ApCommon.Hotel.Model
+@using Lunggo.CustomerWeb.Models
+@using Lunggo.Framework.Config
 @using Lunggo.Framework.Context
 @using Lunggo.Framework.Extension
+@using RestSharp
 @model Lunggo.CustomerWeb.Models.HotelCheckoutData
 @{
     Layout = "/Views/Shared/Desktop/_LayoutDesktop.cshtml";
@@ -56,6 +58,26 @@
         throw;
     }
 
+    var baseUrl = ConfigManager.GetInstance().GetConfigValue("api", "apiUrl");
+    var client = new RestClient(baseUrl);
+    var notes = new List<BookingNotes>();
+    try
+    {
+        var request = new RestRequest("/v1/getbookingnotes", Method.GET);
+        var key = Request.Cookies["authkey"];
+
+        request.AddHeader("Authorization", "Bearer " + key.Value);
+        // execute the request
+        IRestResponse<GetBookingNotesModel> response = client.Execute<GetBookingNotesModel>(request);
+
+        var contentDeserialize = Lunggo.Framework.Extension.JsonExtension.Deserialize<GetBookingNotesModel>(response.Content);
+        notes = contentDeserialize.BookingNotes;
+    }
+    catch
+    {
+
+    }
+
 }
 
 @section AdditionalJS {
@@ -77,6 +99,8 @@
         }
         var token = '@Model.Token';
         var hotelImg = '@hotelMainImage';
+
+        var bookingNotes = @Html.Raw(notes.Serialize());
     </script>
     <script src="/Assets/travorama20/js/HotelCheckoutController.js"></script>
 }
@@ -229,15 +253,15 @@
                                 </div>
 
                                 <div class="col-xs-12" ng-show="selectListVisit">
-                                    <p>Judul</p>
+                                    <p class="col-xs-12">Judul Pesan</p>
                                     <select class="form-control" name="visitTitle" ng-model="currentSelection" placeholder="Pilih Tujuan">
                                         <option ng-repeat="item in listVisits" value="{{item.id}}" id="visits">{{item.title}}</option>
                                     </select>
-                                </div>
+                                </div> 
 
                                 <div ng-show="!selectListVisit">
                                     <div class="form-group">
-                                        <label class="control-label">Judul Pesan</label>
+                                        <label class="control-label col-xs-12">Judul Pesan</label>
                                         <div>
                                             <input type="text" class="form-control" value=buyerInfo.bookerMessageDescription id="buyer-title" name="title" ng-model="buyerInfo.bookerMessageTitle"
                                                    placeholder="Tuliskan tujuan kunjungan Anda" required />

@@ -299,15 +299,16 @@
                                         </dl>
                                         if (Model.Payment.FinalPrice == 0)
                                         {
+                                            
                                             <dl>
-                                                <dt>Tiket Pesawat <span>(@Model.Pax.Count Penumpang)</span></dt>
+                                                <dt>Total</dt>
                                                 <dd>Rp @((Model.Payment.OriginalPrice).ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID")))</dd>
                                             </dl>
                                         }
                                         else
                                         {
                                             <dl>
-                                                <dt>Tiket Pesawat <span>(@Model.Pax.Count Penumpang)</span></dt>
+                                                <dt>Harga Pemesanan</dt>
                                                 <dd>Rp @((Model.Payment.OriginalPrice).ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID")))</dd>
                                             </dl>
                                             <dl class="total-price">

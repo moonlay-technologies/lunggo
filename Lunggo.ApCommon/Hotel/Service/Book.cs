@@ -312,6 +312,12 @@ namespace Lunggo.ApCommon.Hotel.Service
                     ? HttpContext.Current.User.Identity.GetUser()
                     : null
             };
+
+            if (input.IsBookingNoteNew)
+            {
+                User.InsertBookingNotes(input.UserId, input.BookerMessageTitle, input.BookerMessageDescription);
+            }
+
             if (rsvDetail.User != null)
             {
                 var userId = HttpContext.Current.User.Identity.GetUser().Id;

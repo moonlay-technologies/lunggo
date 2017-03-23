@@ -249,6 +249,7 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AdminViewModel.cs" />
     <Compile Include="Models\CalendarRecipientData.cs" />
+    <Compile Include="Models\GetBookingNotesModel.cs" />
     <Compile Include="Models\GetUserModel.cs" />
     <Compile Include="Models\GetProfileModel.cs" />
     <Compile Include="Models\B2BBookingDisability.cs" />
@@ -529,12 +530,8 @@
     <Content Include="Assets\B2BTravorama\assets\plugins\font-awesome\css\font-awesome.css" />
     <Content Include="Assets\B2BTravorama\assets\plugins\font-awesome\css\font-awesome.min.css" />
     <Content Include="Assets\B2BTravorama\assets\plugins\font-awesome\fonts\fontawesome-webfont.svg" />
-    <Content Include="Assets\B2BTravorama\assets\plugins\font-awesome\scss\font-awesome.css">
-      <DependentUpon>font-awesome.scss</DependentUpon>
-    </Content>
-    <Content Include="Assets\B2BTravorama\assets\plugins\font-awesome\scss\font-awesome.min.css">
-      <DependentUpon>font-awesome.css</DependentUpon>
-    </Content>
+    <Content Include="Assets\B2BTravorama\assets\plugins\font-awesome\scss\font-awesome.css" />
+    <Content Include="Assets\B2BTravorama\assets\plugins\font-awesome\scss\font-awesome.min.css" />
     <Content Include="Assets\B2BTravorama\assets\plugins\hammer.min.js" />
     <Content Include="Assets\B2BTravorama\assets\plugins\handlebars\handlebars-v4.0.5.js" />
     <Content Include="Assets\B2BTravorama\assets\plugins\highlight\highlight.pack.js" />
@@ -707,9 +704,7 @@
     <Content Include="Assets\B2BTravorama\assets\plugins\jquery-datatable\extensions\KeyTable\js\dataTables.keyTable.min.js" />
     <Content Include="Assets\B2BTravorama\assets\plugins\jquery-datatable\extensions\KeyTable\Readme.txt" />
     <Content Include="Assets\B2BTravorama\assets\plugins\jquery-datatable\extensions\Responsive\css\dataTables.responsive.css" />
-    <Content Include="Assets\B2BTravorama\assets\plugins\jquery-datatable\extensions\Responsive\css\dataTables.responsive.min.css">
-      <DependentUpon>dataTables.responsive.css</DependentUpon>
-    </Content>
+    <Content Include="Assets\B2BTravorama\assets\plugins\jquery-datatable\extensions\Responsive\css\dataTables.responsive.min.css" />
     <Content Include="Assets\B2BTravorama\assets\plugins\jquery-datatable\extensions\Responsive\examples\child-rows\column-control.html" />
     <Content Include="Assets\B2BTravorama\assets\plugins\jquery-datatable\extensions\Responsive\examples\child-rows\custom-renderer.html" />
     <Content Include="Assets\B2BTravorama\assets\plugins\jquery-datatable\extensions\Responsive\examples\child-rows\disable-child-rows.html" />
@@ -1028,8 +1023,6 @@
     <Content Include="Assets\B2BTravorama\assets\plugins\nvd3\src\interactiveLayer.js" />
     <Content Include="Assets\B2BTravorama\assets\plugins\nvd3\src\intro.js" />
     <Content Include="Assets\B2BTravorama\assets\plugins\nvd3\src\models\axis.js" />
-    <Content Include="Assets\B2BTravorama\assets\plugins\nvd3\src\models\backup\bullet.js" />
-    <Content Include="Assets\B2BTravorama\assets\plugins\nvd3\src\models\backup\bulletChart.js" />
     <Content Include="Assets\B2BTravorama\assets\plugins\nvd3\src\models\boilerplate.js" />
     <Content Include="Assets\B2BTravorama\assets\plugins\nvd3\src\models\bullet.js" />
     <Content Include="Assets\B2BTravorama\assets\plugins\nvd3\src\models\bulletChart.js" />
@@ -1241,64 +1234,28 @@
     <Content Include="Assets\B2BTravorama\pages\js\pages.min.js" />
     <Content Include="Assets\B2BTravorama\pages\js\pages.social.js" />
     <Content Include="Assets\B2BTravorama\pages\js\pages.social.min.js" />
-    <Content Include="Assets\B2BTravorama\pages\scss\pages.css">
-      <DependentUpon>pages.scss</DependentUpon>
-    </Content>
-    <Content Include="Assets\B2BTravorama\pages\scss\pages.min.css">
-      <DependentUpon>pages.css</DependentUpon>
-    </Content>
+    <Content Include="Assets\B2BTravorama\pages\scss\pages.css" />
+    <Content Include="Assets\B2BTravorama\pages\scss\pages.min.css" />
     <Content Include="Assets\bootstrap\bootstrap.css" />
     <Content Include="Assets\bootstrap\bootstrap.min.css" />
-    <Content Include="Assets\css\autocomplete.css">
-      <DependentUpon>autocomplete.scss</DependentUpon>
-    </Content>
-    <Content Include="Assets\css\autocomplete.min.css">
-      <DependentUpon>autocomplete.css</DependentUpon>
-    </Content>
+    <Content Include="Assets\css\autocomplete.css" />
+    <Content Include="Assets\css\autocomplete.min.css" />
     <Content Include="Assets\css\font-awesome.min.css" />
-    <Content Include="Assets\css\global-error.css">
-      <DependentUpon>global-error.scss</DependentUpon>
-    </Content>
-    <Content Include="Assets\css\global-error.min.css">
-      <DependentUpon>global-error.css</DependentUpon>
-    </Content>
-    <Content Include="Assets\css\help_section.css">
-      <DependentUpon>help_section.scss</DependentUpon>
-    </Content>
-    <Content Include="Assets\css\help_section.min.css">
-      <DependentUpon>help_section.css</DependentUpon>
-    </Content>
-    <Content Include="Assets\css\invoice.css">
-      <DependentUpon>invoice.scss</DependentUpon>
-    </Content>
-    <Content Include="Assets\css\invoice.min.css">
-      <DependentUpon>invoice.css</DependentUpon>
-    </Content>
+    <Content Include="Assets\css\global-error.css" />
+    <Content Include="Assets\css\global-error.min.css" />
+    <Content Include="Assets\css\help_section.css" />
+    <Content Include="Assets\css\help_section.min.css" />
+    <Content Include="Assets\css\invoice.css" />
+    <Content Include="Assets\css\invoice.min.css" />
     <Content Include="Assets\css\jquery-ui.min.css" />
-    <Content Include="Assets\css\neweticket.css">
-      <DependentUpon>neweticket.scss</DependentUpon>
-    </Content>
-    <Content Include="Assets\css\neweticket.min.css">
-      <DependentUpon>neweticket.css</DependentUpon>
-    </Content>
-    <Content Include="Assets\css\promo.css">
-      <DependentUpon>promo.scss</DependentUpon>
-    </Content>
-    <Content Include="Assets\css\promo.min.css">
-      <DependentUpon>promo.css</DependentUpon>
-    </Content>
-    <Content Include="Assets\css\style_b2b.css">
-      <DependentUpon>style_b2b.scss</DependentUpon>
-    </Content>
-    <Content Include="Assets\css\style_b2b.min.css">
-      <DependentUpon>style_b2b.css</DependentUpon>
-    </Content>
-    <Content Include="Assets\css\travorama-mobileApp.css">
-      <DependentUpon>travorama-mobileApp.scss</DependentUpon>
-    </Content>
-    <Content Include="Assets\css\travorama-mobileApp.min.css">
-      <DependentUpon>travorama-mobileApp.css</DependentUpon>
-    </Content>
+    <Content Include="Assets\css\neweticket.css" />
+    <Content Include="Assets\css\neweticket.min.css" />
+    <Content Include="Assets\css\promo.css" />
+    <Content Include="Assets\css\promo.min.css" />
+    <Content Include="Assets\css\style_b2b.css" />
+    <Content Include="Assets\css\style_b2b.min.css" />
+    <Content Include="Assets\css\travorama-mobileApp.css" />
+    <Content Include="Assets\css\travorama-mobileApp.min.css" />
     <Content Include="Assets\fonts\bootstrap\glyphicons-halflings-regular.svg" />
     <Content Include="Assets\fonts\DINB-webfont.svg" />
     <Content Include="Assets\fonts\DINR-webfont.svg" />
@@ -1588,12 +1545,6 @@
     <Content Include="Assets\images\Bank-Mandiri-small.jpg" />
     <Content Include="Assets\images\Bank-Mandiri.jpg" />
     <Content Include="Assets\images\Bank-Mandiri.png" />
-    <Content Include="Assets\images\campaign\MobileApp\app-store-cs.png" />
-    <Content Include="Assets\images\campaign\MobileApp\app-store.png" />
-    <Content Include="Assets\images\campaign\MobileApp\background.jpg" />
-    <Content Include="Assets\images\campaign\MobileApp\box-photo.png" />
-    <Content Include="Assets\images\campaign\MobileApp\play-store.png" />
-    <Content Include="Assets\images\default-banner.jpg" />
     <Content Include="Assets\images\banner\download-app.jpg" />
     <Content Include="Assets\images\banner\standard-web-banner.jpg" />
     <Content Include="Assets\images\bca-logo.jpg" />
@@ -1658,6 +1609,7 @@
     <Content Include="Assets\images\contact-sprite.jpg" />
     <Content Include="Assets\images\creditCard.jpg" />
     <Content Include="Assets\images\default-banner-2.jpg" />
+    <Content Include="Assets\images\default-banner.jpg" />
     <Content Include="Assets\images\email-facebook.jpg" />
     <Content Include="Assets\images\email-image.jpg" />
     <Content Include="Assets\images\email-instagram.jpg" />
@@ -2059,10 +2011,9 @@
     <Content Include="Assets\js\sampleData\CGKHND201015-100y.js" />
     <Content Include="Assets\js\sampleData\HNDCGK231015-100y.js" />
     <Content Include="Assets\js\xml2json.min.js" />
+    <Content Include="Assets\mobile\css\help_section.min.css" />
     <Content Include="Assets\mobile\css\style_mobile.css" />
-    <Content Include="Assets\mobile\css\style_mobile.min.css">
-      <DependentUpon>style_mobile.css</DependentUpon>
-    </Content>
+    <Content Include="Assets\mobile\css\style_mobile.min.css" />
     <Content Include="Assets\mobile\images\adult.png" />
     <Content Include="Assets\mobile\images\anak-bw.png" />
     <Content Include="Assets\mobile\images\anak.png" />
@@ -2188,12 +2139,8 @@
     <Content Include="Assets\travorama20\angularDirectory\priceDetail\priceDetailTemplate.html" />
     <Content Include="Assets\travorama20\angularDirectory\search\B2BHotelSearch.service.js" />
     <Content Include="Assets\travorama20\angularDirectory\search\hotelSearch.service.js" />
-    <Content Include="Assets\travorama20\css\style_desktop.css">
-      <DependentUpon>style_desktop.scss</DependentUpon>
-    </Content>
-    <Content Include="Assets\travorama20\css\style_desktop.min.css">
-      <DependentUpon>style_desktop.css</DependentUpon>
-    </Content>
+    <Content Include="Assets\travorama20\css\style_desktop.css" />
+    <Content Include="Assets\travorama20\css\style_desktop.min.css" />
     <Content Include="Assets\travorama20\images\app-store-bg.png" />
     <Content Include="Assets\travorama20\images\app-store-cs.png" />
     <Content Include="Assets\travorama20\images\Hotel\bed.png" />
@@ -2239,12 +2186,12 @@
     <Content Include="Assets\travorama20\js\accountController.js" />
     <Content Include="Assets\travorama20\js\app.config.js" />
     <Content Include="Assets\travorama20\js\B2BAccountController.js" />
-    <Content Include="Assets\travorama20\js\B2BUserManagementController.js" />
-    <Content Include="Assets\travorama20\js\B2BPaymentMgmtController.js" />
     <Content Include="Assets\travorama20\js\B2BHomeController.js" />
     <Content Include="Assets\travorama20\js\B2BHotelDetailController.js" />
     <Content Include="Assets\travorama20\js\B2BHotelSearchController.js" />
+    <Content Include="Assets\travorama20\js\B2BPaymentMgmtController.js" />
     <Content Include="Assets\travorama20\js\B2BTravorama20.js" />
+    <Content Include="Assets\travorama20\js\B2BUserManagementController.js" />
     <Content Include="Assets\travorama20\js\checkoutController.js" />
     <Content Include="Assets\travorama20\js\ConfirmationController.js" />
     <Content Include="Assets\travorama20\js\ContactController.js" />
@@ -2256,6 +2203,7 @@
     <Content Include="Assets\travorama20\js\hotelDetailController.js" />
     <Content Include="Assets\travorama20\js\hotelSearchController.js" />
     <Content Include="Assets\travorama20\js\paymentController.js" />
+    <Content Include="Assets\travorama20\js\PromoController.js" />
     <Content Include="Assets\travorama20\js\returnFlightController.js" />
     <Content Include="Assets\travorama20\js\singleFlightController.js" />
     <Content Include="Assets\travorama20\js\ThankyouController.js" />
@@ -2319,150 +2267,8 @@
     <Content Include="Config\HotelRoomRateType.csv">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\bootstrap\bootstrap.css.map" />
-    <Content Include="Assets\bootstrap\bootstrap.scss" />
-    <Content Include="Assets\bootstrap\bootstrap\mixins\_alerts.scss" />
-    <Content Include="Assets\bootstrap\bootstrap\mixins\_background-variant.scss" />
-    <Content Include="Assets\bootstrap\bootstrap\mixins\_border-radius.scss" />
-    <Content Include="Assets\bootstrap\bootstrap\mixins\_buttons.scss" />
-    <Content Include="Assets\bootstrap\bootstrap\mixins\_center-block.scss" />
-    <Content Include="Assets\bootstrap\bootstrap\mixins\_clearfix.scss" />
-    <Content Include="Assets\bootstrap\bootstrap\mixins\_forms.scss" />
-    <Content Include="Assets\bootstrap\bootstrap\mixins\_gradients.scss" />
-    <Content Include="Assets\bootstrap\bootstrap\mixins\_grid-framework.scss" />
-    <Content Include="Assets\bootstrap\bootstrap\mixins\_grid.scss" />
-    <Content Include="Assets\bootstrap\bootstrap\mixins\_hide-text.scss" />
-    <Content Include="Assets\bootstrap\bootstrap\mixins\_image.scss" />
-    <Content Include="Assets\bootstrap\bootstrap\mixins\_labels.scss" />
-    <Content Include="Assets\bootstrap\bootstrap\mixins\_list-group.scss" />
-    <Content Include="Assets\bootstrap\bootstrap\mixins\_nav-divider.scss" />
-    <Content Include="Assets\bootstrap\bootstrap\mixins\_nav-vertical-align.scss" />
-    <Content Include="Assets\bootstrap\bootstrap\mixins\_opacity.scss" />
-    <Content Include="Assets\bootstrap\bootstrap\mixins\_pagination.scss" />
-    <Content Include="Assets\bootstrap\bootstrap\mixins\_panels.scss" />
-    <Content Include="Assets\bootstrap\bootstrap\mixins\_progress-bar.scss" />
-    <Content Include="Assets\bootstrap\bootstrap\mixins\_reset-filter.scss" />
-    <Content Include="Assets\bootstrap\bootstrap\mixins\_reset-text.scss" />
-    <Content Include="Assets\bootstrap\bootstrap\mixins\_resize.scss" />
-    <Content Include="Assets\bootstrap\bootstrap\mixins\_responsive-visibility.scss" />
-    <Content Include="Assets\bootstrap\bootstrap\mixins\_size.scss" />
-    <Content Include="Assets\bootstrap\bootstrap\mixins\_tab-focus.scss" />
-    <Content Include="Assets\bootstrap\bootstrap\mixins\_table-row.scss" />
-    <Content Include="Assets\bootstrap\bootstrap\mixins\_text-emphasis.scss" />
-    <Content Include="Assets\bootstrap\bootstrap\mixins\_text-overflow.scss" />
-    <Content Include="Assets\bootstrap\bootstrap\mixins\_vendor-prefixes.scss" />
-    <Content Include="Assets\bootstrap\bootstrap\_alerts.scss" />
-    <Content Include="Assets\bootstrap\bootstrap\_badges.scss" />
-    <Content Include="Assets\bootstrap\bootstrap\_breadcrumbs.scss" />
-    <Content Include="Assets\bootstrap\bootstrap\_button-groups.scss" />
-    <Content Include="Assets\bootstrap\bootstrap\_buttons.scss" />
-    <Content Include="Assets\bootstrap\bootstrap\_carousel.scss" />
-    <Content Include="Assets\bootstrap\bootstrap\_close.scss" />
-    <Content Include="Assets\bootstrap\bootstrap\_code.scss" />
-    <Content Include="Assets\bootstrap\bootstrap\_component-animations.scss" />
-    <Content Include="Assets\bootstrap\bootstrap\_dropdowns.scss" />
-    <Content Include="Assets\bootstrap\bootstrap\_forms.scss" />
-    <Content Include="Assets\bootstrap\bootstrap\_glyphicons.scss" />
-    <Content Include="Assets\bootstrap\bootstrap\_grid.scss" />
-    <Content Include="Assets\bootstrap\bootstrap\_input-groups.scss" />
-    <Content Include="Assets\bootstrap\bootstrap\_jumbotron.scss" />
-    <Content Include="Assets\bootstrap\bootstrap\_labels.scss" />
-    <Content Include="Assets\bootstrap\bootstrap\_list-group.scss" />
-    <Content Include="Assets\bootstrap\bootstrap\_media.scss" />
-    <Content Include="Assets\bootstrap\bootstrap\_mixins.scss" />
-    <Content Include="Assets\bootstrap\bootstrap\_modals.scss" />
-    <Content Include="Assets\bootstrap\bootstrap\_navbar.scss" />
-    <Content Include="Assets\bootstrap\bootstrap\_navs.scss" />
-    <Content Include="Assets\bootstrap\bootstrap\_normalize.scss" />
-    <Content Include="Assets\bootstrap\bootstrap\_pager.scss" />
-    <Content Include="Assets\bootstrap\bootstrap\_pagination.scss" />
-    <Content Include="Assets\bootstrap\bootstrap\_panels.scss" />
-    <Content Include="Assets\bootstrap\bootstrap\_popovers.scss" />
-    <Content Include="Assets\bootstrap\bootstrap\_print.scss" />
-    <Content Include="Assets\bootstrap\bootstrap\_progress-bars.scss" />
-    <Content Include="Assets\bootstrap\bootstrap\_responsive-embed.scss" />
-    <Content Include="Assets\bootstrap\bootstrap\_responsive-utilities.scss" />
-    <Content Include="Assets\bootstrap\bootstrap\_scaffolding.scss" />
-    <Content Include="Assets\bootstrap\bootstrap\_tables.scss" />
-    <Content Include="Assets\bootstrap\bootstrap\_theme.scss" />
-    <Content Include="Assets\bootstrap\bootstrap\_thumbnails.scss" />
-    <Content Include="Assets\bootstrap\bootstrap\_tooltip.scss" />
-    <Content Include="Assets\bootstrap\bootstrap\_type.scss" />
-    <Content Include="Assets\bootstrap\bootstrap\_utilities.scss" />
-    <Content Include="Assets\bootstrap\bootstrap\_variables.scss" />
-    <Content Include="Assets\bootstrap\bootstrap\_wells.scss" />
-    <Content Include="Assets\bootstrap\_bootstrap-compass.scss" />
-    <Content Include="Assets\bootstrap\_bootstrap-mincer.scss" />
-    <Content Include="Assets\bootstrap\_bootstrap-sprockets.scss" />
-    <Content Include="Assets\fonts\bootstrap\glyphicons-halflings-regular.eot" />
-    <Content Include="Assets\fonts\bootstrap\glyphicons-halflings-regular.ttf" />
-    <Content Include="Assets\fonts\bootstrap\glyphicons-halflings-regular.woff" />
-    <Content Include="Assets\fonts\bootstrap\glyphicons-halflings-regular.woff2" />
-    <Content Include="Assets\fonts\DINB-webfont.eot" />
-    <Content Include="Assets\fonts\DINB-webfont.ttf" />
-    <Content Include="Assets\fonts\DINB-webfont.woff" />
-    <Content Include="Assets\fonts\DINB-webfont.woff2" />
-    <Content Include="Assets\fonts\DINR-webfont.eot" />
-    <Content Include="Assets\fonts\DINR-webfont.ttf" />
-    <Content Include="Assets\fonts\DINR-webfont.woff" />
-    <Content Include="Assets\fonts\DINR-webfont.woff2" />
-    <Content Include="Assets\fonts\fontawesome-webfont.eot" />
-    <Content Include="Assets\fonts\fontawesome-webfont.ttf" />
-    <Content Include="Assets\fonts\fontawesome-webfont.woff" />
-    <Content Include="Assets\fonts\fontawesome-webfont.woff2" />
-    <Content Include="Assets\fonts\FontAwesome.otf" />
-    <Content Include="Assets\fonts\Gotham-Bold.eot" />
-    <Content Include="Assets\fonts\Gotham-Bold.otf" />
-    <Content Include="Assets\fonts\Gotham-Bold.ttf" />
-    <Content Include="Assets\fonts\Gotham-Bold.woff" />
-    <Content Include="Assets\fonts\Gotham-Medium.eot" />
-    <Content Include="Assets\fonts\Gotham-Medium.otf" />
-    <Content Include="Assets\fonts\Gotham-Medium.ttf" />
-    <Content Include="Assets\fonts\Gotham-Medium.woff" />
-    <Content Include="Assets\mobile\css\style_mobile.scss" />
-    <Content Include="Assets\mobile\css\_home_page_layout.scss" />
-    <Content Include="Assets\mobile\css\_page_account.scss" />
-    <Content Include="Assets\mobile\css\_page_checkout.scss" />
-    <Content Include="Assets\mobile\css\_page_flight.scss" />
-    <Content Include="Assets\mobile\css\_page_home.scss" />
-    <Content Include="Assets\mobile\css\_page_hotel.scss" />
-    <Content Include="Assets\mobile\css\_page_hotel_detail.scss" />
-    <Content Include="Assets\mobile\css\_page_hotel_search.scss" />
-    <Content Include="Assets\mobile\css\_page_static.scss" />
-    <Content Include="Assets\travorama20\css\style_desktop.scss" />
-    <Content Include="Assets\travorama20\css\_footer.scss" />
-    <Content Include="Assets\travorama20\css\_header.scss" />
-    <Content Include="Assets\travorama20\css\_page_account.scss" />
-    <Content Include="Assets\travorama20\css\_page_checkout.scss" />
-    <Content Include="Assets\travorama20\css\_page_flight.scss" />
-    <Content Include="Assets\travorama20\css\_page_hotel.scss" />
-    <Content Include="Assets\travorama20\css\_page_hotel_detail.scss" />
-    <Content Include="Assets\travorama20\css\_page_hotel_search.scss" />
-    <Content Include="Assets\travorama20\css\_page_index.scss" />
-    <Content Include="Assets\travorama20\css\_page_password.scss" />
-    <Content Include="Assets\travorama20\css\_page_static.scss" />
-    <Content Include="Assets\travorama20\css\_screenLarge.scss" />
-    <Content Include="Assets\travorama20\css\_screenSmall.scss" />
-    <Content Include="Assets\css\neweticket.scss" />
-    <Content Include="Assets\css\promo.scss" />
-    <Content Include="Assets\css\invoice.scss" />
-    <Content Include="Assets\fonts\OpenSans-Regular.eot" />
-    <Content Include="Assets\fonts\OpenSans-Regular.ttf" />
-    <Content Include="Assets\fonts\OpenSans-Regular.woff" />
-    <Content Include="Assets\fonts\OpenSans-Regular.woff2" />
-    <Content Include="Assets\fonts\OpenSans-Bold.eot" />
-    <Content Include="Assets\fonts\OpenSans-Bold.ttf" />
-    <Content Include="Assets\fonts\OpenSans-Bold.woff" />
-    <Content Include="Assets\fonts\OpenSans-Bold.woff2" />
-    <Content Include="Assets\fonts\OpenSans-Semibold.eot" />
-    <Content Include="Assets\fonts\OpenSans-Semibold.ttf" />
-    <Content Include="Assets\fonts\OpenSans-Semibold.woff" />
-    <Content Include="Assets\fonts\OpenSans-Semibold.woff2" />
-    <Content Include="Assets\css\help_section.scss" />
-    <Content Include="Assets\css\global-error.scss" />
     <Content Include="App_Code\ToTitleCase.cshtml" />
     <Content Include="App_Code\MsToTime.cshtml" />
-    <Content Include="Assets\css\travorama-mobileApp.scss" />
     <Content Include="Assets\B2BTravorama\assets\less\style.less" />
     <Content Include="Assets\B2BTravorama\assets\plugins\angular-daterangepicker\angular-daterangepicker.min.map" />
     <Content Include="Assets\B2BTravorama\assets\plugins\angular-ui-grid\ui-grid.ttf" />
@@ -2652,8 +2458,150 @@
     <Content Include="Assets\B2BTravorama\pages\scss\_modules.scss" />
     <Content Include="Assets\B2BTravorama\pages\scss\_responsive.scss" />
     <Content Include="Assets\B2BTravorama\pages\scss\_var.scss" />
-    <Content Include="Assets\css\style_b2b.scss" />
+    <Content Include="Assets\bootstrap\bootstrap.css.map" />
+    <Content Include="Assets\bootstrap\bootstrap.scss" />
+    <Content Include="Assets\bootstrap\bootstrap\mixins\_alerts.scss" />
+    <Content Include="Assets\bootstrap\bootstrap\mixins\_background-variant.scss" />
+    <Content Include="Assets\bootstrap\bootstrap\mixins\_border-radius.scss" />
+    <Content Include="Assets\bootstrap\bootstrap\mixins\_buttons.scss" />
+    <Content Include="Assets\bootstrap\bootstrap\mixins\_center-block.scss" />
+    <Content Include="Assets\bootstrap\bootstrap\mixins\_clearfix.scss" />
+    <Content Include="Assets\bootstrap\bootstrap\mixins\_forms.scss" />
+    <Content Include="Assets\bootstrap\bootstrap\mixins\_gradients.scss" />
+    <Content Include="Assets\bootstrap\bootstrap\mixins\_grid-framework.scss" />
+    <Content Include="Assets\bootstrap\bootstrap\mixins\_grid.scss" />
+    <Content Include="Assets\bootstrap\bootstrap\mixins\_hide-text.scss" />
+    <Content Include="Assets\bootstrap\bootstrap\mixins\_image.scss" />
+    <Content Include="Assets\bootstrap\bootstrap\mixins\_labels.scss" />
+    <Content Include="Assets\bootstrap\bootstrap\mixins\_list-group.scss" />
+    <Content Include="Assets\bootstrap\bootstrap\mixins\_nav-divider.scss" />
+    <Content Include="Assets\bootstrap\bootstrap\mixins\_nav-vertical-align.scss" />
+    <Content Include="Assets\bootstrap\bootstrap\mixins\_opacity.scss" />
+    <Content Include="Assets\bootstrap\bootstrap\mixins\_pagination.scss" />
+    <Content Include="Assets\bootstrap\bootstrap\mixins\_panels.scss" />
+    <Content Include="Assets\bootstrap\bootstrap\mixins\_progress-bar.scss" />
+    <Content Include="Assets\bootstrap\bootstrap\mixins\_reset-filter.scss" />
+    <Content Include="Assets\bootstrap\bootstrap\mixins\_reset-text.scss" />
+    <Content Include="Assets\bootstrap\bootstrap\mixins\_resize.scss" />
+    <Content Include="Assets\bootstrap\bootstrap\mixins\_responsive-visibility.scss" />
+    <Content Include="Assets\bootstrap\bootstrap\mixins\_size.scss" />
+    <Content Include="Assets\bootstrap\bootstrap\mixins\_tab-focus.scss" />
+    <Content Include="Assets\bootstrap\bootstrap\mixins\_table-row.scss" />
+    <Content Include="Assets\bootstrap\bootstrap\mixins\_text-emphasis.scss" />
+    <Content Include="Assets\bootstrap\bootstrap\mixins\_text-overflow.scss" />
+    <Content Include="Assets\bootstrap\bootstrap\mixins\_vendor-prefixes.scss" />
+    <Content Include="Assets\bootstrap\bootstrap\_alerts.scss" />
+    <Content Include="Assets\bootstrap\bootstrap\_badges.scss" />
+    <Content Include="Assets\bootstrap\bootstrap\_breadcrumbs.scss" />
+    <Content Include="Assets\bootstrap\bootstrap\_button-groups.scss" />
+    <Content Include="Assets\bootstrap\bootstrap\_buttons.scss" />
+    <Content Include="Assets\bootstrap\bootstrap\_carousel.scss" />
+    <Content Include="Assets\bootstrap\bootstrap\_close.scss" />
+    <Content Include="Assets\bootstrap\bootstrap\_code.scss" />
+    <Content Include="Assets\bootstrap\bootstrap\_component-animations.scss" />
+    <Content Include="Assets\bootstrap\bootstrap\_dropdowns.scss" />
+    <Content Include="Assets\bootstrap\bootstrap\_forms.scss" />
+    <Content Include="Assets\bootstrap\bootstrap\_glyphicons.scss" />
+    <Content Include="Assets\bootstrap\bootstrap\_grid.scss" />
+    <Content Include="Assets\bootstrap\bootstrap\_input-groups.scss" />
+    <Content Include="Assets\bootstrap\bootstrap\_jumbotron.scss" />
+    <Content Include="Assets\bootstrap\bootstrap\_labels.scss" />
+    <Content Include="Assets\bootstrap\bootstrap\_list-group.scss" />
+    <Content Include="Assets\bootstrap\bootstrap\_media.scss" />
+    <Content Include="Assets\bootstrap\bootstrap\_mixins.scss" />
+    <Content Include="Assets\bootstrap\bootstrap\_modals.scss" />
+    <Content Include="Assets\bootstrap\bootstrap\_navbar.scss" />
+    <Content Include="Assets\bootstrap\bootstrap\_navs.scss" />
+    <Content Include="Assets\bootstrap\bootstrap\_normalize.scss" />
+    <Content Include="Assets\bootstrap\bootstrap\_pager.scss" />
+    <Content Include="Assets\bootstrap\bootstrap\_pagination.scss" />
+    <Content Include="Assets\bootstrap\bootstrap\_panels.scss" />
+    <Content Include="Assets\bootstrap\bootstrap\_popovers.scss" />
+    <Content Include="Assets\bootstrap\bootstrap\_print.scss" />
+    <Content Include="Assets\bootstrap\bootstrap\_progress-bars.scss" />
+    <Content Include="Assets\bootstrap\bootstrap\_responsive-embed.scss" />
+    <Content Include="Assets\bootstrap\bootstrap\_responsive-utilities.scss" />
+    <Content Include="Assets\bootstrap\bootstrap\_scaffolding.scss" />
+    <Content Include="Assets\bootstrap\bootstrap\_tables.scss" />
+    <Content Include="Assets\bootstrap\bootstrap\_theme.scss" />
+    <Content Include="Assets\bootstrap\bootstrap\_thumbnails.scss" />
+    <Content Include="Assets\bootstrap\bootstrap\_tooltip.scss" />
+    <Content Include="Assets\bootstrap\bootstrap\_type.scss" />
+    <Content Include="Assets\bootstrap\bootstrap\_utilities.scss" />
+    <Content Include="Assets\bootstrap\bootstrap\_variables.scss" />
+    <Content Include="Assets\bootstrap\bootstrap\_wells.scss" />
+    <Content Include="Assets\bootstrap\_bootstrap-compass.scss" />
+    <Content Include="Assets\bootstrap\_bootstrap-mincer.scss" />
+    <Content Include="Assets\bootstrap\_bootstrap-sprockets.scss" />
     <Content Include="Assets\css\autocomplete.scss" />
+    <Content Include="Assets\css\global-error.scss" />
+    <Content Include="Assets\css\help_section.scss" />
+    <Content Include="Assets\css\invoice.scss" />
+    <Content Include="Assets\css\neweticket.scss" />
+    <Content Include="Assets\css\promo.scss" />
+    <Content Include="Assets\css\style_b2b.scss" />
+    <Content Include="Assets\css\travorama-mobileApp.scss" />
+    <Content Include="Assets\fonts\bootstrap\glyphicons-halflings-regular.eot" />
+    <Content Include="Assets\fonts\bootstrap\glyphicons-halflings-regular.ttf" />
+    <Content Include="Assets\fonts\bootstrap\glyphicons-halflings-regular.woff" />
+    <Content Include="Assets\fonts\bootstrap\glyphicons-halflings-regular.woff2" />
+    <Content Include="Assets\fonts\DINB-webfont.eot" />
+    <Content Include="Assets\fonts\DINB-webfont.ttf" />
+    <Content Include="Assets\fonts\DINB-webfont.woff" />
+    <Content Include="Assets\fonts\DINB-webfont.woff2" />
+    <Content Include="Assets\fonts\DINR-webfont.eot" />
+    <Content Include="Assets\fonts\DINR-webfont.ttf" />
+    <Content Include="Assets\fonts\DINR-webfont.woff" />
+    <Content Include="Assets\fonts\DINR-webfont.woff2" />
+    <Content Include="Assets\fonts\fontawesome-webfont.eot" />
+    <Content Include="Assets\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Assets\fonts\fontawesome-webfont.woff" />
+    <Content Include="Assets\fonts\fontawesome-webfont.woff2" />
+    <Content Include="Assets\fonts\FontAwesome.otf" />
+    <Content Include="Assets\fonts\Gotham-Bold.eot" />
+    <Content Include="Assets\fonts\Gotham-Bold.otf" />
+    <Content Include="Assets\fonts\Gotham-Bold.ttf" />
+    <Content Include="Assets\fonts\Gotham-Bold.woff" />
+    <Content Include="Assets\fonts\Gotham-Medium.eot" />
+    <Content Include="Assets\fonts\Gotham-Medium.otf" />
+    <Content Include="Assets\fonts\Gotham-Medium.ttf" />
+    <Content Include="Assets\fonts\Gotham-Medium.woff" />
+    <Content Include="Assets\fonts\OpenSans-Bold.eot" />
+    <Content Include="Assets\fonts\OpenSans-Bold.ttf" />
+    <Content Include="Assets\fonts\OpenSans-Bold.woff" />
+    <Content Include="Assets\fonts\OpenSans-Bold.woff2" />
+    <Content Include="Assets\fonts\OpenSans-Regular.eot" />
+    <Content Include="Assets\fonts\OpenSans-Regular.ttf" />
+    <Content Include="Assets\fonts\OpenSans-Regular.woff" />
+    <Content Include="Assets\fonts\OpenSans-Regular.woff2" />
+    <Content Include="Assets\fonts\OpenSans-Semibold.eot" />
+    <Content Include="Assets\fonts\OpenSans-Semibold.ttf" />
+    <Content Include="Assets\fonts\OpenSans-Semibold.woff" />
+    <Content Include="Assets\fonts\OpenSans-Semibold.woff2" />
+    <Content Include="Assets\mobile\css\style_mobile.scss" />
+    <Content Include="Assets\mobile\css\_home_page_layout.scss" />
+    <Content Include="Assets\mobile\css\_page_account.scss" />
+    <Content Include="Assets\mobile\css\_page_checkout.scss" />
+    <Content Include="Assets\mobile\css\_page_flight.scss" />
+    <Content Include="Assets\mobile\css\_page_home.scss" />
+    <Content Include="Assets\mobile\css\_page_hotel.scss" />
+    <Content Include="Assets\mobile\css\_page_hotel_detail.scss" />
+    <Content Include="Assets\mobile\css\_page_hotel_search.scss" />
+    <Content Include="Assets\mobile\css\_page_static.scss" />
+    <Content Include="Assets\travorama20\css\style_desktop.scss" />
+    <Content Include="Assets\travorama20\css\_footer.scss" />
+    <Content Include="Assets\travorama20\css\_header.scss" />
+    <Content Include="Assets\travorama20\css\_page_account.scss" />
+    <Content Include="Assets\travorama20\css\_page_checkout.scss" />
+    <Content Include="Assets\travorama20\css\_page_flight.scss" />
+    <Content Include="Assets\travorama20\css\_page_hotel.scss" />
+    <Content Include="Assets\travorama20\css\_page_hotel_detail.scss" />
+    <Content Include="Assets\travorama20\css\_page_hotel_search.scss" />
+    <Content Include="Assets\travorama20\css\_page_index.scss" />
+    <Content Include="Assets\travorama20\css\_page_password.scss" />
+    <Content Include="Assets\travorama20\css\_page_static.scss" />
+    <Content Include="Assets\travorama20\css\_screenLarge.scss" />
+    <Content Include="Assets\travorama20\css\_screenSmall.scss" />
     <None Include="Properties\PublishProfiles\prod-cw %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\dv1-cw.pubxml" />
     <None Include="Properties\PublishProfiles\dv2-cw.pubxml" />
@@ -2671,6 +2619,7 @@
     <None Include="Properties\PublishProfiles\travorama-prod-cw__staging2 %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-prod-cw__staging2 %285%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-prod-cw__staging2.pubxml" />
+    <None Include="Properties\PublishProfiles\travorama-qa-cw - Web Deploy %283%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-qa-cw - Web Deploy.pubxml" />
     <None Include="Service References\Mystifly.OnePointService.Flight\OnePoint.disco" />
     <None Include="Service References\Mystifly.OnePointService.Flight\configuration91.svcinfo" />
@@ -2679,6 +2628,46 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
+    <Content Include="Views\B2BTemplate\B2BApproverAssignment.cshtml" />
+    <Content Include="Views\B2BTemplate\B2BBookingCannotMade.cshtml" />
+    <Content Include="Views\B2BTemplate\B2BBookingCanNowBeMade.cshtml" />
+    <Content Include="Views\B2BTemplate\B2BCancellationConfirmedFlight.cshtml" />
+    <Content Include="Views\B2BTemplate\B2BCancellationConfirmedHotel.cshtml" />
+    <Content Include="Views\B2BTemplate\B2BHotelPriceIncrease.cshtml" />
+    <Content Include="Views\B2BTemplate\B2BInitialRegister.cshtml" />
+    <Content Include="Views\B2BTemplate\B2BInvitationEmail.cshtml" />
+    <Content Include="Views\B2BTemplate\B2BIssuanceDelayHotel.cshtml" />
+    <Content Include="Views\B2BTemplate\B2BIssuanceFailedNotif.cshtml" />
+    <Content Include="Views\B2BTemplate\B2BIssuanceSuccessfulFlight.cshtml" />
+    <Content Include="Views\B2BTemplate\B2BIssuanceSuccessfulHotel.cshtml" />
+    <Content Include="Views\B2BTemplate\B2BPasswordReset.cshtml" />
+    <Content Include="Views\B2BTemplate\B2BPaymentFailed.cshtml" />
+    <Content Include="Views\B2BTemplate\B2BPendingApprovalFlight.cshtml" />
+    <Content Include="Views\B2BTemplate\B2BPendingApprovalHotel.cshtml" />
+    <Content Include="Views\B2BTemplate\B2BRejectionEmail.cshtml" />
+    <Content Include="Views\B2BTemplate\B2BRejectionEmailFlight.cshtml" />
+    <Content Include="Views\B2BTemplate\B2BRejectionEmailHotel.cshtml" />
+    <Content Include="Views\B2BTemplate\B2BSuspensionEmail.cshtml" />
+    <Content Include="Views\B2BTemplate\B2BUnsuspensionEmail.cshtml" />
+    <Content Include="Views\B2BTemplate\B2BWelcomeEmail.cshtml" />
+    <Content Include="Views\B2BTemplate\ConfirmPassword.cshtml" />
+    <Content Include="Views\B2BTemplate\Index.cshtml" />
+    <Content Include="Views\B2BTemplate\Login.cshtml" />
+    <Content Include="Views\B2BTemplate\OrderDetailFlightFinance.cshtml" />
+    <Content Include="Views\B2BTemplate\OrderDetailHotelFinance.cshtml" />
+    <Content Include="Views\B2BTemplate\OrderListApprover.cshtml" />
+    <Content Include="Views\B2BTemplate\OrderListApprover.mobile.cshtml" />
+    <Content Include="Views\B2BTemplate\OrderListBooker.cshtml" />
+    <Content Include="Views\B2BTemplate\OrderListBooker.mobile.cshtml" />
+    <Content Include="Views\B2BTemplate\OrderListFlightFinance.cshtml" />
+    <Content Include="Views\B2BTemplate\OrderListHotelFinance.cshtml" />
+    <Content Include="Views\B2BTemplate\Payment.cshtml" />
+    <Content Include="Views\B2BTemplate\ResetPassword.cshtml" />
+    <Content Include="Views\B2BTemplate\SavePassenger.cshtml" />
+    <Content Include="Views\B2BTemplate\SearchFlight.cshtml" />
+    <Content Include="Views\B2BTemplate\SearchHotel.cshtml" />
+    <Content Include="Views\B2BTemplate\TestEmailFlight.cshtml" />
+    <Content Include="Views\B2BTemplate\UserManagement.cshtml" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -2834,66 +2823,20 @@
     <Content Include="Views\B2BAccount\ApproverReservationHistory.cshtml" />
     <Content Include="Views\B2BPayment\Index.cshtml" />
     <Content Include="Views\B2BAccount\UserManagement.cshtml" />
-    <Content Include="Views\B2BTemplate\Index.cshtml" />
     <Content Include="Views\Shared\B2BTravorama\_B2BHeaderMenu.cshtml" />
     <Content Include="Views\Shared\B2BTravorama\_B2BLayout.cshtml" />
     <Content Include="Views\Shared\B2BTravorama\_B2BSideMenu.cshtml" />
-    <Content Include="Views\B2BTemplate\Login.cshtml" />
     <Content Include="Views\Shared\B2BTravorama\_B2BFooter.cshtml" />
-    <Content Include="Views\B2BTemplate\SearchFlight.cshtml" />
-    <Content Include="Views\B2BTemplate\SearchHotel.cshtml" />
-    <Content Include="Views\B2BTemplate\Payment.cshtml" />
-    <Content Include="Views\B2BTemplate\ResetPassword.cshtml" />
-    <Content Include="Views\B2BTemplate\ConfirmPassword.cshtml" />
     <Content Include="Views\Shared\B2BTravorama\_SearchHotel.cshtml" />
-    <Content Include="Views\B2BTemplate\OrderListHotel.cshtml" />
-    <Content Include="Views\B2BTemplate\OrderListFlight.cshtml" />
-    <Content Include="Views\B2BTemplate\UserManagement.cshtml" />
-    <Content Include="Views\B2BTemplate\OrderListFlightFinance.cshtml" />
-    <Content Include="Views\B2BTemplate\OrderListHotelFinance.cshtml" />
-    <Content Include="Views\B2BTemplate\OrderDetailHotelFinance.cshtml" />
-    <Content Include="Views\B2BTemplate\OrderDetailFlightFinance.cshtml" />
     <Content Include="Views\StaticPage\B2BStaticPage.cshtml" />
     <Content Include="Views\StaticPage\B2BStaticPage.mobile.cshtml" />
-    <Content Include="Views\B2BTemplate\InitialRegister.cshtml" />
-    <Content Include="Views\B2BTemplate\WelcomeEmail.cshtml" />
-    <Content Include="Views\B2BTemplate\PasswordReset.cshtml" />
-    <Content Include="Views\B2BTemplate\InvitationEmail.cshtml" />
-    <Content Include="Views\B2BTemplate\B2BInitialRegister.cshtml" />
-    <Content Include="Views\B2BTemplate\B2BWelcomeEmail.cshtml" />
-    <Content Include="Views\B2BTemplate\B2BPasswordReset.cshtml" />
-    <Content Include="Views\B2BTemplate\B2BInvitationEmail.cshtml" />
-    <Content Include="Views\B2BTemplate\B2BRejectionEmail.cshtml" />
-    <Content Include="Views\B2BTemplate\B2BPendingApprovalFlight.cshtml" />
-    <Content Include="Views\B2BTemplate\B2BPendingApprovalHotel.cshtml" />
-    <Content Include="Views\B2BTemplate\B2BCancellationConfirmedFlight.cshtml" />
-    <Content Include="Views\B2BTemplate\B2BCancellationConfirmedHotel.cshtml" />
-    <Content Include="Views\B2BTemplate\B2BHotelPriceIncrease.cshtml" />
-    <Content Include="Views\B2BTemplate\B2BIssuanceSuccessfulFlight.cshtml" />
-    <Content Include="Views\B2BTemplate\B2BIssuanceSuccessfulHotel.cshtml" />
-    <Content Include="Views\B2BTemplate\B2BIssuanceDelayHotel.cshtml" />
-    <Content Include="Views\B2BTemplate\B2BRejectionEmailFlight.cshtml" />
-    <Content Include="Views\B2BTemplate\B2BRejectionEmailHotel.cshtml" />
-    <Content Include="Views\B2BTemplate\B2BApproverAssignment.cshtml" />
-    <Content Include="Views\B2BTemplate\B2BSuspensionEmail.cshtml" />
-    <Content Include="Views\B2BTemplate\B2BUnsuspensionEmail.cshtml" />
-    <Content Include="Views\B2BTemplate\OrderListBooker.cshtml" />
-    <Content Include="Views\B2BTemplate\OrderListApprover.cshtml" />
-    <Content Include="Views\B2BTemplate\OrderListApprover.mobile.cshtml" />
-    <Content Include="Views\B2BTemplate\OrderListBooker.mobile.cshtml" />
-    <Content Include="Views\B2BTemplate\SavePassenger.cshtml" />
-    <Content Include="Views\B2BTemplate\SavePassenger.mobile.cshtml" />
-    <Content Include="Views\B2BTemplate\B2BBookingCannotMade.cshtml" />
-    <Content Include="Views\B2BTemplate\B2BPaymentFailed.cshtml" />
-    <Content Include="Views\B2BTemplate\B2BBookingCanNowBeMade.cshtml" />
-    <Content Include="Views\B2BTemplate\B2BIssuanceFailedNotif.cshtml" />
     <Content Include="Views\Shared\B2BTravorama\Occupancies.cshtml" />
-    <Content Include="Views\B2BTemplate\TestEmailFlight.cshtml" />
     <Content Include="Views\Payment\B2BThankyou.cshtml" />
     <Content Include="Views\Flight\BookingRejection.cshtml" />
     <Content Include="Views\Hotel\BookingRejection.cshtml" />
     <Content Include="Views\B2BTemplate\OldFlightReservationBooker.cshtml" />
     <Content Include="Views\B2BTemplate\OlderHotelReservationBooker.cshtml" />
+	<Content Include="Views\B2BTemplate\TestEmail.cshtml" />
     <None Include="Views\Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -2921,8 +2864,10 @@
     <Folder Include="Assets\B2BTravorama\assets\plugins\angular-wizard\" />
     <Folder Include="Assets\B2BTravorama\assets\plugins\angular\" />
     <Folder Include="Assets\B2BTravorama\assets\plugins\ng-switchery\" />
+    <Folder Include="Assets\B2BTravorama\assets\plugins\nvd3\src\models\backup\" />
     <Folder Include="Assets\images\slider\" />
     <Folder Include="Assets\images\_sample\" />
+    <Folder Include="Assets\travorama20\fonts\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

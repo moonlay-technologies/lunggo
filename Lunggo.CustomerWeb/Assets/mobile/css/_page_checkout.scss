@@ -234,6 +234,17 @@
         margin-left: 0;
         margin-right: 0;
     }
+
+    .form-visit-selection{
+                color: #1f99c7;
+                font-weight: bold;
+                &.active{
+                 background-color: #1f99c7;
+                    color: white;
+             }
+            }   &:hover{
+                cursor: pointer;
+            }
 }
 
 // page confirmation
