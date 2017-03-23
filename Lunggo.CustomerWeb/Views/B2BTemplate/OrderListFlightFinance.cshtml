@@ -46,6 +46,13 @@
                 $('#btn-um-filter, #btn-um-sort').css('background', '#fff');
                 $('.sort-content, .filter-content').hide();
             });
+
+            $('.close-btn').click(function () {
+                $(this).closest('.menu-wrapper').hide();
+                $('#btn-um-filter, #btn-um-sort').css('background', '#fff');
+            });
+
+            $('#datepicker-range').datepicker();
         });
     </script>
 }
@@ -64,9 +71,9 @@
                         <div class="btn-group">
                             <button type="button" class="btn btn-default no-padding p-t-10 p-b-10" id="btn-um-sort">
                                 <span class="m-r-5">
-                                    <i class="fa fa-sort fs-15"></i>
+                                    <i class="fa fa-calendar fs-15"></i>
                                 </span>
-                                <span class="fs-12 bold font-montserrat text-uppercase">Sort</span>
+                                <span class="fs-12 bold font-montserrat text-uppercase">Tampilkan Tanggal</span>
                             </button>
                         </div>
                         <div class="btn-group">
@@ -80,24 +87,31 @@
                     </div>
                 </div>
                 <div class="bg-white" style="border: 1px solid rgba(230, 230, 230, 0.7); border-top: none" id="sf-container">
-                    <div class="sort-content">
+                    <div class="sort-content menu-wrapper">
                         <div class="panel-heading">
-                            <span class="fs-11 bold font-montserrat text-uppercase">Urutkan Berdasarkan</span>
+                            <span class="fs-11 bold font-montserrat text-uppercase">Tampilkan Tanggal dari:</span>
+                            <span class="pull-right pg-close_line close-btn" style="cursor: pointer;"></span>
                         </div>
                         <div class="panel-body m-t-10">
-                            <div class="btn-group dropdown-default">
-                                <a class="btn dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false"> Waktu Reservasi <span class="caret"></span> </a>
-                                <ul class="dropdown-menu ">
-                                    <li>
-                                        <a href="#">Waktu Reservasi</a>
-                                    </li>
-                                </ul>
+                            <div class="clearfix">
+                                <div class="col-sm-4">
+                                    <div class="input-daterange input-group m-b-15" id="datepicker-range">
+                                        <input type="text" class="input-sm form-control" name="start" />
+                                        <span class="input-group-addon font-montserrat bold text-uppercase fs-12 p-l-10 p-r-10">Sampai</span>
+                                        <input type="text" class="input-sm form-control" name="end" />
+                                    </div>
+                                </div>
+                                <div class="col-sm-8 no-padding">
+                                    <button class="btn btn-primary btn-cons m-l-15">Cari</button>
+
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="filter-content">
+                    <div class="filter-content menu-wrapper">
                         <div class="panel-heading">
                             <span class="fs-11 bold font-montserrat text-uppercase">Filter Berdasarkan</span>
+                            <span class="pull-right pg-close_line close-btn" style="cursor: pointer;"></span>
                         </div>
                         <div class="panel-body m-t-10">
                             <div class="clearfix">
@@ -139,71 +153,69 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="padding-15">
+                                <button class="btn btn-primary btn-cons">Cari</button>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="clearfix m-t-30 m-b-20">
-                <div class="col-sm-8 text-right font-montserrat bold text-uppercase fs-12 m-t-5 m-b-5">Tampilkan Tanggal dari</div>
-                <div class="col-sm-4 no-padding pull-right">
-                    <div class="input-daterange input-group" id="datepicker-range">
-                        <input type="text" class="input-sm form-control" name="start" />
-                        <span class="input-group-addon font-montserrat bold text-uppercase fs-12 p-l-10 p-r-10">Sampai</span>
-                        <input type="text" class="input-sm form-control" name="end" />
-                    </div>
-                </div>
-            </div>
             <div class="table-responsive">
-                <table class="table table-hover" id="">
+                <table class="table table-hover" id="basicTable">
                     <thead>
                         <tr>
-                            <th>Waktu Reservasi</th>
-                            <th>No. Reservasi</th>
-                            <th>Rute</th>
-                            <th>Tipe</th>
-                            <th>Tanggal Terbang</th>
-                            <th>Pemesan</th>
-                            <th>Approver</th>
-                            <th>Harga</th>
-                            <th>Status</th>
-                            <th style="width:7.5%">Order Detail</th>
+                            <th style="width:1%; padding: 0"></th>
+                            <th style="width:11.11111111111111%; padding: 20px 12px; cursor: pointer;">Tanggal Reservasi<i class="fa fa-sort fs-15 m-l-5"></i></th>
+                            <th style="width:11.11111111111111%; padding: 20px 12px">No. Reservasi</th>
+                            <th style="width:11.11111111111111%; padding: 20px 12px">Tanggal Penerbangan</th>
+                            <th style="width:13.11111111111111%; padding: 20px 12px">Pesawat</th>
+                            <th style="width:12.11111111111111%; padding: 20px 12px">Rute</th>
+                            <th style="width:11.11111111111111%; padding: 20px 12px">Harga</th>
+                            <th style="width:11.11111111111111%; padding: 20px 12px">Booked By</th>
+                            <th style="width:11.11111111111111%; padding: 20px 12px">Approved By</th>
+                            <th style="width:7.11111111111111%; padding: 20px 12px">Status</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach (var rsv in Model)
                         {
                             <tr>
-                                <td class="v-align-middle">
-                                    <p>@rsv.RsvTime.ToString("d MMM yyyy'<br/>'HH:mm:ss", CultureInfo.CreateSpecificCulture("id-ID"))</p>
+                                <td class="v-align-middle no-padding"></td>
+                                <td class="v-align-middle padding-10">
+                                    <div>@rsv.RsvTime.ToString("d MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID"))</div>
+                                    <div>@rsv.RsvTime.ToString("HH:mm:ss", CultureInfo.CreateSpecificCulture("id-ID"))</div>
                                 </td>
-                                <td class="v-align-middle ">
-                                    <p>@rsv.RsvNo</p>
+                                <td class="v-align-middle padding-10">
+                                    <div>@rsv.RsvNo</div>
                                 </td>
-                                <td class="v-align-middle">
-                                    <p>@rsv.Itinerary.Trips[0].OriginCity - @rsv.Itinerary.Trips[0].DestinationCity</p>
+                                <td class="v-align-middle padding-10">
+                                    <div>
+                                        @rsv.Itinerary.Trips[0].DepartureDate.Value.ToString("d MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID"))
+                                        &nbsp;
+                                        @(rsv.Itinerary.Trips.Count > 1 ? rsv.Itinerary.Trips[1].DepartureDate.Value.ToString("d MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID")) : "")
+                                    </div>
                                 </td>
-                                <td class="v-align-middle">
-                                    <p>@rsv.Itinerary.TripType</p>
+                                <td class="v-align-middle padding-10">
+                                    <div>Lion Air</div>
                                 </td>
-                                <td class="v-align-middle">
-                                    <p>@rsv.Itinerary.Trips[0].DepartureDate.Value.ToString("d MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID"))</p>
-                                    <p>@(rsv.Itinerary.Trips.Count > 1 ? rsv.Itinerary.Trips[1].DepartureDate.Value.ToString("d MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID")) : "")</p>
+                                <td class="v-align-middle padding-10">
+                                    <div>@rsv.Itinerary.Trips[0].OriginCity - @rsv.Itinerary.Trips[0].DestinationCity</div>
                                 </td>
-                                <td class="v-align-middle">
-                                    <p>@rsv.Booker.Name</p>
+                                <td class="v-align-middle padding-10">
+                                    <div>Rp @rsv.Payment.FinalPrice</div>
                                 </td>
-                                <td class="v-align-middle">
-                                    <p>@rsv.Approver.Name</p>
+                                <td class="v-align-middle padding-10">
+                                    <div>@rsv.Booker.Name</div>
                                 </td>
-                                <td class="v-align-middle">
-                                    <p>@rsv.Payment.FinalPrice</p>
+                                <td class="v-align-middle padding-10">
+                                    @*<div>@rsv.Approver.Name</div>*@
                                 </td>
-                                <td class="v-align-middle">
-                                    <button class="btn btn-success btn-cons">@rsv.RsvDisplayStatus</button>
+                                <td class="v-align-middle padding-10">
+                                    <span class="label label-success">@rsv.RsvDisplayStatus</span>
                                 </td>
-                                <td class="v-align-middle">
-                                    <a class="btn btn-primary btn-cons" href="/id/B2BTemplate/OrderDetailFlightFinance"><i class="fa fa-eye m-r-5"></i>View</a>
-                                </td>
+                                @*<td class="v-align-middle padding-10">
+                                        <p>@rsv.Itinerary.TripType</p>
+                                    </td>*@
                             </tr>
                         }
                     </tbody>
