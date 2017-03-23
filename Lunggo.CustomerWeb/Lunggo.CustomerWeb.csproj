@@ -2892,6 +2892,8 @@
     <Content Include="Views\Payment\B2BThankyou.cshtml" />
     <Content Include="Views\Flight\BookingRejection.cshtml" />
     <Content Include="Views\Hotel\BookingRejection.cshtml" />
+    <Content Include="Views\B2BTemplate\OldFlightReservationBooker.cshtml" />
+    <Content Include="Views\B2BTemplate\OlderHotelReservationBooker.cshtml" />
     <None Include="Views\Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
