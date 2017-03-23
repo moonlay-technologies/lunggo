@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Security.Principal;
 using System.Web;
@@ -23,24 +24,19 @@ namespace Lunggo.ApCommon.Campaign.Service
     {
         public BinMethodDiscount CheckBinDiscount(string rsvNo, string bin, string hashedPan, string voucherCode)
         {
-            ReservationBase rsv;
-            decimal discAmount;
-            if (rsvNo.StartsWith("1"))
-            {
-                rsv = FlightService.GetInstance().GetReservation(rsvNo);
-                discAmount = (rsv as FlightReservation).Itineraries.Sum(i => i.GetApparentOriginalPrice())*0.1M;
-            }
-            else
-            {
-                rsv = HotelService.GetInstance().GetReservation(rsvNo);
-                discAmount = (rsv as HotelReservation).HotelDetails.Rooms.Sum(ro => ro.Rates.Sum(i => i.GetApparentOriginalPrice()))*0.1M;
-            }
-
-            var dailyLimit = 50;
-            var isAvailable = IsPanAndEmailEligibleInCache("btn", hashedPan, rsv.Contact.Email, dailyLimit);
-            var isValid = IsBinPromoValid(rsv, bin, hashedPan, voucherCode, "btn");
-            if (discAmount >= 300000)
-                discAmount = 300000;
+            bin = (bin != null && bin.Length >= 6)
+                ? bin.Substring(0, 6)
+                : "";
+            var promoType = GetBinPromoType(bin);
+            var rsv = rsvNo.StartsWith("1")
+                ? (ReservationBase)FlightService.GetInstance().GetReservation(rsvNo)
+                : (ReservationBase)HotelService.GetInstance().GetReservation(rsvNo);
+            var discAmount = GetDiscAmount(rsv, promoType);
+            var dailyLimit = GetDailyLimit(promoType);
+            var isAvailable = IsPanAndEmailEligibleInCache(promoType, hashedPan, rsv.Contact.Email, dailyLimit);
+            var isValid = IsBinPromoValid(rsv, bin, hashedPan, voucherCode, promoType);
+            discAmount = DiscountCap(discAmount, promoType);
+            var discName = GetDiscName(promoType);
 
             return isValid
                 ? isAvailable
@@ -49,62 +45,119 @@ namespace Lunggo.ApCommon.Campaign.Service
                         Amount = discAmount,
                         IsAvailable = true,
                         Currency = new Currency("IDR"),
-                        DisplayName = "Diskon BTN",
-                        ReplaceMargin = true
+                        DisplayName = discName,
+                        ReplaceMargin = false
                     }
                     : new BinMethodDiscount
                     {
                         Amount = 0,
                         IsAvailable = false,
-                        DisplayName = "Diskon BTN"
+                        DisplayName = discName
                     }
                 : null;
         }
 
         public BinMethodDiscount CheckMethodDiscount(string rsvNo, string voucherCode)
         {
-            if (rsvNo.StartsWith("2"))
-            {
-                var rsv = HotelService.GetInstance().GetReservation(rsvNo);
-                var discAmount = rsv.HotelDetails.Rooms.Sum(ro => ro.Rates.Sum(i => i.GetApparentOriginalPrice())) * 0.1M;
-
-                if (discAmount > 150000)
-                {
-                    discAmount = 150000;
-                }
-
-                var isAvailable = IsEmailEligibleInCache("paydayMadness", rsv.Contact.Email, 20);
-                var isValid = IsMethodPromoValid(rsv, voucherCode, "paydayMadness");
-
-                return isValid ?
-                    isAvailable
+            var promoType = "paydayMadness";
+            var rsv = rsvNo.StartsWith("1")
+                ? (ReservationBase)FlightService.GetInstance().GetReservation(rsvNo)
+                : (ReservationBase)HotelService.GetInstance().GetReservation(rsvNo);
+            var discAmount = GetDiscAmount(rsv, promoType);
+            var dailyLimit = GetDailyLimit(promoType);
+            var isAvailable = IsEmailEligibleInCache(promoType, rsv.Contact.Email, dailyLimit);
+            var isValid = IsMethodPromoValid(rsv, voucherCode, promoType);
+            discAmount = DiscountCap(discAmount, promoType);
+            var discName = GetDiscName(promoType);
+            return isValid
+                ? isAvailable
                     ? new BinMethodDiscount
                     {
                         Amount = discAmount,
                         IsAvailable = true,
                         Currency = new Currency("IDR"),
-                        DisplayName = "Payday Madness",
-                        ReplaceMargin = true
+                        DisplayName = discName,
+                        ReplaceMargin = false
                     }
                     : new BinMethodDiscount
                     {
                         Amount = 0,
                         IsAvailable = false,
-                        DisplayName = "Diskon"
+                        DisplayName = discName
                     }
                 : null;
+        }
+
+        private static string GetDiscName(string promoType)
+        {
+            switch (promoType)
+            {
+                case "btn":
+                    return "Diskon BTN";
+                case "mega":
+                    return "Diskon Bank Mega";
+                case "paydayMadness":
+                    return "Payday Madness";
+                default:
+                    return "";
             }
-            return null;
+        }
+
+        private int GetDailyLimit(string promoType)
+        {
+            switch (promoType)
+            {
+                case "btn":
+                    return 50;
+                case "mega":
+                    return 50;
+                case "paydayMadness":
+                    return 100;
+                default:
+                    return 0;
+            }
+        }
+
+        private static decimal DiscountCap(decimal discAmount, string promoType)
+        {
+            switch (promoType)
+            {
+                case "btn":
+                    return discAmount > 300000 ? 300000 : discAmount;
+                case "mega":
+                    return discAmount;
+                case "paydayMadness":
+                    return discAmount > 150000 ? 150000 : discAmount;
+                default:
+                    return discAmount;
+            }
+        }
+
+        private static decimal GetDiscAmount(ReservationBase rsv, string promoType)
+        {
+            switch (promoType)
+            {
+                case "btn":
+                    return rsv is FlightReservation
+                        ? (rsv as FlightReservation).Itineraries.Sum(i => i.Price.Local) * 0.1M
+                        : (rsv as HotelReservation).HotelDetails.Rooms.Sum(ro => ro.Rates.Sum(i => i.Price.Local)) * 0.1M;
+                case "mega":
+                    return rsv is FlightReservation
+                        ? 0
+                        : (rsv as HotelReservation).HotelDetails.Rooms.Sum(ro => ro.Rates.Sum(i => i.Price.Local)) * 0.1M;
+                case "paydayMadness":
+                    return rsv is FlightReservation
+                        ? 0
+                        : (rsv as HotelReservation).HotelDetails.Rooms.Sum(ro => ro.Rates.Sum(i => i.Price.Local)) * 0.15M;
+                default:
+                    return 0;
+            }
         }
 
         private bool IsBinPromoValid(ReservationBase rsv, string bin, string hashedPan, string voucherCode, string promoType)
         {
-            var bin6 = (bin != null && bin.Length >= 6)
-                ? bin.Substring(0, 6)
-                : "";
             return IsReservationEligible(rsv, promoType) &&
                    string.IsNullOrEmpty(voucherCode) &&
-                   IsBinGranted(bin6, promoType) &&
                    IsDateValid(promoType);
         }
 
@@ -114,10 +167,11 @@ namespace Lunggo.ApCommon.Campaign.Service
                    string.IsNullOrEmpty(voucherCode) &&
                    IsDateValid(promoType);
         }
+
         private bool IsReservationEligible(ReservationBase rsv, string promoType)
         {
-            return rsv.RsvNo.StartsWith("1") 
-                ? IsReservationEligible(rsv as FlightReservation, promoType) 
+            return rsv.RsvNo.StartsWith("1")
+                ? IsReservationEligible(rsv as FlightReservation, promoType)
                 : IsReservationEligible(rsv as HotelReservation, promoType);
         }
 
@@ -126,8 +180,10 @@ namespace Lunggo.ApCommon.Campaign.Service
             switch (promoType)
             {
                 case "btn":
-                    return rsv.Itineraries.Sum(i => i.GetApparentOriginalPrice()) >= 1500000 &&
+                    return rsv.Itineraries.Sum(i => i.Price.Local) >= 1500000 &&
                            rsv.Itineraries.All(i => i.Supplier != Supplier.Mystifly);
+                case "mega":
+                    return false;
                 case "paydayMadness":
                     return false;
                 default:
@@ -140,7 +196,9 @@ namespace Lunggo.ApCommon.Campaign.Service
             switch (promoType)
             {
                 case "btn":
-                    return rsv.HotelDetails.Rooms.Sum(ro => ro.Rates.Sum(i => i.GetApparentOriginalPrice())) >= 1500000;
+                    return rsv.HotelDetails.Rooms.Sum(ro => ro.Rates.Sum(i => i.Price.Local)) >= 1500000;
+                case "mega":
+                    return true;
                 case "paydayMadness":
                     return true;
                 default:
@@ -157,6 +215,9 @@ namespace Lunggo.ApCommon.Campaign.Service
                 case "btn":
                     return env != "production" || (dateNow >= new DateTime(2017, 2, 1) &&
                                                    dateNow <= new DateTime(2017, 3, 31));
+                case "mega":
+                    return env != "production" || (dateNow >= new DateTime(2017, 3, 24) &&
+                                                   dateNow <= new DateTime(2017, 4, 2));
                 case "paydayMadness":
                     return env != "production" || (dateNow >= new DateTime(2017, 3, 25) &&
                                                    dateNow <= new DateTime(2017, 8, 27) &&
@@ -166,34 +227,56 @@ namespace Lunggo.ApCommon.Campaign.Service
             }
         }
 
-        private bool IsBinGranted(string bin6, string promoType)
-        {
-            if (promoType == "btn")
-            {
-                return (bin6 == "421570" ||
-                        bin6 == "485447" ||
-                        bin6 == "469345" ||
-                        bin6 == "462436" ||
-                        bin6 == "437527" ||
-                        bin6 == "437528" ||
-                        bin6 == "437529" ||
-                        IsBinGrantedDevelopment(bin6));
-            }
-            return false;
-        }
-
-        private bool IsBinGrantedDevelopment(string bin6)
+        private static string GetBinPromoType(string bin)
         {
             var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
-            return env != "production" && (bin6 == "401111" ||
-                                           bin6 == "411111" ||
-                                           bin6 == "421111" ||
-                                           bin6 == "431111" ||
-                                           bin6 == "441111" ||
-                                           bin6 == "451111" ||
-                                           bin6 == "461111" ||
-                                           bin6 == "471111" ||
-                                           bin6 == "481111");
+            if (env != "production")
+                bin = "dev" + bin;
+            var binList = new Dictionary<string, List<string>>
+            {
+                {
+                    "btn", new List<string>
+                    {
+                        "421570",
+                        "485447",
+                        "469345",
+                        "462436",
+                        "437527",
+                        "437528",
+                        "437529",
+                        "dev401111",
+                        "dev411111",
+                        "dev421111",
+                        "dev431111",
+                        "dev441111",
+                        "dev451111",
+                        "dev461111",
+                        "dev471111",
+                        "dev481111"
+                    }
+                },
+                {
+                    "mega", new List<string>
+                    {
+                        "420191",
+                        "420192",
+                        "420194",
+                        "420194",
+                        "472670",
+                        "478487",
+                        "489087",
+                        "426211",
+                        "524261",
+                        "dev521111",
+                        "dev511111",
+                        "dev541011",
+                        "dev551011",
+                        "dev541111",
+                        "dev551111"
+                    }
+                }
+            };
+            return binList.SingleOrDefault(list => list.Value.Contains(bin)).Key;
         }
     }
 }

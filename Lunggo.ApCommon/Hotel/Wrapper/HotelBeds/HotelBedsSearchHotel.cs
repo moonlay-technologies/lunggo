@@ -175,7 +175,9 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds
                                         ? allCurrencies[x.hotelCurrency]
                                         : ConfigManager.GetInstance().GetConfigValue("general", "environment") == "production"
                                             ? allCurrencies["IDR"]
-                                            : allCurrencies["USD"]);
+                                            : x.net < 10000
+                                                ? allCurrencies["USD"]
+                                                : allCurrencies["IDR"]);
                                 return rate;
                             }).ToList()
                         }).ToList(),

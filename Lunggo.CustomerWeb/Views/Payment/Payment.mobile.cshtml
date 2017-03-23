@@ -263,11 +263,11 @@
                                 <dt>{{voucher.displayName}}</dt>
                                 <dd><sup>Rp</sup>- {{voucher.amount| number}}</dd>
                             </dl>
-                            <dl ng-show="binDiscount.replaceDiscount && !voucher.confirmedCode">
+                            <dl ng-show="binDiscount.available && !voucher.confirmedCode">
                                 <dt>{{binDiscount.displayName}}</dt>
                                 <dd><sup>Rp</sup>- {{binDiscount.amount | number}}</dd>
                             </dl>
-                            <dl ng-show="methodDiscount.replaceDiscount && !voucher.confirmedCode">
+                            <dl ng-show="methodDiscount.available && !voucher.confirmedCode">
                                 <dt>{{methodDiscount.displayName}}</dt>
                                 <dd><sup>Rp</sup>- {{methodDiscount.amount | number}}</dd>
                             </dl>
@@ -278,9 +278,12 @@
                             <dl class="total-price">
                                 <dt>Total</dt>
                                 @*<dd><sup>Rp</sup> {{totalPrice - voucher.amount - CreditCardPromo.Amount + UniqueCodePaymentConfig.UniqueCode - binDiscount.amount| number}}</dd>*@
-                                <dd ng-if="binDiscount.replaceDiscount && !voucher.confirmedCode"><sup>Rp</sup> {{originalPrice - CreditCardPromo.Amount + UniqueCodePaymentConfig.UniqueCode - binDiscount.amount| number}}</dd>
-                                <dd ng-if="methodDiscount.replaceDiscount && !voucher.confirmedCode"><sup>Rp</sup> {{originalPrice - CreditCardPromo.Amount + UniqueCodePaymentConfig.UniqueCode - methodDiscount.amount| number}}</dd>
-                                <dd ng-if="!((binDiscount.replaceDiscount || methodDiscount.replaceDiscount) && !voucher.confirmedCode)"><sup>Rp</sup> {{totalPrice - voucher.amount - CreditCardPromo.Amount + UniqueCodePaymentConfig.UniqueCode| number}}</dd>
+                                <dd ng-if="!binDiscount.available && !methodDiscount.available && !voucher.confirmedCode">Rp {{totalPrice - CreditCardPromo.Amount + UniqueCodePaymentConfig.UniqueCode| number}}</dd>
+                                <dd ng-if="voucher.confirmedCode">Rp {{totalPrice - voucher.amount - CreditCardPromo.Amount + UniqueCodePaymentConfig.UniqueCode| number}}</dd>
+                                <dd ng-if="binDiscount.available && binDiscount.replaceDiscount && !voucher.confirmedCode">Rp {{originalPrice - CreditCardPromo.Amount + UniqueCodePaymentConfig.UniqueCode - binDiscount.amount| number}}</dd>
+                                <dd ng-if="binDiscount.available && !binDiscount.replaceDiscount && !voucher.confirmedCode">Rp {{totalPrice - CreditCardPromo.Amount + UniqueCodePaymentConfig.UniqueCode - binDiscount.amount| number}}</dd>
+                                <dd ng-if="methodDiscount.available && methodDiscount.replaceDiscount && !voucher.confirmedCode">Rp {{originalPrice - CreditCardPromo.Amount + UniqueCodePaymentConfig.UniqueCode - methodDiscount.amount| number}}</dd>
+                                <dd ng-if="methodDiscount.available && !methodDiscount.replaceDiscount && !voucher.confirmedCode">Rp {{totalPrice - CreditCardPromo.Amount + UniqueCodePaymentConfig.UniqueCode - methodDiscount.amount| number}}</dd>
                             </dl>
                         </div><!-- .summary__body -->
                     </div><!-- .summar--price -->

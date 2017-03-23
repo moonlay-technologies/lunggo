@@ -99,7 +99,11 @@ namespace Lunggo.ApCommon.Hotel.Model
             }
             else
             {
-                var original = Price.OriginalIdr * 1.1M;
+                var markups = new[] {1.25M, 1.275M, 1.30M, 1.325M, 1.35M, 1.375M, 1.40M};
+                var markup = Price.OriginalIdr < 2000000
+                    ? markups[(int) (Price.OriginalIdr/100%3)]
+                    : markups[(int) (Price.OriginalIdr/100%7)];
+                var original = Price.OriginalIdr * markup;
                 var originalLocal = original / Price.LocalCurrency.Rate;
                 var roundedOriginal = Math.Round(originalLocal / Price.LocalCurrency.RoundingOrder) * Price.LocalCurrency.RoundingOrder;
                 var adjuster = Price.LocalCurrency.RoundingOrder*RateCount*NightCount;

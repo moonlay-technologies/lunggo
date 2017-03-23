@@ -77,9 +77,9 @@
     <script src="/Assets/travorama20/js/hotelSearchController.js"></script>
     <script>
         var gtmContentType = 'hotel';
-        var gtmCity = '@foundLocation.Destination';
+        var gtmCity = '@(foundLocation != null ? foundLocation.Destination : "")';
         var gtmRegion = '@region';
-        var gtmCountry = '@foundLocation.Country';
+        var gtmCountry = '@(foundLocation != null ? foundLocation.Country : "")';
         var gtmCheckinDate = '@Model.SearchParamObject.CheckinDate.ToString("yyyyMMdd")';
         var gtmCheckoutDate = '@Model.SearchParamObject.CheckoutDate.ToString("yyyyMMdd")';
         var gtmNumAdults = @sumAdult;
@@ -149,120 +149,120 @@
                         @*tra-on-enter="filterHotels()"*@
                         <input type="text" ng-pattern="/^[a-zA-Z]*$/" ng-model="filter.nameFilter" @*ng-disabled="hotels.length < 1"*@ class="form-hotel-name form-control">
                     </div>
-                </div>
-                <div class="filter-group filter-group--rating">
-                    <div class="filter-group__header">
-                        <h4 class="filter-group__title">Peringkat Bintang Hotel</h4>
-                    </div>
-                    <div class="filter-group__content">
-                        <label class="checkbox" ng-click="changeFilter('star', 1)" ng-class="{ active : (filter.stars.indexOf(1) > -1)}">
-                            <div class="switch"></div>
-                            <span class="star"></span>
-                        </label>
-                        <label class="checkbox" ng-click="changeFilter('star', 2)" ng-class="{ active : (filter.stars.indexOf(2) > -1)}">
-                            <div class="switch"></div>
-                            <span class="star star-2"></span>
-                        </label>
-                        <label class="checkbox" ng-click="changeFilter('star', 3)" ng-class="{ active : (filter.stars.indexOf(3) > -1) }">
-                            <div class="switch"></div>
-                            <span class="star star-3"></span>
-                        </label>
-                        <label class="checkbox" ng-click="changeFilter('star', 4)" ng-class="{ active: (filter.stars.indexOf(4) > -1) }">
-                            <div class="switch"></div>
-                            <span class="star star-4"></span>
-                        </label>
-                        <label class="checkbox" ng-click="changeFilter('star', 5)" ng-class="{ active: (filter.stars.indexOf(5) > -1) }">
-                            <div class=" switch"></div>
-                            <span class="star star-5"></span>
-                        </label>
-                    </div>
-                </div>
-                <div class="filter-group filter-group--facility" ng-show="hotelFilterDisplayInfo.facilityFilter.length > 0">
-                    <div class="filter-group__header">
-                        <h4 class="filter-group__title">Fasilitas</h4>
-                    </div>
-                    <div class="filter-group__content short-txt clearfix">
-                        <div class="col-half" ng-repeat="facilityFilter in hotelFilterDisplayInfo.facilityFilter" ng-hide="facilityFilter.count == 0">
-                            <label class="checkbox" ng-click="changeFilter('facility', facilityFilter)" ng-class="{ 'active': (filter.facilities.indexOf(facilityFilter.code) > -1) }">
-                                <div class="switch"></div>
-                                <span>{{facilityFilter.name}} ({{facilityFilter.count}})</span>
-                            </label>
-                        </div>
-                    </div>
-                    <a class="open-txt"></a>
-                </div>
-                <div class="filter-group filter-group--area" ng-show="hotelFilterDisplayInfo.zoneFilter.length > 0">
-                    <div class="filter-group__header">
-                        <h4 class="filter-group__title">Area</h4>
-                    </div>
-                    <div class="filter-group__content short-txt clearfix">
-                        <div class="col-half" ng-repeat="zoneFilter in hotelFilterDisplayInfo.zoneFilter ">
-                            <label class="checkbox" ng-click="changeFilter('zone', zoneFilter)" ng-class="{ 'active': (filter.zones.indexOf(zoneFilter.code) > -1) }">
-                                <div class="switch"></div>
-                                <span>{{zoneFilter.name}}</span>
-                            </label>
-                        </div>
-                    </div>
-                    <a class="open-txt"></a>
-                </div>
-            </form>
-            <div class="reset">
-                <button class="btn btn-reset" id="reset" ng-click="resetButtonFilter()">Reset</button>
+        </div>
+        <div class="filter-group filter-group--rating">
+            <div class="filter-group__header">
+                <h4 class="filter-group__title">Peringkat Bintang Hotel</h4>
             </div>
-        </section>
+            <div class="filter-group__content">
+                <label class="checkbox" ng-click="changeFilter('star', 1)" ng-class="{ active : (filter.stars.indexOf(1) > -1)}">
+                    <div class="switch"></div>
+                    <span class="star"></span>
+                </label>
+                <label class="checkbox" ng-click="changeFilter('star', 2)" ng-class="{ active : (filter.stars.indexOf(2) > -1)}">
+                    <div class="switch"></div>
+                    <span class="star star-2"></span>
+                </label>
+                <label class="checkbox" ng-click="changeFilter('star', 3)" ng-class="{ active : (filter.stars.indexOf(3) > -1) }">
+                    <div class="switch"></div>
+                    <span class="star star-3"></span>
+                </label>
+                <label class="checkbox" ng-click="changeFilter('star', 4)" ng-class="{ active: (filter.stars.indexOf(4) > -1) }">
+                    <div class="switch"></div>
+                    <span class="star star-4"></span>
+                </label>
+                <label class="checkbox" ng-click="changeFilter('star', 5)" ng-class="{ active: (filter.stars.indexOf(5) > -1) }">
+                    <div class=" switch"></div>
+                    <span class="star star-5"></span>
+                </label>
+            </div>
+        </div>
+        <div class="filter-group filter-group--facility" ng-show="hotelFilterDisplayInfo.facilityFilter.length > 0">
+            <div class="filter-group__header">
+                <h4 class="filter-group__title">Fasilitas</h4>
+            </div>
+            <div class="filter-group__content short-txt clearfix">
+                <div class="col-half" ng-repeat="facilityFilter in hotelFilterDisplayInfo.facilityFilter" ng-hide="facilityFilter.count == 0">
+                    <label class="checkbox" ng-click="changeFilter('facility', facilityFilter)" ng-class="{ 'active': (filter.facilities.indexOf(facilityFilter.code) > -1) }">
+                        <div class="switch"></div>
+                        <span>{{facilityFilter.name}} ({{facilityFilter.count}})</span>
+                    </label>
+                </div>
+            </div>
+            <a class="open-txt"></a>
+        </div>
+        <div class="filter-group filter-group--area" ng-show="hotelFilterDisplayInfo.zoneFilter.length > 0">
+            <div class="filter-group__header">
+                <h4 class="filter-group__title">Area</h4>
+            </div>
+            <div class="filter-group__content short-txt clearfix">
+                <div class="col-half" ng-repeat="zoneFilter in hotelFilterDisplayInfo.zoneFilter ">
+                    <label class="checkbox" ng-click="changeFilter('zone', zoneFilter)" ng-class="{ 'active': (filter.zones.indexOf(zoneFilter.code) > -1) }">
+                        <div class="switch"></div>
+                        <span>{{zoneFilter.name}}</span>
+                    </label>
+                </div>
+            </div>
+            <a class="open-txt"></a>
+        </div>
+    </form>
+    <div class="reset">
+        <button class="btn btn-reset" id="reset" ng-click="resetButtonFilter()">Reset</button>
     </div>
+</section>
+</div>
 
-    <!-- Overlay Sort -->
-    <div class="overlay overlay--hotel-sort overlay--theme--blue" ng-class="{'active' : (PageConfig.ActiveOverlay == 'hotel-sort')}">
-        <header class="overlay__header">
-            <h3 class="overlay__title">
-                SORTIR
-                <span class="overlay__close" ng-click="PageConfig.SetOverlay('')">X</span>
-            </h3>
+<!-- Overlay Sort -->
+<div class="overlay overlay--hotel-sort overlay--theme--blue" ng-class="{'active' : (PageConfig.ActiveOverlay == 'hotel-sort')}">
+    <header class="overlay__header">
+        <h3 class="overlay__title">
+            SORTIR
+            <span class="overlay__close" ng-click="PageConfig.SetOverlay('')">X</span>
+        </h3>
+    </header>
+    <section class="overlay__content">
+        <label class="round" ng-class="{ active : sortBy == sortByType.ascendingPrice }" ng-click="changeSorting(sortByType.ascendingPrice)">
+            <span class="radio"></span>
+            <span class="name">Harga Terendah</span>
+        </label>
+        <label class="round" ng-class="{ active : sortBy == sortByType.descendingPrice }" ng-click="changeSorting(sortByType.descendingPrice)">
+            <span class="radio"></span>
+            <span class="name">Harga Tertinggi</span>
+        </label>
+        <label class="round" ng-class="{ active : sortBy == sortByType.ascendingStar }" ng-click="changeSorting(sortByType.ascendingStar)">
+            <span class="radio"></span>
+            <input type="radio" name="optradio" class="check-radio" value="false" />
+            <span class="name">Bintang Hotel Terendah</span>
+        </label>
+        <label class="round" ng-class="{ active : sortBy == sortByType.descendingStar }" ng-click="changeSorting(sortByType.descendingStar)">
+            <span class="radio"></span>
+            <input type="radio" name="optradio" class="check-radio" value="false" />
+            <span class="name">Bintang Hotel Tertinggi</span>
+        </label>
+    </section>
+</div>
+
+<!-- overlay hotel selector -->
+@Html.Partial("/Views/Shared/Mobile/_Autocomplete.cshtml")
+
+<!-- overlay hotel date -->
+@Html.Partial("/Views/Shared/Mobile/_SelectCheckInDate.cshtml")
+
+<div class="popup__wrapper" ng-class="{'active': expired}">
+    <div class="popup">
+        <header class="popup__header">
+            <h4 class="popup__title">Pencarian Kadaluarsa</h4>
         </header>
-        <section class="overlay__content">
-            <label class="round" ng-class="{ active : sortBy == sortByType.ascendingPrice }" ng-click="changeSorting(sortByType.ascendingPrice)">
-                <span class="radio"></span>
-                <span class="name">Harga Terendah</span>
-            </label>
-            <label class="round" ng-class="{ active : sortBy == sortByType.descendingPrice }" ng-click="changeSorting(sortByType.descendingPrice)">
-                <span class="radio"></span>
-                <span class="name">Harga Tertinggi</span>
-            </label>
-            <label class="round" ng-class="{ active : sortBy == sortByType.ascendingStar }" ng-click="changeSorting(sortByType.ascendingStar)">
-                <span class="radio"></span>
-                <input type="radio" name="optradio" class="check-radio" value="false" />
-                <span class="name">Bintang Hotel Terendah</span>
-            </label>
-            <label class="round" ng-class="{ active : sortBy == sortByType.descendingStar }" ng-click="changeSorting(sortByType.descendingStar)">
-                <span class="radio"></span>
-                <input type="radio" name="optradio" class="check-radio" value="false" />
-                <span class="name">Bintang Hotel Tertinggi</span>
-            </label>
-        </section>
-    </div>
-
-    <!-- overlay hotel selector -->
-    @Html.Partial("/Views/Shared/Mobile/_Autocomplete.cshtml")
-
-    <!-- overlay hotel date -->
-    @Html.Partial("/Views/Shared/Mobile/_SelectCheckInDate.cshtml")
-
-    <div class="popup__wrapper" ng-class="{'active': expired}">
-        <div class="popup">
-            <header class="popup__header">
-                <h4 class="popup__title">Pencarian Kadaluarsa</h4>
-            </header>
-            <div class="popup__body">
-                <div class="container_new">
-                    <span>Pencarian Anda sudah kadaluarsa. Silakan klik tombol di bawah untuk pencarian ulang.</span>
-                </div>
+        <div class="popup__body">
+            <div class="container_new">
+                <span>Pencarian Anda sudah kadaluarsa. Silakan klik tombol di bawah untuk pencarian ulang.</span>
             </div>
-            <div class="popup__footer">
-                <div class="container_new">
-                    <a class="btn btn-block btn-yellow" ng-click="refreshPage()">CARI ULANG</a>
-                </div>
+        </div>
+        <div class="popup__footer">
+            <div class="container_new">
+                <a class="btn btn-block btn-yellow" ng-click="refreshPage()">CARI ULANG</a>
             </div>
         </div>
     </div>
+</div>
 </div>
