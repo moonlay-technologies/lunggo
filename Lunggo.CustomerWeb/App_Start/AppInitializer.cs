@@ -151,11 +151,12 @@ namespace Lunggo.CustomerWeb
         {
             var configManager = ConfigManager.GetInstance();
             var mobileUrl = configManager.GetConfigValue("general", "mobileUrl");
+            var b2bmobileUrl = configManager.GetConfigValue("general", "b2bMobileUrl");
             DisplayModeProvider.Instance.Modes.Clear();
             DisplayModeProvider.Instance.Modes.Insert(0, new DefaultDisplayMode("mobile")
             {
                 ContextCondition = context =>
-                                context.Request.Url.Host == mobileUrl
+                                context.Request.Url.Host == mobileUrl || context.Request.Url.Host == b2bmobileUrl
             });
             DisplayModeProvider.Instance.Modes.Insert(1, new DefaultDisplayMode(""));
         }

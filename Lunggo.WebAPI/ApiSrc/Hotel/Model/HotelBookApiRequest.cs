@@ -20,5 +20,9 @@ namespace Lunggo.WebAPI.ApiSrc.Hotel.Model
         public string BookerMessageTitle { get; set; }
         [JsonProperty("bookerMessageDescription")]
         public string BookerMessageDescription { get; set; }
+        [JsonProperty("isBookingNoteNew")]
+        public bool IsBookingNoteNew { get; set; }
+        [JsonProperty("userId")]
+        public string UserId { get; set; }
     }
 }

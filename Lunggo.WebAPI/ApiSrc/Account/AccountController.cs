@@ -601,5 +601,40 @@ namespace Lunggo.WebAPI.ApiSrc.Account
                 return ApiResponseBase.ExceptionHandling(e);
             }
         }
+
+        [HttpGet]
+        [Authorize]
+        [LunggoCorsPolicy]
+        [Route("v1/getbookingnotes")]
+        public ApiResponseBase GetBookingNotes()
+        {
+            try
+            {
+                var apiResponse = AccountLogic.GetBookingNotesLogic();
+                return apiResponse;
+            }
+            catch (Exception e)
+            {
+                return ApiResponseBase.ExceptionHandling(e);
+            }
+        }
+
+        [Authorize]
+        [LunggoCorsPolicy]
+        [Route("v1/savebookingnotes")]
+        public ApiResponseBase SaveBookingNotes()
+        {
+            SaveBookingNotesApiRequest request = null;
+            try
+            {
+                request = ApiRequestBase.DeserializeRequest<SaveBookingNotesApiRequest>();
+                var apiResponse = AccountLogic.SaveBookingNotesLogic(request);
+                return apiResponse;
+            }
+            catch (Exception e)
+            {
+                return ApiResponseBase.ExceptionHandling(e, request);
+            }
+        }
     }
 }

@@ -759,10 +759,10 @@ app.controller('checkoutController', [
                 $scope.paxData = $scope.paxData + ']';
                 $scope.book.postData = '{' + $scope.book.postData + ',' + $scope.paxData;
                 if ($scope.buyerInfo.bookerMessageTitle == null || $scope.buyerInfo.bookerMessageTitle.length == 0) {
-                    $scope.book.postData = $scope.book.postData + '}';
+                    $scope.book.postData = $scope.book.postData + ', "isBookingNoteNew":' + $scope.isBookingNoteNew + '}';
                 } else {
                     $scope.bookerReq = ' "bookerMessageTitle":"' + $scope.buyerInfo.bookerMessageTitle + '" ,"bookerMessageDescription":"' + $scope.buyerInfo.bookerMessageDescription + '"';
-                    $scope.book.postData = $scope.book.postData + ',' + $scope.bookerReq + '}';
+                    $scope.book.postData = $scope.book.postData + ',' + $scope.bookerReq + ', "isBookingNoteNew":' + $scope.isBookingNoteNew +'}';
                 }
                 $log.debug($scope.book.postData);
                 $scope.book.postData = JSON.parse($scope.book.postData);
@@ -932,22 +932,19 @@ app.controller('checkoutController', [
             $scope.transferWindowOpen = false;
         }
 
-        $scope.listVisits = [
-        {
-            id: 1,
-            title: "Kunjungan ke Bandung",
-            description: "studi banding"
-        },
-        {
-            id: 2,
-            title: "Kunjungan ke Jakarta",
-            description: "Rapat Direksi Utama"
-        },
-        {
-            id: 3,
-            title: "Kunjungan ke Singapura",
-            description: "Team Bonding"
-        }];
+        $scope.notes = bookingNotes;
+        $scope.listVisits = [];
+
+        $scope.isBookingNoteNew = false;
+        for (var i = 0; i < $scope.notes.length; i++) {
+            $scope.listVisits.push({
+                id: i,
+                title: $scope.notes[i].title,
+                description: $scope.notes[i].description
+            });
+        }
+
+
 
         $scope.selectListVisit = false;
         $scope.setVisitForm = function (val) {
@@ -958,6 +955,7 @@ app.controller('checkoutController', [
                 $scope.disableDescription = false;
                 $("#addVisit").addClass("active");
                 $("#chooseVisit").removeClass("active");
+                $scope.isBookingNoteNew = true;
             } else {
                 var result = $scope.listVisits.filter(function (o) { return o.id == $scope.currentSelection; });
                 if (result != null && result.length > 0) {
@@ -967,6 +965,7 @@ app.controller('checkoutController', [
                 $("#chooseVisit").addClass("active");
                 $("#addVisit").removeClass("active");
                 $scope.disableDescription = true;
+                $scope.isBookingNoteNew = false;
             }
         }
 
@@ -986,6 +985,19 @@ app.controller('checkoutController', [
                 $scope.buyerInfo.bookerMessageDescription = result[0].description;
             }
         });
+
+        if ($scope.listVisits.length == 0) {
+            $scope.selectListVisit = false;
+            //   $scope.setVisitForm(false);
+            $("#chooseVisit").hide();
+            $("#addVisit").hide();
+            $scope.isBookingNoteNew = true;
+        } else {
+            $scope.selectListVisit = true;
+            $("#chooseVisit").addClass("active");
+            $("#addVisit").removeClass("active");
+            $scope.isBookingNoteNew = false;
+        }
 
         //************************* END ******************************
     }

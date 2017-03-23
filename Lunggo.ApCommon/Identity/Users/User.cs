@@ -324,5 +324,30 @@ namespace Lunggo.ApCommon.Identity.Users
                 return false;
             }
         }
+
+        public static List<UserBookingNotes> GetBookingNotes(string userId)
+        {
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                var notes = GetBookingNotesByUserIdQuery.GetInstance().Execute(conn, new { userId }).ToList();
+                return notes;
+            }
+        }
+
+        public static void InsertBookingNotes(string userId, string title, string description)
+        {
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                var bookingNote = new UserBookingNotesTableRecord
+                {
+                    UserId = userId,
+                    Title = title,
+                    Description = description
+                };
+
+                UserBookingNotesTableRepo.GetInstance().Insert(conn, bookingNote);
+            }
+            
+        }
     }
 }

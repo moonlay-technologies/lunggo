@@ -250,6 +250,13 @@ var SetBookingDisabilityStatusConfig = {
     Url: '$apiUrl$$setBookingDisabilityStatusPath$'
 };
 
+var GetBookingNotesConfig = {
+    Url: '$apiUrl$$getBookingNotesPath$'
+};
+
+var SaveBookingNotesConfig = {
+    Url: '$apiUrl$$saveBookingNotesPath$'
+};
 var GetCreditCardConfig = {
     Url: '$apiUrl$$getCreditCardPath$'
 };

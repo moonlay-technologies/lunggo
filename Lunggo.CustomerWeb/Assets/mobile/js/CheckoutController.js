@@ -811,6 +811,72 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
         }
     }
 
+    $scope.notes = bookingNotes;
+    $scope.listVisits = [];
+
+    $scope.isBookingNoteNew = false;
+    for (var i = 0; i < $scope.notes.length; i++) {
+        $scope.listVisits.push({
+            id: i,
+            title: $scope.notes[i].title,
+            description: $scope.notes[i].description
+        });
+    }
+
+
+
+    $scope.selectListVisit = false;
+    $scope.setVisitForm = function (val) {
+        $scope.selectListVisit = val;
+        if (val == false) {
+            $scope.buyerInfo.bookerMessageTitle = '';
+            $scope.buyerInfo.bookerMessageDescription = '';
+            $scope.disableDescription = false;
+            $("#addVisit").addClass("active");
+            $("#chooseVisit").removeClass("active");
+            $scope.isBookingNoteNew = true;
+        } else {
+            var result = $scope.listVisits.filter(function (o) { return o.id == $scope.currentSelection; });
+            if (result != null && result.length > 0) {
+                $scope.buyerInfo.bookerMessageTitle = result[0].title;
+                $scope.buyerInfo.bookerMessageDescription = result[0].description;
+            }
+            $("#chooseVisit").addClass("active");
+            $("#addVisit").removeClass("active");
+            $scope.disableDescription = true;
+            $scope.isBookingNoteNew = false;
+        }
+    }
+
+    $scope.setVisitPurpose = function (item) {
+        $scope.buyerInfo.bookerMessageTitle = item.title;
+        $scope.buyerInfo.bookerMessageDescription = item.description;
+    }
+
+    $scope.currentSelection = 0;
+
+    $scope.$watch('currentSelection',
+    function (newValue) {
+        newValue = parseInt(newValue);
+        var result = $scope.listVisits.filter(function (o) { return o.id == newValue; });
+        if (result != null && result.length > 0) {
+            $scope.buyerInfo.bookerMessageTitle = result[0].title;
+            $scope.buyerInfo.bookerMessageDescription = result[0].description;
+        }
+    });
+
+    if ($scope.listVisits.length == 0) {
+        $scope.selectListVisit = false;
+        //   $scope.setVisitForm(false);
+        $("#chooseVisit").hide();
+        $("#addVisit").hide();
+        $scope.isBookingNoteNew = true;
+    } else {
+        $scope.selectListVisit = true;
+        $("#chooseVisit").addClass("active");
+        $("#addVisit").removeClass("active");
+        $scope.isBookingNoteNew = false;
+    }
     // expiry date
    
     //$scope.displayCountry = function (code) {
