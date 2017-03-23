@@ -67,7 +67,7 @@ app.controller('hotelcheckoutController', [
         $scope.currentPage = 1;
         $scope.stepClass = '';
         $scope.loginShown = false;
-        $scope.loggedIn = false;
+        $scope.loggedIn = getAuthAccess();
         $scope.titles = [
             { name: 'Pilih Titel', value: '' },
             { name: 'Tn.', value: 'Mister' },
@@ -256,6 +256,38 @@ app.controller('hotelcheckoutController', [
 
         // **************************** LOGIN **********************************
         
+
+        if ($scope.loggedIn == 2) {
+            // call API get Profile
+            var authAccess = getAuthAccess();
+            if (authAccess == 2) {
+                $http({
+                    method: 'GET',
+                    url: GetProfileConfig.Url,
+                    headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') }
+                }).then(function (returnData) {
+                    if (returnData.data.status == "200") {
+                        $log.debug('Success getting Profile');
+                        $scope.buyerInfo.name = returnData.data.name;
+                        $scope.buyerInfo.countryCode = parseInt(returnData.data.countryCallCd);
+                        $scope.buyerInfo.phone = parseInt(returnData.data.phone);
+                        $scope.buyerInfo.email = returnData.data.email;
+                    }
+                    else {
+                        $scope.buyerInfo = {};
+                    }
+                }).catch(function () {
+                    $scope.buyerInfo = {};
+                });
+            }
+            else {
+                $scope.buyerInfo = {};
+                $log.debug('Not Authorized');
+            }
+
+        } else {
+            $scope.buyerInfo = {};
+        }
         // change page after login
         $scope.form.submit = function () {
             if ($scope.trial > 3) {
@@ -410,7 +442,7 @@ app.controller('hotelcheckoutController', [
                 if ($scope.buyerInfo.bookerMessageTitle == null || $scope.buyerInfo.bookerMessageTitle.length == 0) {
                     $scope.book.postData = $scope.book.postData +'}';
                 } else {
-                    $scope.bookerReq = ' "bookerMessageTitle":"' + $scope.buyerInfo.bookerMessageTitle + '" ,"bookerMessageDescription":"' + $scope.buyerInfo.bookerMessageDescription + '"';
+                    $scope.bookerReq = ' "bookerMessageTitle":"' + $scope.buyerInfo.bookerMessageTitle + '" ,"bookerMessageDescription":"' + $scope.buyerInfo.bookerMessageDescription + '" , "isBookingNoteNew":' + $scope.isBookingNoteNew + '';
                     //'"bookerMessageTitle":"' + $scope.buyerInfo.bookerMessage + '"';
                     $scope.book.postData = $scope.book.postData + ',' + $scope.bookerReq + '}';
                 }
@@ -500,23 +532,20 @@ app.controller('hotelcheckoutController', [
             }
         };
 
-        $scope.listVisits = [
-        {
-            id : 1,
-            title: "Kunjungan ke Bandung",
-            description : "studi banding"
-        },
-        {
-            id: 2,
-            title: "Kunjungan ke Jakarta",
-            description: "Rapat Direksi Utama"
-        },
-        {
-            id: 3,
-            title: "Kunjungan ke Singapura",
-            description: "Team Bonding"
-        }];
+        $scope.notes = bookingNotes;
+        $scope.listVisits = [];
 
+        $scope.isBookingNoteNew = false;
+        for (var i = 0; i < $scope.notes.length; i++) {
+            $scope.listVisits.push({
+                id: i,
+                title: $scope.notes[i].title,
+                description: $scope.notes[i].description
+            });
+        }
+
+        
+        
         $scope.selectListVisit = false;
         $scope.setVisitForm = function(val) {
             $scope.selectListVisit = val;
@@ -526,6 +555,7 @@ app.controller('hotelcheckoutController', [
                 $scope.disableDescription = false;
                 $("#addVisit").addClass("active");
                 $("#chooseVisit").removeClass("active");
+                $scope.isBookingNoteNew = true;
             } else {
                 var result = $scope.listVisits.filter(function (o) { return o.id == $scope.currentSelection; });
                 if (result != null && result.length > 0) {
@@ -535,6 +565,7 @@ app.controller('hotelcheckoutController', [
                 $("#chooseVisit").addClass("active");
                 $("#addVisit").removeClass("active");
                 $scope.disableDescription = true;
+                $scope.isBookingNoteNew = false;
             }
         }
 
@@ -554,5 +585,18 @@ app.controller('hotelcheckoutController', [
                 $scope.buyerInfo.bookerMessageDescription = result[0].description;
             }
         });
+
+        if ($scope.listVisits.length == 0) {
+            $scope.selectListVisit = false;
+            //   $scope.setVisitForm(false);
+            $("#chooseVisit").hide();
+            $("#addVisit").hide();
+            $scope.isBookingNoteNew = true;
+        } else {
+            $scope.selectListVisit = true;
+            $("#chooseVisit").addClass("active");
+            $("#addVisit").removeClass("active");
+            $scope.isBookingNoteNew = false;
+        }
     }
 ]);// checkout controller

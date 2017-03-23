@@ -1,11 +1,15 @@
 ﻿using System;
 using System.Net;
+using System.Web;
 using Lunggo.ApCommon.Hotel.Model.Logic;
 using Lunggo.ApCommon.Hotel.Service;
+using Lunggo.ApCommon.Identity.Users;
 using Lunggo.Framework.Config;
 using Lunggo.Framework.Log;
+using Lunggo.WebAPI.ApiSrc.Account.Model;
 using Lunggo.WebAPI.ApiSrc.Common.Model;
 using Lunggo.WebAPI.ApiSrc.Hotel.Model;
+using Microsoft.AspNet.Identity;
 
 namespace Lunggo.WebAPI.ApiSrc.Hotel.Logic
 {
@@ -19,10 +23,22 @@ namespace Lunggo.WebAPI.ApiSrc.Hotel.Logic
                     StatusCode = HttpStatusCode.BadRequest,
                     ErrorCode = "ERHBOO01"
                 };
+
+            var user = HttpContext.Current.User;
+            if (user == null)
+            {
+                return new HotelBookApiResponse
+                {
+                    StatusCode = HttpStatusCode.Unauthorized,
+                    ErrorCode = "ERABOO04"
+                };
+            }
+            var foundId = user.Identity.GetUser().Id;
+            request.UserId = foundId;
             var bookServiceRequest = PreprocessServiceRequest(request);
             var bookServiceResponse = HotelService.GetInstance().BookHotel(bookServiceRequest);
             var apiResponse = AssembleApiResponse(bookServiceResponse);
-                 
+            
             if (apiResponse.TimeLimit <= DateTime.UtcNow)
             {
                 return new HotelBookApiResponse
@@ -78,7 +94,9 @@ namespace Lunggo.WebAPI.ApiSrc.Hotel.Logic
                 Token = request.Token,
                 SpecialRequest = request.SpecialRequest,
                 BookerMessageTitle = request.BookerMessageTitle,
-                BookerMessageDescription = request.BookerMessageDescription
+                BookerMessageDescription = request.BookerMessageDescription,
+                IsBookingNoteNew = request.IsBookingNoteNew,
+                UserId = request.UserId,
             };
             return selectServiceRequest;
         }

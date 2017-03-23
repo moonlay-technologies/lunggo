@@ -23,6 +23,17 @@ namespace Lunggo.WebAPI.ApiSrc.Flight.Logic
             if (IsValid(request))
             {
                 OnlineContext.SetActiveLanguageCode(request.LanguageCode);
+                var user = HttpContext.Current.User;
+                if (user == null)
+                {
+                    return new FlightBookApiResponse
+                    {
+                        StatusCode = HttpStatusCode.Unauthorized,
+                        ErrorCode = "ERFBOO05"
+                    };
+                }
+                var foundId = user.Identity.GetUser().Id;
+                request.UserId = foundId;
                 var bookServiceRequest = PreprocessServiceRequest(request);
                 var bookServiceResponse = FlightService.GetInstance().BookFlight(bookServiceRequest);
                 var apiResponse = AssembleApiResponse(bookServiceResponse, request.Test);
@@ -156,7 +167,9 @@ namespace Lunggo.WebAPI.ApiSrc.Flight.Logic
                 Contact = request.Contact,
                 Passengers = FlightService.GetInstance().ConvertToPax(request.Passengers),
                 BookerMessageTitle = request.BookerMessageTitle,
-                BookerMessageDescription = request.BookerMessageDescription
+                BookerMessageDescription = request.BookerMessageDescription,
+                UserId = request.UserId,
+                IsBookingNoteNew = request.IsBookingNoteNew
             };
             return bookServiceRequest;
         }

@@ -76,7 +76,10 @@ namespace Lunggo.ApCommon.Flight.Service
                 output.RsvNo = reservation.RsvNo;
                 output.TimeLimit = reservation.Itineraries.Min(itin => itin.TimeLimit);
                 ExpireReservationWhenTimeout(reservation.RsvNo, reservation.Payment.TimeLimit);
-
+                if (input.IsBookingNoteNew)
+                {
+                    User.InsertBookingNotes(input.UserId, input.BookerMessageTitle, input.BookerMessageDescription);
+                }
                 //DeleteItinerariesFromCache(input.Token);
 
                 // DEVELOPMENT PURPOSE

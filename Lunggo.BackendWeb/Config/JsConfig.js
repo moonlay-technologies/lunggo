@@ -250,6 +250,13 @@ var SetBookingDisabilityStatusConfig = {
     Url: 'https://api.local.travorama.com/v1/payment/setbookingdisabilitystatus'
 };
 
+var GetBookingNotesConfig = {
+    Url: 'https://api.local.travorama.com'
+};
+
+var SaveBookingNotesConfig = {
+    Url: 'https://api.local.travorama.com'
+};
 var GetCreditCardConfig = {
     Url: 'https://api.local.travorama.com/v1/payment/getcreditcard'
 };

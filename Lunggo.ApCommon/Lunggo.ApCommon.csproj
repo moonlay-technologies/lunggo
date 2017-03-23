@@ -421,7 +421,9 @@
     <Compile Include="Identity\Model\ApproverData.cs" />
     <Compile Include="Identity\Model\FilterSortingModel.cs" />
     <Compile Include="Identity\Model\UserData.cs" />
+    <Compile Include="Identity\Model\UserBookingNotes.cs" />
     <Compile Include="Identity\Model\UserSortingType.cs" />
+    <Compile Include="Identity\Query\GetBookingNotesByUserIdQuery.cs" />
     <Compile Include="Identity\Query\GetAllUserByAdminQuery.cs" />
     <Compile Include="Identity\Query\GetApproverEmailByUserIdQuery.cs" />
     <Compile Include="Identity\Query\GetCompanyIdByUserQuery.cs" />

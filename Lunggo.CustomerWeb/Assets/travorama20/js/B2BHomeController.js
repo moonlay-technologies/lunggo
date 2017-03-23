@@ -25,7 +25,7 @@ app.controller('B2BFlightSearchFormController', ['$scope', '$log', '$http', '$lo
         if (Cookies.get('destinationCity')) {
             $scope.searchParam.DestinationCity = Cookies.get('destinationCity');
         } else {
-            $$scope.searchParam.DestinationCity = 'Denpasar';
+            $scope.searchParam.DestinationCity = 'Denpasar';
         }
 
         if (Cookies.get('departure')) {
@@ -37,7 +37,7 @@ app.controller('B2BFlightSearchFormController', ['$scope', '$log', '$http', '$lo
         if (Cookies.get('return')) {
             $scope.searchParam.ReturnDate = new Date(Cookies.get('return'));
         } else {
-            $scope.searchParam.ReturnDate = moment().locale("id").add(1, 'days');
+            $scope.searchParam.ReturnDate = new Date();
         }
 
         $('#originPlace').val(($scope.searchParam.OriginCity + " (" + $scope.searchParam.OriginAirport + ")"));
@@ -110,9 +110,9 @@ app.controller('B2BFlightSearchFormController', ['$scope', '$log', '$http', '$lo
     });
 
     $scope.Passenger = {
-        Adult: '',
-        Child: '',
-        Infant: '',
+        Adult: 1,
+        Child: 0,
+        Infant: 0,
         PaxAmtAdult: [1, 2, 3, 4, 5, 6, 7, 8, 9],
         PaxAmtElse: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
     }
@@ -596,7 +596,7 @@ app.controller('B2BHotelSearchFormController', ['$scope', '$log', '$http', '$loc
         if (Cookies.get('hotelSearchLocation')) {
             $scope.hotelSearch.location = Cookies.get('hotelSearchLocation');
         } else {
-            $scope.hotelSearch.location = 16173;
+            $scope.hotelSearch.location = 1316553;
         }
 
         if (Cookies.get('urlCountry')) {
@@ -638,8 +638,11 @@ app.controller('B2BHotelSearchFormController', ['$scope', '$log', '$http', '$loc
             $scope.hotelSearch.checkinDateDisplay = moment($scope.hotelSearch.checkinDate).locale("id").format('LL');
         }
 
-        var valCheckInDate = $scope.setDateWriting($scope.hotelSearch.checkinDate.getDate(),
-            $scope.hotelSearch.checkinDate.getMonth(), $scope.hotelSearch.checkinDate.getFullYear());
+        var valdate = moment($scope.hotelSearch.checkinDate).toDate;
+        var day = parseInt(moment($scope.hotelSearch.checkinDate).format('D'));
+        var month = parseInt(moment($scope.hotelSearch.checkinDate).format('M'));
+        var year = parseInt(moment($scope.hotelSearch.checkinDate).format('YYYY'));
+        var valCheckInDate = $scope.setDateWriting(day, month - 1, year);
         $('#checkInDate').val(valCheckInDate);
         $('#checkInDate').datepicker('setStartDate', new Date(todayDate.getFullYear(), todayDate.getMonth(), todayDate.getDate()));
 

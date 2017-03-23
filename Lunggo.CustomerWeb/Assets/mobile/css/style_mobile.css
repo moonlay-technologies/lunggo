@@ -3420,6 +3420,16 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
   margin-left: 0;
   margin-right: 0; }
 
+.page.page-checkout .form-visit-selection {
+  color: #1f99c7;
+  font-weight: bold; }
+  .page.page-checkout .form-visit-selection.active {
+    background-color: #1f99c7;
+    color: white; }
+
+.page.page-checkout:hover {
+  cursor: pointer; }
+
 .page.page-confirmation .instruction header {
   background: #2fb4e6;
   color: #fff;
@@ -5266,6 +5276,14 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
       padding: 5px 15px 30px; }
       .page-hotel.page-checkout .checkout-content .form-hotel textarea[name="special-request"] {
         height: 80px; }
+      .page-hotel.page-checkout .checkout-content .form-hotel .form-visit-selection {
+        color: #1f99c7;
+        font-weight: bold; }
+        .page-hotel.page-checkout .checkout-content .form-hotel .form-visit-selection.active {
+          background-color: #1f99c7;
+          color: white; }
+      .page-hotel.page-checkout .checkout-content .form-hotel:hover {
+        cursor: pointer; }
     .page-hotel.page-checkout .checkout-content .review-hotel {
       margin: 20px 15px; }
       .page-hotel.page-checkout .checkout-content .review-hotel .review-room {

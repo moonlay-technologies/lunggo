@@ -921,6 +921,7 @@
 
     /*Page Checkout Hotel*/
     &.page-checkout {
+        
         background: #f9f9f9;
         .summary.summary--payment label {
             background: none;
@@ -948,6 +949,16 @@
             .form-hotel {
                 padding: 5px 15px 30px;
                 textarea[name="special-request"] {height: 80px;}
+                .form-visit-selection{
+                    color: #1f99c7;
+                    font-weight: bold;
+                    &.active{
+                        background-color: #1f99c7;
+                        color: white;
+                    }
+                }   &:hover{
+                    cursor: pointer;
+                } 
             }
             .review-hotel {
                 margin: 20px 15px;
@@ -965,6 +976,8 @@
                 padding: 5px 15px 15px;
             }
             .widget {margin: 5px 0 30px;}
+
+
         }
         .form-box {
             textarea[name="fb-request"] {

@@ -7,6 +7,7 @@ using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using Lunggo.ApCommon.Identity.Users;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Service;
 using Lunggo.ApCommon.Hotel.Constant;
@@ -24,6 +25,7 @@ using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds;
 
 using Lunggo.ApCommon.Hotel.Service;
 using Lunggo.ApCommon.Hotel.Service;
+using Microsoft.Ajax.Utilities;
 using Occupancy = Lunggo.ApCommon.Hotel.Model.Occupancy;
 
 namespace Lunggo.BackendWeb
@@ -39,79 +41,82 @@ namespace Lunggo.BackendWeb
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
             AppInitializer.Init();
-            var flight = FlightService.GetInstance();
-            var hotelService = HotelService.GetInstance();
-            var orderList = new List<ReservationListModel>();
-            var rsvs = flight.GetBookerOverviewReservationsByUserIdOrEmail("3903", "suherimanuturi@gmail.com", null, null,null,null);
-            var rsvsHotel = hotelService.GetBookerOverviewReservationsByUserIdOrEmail("3903", "suherimanuturi@gmail.com", null, null,null,null);
-            var tempFlight = rsvs;
-            var tempHotel = rsvsHotel;
-            if (rsvs != null)
-            {
-                var flightList =
-                    rsvs.GroupBy(u => new {u.BookerMessageTitle, u.BookerMessageDescription })
-                        .Select(grp => new ReservationListModel
-                        {
-                            BookerMessageTitle = grp.Key.BookerMessageTitle,
-                            BookerMessageDescription = grp.Key.BookerMessageDescription,
-                            ReservationList = new ReservationList
-                            {
-                                Flights = grp.ToList()
-                            }
-                        }).ToList();
+           // var x = ApCommon.Identity.Users.User.GetBookingNotes("2001");
+            ApCommon.Identity.Users.User.InsertBookingNotes("2001", "Kunjungan ke Tokyo", "Studi Banding");
+            var y = 3;
+            //var flight = FlightService.GetInstance();
+            //var hotelService = HotelService.GetInstance();
+            //var orderList = new List<ReservationListModel>();
+            //var rsvs = flight.GetBookerOverviewReservationsByUserIdOrEmail("3903", "suherimanuturi@gmail.com", null, null,null,null);
+            //var rsvsHotel = hotelService.GetBookerOverviewReservationsByUserIdOrEmail("3903", "suherimanuturi@gmail.com", null, null,null,null);
+            //var tempFlight = rsvs;
+            //var tempHotel = rsvsHotel;
+            //if (rsvs != null)
+            //{
+            //    var flightList =
+            //        rsvs.GroupBy(u => new {u.BookerMessageTitle, u.BookerMessageDescription })
+            //            .Select(grp => new ReservationListModel
+            //            {
+            //                BookerMessageTitle = grp.Key.BookerMessageTitle,
+            //                BookerMessageDescription = grp.Key.BookerMessageDescription,
+            //                ReservationList = new ReservationList
+            //                {
+            //                    Flights = grp.ToList()
+            //                }
+            //            }).ToList();
 
-                orderList.AddRange(flightList);
+            //    orderList.AddRange(flightList);
 
-                if (rsvsHotel != null)
-                {
-                    var hotelList = rsvsHotel.GroupBy(u => new {u.BookerMessageTitle, u.BookerMessageDescription }).Select(grp => new ReservationListModel
-                    {
-                        BookerMessageTitle = grp.Key.BookerMessageTitle,
-                        BookerMessageDescription = grp.Key.BookerMessageDescription,
-                        ReservationList = new ReservationList
-                        {
-                            Hotels = grp.ToList()
-                        }
-                    }).ToList();
+            //    if (rsvsHotel != null)
+            //    {
+            //        var hotelList = rsvsHotel.GroupBy(u => new {u.BookerMessageTitle, u.BookerMessageDescription }).Select(grp => new ReservationListModel
+            //        {
+            //            BookerMessageTitle = grp.Key.BookerMessageTitle,
+            //            BookerMessageDescription = grp.Key.BookerMessageDescription,
+            //            ReservationList = new ReservationList
+            //            {
+            //                Hotels = grp.ToList()
+            //            }
+            //        }).ToList();
 
-                    foreach (var hotel in hotelList)
-                    {
-                        var findRsv = orderList.SingleOrDefault(x => x.BookerId == hotel.BookerId && x.BookerName == hotel.BookerName && x.BookerMessageTitle == hotel.BookerMessageTitle && x.BookerMessageDescription == hotel.BookerMessageDescription);
-                        if (findRsv != null)
-                            findRsv.ReservationList.Hotels = hotel.ReservationList.Hotels;
-                        else
-                        {
-                            orderList.Add(hotel);
-                        }
-                    }
+            //        foreach (var hotel in hotelList)
+            //        {
+            //            var findRsv = orderList.SingleOrDefault(x => x.BookerId == hotel.BookerId && x.BookerName == hotel.BookerName && x.BookerMessageTitle == hotel.BookerMessageTitle && x.BookerMessageDescription == hotel.BookerMessageDescription);
+            //            if (findRsv != null)
+            //                findRsv.ReservationList.Hotels = hotel.ReservationList.Hotels;
+            //            else
+            //            {
+            //                orderList.Add(hotel);
+            //            }
+            //        }
 
 
-                }
-            }
-            else
-            {
-                if (rsvsHotel != null)
-                {
-                    var hotelList = rsvsHotel.GroupBy(u => new { u.BookerMessageTitle, u.BookerMessageDescription }).Select(grp => new ReservationListModel
-                    {
-                        BookerMessageTitle = grp.Key.BookerMessageTitle,
-                        BookerMessageDescription = grp.Key.BookerMessageDescription,
-                        ReservationList = new ReservationList
-                        {
-                            Hotels = grp.ToList()
-                        }
-                    }).ToList();
-                    orderList.AddRange(hotelList);
-                }
-            }
+            //    }
+            //}
+            //else
+            //{
+            //    if (rsvsHotel != null)
+            //    {
+            //        var hotelList = rsvsHotel.GroupBy(u => new { u.BookerMessageTitle, u.BookerMessageDescription }).Select(grp => new ReservationListModel
+            //        {
+            //            BookerMessageTitle = grp.Key.BookerMessageTitle,
+            //            BookerMessageDescription = grp.Key.BookerMessageDescription,
+            //            ReservationList = new ReservationList
+            //            {
+            //                Hotels = grp.ToList()
+            //            }
+            //        }).ToList();
+            //        orderList.AddRange(hotelList);
+            //    }
+            //}
 
-            var flightNull = rsvs.Where(x => x.Payment.TimeLimit == null).ToList();
-            var hotelNull = rsvsHotel.Where(x => x.Payment.TimeLimit == null).ToList();
+            //var flightNull = rsvs.Where(x => x.Payment.TimeLimit == null).ToList();
+            //var hotelNull = rsvsHotel.Where(x => x.Payment.TimeLimit == null).ToList();
 
-            var testHotel = flightNull;
-            var test2Hotel = hotelNull;
+            //var testHotel = flightNull;
+            //var test2Hotel = hotelNull;
 
-            Console.WriteLine("DONE");
+            //Console.WriteLine("DONE");
 
             //HotelService.GetInstance().CommenceIssueHotel(new IssueHotelTicketInput
             //{
