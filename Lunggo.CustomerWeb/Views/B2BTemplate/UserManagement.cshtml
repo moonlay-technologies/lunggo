@@ -333,7 +333,7 @@
                                     <i class="fa fa-pencil"></i>
                                 </button>
                                 <button ng-if="!user.isLocked" ng-click="UpdateUserLock(user.userId, 'LOCK', $index)" class="btn btn-danger btn-cons" style="">Deactivate</button>
-                                <button ng-if="user.isLocked" ng-click="UpdateUserLock(user.userId, 'UNLOCK', $index)" class="btn btn-green btn-cons" style="">Activate</button>
+                                <button ng-if="user.isLocked" ng-click="UpdateUserLock(user.userId, 'UNLOCK', $index)" class="btn btn-primary btn-cons" style="">Activate</button>
                             </td>
                         </tr>
                     </tbody>
