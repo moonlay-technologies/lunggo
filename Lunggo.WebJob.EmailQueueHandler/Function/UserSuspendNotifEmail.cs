@@ -33,7 +33,7 @@ namespace Lunggo.WebJob.EmailQueueHandler.Function
             var mailModel = new MailModel
             {
                 RecipientList = new []{emailList},
-                Subject = envPrefix + status == "true" ? " [Travorama] Your Account Has Been Deactivated" : " [Travorama] Your Account Has Been Reactivated",
+                Subject = envPrefix + (status == "true" ? " [Travorama] Your Account Has Been Deactivated" : " [Travorama] Your Account Has Been Reactivated"),
                 FromMail = "no-reply@travorama.com",
                 FromName = "Travorama",
                 BccList = new[] { "maillog.travorama@gmail.com" }

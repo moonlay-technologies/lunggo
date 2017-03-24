@@ -124,7 +124,6 @@ namespace Lunggo.ApCommon.Hotel.Service
             return
                 rsvs.Select(ConvertToReservationForDisplay)
                     .Where(r => r.RsvDisplayStatus != RsvDisplayStatus.Expired)
-                    .ToList()
                     .ToList();
         }
 
@@ -136,10 +135,6 @@ namespace Lunggo.ApCommon.Hotel.Service
             {
                 var filtersSplit = filter.Split(',');
                 filters.AddRange(filtersSplit);
-            }
-            else
-            {
-                filters.Add("pending");
             }
             var rsvs =
                 GetOverviewReservationsByBookerIdOrEmailFromDb(userId, email, filters, sort, page, itemsPerPage) ??

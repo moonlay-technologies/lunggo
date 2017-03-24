@@ -1,8 +1,11 @@
-﻿using System.Web.Mvc;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Web.Mvc;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Service;
 using Lunggo.ApCommon.Hotel.Model;
 using Lunggo.ApCommon.Hotel.Service;
+using Lunggo.ApCommon.Model;
 using Lunggo.ApCommon.Util;
 using Lunggo.CustomerWeb.Models;
 using Lunggo.Framework.Config;
@@ -53,8 +56,107 @@ namespace Lunggo.CustomerWeb.Controllers
         }
         public ActionResult OrderListBooker()
         {
-            return View();
+            string filter = "active";
+            var flight = FlightService.GetInstance();
+            var hotel = HotelService.GetInstance();
+            var rsvs = new List<FlightReservationForDisplay>();
+            var rsvsHotel = new List<HotelReservationForDisplay>();
+            rsvs = flight.GetBookerOverviewReservationsByUserIdOrEmail("3904", "if312055@gmail.com",
+                        filter, null, null, null);
+
+            rsvsHotel = hotel.GetBookerOverviewReservationsByUserIdOrEmail("3904", "if312055@gmail.com",
+                        filter, null, null, null);
+
+            var rsvForDisplay = ProcessBookerReservation(rsvs, rsvsHotel);
+            return View(rsvForDisplay);
         }
+
+        public static List<ReservationListModel> ProcessBookerReservation(List<FlightReservationForDisplay> rsvFlights,
+            List<HotelReservationForDisplay> rsvHotels)
+        {
+            var orderList = new List<ReservationListModel>();
+            if (rsvFlights != null)
+            {
+                var flightList =
+                    rsvFlights.GroupBy(u => new { u.Booker.Name, u.BookerMessageTitle, u.BookerMessageDescription })
+                        .Select(grp => new ReservationListModel
+                        {
+                            BookerName = grp.Key.Name,
+                            BookerMessageTitle = grp.Key.BookerMessageTitle,
+                            BookerMessageDescription = grp.Key.BookerMessageDescription,
+                            ReservationList = new ReservationList
+                            {
+                                Flights = grp.ToList()
+                            }
+                        }).ToList();
+
+                orderList.AddRange(flightList);
+
+                if (rsvHotels != null)
+                {
+                    var hotelList = rsvHotels.GroupBy(u => new { u.Booker.Name, u.BookerMessageTitle, u.BookerMessageDescription }).Select(grp => new ReservationListModel
+                    {
+                        BookerName = grp.Key.Name,
+                        BookerMessageTitle = grp.Key.BookerMessageTitle,
+                        BookerMessageDescription = grp.Key.BookerMessageDescription,
+                        ReservationList = new ReservationList
+                        {
+                            Hotels = grp.ToList()
+                        }
+                    }).ToList();
+
+                    foreach (var hotel in hotelList)
+                    {
+                        var findRsv = orderList.SingleOrDefault(x => x.BookerId == hotel.BookerId && x.BookerName == hotel.BookerName && x.BookerMessageTitle == hotel.BookerMessageTitle && x.BookerMessageDescription == hotel.BookerMessageDescription);
+                        if (findRsv != null)
+                            findRsv.ReservationList.Hotels = hotel.ReservationList.Hotels;
+                        else
+                        {
+                            orderList.Add(hotel);
+                        }
+                    }
+
+
+                }
+            }
+            else
+            {
+                if (rsvHotels != null)
+                {
+                    var hotelList = rsvHotels.GroupBy(u => new { u.Booker.Name, u.BookerMessageTitle, u.BookerMessageDescription }).Select(grp => new ReservationListModel
+                    {
+                        BookerName = grp.Key.Name,
+                        BookerMessageTitle = grp.Key.BookerMessageTitle,
+                        BookerMessageDescription = grp.Key.BookerMessageDescription,
+                        ReservationList = new ReservationList
+                        {
+                            Hotels = grp.ToList()
+                        }
+                    }).ToList();
+                    orderList.AddRange(hotelList);
+                }
+            }
+            return orderList;
+        }
+
+        public ActionResult OldFlightReservationBooker()
+        {
+            string filter = "inactive";
+            var flight = FlightService.GetInstance();
+            var rsvs = flight.GetBookerOverviewReservationsByUserIdOrEmail("3904", "if312055@gmail.com",
+                filter, null, null, null);
+            return View(rsvs);
+        }
+
+        public ActionResult OlderHotelReservationBooker()
+        {
+            string filter = "inactive";
+            var hotel = HotelService.GetInstance();
+            var rsvs = hotel.GetBookerOverviewReservationsByUserIdOrEmail("3904", "if312055@gmail.com",
+                filter, null, null, null);
+            return View(rsvs);
+        }
+
         public ActionResult OrderListApprover()
         {
             return View();

@@ -100,10 +100,6 @@ namespace Lunggo.ApCommon.Flight.Service
                 var filtersSplit = filter.Split(',');
                 filters.AddRange(filtersSplit);
             }
-            else
-            {
-                filters.Add("pending");
-            }
             var rsvs = GetOverviewReservationsByBookerIdOrEmailFromDb(userId, email, filters, sort, page, itemsPerPage) ?? new List<FlightReservation>();
             return rsvs.Select(ConvertToBookerReservationForDisplay).ToList();
         }

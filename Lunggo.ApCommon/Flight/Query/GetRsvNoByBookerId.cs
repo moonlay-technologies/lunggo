@@ -32,7 +32,7 @@ namespace Lunggo.ApCommon.Flight.Query
         private static string CreateWhereClause()
         {
             var clauseBuilder = new StringBuilder();
-            clauseBuilder.Append("WHERE (r.UserId = @UserId)");
+            clauseBuilder.Append("WHERE (r.UserId = @UserId AND r.RsvType = 'AGENT')");
             return clauseBuilder.ToString();
         }
 
@@ -51,9 +51,9 @@ namespace Lunggo.ApCommon.Flight.Query
             if (filters != null)
             {
                 if (filters.Contains("active"))
-                    clauseBuilder.Append(" AND (r.RsvTime >= DATEADD(day,-1,GETUTCDATE()) OR r.RsvStatusCd = 'PROC' OR (r.RsvStatusCd = 'COMP' AND t.DepartureDate >= DATEADD(day,-1,GETUTCDATE())))");
+                    clauseBuilder.Append(" AND (t.DepartureDate >= DATEADD(day,-1,GETUTCDATE())) ");
                 if (filters.Contains("inactive"))
-                    clauseBuilder.Append(" AND (r.RsvTime < DATEADD(day,-1,GETUTCDATE()) AND r.RsvStatusCd != 'PROC' AND (r.RsvStatusCd != 'COMP' OR t.DepartureDate < DATEADD(day,-1,GETUTCDATE())))");
+                    clauseBuilder.Append(" AND (t.DepartureDate < DATEADD(day,-1,GETUTCDATE())) ");
                 if (filters.Contains("issued"))
                     clauseBuilder.Append(" AND i.BookingStatusCd = 'TKTD'");
                 if (filters.Contains("pending"))

@@ -1,0 +1,152 @@
+﻿@using System.Globalization
+
+@{
+    Layout = "/Views/Shared/B2BTravorama/_B2BLayout.cshtml";
+    ViewBag.BodyClass = "b2b-order-list";
+    ViewBag.SiteHeader = "b2b-order-list";
+    ViewBag.Title = "Order List Booker";
+    ViewBag.AngularController = "b2BBookerController";
+
+}
+
+@section AdditionalCSS{
+}
+
+@section AdditionalJS{
+    <script src="/Assets/js/angular.min.js"></script>
+    <script src="/Assets/js/angular-route.min.js"></script>
+    <script src="/Assets/js/angular-animate.min.js"></script>
+
+    <script src="/Assets/js/moment.min.js"></script>
+    <script src="/Assets/js/moment-with-locales.min.js"></script>
+    <script src="/Assets/js/xml2json.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.5/angular-resource.js"></script>
+    <script src="/Assets/B2BTravorama/assets/js/form_elements.js" type="text/javascript"></script>
+    @*<script src="/Assets/B2BTravorama/assets/js/tables.js" type="text/javascript"></script>*@
+    <script src="/Assets/B2BTravorama/assets/plugins/jquery-datatable/media/js/jquery.dataTables.min.js" type="text/javascript"></script>
+    <script src="/Assets/B2BTravorama/assets/plugins/jquery-datatable/extensions/TableTools/js/dataTables.tableTools.min.js" type="text/javascript"></script>
+    <script src="/Assets/B2BTravorama/assets/plugins/jquery-datatable/media/js/dataTables.bootstrap.js" type="text/javascript"></script>
+    <script src="/Assets/B2BTravorama/assets/plugins/jquery-datatable/extensions/Bootstrap/jquery-datatable-bootstrap.js" type="text/javascript"></script>
+    <script type="text/javascript" src="/Assets/B2BTravorama/assets/plugins/datatables-responsive/js/datatables.responsive.js"></script>
+    <script type="text/javascript" src="/Assets/B2BTravorama/assets/plugins/datatables-responsive/js/lodash.min.js"></script>
+}
+
+@section PageJS{
+    <script src="/Assets/travorama20/js/B2BTravorama20.js"></script>
+    <script src="/Assets/travorama20/js/B2BAccountController.js"></script>
+    <script src="/Assets/B2BTravorama/assets/js/tables.js" type="text/javascript"></script>
+    <script>
+        jQuery(document).ready(function ($) {
+            $('body .ol-item-hide').hide();
+            $('body .ol-item').click(function () {
+                $(this).parent().find('.ol-item-hide').toggle();
+                $(this).parent().find('.ol-item').toggleClass('show');
+                $(this).parent().siblings().find('.ol-item-hide').hide();
+                $(this).parent().siblings().find('.ol-item').removeClass('show');
+            });
+        });
+    </script>
+}
+
+<div ng-app="travoramaB2B" ng-controller="b2BBookerController">
+    <div class="order-list">
+        <div class="panel panel-transparent">
+            <div class="panel-heading m-b-30">
+                <div class="panel-title">
+                    Order List Booker
+                </div>
+                <div class="pull-right">
+                    <button class="btn btn-success btn-cons" onclick="location.href='@Url.Action("OldFlightReservationBooker", "B2BTemplate")'">Penerbangan</button>
+                    <button class="btn btn-success btn-cons" onclick="location.href='@Url.Action("OlderHotelReservationBooker", "B2BTemplate")'">Hotel</button>
+                </div>
+            </div>
+            <div class="panel-body bg-white">
+                <div class="ol-list clearfix m-b-30">
+                    @*<div class="ol-border ol-header fs-12 bold font-montserrat  padding-15 clearfix">
+                            <div class="olh-title col-sm-9 no-padding">@rsv.BookerMessageTitle <span class="label label-primary m-l-10 fs-11 text-capitalize" style="cursor: pointer;" ng-click="infoOrder($index)"><i class="fa fa-info-circle m-r-5"></i>Info</span></div>
+                        </div>*@
+                    @if (Model != null)
+                    {
+                        <div class="ol-body">
+                            @foreach (var hotel in Model)
+                            {
+                                <div class="ol-hotel clearfix">
+                                    <div class="ol-item ol-border bg-white clearfix">
+                                        <div class="clearfix hotel-icon">
+                                            <div class="col-sm-6 no-padding clearfix">
+                                                <div class="p-l-60 m-t-20 m-b-20">
+                                                    <div class="bold font-montserrat fs-12">@hotel.HotelDetail.HotelName</div>
+                                                    <div class="">@hotel.HotelDetail.ZoneName, @hotel.HotelDetail.DestinationName @hotel.HotelDetail.CountryName</div>
+                                                    <div class="">@hotel.HotelDetail.CheckInDate.ToString("d MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID")) - @hotel.HotelDetail.CheckOutDate.ToString("d MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID"))</div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6 no-padding clearfix">
+                                                <div class="col-sm-6 no-padding p-l-60 m-t-30">
+                                                    <ul class="p-l-20">
+                                                        <li>@hotel.Pax.Count Orang</li>
+                                                        <li>@hotel.HotelDetail.Rooms.Count Kamar</li>
+                                                    </ul>
+                                                </div>
+                                                <div class="col-sm-6 no-padding text-center m-t-20 m-b-20">
+                                                    <div class=" m-t-20">Rp. @hotel.Payment.OriginalPrice</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="ol-item-hide ol-border clearfix">
+                                        <div class="plane-type">
+                                            <div class="panel-heading bold font-montserrat fs-12">Tipe Kamar</div>
+                                            <div class="panel-body">
+                                                <ul class="p-l-20">
+                                                    <li>@hotel.HotelDetail.Rooms.Count x @hotel.HotelDetail.Rooms[0].TypeName</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="ol-body" style="padding-top:150px; ">
+                            <h2><center>Belum ada reservasi</center></h2>
+                        </div>
+                    }
+
+                </div>
+
+            </div>
+        </div>
+        <div class="modal fade stick-up in info-order" tabindex="-1" role="dialog" aria-hidden="false">
+            <div class="modal-dialog p-t-100">
+                <div class="modal-content-wrapper">
+                    <div class="modal-content">
+                        <div class="modal-header clearfix">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                <i class="pg-close fs-14"></i>
+                            </button>
+                            <h4 class="text-center no-margin">Detail Info</h4>
+                        </div>
+                        <div class="modal-body m-t-10">
+                            <div class="clearfix m-b-10">
+                                <div class="col-sm-3 no-padding bold">Nama</div>
+                                <div class="col-sm-9 no-padding">{{bookerInfo.name}}</div>
+                            </div>
+                            <div class="clearfix m-b-10">
+                                <div class="col-sm-3 no-padding bold">Title</div>
+                                <div class="col-sm-9 no-padding">{{bookerInfo.bookerTitle}}</div>
+                            </div>
+                            <div class="clearfix m-b-10">
+                                <div class="col-sm-3 no-padding bold">Deskripsi</div>
+                                <div class="col-sm-9 no-padding">
+                                    {{bookerInfo.bookerMessage}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
