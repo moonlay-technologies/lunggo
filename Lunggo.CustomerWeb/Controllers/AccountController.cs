@@ -245,7 +245,12 @@ namespace Lunggo.CustomerWeb.Controllers
             {
                 return RedirectToAction("Index", "Index");
             }
-
+            var email = UserManager.GetEmail(userId);
+            var model = new ResetPasswordViewModel
+            {
+                Email = email,
+                IsAgentType = isAgentType
+            };
             var apiUrl = ConfigManager.GetInstance().GetConfigValue("api", "apiUrl");
             var confirmClient = new RestClient(apiUrl);
             var confirmRequest = new RestRequest("/v1/confirmemail", Method.POST);
@@ -259,11 +264,11 @@ namespace Lunggo.CustomerWeb.Controllers
                 if (isPasswordSet)
                 {
                     ViewBag.PasswordIsSet = true;
-                    return View();
+                    
+                    return View(model);
                 }
                 else
                 {
-                    var email = UserManager.GetEmail(userId);
                     return RedirectToAction("ResetPassword", new { email, isAgentType });
                 }
             }
@@ -271,20 +276,19 @@ namespace Lunggo.CustomerWeb.Controllers
             if (confirmResponse.ErrorCode == "ERACON01" || confirmResponse.ErrorCode == "ERACON02")
             {
                 ViewBag.UserNotFound = true;
-                return View();
+                return View(model);
             }
 
             if (confirmResponse.ErrorCode == "ERACON04")
             {
-                var email = UserManager.GetEmail(userId);
-                ViewBag.Email = email;
+                                ViewBag.Email = email;
                 ViewBag.LinkExpired = true;
-                return View();
+                return View(model);
             }
 
 
             ViewBag.FailedConfirmation = true;
-            return View();
+            return View(model);
         }
 
         //

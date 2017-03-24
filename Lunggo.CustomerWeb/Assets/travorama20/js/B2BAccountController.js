@@ -58,16 +58,17 @@
 
         $scope.loginFailed = false;
         $scope.form.submit = function () {
-            $('.wait').modal({
-                backdrop: 'static',
-                keyboard: false
-            });
+            
             if ($scope.trial > 3) {
                 $scope.trial = 0;
             }
             $scope.loginFailed = false;
             $scope.errorMessage = '';
             $scope.form.submitting = true;
+            $('.wait').modal({
+                backdrop: 'static',
+                keyboard: false
+            });
             var authAccess = getAuthAccess();
             if (authAccess == 2 || authAccess == 1) {
                 $http({

@@ -1,4 +1,5 @@
-﻿@{
+﻿@model Lunggo.CustomerWeb.Models.ResetPasswordViewModel
+@{
     Layout = "/Views/Shared/Desktop/_LayoutDesktop.cshtml";
     ViewBag.Title = "Ganti Password";
     ViewBag.BodyClass = "page-password page-password-reset";
@@ -14,6 +15,7 @@
         var langCode = 'en';
         var userEmail = '@ViewBag.Email';
         var code = '';
+        var isAgentType = '@Model.IsAgentType';
     </script>
 
     <!-- angular controller -->

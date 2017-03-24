@@ -37,7 +37,15 @@
         </div>
         <div class="rr-row clearfix total">
             <div class="col-half bold-txt lg-txt">Total</div>
-            <div class="col-half bold-txt lg-txt right-txt orange-txt">Rp @Model.Payment.FinalPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</div>
+            @if (Model.Payment.FinalPrice != 0)
+            {
+                <div class="col-half bold-txt lg-txt right-txt orange-txt">Rp @Model.Payment.FinalPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</div>
+            }
+            else
+            {
+                <div class="col-half bold-txt lg-txt right-txt orange-txt">Rp @Model.Payment.OriginalPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</div>
+            }
+            
         </div>
     }
     else

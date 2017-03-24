@@ -12,19 +12,18 @@ namespace Lunggo.WebJob.EmailQueueHandler.Function
 {
     public partial class ProcessEmailQueue
     {
-        public static void BookingDisabilityNotifEmail([QueueTrigger("BookingDisabilityNotifEmail")] string msg)
+        public static void UserSuspendNotifEmail([QueueTrigger("UserSuspendNotifEmail")] string msg)
         {
             var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
             var envPrefix = env != "production" ? "[" + env.ToUpper() + "] " : "";
 
             var sw = new Stopwatch();
-            Console.WriteLine("Processing Booking Disability Notif Email ");
+            Console.WriteLine("Processing UserSuspend Notif Email ");
 
             Console.WriteLine("Getting Required Data...");
             sw.Start();
             var msgSplit = msg.Split('&');
             var emailList = msgSplit[0];
-            var listEmail = emailList.Split('|').ToArray();
             var status = msgSplit[1];
             sw.Stop();
             Console.WriteLine("Done Getting Required Data. (" + sw.Elapsed.TotalSeconds + "s)");
@@ -33,16 +32,16 @@ namespace Lunggo.WebJob.EmailQueueHandler.Function
             var mailService = MailService.GetInstance();
             var mailModel = new MailModel
             {
-                RecipientList = listEmail,
-                Subject = envPrefix + "[Travorama] Booking System is Changed",
+                RecipientList = new []{emailList},
+                Subject = envPrefix + (status == "true" ? " [Travorama] Your Account Has Been Deactivated" : " [Travorama] Your Account Has Been Reactivated"),
                 FromMail = "no-reply@travorama.com",
                 FromName = "Travorama",
                 BccList = new[] { "maillog.travorama@gmail.com" }
             };
             Console.WriteLine("Sending Notification Email...");
-            mailService.SendEmail(status, mailModel, "BookingDisabilityStatusNotifEmail");
+            mailService.SendEmail(status, mailModel, "UserSuspendNotifEmail");
 
-            Console.WriteLine("Done Processing Booking Disability Issue Notif Email");
+            Console.WriteLine("Done Processing User Suspend Issue Notif Email");
         }
     }
 }

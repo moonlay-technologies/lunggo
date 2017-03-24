@@ -111,6 +111,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Function\UserSuspendNotifEmail.cs" />
     <Compile Include="Function\FailedPaymentNotifEmail.cs" />
     <Compile Include="Function\B2BFlightRejectionEmail.cs" />
     <Compile Include="Function\B2BFlightPendingApprovalNotifEmail.cs" />

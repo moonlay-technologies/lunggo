@@ -54,6 +54,9 @@
         }
 
         $scope.roles = roles;
+        if ($scope.roles != null & $scope.roles.length > 0 && $scope.roles.indexOf("Customer") > -1) {
+            $scope.roles.splice($scope.roles.indexOf("Customer"), 1);
+        }
         $scope.users = users;
         $scope.approvers = approvers;
         $scope.branches = branches;
@@ -465,12 +468,17 @@
             $scope.userAdded = false;
             //$scope.userData.role = $scope.selectedRole;
             var authAccess = getAuthAccess();
-            if (authAccess == 2) {
-                //authorized
-                $http({
-                    url: AddUserConfig.Url,
-                    method: 'POST',
-                    data: {
+            var data;
+            if ($scope.userData.role.indexOf("Booker") > -1) {
+                if ($scope.userData.approverId == null || $scope.userData.approverId.length == 0) {
+                    $('.mustHaveApprover').modal({
+                        backdrop: 'static',
+                        keyboard: false
+                    });
+                    $('.wait').modal("hide");
+                    return;
+                } else {
+                    data = {
                         email: $scope.userData.email,
                         name: $scope.userData.name,
                         countryCallCd: $scope.userData.countryCallCd,
@@ -480,7 +488,26 @@
                         branch: $scope.userData.branch,
                         approverId: $scope.userData.approverId,
                         roles: $scope.userData.role
-                    },
+                    }
+                }                
+            } else {
+                data = {
+                    email: $scope.userData.email,
+                    name: $scope.userData.name,
+                    countryCallCd: $scope.userData.countryCallCd,
+                    phone: $scope.userData.phone,
+                    position: $scope.userData.position,
+                    department: $scope.userData.department,
+                    branch: $scope.userData.branch,
+                    roles: $scope.userData.role
+                }
+            }
+            if (authAccess == 2) {
+                //authorized
+                $http({
+                    url: AddUserConfig.Url,
+                    method: 'POST',
+                    data: data,
                     headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') }
                 }).then(function (returnData) {
                     $(".wait").modal("hide");
@@ -602,24 +629,48 @@
             });
             $scope.updatingUser = false;
             $scope.editUser.role = $scope.selectedRole;
-
+            var data;
+            if ($scope.userData.role.indexOf("Booker") > -1) {
+                if ($scope.editUser.approverId == null || $scope.editUser.approverId.length == 0) {
+                    $('.mustHaveApprover').modal({
+                        backdrop: 'static',
+                        keyboard: false
+                    });
+                    $('.wait').modal("hide");
+                    return;
+                } else {
+                    data = {
+                        email: $scope.editUser.email,
+                        name: $scope.editUser.name,
+                        countryCallCd: $scope.editUser.countryCallCd,
+                        phone: $scope.editUser.phone,
+                        position: $scope.editUser.position,
+                        department: $scope.editUser.department,
+                        branch: $scope.editUser.branch,
+                        approverId: $scope.editUser.approverId,
+                        roles: $scope.editUser.role
+                    }
+                }
+                
+            } else {
+                data = {
+                    email: $scope.editUser.email,
+                    name: $scope.editUser.name,
+                    countryCallCd: $scope.editUser.countryCallCd,
+                    phone: $scope.editUser.phone,
+                    position: $scope.editUser.position,
+                    department: $scope.editUser.department,
+                    branch: $scope.editUser.branch,
+                    roles: $scope.editUser.role
+                }
+            }
             var authAccess = getAuthAccess();
             if (authAccess == 2) {
                 //authorized
                 $http({
                     url: UpdateUserConfig.Url,
                     method: 'POST',
-                    data: {
-                        email: $scope.editUser.email,
-                        name: $scope.editUser.name,
-                        countryCallCd: $scope.editUser.countryCallCd,
-                        phone: $scope.editUser.phone,
-                        branch: $scope.editUser.branch,
-                        position: $scope.editUser.position,
-                        department: $scope.editUser.department,
-                        approverId: $scope.editUser.approverId,
-                        roles: $scope.editUser.role
-                    },
+                    data: data,
                     headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') }
                 }).then(function (returnData) {
                     $(".wait").modal("hide");
@@ -746,11 +797,21 @@
             }
         }
 
+        $scope.approverExc = [];
         $scope.selectRoleUpdate = function (value) {
             if ($scope.selectedRole == null || $scope.selectedRole.length == 0) {
                 $scope.selectedRole = [value];
                 if (value == 'Booker') {
                     $scope.showListApproverEdit = true;
+                    $scope.approverExc = [];
+                    for (var i = 0; i < $scope.approvers.length; i++) {
+                        if ($scope.approvers[i].name != $scope.editUser.name) {
+                            $scope.approverExc.push({
+                                name: $scope.approvers[i].name,
+                                userId: $scope.approvers[i].userId
+                            });
+                        }
+                    }
                 } else {
                     $scope.showListApproverEdit = false;
                 }
@@ -761,6 +822,15 @@
                     $scope.selectedRole.push(value);
                     if (value == 'Booker') {
                         $scope.showListApproverEdit = true;
+                        $scope.approverExc = [];
+                        for (var i = 0; i < $scope.approvers.length; i++) {
+                            if ($scope.approvers[i].name != $scope.editUser.name) {
+                                $scope.approverExc.push({
+                                    name: $scope.approvers[i].name,
+                                    userId: $scope.approvers[i].userId
+                                });
+                            }
+                        }
                     }
                 }
                 else {

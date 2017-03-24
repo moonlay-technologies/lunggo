@@ -9,9 +9,11 @@ using Lunggo.ApCommon.Identity.Query;
 using Lunggo.ApCommon.Identity.Roles;
 using Lunggo.ApCommon.Product.Constant;
 using Lunggo.Framework.Database;
+using Lunggo.Framework.Queue;
 using Lunggo.Repository.TableRecord;
 using Lunggo.Repository.TableRepository;
 using Microsoft.AspNet.Identity;
+using Microsoft.WindowsAzure.Storage.Queue;
 
 namespace Lunggo.ApCommon.Identity.Users
 {
@@ -54,6 +56,22 @@ namespace Lunggo.ApCommon.Identity.Users
             {
                 var user = GetListApproverEmailByCompanyIdQuery.GetInstance().Execute(conn, new { CompanyId = companyId }).ToList();
                 return user;
+            }
+        }
+
+        internal static string GetEmailByUserId(string userId)
+        {
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                var user = GetEmailByUserIdQuery.GetInstance().Execute(conn, new { userId = userId }).ToList();
+                if (user.Count == 0)
+                {
+                    return null;
+                }
+                else
+                {
+                    return user[0];
+                }
             }
         }
 
@@ -317,6 +335,8 @@ namespace Lunggo.ApCommon.Identity.Users
                         LockoutEnabled = isLocked
                     });
                 }
+
+                SendSuspendNotificationToCustomer(userId, isLocked);
                 return true;
             }
             catch (Exception)
@@ -348,6 +368,15 @@ namespace Lunggo.ApCommon.Identity.Users
                 UserBookingNotesTableRepo.GetInstance().Insert(conn, bookingNote);
             }
             
+        }
+
+       public static void SendSuspendNotificationToCustomer(string userId, bool isLocked)
+       {
+            var email = User.GetEmailByUserId(userId);
+            var stringStatus = isLocked? "true" : "false";
+            var queueService = QueueService.GetInstance();
+            var queue = queueService.GetQueueByReference("UserSuspendNotifEmail");
+            queue.AddMessage(new CloudQueueMessage(email+ "&" + stringStatus));
         }
     }
 }
