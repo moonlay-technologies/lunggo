@@ -2511,45 +2511,154 @@ body.page-index {
 .page-index .section-airline > .container {
   max-width: none;
   border-top: 2px solid #0c8fbf;
-  padding: 15px 0 30px; }
+  padding-top: 15px; }
 
 .page-index .section-airline .airline-info {
   background: #1360ad;
-  padding: 15px 0; }
+  padding: 20px 25px;
+  margin: 30px 0 40px; }
   .page-index .section-airline .airline-info .col-xs-2 {
     text-align: center; }
+  .page-index .section-airline .airline-info .col-sm-2, .page-index .section-airline .airline-info .col-sm-10, .page-index .section-airline .airline-info .col-xs-2 {
+    float: left !important; }
+  .page-index .section-airline .airline-info .col-xs-2 {
+    width: 16.66667% !important; }
 
 .page-index .section-airline .airline-box {
   border: 2px solid #fff;
-  padding: 10px; }
+  padding: 10px;
+  margin-bottom: 5px; }
 
 .page-index .section-airline .icon-bagage {
   background: url(/Assets/images/bagage-white.png) no-repeat;
   width: 70px;
   height: 70px;
   background-size: 100%;
-  margin: 0 auto 5px; }
+  margin: 0 auto 5px;
+  background-position: center; }
 
 .page-index .section-airline .icon-lugage {
   background: url(/Assets/images/lugage-white.png) no-repeat;
   width: 70px;
   height: 70px;
   background-size: 100%;
-  margin: 0 auto 5px; }
+  margin: 0 auto 5px;
+  background-position: center; }
 
 .page-index .section-airline .icon-checkin {
   background: url(/Assets/images/checkin-white.png) no-repeat;
   width: 45px;
   height: 70px;
   background-size: 100%;
-  margin: 0 auto 5px; }
+  margin: 0 auto 5px;
+  background-position: center; }
 
 .page-index .section-airline .icon-disc {
   background: url(/Assets/images/disc-white.png) no-repeat;
   width: 70px;
   height: 70px;
   background-size: 100%;
-  margin: 0 auto 5px; }
+  margin: 0 auto 5px;
+  background-position: center; }
+
+.page-index .section-airline .star-white {
+  display: block;
+  background: url(/Assets/images/star-white.png);
+  height: 16px;
+  width: 17px; }
+  .page-index .section-airline .star-white.sw-2 {
+    width: 34px; }
+  .page-index .section-airline .star-white.sw-3 {
+    width: 51px; }
+  .page-index .section-airline .star-white.sw-4 {
+    width: 68px; }
+  .page-index .section-airline .star-white.sw-5 {
+    width: 85px; }
+
+.page-index .section-airline .how-to {
+  border-top: 2px solid #0c8fbf;
+  padding: 20px 0; }
+  .page-index .section-airline .how-to .col-sm-7 {
+    border-right: 1px solid #0c8fbf; }
+  .page-index .section-airline .how-to .col-sm-5 {
+    padding-left: 30px;
+    width: 41.66667% !important; }
+  .page-index .section-airline .how-to .col-sm-5, .page-index .section-airline .how-to .col-sm-7 {
+    float: left !important; }
+
+.page-index .section-airline #am-plane {
+  border-top: 2px solid #0c8fbf;
+  padding: 15px 0 30px; }
+  .page-index .section-airline #am-plane .plane-img {
+    width: 250px;
+    height: 150px;
+    background-size: cover;
+    background-position: center;
+    margin: 0 auto; }
+    .page-index .section-airline #am-plane .plane-img.p1 {
+      background-image: url(/Assets/images/planes/gi-1.jpg); }
+    .page-index .section-airline #am-plane .plane-img.p2 {
+      background-image: url(/Assets/images/planes/gi-2.jpg); }
+    .page-index .section-airline #am-plane .plane-img.p3 {
+      background-image: url(/Assets/images/planes/gi-3.jpg); }
+    .page-index .section-airline #am-plane .plane-img.p4 {
+      background-image: url(/Assets/images/planes/gi-4.jpg); }
+    .page-index .section-airline #am-plane .plane-img.p5 {
+      background-image: url(/Assets/images/planes/gi-5.jpg); }
+    .page-index .section-airline #am-plane .plane-img.p6 {
+      background-image: url(/Assets/images/planes/gi-6.jpg); }
+    .page-index .section-airline #am-plane .plane-img.p7 {
+      background-image: url(/Assets/images/planes/gi-7.jpg); }
+  .page-index .section-airline #am-plane .plane-type {
+    max-width: 720px;
+    margin: 0 auto; }
+  .page-index .section-airline #am-plane .plane-box {
+    border: 2px solid #ddd;
+    background: #fff;
+    padding: 15px;
+    margin: 0 5px; }
+
+.page-index .section-airline #am-rute {
+  border-top: 2px solid #0c8fbf;
+  padding: 15px 0 30px; }
+  .page-index .section-airline #am-rute .pr-domestik, .page-index .section-airline #am-rute .pr-inter {
+    margin-bottom: 20px; }
+    .page-index .section-airline #am-rute .pr-domestik .pr-left, .page-index .section-airline #am-rute .pr-domestik .pr-mid, .page-index .section-airline #am-rute .pr-domestik .pr-right, .page-index .section-airline #am-rute .pr-inter .pr-left, .page-index .section-airline #am-rute .pr-inter .pr-mid, .page-index .section-airline #am-rute .pr-inter .pr-right {
+      width: 33.333%;
+      float: left;
+      padding: 0 5px; }
+  .page-index .section-airline #am-rute .pr-domestik .prl-t, .page-index .section-airline #am-rute .pr-domestik .prl-b, .page-index .section-airline #am-rute .pr-domestik .prm-t, .page-index .section-airline #am-rute .pr-domestik .prm-b, .page-index .section-airline #am-rute .pr-domestik .prr-t, .page-index .section-airline #am-rute .pr-domestik .prr-b {
+    background: #0c8fbf;
+    padding: 10px 15px;
+    margin-bottom: 10px;
+    border-radius: 2px; }
+  .page-index .section-airline #am-rute .pr-inter .prl-t, .page-index .section-airline #am-rute .pr-inter .prl-b, .page-index .section-airline #am-rute .pr-inter .prm-t, .page-index .section-airline #am-rute .pr-inter .prm-b, .page-index .section-airline #am-rute .pr-inter .prr-t, .page-index .section-airline #am-rute .pr-inter .prr-b {
+    background: #1360ad;
+    padding: 10px 15px;
+    margin-bottom: 10px;
+    border-radius: 2px; }
+
+.page-index .section-airline #am-privacy {
+  border-top: 2px solid #0c8fbf;
+  padding: 15px 0 30px; }
+
+.page-index .section-airline #am-history {
+  border-top: 2px solid #0c8fbf;
+  padding: 15px 0 30px; }
+  .page-index .section-airline #am-history .blue-top {
+    border-top: 2px solid #0c8fbf;
+    padding: 20px 0; }
+  .page-index .section-airline #am-history .food-img {
+    background-image: url(/Assets/images/planes/garuda/food.jpg);
+    width: 100%;
+    height: 200px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    margin-right: 20px; }
+
+.page-index .section-airline #am-plane .col-sm-6, .page-index .section-airline #am-privacy .col-sm-6, .page-index .section-airline #am-history .col-sm-6 {
+  width: 50% !important;
+  float: left !important; }
 
 .page-index .search-calendar .calendar-header, .page-index .search-calendar-hotel .calendar-header {
   height: 45px;
