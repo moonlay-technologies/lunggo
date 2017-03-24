@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Web;
 using System.Web.Mvc;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Service;
@@ -10,6 +12,7 @@ using Lunggo.ApCommon.Util;
 using Lunggo.CustomerWeb.Models;
 using Lunggo.Framework.Config;
 using RestSharp;
+using HttpCookie = RestSharp.HttpCookie;
 
 namespace Lunggo.CustomerWeb.Controllers
 {
@@ -23,6 +26,28 @@ namespace Lunggo.CustomerWeb.Controllers
         public ActionResult Login()
         {
             return View();
+        }
+        public ActionResult Logout()
+        {
+            if (Request.Cookies["accesstoken"] != null)
+            {
+                var httpCookie = Response.Cookies["accesstoken"];
+                if (httpCookie != null)
+                    httpCookie.Expires = DateTime.Now.AddDays(-1d);
+            }
+            if (Request.Cookies["refreshtoken"] != null)
+            {
+                var httpCookie = Response.Cookies["refreshtoken"];
+                if (httpCookie != null)
+                    httpCookie.Expires = DateTime.Now.AddDays(-1d);
+            }
+            if (Request.Cookies["authkey"] != null)
+            {
+                var httpCookie = Response.Cookies["authkey"];
+                if (httpCookie != null)
+                    httpCookie.Expires = DateTime.Now.AddDays(-1d);
+            }
+            return RedirectToAction("Login", "B2BTemplate");
         }
         public ActionResult ResetPassword()
         {

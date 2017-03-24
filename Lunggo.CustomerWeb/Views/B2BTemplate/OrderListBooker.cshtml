@@ -37,36 +37,58 @@
     <script src="/Assets/travorama20/js/B2BTravorama20.js"></script>
     <script src="/Assets/travorama20/js/B2BAccountController.js"></script>
     <script src="/Assets/B2BTravorama/assets/js/tables.js" type="text/javascript"></script>
-    <script>
-        jQuery(document).ready(function ($) {
+    <script type="text/javascript">
+        jQuery(document).ready(function($) {
             $('body .ol-item-hide').hide();
-            $('body .ol-item').click(function () {
+            $('body .ol-item').click(function() {
                 $(this).parent().find('.ol-item-hide').toggle();
                 $(this).parent().find('.ol-item').toggleClass('show');
                 $(this).parent().siblings().find('.ol-item-hide').hide();
                 $(this).parent().siblings().find('.ol-item').removeClass('show');
             });
         });
+
+        function ShowModal(name, title, message) {
+            jQuery('#info-data-modal').empty('');
+            var data = { "bookerName": name, "bookerMessageTitle": title, "bookerMessageDescription": message };
+            var options = { "backdrop": "static", keyboard: true };
+            $('#info-data-modal').append('<div id="row-data" class="modal-header clearfix"><button type="button" class="close" onclick="RemoveData()" data-dismiss="modal" onclick aria-hidden="true">' +
+                '<i class="pg-close fs-14"></i></button><h4 class="text-center no-margin">Detail Info</h4> </div>' +
+                '<div class="modal-body m-t-10"> <div class="clearfix m-b-10"> <div class="col-sm-3 no-padding bold">Nama</div> <div class="col-sm-9 no-padding">'+name+'</div> </div>' +
+                '<div class="clearfix m-b-10"> <div class="col-sm-3 no-padding bold">Title</div> <div class="col-sm-9 no-padding">'+title+'</div> </div>' +            
+                '<div class="clearfix m-b-10"><div class="col-sm-3 no-padding bold">Deskripsi</div><div class="col-sm-9 no-padding">'+message+'</div></div></div>');
+            $('#info-Detail').modal(options);
+            $('#info-Detail').modal('togle');
+            ;
+        }
+
+        function RemoveData() {
+            jQuery('#info-data-modal').empty('');
+            $('#info-Detail').modal('hide');
+        }
     </script>
 }
 
 <div ng-app="travoramaB2B" ng-controller="b2BBookerController">
     <div class="order-list">
         <div class="panel panel-transparent">
-            <div class="panel-heading col-sm-12">
-                <div class="panel-title col-sm-8">
+            <div class="panel-heading m-b-30">
+                <div class="panel-title">
                     Order List Booker
                 </div>
-                <div class="col-sm-4">
+                <div class="pull-right">
                     <button class="btn btn-success btn-cons" onclick="location.href='@Url.Action("OldFlightReservationBooker", "B2BTemplate")'">Lihat Reservasi Lama</button>
                 </div>
             </div>
             <div class="panel-body bg-white">
+                @{
+                    var count = 0;
+                }
                 @foreach (var rsv in Model)
                 {
                     <div class="ol-list clearfix m-b-30" >
                         <div class="ol-border ol-header fs-12 bold font-montserrat  padding-15 clearfix">
-                            <div class="olh-title col-sm-9 no-padding">@rsv.BookerMessageTitle <span class="label label-primary m-l-10 fs-11 text-capitalize" style="cursor: pointer;" ng-click="infoOrder($index)"><i class="fa fa-info-circle m-r-5"></i>Info</span></div>
+                            <div class="olh-title col-sm-9 no-padding">@rsv.BookerMessageTitle <button class="label label-primary m-l-10 fs-11 text-capitalize"  data-target="#info-Detail" onclick="ShowModal('@rsv.BookerName','@rsv.BookerMessageTitle','@rsv.BookerMessageTitle')" style="cursor: pointer;"><i class="fa fa-info-circle m-r-5"></i>Info</button></div>
                         </div>
                         <div class="ol-body">
                             @if (rsv.ReservationList.Flights != null)
@@ -180,32 +202,14 @@
                 }
             </div>
         </div>
-        <div class="modal fade stick-up in info-order" tabindex="-1" role="dialog" aria-hidden="false">
+        <div class="modal fade stick-up in info-order" id='info-Detail' tabindex="-1" role="dialog" aria-hidden="false">
             <div class="modal-dialog p-t-100">
                 <div class="modal-content-wrapper">
                     <div class="modal-content">
-                        <div class="modal-header clearfix">
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                                <i class="pg-close fs-14"></i>
-                            </button>
-                            <h4 class="text-center no-margin">Detail Info</h4>
+                        <div id ="info-data-modal">
+                            
                         </div>
-                        <div class="modal-body m-t-10">
-                            <div class="clearfix m-b-10">
-                                <div class="col-sm-3 no-padding bold">Nama</div>
-                                <div class="col-sm-9 no-padding">{{bookerInfo.name}}</div>
-                            </div>
-                            <div class="clearfix m-b-10">
-                                <div class="col-sm-3 no-padding bold">Title</div>
-                                <div class="col-sm-9 no-padding">{{bookerInfo.bookerTitle}}</div>
-                            </div>
-                            <div class="clearfix m-b-10">
-                                <div class="col-sm-3 no-padding bold">Deskripsi</div>
-                                <div class="col-sm-9 no-padding">
-                                    {{bookerInfo.bookerMessage}}
-                                </div>
-                            </div>
-                        </div>
+                        
                     </div>
                 </div>
             </div>
