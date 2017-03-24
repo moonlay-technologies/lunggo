@@ -35,7 +35,7 @@ namespace Lunggo.WebJob.EmailQueueHandler.Function
             {
                 RecipientList = listEmail,
                 Subject = envPrefix + "[Travorama] Booking System is Changed",
-                FromMail = "booking@travorama.com",
+                FromMail = "no-reply@travorama.com",
                 FromName = "Travorama",
                 BccList = new[] { "maillog.travorama@gmail.com" }
             };

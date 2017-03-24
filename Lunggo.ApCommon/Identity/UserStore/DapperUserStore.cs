@@ -115,7 +115,7 @@ namespace Lunggo.ApCommon.Identity.UserStore
                 Position = user.Position,
                 Branch = user.Branch,
                 Department = user.Department,
-                ApproverId = user.Approver.Id
+                ApproverId = user.Approver == null? null : user.Approver.Id
             };
             return record;
         }

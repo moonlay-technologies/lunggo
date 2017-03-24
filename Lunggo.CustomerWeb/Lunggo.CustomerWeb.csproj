@@ -2835,6 +2835,7 @@
     <Content Include="Views\Flight\BookingRejection.cshtml" />
     <Content Include="Views\Hotel\BookingRejection.cshtml" />
     <Content Include="Views\B2BTemplate\TestEmail.cshtml" />
+    <Content Include="Views\Payment\B2BThankyou.mobile.cshtml" />
     <None Include="Views\Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

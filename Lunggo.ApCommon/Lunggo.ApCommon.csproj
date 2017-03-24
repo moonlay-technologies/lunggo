@@ -435,6 +435,7 @@
     <Compile Include="Identity\Query\GetListApproverEmailQuery.cs" />
     <Compile Include="Identity\Query\GetApproverByUserIdQuery.cs" />
     <Compile Include="Identity\Query\GetListRolesQuery.cs" />
+    <Compile Include="Identity\Query\GetEmailByUserIdQuery.cs" />
     <Compile Include="Identity\Query\GetNameByUserIdQuery.cs" />
     <Compile Include="Model\ApproverOrderListModel.cs" />
     <Compile Include="Payment\Constant\FailureReason.cs" />

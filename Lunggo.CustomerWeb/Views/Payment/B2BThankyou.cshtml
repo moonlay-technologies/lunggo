@@ -1,9 +1,7 @@
 ﻿@using System.Globalization
 @using Lunggo.ApCommon.Constant
 @using Lunggo.ApCommon.Hotel.Model
-@using Lunggo.ApCommon.Hotel.Service
 @using Lunggo.ApCommon.Payment.Constant
-@using Lunggo.ApCommon.Product.Constant
 @using Lunggo.Framework.Config
 @using Lunggo.ApCommon.Flight.Model
 @model Lunggo.ApCommon.Product.Model.ReservationForDisplayBase
@@ -258,6 +256,10 @@
                                             <dl>
                                                 <dt>Tiket Pesawat <span>(@Model.Pax.Count Penumpang)</span></dt>
                                                 <dd>Rp @((Model.Payment.OriginalPrice).ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID")))</dd>
+                                            </dl>
+                                            <dl class="total-price">
+                                                <dt>Total</dt>
+                                                <dd>Rp @Model.Payment.OriginalPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</dd>
                                             </dl>
                                         }
                                         else

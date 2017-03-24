@@ -94,6 +94,7 @@
   <ItemGroup>
     <Compile Include="ConfigGenerator.cs" />
     <Compile Include="HtmlTemplateGenerator.cs" />
+    <None Include="HtmlTemplate\UserSuspendNotifEmail.cshtml" />
     <None Include="HtmlTemplate\HotelSaySorryFailedIssueApproverNotifEmail.cshtml" />
     <None Include="HtmlTemplate\HotelSaySorryFailedIssueBookerNotifEmail.cshtml" />
     <Compile Include="Properties\AssemblyInfo.cs" />
