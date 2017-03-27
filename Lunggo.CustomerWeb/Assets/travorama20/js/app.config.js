@@ -1,5 +1,5 @@
 ﻿app.config(function ($logProvider) {
-    var debugEnabled = false;
+    var debugEnabled = true;
     $logProvider.debugEnabled(debugEnabled);
 });
 
