@@ -10,6 +10,7 @@ using Lunggo.ApCommon.Hotel.Service;
 using Lunggo.ApCommon.Model;
 using Lunggo.ApCommon.Util;
 using Lunggo.CustomerWeb.Models;
+using Lunggo.CustomerWeb.Utils;
 using Lunggo.Framework.Config;
 using RestSharp;
 using HttpCookie = RestSharp.HttpCookie;
@@ -186,9 +187,19 @@ namespace Lunggo.CustomerWeb.Controllers
         {
             return View();
         }
-        public ActionResult OrderListFlightFinance()
+        public ActionResult OrderListFlightFinance(string branch, string dept, string pos, DateTime? from, DateTime? to)
         {
-            return View();
+            var user = B2BUtil.GetB2BUser(Request);
+            if (!user.Roles.Contains("Finance"))
+                return Redirect("/");
+
+            if (!from.HasValue || !to.HasValue)
+        {
+                from = DateTime.Now.AddDays(-30).Date;
+                to = DateTime.Now.Date;
+            }
+            var rsvs = FlightService.GetInstance().GetReservationsByCompany(user.CompanyId, branch, dept, pos, from.Value, to.Value);
+            return View(rsvs);
         }
 
         public ActionResult OrderListHotelFinance()

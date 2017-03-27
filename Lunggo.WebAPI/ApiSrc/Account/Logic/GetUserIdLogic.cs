@@ -22,11 +22,11 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
                     ErrorCode = "ERAGUI01"
                 };
             }
-            var foundId = user.Identity.GetUserId();
+            var foundUser = user.Identity.GetUser();
             return new GetUserIdApiResponse
             {
                 StatusCode = HttpStatusCode.OK,
-                Id = foundId
+                Id = foundUser.Id
             };
         }
     }

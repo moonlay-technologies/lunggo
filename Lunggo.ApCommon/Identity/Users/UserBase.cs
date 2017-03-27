@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Lunggo.ApCommon.Identity.Users
 {
@@ -118,6 +119,12 @@ namespace Lunggo.ApCommon.Identity.Users
         /// 
         /// </summary>
         public virtual int AccessFailedCount { get; set; }
+
+        /// <summary>
+        /// Roles of the User
+        /// 
+        /// </summary>
+        public virtual List<string> Roles { get; set; }
 
 
     }

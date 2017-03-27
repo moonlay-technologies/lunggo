@@ -67,9 +67,32 @@ namespace Lunggo.ApCommon.Flight.Service
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
                 var rsvNos =
-                    GetRsvNosByApprover.GetInstance()
+                    GetRsvNosByApproverQuery.GetInstance()
                         .Execute(conn, new { ApproverId = approverId ,Filters = filters, Sort = sort, Page = page, ItemsPerPage = itemsPerPage }, new { Filters = filters } )
                         .Distinct().ToList();
+                if (!rsvNos.Any())
+                    return null;
+                else
+                {
+                    return rsvNos.Select(GetOverviewReservationFromDb).Where(rsv => rsv != null).ToList();
+                }
+            }
+        }
+
+        private List<FlightReservation> GetReservationsByCompanyFromDb(string companyId, string branchFilter, string departmentFilter, string positionFilter, DateTime fromDate, DateTime toDate)
+        {
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                var param = new
+                {
+                    CompanyId = companyId,
+                    BranchFilter = branchFilter,
+                    DepartmentFilter = departmentFilter,
+                    PositionFilter = positionFilter,
+                    FromDate = fromDate,
+                    ToDate = toDate.AddDays(1)
+                };
+                var rsvNos = GetRsvNosByCompanyQuery.GetInstance().Execute(conn, param, param).Distinct().ToList();
                 if (!rsvNos.Any())
                     return null;
                 else

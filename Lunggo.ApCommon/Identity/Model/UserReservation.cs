@@ -25,7 +25,5 @@ namespace Lunggo.ApCommon.Identity.Model
         public string Department { get; set; }
         [JsonProperty("branch", NullValueHandling = NullValueHandling.Ignore)]
         public string Branch { get; set; }
-        [JsonProperty("approverName", NullValueHandling = NullValueHandling.Ignore)]
-        public string ApproverName { get; set; }
     }
 }
