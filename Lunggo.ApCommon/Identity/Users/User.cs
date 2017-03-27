@@ -318,8 +318,8 @@ namespace Lunggo.ApCommon.Identity.Users
                 PhoneNumber = user.PhoneNumber,
                 Position = user.Position,
                 Branch = user.Branch,
-                Department = user.Department,
-                ApproverName = user.Approver != null ? GetNameByUserId(user.Approver.Id) : null
+                Department = user.Department
+                //ApproverName = user.Approver != null ? GetNameByUserId(user.Approver.Id) : null
             };
             return displayUser;
         }
