@@ -105,7 +105,7 @@ namespace Lunggo.ApCommon.Hotel.Service
 
         public void SetHotelFullFacilityCode(HotelDetailsBase hotel)
         {
-            if (hotel.Facilities != null || hotel.Facilities.Count != 0)
+            if (hotel.Facilities != null && hotel.Facilities.Count != 0)
             {
                 foreach (var data in hotel.Facilities)
                 {
