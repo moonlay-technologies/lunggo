@@ -105,7 +105,7 @@ namespace Lunggo.ApCommon.Flight.Model
             }
             else
             {
-                var originalPrice = Price.OriginalIdr;
+                var originalPrice = Price.FinalIdr * 1.01M;
                 var adultCount = AdultCount;
                 var childCount = ChildCount;
                 var infantCount = InfantCount;

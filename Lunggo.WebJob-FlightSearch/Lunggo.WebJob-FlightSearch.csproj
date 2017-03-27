@@ -90,6 +90,7 @@
     <None Include="Properties\PublishProfiles\travorama-prod-webjobflightsearch - Web Deploy %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-prod-webjobflightsearch.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-qa-webjobflightsearch %282%29.pubxml" />
+    <None Include="Properties\PublishProfiles\travorama-qa-webjobflightsearch - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-qa-webjobflightsearch.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

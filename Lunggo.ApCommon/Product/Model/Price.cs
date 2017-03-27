@@ -146,7 +146,7 @@ namespace Lunggo.ApCommon.Product.Model
         {
             Supplier = price;
             SupplierCurrency = currency;
-            OriginalIdr = price * currency.Rate;
+            OriginalIdr = Math.Round(price * currency.Rate);
         }
 
         public void SetMargin(UsedMargin margin)

@@ -33,7 +33,10 @@ namespace Lunggo.CustomerWeb
             var path = httpRequest.Url.PathAndQuery;
             var userAgent = httpRequest.UserAgent;
             var browserDetectionService = BrowserDetectionService.GetInstance();
-            var isSmartphone = browserDetectionService.IsRequestFromSmartphone(userAgent);
+            var isSmartphone = browserDetectionService.IsRequestFromSmartphone(userAgent) ||
+                               browserDetectionService.IsRequestFromAndroid(userAgent) ||
+                               browserDetectionService.IsRequestFromIos(userAgent) ||
+                               browserDetectionService.IsRequestFromMobile(userAgent);
             var isOnMobilePage = host == mobileUrl;
             if (!isOnMobilePage && isSmartphone)
             {

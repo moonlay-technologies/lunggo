@@ -46,7 +46,7 @@ namespace Lunggo.ApCommon.Campaign.Service
                         IsAvailable = true,
                         Currency = new Currency("IDR"),
                         DisplayName = discName,
-                        ReplaceMargin = false
+                        ReplaceMargin = rsv is FlightReservation
                     }
                     : new BinMethodDiscount
                     {
@@ -272,7 +272,9 @@ namespace Lunggo.ApCommon.Campaign.Service
                         "dev541011",
                         "dev551011",
                         "dev541111",
-                        "dev551111"
+                        "dev551111",
+                        "dev524325",
+                        "dev413718"
                     }
                 }
             };

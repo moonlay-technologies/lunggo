@@ -84,7 +84,12 @@ namespace Lunggo.ApCommon.Flight.Service
                 NetInfantPricePortion = itins[0].NetInfantPricePortion,
                 Price = new Price
             {
+                Supplier = itins.Sum(itin => itin.Price.Supplier),
+                SupplierCurrency = itins[0].Price.SupplierCurrency,
                 OriginalIdr = itins.Sum(itin => itin.Price.OriginalIdr),
+                Rounding = itins.Sum(itin => itin.Price.Rounding),
+                MarginNominal = itins.Sum(itin => itin.Price.MarginNominal),
+                FinalIdr = itins.Sum(itin => itin.Price.FinalIdr),
                 Local = itins.Sum(itin => itin.Price.Local),
                 LocalCurrency = itins[0].Price.LocalCurrency
             }};
@@ -198,8 +203,8 @@ namespace Lunggo.ApCommon.Flight.Service
                 {
                     var trip = trips[i - 1];
                     var price = itin.Price;
-                    price.OriginalIdr = (price.OriginalIdr - cumulativeOri) / i;
-                    cumulativeOri += price.OriginalIdr;
+                    price.OriginalIdr = (itin.Price.OriginalIdr - cumulativeOri) / i;
+                    cumulativeOri += itin.Price.OriginalIdr;
                     var unrounded = (price.Local - cumulativeLocal) / i;
                     var rounded = unrounded - unrounded % price.LocalCurrency.RoundingOrder;
                     price.Local = rounded;

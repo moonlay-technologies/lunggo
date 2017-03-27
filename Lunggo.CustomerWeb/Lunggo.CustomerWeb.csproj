@@ -206,13 +206,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
     </Reference>
-    <Reference Include="Wurfl, Version=1.6.0.1, Culture=neutral, PublicKeyToken=816aeec277aa13b9, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\WURFL_Official_API.1.6.0.1\lib\Wurfl.dll</HintPath>
-    </Reference>
-    <Reference Include="Wurfl.Aspnet.Extensions">
-      <HintPath>..\packages\WURFL_Official_API.1.6.0.1\lib\Wurfl.Aspnet.Extensions.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\AppInitializer.cs" />
@@ -587,6 +580,7 @@
     <Content Include="Assets\images\benefit\discount.png" />
     <Content Include="Assets\images\benefit\news.png" />
     <Content Include="Assets\images\benefit\refund.png" />
+    <Content Include="Assets\images\bersama-prima-alto.jpg" />
     <Content Include="Assets\images\bg-white.jpg" />
     <Content Include="Assets\images\blue-bg.png" />
     <Content Include="Assets\images\blueBg.png" />
@@ -1349,7 +1343,6 @@
     <Content Include="Config\Airport.csv" />
     <Content Include="Config\HotelLocation.csv" />
     <Content Include="Config\Country.csv" />
-    <Content Include="App_Data\wurfl-latest.zip" />
     <Content Include="Config\HotelFacilitiesFilterGroup.csv">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
