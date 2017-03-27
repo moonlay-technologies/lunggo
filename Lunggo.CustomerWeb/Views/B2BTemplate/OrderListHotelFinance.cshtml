@@ -1,4 +1,7 @@
-﻿@{
+﻿@using System.Globalization
+@using Lunggo.ApCommon.Product.Constant
+@model List<Lunggo.ApCommon.Hotel.Model.HotelReservationForDisplay>
+@{
     Layout = "/Views/Shared/B2BTravorama/_B2BLayout.cshtml";
     ViewBag.BodyClass = "b2b-order-list hotel";
     ViewBag.SiteHeader = "b2b-order-list";
@@ -63,58 +66,59 @@
             </div>
         </div>
         <div class="panel-body bg-white">
-            <div class="fs-container">
-                <div class="clearfix">
-                    <div class="btn-group btn-group-justified">
-                        <div class="btn-group">
-                            <button type="button" class="btn btn-default no-padding p-t-10 p-b-10" id="btn-um-sort">
-                                <span class="m-r-5">
-                                    <i class="fa fa-calendar fs-15"></i>
-                                </span>
-                                <span class="fs-12 bold font-montserrat text-uppercase">Tampilkan Tanggal</span>
-                            </button>
-                        </div>
-                        <div class="btn-group">
-                            <button type="button" class="btn btn-default no-padding p-t-10 p-b-10" id="btn-um-filter">
-                                <span class="m-r-5">
-                                    <i class="fa fa-filter fs-15"></i>
-                                </span>
-                                <span class="fs-12 bold font-montserrat text-uppercase">Filter</span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                <div class="bg-white" style="border: 1px solid rgba(230, 230, 230, 0.7); border-top: none" id="sf-container">
-                    <div class="sort-content menu-wrapper">
-                        <div class="panel-heading">
-                            <span class="fs-11 bold font-montserrat text-uppercase">Tampilkan Tanggal dari:</span>
-                            <span class="pull-right pg-close_line close-btn" style="cursor: pointer;"></span>
-                        </div>
-                        <div class="panel-body m-t-10">
-                            <div class="clearfix">
-                                <div class="col-sm-4">
-                                    <div class="input-daterange input-group m-b-15" id="datepicker-range">
-                                        <input type="text" class="input-sm form-control" name="start" />
-                                        <span class="input-group-addon font-montserrat bold text-uppercase fs-12 p-l-10 p-r-10">Sampai</span>
-                                        <input type="text" class="input-sm form-control" name="end" />
-                                    </div>
-                                </div>
-                                <div class="col-sm-8 no-padding">
-                                    <button class="btn btn-primary btn-cons m-l-15">Cari</button>
-
-                                </div>
+            <form action="/id/B2BTemplate/OrderListHotelFinance" method="GET">
+                <div class="fs-container">
+                    <div class="clearfix">
+                        <div class="btn-group btn-group-justified">
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-default no-padding p-t-10 p-b-10" id="btn-um-sort">
+                                    <span class="m-r-5">
+                                        <i class="fa fa-calendar fs-15"></i>
+                                    </span>
+                                    <span class="fs-12 bold font-montserrat text-uppercase">Tampilkan Tanggal</span>
+                                </button>
+                            </div>
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-default no-padding p-t-10 p-b-10" id="btn-um-filter">
+                                    <span class="m-r-5">
+                                        <i class="fa fa-filter fs-15"></i>
+                                    </span>
+                                    <span class="fs-12 bold font-montserrat text-uppercase">Filter</span>
+                                </button>
                             </div>
                         </div>
                     </div>
-                    <div class="filter-content menu-wrapper">
-                        <div class="panel-heading">
-                            <span class="fs-11 bold font-montserrat text-uppercase">Filter Berdasarkan</span>
-                            <span class="pull-right pg-close_line close-btn" style="cursor: pointer;"></span>
+                    <div class="bg-white" style="border: 1px solid rgba(230, 230, 230, 0.7); border-top: none" id="sf-container">
+                        <div class="sort-content menu-wrapper">
+                            <div class="panel-heading">
+                                <span class="fs-11 bold font-montserrat text-uppercase">Tampilkan Tanggal dari:</span>
+                                <span class="pull-right pg-close_line close-btn" style="cursor: pointer;"></span>
+                            </div>
+                            <div class="panel-body m-t-10">
+                                <div class="clearfix">
+                                    <div class="col-sm-4">
+                                        <div class="input-daterange input-group m-b-15" id="datepicker-range">
+                                            <input type="text" class="input-sm form-control" name="from" />
+                                            <span class="input-group-addon font-montserrat bold text-uppercase fs-12 p-l-10 p-r-10">Sampai</span>
+                                            <input type="text" class="input-sm form-control" name="to" />
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-8 no-padding">
+                                        <button class="btn btn-primary btn-cons m-l-15">Cari</button>
+
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="panel-body m-t-10">
-                            <div class="clearfix">
-                                <div class="col-sm-2">
-                                    <div class="form-group">
+                        <div class="filter-content menu-wrapper">
+                            <div class="panel-heading">
+                                <span class="fs-11 bold font-montserrat text-uppercase">Filter Berdasarkan</span>
+                                <span class="pull-right pg-close_line close-btn" style="cursor: pointer;"></span>
+                            </div>
+                            <div class="panel-body m-t-10">
+                                <div class="clearfix">
+                                    <div class="col-sm-2">
+                                        @*<div class="form-group">
                                         <label>Status</label>
                                         <div class="">
                                             <span class="checkbox check-primary">
@@ -130,82 +134,108 @@
                                                 <label for="checkbox-pending">Pending</label>
                                             </span>
                                         </div>
+                                    </div>*@
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group typehead" id="sample-three">
+                                            <label>Jabatan</label>
+                                            <input class="typeahead form-control sample-typehead" type="text" name="pos" placeholder="Cari Berdasarkan Jabatan">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group typehead" id="sample-three">
+                                            <label>Departemen</label>
+                                            <input class="typeahead form-control sample-typehead" name="dept" type="text" placeholder="Cari Berdasarkan Departemen">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group typehead" id="sample-three">
+                                            <label>Cabang</label>
+                                            <input class="typeahead form-control sample-typehead" name="branch" type="text" placeholder="Cari Berdasarkan Cabang">
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="col-sm-3">
-                                    <div class="form-group typehead" id="sample-three">
-                                        <label>Jabatan</label>
-                                        <input class="typeahead form-control sample-typehead" type="text" placeholder="Cari Berdasarkan Jabatan">
-                                    </div>
+                                <div class="padding-15">
+                                    <button type="submit" class="btn btn-primary">Cari</button>
                                 </div>
-                                <div class="col-sm-3">
-                                    <div class="form-group typehead" id="sample-three">
-                                        <label>Departemen</label>
-                                        <input class="typeahead form-control sample-typehead" type="text" placeholder="Cari Berdasarkan Departemen">
-                                    </div>
-                                </div>
-                                <div class="col-sm-3">
-                                    <div class="form-group typehead" id="sample-three">
-                                        <label>Cabang</label>
-                                        <input class="typeahead form-control sample-typehead" type="text" placeholder="Cari Berdasarkan Cabang">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="padding-15">
-                                <button class="btn btn-primary btn-cons">Cari</button>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="table-responsive">
-                <table class="table table-hover" id="basicTable">
-                    <thead>
-                        <tr>
-                            <th style="width:1%; padding: 0"></th>
-                            <th style="width:11.11111111111111%; padding: 20px 12px; cursor: pointer;">Tanggal Reservasi<i class="fa fa-sort fs-15 m-l-5"></i></th>
-                            <th style="width:11.11111111111111%; padding: 20px 12px">No. Reservasi</th>
-                            <th style="width:11.11111111111111%; padding: 20px 12px">Tanggal Checkin</th>
-                            <th style="width:13.11111111111111%; padding: 20px 12px">Nama Hotel</th>
-                            <th style="width:12.11111111111111%; padding: 20px 12px">Nama Kota</th>
-                            <th style="width:11.11111111111111%; padding: 20px 12px">Harga</th>
-                            <th style="width:11.11111111111111%; padding: 20px 12px">Booked By</th>
-                            <th style="width:11.11111111111111%; padding: 20px 12px">Approved By</th>
-                            <th style="width:7.11111111111111%; padding: 20px 12px">Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td class="v-align-middle no-padding"></td>
-                            <td class="v-align-middle padding-10">
-                                <div>1 Jan 2017 10:48:38</div>
-                            </td>
-                            <td class="v-align-middle padding-10">
-                                <div>100026540405</div>
-                            </td>
-                            <td class="v-align-middle padding-10">
-                                <div>1 Jan 2017</div>
-                            </td>
-                            <td class="v-align-middle padding-10">
-                                <div>Aston Imperium Hotel & Convention Center</div>
-                            </td>
-                            <td class="v-align-middle padding-10">
-                                <div>Kabupaten Badung, Bali, Indonesia</div>
-                            </td>
-                            <td class="v-align-middle padding-10">
-                                <div>Rp 9999900</div>
-                            </td>
-                            <td class="v-align-middle padding-10">
-                                <div>Suheri</div>
-                            </td>
-                            <td class="v-align-middle padding-10">
-                                <div>Suheri</div>
-                            </td>
-                            <td class="v-align-middle padding-10">
-                                <span class="label label-success">APPROVED</span>
-                            </td>
-                        </tr>
-                        <tr>
+            </form>
+                
+                <div class="table-responsive">
+                    <table class="table table-hover" id="basicTable">
+                        <thead>
+                            <tr>
+                                <th style="width:1%; padding: 0"></th>
+                                <th style="width:11.11111111111111%; padding: 20px 12px; cursor: pointer;">Tanggal Reservasi<i class="fa fa-sort fs-15 m-l-5"></i></th>
+                                <th style="width:11.11111111111111%; padding: 20px 12px">No. Reservasi</th>
+                                <th style="width:11.11111111111111%; padding: 20px 12px">Tanggal Checkin</th>
+                                <th style="width:13.11111111111111%; padding: 20px 12px">Nama Hotel</th>
+                                <th style="width:12.11111111111111%; padding: 20px 12px">Nama Kota</th>
+                                <th style="width:11.11111111111111%; padding: 20px 12px">Harga</th>
+                                <th style="width:11.11111111111111%; padding: 20px 12px">Booked By</th>
+                                <th style="width:11.11111111111111%; padding: 20px 12px">Approved By</th>
+                                <th style="width:7.11111111111111%; padding: 20px 12px">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model != null)
+                            {
+                                foreach (var hotel in Model)
+                                {
+                                    <tr>
+                                        <td class="v-align-middle no-padding"></td>
+                                        <td class="v-align-middle padding-10">
+                                            <div>@hotel.RsvTime.ToString("d MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID")) @hotel.RsvTime.ToString("HH:mm:ss", CultureInfo.CreateSpecificCulture("id-ID"))</div>
+                                        </td>
+                                        <td class="v-align-middle padding-10">
+                                            <div>@hotel.RsvNo</div>
+                                        </td>
+                                        <td class="v-align-middle padding-10">
+                                            <div>@hotel.HotelDetail.CheckInDate.ToString("d MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID"))</div>
+                                        </td>
+                                        <td class="v-align-middle padding-10">
+                                            <div>@hotel.HotelDetail.HotelName</div>
+                                        </td>
+                                        <td class="v-align-middle padding-10">
+                                            <div>@hotel.HotelDetail.ZoneName, @hotel.HotelDetail.CountryName</div>
+                                        </td>
+                                        <td class="v-align-middle padding-10">
+                                            <div>Rp @hotel.Payment.OriginalPrice</div>
+                                        </td>
+                                        <td class="v-align-middle padding-10">
+                                            <div>@hotel.Booker.Name</div>
+                                        </td>
+                                        <td class="v-align-middle padding-10">
+                                            @{
+                                    var approverName = "";
+                                    approverName = hotel.Approver == null ? "" : hotel.Approver.Name;
+                                            }
+                                            <div>@approverName</div>
+                                        </td>
+                                        <td class="v-align-middle padding-10">
+                                            <span class="label label-success">@hotel.RsvDisplayStatus</span>
+                                            @if (hotel.RsvDisplayStatus == RsvDisplayStatus.Approved)
+                                            {
+                                                <span class="label label-success">APPROVED</span>
+
+                                            }
+                                            @if (hotel.RsvDisplayStatus == RsvDisplayStatus.Rejected)
+                                            {
+                                                <span class="label label-important">REJECTED</span>
+                                            }
+                                            @if (hotel.RsvDisplayStatus == RsvDisplayStatus.Pending)
+                                            {
+                                                <span class="label label-primary">PENDING</span>
+                                            }
+
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                            @*<tr>
                             <td class="v-align-middle no-padding"></td>
                             <td class="v-align-middle padding-10">
                                 <div>2 Jan 2017 10:48:38</div>
@@ -264,10 +294,10 @@
                             <td class="v-align-middle padding-10">
                                 <span class="label label-primary">PENDING</span>
                             </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
+                        </tr>*@
+                        </tbody>
+                    </table>
+                </div>
+</div>
     </div>
 </div>

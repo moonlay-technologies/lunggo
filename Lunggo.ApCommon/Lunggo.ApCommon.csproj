@@ -269,6 +269,7 @@
     <Compile Include="Hotel\Query\GetReservationByApproverIdQuery.cs" />
     <Compile Include="Hotel\Query\GetRoomIdQuery.cs" />
     <Compile Include="Hotel\Query\GetRsvNoByBookerIdQuery.cs" />
+    <Compile Include="Hotel\Query\GetRsvNosByCompanyQuery.cs" />
     <Compile Include="Hotel\Query\GetRsvNosByDeviceIdQuery.cs" />
     <Compile Include="Hotel\Query\GetRsvNosByUserIdQuery.cs" />
     <Compile Include="Hotel\Query\SearchReservationQuery.cs" />

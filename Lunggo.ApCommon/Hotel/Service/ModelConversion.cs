@@ -34,6 +34,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                 RsvType = hotelReservation.RsvType ?? null,
                 RsvDisplayStatus = MapReservationStatus(hotelReservation),
                 Booker = User.ConvertUserForDisplay(hotelReservation.User),
+                Approver = User.ConvertUserForDisplay(hotelReservation.User.Approver),
                 BookerMessageTitle = hotelReservation.BookerMessageTitle,
                 BookerMessageDescription = hotelReservation.BookerMessageDescription,
                 RejectionDescription = hotelReservation.RejectionDescription

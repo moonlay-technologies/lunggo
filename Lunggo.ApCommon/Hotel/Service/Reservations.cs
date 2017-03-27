@@ -227,6 +227,35 @@ namespace Lunggo.ApCommon.Hotel.Service
             }
         }
 
+        public List<HotelReservationForDisplay> GetReservationsByCompany(string companyId, string branchFilter, string departmentFilter, string positionFilter, DateTime fromDate, DateTime toDate)
+        {
+            var rsvs = GetReservationsByCompanyFromDb(companyId, branchFilter, departmentFilter, positionFilter, fromDate, toDate) ?? new List<HotelReservation>();
+            return rsvs.Select(ConvertToReservationForDisplay).ToList();
+        }
+
+        private List<HotelReservation> GetReservationsByCompanyFromDb(string companyId, string branchFilter, string departmentFilter, string positionFilter, DateTime fromDate, DateTime toDate)
+        {
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                var param = new
+                {
+                    CompanyId = companyId,
+                    BranchFilter = branchFilter,
+                    DepartmentFilter = departmentFilter,
+                    PositionFilter = positionFilter,
+                    FromDate = fromDate,
+                    ToDate = toDate.AddDays(1)
+                };
+                var rsvNos = GetRsvNosByCompanyQuery.GetInstance().Execute(conn, param, param).Distinct().ToList();
+                if (!rsvNos.Any())
+                    return null;
+                else
+                {
+                    return rsvNos.Select(GetOverviewReservationFromDb).Where(rsv => rsv != null).ToList();
+                }
+            }
+        }
+
         private HotelReservation GetOverviewReservationFromDb(string rsvNo)
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
@@ -446,6 +475,7 @@ namespace Lunggo.ApCommon.Hotel.Service
 
                         var financeEmails = User.GetListFinanceEmailByCompanyId(companyId);
                         NotifyFailedPayment(rsvNo, approverEmail, userEmail, financeEmails);
+                        UpdateBookingRsvStatusDb(rsvNo, RsvStatus.Approved, message);
                         return false;
                     }
                     

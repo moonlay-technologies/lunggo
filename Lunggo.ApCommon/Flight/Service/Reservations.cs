@@ -200,6 +200,7 @@ namespace Lunggo.ApCommon.Flight.Service
                         var approverEmail = User.GetApproverEmailByUserId(userId);
                         var financeEmails = User.GetListFinanceEmailByCompanyId(companyId);
                         NotifyFailedPayment(rsvNo, approverEmail, userEmail, financeEmails);
+                        UpdateBookingRsvStatusDb(rsvNo, RsvStatus.Approved, rejectionMessage);
                         return false;
                     }
                     UpdateBookingRsvStatusDb(rsvNo, RsvStatus.Approved, rejectionMessage);
