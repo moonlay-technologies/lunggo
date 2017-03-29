@@ -12,6 +12,7 @@ using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Sdk.auto.messages;
 using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Sdk.helpers;
 using Lunggo.ApCommon.Payment.Model;
 using Lunggo.ApCommon.Product.Model;
+using Lunggo.Framework.Config;
 using Lunggo.Framework.Context;
 using Microsoft.Owin.Security.Provider;
 using Newtonsoft.Json;
@@ -170,7 +171,13 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds
                                     RateCommentsId = x.rateCommentsId
                                 };
                                 rate.Price.SetSupplier(x.net,
-                                    x.hotelCurrency != null ? allCurrencies[x.hotelCurrency] : allCurrencies["IDR"]);
+                                    x.hotelCurrency != null
+                                        ? allCurrencies[x.hotelCurrency]
+                                        : ConfigManager.GetInstance().GetConfigValue("general", "environment") == "production"
+                                            ? allCurrencies["IDR"]
+                                            : x.net < 10000
+                                                ? allCurrencies["USD"]
+                                                : allCurrencies["IDR"]);
                                 return rate;
                             }).ToList()
                         }).ToList(),

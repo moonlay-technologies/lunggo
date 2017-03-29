@@ -24,7 +24,7 @@ namespace Lunggo.ApCommon.Hotel.Model
 
         public string HotelName { get; set; }
         public int Type { get; set; }
-        public long Id { get; set; }
+        public string Id { get; set; }
         public string Code { get; set; }
         public string Destination { get; set; }
         public string Zone { get; set; }

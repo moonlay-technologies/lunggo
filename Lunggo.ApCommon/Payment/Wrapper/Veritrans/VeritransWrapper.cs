@@ -17,6 +17,7 @@ using Lunggo.Framework.Config;
 using Lunggo.Framework.Context;
 using Lunggo.Framework.Extension;
 using Lunggo.Framework.Log;
+using Microsoft.Owin.Security.Provider;
 using Newtonsoft.Json;
 using System.Diagnostics;
 using Newtonsoft.Json.Schema;
@@ -28,10 +29,11 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
         private static readonly VeritransWrapper Instance = new VeritransWrapper();
         private bool _isInitialized;
 
-        private static string _endPoint;
+        private static string _chargeEndPoint;
         private static string _serverKey;
-        private static string _cancelEndPoint;
         private static string _rootUrl;
+        private static string _cancelEndPoint;
+        private static string _approveEndPoint;
         private static string _finishedRedirectUrl;
         private static string _unfinishedRedirectUrl;
         private static string _errorRedirectUrl;
@@ -55,9 +57,10 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
         {
             if (!_isInitialized)
             {
-                _endPoint = ConfigManager.GetInstance().GetConfigValue("veritrans", "endPoint");
+                _chargeEndPoint = ConfigManager.GetInstance().GetConfigValue("veritrans", "chargeEndPoint");
                 _serverKey = ConfigManager.GetInstance().GetConfigValue("veritrans", "serverKey") + ":";
-                _cancelEndPoint = ConfigManager.GetInstance().GetConfigValue("veritrans", "cancelEndpoint");
+                _cancelEndPoint = ConfigManager.GetInstance().GetConfigValue("veritrans", "cancelEndPoint");
+                _approveEndPoint = ConfigManager.GetInstance().GetConfigValue("veritrans", "approveEndPoint");
                 _rootUrl = ConfigManager.GetInstance().GetConfigValue("general", "rootUrl");
                 _isInitialized = true;
             }
@@ -70,7 +73,7 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
             WebResponse response;
             VeritransResponse content;
             _cancelEndPoint = _cancelEndPoint.Replace("order_id", orderId);
-            request = CreateCancelTransactionRequest(authorizationKey);
+            request = CreateCancelTransactionRequest(authorizationKey, _cancelEndPoint);
             response = SubmitRequest(request);
             content = GetResponseContent(response);
             if (content != null && content.StatusCode.StartsWith("2"))
@@ -156,6 +159,14 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
                     {
                         ProcessSavedCreditCardToken(payment.Data, content);
                         payment.Status = PaymentResult(content);
+                        if (payment.Status == PaymentStatus.Challenged)
+                        {
+                            CancelTransaction(content.OrderId, content.TransactionId);
+                            payment.Status = PaymentStatus.Denied;
+                            //var responseApprove = ApproveTransaction(content.OrderId, content.TransactionId);
+                            //payment.Status = PaymentResult(responseApprove);
+
+                        }
                         payment.ExternalId = content.TransactionId;
                     }
                     else
@@ -334,6 +345,45 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
             }
         }
 
+
+        internal VeritransResponse ApproveTransaction(string orderId, string transactionId)
+        {
+            var authorizationKey = ProcessAuthorizationKey(_serverKey);
+            WebRequest request;
+            WebResponse response;
+            VeritransResponse content;
+            _approveEndPoint = _approveEndPoint.Replace("order_id", orderId);
+            request = CreateCancelTransactionRequest(authorizationKey, _approveEndPoint);
+            response = SubmitRequest(request);
+            content = GetResponseContent(response);
+            if (content != null && content.StatusCode.StartsWith("2"))
+            {
+                return content;
+            }
+            else
+            {
+                var log = LogService.GetInstance();
+                var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
+                log.Post("CANCEL TRANSACTION" +
+                    "```Payment Log```"
+                    + "\n`*Environment :* " + env.ToUpper()
+                    + "\n*ORDER ID  :*\n"
+                    + orderId
+                        + "\n*TRANSAC ID :*\n"
+                        + transactionId
+                    //+ "\n*ITEM DETAILS :*\n"
+                    //+ itemDetails.Serialize()
+                        + "\n*REQUEST :*\n"
+                        + _temp
+                    + "\n*RESPONSE :*\n"
+                    + content.Serialize()
+                    + "\n*Platform :* "
+                    + Client.GetPlatformType(HttpContext.Current.User.Identity.GetClientId()),
+                    env == "production" ? "#logging-prod" : "#logging-dev");
+                return null;
+            }
+        }
+
         private static void ProcessSavedCreditCardToken(PaymentData data, VeritransResponse content)
         {
             if (data != null && data.CreditCard != null)
@@ -365,7 +415,7 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
 
         private static WebRequest CreateVtDirectRequest(string authorizationKey, PaymentData data, TransactionDetails transactionDetail, PaymentMethod method)
         {
-            var request = (HttpWebRequest)WebRequest.Create(_endPoint);
+            var request = (HttpWebRequest)WebRequest.Create(_chargeEndPoint);
             request.Method = "POST";
             request.Headers.Add("Authorization", "Basic " + authorizationKey);
             request.ContentType = "application/json";
@@ -375,9 +425,9 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
             return request;
         }
 
-        private static WebRequest CreateCancelTransactionRequest(string authorizationKey)
+        private static WebRequest CreateCancelTransactionRequest(string authorizationKey, string endPoint)
         {
-            var request = (HttpWebRequest)WebRequest.Create(_cancelEndPoint);
+            var request = (HttpWebRequest)WebRequest.Create(endPoint);
             request.Method = "POST";
             request.Headers.Add("Authorization", "Basic " + authorizationKey);
             request.ContentType = "application/json";
@@ -387,7 +437,7 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
 
         private static WebRequest CreateVtWebRequest(string authorizationKey, TransactionDetails transactionDetail, List<ItemDetails> itemDetails, PaymentMethod method)
         {
-            var request = (HttpWebRequest)WebRequest.Create(_endPoint);
+            var request = (HttpWebRequest)WebRequest.Create(_chargeEndPoint);
             request.Method = "POST";
             request.Headers.Add("Authorization", "Basic " + authorizationKey);
             request.ContentType = "application/json";
@@ -596,6 +646,7 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
                             case "accept":
                                 return PaymentStatus.Settled;
                             case "challenge":
+                                return PaymentStatus.Challenged;
                             case "deny":
                                 return PaymentStatus.Denied;
                             default:

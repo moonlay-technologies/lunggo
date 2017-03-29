@@ -15,7 +15,7 @@ namespace Lunggo.WebAPI.ApiSrc.Autocomplete.Logic
         {
             var hotel = HotelService.GetInstance();
             var autocomplete = AutocompleteManager.GetInstance();
-            var hotelLocationIds = autocomplete.GetHotelIdsAutocomplete(prefix);
+            var hotelLocationIds = autocomplete.GetHotelIdsAutocomplete(prefix).ToList();
             if (!hotelLocationIds.Any())
             {
                 return new HotelAutocompleteApiResponse

@@ -322,5 +322,24 @@ namespace Lunggo.WebAPI.ApiSrc.Payment
                 return ApiResponseBase.ExceptionHandling(e, request);
             }
         }
+
+        [HttpPost]
+        [LunggoCorsPolicy]
+        [Authorize]
+        [Route("v1/payment/checkmethoddiscount")]
+        public ApiResponseBase CheckMethodDiscount()
+        {
+            CheckMethodDiscountApiRequest request = null;
+            try
+            {
+                request = ApiRequestBase.DeserializeRequest<CheckMethodDiscountApiRequest>();
+                var apiResponse = PaymentLogic.CheckMethodDiscount(request);
+                return apiResponse;
+            }
+            catch (Exception e)
+            {
+                return ApiResponseBase.ExceptionHandling(e, request);
+            }
+        }
     }
 }

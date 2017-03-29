@@ -1,0 +1,73 @@
+@{
+    Layout = "/Views/Shared/mobile/_LayoutMobile.cshtml";
+    ViewBag.Title = "Hari Belanja Online 2016";
+    ViewBag.BodyClass = "page-promo promo-btn-mobile-app";
+    ViewBag.SiteHeader = "header-promo-btn";
+    ViewBag.AngularController = "PromoController";
+}
+
+@section AdditionalCSS {
+    <link href="/Assets/css/promo.css" rel="stylesheet" />
+}
+
+@section AdditionalJS {
+    <!-- additional Angular JS-->
+    <script src="/Assets/js/angular.min.js"></script>
+    <script src="/Assets/js/angular-animate.min.js"></script>
+    <script src="/Assets/js/angular-route.min.js"></script>
+
+    <script type="text/javascript" src="/Scripts/bootstrap.min.js"></script>
+}
+
+@section PageJS{
+    <!-- angular controller -->
+    <script src="/Assets/travorama20/angularDirectory/search/hotelSearch.service.js"></script>
+}
+
+<div class="promo-btn">
+    <div class="mini-banner">
+        <img class="img-promo" src="/Assets/images/campaign/Harbolnas2016/Harbolnas_landingpage_mobile.jpg" alt="Harbolnas 2016" />
+    </div>
+    <div class="tab-promo">
+        <ul class="nav nav-tabs tab-detail">
+            <li class="col-xs-6 active">
+                <a data-toggle="tab" href="#tnc-promo">Syarat & Ketentuan</a>
+            </li>
+            <li class="col-xs-6">
+                <a data-toggle="tab" href="#how-to">Cara Mendapatkan <br />Program Promo</a>
+            </li>
+        </ul>
+        <div class="tab-content">
+            <div id="tnc-promo" class="tab-pane active">
+                <div class="container-page">
+                    <div class="section-title text-center">Syarat & <span class="blue-text">Ketentuan</span></div>
+                    <div class="tnc">
+                        <ol class="list-number">
+                            <li>Diskon hotel sebesar 10% (maks Rp 300.000) tanpa minimum transaksi dalam satu No. Pemesanan.</li>
+                            <li>Hanya berlaku untuk pemesanan melalui desktop website dan mobile website Travorama.</li>
+                            <li>Berlaku untuk semua hotel di seluruh dunia, semua tipe kamar, dan periode inap.</li>
+                            <li>Berlaku untuk satu kali pemesanan per hari selama periode promo.</li>
+                            <li>Promo berlaku untuk semua metode pembayaran.</li>
+                            <li>Promo ini tidak dapat digabung dengan promo lainnya.</li>
+                            <li>Travorama berhak penuh untuk mengubah syarat dan ketentuan tanpa pemberitahuan terlebih dahulu.</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+            <div id="how-to" class="tab-pane">
+                <div class="container-page">
+                    <div class="section-title text-center">Cara Mendapatkan <br /><span class="blue-text">Program Promo</span></div>
+                    <div class="how-to">
+                        <ol class="list-number">
+                            <li>Cari dan pesan hotel melalui situs Travorama.</li>
+                            <li>Pilih metode pembayaran yang Anda inginkan.</li>
+                            <li>Masukkan kode promo <span class="blue-text"><b>'HARBOLNAS1212'</b></span>, harga akan otomatis terpotong sesuai program promo.</li>
+                            <li>Selesaikan proses pembayaran.</li>
+                            <li>E-voucher akan dikirimkan ke alamat email Anda.</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

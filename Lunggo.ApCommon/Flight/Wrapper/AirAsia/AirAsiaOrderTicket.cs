@@ -7,6 +7,7 @@ using CsQuery;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.Framework.Config;
+using Lunggo.Framework.Log;
 using Lunggo.Framework.Web;
 using RestSharp;
 
@@ -33,31 +34,41 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
             internal IssueTicketResult OrderTicket(string bookingId)
             {
                 var clientx = CreateAgentClient();
-
+                var log = LogService.GetInstance();
+                var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
                 if (!Login(clientx))
+                {
+                    Console.WriteLine("[Airasia] Failed to Login");
                     return new IssueTicketResult
                     {
                         IsSuccess = false,
                         Errors = new List<FlightError> { FlightError.TechnicalError },
                         ErrorMessages = new List<string> { "[AirAsia] Can't Login!" }
                     };
+                }
+                    
 
                 // [GET] BookingList
-
+                log.Post("[Airasia] [GET] Halaman BookingList.aspx", "#logging-issueflight");
                 var url = "BookingList.aspx";
                 var listRequest = new RestRequest(url, Method.GET);
                 listRequest.AddHeader("Referer", "https://booking2.airasia.com/AgentHome.aspx");
                 var listResponse = clientx.Execute(listRequest);
 
-                if (listResponse.ResponseUri.AbsolutePath != "/BookingList.aspx" && (listResponse.StatusCode == HttpStatusCode.OK || listResponse.StatusCode == HttpStatusCode.Redirect))
+                if (listResponse.ResponseUri.AbsolutePath != "/BookingList.aspx" &&
+                    (listResponse.StatusCode == HttpStatusCode.OK || listResponse.StatusCode == HttpStatusCode.Redirect))
+                {
+                    log.Post("[AirAsia][GET] Response Uri is not /BookingList.aspx or Status is not (OK Or Redirected)", "#logging-issueflight");
                     return new IssueTicketResult
                     {
                         IsSuccess = false,
                         Errors = new List<FlightError> { FlightError.FailedOnSupplier }
                     };
+                }
+                
 
                 // [POST] BookingList
-
+                log.Post("[Airasia] [Post] Halaman BookingList.aspx", "#logging-issueflight");
                 url = "BookingList.aspx";
                 var filterRequest = new RestRequest(url, Method.POST);
                 filterRequest.AddHeader("Referer", "https://booking2.airasia.com/BookingList.aspx");
@@ -73,16 +84,22 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                 filterRequest.AddParameter("application/x-www-form-urlencoded", postData, ParameterType.RequestBody);
                 var filterResponse = clientx.Execute(filterRequest);
 
-                if (filterResponse.ResponseUri.AbsolutePath != "/BookingList.aspx" && (filterResponse.StatusCode == HttpStatusCode.OK || filterResponse.StatusCode == HttpStatusCode.Redirect))
+                if (filterResponse.ResponseUri.AbsolutePath != "/BookingList.aspx" &&
+                    (filterResponse.StatusCode == HttpStatusCode.OK ||
+                     filterResponse.StatusCode == HttpStatusCode.Redirect))
+                {
+                    log.Post("[AirAsia][POST] Response Uri is not /BookingList.aspx or Status is not (OK Or Redirected)", "#logging-issueflight");
                     return new IssueTicketResult
                     {
                         IsSuccess = false,
                         Errors = new List<FlightError> { FlightError.FailedOnSupplier },
-                        ErrorMessages = new List<string> { "[AirAsia] || " + filterResponse.Content}
+                        ErrorMessages = new List<string> { "[AirAsia] || " + filterResponse.Content }
                     };
+                }
+                
 
                 // [POST] BookingList -> ChangeItinerary
-
+                log.Post("[Airasia] [Post] BookingList -> ChangeItinerary", "#logging-issueflight");
                 url = "BookingList.aspx";
                 var selectRequest = new RestRequest(url, Method.POST);
                 selectRequest.AddHeader("Referer", "https://booking2.airasia.com/BookingList.aspx");
@@ -98,16 +115,20 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                 selectRequest.AddParameter("application/x-www-form-urlencoded", postData, ParameterType.RequestBody);
                 var selectResponse = clientx.Execute(selectRequest);
 
-                if (selectResponse.ResponseUri.AbsolutePath != "/ChangeItinerary.aspx" && selectResponse.StatusCode != HttpStatusCode.OK)
+                if (selectResponse.ResponseUri.AbsolutePath != "/ChangeItinerary.aspx" &&
+                    selectResponse.StatusCode != HttpStatusCode.OK)
+                {
+                    log.Post("[Airasia] Response Uri is not ChangeItinerary.aspx or Status is not OK", "#logging-issueflight");
                     return new IssueTicketResult
                     {
                         IsSuccess = false,
                         Errors = new List<FlightError> { FlightError.FailedOnSupplier },
-                        ErrorMessages = new List<string> { "[AirAsia] Error while requesting at BookingList.aspx. Unexpected response path or response status code || " + selectResponse.Content }
+                        ErrorMessages = new List<string> { "[AirAsia] Error while requesting at BookingList.aspx to ChangeItinerary. Unexpected response path or response status code || " + selectResponse.Content }
                     };
+                }
 
                 // [POST] ChangeItinerary
-
+                log.Post("[Airasia] [POST] ChangeItinerary.aspx", "#logging-issueflight");
                 url = "ChangeItinerary.aspx";
                 var itinRequest = new RestRequest(url, Method.POST);
                 itinRequest.AddHeader("Referer", "https://booking2.airasia.com/ChangeItinerary.aspx");
@@ -126,13 +147,17 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                 var itinResponse = clientx.Execute(itinRequest);
                 var changeItinHtml = itinResponse.Content;
 
-                if (itinResponse.ResponseUri.AbsolutePath != "/PaymentChange.aspx" && (itinResponse.StatusCode == HttpStatusCode.OK || itinResponse.StatusCode == HttpStatusCode.Redirect))
+                if (itinResponse.ResponseUri.AbsolutePath != "/PaymentChange.aspx" &&
+                    (itinResponse.StatusCode == HttpStatusCode.OK || itinResponse.StatusCode == HttpStatusCode.Redirect))
+                {
+                    log.Post("[AirAsia]Response Uri is not PaymentChange.aspx or Status is not (OK Or Redirected)", "#logging-issueflight");
                     return new IssueTicketResult
                     {
                         IsSuccess = false,
                         Errors = new List<FlightError> { FlightError.FailedOnSupplier },
                         ErrorMessages = new List<string> { "[AirAsia] Error while requesting at ChangeItinerary.aspx. Unexpected response path or response status code || " + itinResponse.Content }
                     };
+                }
 
                 var changeItinCq = (CQ)changeItinHtml;
                 var priceValue =
@@ -143,7 +168,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                 {
 
                     // [POST] PaymentChange
-
+                    log.Post("[Airasia] [POST] PaymentChange.aspx", "#logging-issueflight");
                     url = "PaymentChange.aspx";
                     var paymentRequest = new RestRequest(url, Method.POST);
                     paymentRequest.AddHeader("Referer", "https://booking2.airasia.com/PaymentChange.aspx");
@@ -166,11 +191,17 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                     paymentRequest.AddParameter("application/x-www-form-urlencoded", postData, ParameterType.RequestBody);
                     var paymentResponse = clientx.Execute(paymentRequest);
 
-                    if (paymentResponse.ResponseUri.AbsolutePath != "/WaitChange.aspx" && (paymentResponse.StatusCode == HttpStatusCode.OK || paymentResponse.StatusCode == HttpStatusCode.Redirect))
+                    if (paymentResponse.ResponseUri.AbsolutePath != "/WaitChange.aspx" &&
+                        (paymentResponse.StatusCode == HttpStatusCode.OK ||
+                         paymentResponse.StatusCode == HttpStatusCode.Redirect))
+                    {
+                        log.Post("[AirAsia] Response Uri is not /WaitChange.aspx or Status is not (OK Or Redirected)", "#logging-issueflight");
                         throw new Exception();
+                    }
+                        
 
                     // [GET] WaitChange
-
+                    log.Post("[Airasia] [GET] WaitChange.aspx", "#logging-issueflight");
                     var sw = Stopwatch.StartNew();
                     var retryLimit = new TimeSpan(0, 1, 0);
                     var retryInterval = new TimeSpan(0, 0, 2);
@@ -185,9 +216,15 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                             Thread.Sleep(retryInterval);
                     }
 
-                    if (waitResponse.ResponseUri.AbsolutePath != "/ChangeFinalItinerary.aspx" && (waitResponse.StatusCode == HttpStatusCode.OK || waitResponse.StatusCode == HttpStatusCode.Redirect))
+                    if (waitResponse.ResponseUri.AbsolutePath != "/ChangeFinalItinerary.aspx" &&
+                        (waitResponse.StatusCode == HttpStatusCode.OK ||
+                         waitResponse.StatusCode == HttpStatusCode.Redirect))
+                    {
+                        log.Post("[Airasia] Response Uri is not /ChangeFinalItinerary.aspx or Status is not (OK Or Redirected)", "#logging-issueflight");
                         throw new Exception();
+                    }
 
+                    log.Post("[AirAsia] Done", "#logging-issueflight");
                     return new IssueTicketResult
                     {
                         IsSuccess = true,

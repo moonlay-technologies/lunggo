@@ -206,13 +206,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
     </Reference>
-    <Reference Include="Wurfl, Version=1.6.0.1, Culture=neutral, PublicKeyToken=816aeec277aa13b9, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\WURFL_Official_API.1.6.0.1\lib\Wurfl.dll</HintPath>
-    </Reference>
-    <Reference Include="Wurfl.Aspnet.Extensions">
-      <HintPath>..\packages\WURFL_Official_API.1.6.0.1\lib\Wurfl.Aspnet.Extensions.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\AppInitializer.cs" />
@@ -226,6 +219,7 @@
     <Compile Include="Areas\Api\Models\AccountApiResponseModel.cs" />
     <Compile Include="Areas\Api\Models\AccountResponseModel.cs" />
     <Compile Include="Areas\Api\Models\ResetPasswordViewModel.cs" />
+    <Compile Include="Attributes\RequireHttpsProduction.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\B2BAccountController.cs" />
     <Compile Include="Controllers\B2BFlightController.cs" />
@@ -1535,6 +1529,7 @@
     <Content Include="Assets\images\ajax-loader.gif" />
     <Content Include="Assets\images\amex.png" />
     <Content Include="Assets\images\appStore.png" />
+    <Content Include="Assets\images\arrow-down-grey.png" />
     <Content Include="Assets\images\arrow-down.png" />
     <Content Include="Assets\images\arrow-white.png" />
     <Content Include="Assets\images\asita-logo.png" />
@@ -1557,6 +1552,7 @@
     <Content Include="Assets\images\benefit\discount.png" />
     <Content Include="Assets\images\benefit\news.png" />
     <Content Include="Assets\images\benefit\refund.png" />
+    <Content Include="Assets\images\bersama-prima-alto.jpg" />
     <Content Include="Assets\images\bg-white.jpg" />
     <Content Include="Assets\images\blue-bg.png" />
     <Content Include="Assets\images\blueBg.png" />
@@ -1570,15 +1566,29 @@
     <Content Include="Assets\images\campaign\bandung-text.png" />
     <Content Include="Assets\images\campaign\bandung-thumb.jpg" />
     <Content Include="Assets\images\campaign\bandung.jpg" />
+    <Content Include="Assets\images\campaign\Harbolnas2016\Harbolnas_landingpage.jpg" />
+    <Content Include="Assets\images\campaign\Harbolnas2016\Harbolnas_landingpage_mobile.jpg" />
     <Content Include="Assets\images\campaign\hongkong-text.png" />
     <Content Include="Assets\images\campaign\hongkong-thumb.jpg" />
     <Content Include="Assets\images\campaign\hongkong.jpg" />
+    <Content Include="Assets\images\campaign\HutBTN\HutBTN-page-mobile.jpg" />
+    <Content Include="Assets\images\campaign\HutBTN\HutBTN-page.jpg" />
+    <Content Include="Assets\images\campaign\HutBTN\HutBTN-promo-mobile.jpg" />
+    <Content Include="Assets\images\campaign\HutBTN\HutBTN-slider-mobile.jpg" />
+    <Content Include="Assets\images\campaign\HutBTN\HutBTN-slider.jpg" />
+    <Content Include="Assets\images\campaign\Imlek2017\Imlek2017-page-mobile.jpg" />
+    <Content Include="Assets\images\campaign\Imlek2017\Imlek2017-page.jpg" />
+    <Content Include="Assets\images\campaign\Imlek2017\Imlek2017-promo-mobile.jpg" />
+    <Content Include="Assets\images\campaign\Imlek2017\Imlek2017-slider-mobile.jpg" />
+    <Content Include="Assets\images\campaign\Imlek2017\Imlek2017-slider.jpg" />
     <Content Include="Assets\images\campaign\jakarta-text.png" />
     <Content Include="Assets\images\campaign\jakarta-thumb.jpg" />
     <Content Include="Assets\images\campaign\jakarta.jpg" />
     <Content Include="Assets\images\campaign\malaysia-text.png" />
     <Content Include="Assets\images\campaign\malaysia-thumb.jpg" />
     <Content Include="Assets\images\campaign\malaysia.jpg" />
+    <Content Include="Assets\images\campaign\MatahariMall2016\MatahariMall-page-mobile.jpg" />
+    <Content Include="Assets\images\campaign\MatahariMall2016\MatahariMall-page.jpg" />
     <Content Include="Assets\images\campaign\MobileApp\app-store-cs.png" />
     <Content Include="Assets\images\campaign\MobileApp\app-store.png" />
     <Content Include="Assets\images\campaign\MobileApp\background.jpg" />
@@ -1591,12 +1601,27 @@
     <Content Include="Assets\images\campaign\OnlineRevolution2016\OnlineRevolution-page.jpg" />
     <Content Include="Assets\images\campaign\OnlineRevolution2016\OnlineRevolution-slider-mobile.jpg" />
     <Content Include="Assets\images\campaign\OnlineRevolution2016\OnlineRevolution-slider.jpg" />
+    <Content Include="Assets\images\campaign\PaydayMadness\PaydayMadness-page-mobile.jpg" />
+    <Content Include="Assets\images\campaign\PaydayMadness\PaydayMadness-page.jpg" />
+    <Content Include="Assets\images\campaign\PaydayMadness\PaydayMadness-promo-mobile.jpg" />
+    <Content Include="Assets\images\campaign\PaydayMadness\PaydayMadness-slider-mobile.jpg" />
+    <Content Include="Assets\images\campaign\PaydayMadness\PaydayMadness-slider.jpg" />
+    <Content Include="Assets\images\campaign\PaydayMegaDeals\PaydayMegaDeals-page-mobile.jpg" />
+    <Content Include="Assets\images\campaign\PaydayMegaDeals\PaydayMegaDeals-page.jpg" />
+    <Content Include="Assets\images\campaign\PaydayMegaDeals\PaydayMegaDeals-promo-mobile.jpg" />
+    <Content Include="Assets\images\campaign\PaydayMegaDeals\PaydayMegaDeals-slider-mobile.jpg" />
+    <Content Include="Assets\images\campaign\PaydayMegaDeals\PaydayMegaDeals-slider.jpg" />
     <Content Include="Assets\images\campaign\singapore-text.png" />
     <Content Include="Assets\images\campaign\singapore-thumb.jpg" />
     <Content Include="Assets\images\campaign\singapore.jpg" />
     <Content Include="Assets\images\campaign\surabaya-text.png" />
     <Content Include="Assets\images\campaign\surabaya-thumb.jpg" />
     <Content Include="Assets\images\campaign\surabaya.jpg" />
+    <Content Include="Assets\images\campaign\TerbanginHemat\TerbanginHemat-page-mobile.jpg" />
+    <Content Include="Assets\images\campaign\TerbanginHemat\TerbanginHemat-page.jpg" />
+    <Content Include="Assets\images\campaign\TerbanginHemat\TerbanginHemat-promo-mobile.jpg" />
+    <Content Include="Assets\images\campaign\TerbanginHemat\TerbanginHemat-slider-mobile.jpg" />
+    <Content Include="Assets\images\campaign\TerbanginHemat\TerbanginHemat-slider.jpg" />
     <Content Include="Assets\images\campaign\yogyakarta-text.png" />
     <Content Include="Assets\images\campaign\yogyakarta-thumb.jpg" />
     <Content Include="Assets\images\campaign\yogyakarta.jpg" />
@@ -1717,7 +1742,22 @@
     <Content Include="Assets\images\hotel-review-header.png" />
     <Content Include="Assets\images\hotel-star-4.jpg" />
     <Content Include="Assets\images\hotel-star-4.png" />
-    <Content Include="Assets\images\hotel\markers.png" />
+    <Content Include="Assets\images\hotel\filter-hotel-map-white.png" />
+    <Content Include="Assets\images\hotel\filter-hotel-map.png" />
+    <Content Include="Assets\images\hotel\hotel-dummy.jpg" />
+    <Content Include="Assets\images\hotel\location-white.png" />
+    <Content Include="Assets\images\hotel\markers-blue.png" />
+    <Content Include="Assets\images\hotel\markers-red.png" />
+    <Content Include="Assets\images\hotel\popular\bali.jpg" />
+    <Content Include="Assets\images\hotel\popular\flight-1.jpg" />
+    <Content Include="Assets\images\hotel\popular\flight-2.jpg" />
+    <Content Include="Assets\images\hotel\popular\flight-3.jpg" />
+    <Content Include="Assets\images\hotel\popular\flight-4.jpg" />
+    <Content Include="Assets\images\hotel\popular\jakarta.jpg" />
+    <Content Include="Assets\images\hotel\popular\macau.jpg" />
+    <Content Include="Assets\images\hotel\popular\surabaya.jpg" />
+    <Content Include="Assets\images\hotel\popular\yogya.jpg" />
+    <Content Include="Assets\images\hotel\view-map.jpg" />
     <Content Include="Assets\images\hourglass.png" />
     <Content Include="Assets\images\hover-menu-arrow.png" />
     <Content Include="Assets\images\howto-bg.jpg" />
@@ -1730,6 +1770,16 @@
     <Content Include="Assets\images\howtopay-3.jpg" />
     <Content Include="Assets\images\howtopay-header.jpg" />
     <Content Include="Assets\images\idr-sprite.png" />
+    <Content Include="Assets\images\index\popular-flight-bali.jpg" />
+    <Content Include="Assets\images\index\popular-flight-jakarta.jpg" />
+    <Content Include="Assets\images\index\popular-flight-medan.jpg" />
+    <Content Include="Assets\images\index\popular-flight-surabaya.jpg" />
+    <Content Include="Assets\images\index\popular-flight-yogyakarta.jpg" />
+    <Content Include="Assets\images\index\popular-hotel-bali.jpg" />
+    <Content Include="Assets\images\index\popular-hotel-bandung.jpg" />
+    <Content Include="Assets\images\index\popular-hotel-jakarta.jpg" />
+    <Content Include="Assets\images\index\popular-hotel-surabaya.jpg" />
+    <Content Include="Assets\images\index\popular-hotel-yogyakarta.jpg" />
     <Content Include="Assets\images\infant-icon.png" />
     <Content Include="Assets\images\instagram-icon.png" />
     <Content Include="Assets\images\jcb.png" />
@@ -1755,6 +1805,7 @@
     <Content Include="Assets\images\mandiri-logo.jpg" />
     <Content Include="Assets\images\mandiri.png" />
     <Content Include="Assets\images\map.jpg" />
+    <Content Include="Assets\images\marker-calendar.png" />
     <Content Include="Assets\images\mastercard-logo.jpg" />
     <Content Include="Assets\images\mastercard.png" />
     <Content Include="Assets\images\menu-icon-white.png" />
@@ -1854,6 +1905,7 @@
     <Content Include="Assets\images\social-googlePlus.png" />
     <Content Include="Assets\images\social-instagram.png" />
     <Content Include="Assets\images\social-twitter.png" />
+    <Content Include="Assets\images\sprite-arrow.png" />
     <Content Include="Assets\images\ssl-image.png" />
     <Content Include="Assets\images\static-header-sprite.png" />
     <Content Include="Assets\images\stop.png" />
@@ -1900,6 +1952,13 @@
     <Content Include="Assets\images\voucher\travorama-white.png" />
     <Content Include="Assets\images\warning-image.png" />
     <Content Include="Assets\images\white-bg.png" />
+    <Content Include="Assets\images\why-active.png" />
+    <Content Include="Assets\images\why-disc.png" />
+    <Content Include="Assets\images\why-flight.png" />
+    <Content Include="Assets\images\why-free.png" />
+    <Content Include="Assets\images\why-hotel.png" />
+    <Content Include="Assets\images\why-long.png" />
+    <Content Include="Assets\images\why-trust.png" />
     <Content Include="Assets\images\wifi.png" />
     <Content Include="Assets\images\yellow-stripe-small.png" />
     <Content Include="Assets\images\yellow-stripe.png" />
@@ -2130,6 +2189,8 @@
     <Content Include="Assets\mobile\js\CheckoutController.js" />
     <Content Include="Assets\mobile\js\HomeController.js" />
     <Content Include="Assets\mobile\js\HotelController.js" />
+    <Content Include="Assets\mobile\js\HotelMapController.js" />
+    <Content Include="Assets\mobile\js\PromoController.js" />
     <Content Include="Assets\mobile\js\returnFlightController.js" />
     <Content Include="Assets\mobile\js\singleFlightController.js" />
     <Content Include="Assets\mobile\js\StaticController.js" />
@@ -2201,6 +2262,7 @@
     <Content Include="Assets\travorama20\js\HotelCheckoutController.js" />
     <Content Include="Assets\travorama20\js\HotelController.js" />
     <Content Include="Assets\travorama20\js\hotelDetailController.js" />
+    <Content Include="Assets\travorama20\js\HotelMap.js" />
     <Content Include="Assets\travorama20\js\hotelSearchController.js" />
     <Content Include="Assets\travorama20\js\paymentController.js" />
     <Content Include="Assets\travorama20\js\PromoController.js" />
@@ -2230,10 +2292,25 @@
     <Content Include="Assets\vendor\fancybox\jquery.fancybox.css" />
     <Content Include="Assets\vendor\fancybox\jquery.fancybox.js" />
     <Content Include="Assets\vendor\fancybox\jquery.fancybox.pack.js" />
+    <Content Include="Assets\vendor\fullcalendar\fullcalendar-id.min.js" />
+    <Content Include="Assets\vendor\fullcalendar\fullcalendar.min.css" />
+    <Content Include="Assets\vendor\fullcalendar\fullcalendar.min.js" />
     <Content Include="Assets\vendor\lightslider\lightslider.css" />
     <Content Include="Assets\vendor\lightslider\lightslider.js" />
     <Content Include="Assets\vendor\slick\slick.css" />
     <Content Include="Assets\vendor\slick\slick.min.js" />
+    <Content Include="Campaign\Harbolnas2016\css\promo-harbolnas.css">
+      <DependentUpon>promo-harbolnas.scss</DependentUpon>
+    </Content>
+    <Content Include="Campaign\Harbolnas2016\css\promo-harbolnas.min.css">
+      <DependentUpon>promo-harbolnas.css</DependentUpon>
+    </Content>
+    <Content Include="Campaign\MatahariMall2016\css\promo-mataharimall.css">
+      <DependentUpon>promo-mataharimall.scss</DependentUpon>
+    </Content>
+    <Content Include="Campaign\MatahariMall2016\css\promo-mataharimall.min.css">
+      <DependentUpon>promo-mataharimall.css</DependentUpon>
+    </Content>
     <Content Include="Config\Airline.csv" />
     <Content Include="Config\GeoCodingAPI.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -2251,7 +2328,6 @@
     <Content Include="Config\Airport.csv" />
     <Content Include="Config\HotelLocation.csv" />
     <Content Include="Config\Country.csv" />
-    <Content Include="App_Data\wurfl-latest.zip" />
     <Content Include="Config\HotelFacilitiesFilterGroup.csv">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -2596,12 +2672,16 @@
     <Content Include="Assets\travorama20\css\_page_flight.scss" />
     <Content Include="Assets\travorama20\css\_page_hotel.scss" />
     <Content Include="Assets\travorama20\css\_page_hotel_detail.scss" />
+    <Content Include="Assets\travorama20\css\_page_hotel_map.scss" />
     <Content Include="Assets\travorama20\css\_page_hotel_search.scss" />
+    <Content Include="Assets\travorama20\css\_page_hotel_search_listing.scss" />
     <Content Include="Assets\travorama20\css\_page_index.scss" />
     <Content Include="Assets\travorama20\css\_page_password.scss" />
     <Content Include="Assets\travorama20\css\_page_static.scss" />
     <Content Include="Assets\travorama20\css\_screenLarge.scss" />
     <Content Include="Assets\travorama20\css\_screenSmall.scss" />
+    <Content Include="Campaign\Harbolnas2016\css\promo-harbolnas.scss" />
+    <Content Include="Campaign\MatahariMall2016\css\promo-mataharimall.scss" />
     <None Include="Properties\PublishProfiles\prod-cw %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\dv1-cw.pubxml" />
     <None Include="Properties\PublishProfiles\dv2-cw.pubxml" />
@@ -2611,7 +2691,10 @@
     <None Include="Properties\PublishProfiles\travorama-dv2-cw.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-prod-cw %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-prod-cw - Web Deploy %282%29.pubxml" />
+    <None Include="Properties\PublishProfiles\travorama-prod-cw - Web Deploy %283%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-prod-cw - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\travorama-prod-cw-staging - Web Deploy %282%29.pubxml" />
+    <None Include="Properties\PublishProfiles\travorama-prod-cw-staging - Web Deploy %283%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-prod-cw-staging - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-prod-cw.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-prod-cw__staging %286%29.pubxml" />
@@ -2620,6 +2703,9 @@
     <None Include="Properties\PublishProfiles\travorama-prod-cw__staging2 %285%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-prod-cw__staging2.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-qa-cw - Web Deploy %283%29.pubxml" />
+    <None Include="Properties\PublishProfiles\travorama-qa-cw - Web Deploy %284%29.pubxml" />
+    <None Include="Properties\PublishProfiles\travorama-qa-cw - Web Deploy %285%29.pubxml" />
+    <None Include="Properties\PublishProfiles\travorama-qa-cw - Web Deploy %286%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-qa-cw - Web Deploy.pubxml" />
     <None Include="Service References\Mystifly.OnePointService.Flight\OnePoint.disco" />
     <None Include="Service References\Mystifly.OnePointService.Flight\configuration91.svcinfo" />
@@ -2838,6 +2924,32 @@
     <Content Include="Views\B2BTemplate\OlderHotelReservationBooker.cshtml" />
     <Content Include="Views\B2BTemplate\TestEmail.cshtml" />
     <Content Include="Views\Payment\B2BThankyou.mobile.cshtml" />
+    <Content Include="Views\Promo\Imlek.cshtml" />
+    <Content Include="Views\Promo\Imlek.mobile.cshtml" />
+    <Content Include="Views\Promo\BTNTerbanginHemat.cshtml" />
+    <Content Include="Views\Promo\BTNTerbanginHemat.mobile.cshtml" />
+    <Content Include="Views\Promo\BTNTerbanginHematWebview.cshtml" />
+    <Content Include="Views\Promo\HutBTN.cshtml" />
+    <Content Include="Views\Promo\HutBTNWebview.cshtml" />
+    <Content Include="Views\Promo\HutBTN.mobile.cshtml" />
+    <Content Include="Views\Shared\Desktop\_HotelListing.cshtml" />
+    <Content Include="Views\Hotel\HotelMap.cshtml" />
+    <Content Include="Views\Shared\Mobile\_HotelListing.cshtml" />
+    <Content Include="Views\Hotel\HotelMap.mobile.cshtml" />
+    <Content Include="Views\Shared\Desktop\_PopularHotel.cshtml" />
+    <Content Include="Views\Shared\Desktop\_PopularFlight.cshtml" />
+    <Content Include="Views\Shared\Desktop\_PriceSlider.cshtml" />
+    <Content Include="Views\Shared\Desktop\_PriceSliderReturn.cshtml" />
+    <Content Include="Views\Promo\Harbolnas2016.cshtml" />
+    <Content Include="Views\Promo\Harbolnas2016.mobile.cshtml" />
+    <Content Include="Views\Promo\Harbolnas2016WebView.cshtml" />
+    <Content Include="Views\Promo\MatahariMall.cshtml" />
+    <Content Include="Views\Promo\MatahariMall.mobile.cshtml" />
+    <Content Include="Views\Promo\MatahariMallWebview.cshtml" />
+    <Content Include="Views\Promo\PaydayMadnessPermataBank.cshtml" />
+    <Content Include="Views\Promo\PaydayMadnessPermataBank.mobile.cshtml" />
+    <Content Include="Views\Promo\PaydayMegaDeals.cshtml" />
+    <Content Include="Views\Promo\PaydayMegaDeals.mobile.cshtml" />
     <None Include="Views\Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -2914,7 +3026,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>23321</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>

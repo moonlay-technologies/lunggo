@@ -19,14 +19,14 @@ namespace Lunggo.ApCommon.Campaign.Service
 {
     public partial class CampaignService
     {
-        private bool IsPanAndEmailEligibleInCache(string promoType, string hashedPan, string email)
+        private bool IsPanAndEmailEligibleInCache(string promoType, string hashedPan, string email, int limit)
         {
             var redis = RedisService.GetInstance().GetDatabase(ApConstant.MasterDataCacheName);
             var panRedisKey = "binPromo:pan:" + promoType;
             var isPanExist = redis.SetContains(panRedisKey, hashedPan);
             var emailRedisKey = "binPromo:email:" + promoType;
             var isEmailExist = redis.SetContains(emailRedisKey, email);
-            var fullyUsed = redis.SetLength(panRedisKey) >= 50 || redis.SetLength(emailRedisKey) >= 50;
+            var fullyUsed = redis.SetLength(panRedisKey) >= limit || redis.SetLength(emailRedisKey) >= limit;
             var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
             return env != "production" || (!isPanExist && !isEmailExist && !fullyUsed);
         }
@@ -43,6 +43,25 @@ namespace Lunggo.ApCommon.Campaign.Service
             redis.KeyExpire(emailRedisKey, timeout);
         }
 
+        public void SaveEmailInCache(string promoType, string email)
+        {
+            var redis = RedisService.GetInstance().GetDatabase(ApConstant.MasterDataCacheName);
+            var emailRedisKey = "methodPromo:email:" + promoType;
+            redis.SetAdd(emailRedisKey, email);
+            var timeout = DateTime.UtcNow.AddHours(31).Date - DateTime.UtcNow.AddHours(7);
+            redis.KeyExpire(emailRedisKey, timeout);
+        }
+
+        private bool IsEmailEligibleInCache(string promoType, string email, int limit)
+        {
+            var redis = RedisService.GetInstance().GetDatabase(ApConstant.MasterDataCacheName);
+            var emailRedisKey = "methodPromo:email:" + promoType;
+            var isEmailExist = redis.SetContains(emailRedisKey, email);
+            var fullyUsed = redis.SetLength(emailRedisKey) > limit;
+            var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
+            return  (!isEmailExist && !fullyUsed);
+            //env != "production" ||
+        }
         private bool IsPhoneAndEmailEligibleInCache(string voucherCode, string phone, string email)
         {
             var redis = RedisService.GetInstance().GetDatabase(ApConstant.MasterDataCacheName);

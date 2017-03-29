@@ -34,7 +34,8 @@ namespace Lunggo.ApCommon.Flight.Service
                 {
                     IsSuccess = false,
                     IsValid = false,
-                    Errors = new List<FlightError> { FlightError.FareIdNoLongerValid },
+                    Errors = new List<FlightError> {FlightError.FareIdNoLongerValid},
+                    ErrorMessages = new List<string> {"Null itin."}
                 };
 
             var bookResults = BookItineraries(itins, input, output);
@@ -232,7 +233,14 @@ namespace Lunggo.ApCommon.Flight.Service
             var supplierName = bookInfo.Itinerary.Supplier;
             var supplier = Suppliers.Where(entry => entry.Value.SupplierName == supplierName).Select(entry => entry.Value).Single();
             var result = supplier.BookFlight(bookInfo);
-
+            //Auto Retry Book
+            var trial = 0;
+            while (trial < 3 && result.Errors != null)
+            {
+                result = supplier.BookFlight(bookInfo);
+                trial++;
+            }
+         
             var defaultTimeout = DateTime.UtcNow.AddMinutes(double.Parse(ConfigManager.GetInstance().GetConfigValue("flight", "paymentTimeout")));
             if (result.Status != null)
             {

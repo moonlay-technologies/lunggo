@@ -1,0 +1,26 @@
+﻿<ul class="hotel-list-container">
+    <li ng-repeat="hotel in hotels" ng-click="GotoDetailHotel(hotel)">
+        <div class="hotel-list clearfix">
+            <div class="col-left-hotel"><div class="img-list" alt-image style="background-image: url({{hotel.mainImage}});"></div></div>
+            <div class="col-right-hotel">
+                <div class="blue-txt bold-txt lg-txt">{{hotel.hotelName}}</div>
+                <div class="star" ng-if="hotel.starRating == 1"></div>
+                <div class="star star-2 " ng-if="hotel.starRating == 2"></div>
+                <div class="star star-3 " ng-if="hotel.starRating == 3"></div>
+                <div class="star star-4 " ng-if="hotel.starRating == 4"></div>
+                <div class="star star-5 " ng-if="hotel.starRating == 5"></div>
+                <div class="location grey-txt">
+                    {{toTitleCase(hotel.area)}}
+                    <span ng-show="hotel.area == null || hotel.area.length < 1">{{toTitleCase(hotel.address)}} {{toTitleCase(hotel.zone)}} <span ng-show="hotel.postalCd != null || hotel.postalCd.length > 0"> {{hotel.postalCd}}</span></span>
+                </div>
+                <div class="price orange-txt">
+                    <div class="txt-md semibold-txt">Harga per malam mulai dari:</div>
+                    <div class="underline-txt sm-txt">Rp {{hotel.originalCheapestFare | currency:'':0}}</div>
+                    <a ng-click="GotoDetailHotel(hotel)" class="detail"></a>
+                    <div class="lg-txt"><b><sup>Rp</sup> {{hotel.netCheapestFare | currency:'':0}}</b></div>
+                    <span class="xs-txt">(*Termasuk Pajak & Service Charge)</span>
+                </div>
+            </div>
+        </div>
+    </li>
+</ul>

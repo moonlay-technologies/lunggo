@@ -56,7 +56,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                 }
                 catch
                 {
-                    return new RevalidateFareResult {Errors = new List<FlightError> {FlightError.FareIdNoLongerValid}};
+                    return new RevalidateFareResult {Errors = new List<FlightError> {FlightError.FareIdNoLongerValid}, ErrorMessages = new List<string>{"Broken Fare ID."}};
                 }
 
                 // [GET] Search Flight
@@ -179,9 +179,12 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                         var infantPrice = 0M;
                         try
                         {
+                            var iIdx = conditions.Itinerary.ChildCount > 0 ? 2 : 1;
                             adultPrice = decimal.Parse(breakdownPrice[0].LastElementChild.InnerText.Split(' ')[2], CultureInfo.CreateSpecificCulture("id-ID"));
-                            childPrice = decimal.Parse(breakdownPrice[1].LastElementChild.InnerText.Split(' ')[2], CultureInfo.CreateSpecificCulture("id-ID"));
-                            infantPrice = decimal.Parse(breakdownPrice[2].LastElementChild.InnerText.Split(' ')[2], CultureInfo.CreateSpecificCulture("id-ID"));
+                            if (conditions.Itinerary.ChildCount > 0)
+                                childPrice = decimal.Parse(breakdownPrice[1].LastElementChild.InnerText.Split(' ')[2], CultureInfo.CreateSpecificCulture("id-ID"));
+                            if (conditions.Itinerary.InfantCount > 0)
+                                infantPrice = decimal.Parse(breakdownPrice[iIdx].LastElementChild.InnerText.Split(' ')[2], CultureInfo.CreateSpecificCulture("id-ID"));
                         }
                         catch { }
                         var currency = itinHtml[".section-total-display-currency>span>strong"].Text();

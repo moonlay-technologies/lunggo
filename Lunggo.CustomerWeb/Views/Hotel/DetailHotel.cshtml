@@ -1,12 +1,9 @@
-﻿    @using Lunggo.CustomerWeb.Models
+﻿@using Lunggo.ApCommon.Hotel.Service
+@using System.Globalization
+@using Lunggo.CustomerWeb.Models
 @using Lunggo.Framework.Extension
 @model HotelDetailModel.HotelDetail
-@{
-    Layout = "/Views/Shared/Desktop/_LayoutDesktop.cshtml";
-    ViewBag.BodyClass = "page-hotel page-detail";
-    ViewBag.Title = "Detail Hotel";
-    ViewBag.AngularController = "hotelDetailController";
-}
+           
 @{
     var loc = Html.Raw(Model.HotelDetailData.HotelName) + ", " + Model.HotelDetailData.City;
     var hotelFac = new List<_Page_Views_Hotel_DetailHotel_cshtml.FacilityModel>();
@@ -15,6 +12,46 @@
     var lat = Model.HotelDetailData.Latitude;
     var lng = Model.HotelDetailData.Longitude;
 
+    var sumAdult = 0;
+    var sumChildren = 0;
+
+    var searchParams = Model.SearchParam.Split('.');
+    var locationCode = searchParams[1];
+    var checkInDate = searchParams[2].Replace("-", "");
+    var checkOutDate = searchParams[3].Replace("-", "");
+    var x = HotelService.AutoCompletes.Where(c => c.Id == locationCode).ToList();
+    var region = "";
+    if (x.Count > 0)
+    {
+        var found = x[0];
+        if (found.Type == 1)
+        {
+            region = Model.HotelDetailData.DestinationName;
+        }
+        else if (found.Type == 2)
+        {
+            region = !string.IsNullOrEmpty(Model.HotelDetailData.ZoneName) ? Model.HotelDetailData.ZoneName : Model.HotelDetailData.DestinationName;
+        }
+        else if (found.Type == 3)
+        {
+            region = !string.IsNullOrEmpty(Model.HotelDetailData.AreaName) ? Model.HotelDetailData.AreaName : Model.HotelDetailData.DestinationName;
+        }
+        else
+        {
+            region = Model.HotelDetailData.DestinationName;   
+        }
+    }
+
+    var occupancies = searchParams[6].Split('|');
+    foreach (var occ in occupancies)
+    {
+        var splittedOcc = occ.Split('~');
+        sumAdult += Convert.ToInt32(splittedOcc[0]);
+        sumChildren += Convert.ToInt32(splittedOcc[1]);
+    }
+    
+                               if (Model.HotelDetailData.Facilities != null)
+    {
     if (Model.HotelDetailData.Facilities.Business != null)
     {
         hotelFac.Add(SetFacilityForDisplay(Model.HotelDetailData.Facilities.Business, "Bisnis"));
@@ -50,6 +87,15 @@
         hotelFac.Add(SetFacilityForDisplay(Model.HotelDetailData.Facilities.Sport, "Olah Raga"));
                     }
                 }
+}
+
+@{
+    Layout = "/Views/Shared/Desktop/_LayoutDesktop.cshtml";
+    ViewBag.BodyClass = "page-hotel page-detail";
+    ViewBag.Title = "Kamar Hotel " + hotelName + " di " + loc + " Promo Tanggal " + Model.HotelDetailData.CheckInDate.ToString("d MMMM yyyy", CultureInfo.CreateSpecificCulture("id-ID"));
+    ViewBag.AngularController = "hotelDetailController";
+    ViewBag.Page = "HotelDetail";
+}
 
 @functions{
 
@@ -73,11 +119,11 @@
         facilityModel.FacilityGroup = groupName;
         for (var i = 0; i < facilities.Count; i++)
         {
-            if (i%4 == 0)
+            if (i % 4 == 0)
             {
                 facilityModel.FacilityList[0].Add(facilities[i]);
         }
-            else if (i%4 == 1)
+            else if (i % 4 == 1)
         {
                 facilityModel.FacilityList[1].Add(facilities[i]);
         }
@@ -86,7 +132,7 @@
                 facilityModel.FacilityList[2].Add(facilities[i]);
     }
 
-            else if (i%4 == 3)
+            else if (i % 4 == 3)
     {
                 facilityModel.FacilityList[3].Add(facilities[i]);
     }
@@ -124,11 +170,26 @@
     <script src="/Assets/travorama20/angularDirectory/common/hotelAutocomplete.service.js"></script>
     <script type="text/javascript" src="/Assets/js/jquery.ui.datepicker-id.js"></script>
     <script type="text/javascript" src="https://maps.google.com/maps/api/js?key=AIzaSyCRAmMz6GPXsXi1pZAl5QUsjNTcY0ZfqVA"></script>
+    <script>
+        var gtmContentType = 'hotel';
+        var gtmCity = '@Model.HotelDetailData.DestinationName';
+        var gtmHotelIds = '@Model.HotelDetailData.HotelCode';
+        var gtmRegion = '@region';
+        var gtmCountry = '@Model.HotelDetailData.CountryName';
+        var gtmCheckinDate = '@checkInDate';
+        var gtmCheckoutDate = '@checkOutDate';
+        var gtmNumAdults = @sumAdult;
+        var gtmNumChildren = @sumChildren;
+        var gtmPurchaseCurrency = 'IDR';
+        var gtmPageName = 'hotel_detail';
+    </script>
+
 }
 
 @Html.Partial("/Views/Shared/Desktop/_PageSlider.cshtml", new HotelLocation
 {
-    Location = loc, IsHotelSearch = true
+    Location = loc,
+    IsHotelSearch = true
 })
 <div class="travorama-hotel" ng-init="init(@Newtonsoft.Json.JsonConvert.SerializeObject(Model))" ng-class="{'page-loaded' : pageLoaded}">
     <div class="container">
@@ -137,6 +198,7 @@
             <a href="#" id="back-to-top" title="Back to top"></a>
             @*<div ng-show="!searchDone" class="text-center">
                 <img src="/Assets/images/load.gif" style="width:5%; margin-left: 10%">
+                
             </div>*@
             <div class="detail-hotel">
                 <div class="big-slider">
@@ -170,62 +232,65 @@
                     <div class="slider-container clearfix">
                         <div class="slider clearfix">
                             <ul id="image-gallery" class="gallery list-unstyled cS-hidden">
-                                @if (Model.HotelDetailData.ImageUrl.Count >= 1)
+                                @if (Model.HotelDetailData.ImageUrl != null)
                                 {
-                                    <li data-thumb="@Model.HotelDetailData.ImageUrl[0]" alt-image>
-                                        <div style="background-image: url(@Model.HotelDetailData.ImageUrl[0]); width: 100%; height: 590px; background-size: cover; background-position: center center;"></div>
-                                </li>
-                                }
-                                
-                               @if (Model.HotelDetailData.ImageUrl.Count >= 2)
-                               {
-                                <li data-thumb="@Model.HotelDetailData.ImageUrl[1]" alt-image>
-                                    <div style="background-image: url(@Model.HotelDetailData.ImageUrl[1]); width: 100%; height: 590px; background-size: cover; background-position: center center;"></div>
-                                </li>
-                               }
-                                
-                                @if (Model.HotelDetailData.ImageUrl.Count >= 3)
-                                {
-                                    <li data-thumb="@Model.HotelDetailData.ImageUrl[2]" alt-image>
-                                        <div style="background-image: url(@Model.HotelDetailData.ImageUrl[2]); width: 100%; height: 590px; background-size: cover; background-position: center center;"></div>
+                                    if (Model.HotelDetailData.ImageUrl.Count >= 1)
+                                     {
+                                         <li data-thumb="@Model.HotelDetailData.ImageUrl[0]" alt-image>
+                                             <div style="background-image: url(@Model.HotelDetailData.ImageUrl[0]); width: 100%; height: 590px; background-size: cover; background-position: center center;"></div>
+                                         </li>
+                                     }
+
+                                    if (Model.HotelDetailData.ImageUrl.Count >= 2)
+                                     {
+                                         <li data-thumb="@Model.HotelDetailData.ImageUrl[1]" alt-image>
+                                             <div style="background-image: url(@Model.HotelDetailData.ImageUrl[1]); width: 100%; height: 590px; background-size: cover; background-position: center center;"></div>
+                                         </li>
+                                     }
+
+                                    if (Model.HotelDetailData.ImageUrl.Count >= 3)
+                                     {
+                                         <li data-thumb="@Model.HotelDetailData.ImageUrl[2]" alt-image>
+                                             <div style="background-image: url(@Model.HotelDetailData.ImageUrl[2]); width: 100%; height: 590px; background-size: cover; background-position: center center;"></div>
+                                         </li>
+                                     }
+
+                                    if (Model.HotelDetailData.ImageUrl.Count >= 4)
+                                     {
+                                         <li data-thumb="@Model.HotelDetailData.ImageUrl[3]" alt-image>
+                                             <div style="background-image: url(@Model.HotelDetailData.ImageUrl[3]); width: 100%; height: 590px; background-size: cover; background-position: center center;"></div>
+                                         </li>
+                                     }
+
+                                    if (Model.HotelDetailData.ImageUrl.Count >= 5)
+                                     {
+                                         <li data-thumb="@Model.HotelDetailData.ImageUrl[4]" alt-image>
+                                             <div style="background-image: url(@Model.HotelDetailData.ImageUrl[4]); width: 100%; height: 590px; background-size: cover; background-position: center center;"></div>
+                                         </li>
+                                     }
+
+                                    if (Model.HotelDetailData.ImageUrl.Count >= 6)
+                                     {
+                                         <li data-thumb="@Model.HotelDetailData.ImageUrl[5]" alt-image>
+                                             <div style="background-image: url(@Model.HotelDetailData.ImageUrl[5]); width: 100%; height: 590px; background-size: cover; background-position: center center;"></div>
+                                         </li>
+                                     }
+                                    @*<li data-thumb="{{hotelImages[1]}}" alt-image>
+                                        <div style="background-image: url({{hotelImages[1]}}); width: 100%; height: 590px; background-size: cover; background-position: center center;"></div>
                                     </li>
-                                }
-                                
-                                @if (Model.HotelDetailData.ImageUrl.Count >= 4)
-                                {
-                                    <li data-thumb="@Model.HotelDetailData.ImageUrl[3]" alt-image>
-                                        <div style="background-image: url(@Model.HotelDetailData.ImageUrl[3]); width: 100%; height: 590px; background-size: cover; background-position: center center;"></div>
+                                    <li data-thumb="{{hotelImages[2]}}" alt-image>
+                                        <div style="background-image: url({{hotelImages[2]}}); width: 100%; height: 590px; background-size: cover; background-position: center center;"></div>
                                     </li>
-                                }
-                                
-                                @if (Model.HotelDetailData.ImageUrl.Count >= 5)
-                                {
-                                    <li data-thumb="@Model.HotelDetailData.ImageUrl[4]" alt-image>
-                                        <div style="background-image: url(@Model.HotelDetailData.ImageUrl[4]); width: 100%; height: 590px; background-size: cover; background-position: center center;"></div>
+                                    <li data-thumb="{{hotelImages[3]}}" alt-image>
+                                        <div style="background-image: url({{hotelImages[3]}}); width: 100%; height: 590px; background-size: cover; background-position: center center;"></div>
                                     </li>
-                                }
-                                
-                                @if (Model.HotelDetailData.ImageUrl.Count >= 6)
-                                {
-                                    <li data-thumb="@Model.HotelDetailData.ImageUrl[5]" alt-image>
-                                        <div style="background-image: url(@Model.HotelDetailData.ImageUrl[5]); width: 100%; height: 590px; background-size: cover; background-position: center center;"></div>
+                                    <li data-thumb="{{hotelImages[4]}}" alt-image>
+                                        <div style="background-image: url({{hotelImages[4]}}); width: 100%; height: 590px; background-size: cover; background-position: center center;"></div>
                                     </li>
+                                    <li data-thumb="{{hotelImages[5]}}" alt-image>
+                                        <div style="background-image: url({{hotelImages[5]}}); width: 100%; height: 590px; background-size: cover; background-position: center center;"></div>
+                                    </li>*@
                                 }
-                                @*<li data-thumb="{{hotelImages[1]}}" alt-image>
-                                    <div style="background-image: url({{hotelImages[1]}}); width: 100%; height: 590px; background-size: cover; background-position: center center;"></div>
-                                </li>
-                                <li data-thumb="{{hotelImages[2]}}" alt-image>
-                                    <div style="background-image: url({{hotelImages[2]}}); width: 100%; height: 590px; background-size: cover; background-position: center center;"></div>
-                                </li>
-                                <li data-thumb="{{hotelImages[3]}}" alt-image>
-                                    <div style="background-image: url({{hotelImages[3]}}); width: 100%; height: 590px; background-size: cover; background-position: center center;"></div>
-                                </li>
-                                <li data-thumb="{{hotelImages[4]}}" alt-image>
-                                    <div style="background-image: url({{hotelImages[4]}}); width: 100%; height: 590px; background-size: cover; background-position: center center;"></div>
-                                </li>
-                                <li data-thumb="{{hotelImages[5]}}" alt-image>
-                                    <div style="background-image: url({{hotelImages[5]}}); width: 100%; height: 590px; background-size: cover; background-position: center center;"></div>
-                                </li>*@
                             </ul>
                         </div>
                         <div class="col-right-slider">
@@ -319,7 +384,7 @@
                 </div>
                 
                 
-                <div class="room clearfix" >
+                <div class="room clearfix">
                     <div class="top-title clearfix">
                         <div class="col-left-rs bg-title"><b>Pilih</b> Kamar </div>
                         <div ng-hide="!searchDone">
@@ -333,7 +398,7 @@
                     <div ng-show="noResults" style="font-size: 20px; text-align: center">
                         Hasil pencarian kamar tidak ditemukan
                     </div>
-                    <div class="room-sort clearfix" ng-hide="!searchDone">
+                    <div class="room-sort clearfix" ng-hide="!searchDone || noResults">
                         <div class="col-6">Tipe Kamar</div>
                         <div class="col-4">
                             <div class="tab-hotel-price clearfix">
@@ -350,7 +415,7 @@
                         </div>
                     </div>
                     <div>
-                        <ul class="room-list-container" ng-hide="!searchDone">
+                        <ul class="room-list-container" ng-hide="!searchDone || noResults">
                             <li ng-show="$index+1 <= roomCount" ng-repeat="room in singleRoom track by $index">
                             <div class="room-list clearfix">
                                 <div class="room-left" ng-show="room.roomImages === undefined || room.roomImages.length <= 0"><div class="no-room-pic"></div></div>
@@ -452,7 +517,7 @@
                     </ul>
                     </div>
                    
-                    <div class="hotel-result clearfix" ng-hide="!searchDone">
+                    <div class="hotel-result clearfix" ng-hide="!searchDone  || noResults">
                         <span class="hotel-result-txt">Jumlah Tipe Kamar Tersedia: <b>{{singleRoom.length}}</b></span>
                         <a href="" class="btn-hotel-result btn-blue small" ng-click="togleDisplay()">
                             Tampilkan
@@ -513,7 +578,7 @@
                                                             @facility.FacilityGroup
                                                         </div>
                                                     }
-                                                    else if (facility.FacilityGroup =="Bisnis")
+                                                    else if (facility.FacilityGroup == "Bisnis")
                                                     {
                                                         <div class="ih-left business-lg-icon">
                                                             @facility.FacilityGroup

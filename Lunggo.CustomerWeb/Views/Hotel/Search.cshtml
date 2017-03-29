@@ -1,53 +1,64 @@
-﻿@using Lunggo.ApCommon.Hotel.Service
+﻿@using System.Globalization
+@using CsQuery.EquationParser.Implementation.Functions
+@using Lunggo.ApCommon.Hotel.Model
+@using Lunggo.ApCommon.Hotel.Service
 @using Lunggo.CustomerWeb.Models
 @using Lunggo.Framework.Extension
-@model Lunggo.CustomerWeb.Models.HotelSearchApiRequest
-@{
-    Layout = "/Views/Shared/Desktop/_LayoutDesktop.cshtml";
-    ViewBag.BodyClass = "page-hotel page-search";
-    ViewBag.Title = "Pencarian Hotel";
-    ViewBag.AngularController = "hotelSearchController";
+@model HotelSearchApiRequest
 
-}
-
-@section AdditionalCSS{
-    <link href="/Assets/css/jquery-ui.min.css" rel="stylesheet" />
-}
 @{
-    long location;
-    var x = long.TryParse(Model.SearchParamObject.Location, out location);
     var loc = "";
     var locFound = false;
-    var k = HotelService.AutoCompletes.Where(c => c.Id == location).ToList();
-    if (k.Count > 0)
+    var foundLocation = HotelService.AutoCompletes.FirstOrDefault(c => c.Id == Model.SearchParamObject.Location);
+    var sumAdult = 0;
+    var sumChildren = 0;
+    foreach (var occ in Model.SearchParamObject.Occupancies)
     {
-        var foundLocation = k[0];
+        sumAdult += occ.AdultCount;
+        sumChildren += occ.ChildCount;
+    }
+
+    var region = "";
     if (foundLocation != null)
     {
         if (foundLocation.Type == 1)
         {
             loc = foundLocation.Destination + ", " + foundLocation.Country;
+            region = foundLocation.Destination;
         }
         else if (foundLocation.Type == 2)
         {
             loc = foundLocation.Zone + ", " + foundLocation.Destination + ", " + foundLocation.Country;
+            region = foundLocation.Zone;
         }
         else if (foundLocation.Type == 3)
         {
             loc = foundLocation.Area + ", " + foundLocation.Destination + ", " + foundLocation.Country;
+            region = foundLocation.Area;
         }
         else if (foundLocation.Type == 4)
         {
             loc = foundLocation.HotelName + ", " + foundLocation.Destination + ", " + foundLocation.Country;
+            region = foundLocation.Destination;
         }
     }
-        locFound = true;
-    }
-
-
+    locFound = true;
 }
+
+@{
+    Layout = "/Views/Shared/Desktop/_LayoutDesktop.cshtml";
+    ViewBag.BodyClass = "page-hotel page-search";
+    ViewBag.Title = "Kamar Hotel Promo di " + loc + " Tanggal " + Model.SearchParamObject.CheckinDate.ToString("d MMMM yyyy", CultureInfo.CreateSpecificCulture("id-ID"));
+    ViewBag.AngularController = "hotelSearchController";
+    ViewBag.Page = "HotelSearch";
+}
+
+@section AdditionalCSS{
+    <link href="/Assets/css/jquery-ui.min.css" rel="stylesheet" />
+}
+
 @section AdditionalJS {
-<script src="/Assets/js/js.cookie.js"></script>
+    <script src="/Assets/js/js.cookie.js"></script>
     <script src="/Assets/js/jquery-ui.min.js"></script>
     <script type="text/javascript" src="/Assets/js/jquery.ui.datepicker-id.js"></script>
     <script src="/Assets/js/bootstrap.min.js"></script>
@@ -77,11 +88,25 @@
     <script src="/Assets/travorama20/angularDirectory/search/hotelSearch.service.js"></script>
     <script src="/Assets/travorama20/angularDirectory/common/hotelAutocomplete.service.js"></script>
     <script src="/Assets/travorama20/js/hotelSearchController.js"></script>
+    <script>
+        var gtmContentType = 'hotel';
+        var gtmCity = '@(foundLocation != null ? foundLocation.Destination : "")';
+        var gtmRegion = '@region';
+        var gtmCountry = '@(foundLocation != null ? foundLocation.Country : "")';
+        var gtmCheckinDate = '@Model.SearchParamObject.CheckinDate.ToString("yyyyMMdd")';
+        var gtmCheckoutDate = '@Model.SearchParamObject.CheckoutDate.ToString("yyyyMMdd")';
+        var gtmNumAdults = @sumAdult;
+        var gtmNumChildren = @sumChildren;
+        var gtmPurchaseCurrency = 'IDR';
+        var gtmPageValue = null;
+    </script>
+
 }
 
 @Html.Partial("/Views/Shared/Desktop/_PageSlider.cshtml", new HotelLocation
 {
-    Location = loc, IsHotelSearch = false
+    Location = loc,
+    IsHotelSearch = false
 })
 <div class="travorama-hotel" ng-init="init(@Model.Serialize())">
     <div class="container">
@@ -94,11 +119,15 @@
             </div>
             <div class="search-list-result clearfix">
                 <div class="col-left-result filter">
+                    <div class="view-map">
+                        <a class="btn btn-blue big md-txt btn-view-map" id="mapUrl">Tampilkan Peta</a>
+                    </div>
                     <div class="filter-container">
                         <div class="header-filter">Filter Pencarian</div>
                         <div class="filter-group">
                             <label class="filter-title">Nama Hotel</label>
-                            <input type="text" ng-pattern="/^[a-zA-Z]*$/" ng-model="filter.nameFilter" ng-disabled="hotels.length < 1" class="form-hotel-name form-control" tra-on-enter="filterHotels()">
+                            @*tra-on-enter="filterHotels()"*@
+                            <input type="text" ng-pattern="/^[a-zA-Z]*$/" ng-model="filter.nameFilter" class="form-hotel-name form-control">
                         </div>
                         <div class="filter-group">
                             <label class="filter-title">Harga Hotel</label>
@@ -155,151 +184,80 @@
                                     <span class="checkbox"></span>
                                     @*<input type="checkbox" name="check" class="check" value="false" ng-disabled="true" />*@
                                     <span class="name">{{facilityFilter.name}}</span>
-                                </label>
-                                <span class="city-hotel">{{facilityFilter.count}}</span>
-                            </div>
-                        </div>
-                        <div class="filter-group" ng-if="false">
-                            <label class="filter-title">Tipe Kamar</label>
-                            <div class="room">
-                                <label class="sqr city-point">
-                                    <span class="checkbox"></span>
-                                    <input type="checkbox" name="check" class="check" value="false" />
-                                    <span class="name">Single</span>
-                                </label>
-                                <label class="sqr city-point">
-                                    <span class="checkbox"></span>
-                                    <input type="checkbox" name="check" class="check" value="false" />
-                                    <span class="name">Twin</span>
-                                </label>
-                                <label class="sqr city-point">
-                                    <span class="checkbox"></span>
-                                    <input type="checkbox" name="check" class="check" value="false" />
-                                    <span class="name">King</span>
-                                </label>
-                            </div>
+                            </label>
+                            <span class="city-hotel">{{facilityFilter.count}}</span>
                         </div>
                     </div>
-                </div>
-                <div class="col-right-result">
-                    <div class="sort clearfix" ng-show="totalHotelCount > 0">
-                        <div class="sort-l"><span class="bold-txt">Urut Berdasarkan :</span></div>
-                        <div class="sort-r">
-                            <label class="round pointer" ng-class="{ active : sortBy == sortByType.ascendingPrice }" ng-click="changeSorting(sortByType.ascendingPrice)">
-                                <span class="radio"></span>
-                                <span class="name">Harga Terendah</span>
+                    <div class="filter-group" ng-if="false">
+                        <label class="filter-title">Tipe Kamar</label>
+                        <div class="room">
+                            <label class="sqr city-point">
+                                <span class="checkbox"></span>
+                                <input type="checkbox" name="check" class="check" value="false" />
+                                <span class="name">Single</span>
+                            </label>
+                            <label class="sqr city-point">
+                                <span class="checkbox"></span>
+                                <input type="checkbox" name="check" class="check" value="false" />
+                                <span class="name">Twin</span>
+                            </label>
+                            <label class="sqr city-point">
+                                <span class="checkbox"></span>
+                                <input type="checkbox" name="check" class="check" value="false" />
+                                <span class="name">King</span>
                             </label>
                         </div>
-                        <div class="sort-r">
-                            <label class="round pointer" ng-class="{ active : sortBy == sortByType.descendingPrice }" ng-click="changeSorting(sortByType.descendingPrice)">
-                                <span class="radio"></span>
-                                <span class="name">Harga Tertinggi</span>
-                            </label>
-                        </div>
-                    </div>
-                    <div class="tab-hotel-price clearfix" ng-show="searchDone">
-                        <div class="col-half bold-txt right-txt">
-                            Tampilkan Harga :
-                        </div>
-                        <div class="tab-wrapper col-half">
-                            <div class="tab-border clearfix">
-                                <div class="col-6 tab-list active" href="#price-night">Per kamar, per malam</div>
-                                <div class="col-4 tab-list" href="#price-total">Harga total</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="text-center" ng-show="searchDone && returnedHotelCount == 0"><h3> Hotel tidak ditemukan, silakan ganti filter atau destinasi anda.</h3></div>
-                    <div class="hotel-list-container" ng-show="searchDone">
-                        <a ng-repeat="hotel in hotels" class="hl-wrapper" href="{{getUrlHotelDetail(hotel)}}" target="_blank">
-                            <div class="hotel-list clearfix pointer">
-                                <div class="col-2">
-                                    <img class="img-list" hotel-list-image ng-src="{{hotel.mainImage}}" alt="Hotel" />
-                                </div>
-                                <div class="col-8">
-                                    <div class="clearfix">
-                                        <div class="col-8 blue-txt bg">{{hotel.hotelName}}</div>
-                                        <div class="col-2 facility">
-                                            <span class="wifi" ng-show="hotel.isWifiAccessAvailable"></span>
-                                            <span class="meal" ng-show="hotel.restaurant"></span>
-                                        </div>
-                                    </div>
-                                    <div ng-class="{
-                                     'star': hotel.starRating == 1,
-                                     'star star-2': hotel.starRating == 2,
-                                     'star star-3': hotel.starRating == 3,
-                                     'star star-4': hotel.starRating == 4,
-                                     'star star-5': hotel.starRating == 5}">
-                                    </div>
-                                    <div class="location">
-                                        <div><span ng-show="hotel.area == null || hotel.area.length < 1">{{toTitleCase(hotel.address)}}</span> {{toTitleCase(hotel.area)}}</div>
-                                        <span ng-show="hotel.area == null || hotel.area.length < 1">{{toTitleCase(hotel.city)}}<span ng-show="hotel.postalCd != null || hotel.postalCd.length > 0"> {{hotel.postalCd}}</span></span>
-                                    </div>
-                                    
-                                    @*=================== ini review row ================*@
-                                    @*<div class="review clearfix">
-                                        <div class="col-half left">
-                                            <b><span class="md-txt">8.0</span> - </b> Sangat Baik
-                                            <br /><span class="grey-txt">540 ulasan</span>
-                                        </div>
-                                        <div class="col-half">
-                                            <span class="trip-advisor"></span>
-                                            <br /><span class="grey-txt">540 ulasan</span>
-                                        </div>
-                                    </div>*@
-                                    <div class="break"></div>
-                                    <div class="price clearfix" id="price-night" style="display: block">
-                                        <div class="col-half">
-                                            <span class="txt-md"><b>Harga per kamar, per malam :</b></span>
-                                            <br /><span class="xs-txt">(*Termasuk Pajak & Service Charge)</span>
-                                        </div>
-                                        <div class="col-half">
-                                            <span class="underline-txt">Rp {{hotel.originalCheapestFare | currency:'':0}}</span>
-                                            <br /><span class="lg-txt"><b><sup>Rp</sup> {{hotel.netCheapestFare | currency:'':0}}</b></span>
-                                        </div>
-                                    </div>
-                                    <div class="price clearfix" id="price-total">
-                                        <div class="col-half">
-                                            <span class="txt-md"><b>Harga total :</b></span>
-                                            <br /><span class="xs-txt">(*Termasuk Pajak & Service Charge)</span>
-                                        </div>
-                                        <div class="col-half">
-                                            <span class="underline-txt">Rp {{hotel.originalCheapestTotalFare | currency:'':0}}</span>
-                                            <br /><span class="lg-txt"><b><sup>Rp</sup> {{hotel.netCheapestTotalFare | currency:'':0}}</b></span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-                        <div class="pagination" ng-show="searchDone && returnedHotelCount > 0 && pageCount > 1">
-                            Halaman
-                            <div class="page-container">
-                                <a href="" class="prev" ng-click="page != 1 && prevPage()"></a>
-                                <ul class="page-list">
-                                    <li><a href="#" ng-class="{active : pageNumber == page}" ng-repeat="pageNumber in getPageNumberList(pageCount, page) track by $index" ng-click="changePage(pageNumber)">{{pageNumber}}</a></li>
-                                </ul>
-                                <a href="" class="next" ng-click="page != pageCount && nextPage()"></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div ng-show="!searchDone" class="text-center" style="margin-top: 50%;">
-                        <img src="/Assets/images/load.gif" class="img-loading">
                     </div>
                 </div>
             </div>
+            <div class="col-right-result">
+                <div class="sort clearfix" ng-show="totalHotelCount > 0">
+                    <div class="sort-l"><span class="bold-txt">Urut Berdasarkan :</span></div>
+                    <div class="sort-r">
+                        <label class="round pointer" ng-class="{ active : sortBy == sortByType.ascendingPrice }" ng-click="changeSorting(sortByType.ascendingPrice)">
+                            <span class="radio"></span>
+                            <span class="name">Harga Terendah</span>
+                        </label>
+                    </div>
+                    <div class="sort-r">
+                        <label class="round pointer" ng-class="{ active : sortBy == sortByType.descendingPrice }" ng-click="changeSorting(sortByType.descendingPrice)">
+                            <span class="radio"></span>
+                            <span class="name">Harga Tertinggi</span>
+                        </label>
+                    </div>
+                </div>
+                <div class="tab-hotel-price clearfix" ng-show="searchDone">
+                    <div class="col-half bold-txt right-txt">
+                        Tampilkan Harga :
+        </div>
+        <div class="tab-wrapper col-half">
+            <div class="tab-border clearfix">
+                <div class="col-6 tab-list active" href="#price-night" id="perRoom" ng-click="changeStatePrice('perRoom')">Per kamar, per malam</div>
+                <div class="col-4 tab-list" href="#price-total" id="total" ng-click="changeStatePrice('total')">Harga total</div>
+            </div>
         </div>
     </div>
+    <div class="text-center" ng-show="searchDone && returnedHotelCount == 0"><h3> Hotel tidak ditemukan, silakan ganti filter atau destinasi anda.</h3></div>
+    @Html.Partial("/Views/Shared/Desktop/_HotelListing.cshtml")
+    <div ng-show="!searchDone" class="text-center" style="margin-top: 50%;">
+        <img src="/Assets/images/load.gif" class="img-loading">
+    </div>
+</div>
+</div>
+</div>
+</div>
 
-    <div class="bookfailed-popup" ng-show="expired">
-        <div class="overlay-content">
-            <section style="padding-top:60px; padding-left:225px;">
-                <div><img src="/Assets/images/travorama-logo-color.png" height="22px" width="80px"></div>
-                <div style="padding-top:20px;"><span style="color: #15b1e4; font-size:22px"><b>Pencarian Kadaluarsa</b></span></div>
-                <div style="padding-top:5px;"><span style="font-size:13px">Hasil pencarian Anda <span style="color: #15b1e4;font-size:13px"><b> sudah kadaluarsa</b></span>.</span></div>
-                <div><span style="font-size:13px">Anda akan dialihkan ke halaman pencarian yang baru.</span></div>
-            </section>
-            <div align="right" style="padding-right:30px;padding-top:30px;">
-                <a class="btn popup-btn-yellow book-failed" ng-click="refreshPage()"><b>CARI ULANG</b></a>
-            </div>
+<div class="bookfailed-popup" ng-show="expired">
+    <div class="overlay-content">
+        <section style="padding-top:60px; padding-left:225px;">
+            <div><img src="/Assets/images/travorama-logo-color.png" height="22px" width="80px"></div>
+            <div style="padding-top:20px;"><span style="color: #15b1e4; font-size:22px"><b>Pencarian Kadaluarsa</b></span></div>
+            <div style="padding-top:5px;"><span style="font-size:13px">Hasil pencarian Anda <span style="color: #15b1e4;font-size:13px"><b> sudah kadaluarsa</b></span>.</span></div>
+            <div><span style="font-size:13px">Anda akan dialihkan ke halaman pencarian yang baru.</span></div>
+        </section>
+        <div align="right" style="padding-right:30px;padding-top:30px;">
+            <a class="btn popup-btn-yellow book-failed" ng-click="refreshPage()"><b>CARI ULANG</b></a>
         </div>
     </div>
+</div>
 </div>

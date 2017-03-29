@@ -13,6 +13,7 @@ namespace Lunggo.ApCommon.Payment.Constant
         VoucherNoLongerEligible,
         BinPromoNoLongerEligible,
         MethodNotAvailable,
-        BookingDisabled
+        BookingDisabled,
+        MethodDiscountNoLongerEligible
     }
 }

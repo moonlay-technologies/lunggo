@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using CsQuery;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.Framework.Config;
 using Lunggo.Framework.Encoder;
+using Lunggo.Framework.Log;
 using Lunggo.Framework.Web;
 using RestSharp;
 
@@ -13,6 +15,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
 {
     internal partial class SriwijayaWrapper
     {
+        public static int issueTrial = 0;	
         internal override IssueTicketResult OrderTicket(string bookingId, bool canHold)
         {
             var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
@@ -31,14 +34,17 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
         {
             internal IssueTicketResult OrderTicket(string bookingId)
             {
+                var log = LogService.GetInstance();
+                var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
                 var clientx = CreateAgentClient();
                 var untukEncode = "ticketing:" + bookingId + ":STEP2";
                 var encode = untukEncode.Base64Encode();
                 var encode2 = encode.Base64Encode();
-
+                log.Post("[Sriwijaya] Login", "#logging-issueflight");
                 Login(clientx);
                 try
                 {
+                    log.Post("[Sriwijaya] Check Booking Id. Url : SJ-Eticket/application/?action=CheckBCode&reffNo=" + bookingId, "#logging-issueflight");
                     var url = "SJ-Eticket/application/?action=CheckBCode&reffNo=" + bookingId;
                     var submitRequest = new RestRequest(url, Method.POST);
                     var postData =
@@ -48,6 +54,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                     submitRequest.AddParameter("application/x-www-form-urlencoded", postData, ParameterType.RequestBody);
                     var submitResponse = clientx.Execute(submitRequest);
 
+                    log.Post("[Sriwijaya] Post Booking Id. Url : SJ-Eticket/application/?", "#logging-issueflight");
                     url = "SJ-Eticket/application/?";
                     var checkRequest = new RestRequest(url, Method.POST);
                     postData =
@@ -65,15 +72,18 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                     var tunjukStatusBook = tunjukClassTarget.MakeRoot()[".bookingCode"];
                     var statusBook = tunjukClassTarget.Select(x => x.Cq().Text()).FirstOrDefault();
 
+                    log.Post("[Sriwijaya] Cek Booking Status", "#logging-issueflight");
                     var hasil = new IssueTicketResult();
                     if ((statusBook == "Confirm") || (statusBook == "Confirmed"))
                     {
+                        log.Post("[Sriwijaya] Success", "#logging-issueflight");
                         hasil.BookingId = bookingId;
                         hasil.IsSuccess = true;
                         hasil.IsInstantIssuance = true;
                     }
                     else
                     {
+                        log.Post("[Sriwijaya] Error because status book is not Confirm or confirmed", "#logging-issueflight");
                         hasil.CurrentBalance = GetCurrentBalance();
                         hasil.IsSuccess = false;
                         hasil.Errors = new List<FlightError> { FlightError.FailedOnSupplier };
@@ -97,6 +107,12 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                             };
                         case IssueEnum.NotIssued:
                             Logout(clientx);
+                            if (issueTrial < 3)
+                            {
+                                Debug.Print("issueTrial : " + issueTrial);
+                                issueTrial += 1;
+                                Client.OrderTicket(bookingId);
+                            }
                             return new IssueTicketResult
                             {
                                 CurrentBalance = GetCurrentBalance(),
@@ -104,6 +120,12 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                             };
                         case IssueEnum.CheckingError:
                             Logout(clientx);
+                            if (issueTrial < 3)
+                            {
+                                Debug.Print("issueTrial : " + issueTrial);
+                                issueTrial += 1;
+                                Client.OrderTicket(bookingId);
+                            }
                             return new IssueTicketResult
                             {
                                 CurrentBalance = GetCurrentBalance(),
@@ -113,6 +135,12 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                             };
                         default:
                             Logout(clientx);
+                            if (issueTrial < 3)
+                            {
+                                Debug.Print("issueTrial : " + issueTrial);
+                                issueTrial += 1;
+                                Client.OrderTicket(bookingId);
+                            }
                             return new IssueTicketResult
                             {
                                 CurrentBalance = GetCurrentBalance(),

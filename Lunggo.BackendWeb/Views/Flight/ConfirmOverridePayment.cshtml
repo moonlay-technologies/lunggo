@@ -1,0 +1,76 @@
+﻿@using Lunggo.ApCommon.Flight.Constant
+@model Lunggo.ApCommon.Flight.Model.FlightReservation
+
+@{
+    ViewBag.Title = "Flight Reservation Detail";
+}
+
+@if (Model != null)
+{
+    <br/>
+    <div class="alert alert-danger">
+        <b>WARNING!</b>
+        <br/>
+        Only continue this override if you want to set this reservation payment status as "Complete".
+        <br/>
+        This action is irreversible and will automatically issue the reservation and then automatically send the e-ticket e-mail.
+        <br/>
+        Please review the reservation detail below.
+        <br />
+        <br />
+        <b>
+            ONLY USE THIS WHEN PAYMENT IS DONE NOT BY SYSTEM BUT RATHER BY MANUAL MEANS
+            <br />
+            e.g., when customer pay by transfer not to online account and/or needs human/manual verification.
+            <br/>
+            AND DON'T FORGET TO ISSUE AFTERWARDS
+        </b>
+    </div>
+    <form action="@Url.Action("ConfirmOverridePayment", "Flight", new {rsvNo = Model.RsvNo})" method="POST">
+        <button type="submit" class="btn btn-danger">Confirm Override Payment Status</button>
+    </form>
+
+    <h3>
+        <i class="fa fa-angle-right"></i> Flight Reservation <small> > @Model.RsvNo</small>
+    </h3>
+
+    <div class="row">
+        @{ Html.RenderPartial("RenderReservation", Model); }
+    </div>
+
+    <div class="row">
+        @{
+            var count = 0;
+        }
+        @foreach (var trip in Model.Itineraries.SelectMany(p => p.Trips))
+        {
+            <div class="col-md-8">
+                <div class="showback">
+                    @if (count == 0)
+                    {
+                        <h4><b>Depart Flight</b></h4>
+                    }
+                    else
+                    {
+                        <h4><b>Return Flight</b></h4>
+                    }
+                    @{
+                        count += 1;
+                    }
+                    <hr />
+                    @{ Html.RenderPartial("RenderTrip", trip); }
+                </div>
+             </div>
+        }
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            @{ Html.RenderPartial("RenderPassenger", Model.Pax); }
+        </div>
+    </div>
+}
+else
+{
+    <h3><i class="fa fa-angle-right"></i> Flight Reservation <h1> > NOT FOUND</h1></h3>
+}

@@ -36,29 +36,29 @@ namespace Lunggo.ApCommon.Identity.AuthStore
             });
         }
 
-        public async Task<bool> AddOrReplaceRefreshToken(RefreshToken token, bool ignoreDevice)
+        public async Task<bool> AddOrReplaceRefreshToken(RefreshToken token)
         {
             return await Task.Run(() =>
             {
                 using (var conn = DbService.GetInstance().GetOpenConnection())
                 {
-                    if (ignoreDevice)
-                    {
-                        var existingTokenRecords =
-                            GetRefreshTokenByClientAndSubjectQuery.GetInstance()
-                                .Execute(conn, new {token.Subject, token.ClientId});
+                    //if (ignoreDevice)
+                    //{
+                    //    var existingTokenRecords =
+                    //        GetRefreshTokenByClientAndSubjectQuery.GetInstance()
+                    //            .Execute(conn, new {token.Subject, token.ClientId});
 
-                        Parallel.ForEach(existingTokenRecords, existingTokenRecord =>
-                        {
-                            var existingToken = ToRefreshToken(existingTokenRecord);
-                            if (existingToken != null)
-                                RemoveRefreshToken(existingToken).Wait();
-                        });
+                    //    Parallel.ForEach(existingTokenRecords, existingTokenRecord =>
+                    //    {
+                    //        var existingToken = ToRefreshToken(existingTokenRecord);
+                    //        if (existingToken != null)
+                    //            RemoveRefreshToken(existingToken).Wait();
+                    //    });
 
-                        return RefreshTokenTableRepo.GetInstance().Insert(conn, ToRefreshTokenRecord(token)) > 0;
-                    }
-                    else
-                    {
+                    //    return RefreshTokenTableRepo.GetInstance().Insert(conn, ToRefreshTokenRecord(token)) > 0;
+                    //}
+                    //else
+                    //{
                         var existingTokenRecords =
                             GetRefreshTokenByClientAndSubjectAndDeviceQuery.GetInstance()
                                 .Execute(conn, new { token.Subject, token.ClientId, token.DeviceId });
@@ -71,7 +71,7 @@ namespace Lunggo.ApCommon.Identity.AuthStore
                         });
 
                         return RefreshTokenTableRepo.GetInstance().Insert(conn, ToRefreshTokenRecord(token)) > 0;
-                    }
+                    //}
                 }
             });
         }

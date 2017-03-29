@@ -21,5 +21,33 @@ namespace Lunggo.CustomerWeb.Controllers
                 return View();
             }
         }
+
+        [DeviceDetectionFilter]
+        [Route("tiket-pesawat")]
+        public ActionResult IndexFlight(string destination)
+        {
+            ViewBag.IndexType = "flight";
+            if (destination == null)
+                return View("Index");
+            else
+            {
+                ViewBag.Destination = destination;
+                return View("Index");
+            }
+        }
+
+        [DeviceDetectionFilter]
+        [Route("hotel")]
+        public ActionResult IndexHotel(string destination)
+        {
+            ViewBag.IndexType = "hotel";
+            if (destination == null)
+                return View("Index");
+            else
+            {
+                ViewBag.Destination = destination;
+                return View("Index");
+            }
+        }
     }
 }

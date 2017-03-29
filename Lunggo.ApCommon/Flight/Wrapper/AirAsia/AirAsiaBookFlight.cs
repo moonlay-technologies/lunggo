@@ -89,6 +89,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                 List<string> errorMessages;
                 CommonInputCheck(bookInfo.Passengers, date, out errorMessages);
                 if (errorMessages.Count > 0)
+                {
                     return new BookFlightResult
                     {
                         IsSuccess = false,
@@ -99,8 +100,10 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                         Errors = new List<FlightError> { FlightError.InvalidInputData },
                         ErrorMessages = errorMessages
                     };
+                }
 
                 if (!Login(client))
+                {
                     return new BookFlightResult
                     {
                         IsSuccess = false,
@@ -111,6 +114,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                         Errors = new List<FlightError> { FlightError.TechnicalError },
                         ErrorMessages = new List<string> { "[AirAsia] Failed to Login" }
                     };
+                }
 
                 var flightPart = coreFareId.Split('|')[1];
                 var splitted = flightPart.Split('~');
@@ -170,7 +174,11 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                 searchRequest.AddParameter("application/x-www-form-urlencoded", postData, ParameterType.RequestBody);
                 var searchResponse = client.Execute(searchRequest);
 
-                if ((searchResponse.ResponseUri != null && searchResponse.ResponseUri.AbsolutePath != "/Select.aspx") || (searchResponse.StatusCode != HttpStatusCode.OK && searchResponse.StatusCode != HttpStatusCode.Redirect))
+                if ((searchResponse.ResponseUri != null && searchResponse.ResponseUri.AbsolutePath != "/Select.aspx") ||
+                    (searchResponse.StatusCode != HttpStatusCode.OK &&
+                     searchResponse.StatusCode != HttpStatusCode.Redirect))
+                {
+
                     return new BookFlightResult
                     {
                         IsSuccess = false,
@@ -181,6 +189,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                         Errors = new List<FlightError> { FlightError.TechnicalError },
                         ErrorMessages = new List<string> { "[AirAsia] Error in requesting at Search.aspx.Unexpected absolute path response or status code ||" + searchResponse.Content }
                     };
+                }
 
                 Thread.Sleep(1000);
 
@@ -233,7 +242,10 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                 selectRequest.AddParameter("application/x-www-form-urlencoded", postData, ParameterType.RequestBody);
                 var selectResponse = client.Execute(selectRequest);
 
-                if ((selectResponse.ResponseUri != null && selectResponse.ResponseUri.AbsolutePath != "/Traveler.aspx") || (selectResponse.StatusCode != HttpStatusCode.OK && selectResponse.StatusCode != HttpStatusCode.Redirect))
+                if ((selectResponse.ResponseUri != null && selectResponse.ResponseUri.AbsolutePath != "/Traveler.aspx") ||
+                    (selectResponse.StatusCode != HttpStatusCode.OK &&
+                     selectResponse.StatusCode != HttpStatusCode.Redirect))
+                {
                     return new BookFlightResult
                     {
                         IsSuccess = false,
@@ -245,6 +257,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                         ErrorMessages = new List<string> { "[AirAsia] Error in requesting at Select.aspx. Unexpected absolute path response or status code || " + selectResponse.Content }
 
                     };
+                }
 
                 Thread.Sleep(1000);
 
@@ -353,8 +366,11 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                 travelerRequest.AddParameter("application/x-www-form-urlencoded", postData, ParameterType.RequestBody);
                 var travelerResponse = client.Execute(travelerRequest);
 
-                if ((travelerResponse.ResponseUri != null && travelerResponse.ResponseUri.AbsolutePath != "/UnitMap.aspx") || (travelerResponse.StatusCode != HttpStatusCode.OK && travelerResponse.StatusCode != HttpStatusCode.Redirect))
-
+                if ((travelerResponse.ResponseUri != null &&
+                     travelerResponse.ResponseUri.AbsolutePath != "/UnitMap.aspx") ||
+                    (travelerResponse.StatusCode != HttpStatusCode.OK &&
+                     travelerResponse.StatusCode != HttpStatusCode.Redirect))
+                {
                     return new BookFlightResult
                     {
                         IsSuccess = false,
@@ -369,6 +385,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                             ((CQ) travelerResponse.Content)["#errorSectionContent"]
                         }
                     };
+                }
+                    
                 Thread.Sleep(1000);
 
                 // [POST] Select Seat
@@ -392,7 +410,10 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                 unitMapRequest.AddParameter("application/x-www-form-urlencoded", postData, ParameterType.RequestBody);
                 var unitMapResponse = client.Execute(unitMapRequest);
 
-                if ((unitMapResponse.ResponseUri != null && unitMapResponse.ResponseUri.AbsolutePath != "/Payment.aspx") || (unitMapResponse.StatusCode != HttpStatusCode.OK && unitMapResponse.StatusCode != HttpStatusCode.Redirect))
+                if ((unitMapResponse.ResponseUri != null && unitMapResponse.ResponseUri.AbsolutePath != "/Payment.aspx") ||
+                    (unitMapResponse.StatusCode != HttpStatusCode.OK &&
+                     unitMapResponse.StatusCode != HttpStatusCode.Redirect))
+                {
                     return new BookFlightResult
                     {
                         IsSuccess = false,
@@ -403,6 +424,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                         Errors = new List<FlightError> { FlightError.FailedOnSupplier },
                         ErrorMessages = new List<string> { "[AirAsia] Error while requesting at UnitMap.aspx. Unexpected absolute path response or status code || " + unitMapResponse.Content }
                     };
+                }
+                
 
                 Thread.Sleep(1000);
 
@@ -517,7 +540,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                             ErrorMessages = new List<string> { "[AirAsia] Error while trying to get currency value" },
                             NewItinerary = itin,
                             NewPrice = decimal.Parse(newPrice),
-                            Status = null
+                            Status = null,
+                            Errors = new List<FlightError> { FlightError.TechnicalError }
                         };
                     }
                     itin.Price.SetSupplier(decimal.Parse(newPrice), new Currency(currency, Payment.Constant.Supplier.AirAsia));
@@ -551,11 +575,11 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                             IsItineraryChanged = false,
                             IsPriceChanged = bookInfo.Itinerary.Price.Supplier != decimal.Parse(newPrice),
                             IsSuccess = false,
-                            ErrorMessages = new List<string> { "[AirAsia] Itinerary is changed!" },
+                            ErrorMessages = new List<string> { "[AirAsia] Price is changed!" },
                             NewItinerary = itin,
                             NewPrice = decimal.Parse(newPrice),
                             Status = null,
-                            Errors = new List<FlightError> { FlightError.TechnicalError }
+                            //Errors = new List<FlightError> { FlightError.TechnicalError }
                         };
                     }
                 }
@@ -627,7 +651,10 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                     //};
                 }
 
-                if (paymentResponse.ResponseUri.AbsolutePath != "/Payment.aspx" || (paymentResponse.StatusCode != HttpStatusCode.OK && paymentResponse.StatusCode != HttpStatusCode.Redirect))
+                if (paymentResponse.ResponseUri.AbsolutePath != "/Payment.aspx" ||
+                    (paymentResponse.StatusCode != HttpStatusCode.OK &&
+                     paymentResponse.StatusCode != HttpStatusCode.Redirect))
+                {
                     return new BookFlightResult
                     {
                         IsSuccess = false,
@@ -638,6 +665,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                         Errors = new List<FlightError> { FlightError.FailedOnSupplier },
                         ErrorMessages = new List<string> { "[AirAsia] Error while select hold payment. Unexpected absolute path response or status code || " + paymentResponse.Content }
                     };
+                }
+                    
 
                 Thread.Sleep(1000);
 
@@ -681,7 +710,10 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                     Thread.Sleep(1000);
                 }
 
-                if (paymentResponse2.ResponseUri.AbsolutePath != "/Wait.aspx" || (paymentResponse2.StatusCode != HttpStatusCode.OK && paymentResponse2.StatusCode != HttpStatusCode.Redirect))
+                if (paymentResponse2.ResponseUri.AbsolutePath != "/Wait.aspx" ||
+                    (paymentResponse2.StatusCode != HttpStatusCode.OK &&
+                     paymentResponse2.StatusCode != HttpStatusCode.Redirect))
+                {
                     return new BookFlightResult
                     {
                         IsSuccess = false,
@@ -693,6 +725,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                         ErrorMessages = new List<string> { "[AirAsia] Error while select submit payment at payment.aspx. Unexpected absolute path response or status code || " + paymentResponse2.Content }
 
                     };
+                }
+                
                 Thread.Sleep(1000);
 
                 // [GET] Wait for Book

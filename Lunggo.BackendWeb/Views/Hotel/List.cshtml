@@ -40,7 +40,6 @@
                         <th>Jlh Pax</th>
                         <th>Harga</th>
                         <th>Status Pembayaran</th>
-                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -78,6 +77,11 @@
                             </td>
                             <td>
                                 @(rsv.Payment.FinalPrice == 0 ? rsv.Payment.OriginalPrice.ToString("Rp 0,0", CultureInfo.CreateSpecificCulture("id-ID")) : rsv.Payment.FinalPrice.ToString("Rp 0,0", CultureInfo.CreateSpecificCulture("id-ID")))
+                                @if (rsv.Payment.DiscountNominal != 0)
+                                {
+                                    <br/>
+                                    <span class="badge bg-info" style="font-size: 10px" title="@rsv.Payment.DiscountName">V</span><span style="font-size: 10px">@rsv.Payment.DiscountNominal.ToString("Rp 0,0", CultureInfo.CreateSpecificCulture("id-ID"))</span>
+                                }
                             </td>
                             <td>
                                 @if (rsv.Payment.Method != PaymentMethod.Undefined)
@@ -85,7 +89,7 @@
                                     switch (rsv.Payment.Status)
                                     {
                                         case PaymentStatus.Pending:
-                                            <span class="label label-default" style="font-size: 14px">Pending</span>
+                                            <span class="label label-primary" style="font-size: 14px">Pending</span>
                                             <br />
                                             <span>@rsv.Payment.Method.ToString()</span>
                                             break;
@@ -120,17 +124,23 @@
                                         <span>@rsv.Payment.Method.ToString()</span>
                                             break;
                                         case PaymentStatus.Expired:
-                                        <span class="label label-danger" style="font-size: 14px">Expired</span>
+                                        <span class="label label-default" style="font-size: 14px">Expired</span>
                                         <br />
                                         <span>@rsv.Payment.Method.ToString()</span>
                                             break;
                                     }
-
                                 }
-                            </td>
-
-                            <td>
-                                <a href="@Url.Action("Detail", "Hotel", new {rsv.RsvNo})" class="btn btn-xs btn-info"><span class="fa fa-eye"> view</span></a><br />
+                                else
+                                {
+                                    if (rsv.Payment.Status == PaymentStatus.Expired)
+                                    {
+                                        <span class="label label-default" style="font-size: 14px">Expired</span>
+                                    }
+                                    if (rsv.Payment.Status == PaymentStatus.Settled)
+                                    {
+                                        <span class="label label-success" style="font-size: 14px">Complete</span>
+                                    }
+                                }
                             </td>
                         </tr>
                     }

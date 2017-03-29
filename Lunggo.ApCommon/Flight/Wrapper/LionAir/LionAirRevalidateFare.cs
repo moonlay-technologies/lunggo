@@ -116,81 +116,19 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
 
                 // [GET] Search Flight
 
-                var client = CreateAgentClient();string userId = "";
-                var msgLogin = "Your login name is inuse";
-                int counter = 0;
+                var client = CreateAgentClient();
+                string errorMessage;
+                string userId;
+                string userName;
 
-                var cloudAppUrl = ConfigManager.GetInstance().GetConfigValue("general", "cloudAppUrl");
-                var clientx = new RestClient(cloudAppUrl);
-                var accReq = new RestRequest("/api/LionAirAccount/ChooseUserId", Method.GET);
-                var userName = "";
-                var currentDeposit = "";
-                RestResponse accRs;
-                var reqTime = DateTime.UtcNow;
-                while (msgLogin == "Your login name is inuse" || msgLogin == "There was an error logging you in")
+                var succeedLogin = Login(client, out userName, out userId, out errorMessage);
+                if (!succeedLogin)
                 {
-                    while (DateTime.UtcNow <= reqTime.AddMinutes(10) && userName.Length == 0)
-                    {
-                        accRs = (RestResponse) clientx.Execute(accReq);
-                        userName = accRs.Content.Trim('"');
-                    }
-
-                    if (userName.Length == 0)
-                    {
-                        return new RevalidateFareResult
-                        {
-                            Errors = new List<FlightError> {FlightError.TechnicalError},
-                            ErrorMessages = new List<string> { "[Lion Air] userName is full" }
-                        };
-                    }
-                    bool successLogin;
-                    do
-                    {
-                        client.BaseUrl = new Uri("https://agent.lionair.co.id");
-                        const string url0 = @"/lionairagentsportal/default.aspx";
-                        var searchRequest0 = new RestRequest(url0, Method.GET);
-                        var searchResponse0 = client.Execute(searchRequest0);
-                        var html0 = searchResponse0.Content;
-                        CQ searchedHtml = html0;
-                        var viewstate = HttpUtility.UrlEncode(searchedHtml["#__VIEWSTATE"].Attr("value"));
-                        var eventval = HttpUtility.UrlEncode(searchedHtml["#__EVENTVALIDATION"].Attr("value"));
-                        FlightService.GetInstance().ParseCabinClass(CabinClass.Economy);
-                        if (searchResponse0.ResponseUri.AbsolutePath != "/lionairagentsportal/default.aspx" &&
-                            (searchResponse0.StatusCode == HttpStatusCode.OK ||
-                             searchResponse0.StatusCode == HttpStatusCode.Redirect))
-                        {
-                            accReq = new RestRequest("/api/LionAirAccount/LogOut?userId=" + userName, Method.GET);
-                            accRs = (RestResponse)clientx.Execute(accReq);
-                            return new RevalidateFareResult
-                            {
-                                Errors = new List<FlightError> {FlightError.InvalidInputData},
-                                ErrorMessages = new List<string> { "[Lion Air] can't enter page default || " + searchResponse0.Content }
-                            };
-                        }
-                        Thread.Sleep(1000);
-                        const string url1 = @"/lionairagentsportal/CaptchaGenerator.aspx";
-                        var searchRequest1 = new RestRequest(url1, Method.GET);
-                        var searchResponse1 = client.Execute(searchRequest1);
-
-                        Thread.Sleep(1000);
-
-                        successLogin = Login(client, searchResponse1.RawBytes, viewstate, eventval, out userId, userName,
-                            out msgLogin, out currentDeposit);
-                        Thread.Sleep(1000);
-                        counter++;
-                    } while (!successLogin && counter < 21 && (msgLogin != "Your login name is inuse"
-                        && msgLogin != "There was an error logging you in"));
-                }
-            
-
-                if (counter >= 21)
-                {
-                    accReq = new RestRequest("/api/LionAirAccount/LogOut?userId=" + userName, Method.GET);
-                    accRs = (RestResponse)clientx.Execute(accReq);
                     return new RevalidateFareResult
                     {
-                        Errors = new List<FlightError> { FlightError.InvalidInputData },
-                        ErrorMessages = new List<string> { "[Lion Air] Captcha is invalid" }
+                        IsSuccess = false,
+                        Errors = new List<FlightError> { FlightError.TechnicalError },
+                        ErrorMessages = new List<string> { errorMessage }
                     };
                 }
                 
@@ -662,8 +600,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                         Thread.Sleep(1000);
                         var searchResponse16 = client.Execute(searchRequest16);
 
-                        accReq = new RestRequest("/api/LionAirAccount/LogOut?userId=" + userName, Method.GET);
-                        accRs = (RestResponse)clientx.Execute(accReq);
+                        TurnInUsername(userName);
                     }
 
                     var isInternational = CheckInternationality(segments);
@@ -747,8 +684,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                     Thread.Sleep(1000);
                     var searchResponse16 = client.Execute(searchRequest16);
 
-                    accReq = new RestRequest("/api/LionAirAccount/LogOut?userId=" + userName, Method.GET);
-                    accRs = (RestResponse)clientx.Execute(accReq);
+                    TurnInUsername(userName);
                     return new RevalidateFareResult
                     {
                         IsSuccess = false,

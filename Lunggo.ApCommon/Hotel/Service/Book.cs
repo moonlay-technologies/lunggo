@@ -36,7 +36,6 @@ namespace Lunggo.ApCommon.Hotel.Service
             }
 
             var oldPrice = bookInfo.Rooms.Sum(room => room.Rates.Sum(rate => rate.Price.Supplier));
-            decimal newPrice = 0;
 
             //Refresh RateKey
             var occupancies = new List<Occupancy>();
@@ -68,6 +67,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                     Convert.ToInt32(checkin.Substring(6, 2))),
                 Checkout = new DateTime(Convert.ToInt32(checkout.Substring(0, 4)), Convert.ToInt32(checkout.Substring(4, 2)),
                     Convert.ToInt32(checkout.Substring(6, 2))),
+                Nights = bookInfo.NightCount,
                 HotelCode = bookInfo.HotelCode,
                 SearchId = generatedSearchId.ToString()
             };
@@ -160,18 +160,12 @@ namespace Lunggo.ApCommon.Hotel.Service
                     if (revalidateResult.IsPriceChanged)
                     {
                         rate.Price.SetSupplier(revalidateResult.NewPrice.GetValueOrDefault(), rate.Price.SupplierCurrency);
-                        newPrice += revalidateResult.NewPrice.GetValueOrDefault();
+                        rate.Price.CalculateFinalAndLocal(rate.Price.LocalCurrency);
                     }
-                    else
-                    {
-                        newPrice += rate.Price.Supplier;
-                    }
-                }
-                else
-                {
-                    newPrice += rate.Price.Supplier;
                 }
             }
+
+            var newPrice = bookInfo.Rooms.Sum(room => room.Rates.Sum(rate => rate.Price.Supplier));
 
             if (rateFound.Any(r => r == false))
             {
@@ -190,7 +184,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                 {
                     IsPriceChanged = true,
                     IsValid = true,
-                    NewPrice = newPrice
+                    NewPrice = bookInfo.Rooms.Sum(room => room.Rates.Sum(rate => rate.Price.Local))
                 };
             var rsvDetail = CreateHotelReservation(input, bookInfo);
             InsertHotelRsvToDb(rsvDetail);
@@ -248,9 +242,6 @@ namespace Lunggo.ApCommon.Hotel.Service
             var checkoutdate = new DateTime(Convert.ToInt32(coDate.Substring(0, 4)),
                 Convert.ToInt32(coDate.Substring(4, 2)), Convert.ToInt32(coDate.Substring(6, 2)));
 
-            var price = bookInfo.Rooms.SelectMany(r => r.Rates).Sum(r => r.Price.Local);
-            var cheapestPrice = bookInfo.Rooms.SelectMany(r => r.Rates).Min(r => r.Price.Local);
-
             var hotelInfo = new HotelDetail
             {
                 AccomodationType = bookInfo.AccomodationType,
@@ -259,12 +250,12 @@ namespace Lunggo.ApCommon.Hotel.Service
                 City = bookInfo.City,
                 CountryCode = bookInfo.CountryCode,
                 DestinationCode = bookInfo.DestinationCode,
-                NetTotalFare = price,
-                OriginalTotalFare = price * 1.01M,
-                NetCheapestFare = cheapestPrice,
-                NetCheapestTotalFare = cheapestPrice,
-                OriginalCheapestTotalFare = cheapestPrice * 1.01M,
-                OriginalCheapestFare = cheapestPrice * 1.01M,
+                NetTotalFare = bookInfo.Rooms.SelectMany(r => r.Rates).Sum(r => r.Price.Local),
+                OriginalTotalFare = bookInfo.Rooms.SelectMany(r => r.Rates).Sum(r => r.GetApparentOriginalPrice()),
+                NetCheapestFare = bookInfo.Rooms.SelectMany(r => r.Rates).Min(r => r.Price.Local),
+                NetCheapestTotalFare = bookInfo.Rooms.SelectMany(r => r.Rates).Min(r => r.Price.Local),
+                OriginalCheapestTotalFare = bookInfo.Rooms.SelectMany(r => r.Rates).Min(r => r.GetApparentOriginalPrice()),
+                OriginalCheapestFare = bookInfo.Rooms.SelectMany(r => r.Rates).Min(r => r.GetApparentOriginalPrice()),
                 TotalAdult = input.Passengers.Count(p => p.Type == PaxType.Adult),
                 TotalChildren = input.Passengers.Count(p => p.Type == PaxType.Child),
                 SpecialRequest = input.SpecialRequest,
@@ -295,7 +286,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                 {
                     Status = PaymentStatus.Pending,
                     LocalCurrency = new Currency(OnlineContext.GetActiveCurrencyCode()),
-                    OriginalPriceIdr = price,
+                    OriginalPriceIdr = bookInfo.Rooms.SelectMany(r => r.Rates).Sum(r => r.Price.Local),
                     TimeLimit = DateTime.UtcNow.AddHours(1)
                     //TimeLimit = bookInfo.Rooms.SelectMany(r => r.Rates).Min(order => order.TimeLimit).AddMinutes(-10),
                 },

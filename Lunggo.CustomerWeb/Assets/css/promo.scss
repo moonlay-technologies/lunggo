@@ -7,12 +7,26 @@
 }
 
 body.page-promo.promo-btn-mobile-app {padding-top:0;}
-.promo-btn {
+.page-promo {
     font-family: 'Open Sans';
-
+    &.promo-imlek {
+        .top-section a {background-image: url("/Assets/images/campaign/Imlek2017/Imlek2017-page.jpg");}
+    }
+    &.promo-btn {
+        .top-section a {background-image: url("/Assets/images/campaign/TerbanginHemat/TerbanginHemat-page.jpg");}
+    }
+    &.promo-hut-btn {
+        .top-section a {background-image: url("/Assets/images/campaign/HutBTN/HutBTN-page.jpg");}
+    }
+    &.promo-permata {
+        .top-section a {background-image: url("/Assets/images/campaign/PaydayMadness/PaydayMadness-page.jpg");}
+    }
+    &.promo-bankmega {
+        .top-section a {background-image: url("/Assets/images/campaign/PaydayMegaDeals/PaydayMegaDeals-page.jpg")}
+    }
+    
     /*Desktop*/
 	.top-section a {
-        background-image: url("/Assets/images/campaign/OnlineRevolution2016/OnlineRevolution-page.jpg");
         display: block;
         width: 100%;
         background-position: center center;

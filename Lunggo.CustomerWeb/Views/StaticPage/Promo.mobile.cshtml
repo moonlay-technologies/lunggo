@@ -18,18 +18,89 @@
         <h1 class="text-center section-title stripe">Promo <span>Berlangsung</span></h1>
     </header>
     <div class=" container-page">
-        <div class="promo-list">
-            <p>
-                <a href="@Url.Action("OnlineRevolution", "Promo")"><div class="img-promo" style="background-image: url(/Assets/images/campaign/OnlineRevolution2016/OnlineRevolution-page-mobile.jpg);"></div></a>
-            </p>
-            <p>
-                Spesial untuk pemegang Kartu Debit dan Kartu Kredit BTN, nikmati diskon hingga Rp 300.000 untuk rute penerbangan domestik. Buat perjalanan kamu lebih hemat dengan menggunakan Kartu Debit dan Kartu Kredit BTN.
-            </p>
-            <p>
-                Periode booking: <b>21 November - 31 Desember 2016</b>
-                <br />
-                <a href="@Url.Action("OnlineRevolution", "Promo")">Selengkapnya</a>
-            </p>
-        </div>
+        @if (DateTime.UtcNow.AddHours(7).Date <= new DateTime(2017, 02, 15))
+        {
+            <div class="promo-list">
+                <p>
+                    <a href="@Url.Action("Imlek", "Promo")"><img src="/Assets/images/campaign/Imlek2017/Imlek2017-promo-mobile.jpg" /></a>
+                </p>
+                <p>
+                    Rayakan kebersamaan imlek bersama keluarga di hotel terbaik pilihan Anda. Gunakan kode promo untuk mendapatkan secret deal harga kamar hotel. Berlaku tanpa minimum pembelian, untuk hotel domestik dan internasional.
+                </p>
+                <p>
+                    Periode booking: <b>28 Januari - 15 Februari 2017</b>
+                    <br />
+                    <a href="@Url.Action("Imlek", "Promo")">Selengkapnya</a>
+                </p>
+            </div>
+        }
+        @if (DateTime.UtcNow.AddHours(7).Date > new DateTime(2017, 02, 10) && DateTime.UtcNow.AddHours(7).Date <= new DateTime(2017, 03, 31))
+        {
+            <div class="promo-list">
+                <p>
+                    <a href="@Url.Action("BTNTerbanginHemat", "Promo")"><img src="/Assets/images/campaign/TerbanginHemat/TerbanginHemat-promo-mobile.jpg" /></a>
+                </p>
+                <p>
+                    Spesial untuk pemegang Kartu Debit dan Kartu Kredit BTN, nikmati diskon hingga Rp 300.000 setiap reservasi tiket pesawat dan kamar hotel di seluruh dunia.
+                    Buat perjalanan kamu lebih hemat dengan menggunakan Kartu Debit dan Kartu Kredit BTN.
+                </p>
+                <p>
+                    Periode booking: <b>1 Februari - 31 Maret 2017</b>
+                    <br />
+                    <a href="@Url.Action("BTNTerbanginHemat", "Promo")">Selengkapnya</a>
+                </p>
+            </div>
+        }
+        @if (DateTime.UtcNow.AddHours(7).Date <= new DateTime(2017, 02, 10))
+        {
+            <div class="promo-list">
+                <p>
+                    <a href="@Url.Action("HutBTN", "Promo")"><img src="/Assets/images/campaign/HutBTN/HutBTN-promo-mobile.jpg" /></a>
+                </p>
+                <p>
+                    Di Hari Ulang Tahun BTN ke-67, spesial untuk pemegang Kartu Debit dan Kartu Kredit BTN, nikmati diskon regular BTN berupa potongan harga 10% dan tambahan diskon sebesar Rp 67.000 setiap reservasi tiket pesawat dan kamar hotel di seluruh dunia.
+                    Buat perjalanan kamu lebih hemat dengan menggunakan Kartu Debit dan Kartu Kredit BTN.
+                </p>
+                <p>
+                    Periode booking: <b>8 - 10 Februari 2017</b>
+                    <br />
+                    <a href="@Url.Action("HutBTN", "Promo")">Selengkapnya</a>
+                </p>
+            </div>
+        }
+        @if (DateTime.UtcNow.AddHours(7).Date >= new DateTime(2017, 03, 25) && DateTime.UtcNow.AddHours(7).Date <= new DateTime(2017, 08, 27))
+        {
+            <div class="promo-list">
+                <p>
+                    <a href="@Url.Action("PaydayMadnessPermataBank", "Promo")"><img src="/Assets/images/campaign/PaydayMadness/PaydayMadness-promo-mobile.jpg" /></a>
+                </p>
+                <p>
+                    Yeay payday time! Saatnya memanjakan diri bersama keluarga atau sahabat dengan menginap di hotel-hotel terbaik pilihan kamu.
+                    Nikmati diskon 15% maksimal Rp 150.000 untuk setiap reservasi kamar hotel di Indonesia dan luar negeri dengan menggunakan metode pembayaran transfer bank melalui ATM Bank Permata.
+                </p>
+                <p>
+                    Periode booking: <b>25 Maret - 27 Agustus 2017</b>
+                    <br />
+                    <a href="@Url.Action("PaydayMadnessPermataBank", "Promo")">Selengkapnya</a>
+                </p>
+            </div>
+        }
+        @if (DateTime.UtcNow.AddHours(7).Date >= new DateTime(2017, 03, 24) && DateTime.UtcNow.AddHours(7).Date <= new DateTime(2017, 04, 02))
+        {
+            <div class="promo-list">
+                <p>
+                    <a href="@Url.Action("PaydayMegaDeals", "Promo")"><img src="/Assets/images/campaign/PaydayMegaDeals/PaydayMegaDeals-promo-mobile.jpg" /></a>
+                </p>
+                <p>
+                    Mumpung sudah gajian, yuk siapkan rencana liburan kamu bersama sahabat atau keluarga. Pesan hotelnya di Travorama dan gunakan kartu kredit Bank Mega untuk tambahan potongan harga sebesar
+                    10% (diluar harga promo Travorama). Berlaku untuk reservasi kamar hotel di Indonesia dan Luar Negeri. Tanpa minimum pembelian dan tanpa maksimum potongan harga.
+                </p>
+                <p>
+                    Periode booking: <b>25 Maret - 27 Agustus 2017</b>
+                    <br />
+                    <a href="@Url.Action("PaydayMadnessPermataBank", "Promo")">Selengkapnya</a>
+                </p>
+            </div>
+        }
     </div><!-- .section-search -->
 </section><!-- .home-page -->

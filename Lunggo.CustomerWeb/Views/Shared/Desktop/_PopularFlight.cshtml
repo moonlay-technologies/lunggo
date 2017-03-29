@@ -1,0 +1,156 @@
+﻿@using System.Globalization
+@using Lunggo.ApCommon.Flight.Service
+@{
+    string dpsUrl;
+    string jktUrl;
+    string knoUrl;
+    string subUrl;
+    string jogUrl;
+    var today = DateTime.Today;
+    var days = DateTime.DaysInMonth(today.Year, today.Month);
+    var lastDay = new DateTime(today.Year, today.Month, days);
+    
+    var denpasar = FlightService.GetInstance().PairsOfDateAndPrice("JKT", "DPS", today ,lastDay);
+    var jakarta = FlightService.GetInstance().PairsOfDateAndPrice("DPS", "JKT", today, lastDay);
+    var medan = FlightService.GetInstance().PairsOfDateAndPrice("JKT", "KNO", today, lastDay);
+    var surabaya = FlightService.GetInstance().PairsOfDateAndPrice("JKT", "SUB", today, lastDay);
+    var yogya = FlightService.GetInstance().PairsOfDateAndPrice("JKT", "JOG", today, lastDay);
+
+    if (denpasar.CheapestPrice > 0)
+    {
+        var splittedDate = denpasar.CheapestDate.Split('/');
+        dpsUrl = "/id/tiket-pesawat/cari/Jakarta-Denpasar-JKT-DPS/JKTDPS" + splittedDate[2] + splittedDate[1] + splittedDate[0].Substring(2, 2) + "-100y";
+    }
+    else
+    {
+        dpsUrl = "/id/tiket-pesawat/cari/Jakarta-Denpasar-JKT-DPS/JKTDPS";
+    }
+
+    if (jakarta.CheapestPrice > 0)
+    {
+        var splittedDate = jakarta.CheapestDate.Split('/');
+        jktUrl = "/id/tiket-pesawat/cari/Denpasar-Jakarta-DPS-JKT/DPSJKT" + splittedDate[2] + splittedDate[1] + splittedDate[0].Substring(2, 2) + "-100y";
+    }
+    else
+    {
+        jktUrl = "/id/tiket-pesawat/cari/Denpasar-Jakarta-DPS-JKT/DPSJKT";
+    }
+
+    if (medan.CheapestPrice > 0)
+    {
+        var splittedDate = denpasar.CheapestDate.Split('/');
+        knoUrl = "/id/tiket-pesawat/cari/Jakarta-Medan-JKT-KNO/JKTKNO" + splittedDate[2] + splittedDate[1] + splittedDate[0].Substring(2, 2) + "-100y";
+    }
+    else
+    {
+        knoUrl = "/id/tiket-pesawat/cari/Jakarta-Medan-JKT-KNO/JKTKNO";
+    }
+
+    if (surabaya.CheapestPrice > 0)
+    {
+        var splittedDate = surabaya.CheapestDate.Split('/');
+        subUrl = "/id/tiket-pesawat/cari/Jakarta-Surabaya-JKT-SUB/JKTSUB" + splittedDate[2] + splittedDate[1] + splittedDate[0].Substring(2, 2) + "-100y";
+    }
+    else
+    {
+       subUrl = "/id/tiket-pesawat/cari/Jakarta-Surabaya-JKT-SUB/JKTSUB";
+    }
+
+    if (yogya.CheapestPrice > 0)
+    {
+        var splittedDate = yogya.CheapestDate.Split('/');
+        jogUrl = "/id/tiket-pesawat/cari/Jakarta-Yogyakarta-JKT-JOG/JKTJOG" + splittedDate[2] + splittedDate[1] + splittedDate[0].Substring(2, 2) + "-100y";
+    }
+    else
+    {
+        jogUrl = "/id/tiket-pesawat/cari/Jakarta-Yogyakarta-JKT-JOG/JKTJOG";
+    }
+}
+<div class="popular-flight">
+    <div class="md-txt os-bold">Tujuan Penerbangan Terpopuler</div>
+    <div class="pop-flight" style="background-image: url(/Assets/images/index/popular-flight-bali.jpg)">
+        <a href="@dpsUrl" class="pf-wrapper">
+            <div class="pf-txt">
+                <div class="top-txt white-txt pull-left">
+                    <div class="normal-txt">Tiket Pesawat ke</div>
+                    <div class="xlg-txt os-bold">Denpasar</div>
+                </div>
+                @if (denpasar.CheapestPrice > 0)
+                {
+                    <div class="bottom-txt pull-right">
+                        <span class="normal-txt white-txt">mulai dari</span>
+                        <span class="md-txt os-bold yellow-txt">Rp @denpasar.CheapestPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</span>
+                    </div>
+                }                
+            </div>
+        </a>
+    </div>
+    <div class="pop-flight" style="background-image: url(/Assets/images/index/popular-flight-jakarta.jpg)">
+        <a href="@jktUrl" class="pf-wrapper">
+            <div class="pf-txt">
+                <div class="top-txt white-txt pull-left">
+                    <div class="normal-txt">Tiket Pesawat ke</div>
+                    <div class="xlg-txt os-bold">Jakarta</div>
+                </div>
+                @if (jakarta.CheapestPrice > 0)
+                {
+                    <div class="bottom-txt pull-right">
+                        <span class="normal-txt white-txt">mulai dari</span>
+                        <span class="md-txt os-bold yellow-txt">Rp @jakarta.CheapestPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</span>
+                    </div>
+                }
+            </div>
+        </a>
+    </div>
+    <div class="pop-flight" style="background-image: url(/Assets/images/index/popular-flight-medan.jpg)">
+        <a href="@knoUrl" class="pf-wrapper">
+            <div class="pf-txt">
+                <div class="top-txt white-txt pull-left">
+                    <div class="normal-txt">Tiket Pesawat ke</div>
+                    <div class="xlg-txt os-bold">Medan</div>
+                </div>
+                @if (medan.CheapestPrice > 0)
+                {
+                    <div class="bottom-txt pull-right">
+                        <span class="normal-txt white-txt">mulai dari</span>
+                        <span class="md-txt os-bold yellow-txt">Rp @medan.CheapestPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</span>
+                    </div>
+                }
+            </div>
+        </a>
+    </div>
+    <div class="pop-flight" style="background-image: url(/Assets/images/index/popular-flight-surabaya.jpg)">
+        <a href="@subUrl" class="pf-wrapper">
+            <div class="pf-txt">
+                <div class="top-txt white-txt pull-left">
+                    <div class="normal-txt">Tiket Pesawat ke</div>
+                    <div class="xlg-txt os-bold">Surabaya</div>
+                </div>
+                @if (surabaya.CheapestPrice > 0)
+                {
+                    <div class="bottom-txt pull-right" >
+                        <span class="normal-txt white-txt">mulai dari</span>
+                        <span class="md-txt os-bold yellow-txt">Rp @surabaya.CheapestPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</span>
+                    </div>
+                }
+            </div>
+        </a>
+    </div>
+    <div class="pop-flight" style="background-image: url(/Assets/images/index/popular-flight-yogyakarta.jpg)">
+        <a href="@jogUrl" class=" pf-wrapper">
+            <div class="pf-txt">
+                <div class="top-txt white-txt pull-left">
+                    <div class="normal-txt">Tiket Pesawat ke</div>
+                    <div class="xlg-txt os-bold">Yogyakarta</div>
+                </div>
+                @if (yogya.CheapestPrice > 0)
+                {
+                    <div class="bottom-txt pull-right">
+                        <span class="normal-txt white-txt">mulai dari</span>
+                        <span class="md-txt os-bold yellow-txt">Rp @yogya.CheapestPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</span>
+                    </div>
+                }              
+            </div>
+        </a>
+    </div>
+</div>

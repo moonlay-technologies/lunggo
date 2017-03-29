@@ -4,60 +4,70 @@ function ($scope, $log, $window, $http, $resource, $timeout, $interval, hotelSea
 
     $(document).ready(function () {
 
-        if (Cookies.get('hotelSearchLocationDisplay')) {
-            $scope.hotelSearch.locationDisplay = Cookies.get('hotelSearchLocationDisplay');
+        if (Cookies.get('hotelLocationDisplay')) {
+            $scope.hotelSearch.locationDisplay = Cookies.get('hotelLocationDisplay');
+            if (Cookies.get('hotelLocation')) {
+                $scope.hotelSearch.location = Cookies.get('hotelLocation');
+            } else {
+                $scope.hotelSearch.location = 1316553;
+            }
+            if (Cookies.get('urlCountry')) {
+                $scope.hotelSearch.urlData.country = Cookies.get('urlCountry');
+            } else {
+                $scope.hotelSearch.urlData.country = 'Indonesia';
+            }
+            if (Cookies.get('urlDestination')) {
+                $scope.hotelSearch.urlData.destination = Cookies.get('urlDestination');
+            } else {
+                $scope.hotelSearch.urlData.destination = 'Bali';
+            }
+            if (Cookies.get('urlZone')) {
+                $scope.hotelSearch.urlData.zone = Cookies.get('urlZone');
+            } else {
+                $scope.hotelSearch.urlData.zone = null;
+            }
+            if (Cookies.get('urlArea')) {
+                $scope.hotelSearch.urlData.area = Cookies.get('urlArea');
+            } else {
+                $scope.hotelSearch.urlData.area = null;
+            }
+
+            if (Cookies.get('urlType')) {
+                $scope.hotelSearch.urlData.type = Cookies.get('urlType');
+            } else {
+                $scope.hotelSearch.urlData.type = 'Destination';
+            }
         } else {
             $scope.hotelSearch.locationDisplay = 'Bali, Indonesia';
-        }
-
-        if (Cookies.get('hotelSearchLocation')) {
-            $scope.hotelSearch.location = Cookies.get('hotelSearchLocation');
-        } else {
-            $scope.hotelSearch.location = 16173;
-        }
-
-        if (Cookies.get('urlCountry')) {
-            $scope.hotelSearch.urlData.country = Cookies.get('urlCountry');
-        } else {
             $scope.hotelSearch.urlData.country = 'Indonesia';
-        }
-
-        if (Cookies.get('urlDestination')) {
-            $scope.hotelSearch.urlData.destination = Cookies.get('urlDestination');
-        } else {
             $scope.hotelSearch.urlData.destination = 'Bali';
-        }
-
-        if (Cookies.get('urlZone')) {
-            $scope.hotelSearch.urlData.zone = Cookies.get('urlZone');
-        } else {
             $scope.hotelSearch.urlData.zone = null;
-        }
-
-        if (Cookies.get('urlArea')) {
-            $scope.hotelSearch.urlData.area = Cookies.get('urlArea');
-        } else {
             $scope.hotelSearch.urlData.area = null;
-        }
-
-        if (Cookies.get('urlType')) {
-            $scope.hotelSearch.urlData.type = Cookies.get('urlType');
-        } else {
             $scope.hotelSearch.urlData.type = 'Destination';
         }
 
         if (Cookies.get('hotelSearchCheckInDate')) {
-            $scope.hotelSearch.checkinDate = new Date(Cookies.get('hotelSearchCheckInDate'));
-            $scope.hotelSearch.checkinDateDisplay = moment($scope.hotelSearch.checkinDate).locale("id").format('LL');
-            $('.ui-datepicker.checkindate').datepicker("setDate", new Date($scope.hotelSearch.checkinDateDisplay));
+            if (new Date(Cookies.get('hotelSearchCheckInDate')) < new Date()) {
+                $scope.hotelSearch.checkinDate = moment().locale("id").add(5, 'days');
+                $scope.hotelSearch.checkinDateDisplay = moment($scope.hotelSearch.checkinDate).locale("id").format('LL');
+            } else {
+                $scope.hotelSearch.checkinDate = new Date(Cookies.get('hotelSearchCheckInDate'));
+                $scope.hotelSearch.checkinDateDisplay = moment($scope.hotelSearch.checkinDate).locale("id").format('LL');
+                $('.ui-datepicker.checkindate').datepicker("setDate", new Date($scope.hotelSearch.checkinDateDisplay));
+            }
         } else {
             $scope.hotelSearch.checkinDate = moment().locale("id").add(5, 'days');
             $scope.hotelSearch.checkinDateDisplay = moment($scope.hotelSearch.checkinDate).locale("id").format('LL');
         }
 
         if (Cookies.get('hotelSearchCheckOutDate')) {
-            $scope.hotelSearch.checkoutDate = new Date(Cookies.get('hotelSearchCheckOutDate'));
-            $scope.hotelSearch.checkoutDateDisplay = moment($scope.hotelSearch.checkoutDate).locale("id").format('LL');
+            if (new Date(Cookies.get('hotelSearchCheckOutDate')) < new Date(new Date().getTime() + 24 * 60 * 60 * 1000)) {
+                $scope.hotelSearch.checkoutDate = moment().locale("id").add(7, 'days');
+                $scope.hotelSearch.checkoutDateDisplay = moment($scope.hotelSearch.checkoutDate).locale("id").format('LL');
+            } else {
+                $scope.hotelSearch.checkoutDate = new Date(Cookies.get('hotelSearchCheckOutDate'));
+                $scope.hotelSearch.checkoutDateDisplay = moment($scope.hotelSearch.checkoutDate).locale("id").format('LL');
+            }
         } else {
             $scope.hotelSearch.checkoutDate = moment().locale("id").add(7, 'days');
             $scope.hotelSearch.checkoutDateDisplay = moment($scope.hotelSearch.checkoutDate).locale("id").format('LL');
@@ -101,6 +111,16 @@ function ($scope, $log, $window, $http, $resource, $timeout, $interval, hotelSea
     });
     // **************************GENERAL VARIABLES*****************************
    
+    $scope.gtmContentType = 'hotel';
+    $scope.gtmCity = gtmCity;
+    $scope.gtmRegion = gtmRegion;
+    $scope.gtmCountry = gtmCountry;
+    $scope.gtmCheckinDate = gtmCheckinDate;
+    $scope.gtmCheckoutDate = gtmCheckoutDate;
+    $scope.gtmNumAdults = gtmNumAdults;
+    $scope.gtmNumChildren = gtmNumChildren;
+    $scope.gtmPurchaseCurrency = gtmPurchaseCurrency;
+    $scope.gtmPageValue = null;
     // Hotel Data
     $scope.model = {};
     $scope.hotels = [];
@@ -133,6 +153,10 @@ function ($scope, $log, $window, $http, $resource, $timeout, $interval, hotelSea
         location: location,
     }
 
+    $scope.statePrice = 'perRoom';
+    $scope.changeStatePrice = function(value) {
+        $scope.statePrice = value;
+    }
     // Page Load And Display
 
     var isFirstload = true;
@@ -151,12 +175,16 @@ function ($scope, $log, $window, $http, $resource, $timeout, $interval, hotelSea
         showHotelSearch : false
     }
    
+    $scope.mapUrl = '';
     // ***************************************END*******************************
 
     // ****************************** INITS ************************************
     $scope.init = function (model) {
+        //$log.debug("href = " + window.location.pathname);
         $scope.model = model;
         $log.debug($scope.model);
+        $scope.mapUrl = window.location.pathname.replace("cari", "map") + '?info=' + model.searchParam;
+        $("#mapUrl").attr("href", $scope.mapUrl);
         $scope.hotelSearch.location = $scope.model.searchParamObject.location;
         $scope.hotelSearch.checkinDate = $scope.model.searchParamObject.checkinDate;
         $scope.hotelSearch.checkinDateDisplay = moment($scope.hotelSearch.checkinDate).locale("id").format('LL');
@@ -204,6 +232,15 @@ function ($scope, $log, $window, $http, $resource, $timeout, $interval, hotelSea
         $scope.searchParam = model.searchParam;
         if ($scope.locFound) {
             $scope.searchHotel();
+            if ($scope.statePrice == 'perRoom') {
+                $('body #perRoom').addClass("active");
+                $('body #total').removeClass("active");
+                $("body #price-night").show();
+            } else {
+                $('body #total').addClass("active");
+                $('body #perRoom').removeClass("active");
+                $("body #price-total").show();
+            }
         } else {
             $scope.searchDone = true;
             $scope.returnedHotelCount = 0;
@@ -244,7 +281,23 @@ function ($scope, $log, $window, $http, $resource, $timeout, $interval, hotelSea
 
         return true;
     };
+
+    $scope.checkHotel = function(hotels) {
+        var allContained = true;
+        for (var i = 0; i < hotels.length; i++) {
+            var hotelName = hotels[i].hotelName.toLowerCase();
+            if ($scope.filter.nameFilter != null && $scope.filter.nameFilter !== '') {
+                if (hotelName.indexOf($scope.filter.nameFilter.toLowerCase()) == -1) {
+                    allContained = false;
+                    break;
+                }
+            }        
+        }
+
+        return allContained;
+    }
     $scope.searchHotel = function (filter, sort, isMobile) {
+        
         $scope.searchDone = false;
         $scope.pageCount = 0;
 
@@ -254,7 +307,9 @@ function ($scope, $log, $window, $http, $resource, $timeout, $interval, hotelSea
             if (validateResponse(data) == false) {
                 return false;
             } else $scope.researching = false;
-            
+            $scope.hotels = [];
+            if (data.hotels != null) {
+                if ($scope.checkHotel(data.hotels)) {
             if (data.searchId !== undefined) {
 
                 $scope.hotelSearch.searchId = data.searchId;
@@ -262,9 +317,7 @@ function ($scope, $log, $window, $http, $resource, $timeout, $interval, hotelSea
             }
 
             $scope.expiryDate = new Date(data.expTime);
-            //$scope.expiryDate = new Date();
-            //$scope.expiryDate = $scope.expiryDate.setMinutes($scope.expiryDate.getMinutes() + 1);
-            $interval(function () {
+                    $interval(function() {
                 var nowTime = new Date();
                 if (nowTime > $scope.expiryDate) {
                     $scope.expired = true;
@@ -292,28 +345,82 @@ function ($scope, $log, $window, $http, $resource, $timeout, $interval, hotelSea
             $scope.perPage = data.perPage;
             $scope.pageCount = data.pageCount;
             $scope.totalHotelCount = data.totalHotelCount;
+            
 
             if (isFirstload) {
                 $scope.filter.minPrice = data.minPrice;
                 $scope.filter.maxPrice = data.maxPrice;
                 $scope.minPrice = data.minPrice;
                 $scope.maxPrice = data.maxPrice;
-            initiatePriceSlider();
-
+                initiatePriceSlider();
                 $scope.hotelFilterDisplayInfo = data.hotelFilterDisplayInfo;
                 isFirstload = false;
-            };
 
-            //$timeout(function () { customCheckbox(); }, 0);
+                        var hotelId = [];
+                        if (data.totalHotelCount >= 10) {
+                            for (var i = 0; i < 10; i++) {
+                                hotelId.push(data.hotels[i].hotelCd.toString());
+                            }
+                        }else if (data.totalHotelCount > 0 && data.totalHotelCount < 10) {
+                            for (var i = 0; i < data.totalHotelCount; i++) {
+                                hotelId.push(data.hotels[i].hotelCd.toString());
+                            }
+                        }
+                        
+                        !function (f, b, e, v, n, t, s) {
+                            if (f.fbq) return; n = f.fbq = function () {
+                                n.callMethod ?
+                                n.callMethod.apply(n, arguments) : n.queue.push(arguments)
+                            }; if (!f._fbq) f._fbq = n;
+                            n.push = n; n.loaded = !0; n.version = '2.0'; n.queue = []; t = b.createElement(e); t.async = !0;
+                            t.src = v; s = b.getElementsByTagName(e)[0]; s.parentNode.insertBefore(t, s)
+                        }(window,document, 'script', '//connect.facebook.net/en_US/fbevents.js');
+
+                        //fbq('init', '<FB_PIXEL_ID>');
+
+                        fbq('track', 'Search', {
+                            content_type: 'hotel',
+                            content_ids: hotelId,
+                            checkin_date: $scope.gtmCheckinDate,
+                            checkout_date: $scope.gtmCheckoutDate,
+                            city: $scope.gtmCity,
+                            region: $scope.gtmRegion,
+                            country: $scope.gtmCountry,
+                            num_adults: $scope.gtmNumAdults,
+                            num_children: $scope.gtmNumChildren,
+                            purchase_value: data.minPrice,
+                            purchase_currency: $scope.gtmPurchaseCurrency,
+                        });
+            };
+                    $scope.searchDone = true;
+                    $scope.finishLoad = true;
+                    if ($scope.statePrice == 'perRoom') {
+                        $('body #perRoom').click();
+                        $("body #price-total").hide();
+                        $("body #price-night").show();
+                    } else {
+                        $('body #total').click();
+                        $("body #price-night").hide();
+                        $("body #price-total").show();
+                    }
+                } else {
+                    $scope.searchDone = false;
+                }
+            } else {
+                if ($scope.researching == false) {
+                    $scope.searchDone = true;
+                    $scope.finishLoad = true;
+                } else {
+                    $scope.searchDone = false;
+                    $scope.finishLoad =false;
+                }
+                
+            }
+
             $log.debug(data);
         }, function (error) {
             $log.error("error: " + error);
         }).finally(function () {
-            if ($scope.researching == false) {
-                $scope.searchDone = true;
-                $scope.finishLoad = true;
-            }
-            
         });
     };
 
@@ -344,7 +451,7 @@ function ($scope, $log, $window, $http, $resource, $timeout, $interval, hotelSea
         var destinationName = hotel.destinationName;
         destinationName = destinationName.replace(/\s+/g, '-');
         destinationName = destinationName.replace(/[^0-9a-zA-Z-]/gi, '').toLowerCase();
-        $log.debug('redirect to detail hotel with hotelCd: ' + hotel.hotelCd);
+        //$log.debug('redirect to detail hotel with hotelCd: ' + hotel.hotelCd);
         var url = '/id/hotel/' + hotel.country + '/' + destinationName +
             '/' + hotelName + '-' + hotel.hotelCd + "/?" + $scope.searchParam; 
 
@@ -492,8 +599,13 @@ function ($scope, $log, $window, $http, $resource, $timeout, $interval, hotelSea
 
     };
     
+    //setup before functions
+    var typingTimer;                //timer identifier
+    var doneTypingInterval = 500;  //time in ms (5 seconds)
+
     $scope.$watch('filter.nameFilter', function (newValue, oldValue, scope) {
-        filterHotels();
+        clearTimeout(typingTimer);
+        typingTimer = setTimeout(filterHotels, doneTypingInterval);
     }, true);
 
     $scope.$watch('filter.minPrice', function (newValue, oldValue, scope) {
@@ -561,13 +673,3 @@ function ($scope, $log, $window, $http, $resource, $timeout, $interval, hotelSea
 
     // ****************************** END **************************************
 }]);
-
-//$('.overlay .filter-group--facility a').on('click', function () { //click or click touchstart
-//    $('.overlay .filter-group--facility a').toggleClass('active');
-//    $('.overlay .sh-list').toggleClass('opened');
-//});
-
-//$('.overlay .filter-group--area').on('click', function () {
-//    $('.overlay .filter-group--facility a').toggleClass('active');
-//    $('.overlay .sh-list').toggleClass('opened');
-//});

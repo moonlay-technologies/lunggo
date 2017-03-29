@@ -70,9 +70,10 @@
 
 @{
     Layout = "/Views/Shared/mobile/_LayoutMobile.cshtml";
-    ViewBag.Title = "Pencarian Penerbangan Sejalan";
+    ViewBag.Title = "Tiket Pesawat Promo dari " + originCityNames.First() + " ke " + destinationCityNames.First() + " Tanggal " + trips.First().DepartureDate.ToString("d MMMM yyyy", CultureInfo.CreateSpecificCulture("id-ID"));
     ViewBag.BodyClass = "page page-flight single-flight";
     ViewBag.AngularController = "SingleFlightController";
+    ViewBag.Page = "FlightSearchSingle";
 }
 
 @section AdditionalCSS{
@@ -108,6 +109,22 @@
     </script>
     <script src="/Assets/mobile/js/singleFlightController.js"></script>
     <script src="/Assets/travorama20/angularDirectory/priceDetail/priceDetailDirMobile.js"></script>
+    <script>
+        var gtmContentType = 'flight';
+        var gtmDepartingDepartureDate = '@trips[0].DepartureDate.ToString("yyyyMMdd")';
+        var gtmReturningDepartureDate = null;
+        var gtmOriginAirport = '@trips[0].OriginAirport';
+        var gtmDestinationAirport = '@trips[0].DestinationAirport';
+        var gtmDepartingArrivalDate = null;
+        var gtmReturningArrivalDate = null;
+        var gtmNumAdults = @data.AdultCount;
+        var gtmNumChildren = @data.ChildCount;
+        var gtmNumInfants = @data.InfantCount;
+        var gtmTravelClass = '@data.CabinClass.ToString().ToLower()';
+        var gtmPurchaseValue = '';
+        var gtmPurchaseCurrency = 'IDR';
+    </script>
+
 }
 
 <div class="page-loading" ng-class="{'page-loaded':PageConfig.Loaded}">
@@ -202,7 +219,7 @@
                 <div class="content-right">
                     <label>Harga per Orang :</label>
                     <h5 class="flight-price-was" ng-show="flight.originalAdultFare">Rp {{flight.originalAdultFare | number}}</h5>
-                    <h4 class="flight-price">Rp {{flight.netAdultFare | number}}</h4>
+                    <h4 class="flight-price">Rp {{flight.netAdultFare | number}}<span style="font-size: 10px"> /pax</span></h4>
                 </div>
             </div>
             <div class="flight-footer">

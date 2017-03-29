@@ -169,14 +169,6 @@
       <Private>True</Private>
       <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
-    <Reference Include="Wurfl, Version=1.6.0.1, Culture=neutral, PublicKeyToken=816aeec277aa13b9, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\WURFL_Official_API.1.6.0.1\lib\Wurfl.dll</HintPath>
-    </Reference>
-    <Reference Include="Wurfl.Aspnet.Extensions, Version=1.6.0.1, Culture=neutral, PublicKeyToken=816aeec277aa13b9, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\WURFL_Official_API.1.6.0.1\lib\Wurfl.Aspnet.Extensions.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\AppInitializer.cs" />
@@ -204,6 +196,8 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Model\SubscriberCalendar.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Query\GetSegmentIdsQuery.cs" />
+    <Compile Include="Query\GetItineraryIdsQuery.cs" />
     <Compile Include="Query\GetBookingPending.cs" />
     <Compile Include="Query\GetBookingPendingRecord.cs" />
     <Compile Include="Query\GetSearchHotelDetail.cs" />
@@ -317,7 +311,6 @@
     <Content Include="Config\i18n_message.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Config\JsConfig - Copy.js" />
     <Content Include="Config\JsConfig.js" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
@@ -382,11 +375,6 @@
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\CustomAutoComplete.js" />
     <Content Include="Scripts\Flip.js" />
-    <Content Include="Introspector\Introspector.pdf" />
-    <Content Include="Introspector\Introspector.ashx" />
-    <Content Include="App_Readme\WURFL-v1.6.0.1.chm" />
-    <Content Include="App_Readme\WURFL Quick Guide_v1_5.pdf" />
-    <Content Include="App_Data\wurfl-latest.zip" />
     <Content Include="Config\Country.csv">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -412,8 +400,10 @@
     <None Include="Properties\PublishProfiles\travorama-prod-backend %285%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-prod-backend %286%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-prod-backend %287%29.pubxml" />
+    <None Include="Properties\PublishProfiles\travorama-prod-backend - Web Deploy %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-prod-backend - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-prod-backend.pubxml" />
+    <None Include="Properties\PublishProfiles\travorama-qa-tap - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-qa-tap.pubxml" />
     <None Include="Scripts\jquery-2.1.0.intellisense.js" />
     <Content Include="Scripts\jquery-2.1.0.js" />
@@ -527,6 +517,8 @@
     <Content Include="Views\Hotel\RenderPax.cshtml" />
     <Content Include="Views\Hotel\RenderReservation.cshtml" />
     <Content Include="Views\Hotel\RenderHotel.cshtml" />
+    <Content Include="Views\Flight\ConfirmOverrideIssue.cshtml" />
+    <Content Include="Views\Flight\ConfirmOverridePayment.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\CheckPaymentViewModel\" />

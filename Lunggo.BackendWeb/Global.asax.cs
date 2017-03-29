@@ -9,6 +9,7 @@ using System.Web.Optimization;
 using System.Web.Routing;
 using Lunggo.ApCommon.Identity.Users;
 using Lunggo.ApCommon.Flight.Constant;
+using Lunggo.ApCommon.Flight.Model.Logic;
 using Lunggo.ApCommon.Flight.Service;
 using Lunggo.ApCommon.Hotel.Constant;
 using Lunggo.ApCommon.Hotel.Model;
@@ -180,108 +181,108 @@ namespace Lunggo.BackendWeb
 //            });
 
 
-//var hoteldetail = new HotelDetailsBase
-//{
-//    AccomodationType = "HOTEL",
-//    City = "Palma de Mallorca",
-//    CountryCode = "ES",
-//    DestinationCode = "PMI",
-//    HotelCode = 74400,
-//    HotelName = "UR Mision de San Miguel",
-//    Address = "somewhere",
-//    Chain = "lala",
-//    ZoneCode = 10,
-//    StarRating = "4est",
-//    Rooms = new List<HotelRoom>
-//    {
-//        new HotelRoom
-//        {
-//            RoomCode = "TPL.ST",
-//            Type = "TRIPLE STANDARD",
-//            Rates = new List<HotelRate>
-//            {
-//                new HotelRate
-//                {
-//                    RateKey = "20161108|20161110|W|1|74400|TPL.ST|CG-TODOS1|BB||1~2~1|8|N@AC00D0CEA1634851BC8E35BF320EAAF2",
-//                    Price = new Price
-//                    {
-//                        Supplier = 4047952,
-//                        SupplierCurrency = new Currency("IDR"),
-//                        LocalCurrency = new Currency("IDR"),
-//                        Margin = new UsedMargin
-//                        {
-//                            Constant = 1,
-//                            Currency = new Currency("IDR"),
-//                            IsFlat = false,
-//                            Name = "HTBD",
-//                            Percentage = 1,
-//                            Description = "HOTELBED"
-//                        },
-//                        MarginNominal = 10000,
-//                    },
-//                    PaymentType = "AT_WEB",
-//                    AdultCount = 2,
-//                    ChildCount = 1,
-//                    Boards = "BB",
-//                    Cancellation = new Cancellation
-//                    {
-//                        StartTime = Convert.ToDateTime("2016-12-05T23:59:00+01:00"),
-//                        Fee = 1261858
-//                    },
-//                    RateCount = 1,
-//                    Class = "NOR",
-//                    Type = "BOOKABLE",
-//                    TimeLimit = new DateTime(2016, 10, 12, 14,0,0)
-//                }
-//            }
-//        },
+            //var hoteldetail = new HotelDetailsBase
+            //{
+            //    AccomodationType = "HOTEL",
+            //    City = "Palma de Mallorca",
+            //    CountryCode = "ES",
+            //    DestinationCode = "PMI",
+            //    HotelCode = 74400,
+            //    HotelName = "UR Mision de San Miguel",
+            //    Address = "somewhere",
+            //    Chain = "lala",
+            //    ZoneCode = 10,
+            //    StarRating = "4est",
+            //    Rooms = new List<HotelRoom>
+            //    {
+            //        new HotelRoom
+            //        {
+            //            RoomCode = "TPL.ST",
+            //            Type = "TRIPLE STANDARD",
+            //            Rates = new List<HotelRate>
+            //            {
+            //                new HotelRate
+            //                {
+            //                    RateKey = "20161108|20161110|W|1|74400|TPL.ST|CG-TODOS1|BB||1~2~1|8|N@AC00D0CEA1634851BC8E35BF320EAAF2",
+            //                    Price = new Price
+            //                    {
+            //                        Supplier = 4047952,
+            //                        SupplierCurrency = new Currency("IDR"),
+            //                        LocalCurrency = new Currency("IDR"),
+            //                        Margin = new UsedMargin
+            //                        {
+            //                            Constant = 1,
+            //                            Currency = new Currency("IDR"),
+            //                            IsFlat = false,
+            //                            Name = "HTBD",
+            //                            Percentage = 1,
+            //                            Description = "HOTELBED"
+            //                        },
+            //                        MarginNominal = 10000,
+            //                    },
+            //                    PaymentType = "AT_WEB",
+            //                    AdultCount = 2,
+            //                    ChildCount = 1,
+            //                    Boards = "BB",
+            //                    Cancellation = new Cancellation
+            //                    {
+            //                        StartTime = Convert.ToDateTime("2016-12-05T23:59:00+01:00"),
+            //                        Fee = 1261858
+            //                    },
+            //                    RateCount = 1,
+            //                    Class = "NOR",
+            //                    Type = "BOOKABLE",
+            //                    TimeLimit = new DateTime(2016, 10, 12, 14,0,0)
+            //                }
+            //            }
+            //        },
 
-//    }
-//};
+            //    }
+            //};
 
-//HotelService.GetInstance().SaveSelectedHotelDetailsToCache("1002", hoteldetail);
-//var bookinput = new BookHotelInput
-//{
-//    Token = "1002",
-//    Contact = new Contact
-//    {
-//        CountryCallingCode = "62",
-//        Email = "intandea@gmail.com",
-//        Name = "Intan Yutami",
-//        Phone = "01092882",
-//        Title = Title.Miss
-//    },
-//    Passengers = new List<Pax>
-//    {
-//        new Pax
-//        {
-//            FirstName = "John",
-//            LastName = "Smith",
-//            Type = PaxType.Adult,
-//            Title = Title.Mister,
-//            Gender = Gender.Male
-//        },
-//        new Pax
-//        {
-//            FirstName = "Sarah Jane",
-//            LastName = "Smith",
-//            Type = PaxType.Adult,
-//            Title = Title.Miss,
-//            Gender = Gender.Female
-//        },
-//        new Pax
-//        {
-//            FirstName = "John",
-//            LastName = "Watson",
-//            Type = PaxType.Child,
-//            Title = Title.Mister,
-//            Gender = Gender.Male
-//        }
-//    },
-//    SpecialRequest = "none"
-//};
+            //HotelService.GetInstance().SaveSelectedHotelDetailsToCache("1002", hoteldetail);
+            //var bookinput = new BookHotelInput
+            //{
+            //    Token = "1002",
+            //    Contact = new Contact
+            //    {
+            //        CountryCallingCode = "62",
+            //        Email = "intandea@gmail.com",
+            //        Name = "Intan Yutami",
+            //        Phone = "01092882",
+            //        Title = Title.Miss
+            //    },
+            //    Passengers = new List<Pax>
+            //    {
+            //        new Pax
+            //        {
+            //            FirstName = "John",
+            //            LastName = "Smith",
+            //            Type = PaxType.Adult,
+            //            Title = Title.Mister,
+            //            Gender = Gender.Male
+            //        },
+            //        new Pax
+            //        {
+            //            FirstName = "Sarah Jane",
+            //            LastName = "Smith",
+            //            Type = PaxType.Adult,
+            //            Title = Title.Miss,
+            //            Gender = Gender.Female
+            //        },
+            //        new Pax
+            //        {
+            //            FirstName = "John",
+            //            LastName = "Watson",
+            //            Type = PaxType.Child,
+            //            Title = Title.Mister,
+            //            Gender = Gender.Male
+            //        }
+            //    },
+            //    SpecialRequest = "none"
+            //};
 
-//HotelService.GetInstance().BookHotel(bookinput);
+            //HotelService.GetInstance().BookHotel(bookinput);
 
 
 //var hotelbed = new HotelBedsSearchHotel();
