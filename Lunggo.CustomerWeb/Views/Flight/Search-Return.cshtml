@@ -1,6 +1,4 @@
-﻿@* perubahan nama totalFare menjadi netTotalFare *@
-
-@using System.Globalization
+﻿@using System.Globalization
 @using Lunggo.ApCommon.Flight.Constant
 @using Lunggo.ApCommon.Flight.Model
 @using Lunggo.ApCommon.Flight.Service
@@ -76,7 +74,8 @@
 @{
     Layout = "/Views/Shared/Desktop/_LayoutDesktop.cshtml";
     ViewBag.BodyClass = "page-flight page-flight-return";
-    ViewBag.Title = "Pencarian Penerbangan Pergi Pulang";
+    ViewBag.Title = "Tiket Pesawat Promo dari " + originCityNames.First() + " ke " + destinationCityNames.First() + " Tanggal " + trips.First().DepartureDate.ToString("d MMMM yyyy", CultureInfo.CreateSpecificCulture("id-ID"));
+    ViewBag.Page = "FlightSearchReturn";
 }
 
 @section AdditionalCSS {
@@ -93,6 +92,7 @@
     <script>
         var langCode = 'en';
         flightPageFunctions();
+        backToTop();
         FlightSearchConfig.flightForm = {
             departureFlightParam: {
                 TripType: "@TripType.OneWay",
@@ -143,7 +143,29 @@
     <!-- angular controller -->
     <script src="/Assets/travorama20/angularDirectory/priceDetail/priceDetailDir.js"></script>
     <script src="/Assets/travorama20/js/returnFlightController.js"></script>
+    <script>
+        jQuery(document).ready(function($) {
+            $('body .carousel-control').click(function() {
+
+            });
+        })
+    </script>
     <script>backToTop()</script>
+    <script>
+        var gtmContentType = 'flight';
+        var gtmDepartingDepartureDate = '@trips[0].DepartureDate.ToString("yyyyMMdd")';
+        var gtmReturningDepartureDate = null;
+        var gtmOriginAirport = '@trips[0].OriginAirport';
+        var gtmDestinationAirport = '@trips[0].DestinationAirport';
+        var gtmDepartingArrivalDate = '@trips[1].DepartureDate.ToString("yyyyMMdd")';
+        var gtmReturningArrivalDate = null;
+        var gtmNumAdults = @data.AdultCount;
+        var gtmNumChildren = @data.ChildCount;
+        var gtmNumInfants = @data.InfantCount;
+        var gtmTravelClass = '@data.CabinClass.ToString().ToLower()';
+        var gtmPurchaseValue = '';
+        var gtmPurchaseCurrency = 'IDR';
+    </script>
 }
 <section class="page-slider">
     <div class="container">
@@ -164,19 +186,19 @@
                         <b>@data.Trips[0].DepartureDate.ToString("dddd, dd MMMM yyyy", new CultureInfo("id-ID")) - @data.Trips[1].DepartureDate.ToString("dddd, dd MMMM yyyy", new CultureInfo("id-ID"))</b> | <b>@(data.AdultCount + data.ChildCount + data.InfantCount) Orang</b>
                         @if (data.ChildCount != 0 && data.InfantCount != 0)
                         {
-                        <span>(@data.AdultCount Dewasa , @data.ChildCount Anak, @data.InfantCount Bayi)</span>
+                            <span>(@data.AdultCount Dewasa , @data.ChildCount Anak, @data.InfantCount Bayi)</span>
                         }
                         else if (data.ChildCount != 0 && data.InfantCount == 0)
                         {
-                        <span>(@data.AdultCount Dewasa , @data.ChildCount Anak)</span>
+                            <span>(@data.AdultCount Dewasa , @data.ChildCount Anak)</span>
                         }
                         else if (data.ChildCount == 0 && data.InfantCount != 0)
                         {
-                        <span>(@data.AdultCount Dewasa , @data.InfantCount Bayi)</span>
+                            <span>(@data.AdultCount Dewasa , @data.InfantCount Bayi)</span>
                         }
                         else if (data.ChildCount == 0 && data.InfantCount == 0)
                         {
-                        <span>(@data.AdultCount Dewasa)</span>
+                            <span>(@data.AdultCount Dewasa)</span>
                         }
                     </h4>
                 </div>
@@ -188,7 +210,7 @@
             </div>
         </div>
     </div>
-    <div class="container">
+    <div class="container section-search">
         <div class="search-result-form-content">
             @Html.Partial("/Views/Flight/FlightSearchForm.cshtml")
         </div><!-- .search-result-form-content -->
@@ -221,7 +243,7 @@
     <div class="container page-title">
         <h3><b>HASIL</b> PENCARIAN</h3>
     </div>
-
+    @Html.Partial("/Views/Shared/Desktop/_PriceSliderReturn.cshtml")
     <div class="container search-result-container">
 
         <div class="search-result-departure" ng-class="{'active': (pageConfig.activeFlightSection == 'departure'), 'inactive': (pageConfig.activeFlightSection != 'departure'), 'selected': (departureFlightConfig.chosenFlight > -1) }" ng-click="setPageActiveSection('departure')">
@@ -527,11 +549,12 @@
                                 </div><!-- .summar-bottom -->
                             </div>
                             <div class="flight-summary-right">
-
-                                <span class="original-price"> Rp {{flight.originalAdultFare | number}} </span>
-                                <h4 class="flight-price"><sup>Rp</sup> {{flight.netAdultFare | number}}</h4>
-                                <small>*Termasuk Pajak &amp; Service Charge</small>
-                                <a class="btn btn-yellow sm-btn" ng-click="setChosenFlight('departure',flight.IndexNo)">PESAN</a>
+                                <div class="fsr-price">
+                                    <span class="original-price"> Rp {{flight.originalAdultFare | number}} </span>
+                                    <h4 class="flight-price"><sup>Rp</sup> {{flight.netAdultFare | number}}<span class="sm-txt"> /pax</span></h4>
+                                    <small>*Termasuk Pajak &amp; Service Charge</small>
+                                    <a class="btn btn-yellow sm-btn" ng-click="setChosenFlight('departure',flight.IndexNo)">PESAN</a>
+                                </div>
                             </div>
                         </div><!-- .flight-summary -->
                         <div class="flight-detail" ng-show="departureFlightConfig.activeFlight == flight.IndexNo">
@@ -886,10 +909,12 @@
                             </div>
 
                             <div class="flight-summary-right">
-                                <span class="original-price"> Rp {{flight.originalAdultFare | number}} </span>
-                                <h4 class="flight-price"><sup>Rp</sup> {{flight.netAdultFare | number}}</h4>
-                                <small>*Termasuk Pajak &amp; Service Charge</small>
-                                <a class="btn btn-yellow sm-btn" ng-click="setChosenFlight('return',flight.IndexNo)">PESAN</a>
+                                <div class="fsr-price">
+                                    <span class="original-price"> Rp {{flight.originalAdultFare | number}} </span>
+                                    <h4 class="flight-price"><sup>Rp</sup> {{flight.netAdultFare | number}}<span class="sm-txt"> /pax</span></h4>
+                                    <small>*Termasuk Pajak &amp; Service Charge</small>
+                                    <a class="btn btn-yellow sm-btn" ng-click="setChosenFlight('return',flight.IndexNo)">PESAN</a>
+                                </div>
                             </div>
                         </div><!-- .flight-summary -->
                         <div class="flight-detail" ng-show="returnFlightConfig.activeFlight == flight.IndexNo">

@@ -220,8 +220,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                         fareRequest.AddHeader("Referer", "http://www.airasia.com/id/id/home.page?cid=1");
                         var itinHtml = (CQ)client.Execute(fareRequest).Content;
                         var price =
-                            decimal.Parse(itinHtml[".section-total-display-price > span:first"].Text().Trim(' ', '\n'),
-                                CultureInfo.CreateSpecificCulture("id-ID"));
+                            decimal.Parse(itinHtml[".section-total-display-price > span:first"].Text().Trim(' ', '\n'));
                         var breakdownPrice = itinHtml["[data-accordion-id='priceFareTaxesFeesContent0']"].Single().ChildElements.ToList();
                         var adultPrice = 0M;
                         var childPrice = 0M;
@@ -230,9 +229,12 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                         {
                             var x = breakdownPrice[0].LastElementChild;
                             var y = x.InnerText.Trim();
-                            adultPrice = decimal.Parse(breakdownPrice[0].LastElementChild.InnerText.Trim().Split(' ')[2], CultureInfo.CreateSpecificCulture("id-ID"));
-                            childPrice = decimal.Parse(breakdownPrice[1].LastElementChild.InnerText.Trim().Split(' ')[2], CultureInfo.CreateSpecificCulture("id-ID"));
-                            infantPrice = decimal.Parse(breakdownPrice[2].LastElementChild.InnerText.Trim().Split(' ')[2], CultureInfo.CreateSpecificCulture("id-ID"));
+                            var iIdx = conditions.ChildCount > 0 ? 2 : 1;
+                            adultPrice = decimal.Parse(breakdownPrice[0].LastElementChild.InnerText.Trim().Split(' ')[2]);
+                            if (conditions.ChildCount > 0)
+                                childPrice = decimal.Parse(breakdownPrice[1].LastElementChild.InnerText.Trim().Split(' ')[2]);
+                            if (conditions.InfantCount > 0)
+                                infantPrice = decimal.Parse(breakdownPrice[iIdx].LastElementChild.InnerText.Trim().Split(' ')[2]);
                         }
                         catch { }
                         var currency = itinHtml[".section-total-display-currency>span>strong"].Text().Substring(0,3);

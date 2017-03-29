@@ -34,7 +34,7 @@ namespace Lunggo.ApCommon.Flight.Service
             if (!isSearching)
             {
                 var priceCalendarQueue = QueueService.GetInstance().GetQueueByReference("FlightPriceCalendar");
-                priceCalendarQueue.AddMessage(new CloudQueueMessage(input.SearchId), initialVisibilityDelay: new TimeSpan(0, 0, searchTimeout));
+                priceCalendarQueue.AddMessage(new CloudQueueMessage(input.SearchId), initialVisibilityDelay: new TimeSpan(0, 2, 0));
             }
 
             foreach (var unsearchedSupplierId in unsearchedSupplierIds)
@@ -154,9 +154,6 @@ namespace Lunggo.ApCommon.Flight.Service
                             itin.SearchId = searchId;
                         }
 
-                    if (searchCancellation.IsCancellationRequested)
-                        return;
-
                     SaveSearchedPartialItinerariesToBufferCache(result.Itineraries, searchId, supplierIndex,
                         conditionsList.IndexOf(partialConditions));
                 });
@@ -203,25 +200,25 @@ namespace Lunggo.ApCommon.Flight.Service
             InvalidateSearchingStatusInCache(searchId, supplierIndex);
         }
 
-        public void SetSearchAsEmptyIfNotSet(string searchId, int supplierIndex)
+        public void SetSearchAsEmptyIfNotSet(string searchIdWithTimeout, int supplierIndex)
         {
-            var searchParam = searchId.Split('|')[0];
-            var searchFlightTimeOut = DateTime.Parse(searchId.Split('|')[1]);
+            var searchId = searchIdWithTimeout.Split('|')[0];
+            var searchFlightTimeOut = DateTime.Parse(searchIdWithTimeout.Split('|')[1]);
             var searchExpiry = GetSearchedItinerariesExpiry(searchId, supplierIndex);
             if (searchExpiry == null)
             {
                 var cacheTimeout = int.Parse(ConfigManager.GetInstance().GetConfigValue("flight", "SearchResultCacheTimeout"));
                 var emptyLists = new List<List<FlightItinerary>> { new List<FlightItinerary>() };
 
-                var conditions = DecodeSearchConditions(searchParam);
+                var conditions = DecodeSearchConditions(searchId);
                 var conditionsList = new List<SearchFlightConditions> { conditions };
                 if (conditions.Trips.Count > 1)
                     conditionsList.ForEach(c => emptyLists.Add(new List<FlightItinerary>()));
 
-                SaveSearchedItinerariesToCache(emptyLists, searchParam, cacheTimeout, supplierIndex, searchFlightTimeOut);
-                SaveCurrencyStatesToCache(searchParam, Currency.GetAllCurrencies(), cacheTimeout);
-                SaveSearchedSupplierIndexToCache(searchParam, supplierIndex, cacheTimeout);
-                InvalidateSearchingStatusInCache(searchParam, supplierIndex);
+                SaveSearchedItinerariesToCache(emptyLists, searchId, cacheTimeout, supplierIndex, searchFlightTimeOut);
+                SaveCurrencyStatesToCache(searchId, Currency.GetAllCurrencies(), cacheTimeout);
+                SaveSearchedSupplierIndexToCache(searchId, supplierIndex, cacheTimeout);
+                InvalidateSearchingStatusInCache(searchId, supplierIndex);
             }
         }
 

@@ -39,14 +39,14 @@
             {
                 hotelImg = images == null
                     ? null
-                    : "http://photos.hotelbeds.com/giata/" + orDefault.Path;
+                    : "https://photos.hotelbeds.com/giata/" + orDefault.Path;
             }
             var firstOrDefault = images.Where(i => i.Type == "HAB").ToList().FirstOrDefault();
             if (firstOrDefault != null)
             {
                 roomImg = images == null
                     ? null
-                    : "http://photos.hotelbeds.com/giata/" + firstOrDefault.Path;
+                    : "https://photos.hotelbeds.com/giata/" + firstOrDefault.Path;
             }
         
         }

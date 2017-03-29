@@ -6,9 +6,6 @@ app.controller('checkoutController', [
 
         // set hash to page 1
         angular.element(document).ready(function () {
-            $('html, body').animate({
-                scrollTop: $(".page-loading").offset().top
-            }, 700);
             if (getParam('page') == 2) {
                 $location.hash('page-2');
             } else {
@@ -300,9 +297,6 @@ app.controller('checkoutController', [
         }
 
         $scope.validateForm = function (page) {
-            $('html, body').animate({
-                scrollTop: $(".page-loading").offset().top
-            }, 700);
             if (page == 1) {
                 if (!$scope.CheckTitle([$scope.buyerInfo])) {
                     $scope.form.incompleteContactTitle = true;
@@ -878,9 +872,6 @@ app.controller('checkoutController', [
         // change page
         $scope.changePage = function (page) {
             $location.hash("page-" + page);
-            $('html, body').animate({
-                scrollTop: $(".page-loading").offset().top
-            }, 700);
             // change current page variable
             $scope.currentPage = page;
             // change step class

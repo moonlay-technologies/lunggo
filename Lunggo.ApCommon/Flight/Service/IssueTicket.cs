@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
@@ -20,7 +21,7 @@ namespace Lunggo.ApCommon.Flight.Service
     {
         internal override void Issue(string rsvNo)
         {
-            IssueTicket(new IssueTicketInput {RsvNo = rsvNo});
+            IssueTicket(new IssueTicketInput { RsvNo = rsvNo });
         }
 
         internal void IssueBooker(string rsvNo)
@@ -32,6 +33,7 @@ namespace Lunggo.ApCommon.Flight.Service
         public IssueTicketOutput IssueTicket(IssueTicketInput input)
         {
             var reservation = GetReservation(input.RsvNo);
+
             var output = new IssueTicketOutput();
 
             if (reservation == null)
@@ -101,7 +103,12 @@ namespace Lunggo.ApCommon.Flight.Service
                     output.Errors = new List<FlightError> { FlightError.InvalidInputData };
                     return output;
                 }
-
+            if (reservation.Itineraries.TrueForAll(x => x.BookingStatus == BookingStatus.Ticketed))
+            {
+                output.IsSuccess = false;
+                output.Errors = new List<FlightError> { FlightError.AlreadyBooked };
+                return output;
+            }
                 if (reservation.Payment.Method == PaymentMethod.Credit ||
                     (reservation.Payment.Method != PaymentMethod.Credit && 
                     reservation.Payment.Status == PaymentStatus.Settled))
@@ -114,6 +121,18 @@ namespace Lunggo.ApCommon.Flight.Service
                         CanHold = itin.CanHold,
                         Supplier = itin.Supplier
                     });
+                    //AutoRetry Issue
+                    var trial = 0;
+                    while (response.Errors != null && trial < 3)
+                    {
+                        response = IssueTicketInternal(new IssueTicketInfo
+                        {
+                            BookingId = itin.BookingId,
+                            CanHold = itin.CanHold,
+                            Supplier = itin.Supplier
+                        });
+                        trial++;
+                    }
                     balance.Add(response.CurrentBalance);
                     supplier.Add(response.SupplierName);
                     localPrice.Add(itin.Price.Supplier);
@@ -184,17 +203,17 @@ namespace Lunggo.ApCommon.Flight.Service
                     }
                     else
                     {
-                        if (casetype != 0)
-                        {
-                            SendIssueSlightDelayNotifToCustomer(reservation.RsvNo + "+" + casetype);
+                    if (casetype != 0)
+                    {
+                        SendIssueSlightDelayNotifToCustomer(reservation.RsvNo + "+" + casetype);
 
-                        }
-                        else
-                        {
-                            SendSaySorryFailedIssueNotifToCustomer(reservation.RsvNo);
-                        }    
                     }
-                    
+                    else
+                    {
+                        SendSaySorryFailedIssueNotifToCustomer(reservation.RsvNo);
+                    }
+                    }
+
 
                     SendIssueFailedNotifToDeveloper(reservation.RsvNo + "+" + supplierInfoItin);
                     

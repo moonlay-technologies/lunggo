@@ -125,14 +125,12 @@ namespace Lunggo.ApCommon.Hotel.Service
                         hotelDetail.Rooms.Add(hotelRoom);
                     }
 
-                var price = hotelDetail.Rooms.SelectMany(r => r.Rates).Sum(r => r.Price.Local);
-                hotelDetail.NetTotalFare = price;
-                hotelDetail.OriginalTotalFare = price * 1.01M;
-                var cheapestPrice = hotelDetail.Rooms.SelectMany(r => r.Rates).Min(r => r.Price.Local);
-                hotelDetail.NetCheapestFare = cheapestPrice;
-                hotelDetail.OriginalCheapestFare = cheapestPrice * 1.01M;
-                hotelDetail.NetCheapestTotalFare = cheapestPrice;
-                hotelDetail.OriginalCheapestTotalFare = cheapestPrice * 1.01M;
+                hotelDetail.NetTotalFare = hotelDetail.Rooms.SelectMany(r => r.Rates).Sum(r => r.Price.Local);
+                hotelDetail.OriginalTotalFare = hotelDetail.Rooms.SelectMany(r => r.Rates).Sum(r => r.GetApparentOriginalPrice());
+                hotelDetail.NetCheapestFare = hotelDetail.Rooms.SelectMany(r => r.Rates).Min(r => r.Price.Local);
+                hotelDetail.OriginalCheapestFare = hotelDetail.Rooms.SelectMany(r => r.Rates).Min(r => r.GetApparentOriginalPrice());
+                hotelDetail.NetCheapestTotalFare = hotelDetail.NetCheapestFare;
+                hotelDetail.OriginalCheapestTotalFare = hotelDetail.OriginalCheapestFare;
 
                 hotelReservation.HotelDetails = hotelDetail;
                 

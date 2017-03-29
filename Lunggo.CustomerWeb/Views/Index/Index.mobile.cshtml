@@ -2,11 +2,12 @@
 @using Lunggo.Framework.Config
 @{
     Layout = "/Views/Shared/mobile/_LayoutMobile.cshtml";
-    ViewBag.Title = "Enjoy Your Every Moment";
+    ViewBag.Title = "Diskon untuk semua penerbangan dan hotel domestik dan internasional";
     ViewBag.BodyClass = "page page-home";
     ViewBag.AngularController = "homeController";
     ViewBag.CurrentPage = "home";
     ViewBag.SiteHeader = "mobile-home-page";
+    ViewBag.Page = "Index";
 }
 
 @section AdditionalCSS{
@@ -25,26 +26,33 @@
     <script src="/Assets/js/jquery.ui.touch-punch.min.js"></script>
     <script src="/Assets/vendor/slick/slick.min.js"></script>
     <script src="/Assets/js/js.cookie.js"></script>
+    @*<script type="text/javascript" src="/Assets/vendor/fullcalendar/fullcalendar.min.js"></script>
+        <script type="text/javascript" src="/Assets/vendor/fullcalendar/fullcalendar-id.min.js"></script>*@
 }
 
 @section PageJS {
-   
     <script src="/Assets/travorama20/angularDirectory/search/hotelSearch.service.js"></script>
-    <script src="/Assets/travorama20/js/homeController.js"></script>
+    <script src="/Assets/mobile/js/HomeController.js"></script>
 }
 
 <div class="page-loading form-container" ng-class="{'page-loaded' : PageConfig.Loaded}" ng-init="getCookies()">
     <div class="carousel-inner" role="listbox">
-        @if (DateTime.UtcNow.AddHours(7).Date <= new DateTime(2016, 12, 15))
+        @if (DateTime.UtcNow.AddHours(7) >= new DateTime(2017, 03, 24, 20, 0, 0) && DateTime.UtcNow.AddHours(7).Date <= new DateTime(2017, 08, 27))
         {
             <div class="item">
-                <a href="/id/Promo/MatahariMall"><img src="/Assets/images/campaign/MatahariMall2016/MatahariMall-slider-mobile.jpg" alt="Matahari Mall" /></a>
+                <a href="/id/Promo/PaydayMadnessPermataBank"><img src="/Assets/images/campaign/PaydayMadness/PaydayMadness-slider-mobile.jpg" alt="JOINT Payday Madness Permata Bank" /></a>
             </div>
         }
-        @if (DateTime.UtcNow.AddHours(7).Date <= new DateTime(2016, 12, 31))
+        @if (DateTime.UtcNow.AddHours(7).Date >= new DateTime(2017, 03, 23) && DateTime.UtcNow.AddHours(7).Date <= new DateTime(2017, 04, 02))
         {
             <div class="item">
-                <a href="/id/Promo/OnlineRevolution"><img src="/Assets/images/campaign/OnlineRevolution2016/OnlineRevolution-slider-mobile.jpg" alt="Online Revolution" /></a>
+                <a href="/id/Promo/PaydayMegaDeals"><img src="/Assets/images/campaign/PaydayMegaDeals/PaydayMegaDeals-slider-mobile.jpg" alt="Payday Mega Deals" /></a>
+            </div>
+        }
+        @if (DateTime.UtcNow.AddHours(7).Date <= new DateTime(2017, 3, 31))
+        {
+            <div class="item">
+                <a href="/id/Promo/BTNTerbanginHemat"><img src="/Assets/images/campaign/TerbanginHemat/TerbanginHemat-slider-mobile.jpg" alt="Terbangin Hemat (Terbang & Nginap Hemat)" /></a>
             </div>
         }
         <div class="item">
@@ -53,15 +61,15 @@
     </div>
     <div class="main-tab">
         <ul class="nav nav-tabs tab-detail">
-            <li class="col-xs-6">
+            <li class="col-xs-6 flight @(ViewBag.IndexType == null || ViewBag.IndexType == "flight" ? "active" : "")">
                 <a class="tab-flight" data-toggle="tab" ng-click="showForm('flight')">Pesawat</a>
             </li>
-            <li class="col-xs-6 active">
+            <li class="col-xs-6 hotel @(ViewBag.IndexType != null && ViewBag.IndexType == "hotel" ? "active" : "")">
                 <a class="tab-hotel" data-toggle="tab" ng-click="showForm('hotel')">Hotel</a>
             </li>
         </ul>
         <div class="tab-content">
-            <div id="tab-flight" class="tab-pane tp-flight" ng-class="{'active' : isFlight}">
+            <div id="tab-flight" class="tab-pane tp-flight @(ViewBag.IndexType == null || ViewBag.IndexType == "flight" ? "active" : "")">
                 <div class="form-wrapper">
                     <form class="flight-form" name="flight-form" ng-submit="FlightSearchForm.Submit()" novalidate>
                         <div class="top-form row">
@@ -153,7 +161,7 @@
                     </form><!-- .flight-form -->
                 </div><!-- .form-wrapper -->
             </div>
-            <div id="tab-hotel" class="tab-pane tp-hotel page-hotel-mobile active" ng-class="{'active' : !isFlight}">
+            <div id="tab-hotel" class="tab-pane tp-hotel page-hotel-mobile @(ViewBag.IndexType != null && ViewBag.IndexType == "hotel" ? "active" : "")">
                 <div class="form-wrapper">
                     @Html.Partial("/Views/Shared/Mobile/_SearchHotelForm.cshtml", new HotelLocation
                     {
@@ -369,9 +377,7 @@
     </div><!-- .overlay--passenger-selector -->
     <!-- overlay hotel selector -->
     @Html.Partial("/Views/Shared/Mobile/_Autocomplete.cshtml")
-
     <!-- overlay hotel date -->
     @Html.Partial("/Views/Shared/Mobile/_SelectCheckInDate.cshtml")
-
     @Html.Partial("/Views/Shared/mobile/_SiteFooter.cshtml")
 </div><!-- .page-loading -->

@@ -32,6 +32,7 @@ namespace Lunggo.WebJob.EmailQueueHandler.Function
                 var mailModel = new MailModel
                 {
                     RecipientList = new[] {reservation.Contact.Email},
+                    BccList = new[] { "maillog.travorama@gmail.com" },
                     Subject =
                         envPrefix + "[Travorama] Harap Selesaikan Pembayaran Anda - No. Pemesanan " + reservation.RsvNo,
                     FromMail = "booking@travorama.com",
@@ -67,6 +68,7 @@ namespace Lunggo.WebJob.EmailQueueHandler.Function
                 var mailModel = new MailModel
                 {
                     RecipientList = new[] { reservation.Contact.Email },
+                    BccList = new[] { "maillog.travorama@gmail.com" },
                     Subject = envPrefix + "[Travorama] Harap Selesaikan Pembayaran Anda - No. Pemesanan " + reservation.RsvNo,
                     FromMail = "booking@travorama.com",
                     FromName = "Travorama"

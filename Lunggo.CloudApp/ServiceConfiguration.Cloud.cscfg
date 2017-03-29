@@ -4,13 +4,15 @@
     <Instances count="1" />
     <ConfigurationSettings>
       <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value="DefaultEndpointsProtocol=https;AccountName=lunggostorageqa;AccountKey=ECUAdynBjM6ttLekJLBMNCoXHEUEulWkLwT5r8iTDXeW9GuHCD7sx5IOF9CtdI6/vyJbfX6XHxPbgiao8a2Umw==" />
+      <Setting name="APPINSIGHTS_INSTRUMENTATIONKEY" value="1f91c866-d6b4-4663-a799-12c7f17d4383" />
     </ConfigurationSettings>
   </Role>
   <Role name="Lunggo.CloudApp.CaptchaReader">
     <Instances count="1" />
     <ConfigurationSettings>
-      <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value="UseDevelopmentStorage=true" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value="DefaultEndpointsProtocol=https;AccountName=travoramalocal;AccountKey=$(_travoramalocal.key_)" />
       <Setting name="Setting1" value="" />
+      <Setting name="APPINSIGHTS_INSTRUMENTATIONKEY" value="1f91c866-d6b4-4663-a799-12c7f17d4383" />
     </ConfigurationSettings>
   </Role>
 </ServiceConfiguration>

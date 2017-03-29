@@ -1,11 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Lunggo.ApCommon.Hotel.Constant;
-using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Sdk.auto.model;
-using Newtonsoft.Json;
 
 namespace Lunggo.ApCommon.Hotel.Model.Logic
 {
@@ -13,7 +8,7 @@ namespace Lunggo.ApCommon.Hotel.Model.Logic
     {
         public SearchHotelType SearchHotelType { get; set; }
         public string SearchId { get; set; }
-        public long Location { get; set; }
+        public string Location { get; set; }
         public int Nights { get; set; }
         public DateTime CheckIn { get; set; }
         public DateTime Checkout { get; set; }

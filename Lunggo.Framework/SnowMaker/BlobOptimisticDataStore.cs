@@ -91,8 +91,8 @@ namespace Lunggo.Framework.SnowMaker
 
         void UploadText(ICloudBlob blob, string text, AccessCondition accessCondition)
         {
-            blob.Properties.ContentEncoding = "UTF-8";
-            blob.Properties.ContentType = "text/plain";
+            //blob.Properties.ContentEncoding = "UTF-8";
+            //blob.Properties.ContentType = "text/plain";
             using (var stream = new MemoryStream(Encoding.UTF8.GetBytes(text)))
             {
                 blob.UploadFromStream(stream, accessCondition);

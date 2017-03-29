@@ -333,7 +333,10 @@
     <Compile Include="ApiSrc\Hotel\Logic\GetRateLogic.cs" />
     <Compile Include="ApiSrc\Hotel\Logic\GetRoomDetailLogic.cs" />
     <Compile Include="ApiSrc\Hotel\Logic\GetHotelDetailLogic.cs" />
+    <Compile Include="ApiSrc\Hotel\Logic\PriceCalendarLogic.cs" />
     <Compile Include="ApiSrc\Hotel\Logic\SearchHotelLogic.cs" />
+    <Compile Include="ApiSrc\Hotel\Model\HotelPriceCalendarApiRequest.cs" />
+    <Compile Include="ApiSrc\Hotel\Model\HotelPriceCalendarApiResponse.cs" />
     <Compile Include="ApiSrc\Hotel\Model\HotelAvailableRateApiRequest.cs" />
     <Compile Include="ApiSrc\Hotel\Model\HotelAvailableRateApiResponse.cs" />
     <Compile Include="ApiSrc\Hotel\Model\HotelBookApiRequest.cs" />
@@ -365,6 +368,7 @@
     <Compile Include="ApiSrc\Payment\Logic\GetBookingDisabilityStatus.cs" />
     <Compile Include="ApiSrc\Payment\Logic\EditCreditCardLogic.cs" />
     <Compile Include="ApiSrc\Payment\Logic\AddCreditCardLogic.cs" />
+    <Compile Include="ApiSrc\Payment\Logic\CheckMethodDiscountLogic.cs" />
     <Compile Include="ApiSrc\Payment\Logic\CheckBinDiscountLogic.cs" />
     <Compile Include="ApiSrc\Payment\Logic\CheckPaymentLogic.cs" />
     <Compile Include="ApiSrc\Payment\Logic\DeleteCreditCardLogic.cs" />
@@ -376,6 +380,8 @@
     <Compile Include="ApiSrc\Payment\Model\AddCreditCardRequest.cs" />
     <Compile Include="ApiSrc\Payment\Model\SetBookingDisabilityStatusRequest.cs" />
     <Compile Include="ApiSrc\Payment\Model\CheckBinDiscountApiRequest.cs" />
+    <Compile Include="ApiSrc\Payment\Model\CheckMethodDiscountApiRequest.cs" />
+    <Compile Include="ApiSrc\Payment\Model\CheckMethodDiscountApiResponse.cs" />
     <Compile Include="ApiSrc\Payment\Model\CheckBinDiscountApiResponse.cs" />
     <Compile Include="ApiSrc\Payment\Model\GetBookingDisabilityStatusResponse.cs" />
     <Compile Include="ApiSrc\Payment\Model\EditCreditCardApiRequest.cs" />
@@ -442,6 +448,10 @@
     <None Include="Properties\PublishProfiles\travorama-dvapp-api %289%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-dvapp-api.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-dvapp-api__staging.pubxml" />
+    <None Include="Properties\PublishProfiles\travorama-prod-api-staging - Web Deploy %282%29.pubxml" />
+    <None Include="Properties\PublishProfiles\travorama-prod-api-staging - Web Deploy %283%29.pubxml" />
+    <None Include="Properties\PublishProfiles\travorama-prod-api-staging - Web Deploy %284%29.pubxml" />
+    <None Include="Properties\PublishProfiles\travorama-prod-api-staging - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-prod-api__staging.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-prod-api__staging2 %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-prod-api__staging2.pubxml" />
@@ -450,6 +460,9 @@
     <None Include="Properties\PublishProfiles\travorama-qa-api %284%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-qa-api %285%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-qa-api - Web Deploy %282%29.pubxml" />
+    <None Include="Properties\PublishProfiles\travorama-qa-api - Web Deploy %283%29.pubxml" />
+    <None Include="Properties\PublishProfiles\travorama-qa-api - Web Deploy %284%29.pubxml" />
+    <None Include="Properties\PublishProfiles\travorama-qa-api - Web Deploy %285%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-qa-api - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-qa-api.pubxml" />
     <None Include="Web.Debug.config">

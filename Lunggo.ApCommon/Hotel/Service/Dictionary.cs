@@ -179,12 +179,12 @@ namespace Lunggo.ApCommon.Hotel.Service
         {
             public String Name;
             public AutocompleteType Type;
-            public long Id;
+            public string Id;
             public string Code;
         }
 
         //FOR AUTOCOMPLETE
-        public static Dictionary<long, Autocomplete> _Autocompletes;
+        public static Dictionary<string, Autocomplete> _Autocompletes;
         public static List<HotelAutoComplete> AutoCompletes = new List<HotelAutoComplete>();
         public static List<HotelAutoComplete> AutocompleteList = new List<HotelAutoComplete>();
 
@@ -297,13 +297,13 @@ namespace Lunggo.ApCommon.Hotel.Service
 
         private static void PopulateHotel()
         {
-            var index = _Autocompletes.Count + 1;
             for (var i = 1; i < 1000; i++)
             {
                 var hotel = new HotelDetailsBase();
                 try
                 {
                     hotel = GetInstance().GetHotelDetailFromTableStorage(i);
+                    var index = ((long) AutocompleteType.Hotel).ToString() + hotel.HotelCode*4294967295;
                     var input = new Autocomplete
                     {
                         Id = index,
@@ -316,7 +316,6 @@ namespace Lunggo.ApCommon.Hotel.Service
                     };
 
                     _Autocompletes.Add(index, input);
-                    index++;
                 }
                 catch
                 {
@@ -847,9 +846,9 @@ namespace Lunggo.ApCommon.Hotel.Service
             zones = zones.Distinct().ToList();
             foreach (var zone in zones)
             {
-                var zoneCode = zone.Code.Split('-').Length == 2 ? zone.Code : zone.DestinationCode + "-" + zone.Code;
-                if (!HotelDestinationZoneDict.ContainsKey(zoneCode))
-                    HotelDestinationZoneDict.Add(zoneCode, zone);
+                zone.Code = zone.Code.Split('-').Length == 2 ? zone.Code : zone.DestinationCode + "-" + zone.Code;
+                if (!HotelDestinationZoneDict.ContainsKey(zone.Code))
+                    HotelDestinationZoneDict.Add(zone.Code, zone);
             }
         }
 
@@ -888,7 +887,7 @@ namespace Lunggo.ApCommon.Hotel.Service
         //    }
         //}
         //GET METHOD REGARDING AUTOCOMPLETE
-        public HotelAutoComplete GetLocationById(long id)
+        public HotelAutoComplete GetLocationById(string id)
         {
             var value = AutoCompletes.First(c => c.Id == id);
             if (value != null)

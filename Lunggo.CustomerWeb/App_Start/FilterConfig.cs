@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using Lunggo.CustomerWeb.Attributes;
 using Lunggo.Framework.Config;
 using Lunggo.Framework.Filter;
 
@@ -15,6 +16,7 @@ namespace Lunggo.CustomerWeb
             filters.Add(new LanguageFilterAttribute());
             filters.Add(new DeviceDetectionFilterAttribute());
             AddBasicAuthenticationFilterAttribute(filters);
+                GlobalFilters.Filters.Add(new RequireHttpsProductionAttribute());
         }
 
         private static HandleErrorAttribute CreateGlobalErrorHandler()

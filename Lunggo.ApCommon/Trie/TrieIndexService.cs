@@ -87,7 +87,7 @@ namespace Lunggo.ApCommon.Trie
                         break;
                 }
 
-                HotelAutocompleteIndex.InsertWordsBySentence(name, item.Id);
+                HotelAutocompleteIndex.InsertWordsBySentence(name, long.Parse(item.Id));
             }
         }
     }

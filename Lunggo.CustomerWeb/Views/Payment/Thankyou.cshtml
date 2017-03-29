@@ -1,5 +1,6 @@
 ﻿@using System.Globalization
 @using Lunggo.ApCommon.Constant
+@using Lunggo.ApCommon.Flight.Constant
 @using Lunggo.ApCommon.Hotel.Model
 @using Lunggo.ApCommon.Hotel.Service
 @using Lunggo.ApCommon.Payment.Constant
@@ -21,11 +22,28 @@
     //Model.Payment.Status = PaymentStatus.Settled;
 
     var night = 0;
+    var totalAdult = 0;
+    var totalChild = 0;
     if (Model is HotelReservationForDisplay)
     {
         var rsv = Model as HotelReservationForDisplay;
         night = (rsv.HotelDetail.CheckOutDate - rsv.HotelDetail.CheckInDate).Days;
+        foreach (var room in rsv.HotelDetail.Rooms)
+        {
+            var roomName = room.RoomName;
+            var sum = 0;
+
+            foreach (var rate in room.Rates)
+            {
+                foreach (var config in rate.Breakdowns)
+                {
+                    totalAdult += config.AdultCount;
+                    totalChild += config.ChildCount;
+                }
+            }
+        }
     }
+    
 }
 @section AdditionalJS {
     <!-- additional Angular JS-->
@@ -34,26 +52,71 @@
 
 @section PageJS{
     <script>
-    var langCode = 'en';
-    var printTimeout = '';
-    var page = 'Flight';
-    // development only start
-    printTimeout = new Date(); // please change this print time out to actual time
-    printTimeout.setSeconds(printTimeout.getSeconds() + 7200);
-    // development only end
+        var langCode = 'en';
+        var printTimeout = '';
+        var page = 'Flight';
+        // development only start
+        printTimeout = new Date(); // please change this print time out to actual time
+        printTimeout.setSeconds(printTimeout.getSeconds() + 7200);
+        // development only end
 
-    // countdown timer
-    $('.timer').countdown(printTimeout, function (event) {
-        $('.timer .hour h5').text(event.strftime('%H'));
-        $('.timer .minute h5').text(event.strftime('%M'));
-        $('.timer .second h5').text(event.strftime('%S'));
-    }).on('finish.countdown', function () {
-        $('.print .btn').removeClass('disabled');
-    });
-    
+        // countdown timer
+        $('.timer').countdown(printTimeout, function(event) {
+            $('.timer .hour h5').text(event.strftime('%H'));
+            $('.timer .minute h5').text(event.strftime('%M'));
+            $('.timer .second h5').text(event.strftime('%S'));
+        }).on('finish.countdown', function() {
+            $('.print .btn').removeClass('disabled');
+        });
+
     </script>
     <!-- angular controller -->
     <script src="/Assets/travorama20/js/ThankYouController.js"></script>
+    <script>
+        @if (Model is FlightReservationForDisplay)
+        {
+            var rsv = Model as FlightReservationForDisplay;
+            @:var gtmContentType = 'flight';
+                @:var gtmDepartingDepartureDate = '@rsv.Itinerary.Trips[0].DepartureDate.GetValueOrDefault().ToString("yyyyMMdd")';
+                @:var gtmDepartingArrivalDate = '@rsv.Itinerary.Trips[0].Segments.Last().ArrivalTime.GetValueOrDefault().ToString("yyyyMMdd")';
+                @:var gtmOriginAirport = '@rsv.Itinerary.Trips[0].OriginAirport';
+                @:var gtmDestinationAirport = '@rsv.Itinerary.Trips[0].DestinationAirport';
+                @:var gtmNumAdults = @rsv.Itinerary.AdultCount;
+                @:var gtmNumChildren = @rsv.Itinerary.ChildCount;
+                @:var gtmNumInfants = @rsv.Itinerary.InfantCount;
+                @:var gtmTravelClass = '@rsv.Itinerary.RequestedCabinClass.ToString().ToLower()';
+                @:var gtmPurchaseValue = @rsv.Payment.FinalPrice;
+                @:var gtmPurchaseCurrency = 'IDR';
+                @:var gtmCurrency = 'IDR';
+                @:var gtmValue = @rsv.Payment.FinalPrice;
+                @:var gtmTravoramaReservationId = '@Model.RsvNo';
+                @:var gtmPageName = 'thank_you';
+                if (rsv.Itinerary.TripType.GetValueOrDefault() == TripType.RoundTrip)
+            {
+                @:var gtmReturningDepartureDate = '@rsv.Itinerary.Trips[1].DepartureDate.GetValueOrDefault().ToString("yyyyMMdd")';
+                    @:var gtmReturningArrivalDate = '@rsv.Itinerary.Trips[1].Segments.Last().ArrivalTime.GetValueOrDefault().ToString("yyyyMMdd")'
+                }
+        }
+        else if (Model is HotelReservationForDisplay)
+        {
+            var rsv = Model as HotelReservationForDisplay;
+            @:var gtmContentType = 'hotel';
+            @:var gtmCity = '@rsv.HotelDetail.DestinationName';
+            @:var gtmHotelIds = '@rsv.HotelDetail.HotelCode';
+            @:var gtmRegion = '@rsv.HotelDetail.DestinationName';
+            @:var gtmCountry = '@rsv.HotelDetail.CountryName';
+            @:var gtmCheckinDate = '@rsv.HotelDetail.CheckInDate.ToString("yyyyMMdd")';
+            @:var gtmCheckoutDate = '@rsv.HotelDetail.CheckOutDate.ToString("yyyyMMdd")';
+            @:var gtmNumAdults = @totalAdult;
+            @:var gtmNumChildren = @totalChild;
+            @:var gtmPurchaseCurrency = 'IDR';
+            @:var gtmPurchaseValue = @rsv.Payment.FinalPrice;
+            @:var gtmPageName = 'thank_you';
+            @:var gtmCurrency = 'IDR';
+            @:var gtmValue = @rsv.Payment.FinalPrice;
+            @:var gtmTravoramaReservationId = '@Model.RsvNo';
+        }
+    </script>
 }
 
 <div ng-app="travorama" ng-controller="ThankyouController" class="page-loading" ng-class="{'page-loaded' : pageLoaded}">
@@ -335,7 +398,7 @@
                                         @if (Model is HotelReservationForDisplay)
                                         {
                                             var rsv = Model as HotelReservationForDisplay;
-                                            foreach (var room in rsv.HotelDetail.Rooms)
+                                            @*foreach (var room in rsv.HotelDetail.Rooms)
                                             {
                                                 foreach (var rate in room.Rates)
                                                 {
@@ -346,17 +409,18 @@
                                                                 @config.RateCount @ToTitleCase.ConvertToTitleCase(room.RoomName) @ToTitleCase.ConvertToTitleCase(config.BoardDescription) x @night Malam
                                                             </dt>
                                                             <dd class="dd-price">
-                                                                Rp @config.NetTotalFare.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))
+                                                                Rp @config.OriginalTotalFare.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))
                                                             </dd>
                                                         </dl>
                                                     }
                                                 }
-                                            }
+                                            }*@
 
-                                            <dl class="service-room" ng-show="roomService > 0">
-                                                <dt class="dt-title">Pelayanan Kamar :</dt>
-                                                <dd class="dd-price">Rp {{roomService | number}}</dd>
+                                            <dl>
+                                                <dt>Kamar Hotel <span>(@rsv.HotelDetail.Rooms.Sum(ro => ro.Rates.Sum(ra => ra.Breakdowns.Sum(b => b.RateCount))) Kamar)</span></dt>
+                                                <dd>Rp @((Model.Payment.OriginalPrice).ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID")))</dd>
                                             </dl>
+
                                             if (Model.Payment.DiscountNominal > 0)
                                             {
                                                 <dl>

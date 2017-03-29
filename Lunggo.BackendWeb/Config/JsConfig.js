@@ -103,6 +103,10 @@ var CheckBinDiscountConfig = {
     Url: 'https://api.local.travorama.com/v1/payment/checkbindiscount'
 };
 
+var CheckMethodDiscountConfig = {
+    Url: 'https://api.local.travorama.com/v1/payment/checkmethoddiscount'
+};
+
 var SubscribeConfig = {
     Url: 'https://api.local.travorama.com/v1/newsletter/subscribe'
 };
@@ -283,11 +287,21 @@ var HotelAvailableRatesConfig = {
     working: false
 };
 
-
 var GetHolidayConfig = {
     Url: 'https://api.local.travorama.com/v1/calendar/id',
     working: false
 };
+
+var FlightPriceCalendarConfig = {
+    Url: 'https://api.local.travorama.com/v1/flight/pricecalendar',
+    working: false
+};
+
+var HotelPriceCalendarConfig = {
+    Url: 'https://api.local.travorama.com/v1/hotel/pricecalendar',
+    working: false
+};
+
 function setCookie(cname, cvalue, expTime) {
 
     if (cname != "accesstoken") {

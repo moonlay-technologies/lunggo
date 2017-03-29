@@ -74,23 +74,23 @@ namespace Lunggo.WebAPI.ApiSrc.Auxiliary.Logic
                     BannerUrl = "http://www.travorama.com/Assets/images/banner/standard-web-banner.jpg",
                     DetailsUrl = ""
                 });
-            if (DateTime.UtcNow.AddHours(7).Date <= new DateTime(2016, 12, 31))
-                promos.Add(
-                    new FeaturedPromo
-                    {
-                        Id = "2",
-                        BannerUrl =
-                            "http://www.travorama.com/Assets/images/campaign/OnlineRevolution2016/OnlineRevolution-slider-mobile.jpg",
-                        DetailsUrl = "http://www.travorama.com/id/promo/onlinerevolutionwebview"
-                    });
-            if (DateTime.UtcNow.AddHours(7).Date <= new DateTime(2016, 12, 15))
+            if (DateTime.UtcNow.AddHours(7).Date >= new DateTime(2017, 02, 08) && DateTime.UtcNow.AddHours(7).Date <= new DateTime(2017, 02, 10))
                 promos.Add(
                     new FeaturedPromo
                     {
                         Id = "3",
                         BannerUrl =
-                            "http://www.travorama.com/Assets/images/campaign/MatahariMall2016/MatahariMall-slider-mobile.jpg",
-                        DetailsUrl = "http://www.travorama.com/id/promo/MatahariMallWebView"
+                            "http://www.travorama.com/Assets/images/campaign/HutBTN/HutBTN-slider-mobile.jpg",
+                        DetailsUrl = "http://www.travorama.com/id/promo/HutBTNWebview"
+                    });
+            if (DateTime.UtcNow.AddHours(7).Date <= new DateTime(2017, 03, 31) && !(DateTime.UtcNow.AddHours(7).Date >= new DateTime(2017, 02, 08) && DateTime.UtcNow.AddHours(7).Date <= new DateTime(2017, 02, 10)))
+                promos.Add(
+                    new FeaturedPromo
+                    {
+                        Id = "3",
+                        BannerUrl =
+                            "http://www.travorama.com/Assets/images/campaign/TerbanginHemat/TerbanginHemat-slider-mobile.jpg",
+                        DetailsUrl = "http://www.travorama.com/id/promo/BTNTerbanginHematWebview"
                     });
             return promos;
         }

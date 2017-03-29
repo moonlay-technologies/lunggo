@@ -1,0 +1,71 @@
+﻿@{
+    Layout = "/Views/Shared/mobile/_LayoutMobile.cshtml";
+    ViewBag.Title = "Payday Madness Permata Bank";
+    ViewBag.BodyClass = "page-promo promo-mobile promo-permata";
+    ViewBag.AngularController = "PromoController";
+}
+
+@section AdditionalCSS {
+    <link href="/Assets/css/promo.css" rel="stylesheet" />
+}
+
+@section AdditionalJS {
+    <script src="/Assets/js/bootstrap.js"></script>
+}
+
+@section PageJS{
+    <!-- angular controller -->
+    <script src="/Assets/travorama20/js/PromoController.js"></script>
+    <script src="/Assets/travorama20/angularDirectory/search/hotelSearch.service.js"></script>
+}
+
+<div class="promo-permata">
+    <div class="mini-banner">
+        <a href="/"><img class="img-promo" src="/Assets/images/campaign/PaydayMadness/PaydayMadness-page-mobile.jpg" alt="Payday Madness Permata Bank" /></a>
+    </div>
+    <div class="tab-promo">
+        <ul class="nav nav-tabs tab-detail">
+            <li class="col-xs-6 active">
+                <a data-toggle="tab" href="#tnc-promo">Syarat & Ketentuan</a>
+            </li>
+            <li class="col-xs-6">
+                <a data-toggle="tab" href="#how-to">Cara Mendapatkan <br />Program Promo</a>
+            </li>
+        </ul>
+        <div class="tab-content">
+            <div id="tnc-promo" class="tab-pane active">
+                <div class="container-page">
+                    <div class="section-title text-center">Syarat & <span class="blue-text">Ketentuan</span></div>
+                    <div class="tnc">
+                        <ol class="list-number">
+                            <li>Diskon sebesar 15% (Maks. Rp 150.000). Tanpa minimum transaksi.</li>
+                            <li>Berlaku untuk pemesanan setiap tanggal <span class="os-bold blue-txt">25, 26 dan 27 setiap bulan.</span></li>
+                            <li>Periode terbang dan inap kapan saja.</li>
+                            <li>Berlaku untuk semua hotel di dalam dan luar negeri.</li>
+                            <li>Berlaku untuk pembayaran menggunakan bank transfer supported by Permata Bank.</li>
+                            <li>Berlaku untuk pemesanan melalui situs Travorama.</li>
+                            <li>Program promo hanya dapat digunakan satu kali per hari untuk satu user.</li>
+                            <li>Program tidak dapat digabungkan dengan voucher dan promo lainnya.</li>
+                            <li>Travorama berhak penuh untuk mengubah syarat dan ketentuan tanpa pemberitahuan terlebih dahulu.</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+            <div id="how-to" class="tab-pane">
+                <div class="container-page">
+                    <div class="section-title text-center">Cara Mendapatkan <br /><span class="blue-text">Program Promo</span></div>
+                    <div class="how-to">
+                        <ol class="list-number">
+                            <li>Cari dan pesan kamar hotel melalui situs Travorama.</li>
+                            <li>Pilih metode pembayaran bank transfer supported by Permata Bank (Payday Madness).</li>
+                            <li>Harga akan otomatis terpotong sesuai program promo.</li>
+                            <li>Lakukan pembayaran sesuai dengan instruksi.</li>
+                            <li>Selesaikan proses pembayaran dan lakukan konfirmasi pembayaran.</li>
+                            <li>E-voucher hotel akan dikirimkan ke alamat email Anda.</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -122,6 +122,8 @@
     <Compile Include="Function\HotelSaySorryFailedIssueApproverNotifEmail.cs" />
     <Compile Include="Function\HotelSaySorryFailedIssueBookerNotifEmail.cs" />
     <Compile Include="Function\BookingDisabilityNotifEmail.cs" />
+    <Compile Include="Function\FlightIssueTimeoutNotifEmail.cs" />
+    <Compile Include="Function\HotelInternalFailedIssueNotifEmail.cs" />
     <Compile Include="Function\HotelSaySorryFailedIssueNotifEmail.cs" />
     <Compile Include="Function\HotelVoucherEmail.cs" />
     <Compile Include="Function\FlightEticketSlightDelayNotifEmail.cs" />

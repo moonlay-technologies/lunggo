@@ -25,7 +25,7 @@ namespace Lunggo.WebAPI.ApiSrc.Payment.Logic
             return apiResponse;
         }
 
-        private static CheckBinDiscountResponse AssembleApiResponse(BinDiscount binDiscount)
+        private static CheckBinDiscountResponse AssembleApiResponse(BinMethodDiscount binDiscount)
         {
             return binDiscount != null
                 ? new CheckBinDiscountResponse

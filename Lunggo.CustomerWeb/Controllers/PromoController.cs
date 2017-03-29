@@ -8,15 +8,36 @@ namespace Lunggo.CustomerWeb.Controllers
 {
     public class PromoController : Controller
     {
-        // GET: Promo
-        public ActionResult OnlineRevolution()
+        [Route("{langCode}/Promo/{name}")]
+        public ActionResult Promo(string name)
         {
-            return View();
-        }
-
-        public ActionResult OnlineRevolutionWebview()
-        {
-            return View();
+            switch (name.ToLower())
+            {
+                case "onlinerevolution":
+                    return View("OnlineRevolution");
+                case "onlinerevolutionwebview":
+                    return View("OnlineRevolutionWebview");
+                case "imlek":
+                    return View("Imlek");
+                case "btnterbanginhemat":
+                    return View("BTNTerbanginHemat");
+                case "btnterbanginhematwebview":
+                    return View("BTNTerbanginHematWebview");
+                case "hutbtn":
+                    return View("HutBTN");
+                case "hutbtnwebview":
+                    return View("HutBTNWebview");
+                case "harbolnas2016":
+                    return View("Harbolnas2016");
+                case "mataharimall":
+                    return View("MatahariMall");
+                case "paydaymadnesspermatabank":
+                    return View("PaydayMadnessPermataBank");
+                case "paydaymegadeals":
+                    return View("PaydayMegaDeals");
+                default:
+                    return RedirectToAction("Index", "Index");
+            }
         }
     }
 }

@@ -103,6 +103,10 @@ var CheckBinDiscountConfig = {
     Url: '$apiUrl$$checkBinDiscountPath$'
 };
 
+var CheckMethodDiscountConfig = {
+    Url: '$apiUrl$$checkMethodDiscountPath$'
+};
+
 var SubscribeConfig = {
     Url: '$apiUrl$$subscribePath$'
 };
@@ -283,11 +287,21 @@ var HotelAvailableRatesConfig = {
     working: false
 };
 
-
 var GetHolidayConfig = {
     Url: '$apiUrl$$holidayListPath$',
     working: false
 };
+
+var FlightPriceCalendarConfig = {
+    Url: '$apiUrl$$flightPriceCalendarPath$',
+    working: false
+};
+
+var HotelPriceCalendarConfig = {
+    Url: '$apiUrl$$hotelPriceCalendarPath$',
+    working: false
+};
+
 function setCookie(cname, cvalue, expTime) {
 
     if (cname != "accesstoken") {

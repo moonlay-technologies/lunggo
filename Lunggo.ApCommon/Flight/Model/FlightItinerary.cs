@@ -92,7 +92,39 @@ namespace Lunggo.ApCommon.Flight.Model
         public BookingStatus BookingStatus { get; set; }
         public List<FlightTrip> Trips { get; set; }
         public FareType FareType { get; set; }
-        public Supplier Supplier { get; set; }        
+        public Supplier Supplier { get; set; }
+
+        internal override decimal GetApparentOriginalPrice()
+        {
+            if (Price == null)
+                throw new Exception("Price not set");
+
+            if (Price.OriginalIdr >= Price.FinalIdr)
+            {
+                return Price.OriginalIdr/Price.LocalCurrency.Rate;
+            }
+            else
+            {
+                var originalPrice = Price.FinalIdr * 1.01M;
+                var adultCount = AdultCount;
+                var childCount = ChildCount;
+                var infantCount = InfantCount;
+                var roundingOrder = Price.LocalCurrency.RoundingOrder;
+
+                var adultAdjustment = adultCount != 0
+                    ? (originalPrice * AdultPricePortion / adultCount) % roundingOrder * adultCount
+                    : 0M;
+                var childAdjustment = childCount != 0
+                    ? roundingOrder - (originalPrice * ChildPricePortion / childCount) % roundingOrder * childCount
+                    : 0M;
+                var infantAdjustment = infantCount != 0
+                    ? roundingOrder - (originalPrice * InfantPricePortion / infantCount) % roundingOrder * infantCount
+                    : 0M;
+                var adjustment = -adultAdjustment + childAdjustment + infantAdjustment;
+
+                return originalPrice + adjustment;
+            }
+        }
 
         public bool Identical(FlightItinerary otheritin)
         {

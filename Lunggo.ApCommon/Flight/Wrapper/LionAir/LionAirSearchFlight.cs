@@ -430,7 +430,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                             pricefunc.SetId(priceId);
                             var adultPrice = pricefunc.GetAdultPrice(conditions.AdultCount);
                             var childPrice = pricefunc.GetChildPrice(conditions.ChildCount);
-                            var infantPrice = pricefunc.GetInfantPrice(conditions.InfantCount);
+                            var infantPrice = pricefunc.GetInfantPrice(conditions.InfantCount, conditions.ChildCount);
                             var price = adultPrice + childPrice + infantPrice;
 
                             var originCountry1 = FlightService.GetInstance().GetAirportCountryCode(airportDeparture);
@@ -838,15 +838,16 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                     return childPrice;
                 }
 
-                public decimal GetInfantPrice(int infant)
+                public decimal GetInfantPrice(int infant, int child)
                 {
                     if (infant == 0)
                         return 0M;
 
                     dynamic fare = WorkOutTripTotals();
-                    var infantPrice1 = Convert.ToDecimal(fare.PaxFares[2].Base) +
-                                     Convert.ToDecimal(fare.PaxFares[2].Taxes) +
-                                     Convert.ToDecimal(fare.PaxFares[2].GST);
+                    var idx = child > 0 ? 2 : 1;
+                    var infantPrice1 = Convert.ToDecimal(fare.PaxFares[idx].Base) +
+                                     Convert.ToDecimal(fare.PaxFares[idx].Taxes) +
+                                     Convert.ToDecimal(fare.PaxFares[idx].GST);
                     var infantPrice = infantPrice1 * infant;
                     return infantPrice;
                 }

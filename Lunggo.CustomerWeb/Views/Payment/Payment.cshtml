@@ -1,4 +1,5 @@
 ﻿@using System.Globalization
+@using Lunggo.ApCommon.Flight.Constant
 @using Lunggo.ApCommon.Flight.Model
 @using Lunggo.ApCommon.Hotel.Model
 @using Lunggo.ApCommon.Hotel.Service
@@ -12,6 +13,8 @@
 @{
 
     var rsvNo = "";
+    //var todayDate = DateTime.Today;
+    var todayDate = new DateTime(2017, 3, 25);
     var savedCreditCards = Model.SavedCreditCards;
     var orderedRooms = new List<Tuple<string, int>>();
     var totalpax = 0;
@@ -35,14 +38,14 @@
             {
                 hotelImg = images == null
                     ? null
-                    : "http://photos.hotelbeds.com/giata/" + orDefault.Path;
+                    : "https://photos.hotelbeds.com/giata/" + orDefault.Path;
             }
             var firstOrDefault = images.Where(i => i.Type == "HAB").ToList().FirstOrDefault();
             if (firstOrDefault != null)
             {
                 roomImg = images == null
                     ? null
-                    : "http://photos.hotelbeds.com/giata/" + firstOrDefault.Path;
+                    : "https://photos.hotelbeds.com/giata/" + firstOrDefault.Path;
             }
             var rooms = rsv.HotelDetail.Rooms;
             rsvNo = Model.RsvNo;
@@ -80,7 +83,6 @@
 @{
     Layout = "/Views/Shared/Desktop/_LayoutDesktop.cshtml";
     ViewBag.BodyClass = "page-checkout page-checkout-flight";
-
     ViewBag.SiteHeader = "checkout";
     ViewBag.Title = "Pembayaran";
 }
@@ -98,103 +100,129 @@
     <script src="/Assets/js/CryptoJS/rollups/sha512.js"></script>
     <script src="/Assets/js/CryptoJS/components/enc-base64-min.js"></script>
     <!-- veritrans JS -->
-    <script src="https://api.sandbox.veritrans.co.id/v2/assets/js/veritrans.min.js"></script>
+    <script src=@(ConfigManager.GetInstance().GetConfigValue("veritrans", "endPoint") + "/v2/assets/js/midtrans.min.js")></script>
     <!-- fancybox -->
     <script type="text/javascript" src="/Assets/vendor/fancybox/jquery.fancybox.pack.js"></script>
 }
 @section PageJS{
     <script>
-        var langCode = 'en';
-        var paymentTimeout = '';
-        // development only start
-        paymentTimeout = new Date('@Model.TimeLimit.ToString("yyyy-MM-dd'T'HH:mm:ss")');
-        console.log("TIME OUT" + paymentTimeout);
-        // countdown timer
-        $('.timer').countdown(paymentTimeout, function(event) {
-            $('.timer .hour').text(event.strftime('%H'));
-            $('.timer .minute').text(event.strftime('%M'));
-            $('.timer .second').text(event.strftime('%S'));
-        });
+    var langCode = 'en';
+    var paymentTimeout = '';
+    // development only start
+    paymentTimeout = new Date('@Model.TimeLimit.ToString("yyyy-MM-dd'T'HH:mm:ss'Z'")');
+    console.log("TIME OUT" + paymentTimeout);
+    // countdown timer
+    $('.timer').countdown(paymentTimeout, function(event) {
+        $('.timer .hour').text(event.strftime('%H'));
+        $('.timer .minute').text(event.strftime('%M'));
+        $('.timer .second').text(event.strftime('%S'));
+    });
 
-        // date selector
-        $('.date-picker').datepicker({
-            minDate: new Date()
-        });
-        var langCode = '@OnlineContext.GetActiveLanguageCode()';
-        var currentPage = 1;
-        var transferWindow = ['@ConfigManager.GetInstance().GetConfigValue("general", "bankTransferStartTime")', '@ConfigManager.GetInstance().GetConfigValue("general", "bankTransferEndTime")'];
-        //var transferWindow = [ '1100', '1124' ];
-        // messages
-        var message = '@ViewBag.Message';
-        // flight detail
-        var rsvNo = @Model.RsvNo;
-        var paymentDetail = '';
-        var flightDetail = '';
-        var trips = '';
-        var price = '';
-        var originalPrice = '';
-        var totalpax = '';
-        var nights = '';
-        @if (Model.Reservation is FlightReservationForDisplay)
+    // date selector
+    $('.date-picker').datepicker({
+        minDate: new Date()
+    });
+    var langCode = '@OnlineContext.GetActiveLanguageCode()';
+    var currentPage = 1;
+    var transferWindow = ['@ConfigManager.GetInstance().GetConfigValue("general", "bankTransferStartTime")', '@ConfigManager.GetInstance().GetConfigValue("general", "bankTransferEndTime")'];
+    var message = '@ViewBag.Message';
+    // flight detail
+    var rsvNo = @Model.RsvNo;
+    var paymentDetail = '';
+    var flightDetail = '';
+    var trips = '';
+    var price = '';
+    var originalPrice = '';
+    var totalpax = '';
+    var nights = '';
+    @if (Model.Reservation is FlightReservationForDisplay)
         {
             var reservation = Model.Reservation as FlightReservationForDisplay;
             @:trips = @Html.Raw(reservation.Itinerary.Trips.Serialize());
-                                @:price = @reservation.Itinerary.NetTotalFare;
-                                @:originalPrice = '@reservation.Itinerary.OriginalTotalFare';
-                            }
+                            @:price = @reservation.Itinerary.NetTotalFare;
+                            @:originalPrice = '@reservation.Itinerary.OriginalTotalFare';
+                        }
         else
         {
             var reservation = Model.Reservation as HotelReservationForDisplay;
             @:hotelDetails = @Html.Raw(reservation.HotelDetail.Serialize());
-                                    @:price = @reservation.HotelDetail.NetTotalFare;
-                                    @:originalPrice = '@reservation.HotelDetail.OriginalTotalFare';
-                            }
-        var redirectionUrl;
-        @if (Model.Reservation.Payment.RedirectionUrl != null)
-        {
-        @:redirectionUrl = '@Model.Reservation.Payment.RedirectionUrl';
+                            @:price = @reservation.HotelDetail.NetTotalFare;
+                            @:originalPrice = '@reservation.HotelDetail.OriginalTotalFare';
                         }
-        @if (Model.Reservation is FlightReservationForDisplay)
-    {
-        @:var departureDate;
-                        var reservation = Model.Reservation as FlightReservationForDisplay;
-        if (reservation.Itinerary.Trips != null)
-         {
-             if (reservation.Itinerary.Trips.Count == 2)
-             {
-                 @:departureDate = '@reservation.Itinerary.Trips[1].DepartureDate';
-                             }
-             else
-             {
-                 @:departureDate = '@reservation.Itinerary.Trips[0].DepartureDate';
-                             }
-         }
+    var redirectionUrl;
+    @if (Model.Reservation.Payment.RedirectionUrl != null)
+        {
+            @:redirectionUrl = '@Model.Reservation.Payment.RedirectionUrl';
+                        }
+    @if (Model.Reservation is FlightReservationForDisplay)
+        {
+            @:var departureDate;
+            var reservation = Model.Reservation as FlightReservationForDisplay;
+            if (reservation.Itinerary.Trips != null)
+            {
+                if (reservation.Itinerary.Trips.Count == 2)
+                {
+                    @:departureDate = '@reservation.Itinerary.Trips[1].DepartureDate';
+                }
+                else
+                {
+                    @:departureDate = '@reservation.Itinerary.Trips[0].DepartureDate';
+                }
+            }
+
+            if (reservation.Itinerary.TripType.GetValueOrDefault() == TripType.RoundTrip)
+            {
+                @:var gtmReturningDepartureDate = '@reservation.Itinerary.Trips[1].DepartureDate.GetValueOrDefault().ToString("yyyyMMdd")';
+                @:var gtmReturningArrivalDate = '@reservation.Itinerary.Trips[1].Segments.Last().ArrivalTime.GetValueOrDefault().ToString("yyyyMMdd")'
+            }
+            @:var gtmContentType = 'flight';
+            @:var gtmDepartingDepartureDate = '@reservation.Itinerary.Trips[0].DepartureDate.GetValueOrDefault().ToString("yyyyMMdd")';
+            @:var gtmDepartingArrivalDate = '@reservation.Itinerary.Trips[0].Segments.Last().ArrivalTime.GetValueOrDefault().ToString("yyyyMMdd")';
+            @:var gtmOriginAirport = '@reservation.Itinerary.Trips[0].OriginAirport';
+            @:var gtmDestinationAirport = '@reservation.Itinerary.Trips[0].DestinationAirport';
+            @:var gtmNumAdults = @reservation.Itinerary.AdultCount;
+            @:var gtmNumChildren = @reservation.Itinerary.ChildCount;
+            @:var gtmNumInfants = @reservation.Itinerary.InfantCount;
+            @:var gtmTravelClass = '@reservation.Itinerary.RequestedCabinClass.ToString().ToLower()';
+            @:var gtmPurchaseValue = @reservation.Itinerary.NetTotalFare;
+            @:var gtmPurchaseCurrency = 'IDR';
+            @:var gtmPageName = 'payment';
     }
-        @if (Model.Reservation is HotelReservationForDisplay)
+    @if (Model.Reservation is HotelReservationForDisplay)
     {
         var hotel = Model.Reservation as HotelReservationForDisplay;
         @:originalPrice = '@hotel.HotelDetail.OriginalTotalFare';
-                    @:price = '@hotel.HotelDetail.NetTotalFare';
-                @*@:nights = '@((hotel.HotelDetail.CheckOutDate - hotel.HotelDetail.CheckInDate).Days)';
-        @:totalpax = '@totalpax';*@
+        @:price = '@hotel.HotelDetail.NetTotalFare';
+        @:var gtmContentType = 'hotel';
+        @:var gtmCity = '@hotel.HotelDetail.DestinationName';
+        @:var gtmHotelIds = '@hotel.HotelDetail.HotelCode';
+        @:var gtmRegion = '@hotel.HotelDetail.DestinationName';
+        @:var gtmCountry = '@hotel.HotelDetail.CountryName';
+        @:var gtmCheckinDate = '@hotel.HotelDetail.CheckInDate.ToString("yyyyMMdd")';
+        @:var gtmCheckoutDate = '@hotel.HotelDetail.CheckOutDate.ToString("yyyyMMdd")';
+        @:var gtmNumAdults = @totalAdult;
+        @:var gtmNumChildren = @totalChild;
+        @:var gtmPurchaseCurrency = 'IDR';
+        @:var gtmPurchaseValue = @hotel.HotelDetail.NetTotalFare;
+        @:var gtmPageName = 'payment';
     }
-        // change current page
-        if (getParam('page') == 4) {
-            currentPage = getParam('page');
-        } else {
-            currentPage = 1;
-        }
-        var loggedIn = @User.Identity.IsAuthenticated.ToString().ToLower();
-        var buyerInfo = {
-            fullname: '@(User.Identity.GetFirstName() + " " + User.Identity.GetLastName())',
-            countryCode: '@User.Identity.GetCountryCd()',
-            phone: '@User.Identity.GetPhoneNumber()',
-            email: '@User.Identity.GetEmail()'
-        };
+    // change current page
+    if (getParam('page') == 4) {
+        currentPage = getParam('page');
+    } else {
+        currentPage = 1;
+    }
+    var loggedIn = @User.Identity.IsAuthenticated.ToString().ToLower();
+    var buyerInfo = {
+        fullname: '@(User.Identity.GetFirstName() + " " + User.Identity.GetLastName())',
+        countryCode: '@User.Identity.GetCountryCd()',
+        phone: '@User.Identity.GetPhoneNumber()',
+        email: '@User.Identity.GetEmail()'
+    };
 
-        var langCode = '@OnlineContext.GetActiveLanguageCode()';
+    var langCode = '@OnlineContext.GetActiveLanguageCode()';
 
-        var expirytime = '@Model.TimeLimit';
+    var expirytime = '@Model.TimeLimit.ToString("yyyy-MM-dd'T'HH:mm:ss'Z'")';
 
     </script>
 
@@ -221,7 +249,7 @@
 
                                 <div class="payment-wrapper">
                                     <div class="row">
-                                        <div class="payment transfer col-xs-4" ng-click="binDiscount.reset('ncc')">
+                                        <div class="payment transfer col-xs-4" ng-click="binDiscount.reset('ncc'); methodDiscount.reset('nVA')">
                                             <label ng-class="{ 'disabled' : !transferWindowOpen }">
                                                 <header>
                                                     <div class="input-wrapper">
@@ -231,11 +259,11 @@
                                                     <h5>Bank Transfer</h5>
                                                 </header>
                                                 <section>
-                                                    <img src="/Assets/images/payment-atm.jpg" alt="Bank Transfer" />
+                                                    <img src="/Assets/images/bersama-prima-alto.jpg" alt="Bank Transfer" />
                                                 </section>
                                             </label>
                                         </div><!-- .payment -->
-                                        <div class="payment creditcard col-xs-4" ng-click="binDiscount.reset('cc')">
+                                        <div class="payment creditcard col-xs-4" ng-click="binDiscount.reset('cc'); methodDiscount.reset('nVA')">
                                             <label>
                                                 <header>
                                                     <div class="input-wrapper">
@@ -249,22 +277,48 @@
                                                 </section>
                                             </label>
                                         </div><!-- .payment -->
-                                        <div class="payment virtualAccount col-xs-4" ng-click="binDiscount.reset('ncc')">
-                                            <label>
-                                                <header>
-                                                    <div class="input-wrapper">
-                                                        <input type="radio" name="PMInput" value="@PaymentMethod.VirtualAccount" ng-model="paymentMethod" ng-change="CreditCardPromo.Check(CreditCard.Number)" />
-                                                    </div>
-                                                    <h5>Virtual Account</h5>
-                                                </header>
-                                                <section>
-                                                    <img src="/Assets/images/payment-atm.jpg" alt="Virtual Account" />
-                                                </section>
-                                            </label>
-                                        </div><!-- .payment -->
+                                        
+                                        @{
+                                            var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
+                                        }
+                                        @if (env != "production" || (Model.Reservation is HotelReservationForDisplay && todayDate.Year == 2017 && todayDate.Month >= 3 && todayDate.Month <= 8 && todayDate.Day >= 25 && todayDate.Day <= 27))
+                                        {
+                                            <div class="payment virtualAccount col-xs-4" ng-click="binDiscount.reset('ncc'); methodDiscount.reset('VA')">
+                                                <label>
+                                                    <header>
+                                                        <div class="input-wrapper">
+                                                            <input type="radio" name="PMInput" value="@PaymentMethod.VirtualAccount" ng-click="methodDiscount.check()"
+                                                                    ng-model="paymentMethod" ng-change="CreditCardPromo.Check(CreditCard.Number)" />
+                                                        </div>
+                                                        <h5>Payday Madness</h5>
+                                                    </header>
+                                                    <section>
+                                                        <img src="/Assets/images/bersama-prima-alto.jpg" alt="Virtual Account" />
+                                                    </section>
+                                                </label>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div class="payment virtualAccount col-xs-4" ng-click="binDiscount.reset('ncc');">
+                                                <label>
+                                                    <header>
+                                                        <div class="input-wrapper">
+                                                            <input type="radio" name="PMInput" value="@PaymentMethod.VirtualAccount" ng-model="paymentMethod" ng-change="CreditCardPromo.Check(CreditCard.Number)" />
+                                                        </div>
+                                                        <h5>Virtual Account</h5>
+                                                    </header>
+                                                    <section>
+                                                        <img src="/Assets/images/bersama-prima-alto.jpg" alt="Virtual Account" />
+                                                    </section>
+                                                </label>
+                                            </div>
+
+                                        }
+
                                     </div>
                                     <div class="row">
-                                        <div class="payment mandiri col-xs-4" ng-click="binDiscount.reset('ncc')">
+                                        <div class="payment mandiri col-xs-4" ng-click="binDiscount.reset('ncc'); methodDiscount.reset('nVA')">
                                             <label>
                                                 <header>
                                                     <div class="input-wrapper">
@@ -277,7 +331,7 @@
                                                 </section>
                                             </label>
                                         </div><!-- .payment -->
-                                        <div class="payment cimbClicks col-xs-4" ng-click="binDiscount.reset('ncc')">
+                                        <div class="payment cimbClicks col-xs-4" ng-click="binDiscount.reset('ncc'); methodDiscount.reset('nVA')">
                                             <label>
                                                 <header>
                                                     <div class="input-wrapper">
@@ -318,7 +372,7 @@
                                                     <h5>Bank Permata</h5>
                                                 </header>
                                                 <section>
-                                                    <img src="/Assets/images/permata.png" alt="Bank Permata">
+                                                    <img src="/Assets/images/bersama-prima-alto.jpg" alt="Bank Permata">
                                                 </section>
                                             </label>
                                         </div>
@@ -351,6 +405,9 @@
 
                                                     <div ng-show="!checkNumber(CreditCard.Number)" style="color:red">
                                                         Nomor kartu tidak boleh mengandung karakter selain angka
+                                                    </div>
+                                                    <div ng-show="binDiscount.text != ''" style="color:green">
+                                                        {{binDiscount.text}}
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
@@ -480,8 +537,10 @@
 
                                         <p>*Dengan klik tombol ‘Bayar’, Anda telah setuju dengan <a href="@Url.Action("Terms","StaticPage")" target="_blank">syarat &amp; ketentuan</a> dan <a href="@Url.Action("Privacy","StaticPage")" target="_blank">kebijakan privasi</a></p>
 
-                                        <input type="submit" class="btn btn-yellow md-txt lg-btn" value="{{ !checkoutForm.loading? 'BAYAR' : 'MEMPROSES' }}" ng-disabled="(checkoutForm.loading || !paymentMethod) || !creditCardForm.$valid">
-
+                                        <input type="submit" class="btn btn-yellow md-txt lg-btn col-xs-6" id="payButton" value="{{ !checkoutForm.loading? 'BAYAR' : 'MEMPROSES' }}" ng-disabled="(checkoutForm.loading || !paymentMethod) || !creditCardForm.$valid || (paymentMethod == 'VirtualAccount' && methodDiscount.firstRequest)">
+                                        <div class="col-xs-6" ng-show="methodDiscount.wait">
+                                            <img src="/Assets/images/load.gif" style="width: 10%;margin-left: 10%;margin-top: 8%;">
+                                        </div>
                                     </form>
 
                                     <form action="" method="post" name="submitForm" id="rsvno" class="hidden">
@@ -514,16 +573,20 @@
                                         </dl>
                                         <dl style="color: #1daee4">
                                             <dt>Diskon Travorama</dt>
-                                            <dd ng-if="!(binDiscount.replaceDiscount && !voucher.confirmedCode)">- Rp {{originalPrice - totalPrice| number}}</dd>
-                                            <dd ng-if="binDiscount.replaceDiscount && !voucher.confirmedCode"> Rp 0</dd>
+                                            <dd ng-if="!((binDiscount.replaceDiscount || methodDiscount.replaceDiscount) && !voucher.confirmedCode)">- Rp {{originalPrice - totalPrice| number}}</dd>
+                                            <dd ng-if="(binDiscount.replaceDiscount || methodDiscount.replaceDiscount) && !voucher.confirmedCode"> Rp 0</dd>
                                         </dl>
                                         <dl ng-if="voucher.confirmedCode">
                                             <dt>{{voucher.displayName}}</dt>
                                             <dd>- Rp {{voucher.amount | number}}</dd>
                                         </dl>
-                                        <dl ng-if="binDiscount.replaceDiscount && !voucher.confirmedCode" style="color: #1daee4">
+                                        <dl ng-if="binDiscount.available && !voucher.confirmedCode" style="color: #1daee4">
                                             <dt>{{binDiscount.displayName}}</dt>
                                             <dd>- Rp {{binDiscount.amount | number}}</dd>
+                                        </dl>
+                                        <dl ng-if="methodDiscount.available && !voucher.confirmedCode" style="color: #1daee4">
+                                            <dt>{{methodDiscount.displayName}}</dt>
+                                            <dd>- Rp {{methodDiscount.amount | number}}</dd>
                                         </dl>
                                         <dl ng-if="CreditCardPromo.Valid">
                                             <dt>{{CreditCardPromo.PromoName}}</dt>
@@ -535,8 +598,12 @@
                                         </dl>
                                         <dl class="total-price">
                                             <dt>Total</dt>
-                                            <dd ng-if="binDiscount.replaceDiscount && !voucher.confirmedCode">Rp {{originalPrice - CreditCardPromo.Amount + UniqueCodePaymentConfig.UniqueCode - binDiscount.amount| number}}</dd>
-                                            <dd ng-if="!(binDiscount.replaceDiscount && !voucher.confirmedCode)">Rp {{totalPrice - voucher.amount - CreditCardPromo.Amount + UniqueCodePaymentConfig.UniqueCode| number}}</dd>
+                                            <dd ng-if="!binDiscount.available && !methodDiscount.available && !voucher.confirmedCode">Rp {{totalPrice - CreditCardPromo.Amount + UniqueCodePaymentConfig.UniqueCode| number}}</dd>
+                                            <dd ng-if="voucher.confirmedCode">Rp {{totalPrice - voucher.amount - CreditCardPromo.Amount + UniqueCodePaymentConfig.UniqueCode| number}}</dd>
+                                            <dd ng-if="binDiscount.available && binDiscount.replaceDiscount && !voucher.confirmedCode">Rp {{originalPrice - CreditCardPromo.Amount + UniqueCodePaymentConfig.UniqueCode - binDiscount.amount| number}}</dd>
+                                            <dd ng-if="binDiscount.available && !binDiscount.replaceDiscount && !voucher.confirmedCode">Rp {{totalPrice - CreditCardPromo.Amount + UniqueCodePaymentConfig.UniqueCode - binDiscount.amount| number}}</dd>
+                                            <dd ng-if="methodDiscount.available && methodDiscount.replaceDiscount && !voucher.confirmedCode">Rp {{originalPrice - CreditCardPromo.Amount + UniqueCodePaymentConfig.UniqueCode - methodDiscount.amount| number}}</dd>
+                                            <dd ng-if="methodDiscount.available && !methodDiscount.replaceDiscount && !voucher.confirmedCode">Rp {{totalPrice - CreditCardPromo.Amount + UniqueCodePaymentConfig.UniqueCode - methodDiscount.amount| number}}</dd>
                                         </dl>
                                     </div>
                                 </div><!-- .widget.price-detail -->

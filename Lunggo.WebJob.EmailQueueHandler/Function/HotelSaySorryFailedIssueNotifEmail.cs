@@ -9,7 +9,7 @@ namespace Lunggo.WebJob.EmailQueueHandler.Function
 {
     public partial class ProcessEmailQueue
     {
-        public static void HotelSaySorryFailedIssueNotifEmail([QueueTrigger("Hotelsaysorryfailedissuenotifemail")] string rsvNo)
+        public static void HotelSaySorryFailedIssueNotifEmail([QueueTrigger("hotelsaysorryfailedissuenotifemail")] string rsvNo)
         {
             var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
             var envPrefix = env != "production" ? "[" + env.ToUpper() + "] " : "";
@@ -29,6 +29,7 @@ namespace Lunggo.WebJob.EmailQueueHandler.Function
             var mailModel = new MailModel
             {
                 RecipientList = new[] { reservation.Contact.Email },
+                BccList = new[] { "maillog.travorama@gmail.com" },
                 Subject = envPrefix + "[Travorama] Pemesanan Gagal - No. Pemesanan " + reservation.RsvNo,
                 FromMail = "booking@travorama.com",
                 FromName = "Travorama"

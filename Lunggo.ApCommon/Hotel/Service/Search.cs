@@ -1,28 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity.Core.Metadata.Edm;
 using System.Diagnostics;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
-using System.Web.Configuration;
-using System.Web.Mvc;
-using System.Web.UI;
-using CsQuery.Engine.PseudoClassSelectors;
-using Lunggo.ApCommon.Flight.Model.Logic;
 using Lunggo.ApCommon.Hotel.Constant;
 using Lunggo.ApCommon.Hotel.Model;
 using Lunggo.ApCommon.Hotel.Model.Logic;
-using Lunggo.ApCommon.Hotel.Query;
 using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds;
 using Lunggo.ApCommon.Payment.Model;
-using Lunggo.ApCommon.Product.Model;
 using Lunggo.Framework.Config;
-using Lunggo.Framework.Documents;
-using Lunggo.Framework.Extension;
-using Lunggo.Framework.SharedModel;
+using Lunggo.Framework.Queue;
+using Microsoft.WindowsAzure.Storage.Queue;
 
 namespace Lunggo.ApCommon.Hotel.Service
 {
@@ -186,8 +174,9 @@ namespace Lunggo.ApCommon.Hotel.Service
             };
             
             result.HotelDetails = AddDetailInfoForSearchResult(result.HotelDetails);
+            //SetLowestPriceToCache();
             if (result.HotelDetails == null || result.HotelDetails.Count == 0)
-                return new SearchHotelOutput()
+                return new SearchHotelOutput
                 {
                     IsSuccess = true,
                     DestinationName = result.DestinationName,
@@ -214,6 +203,11 @@ namespace Lunggo.ApCommon.Hotel.Service
             firstPageHotelDetails = SetPagination(firstPageHotelDetails, input.Page, input.PerPage);
             //AddDetailInfoForDisplayHotel(firstPageHotelDetails);
             var searchType = detailDestination.Type.ToString();
+            var searchIds = detailDestination.Code + "|" + input.CheckIn.ToString("ddMMyy") + "|" + input.Nights + "|" + result.MinPrice;
+            var priceCalendarQueue = QueueService.GetInstance().GetQueueByReference("HotelPriceCalendar");
+            var searchTimeout = int.Parse(ConfigManager.GetInstance().GetConfigValue("hotel", "hotelSearchResultCacheTimeout"));
+            priceCalendarQueue.AddMessage(new CloudQueueMessage(searchIds), initialVisibilityDelay: new TimeSpan(0, 0, searchTimeout));
+            //SetLowestPriceToCache(input.CheckIn, input.Nights, detailDestination.Code, result.MinPrice);
             return new SearchHotelOutput
             {
                 IsSuccess = true,
@@ -377,13 +371,18 @@ namespace Lunggo.ApCommon.Hotel.Service
                                 ErrorMessages = new List<string> { "Rate Key Not Found!" }
                             };
 
+            var searchIds = input.HotelCode + "|" + input.CheckIn.ToString("ddMMyy") + "|" + input.Nights + "|" + results.MinPrice;
+            var priceCalendarQueue = QueueService.GetInstance().GetQueueByReference("hotelpricecalendar");
+            var searchTimeout = int.Parse(ConfigManager.GetInstance().GetConfigValue("hotel", "hotelSearchResultCacheTimeout"));
+            priceCalendarQueue.AddMessage(new CloudQueueMessage(searchIds), initialVisibilityDelay: new TimeSpan(0, 0, searchTimeout));
+            //SetLowestPriceToCache(input.CheckIn, input.Nights, Convert.ToString(input.HotelCode), results.MinPrice);
             return new SearchHotelOutput
-                        {
-                            IsSuccess = true,
-                            HotelRoom = ConvertToSingleHotelRoomForDisplay(roomHotel),
-                            ReturnedHotelCount = 1,
-                            TotalHotelCount = 1
-                        };
+            {
+                IsSuccess = true,
+                HotelRoom = ConvertToSingleHotelRoomForDisplay(roomHotel),
+                ReturnedHotelCount = 1,
+                TotalHotelCount = 1
+            };
         }
 
         public List<HotelDetail> ApplyHotelDetails(Dictionary<int, HotelDetailsBase> dict, List<HotelDetail> hotels)
@@ -461,11 +460,11 @@ namespace Lunggo.ApCommon.Hotel.Service
             {
                 hotel.StarCode = GetSimpleCodeByCategoryCode(hotel.StarRating);
                 hotel.NetTotalFare = hotel.Rooms.SelectMany(r => r.Rates).Sum(r => r.Price.Local);
-                hotel.OriginalTotalFare = hotel.NetTotalFare * 1.01M;
+                hotel.OriginalTotalFare = hotel.Rooms.SelectMany(r => r.Rates).Sum(r => r.GetApparentOriginalPrice());
                 hotel.NetCheapestFare = hotel.Rooms.SelectMany(r => r.Rates).Min(r => Math.Round(r.Price.Local/r.RateCount/r.NightCount));
-                hotel.OriginalCheapestFare = hotel.NetCheapestFare * 1.01M;
+                hotel.OriginalCheapestFare = hotel.Rooms.SelectMany(r => r.Rates).Min(r => Math.Round(r.GetApparentOriginalPrice() / r.RateCount / r.NightCount));
                 hotel.NetCheapestTotalFare = hotel.Rooms.SelectMany(r => r.Rates).Min(r => r.Price.Local);
-                hotel.OriginalCheapestTotalFare = hotel.NetCheapestTotalFare * 1.01M;
+                hotel.OriginalCheapestTotalFare = hotel.Rooms.SelectMany(r => r.Rates).Min(r => r.GetApparentOriginalPrice());
 
                 shortlistHotel.Add(hotel);
             }

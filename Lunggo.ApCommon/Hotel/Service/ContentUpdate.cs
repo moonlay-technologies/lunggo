@@ -7,6 +7,7 @@ using System.Net;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using Lunggo.ApCommon.Hotel.Constant;
 using Lunggo.ApCommon.Hotel.Model;
 using Lunggo.ApCommon.Hotel.Model.Logic;
 using Lunggo.ApCommon.Hotel.Query;
@@ -52,8 +53,7 @@ namespace Lunggo.ApCommon.Hotel.Service
         public void UpdateAutocomplete()
         {
             Console.WriteLine("Update AutoComplete");
-            _Autocompletes = new Dictionary<long, Autocomplete>();
-            long index = 1;
+            _Autocompletes = new Dictionary<string, Autocomplete>();
             foreach (var country in Countries)
             {
                 foreach (var destination in country.Destinations)
@@ -72,17 +72,16 @@ namespace Lunggo.ApCommon.Hotel.Service
                                 hotelDestCount += hotelZoneTotal;
                                 var singleAutoComplete = new HotelAutoComplete
                                 {
-                                    Id = index,
+                                    Id = ((long) AutocompleteType.Zone).ToString() + CodeToNumber(zone.Code),
                                     Code = zone.Code,
                                     Zone = zone.Name,
                                     Destination = destination.Name,
                                     Country = country.Name,
-                                    Type = 2,
+                                    Type = (int) AutocompleteType.Zone,
                                     HotelCount = hotelZoneTotal,
                                 };
 
                                 AutocompleteList.Add(singleAutoComplete);
-                                index++;
 
                                 if (zone.Areas != null)
                                 {
@@ -93,17 +92,16 @@ namespace Lunggo.ApCommon.Hotel.Service
                                             Console.WriteLine("Area : {0}", area.Code);
                                             singleAutoComplete = new HotelAutoComplete
                                             {
-                                                Id = index,
+                                                Id = ((long) AutocompleteType.Area).ToString() + CodeToNumber(area.Code),
                                                 Code = area.Code,
                                                 Area = area.Name,
                                                 Zone = zone.Name,
                                                 Destination = destination.Name,
                                                 Country = country.Name,
-                                                Type = 3,
+                                                Type = (int) AutocompleteType.Area,
                                                 HotelCount = GetInstance().GetHotelListByLocationFromStorage(area.Code).Count,
                                             };
                                             AutocompleteList.Add(singleAutoComplete);
-                                            index++;
                                         }
                                     }
                                 }
@@ -112,19 +110,30 @@ namespace Lunggo.ApCommon.Hotel.Service
                     }
                     var singleDest = new HotelAutoComplete
                     {
-                        Id = index,
+                        Id = ((long) AutocompleteType.Destination).ToString() + CodeToNumber(destination.Code),
                         Code = destination.Code,
                         Destination = destination.Name,
                         Country = country.Name,
-                        Type = 1,
+                        Type = (int) AutocompleteType.Destination,
                         HotelCount = hotelDestCount,
                     };
                     AutocompleteList.Add(singleDest);
-                    index++;
                 }
             }
             SaveHotelAutocompleteToBlob();
         }
+
+        private static long CodeToNumber(string code)
+        {
+            var result = 0L;
+            foreach (var ch in code)
+            {
+                result *= (128 - 32);
+                result += ch - 32;
+            }
+            return result;
+        }
+
         public void UpdateTruncatedHotelDetailContent()
         {
             for (var i = 1; i <= 150000; i++)

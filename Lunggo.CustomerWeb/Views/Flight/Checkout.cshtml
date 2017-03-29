@@ -1,4 +1,5 @@
 ﻿@using Lunggo.CustomerWeb.Models
+@using Lunggo.ApCommon.Flight.Constant
 @using Lunggo.Framework.Context
 @using Lunggo.Framework.Extension
 @using Lunggo.Framework.Config
@@ -18,8 +19,6 @@
     var token = "";
     var savedPassengers = Model.SavedPassengers;
     var savedCreditCards = Model.SavedCreditCards;
-
-
     try
     {
         adultCount = Model.Itinerary.AdultCount.GetValueOrDefault();
@@ -37,6 +36,14 @@
         ViewBag.Message = "BookExpired";
     }
 
+var gtmReturningDepartureDate = "";
+    var gtmReturningArrivalDate = "";
+    if (Model.Itinerary.TripType.GetValueOrDefault() == TripType.RoundTrip)
+    {
+        gtmReturningDepartureDate = Model.Itinerary.Trips[1].DepartureDate.GetValueOrDefault().ToString("yyyyMMdd");
+        gtmReturningArrivalDate = Model.Itinerary.Trips[1].Segments.Last().ArrivalTime.GetValueOrDefault().ToString("yyyyMMdd");
+    }
+
     var baseUrl = ConfigManager.GetInstance().GetConfigValue("api", "apiUrl");
     var client = new RestClient(baseUrl);
     var notes = new List<BookingNotes>();
@@ -51,7 +58,7 @@
 
         var contentDeserialize = JsonExtension.Deserialize<GetBookingNotesModel>(response.Content);
         notes = contentDeserialize.BookingNotes;
-    }
+}
     catch
     {
 
@@ -67,61 +74,47 @@
 }
 @section AdditionalCSS {
     <link href="/Assets/css/jquery-ui.min.css" rel="stylesheet" />
-    <!-- fancybox CSS-->
     <link href="/Assets/vendor/fancybox/jquery.fancybox.css" rel="stylesheet" />
 }
 @section AdditionalJS {
-    <!-- additional Angular JS-->
-    <!-- veritrans JS -->
     <script src="https://api.sandbox.veritrans.co.id/v2/assets/js/veritrans.min.js"></script>
-    <!-- fancybox -->
     <script type="text/javascript" src="/Assets/vendor/fancybox/jquery.fancybox.pack.js"></script>
 }
 @section PageJS{
     <script>
-    var langCode = '@OnlineContext.GetActiveLanguageCode()';
-    var currentPage = 1;
-    var transferWindow = ['@ConfigManager.GetInstance().GetConfigValue("general","bankTransferStartTime")', '@ConfigManager.GetInstance().GetConfigValue("general","bankTransferEndTime")'];
-    //var transferWindow = [ '1100', '1124' ];
-    // messages
-    var message = '@ViewBag.Message';
-    // flight detail
-    var token = @Model.Token;
-    var paymentDetail = '';
-    var flightDetail = '';
-    var expiryDate = '@Model.ExpiryTime.ToString("o")';
-    var trips = @Html.Raw(Model.Itinerary.Trips.Serialize());
-
-    // passenger number
-    var adultPassenger = @Model.Itinerary.AdultCount;
-    var adultFare = @Model.Itinerary.OriginalAdultFare;
-    var adultNetFare = @Model.Itinerary.NetAdultFare * adultPassenger;
-    var totalAdultFare = adultPassenger * adultFare;
-    var adultTypeName = 'Dewasa';
-
-    var childPassenger = @Model.Itinerary.ChildCount;
-    var childFare = @Model.Itinerary.OriginalChildFare;
-    var childNetFare = @Model.Itinerary.NetChildFare * childPassenger;
-    var totalChildFare = childPassenger * childFare;
-    var childTypeName = 'Anak';
-
-    var infantPassenger = @Model.Itinerary.InfantCount;
-    var infantFare = @Model.Itinerary.OriginalInfantFare;
-    var infantNetFare = @Model.Itinerary.NetInfantFare * infantPassenger;
-    var totalInfantFare = infantPassenger * infantFare;
-    var infantTypeName = 'Bayi';
-    //var monthNames = ["Januari", "Februari", "Maret","April", "Mei", "Juni", "Juli","Agustus", "September", "Oktober","November", "Desember"];
-    // passport or id requirement
-    var passportRequired = @Model.Itinerary.RequirePassport.ToString().ToLower();
-    var idRequired = false;
-    var nationalityRequired = @Model.Itinerary.RequireNationality.ToString().ToLower();
-    var birthDateRequired = @Model.Itinerary.RequireBirthDate.ToString().ToLower();
-    var departureDate = '@Model.Itinerary.Trips.Last().DepartureDate';
-    var beforeDepartureDate = '@Model.Itinerary.Trips.Last().DepartureDate.GetValueOrDefault().AddDays(-1)';
-    var passportDate = '@Model.Itinerary.Trips.Last().DepartureDate.GetValueOrDefault().AddMonths(6)';
-    var originalPrice = '@Model.Itinerary.OriginalTotalFare';
-    var price = '@Model.Itinerary.NetTotalFare';
-    //var trips = '@Model.Itinerary.Trips';
+        var langCode = '@OnlineContext.GetActiveLanguageCode()';
+        var currentPage = 1;
+        var transferWindow = ['@ConfigManager.GetInstance().GetConfigValue("general","bankTransferStartTime")', '@ConfigManager.GetInstance().GetConfigValue("general","bankTransferEndTime")'];
+        var message = '@ViewBag.Message';
+        var token = @Model.Token;
+        var paymentDetail = '';
+        var flightDetail = '';
+        var expiryDate = '@Model.ExpiryTime.ToString("o")';
+        var trips = @Html.Raw(Model.Itinerary.Trips.Serialize());
+        var adultPassenger = @Model.Itinerary.AdultCount;
+        var adultFare = @Model.Itinerary.OriginalAdultFare;
+        var adultNetFare = @Model.Itinerary.NetAdultFare * adultPassenger;
+        var totalAdultFare = adultPassenger * adultFare;
+        var adultTypeName = 'Dewasa';
+        var childPassenger = @Model.Itinerary.ChildCount;
+        var childFare = @Model.Itinerary.OriginalChildFare;
+        var childNetFare = @Model.Itinerary.NetChildFare * childPassenger;
+        var totalChildFare = childPassenger * childFare;
+        var childTypeName = 'Anak';
+        var infantPassenger = @Model.Itinerary.InfantCount;
+        var infantFare = @Model.Itinerary.OriginalInfantFare;
+        var infantNetFare = @Model.Itinerary.NetInfantFare * infantPassenger;
+        var totalInfantFare = infantPassenger * infantFare;
+        var infantTypeName = 'Bayi';
+        var passportRequired = @Model.Itinerary.RequirePassport.ToString().ToLower();
+        var idRequired = false;
+        var nationalityRequired = @Model.Itinerary.RequireNationality.ToString().ToLower();
+        var birthDateRequired = @Model.Itinerary.RequireBirthDate.ToString().ToLower();
+        var departureDate = '@Model.Itinerary.Trips.Last().DepartureDate';
+        var beforeDepartureDate = '@Model.Itinerary.Trips.Last().DepartureDate.GetValueOrDefault().AddDays(-1)';
+        var passportDate = '@Model.Itinerary.Trips.Last().DepartureDate.GetValueOrDefault().AddMonths(6)';
+        var originalPrice = '@Model.Itinerary.OriginalTotalFare';
+        var price = '@Model.Itinerary.NetTotalFare';
         // change current page
         if (getParam('page') == 2) {
             currentPage = getParam('page');
@@ -130,12 +123,30 @@
         }
         var bookingNotes = @Html.Raw(notes.Serialize());
         //Go to top
-        $(".go-top").on("click", function() {
-            $("body").scrollTop(0);
-        });
+        goTop();
     </script>
     <!-- angular controller -->
     <script src="/Assets/travorama20/js/checkoutController.js"></script>
+    <script>
+    var gtmContentType = 'flight';
+    var gtmDepartingDepartureDate = '@Model.Itinerary.Trips[0].DepartureDate.GetValueOrDefault().ToString("yyyyMMdd")';
+    var gtmDepartingArrivalDate = '@Model.Itinerary.Trips[0].Segments.Last().ArrivalTime.GetValueOrDefault().ToString("yyyyMMdd")';
+    var gtmOriginAirport = '@Model.Itinerary.Trips[0].OriginAirport';
+    var gtmDestinationAirport = '@Model.Itinerary.Trips[0].DestinationAirport';
+    var gtmNumAdults = @Model.Itinerary.AdultCount;
+    var gtmNumChildren = @Model.Itinerary.ChildCount;
+    var gtmNumInfants = @Model.Itinerary.InfantCount;
+    var gtmTravelClass = '@Model.Itinerary.RequestedCabinClass.ToString().ToLower()';
+    var gtmPurchaseValue = @Model.Itinerary.NetTotalFare;
+    var gtmPurchaseCurrency = 'IDR';
+    @if (Model.Itinerary.TripType.GetValueOrDefault() == TripType.RoundTrip)
+    {
+        @:var gtmReturningDepartureDate = '@gtmReturningDepartureDate';
+        @:var gtmReturningArrivalDate = '@gtmReturningArrivalDate';
+    }
+    var gtmPageName = 'contact_form';
+    </script>
+
 }
 
 @switch ((string)ViewBag.Message)
@@ -172,7 +183,7 @@
                                                 <input type="password" class="form-control" name="Password" ng-model="form.password" id="login-password" value="" placeholder="Password" />
                                             </div>
                                             <div class="col-xs-2">
-                                                <input type="submit" value="MASUK" class="btn btn-yellow form-control" ng-disabled="form.submitting" />
+                                                <input type="submit" value="MASUK" class="btn btn-yellow form-control sm-btn" ng-disabled="form.submitting" />
                                             </div>
                                         </div>
                                         <div class="form-group">
@@ -794,7 +805,7 @@
                         <div><span style="font-size:13px">Silakan klik tombol di bawah untuk kembali ke halaman pencarian.</span></div>
                     </section>
                     <div align="right" style="padding-right:30px;padding-top:30px;">
-                        <a class="btn popup-btn-yellow book-failed" href="{{returnUrl}}"><b>CARI ULANG</b></a>
+                        <a class="btn popup-btn-yellow book-failed sm-btn" href="{{returnUrl}}"><b>CARI ULANG</b></a>
                     </div>
                 </div>
             </div>
@@ -838,7 +849,7 @@
                         <div align="right" style="padding-right:50px"><img src="/Assets/images/popup/smallyellowstrip.png"></div>
                     </section>
                     <div align="right" style="padding-right:30px;padding-top:30px;">
-                        <a class="btn popup-btn-yellow book-failed" href="{{returnUrl}}"><b>CARI LAGI</b></a>
+                        <a class="btn popup-btn-yellow book-failed  sm-btn" href="{{returnUrl}}"><b>CARI LAGI</b></a>
                     </div>
                 </div>
             </div>
@@ -855,14 +866,16 @@
 
                         <footer>
                             <div class="container">
-                                <div class="row">
+                                <div class="clearfix" style="margin-left: -12px;">
                                     <div class="col-sm-6">
-                                        <a class="btn btn-grey btn-block" href="{{returnUrl}}">CARI ULANG</a>
+                                        <a class="btn btn-grey btn-block sm-btn" href="{{returnUrl}}">CARI ULANG</a>
                                     </div>
-                                    <form name="finalForm" id="finalForm" ng-submit="book.send()">
-                                        <input type="submit" class="btn btn-yellow" value="LANJUTKAN" ng-disabled="(checkoutForm.loading)">
+                                    <div class="col-sm-6">
+                                        <form name="" id="finalForm" ng-submit="book.send()">
+                                            <input type="submit" class="btn btn-yellow btn-block sm-btn" value="LANJUTKAN" ng-disabled="(checkoutForm.loading)">
                                     </form>
                                 </div>
+                            </div>
                             </div>
                         </footer>
                     </section>
@@ -871,7 +884,7 @@
         </div>
         @*</div>*@
         <!-- checkout end here -->
-                                    break;
+        break;
     case "BookExpired":
     @:[Ini ceritanya page booking expired]
         break;

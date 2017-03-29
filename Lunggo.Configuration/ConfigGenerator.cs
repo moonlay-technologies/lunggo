@@ -63,6 +63,7 @@ namespace Lunggo.Configuration
                 "WebJob.EmailQueueHandler", 
                 "WebJob.FlightProcessor",
                 "WebJob.HotelProcessor",
+                "WebJob.PriceUpdater",
                 "WebJob.FlightCrawlScheduler", 
                 "WebJob-FlightSearch.FlightCrawler1",
                 "WebJob-FlightSearch.FlightCrawler2", 
@@ -341,6 +342,7 @@ namespace Lunggo.Configuration
             const string autocompleteAirlinePath = @"/v1/autocomplete/airlines/";
             const string checkVoucherPath = @"/v1/payment/checkvoucher";
             const string checkBinDiscountPath = @"/v1/payment/checkbindiscount";
+            const string checkMethodDiscountPath = @"/v1/payment/checkmethoddiscount";
             const string subscribePath = @"/v1/newsletter/subscribe";
             const string loginPath = @"/v1/login";
             const string b2bLoginPath = @"/v1/b2blogin";
@@ -379,6 +381,8 @@ namespace Lunggo.Configuration
             const string setBookingDisabilityStatusPath = @"/v1/payment/setbookingdisabilitystatus";
             const string getBookingNotesPath = @"/v1/getbookingnotes";
             const string saveBookingNotesPath = @"/v1/savebookingnotes";
+            const string flightPriceCalendarPath = @"/v1/flight/pricecalendar";
+            const string hotelPriceCalendarPath = @"/v1/hotel/pricecalendar";
             var veritransTokenPath = _configDictionary["@@.*.veritrans.tokenEndPoint@@"];
             var veritransClientKey = _configDictionary["@@.*.veritrans.clientKey@@"];
 
@@ -399,6 +403,7 @@ namespace Lunggo.Configuration
             fileTemplate.SetAttribute("autocompleteAirlinePath", autocompleteAirlinePath);
             fileTemplate.SetAttribute("checkVoucherPath", checkVoucherPath);
             fileTemplate.SetAttribute("checkBinDiscountPath", checkBinDiscountPath);
+            fileTemplate.SetAttribute("checkMethodDiscountPath", checkMethodDiscountPath);
             fileTemplate.SetAttribute("subscribePath", subscribePath);
             fileTemplate.SetAttribute("trxHistoryPath", trxHistoryPath);
             fileTemplate.SetAttribute("bookerTrxHistoryPath", bookerTrxHistoryPath);
@@ -432,6 +437,8 @@ namespace Lunggo.Configuration
             fileTemplate.SetAttribute("hotelBookPath", hotelBookPath);
             fileTemplate.SetAttribute("hotelAvailableRatesPath", hotelAvailableRatesPath);
             fileTemplate.SetAttribute("holidayListPath", holidayListPath);
+            fileTemplate.SetAttribute("flightPriceCalendarPath", flightPriceCalendarPath);
+            fileTemplate.SetAttribute("hotelPriceCalendarPath", hotelPriceCalendarPath);
             fileTemplate.SetAttribute("mobileUrl", mobileUrl);
             fileTemplate.SetAttribute("getCreditCardPath", getCreditCardPath);
             fileTemplate.SetAttribute("addCreditCardPath", addCreditCardPath);
@@ -487,6 +494,7 @@ namespace Lunggo.Configuration
                 "WebJob.MystiflyQueueHandler",
                 "WebJob.FlightProcessor",
                 "WebJob.HotelProcessor",
+                "WebJob.PriceUpdater",
                 "WebJob.FlightCrawlScheduler",
                 "WebJob-FlightSearch.FlightCrawler1", 
                 "WebJob-FlightSearch.FlightCrawler2", 
@@ -514,6 +522,7 @@ namespace Lunggo.Configuration
                 "WebJob.MystiflyQueueHandler",
                 "WebJob.FlightProcessor",
                 "WebJob.HotelProcessor",
+                "WebJob.PriceUpdater",
                 "WebJob.FlightCrawlScheduler",
                 "WebJob-FlightSearch.FlightCrawler1",
                 "WebJob-FlightSearch.FlightCrawler2",

@@ -102,7 +102,7 @@
                         @switch (Model.Payment.Status)
                         {
                             case PaymentStatus.Pending:
-                                
+                            <span class="label label-primary" style="font-size:larger;">Pending</span><br />
                                 break;
                             case PaymentStatus.Settled:
                             <span class="label label-success" style="font-size:larger;">Complete</span><br />
@@ -123,7 +123,7 @@
                             <span class="label label-danger" style="font-size:larger;">Denied</span><br />
                                 break;
                             case PaymentStatus.Expired:
-                            <span class="label label-danger" style="font-size:larger;">Expired</span><br />
+                            <span class="label label-default" style="font-size:larger;">Expired</span><br />
                                 break;
                         }
                     </td>

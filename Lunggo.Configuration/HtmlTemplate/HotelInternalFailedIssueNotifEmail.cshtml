@@ -1,0 +1,20 @@
+﻿@using System.Globalization
+@using Lunggo.ApCommon.Constant
+@using Lunggo.Framework.Config
+@model Lunggo.ApCommon.Hotel.Model.HotelReservationForDisplay
+@{ var env = ConfigManager.GetInstance().GetConfigValue("general", "environment"); }
+<html>
+<head>
+    <title>
+        Failed Issue in Travorama
+    </title>
+</head>
+<body>
+    <p>@(env != "production" ? "THIS IS A TEST EMAIL. PLEASE IGNORE THIS DREADED EMAIL. SORRY FOR THE INCONVENIENCE." : "")</p>
+    <p>A hotel issuance has been failed!</p>
+    <p>Please check the details and process the refund as necessary.</p>
+    <p>Reservation Number : @Model.RsvNo</p>
+    <p>TAP Link : @("http://tap.travorama.com/Hotel/Detail?RsvNo=" + Model.RsvNo)</p>
+</body>
+
+</html>

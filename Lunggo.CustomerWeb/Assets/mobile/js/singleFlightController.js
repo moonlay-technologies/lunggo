@@ -9,6 +9,19 @@
         
     });
     
+    $scope.gtmContentType = gtmContentType;
+    $scope.gtmDepartingDepartureDate = gtmDepartingDepartureDate;
+    $scope.gtmReturningDepartureDate = gtmReturningDepartureDate;
+    $scope.gtmOriginAirport = gtmOriginAirport;
+    $scope.gtmDestinationAirport = gtmDestinationAirport;
+    $scope.gtmDepartingArrivalDate = gtmDepartingArrivalDate;
+    $scope.gtmReturningArrivalDate = gtmReturningArrivalDate;
+    $scope.gtmNumAdults = gtmNumAdults;
+    $scope.gtmNumChildren = gtmNumChildren;
+    $scope.gtmNumInfants = gtmNumInfants;
+    $scope.gtmTravelClass = gtmTravelClass;
+    $scope.gtmPurchaseCurrency = gtmPurchaseCurrency;
+
     $scope.returnUrl = "/";
     $scope.Progress = 0;
     $scope.trial = 0;
@@ -126,6 +139,7 @@
         return departureParam + '-' + passengerParam;
     }
 
+    $scope.listPrices = [];
     $scope.GetFlight = function () {
         if ($scope.trial > 3) {
             $scope.trial = 0;
@@ -137,7 +151,6 @@
             $log.debug('request : ' + $scope.FlightConfig[0].FlightRequest.Requests);
             $log.debug("Request : " + FlightSearchConfig.Url + $scope.flightFixRequest() + '/' + $scope.Progress);
 
-            // **********
             // ajax
             var authAccess = getAuthAccess();
             if (authAccess == 1 || authAccess == 2)
@@ -161,6 +174,9 @@
                     }
                     if (returnData.data.flights.length != 0) {
                         $scope.FlightFunctions.GenerateFlightList(returnData.data.flights[0].options);
+                        for (var x = 0; x < returnData.data.flights[0].options.length; x++) {
+                            $scope.listPrices.push(parseInt(returnData.data.flights[0].options[x].netTotalFare));
+                        }
                     }
                     
                     $log.debug('Progress : ' + $scope.Progress + ' %');
@@ -200,12 +216,45 @@
                 $scope.FlightConfig[0].FlightRequest.Progress = 100;
                 $scope.FlightConfig[0].FlightRequest.FinalProgress = 100;
                 $log.debug('Not Authorized');
-            }
-            
-
+            }           
         } else {
             $log.debug('Finished getting flight list !');
             $scope.PageConfig.Busy = false;
+
+            $scope.busy = false;
+            $scope.loading = false;
+            $scope.loadingFlight = false;
+
+            !function (f, b, e, v, n, t, s) {
+                if (f.fbq) return; n = f.fbq = function () {
+                    n.callMethod ?
+                    n.callMethod.apply(n, arguments) : n.queue.push(arguments)
+                }; if (!f._fbq) f._fbq = n;
+                n.push = n; n.loaded = !0; n.version = '2.0'; n.queue = []; t = b.createElement(e); t.async = !0;
+                t.src = v; s = b.getElementsByTagName(e)[0]; s.parentNode.insertBefore(t, s)
+            }(window, document, 'script', '//connect.facebook.net/en_US/fbevents.js');
+
+            //fbq('init', '<FB_PIXEL_ID>');
+            var lowestPrice;
+
+            if ($scope.listPrices.length > 0) {
+                lowestPrice = Math.min.apply(Math, $scope.listPrices);
+            } else {
+                lowestPrice = 0;
+            }
+
+            fbq('track', 'Search', {
+                content_type: $scope.gtmContentType,
+                departing_departure_date: $scope.gtmDepartingDepartureDate,
+                origin_airport: $scope.gtmOriginAirport,
+                destination_airport: $scope.gtmDestinationAirport,
+                num_adults: $scope.gtmNumAdults,
+                num_children: $scope.gtmNumChildren,
+                num_infants: $scope.gtmNumInfants,
+                travel_class: $scope.gtmTravelClass,
+                purchase_value: lowestPrice,
+                purchase_currency: $scope.gtmPurchaseCurrency,
+            });
         }
 
     }// get flight end

@@ -89,7 +89,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                 StarRating = Convert.ToInt32((hotelDetail.StarCode)),
                 //ChainName = GetHotelChainDesc(hotelDetail.Chain),
                 AccomodationName = GetHotelAccomodationDescId(hotelDetail.AccomodationType),
-                ImageUrl = hotelDetail.ImageUrl.Where(x => x.Type == "HAB").ToList().Select(y => y.Path).ToList(),
+                ImageUrl = hotelDetail.ImageUrl != null ? hotelDetail.ImageUrl.Where(x => x.Type == "HAB").ToList().Select(y => y.Path).ToList() : null,
                 MainImage = hotelDetail.ImageUrl != null ? hotelDetail.ImageUrl.Where(x => x.Type == "GEN").Select(x => x.Path).FirstOrDefault() : null,
                 IsRestaurantAvailable = hotelDetail.IsRestaurantAvailable,
                 IsWifiAccessAvailable = hotelDetail.WifiAccess,
@@ -126,7 +126,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                 HotelName = hotelDetail.HotelName,
                 Address = hotelDetail.Address,
                 City = hotelDetail.City,
-                ZoneName = hotelDetail.ZoneCode.Split('-').Length == 2 ?
+                ZoneName = hotelDetail.ZoneCode == null ? null : hotelDetail.ZoneCode.Split('-').Length == 2 ?
                     GetZoneNameFromDict(hotelDetail.ZoneCode) : GetZoneNameFromDict(hotelDetail.DestinationCode + "-" + hotelDetail.ZoneCode),
                 StarRating = hotelDetail.StarCode != 0
                       ? hotelDetail.StarCode
@@ -135,7 +135,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                           : 0),
                 //ChainName = GetHotelChainDesc(hotelDetail.Chain),
                 AccomodationName = GetHotelAccomodationDescId(hotelDetail.AccomodationType),
-                ImageUrl = ConcateHotelImageUrl(hotelDetail.ImageUrl.Where(x => x.Type == "HAB").ToList()),
+                ImageUrl = hotelDetail.ImageUrl != null ? ConcateHotelImageUrl(hotelDetail.ImageUrl.Where(x => x.Type == "HAB").ToList()) : null,
                 MainImage = hotelDetail.ImageUrl != null ? hotelDetail.ImageUrl.Where(x => x.Type == "GEN").Select(x => x.Path).FirstOrDefault() : null,
                 IsRestaurantAvailable = hotelDetail.IsRestaurantAvailable,
                 IsWifiAccessAvailable = hotelDetail.WifiAccess,
@@ -184,10 +184,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                             : 0),
                     //ChainName = GetHotelChainDesc(hotelDetail.Chain),
                     //AccomodationName = GetHotelAccomodationDescId(hotelDetail.AccomodationType),
-                    MainImage =
-                        hotelDetail.ImageUrl == null
-                            ? null
-                        : hotelDetail.ImageUrl == null ? null : string.Concat(baseUrl, hotelDetail.ImageUrl.Where(x => x.Type == "GEN").Select(x => x.Path).FirstOrDefault()),
+                    MainImage = hotelDetail.ImageUrl == null ? null : string.Concat(baseUrl, hotelDetail.ImageUrl.Where(x => x.Type == "GEN").Select(x => x.Path).FirstOrDefault()),
                 OriginalTotalFare = hotelDetail.OriginalTotalFare,
                 NetTotalFare = hotelDetail.NetTotalFare,
                 IsWifiAccessAvailable = hotelDetail.Facilities != null &&
@@ -238,14 +235,10 @@ namespace Lunggo.ApCommon.Hotel.Service
                     StarRating = hotelDetail.StarCode != 0
                         ? hotelDetail.StarCode
                         : (hotelDetail.StarRating != null
-                            ? Convert.ToInt32(hotelDetail.StarRating.Substring(0, 1))
-                            : 0),
+                            ? GetSimpleCodeByCategoryCode(hotelDetail.StarRating) : 0),
                     //ChainName = GetHotelChainDesc(hotelDetail.Chain),
                     //AccomodationName = GetHotelAccomodationDescId(hotelDetail.AccomodationType),
-                    MainImage =
-                        hotelDetail.ImageUrl == null
-                            ? null
-                            : hotelDetail.ImageUrl == null ? null : string.Concat(baseUrl, hotelDetail.ImageUrl.Where(x => x.Type == "GEN").Select(x => x.Path).FirstOrDefault()),
+                    MainImage = hotelDetail.ImageUrl == null ? null : string.Concat(baseUrl, hotelDetail.ImageUrl.Where(x => x.Type == "GEN").Select(x => x.Path).FirstOrDefault()),
                     OriginalTotalFare = hotelDetail.OriginalTotalFare,
                     OriginalCheapestFare = hotelDetail.OriginalCheapestFare,
                     OriginalCheapestTotalFare = hotelDetail.OriginalCheapestTotalFare,
@@ -269,7 +262,9 @@ namespace Lunggo.ApCommon.Hotel.Service
                     BookingReference = hotelDetail.BookingReference,
                     ClientReference = hotelDetail.ClientReference,
                     PhonesNumbers = hotelDetail.PhonesNumbers,
-                    PostalCode = hotelDetail.PostalCode == "0" ? null : hotelDetail.PostalCode
+                    PostalCode = hotelDetail.PostalCode == "0" ? null : hotelDetail.PostalCode,
+                    Latitude = hotelDetail.Latitude == 0 ? null : hotelDetail.Latitude,
+                    Longitude = hotelDetail.Longitude == 0 ? null: hotelDetail.Longitude
                 };
                 if (!string.IsNullOrEmpty(hotelDetail.ZoneCode))
                 {
@@ -354,6 +349,10 @@ namespace Lunggo.ApCommon.Hotel.Service
         public HotelFacilityForDisplay ConvertFacilityForDisplay(List<HotelFacility> facilities)
         {
             var displayFacilities = new HotelFacilityForDisplay();
+            if (facilities == null)
+            {
+                return null;
+            }
             var selected = facilities.Where(x => x.MustDisplay || x.IsAvailable);
             foreach (var data in selected)
             {
@@ -437,11 +436,11 @@ namespace Lunggo.ApCommon.Hotel.Service
                 new HotelRoomForDisplay
                 {
                     RoomCode = room.RoomCode,
-                    RoomName = room.RoomName ?? GetHotelRoomDescId(room.RoomCode),
+                    RoomName = GetHotelRoomDescEn(room.RoomCode),
                     Type = room.Type,
                     PaxCapacity = GetPaxCapacity(room.RoomCode),
                     CharacteristicCode = room.characteristicCd,
-                    Images = room.Images != null ? ConcateRoomImageUrl(room.Images) : null,
+                    Images = ConcateRoomImageUrl(room.Images),
                     Facilities = room.Facilities,
                     SingleRate = ConvertToSingleRateForDisplay(room.SingleRate),
                     Rates = ConvertToRatesForDisplay(room.Rates)
@@ -456,13 +455,13 @@ namespace Lunggo.ApCommon.Hotel.Service
             return new HotelRoomForDisplay
                 {
                     RoomCode = roomDetail.RoomCode,
-                    RoomName = roomDetail.RoomName,
+                    RoomName = string.IsNullOrEmpty(roomDetail.RoomName) ? GetHotelRoomDescEn(roomDetail.RoomCode) : roomDetail.RoomName,
                     Type = roomDetail.Type,
                     TypeName = dictionary.GetHotelRoomRateTypeId(roomDetail.Type),
                     CharacteristicCode = roomDetail.characteristicCd,
                     CharacteristicName = dictionary.GetHotelRoomRateTypeId(roomDetail.characteristicCd),
-                    Images = roomDetail.Images != null ? ConcateRoomImageUrl(roomDetail.Images) : null,
-                    Facilities = roomDetail.Facilities != null ? roomDetail.Facilities : null,
+                    Images = ConcateRoomImageUrl(roomDetail.Images),
+                    Facilities = roomDetail.Facilities ?? null,
                     Rates = ConvertToRatesForDisplay(roomDetail.Rates),
                     SingleRate = ConvertToSingleRateForDisplay(roomDetail.SingleRate)
                 };
@@ -648,9 +647,9 @@ namespace Lunggo.ApCommon.Hotel.Service
         public void SetDisplayPriceHotelRate(HotelRateForDisplay rateDisplay, HotelRate rate)
         {
             rateDisplay.Breakdowns[0].NetTotalFare = rate.Price.Local;
-            rateDisplay.Breakdowns[0].OriginalTotalFare = Math.Round(rateDisplay.Breakdowns[0].NetTotalFare * 1.01M);
+            rateDisplay.Breakdowns[0].OriginalTotalFare = rate.GetApparentOriginalPrice();
             rateDisplay.Breakdowns[0].NetFare = Math.Round((rateDisplay.Breakdowns[0].NetTotalFare / rate.RateCount) / rate.NightCount);
-            rateDisplay.Breakdowns[0].OriginalFare = Math.Round(rateDisplay.Breakdowns[0].NetFare * 1.01M);
+            rateDisplay.Breakdowns[0].OriginalFare = Math.Round((rateDisplay.Breakdowns[0].OriginalTotalFare / rate.RateCount) / rate.NightCount);
 
             if (rateDisplay.Cancellation != null)
             {

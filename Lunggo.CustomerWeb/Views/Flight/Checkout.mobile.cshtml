@@ -1,4 +1,5 @@
 ﻿@using System.Globalization
+@using Lunggo.ApCommon.Flight.Constant
 @using Lunggo.ApCommon.Identity.Users
 @using Lunggo.Framework.Config
 @using Lunggo.Framework.Context
@@ -30,6 +31,15 @@
     {
         ViewBag.Message = "BookExpired";
     }
+
+var gtmReturningDepartureDate = "";
+    var gtmReturningArrivalDate = "";
+    if (Model.Itinerary.TripType.GetValueOrDefault() == TripType.RoundTrip)
+    {
+        gtmReturningDepartureDate = Model.Itinerary.Trips[1].DepartureDate.GetValueOrDefault().ToString("yyyyMMdd");
+        gtmReturningArrivalDate = Model.Itinerary.Trips[1].Segments.Last().ArrivalTime.GetValueOrDefault().ToString("yyyyMMdd");
+    }
+
     var baseUrl = ConfigManager.GetInstance().GetConfigValue("api", "apiUrl");
     var client = new RestClient(baseUrl);
     var notes = new List<BookingNotes>();
@@ -44,7 +54,7 @@
 
         var contentDeserialize = Lunggo.Framework.Extension.JsonExtension.Deserialize<GetBookingNotesModel>(response.Content);
         notes = contentDeserialize.BookingNotes;
-    }
+}
     catch
     {
 
@@ -75,42 +85,63 @@
 }
 @section PageJS{
     <script>
-    var langCode = '@OnlineContext.GetActiveLanguageCode()';
-    // Checkout Detail
-    var CheckoutDetail = {
-        Token: '@Model.Token',
-        ExpiryDate: '@Model.ExpiryTime.ToString("o")',
-        Trips: @Html.Raw(Model.Itinerary.Trips.Serialize()),
-        Price: @Model.Itinerary.NetTotalFare,
-        TotalAdultFare : @Model.Itinerary.OriginalAdultFare * @Model.Itinerary.AdultCount,
-        TotalChildFare: @Model.Itinerary.OriginalChildFare * @Model.Itinerary.ChildCount,
-        TotalInfantFare: @Model.Itinerary.OriginalInfantFare * @Model.Itinerary.InfantCount,
-        OriginalPrice: @Model.Itinerary.OriginalTotalFare,
-        // passenger
-        Passenger: [@Model.Itinerary.AdultCount, @Model.Itinerary.ChildCount, @Model.Itinerary.InfantCount],
-        PassengerName: ['Dewasa', 'Anak', 'Bayi'],
-        // identity requirement
-        PassportRequired: @Model.Itinerary.RequirePassport.ToString().ToLower(),
-        IdRequired: false,
-        NationalityRequired: @Model.Itinerary.RequireNationality.ToString().ToLower(),
-        BirthDateRequired: @Model.Itinerary.RequireBirthDate.ToString().ToLower(),
-        // departure date
-        DepartureDate: '@Model.Itinerary.Trips.Last().DepartureDate',
-        BeforeDepartureDate: '@Model.Itinerary.Trips.Last().DepartureDate.GetValueOrDefault().AddDays(-1)',
-        PassportDepartureDate: '@Model.Itinerary.Trips.Last().DepartureDate.GetValueOrDefault().AddMonths(6)',
-        // buyer info
-        BuyerInfo: {
-            LoggedIn : @User.Identity.IsAuthenticated.ToString().ToLower(),
-            Name: '@User.Identity.GetFirstName() + " " + @User.Identity.GetLastName()',
-            CountryCode : '@User.Identity.GetCountryCd()',
-            Phone: '@User.Identity.GetPhoneNumber()',
-            Email: '@User.Identity.GetEmail()'
+        var langCode = '@OnlineContext.GetActiveLanguageCode()';
+        // Checkout Detail
+        var CheckoutDetail = {
+            Token: '@Model.Token',
+            ExpiryDate: '@Model.ExpiryTime.ToString("o")',
+            Trips: @Html.Raw(Model.Itinerary.Trips.Serialize()),
+            Price: @Model.Itinerary.NetTotalFare,
+            TotalAdultFare : @Model.Itinerary.OriginalAdultFare * @Model.Itinerary.AdultCount,
+            TotalChildFare: @Model.Itinerary.OriginalChildFare * @Model.Itinerary.ChildCount,
+            TotalInfantFare: @Model.Itinerary.OriginalInfantFare * @Model.Itinerary.InfantCount,
+            OriginalPrice: @Model.Itinerary.OriginalTotalFare,
+            // passenger
+            Passenger: [@Model.Itinerary.AdultCount, @Model.Itinerary.ChildCount, @Model.Itinerary.InfantCount],
+            PassengerName: ['Dewasa', 'Anak', 'Bayi'],
+            // identity requirement
+            PassportRequired: @Model.Itinerary.RequirePassport.ToString().ToLower(),
+            IdRequired: false,
+            NationalityRequired: @Model.Itinerary.RequireNationality.ToString().ToLower(),
+            BirthDateRequired: @Model.Itinerary.RequireBirthDate.ToString().ToLower(),
+            // departure date
+            DepartureDate: '@Model.Itinerary.Trips.Last().DepartureDate',
+            BeforeDepartureDate: '@Model.Itinerary.Trips.Last().DepartureDate.GetValueOrDefault().AddDays(-1)',
+            PassportDepartureDate: '@Model.Itinerary.Trips.Last().DepartureDate.GetValueOrDefault().AddMonths(6)',
+            // buyer info
+            BuyerInfo: {
+                LoggedIn : @User.Identity.IsAuthenticated.ToString().ToLower(),
+                Name: '@User.Identity.GetFirstName() + " " + @User.Identity.GetLastName()',
+                CountryCode : '@User.Identity.GetCountryCd()',
+                Phone: '@User.Identity.GetPhoneNumber()',
+                Email: '@User.Identity.GetEmail()'
             }
         };
         var bookingNotes = @Html.Raw(notes.Serialize());
     </script>
     <!-- angular controller -->
     <script src="/Assets/mobile/js/CheckoutController.js"></script>
+    <script>
+        var gtmContentType = 'flight';
+        var gtmDepartingDepartureDate = '@Model.Itinerary.Trips[0].DepartureDate.GetValueOrDefault().ToString("yyyyMMdd")';
+        var gtmDepartingArrivalDate = '@Model.Itinerary.Trips[0].Segments.Last().ArrivalTime.GetValueOrDefault().ToString("yyyyMMdd")';
+        var gtmOriginAirport = '@Model.Itinerary.Trips[0].OriginAirport';
+        var gtmDestinationAirport = '@Model.Itinerary.Trips[0].DestinationAirport';
+        var gtmNumAdults = @Model.Itinerary.AdultCount;
+        var gtmNumChildren = @Model.Itinerary.ChildCount;
+        var gtmNumInfants = @Model.Itinerary.InfantCount;
+        var gtmTravelClass = '@Model.Itinerary.RequestedCabinClass.ToString().ToLower()';
+        var gtmPurchaseValue = @Model.Itinerary.NetTotalFare;
+        var gtmPurchaseCurrency = 'IDR';
+        @if (Model.Itinerary.TripType.GetValueOrDefault() == TripType.RoundTrip)
+        {
+            @:var gtmReturningDepartureDate = '@gtmReturningDepartureDate';
+            @:var gtmReturningArrivalDate = '@gtmReturningArrivalDate';
+        }
+        
+        var gtmPageName = 'contact_form';
+    </script>
+
 }
 
 @switch ((string)ViewBag.Message)
@@ -172,7 +203,7 @@
                                 <label class=" control-label">Masukkan alamat e-mail Anda : </label>
                                 <input type="email" value="" ng-model="buyerInfo.email" name="Email" class="form-control" placeholder="Ex: name@domain.com" required />
                             </div>
-                            
+
                             @if (ViewBag.Domain == "B2B")
                             {
                                 <label class="control-label">Tujuan Kunjungan</label>
@@ -396,7 +427,7 @@
                             </dl>
                             <dl>
                                 <dt>Diskon Travorama</dt>
-                                <dd><sup>-Rp</sup> {{CheckoutConfig.OriginalPrice - CheckoutConfig.Price | number}}</dd>
+                                <dd>-<sup>Rp</sup> {{CheckoutConfig.OriginalPrice - CheckoutConfig.Price | number}}</dd>
                             </dl>
                             <dl>
                                 <dt>Harga Total: </dt>
