@@ -197,6 +197,15 @@
                 $scope.showListApproverEdit = false;
             } else {
                 $scope.showListApproverEdit = true;
+                $scope.approverExc = [];
+                for (var i = 0; i < $scope.approvers.length; i++) {
+                    if ($scope.approvers[i].name != $scope.editUser.name) {
+                        $scope.approverExc.push({
+                            name: $scope.approvers[i].name,
+                            userId: $scope.approvers[i].userId
+                        });
+                    }
+                }
             }
             $('#edit-user').modal('show');
             
@@ -630,7 +639,7 @@
             $scope.updatingUser = false;
             $scope.editUser.role = $scope.selectedRole;
             var data;
-            if ($scope.userData.role.indexOf("Booker") > -1) {
+            if ($scope.editUser.role.indexOf("Booker") > -1) {
                 if ($scope.editUser.approverId == null || $scope.editUser.approverId.length == 0) {
                     $('.mustHaveApprover').modal({
                         backdrop: 'static',

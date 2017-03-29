@@ -69,7 +69,7 @@
     </script>
 }
 
-<div ng-app="travoramaB2B" ng-controller="b2BBookerController">
+<div>
     <div class="order-list">
         <div class="panel panel-transparent">
             <div class="panel-heading m-b-30">
@@ -88,7 +88,7 @@
                 {
                     <div class="ol-list clearfix m-b-30" >
                         <div class="ol-border ol-header fs-12 bold font-montserrat  padding-15 clearfix">
-                            <div class="olh-title col-sm-9 no-padding">@rsv.BookerMessageTitle <button class="label label-primary m-l-10 fs-11 text-capitalize"  data-target="#info-Detail" onclick="ShowModal('@rsv.BookerName','@rsv.BookerMessageTitle','@rsv.BookerMessageTitle')" style="cursor: pointer;"><i class="fa fa-info-circle m-r-5"></i>Info</button></div>
+                            <div class="olh-title col-sm-9 no-padding">@rsv.BookerMessageTitle <button class="label label-primary m-l-10 fs-11 text-capitalize"  data-target="#info-Detail" onclick="ShowModal('@rsv.BookerName','@rsv.BookerMessageTitle','@rsv.BookerMessageDescription')" style="cursor: pointer;"><i class="fa fa-info-circle m-r-5"></i>Info</button></div>
                         </div>
                         <div class="ol-body">
                             @if (rsv.ReservationList.Flights != null)
@@ -102,14 +102,14 @@
                                                     <div class="clearfix">
                                                         <div class="col-sm-5 no-padding p-l-60 m-t-20 m-b-20">
                                                             <div class="bold font-montserrat fs-12">@flight.Itinerary.Trips[0].OriginCity</div>
-                                                            <div class="">@flight.Itinerary.Trips[0].DepartureDate.Value.ToString("d MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID"))</div>
-                                                            <div class="">@flight.Itinerary.Trips[0].DepartureDate.Value.ToString("HH:mm", CultureInfo.CreateSpecificCulture("id-ID"))</div>
+                                                            <div class="">@flight.Itinerary.Trips[0].Segments[0].DepartureTime.Value.ToString("d MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID"))</div>
+                                                            <div class="">@flight.Itinerary.Trips[0].Segments[0].DepartureTime.Value.ToString("HH:mm", CultureInfo.CreateSpecificCulture("id-ID"))</div>
                                                         </div>
                                                         <div class="col-sm-2 no-padding p-l-20 p-r-20 m-t-50 m-b-20"><span class="dash"></span></div>
                                                         <div class="col-sm-5 no-padding p-l-60 m-t-20 m-b-20">
                                                             <div class="bold font-montserrat fs-12">@flight.Itinerary.Trips[0].DestinationCity</div>
-                                                            <div class="">@flight.Itinerary.Trips[0].Segments[0].DepartureTime.Value.ToString("d MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID"))</div>
-                                                            <div class="">@flight.Itinerary.Trips[0].Segments[0].DepartureTime.Value.ToString("HH:mm")</div>
+                                                            <div class="">@flight.Itinerary.Trips[0].Segments[0].ArrivalTime.Value.ToString("d MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID"))</div>
+                                                            <div class="">@flight.Itinerary.Trips[0].Segments[0].ArrivalTime.Value.ToString("HH:mm")</div>
                                                         </div>
                                                     </div>
                                                 </div>

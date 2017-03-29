@@ -294,7 +294,7 @@ namespace Lunggo.ApCommon.Identity.Users
                         Position = user.Position,
                         Department = user.Department,
                         Branch = user.Branch,
-                        ApproverId = user.Approver.Id
+                        ApproverId = user.Approver == null ? null : user.Approver.Id 
                     });
                 }
                 return true;
