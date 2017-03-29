@@ -87,10 +87,13 @@ namespace Lunggo.CustomerWeb.Controllers
             var hotel = HotelService.GetInstance();
             var rsvs = new List<FlightReservationForDisplay>();
             var rsvsHotel = new List<HotelReservationForDisplay>();
-            rsvs = flight.GetBookerOverviewReservationsByUserIdOrEmail("3904", "if312055@gmail.com",
+            var user = B2BUtil.GetB2BUser(Request);
+            if (!user.Roles.Contains("Booker"))
+                return Redirect("/");
+            rsvs = flight.GetBookerOverviewReservationsByUserIdOrEmail(user.Id, user.Email,
                         filter, null, null, null);
 
-            rsvsHotel = hotel.GetBookerOverviewReservationsByUserIdOrEmail("3904", "if312055@gmail.com",
+            rsvsHotel = hotel.GetBookerOverviewReservationsByUserIdOrEmail(user.Id, user.Email,
                         filter, null, null, null);
 
             var rsvForDisplay = ProcessBookerReservation(rsvs, rsvsHotel);
@@ -168,8 +171,11 @@ namespace Lunggo.CustomerWeb.Controllers
         public ActionResult OldFlightReservationBooker()
         {
             string filter = "inactive";
+            var user = B2BUtil.GetB2BUser(Request);
+            if (!user.Roles.Contains("Booker"))
+                return Redirect("/");
             var flight = FlightService.GetInstance();
-            var rsvs = flight.GetBookerOverviewReservationsByUserIdOrEmail("3904", "if312055@gmail.com",
+            var rsvs = flight.GetBookerOverviewReservationsByUserIdOrEmail(user.Id, user.Email,
                 filter, null, null, null);
             return View(rsvs);
         }
@@ -177,8 +183,11 @@ namespace Lunggo.CustomerWeb.Controllers
         public ActionResult OlderHotelReservationBooker()
         {
             string filter = "inactive";
+            var user = B2BUtil.GetB2BUser(Request);
+            if (!user.Roles.Contains("Booker"))
+                return Redirect("/");
             var hotel = HotelService.GetInstance();
-            var rsvs = hotel.GetBookerOverviewReservationsByUserIdOrEmail("3904", "if312055@gmail.com",
+            var rsvs = hotel.GetBookerOverviewReservationsByUserIdOrEmail(user.Id, user.Email,
                 filter, null, null, null);
             return View(rsvs);
         }
@@ -195,16 +204,26 @@ namespace Lunggo.CustomerWeb.Controllers
 
             if (!from.HasValue || !to.HasValue)
         {
-                from = DateTime.Now.AddDays(-30).Date;
+                from = DateTime.Now.AddDays(-60).Date;
                 to = DateTime.Now.Date;
             }
             var rsvs = FlightService.GetInstance().GetReservationsByCompany(user.CompanyId, branch, dept, pos, from.Value, to.Value);
             return View(rsvs);
         }
 
-        public ActionResult OrderListHotelFinance()
+        public ActionResult OrderListHotelFinance(string branch, string dept, string pos, DateTime? from, DateTime? to)
         {
-            return View();
+            var user = B2BUtil.GetB2BUser(Request);
+            if (!user.Roles.Contains("Finance"))
+                return Redirect("/");
+
+            if (!from.HasValue || !to.HasValue)
+            {
+                from = DateTime.Now.AddDays(-60).Date;
+                to = DateTime.Now.Date;
+            }
+            var rsvs = HotelService.GetInstance().GetReservationsByCompany(user.CompanyId, branch, dept, pos, from.Value, to.Value);
+            return View(rsvs);
         }
 
         public ActionResult OrderDetailFlightFinance()
