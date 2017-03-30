@@ -76,7 +76,7 @@
                             <div class="ol-flight clearfix">
                                 <div class="ol-item ol-border bg-white clearfix">
                                     <div class="clearfix flight-icon">
-                                        <div class="col-sm-6 no-padding">
+                                        <div class="col-sm-5 no-padding">
                                             <div class="clearfix">
                                                 <div class="col-sm-5 no-padding p-l-60 m-t-20 m-b-20">
                                                     <div class="bold font-montserrat fs-12">@flight.Itinerary.Trips[0].OriginCity</div>
@@ -91,12 +91,17 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-sm-6 no-padding clearfix">
+                                        <div class="col-sm-4 no-padding clearfix">
                                             <div class="col-sm-5 no-padding text-center m-t-20">
                                                 <div class=" m-t-20">@flight.Pax.Count Orang</div>
                                             </div>
                                             <div class="col-sm-7 no-padding text-center m-t-20 m-b-20">
                                                 <div class=" m-t-20">Rp. @flight.Payment.OriginalPrice</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3 no-padding m-t-15 m-b-20">
+                                            <div class="text-center">
+                                                <button class="btn btn-success btn-cons m-t-15" disabled="disabled">@flight.RsvDisplayStatus</button>
                                             </div>
                                         </div>
                                     </div>

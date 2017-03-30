@@ -73,14 +73,14 @@
                                 <div class="ol-hotel clearfix">
                                     <div class="ol-item ol-border bg-white clearfix">
                                         <div class="clearfix hotel-icon">
-                                            <div class="col-sm-6 no-padding clearfix">
+                                            <div class="col-sm-5 no-padding clearfix">
                                                 <div class="p-l-60 m-t-20 m-b-20">
                                                     <div class="bold font-montserrat fs-12">@hotel.HotelDetail.HotelName</div>
                                                     <div class="">@hotel.HotelDetail.ZoneName, @hotel.HotelDetail.DestinationName @hotel.HotelDetail.CountryName</div>
                                                     <div class="">@hotel.HotelDetail.CheckInDate.ToString("d MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID")) - @hotel.HotelDetail.CheckOutDate.ToString("d MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID"))</div>
                                                 </div>
                                             </div>
-                                            <div class="col-sm-6 no-padding clearfix">
+                                            <div class="col-sm-4 no-padding clearfix">
                                                 <div class="col-sm-6 no-padding p-l-60 m-t-30">
                                                     <ul class="p-l-20">
                                                         <li>@hotel.Pax.Count Orang</li>
@@ -89,6 +89,11 @@
                                                 </div>
                                                 <div class="col-sm-6 no-padding text-center m-t-20 m-b-20">
                                                     <div class=" m-t-20">Rp. @hotel.Payment.OriginalPrice</div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-3 no-padding m-t-15 m-b-20">
+                                                <div class="text-center">
+                                                    <button class="btn btn-success btn-cons m-t-15" disabled="disabled">@hotel.RsvDisplayStatus</button>
                                                 </div>
                                             </div>
                                         </div>
