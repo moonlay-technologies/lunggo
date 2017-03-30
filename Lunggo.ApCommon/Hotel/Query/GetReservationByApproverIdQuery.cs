@@ -35,7 +35,7 @@ namespace Lunggo.ApCommon.Hotel.Query
         private static string CreateWhereClause()
         {
             var clauseBuilder = new StringBuilder();
-            clauseBuilder.Append("WHERE u.ApproverId = @ApproverId AND r.RsvType = 'AGENT'");
+            clauseBuilder.Append("WHERE u.ApproverId = @ApproverId AND r.RsvType = 'AGENT'  AND p.StatusCd = 'PEN' ");
             return clauseBuilder.ToString();
         }
 

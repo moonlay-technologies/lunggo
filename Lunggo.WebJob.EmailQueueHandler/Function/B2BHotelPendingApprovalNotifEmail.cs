@@ -50,7 +50,7 @@ namespace Lunggo.WebJob.EmailQueueHandler.Function
             var mailModel = new MailModel
             {
                 RecipientList = recipient,
-                Subject = envPrefix + env == "production" ? "New Agent Hotel Booking - No Pemesanan :  " + rsvNo : "[TEST] Ignore This Email",
+                Subject = envPrefix + "[Travorama] Persetujuan Anda Dibutuhkan - No. Pemesanan " + reservation.RsvNo,
                 FromMail = "booking@travorama.com",
                 FromName = "Travorama",
                 BccList = new[] { "maillog.travorama@gmail.com" }

@@ -567,10 +567,13 @@
                         var foundDepartment = false;
                         
                         for (var i = 0; i < $scope.positions.length; i++) {
-                            if ($scope.positions[i].toLowerCase() == $scope.userData.position.toLowerCase()) {
-                                foundPosition = true;
-                                break;
+                            if ($scope.positions[i] != null) {
+                                if ($scope.positions[i].toLowerCase() == $scope.userData.position.toLowerCase()) {
+                                    foundPosition = true;
+                                    break;
+                                }
                             }
+                            
                         }
 
                         if (foundPosition) {
@@ -578,10 +581,13 @@
                         }
 
                         for (var i = 0; i < $scope.branches.length; i++) {
-                            if ($scope.branches[i].toLowerCase() == $scope.userData.branch.toLowerCase()) {
-                                foundBranch = true;
-                                break;
+                            if ($scope.branches[i] != null) {
+                                if ($scope.branches[i].toLowerCase() == $scope.userData.branch.toLowerCase()) {
+                                    foundBranch = true;
+                                    break;
+                                }
                             }
+                            
                         }
 
                         if (foundBranch) {
@@ -589,10 +595,13 @@
                         }
 
                         for (var i = 0; i < $scope.departments.length; i++) {
-                            if ($scope.departments[i].toLowerCase() == $scope.userData.department.toLowerCase()) {
-                                foundDepartment = true;
-                                break;
+                            if ($scope.departments[i] != null) {
+                                if ($scope.departments[i].toLowerCase() == $scope.userData.department.toLowerCase()) {
+                                    foundDepartment = true;
+                                    break;
+                                }
                             }
+                            
                         }
 
                         if (foundDepartment) {

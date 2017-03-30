@@ -74,8 +74,8 @@
                                         <div class="col-sm-2 no-padding p-l-20 p-r-20 m-t-50 m-b-20"><span class="dash"></span></div>
                                         <div class="col-sm-5 no-padding p-l-60 m-t-20 m-b-20">
                                                 <div class="bold font-montserrat fs-12">{{flight.itin.trips[0].destination}}</div>
-                                                <div class="">{{flight.itin.trips[0].segments[0].departureTime | date : 'EEEE, dd MMMM yyyy'}}</div>
-                                                <div class="">{{flight.itin.trips[0].segments[0].departureTime | date : 'HH:mm' :'UTC'}}</div>
+                                                <div class="">{{flight.itin.trips[0].segments[0].arrivalTime | date : 'EEEE, dd MMMM yyyy'}}</div>
+                                                <div class="">{{flight.itin.trips[0].segments[0].arrivalTime | date : 'HH:mm' :'UTC'}}</div>
                                         </div>
                                     </div>
                                 </div>
@@ -101,7 +101,7 @@
                                 <div class="panel-body">
                                     <div class="airline-lion">
                                         <span class=" m-r-5">
-                                                <img src="flight.itin.trips[0].segments[0].airlineLogoUrl" alt="flight.itin.trips[0].segments[0].airlineName" class="flight-airline-image" width="50" height="50">
+                                            <img ng-src="{{flight.itin.trips[0].segments[0].airlineLogoUrl}}" alt="flight.itin.trips[0].segments[0].airlineName" class="flight-airline-image" width="50" height="50">
                                         </span>
                                             <span class="bold font-montserrat fs-12 text-uppercase">{{flight.itin.trips[0].segments[0].airlineName}}</span>
                                     </div>
@@ -113,7 +113,7 @@
                                     <ol class="pax-list p-l-15">
                                             <li ng-repeat="pax in flight.pax track by $index">
                                             <div class="pl-row clearfix">
-                                                    <div class="col-sm-4 no-padding">Mr. {{titlePax(pax.title)}} {{pax.name}}</div>
+                                                    <div class="col-sm-4 no-padding">{{titlePax(pax.title)}} {{pax.name}}</div>
                                                 <div class="col-sm-1 no-padding p-r-40"><span class="dash m-t-10"></span></div>
                                                     <div class="col-sm-6 no-padding">{{paxType(pax.type)}}</div>
                                             </div>

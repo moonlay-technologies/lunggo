@@ -1,6 +1,7 @@
 ﻿@using System.Globalization
 @using Lunggo.ApCommon.Constant
 @using Lunggo.ApCommon.Model
+@using Lunggo.ApCommon.Product.Constant
 @model List<ReservationListModel>
 @{
     Layout = "/Views/Shared/B2BTravorama/_B2BLayout.cshtml";
@@ -125,7 +126,24 @@
                                                 </div>
                                                 <div class="col-sm-3 no-padding m-t-15 m-b-20">
                                                     <div class="text-center">
-                                                        <button class="btn btn-success btn-cons m-t-15" disabled="disabled">@flight.RsvDisplayStatus</button>
+                                                        @if (flight.RsvDisplayStatus == RsvDisplayStatus.Issued || flight.RsvDisplayStatus == RsvDisplayStatus.Paid || flight.RsvDisplayStatus == RsvDisplayStatus.Reserved || flight.RsvDisplayStatus == RsvDisplayStatus.Approved)
+                                                        {
+                                                            <button class="btn btn-success btn-cons m-t-15" disabled="disabled">@flight.RsvDisplayStatus</button>
+                                                        }
+                                                        @if (flight.RsvDisplayStatus == RsvDisplayStatus.Rejected || flight.RsvDisplayStatus == RsvDisplayStatus.FailedUnpaid || flight.RsvDisplayStatus == RsvDisplayStatus.Expired)
+                                                        {
+                                                            <button class="btn btn-danger btn-cons m-t-15" disabled="disabled">@flight.RsvDisplayStatus</button>
+                                                        }
+                                                        @if (flight.RsvDisplayStatus == RsvDisplayStatus.Pending)
+                                                        {
+                                                            <button class="btn btn-cons m-t-15">@flight.RsvDisplayStatus</button>
+                                                        }
+                                                        
+                                                        @if (flight.RsvDisplayStatus == RsvDisplayStatus.Issued)
+                                                        {
+                                                            <a href="/id/Payment/Eticket?rsvNo=@flight.RsvNo" class="btn btn-blue btn-cons m-t-15"> Eticket</a>
+                                                        }
+                                                        
                                                     </div>
                                                 </div>
                                             </div>
@@ -231,7 +249,23 @@
                                                 </div>
                                                 <div class="col-sm-3 no-padding m-t-15 m-b-20">
                                                     <div class="text-center">
-                                                        <button class="btn btn-success btn-cons m-t-15" disabled="disabled">@hotel.RsvDisplayStatus</button>
+                                                        @if (hotel.RsvDisplayStatus == RsvDisplayStatus.Issued || hotel.RsvDisplayStatus == RsvDisplayStatus.Paid || hotel.RsvDisplayStatus == RsvDisplayStatus.Reserved || hotel.RsvDisplayStatus == RsvDisplayStatus.Approved)
+                                                        {
+                                                            <button class="btn btn-success btn-cons m-t-15" disabled="disabled">@hotel.RsvDisplayStatus</button>
+                                                        }
+                                                        @if (hotel.RsvDisplayStatus == RsvDisplayStatus.Rejected || hotel.RsvDisplayStatus == RsvDisplayStatus.FailedUnpaid || hotel.RsvDisplayStatus == RsvDisplayStatus.Expired)
+                                                        {
+                                                            <button class="btn btn-danger btn-cons m-t-15" disabled="disabled">@hotel.RsvDisplayStatus</button>
+                                                        }
+                                                        @if (hotel.RsvDisplayStatus == RsvDisplayStatus.Pending)
+                                                        {
+                                                            <button class="btn btn-cons m-t-15" >@hotel.RsvDisplayStatus</button>
+                                                        }
+
+                                                        @if (hotel.RsvDisplayStatus == RsvDisplayStatus.Issued)
+                                                        {
+                                                            <a href="/id/Payment/Eticket?rsvNo=@hotel.RsvNo" class="btn btn-blue btn-cons m-t-15"> Eticket</a>
+                                                        }
                                                     </div>
                                                 </div>
                                             </div>
