@@ -7,16 +7,16 @@
     var hotelImg = "";
     var roomImg = "";
     var images = HotelService.GetInstance().GetHotelDetailFromDb(Model.HotelCode).ImageUrl;
-
-    var orDefault = images.Where(i => i.Type == "GEN").ToList().FirstOrDefault();
+    
+    var orDefault = images == null ? null :  images.Where(i => i.Type == "GEN").ToList().SingleOrDefault();
     if (orDefault != null)
     {
         hotelImg = images == null
             ? null
             : "https://photos.hotelbeds.com/giata/" + orDefault.Path;
     }
-    
-    var firstOrDefault = images.Where(i => i.Type == "HAB").ToList().FirstOrDefault();
+
+    var firstOrDefault = images == null ? null : images.Where(i => i.Type == "HAB").ToList().FirstOrDefault();
     if (firstOrDefault != null)
     {
         roomImg = images == null

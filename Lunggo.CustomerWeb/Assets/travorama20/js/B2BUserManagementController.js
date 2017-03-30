@@ -175,7 +175,7 @@
             }
             
             $scope.editUser.countryCallCd = $scope.users[index].countryCallCd;
-            $scope.editUser.phone = $scope.users[index].phoneNumber;
+            $scope.editUser.phone = parseInt($scope.users[index].phoneNumber);
             $scope.editUser.department = $scope.users[index].department;
             $scope.editUser.branch = $scope.users[index].branch;
             $scope.editUser.position = $scope.users[index].position;
@@ -556,7 +556,9 @@
                             approverId: $scope.userData.approverId,
                             roleName:roles,
                             department: $scope.userData.department,
-                            approverName: approverName
+                            approverName: approverName,
+                            phoneNumber: $scope.userData.phone,
+                            countryCallCd: $scope.userData.countryCallCd
                         });
                         $scope.userNames.push($scope.userData.name);
 
@@ -698,12 +700,15 @@
                         $scope.users[$scope.currentEditIndex].branch = $scope.editUser.branch;
                         $scope.users[$scope.currentEditIndex].position = $scope.editUser.position;
                         $scope.users[$scope.currentEditIndex].department = $scope.editUser.department;
+                        $scope.users[$scope.currentEditIndex].countryCallCd = $scope.editUser.countryCallCd;
+                        $scope.users[$scope.currentEditIndex].phoneNumber = $scope.editUser.phone;
+
 
                         if ($scope.editUser.role != null && $scope.editUser.role.length > 0) {
                             $scope.users[$scope.currentEditIndex].roleName = $scope.editUser.role;
                         }
                         
-                        $scope.users[$scope.currentEditIndex].approverId = $scope.editUser.branch;
+                        $scope.users[$scope.currentEditIndex].approverId = $scope.editUser.approverId;
                         //$.grep(myArray, function(e){ return e.id == id; });
                         $scope.users[$scope.currentEditIndex].approverName =
                             $.grep($scope.approvers, function (e) { return e.userId == $scope.editUser.approverId; })[0].name;
