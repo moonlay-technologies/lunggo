@@ -76,6 +76,9 @@ namespace Lunggo.CustomerWeb.Controllers
             }
             if (!B2BUtil.IsB2BAuthorized(Request))
                 return RedirectToAction("Login", "B2BTemplate");
+            var user = B2BUtil.GetB2BUser(Request);
+            if (!user.Roles.Contains("Booker"))
+                return Redirect("/");
             var result = GetBookingDisabilityStatus();
             if (result.IsBookingDisabled == null)
             {
@@ -91,6 +94,9 @@ namespace Lunggo.CustomerWeb.Controllers
             }
             if (!B2BUtil.IsB2BAuthorized(Request))
                 return RedirectToAction("Login", "B2BTemplate");
+            var user = B2BUtil.GetB2BUser(Request);
+            if (!user.Roles.Contains("Booker"))
+                return Redirect("/");
             var result = GetBookingDisabilityStatus();
             if (result.IsBookingDisabled == null)
             {
@@ -100,6 +106,15 @@ namespace Lunggo.CustomerWeb.Controllers
         }
         public ActionResult Payment()
         {
+            if (!B2BUtil.IsB2BDomain(Request))
+            {
+                return Redirect("/");
+            }
+            if (!B2BUtil.IsB2BAuthorized(Request))
+                return RedirectToAction("Login", "B2BTemplate");
+            var user = B2BUtil.GetB2BUser(Request);
+            if (!user.Roles.Contains("Finance"))
+                return Redirect("/");
             return View();
         }
         public ActionResult OrderListBooker()
@@ -315,6 +330,11 @@ namespace Lunggo.CustomerWeb.Controllers
             {
                 return Redirect("/");
             }
+            if (!B2BUtil.IsB2BAuthorized(Request))
+                return RedirectToAction("Login", "B2BTemplate");
+            var user = B2BUtil.GetB2BUser(Request);
+            if (!user.Roles.Contains("Booker"))
+                return Redirect("/");
             return View();
         }
         //Email Template
