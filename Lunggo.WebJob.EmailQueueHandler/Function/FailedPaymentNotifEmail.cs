@@ -42,7 +42,8 @@ namespace Lunggo.WebJob.EmailQueueHandler.Function
                 RecipientList = emails,
                 Subject = envPrefix + "[Travorama] Payment Process for Reservation Number " + rsvNo + " is Failed",
                 FromMail = "booking@travorama.com",
-                FromName = "Travorama"
+                FromName = "Travorama",
+                BccList = new[] { "maillog.travorama@gmail.com" }
             };
             Console.WriteLine("Sending Notification Email...");
             mailService.SendEmail(rsvNo, mailModel, "FailedPaymentNotifEmail");
