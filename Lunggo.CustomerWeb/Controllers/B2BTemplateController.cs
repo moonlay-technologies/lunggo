@@ -22,10 +22,20 @@ namespace Lunggo.CustomerWeb.Controllers
         // GET: B2BTemplate
         public ActionResult Index()
         {
+            if (!B2BUtil.IsB2BDomain(Request))
+            {
+                return Redirect("/");
+            }
+            if (!B2BUtil.IsB2BAuthorized(Request))
+                return RedirectToAction("Login", "B2BTemplate");
             return View();
         }
         public ActionResult Login()
         {
+            if (!B2BUtil.IsB2BDomain(Request))
+            {
+                return Redirect("/");
+            }
             return View();
         }
         public ActionResult Logout()
@@ -60,6 +70,12 @@ namespace Lunggo.CustomerWeb.Controllers
         }
         public ActionResult SearchFlight()
         {
+            if (!B2BUtil.IsB2BDomain(Request))
+            {
+                return Redirect("/");
+            }
+            if (!B2BUtil.IsB2BAuthorized(Request))
+                return RedirectToAction("Login", "B2BTemplate");
             var result = GetBookingDisabilityStatus();
             if (result.IsBookingDisabled == null)
             {
@@ -69,6 +85,12 @@ namespace Lunggo.CustomerWeb.Controllers
         }
         public ActionResult SearchHotel()
         {
+            if (!B2BUtil.IsB2BDomain(Request))
+            {
+                return Redirect("/");
+            }
+            if (!B2BUtil.IsB2BAuthorized(Request))
+                return RedirectToAction("Login", "B2BTemplate");
             var result = GetBookingDisabilityStatus();
             if (result.IsBookingDisabled == null)
             {
@@ -82,6 +104,12 @@ namespace Lunggo.CustomerWeb.Controllers
         }
         public ActionResult OrderListBooker()
         {
+            if (!B2BUtil.IsB2BDomain(Request))
+            {
+                return Redirect("/");
+            }
+            if (!B2BUtil.IsB2BAuthorized(Request))
+                return RedirectToAction("Login", "B2BTemplate");
             string filter = "active";
             var flight = FlightService.GetInstance();
             var hotel = HotelService.GetInstance();
@@ -170,6 +198,12 @@ namespace Lunggo.CustomerWeb.Controllers
 
         public ActionResult OldFlightReservationBooker()
         {
+            if (!B2BUtil.IsB2BDomain(Request))
+            {
+                return Redirect("/");
+            }
+            if (!B2BUtil.IsB2BAuthorized(Request))
+                return RedirectToAction("Login", "B2BTemplate");
             string filter = "inactive";
             var user = B2BUtil.GetB2BUser(Request);
             if (!user.Roles.Contains("Booker"))
@@ -182,6 +216,12 @@ namespace Lunggo.CustomerWeb.Controllers
 
         public ActionResult OlderHotelReservationBooker()
         {
+            if (!B2BUtil.IsB2BDomain(Request))
+            {
+                return Redirect("/");
+            }
+            if (!B2BUtil.IsB2BAuthorized(Request))
+                return RedirectToAction("Login", "B2BTemplate");
             string filter = "inactive";
             var user = B2BUtil.GetB2BUser(Request);
             if (!user.Roles.Contains("Booker"))
@@ -194,10 +234,25 @@ namespace Lunggo.CustomerWeb.Controllers
 
         public ActionResult OrderListApprover()
         {
+            if (!B2BUtil.IsB2BDomain(Request))
+            {
+                return Redirect("/");
+            }
+            if (!B2BUtil.IsB2BAuthorized(Request))
+                return RedirectToAction("Login", "B2BTemplate");
+            var user = B2BUtil.GetB2BUser(Request);
+            if (!user.Roles.Contains("Approver"))
+                return Redirect("/");
             return View();
         }
         public ActionResult OrderListFlightFinance(string branch, string dept, string pos, DateTime? from, DateTime? to)
         {
+            if (!B2BUtil.IsB2BDomain(Request))
+            {
+                return Redirect("/");
+            }
+            if (!B2BUtil.IsB2BAuthorized(Request))
+                return RedirectToAction("Login", "B2BTemplate");
             var user = B2BUtil.GetB2BUser(Request);
             if (!user.Roles.Contains("Finance"))
                 return Redirect("/");
@@ -213,6 +268,12 @@ namespace Lunggo.CustomerWeb.Controllers
 
         public ActionResult OrderListHotelFinance(string branch, string dept, string pos, DateTime? from, DateTime? to)
         {
+            if (!B2BUtil.IsB2BDomain(Request))
+            {
+                return Redirect("/");
+            }
+            if (!B2BUtil.IsB2BAuthorized(Request))
+                return RedirectToAction("Login", "B2BTemplate");
             var user = B2BUtil.GetB2BUser(Request);
             if (!user.Roles.Contains("Finance"))
                 return Redirect("/");
@@ -237,10 +298,23 @@ namespace Lunggo.CustomerWeb.Controllers
         }
         public ActionResult UserManagement()
         {
+            if (!B2BUtil.IsB2BDomain(Request))
+            {
+                return Redirect("/");
+            }
+            if (!B2BUtil.IsB2BAuthorized(Request))
+                return RedirectToAction("Login", "B2BTemplate");
+            var user = B2BUtil.GetB2BUser(Request);
+            if (!user.Roles.Contains("Admin"))
+                return Redirect("/");
             return View();
         }
         public ActionResult SavePassenger()
         {
+            if (!B2BUtil.IsB2BDomain(Request))
+            {
+                return Redirect("/");
+            }
             return View();
         }
         //Email Template
