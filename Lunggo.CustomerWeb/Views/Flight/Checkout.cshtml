@@ -79,49 +79,49 @@
 }
 @section PageJS{
     <script>
-    var langCode = '@OnlineContext.GetActiveLanguageCode()';
-    var currentPage = 1;
-    var transferWindow = ['@ConfigManager.GetInstance().GetConfigValue("general","bankTransferStartTime")', '@ConfigManager.GetInstance().GetConfigValue("general","bankTransferEndTime")'];
-    //var transferWindow = [ '1100', '1124' ];
-    // messages
-    var message = '@ViewBag.Message';
-    // flight detail
-    var token = @Model.Token;
-    var paymentDetail = '';
-    var flightDetail = '';
-    var expiryDate = '@Model.ExpiryTime.ToString("o")';
-    var trips = @Html.Raw(Model.Itinerary.Trips.Serialize());
+        var langCode = '@OnlineContext.GetActiveLanguageCode()';
+        var currentPage = 1;
+        var transferWindow = ['@ConfigManager.GetInstance().GetConfigValue("general","bankTransferStartTime")', '@ConfigManager.GetInstance().GetConfigValue("general","bankTransferEndTime")'];
+        //var transferWindow = [ '1100', '1124' ];
+        // messages
+        var message = '@ViewBag.Message';
+        // flight detail
+        var token = @Model.Token;
+        var paymentDetail = '';
+        var flightDetail = '';
+        var expiryDate = '@Model.ExpiryTime.ToString("o")';
+        var trips = @Html.Raw(Model.Itinerary.Trips.Serialize());
 
-    // passenger number
-    var adultPassenger = @Model.Itinerary.AdultCount;
-    var adultFare = @Model.Itinerary.OriginalAdultFare;
-    var adultNetFare = @Model.Itinerary.NetAdultFare * adultPassenger;
-    var totalAdultFare = adultPassenger * adultFare;
-    var adultTypeName = 'Dewasa';
+        // passenger number
+        var adultPassenger = @Model.Itinerary.AdultCount;
+        var adultFare = @Model.Itinerary.OriginalAdultFare;
+        var adultNetFare = @Model.Itinerary.NetAdultFare * adultPassenger;
+        var totalAdultFare = adultPassenger * adultFare;
+        var adultTypeName = 'Dewasa';
 
-    var childPassenger = @Model.Itinerary.ChildCount;
-    var childFare = @Model.Itinerary.OriginalChildFare;
-    var childNetFare = @Model.Itinerary.NetChildFare * childPassenger;
-    var totalChildFare = childPassenger * childFare;
-    var childTypeName = 'Anak';
+        var childPassenger = @Model.Itinerary.ChildCount;
+        var childFare = @Model.Itinerary.OriginalChildFare;
+        var childNetFare = @Model.Itinerary.NetChildFare * childPassenger;
+        var totalChildFare = childPassenger * childFare;
+        var childTypeName = 'Anak';
 
-    var infantPassenger = @Model.Itinerary.InfantCount;
-    var infantFare = @Model.Itinerary.OriginalInfantFare;
-    var infantNetFare = @Model.Itinerary.NetInfantFare * infantPassenger;
-    var totalInfantFare = infantPassenger * infantFare;
-    var infantTypeName = 'Bayi';
-    //var monthNames = ["Januari", "Februari", "Maret","April", "Mei", "Juni", "Juli","Agustus", "September", "Oktober","November", "Desember"];
-    // passport or id requirement
-    var passportRequired = @Model.Itinerary.RequirePassport.ToString().ToLower();
-    var idRequired = false;
-    var nationalityRequired = @Model.Itinerary.RequireNationality.ToString().ToLower();
-    var birthDateRequired = @Model.Itinerary.RequireBirthDate.ToString().ToLower();
-    var departureDate = '@Model.Itinerary.Trips.Last().DepartureDate';
-    var beforeDepartureDate = '@Model.Itinerary.Trips.Last().DepartureDate.GetValueOrDefault().AddDays(-1)';
-    var passportDate = '@Model.Itinerary.Trips.Last().DepartureDate.GetValueOrDefault().AddMonths(6)';
-    var originalPrice = '@Model.Itinerary.OriginalTotalFare';
-    var price = '@Model.Itinerary.NetTotalFare';
-    //var trips = '@Model.Itinerary.Trips';
+        var infantPassenger = @Model.Itinerary.InfantCount;
+        var infantFare = @Model.Itinerary.OriginalInfantFare;
+        var infantNetFare = @Model.Itinerary.NetInfantFare * infantPassenger;
+        var totalInfantFare = infantPassenger * infantFare;
+        var infantTypeName = 'Bayi';
+        //var monthNames = ["Januari", "Februari", "Maret","April", "Mei", "Juni", "Juli","Agustus", "September", "Oktober","November", "Desember"];
+        // passport or id requirement
+        var passportRequired = @Model.Itinerary.RequirePassport.ToString().ToLower();
+        var idRequired = false;
+        var nationalityRequired = @Model.Itinerary.RequireNationality.ToString().ToLower();
+        var birthDateRequired = @Model.Itinerary.RequireBirthDate.ToString().ToLower();
+        var departureDate = '@Model.Itinerary.Trips.Last().DepartureDate';
+        var beforeDepartureDate = '@Model.Itinerary.Trips.Last().DepartureDate.GetValueOrDefault().AddDays(-1)';
+        var passportDate = '@Model.Itinerary.Trips.Last().DepartureDate.GetValueOrDefault().AddMonths(6)';
+        var originalPrice = '@Model.Itinerary.OriginalTotalFare';
+        var price = '@Model.Itinerary.NetTotalFare';
+        //var trips = '@Model.Itinerary.Trips';
         // change current page
         if (getParam('page') == 2) {
             currentPage = getParam('page');
@@ -249,39 +249,41 @@
                                 </div>
                                 @if (ViewBag.Domain == "B2B")
                                 {
-                                    <label class="control-label">Tujuan Kunjungan</label>
-                                    <div class="form-group select">
-                                        <p class="col-xs-6 form-visit-selection" ng-click="setVisitForm(true)" tabindex="1" id="chooseVisit">Pilih</p>
-                                        <p class="col-xs-6 form-visit-selection active" ng-click="setVisitForm(false)" tabindex="2" id="addVisit">Tambahkan</p>
+                                    <label class="control-label important">Tujuan Kunjungan : </label>
+                                    <div class="row select page-hotel" style="margin-bottom: 10px;">
+                                        <div class="col-xs-6">
+                                            <label class="round pointer" ng-click="setVisitForm(true)" tabindex="1" id="chooseVisit">
+                                                <span class="radio"></span>
+                                                <span class="name">Pilih Tujuan Kunjungan</span>
+                                            </label>
+                                        </div>
+                                        <div class="col-xs-6">
+                                            <label class="round pointer" ng-click="setVisitForm(false)" tabindex="2" id="addVisit">
+                                                <span class="radio"></span>
+                                                <span class="name">Tambah Tujuan Kunjungan</span>
+                                            </label>
+                                        </div>
                                     </div>
-
-                                    <div class="col-xs-12" ng-show="selectListVisit">
-                                        <p class="col-xs-12">Judul Pesan</p>
-                                        <select class="form-control" name="visitTitle" ng-model="currentSelection" placeholder="Pilih Tujuan">
-                                            <option ng-repeat="item in listVisits" value="{{item.id}}" id="visits">{{item.title}}</option>
-                                        </select>
-                                    </div>
-
-                                    <div ng-show="!selectListVisit">
+                                    <div class="rc-content">
                                         <div class="form-group">
-                                            <label class="control-label col-xs-12">Judul Pesan</label>
-                                            <div>
+                                            <label class="control-label">Judul Pesan</label>
+                                            <div class="" ng-show="selectListVisit">
+                                                <select class="form-control" name="visitTitle" ng-model="currentSelection" placeholder="Pilih Tujuan">
+                                                    <option ng-repeat="item in listVisits" value="{{item.id}}" id="visits">{{item.title}}</option>
+                                                </select>
+                                            </div>
+                                            <div class="" ng-show="!selectListVisit">
                                                 <input type="text" class="form-control" value=buyerInfo.bookerMessageDescription id="buyer-title" name="title" ng-model="buyerInfo.bookerMessageTitle"
                                                        placeholder="Tuliskan tujuan kunjungan Anda" required />
                                             </div>
                                         </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label class="control-label">Deskripsi</label>
-                                        <div>
+                                        <div class="form-group">
+                                            <label class="control-label">Deskripsi</label>
                                             <textarea class="form-control ng-pristine ng-untouched ng-valid" name="special-request" ng-disabled="disableDescription"
-                                                      placeholder="Tuliskan deskripsi kunjungan Anda" ng-model="buyerInfo.bookerMessageDescription" required></textarea>
+                                                      placeholder="Tuliskan deskripsi kunjungan Anda" ng-model="buyerInfo.bookerMessageDescription" required style="height: 80px; border-radius: 2px; box-shadow: none;"></textarea>
                                         </div>
                                     </div>
                                 }
-
-
                             </form><!-- #buyer-form -->
 
                             <div class="step-button">

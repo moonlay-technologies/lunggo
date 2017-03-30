@@ -37,17 +37,6 @@
     <script src="/Assets/travorama20/js/B2BTravorama20.js"></script>
     <script src="/Assets/travorama20/angularDirectory/search/hotelSearch.service.js"></script>
     <script src="/Assets/travorama20/js/B2BHomeController.js"></script>
-
-    <script>
-        jQuery(document).ready(function ($) {
-            $('body #room-hotel-detail').hide();
-            var room = $('body #room-hotel').find('.cs-select');
-            $(room).on('click', function () {
-                $('body #room-hotel-detail').fadeIn();
-            });
-        })
-    </script>
-
 }
 
 <div ng-app="travoramaB2B" ng-controller="B2BHotelSearchFormController" ng-class="{'active' : pageLoaded}">
@@ -72,32 +61,21 @@
             <div class="panel-body m-t-10">
                 <form id="form-flight" role="form" autocomplete="off" novalidate="novalidate">
                     <div class="row clearfix">
-                        <div class="col-sm-6 m-b-15">
-                            <div class="form-group">
+                        <div class="col-sm-6">
+                            <div class="form-group form-group-default">
                                 <label>Tujuan</label>
-                                <input type="text" class="form-control" placeholder="Bali, Indonesia" ng-model="hotelSearch.locationDisplay">
+                                <input type="text" class="form-control hotel-location" placeholder="Bali, Indonesia" ng-model="hotelSearch.locationDisplay">
                             </div>
-                            @*<div class="form-group form-group-default">
-                                    <label>Tujuan</label>
-                                    <input type="text" class="form-control hotel-location" placeholder="Bali, Indonesia" ng-model="hotelSearch.locationDisplay">
-                                </div>*@
                         </div>
-                        <div class="col-sm-6 m-b-15">
-                            <div class="form-group">
+                        <div class="col-sm-6">
+                            <div class="form-group form-group-default input-group">
                                 <label>Tanggal Check In</label>
-                                <div id="checkInDate" class="input-group date">
-                                    <input type="text" class="form-control"><span class="input-group-addon">
-                                        <i class="fa fa-calendar"></i>
-                                    </span>
-                                </div>
+                                <input type="email" class="form-control" placeholder="Pilih tanggal Check In" id="checkInDate">
+                                <span class="input-group-addon">
+                                    <i class="fa fa-calendar"></i>
+                                </span>
+
                             </div>
-                            @*<div class="form-group form-group-default input-group">
-                                    <label>Tanggal Check In</label>
-                                    <input type="email" class="form-control" placeholder="Pilih tanggal Check In" id="checkInDate">
-                                    <span class="input-group-addon">
-                                        <i class="fa fa-calendar"></i>
-                                    </span>
-                                </div>*@
                         </div>
                     </div>
                     <div class="row clearfix">
@@ -116,18 +94,6 @@
                                     </select>
                                 </div>
                             </div>
-                            @*<div class="form-group form-group-default">
-                                    <label class="label-custom">Malam</label>
-                                    <select class="cs-select cs-skin-slide nightCount" data-init-plugin="cs-select" ng-model="hotelSearch.nightCount">
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
-                                        <option value="4">4</option>
-                                        <option value="5">5</option>
-                                        <option value="6">6</option>
-                                        <option value="7">7</option>
-                                    </select>
-                                </div>*@
                         </div>
                         <div class="col-sm-6 m-b-15">
                             <div class="form-group">
@@ -145,19 +111,6 @@
                                     </select>
                                 </div>
                             </div>
-                            @*<div class="form-group form-group-default" id="room-hotel">
-                                    <label class="label-custom">Jumlah Kamar</label>
-                                    <select class="cs-select cs-skin-slide roomCount" data-init-plugin="cs-select" ng-model="hotelSearch.roomCount">
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
-                                        <option value="4">4</option>
-                                        <option value="5">5</option>
-                                        <option value="6">6</option>
-                                        <option value="7">7</option>
-                                        <option value="8">8</option>
-                                    </select>
-                                </div>*@
                         </div>
                     </div>
 
@@ -185,7 +138,7 @@
                     <div ng-show="hotelSearch.roomCount >= 8">
                         @Html.Partial("/Views/Shared/B2BTravorama/Occupancies.cshtml", new OccupancyModel { Order = 7 })
                     </div>
-                    <div class="clearfix m-t-20">
+                    <div class="clearfix m-t-10">
                         <button class="btn btn-primary" type="submit" ng-click="hotelSearch.getHotels()">Cari Hotel</button>
                     </div>
                 </form>
