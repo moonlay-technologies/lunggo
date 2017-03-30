@@ -897,7 +897,7 @@
         });
 
         $("input#checkbox-sa").change(function () {
-            $scope.inputFilterByRole("Super Admin");
+            $scope.inputFilterByRole("Admin");
         });
 
         $("li#sort-name").click(function() {

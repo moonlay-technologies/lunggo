@@ -242,24 +242,26 @@ namespace Lunggo.ApCommon.Flight.Service
                         itin.Trips.Add(trip);
                     }
                     reservation.Itineraries.Add(itin);
-                    var paxRecords = PaxTableRepo.GetInstance()
+                }
+
+                var paxRecords = PaxTableRepo.GetInstance()
                         .Find(conn, new PaxTableRecord { RsvNo = rsvNo }).ToList();
 
-                    if (paxRecords.Count == 0)
-                        return null;
+                if (paxRecords.Count == 0)
+                    return null;
 
-                    foreach (var passengerRecord in paxRecords)
+                foreach (var passengerRecord in paxRecords)
+                {
+                    var passenger = new Pax
                     {
-                        var passenger = new Pax
-                        {
-                            Title = TitleCd.Mnemonic(passengerRecord.TitleCd),
-                            FirstName = passengerRecord.FirstName,
-                            LastName = passengerRecord.LastName,
-                            Type = PaxTypeCd.Mnemonic(passengerRecord.TypeCd)
-                        };
-                        reservation.Pax.Add(passenger);
-                    }
+                        Title = TitleCd.Mnemonic(passengerRecord.TitleCd),
+                        FirstName = passengerRecord.FirstName,
+                        LastName = passengerRecord.LastName,
+                        Type = PaxTypeCd.Mnemonic(passengerRecord.TypeCd)
+                    };
+                    reservation.Pax.Add(passenger);
                 }
+
                 return reservation;
 
                 //FlightReservation reservation = null;
