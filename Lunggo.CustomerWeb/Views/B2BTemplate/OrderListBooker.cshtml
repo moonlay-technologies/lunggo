@@ -11,6 +11,8 @@
 
 }
 
+
+
 @section AdditionalCSS{
 }
 
@@ -160,6 +162,47 @@
                             {
                                 foreach (var hotel in rsv.ReservationList.Hotels)
                                 {
+                                    var night = (hotel.HotelDetail.CheckOutDate - hotel.HotelDetail.CheckInDate).Days;
+                                    var sumAdult = 0;
+                                    var sumChild = 0;
+                                    var orderedRooms = new List<Tuple<string, int>>();
+                                    var listAges = new List<int>();
+                                    var totalRoom = 0;
+                                    var totalPax = 0;
+                                    try
+                                    {
+
+                                        foreach (var room in hotel.HotelDetail.Rooms)
+                                        {
+                                            var roomName = room.RoomName;
+                                            var sum = 0;
+
+                                            foreach (var rate in room.Rates)
+                                            {
+
+                                                foreach (var config in rate.Breakdowns)
+                                                {
+                                                    sum += config.RateCount;
+                                                    totalRoom += config.RateCount;
+                                                    sumAdult += config.AdultCount;
+                                                    sumChild += config.ChildCount;
+                                                    //if (config.ChildCount <= 0)
+                                                    //{
+                                                    //    continue;
+                                                    //}
+                                                    //listAges.AddRange(config.ChildrenAges);
+                                                }
+
+                                            }
+                                            orderedRooms.Add(new Tuple<string, int>(roomName, sum)); ;
+                                        }
+                                        totalPax = sumAdult + sumChild;
+                                    }
+                                    catch (Exception)
+                                    {
+
+                                        throw;
+                                    }
                                     <div class="ol-hotel clearfix">
                                         <div class="ol-item ol-border bg-white clearfix">
                                             <div class="clearfix hotel-icon">
@@ -173,8 +216,8 @@
                                                 <div class="col-sm-6 no-padding clearfix">
                                                     <div class="col-sm-6 no-padding p-l-60 m-t-30">
                                                         <ul class="p-l-20">
-                                                            <li>@hotel.Pax.Count Orang</li>
-                                                            <li>@hotel.HotelDetail.Rooms.Count Kamar</li>
+                                                            <li>@totalPax Orang</li>
+                                                            <li>@totalRoom Kamar</li>
                                                         </ul>
                                                     </div>
                                                     <div class="col-sm-6 no-padding text-center m-t-20 m-b-20">
@@ -188,7 +231,20 @@
                                                 <div class="panel-heading bold font-montserrat fs-12">Tipe Kamar</div>
                                                 <div class="panel-body">
                                                     <ul class="p-l-20">
-                                                        <li>@hotel.HotelDetail.Rooms.Count x @hotel.HotelDetail.Rooms[0].TypeName</li>
+                                                        @for (var i = 0; i < orderedRooms.Count; i++)
+                                                        {
+                                                            if (i != orderedRooms.Count - 1)
+                                                            {
+                                                                <li>@orderedRooms[i].Item2<span>x </span> @ToTitleCase.ConvertToTitleCase(orderedRooms[i].Item1)<span> , </span></li>
+
+                                                            }
+                                                            else
+                                                            {
+                                                                <li>@orderedRooms[i].Item2<span>x </span> @ToTitleCase.ConvertToTitleCase(orderedRooms[i].Item1)</li>
+                                                            }
+
+                                                        }
+                                                        
                                                     </ul>
                                                 </div>
                                             </div>

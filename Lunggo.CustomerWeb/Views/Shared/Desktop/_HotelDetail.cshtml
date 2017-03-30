@@ -7,8 +7,8 @@
     var hotelImg = "";
     var roomImg = "";
     var images = HotelService.GetInstance().GetHotelDetailFromDb(Model.HotelCode).ImageUrl;
-    
-    var orDefault = images == null ? null :  images.Where(i => i.Type == "GEN").ToList().SingleOrDefault();
+    var defaultList = images == null ? null : images.Where(i => i.Type == "GEN").ToList();
+    var orDefault = defaultList == null ? null : defaultList[0];
     if (orDefault != null)
     {
         hotelImg = images == null
@@ -16,7 +16,8 @@
             : "https://photos.hotelbeds.com/giata/" + orDefault.Path;
     }
 
-    var firstOrDefault = images == null ? null : images.Where(i => i.Type == "HAB").ToList().FirstOrDefault();
+    var first = images == null ? null : images.Where(i => i.Type == "HAB").ToList();
+    var firstOrDefault = first == null ? null : first[0];
     if (firstOrDefault != null)
     {
         roomImg = images == null
