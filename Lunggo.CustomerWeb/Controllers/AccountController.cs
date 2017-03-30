@@ -239,7 +239,7 @@ namespace Lunggo.CustomerWeb.Controllers
         //
         // GET: /Account/ConfirmEmail
         [System.Web.Mvc.AllowAnonymous]
-        public async Task<ActionResult> ConfirmEmail(string userId, string code, bool isAgentType)
+        public async Task<ActionResult> ConfirmEmail(string userId, string code, bool? isAgentType)
         {
             if (userId == null || code == null)
             {
@@ -249,7 +249,7 @@ namespace Lunggo.CustomerWeb.Controllers
             var model = new ResetPasswordViewModel
             {
                 Email = email,
-                IsAgentType = isAgentType
+                IsAgentType = isAgentType ?? false
             };
             var apiUrl = ConfigManager.GetInstance().GetConfigValue("api", "apiUrl");
             var confirmClient = new RestClient(apiUrl);
@@ -343,7 +343,7 @@ namespace Lunggo.CustomerWeb.Controllers
         //
         // GET: /Account/ResetPassword
         [System.Web.Mvc.AllowAnonymous]
-        public ActionResult ResetPassword(string code, string email, bool isAgentType)
+        public ActionResult ResetPassword(string code, string email, bool? isAgentType)
         {
             var model = new ResetPasswordViewModel { Email = email, Code = code, IsAgentType = isAgentType};
             if (email == null)
@@ -388,7 +388,7 @@ namespace Lunggo.CustomerWeb.Controllers
                 return View(model);
             }
 
-            if (model.IsAgentType)
+            if (model.IsAgentType.HasValue && model.IsAgentType.Value)
                 model.Email = "b2b:" + model.Email;
 
             var user = await UserManager.FindByNameAsync(model.Email);

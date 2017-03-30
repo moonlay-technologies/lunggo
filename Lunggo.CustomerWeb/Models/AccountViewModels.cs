@@ -90,7 +90,7 @@ namespace Lunggo.CustomerWeb.Models
 
         public string Code { get; set; }
 
-        public bool IsAgentType { get; set; }
+        public bool? IsAgentType { get; set; }
 
         public string ApiUrl { get; set; }
     }
