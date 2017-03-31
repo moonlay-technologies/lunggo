@@ -117,6 +117,8 @@ app.controller('checkoutController', [
             incompleteContactName: false,
             incompleteContactPhone: false,
             incompleteContactEmail: false,
+            incompleteBookerMessageTitle: false,
+            incompletebookerMessageDescription: false,
             hasDuplicatePaxName: false,
             incompleteTitles: false,
             incompleteBirthDates: false,
@@ -264,6 +266,22 @@ app.controller('checkoutController', [
             }
         }
 
+        $scope.checkVisitTitle = function (title) {
+            if (title == null || title == "") {
+                return false;
+            } else {
+                return true;
+            }
+        }
+
+        $scope.checkVisitDescription = function (message) {
+            if (message == null || message == "") {
+                return false;
+            } else {
+                return true;
+            }
+        }
+
         $scope.checkPhone = function(phone) {
             if ($scope.buyerInfo.countryCode == 'xx') {
                 return false;
@@ -326,6 +344,18 @@ app.controller('checkoutController', [
                 if (!$scope.form.incompleteContactTitle && !$scope.form.incompleteContactName
                     && !$scope.form.incompleteContactPhone && !$scope.form.incompleteContactEmail) {
                     $scope.changePage(2);
+                }
+
+                if (!$scope.checkVisitTitle($scope.buyerInfo.bookerMessageTitle)) {
+                    $scope.form.incompleteBookerMessageTitle = true;
+                } else {
+                    $scope.form.incompleteBookerMessageTitle = false;
+                }
+
+                if (!$scope.checkVisitDescription($scope.buyerInfo.bookerMessageDescription)) {
+                    $scope.form.incompletebookerMessageDescription = true;
+                } else {
+                    $scope.form.incompletebookerMessageDescription = false;
                 }
 
             }
@@ -988,6 +1018,7 @@ app.controller('checkoutController', [
             $("#chooseVisit").addClass("active");
             $("#addVisit").removeClass("active");
             $scope.isBookingNoteNew = false;
+            $scope.disableDescription = true;
         }
 
         //************************* END ******************************

@@ -588,6 +588,7 @@ app.controller('hotelcheckoutController', [
             $("#chooseVisit").addClass("active");
             $("#addVisit").removeClass("active");
             $scope.isBookingNoteNew = false;
+            $scope.disableDescription = true;
         }
     }
 ]);// checkout controller

@@ -197,7 +197,7 @@ var gtmReturningDepartureDate = "";
 
                             <form class="form" id="buyer-form" name="buyerForm" novalidate>
 
-                                <div class="form-group" ng-class="{'has-error' : buyerForm.title.$touched && buyerForm.title.$invalid}">
+                                <div class="form-group" >
                                     <label class="control-label important">Titel:</label>
                                     <div>
                                         <select class="form-control" id="buyer-title" name="title" ng-model="buyerInfo.title" ng-init="buyerInfo.title = titles[0].value">
@@ -276,20 +276,20 @@ var gtmReturningDepartureDate = "";
                                         </div>
                                     </div>
                                     <div class="rc-content">
-                                        <div class="form-group">
+                                        <div class="form-group" ng-class="{'has-error' : buyerForm.visitTitle.$touched && buyerForm.visitTitle.$invalid}">
                                             <label class="control-label">Judul Pesan</label>
                                             <div class="" ng-show="selectListVisit">
-                                        <select class="form-control" name="visitTitle" ng-model="currentSelection" placeholder="Pilih Tujuan">
-                                            <option ng-repeat="item in listVisits" value="{{item.id}}" id="visits">{{item.title}}</option>
-                                        </select>
-                                    </div>
+                                                <select class="form-control" name="visitTitle" ng-model="currentSelection" placeholder="Pilih Tujuan">
+                                                    <option ng-repeat="item in listVisits" value="{{item.id}}" id="visits">{{item.title}}</option>
+                                                </select>
+                                            </div>
                                             <div class="" ng-show="!selectListVisit">
-                                                <input type="text" class="form-control" value=buyerInfo.bookerMessageDescription id="buyer-title" name="title" ng-model="buyerInfo.bookerMessageTitle"
+                                                <input type="text" class="form-control" value=buyerInfo.bookerMessageDescription id="buyer-title" name="visitTitle" ng-model="buyerInfo.bookerMessageTitle"
                                                        placeholder="Tuliskan tujuan kunjungan Anda" required />
                                             </div>
                                         </div>
-                                    <div class="form-group">
-                                        <label class="control-label">Deskripsi</label>
+                                        <div class="form-group" ng-class="{'has-error' : buyerForm.special-request.$touched && buyerForm.special-request.$invalid}">
+                                            <label class="control-label">Deskripsi</label>
                                             <textarea class="form-control ng-pristine ng-untouched ng-valid" name="special-request" ng-disabled="disableDescription"
                                                       placeholder="Tuliskan deskripsi kunjungan Anda" ng-model="buyerInfo.bookerMessageDescription" required style="height: 80px; border-radius: 2px; box-shadow: none;"></textarea>
                                         </div>
@@ -309,6 +309,12 @@ var gtmReturningDepartureDate = "";
                                 </div>
                                 <div style="color:red" ng-show="form.incompleteContactEmail">
                                     Alamat E-Mail pada Data Kontak Belum Ditambahkan<br /> <br />
+                                </div>
+                                <div style="color:red" ng-show="form.incompletebookerMessageDescription">
+                                    Deskripsi Belum Ditambahkan <br /> <br />
+                                </div>
+                                <div style="color:red" ng-show="form.incompleteBookerMessageTitle">
+                                    Judul Pesan Belum Ditambahkan <br /> <br />
                                 </div>
                                 <button class="btn btn-yellow go-top md-txt lg-btn" ng-click="validateForm(1)">LANJUTKAN</button>
                             </div>
