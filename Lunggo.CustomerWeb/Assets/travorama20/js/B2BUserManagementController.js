@@ -536,7 +536,7 @@
                         }
                         var splittedName = $scope.userData.name.split(' ');
                         var approverName;
-                        if (roles.indexOf("Approver") == -1) {
+                        if (roles.indexOf("Booker") == -1) {
                             approverName = "";
                         } else {
                             var approvers = $.grep($scope.approvers, function(e) { return e.userId == $scope.userData.approverId; });
