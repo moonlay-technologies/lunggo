@@ -223,6 +223,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\B2BAccountController.cs" />
     <Compile Include="Controllers\B2BFlightController.cs" />
+    <Compile Include="Controllers\B2BHomePageController.cs" />
     <Compile Include="Controllers\B2BHotelController.cs" />
     <Compile Include="Controllers\B2BIndexController.cs" />
     <Compile Include="Controllers\B2BPaymentController.cs" />
@@ -1248,6 +1249,9 @@
     <Content Include="Assets\css\promo.min.css" />
     <Content Include="Assets\css\style_b2b.css" />
     <Content Include="Assets\css\style_b2b.min.css" />
+    <Content Include="Assets\css\style_b2b_homepage.css">
+      <DependentUpon>style_b2b_homepage.scss</DependentUpon>
+    </Content>
     <Content Include="Assets\css\travorama-mobileApp.css" />
     <Content Include="Assets\css\travorama-mobileApp.min.css" />
     <Content Include="Assets\fonts\bootstrap\glyphicons-halflings-regular.svg" />
@@ -2683,6 +2687,7 @@
     <Content Include="Assets\travorama20\css\_screenSmall.scss" />
     <Content Include="Campaign\Harbolnas2016\css\promo-harbolnas.scss" />
     <Content Include="Campaign\MatahariMall2016\css\promo-mataharimall.scss" />
+    <Content Include="Assets\css\style_b2b_homepage.scss" />
     <None Include="Properties\PublishProfiles\prod-cw %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\dv1-cw.pubxml" />
     <None Include="Properties\PublishProfiles\dv2-cw.pubxml" />
@@ -2951,6 +2956,8 @@
     <Content Include="Views\Promo\PaydayMadnessPermataBank.mobile.cshtml" />
     <Content Include="Views\Promo\PaydayMegaDeals.cshtml" />
     <Content Include="Views\Promo\PaydayMegaDeals.mobile.cshtml" />
+    <Content Include="Views\Shared\B2BTravorama\_B2BHomePageLayout.cshtml" />
+    <Content Include="Views\B2BHomePage\Index.cshtml" />
     <None Include="Views\Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
