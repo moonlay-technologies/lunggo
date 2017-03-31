@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Lunggo.Framework.Config;
 using Lunggo.Framework.Filter;
 
 namespace Lunggo.CustomerWeb.Controllers
@@ -13,6 +14,9 @@ namespace Lunggo.CustomerWeb.Controllers
         [DeviceDetectionFilter]
         public ActionResult Index(string destination)
         {
+            var b2bHost = ConfigManager.GetInstance().GetConfigValue("general", "b2bRootUrl");
+            if (Request.Url.Host == b2bHost)
+                return RedirectToAction("Login", "B2BTemplate");
             if (destination == null)
                 return View();
             else

@@ -10,6 +10,7 @@ using System;
 using System.Collections.Specialized;
 using System.Net;
 using System.Web.Mvc;
+using Lunggo.CustomerWeb.Utils;
 using Lunggo.Framework.Config;
 using Lunggo.Framework.Extension;
 using RestSharp;
@@ -24,9 +25,9 @@ namespace Lunggo.CustomerWeb.Controllers
         [Route("id/hotel/cari/{country}/{destination}/{zone}/{area}")]
         public ActionResult Search(string country, string destination, string zone, string area)
         {
-            if (!IsB2BAuthorized())
+            if (!B2BUtil.IsB2BAuthorized(Request))
                 return RedirectToAction("Index", "Index");
-            ViewBag.Domain = IsB2BDomain() ? "B2B" : "B2C";
+            ViewBag.Domain = B2BUtil.IsB2BDomain(Request) ? "B2B" : "B2C";
             try
             {
                 var source = ConfigManager.GetInstance().GetConfigValue("api", "apiUrl");
@@ -176,9 +177,9 @@ namespace Lunggo.CustomerWeb.Controllers
         [Route("id/hotel/{country}/{destination}/{hotelParam}")]
         public ActionResult DetailHotel(String hotelParam)
         {
-            if (!IsB2BAuthorized())
+            if (!B2BUtil.IsB2BAuthorized(Request))
                 return RedirectToAction("Index", "Index");
-            ViewBag.Domain = IsB2BDomain() ? "B2B" : "B2C";
+            ViewBag.Domain = B2BUtil.IsB2BDomain(Request) ? "B2B" : "B2C";
             var source = ConfigManager.GetInstance().GetConfigValue("api", "apiUrl");
 
             var hotelCd = Convert.ToInt32(hotelParam.Split('-').Last());
@@ -228,9 +229,9 @@ namespace Lunggo.CustomerWeb.Controllers
 
         public ActionResult Checkout(string token)
         {
-            if (!IsB2BAuthorized())
+            if (!B2BUtil.IsB2BAuthorized(Request))
                 return RedirectToAction("Index", "Index");
-            ViewBag.Domain = IsB2BDomain() ? "B2B" : "B2C";
+            ViewBag.Domain = B2BUtil.IsB2BDomain(Request) ? "B2B" : "B2C";
             var hotelDetail = HotelService.GetInstance().GetSelectionFromCache(token);
 
             if (hotelDetail != null)
@@ -273,9 +274,9 @@ namespace Lunggo.CustomerWeb.Controllers
         [ActionName("Checkout")]
         public ActionResult CheckoutPost(string rsvNo)
         {
-            if (!IsB2BAuthorized())
+            if (!B2BUtil.IsB2BAuthorized(Request))
                 return RedirectToAction("Index", "Index");
-            ViewBag.Domain = IsB2BDomain() ? "B2B" : "B2C";
+            ViewBag.Domain = B2BUtil.IsB2BDomain(Request) ? "B2B" : "B2C";
             var regId = GenerateId(rsvNo);
             if (ViewBag.Domain.Equals("B2B"))
                 return RedirectToAction("B2BThankyou", "Payment", new { rsvNo, regId });
@@ -285,9 +286,9 @@ namespace Lunggo.CustomerWeb.Controllers
 
         public ActionResult Confirmation()
         {
-            if (!IsB2BAuthorized())
+            if (!B2BUtil.IsB2BAuthorized(Request))
                 return RedirectToAction("Index", "Index");
-            ViewBag.Domain = IsB2BDomain() ? "B2B" : "B2C";
+            ViewBag.Domain = B2BUtil.IsB2BDomain(Request) ? "B2B" : "B2C";
             return View();
         }
         public ActionResult Thankyou()
@@ -408,43 +409,6 @@ namespace Lunggo.CustomerWeb.Controllers
             return result;
         }
 
-        private bool IsB2BAuthorized()
-        {
-            if (!IsB2BDomain())
-                return true;
-            var baseUrl = ConfigManager.GetInstance().GetConfigValue("api", "apiUrl");
-            var client = new RestClient(baseUrl);
-
-            var request = new RestRequest("/v1/profile", Method.GET);
-            var key = Request.Cookies["authkey"];
-            if (key == null)
-                return false;
-
-            request.AddHeader("Authorization", "Bearer " + key.Value);
-            // execute the request
-            IRestResponse<GetProfileModel> response = client.Execute<GetProfileModel>(request);
-            IRestResponse response2 = client.Execute(request);
-            var temp = response2.Content;
-            if (response.Data == null || response.Data.UserName == null) return false;
-            if (response.Data.UserName.Contains("b2b:"))
-                return true;
-            return false;
-        }
-
-        public bool IsB2BDomain()
-        {
-            var httpRequest = Request;
-            if (httpRequest.Url != null)
-            {
-                var host = httpRequest.Url.Host;
-                if (host.Contains("b2b"))
-                {
-                    return true;
-                }
-                return false;
-            }
-            return false;
-        }
         #endregion
     }
 }
