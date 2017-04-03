@@ -1,0 +1,219 @@
+﻿@{
+    Layout = "/Views/Shared/B2BTravorama/_B2BHomePageLayout.cshtml";
+    ViewBag.BodyClass = "b2b-homepage";
+    ViewBag.SiteHeader = "b2b-homepage";
+    ViewBag.Title = "Travorama Home Page";
+    ViewBag.AngularController = "";
+
+}
+
+@section AdditionalCSS{
+    <link href="/Assets/css/style_b2b_homepage.css" rel="stylesheet" type="text/css" />
+}
+
+@section AdditionalJS{
+    <script src="/Assets/travorama20/js/travorama20.js"></script>
+}
+
+@section PageJS{
+    <script>backToTop();</script>
+    <script>
+        jQuery(document).ready(function ($) {
+            var win = $(window),
+                fxel = $('.hr-header'),
+                eloffset = fxel.offset().top;
+
+            win.scroll(function () {
+                if (eloffset < win.scrollTop()) {
+                    fxel.addClass("fixed");
+                } else {
+                    fxel.removeClass("fixed");
+                }
+            });
+
+            $('body #mobile-menu').click(function() {
+                $('.menu-dropdown').toggle();
+            });
+
+            $('.menu-dropdown a').click(function () {
+                $(this).closest('.menu-dropdown').hide();
+            });
+        });
+    </script>
+}
+
+<div class="homepage-content">
+    <a href="#" id="back-to-top" title="Back to top" class="show"></a>
+    <div class="homepage-register" id="#home">
+        <div class="hr-header white-txt">
+            <div class="container clearfix">
+                <div class="col-sm-5">
+                    <span class="bold lg-txt">Travorama </span><span class="italic font-georgia">for </span><span class="uppercase-txt bold">Bussiness</span>
+                </div>
+                <div class="col-sm-7">
+                    <ul class="hr-menu uppercase-txt bold pull-right">
+                        <li><a href="#benefit" class="white-txt">Tentang kami</a></li>
+                        <li><a href="#feature" class="white-txt">Fitur</a></li>
+                        <li><a href="#" class="white-txt">Brosur</a></li>
+                        <li><a href="#" class="white-txt">Request Demo</a></li>
+                        <li><button href="#" class="btn btn-primary btn-sm white-txt uppercase-txt" style="margin-left: 15px;">Masuk</button></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="hr-header-mobile white-txt">
+            <div class="menu-logo container center-txt">
+                <span class="burger-icon" id="mobile-menu"></span>
+                <span class="bold md-txt">Travorama </span><span class="italic font-georgia sm-txt">for </span><span class="uppercase-txt bold sm-txt">Bussiness</span>
+            </div>
+            <ul class="menu-dropdown uppercase-txt bold pull-right">
+                <li><a href="#benefit" class="white-txt">Tentang kami</a></li>
+                <li><a href="#feature" class="white-txt">Fitur</a></li>
+                <li><a href="#" class="white-txt">Brosur</a></li>
+                <li><a href="#" class="white-txt">Request Demo</a></li>
+                <li><a href="#" class="white-txt">Masuk</a></li>
+            </ul>
+        </div>
+        <div class="hr-wrapper container">
+            <div class="hr-content white-txt">
+                <div class="center-txt">
+                    <div class="bold xlg-txt">Simplify corporate travel management</div>
+                    <div class="italic md-txt" style="margin-top: 15px;">
+                        Permudah perjalanan bisnis anda dan karyawan dengan menggunakan
+                        portal travel yang dirancang untuk memenuhi kebutuhan perusahaan anda.
+                    </div>
+                    <div class="hr-input clearfix">
+                        <div class="col-sm-8" style="margin: 10px 0">
+                            <input type="email" name="hr-email" value=" " placeholder="Alamat Email Anda" class="italic" />
+                        </div>
+                        <div class="col-sm-4 clearfix" style="margin: 10px 0">
+                            <button href="#" class="btn btn-primary btn-lg pull-left btn-block">DAFTAR</button>
+                        </div>
+                    </div>
+                    <div class="italic">Sudah punya akun? <a href="#" class="underline-txt yellow-txt">Masuk</a></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="homepage-benefit" id="benefit">
+        <div class="container">
+            <div class="purple-txt center-txt lg-txt" style="margin-bottom: 30px;">Keuntungan menggunakan <span class="bold">Travorama</span> <span class="italic md-txt font-georgia">for</span> <span class="bold">Business</span></div>
+            <div class="clearfix center-txt">
+                <div class="row">
+                    <div class="col-sm-3">
+                        <div class="img-benefit" style="background-image: url(/Assets/images/B2BHomePage/benefit-1.png)"></div>
+                        <div class="bold">Harga kompetitif</div>
+                        <div class="">
+                            Harga yang ditawarkan lebih murah dibandingkan travel agent konvensional pada umumnya.
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="img-benefit" style="background-image: url(/Assets/images/B2BHomePage/benefit-2.png)"></div>
+                        <div class="bold">Hemat waktu dan biaya komunikasi</div>
+                        <div class="">
+                            Pemesanan tiket pesawat dan kamar hotel semakin mudah dan hemat biaya komunikasi karena tidak perlu bolak balik menghubungi travel agent.
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="img-benefit" style="background-image: url(/Assets/images/B2BHomePage/benefit-3.png)"></div>
+                        <div class="bold">Kemudahan mengatur pemesanan</div>
+                        <div class="">Kemudahan melakukan refund atau reschedule tiket pesawat serta pembatalan pemesanan hotel.</div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="img-benefit" style="background-image: url(/Assets/images/B2BHomePage/benefit-4.png)"></div>
+                        <div class="bold">Platform travel terintegrasi yang bisa dipersonalisasi</div>
+                        <div class="">Perusahaan bisa mengatur tugas masing-masing pengguna akun. Platform bisa dipersonalisasi dengan menambahkan logo perusahaan.</div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-3">
+                        <div class="img-benefit" style="background-image: url(/Assets/images/B2BHomePage/benefit-5.png)"></div>
+                        <div class="bold">Report travel terintegrasi</div>
+                        <div class="">Laporan pemesanan dan invoice dari seluruh user akan dikirimkan ke alamat email terdaftar anda.</div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="img-benefit" style="background-image: url(/Assets/images/B2BHomePage/benefit-6.png)"></div>
+                        <div class="bold">Fasilitas credit limit</div>
+                        <div class="">Selain menggunakan credit card, anda juga bisa mengajukan fasilitas credit limit untuk pembayaran dengan jangka waktu mundur.</div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="img-benefit" style="background-image: url(/Assets/images/B2BHomePage/benefit-7.png)"></div>
+                        <div class="bold">Akses gratis</div>
+                        <div class="">Gratis akses portal travel selama masa promo.</div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="img-benefit" style="background-image: url(/Assets/images/B2BHomePage/benefit-8.png)"></div>
+                        <div class="bold">Self service dan 24/7 booking</div>
+                        <div class="">Pesan tiket pesawat dan kamar hotel bisa anda lakukan sendiri 24 jam 7 hari dari manapun lokasi anda berada.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="homepage-feature" id="feature">
+        <div class="container">
+            <div class="clearfix white-txt">
+                <div class="clearfix">
+                    <div class="col-sm-2"></div>
+                    <div class="col-sm-10">
+                        <div class="white-txt lg-txt bold">Fitur Eksklusif</div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-2">
+                        <div class="img-feature" style="background-image: url(/Assets/images/B2BHomePage/feature-1.png); "></div>
+                    </div>
+                    <div class="col-sm-10">
+                        <div class="bold md-txt">Reservasi online tiket pesawat dan kamar hotel</div>
+                        <div class="">Perusahaan bisa melakukan reservasi tiket pesawat domestik dan internasional menggunakan maskapai Citilink, Sriwijaya Air, Air Asia, Batik Air, Lion Air, Nam Air dan Wings Air. Reservasi kamar hotel domestik dan internasional tersedia mulai dari hotel melati hingga bintang 5 di seluruh benua yang dikelola oleh jaringan hotel internasional seperti Marriott, Hilton, Accor, Ascott, Best Western, Starwood, Hyatt dan lainnya. Juga jaringan hotel lokal seperti Parador, Santika, Haris, Dafam, Jayakarta dan lainnya.</div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-2">
+                        <div class="img-feature" style="background-image: url(/Assets/images/B2BHomePage/feature-2.png); "></div>
+                    </div>
+                    <div class="col-sm-10">
+                        <div class="bold md-txt">Kustomisasi alur pemesanan</div>
+                        <div class="">Manfaatkan tiga tipe user yang telah disesuaikan dengan kebutuhan perusahaan, yaitu user admin, traveler dan finance. Semua kontrol user dan alur reservasi dipegang oleh perusahaan sendiri sehingga lebih fleksibel apabila terjadi perubahan struktur organisasi perusahaan.</div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-2">
+                        <div class="img-feature" style="background-image: url(/Assets/images/B2BHomePage/feature-3.png); "></div>
+                    </div>
+                    <div class="col-sm-10">
+                        <div class="bold md-txt">Mudah digunakan & personalisasi platform</div>
+                        <div class="">Platform reservasi sangat mudah digunakan, seperti gabungan melakukan reservasi di online travel agent dan transaksi e-banking. Platform menjadi lebih eksklusif dengan menambahkan logo perusahaan.</div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-2">
+                        <div class="img-feature" style="background-image: url(/Assets/images/B2BHomePage/feature-4.png); "></div>
+                    </div>
+                    <div class="col-sm-10">
+                        <div class="bold md-txt">Mudah melakukan cancel dan refund</div>
+                        <div class="">Tersedia tombol refund tiket pesawat dan cancel kamar hotel sehingga memudahkan perusahaan saat melakukan pembatalan pemesanan apabila terjadi perubahan atau pembatalan keberangkatan.</div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-2">
+                        <div class="img-feature" style="background-image: url(/Assets/images/B2BHomePage/feature-5.png); "></div>
+                    </div>
+                    <div class="col-sm-10">
+                        <div class="bold md-txt">Laporan real time</div>
+                        <div class="">Perusahaan akan menerima laporan secara real time setiap kali terjadi pemesanan tiket pesawat dan kamar hotel melalui platform.</div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-2">
+                        <div class="img-feature" style="background-image: url(/Assets/images/B2BHomePage/feature-6.png); "></div>
+                    </div>
+                    <div class="col-sm-10">
+                        <div class="bold md-txt">Konsolidasi biaya perjalanan</div>
+                        <div class="">Perusahaan yang memiliki cabang cukup banyak terkadang memiliki kesulitan saat melakukan konsolidasi biaya perjalanan. Travorama menyediakan report dwi mingguan dan bulanan penggunaan biaya perjalanan perusahaan di masing-masing cabang maupun kantor pusat yang bisa di-download melalui portal perusahaan.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

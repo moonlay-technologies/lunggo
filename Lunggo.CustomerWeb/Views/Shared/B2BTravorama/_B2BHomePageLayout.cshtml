@@ -1,0 +1,57 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta content="" name="description" />
+    <meta content="" name="author" />
+    <link rel="shortcut icon" type="image/ico" href="/Assets/images/favico.ico" />
+
+    @{ Html.RenderPartial("_openGraph"); }
+    @{ Html.RenderPartial("_metaTag"); }
+
+    <title>@ViewBag.Title | Travorama B2B Home</title>
+
+    <!-- stylesheets -->
+    <link href="/Assets/B2BTravorama/assets/plugins/bootstrapv3/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="/Assets/B2BTravorama/assets/plugins/font-awesome/css/font-awesome.css" rel="stylesheet" type="text/css" />
+
+    @if (IsSectionDefined("AdditionalCSS"))
+    {
+        @RenderSection("AdditionalCSS");
+    }
+
+    @section AdditionalCSS{
+    }
+
+    @section AdditionalJS{
+    }
+
+    @section PageJS{
+
+    }
+
+</head>
+<body class="b2b-homepage @ViewBag.BodyClass">
+    @Html.Partial("/Views/Shared/_googleTag.cshtml")
+
+    @RenderBody()
+
+    <script src="/Assets/B2BTravorama/assets/plugins/jquery/jquery-1.11.1.min.js" type="text/javascript"></script>
+    <script src="/Assets/B2BTravorama/assets/plugins/modernizr.custom.js" type="text/javascript"></script>
+    <script src="/Assets/B2BTravorama/assets/plugins/jquery-ui/jquery-ui.min.js" type="text/javascript"></script>
+    <script src="/Assets/B2BTravorama/assets/plugins/bootstrapv3/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="/Assets/B2BTravorama/assets/plugins/moment/moment.min.js"></script>
+
+    @if (IsSectionDefined("AdditionalJS"))
+    {
+        @RenderSection("AdditionalJS");
+    }
+
+    @if (IsSectionDefined("PageJS"))
+    {
+        @RenderSection("PageJS");
+    }
+
+</body>
+</html>
