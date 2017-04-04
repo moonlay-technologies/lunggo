@@ -1,4 +1,12 @@
-﻿body {
+﻿.page-sidebar a, .page-sidebar button, .page-sidebar a:visited, .page-sidebar button:visited,
+.page-sidebar a:focus, .page-sidebar button:focus, .icon-thumbnail {color: #b1bed8;}
+.form-group-default, .form-control {border: 1px solid rgba(0, 0, 0, 0.2);}
+.select2-container .select2-selection {border: 1px solid rgba(0, 0, 0, 0.2) !important;}
+.btn-default, .btn-default:focus {
+    border-color: rgba(0, 0, 0, 0.2);
+}
+
+body {
     .col-xs-15,
     .col-sm-15,
     .col-md-15,
@@ -49,7 +57,7 @@
             padding: 5px 0;
             background-color: #fff;
             position: relative;
-            border: 1px solid rgba(0, 0, 0, 0.07);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.2);
             border-radius: 2px;
             label {padding-left: 12px;}
         }
@@ -78,7 +86,7 @@
         .select2-search--dropdown {display: none;}
         &.hotel {
             .room-item {
-                border-bottom: 1px solid rgba(230, 230, 230, 0.7);
+                border-bottom: 1px solid rgba(0, 0, 0, 0.2);
                 .panel-body {padding-bottom: 0;}
                 &:last-child .panel-body {padding-bottom: 20px;}
             }
@@ -89,7 +97,7 @@
             .pi-wrapper {
                 background-color: #fff;
                 position: relative;
-                border: 1px solid rgba(0, 0, 0, 0.07);
+                border: 1px solid rgba(0, 0, 0, 0.2);
                 border-radius: 2px;
                 overflow: hidden;
                 -webkit-transition: background-color 0.2s ease;
@@ -105,7 +113,7 @@
             }
             .set-status {cursor: pointer;}
             .pi-top {position: relative;}
-            .pi-bottom {border-top: 1px solid rgba(0, 0, 0, 0.07); text-transform: uppercase;}
+            .pi-bottom {border-top: 1px solid rgba(0, 0, 0, 0.2); text-transform: uppercase;}
         }
         .remove-payment {
             position: absolute;
@@ -185,6 +193,14 @@
         .table.table-condensed.table-detailed > tbody > tr > td:first-child:before {display: none;}
     }
     &.b2b-order-list, &.b2b-save-pax {
+        .table thead tr th {position: relative; cursor: pointer;}
+        table.dataTable thead .sorting:after, table.dataTable thead .sorting_asc:after, table.dataTable thead .sorting_desc:after, 
+        table.dataTable thead .sorting_asc_disabled:after, table.dataTable thead .sorting_desc_disabled:after {
+            position: absolute;
+            top: 50%;
+            right: 0;
+            transform: translateY(-50%);
+        }
         .select2-container {z-index: 9999;}
         .select2-search--dropdown {display: none;}
         .dash {
@@ -202,7 +218,7 @@
         }
         .ol-list {
             .ol-border {
-                border-bottom: 1px solid rgba(230, 230, 230, 0.7);
+                border-bottom: 1px solid rgba(0, 0, 0, 0.2);
             }
             .text-middle {
                 position: absolute;

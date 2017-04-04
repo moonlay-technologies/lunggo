@@ -1556,6 +1556,8 @@
     <Content Include="Assets\images\B2BHomePage\feature-5.png" />
     <Content Include="Assets\images\B2BHomePage\feature-6.png" />
     <Content Include="Assets\images\B2BHomePage\menu-button.png" />
+    <Content Include="Assets\images\B2BHomePage\travorama-b2b-logo-black.png" />
+    <Content Include="Assets\images\B2BHomePage\travorama-b2b-logo.png" />
     <Content Include="Assets\images\B2BHomePage\up-arrow.png" />
     <Content Include="Assets\images\backtotop.jpg" />
     <Content Include="Assets\images\bank-bca.png" />

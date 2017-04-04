@@ -19,15 +19,15 @@
     }
     catch
     {
-        
+
     }
-    
+
 }
 <div class="page-sidebar" data-pages="sidebar">
     <div class="sidebar-header">
-        <img src="/Assets/images/travorama-logo-white.png" alt="logo" class="brand" data-src="/Assets/images/travorama-logo-white.png" data-src-retina="/Assets/images/travorama-logo-white.png" width="100" height="30">
+        <img src="/Assets/images/B2BHomePage/travorama-b2b-logo.png" alt="logo" data-src="/Assets/images/B2BHomePage/travorama-b2b-logo.png" width="150" height="15">
         <div class="sidebar-header-controls">
-            <button data-toggle-pin="sidebar" class="m-l-30 btn btn-link visible-lg-inline" type="button">
+            <button data-toggle-pin="sidebar" class="padding-10 btn btn-link visible-lg-inline" type="button">
                 <i class="fa fs-12"></i>
             </button>
         </div>
@@ -42,23 +42,23 @@
             </li>
             @if (roles != null && roles.Count > 0 && roles.Contains("Booker"))
             {
-            <li class="">
-                <a href="javascript:;">
-                    <span class="title">Booking</span>
-                    <span class=" arrow"></span>
-                </a>
-                <span class="icon-thumbnail"><i class="fa fa-check-square"></i></span>
-                <ul class="sub-menu">
-                    <li class="">
-                        <a href="/id/B2BTemplate/SearchFlight">Tiket Pesawat</a>
-                        <span class="icon-thumbnail"><i class="fa fa-plane"></i></span>
-                    </li>
-                    <li class="">
-                        <a href="/id/B2BTemplate/SearchHotel">Tiket Hotel</a>
-                        <span class="icon-thumbnail"><i class="fa fa-building"></i></span>
-                    </li>
-                </ul>
-            </li>
+                <li class="">
+                    <a href="javascript:;">
+                        <span class="title">Booking</span>
+                        <span class=" arrow"></span>
+                    </a>
+                    <span class="icon-thumbnail"><i class="fa fa-check-square"></i></span>
+                    <ul class="sub-menu">
+                        <li class="">
+                            <a href="/id/B2BTemplate/SearchFlight">Tiket Pesawat</a>
+                            <span class="icon-thumbnail"><i class="fa fa-plane"></i></span>
+                        </li>
+                        <li class="">
+                            <a href="/id/B2BTemplate/SearchHotel">Tiket Hotel</a>
+                            <span class="icon-thumbnail"><i class="fa fa-building"></i></span>
+                        </li>
+                    </ul>
+                </li>
             }
             @if (roles != null && roles.Count > 0 && roles.Contains("Booker"))
             {
@@ -69,44 +69,44 @@
                     <span class="icon-thumbnail "><i class="fa fa-users"></i></span>
                 </li>
             }
-           
+
             @if (roles != null && roles.Count > 0 && roles.Contains("Finance"))
             {
                 <li class="paymentmgmt">
-                <a href="/id/B2BTemplate/Payment">
-                    <span class="title">Payment Management</span>
-                </a>
-                <span class="icon-thumbnail "><i class="pg-credit_card"></i></span>
-            </li>
+                    <a href="/id/B2BTemplate/Payment">
+                        <span class="title">Payment Management</span>
+                    </a>
+                    <span class="icon-thumbnail "><i class="pg-credit_card"></i></span>
+                </li>
             }
             @if (roles != null && roles.Count > 0 && roles.Contains("Admin"))
             {
-            <li class="">
-                <a href="/id/B2BTemplate/UserManagement">
-                    <span class="title">User Management</span>
-                </a>
-                <span class="icon-thumbnail "><i class="fa fa-user"></i></span>
-            </li>
+                <li class="">
+                    <a href="/id/B2BTemplate/UserManagement">
+                        <span class="title">User Management</span>
+                    </a>
+                    <span class="icon-thumbnail "><i class="fa fa-user"></i></span>
+                </li>
             }
 
             @if (roles != null && roles.Count > 0 && roles.Contains("Approver"))
             {
-            <li class="">
-                <a href="/id/B2BTemplate/OrderListApprover">
-                    <span class="title">Order List Approver</span>
-                </a>
-                <span class="icon-thumbnail">A</span>
-            </li>
+                <li class="">
+                    <a href="/id/B2BTemplate/OrderListApprover">
+                        <span class="title">Order List Approver</span>
+                    </a>
+                    <span class="icon-thumbnail">A</span>
+                </li>
             }
 
             @if (roles != null && roles.Count > 0 && roles.Contains("Booker"))
             {
-            <li class="">
-                <a href="/id/B2BTemplate/OrderListBooker">
-                    <span class="title">Order List Booker</span>
-                </a>
-                <span class="icon-thumbnail">B</span>
-            </li>
+                <li class="">
+                    <a href="/id/B2BTemplate/OrderListBooker">
+                        <span class="title">Order List Booker</span>
+                    </a>
+                    <span class="icon-thumbnail">B</span>
+                </li>
             }
             @if (roles != null && roles.Count > 0 && roles.Contains("Finance"))
             {
