@@ -139,7 +139,7 @@ namespace Lunggo.ApCommon.Campaign.Service
             {
                 case "btn":
                     return rsv is FlightReservation
-                        ? (rsv as FlightReservation).Itineraries.Sum(i => i.Price.Local) * 0.1M
+                        ? (rsv as FlightReservation).Itineraries.Sum(i => i.GetApparentOriginalPrice()) * 0.1M
                         : (rsv as HotelReservation).HotelDetails.Rooms.Sum(ro => ro.Rates.Sum(i => i.Price.Local)) * 0.1M;
                 case "mega":
                     return rsv is FlightReservation
