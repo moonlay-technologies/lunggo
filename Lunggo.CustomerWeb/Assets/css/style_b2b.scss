@@ -192,7 +192,11 @@ body {
         }
         .table.table-condensed.table-detailed > tbody > tr > td:first-child:before {display: none;}
     }
-    &.b2b-order-list, &.b2b-save-pax {
+    &.b2b-order-list, &.b2b-save-pax, &.b2b-user-manage {
+        .select2-container {z-index: 9999;}
+        .select2-search--dropdown {display: none;}
+    }
+    &.b2b-order-list {
         .table thead tr th {position: relative; cursor: pointer;}
         table.dataTable thead .sorting:after, table.dataTable thead .sorting_asc:after, table.dataTable thead .sorting_desc:after, 
         table.dataTable thead .sorting_asc_disabled:after, table.dataTable thead .sorting_desc_disabled:after {
@@ -201,8 +205,6 @@ body {
             right: 0;
             transform: translateY(-50%);
         }
-        .select2-container {z-index: 9999;}
-        .select2-search--dropdown {display: none;}
         .dash {
             display: block;
             height: 2px;

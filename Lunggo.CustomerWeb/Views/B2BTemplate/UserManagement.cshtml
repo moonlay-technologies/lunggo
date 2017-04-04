@@ -95,6 +95,7 @@
                 //    $(this).closest('.um-body').find('#um-item-' + cloneIndex + ' .pi-status').find('.current-status').hide();
                 //    $(this).closest('.um-body').find('#um-item-' + cloneIndex + ' .pi-status').append('<a class="set-status">' + 'Set As Primary' + '</a>');
                 //}
+                //}
             }
 
             //function remove() {
@@ -360,29 +361,17 @@
                                 <input type="text" class="form-control" placeholder="" ng-model="editUser.name">
                             </div>
                             <div class="row">
-                                <div class="col-sm-4">
-                                    <div class="form-group input-custom">
+                                <div class="col-sm-5">
+                                    <div class="form-group">
                                         <label>Kode Negara</label>
-                                        <select class="form-control" ng-model="editUser.countryCallCd">
-                                            <option ng-repeat="country in countries" value="{{country.dial_code}}" ng-selected="country.dial_code == userProfile.country">{{country.name}} {{country.dial_code}}</option>
-                                        </select> 
-                                        @*<div class="btn-group dropdown-default required btn-input-custom">
-                                            <a class="btn dropdown-toggle" data-toggle="dropdown" href="#"><span class="dropdown-selected">+62</span> <span class="caret"></span> </a>
-                                            <ul class="dropdown-menu">
-                                                <li>1</li>
-                                                <li>2</li>
-                                                <li>3</li>
-                                                <li>4</li>
-                                                <li>5</li>
-                                                <li>6</li>
-                                                <li>7</li>
-                                                <li>8</li>
-                                                <li>9</li>
-                                            </ul>
-                                        </div>*@
+                                        <div class="form-group ">
+                                            <select class="full-width" data-init-plugin="select2">
+                                                <option ng-repeat="country in countries" value="{{country.dial_code}}" ng-selected="country.dial_code == userProfile.country">{{country.name}} {{country.dial_code}}</option>
+                                            </select>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="col-sm-8">
+                                <div class="col-sm-7">
                                     <div class="form-group form-group-default">
                                         <label>Telepon</label>
                                         <input type="number"  class="form-control" placeholder="" ng-model="editUser.phone">
@@ -462,15 +451,17 @@
                                 <input type="text" class="form-control" placeholder="" ng-model="userData.name">
                             </div>
                             <div class="row">
-                                <div class="col-sm-4">
-                                    <div class="form-group input-custom">
+                                <div class="col-sm-5">
+                                    <div class="form-group">
                                         <label>Kode Negara</label>
-                                        <select class="form-control" ng-model="userData.countryCallCd" id="countryCode">
-                                            <option ng-repeat="country in countries" value="{{country.dial_code}}" ng-selected="country.dial_code == 'Pilih Kode Negara'">{{country.name}} {{country.dial_code}}</option>
-                                        </select> 
+                                        <div class="form-group ">
+                                            <select class="full-width" data-init-plugin="select2">
+                                                <option ng-repeat="country in countries" value="{{country.dial_code}}" ng-selected="country.dial_code == userProfile.country">{{country.name}} {{country.dial_code}}</option>
+                                            </select>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="col-sm-8">
+                                <div class="col-sm-7">
                                     <div class="form-group form-group-default">
                                         <label>Telepon</label>
                                         <input type="number" class="form-control" placeholder="" ng-model="userData.phone">
@@ -546,7 +537,7 @@
         </div>
     </div>
     
-    <div class="modal fade slide-up disable-scroll modal-sm-default wait" tabindex="-1" role="dialog" aria-hidden="false">
+    <div class="modal fade slide-up modal-sm-default wait" tabindex="-1" role="dialog" aria-hidden="false">
         <div class="modal-dialog modal-sm">
             <div class="modal-content-wrapper">
                 <div class="modal-content">
