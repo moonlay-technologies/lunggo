@@ -90,7 +90,7 @@
         background-image: url(/Assets/images/B2BHomePage/background-bg.jpg);
         background-size: cover;
         background-position: center;
-        padding: 60px 0;
+        padding: 45px 0;
         position: relative;
         &:after {
             background: #000;
@@ -170,6 +170,7 @@
                 float: left;
                 display: block;
                 margin: 0;
+                cursor: pointer;
                 a {
                     padding: 12px 15px;
                     display: block;
@@ -195,7 +196,7 @@
     }
     /*Section 2*/
     .homepage-benefit {
-        padding: 80px 0;
+        padding: 45px 0;
         background: #ffffff;
         .col-sm-3 {
             margin:  10px 0;
@@ -211,7 +212,7 @@
     }
     /*Section 3*/
     .homepage-feature {
-        padding: 80px 0;
+        padding: 45px 0;
         background-image: url(/Assets/images/B2BHomePage/background-purple.jpg);
         background-size: cover;
         background-position: center;
@@ -240,9 +241,44 @@
         .homepage-register {
             .hr-header {display: none;}
             .hr-header-mobile {display: block;}
-            .hr-content {margin: 60px auto 45px;}
+            .hr-content {margin: 100px auto 60px;}
         }
-        .homepage-benefit, .homepage-feature {padding: 60px 0 30px;}
+        .homepage-benefit, .homepage-feature {padding: 30px 0;}
         .homepage-benefit .col-sm-3 {margin:  0  0 30px;}
     }
+}
+
+/* ----------- iPhone 4 and 4S ----------- */
+@media only screen 
+  and (min-device-width: 320px) 
+  and (height: 480px) {
+  .homepage-register {padding: 10px 0 !important;}
+}
+
+/* ----------- iPhone 5 and 5S ----------- */
+@media only screen 
+  and (min-device-width: 320px) 
+  and (height: 568px) {
+  .homepage-register {padding: 55px 0 !important;}
+}
+
+/* ----------- iPhone 6 ----------- */
+@media only screen 
+  and (min-device-width: 375px) 
+  and (height: 667px) { 
+  .homepage-register {padding: 110px 0 !important;}
+}
+
+/* ----------- iPhone 6+ ----------- */
+@media only screen 
+  and (min-device-width: 414px) 
+  and (height: 736px) { 
+  .homepage-register {padding: 145px 0 !important;}
+}
+
+/* ----------- Galaxy S3 ----------- */
+@media only screen 
+  and (min-device-width: 320px) 
+  and (height: 640px) {
+  .homepage-register {padding: 85px 0 !important;}
 }

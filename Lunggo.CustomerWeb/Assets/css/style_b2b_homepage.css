@@ -101,7 +101,7 @@
     background-image: url(/Assets/images/B2BHomePage/background-bg.jpg);
     background-size: cover;
     background-position: center;
-    padding: 60px 0;
+    padding: 45px 0;
     position: relative; }
     .b2b-homepage .homepage-register:after {
       background: #000;
@@ -172,7 +172,8 @@
       .b2b-homepage .homepage-register .hr-menu li {
         float: left;
         display: block;
-        margin: 0; }
+        margin: 0;
+        cursor: pointer; }
         .b2b-homepage .homepage-register .hr-menu li a {
           padding: 12px 15px;
           display: block; }
@@ -190,7 +191,7 @@
         width: 100%;
         color: #000; }
   .b2b-homepage .homepage-benefit {
-    padding: 80px 0;
+    padding: 45px 0;
     background: #ffffff; }
     .b2b-homepage .homepage-benefit .col-sm-3 {
       margin: 10px 0; }
@@ -203,7 +204,7 @@
       margin: 0 auto;
       background-repeat: no-repeat; }
   .b2b-homepage .homepage-feature {
-    padding: 80px 0;
+    padding: 45px 0;
     background-image: url(/Assets/images/B2BHomePage/background-purple.jpg);
     background-size: cover;
     background-position: center; }
@@ -235,8 +236,33 @@
     .b2b-homepage .homepage-register .hr-header-mobile {
       display: block; }
     .b2b-homepage .homepage-register .hr-content {
-      margin: 60px auto 45px; }
+      margin: 100px auto 60px; }
     .b2b-homepage .homepage-benefit, .b2b-homepage .homepage-feature {
-      padding: 60px 0 30px; }
+      padding: 30px 0; }
     .b2b-homepage .homepage-benefit .col-sm-3 {
       margin: 0 0 30px; } }
+
+/* ----------- iPhone 4 and 4S ----------- */
+@media only screen and (min-device-width: 320px) and (height: 480px) {
+  .homepage-register {
+    padding: 10px 0 !important; } }
+
+/* ----------- iPhone 5 and 5S ----------- */
+@media only screen and (min-device-width: 320px) and (height: 568px) {
+  .homepage-register {
+    padding: 55px 0 !important; } }
+
+/* ----------- iPhone 6 ----------- */
+@media only screen and (min-device-width: 375px) and (height: 667px) {
+  .homepage-register {
+    padding: 110px 0 !important; } }
+
+/* ----------- iPhone 6+ ----------- */
+@media only screen and (min-device-width: 414px) and (height: 736px) {
+  .homepage-register {
+    padding: 145px 0 !important; } }
+
+/* ----------- Galaxy S3 ----------- */
+@media only screen and (min-device-width: 320px) and (height: 640px) {
+  .homepage-register {
+    padding: 85px 0 !important; } }

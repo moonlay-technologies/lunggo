@@ -31,12 +31,25 @@
                 }
             });
 
-            $('body #mobile-menu').click(function() {
+            $('body #mobile-menu').click(function () {
                 $('.menu-dropdown').toggle();
             });
 
             $('.menu-dropdown a').click(function () {
                 $(this).closest('.menu-dropdown').hide();
+            });
+
+            $('li.hr-link').click(function () {
+                var id = $(this).attr('attr-value');
+                $('html,body').animate({
+                    scrollTop: $('#' + id).offset().top - 70
+                }, 'slow');
+            });
+            $('li.hr-link-mobile').click(function () {
+                var id = $(this).attr('attr-value');
+                $('html,body').animate({
+                    scrollTop: $('#' + id).offset().top - 55
+                }, 'slow');
             });
         });
     </script>
@@ -44,7 +57,7 @@
 
 <div class="homepage-content">
     <a href="#" id="back-to-top" title="Back to top" class="show"></a>
-    <div class="homepage-register" id="#home">
+    <div class="homepage-register" id="home">
         <div class="hr-header white-txt">
             <div class="container clearfix">
                 <div class="col-sm-5">
@@ -52,11 +65,11 @@
                 </div>
                 <div class="col-sm-7">
                     <ul class="hr-menu uppercase-txt bold pull-right">
-                        <li><a href="#benefit" class="white-txt">Tentang kami</a></li>
-                        <li><a href="#feature" class="white-txt">Fitur</a></li>
-                        <li><a href="#" class="white-txt">Brosur</a></li>
-                        <li><a href="#" class="white-txt">Request Demo</a></li>
-                        <li><button href="#" class="btn btn-primary btn-sm white-txt uppercase-txt" style="margin-left: 15px;">Masuk</button></li>
+                        <li class="hr-link" attr-value="benefit"><a class="white-txt">Tentang Kami</a></li>
+                        <li class="hr-link" attr-value="feature"><a class="white-txt">Fitur</a></li>
+                        <li class="hr-link" attr-value=""><a href="#" class="white-txt">Brosur</a></li>
+                        <li class="hr-link" attr-value=""><a href="#" class="white-txt">Request Demo</a></li>
+                        <li class="hr-link" attr-value="home"><button href="#" class="btn btn-primary btn-sm white-txt uppercase-txt" style="margin-left: 15px;">Masuk</button></li>
                     </ul>
                 </div>
             </div>
@@ -64,14 +77,14 @@
         <div class="hr-header-mobile white-txt">
             <div class="menu-logo container center-txt">
                 <span class="burger-icon" id="mobile-menu"></span>
-                <span class="bold lg-txt">Travorama </span><span class="italic font-georgia">for </span><span class="uppercase-txt bold">Bussiness</span>
+                <a href="#" class="white-txt" style="text-decoration: none;"><span class="bold lg-txt">Travorama </span><span class="italic font-georgia">for </span><span class="uppercase-txt bold">Bussiness</span></a>
             </div>
             <ul class="menu-dropdown uppercase-txt bold pull-right">
-                <li><a href="#benefit" class="white-txt">Tentang kami</a></li>
-                <li><a href="#feature" class="white-txt">Fitur</a></li>
-                <li><a href="#" class="white-txt">Brosur</a></li>
-                <li><a href="#" class="white-txt">Request Demo</a></li>
-                <li><a href="#" class="white-txt">Masuk</a></li>
+                <li class="hr-link-mobile" attr-value="benefit"><a class="white-txt">Tentang kami</a></li>
+                <li class="hr-link-mobile" attr-value="feature"><a class="white-txt">Fitur</a></li>
+                <li class="hr-link-mobile" attr-value=""><a href="#" class="white-txt">Brosur</a></li>
+                <li class="hr-link-mobile" attr-value=""><a href="#" class="white-txt">Request Demo</a></li>
+                <li class="hr-link-mobile" attr-value="home"><a class="white-txt">Masuk</a></li>
             </ul>
         </div>
         <div class="hr-wrapper container">
@@ -90,7 +103,7 @@
                             <button href="#" class="btn btn-primary btn-lg pull-left btn-block">DAFTAR</button>
                         </div>
                     </div>
-                    <div class="italic">Sudah punya akun? <a href="#" class="underline-txt yellow-txt">Masuk</a></div>
+                    <div class="italic">Sudah punya akun? <a href="#" class="yellow-txt">Masuk</a></div>
                 </div>
             </div>
         </div>
