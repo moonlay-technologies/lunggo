@@ -10,7 +10,7 @@ namespace Lunggo.CustomerWeb.Controllers
     public class IndexController : Controller
     {
         // GET: Index
-        [DeviceDetectionFilter]
+        //[DeviceDetectionFilter]
         public ActionResult Index(string destination)
         {
             if (destination == null)
@@ -22,7 +22,7 @@ namespace Lunggo.CustomerWeb.Controllers
             }
         }
 
-        [DeviceDetectionFilter]
+        //[DeviceDetectionFilter]
         [Route("tiket-pesawat")]
         public ActionResult IndexFlight(string destination)
         {
@@ -36,7 +36,7 @@ namespace Lunggo.CustomerWeb.Controllers
             }
         }
 
-        [DeviceDetectionFilter]
+        //[DeviceDetectionFilter]
         [Route("hotel")]
         public ActionResult IndexHotel(string destination)
         {

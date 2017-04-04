@@ -36,7 +36,7 @@ namespace Lunggo.CustomerWeb
             //InitLogger();
             InitFlightService();
             InitPaymentService();
-            InitBrowserDetectionService();
+            //InitBrowserDetectionService();
             InitDisplayModes();
             InitMailService();
             InitHtmlTemplateService();

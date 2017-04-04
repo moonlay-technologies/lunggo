@@ -14,7 +14,7 @@ namespace Lunggo.CustomerWeb
         {
             filters.Add(CreateGlobalErrorHandler());
             filters.Add(new LanguageFilterAttribute());
-            filters.Add(new DeviceDetectionFilterAttribute());
+            //filters.Add(new DeviceDetectionFilterAttribute());
             AddBasicAuthenticationFilterAttribute(filters);
                 GlobalFilters.Filters.Add(new RequireHttpsProductionAttribute());
         }

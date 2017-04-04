@@ -35,7 +35,7 @@ namespace Lunggo.BackendWeb
             InitBlobStorageService();
             InitFlightService();
             InitPaymentService();
-            InitBrowserDetectionService();
+            //InitBrowserDetectionService();
             InitDisplayModes();
             InitMailService();
             InitHtmlTemplateService();
