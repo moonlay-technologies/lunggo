@@ -16,6 +16,10 @@ namespace Lunggo.CustomerWeb.Controllers
         public ActionResult AirlineSEO()
         {
             return View();
+        } 
+        public ActionResult FlightTo()
+        {
+            return View();
         }
     }
 }

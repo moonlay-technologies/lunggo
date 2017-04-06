@@ -1600,7 +1600,7 @@ body.page-index {
   .page-index .section-search .search-form {
     width: 320px;
     height: 520px;
-    background: rgba(37, 37, 37, 0.8);
+    background: rgba(0, 0, 0, 0.5);
     position: relative;
     z-index: 3; }
     .page-index .section-search .search-form .tab-header {
@@ -2509,9 +2509,7 @@ body.page-index {
     max-width: none; }
 
 .page-index .section-airline > .container {
-  max-width: none;
-  border-top: 2px solid #0c8fbf;
-  padding-top: 15px; }
+  max-width: none; }
 
 .page-index .section-airline .airline-info {
   background: #1360ad;
@@ -2585,6 +2583,10 @@ body.page-index {
     width: 41.66667% !important; }
   .page-index .section-airline .how-to .col-sm-5, .page-index .section-airline .how-to .col-sm-7 {
     float: left !important; }
+
+.page-index .section-airline #am-profile {
+  border-top: 2px solid #0c8fbf;
+  padding-top: 15px; }
 
 .page-index .section-airline #am-plane {
   border-top: 2px solid #0c8fbf;
@@ -3027,7 +3029,8 @@ body.page-index {
 
 .page-index .section-calendar-price .airline-menu a {
   text-decoration: none;
-  color: #000; }
+  color: #000;
+  cursor: pointer; }
 
 .page-index .section-calendar-price .airline-menu .am-container {
   margin: 15px 0; }
@@ -3076,8 +3079,6 @@ body.page-index {
     max-width: none !important; }
   .page-index .section-flight-to .row {
     margin-bottom: 12px; }
-    .page-index .section-flight-to .row:last-child {
-      margin-bottom: 0; }
   .page-index .section-flight-to .ft-title {
     margin-bottom: 20px;
     padding-bottom: 20px;

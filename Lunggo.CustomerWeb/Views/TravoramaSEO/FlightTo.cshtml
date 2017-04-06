@@ -5,7 +5,7 @@
     ViewBag.FooterSubscribe = true;
     ViewBag.FooterPayment = true;
     ViewBag.FooterFeedback = false;
-    ViewBag.Title = "Garuda Airline | Travorama";
+    ViewBag.Title = "Flight Destination | Travorama";
     ViewBag.AngularController = "homeController";
     //ViewBag.Campaign = true;
     ViewBag.Page = "Index";
@@ -48,25 +48,23 @@
             });
 
             $('a.am-link').click(function () {
-                var id = $(this).attr('attr-link');
-                //alert(id);
-                $('html,body').animate({
-                    scrollTop: $('#' + id).offset().top - 70
-                }, 'slow');
+
             });
         });
     </script>
-    <script> backToTop();</script>
+    @*<script> changeMainTab();</script>*@
 }
 
-<a href="#" id="back-to-top" title="Back to top"></a>
+
 <section class="section-search normal-txt">
     <div class="container">
         <div class="search-form">
             <header class="tab-header clearfix">
                 <nav>
                     <ul>
-                        <li class="flight @(ViewBag.IndexType == null || ViewBag.IndexType == "flight" ? "active" : "")" style="width: 100%;"><a data-toggle="tab" id="#plane" ng-click="showForm('flight')">Pesawat</a></li>
+                        <li class="flight @(ViewBag.IndexType == null || ViewBag.IndexType == "flight" ? "active" : "")"><a data-toggle="tab" id="#plane" ng-click="showForm('flight')">Pesawat</a></li>
+                        <li class="hotel @(ViewBag.IndexType != null && ViewBag.IndexType == "hotel" ? "active" : "")"><a data-toggle="tab" id="#hotel" ng-click="showForm('hotel')">Hotel</a></li>
+                        @*<li class="activity" data-toggle="tooltip" data-placement="bottom" title="Coming soon!"><a href="#">Activity</a></li>*@
                     </ul>
                 </nav>
             </header>
@@ -296,155 +294,306 @@
         @Html.Partial("/Views/Shared/Desktop/_SearchHotel.cshtml")
         @Html.Partial("/Views/Shared/Desktop/_ChildrenAgeForm.cshtml")
     </div><!-- .container -->
-    @if (ViewBag.DestinationName == null || ViewBag.DestinationName == "")
-    {
-        <div class="page-slider">
-            <div class="slider-wrapper" id="index-wrapper">
-                <div class="slider">
-                    <a href="#">
-                        <img src="/Assets/images/planes/garuda/background-bg.jpg" alt="Travorama" />
-                    </a>
-                </div>
+    <div class="page-slider">
+        <div class="slider-wrapper" id="index-wrapper">
+            <div class="slider">
+                <a href="#">
+                    <img src="/Assets/images/background-bali-dest.jpg" alt="Bali" />
+                </a>
             </div>
-        </div><!-- .slider -->
-    }
-    else
-    {
-        <div class="page-slider" style="background-image:url('/Assets/images/campaign/@(ViewBag.DestinationName.Replace(" ","")).jpg');">
-            <div class="slider-text hidden">
-                <h1><img src="/Assets/images/enjoyyoureverymoment.png" alt="Enjoy Your Every Moment" /></h1>
-                <p>Ke mana pun Anda ingin bepergian, kami menyediakan pilihan penerbangan <br /> domestik dan internasional dari 900 maskapai</p>
-            </div>
-        </div><!-- .slider -->
-    }
-
-</section><!-- .section-search -->
-<section class="section-calendar-price">
+        </div>
+    </div><!-- .slider -->
+</section>
+<section class="section-flight-to">
     <div class="container">
-        <div class="row">
-            <div class="col-xs-8">
-                <div class="price-calendar">
-                    <div class="md-txt os-bold">Tiket Pesawat Termurah Setiap Hari</div>
-                    <div class="search-map">
-                        <div class="row normal-txt semibold-txt">
-                            <div class="col-xs-7">
-                                <div class="col-xs-6" id="searchFrom">Dari</div>
-                                <div class="col-xs-6" id="searchTo">Ke</div>
+        <div class="flight-to-destination normal-txt">
+            <div class="ft-title text-uppercase xlg-txt">tiket murah penerbangan <span class="bold-txt">ke bali/denpasar (dps)</span></div>
+            <div class="ft-content">
+                <div class="row">
+                    <div class="col-xs-4">
+                        <div class="flight-to-content">
+                            <div class="ft-top bold-txt white-txt text-uppercase clearfix">
+                                <span class="pull-left">Sub</span>
+                                <span class="pull-right">Dps</span>
                             </div>
-                            <div class="col-xs-5">
-                                <div class="col-xs-12">Bulan</div>
+                            <div class="ft-bottom">
+                                Surabaya ke Bali
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="search-input col-xs-7">
-                                <div class="col-xs-6 map-input">
-                                    <input type="text" name="searchFrom">
-                                </div>
-                                <div class="col-xs-6 map-input">
-                                    <input type="text" name="searchTo">
-                                </div>
-                            </div>
-                            <div class="col-xs-5">
-                                <div class="col-xs-8">
-                                    <select id="month-year-select" class="hidden">
-                                        <option value="" id="smonth0"></option>
-                                        <option value="" id="smonth1"></option>
-                                        <option value="" id="smonth2"></option>
-                                        <option value="" id="smonth3"></option>
-                                        <option value="" id="smonth4"></option>
-                                        <option value="" id="smonth5"></option>
-                                        <option value="" id="smonth6"></option>
-                                        <option value="" id="smonth7"></option>
-                                        <option value="" id="smonth8"></option>
-                                        <option value="" id="smonth9"></option>
-                                        <option value="" id="smonth10"></option>
-                                        <option value="" id="smonth11"></option>
-                                        <option value="" id="smonth12"></option>
-                                    </select>
-                                    <div class="dropdown form-control clearfix select-my">
-                                        <div class="selected-my"></div>
-                                        <div class=" option" id="month-year">
-                                            <div id="month0"></div>
-                                            <div id="month1"></div>
-                                            <div id="month2"></div>
-                                            <div id="month3"></div>
-                                            <div id="month4"></div>
-                                            <div id="month5"></div>
-                                            <div id="month6"></div>
-                                            <div id="month7"></div>
-                                            <div id="month8"></div>
-                                            <div id="month9"></div>
-                                            <div id="month10"></div>
-                                            <div id="month11"></div>
-                                            <div id="month12"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-xs-4">
-                                    <a class="btn btn-yellow lg-btn md-txt btn-calendar" id="submitCalendar">CARI</a>
-                                </div>
-
-                            </div>
-                        </div>
-                        <div class="location-choice">
-                            @Html.Partial("/Views/Shared/Desktop/_SearchLocation.cshtml")
                         </div>
                     </div>
-                    <div id="pc-datepicker"></div>
+                    <div class="col-xs-4">
+                        <div class="flight-to-content">
+                            <div class="ft-top bold-txt white-txt text-uppercase clearfix">
+                                <span class="pull-left">Sub</span>
+                                <span class="pull-right">Dps</span>
+                            </div>
+                            <div class="ft-bottom">
+                                Surabaya ke Bali
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-4">
+                        <div class="flight-to-content">
+                            <div class="ft-top bold-txt white-txt text-uppercase clearfix">
+                                <span class="pull-left">Sub</span>
+                                <span class="pull-right">Dps</span>
+                            </div>
+                            <div class="ft-bottom">
+                                Surabaya ke Bali
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-4">
+                        <div class="flight-to-content">
+                            <div class="ft-top bold-txt white-txt text-uppercase clearfix">
+                                <span class="pull-left">Sub</span>
+                                <span class="pull-right">Dps</span>
+                            </div>
+                            <div class="ft-bottom">
+                                Surabaya ke Bali
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-4">
+                        <div class="flight-to-content">
+                            <div class="ft-top bold-txt white-txt text-uppercase clearfix">
+                                <span class="pull-left">Sub</span>
+                                <span class="pull-right">Dps</span>
+                            </div>
+                            <div class="ft-bottom">
+                                Surabaya ke Bali
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-4">
+                        <div class="flight-to-content">
+                            <div class="ft-top bold-txt white-txt text-uppercase clearfix">
+                                <span class="pull-left">Sub</span>
+                                <span class="pull-right">Dps</span>
+                            </div>
+                            <div class="ft-bottom">
+                                Surabaya ke Bali
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-4">
+                        <div class="flight-to-content">
+                            <div class="ft-top bold-txt white-txt text-uppercase clearfix">
+                                <span class="pull-left">Sub</span>
+                                <span class="pull-right">Dps</span>
+                            </div>
+                            <div class="ft-bottom">
+                                Surabaya ke Bali
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-4">
+                        <div class="flight-to-content">
+                            <div class="ft-top bold-txt white-txt text-uppercase clearfix">
+                                <span class="pull-left">Sub</span>
+                                <span class="pull-right">Dps</span>
+                            </div>
+                            <div class="ft-bottom">
+                                Surabaya ke Bali
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-4">
+                        <div class="flight-to-content">
+                            <div class="ft-top bold-txt white-txt text-uppercase clearfix">
+                                <span class="pull-left">Sub</span>
+                                <span class="pull-right">Dps</span>
+                            </div>
+                            <div class="ft-bottom">
+                                Surabaya ke Bali
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-4">
+                        <div class="flight-to-content">
+                            <div class="ft-top bold-txt white-txt text-uppercase clearfix">
+                                <span class="pull-left">Sub</span>
+                                <span class="pull-right">Dps</span>
+                            </div>
+                            <div class="ft-bottom">
+                                Surabaya ke Bali
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-4">
+                        <div class="flight-to-content">
+                            <div class="ft-top bold-txt white-txt text-uppercase clearfix">
+                                <span class="pull-left">Sub</span>
+                                <span class="pull-right">Dps</span>
+                            </div>
+                            <div class="ft-bottom">
+                                Surabaya ke Bali
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-4">
+                        <div class="flight-to-content">
+                            <div class="ft-top bold-txt white-txt text-uppercase clearfix">
+                                <span class="pull-left">Sub</span>
+                                <span class="pull-right">Dps</span>
+                            </div>
+                            <div class="ft-bottom">
+                                Surabaya ke Bali
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-4">
+                        <div class="flight-to-content">
+                            <div class="ft-top bold-txt white-txt text-uppercase clearfix">
+                                <span class="pull-left">Sub</span>
+                                <span class="pull-right">Dps</span>
+                            </div>
+                            <div class="ft-bottom">
+                                Surabaya ke Bali
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-4">
+                        <div class="flight-to-content">
+                            <div class="ft-top bold-txt white-txt text-uppercase clearfix">
+                                <span class="pull-left">Sub</span>
+                                <span class="pull-right">Dps</span>
+                            </div>
+                            <div class="ft-bottom">
+                                Surabaya ke Bali
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-4">
+                        <div class="flight-to-content">
+                            <div class="ft-top bold-txt white-txt text-uppercase clearfix">
+                                <span class="pull-left">Sub</span>
+                                <span class="pull-right">Dps</span>
+                            </div>
+                            <div class="ft-bottom">
+                                Surabaya ke Bali
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-4">
+                        <div class="flight-to-content">
+                            <div class="ft-top bold-txt white-txt text-uppercase clearfix">
+                                <span class="pull-left">Sub</span>
+                                <span class="pull-right">Dps</span>
+                            </div>
+                            <div class="ft-bottom">
+                                Surabaya ke Bali
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-4">
+                        <div class="flight-to-content">
+                            <div class="ft-top bold-txt white-txt text-uppercase clearfix">
+                                <span class="pull-left">Sub</span>
+                                <span class="pull-right">Dps</span>
+                            </div>
+                            <div class="ft-bottom">
+                                Surabaya ke Bali
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-4">
+                        <div class="flight-to-content">
+                            <div class="ft-top bold-txt white-txt text-uppercase clearfix">
+                                <span class="pull-left">Sub</span>
+                                <span class="pull-right">Dps</span>
+                            </div>
+                            <div class="ft-bottom">
+                                Surabaya ke Bali
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-4">
+                        <div class="flight-to-content">
+                            <div class="ft-top bold-txt white-txt text-uppercase clearfix">
+                                <span class="pull-left">Sub</span>
+                                <span class="pull-right">Dps</span>
+                            </div>
+                            <div class="ft-bottom">
+                                Surabaya ke Bali
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-4">
+                        <div class="flight-to-content">
+                            <div class="ft-top bold-txt white-txt text-uppercase clearfix">
+                                <span class="pull-left">Sub</span>
+                                <span class="pull-right">Dps</span>
+                            </div>
+                            <div class="ft-bottom">
+                                Surabaya ke Bali
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-4">
+                        <div class="flight-to-content">
+                            <div class="ft-top bold-txt white-txt text-uppercase clearfix">
+                                <span class="pull-left">Sub</span>
+                                <span class="pull-right">Dps</span>
+                            </div>
+                            <div class="ft-bottom">
+                                Surabaya ke Bali
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-4">
+                        <div class="flight-to-content">
+                            <div class="ft-top bold-txt white-txt text-uppercase clearfix">
+                                <span class="pull-left">Sub</span>
+                                <span class="pull-right">Dps</span>
+                            </div>
+                            <div class="ft-bottom">
+                                Surabaya ke Bali
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-4">
+                        <div class="flight-to-content">
+                            <div class="ft-top bold-txt white-txt text-uppercase clearfix">
+                                <span class="pull-left">Sub</span>
+                                <span class="pull-right">Dps</span>
+                            </div>
+                            <div class="ft-bottom">
+                                Surabaya ke Bali
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-4">
+                        <div class="flight-to-content">
+                            <div class="ft-top bold-txt white-txt text-uppercase clearfix">
+                                <span class="pull-left">Sub</span>
+                                <span class="pull-right">Dps</span>
+                            </div>
+                            <div class="ft-bottom">
+                                Surabaya ke Bali
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="col-xs-4">
-                @*@Html.Partial("/Views/Shared/Desktop/_PopularFlight.cshtml")*@
-                @Html.Partial("/Views/Shared/Desktop/_AirlineMenu.cshtml")
+            <div class="row">
+                <div class="col-sm-6"><a href="#" class="grey-txt bold-txt">&lt; PREVIOUS</a></div>
+                <div class="col-sm-6"><a href="#" class="blue-txt bold-txt pull-right"> NEXT &gt;</a></div>
             </div>
         </div>
     </div>
 </section>
-<section class="section-airline">
-    <div class="container">
-        @Html.Partial("/Views/Shared/Desktop/_AirlinePage.cshtml")
-    </div>
-</section>
-<section class="section-subscribe">
-    <div class="container">
-
-        <img class="subscribe-bg" src="/Assets/images/subscribe-bg.jpg" alt="Email" />
-
-        <div class="row subscribe-after">
-            <div class="col-xs-10 col-xs-offset-2">
-                <div>
-                    <h2><b>Terima Kasih Telah Mendaftar di Newsletter Kami</b></h2>
-                </div>
-            </div>
-        </div>
-
-        <div class="row subscribe-before">
-            <div class="col-xs-7">
-                <h2>Jadilah yang pertama tahu mengenai tujuan perjalanan serta promo penerbangan terkini!</h2>
-            </div>
-            <div class="col-xs-5">
-                <form class="form subscribe-form">
-                    <div class="form-group">
-                        <input type="text" name="address" value="" class="subscribe-email form-control" placeholder="Alamat E-mail Anda" />
-                    </div>
-                    <div class="form-group">
-                        <input type="text" name="name" value="" class="subscribe-name form-control" placeholder="Nama Anda" />
-                        <input type="submit" class="btn btn-yellow sm-btn" value="MEMBERSHIP" />
-                    </div>
-                </form>
-            </div>
-        </div>
-
-    </div>
-</section><!-- .section-subscribe -->
-<section class="section-payment">
-    <div class="container text-center">
-
-        <h2 class="section-title stripe text-center xlg-txt">MENERIMA <span>PEMBAYARAN</span> MELALUI</h2>
-
-        <p class="text-center">
-            <img src="/Assets/images/payment-method.jpg" alt="Visa and Master Card, ATM Bersama, CIMB Clicks" />
-        </p>
-
-    </div>
-</section><!-- .section-payment -->

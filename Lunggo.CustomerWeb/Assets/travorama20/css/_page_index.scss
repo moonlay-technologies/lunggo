@@ -15,7 +15,7 @@ body.page-index {margin-bottom: 0;}
 
         
         // search form
-        .search-form {width:320px; height:520px; background:rgba(37,37,37,0.8); position:relative; z-index:3;
+        .search-form {width:320px; height:520px; background:rgba(0, 0, 0, 0.5); position:relative; z-index:3;
             .tab-header {height:auto;
                 nav {
                     ul {margin:0; padding:0;
@@ -590,8 +590,6 @@ body.page-index {margin-bottom: 0;}
     .section-airline {
         &>.container {
             max-width: none; 
-            border-top: 2px solid #0c8fbf;
-            padding-top: 15px;
         }
         .airline-info {
             background: #1360ad;
@@ -655,6 +653,10 @@ body.page-index {margin-bottom: 0;}
             .col-sm-7 {border-right: 1px solid #0c8fbf;}
             .col-sm-5 {padding-left: 30px; width: 41.66667% !important;}
             .col-sm-5, .col-sm-7 {float: left !important;}
+        }
+        #am-profile {
+            border-top: 2px solid #0c8fbf;
+            padding-top: 15px;
         }
         #am-plane {
             border-top: 2px solid #0c8fbf;
@@ -1102,6 +1104,7 @@ body.page-index {margin-bottom: 0;}
             a {
                 text-decoration: none;
                 color: #000;
+                cursor: pointer;
             }
             .am-container {margin: 15px 0;}
             .am-content {
@@ -1154,9 +1157,7 @@ body.page-index {margin-bottom: 0;}
     .section-flight-to {
         margin: 40px 0;
         &>.container {max-width: none !important;}
-        .row {margin-bottom: 12px;
-            &:last-child {margin-bottom: 0;}
-        }
+        .row {margin-bottom: 12px;}
         .ft-title {
             margin-bottom: 20px;
             padding-bottom: 20px;

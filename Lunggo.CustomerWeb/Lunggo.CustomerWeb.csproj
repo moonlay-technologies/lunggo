@@ -1708,9 +1708,10 @@
     <Content Include="Views\TravoramaSEO\HotelSEO.cshtml" />
     <Content Include="Views\TravoramaSEO\FlightToSEO.cshtml" />
     <Content Include="Views\TravoramaSEO\AirlineSEO.cshtml" />
-    <Content Include="Views\Shared\Desktop\_FlightToDestination.cshtml" />
+    <Content Include="Views\Shared\Desktop\_LandingPageSearch.cshtml" />
     <Content Include="Views\Shared\Desktop\_AirlineMenu.cshtml" />
     <Content Include="Views\Shared\Desktop\_AirlinePage.cshtml" />
+    <Content Include="Views\TravoramaSEO\FlightTo.cshtml" />
     <None Include="Views\Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
