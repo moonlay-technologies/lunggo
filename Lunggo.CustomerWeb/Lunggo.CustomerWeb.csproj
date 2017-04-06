@@ -571,6 +571,7 @@
     <Content Include="Assets\images\asita-logo.png" />
     <Content Include="Assets\images\at-icon.png" />
     <Content Include="Assets\images\atm-bersama.jpg" />
+    <Content Include="Assets\images\background-bali-dest.jpg" />
     <Content Include="Assets\images\backtotop.jpg" />
     <Content Include="Assets\images\bagage-white.png" />
     <Content Include="Assets\images\bank-bca.png" />
@@ -873,6 +874,15 @@
     <Content Include="Assets\images\plane-down.png" />
     <Content Include="Assets\images\plane-up.png" />
     <Content Include="Assets\images\plane-updown-sprite.png" />
+    <Content Include="Assets\images\planes\garuda\background-bg.jpg" />
+    <Content Include="Assets\images\planes\garuda\food.jpg" />
+    <Content Include="Assets\images\planes\gi-1.jpg" />
+    <Content Include="Assets\images\planes\gi-2.jpg" />
+    <Content Include="Assets\images\planes\gi-3.jpg" />
+    <Content Include="Assets\images\planes\gi-4.jpg" />
+    <Content Include="Assets\images\planes\gi-5.jpg" />
+    <Content Include="Assets\images\planes\gi-6.jpg" />
+    <Content Include="Assets\images\planes\gi-7.jpg" />
     <Content Include="Assets\images\pop-bali.jpg" />
     <Content Include="Assets\images\pop-bandung.jpg" />
     <Content Include="Assets\images\pop-hongkong.jpg" />
