@@ -53,6 +53,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
             private static RestClient CreateAgentClient()
             {
                 var client = new RestClient("https://booking2.airasia.com");
+                //ServicePointManager.SecurityProtocol = SecurityProtocolType.Ssl3 | SecurityProtocolType.Tls | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
                 //client.AddDefaultHeader("Content-Type", "application/x-www-form-urlencoded");
                 client.AddDefaultHeader("Accept-Language", "en-US,en;q=0.8");
                 client.AddDefaultHeader("Upgrade-Insecure-Requests", "1");
@@ -85,6 +86,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                 request.AddParameter("application/x-www-form-urlencoded", postData, ParameterType.RequestBody);
                 request.AddHeader("Origin", "http://www.airasia.com");
                 request.AddHeader("Referer", "http://www.airasia.com/id/id/login/travel-agent.page");
+                //client.Timeout = 0;
                 var response = client.Execute(request);
 
                 return response.ResponseUri.AbsolutePath == "/AgentHome.aspx";
